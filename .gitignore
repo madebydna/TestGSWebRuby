@@ -1,0 +1,19 @@
+*.log
+*.log.*[0-9]
+
+# Mac OSX hidden files created by Finder
+.DS_Store
+
+# IntelliJ IDEA files
+*.ipr
+*.iws
+*.iml
+.#*.*[0-9]
+atlassian-ide-plugin.xml
+
+# Vim
+*.swp
+.*un~
+
+tmp
+

@@ -1,0 +1,20 @@
+<p>Category <%= category.name %></p>
+<table>
+    <% last_key = nil %>
+    <% school_category_rows.each do |row| %>
+        <tr>
+            <td>
+                <% if last_key && last_key == row.key %>
+                &nbsp;
+                <% else %>
+                    <%= row.key.gsub('_',' ').capitalize %>
+                <% end %>
+            </td>
+            <td>
+                <%= row.value.gsub('_',' ').capitalize %>
+            </td>
+        </tr>
+        <% last_key = row.key %>
+    <% end %>
+</table>
+

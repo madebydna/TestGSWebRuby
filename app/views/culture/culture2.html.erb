@@ -1,0 +1,17 @@
+
+<h1>culture</h1>
+
+
+<div class="container">
+
+    <div class="position1">
+
+        <% category = @category_positions['1'].category %>
+        <%= render :partial => 'category_data',
+                   locals: { school_category_rows: @school_category_data_map[category], category: category }
+        %>
+
+    </div>
+
+</div>
+
