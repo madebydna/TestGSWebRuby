@@ -9,6 +9,8 @@ gem 'mysql2'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'better_errors', '~> 0.9.0'
+  gem 'binding_of_caller', '~> 0.7.2'
 end
 
 gem 'rails_admin'
