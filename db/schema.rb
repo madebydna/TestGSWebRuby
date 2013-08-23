@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820233922) do
+ActiveRecord::Schema.define(:version => 20130823203628) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(:version => 20130820233922) do
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "category_data", :force => true do |t|
+    t.integer  "category_id"
+    t.string   "response_key"
+    t.string   "response_label"
+    t.integer  "collection_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "category_placements", :force => true do |t|
@@ -75,15 +84,21 @@ ActiveRecord::Schema.define(:version => 20130820233922) do
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
+  create_table "response_values", :force => true do |t|
+    t.string   "response_value"
+    t.string   "response_label"
+    t.integer  "collection_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "school_category_data", :force => true do |t|
     t.integer  "school_id"
-    t.integer  "category_id"
     t.string   "key"
     t.string   "value"
-    t.string   "value_type"
     t.boolean  "active"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "school_collections", :force => true do |t|

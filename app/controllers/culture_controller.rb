@@ -8,7 +8,7 @@ class CultureController < ApplicationController
   end
 
   def culture2
-    # Get this page's config
+    # Get this page's config      as
     # This will well us, for a certain page, what categories should be at which position, and which collections they might belong to
     # It's important to sort the collection_ids in descending order here, do that nulls are last
     category_placements = CategoryPlacement.order('collection_id desc').joins(:page).where('pages.name = ?', 'culture').all
