@@ -1,4 +1,4 @@
-class CultureController < ApplicationController
+class CultureController < LocalizedProfileController
 
   # Find school before executing culture action
   before_filter :find_school, only: [:culture2]
