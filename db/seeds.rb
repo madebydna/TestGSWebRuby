@@ -80,3 +80,29 @@ schools_per_state = 4
 end
 
 
+# Category data
+CategoryData.create!(category:sports,response_key:'girl_sports',response_label:'Sports for Girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boy_sports',response_label:'Sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boy_sports_other',response_label:'Other sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girl_sports_other',response_label:'Other sports for girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girl_sports',response_label:'Sports for Girls', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boy_sports',response_label:'Sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boy_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'girl_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
+
+
+# response value
+schools_per_state = 4
+%w(ca dc).each_with_index do |state, index|
+  first = (index * schools_per_state) + 1
+  last = (index+1) * schools_per_state
+  query = "select * from _#{state}.esp_response where school_id >= #{first} and school_id <= #{last} and response_key like '%sports%'"
+  client = Mysql2::Client.new(host: 'dev.greatschools.org', username: 'service', :password => 'service')
+  results = client.query(query)
+  if results.count > 0
+    results.each do |result|
+      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'], collection:private_schools)
+      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'], collection:bay_area_schools)
+    end
+  end
+end
