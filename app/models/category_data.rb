@@ -3,4 +3,21 @@ class CategoryData < ActiveRecord::Base
 
   belongs_to :collection
   belongs_to :category
+
+  # return CategoryData with collection_id in the provided
+  # collections. If a single object is passed in, the Array(...) call will convert it to an array
+  # Will return CategoryData with nil collection_id
+  def self.belonging_to_collections(category, collections = nil)
+    all_data_for_category(category).select do |category_data|
+      array_of_ids_with_nil = (Array(collections).map(&:id))<<nil
+      array_of_ids_with_nil.include? category_data.collection_id
+    end
+  end
+
+  def self.all_data_for_category(category)
+    Rails.cache.fetch("CategoryData/category_#{category.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
+      order('category_id asc').order('collection_id desc').where(category_id:category.id)
+    end
+  end
+
 end

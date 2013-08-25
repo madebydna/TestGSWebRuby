@@ -1,0 +1,30 @@
+
+<h1>culture</h1>
+
+
+<div class="container">
+
+    <div class="position1">
+
+        <% if @category_positions[1] %>
+        <% category = @category_positions[1] %>
+        <%= render :partial => 'category_data',
+                   locals: { school_category_rows: category.values_for_school(@school), category: category }
+        %>
+        <% end %>
+
+    </div>
+
+    <div class="position2">
+
+        <% if @category_positions[2] %>
+            <% category = @category_positions[2] %>
+            <%= render :partial => 'category_data',
+                       locals: { school_category_rows: category.values_for_school(@school), category: category }
+            %>
+        <% end %>
+
+    </div>
+
+</div>
+

@@ -1,5 +1,5 @@
 class SchoolCategoryData < ActiveRecord::Base
-  attr_accessible :active, :category, :key, :school, :value, :value_type
+  attr_accessible :active, :key, :school, :value
 
   belongs_to :school
   belongs_to :category

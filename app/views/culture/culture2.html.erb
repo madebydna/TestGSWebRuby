@@ -6,10 +6,12 @@
 
     <div class="position1">
 
+        <% if @category_positions['1'] %>
         <% category = @category_positions['1'].category %>
         <%= render :partial => 'category_data',
                    locals: { school_category_rows: @school_category_data_map[category], category: category }
         %>
+        <% end %>
 
     </div>
 

@@ -57,6 +57,7 @@ arts_music = Category.create!(name: 'Arts & Music')
 CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: bay_area_schools, position: 1 )
 CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
 CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
+CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
 
 
 # steal data from dev's esp_response to populate SchoolCategoryData
@@ -81,14 +82,14 @@ end
 
 
 # Category data
-CategoryData.create!(category:sports,response_key:'girl_sports',response_label:'Sports for Girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boy_sports',response_label:'Sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boy_sports_other',response_label:'Other sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girl_sports_other',response_label:'Other sports for girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girl_sports',response_label:'Sports for Girls', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boy_sports',response_label:'Sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boy_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'girl_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
 
 
 # response value

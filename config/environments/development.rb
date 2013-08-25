@@ -34,4 +34,7 @@ LocalizedProfiles::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Don't cache in dev environment
+  config.cache_store = :null_store
 end

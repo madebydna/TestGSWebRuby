@@ -1,6 +1,7 @@
 LocalizedProfiles::Application.routes.draw do
   get "culture/culture"
   get "culture/culture2"
+  get "culture/culture3"
 
   devise_for :admins
 

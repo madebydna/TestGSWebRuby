@@ -10,18 +10,16 @@ class Page < ActiveRecord::Base
   # Returns a hash of {position number => Category}
   # If collection(s) are passed in, the hash will only contain entries for categories that match the collections
   def categories_per_position(collections = nil)
-    placements = category_placements
 
     # get the right category placements
-    if collections
-      placements = category_placements.belonging_to_collections collections
-    end
+    placements = CategoryPlacement.belonging_to_collections(self, collections)
 
     # build the hash
     placements.inject({}) do |hash, placement|
       hash[placement.position] ||= placement.category
       hash
     end
+
   end
 
 

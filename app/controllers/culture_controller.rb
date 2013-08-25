@@ -1,20 +1,20 @@
 class CultureController < LocalizedProfileController
 
   # Find school before executing culture action
-  before_filter :find_school, only: [:culture2]
+  before_filter :find_school, only: [:culture2, :culture3]
+  before_filter :page, only: [:culture2, :culture3]
 
   def initialize
     @category_positions = {}
   end
 
-  def culture2
-    # Get this page's config      as
-    # This will well us, for a certain page, what categories should be at which position, and which collections they might belong to
-    # It's important to sort the collection_ids in descending order here, do that nulls are last
-    category_placements = CategoryPlacement.order('collection_id desc').joins(:page).where('pages.name = ?', 'culture').all
+  def culture3
+    @category_positions = @page.categories_per_position(@school.collections)
+  end
 
+  def culture2
     # for this page, lets build a hash that tells us what category of data to put at each position
-    if category_placements
+    if @page.category_placements
       @category_positions = category_placements.inject({}) do |map, category_placement|
 
         # Skip this category_placement if its collection doesnt match school's collection
@@ -52,6 +52,10 @@ class CultureController < LocalizedProfileController
     @school = School.find school_id
   end
 
+
+  def page
+    @page = Page.where(name: 'Extracurriculars').first
+  end
 
   def culture
     @schoolId = params[:schoolId]
