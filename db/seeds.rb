@@ -102,8 +102,8 @@ schools_per_state = 4
   results = client.query(query)
   if results.count > 0
     results.each do |result|
-      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'], collection:private_schools)
-      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'], collection:bay_area_schools)
+      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'].gsub('_',' '), collection:private_schools)
+      ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'].gsub('_',' '), collection:bay_area_schools)
     end
   end
 end

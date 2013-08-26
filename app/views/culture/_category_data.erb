@@ -7,11 +7,13 @@
                 <% if last_key && last_key == label %>
                 &nbsp;
                 <% else %>
-                    <%= label.gsub('_',' ').capitalize %>
+                    <%= label.capitalize %>
                 <% end %>
             </td>
             <td>
-                <%= value.gsub('_',' ').capitalize %>
+                <% value.each do |pretty| %>
+                    <%= pretty %> <br/>
+                <% end %>
             </td>
         </tr>
         <% last_key = label %>

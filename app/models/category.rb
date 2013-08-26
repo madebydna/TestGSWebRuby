@@ -34,9 +34,10 @@ class Category < ActiveRecord::Base
       value = school_data.value
 
       label = key_label_map[key] || key
+      hash[label] ||= []
       pretty_value = ResponseValue.pretty_value(value, school.collections)
 
-      hash[label] = pretty_value
+      hash[label] << pretty_value
       hash
     end
   end
