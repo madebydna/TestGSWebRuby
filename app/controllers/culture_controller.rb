@@ -10,6 +10,7 @@ class CultureController < LocalizedProfileController
 
   def culture3
     @category_positions = @page.categories_per_position(@school.collections)
+    render :layout => "application"
   end
 
   def culture2

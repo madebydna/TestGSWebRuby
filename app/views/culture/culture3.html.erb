@@ -1,30 +1,51 @@
+<%= render :partial => 'nav/topnav' %>
 
-<h1>culture</h1>
-
-
-<div class="container">
-
-    <div class="position1">
-
-        <% if @category_positions[1] %>
-        <% category = @category_positions[1] %>
-        <%= render :partial => 'category_data',
-                   locals: { school_category_rows: category.values_for_school(@school), category: category }
-        %>
-        <% end %>
-
-    </div>
-
-    <div class="position2">
-
-        <% if @category_positions[2] %>
-            <% category = @category_positions[2] %>
-            <%= render :partial => 'category_data',
-                       locals: { school_category_rows: category.values_for_school(@school), category: category }
-            %>
-        <% end %>
-
-    </div>
-
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 " style="text-align: center"><h1><%= @school.name %></h1></div>
 </div>
+<div class="row" style="padding:0px 20px 20px 20px">
+    <div class="col-xs-0 col-sm-2 col-md-3 "></div>
+    <div class="col-xs-12 col-sm-8 col-md-6 " style="text-align: center">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4">GreatSchools rating</div>
+            <div class="col-xs-4 col-sm-4 col-md-4 ">PCSB rating</div>
+            <div class="col-xs-4 col-sm-4 col-md-4 ">18 reviews</div>
+        </div>
+    </div>
+    <div class="col-xs-0 col-sm-2 col-md-3 "></div>
+</div>
+
+<%= render :partial => 'profile/profile_subnav' %>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                <div id="contents">
+                    <div id="main">
+                        <% if @category_positions[1] %>
+                            <% category = @category_positions[1] %>
+                            <%= render :partial => 'category_data',
+                                       locals: { school_category_rows: category.values_for_school(@school), category: category }
+                            %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                <div id="contents">
+                    <div id="main">
+                        <% if @category_positions[2] %>
+                            <% category = @category_positions[2] %>
+                            <%= render :partial => 'category_data',
+                                       locals: { school_category_rows: category.values_for_school(@school), category: category }
+                            %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

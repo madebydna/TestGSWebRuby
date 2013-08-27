@@ -1,0 +1,80 @@
+
+/* line 2, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation li {
+  list-style-type: none;
+  display: inline;
+  margin-left: 20px;
+}
+/* line 6, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation li a {
+  color: #AAAAAA;
+  text-decoration: none;
+}
+/* line 9, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation li a:hover {
+  color: #ffb3ff;
+}
+
+/* line 15, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation2 li {
+  list-style-type: none;
+  display: inline;
+  margin-left: 60px;
+}
+/* line 19, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation2 li a {
+  color: #555555;
+  text-decoration: none;
+}
+/* line 22, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation2 li a:hover {
+  color: #AAAA50;
+}
+
+/* line 27, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#mobile-header {
+  display: none;
+  float: left;
+}
+
+@media only screen and (max-width: 767px) {
+/* line 32, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #mobile-header {
+    display: block;
+  }
+
+/* line 35, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #navigation {
+    display: none;
+  }
+
+/* line 38, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #navigation2 {
+    display: none;
+  }
+}
+@media only screen and (min-width: 767px) {
+/* line 43, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #mobile-header {
+    display: none;
+  }
+
+/* line 46, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #navigation {
+    display: block;
+  }
+
+/* line 49, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+  #navigation2 {
+    background-color: #000000;
+    padding: 10px;
+    display: block;
+  }
+}
+/* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation2.affix {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}

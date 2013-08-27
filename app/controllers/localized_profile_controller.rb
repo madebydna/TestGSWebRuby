@@ -1,4 +1,5 @@
-class LocalizedProfileController < ActionController::Base
+class LocalizedProfileController < ApplicationController
   protect_from_forgery
+
 
 end

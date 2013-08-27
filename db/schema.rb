@@ -64,6 +64,13 @@ ActiveRecord::Schema.define(:version => 20130823203628) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "page_configs", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.string   "parent_id"
@@ -93,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20130823203628) do
   end
 
   create_table "school_category_data", :force => true do |t|
-    t.integer  "school_id"
+    t.integer  "school_id",  :null => false
     t.string   "key"
     t.string   "value"
     t.boolean  "active"

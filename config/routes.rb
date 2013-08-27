@@ -2,6 +2,8 @@ LocalizedProfiles::Application.routes.draw do
   get "culture/culture"
   get "culture/culture2"
   get "culture/culture3"
+  get "pages/home"
+  get "pages/contact"
 
   devise_for :admins
 
