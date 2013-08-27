@@ -26,7 +26,7 @@ class LocalizedProfileController < ApplicationController
 
   # Finds school given request param schoolId
   def find_school
-    school_id = params[:schoolId]
+    school_id = params[:schoolId] || 1
 
     if school_id.nil?
       # todo: redirect to school controller, school_not_found action
