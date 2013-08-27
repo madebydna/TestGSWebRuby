@@ -11,6 +11,11 @@ user = Admin.new
 user.email = 'ssprouse@greatschools.org'
 user.password = 'testrailsadmin'
 user.save!
+# Demo admin user
+user = Admin.new
+user.email = 'omega@greatschools.org'
+user.password = 'omegademo'
+user.save!
 
 
 # Schools
