@@ -38,6 +38,9 @@ class Category < ActiveRecord::Base
       pretty_value = ResponseValue.pretty_value(value, school.collections)
 
       hash[label] << pretty_value
+
+      # remove duplicates from the array
+      hash[label].uniq!
       hash
     end
   end

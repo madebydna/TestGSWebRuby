@@ -15,7 +15,9 @@
     <div class="col-xs-0 col-sm-2 col-md-3 "></div>
 </div>
 
-<%= render :partial => 'profile/profile_subnav' %>
+<!--<%= link_to :controller => 'localized_profile' %>-->
+
+<%= render :partial => 'localized_profile/profile_subnav' %>
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
@@ -37,6 +39,33 @@
                     <div id="main">
                         <% if @category_positions[2] %>
                             <% category = @category_positions[2] %>
+                            <%= render :partial => 'category_data',
+                                       locals: { school_category_rows: category.values_for_school(@school), category: category }
+                            %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                <div id="contents">
+                    <div id="main">
+                        <% if @category_positions[3] %>
+                            <% category = @category_positions[3] %>
+                            <%= render :partial => 'category_data',
+                                       locals: { school_category_rows: category.values_for_school(@school), category: category }
+                            %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+                <div id="contents">
+                    <div id="main">
+                        <% if @category_positions[4] %>
+                            <% category = @category_positions[4] %>
                             <%= render :partial => 'category_data',
                                        locals: { school_category_rows: category.values_for_school(@school), category: category }
                             %>

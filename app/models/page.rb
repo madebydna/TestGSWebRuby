@@ -22,5 +22,9 @@ class Page < ActiveRecord::Base
 
   end
 
+  def code_friendly_name
+    name.gsub('&',' ').gsub(/\s+/, '_').classify
+  end
+
 
 end

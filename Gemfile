@@ -13,7 +13,7 @@ group :development, :test do
   gem 'binding_of_caller', '~> 0.7.2'
 
   # Supporting Gem for Rails Panel for Chrome
-  gem 'meta_request'
+  # gem 'meta_request'
 
   # Use SCSS for stylesheets
 

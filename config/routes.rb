@@ -1,7 +1,8 @@
 LocalizedProfiles::Application.routes.draw do
-  get "profile/culture", :to => 'localized_profile#culture'
-  get "pages/home"
-  get "pages/contact"
+  get 'profile/extracurriculars', :to => 'localized_profile#extracurriculars'
+  get 'profile/programs-resources', :to => 'localized_profile#programs_resources'
+  get 'pages/home'
+  get 'pages/contact'
 
   devise_for :admins
 

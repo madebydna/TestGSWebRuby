@@ -19,6 +19,7 @@ class ResponseValue < ActiveRecord::Base
     end
 
     result = default_values[value] if result.nil?
+    result = value if result.nil?
 
     return result
   end

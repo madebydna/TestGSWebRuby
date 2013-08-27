@@ -1,0 +1,18 @@
+<div id="navigation2" class="affix">
+    <nav class="nav">
+        <ul style="margin-bottom: 0px">
+            <li>
+                <%= link_to 'Programs & resources',
+                            :controller => 'localized_profile',
+                            :action => 'programs_resources',
+                            :schoolId => @school.id %>
+            </li>
+            <li>
+                <%= link_to 'Extracurriculars',
+                            :controller => 'localized_profile',
+                            :action => 'extracurriculars',
+                            :schoolId => @school.id %>
+            </li>
+        </ul>
+    </nav>
+</div>

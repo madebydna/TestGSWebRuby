@@ -1,5 +1,5 @@
-<p>Category <%= category.name %></p>
-<table>
+<h4><%= category.name %></h4>
+<table class="table table-striped">
     <% last_key = nil %>
     <% school_category_rows.each do |label, value| %>
         <tr>
@@ -7,12 +7,14 @@
                 <% if last_key && last_key == label %>
                 &nbsp;
                 <% else %>
-                    <%= label.capitalize %>
+                    <strong>
+                        <%= label.capitalize unless label.nil? %>
+                    </strong>
                 <% end %>
             </td>
             <td>
                 <% value.each do |pretty| %>
-                    <%= pretty %> <br/>
+                    <%= pretty.capitalize unless pretty.nil? %> <br/>
                 <% end %>
             </td>
         </tr>

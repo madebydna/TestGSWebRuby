@@ -1,22 +1,27 @@
 class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
-
   # Find school before executing culture action
-  before_filter :find_school, only: [:culture]
-  before_filter :page, only: [:culture]
+  before_filter :find_school
 
   def initialize
     @category_positions = {}
   end
 
-  def culture
+  def programs_resources
+    page('Programs & resources')
     @category_positions = @page.categories_per_position(@school.collections)
     render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
   end
 
-  def page
-    @page = Page.where(name: 'Extracurriculars').first
+  def extracurriculars
+    page('Extracurriculars')
+    @category_positions = @page.categories_per_position(@school.collections)
+    render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
+  end
+
+  def page(name)
+    @page = Page.where(name: name).first
   end
 
   # Finds school given request param schoolId

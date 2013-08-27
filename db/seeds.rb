@@ -54,15 +54,46 @@ SchoolCollection.create!(school:maret_school, collection:private_schools)
 
 # Categories
 school_basics = Category.create!(name: 'School basics')
+programs = Category.create!(name: 'Programs')
 sports = Category.create!(name: 'Sports')
 arts_music = Category.create!(name: 'Arts & Music')
 
 
 # Category placements
 CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: bay_area_schools, position: 1 )
+CategoryPlacement.create!(category: programs, page: programs_resources, position: 2 )
 CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
 CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
+
+# Category data
+CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:private_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
+CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
+
+CategoryData.create!(category:school_basics,response_key:'administrator_name',response_label:'School Leader\'s name')
+CategoryData.create!(category:school_basics,response_key:'school_fax',response_label:'Fax number')
+CategoryData.create!(category:school_basics,response_key:'start_time',response_label:'School start time')
+CategoryData.create!(category:school_basics,response_key:'end_time',response_label:'School end time')
+
+CategoryData.create!(category:arts_music, response_key:'arts_music', response_label:'Music')
+CategoryData.create!(category:arts_music, response_key:'arts_performing_written', response_label:'Performing arts')
+
+CategoryData.create!(
+    category:programs,
+    response_key:'special_ed_programs',
+    response_label:'Specialized programs for specific types of special education students'
+)
+CategoryData.create!(
+    category:programs,
+    response_key:'foreign_language',
+    response_label:'Foreign languages taught'
+)
 
 
 # steal data from dev's esp_response to populate SchoolCategoryData
@@ -70,7 +101,8 @@ schools_per_state = 4
 %w(ca dc).each_with_index do |state, index|
   first = (index * schools_per_state) + 1
   last = (index+1) * schools_per_state
-  query = "select * from _#{state}.esp_response where school_id >= #{first} and school_id <= #{last} and response_key like '%sports%'"
+  query = "select * from _#{state}.esp_response where school_id >= #{first} "
+  query += " and school_id <= #{last} and active=1 and response_key in (#{CategoryData.all.map{ |item| item.response_key}.to_s[1..-2]})"
   client = Mysql2::Client.new(host: 'dev.greatschools.org', username: 'service', :password => 'service')
   results = client.query(query)
   if results.count > 0
@@ -86,15 +118,7 @@ schools_per_state = 4
 end
 
 
-# Category data
-CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
+
 
 
 # response value
