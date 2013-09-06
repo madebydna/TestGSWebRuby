@@ -1,5 +1,5 @@
 class CategoryPlacement < ActiveRecord::Base
-  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id
+  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :order
 
   belongs_to :category
   belongs_to :collection

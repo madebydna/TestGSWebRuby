@@ -1,0 +1,46 @@
+<h4><%= category.name %></h4>
+<table class="table table-striped">
+
+    <tr>
+        <% headers_shown = false %>
+
+        <!-- calculate whether column headers should be shown -->
+        <% config['columns'].each do |column| %>
+            <% if column['label'] && column['show_header'] %>
+                <% headers_shown = true %>
+            <% end %>
+        <% end %>
+
+        <% config['columns'].each do |column| %>
+            <% if column['label'] && column['show_header'] %>
+                <th><%= column['label'] %></th>
+            <% else %>
+                <% if headers_shown %>
+                    <th>&nbsp;</th>
+                <% end %>
+            <% end %>
+        <% end %>
+    </tr>
+
+
+    <% rows.each do |hash| %>
+        <tr>
+
+            <% config['columns'].each do |column| %>
+                <% if hash[column['key'].to_sym] %>
+                    <td>
+                        <% value = hash[column['key'].to_sym] %>
+                        <% if value.class == 'Array' %>
+                            <% value.each do |val| %>
+                                <%= val %><br/>
+                            <% end %>
+                        <% else %>
+                            <%= value %>
+                        <% end %>
+                    </td>
+                <% end %>
+            <% end %>
+
+        </tr>
+    <% end %>
+</table>

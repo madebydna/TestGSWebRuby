@@ -57,6 +57,7 @@ school_basics = Category.create!(name: 'School basics')
 programs = Category.create!(name: 'Programs')
 sports = Category.create!(name: 'Sports')
 arts_music = Category.create!(name: 'Arts & Music')
+student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'StudentEthnicity')
 
 
 # Category placements
@@ -65,6 +66,10 @@ CategoryPlacement.create!(category: programs, page: programs_resources, position
 CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
 CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
+CategoryPlacement.create!(
+    category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table',
+    layout_config: "{ \"columns\": [ { \"label\": \"Student ethnicity\", \"show_header\": false, \"key\": \"ethnicity\" }, { \"label\": \"School value\", \"show_header\": true, \"key\": \"school_value\", \"format\": \"percentage\" }, { \"label\": \"State value\", \"show_header\": true, \"key\": \"state_value\", \"format\": \"percentage\" } ] }"
+)
 
 # Category data
 CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:private_schools)

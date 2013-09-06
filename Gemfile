@@ -45,7 +45,10 @@ group :assets do
 
   gem 'compass-rails', '~> 2.0.alpha.0'
   gem 'uglifier', '>= 1.0.3'
+  gem 'bootstrap-wysihtml5-rails'
 end
+gem 'codemirror-rails'
+gem 'ckeditor'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

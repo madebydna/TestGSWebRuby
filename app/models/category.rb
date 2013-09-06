@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  attr_accessible :description, :name, :parent
+  attr_accessible :description, :name, :parent, :source
 
   has_many :category_placements, :order => 'collection_id desc'
 
@@ -15,6 +15,15 @@ class Category < ActiveRecord::Base
     category_data(collections).inject({}) do |map, category_data_row|
       map[category_data_row.response_key] ||= category_data_row.response_label
       map
+    end
+  end
+
+  def data_for_school(school)
+    if source.nil?
+      return values_for_school(school)
+    else
+      data_reader = source.constantize.new
+      return data_reader.get_data(school)
     end
   end
 

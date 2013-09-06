@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823203628) do
+ActiveRecord::Schema.define(:version => 20130906022357) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20130823203628) do
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.text     "json"
+    t.string   "source"
   end
 
   create_table "category_data", :force => true do |t|
@@ -53,8 +55,11 @@ ActiveRecord::Schema.define(:version => 20130823203628) do
     t.integer  "collection_id"
     t.integer  "page_id"
     t.integer  "position"
+    t.string   "layout"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "order"
+    t.text     "layout_config"
   end
 
   create_table "collections", :force => true do |t|
