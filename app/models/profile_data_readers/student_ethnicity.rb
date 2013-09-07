@@ -1,22 +1,20 @@
 class StudentEthnicity
 
-  def data_category
-    # return the name of the category of data. i.e. "StudentEthnicity". Class name by default?
+  def initialize(category)
+    @category = category
   end
 
   def query
     # Run some query and get back a resultset
   end
 
-  def get_data(school)
+  def data(school)
     # handle checking request-scoped cached results, maybe get a higher-level resultset and filter out unneeded data
     # maybe actually run the query() method
     # return results
-
-    to_json(nil)
   end
 
-  def to_json(data)
+  def table_data(school)
     results = []
 
     # for each resultset
@@ -60,6 +58,16 @@ class StudentEthnicity
                 state_value: '1'
             },
         ]
+
+    table_data = TableData.new
+    results.each do |row|
+      table_data.add_row row
+    end
+    table_data
+  end
+
+  def prettify_data(school, table_data)
+    table_data
   end
 
 end

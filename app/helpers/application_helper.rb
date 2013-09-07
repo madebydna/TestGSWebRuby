@@ -8,7 +8,7 @@ module ApplicationHelper
       partial = nil
       case category_placement.layout
         when nil
-          partial = 'category_data'
+          partial = 'default_two_column_table'
         else
           partial = category_placement.layout
       end
@@ -17,17 +17,25 @@ module ApplicationHelper
 
       partial = "data_layouts/#{partial}"
 
-
-      # TODO: refactor the old category_data partial and how data is retrieved from the category, so that
-      # everything is consistent
+      table_data = category.data_for_school(@school)
 
       # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
-      if partial == 'data_layouts/category_data'
-        render :partial => partial, locals: { school_category_rows: category.values_for_school(@school), category: category }
+      if partial == 'data_layouts/default_two_column_table'
+        render partial: partial,
+               locals: {
+                   data: table_data,
+                   category: category
+               }
       else
+        # cleanse the json config
         layout_config = category_placement.layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
-        render :partial => partial,
-               locals: { rows: category.data_for_school(@school), category: category, config: JSON.parse(layout_config) }
+
+        render partial: partial,
+               locals: {
+                   data: table_data,
+                   category: category,
+                   config: TableConfig.new(JSON.parse(layout_config))
+               }
       end
 
     end

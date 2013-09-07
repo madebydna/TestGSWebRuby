@@ -1,7 +1,11 @@
 <h4><%= category.name %></h4>
 <table class="table table-striped">
     <% last_key = nil %>
-    <% school_category_rows.each do |label, value| %>
+    <% data.rows.each do |row| %>
+
+        <% label = row[:label] %>
+        <% value = row[:value] %>
+
         <tr>
             <td>
                 <% if last_key && last_key == label %>

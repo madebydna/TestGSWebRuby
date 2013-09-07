@@ -2,31 +2,19 @@
 <table class="table table-striped">
 
     <tr>
-        <% headers_shown = false %>
-
-        <!-- calculate whether column headers should be shown -->
-        <% config['columns'].each do |column| %>
-            <% if column['label'] && column['show_header'] %>
-                <% headers_shown = true %>
-            <% end %>
-        <% end %>
-
-        <% config['columns'].each do |column| %>
-            <% if column['label'] && column['show_header'] %>
+        <% config.columns_to_print(data).each do |column| %>
+            <% if column['display_type'] == :data_and_header %>
                 <th><%= column['label'] %></th>
             <% else %>
-                <% if headers_shown %>
-                    <th>&nbsp;</th>
-                <% end %>
+                <th>&nbsp;</th>
             <% end %>
         <% end %>
     </tr>
 
-
-    <% rows.each do |hash| %>
+    <% data.rows.each do |hash| %>
         <tr>
 
-            <% config['columns'].each do |column| %>
+            <% config.columns_to_print(data).each do |column| %>
                 <% if hash[column['key'].to_sym] %>
                     <td>
                         <% value = hash[column['key'].to_sym] %>

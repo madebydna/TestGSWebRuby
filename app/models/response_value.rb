@@ -24,6 +24,26 @@ class ResponseValue < ActiveRecord::Base
     return result
   end
 
+  def self.lookup_table(collections = [])
+    hash = {}
+
+    cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
+      all_values
+    end
+
+    default_values = cached_all_values[:default_values]
+    collection_values = cached_all_values[:collection_values]
+    hash.merge! default_values
+
+    Array(collections).each do |collection|
+      if collection && collection_values[collection]
+        hash.merge! collection_values[collection]
+      end
+    end
+
+    hash
+  end
+
 
   def self.all_values
     default_values = {}

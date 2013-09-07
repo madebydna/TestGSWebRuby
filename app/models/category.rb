@@ -19,11 +19,26 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
+=begin
     if source.nil?
       return values_for_school(school)
     else
-      data_reader = source.constantize.new
-      return data_reader.get_data(school)
+      return data_reader.json_data(school)
+    end
+=end
+    data_reader.prettify_data(school, data_reader.table_data(school))
+  end
+
+  def data_reader
+    return @data_reader if @data_reader
+    default_class = 'EspResponseReader'
+
+    class_name = source || default_class
+
+    begin
+      @data_reader = class_name.constantize.new(self)
+    rescue
+      @data_reader = default_class.constantize.new(self)
     end
   end
 

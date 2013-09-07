@@ -68,7 +68,7 @@ CategoryPlacement.create!(category: arts_music, page: extracurriculars, collecti
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
 CategoryPlacement.create!(
     category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table',
-    layout_config: "{ \"columns\": [ { \"label\": \"Student ethnicity\", \"show_header\": false, \"key\": \"ethnicity\" }, { \"label\": \"School value\", \"show_header\": true, \"key\": \"school_value\", \"format\": \"percentage\" }, { \"label\": \"State value\", \"show_header\": true, \"key\": \"state_value\", \"format\": \"percentage\" } ] }"
+    layout_config: "{ \"columns\": [ { \"label\": \"Student ethnicity\", \"hide_header\": true, \"key\": \"ethnicity\" }, { \"label\": \"School value\", \"key\": \"school_value\", \"format\": \"percentage\" }, { \"label\": \"State value\", \"key\": \"state_value\", \"format\": \"percentage\" } ] }"
 )
 
 # Category data
