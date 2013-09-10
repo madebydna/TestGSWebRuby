@@ -5,10 +5,6 @@ class School < ActiveRecord::Base
   has_many :collections, through: :school_collections
   has_many :esp_responses
 
-  def key_label_map(category)
-    category.key_label_map(collections)
-  end
-
 =begin
   def label_value_map_per_category(page)
     categories_per_position = page.categories_per_position(collections)

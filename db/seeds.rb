@@ -72,33 +72,24 @@ CategoryPlacement.create!(
 )
 
 # Category data
-CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:private_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports',response_label:'Sports for Girls', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports',response_label:'Sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'boys_sports_other',response_label:'Other sports for boys', collection:bay_area_schools)
-CategoryData.create!(category:sports,response_key:'girls_sports_other',response_label:'Other sports for girls', collection:bay_area_schools)
+CategoryData.create!(category: sports,response_key:'girls_sports', collection:private_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports', collection:private_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:private_schools)
+CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:private_schools)
+CategoryData.create!(category: sports, response_key:'girls_sports', collection:bay_area_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports', collection:bay_area_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:bay_area_schools)
+CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:bay_area_schools)
+CategoryData.create!(category: school_basics, response_key:'administrator_name')
+CategoryData.create!(category: school_basics, response_key:'school_fax')
+CategoryData.create!(category: school_basics, response_key:'start_time')
+CategoryData.create!(category: school_basics, response_key:'end_time')
 
-CategoryData.create!(category:school_basics,response_key:'administrator_name',response_label:'School Leader\'s name')
-CategoryData.create!(category:school_basics,response_key:'school_fax',response_label:'Fax number')
-CategoryData.create!(category:school_basics,response_key:'start_time',response_label:'School start time')
-CategoryData.create!(category:school_basics,response_key:'end_time',response_label:'School end time')
+CategoryData.create!(category: arts_music, response_key:'arts_music')
+CategoryData.create!(category: arts_music, response_key:'arts_performing_written')
 
-CategoryData.create!(category:arts_music, response_key:'arts_music', response_label:'Music')
-CategoryData.create!(category:arts_music, response_key:'arts_performing_written', response_label:'Performing arts')
-
-CategoryData.create!(
-    category:programs,
-    response_key:'special_ed_programs',
-    response_label:'Specialized programs for specific types of special education students'
-)
-CategoryData.create!(
-    category:programs,
-    response_key:'foreign_language',
-    response_label:'Foreign languages taught'
-)
+CategoryData.create!(category: programs, response_key:'special_ed_programs')
+CategoryData.create!(category: programs, response_key:'foreign_language')
 
 
 # steal data from dev's esp_response to populate EspResponse
@@ -123,10 +114,27 @@ schools_per_state = 4
 end
 
 
+# response value - this table is used to store the keys or values and their pretty labels.
 
+#esp response keys and their pretty labels
+ResponseValue.create!(response_value: 'girls_sports',response_label:'Sports for Girls',collection:private_schools)
+ResponseValue.create!(response_value: 'boys_sports',response_label:'Sports for boys',collection:private_schools)
+ResponseValue.create!(response_value: 'boys_sports_other',response_label:'Other sports for boys',collection:private_schools)
+ResponseValue.create!(response_value: 'girls_sports_other',response_label:'Other sports for girls',collection:private_schools)
+ResponseValue.create!(response_value: 'girls_sports',response_label:'Sports for Girls',collection:bay_area_schools)
+ResponseValue.create!(response_value: 'boys_sports',response_label:'Sports for boys',collection:bay_area_schools)
+ResponseValue.create!(response_value: 'boys_sports_other',response_label:'Other sports for boys',collection:bay_area_schools)
+ResponseValue.create!(response_value: 'girls_sports_other',response_label:'Other sports for girls',collection:bay_area_schools)
+ResponseValue.create!(response_value: 'administrator_name',response_label:'School Leader\'s name')
+ResponseValue.create!(response_value: 'school_fax',response_label:'Fax number')
+ResponseValue.create!(response_value: 'start_time',response_label:'School start time')
+ResponseValue.create!(response_value: 'end_time',response_label:'School end time')
+ResponseValue.create!(response_value: 'arts_music',response_label:'Music')
+ResponseValue.create!(response_value: 'arts_performing_written',response_label:'Performing arts')
+ResponseValue.create!(response_value: 'special_ed_programs',response_label:'Specialized programs for specific types of special education students')
+ResponseValue.create!(response_value: 'foreign_language',response_label:'Foreign languages taught')
 
-
-# response value
+#esp response values and their pretty labels
 schools_per_state = 4
 %w(ca dc).each_with_index do |state, index|
   first = (index * schools_per_state) + 1

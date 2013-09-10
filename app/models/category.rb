@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
 
   def key_label_map(collections = nil)
     category_data(collections).inject({}) do |map, category_data_row|
-      map[category_data_row.response_key] ||= category_data_row.response_label
+      map[category_data_row.response_key] ||= category_data_row.response_key
       map
     end
   end
@@ -44,27 +44,29 @@ class Category < ActiveRecord::Base
 
   # returns a label => pretty value map for this category
   def values_for_school(school)
-    key_label_map = school.key_label_map(self)
+    #key_label_map = school.key_label_map(self)
 
     all_school_data = EspResponse.where(school_id: school.id)
 
-    pp key_label_map.keys
+    #pp key_label_map.keys
+
+    keys_to_use = category_data(school.collections).map(&:response_key)
+
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    all_school_data.select! { |data| key_label_map.keys.include? data.key}
+    all_school_data.select! { |data| keys_to_use.include? data.key}
 
     all_school_data.inject({}) do |hash, school_data|
       key = school_data.key
       value = school_data.value
 
-      label = key_label_map[key] || key
-      hash[label] ||= []
+      hash[key] ||= []
       pretty_value = ResponseValue.pretty_value(value, school.collections)
 
-      hash[label] << pretty_value
+      hash[key] << pretty_value
 
       # remove duplicates from the array
-      hash[label].uniq!
+      hash[key].uniq!
       hash
     end
   end

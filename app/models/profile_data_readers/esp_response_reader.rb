@@ -13,10 +13,10 @@ class EspResponseReader
   # maybe actually run the query() method
   # return map of response_key to array of values
   def data(school)
-    key_label_map = @category.key_label_map(school.collections)
+    keys_to_use = @category.category_data(school.collections).map(&:response_key)
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    data = query(school).select! { |data| key_label_map.keys.include? data.key}
+    data = query(school).select! { |data| keys_to_use.include? data.key}
 
     # since esp_response has multiple rows with the same key, roll up all values for a key into an array
     data.inject({}) do |hash, school_data|
@@ -42,10 +42,9 @@ class EspResponseReader
   end
 
   def prettify_data(school, table_data)
-    key_label_map = category.key_label_map(school.collections)
-
-    table_data.transform! :label, key_label_map
-    table_data.transform! :value, ResponseValue.lookup_table(school.collections)
+    lookup_table = ResponseValue.lookup_table(school.collections)
+    table_data.transform! :label, lookup_table
+    table_data.transform! :value, lookup_table
   end
 
 end
