@@ -16,7 +16,8 @@ class Page < ActiveRecord::Base
 
     # build the hash
     placements.inject({}) do |hash, placement|
-      hash[placement.position] ||= placement
+      hash[placement.position] ||= []
+      hash[placement.position] << placement
       hash
     end
 

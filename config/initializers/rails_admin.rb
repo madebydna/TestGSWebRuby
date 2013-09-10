@@ -152,12 +152,30 @@ RailsAdmin.config do |config|
    #  edit do; end
    #  export do; end
 
-   edit do
+   list do
+     field :priority
      field :category
      field :page
      field :position
      field :collection
-     field :layout
+     field :layout, :enum do
+       enum_method do
+         :possible_layouts
+       end
+     end
+   end
+
+   edit do
+     field :priority
+     field :category
+     field :page
+     field :position
+     field :collection
+     field :layout, :enum do
+       enum_method do
+         :possible_layouts
+       end
+     end
      field :layout_config, :text do
        codemirror true
      end

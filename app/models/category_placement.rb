@@ -1,10 +1,19 @@
 class CategoryPlacement < ActiveRecord::Base
-  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :order
+  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority
 
   belongs_to :category
   belongs_to :collection
   belongs_to :page
 
+  after_initialize :set_defaults
+
+  # layout name => partial name
+  def possible_layouts
+    {
+        'Default two column table' => 'default_two_column_table',
+        'Configured table' => 'configured_table'
+    }
+  end
 
   # return CategoryPlacements with collection_id in the provided
   # collections. If a single object is passed in, the Array(...) call will convert it to an array
@@ -18,8 +27,12 @@ class CategoryPlacement < ActiveRecord::Base
 
   def self.placements_for_page(page)
     Rails.cache.fetch("CategoryPlacement/page_#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('position asc').order('collection_id desc').where(page_id:page.id)
+      order('position asc').order('collection_id desc').order('priority').where(page_id:page.id)
     end
+  end
+
+  def set_defaults
+    self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
   end
 
 end
