@@ -1,0 +1,18 @@
+<div id="piechart">
+
+</div>
+
+<% ethnicity_array = table_data_to_piechart data, :ethnicity, :school_value %>
+
+<% content_for :head do %>
+    <script type="text/javascript">
+        (function(){
+            var drawChartFunc = function(){ drawPieChart(<%= raw ethnicity_array.to_json %>, 'piechart', 200, false) };
+            if (GS_PieLoader) {
+                GS_PieLoader.push(drawChartFunc);
+            } else {
+                google.setOnLoadCallback(drawChartFunc);
+            }
+        })();
+    </script>
+<% end %>

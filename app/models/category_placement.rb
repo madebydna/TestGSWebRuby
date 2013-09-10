@@ -11,7 +11,8 @@ class CategoryPlacement < ActiveRecord::Base
   def possible_layouts
     {
         'Default two column table' => 'default_two_column_table',
-        'Configured table' => 'configured_table'
+        'Configured table' => 'configured_table',
+        'Pie chart' => 'pie_chart'
     }
   end
 

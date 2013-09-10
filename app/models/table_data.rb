@@ -31,6 +31,14 @@ class TableData
     row_hash.keys.each { |column| @columns.add column }
   end
 
+  # for each row, remove all keys that dont exist in provided array
+  def reduce!(keys = [])
+    rows.each do |row|
+      row.keep_if { |key, _| keys.include? key }
+    end
+  end
+
+
 
   # For every row, look up the value of the specified column in a provided lookup_table.
   # If a match is found, overwrite the value

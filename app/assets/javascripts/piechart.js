@@ -14,7 +14,7 @@
 var GS_PieLoader = [];
 $.getScript("https://www.google.com/jsapi", function() {
     google.load("visualization", "1", {packages:["corechart"], callback:function(){
-        for (var x=0; x &lt; GS_PieLoader.length; x++) {
+        for (var x=0; x < GS_PieLoader.length; x++) {
             GS_PieLoader[x]();
         }
         GS_PieLoader = undefined;
@@ -52,6 +52,7 @@ function drawPieChart(dataIn, divNameId, dimensions, catchClick) {
     }
 }
 
+/*
 (function(){
     var drawChartFunc = function(){ drawPieChart(${chartParameters}) };
     if (GS_PieLoader) {
@@ -59,4 +60,4 @@ function drawPieChart(dataIn, divNameId, dimensions, catchClick) {
     } else {
         google.setOnLoadCallback(drawChartFunc);
     }
-})();
+})();*/

@@ -52,4 +52,17 @@ module ApplicationHelper
     end
   end
 
+  # for each row in the given table_data, generate an array [key1, key2]
+  def table_data_to_piechart(table_data, key1, key2)
+    array = []
+
+    table_data.rows.each do |row|
+      array << [
+          "#{row[key1]}", row[key2].to_i
+      ]
+    end
+
+    array
+  end
+
 end
