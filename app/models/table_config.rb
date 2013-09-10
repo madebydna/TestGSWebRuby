@@ -1,7 +1,7 @@
 class TableConfig
 
-  def initialize(config)
-    @config = config
+  def initialize(configJson)
+    @config = configJson
   end
 
   def columns_to_print(table_data)

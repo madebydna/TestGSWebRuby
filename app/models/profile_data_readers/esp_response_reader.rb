@@ -6,7 +6,7 @@ class EspResponseReader
   end
 
   def query(school)
-    osp_data = SchoolCategoryData.where(school_id: school.id)
+    osp_data = EspResponse.where(school_id: school.id)
   end
 
   # handle checking request-scoped cached results, maybe get a higher-level resultset and filter out unneeded data

@@ -3,7 +3,7 @@ class School < ActiveRecord::Base
 
   has_many :school_collections
   has_many :collections, through: :school_collections
-  has_many :school_category_datas
+  has_many :esp_responses
 
   def key_label_map(category)
     category.key_label_map(collections)

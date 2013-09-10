@@ -101,7 +101,7 @@ CategoryData.create!(
 )
 
 
-# steal data from dev's esp_response to populate SchoolCategoryData
+# steal data from dev's esp_response to populate EspResponse
 schools_per_state = 4
 %w(ca dc).each_with_index do |state, index|
   first = (index * schools_per_state) + 1
@@ -112,7 +112,7 @@ schools_per_state = 4
   results = client.query(query)
   if results.count > 0
     results.each do |result|
-      SchoolCategoryData.create!(
+      EspResponse.create!(
           school: School.find(result['school_id']),
           key:result['response_key'],
           value:result['response_value'],

@@ -46,7 +46,7 @@ class Category < ActiveRecord::Base
   def values_for_school(school)
     key_label_map = school.key_label_map(self)
 
-    all_school_data = SchoolCategoryData.where(school_id: school.id)
+    all_school_data = EspResponse.where(school_id: school.id)
 
     pp key_label_map.keys
 

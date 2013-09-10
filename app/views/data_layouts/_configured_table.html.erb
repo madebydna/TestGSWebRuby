@@ -1,15 +1,17 @@
 <h4><%= category.name %></h4>
 <table class="table table-striped">
-
-    <tr>
-        <% config.columns_to_print(data).each do |column| %>
-            <% if column['display_type'] == :data_and_header %>
-                <th><%= column['label'] %></th>
-            <% else %>
-                <th>&nbsp;</th>
+    <thead>
+        <tr>
+            <% config.columns_to_print(data).each do |column| %>
+                <% if column['display_type'] == :data_and_header %>
+                    <th><%= column['label'] %></th>
+                <% else %>
+                    <th>&nbsp;</th>
+                <% end %>
             <% end %>
-        <% end %>
-    </tr>
+        </tr>
+    </thead>
+    <tbody>
 
     <% data.rows.each do |hash| %>
         <tr>
@@ -31,4 +33,5 @@
 
         </tr>
     <% end %>
+    </tbody>
 </table>

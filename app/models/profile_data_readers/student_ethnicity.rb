@@ -15,13 +15,13 @@ class StudentEthnicity
   end
 
   def table_data(school)
-    results = []
+    json_data = []
 
     # for each resultset
     # push a new hash onto the array:
 
-    results =
-        [
+    json_data = {
+      rows: [
             {
                 ethnicity: 'Asian',
                 school_value: '51',
@@ -58,12 +58,9 @@ class StudentEthnicity
                 state_value: '1'
             },
         ]
+    }
 
-    table_data = TableData.new
-    results.each do |row|
-      table_data.add_row row
-    end
-    table_data
+    table_data = TableData.new json_data
   end
 
   def prettify_data(school, table_data)

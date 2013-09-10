@@ -27,10 +27,10 @@ RailsAdmin.config do |config|
   # config.default_items_per_page = 20
 
   # Exclude specific models (keep the others):
-  # config.excluded_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'SchoolCategoryData', 'SchoolCollection', 'User']
+  # config.excluded_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
 
   # Include specific models (exclude the others):
-  # config.included_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'SchoolCategoryData', 'SchoolCollection', 'User']
+  # config.included_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -283,7 +283,7 @@ RailsAdmin.config do |config|
 
   #     configure :school_collections, :has_many_association 
   #     configure :collections, :has_many_association 
-  #     configure :school_category_datas, :has_many_association 
+  #     configure :esp_responses, :has_many_association 
 
   #   # Found columns:
 
@@ -319,11 +319,11 @@ RailsAdmin.config do |config|
   # end
 
 
-  ###  SchoolCategoryData  ###
+  ###  EspResponse  ###
 
-  # config.model 'SchoolCategoryData' do
+  # config.model 'EspResponse' do
 
-  #   # You can copy this to a 'rails_admin do ... end' block inside your school_category_data.rb model definition
+  #   # You can copy this to a 'rails_admin do ... end' block inside your esp_response.rb model definition
 
   #   # Found associations:
 

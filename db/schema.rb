@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906022357) do
+ActiveRecord::Schema.define(:version => 20130909232048) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(:version => 20130906022357) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "esp_responses", :force => true do |t|
+    t.integer  "school_id",  :null => false
+    t.string   "key"
+    t.string   "value"
+    t.boolean  "active"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "page_configs", :force => true do |t|
     t.string   "key"
     t.string   "value"
@@ -102,15 +111,6 @@ ActiveRecord::Schema.define(:version => 20130906022357) do
     t.integer  "collection_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-  end
-
-  create_table "school_category_data", :force => true do |t|
-    t.integer  "school_id",  :null => false
-    t.string   "key"
-    t.string   "value"
-    t.boolean  "active"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "school_collections", :force => true do |t|

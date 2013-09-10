@@ -1,4 +1,4 @@
-class SchoolCategoryData < ActiveRecord::Base
+class EspResponse < ActiveRecord::Base
   attr_accessible :active, :key, :school, :value
 
   belongs_to :school
