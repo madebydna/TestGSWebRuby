@@ -4,15 +4,21 @@
 
 <% ethnicity_array = table_data_to_piechart data, :ethnicity, :school_value %>
 
+<% piechart_options = {
+        width: 350,
+        height: 350,
+        fontSize: '13',
+        title: category.name
+    }.stringify_keys;
+%>
+
 <% content_for :head do %>
     <script type="text/javascript">
-        (function(){
-            var drawChartFunc = function(){ drawPieChart(<%= raw ethnicity_array.to_json %>, 'piechart', 200, false) };
-            if (GS_PieLoader) {
-                GS_PieLoader.push(drawChartFunc);
-            } else {
-                google.setOnLoadCallback(drawChartFunc);
-            }
-        })();
+        GS.piechart.drawPieChart(
+            <%= raw ethnicity_array.to_json %>,
+            'piechart',
+            null,
+            <%= raw config.config.merge(piechart_options).to_json %>
+        );
     </script>
 <% end %>

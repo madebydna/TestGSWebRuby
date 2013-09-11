@@ -28,7 +28,7 @@ class CategoryPlacement < ActiveRecord::Base
 
   def self.placements_for_page(page)
     Rails.cache.fetch("CategoryPlacement/page_#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('position asc').order('collection_id desc').order('priority').where(page_id:page.id)
+      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id)
     end
   end
 

@@ -1,4 +1,5 @@
 class TableConfig
+  attr_reader :config
 
   def initialize(configJson)
     @config = configJson
