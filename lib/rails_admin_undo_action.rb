@@ -29,7 +29,6 @@ module RailsAdmin
 
             if request.get? # request undo
               if @object.previous_version
-                @object = @object.previous_version
                 respond_to do |format|
                   format.html { render @action.template_name }
                   format.js   { render @action.template_name, :layout => false }
@@ -42,7 +41,14 @@ module RailsAdmin
               redirect_path = nil
 
               if @object.previous_version
-                if @object.previous_version.save
+
+                if params[:version_timestamp]
+                  @object = @object.version_at(params[:version_timestamp])
+                else
+                  @object = @object.previous_version
+                end
+
+                if @object.save
                   flash[:success] = 'Undo successful.'
                   redirect_path = index_path
                 end

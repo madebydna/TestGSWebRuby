@@ -1,34 +1,38 @@
 
 %h4 You are about to undo a #{@abstract_model.to_param}
 
-= form_for(@object, :url => undo_path(:model_name => @abstract_model.to_param, :id => @object.id), :html => {:method => "post"}) do
-  %input{:type => :hidden, :name => 'return_to', :value => (params[:return_to].presence || request.referer)}
-  .form-actions
-    %button.btn.btn-danger{:type => "submit", :'data-disable-with' => t("admin.form.confirmation")}
-      %i.icon-white.icon-ok
-      = t("admin.form.confirmation")
-    %button.btn{:type => "submit", :name => "_continue", :'data-disable-with' => t("admin.form.cancel")}
-      %i.icon-remove
-      = t("admin.form.cancel")
+- @object.versions.reverse.each do |version|
+  - next if version.nil?
+  - object = version.reify
+  - next if object.nil?
+  %hr
 
-%h4 Your data will look like this after you undo:
+  %h5 Your data will look like this after you undo:
 
-- @model_config.show.with(:object => @object, :view => self).visible_groups.each do |fieldset|
-  - unless (fields = fieldset.with(:object => @object, :view => self, :controller => self.controller).visible_fields).empty?
-    - if !(values = fields.map{ |f| f.value.presence }).compact.empty? || !RailsAdmin::config.compact_show_view
-      .fieldset
-        %h5
-          = fieldset.label
-        - if fieldset.help
-          %p= fieldset.help
-        %dl
-          - fields.each_with_index do |field, index|
-            - unless values[index].nil? && RailsAdmin::config.compact_show_view
-              %dt
-                %span.label.label-info{:class => "#{field.type_css_class} #{field.css_class}"}
-                  = field.label
-              %dd.well
-                = field.pretty_value
+  - @model_config.show.with(:object => object, :view => self).visible_groups.each do |fieldset|
+    - unless (fields = fieldset.with(:object => object, :view => self, :controller => self.controller).visible_fields).empty?
+      - if !(values = fields.map{ |f| f.value.presence }).compact.empty? || !RailsAdmin::config.compact_show_view
+        .fieldset
+          %h5
+            = fieldset.label
+          - if fieldset.help
+            %p= fieldset.help
+          %dl
+            - fields.each_with_index do |field, index|
+              - unless values[index].nil? && RailsAdmin::config.compact_show_view
+                %dt
+                  %span.label.label-info{:class => "#{field.type_css_class} #{field.css_class}"}
+                    = field.label
+                %dd.well
+                  = field.pretty_value
+  = form_for(object, :url => undo_path(:model_name => @abstract_model.to_param, :id => object.id), :html => {:method => "post"}) do
+    %input{:type => :hidden, :name => 'return_to', :value => (params[:return_to].presence || request.referer)}
+    %input{:type => :hidden, :name => 'version_timestamp', :value => version.previous.created_at}
+    .form-actions
+      %button.btn.btn-danger{:type => "submit", :'data-disable-with' => t("admin.form.confirmation")}
+        %i.icon-white.icon-ok
+        = "Revert to this one"
+  %br
 
 
 
