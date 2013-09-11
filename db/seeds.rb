@@ -68,7 +68,7 @@ CategoryPlacement.create!(category: arts_music, page: extracurriculars, collecti
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
 CategoryPlacement.create!(
     category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table',
-    layout_config: "{ \"columns\": [ { \"label\": \"Student ethnicity\", \"hide_header\": true, \"key\": \"ethnicity\" }, { \"label\": \"School value\", \"key\": \"school_value\", \"format\": \"percentage\" }, { \"label\": \"State value\", \"key\": \"state_value\", \"format\": \"percentage\" } ] }"
+    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
 
 # Category data

@@ -4,21 +4,6 @@
 require Rails.root.join('lib', 'rails_admin_undo_action.rb')
 RailsAdmin.config do |config|
 
-  config.actions do
-    dashboard
-    index
-    new
-    show
-    edit
-    delete
-    bulk_delete
-    export
-    history_show
-    history_index
-    show_in_app
-    undo
-  end
-
   ################  Global configuration  ################
 
   # Set the admin name here (optional second array element will appear in red). For example:
@@ -500,4 +485,8 @@ RailsAdmin.config do |config|
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
 
+  config.actions do
+    all
+    undo
+  end
 end
