@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
   attr_accessible :name, :parent
+  has_paper_trail
 
   has_many :category_placements, :order => 'collection_id desc'
 

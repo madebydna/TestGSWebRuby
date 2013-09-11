@@ -1,5 +1,6 @@
 class CategoryData < ActiveRecord::Base
   attr_accessible :category_id, :category, :collection_id, :collection, :response_key
+  has_paper_trail
 
   belongs_to :collection
   belongs_to :category

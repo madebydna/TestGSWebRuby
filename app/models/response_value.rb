@@ -1,5 +1,7 @@
 class ResponseValue < ActiveRecord::Base
   attr_accessible :collection_id, :collection, :response_label, :response_value
+  has_paper_trail
+
   belongs_to :collection
 
   def self.pretty_value(value, collections = [])
