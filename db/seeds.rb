@@ -189,4 +189,4 @@ SchoolCategoryData.create!(key: 'student_ethnicity',school: alameda_high_school,
                 state_value: '1'
             },
         ]
-    }.as_json )
+    }.to_json )
