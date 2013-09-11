@@ -1,5 +1,5 @@
 <h4><%= category.name %></h4>
-<table class="table table-striped">
+<table class="table table-striped no-more-tables">
     <thead>
         <tr>
             <% config.columns_to_print(data).each do |column| %>
@@ -18,7 +18,7 @@
 
             <% config.columns_to_print(data).each do |column| %>
                 <% if hash[column['key'].to_sym] %>
-                    <td>
+                    <td data-title="<%= column['label'] %>">
                         <% value = hash[column['key'].to_sym] %>
                         <% if value.class == 'Array' %>
                             <% value.each do |val| %>
