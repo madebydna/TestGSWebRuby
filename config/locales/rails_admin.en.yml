@@ -1,0 +1,6 @@
+en:
+  admin:
+    actions:
+      undo:
+        menu: "Undo"
+        breadcrumb: "Undo"

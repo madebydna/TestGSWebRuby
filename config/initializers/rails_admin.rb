@@ -1,8 +1,23 @@
 # RailsAdmin config file. Generated on August 20, 2013 16:37
 # See github.com/sferik/rails_admin for more informations
 
+require Rails.root.join('lib', 'rails_admin_undo_action.rb')
 RailsAdmin.config do |config|
 
+  config.actions do
+    dashboard
+    index
+    new
+    show
+    edit
+    delete
+    bulk_delete
+    export
+    history_show
+    history_index
+    show_in_app
+    undo
+  end
 
   ################  Global configuration  ################
 
@@ -12,13 +27,13 @@ RailsAdmin.config do |config|
   # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }
 
   # RailsAdmin may need a way to know who the current user is]
-  config.current_user_method { current_user } # auto-generated
+  config.current_user_method { current_admin } # auto-generated
 
   # If you want to track changes on your models:
   # config.audit_with :history, 'User'
 
   # Or with a PaperTrail: (you need to install it first)
-  # config.audit_with :paper_trail, 'User'
+  config.audit_with :paper_trail, 'Admin'
 
   # Display empty fields in show views:
   # config.compact_show_view = false

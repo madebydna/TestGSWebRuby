@@ -31,6 +31,12 @@ gem 'rails_admin'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem 'haml'
+gem 'haml-rails'
+
+# paper_trail allows implementing versioning to models
+gem 'paper_trail', :git => 'git://github.com/airblade/paper_trail.git'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
