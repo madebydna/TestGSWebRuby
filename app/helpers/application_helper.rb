@@ -5,7 +5,7 @@ module ApplicationHelper
 
       placement_and_data = choose_placement_and_get_data position_number
 
-      if placement_and_data[:index]
+      if placement_and_data && placement_and_data[:index]
         category_placement = @category_positions[position_number][placement_and_data[:index]]
         category = category_placement.category
         data = placement_and_data[:data]
@@ -46,7 +46,10 @@ module ApplicationHelper
 
         if data.rows.any?
           return {data: data, index: index}
+        else
+          return nil
         end
+
       end
 
     end

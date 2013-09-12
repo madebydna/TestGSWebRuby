@@ -41,6 +41,7 @@ culture = Page.create!(name: 'Culture', parent: programs_culture)
 # Test collections
 bay_area_schools = Collection.create!(name: 'Bay Area schools')
 private_schools = Collection.create!(name: 'Private schools')
+dc_schools = Collection.create!(name: 'Washington dc schools')
 
 # School collections
 SchoolCollection.create!(school:alameda_high_school, collection:bay_area_schools)
@@ -50,6 +51,7 @@ SchoolCollection.create!(school:lowell_middle_school, collection:bay_area_school
 SchoolCollection.create!(school:page_private_school, collection:private_schools)
 SchoolCollection.create!(school:sheridan_school, collection:private_schools)
 SchoolCollection.create!(school:maret_school, collection:private_schools)
+SchoolCollection.create!(school:maret_school, collection:dc_schools)
 
 
 # Categories
@@ -63,6 +65,7 @@ student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'Student
 # Category placements
 CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: bay_area_schools, position: 1 )
 CategoryPlacement.create!(category: programs, page: programs_resources, position: 2 )
+CategoryPlacement.create!(category: programs, page: programs_resources, position: 1,collection: dc_schools )
 CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
 CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
@@ -76,6 +79,10 @@ CategoryData.create!(category: sports,response_key:'girls_sports', collection:pr
 CategoryData.create!(category: sports, response_key:'boys_sports', collection:private_schools)
 CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:private_schools)
 CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:private_schools)
+CategoryData.create!(category: sports,response_key:'girls_sports', collection:dc_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports', collection:dc_schools)
+CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:dc_schools)
+CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:dc_schools)
 CategoryData.create!(category: sports, response_key:'girls_sports', collection:bay_area_schools)
 CategoryData.create!(category: sports, response_key:'boys_sports', collection:bay_area_schools)
 CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:bay_area_schools)
@@ -112,6 +119,36 @@ schools_per_state = 4
     end
   end
 end
+
+# steal data from dev's esp_response to populate EspResponse
+schools_per_state = 4
+%w(ca dc).each_with_index do |state, index|
+  first = (index * schools_per_state) + 1
+  last = (index+1) * schools_per_state
+  query = "select * from _#{state}.esp_response where school_id >= #{first} "
+  query += " and school_id <= #{last} and active=1 and response_key in (#{CategoryData.all.map{ |item| item.response_key}.to_s[1..-2]})"
+  client = Mysql2::Client.new(host: 'dev.greatschools.org', username: 'service', :password => 'service')
+  results = client.query(query)
+  if results.count > 0
+    results.each do |result|
+      EspResponse.create!(
+          school: School.find(result['school_id']),
+          key:result['response_key'],
+             value:result['response_value'],
+             active:true
+      )
+    end
+  end
+end
+
+EspResponse.create!(school: School.find(6),key:'boy_sports',value:'tennis',active:true)
+EspResponse.create!(school: School.find(6),key:'boy_sports',value:'track',active:true)
+EspResponse.create!(school: School.find(6),key:'boy_sports_other',value:'swimming',active:true)
+EspResponse.create!(school: School.find(6),key:'foreign_language',value:'french',active:true)
+EspResponse.create!(school: School.find(6),key:'arts_music',value:'chorus',active:true)
+EspResponse.create!(school: School.find(6),key:'start_time',value:'8:00',active:true)
+EspResponse.create!(school: School.find(6),key:'end_time',value:'12:00',active:true)
+EspResponse.create!(school: School.find(6),key:'special_ed_programs',value:'multiple',active:true)
 
 
 # response value - this table is used to store the keys or values and their pretty labels.

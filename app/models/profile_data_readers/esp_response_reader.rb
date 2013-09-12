@@ -18,13 +18,16 @@ class EspResponseReader
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
     data = query(school).select! { |data| keys_to_use.include? data.key}
 
-    # since esp_response has multiple rows with the same key, roll up all values for a key into an array
-    data.inject({}) do |hash, school_data|
-      key = school_data['key']
-      hash[key] ||= []
-      hash[key] << school_data['value']
-      hash
+    unless data.nil?
+      # since esp_response has multiple rows with the same key, roll up all values for a key into an array
+      data.inject({}) do |hash, school_data|
+        key = school_data['key']
+        hash[key] ||= []
+        hash[key] << school_data['value']
+        hash
+      end
     end
+
   end
 
   def table_data(school)
@@ -32,11 +35,13 @@ class EspResponseReader
     # This is what the view / layout code expects
     table_data = TableData.new
 
-    data(school).each_pair do |key, value|
-      table_data.add_row ({
-          label: key,
-          value: value
-      })
+    unless data(school).nil?
+      data(school).each_pair do |key, value|
+        table_data.add_row ({
+            label: key,
+            value: value
+        })
+      end
     end
     table_data
   end
