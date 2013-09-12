@@ -31,6 +31,22 @@
   color: #AAAA50;
 }
 
+#navigation3 li {
+  list-style-type: none;
+  display: inline;
+  margin-left: 10px;
+}
+/* line 19, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation3 li a {
+  color: #CCCCCC;
+  text-decoration: none;
+  //font-size: 1.125em;
+}
+/* line 22, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
+#navigation3 li a:hover {
+  color: #AAAA50;
+}
+
 /* line 27, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
 #mobile-header {
   display: none;
@@ -52,12 +68,15 @@
   #navigation2 {
     display: none;
   }
+  .sub-navigation { display: block;}
+
 }
 @media only screen and (min-width: 767px) {
 /* line 43, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
   #mobile-header {
     display: none;
   }
+  .sub-navigation { display: none;}
 
 /* line 46, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
   #navigation {
@@ -70,6 +89,17 @@
     padding: 10px;
     display: block;
   }
+  #navigation3 li {
+    list-style-type: none;
+    display: inline;
+    margin-left: 20px;
+    font-size:1.25em;
+  }
+  #navigation3 {
+    background-color: #000000;
+    //padding: 10px;
+    display: block;
+  }
 }
 /* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
 #navigation2.affix {
@@ -78,3 +108,4 @@
   width: 100%;
   z-index: 10;
 }
+

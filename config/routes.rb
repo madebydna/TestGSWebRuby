@@ -1,4 +1,12 @@
 LocalizedProfiles::Application.routes.draw do
+  get "navigation/navtest1"
+
+  get "navigation/navtest2"
+
+  get "navigation/navtest3"
+  get "navigation/navtest4"
+
+
   get 'profile/extracurriculars', :to => 'localized_profile#extracurriculars'
   get 'profile/programs-resources', :to => 'localized_profile#programs_resources'
   get 'pages/home'

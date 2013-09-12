@@ -15,9 +15,14 @@ $(function () {
             $.sidr('close', 'sidr-main');
         }
     });
+    var source_sidr = '#navigation';
+    if ($("#navigation2").length > 0){
+        source_sidr = '#navigation2, #navigation';
+    }
+
     $('#responsive-menu-button').sidr({
         name: 'sidr-main',
-        source: '#navigation2, #navigation'
+        source: source_sidr
     });
 
 //        var sticky = $('.sticky');
