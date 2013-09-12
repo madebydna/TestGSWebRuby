@@ -5,7 +5,9 @@
 
         <% label = row[:label] %>
         <% value = row[:value] %>
-
+        <% if value.nil? %>
+            <% value = ["na"] %>
+        <% end %>
         <tr>
             <td>
                 <% if last_key && last_key == label %>

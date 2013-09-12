@@ -24,11 +24,14 @@ module ApplicationHelper
           # cleanse the json config
           layout_config = category_placement.layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
 
+          layout_config_json = {}.to_json
+          layout_config_json = JSON.parse(layout_config) unless layout_config.nil? || layout_config == ""
+
           render partial: partial,
                  locals: {
                      data: data,
                      category: category,
-                     config: TableConfig.new(JSON.parse(layout_config))
+                     config: TableConfig.new(layout_config_json)
                  }
         end
       end
