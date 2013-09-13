@@ -1,4 +1,4 @@
-class CreateSchoolCategoryData < ActiveRecord::Migration
+class CreateSchoolCategoryDataOld < ActiveRecord::Migration
   def change
     create_table :school_category_data do |t|
       t.integer :school_id, :null => false
