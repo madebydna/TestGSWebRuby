@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   attr_accessible :description, :name, :parent, :source
+
   has_paper_trail
 
   has_many :category_placements, :order => 'collection_id desc'
@@ -7,6 +8,7 @@ class Category < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Category'
   has_many :categories, :foreign_key => 'parent_id'
   has_many :category_datas
+
 
   def category_data(collections = nil)
       CategoryData.belonging_to_collections(self, collections)

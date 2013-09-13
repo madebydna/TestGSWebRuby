@@ -153,11 +153,11 @@ RailsAdmin.config do |config|
    #  export do; end
 
    list do
-     field :priority
-     field :category
      field :page
      field :position
+     field :priority
      field :collection
+     field :category
      field :layout, :enum do
        enum_method do
          :possible_layouts

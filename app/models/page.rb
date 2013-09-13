@@ -15,12 +15,15 @@ class Page < ActiveRecord::Base
     # get the right category placements
     placements = CategoryPlacement.belonging_to_collections(self, collections)
 
-    placements.uniq!{|x| x.category_id.to_s + "_" + "_" + x.layout.to_s + "_" + x.priority.to_s}
-
     # build the hash
     placements.inject({}) do |hash, placement|
+
+      # default the value to an empty Array
       hash[placement.position] ||= []
+
+      # push an item onto the Array
       hash[placement.position] << placement
+
       hash
     end
 

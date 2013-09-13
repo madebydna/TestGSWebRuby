@@ -1,0 +1,14 @@
+<ol>
+    <% @category_positions[position_number].each_with_index do |placement, index| %>
+        <li>
+            <p <%= 'style=font-weight:bold ' if picked_placement == placement %> >
+                Category: <%= placement.category.name %> <br/>
+                <%= "Collection: #{placement.collection.name if placement.collection}" %> <br/>
+                Layout: <%= placement.layout %> <br/>
+                Has Data? <%= placement.category.data_for_school(@school).rows.any? %> <br/>
+                Category already picked with this layout: <%= category_layout_already_picked? placement %> <br/>
+            </p>
+            <% mark_category_layout_picked placement %>
+        </li>
+    <% end %>
+</ol>
