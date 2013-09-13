@@ -60,19 +60,31 @@ programs = Category.create!(name: 'Programs')
 sports = Category.create!(name: 'Sports')
 arts_music = Category.create!(name: 'Arts & Music')
 student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'StudentEthnicity')
+category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source: 'EspResponse')
 
 
 # Category placements
-CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: bay_area_schools, position: 1 )
+CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: dc_schools, position: 1 )
 CategoryPlacement.create!(category: programs, page: programs_resources, position: 2 )
-CategoryPlacement.create!(category: programs, page: programs_resources, position: 1,collection: dc_schools )
+CategoryPlacement.create!(category: programs, page: programs_resources, position: 1,collection: bay_area_schools)
 CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
 CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
 CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
 CategoryPlacement.create!(
-    category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table',
+    category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table', collection: private_schools,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
+CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: private_schools, position: 3 )
+CategoryPlacement.create!(category: category_no_osp_data, page: programs_resources, collection: nil, position: 4 )
+CategoryPlacement.create!(
+    category: student_ethnicity, page: programs_resources, position: 4, layout: 'pie_chart',
+    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+)
+CategoryPlacement.create!(
+    category: student_ethnicity, page: programs_resources, position: 5, layout: 'configured_table', collection: dc_schools,
+    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+)
+CategoryPlacement.create!(category: sports, page: programs_resources, collection: nil, position: 5 )
 
 # Category data
 CategoryData.create!(category: sports,response_key:'girls_sports', collection:private_schools)
@@ -97,6 +109,7 @@ CategoryData.create!(category: arts_music, response_key:'arts_performing_written
 
 CategoryData.create!(category: programs, response_key:'special_ed_programs')
 CategoryData.create!(category: programs, response_key:'foreign_language')
+CategoryData.create!(category: category_no_osp_data, response_key:'_bogus')
 
 
 # steal data from dev's esp_response to populate EspResponse
