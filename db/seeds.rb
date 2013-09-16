@@ -16,7 +16,11 @@ user = Admin.new
 user.email = 'omega@greatschools.org'
 user.password = 'omegademo'
 user.save!
-
+# Test admin user
+user = Admin.new
+user.email = 'mseltzer@greatschools.org'
+user.password = 'railsadmin'
+user.save!
 
 # Schools
 alameda_high_school = School.create!(state: 'CA', name: 'Alameda High School')
