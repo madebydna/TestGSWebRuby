@@ -21,6 +21,10 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def code_name
+    name.gsub /\W+/, '_'
+  end
+
   def data_for_school(school)
 =begin
     if source.nil?

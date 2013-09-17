@@ -1,0 +1,29 @@
+<div id="navigation3">
+    <nav class="nav" style="background-color: #000000; color: #FFFFFF; padding-top: 10px; padding-bottom: 10px; text-align: center">
+        <ul style="margin: 0px; padding: 0px ">
+            <li>
+                <!--<a href="../navigation/navtest1">Overview</a>-->
+                <%= link_to 'Overview',
+                            :controller => 'localized_profile',
+                            :action => 'overview',
+                            :schoolId => @school.id %>
+            </li>
+            <li>
+                <%= link_to 'Quality',
+                            :controller => 'localized_profile',
+                            :action => 'quality',
+                            :schoolId => @school.id %>
+            </li>
+            <li>
+                <%= link_to 'Details',
+                            :controller => 'localized_profile',
+                            :action => 'details',
+                            :schoolId => @school.id %></li>
+            <li>
+                <%= link_to 'Reviews',
+                            :controller => 'localized_profile',
+                            :action => 'reviews',
+                            :schoolId => @school.id %></li>
+        </ul>
+    </nav>
+</div>

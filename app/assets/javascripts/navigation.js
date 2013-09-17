@@ -31,9 +31,9 @@ $(function () {
 //        console.log("stickyTop", stickyTop);
 //        console.log("stickyTopp", stickyTopp);
 
-    $('#navigation2').affix({
+    $('#gsGlobalNavigation').affix({
         offset: {
-            top: 135
+            top: 0
         }
     });
 

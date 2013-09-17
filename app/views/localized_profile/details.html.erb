@@ -1,0 +1,43 @@
+<%= render :partial => 'nav/topnav' %>
+<%= render :partial => 'localized_profile/header' %>
+<%= render :partial => 'localized_profile/profile-nav' %>
+<div class="row">
+    <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
+        <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >
+           <% @category_placements.each_pair do |key,cat_place| %>
+
+                <% if cat_place && cat_place[:placement] %>
+                    <% placement=cat_place[:placement] %>
+                    <li style="position: relative; float:left; right: 50%;"><a href="#<%= key.to_s + cat_place[:placement].category.code_name %>"><%= placement.title  %></a></li>
+
+        <% end %>
+            <% end %>
+            <!--<li style="position: relative; float:left; right: 50%;"><a href="#StudentEthnicity">Student Ethnicity</a></li>-->
+            <!--<li style="position: relative; float:left; right: 50%;margin-left:20px"><a href="#Love" >Love 2</a></li>-->
+            <!--<li style="position: relative; float:left; right: 50%;margin-left:20px"><a href="#Understanding">Understanding 3</a></li>-->
+            <!--<li style="position: relative; float:left; right: 50%;margin-left:20px"><a href="#Ethnicity">Ethnicity 3</a></li>-->
+            <!--<li style="position: relative; float:left; right: 50%;margin-left:20px"><a href="#Quality">Quality 3</a></li>-->
+            <!--<li style="position: relative; float:left; right: 50%;margin-left:20px"><a href="#Fascination">Fascination 3</a></li>-->
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+        <div class="row">
+            <%= render_position 1 %>
+            <%= render_position 2 %>
+            <%= render_position 3 %>
+            <%= render_position 4 %>
+            <%= render_position 5 %>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+        <div id="contents">
+            <div id="main">
+                <a name="Fascination"></a>
+                <h2 style="padding-top: 50px; margin-top: -50px;">Fascination</h2>
+                6 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </div>
+        </div>
+    </div>
+</div>

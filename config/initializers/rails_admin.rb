@@ -154,8 +154,14 @@ RailsAdmin.config do |config|
 
    list do
      field :page
+     field :title
      field :position
-     field :priority
+     field :size, :enum do
+       enum_method do
+         :possible_sizes
+       end
+     end
+     #field :priority
      field :collection
      field :category
      field :layout, :enum do
@@ -166,10 +172,16 @@ RailsAdmin.config do |config|
    end
 
    edit do
-     field :priority
+     field :title
+     #field :priority
      field :category
      field :page
      field :position
+     field :size, :enum do
+       enum_method do
+         :possible_sizes
+       end
+     end
      field :collection
      field :layout, :enum do
        enum_method do

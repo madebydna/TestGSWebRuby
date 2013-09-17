@@ -25,10 +25,13 @@ module ApplicationHelper
 
         # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
         if partial == 'data_layouts/default_two_column_table'
-          render partial: partial,
+          render partial: 'module_container',
                  locals: {
+                     partial:partial,
+                     category_placement:category_placement,
                      data: data,
-                     category: category
+                     category: category,
+                     size:category_placement.size
                  }
         else
           # cleanse the json config
@@ -37,11 +40,14 @@ module ApplicationHelper
           layout_config_json = {}.to_json
           layout_config_json = JSON.parse(layout_config) unless layout_config.nil? || layout_config == ""
 
-          render partial: partial,
+          render partial: 'module_container',
                  locals: {
+                     partial:partial,
+                     category_placement:category_placement,
                      data: data,
                      category: category,
-                     config: TableConfig.new(layout_config_json)
+                     config: TableConfig.new(layout_config_json),
+                     size:category_placement.size  || 12
                  }
         end
       end

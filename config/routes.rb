@@ -7,8 +7,13 @@ LocalizedProfiles::Application.routes.draw do
   get "navigation/navtest4"
 
 
-  get 'profile/extracurriculars', :to => 'localized_profile#extracurriculars'
-  get 'profile/programs-resources', :to => 'localized_profile#programs_resources'
+  get 'profile/overview', :to => 'localized_profile#overview'
+  get 'profile/quality', :to => 'localized_profile#quality'
+  get 'profile/details', :to => 'localized_profile#details'
+  get 'profile/reviews', :to => 'localized_profile#reviews'
+
+  #get 'profile/extracurriculars', :to => 'localized_profile#extracurriculars'
+  #get 'profile/programs-resources', :to => 'localized_profile#programs_resources'
   get 'pages/home'
   get 'pages/contact'
 

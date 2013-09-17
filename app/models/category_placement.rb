@@ -1,5 +1,5 @@
 class CategoryPlacement < ActiveRecord::Base
-  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority
+  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :size, :title
   has_paper_trail
 
   belongs_to :category
@@ -16,6 +16,10 @@ class CategoryPlacement < ActiveRecord::Base
         'Pie chart' => 'pie_chart',
         'Blank layout' => 'blank_layout'
     }
+  end
+
+  def possible_sizes
+    (1..12)
   end
 
   # return CategoryPlacements with collection_id in the provided
