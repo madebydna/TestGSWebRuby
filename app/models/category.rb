@@ -53,7 +53,7 @@ class Category < ActiveRecord::Base
   def values_for_school(school)
     #key_label_map = school.key_label_map(self)
 
-    all_school_data = EspResponse.where(school_id: school.id)
+    all_school_data = EspResponse.using(school.state.upcase.to_sym).where(school_id: school.id)
 
     #pp key_label_map.keys
 
@@ -64,8 +64,8 @@ class Category < ActiveRecord::Base
     all_school_data.select! { |data| keys_to_use.include? data.key}
 
     all_school_data.inject({}) do |hash, school_data|
-      key = school_data.key
-      value = school_data.value
+      key = school_data.response_key
+      value = school_data.response_value
 
       hash[key] ||= []
       pretty_value = ResponseValue.pretty_value(value, school.collections)

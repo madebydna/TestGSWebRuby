@@ -1,0 +1,24 @@
+
+<%= render :partial => 'form_enumeration', :locals => {:form => form, :field => field} %>
+<script type="text/javascript">
+    $("#school_collection_state").on('change', function(){
+        var select = $('#school_collection_school_id');
+        var options = select.data('options');
+        var remote_source = $('#school_collection_school_id').data('ra-filteringSelect').options['remote_source'];
+        if (remote_source.indexOf('state=') > -1) {
+            remote_source = remote_source.replace(/state=\w\w/, 'state=' + $(this).val());
+        } else {
+            remote_source = remote_source + '&state=' + $(this).val();
+        }
+        options['remote_source'] = remote_source;
+        select.attr('data-options', JSON.stringify(options));
+        select.data('options', options);
+
+        $('#school_collection_school_id').data('ra-filteringSelect').options['remote_source'] = remote_source;
+        $('#school_collection_school_id').data('ra-filteringSelect').options['source'] = remote_source;
+
+        $('#school_collection_school_id').siblings('.filtering-select').remove();
+        $('#school_collection_school_id').data('ra-filteringSelect')._create();
+    });
+
+</script>

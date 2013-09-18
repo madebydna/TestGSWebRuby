@@ -61,13 +61,14 @@ class LocalizedProfileController < ApplicationController
 
   # Finds school given request param schoolId
   def find_school
+    state = params[:state] || 'ca'
     school_id = params[:schoolId] || 1
 
     if school_id.nil?
       # todo: redirect to school controller, school_not_found action
     end
 
-    @school = School.find school_id
+    @school = School.using(state.upcase.to_sym).find school_id
   end
   def page_category_layout_key(placement)
     key = "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"

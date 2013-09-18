@@ -1,14 +1,25 @@
 class StudentEthnicity
 
+  def key
+    'ethnicity_data'
+  end
+
   def initialize(category)
     @category = category
   end
 
-  def query
+  def query(school)
+    data_types = []
+
+    #json_data = SchoolCategoryData
+
+    #School.data.census_data_for_data_types data_types
     # Run some query and get back a resultset
   end
 
   def data(school)
+
+
     # handle checking request-scoped cached results, maybe get a higher-level resultset and filter out unneeded data
     # maybe actually run the query() method
     # return results

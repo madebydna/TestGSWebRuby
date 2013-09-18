@@ -9,7 +9,6 @@ gem 'mysql2'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'better_errors', '~> 0.9.0'
   gem 'binding_of_caller', '~> 0.7.2'
 
   # Supporting Gem for Rails Panel for Chrome
@@ -18,6 +17,7 @@ group :development, :test do
   # Use SCSS for stylesheets
 
 end
+gem 'better_errors', '~> 0.9.0'
 
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -37,6 +37,8 @@ gem 'haml-rails'
 # paper_trail allows implementing versioning to models
 gem 'paper_trail', :git => 'git://github.com/airblade/paper_trail.git'
 
+gem 'ar-octopus', '0.6.0'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -55,6 +57,8 @@ group :assets do
 end
 gem 'codemirror-rails'
 gem 'ckeditor'
+
+gem 'safe_attributes'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

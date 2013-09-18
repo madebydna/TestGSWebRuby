@@ -30,7 +30,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
 
   # Include specific models (exclude the others):
-  # config.included_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
+  config.included_models = ['Category', 'CategoryData', 'CategoryPlacement', 'Collection', 'Page', 'School', 'SchoolCollection', 'ResponseValue']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -243,6 +243,7 @@ RailsAdmin.config do |config|
         field :description
         field :updated_at
       end
+
   #     export do; end
   #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
   #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
@@ -435,6 +436,31 @@ RailsAdmin.config do |config|
   #       # items_per_page 100    # Override default_items_per_page
   #       # sort_by :id           # Sort column (default is primary key)
   #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+       end
+
+       edit do
+         field :state, :enum do
+           enum_method do
+             :state_hash
+           end
+           partial 'state_select'
+         end
+         field :collection
+         field :school do
+           associated_collection_cache_all false  # REQUIRED if you want to SORT the list as below
+           associated_collection_scope do
+             # bindings[:object] & bindings[:controller] are available, but not in scope's block!
+             params = bindings[:controller].params
+             state = params[:state] || 'CA'
+
+             Proc.new { |scope|
+               # scoping all Players currently, let's limit them to the team's league
+               # Be sure to limit if there are a lot of Players and order them by position
+               #scope = scope.using(state.upcase.to_sym)
+               scope = scope.using(state.upcase.to_sym)
+             }
+           end
+         end
        end
   #     show do; end
   #     edit do; end

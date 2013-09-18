@@ -1,5 +1,7 @@
 class CreateSchoolCategoryData < ActiveRecord::Migration
-  def change
+  using_group(:state_dbs)
+
+  def self.up
     create_table :school_category_data do |t|
       t.string :key
       t.integer :school_id

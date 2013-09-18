@@ -68,6 +68,7 @@ category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', sou
 
 
 # Category placements
+# defaults (no collection)
 CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: dc_schools, position: 1 )
 CategoryPlacement.create!(category: programs, page: programs_resources, position: 2 )
 CategoryPlacement.create!(category: programs, page: programs_resources, position: 1,collection: bay_area_schools)
@@ -117,6 +118,7 @@ CategoryData.create!(category: category_no_osp_data, response_key:'_bogus')
 
 
 # steal data from dev's esp_response to populate EspResponse
+=begin
 schools_per_state = 4
 %w(ca dc).each_with_index do |state, index|
   first = (index * schools_per_state) + 1
@@ -136,8 +138,10 @@ schools_per_state = 4
     end
   end
 end
+=end
 
 # steal data from dev's esp_response to populate EspResponse
+=begin
 schools_per_state = 4
 %w(ca dc).each_with_index do |state, index|
   first = (index * schools_per_state) + 1
@@ -157,7 +161,9 @@ schools_per_state = 4
     end
   end
 end
+=end
 
+=begin
 EspResponse.create!(school: School.find(6),key:'boy_sports',value:'tennis',active:true)
 EspResponse.create!(school: School.find(6),key:'boy_sports',value:'track',active:true)
 EspResponse.create!(school: School.find(6),key:'boy_sports_other',value:'swimming',active:true)
@@ -166,6 +172,7 @@ EspResponse.create!(school: School.find(6),key:'arts_music',value:'chorus',activ
 EspResponse.create!(school: School.find(6),key:'start_time',value:'8:00',active:true)
 EspResponse.create!(school: School.find(6),key:'end_time',value:'12:00',active:true)
 EspResponse.create!(school: School.find(6),key:'special_ed_programs',value:'multiple',active:true)
+=end
 
 
 # response value - this table is used to store the keys or values and their pretty labels.
@@ -204,8 +211,15 @@ schools_per_state = 4
   end
 end
 
+=begin
+require 'states'
+States.state_hash.values.each do |state|
+  query = "select * _#{state}"
 
-SchoolCategoryData.create!(key: 'student_ethnicity',school: alameda_high_school,school_data: {
+end
+=end
+
+SchoolCategoryData.using(alameda_high_school.state.upcase.to_sym).create!(key: 'student_ethnicity',school: alameda_high_school,school_data: {
       rows: [
             {
                 ethnicity: 'Asian',
@@ -244,3 +258,4 @@ SchoolCategoryData.create!(key: 'student_ethnicity',school: alameda_high_school,
             },
         ]
     }.to_json )
+

@@ -1,4 +1,7 @@
 LocalizedProfiles::Application.routes.draw do
+  resources :census_data_sets
+
+
   get "navigation/navtest1"
 
   get "navigation/navtest2"

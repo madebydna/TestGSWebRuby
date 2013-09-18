@@ -6,7 +6,7 @@ class EspResponseReader
   end
 
   def query(school)
-    osp_data = EspResponse.where(school_id: school.id)
+    EspResponse.using(school.state.upcase.to_sym).where(school_id: school.id)
   end
 
   # handle checking request-scoped cached results, maybe get a higher-level resultset and filter out unneeded data
@@ -16,18 +16,17 @@ class EspResponseReader
     keys_to_use = @category.category_data(school.collections).map(&:response_key)
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    data = query(school).select! { |data| keys_to_use.include? data.key}
+    data = query(school).select! { |response| keys_to_use.include? response.response_key}
 
     unless data.nil?
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
-      data.inject({}) do |hash, school_data|
-        key = school_data['key']
+      blah = data.inject({}) do |hash, response|
+        key = response.response_key
         hash[key] ||= []
-        hash[key] << school_data['value']
+        hash[key] << response.response_value
         hash
       end
     end
-
   end
 
   def table_data(school)

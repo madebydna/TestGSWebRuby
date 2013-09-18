@@ -35,6 +35,9 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    ar-octopus (0.6.0)
+      activerecord (>= 3.0.0, < 4.0)
+      activesupport (>= 3.0.0, < 4.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
@@ -176,6 +179,8 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
+    safe_attributes (1.0.10)
+      activerecord (>= 3.0.0)
     safe_yaml (0.9.5)
     sass (3.2.10)
     sass-rails (3.2.6)
@@ -209,6 +214,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ar-octopus (= 0.6.0)
   better_errors (~> 0.9.0)
   binding_of_caller (~> 0.7.2)
   bootstrap-wysihtml5-rails
@@ -226,6 +232,7 @@ DEPENDENCIES
   rails (= 3.2.11)
   rails_admin
   rspec-rails
+  safe_attributes
   sass-rails (~> 3.2.3)
   sdoc
   turbolinks

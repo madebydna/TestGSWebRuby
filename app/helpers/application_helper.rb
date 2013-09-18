@@ -5,7 +5,7 @@ module ApplicationHelper
 
       placement_and_data = choose_placement_and_get_data position_number
 
-      if params[:category_placement_debugging]
+      if params[:category_placement_debugging] && placement_and_data
         return render partial: 'data_layouts/category_placement_debug', locals: {
             position_number: position_number,
             picked_placement: placement_and_data[:placement]
@@ -114,6 +114,61 @@ module ApplicationHelper
     end
 
     array
+  end
+
+  def state_hash
+    {
+     'Alabama' => 'AL',
+     'Alaska' => 'AK',
+     'Arizona' => 'AZ',
+     'Arkansas' => 'AR',
+     'California' => 'CA',
+     'Colorado' => 'CO',
+     'Connecticut' => 'CT',
+     'Delaware' => 'DE',
+     'District of Columbia' => 'DC',
+     'Florida' => 'FL',
+     'Georgia' => 'GA',
+     'Hawaii' => 'HI',
+     'Idaho' => 'ID',
+     'Illinois' => 'IL',
+     'Indiana' => 'IN',
+     'Iowa' => 'IA',
+     'Kansas' => 'KS',
+     'Kentucky' => 'KY',
+     'Louisiana' => 'LA',
+     'Maine' => 'ME',
+     'Maryland' => 'MD',
+     'Massachusetts' => 'MA',
+     'Michigan' => 'MI',
+     'Minnesota' => 'MN',
+     'Mississippi' => 'MS',
+     'Missouri' => 'MO',
+     'Montana' => 'MT',
+     'Nebraska' => 'NE',
+     'Nevada' => 'NV',
+     'New Hampshire' => 'NH',
+     'New Jersey' => 'NJ',
+     'New Mexico' => 'NM',
+     'New York' => 'NY',
+     'North Carolina' => 'NC',
+     'North Dakota' => 'ND',
+     'Ohio' => 'OH',
+     'Oklahoma' => 'OK',
+     'Oregon' => 'OR',
+     'Pennsylvania' => 'PA',
+     'Rhode Island' => 'RI',
+     'South Carolina' => 'SC',
+     'South Dakota' => 'SD',
+     'Tennessee' => 'TN',
+     'Texas' => 'TX',
+     'Utah' => 'UT',
+     'Vermont' => 'VT',
+     'Virginia' => 'VA',
+     'Washington' => 'WA',
+     'West Virginia' => 'WV',
+     'Wisconsin' => 'WI',
+     'Wyoming' => 'WY'}
   end
 
 end

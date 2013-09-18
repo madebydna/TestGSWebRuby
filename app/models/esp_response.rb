@@ -1,7 +1,4 @@
 class EspResponse < ActiveRecord::Base
-  attr_accessible :active, :key, :school, :value
-
-  belongs_to :school
-  belongs_to :category
+  self.table_name = 'esp_response'
 
 end

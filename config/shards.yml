@@ -1,0 +1,172 @@
+mysql: &mysql
+  username: <%= ENV['MYSQL_USER'] || 'root' %>
+  host: localhost
+  adapter: mysql2
+
+octopus:
+  verify_connection: true
+  environments:
+    - development
+    - test
+  development:
+    state_dbs:
+      AL:
+        <<: *mysql
+        database: _al
+      AK:
+        <<: *mysql
+        database: _ak
+      AZ:
+        <<: *mysql
+        database: _az
+      AR:
+        <<: *mysql
+        database: _ar
+      CA:
+        <<: *mysql
+        database: _ca
+      CO:
+        <<: *mysql
+        database: _co
+      CT:
+        <<: *mysql
+        database: _ct
+      DE:
+        <<: *mysql
+        database: _de
+      DC:
+        <<: *mysql
+        database: _dc
+      FL:
+        <<: *mysql
+        database: _fl
+      GA:
+        <<: *mysql
+        database: _ga
+      HI:
+        <<: *mysql
+        database: _hi
+      ID:
+        <<: *mysql
+        database: _id
+      IL:
+        <<: *mysql
+        database: _il
+      IN:
+        <<: *mysql
+        database: _in
+      IA:
+        <<: *mysql
+        database: _ia
+      KS:
+        <<: *mysql
+        database: _ks
+      KY:
+        <<: *mysql
+        database: _ky
+      LA:
+        <<: *mysql
+        database: _la
+      ME:
+        <<: *mysql
+        database: _me
+      MD:
+        <<: *mysql
+        database: _md
+      MA:
+        <<: *mysql
+        database: _ma
+      MI:
+        <<: *mysql
+        database: _mi
+      MN:
+        <<: *mysql
+        database: _mn
+      MS:
+        <<: *mysql
+        database: _ms
+      MO:
+        <<: *mysql
+        database: _mo
+      MT:
+        <<: *mysql
+        database: _mt
+      NE:
+        <<: *mysql
+        database: _ne
+      NV:
+        <<: *mysql
+        database: _nv
+      NH:
+        <<: *mysql
+        database: _nh
+      NJ:
+        <<: *mysql
+        database: _nj
+      NM:
+        <<: *mysql
+        database: _nm
+      NY:
+        <<: *mysql
+        database: _ny
+      NC:
+        <<: *mysql
+        database: _nc
+      ND:
+        <<: *mysql
+        database: _nd
+      OH:
+        <<: *mysql
+        database: _oh
+      OK:
+        <<: *mysql
+        database: _ok
+      OR:
+        <<: *mysql
+        database: _or
+      PA:
+        <<: *mysql
+        database: _pa
+      RI:
+        <<: *mysql
+        database: _ri
+      SC:
+        <<: *mysql
+        database: _sc
+      SD:
+        <<: *mysql
+        database: _sd
+      TN:
+        <<: *mysql
+        database: _tn
+      TX:
+        <<: *mysql
+        database: _tx
+      UT:
+        <<: *mysql
+        database: _ut
+      VT:
+        <<: *mysql
+        database: _vt
+      VA:
+        <<: *mysql
+        database: _va
+      WA:
+        <<: *mysql
+        database: _wa
+      WV:
+        <<: *mysql
+        database: _wv
+      WI:
+        <<: *mysql
+        database: _wi
+      WY:
+        <<: *mysql
+        database: _wy
+    localized_profiles:
+      dev:
+        <<: *mysql
+        database: LocalizedProfiles_development
+
+  test:
+
