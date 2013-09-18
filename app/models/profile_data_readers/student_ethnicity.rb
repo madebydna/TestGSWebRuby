@@ -9,66 +9,60 @@ class StudentEthnicity
   end
 
   def query(school)
-    data_types = []
+    ethnicity_data_types = [9]
 
     #json_data = SchoolCategoryData
 
-    #School.data.census_data_for_data_types data_types
+    school.census_data_for_data_types ethnicity_data_types
     # Run some query and get back a resultset
   end
 
   def data(school)
+    rows = query(school).inject([]) do |rows_array, census_data|
+      school_values = school.census_data_school_values.having_data_set(census_data)
+      school_value = nil
+      if Array(school_values).any?
+        first = school_values[0]
+        school_value = school_values[0].value_float unless first.nil?
+      end
 
+      state_values = census_data.census_data_state_values
+      state_value = nil
+      if (Array(state_values)).any?
+        first = state_values[0]
+        state_value = state_values[0].value_float unless first.nil?
+      end
+
+      description = ''
+      if census_data.census_breakdown
+        description = census_data.census_breakdown
+      end
+
+      if state_value && school_value
+        rows_array << {
+            ethnicity: description,
+            school_value: school_value.round,
+            state_value: state_value.round
+        }
+      end
+
+      rows_array
+    end
+
+    rows.sort_by! {|row| row[:school_value] }.reverse!
 
     # handle checking request-scoped cached results, maybe get a higher-level resultset and filter out unneeded data
     # maybe actually run the query() method
     # return results
+    rows
   end
 
   def table_data(school)
-    json_data = []
 
-    # for each resultset
-    # push a new hash onto the array:
+    rows = data(school)
 
     json_data = {
-      rows: [
-            {
-                ethnicity: 'Asian',
-                school_value: '51',
-                state_value: '11'
-            },
-            {
-                ethnicity: 'White',
-                school_value: '32',
-                state_value: '27'
-            },
-            {
-                ethnicity: 'Hispanic',
-                school_value: '9',
-                state_value: '51'
-            },
-            {
-                ethnicity: 'Black',
-                school_value: '6',
-                state_value: '7'
-            },
-            {
-                ethnicity: 'Hawaiian Native/Pacific Islander',
-                school_value: '1',
-                state_value: '1'
-            },
-            {
-                ethnicity: 'Two or more races',
-                school_value: '1',
-                state_value: '3'
-            },
-            {
-                ethnicity: 'American Indian/Alaska Native',
-                school_value: '0',
-                state_value: '1'
-            },
-        ]
+        rows: rows
     }
 
     table_data = TableData.new json_data

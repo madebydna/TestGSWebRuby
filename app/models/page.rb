@@ -1,7 +1,6 @@
 class Page < ActiveRecord::Base
   attr_accessible :name, :parent
   has_paper_trail
-  using(:master)
 
   has_many :category_placements, :order => 'collection_id desc'
 
@@ -14,7 +13,7 @@ class Page < ActiveRecord::Base
   def categories_per_position(collections = nil)
 
     # get the right category placements
-    placements = CategoryPlacement.belonging_to_collections(self, collections)
+    placements = CategoryPlacement.using(:master).belonging_to_collections(self, collections)
 
     # build the hash
     placements.inject({}) do |hash, placement|

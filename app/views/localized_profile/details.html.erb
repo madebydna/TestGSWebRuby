@@ -8,7 +8,10 @@
 
                 <% if cat_place && cat_place[:placement] %>
                     <% placement=cat_place[:placement] %>
-                    <li style="position: relative; float:left; right: 50%;"><a href="#<%= key.to_s + cat_place[:placement].category.code_name %>"><%= placement.title  %></a></li>
+                    <li style="position: relative; float:left; right: 50%;">
+                        <a href="#<%= key.to_s + cat_place[:placement].category.code_name %>">
+                            <%= placement.title || placement.category.name %></a>
+                    </li>
 
         <% end %>
             <% end %>

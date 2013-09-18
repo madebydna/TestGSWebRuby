@@ -13,12 +13,16 @@ class School < ActiveRecord::Base
     CensusDataSet.using(state.upcase.to_sym).by_data_types(state, data_types)
   end
 
+  def census_data_school_values
+    CensusDataSchoolValue.using(state.upcase.to_sym).where(school_id: id)
+  end
+
   def self.all
     School.using(:CA).all
   end
 
   def school_collections
-    SchoolCollection.where(state: state, school_id: id)
+    SchoolCollection.using(:master).where(state: state, school_id: id)
   end
 
   def collections

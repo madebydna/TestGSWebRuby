@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Test admin user
+require 'states'
+
+
 user = Admin.new
 user.email = 'ssprouse@greatschools.org'
 user.password = 'testrailsadmin'
@@ -40,6 +43,7 @@ highlights = Page.create!(name: 'Highlights', parent:programs_culture)
 programs_resources = Page.create!(name: 'Programs & resources', parent:programs_culture)
 extracurriculars = Page.create!(name: 'Extracurriculars', parent: programs_culture)
 culture = Page.create!(name: 'Culture', parent: programs_culture)
+details = Page.create!(name: 'Details', parent: programs_culture)
 
 
 # Test collections
@@ -69,27 +73,18 @@ category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', sou
 
 # Category placements
 # defaults (no collection)
-CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: dc_schools, position: 1 )
-CategoryPlacement.create!(category: programs, page: programs_resources, position: 2 )
-CategoryPlacement.create!(category: programs, page: programs_resources, position: 1,collection: bay_area_schools)
-CategoryPlacement.create!(category: sports, page: extracurriculars, collection: nil, position: 1 )
-CategoryPlacement.create!(category: arts_music, page: extracurriculars, collection: nil, position: 2 )
-CategoryPlacement.create!(category: sports, page: culture, collection: nil, position: 1 )
 CategoryPlacement.create!(
-    category: student_ethnicity, page: programs_resources, position: 3, layout: 'configured_table', collection: private_schools,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(category: school_basics, page: programs_resources, collection: private_schools, position: 3 )
-CategoryPlacement.create!(category: category_no_osp_data, page: programs_resources, collection: nil, position: 4 )
-CategoryPlacement.create!(
-    category: student_ethnicity, page: programs_resources, position: 4, layout: 'pie_chart',
+    category: student_ethnicity, page: details, position: 1, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
 CategoryPlacement.create!(
-    category: student_ethnicity, page: programs_resources, position: 5, layout: 'configured_table', collection: dc_schools,
+    category: student_ethnicity, page: details, title: 'Ethnicity data', position: 2, layout: 'configured_table', size: 8,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
-CategoryPlacement.create!(category: sports, page: programs_resources, collection: nil, position: 5 )
+CategoryPlacement.create!(category: school_basics, page: details, position: 3, size: 6 )
+CategoryPlacement.create!(category: arts_music, page: details, position: 4, size: 6 )
+CategoryPlacement.create!(category: programs, page: details, position: 5, )
+
 
 # Category data
 CategoryData.create!(category: sports,response_key:'girls_sports', collection:private_schools)
@@ -208,6 +203,16 @@ schools_per_state = 4
       ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'].gsub('_',' '), collection:private_schools)
       ResponseValue.create!(response_value:result['response_value'],response_label:result['response_value'].gsub('_',' '), collection:bay_area_schools)
     end
+  end
+end
+
+# census breakdown
+query = 'select * from gs_schooldb.census_breakdown'
+client = Mysql2::Client.new(host: 'dev.greatschools.org', username: 'service', :password => 'service')
+results = client.query(query)
+if results.count > 0
+  results.each do |result|
+    CensusBreakdown.create!(datatype_id: result['datatype_id'], description: result['description'])
   end
 end
 

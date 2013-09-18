@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917224159) do
+ActiveRecord::Schema.define(:version => 20130918042153) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(:version => 20130917224159) do
     t.text     "layout_config"
     t.integer  "size"
     t.string   "title"
+  end
+
+  create_table "census_breakdowns", :force => true do |t|
+    t.integer  "datatype_id"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "collections", :force => true do |t|
@@ -118,6 +125,15 @@ ActiveRecord::Schema.define(:version => 20130917224159) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "school_category_data", :force => true do |t|
+    t.string   "key"
+    t.integer  "school_id"
+    t.text     "school_data"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "state"
   end
 
   create_table "school_collections", :force => true do |t|

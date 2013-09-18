@@ -1,7 +1,6 @@
 class CategoryPlacement < ActiveRecord::Base
   attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :size, :title
   has_paper_trail
-  using(:master)
 
   belongs_to :category
   belongs_to :collection

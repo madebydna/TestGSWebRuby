@@ -40,7 +40,7 @@ class LocalizedProfileController < ApplicationController
       category_p_d=choose_placement_and_get_data(position_number)
       category_placement_data[position_number]=category_p_d
     end
-    pp category_placement_data
+    category_placement_data
   end
 
   #def programs_resources
@@ -56,7 +56,7 @@ class LocalizedProfileController < ApplicationController
   #end
 
   def page(name)
-    @page = Page.where(name: name).first
+    @page = Page.using(:master).where(name: name).first
   end
 
   # Finds school given request param schoolId

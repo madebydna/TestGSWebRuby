@@ -51,7 +51,7 @@ class ResponseValue < ActiveRecord::Base
     default_values = {}
     collection_values = {}
 
-    ResponseValue.all.each do |response_value|
+    ResponseValue.using(:master).all.each do |response_value|
 
       if response_value.collection.nil?
         default_values[response_value.response_value] = response_value.response_label

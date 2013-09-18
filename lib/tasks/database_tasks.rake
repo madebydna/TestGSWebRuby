@@ -2,6 +2,8 @@ require 'states'
 require 'octopus'
 
 namespace :db do
+  task :reseed => [:drop, :create, :migrate, :seed]
+
   namespace :shards do
     tables = %w(school esp_response census_data_set census_data_school_value census_data_district_value census_data_state_value)
     states = States.state_hash.values
@@ -40,7 +42,7 @@ namespace :db do
 
       config = ActiveRecord::Base.configurations[Rails.env]
 
-      limit_rows = 5000
+      limit_rows = 10000000
 
       databases.each do |db|
         source_db = db

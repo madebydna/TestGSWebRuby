@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 
 
   def category_data(collections = nil)
-      CategoryData.belonging_to_collections(self, collections)
+      CategoryData.using(:master).belonging_to_collections(self, collections)
   end
 
   def key_label_map(collections = nil)
