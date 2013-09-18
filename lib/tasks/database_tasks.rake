@@ -98,7 +98,7 @@ namespace :db do
         puts "using #{db}"
         tables.each do |table|
           puts "dropping table #{table} on this machine"
-          sql_command = "echo \"drop table #{db}.#{table}\" | mysql -uroot"
+          sql_command = "echo drop table #{db}.#{table} | mysql -uroot"
           system(sql_command)
         end
       end

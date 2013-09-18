@@ -127,15 +127,6 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "school_category_data", :force => true do |t|
-    t.string   "key"
-    t.integer  "school_id"
-    t.text     "school_data"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "state"
-  end
-
   create_table "school_collections", :force => true do |t|
     t.integer  "school_id"
     t.integer  "collection_id"
