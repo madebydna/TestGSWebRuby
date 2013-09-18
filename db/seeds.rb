@@ -83,9 +83,9 @@ CategoryPlacement.create!(
     category: student_ethnicity, page: details, title: 'Ethnicity data', position: 2, layout: 'configured_table', size: 8,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
-CategoryPlacement.create!(category: school_basics, page: details, position: 3, size: 6 )
+CategoryPlacement.create!(category: school_basics, page: details, position: 3, size: 12 )
 CategoryPlacement.create!(category: arts_music, page: details, position: 4, size: 6 )
-CategoryPlacement.create!(category: programs, page: details, position: 5, size: 12 )
+CategoryPlacement.create!(category: programs, page: details, position: 5, size: 6 )
 
 # different config for different page
 CategoryPlacement.create!(
