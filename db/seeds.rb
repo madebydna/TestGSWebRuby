@@ -56,7 +56,6 @@ dc_schools = Collection.create!(name: 'Washington dc schools')
 # School collections
 SchoolCollection.create!(school:alameda_high_school, collection:bay_area_schools)
 SchoolCollection.create!(school:lowell_high_school, collection:bay_area_schools)
-SchoolCollection.create!(school:lowell_middle_school, collection:bay_area_schools)
 
 SchoolCollection.create!(school:page_private_school, collection:private_schools)
 SchoolCollection.create!(school:sheridan_school, collection:private_schools)
