@@ -37,4 +37,7 @@ LocalizedProfiles::Application.configure do
 
   # Don't cache in dev environment
   config.cache_store = :null_store
+
+  require 'socket'
+  config.action_controller.asset_host = "#{Socket.gethostname}:3000"
 end

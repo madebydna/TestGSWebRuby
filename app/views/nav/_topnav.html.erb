@@ -17,6 +17,13 @@
             <li><a href="#find-a-school">Find A School</a></li>
             <li><a href="#review-a-school">Review A School</a></li>
             <li><a href="#back-to-school">Back To School</a></li>
+            <% if params[:java] == 'java' %>
+                <li>
+                    <a href="javascript:GS.facebook.login().done(function(){window.location.reload();});return false;">
+                        <%= @user_first_name.nil?? 'Sign In' : "Welcome, #{@user_first_name}" %>
+                    </a>
+                </li>
+            <% end %>
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

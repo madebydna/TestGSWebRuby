@@ -2,9 +2,14 @@ class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
   # Find school before executing culture action
-  before_filter :find_school
+  before_filter :find_school, :find_user
 
-  layout 'application'
+  layout :choose_profile_layout
+
+  def choose_profile_layout
+    @java = params[:java] == 'java'
+    @java? 'application' : 'application'
+  end
 
   def overview
     page('Overview')
@@ -53,16 +58,24 @@ class LocalizedProfileController < ApplicationController
     @page = Page.using(:master).where(name: name).first
   end
 
+  def find_user
+    member_id = cookies[:MEMID]
+    @user = User.using(:gs_schooldb).find member_id unless member_id.nil?
+    @user_first_name = @user.first_name unless @user.nil?
+  end
+
   # Finds school given request param schoolId
   def find_school
-    state = params[:state] || 'ca'
+    state = params[:state] || 'CA'
+    state.gsub! '-', ' '
+    state_abbreviation = States.abbreviation(state)
     school_id = params[:schoolId] || 1
 
     if school_id.nil?
       # todo: redirect to school controller, school_not_found action
     end
 
-    @school = School.using(state.upcase.to_sym).find school_id
+    @school = School.using(state_abbreviation.to_sym).find school_id
   end
   def page_category_layout_key(placement)
     key = "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"

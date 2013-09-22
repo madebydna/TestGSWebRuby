@@ -256,14 +256,6 @@ if results.count > 0
   end
 end
 
-=begin
-require 'states'
-States.state_hash.values.each do |state|
-  query = "select * _#{state}"
-
-end
-=end
-
 SchoolCategoryData.using(alameda_high_school.state.upcase.to_sym).create!(key: 'student_ethnicity',school: alameda_high_school,school_data: {
       rows: [
             {

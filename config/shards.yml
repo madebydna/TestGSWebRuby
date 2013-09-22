@@ -164,6 +164,9 @@ octopus:
         <<: *mysql
         database: _wy
     localized_profiles:
+      gs_schooldb:
+        <<: *mysql
+        database: gs_schooldb
       dev:
         <<: *mysql
         database: LocalizedProfiles_development
