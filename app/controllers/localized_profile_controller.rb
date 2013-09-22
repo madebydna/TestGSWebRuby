@@ -4,34 +4,28 @@ class LocalizedProfileController < ApplicationController
   # Find school before executing culture action
   before_filter :find_school
 
-  def initialize
-    @category_positions = {}
-  end
+  layout 'application'
 
   def overview
     page('Overview')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
-    render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
   end
 
   def quality
     page('Quality')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
-    render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
   end
   def details
     page('Details')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
-    render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
   end
   def reviews
     page('Reviews')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
-    render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
   end
 
   def choose_category_placements
