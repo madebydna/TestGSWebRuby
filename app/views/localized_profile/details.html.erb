@@ -10,7 +10,8 @@
                     <% placement=cat_place[:placement] %>
                     <li style="position: relative; float:left; right: 50%;">
                         <a href="#<%= key.to_s + cat_place[:placement].category.code_name %>">
-                            <%= placement.title || placement.category.name %></a>
+                            <%= (placement.title && placement.title.size > 0)? placement.title : placement.category.name %>
+                        </a>
                     </li>
 
         <% end %>
