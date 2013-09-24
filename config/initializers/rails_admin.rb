@@ -61,7 +61,7 @@ RailsAdmin.config do |config|
   #   # Found associations:
 
   #     configure :parent, :belongs_to_association
-  #     configure :category_placements, :has_many_association 
+  #     configure :category_placements, :has_many_association
   #     configure :categories, :has_many_association
 
   #   # Found columns:
