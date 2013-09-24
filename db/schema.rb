@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.string   "source"
   end
 
-  add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
-
   create_table "category_data", :force => true do |t|
     t.integer  "category_id"
     t.string   "response_key"
@@ -49,9 +47,6 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
-
-  add_index "category_data", ["category_id"], :name => "index_category_data_on_category_id"
-  add_index "category_data", ["response_key"], :name => "index_category_data_on_response_key"
 
   create_table "category_placements", :force => true do |t|
     t.integer  "category_id"
@@ -66,10 +61,6 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.integer  "size"
     t.string   "title"
   end
-
-  add_index "category_placements", ["category_id"], :name => "index_category_placements_on_category_id"
-  add_index "category_placements", ["collection_id"], :name => "index_category_placements_on_collection_id"
-  add_index "category_placements", ["page_id"], :name => "index_category_placements_on_page_id"
 
   create_table "census_breakdowns", :force => true do |t|
     t.integer  "datatype_id"
@@ -94,14 +85,19 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "page_configs", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.string   "parent_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "pages", ["parent_id"], :name => "index_pages_on_parent_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -124,26 +120,12 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "response_values", ["collection_id"], :name => "index_response_values_on_collection_id"
-  add_index "response_values", ["response_value"], :name => "index_response_values_on_response_value"
-
   create_table "school", :force => true do |t|
     t.string   "state"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "school_category_data", :force => true do |t|
-    t.string   "key"
-    t.integer  "school_id"
-    t.text     "school_data"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "state"
-  end
-
-  add_index "school_category_data", ["school_id"], :name => "index_school_category_data_on_school_id"
 
   create_table "school_collections", :force => true do |t|
     t.integer  "school_id"

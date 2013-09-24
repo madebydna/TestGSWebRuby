@@ -10,7 +10,8 @@ gem 'mysql2'
 group :development, :test do
   gem 'rspec-rails'
   gem 'binding_of_caller', '~> 0.7.2'
-
+  gem 'cucumber', '~> 1.3.8'
+  gem 'cucumber-rails', '~> 1.4.0'
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'
 
