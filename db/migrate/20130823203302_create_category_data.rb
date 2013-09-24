@@ -8,5 +8,8 @@ class CreateCategoryData < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :category_data, :category_id
+    add_index :category_data, :response_key
   end
 end

@@ -9,5 +9,7 @@ class CreateSchoolCategoryData < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :school_category_data, :school_id
   end
 end

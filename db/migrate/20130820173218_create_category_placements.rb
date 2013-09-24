@@ -8,5 +8,9 @@ class CreateCategoryPlacements < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :category_placements, :category_id
+    add_index :category_placements, :collection_id
+    add_index :category_placements, :page_id
   end
 end

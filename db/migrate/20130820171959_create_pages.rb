@@ -6,5 +6,7 @@ class CreatePages < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :pages, :parent_id
   end
 end
