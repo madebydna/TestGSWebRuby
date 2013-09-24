@@ -1,5 +1,5 @@
 
-<%= render :partial => 'form_enumeration', :locals => {:form => form, :field => field} %>
+<%= render 'form_enumeration', form: form, field: field %>
 <script type="text/javascript">
     $("#school_collection_state").on('change', function(){
         var select = $('#school_collection_school_id');

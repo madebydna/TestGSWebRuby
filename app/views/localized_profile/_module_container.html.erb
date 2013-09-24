@@ -3,12 +3,11 @@
         <div id="main">
             <a name="<%= category_placement.position.to_s + category.code_name %>"></a>
             <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
-            <%= render partial: partial,
-                      locals: {
-                              data: data,
-                              category: category,
-                              config: config || nil
-                      }  %>
+            <%= render partial,
+              data: data,
+              category: category,
+              config: config || nil
+            %>
         </div>
     </div>
 </div>

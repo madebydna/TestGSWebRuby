@@ -26,13 +26,6 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
-=begin
-    if source.nil?
-      return values_for_school(school)
-    else
-      return data_reader.json_data(school)
-    end
-=end
     data_reader.prettify_data(school, data_reader.table_data(school))
   end
 

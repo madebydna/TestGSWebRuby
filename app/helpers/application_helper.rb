@@ -6,10 +6,9 @@ module ApplicationHelper
       placement_and_data = choose_placement_and_get_data position_number
 
       if params[:category_placement_debugging] && placement_and_data
-        return render partial: 'data_layouts/category_placement_debug', locals: {
-            position_number: position_number,
-            picked_placement: placement_and_data[:placement]
-        }
+        return render 'data_layouts/category_placement_debug',
+          position_number: position_number,
+          picked_placement: placement_and_data[:placement]
       end
 
       if placement_and_data && placement_and_data[:placement]
@@ -25,30 +24,26 @@ module ApplicationHelper
 
         # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
         if partial == 'data_layouts/default_two_column_table'
-          render partial: 'module_container',
-                 locals: {
-                     partial:partial,
-                     category_placement:category_placement,
-                     data: data,
-                     category: category,
-                     size:category_placement.size
-                 }
+          render 'module_container',
+            partial: partial,
+            category_placement: category_placement,
+            data: data,
+            category: category,
+            size: category_placement.size
         else
           # cleanse the json config
           layout_config = category_placement.layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
 
           layout_config_json = {}.to_json
-          layout_config_json = JSON.parse(layout_config) unless layout_config.nil? || layout_config == ""
+          layout_config_json = JSON.parse(layout_config) unless layout_config.nil? || layout_config == ''
 
-          render partial: 'module_container',
-                 locals: {
-                     partial:partial,
-                     category_placement:category_placement,
-                     data: data,
-                     category: category,
-                     config: TableConfig.new(layout_config_json),
-                     size:category_placement.size  || 12
-                 }
+          render 'module_container',
+             partial:partial,
+             category_placement:category_placement,
+             data: data,
+             category: category,
+             config: TableConfig.new(layout_config_json),
+             size:category_placement.size || 12
         end
       end
 
@@ -57,7 +52,7 @@ module ApplicationHelper
 
 
   def page_category_layout_key(placement)
-    key = "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"
+    "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"
   end
   def category_layout_already_picked?(placement)
     @category_layouts_already_picked_by_a_position ||= []
@@ -94,7 +89,7 @@ module ApplicationHelper
         if data.rows.any?
 
           # Return a hash, since the caller needs the Category's school data, along with the Category Placement itself
-          return {placement: placement, data: data}
+          return { placement: placement, data: data }
         end
       end
 
