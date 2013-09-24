@@ -1,6 +1,6 @@
-<%= render :partial => 'nav/topnav' %>
-<%= render :partial => 'localized_profile/header' %>
-<%= render :partial => 'localized_profile/profile-nav' %>
+<%= render 'nav/topnav' %>
+<%= render 'localized_profile/header', school: @school %>
+<%= render 'localized_profile/profile-nav', school: @school %>
 <div class="row">
     <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
         <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >

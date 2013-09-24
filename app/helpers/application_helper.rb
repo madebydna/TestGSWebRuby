@@ -7,8 +7,9 @@ module ApplicationHelper
 
       if params[:category_placement_debugging] && placement_and_data
         return render 'data_layouts/category_placement_debug',
-          position_number: position_number,
-          picked_placement: placement_and_data[:placement]
+          category_placements: @category_positions[position_number],
+          picked_placement: placement_and_data[:placement],
+          school: @school
       end
 
       if placement_and_data && placement_and_data[:placement]
