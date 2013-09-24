@@ -66,7 +66,7 @@ RailsAdmin.config do |config|
 
   #   # Found columns:
 
-  #     configure :id, :integer 
+  #     configure :id, :integer
   #     configure :parent_id, :integer         # Hidden
   #     configure :name, :string
   #     configure :description, :string
