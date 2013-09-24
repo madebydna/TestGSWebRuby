@@ -55,6 +55,7 @@ group :assets do
   gem 'compass-rails', '~> 2.0.alpha.0'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-wysihtml5-rails'
+  gem "css_splitter", "~> 0.1.1"
 end
 gem 'codemirror-rails'
 gem 'ckeditor'
