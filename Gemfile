@@ -38,7 +38,7 @@ gem 'jbuilder', '~> 1.2'
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
-  gem 'awesome_print'
+  gem 'awesome_print', :require => 'ap'
 
   # better_errors and binding_of_caller work together as in-browser debugging tools
   gem 'better_errors', '~> 0.9.0'
