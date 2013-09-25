@@ -37,17 +37,19 @@ gem 'jbuilder', '~> 1.2'
 
 
 group :development, :test do
+  # better_errors and binding_of_caller work together as in-browser debugging tools
   gem 'better_errors', '~> 0.9.0'
-  gem 'rspec-rails'
   gem 'binding_of_caller', '~> 0.7.2'
+  # Supporting Gem for Rails Panel for Chrome
+  # gem 'meta_request'
+
+  # testing frameworks
+  gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0'
 
   # Use haml for template engine. Also specified in application.rb
   gem 'haml-rails'
-
-  # Supporting Gem for Rails Panel for Chrome
-  # gem 'meta_request'
 end
 
 # Gems used only for assets and not required
