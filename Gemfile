@@ -43,6 +43,13 @@ group :development, :test do
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'
 
+  # execute  "rails_best_practices -f html ."  on the command line to generate an html report
+  # beware of false positives for things like unused methods
+  gem 'rails_best_practices'
+
+  # gem for setting up ruby objects as test data
+  gem 'factory_girl_rails', '~> 4.2.1'
+
   # testing frameworks
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
