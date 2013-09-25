@@ -15,7 +15,6 @@ LocalizedProfiles::Application.routes.draw do
   get 'pages/contact'
 
   devise_for :admins
-  devise_for :users
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 

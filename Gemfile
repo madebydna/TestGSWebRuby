@@ -37,6 +37,9 @@ gem 'jbuilder', '~> 1.2'
 
 
 group :development, :test do
+  # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
+  gem 'awesome_print'
+
   # better_errors and binding_of_caller work together as in-browser debugging tools
   gem 'better_errors', '~> 0.9.0'
   gem 'binding_of_caller', '~> 0.7.2'
@@ -53,7 +56,7 @@ group :development, :test do
   # testing frameworks
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
-  gem 'cucumber-rails', '~> 1.4.0'
+  gem 'cucumber-rails', '~> 1.4.0', :require => false
   gem 'capybara'
 
   # Use haml for template engine. Also specified in application.rb

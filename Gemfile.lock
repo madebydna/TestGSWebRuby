@@ -265,6 +265,7 @@ PLATFORMS
 
 DEPENDENCIES
   ar-octopus (= 0.6.0)
+  awesome_print
   better_errors (~> 0.9.0)
   binding_of_caller (~> 0.7.2)
   bootstrap-wysihtml5-rails
