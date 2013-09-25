@@ -54,6 +54,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0'
+  gem 'capybara'
 
   # Use haml for template engine. Also specified in application.rb
   gem 'haml-rails'
