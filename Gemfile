@@ -2,52 +2,59 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'mysql2'
-
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'binding_of_caller', '~> 0.7.2'
-  gem 'cucumber', '~> 1.3.8'
-  gem 'cucumber-rails', '~> 1.4.0'
-  # Supporting Gem for Rails Panel for Chrome
-  # gem 'meta_request'
-
-  # Use SCSS for stylesheets
-
-end
-gem 'better_errors', '~> 0.9.0'
-
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
-gem 'rails_admin'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-gem 'haml'
-gem 'haml-rails'
+gem 'rails_admin'
+
+# We added this to rails-admin, as a way to edit json inline
+gem 'codemirror-rails'
+
+# REVIEW: are we still using this? remove if not
+gem 'ckeditor'
+
+# Authentication, used for rails-admin
+gem 'devise'
+
+# Add database sharding support to Active Record
+gem 'ar-octopus', '0.6.0'
+
+# Adds support for reserved-word column names as model attributes. Useful when writing models for legacy schemas
+gem 'safe_attributes'
 
 # paper_trail allows implementing versioning to models
 gem 'paper_trail', :git => 'git://github.com/airblade/paper_trail.git'
 
-gem 'ar-octopus', '0.6.0'
+gem 'haml'
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+
+# DSL or building JSON objects. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 1.2'
+
+
+group :development, :test do
+  gem 'better_errors', '~> 0.9.0'
+  gem 'rspec-rails'
+  gem 'binding_of_caller', '~> 0.7.2'
+  gem 'cucumber', '~> 1.3.8'
+  gem 'cucumber-rails', '~> 1.4.0'
+
+  # Use haml for template engine. Also specified in application.rb
+  gem 'haml-rails'
+
+  # Supporting Gem for Rails Panel for Chrome
+  # gem 'meta_request'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  # gem 'sass-rails', '~> 4.0.0'
-  # Use CoffeeScript for .js.coffee assets and views
-  # gem 'coffee-rails', '~> 4.0.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -55,12 +62,8 @@ group :assets do
   gem 'compass-rails', '~> 2.0.alpha.0'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-wysihtml5-rails'
-  gem "css_splitter", "~> 0.1.1"
+  gem 'css_splitter', '~> 0.1.1'
 end
-gem 'codemirror-rails'
-gem 'ckeditor'
-
-gem 'safe_attributes'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -82,5 +85,3 @@ end
 # To use debugger
 # gem 'debugger'
 
-
-gem "devise"
