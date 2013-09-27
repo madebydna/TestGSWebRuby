@@ -72,11 +72,7 @@ class LocalizedProfileController < ApplicationController
     key = page_category_layout_key placement
     @category_layouts_already_picked_by_a_position.include? key
   end
-  def mark_category_layout_picked(placement)
-    key = page_category_layout_key placement
-    @category_layouts_already_picked_by_a_position ||= []
-    @category_layouts_already_picked_by_a_position << key
-  end
+
 
   def choose_placement_and_get_data(position_number)
 
@@ -111,18 +107,7 @@ class LocalizedProfileController < ApplicationController
     end
   end
 
-  # for each row in the given table_data, generate an array [key1, key2]
-  def table_data_to_piechart(table_data, key1, key2)
-    array = []
 
-    table_data.rows.each do |row|
-      array << [
-          "#{row[key1]}", row[key2].to_i
-      ]
-    end
-
-    array
-  end
 
 
 end
