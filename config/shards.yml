@@ -1,7 +1,14 @@
+<% require 'States' %>
 mysql: &mysql
-  username: <%= ENV['MYSQL_USER'] || 'root' %>
-  host: localhost
   adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+
+mysql_localhost: &mysql_localhost
+  <<: *mysql
+  host: 127.0.0.1
+  password:
 
 octopus:
   verify_connection: true
@@ -10,166 +17,23 @@ octopus:
     - test
   development:
     state_dbs:
-      AL:
-        <<: *mysql
-        database: _al
-      AK:
-        <<: *mysql
-        database: _ak
-      AZ:
-        <<: *mysql
-        database: _az
-      AR:
-        <<: *mysql
-        database: _ar
-      CA:
-        <<: *mysql
-        database: _ca
-      CO:
-        <<: *mysql
-        database: _co
-      CT:
-        <<: *mysql
-        database: _ct
-      DE:
-        <<: *mysql
-        database: _de
-      DC:
-        <<: *mysql
-        database: _dc
-      FL:
-        <<: *mysql
-        database: _fl
-      GA:
-        <<: *mysql
-        database: _ga
-      HI:
-        <<: *mysql
-        database: _hi
-      ID:
-        <<: *mysql
-        database: _id
-      IL:
-        <<: *mysql
-        database: _il
-      IN:
-        <<: *mysql
-        database: _in
-      IA:
-        <<: *mysql
-        database: _ia
-      KS:
-        <<: *mysql
-        database: _ks
-      KY:
-        <<: *mysql
-        database: _ky
-      LA:
-        <<: *mysql
-        database: _la
-      ME:
-        <<: *mysql
-        database: _me
-      MD:
-        <<: *mysql
-        database: _md
-      MA:
-        <<: *mysql
-        database: _ma
-      MI:
-        <<: *mysql
-        database: _mi
-      MN:
-        <<: *mysql
-        database: _mn
-      MS:
-        <<: *mysql
-        database: _ms
-      MO:
-        <<: *mysql
-        database: _mo
-      MT:
-        <<: *mysql
-        database: _mt
-      NE:
-        <<: *mysql
-        database: _ne
-      NV:
-        <<: *mysql
-        database: _nv
-      NH:
-        <<: *mysql
-        database: _nh
-      NJ:
-        <<: *mysql
-        database: _nj
-      NM:
-        <<: *mysql
-        database: _nm
-      NY:
-        <<: *mysql
-        database: _ny
-      NC:
-        <<: *mysql
-        database: _nc
-      ND:
-        <<: *mysql
-        database: _nd
-      OH:
-        <<: *mysql
-        database: _oh
-      OK:
-        <<: *mysql
-        database: _ok
-      OR:
-        <<: *mysql
-        database: _or
-      PA:
-        <<: *mysql
-        database: _pa
-      RI:
-        <<: *mysql
-        database: _ri
-      SC:
-        <<: *mysql
-        database: _sc
-      SD:
-        <<: *mysql
-        database: _sd
-      TN:
-        <<: *mysql
-        database: _tn
-      TX:
-        <<: *mysql
-        database: _tx
-      UT:
-        <<: *mysql
-        database: _ut
-      VT:
-        <<: *mysql
-        database: _vt
-      VA:
-        <<: *mysql
-        database: _va
-      WA:
-        <<: *mysql
-        database: _wa
-      WV:
-        <<: *mysql
-        database: _wv
-      WI:
-        <<: *mysql
-        database: _wi
-      WY:
-        <<: *mysql
-        database: _wy
+    <% States.state_hash.values.each do |abbreviation| %>
+      <%= abbreviation.upcase %>:
+        <<: *mysql_localhost
+        database: _<%= abbreviation.downcase %>
+    <% end %>
     localized_profiles:
       gs_schooldb:
-        <<: *mysql
+        <<: *mysql_localhost
         database: gs_schooldb
-      dev:
-        <<: *mysql
-        database: LocalizedProfiles_development
-
   test:
-
+    state_dbs:
+    <% States.state_hash.values.each do |abbreviation| %>
+      <%= abbreviation.upcase %>:
+        <<: *mysql_localhost
+        database: _<%= abbreviation.downcase %>_test
+    <% end %>
+    localized_profiles:
+      gs_schooldb:
+        <<: *mysql_localhost
+        database: gs_schooldb

@@ -60,7 +60,7 @@ class LocalizedProfileController < ApplicationController
 
   def find_user
     member_id = cookies[:MEMID]
-    @user = User.using(:gs_schooldb).find member_id unless member_id.nil?
+    @user = User.find member_id unless member_id.nil?
     @user_first_name = @user.first_name unless @user.nil?
   end
 
