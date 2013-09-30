@@ -29,6 +29,9 @@ class School < ActiveRecord::Base
     school_collections.map(&:collection)
   end
 
+  def reviews
+    SchoolRating.fetch_reviews self
+  end
 
 =begin
   def label_value_map_per_category(page)

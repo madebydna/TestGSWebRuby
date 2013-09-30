@@ -3,31 +3,24 @@
 <%= render 'localized_profile/profile-nav', school: @school %>
 <div class="row">
     <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
-        <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >
-            <% @category_placements.each_pair do |key,cat_place| %>
 
-                <% if cat_place && cat_place[:placement] %>
-                    <% placement=cat_place[:placement] %>
-                    <li style="position: relative; float:left; right: 50%;">
-                        <a href="#<%= key.to_s + cat_place[:placement].category.code_name %>">
-                            <%= placement.title || placement.category.name %></a>
-                    </li>
-
-                <% end %>
-            <% end %>
-        </ul>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
-        <div class="row">
-            <%= render_position 1 %>
-            <%= render_position 2 %>
-            <%= render_position 3 %>
-            <%= render_position 4 %>
-            <%= render_position 5 %>
+
+
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+            <% @school_reviews.each do |review| %>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="contents">
+                        <div id="main">
+                            <%= review[:comments] %>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
         </div>
-    </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
         <div id="contents">
             <div id="main">

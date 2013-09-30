@@ -29,8 +29,10 @@ class LocalizedProfileController < ApplicationController
   end
   def reviews
     page('Reviews')
-    @category_positions = @page.categories_per_position(@school.collections)
-    @category_placements =  choose_category_placements
+    @school_reviews = @school.reviews
+
+    #@category_positions = @page.categories_per_position(@school.collections)
+    #@category_placements =  choose_category_placements
   end
 
   def choose_category_placements
