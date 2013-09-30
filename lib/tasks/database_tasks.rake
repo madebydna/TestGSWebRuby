@@ -33,6 +33,8 @@ $databases_receiving_mysql_dump = {
 
 $state_dbs_receiving_mysql_dump.each { |state| $databases_receiving_mysql_dump[state] = :state_tables }
 
+$all_state_dbs = States.state_hash.values.collect { |state| "_#{state.downcase}" }
+
 namespace :db do
   state_dbs = %w(_ca _dc)
   other_dbs = %w(gs_schooldb)
@@ -93,7 +95,7 @@ namespace :db do
     $specific_dbs = String(args[:specific_dbs]).split ','
 
     environments.each do |env|
-      $databases_receiving_mysql_dump.keys.each do |db|
+      $all_state_dbs.each do |db|
         if $specific_dbs.empty? || $specific_dbs.include?(db)
           puts "Creating database #{db}"
 
