@@ -35,6 +35,8 @@ $state_dbs_receiving_mysql_dump.each { |state| $databases_receiving_mysql_dump[s
 
 $all_state_dbs = States.state_hash.values.collect { |state| "_#{state.downcase}" }
 
+$all_legacy_dbs = ($databases_receiving_mysql_dump.keys + $all_state_dbs).uniq!
+
 namespace :db do
   state_dbs = %w(_ca _dc)
   other_dbs = %w(gs_schooldb)
@@ -95,7 +97,7 @@ namespace :db do
     $specific_dbs = String(args[:specific_dbs]).split ','
 
     environments.each do |env|
-      $all_state_dbs.each do |db|
+      $all_legacy_dbs.each do |db|
         if $specific_dbs.empty? || $specific_dbs.include?(db)
           puts "Creating database #{db}"
 
@@ -117,7 +119,7 @@ namespace :db do
 
     # for each environment (development, test) create the dbs.
     environments.each do |env|
-      $databases_receiving_mysql_dump.keys.each do |db|
+      $all_legacy_dbs.each do |db|
         if $specific_dbs.empty? || $specific_dbs.include?(db)
           puts "Dropping database #{db} on #{config['host']}"
 
