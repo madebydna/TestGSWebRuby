@@ -9,10 +9,25 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
         <% @school_reviews.each do |review| %>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div id="contents">
-                    <div id="main">
-                        <%= review[:comments] %>
+            <div id="contents">
+                <div id="main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+
+
+                            <div>
+                                <div class="iconx16-stars i-16-orange-star  i-16-star-<%= review[:quality] %> fl"><!-- not empty--></div>
+                                <div class="iconx16-stars i-16-grey-star  i-16-star-<%= 5 - review[:quality].to_i %> fl"><!-- not empty--></div>
+                            </div>
+                            <br />
+                            posted on: <%= review[:posted] %><br />
+                            posted by: <%= review[:who] %>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+                             <%= review[:comments] %>
+                         </div>
+
                     </div>
                 </div>
             </div>
