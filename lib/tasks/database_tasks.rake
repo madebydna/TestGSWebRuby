@@ -1,6 +1,7 @@
 require 'states'
 require 'octopus'
 
+<<<<<<< HEAD
 $tables_receiving_mysql_dump = {
     state_tables: %w(
       school
@@ -32,6 +33,27 @@ $databases_receiving_mysql_dump = {
 }.stringify_keys!
 
 $state_dbs_receiving_mysql_dump.each { |state| $databases_receiving_mysql_dump[state] = :state_tables }
+=======
+namespace :db do
+  task :reseed => [:drop, :create, :migrate, :seed]
+
+  namespace :shards do
+    tables = %w(school esp_response census_data_set census_data_school_value census_data_district_value census_data_state_value TestDataSet)
+    states = States.state_hash.values
+    databases = states.map{|state| '_' + state.downcase}
+
+    desc 'Create shards dbs.'
+    task :create, [:username, :password, :state] => :load_config do |task, args|
+      username = args[:username]
+      password = args[:password]
+      state = args[:state]
+
+      if state
+        databases = Array(state)
+      else
+        databases << 'LocalizedProfiles_development'
+      end
+>>>>>>> GS-14850 added test data set
 
 namespace :db do
   state_dbs = %w(_ca _dc)
