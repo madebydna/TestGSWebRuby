@@ -70,5 +70,17 @@ class TableData
   def sort_by(column, order_lookup_map)
     rows.sort_by{|row| order_lookup_map[row[column]]}
   end
+  # for each row in the given table_data, generate an array [key1, key2]
+  def to_piechart(key1, key2)
+    array = []
+
+    rows.each do |row|
+      array << [
+          "#{row[key1]}", row[key2].to_i
+      ]
+    end
+
+    array
+  end
 
 end
