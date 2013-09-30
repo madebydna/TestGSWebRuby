@@ -20,6 +20,9 @@ $tables_receiving_mysql_dump = {
       TestDataBreakdown
       TestDataSubject
       TestDataType
+    ),
+    surveys_tables: %w(
+      school_rating
     )
 }.stringify_keys!
 
@@ -28,7 +31,8 @@ $state_dbs_receiving_mysql_dump = %w(_ca _dc)
 $databases_receiving_mysql_dump = {
     _ca: :state_tables,
     _dc: :state_tables,
-    gs_schooldb: :gs_schooldb_tables
+    gs_schooldb: :gs_schooldb_tables,
+    surveys: :surveys_tables
 }.stringify_keys!
 
 $state_dbs_receiving_mysql_dump.each { |state| $databases_receiving_mysql_dump[state] = :state_tables }
@@ -38,9 +42,9 @@ $all_state_dbs = States.state_hash.values.collect { |state| "_#{state.downcase}"
 $all_legacy_dbs = ($databases_receiving_mysql_dump.keys + $all_state_dbs).uniq!
 
 namespace :db do
-  state_dbs = %w(_ca _dc)
-  other_dbs = %w(gs_schooldb)
-  all_legacy_dbs = state_dbs.clone + other_dbs
+  #state_dbs = %w(_ca _dc)
+  #other_dbs = %w(gs_schooldb)
+  #all_legacy_dbs = state_dbs.clone + other_dbs
 
   def dump_schema_from_dev(source_db, filename = source_db)
     database_config = YAML::load(File.open("#{Rails.root}/config/database.yml"))
