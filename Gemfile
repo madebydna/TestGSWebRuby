@@ -35,6 +35,9 @@ gem 'turbolinks'
 # DSL or building JSON objects. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Hashie is a simple collection of useful Hash extensions
+gem 'hashie'
+
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
@@ -43,6 +46,7 @@ group :development, :test do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   gem 'better_errors', '~> 0.9.0'
   gem 'binding_of_caller', '~> 0.7.2'
+
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'
 
