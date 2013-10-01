@@ -4,29 +4,66 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
-        <h2>Ratings</h2>
-        overall: <%= @rating_averages.overall.avg_score %>   <br />
-        principal: <%= @rating_averages.principal.avg_score %> <br />
-        teacher: <%= @rating_averages.teacher.avg_score %>   <br />
-        parent: <%= @rating_averages.parent.avg_score %>    <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div class="row">
+                    <div class="contents">
+                        <div class="main clearfix">
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                <div class="mrm pam bg-white">
+                                    <h4>Community Ratings</h4>
+                                    <div class="clearfix">
+                                        <div class="fl prm">overall:</div>
+                                        <%= draw_stars_16 @rating_averages.overall.avg_score %>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">principal:</div>
+                                        <%= draw_stars_16 @rating_averages.principal.avg_score %>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">teacher:</div>
+                                        <%= draw_stars_16 @rating_averages.teacher.avg_score %>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">parent:</div>
+                                        <%= draw_stars_16 @rating_averages.parent.avg_score %>
+                                    </div>
+                                </div>
+                            </div>
 
-        <h2>Stars</h2>
-        five star count: <%= @star_counts[5] %>   <br />
-        four star count: <%= @star_counts[4] %>   <br />
-        three star count: <%= @star_counts[3] %>   <br />
-        two star count: <%= @star_counts[2] %>   <br />
-        one star count: <%= @star_counts[1] %>   <br />
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="pam bg-white">
+                                    <h4>Ratings Distribution</h4>
+                                    five stars: <%= @star_counts[5] %>   <br />
+                                    four stars: <%= @star_counts[4] %>   <br />
+                                    three stars: <%= @star_counts[3] %>   <br />
+                                    two stars: <%= @star_counts[2] %>   <br />
+                                    one stars: <%= @star_counts[1] %>   <br />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="contents">
+                    <div class="main tac">
+                        <h4>Do you know this school?</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <% @school_reviews.each do |review| %>
-            <div id="contents">
-                <div id="main">
+            <div class="contents">
+                <div class="main">
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-
-
                             <div>
-                                <div class="iconx16-stars i-16-orange-star  i-16-star-<%= review[:quality] %> fl"><!-- not empty--></div>
-                                <div class="iconx16-stars i-16-grey-star  i-16-star-<%= 5 - review[:quality].to_i %> fl"><!-- not empty--></div>
+                                <%= draw_stars_16 review[:quality].to_i %>
                             </div>
                             <br />
                             posted on: <%= review[:posted] %><br />
@@ -43,8 +80,8 @@
         <% end %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-        <div id="contents">
-            <div id="main">
+        <div class="contents">
+            <div class="main">
                 <a name="Fascination"></a>
                 <h2 style="padding-top: 50px; margin-top: -50px;">Fascination</h2>
                 6 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
