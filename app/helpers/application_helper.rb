@@ -52,21 +52,10 @@ module ApplicationHelper
     end
   end
 
-  def page_category_layout_key(placement)
-    "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"
-  end
-
   def mark_category_layout_picked(placement)
-    key = page_category_layout_key placement
+    key = placement.page_category_layout_key
     @category_layouts_already_picked_by_a_position ||= []
     @category_layouts_already_picked_by_a_position << key
-  end
-
-
-
-
-  def state_hash
-    States::state_hash
   end
 
 end

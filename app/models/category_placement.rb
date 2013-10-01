@@ -8,6 +8,12 @@ class CategoryPlacement < ActiveRecord::Base
 
   after_initialize :set_defaults
 
+
+  # creates a key that identifies this placement's category on a specific page, with a specific format
+  def page_category_layout_key
+    "page#{page.id}_category#{category.id}_layout#{layout}"
+  end
+
   # layout name => partial name
   def possible_layouts
     {

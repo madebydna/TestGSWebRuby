@@ -44,18 +44,6 @@ class LocalizedProfileController < ApplicationController
     category_placement_data
   end
 
-  #def programs_resources
-  #  page('Programs & resources')
-  #  @category_positions = @page.categories_per_position(@school.collections)
-  #  render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
-  #end
-  #
-  #def extracurriculars
-  #  page('Extracurriculars')
-  #  @category_positions = @page.categories_per_position(@school.collections)
-  #  render :layout => 'application' # TODO: why do we need to use this? ApplicationController should render this by default
-  #end
-
   def page(name)
     @page = Page.using(:master).where(name: name).first
   end
@@ -79,15 +67,13 @@ class LocalizedProfileController < ApplicationController
 
     @school = School.using(state_abbreviation.to_sym).find school_id
   end
-  def page_category_layout_key(placement)
-    key = "page#{placement.page.id}_category#{placement.category.id}_layout#{placement.layout}"
-  end
+
+
   def category_layout_already_picked?(placement)
     @category_layouts_already_picked_by_a_position ||= []
-    key = page_category_layout_key placement
+    key = placement.page_category_layout_key
     @category_layouts_already_picked_by_a_position.include? key
   end
-
 
   def choose_placement_and_get_data(position_number)
 
