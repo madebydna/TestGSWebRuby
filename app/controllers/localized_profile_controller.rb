@@ -22,26 +22,23 @@ class LocalizedProfileController < ApplicationController
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
   end
+
   def details
     page('Details')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
   end
+
   def reviews
     page('Reviews')
     @school_reviews = @school.reviews
-
-    #@category_positions = @page.categories_per_position(@school.collections)
-    #@category_placements =  choose_category_placements
   end
 
   def choose_category_placements
-    category_placement_data={}
-    (1..6).each do |position_number|
-      category_p_d = choose_placement_and_get_data(position_number)
-      category_placement_data[position_number] = category_p_d
+    @category_positions.keys.sort.inject({}) do |hash, position|
+      hash[position] = choose_placement_and_get_data(position)
+      hash
     end
-    category_placement_data
   end
 
   def page(name)
@@ -68,13 +65,15 @@ class LocalizedProfileController < ApplicationController
     @school = School.using(state_abbreviation.to_sym).find school_id
   end
 
-
+  # true if category was already chosen to be displayed with associated layout.
   def category_layout_already_picked?(placement)
     @category_layouts_already_picked_by_a_position ||= []
     key = placement.page_category_layout_key
     @category_layouts_already_picked_by_a_position.include? key
   end
 
+  # Given a hash of category_positions exists, determine the correct category_placement to display at a position
+  # Requests data for each category to check eligibility
   def choose_placement_and_get_data(position_number)
 
     # Make sure there are some Category Placements for the position that was requested
@@ -107,8 +106,5 @@ class LocalizedProfileController < ApplicationController
       return nil
     end
   end
-
-
-
 
 end

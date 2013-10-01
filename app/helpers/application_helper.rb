@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def render_all_positions
+    result = ''
+    @category_positions.keys.sort.each { |position| result << (render_position position) }
+    result.html_safe
+  end
+
   def render_position(position_number)
     if @category_positions[position_number]
 
@@ -40,8 +46,6 @@ module ApplicationHelper
         category: category,
         config: category_placement.layout_config.present? ? TableConfig.new(layout_config_json) : nil,
         size: category_placement.size || 12
-
-      end
 
     end
   end
