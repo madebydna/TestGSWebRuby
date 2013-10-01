@@ -30,7 +30,22 @@ class School < ActiveRecord::Base
   end
 
   def reviews
-    SchoolRating.fetch_reviews self
+    #second parameter is group to filter by leave it as empty string '' for all
+    #third parameter is order by - options are
+    #   '' empty string is most recent first
+    #   'oldest' is oldest first
+    #   'rating_top' is by highest rating
+    #   'rating_bottom' is by lowest rating
+    SchoolRating.fetch_reviews self, '', ''
+  end
+  def reviews_filter(group_type, order_results_by)
+    #second parameter is group to filter by leave it as empty string '' for all
+    #third parameter is order by - options are
+    #   '' empty string is most recent first
+    #   'oldest' is oldest first
+    #   'rating_top' is by highest rating
+    #   'rating_bottom' is by lowest rating
+    SchoolRating.fetch_reviews self, group_type, order_results_by
   end
 
 =begin
