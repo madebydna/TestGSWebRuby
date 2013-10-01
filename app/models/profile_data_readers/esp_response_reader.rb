@@ -30,25 +30,17 @@ class EspResponseReader
   end
 
   def table_data(school)
-    # now that we have a map of key => array of values, create an array with one element for each pair
-    # This is what the view / layout code expects
-    table_data = TableData.new
+    hash = data(school)
 
-    unless data(school).nil?
-      data(school).each_pair do |key, value|
-        table_data.add_row ({
-            label: key,
-            value: value
-        })
-      end
+    unless hash.nil?
+      TableData.from_hash hash, :label, :value
     end
-    table_data
   end
 
   def prettify_data(school, table_data)
     lookup_table = ResponseValue.lookup_table(school.collections)
-    table_data.transform! :label, lookup_table
-    table_data.transform! :value, lookup_table
+    table_data.transform_column! :label, lookup_table
+    table_data.transform_column! :value, lookup_table
   end
 
 end

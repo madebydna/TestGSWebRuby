@@ -58,14 +58,11 @@ class StudentEthnicity
   end
 
   def table_data(school)
-
     rows = data(school)
 
-    json_data = {
-        rows: rows
-    }
-
-    table_data = TableData.new json_data
+    if rows.any?
+      TableData.new rows
+    end
   end
 
   def prettify_data(school, table_data)

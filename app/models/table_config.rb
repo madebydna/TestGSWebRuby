@@ -1,3 +1,4 @@
+# Knows how to parse a JSON representation of a Layout config in LocalizedProfile admin. Specifically for table layouts
 class TableConfig
   attr_reader :config
 
