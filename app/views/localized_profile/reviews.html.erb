@@ -4,6 +4,19 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+        <h2>Ratings</h2>
+        overall: <%= @rating_averages.overall.avg_score %>   <br />
+        principal: <%= @rating_averages.principal.avg_score %> <br />
+        teacher: <%= @rating_averages.teacher.avg_score %>   <br />
+        parent: <%= @rating_averages.parent.avg_score %>    <br />
+
+        <h2>Stars</h2>
+        five star count: <%= @star_counts[5] %>   <br />
+        four star count: <%= @star_counts[4] %>   <br />
+        three star count: <%= @star_counts[3] %>   <br />
+        two star count: <%= @star_counts[2] %>   <br />
+        one star count: <%= @star_counts[1] %>   <br />
+
         <% @school_reviews.each do |review| %>
             <div id="contents">
                 <div id="main">
