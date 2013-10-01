@@ -38,8 +38,8 @@ class LocalizedProfileController < ApplicationController
   def choose_category_placements
     category_placement_data={}
     (1..6).each do |position_number|
-      category_p_d=choose_placement_and_get_data(position_number)
-      category_placement_data[position_number]=category_p_d
+      category_p_d = choose_placement_and_get_data(position_number)
+      category_placement_data[position_number] = category_p_d
     end
     category_placement_data
   end
