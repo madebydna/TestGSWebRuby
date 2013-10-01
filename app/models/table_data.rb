@@ -10,7 +10,7 @@ class TableData
   # Generate a TableData from a json object
   def self.from_json(json)
     table_data = TableData.new
-    json.each { |k,v| table_data.send "#{k}=", v }
+    json.each { |k, v| table_data.send "#{k}=", v }
     return table_data
   end
 
@@ -38,13 +38,13 @@ class TableData
     end
 
     if rows.any?
-      rows.each { |row| add_columns_for_row row}
+      rows.each { |row| add_columns_for_row row }
     end
 
     @rows = rows
     @data = {
-      rows: rows,
-      columns: @columns
+        rows: rows,
+        columns: @columns
     }
   end
 
@@ -96,15 +96,15 @@ class TableData
   end
 
   def sort_ascending(column)
-    rows.sort_by{|row| row[column]}
+    rows.sort_by { |row| row[column] }
   end
 
   def sort_descending(column)
-    rows.sort_by{|row| row[column]}.reverse!
+    rows.sort_by { |row| row[column] }.reverse!
   end
 
   def sort_by(column, order_lookup_map)
-    rows.sort_by{|row| order_lookup_map[row[column]]}
+    rows.sort_by { |row| order_lookup_map[row[column]] }
   end
 
   # for each row in the given table_data, generate an array [label_column, value_column]
