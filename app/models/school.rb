@@ -48,6 +48,11 @@ class School < ActiveRecord::Base
     SchoolRating.fetch_reviews self, group_type, order_results_by
   end
 
+  def test_scores
+    TestDataSet.fetch_test_scores(id)
+  end
+
+
 =begin
   def label_value_map_per_category(page)
     categories_per_position = page.categories_per_position(collections)

@@ -15,7 +15,7 @@ class TestDataSet < ActiveRecord::Base
 
   end
 
-  def self.test_data_for_school(schoolId)
+  def self.fetch_test_scores(schoolId)
     @data_sets_and_values = TestDataSet.for_school(schoolId)
     @all_data_set_ids = @data_sets_and_values.pluck("TestDataSet.id")
     @valid_data_set_ids = TestDataSetFile.get_valid_data_set_ids(@all_data_set_ids)

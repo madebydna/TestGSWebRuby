@@ -148,4 +148,9 @@ class LocalizedProfileController < ApplicationController
     end
   end
 
+  def test_scores
+    page('TestScores')
+    @school.test_scores
+  end
+
 end

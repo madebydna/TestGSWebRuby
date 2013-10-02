@@ -17,6 +17,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/profile/quality', :to => 'localized_profile#quality'
   get '/profile/details', :to => 'localized_profile#details'
   get '/profile/reviews', :to => 'localized_profile#reviews'
+  get '/profile/testscores', :to=> 'localized_profile#test_scores'
 
   get 'pages/home'
   get 'pages/contact'
