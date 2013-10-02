@@ -2,11 +2,6 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   resources :census_data_sets
 
-  get "navigation/navtest1"
-  get "navigation/navtest2"
-  get "navigation/navtest3"
-  get "navigation/navtest4"
-
   # Handle existing school profile links. Point them to overview action
   get '/:state/:city/:school_name', to: 'localized_profile#overview', constraints: {
       state: States.any_state_name_regex,
@@ -18,9 +13,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/profile/details', :to => 'localized_profile#details'
   get '/profile/reviews', :to => 'localized_profile#reviews'
   get '/profile/testscores', :to=> 'localized_profile#test_scores'
-
-  get 'pages/home'
-  get 'pages/contact'
+  get '/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
   devise_for :admins
 

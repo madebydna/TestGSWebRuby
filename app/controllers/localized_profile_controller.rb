@@ -31,10 +31,15 @@ class LocalizedProfileController < ApplicationController
 
   def reviews
     page('Reviews')
-    @school_reviews = @school.reviews
+    # fetches all reviews
+    @school_reviews = @school.reviews_filter '', '', '', 10
+
+    @review_offset = 0;
+    @review_limit = 10;
+    # fetches all reviews
+    @school_reviews_all = @school.reviews
     #store star counts for overall
     @star_counts = [ 0, 0, 0, 0, 0, 0 ]
-
     #store resulting average and components for calculating them
     @rating_averages = Hashie::Mash.new(
       {
@@ -45,7 +50,7 @@ class LocalizedProfileController < ApplicationController
       }
     )
     #quality - overall
-    @school_reviews.each do |review|
+    @school_reviews_all.each do |review|
       #use quality for star counts and overall score
       overall_rating = review.quality
       if overall_rating != 'decline'
@@ -92,19 +97,7 @@ class LocalizedProfileController < ApplicationController
     @user_first_name = @user.first_name unless @user.nil?
   end
 
-  # Finds school given request param schoolId
-  def find_school
-    state = params[:state] || 'CA'
-    state.gsub! '-', ' '
-    state_abbreviation = States.abbreviation(state)
-    school_id = params[:schoolId] || 1
 
-    if school_id.nil?
-      # todo: redirect to school controller, school_not_found action
-    end
-
-    @school = School.using(state_abbreviation.to_sym).find school_id
-  end
 
   # true if category was already chosen to be displayed with associated layout.
   def category_layout_already_picked?(placement)

@@ -6,14 +6,6 @@ module ApplicationHelper
     result.html_safe
   end
 
-  def draw_stars_16(on_star_count)
-    off_star_count = 5 - on_star_count
-    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ' fl'
-    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ' fl'
-    content_tag(:div, '', :class => class_on)  +
-    content_tag(:div, '', :class => class_off)
-  end
-
   def render_position(position_number)
     if @category_positions[position_number]
 
@@ -64,4 +56,11 @@ module ApplicationHelper
     @category_layouts_already_picked_by_a_position << key
   end
 
+  def draw_stars_16(on_star_count)
+    off_star_count = 5 - on_star_count
+    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ' fl'
+    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ' fl'
+    content_tag(:div, '', :class => class_on)  +
+        content_tag(:div, '', :class => class_off)
+  end
 end

@@ -3,18 +3,20 @@ class SchoolRating < ActiveRecord::Base
 
   self.table_name='school_rating'
 
-  scope :group_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group.empty? }
   #scope :recent, order("posted DESC")
   #scope :oldest, order("posted ASC")
   #scope :rating_top, order("quality DESC")
   #scope :rating_bottom, order("quality ASC")
+  scope :review_selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group.empty? }
+  scope :review_limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.to_s.empty? }
+  scope :review_offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.to_s.empty? }
 
-  def self.fetch_reviews(school, group_to_fetch, order_results_by)
+  def self.fetch_reviews(school, group_to_fetch, order_results_by, offset_start, quantity_to_return)
     # TODO: restrict reviews to correct statuses
-    # .limit(10).offset(30)  for getting next ten in ajax
-    SchoolRating.where(school_id: school.id, state: school.state).group_filter(group_to_fetch).order_by(order_results_by)
+    SchoolRating.where(school_id: school.id, state: school.state).review_selection_filter(group_to_fetch).order_by_selection(order_results_by).review_limit_number(quantity_to_return).review_offset_number(offset_start)
   end
-  def self.order_by(order_selection)
+
+  def self.order_by_selection(order_selection)
     case order_selection
       when 'oldest'
         order("posted ASC")

@@ -29,23 +29,18 @@ class School < ActiveRecord::Base
     school_collections.map(&:collection)
   end
 
+  # returns all reviews for
   def reviews
-    #second parameter is group to filter by leave it as empty string '' for all
-    #third parameter is order by - options are
-    #   '' empty string is most recent first
-    #   'oldest' is oldest first
-    #   'rating_top' is by highest rating
-    #   'rating_bottom' is by lowest rating
-    SchoolRating.fetch_reviews self, '', ''
+    SchoolRating.fetch_reviews self, '', '', '', ''
   end
-  def reviews_filter(group_type, order_results_by)
+  def reviews_filter(group_type, order_results_by, offset_start, quantity_to_return)
     #second parameter is group to filter by leave it as empty string '' for all
     #third parameter is order by - options are
     #   '' empty string is most recent first
     #   'oldest' is oldest first
     #   'rating_top' is by highest rating
     #   'rating_bottom' is by lowest rating
-    SchoolRating.fetch_reviews self, group_type, order_results_by
+    SchoolRating.fetch_reviews self, group_type, order_results_by, offset_start, quantity_to_return
   end
 
   def test_scores
