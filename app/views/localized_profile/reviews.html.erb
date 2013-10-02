@@ -56,6 +56,27 @@
             </div>
         </div>
 
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
+                <div class="fl">
+                    <div class="btn-group js_reviewFilterButton" data-group-selected="all">
+                        <button type="button" class="btn btn-default active" data-group-name="all">All</button>
+                        <button type="button" class="btn btn-default" data-group-name="parents">Parents</button>
+                        <button type="button" class="btn btn-default" data-group-name="students">Students</button>
+                    </div>
+                </div>
+                <div class="dropdown fl pll">
+                    <button type="button" class="btn btn-default" data-toggle="dropdown" href="#">Date newest to oldest <b class="caret"></b></button>
+                    <ul class="dropdown-menu mll js_reviewFilterDropDown" data-order-selected="newToOld">
+                        <li><a data-order-review="newToOld">Date newest to oldest</a></li>
+                        <li><a data-order-review="oldToNew">Date oldest to newest</a></li>
+                        <li><a data-order-review="ratingsHighToLow">Ratings high to low</a></li>
+                        <li><a data-order-review="ratingsLowToHigh">Ratings low to high</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </row>
 
         <div class="js_reviewsList">
         <% @school_reviews.each do |review| %>
@@ -94,3 +115,4 @@
         </div>
     </div>
 </div>
+<%= render 'nav/footer' %>
