@@ -81,7 +81,7 @@
         <% end %>
         </div>
         <% if @school_reviews_all.size > 10 %>
-            <button data-total-count="<%= @school_reviews_all.size %>" data-offset="<%= @review_offset %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
+            <button data-total-count="<%= @school_reviews_all.size %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
         <% end %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
