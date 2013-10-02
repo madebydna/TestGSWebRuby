@@ -39,7 +39,7 @@ class TestDataSet < ActiveRecord::Base
         breakdown_id = result.breakdown_id
         number_tested = result.number_tested
 
-        test_data.deep_merge!({ "#{test_data_type_id}" => { "#{grade}" => { "#{level_code}" => { "#{subject}" => { "#{test_data_set_id}" => {"score" => test_score_float , "number_tested" => number_tested} }  }}}})
+        test_data.deep_merge!({ "#{test_data_type_id}" => { "#{grade}" => { "#{level_code}" => { "#{subject}" => { "#{year}" => {"score" => test_score_float , "number_tested" => number_tested} }  }}}})
 
       end
 
@@ -74,10 +74,10 @@ class TestDataSet < ActiveRecord::Base
         29 => 'biology 1',
         30 => 'history',
         43 => 'earth science',
-        13 => 'HIGH_SCHOOL_SUMMATIVE_MATHEMATICS_GRADE_9_11',
-        53 => 'WORLD_HISTORY',
-        42 => 'CHEMISTRY',
-        41 => 'PHYSICS'
+        13 => 'high school summative mathematics grade 9_11',
+        53 => 'world history',
+        42 => 'chemistry',
+        41 => 'physics'
 
     }
   end
