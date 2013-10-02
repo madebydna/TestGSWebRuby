@@ -28,7 +28,7 @@ class TestDataSet < ActiveRecord::Base
       #Todo consider a different data structure instead of nested maps.
 
       if @valid_data_set_ids.include?(result.data_set_id)
-        test_data_type_id = result.data_type_id
+        test_data_type_id = lookup_test[result.data_type_id]
         test_data_set_id = result.data_set_id
         grade = result.grade
         level_code = result.level_code
