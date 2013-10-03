@@ -58,6 +58,12 @@
 
         <row>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
+                <h3><%= @review_filter_totals.all %> review<% if @review_filter_totals.all != 1 %><%= 's' %><% end %> of this school</h3>
+            </div>
+        </row>
+
+        <row>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
                 <div class="fl">
                     <div class="btn-group js_reviewFilterButton" data-group-selected="all">
                         <button type="button" class="btn btn-default active" data-group-name="all">All</button>
