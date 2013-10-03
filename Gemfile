@@ -38,6 +38,8 @@ gem 'jbuilder', '~> 1.2'
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
 
+gem 'to_regexp'
+
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
@@ -65,6 +67,15 @@ group :development, :test do
 
   # Use haml for template engine. Also specified in application.rb
   gem 'haml-rails'
+
+  # DSL for page object pattern, used for cucumber testing
+  gem 'site_prism'
+
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+  gem 'mechanize'
+  gem 'capybara'
+  gem 'capybara-mechanize'
 end
 
 # Gems used only for assets and not required
