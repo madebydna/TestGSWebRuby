@@ -11,6 +11,7 @@ $(function () {
 
     $(".js_reviewFilterButton").on("click", "button", function(){
         if($(".js_reviewFilterButton").data( "group-selected"  ) != $(this).data( "group-name" )){
+            $(".js_reviewsGetNextTen").addClass("dn");
             var offset = 0;
             var limit = $(".js_reviewsGetNextTen").data( "limit" );
             var filter_by_group = $(this).data( "group-name" );
@@ -24,20 +25,16 @@ $(function () {
                }
             }
             $(".js_reviewsGetNextTen").data( "total-count", totalCount );
-
             $(".js_reviewsList").html('');
-
             $(this).siblings().removeClass("active");
             $(this).addClass("active");
             $(".js_reviewFilterButton").data( "group-selected", filter_by_group);
-
             var order_by = $(".js_reviewFilterDropDown").data( "order-selected" );
-
             callAjax(offset, limit, totalCount, filter_by_group, order_by);
         }
     });
     $(".js_reviewFilterDropDown").on("click", "a", function(){
-
+        $(".js_reviewsGetNextTen").addClass("dn");
         var storeSelectedObj = $(".js_reviewFilterDropDown");
         var selectedText = $(".js_reviewFilterDropDownText");
         var order_by = $(this).data( "order-review" );
@@ -54,7 +51,7 @@ $(function () {
         }
     });
     var callAjax = function(offset, limit, totalCount, filter_by, order_by){
-        console.log(offset+":"+limit+":"+totalCount+":"+filter_by+":"+order_by);
+//        console.log(offset+":"+limit+":"+totalCount+":"+filter_by+":"+order_by);
         jQuery.ajax({
             type:'GET',
             url:"/ajax/reviews_pagination",
