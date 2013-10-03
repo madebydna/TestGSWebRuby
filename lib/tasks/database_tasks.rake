@@ -4,6 +4,7 @@ require 'octopus'
 $tables_receiving_mysql_dump = {
     state_tables: %w(
       school
+      school_metadata
       esp_response
       census_data_set
       census_data_school_value

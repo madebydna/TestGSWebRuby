@@ -13,7 +13,11 @@ class SchoolRating < ActiveRecord::Base
 
   def self.fetch_reviews(school, group_to_fetch, order_results_by, offset_start, quantity_to_return)
     # TODO: restrict reviews to correct statuses
-    SchoolRating.where(school_id: school.id, state: school.state).review_selection_filter(group_to_fetch).order_by_selection(order_results_by).review_limit_number(quantity_to_return).review_offset_number(offset_start)
+    SchoolRating.where(school_id: school.id, state: school.state)
+      .review_selection_filter(group_to_fetch)
+      .order_by_selection(order_results_by)
+      .review_limit_number(quantity_to_return)
+      .review_offset_number(offset_start)
   end
 
   def self.order_by_selection(order_selection)
