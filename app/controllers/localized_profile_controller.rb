@@ -49,12 +49,25 @@ class LocalizedProfileController < ApplicationController
         parent:    { avg_score: 0, total: 0, counter: 0 }
       }
     )
-    #quality - overall
+    @review_filter_totals = Hashie::Mash.new(
+        {
+            all: @school_reviews_all.size,
+            parent: 0,
+            student: 0
+        }
+    )
+    #quality maps to overall_rating
     @school_reviews_all.each do |review|
       #use quality for star counts and overall score
       overall_rating = review.quality
       if overall_rating != 'decline'
         @star_counts[overall_rating.to_i] = @star_counts[overall_rating.to_i]+1
+      end
+      if review.who == 'parent'
+        @review_filter_totals.parent = @review_filter_totals.parent+1
+      end
+      if review.who == 'student'
+        @review_filter_totals.student = @review_filter_totals.student+1
       end
       set_reviews_values @rating_averages.overall, overall_rating
       set_reviews_values @rating_averages.principal, review.principal

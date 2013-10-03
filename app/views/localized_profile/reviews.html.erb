@@ -61,12 +61,12 @@
                 <div class="fl">
                     <div class="btn-group js_reviewFilterButton" data-group-selected="all">
                         <button type="button" class="btn btn-default active" data-group-name="all">All</button>
-                        <button type="button" class="btn btn-default" data-group-name="parents">Parents</button>
-                        <button type="button" class="btn btn-default" data-group-name="students">Students</button>
+                        <button type="button" class="btn btn-default" data-group-name="parent">Parents</button>
+                        <button type="button" class="btn btn-default" data-group-name="student">Students</button>
                     </div>
                 </div>
                 <div class="dropdown fl pll">
-                    <button type="button" class="btn btn-default" data-toggle="dropdown" href="#">Date newest to oldest <b class="caret"></b></button>
+                    <button type="button" class="btn btn-default js_reviewFilterDropDownText" data-toggle="dropdown" href="#">Date newest to oldest <b class="caret"></b></button>
                     <ul class="dropdown-menu mll js_reviewFilterDropDown" data-order-selected="newToOld">
                         <li><a data-order-review="newToOld">Date newest to oldest</a></li>
                         <li><a data-order-review="oldToNew">Date oldest to newest</a></li>
@@ -79,30 +79,10 @@
         </row>
 
         <div class="js_reviewsList">
-        <% @school_reviews.each do |review| %>
-            <div class="contents">
-                <div class="main">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-                            <div>
-                                <%= draw_stars_16 review[:quality].to_i %>
-                            </div>
-                            <br />
-                            posted on: <%= review[:posted] %><br />
-                            posted by: <%= review[:who] %>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                             <%= review[:comments] %>
-                         </div>
-
-                    </div>
-                </div>
-            </div>
-        <% end %>
+            <%= render '/shared/review_module', school_reviews_pagination: @school_reviews %>
         </div>
-        <% if @school_reviews_all.size > 10 %>
-            <button data-total-count="<%= @school_reviews_all.size %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
+        <% if @review_filter_totals.all > 10 %>
+            <button data-total-count="<%= @review_filter_totals.all %>" data-all-count="<%= @review_filter_totals.all %>" data-parent-count="<%= @review_filter_totals.parent %>" data-student-count="<%= @review_filter_totals.student %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
         <% end %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">

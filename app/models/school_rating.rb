@@ -7,7 +7,7 @@ class SchoolRating < ActiveRecord::Base
   #scope :oldest, order("posted ASC")
   #scope :rating_top, order("quality DESC")
   #scope :rating_bottom, order("quality ASC")
-  scope :review_selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group.empty? }
+  scope :review_selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.empty? }
   scope :review_limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.to_s.empty? }
   scope :review_offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.to_s.empty? }
 
@@ -18,11 +18,11 @@ class SchoolRating < ActiveRecord::Base
 
   def self.order_by_selection(order_selection)
     case order_selection
-      when 'oldest'
+      when 'oldToNew'
         order("posted ASC")
-      when 'rating_top'
+      when 'ratingsHighToLow'
         order("quality DESC, posted DESC")
-      when 'rating_bottom'
+      when 'ratingsLowToHigh'
         order("quality ASC, posted DESC")
       else
         order("posted DESC")
