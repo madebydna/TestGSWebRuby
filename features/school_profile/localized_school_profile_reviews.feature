@@ -1,18 +1,17 @@
-Feature: Localized Profile Reviews
+Feature: Localized Profile: View Reviews
   As a user
-  I can view and write reviews
-  So that I can evaluate and share my opinion on schools
+  I can see other parents' reviews
 
   Background: 
-    Given I visit localized school profile reviews page
+    Given I visit a localized school profile reviews page
 
   @javascript
   Scenario: There are school reviews
-    Given I see reviews
+    Then I see reviews
 
   @javascript
   Scenario Outline: I can filter school reviews
-    Given I filter on <filter>
+    Then I filter on <filter>
   Examples:
     | filter    |
     | parents   |
@@ -20,7 +19,7 @@ Feature: Localized Profile Reviews
     | all       |
 
   @javascript
-  Scenario: I can filter school reviews
+  Scenario: I can pagination through reviews
     When I visit a school with more than ten reviews
     And I click the button "Get Next Ten"
     Then I wait to see more than ten reviews
