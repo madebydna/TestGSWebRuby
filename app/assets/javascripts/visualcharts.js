@@ -11,7 +11,7 @@
 
 
 var GS = GS || {};
-GS.piechart = GS.piechart || function($) {
+GS.visualchart = GS.visualchart || function($) {
 
     var loader = [];
     $.getScript("https://www.google.com/jsapi", function() {
@@ -75,10 +75,29 @@ GS.piechart = GS.piechart || function($) {
         }
     };
 
+    var drawBarChart = function (barChartData, div) {
+        var func = function () {
+            var data = google.visualization.arrayToDataTable(barChartData);
+
+            var options = {};
+
+            var chart = new google.visualization.BarChart(document.getElementById(div));
+            chart.draw(data, options);
+
+        }
+        if (loader) {
+            loader.push(func);
+        } else {
+            google.setOnLoadCallback(func);
+        }
+
+    };
+
     return {
         colors: colors,
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
+        drawBarChart: drawBarChart,
         loader: loader
     }
 

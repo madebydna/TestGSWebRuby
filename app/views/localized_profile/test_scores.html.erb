@@ -29,7 +29,7 @@
                                     <div id="<%= bar_chart_div_id %>" style="width: 350px; height: 150px;"></div>
                                     <% content_for :head do %>
                                         <script type="text/javascript">
-                                            GS.barchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
+                                            GS.visualchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
                                         </script>
                                     <% end %>
                                 <% end %>
