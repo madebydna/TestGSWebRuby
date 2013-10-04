@@ -10,23 +10,31 @@ class GsPage < SitePrism::Page
   # class methods
   ##################################################
 
+  # Gets a page object and tells the page object to send the browser to the right URL
   def self.get_page(page_name)
     regex, symbol_or_page = PAGE_MAPPING.select{ |key, value| page_name.match key }.first
 
     raise "Could not find page matching #{page_name}" if symbol_or_page.nil?
 
+    # memoize page object instance or each page mapping regex
     if symbol_or_page.instance_of? Symbol
-      symbol_or_page = Object.const_get(symbol_or_page.to_s).new
-      PAGE_MAPPING[regex] = symbol_or_page
+      page = Object.const_get(symbol_or_page.to_s).new
+      PAGE_MAPPING[regex] = page
+    else
+      page = symbol_or_page
     end
 
-    symbol_or_page.switch_url page_name
-    return symbol_or_page
+    # return the page object
+    return page
   end
 
   def self.visit(page_name)
-    page = get_page page_name
-    page.load
+    # get a page object
+    page = self.get_page page_name
+
+    # tell the page to set its URL based on this page name
+    page.switch_url page_name
+
     return page
   end
 
@@ -47,16 +55,37 @@ class GsPage < SitePrism::Page
     # Below methods available through SitePrism DSL
     self.class.set_url url
     self.class.set_url_matcher url.to_regexp(:literal => true)
+
+    #directs the browser to this url
+    load
+
   end
 
-  def element_visible?(element)
+  def element_visible?(element_name)
     # convert human-friend element with whitespace to
-    element.gsub! /\s+/, '_'
+    element = element_name.gsub /\s+/, '_'
 
     raise "Element '#{element}' not defined for page #{self.class}" unless respond_to? element
 
     result = self.send element
-    result.visible?
+
+    raise "Element '#{element}' not found on page #{self.class}" if result.nil?
+
+    if result.is_a? Enumerable
+      result.count.should > 0
+      result.first.visible?
+    else
+      result.visible?
+    end
+  end
+
+  def wait_for_element(element_name)
+    # convert human-friend element with whitespace to
+    element = element_name.gsub /\s+/, '_'
+
+    raise "Element '#{element}' not defined for page #{self.class}" unless respond_to? element
+
+    self.send "wait_for_#{element}"
   end
 
   def element(element)
