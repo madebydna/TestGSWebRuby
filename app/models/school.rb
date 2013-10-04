@@ -44,7 +44,7 @@ class School < ActiveRecord::Base
   end
 
   def test_scores
-    TestDataSet.fetch_test_scores(id)
+    TestDataSet.fetch_test_scores self
   end
 
 
