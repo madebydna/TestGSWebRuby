@@ -6,7 +6,7 @@
 
 <!--<%= @school.test_scores %>-->
 
-<% @school.test_scores.each do |test,value| %>
+<% @school.test_scores.each_with_index do |(test,value),index| %>
     <div class="contents">
         <div class="main">
             <div class="row">
@@ -20,8 +20,17 @@
                                     <%= subject %><br/>
                                     <% value.each do |year,value| %>
                                         <%= year %>
-                                        score: <%= value["score"] %>
+                                        score : <%= value["score"] %>
                                         number tested: <%= value["number_tested"] %><br/>
+                                    <% end %>
+
+                                    <!--TODO change this to test id-->
+                                    <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
+                                    <div id="<%= bar_chart_div_id %>" style="width: 350px; height: 150px;"></div>
+                                    <% content_for :head do %>
+                                        <script type="text/javascript">
+                                            GS.barchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
+                                        </script>
                                     <% end %>
                                 <% end %>
                             <% end %>
@@ -32,4 +41,9 @@
         </div>
     </div>
 <% end %>
+
+
+
+
+
 <%= render 'nav/footer' %>

@@ -63,4 +63,8 @@ module ApplicationHelper
     content_tag(:div, '', :class => class_on)  +
         content_tag(:div, '', :class => class_off)
   end
+
+  def to_bar_chart_array(data_hash)
+    @bar_chart_data = [['year','score']] + data_hash.collect{|key,value| [key.to_s,value.score] }
+  end
 end

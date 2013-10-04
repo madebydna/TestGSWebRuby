@@ -157,6 +157,7 @@ class LocalizedProfileController < ApplicationController
   def test_scores
     page('TestScores')
     @school.test_scores
+    @tabledata = [[2010, 446],[2011, 469],[2012, 399],[2013, 437]];
   end
 
 end
