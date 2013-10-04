@@ -38,7 +38,6 @@ Given /^I visit ([^\"]+)(?: page)?$/ do |page_name|
   # @page.navigation.visible?
 end
 
-
 Given /I see(?: the)? ([^\"]+)/ do |element_name|
   @page.element_visible? element_name
 end
@@ -48,15 +47,3 @@ Given /I wait to see(?: the)? ([^\"]+)/ do |element_name|
   @page.element_visible? element_name
 end
 
-Given /I filter(?: on)? (parents|students|all)/ do |filter|
-  element = "#{filter}_filter"
-
-  @page.element(element).click
-  @page.wait_for_reviews
-  @page.should have_at_least(3).reviews
-
-  if filter.match /parents|students/
-    @page.posters.each { |poster| poster.text.should match(/#{filter[0..-2]}/i) }
-  end
-
-end
