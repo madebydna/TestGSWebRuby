@@ -47,3 +47,7 @@ Given /I wait to see(?: the)? ([^\"]+)/ do |element_name|
   @page.element_visible? element_name
 end
 
+Given /I(?: can)? sort(?: the)? (.+) (?:on|by) (.*)/ do |element_name, sort_by|
+  @page.send "sort_#{element_name}", sort_by
+end
+

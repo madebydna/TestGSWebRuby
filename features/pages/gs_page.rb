@@ -1,14 +1,15 @@
 class GsPage < SitePrism::Page
-  public :element_exists?
+
+  include RSpec::Matchers
 
   PAGE_MAPPING = {
       /localized( school)? profile( page)?$/i => :LocalizedProfilePage,
       /localized( school)? profile reviews( page)?$/i => :LocalizedProfileReviewsPage,
   }
 
-  ##################################################
-  # class methods
-  ##################################################
+  # ----------------------------------------------------------------------------------
+  # Methods for working with page objects
+  # ----------------------------------------------------------------------------------
 
   # Gets a page object and tells the page object to send the browser to the right URL
   def self.get_page(page_name)
@@ -29,6 +30,7 @@ class GsPage < SitePrism::Page
   end
 
   def self.visit(page_name)
+
     # get a page object
     page = self.get_page page_name
 
@@ -38,13 +40,10 @@ class GsPage < SitePrism::Page
     return page
   end
 
-  ##################################################
-  # instance methods
-  ##################################################
-
   # Switches the url and url matchers for the underlying page object.
   # This is so that a page object can be reused rather than reinstantiated
   def switch_url(page_name)
+
     # Get the regex and url for the first URL that matches
     # It will enumerate all of them, but code is clean
     regex, url = self.class::URLS.select{ |key, value| page_name.match key }.first
@@ -58,18 +57,16 @@ class GsPage < SitePrism::Page
 
     #directs the browser to this url
     load
-
   end
 
+  # ----------------------------------------------------------------------------------
+  # Extend SitePrism::Page with extra methods for working with elements
+  # ----------------------------------------------------------------------------------
+
   def element_visible?(element_name)
-    # convert human-friend element with whitespace to
-    element = element_name.gsub /\s+/, '_'
+    result = element(element_name)
 
-    raise "Element '#{element}' not defined for page #{self.class}" unless respond_to? element
-
-    result = self.send element
-
-    raise "Element '#{element}' not found on page #{self.class}" if result.nil?
+    raise "Element '#{element_name}' not found on page #{self.class}" if result.nil?
 
     if result.is_a? Enumerable
       result.count.should > 0
@@ -80,16 +77,11 @@ class GsPage < SitePrism::Page
   end
 
   def wait_for_element(element_name)
-    # convert human-friend element with whitespace to
-    element = element_name.gsub /\s+/, '_'
+    element = lookup_element_name element_name
 
     raise "Element '#{element}' not defined for page #{self.class}" unless respond_to? element
 
     self.send "wait_for_#{element}"
   end
 
-  def element(element)
-    raise "Element '#{element}' not defined for page #{self.class}" unless respond_to? element
-    self.send element
-  end
 end

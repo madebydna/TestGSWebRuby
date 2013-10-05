@@ -11,6 +11,7 @@ require 'selenium/webdriver' # Added by Anthony so I can override the user agent
 require 'capybara/dsl'
 require 'site_prism'
 require 'to_regexp'
+require 'hashie'
 
 # NOTE: You may need to manually set "general.useragent.enable_overrides" to "true" in your Firefox about:config for this to work
 Capybara.register_driver :selenium_iphone do |app|

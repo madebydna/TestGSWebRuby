@@ -22,5 +22,13 @@ Feature: Localized Profile: View Reviews
   Scenario: I can pagination through reviews
     When I visit a school with more than ten reviews
     And I click the button "Get Next Ten"
-    Then I wait to see more than ten reviews
+    Then I wait to see more than 10 reviews
+
+  @javascript
+  Scenario Outline: I can sort reviews
+    Then I sort reviews by <field>
+  Examples:
+  | field                   |
+  | Date newest to oldest   |
+  | Date oldest to newest   |
 
