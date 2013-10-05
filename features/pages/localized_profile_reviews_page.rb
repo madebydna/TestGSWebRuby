@@ -31,9 +31,9 @@ class LocalizedProfileReviewsPage < LocalizedProfilePage
     }
 
     if (select_box.text != option)
-      (expect sort).to change{ reviews.first.text }
+      (expect sort).to change{ reviews.first.text + reviews.last.text }
     else
-      (expect sort).not_to change{ reviews.first.text }
+      (expect sort).not_to change{ reviews.first.text + reviews.last.text }
     end
 
     select_box.text.should == option

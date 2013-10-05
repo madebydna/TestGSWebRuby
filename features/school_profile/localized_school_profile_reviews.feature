@@ -31,4 +31,6 @@ Feature: Localized Profile: View Reviews
   | field                   |
   | Date newest to oldest   |
   | Date oldest to newest   |
+  | Ratings high to low     |
+  | Ratings low to high     |
 
