@@ -51,7 +51,7 @@ class TableData
   # given an array of objects, build a new array of hashes. Calls each attribute method on each given object
   # each hash should contain all of the provided attributes
   def self.pluck_attributes(objects = [], attributes = [])
-    objects.collect do |object|
+    objects.map do |object|
       attributes.inject({}) { |hash, attribute| hash[attribute] = object.send attribute; hash }
     end
   end
@@ -109,7 +109,7 @@ class TableData
 
   # for each row in the given table_data, generate an array [label_column, value_column]
   def to_piechart(label_column, value_column)
-    rows.collect { |row| ["#{row[label_column]}", row[value_column].to_i] }
+    rows.map { |row| ["#{row[label_column]}", row[value_column].to_i] }
   end
 
 end

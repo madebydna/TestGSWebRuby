@@ -38,7 +38,7 @@ $databases_receiving_mysql_dump = {
 
 $state_dbs_receiving_mysql_dump.each { |state| $databases_receiving_mysql_dump[state] = :state_tables }
 
-$all_state_dbs = States.state_hash.values.collect { |state| "_#{state.downcase}" }
+$all_state_dbs = States.state_hash.values.map { |state| "_#{state.downcase}" }
 
 $all_legacy_dbs = ($databases_receiving_mysql_dump.keys + $all_state_dbs).uniq!
 

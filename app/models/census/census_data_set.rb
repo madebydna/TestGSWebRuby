@@ -2,22 +2,34 @@ class CensusDataSet < ActiveRecord::Base
   self.table_name = 'census_data_set'
   self.inheritance_column = nil
 
+  include ReadOnlyRecord
+
   has_many :census_data_school_values, class_name: 'CensusDataSchoolValue', foreign_key: 'data_set_id'
   has_many :census_data_district_values, class_name: 'CensusDataDistrictValue', foreign_key: 'data_set_id'
   has_many :census_data_state_values, class_name: 'CensusDataStateValue', foreign_key: 'data_set_id'
   has_one :census_breakdown, foreign_key: 'datatype_id'
 
+  delegate :value, :modified, :modified_by,
+           to: :census_data_school_value, prefix: 'school', allow_nil: true
+  delegate :value, :modified, :modified_by,
+           to: :census_data_state_value, prefix: 'state', allow_nil: true
+
+
+  def census_data_school_value
+    census_data_school_values[0] if census_data_school_values.any?
+  end
+  def census_data_state_value
+    census_data_state_values[0] if census_data_state_values.any?
+  end
+
+
   scope :with_data_types, lambda { |data_type_ids|
     where(data_type_id: Array(data_type_ids))
   }
 
-  scope :include_school_district_state, lambda {
-
-
-    # eager load is slower when more census_data_sets match more school values
-    # generally three separate queries seems faster
-    preload(:census_data_school_values)
-    .preload(:census_data_state_values)
+  scope :include_school_district_state, lambda { |school_id|
+    includes(:census_data_school_values).where('census_data_school_value.school_id = 1')
+    .includes(:census_data_state_values)
   }
 
   scope :active, where(active: true)
@@ -38,13 +50,24 @@ class CensusDataSet < ActiveRecord::Base
     #max_years = max_year_per_data_type(state)
     #max_years.select! { |data_type_id| data_type_ids.include? data_type_id }
 
-    results = using(state.upcase.to_sym)
+    using(state.upcase.to_sym)
       .with_data_types(data_type_ids)
       .active
       .where(year: 2011)
-      .all
 
     #results.select { |result| result.year == 0 || max_year_per_data_type(state)[result.data_type_id] == result.year }
+  end
+
+  def to_hash
+    {
+      year:year,
+      grade: grade,
+      subject: subject_id, #TODO: change to subject object or string
+      level_code: level_code,
+      breakdown: census_breakdown || '',
+      school_value: school_value,
+      state_value: state_value
+    }
   end
 
   def census_breakdown
