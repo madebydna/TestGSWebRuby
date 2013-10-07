@@ -2,7 +2,7 @@ class School < ActiveRecord::Base
   self.table_name='school'
 
   attr_accessible :name, :state, :school_collections
-
+  has_many :school_metadatas
   #has_many :school_collections
   #has_many :collections, through: :school_collections
   #has_many :census_data_school_values, :class_name => 'CensusDataSchoolValue'
@@ -27,6 +27,15 @@ class School < ActiveRecord::Base
 
   def collections
     school_collections.map(&:collection)
+  end
+
+  # get the schools metadata
+  def school_metadata
+    schoolMetadata = Hashie::Mash.new()
+    school_metadatas.each do |metadata|
+      schoolMetadata[metadata.meta_key] = metadata.meta_value
+    end
+    return schoolMetadata
   end
 
   # returns all reviews for

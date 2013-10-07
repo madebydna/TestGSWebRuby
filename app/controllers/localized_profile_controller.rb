@@ -15,39 +15,47 @@ class LocalizedProfileController < ApplicationController
     page('Overview')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
+    initHeader
   end
 
   def quality
     page('Quality')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
+    initHeader
   end
 
   def details
     page('Details')
     @category_positions = @page.categories_per_position(@school.collections)
     @category_placements =  choose_category_placements
+    initHeader
   end
 
   def reviews
     page('Reviews')
-    # fetches all reviews
+    initHeader
     @school_reviews = @school.reviews_filter '', '', '', 10
 
-    @review_offset = 0;
-    @review_limit = 10;
+    @review_offset = 0
+    @review_limit = 10
+
+  end
+
+  def set_reviews_objects
+
     # fetches all reviews
     @school_reviews_all = @school.reviews
     #store star counts for overall
     @star_counts = [ 0, 0, 0, 0, 0, 0 ]
     #store resulting average and components for calculating them
     @rating_averages = Hashie::Mash.new(
-      {
-        overall:   { avg_score: 0, total: 0, counter: 0 },
-        principal: { avg_score: 0, total: 0, counter: 0 },
-        teacher:   { avg_score: 0, total: 0, counter: 0 },
-        parent:    { avg_score: 0, total: 0, counter: 0 }
-      }
+        {
+            overall:   { avg_score: 0, total: 0, counter: 0 },
+            principal: { avg_score: 0, total: 0, counter: 0 },
+            teacher:   { avg_score: 0, total: 0, counter: 0 },
+            parent:    { avg_score: 0, total: 0, counter: 0 }
+        }
     )
     @review_filter_totals = Hashie::Mash.new(
         {
@@ -57,6 +65,7 @@ class LocalizedProfileController < ApplicationController
         }
     )
     #quality maps to overall_rating
+
     @school_reviews_all.each do |review|
       #use quality for star counts and overall score
       overall_rating = review.quality
@@ -156,7 +165,13 @@ class LocalizedProfileController < ApplicationController
 
   def test_scores
     page('TestScores')
+    initHeader
     @school.test_scores
   end
 
+  def initHeader
+    @headerMetadata = @school.school_metadata
+
+    set_reviews_objects
+  end
 end
