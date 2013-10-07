@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
                     <div>
-                        <%= test %><br/>
+                        <%= value.test_label %><br/>
                         <% value.grades.each do |grade,value| %>
                             <br/>GRADE <%= grade %><br/><br/>
                             <% value.each do |levelcode,value| %>
@@ -26,7 +26,7 @@
 
                                     <!--TODO change this to test id-->
                                     <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
-                                    <div id="<%= bar_chart_div_id %>" style="width: 350px; height: 150px;"></div>
+                                    <div id="<%= bar_chart_div_id %>" style="width: 420px; height: 150px;"></div>
                                     <% content_for :head do %>
                                         <script type="text/javascript">
                                             GS.visualchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
@@ -35,6 +35,7 @@
                                 <% end %>
                             <% end %>
                         <% end %>
+                        <%= value.test_description %><br/>
                     </div>
                 </div>
             </div>

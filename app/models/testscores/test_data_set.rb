@@ -27,6 +27,7 @@ class TestDataSet < ActiveRecord::Base
     @valid_data_set_ids = TestDataSetFile.get_valid_data_set_ids(@all_data_set_ids,school)
 
     test_data = TestData.new
+    test_meta_data = TestData.new
     @data_sets_and_values.each do |result|
 
       #Todo get the test data type, subject, grade, level code objects?
@@ -45,15 +46,15 @@ class TestDataSet < ActiveRecord::Base
         breakdown_id = result.breakdown_id
         number_tested = result.number_tested
 
-        #test_data.deep_merge!({ "#{test_data_type_id}" => { "#{grade}" => { "#{level_code}" => { "#{subject}" => { "#{year}" => {"score" => test_score_float , "number_tested" => number_tested} }  }}}})
-
-
+        unless test_meta_data.key?(test_data_type_id)
+          test_meta_data.deep_merge!({test_data_type_id => TestDataType.by_id(test_data_type_id)})
+        end
 
         test_data.deep_merge!(
             {test_data_type_id =>
                  {
-                     testLabel: 'a test label',
-                     description: 'description',
+                     test_label: test_meta_data[test_data_type_id].display_name,
+                     test_description: test_meta_data[test_data_type_id].description,
                      grades: {
                          grade =>
                              {level_code =>
@@ -61,7 +62,8 @@ class TestDataSet < ActiveRecord::Base
                                        {year =>
                                             {
                                                 "score" => test_score,
-                                                "number_tested" => number_tested
+                                                "number_tested" => number_tested,
+                                                "state_avg" => state_avg
                                             }
                                        }
                                   }
@@ -78,8 +80,6 @@ class TestDataSet < ActiveRecord::Base
     test_data
   end
 
-
-
   def self.lookup_subject
     {
         1 => 'All subjects',
@@ -87,11 +87,11 @@ class TestDataSet < ActiveRecord::Base
         3 =>  'writing',
         4 =>  'english language arts',
         5 => 'math',
-        7 => 'algebra1',
+        7 => 'algebra 1',
         8 => 'integrated math 1',
         9 => 'geometry',
         10 => 'integrated math 2',
-        11 => 'algebra2',
+        11 => 'algebra 2',
         12 => 'integrated math 3',
         19 => 'english',
         24 => 'social studies',
@@ -107,13 +107,6 @@ class TestDataSet < ActiveRecord::Base
         42 => 'chemistry',
         41 => 'physics'
 
-    }
-  end
-
-  def self.lookup_test
-    {
-        18 => 'California Standards Tests',
-        19 => 'California High School Exit Examination'
     }
   end
 

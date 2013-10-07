@@ -79,7 +79,7 @@ GS.visualchart = GS.visualchart || function($) {
         var func = function () {
             var data = google.visualization.arrayToDataTable(barChartData);
 
-            var options = {};
+            var options = {colors: ['#808080','#C0C0C0'],hAxis: {maxValue: 100, minValue:0}, chartArea: {left:30,top:20, width:"55%"}};
 
             var chart = new google.visualization.BarChart(document.getElementById(div));
             chart.draw(data, options);
