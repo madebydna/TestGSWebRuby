@@ -165,7 +165,6 @@ class LocalizedProfileController < ApplicationController
   def test_scores
     page('TestScores')
     initHeader
-    @school.test_scores
   end
 
   def initHeader

@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def render_all_positions
     result = ''
-    @category_positions.keys.sort.each { |position| result << (render_position position) }
+    @category_positions.keys.sort.each { |position| result << String(render_position position) }
     result.html_safe
   end
 
