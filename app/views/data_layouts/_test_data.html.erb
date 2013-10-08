@@ -3,22 +3,23 @@
         <div class="main">
             <div class="row">
                 <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-                    <div>
-                        <%= value.test_label %><br/>
+
+                    <%= value.test_label %><br/><br/>
+                    <div class="js_grades_div">
                         <% value.grades.each do |grade,value| %>
-                            <br/>GRADE <%= grade %><br/><br/>
+                            <span id="js_<%= test %>_<%= grade %>" class="js_test_scores_grades">GRADE <%= grade %></span>
+                        <% end %>
+                    </div>
+
+                    <% value.grades.each do |grade,value| %>
+                        <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
+
                             <% value.each do |levelcode,value| %>
                                 <% value.each do |subject,value| %>
-                                    <%= subject %><br/>
-                                    <% value.each do |year,value| %>
-                                        <%= year %>
-                                        score : <%= value["score"] %>
-                                        number tested: <%= value["number_tested"] %><br/>
-                                    <% end %>
-
+                                    <div><%= subject %></div>
                                     <!--TODO change this to test id-->
                                     <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
-                                    <div id="<%= bar_chart_div_id %>" style="width: 420px; height: 150px;"></div>
+                                    <div id="<%= bar_chart_div_id %>"><!--Div for bar chart--></div>
                                     <% content_for :head do %>
                                         <script type="text/javascript">
                                             GS.visualchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
@@ -26,11 +27,16 @@
                                     <% end %>
                                 <% end %>
                             <% end %>
-                        <% end %>
-                        <br/>
-                    </div>
+                        </div>
+                    <% end %>
                 </div>
             </div>
         </div>
     </div>
 <% end %>
+
+
+<script type="text/javascript">
+    GS.testScores.initializeHandlers();
+    $(".js_grades_div").children().first().trigger( "click" );
+</script>
