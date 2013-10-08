@@ -70,7 +70,7 @@ module ApplicationHelper
       write_s = 's'
     end
     @review_filter_totals.all.to_s + ' review' + write_s
-end
+  end
 
   def to_bar_chart_array(data_hash)
     @bar_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
@@ -78,4 +78,12 @@ end
     }
   end
 
+  def generate_img_path ( img_size, media_hash )
+    default_url = "http://dev.greatschools.org/"
+    comm_media_prefix = "library/"
+    default_url + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
+
+  #${communityUtil.mediaPrefix}school_media/${schoolMedia.schoolState.abbreviationLowerCase}/${fn:substring(schoolMedia.hash,0,2)}/${schoolMedia.hash}-500.jpg"
+    #alt="${schoolMedia.id}
+  end
 end

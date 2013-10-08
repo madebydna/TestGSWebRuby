@@ -21,6 +21,7 @@ $tables_receiving_mysql_dump = {
       TestDataBreakdown
       TestDataSubject
       TestDataType
+      school_media
     ),
     surveys_tables: %w(
       school_rating

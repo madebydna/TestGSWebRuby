@@ -1,4 +1,5 @@
 class School < ActiveRecord::Base
+  include ActionView::Helpers
   self.table_name='school'
 
   attr_accessible :name, :state, :school_collections
@@ -38,6 +39,27 @@ class School < ActiveRecord::Base
     return schoolMetadata
   end
 
+  def school_media_first_hash
+    result = SchoolMedia.fetch_school_media self, 1
+    result.first['hash']  unless result.nil? || result.empty?
+  end
+
+  def school_media
+    SchoolMedia.fetch_school_media self, ''
+  end
+
+  def process_level
+    l = level.split ','
+    case l.size
+      when 1
+        l.first
+      when 0
+        nil
+      else
+        l.first + "-" + l.last
+    end
+  end
+
   # returns all reviews for
   def reviews
     SchoolRating.fetch_reviews self, '', '', '', ''
@@ -57,7 +79,11 @@ class School < ActiveRecord::Base
   end
 
   def enrollment
-    CensusData.data_for_school(self)['Enrollment'].first.school_value
+    test = CensusData.data_for_school(self)['Enrollment']
+    if test
+      #test.first.school_value.to_i.round
+      number_with_delimiter(test.first.school_value.to_i, :delimiter => ',')
+    end
   end
 
 

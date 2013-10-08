@@ -5,29 +5,34 @@
                 <%= link_to 'Overview',
                             :controller => 'localized_profile',
                             :action => 'overview',
-                            :schoolId => school.id %>
+                            :schoolId => school.id,
+                            :state => school.state %>
             </li>
             <li>
                 <%= link_to 'Quality',
                             :controller => 'localized_profile',
                             :action => 'quality',
-                            :schoolId => school.id %>
+                            :schoolId => school.id,
+                            :state => school.state %>
             </li>
             <li>
                 <%= link_to 'Details',
                             :controller => 'localized_profile',
                             :action => 'details',
-                            :schoolId => school.id %></li>
+                            :schoolId => school.id,
+                            :state => school.state %></li>
             <li>
                 <%= link_to 'Reviews',
                             :controller => 'localized_profile',
                             :action => 'reviews',
-                            :schoolId => school.id %></li>
+                            :schoolId => school.id,
+                            :state => school.state %></li>
             <li>
                 <%= link_to 'TestScores',
                             :controller => 'localized_profile',
                             :action => 'test_scores',
-                            :schoolId => school.id %></li>
+                            :schoolId => school.id,
+                            :state => school.state %></li>
         </ul>
     </nav>
 </div>

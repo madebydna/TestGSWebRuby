@@ -1,12 +1,31 @@
 <div class="row pal">
-    <div class="col-xs-0 col-sm-2 col-md-3 tar ptl prl">image</div>
+    <div class="col-xs-0 col-sm-2 col-md-3 tar ptl prl">
+        <% media_hash = @school.school_media_first_hash %>
+        <% if media_hash %>
+           <img src="<%= generate_img_path "130", media_hash %>" />
+        <% else %>
+            <%= image_tag "cute-puppy-dog-wallpapers.jpg" , :width => 130, :height => 97  %>
+        <% end %>
+    </div>
     <div class="col-xs-12 col-sm-10 col-md-9 tal">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 tal pbl"><h1><%= school.name %></h1></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 tal pbl"><h1><%= @school.name %></h1></div>
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                 <div class="fl">GreatSchools rating <%= @headerMetadata.overallRating %></div>
                 <div class="fl pll"><%= draw_stars_16 @rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count %></div></div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                <% if @school.enrollment %>
+                    <div class="fl prm" style="border-right: 1px #CCCCCC solid;"><%= @school.enrollment %> students</div>
+                <% end %>
+                <% if @school.process_level %>
+                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.process_level %></div>
+                <% end %>
+                <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.type %></div>
+                <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.city + " " + @school.state %></div>
+                <div class="fl phm">Contact info</div>
+            </div>
+
         </div>
     </div>
 </div>
