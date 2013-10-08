@@ -9,6 +9,8 @@ class CensusData
       .all
 
     rows = results.map { |census_data_set| census_data_set.to_hash }
+
+    rows_per_data_type = rows.group_by(&:data_type_id)
   end
 
 end
