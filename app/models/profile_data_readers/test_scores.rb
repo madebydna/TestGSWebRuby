@@ -13,12 +13,7 @@ class TestScores
   end
 
   def table_data(school)
-    #data(school)
-    #puts "---------------test scores-#{rows.any?}-----"
-    #if rows.any?
-    #  TableData.new rows
-    #end
-    Hashie::Mash.new({rows: data(school)})
+    data(school)
   end
 
   def prettify_data(school, table_data)
