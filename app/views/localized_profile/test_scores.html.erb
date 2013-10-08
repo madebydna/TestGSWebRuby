@@ -7,12 +7,12 @@
     <div class="contents">
         <div class="main">
             <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
 
                         <%= value.test_label %><br/><br/>
-                        <div class="js_grades_div">
+                        <div class="btn-group js_grades_div">
                         <% value.grades.each do |grade,value| %>
-                            <span id="js_<%= test %>_<%= grade %>" class="js_test_scores_grades">GRADE <%= grade %></span>
+                            <div id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></div>
                         <% end %>
                         </div>
 
@@ -21,7 +21,7 @@
 
                                 <% value.each do |levelcode,value| %>
                                     <% value.each do |subject,value| %>
-                                        <div><%= subject %></div>
+                                        <br/><%= subject %>
                                         <!--TODO change this to test id-->
                                         <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
                                         <div id="<%= bar_chart_div_id %>"><!--Div for bar chart--></div>
