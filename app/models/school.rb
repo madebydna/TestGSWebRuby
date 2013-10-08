@@ -56,6 +56,10 @@ class School < ActiveRecord::Base
     TestDataSet.fetch_test_scores self
   end
 
+  def enrollment
+    CensusData.data_for_school(self)['Enrollment'].first.school_value
+  end
+
 
 =begin
   def label_value_map_per_category(page)

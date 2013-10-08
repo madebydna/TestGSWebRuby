@@ -26,20 +26,9 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
-    data_reader.prettify_data(school, data_reader.table_data(school))
-  end
-
-  def data_reader
-    return @data_reader if @data_reader
-    default_class = 'EspResponseReader'
-
-    class_name = source || default_class
-
-    begin
-      @data_reader = class_name.constantize.new(self)
-    rescue
-      @data_reader = default_class.constantize.new(self)
-    end
+    # TODO: don't fall back to EspResponse - update seeds to specify it in the config
+    method_name = (source || 'EspResponse').underscore.to_sym
+    CategoryDataReader.send method_name, school, self
   end
 
   # returns a label => pretty value map for this category

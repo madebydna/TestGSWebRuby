@@ -75,7 +75,7 @@ class CensusDataSet < ActiveRecord::Base
 
   def to_hash
     Hashie::Mash.new(
-      data_type_id: data_type_id,
+      data_type: data_type,
       year: year,
       grade: grade,
       subject: subject_id, #TODO: change to subject object or string

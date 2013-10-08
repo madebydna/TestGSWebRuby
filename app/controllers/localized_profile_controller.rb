@@ -151,8 +151,7 @@ class LocalizedProfileController < ApplicationController
 
         data = category.data_for_school(@school)
 
-        if data.rows.any?
-
+        if data
           # Return a hash, since the caller needs the Category's school data, along with the Category Placement itself
           return {placement: placement, data: data}
         end
