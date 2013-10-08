@@ -1,6 +1,6 @@
 class CensusData
 
-  def self.census_data_for_school(school)
+  def self.data_for_school(school)
     ethnicity_data_types = [9, 17]
 
     results = CensusDataSet.using(school.state.upcase.to_sym)

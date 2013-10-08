@@ -1,7 +1,7 @@
 class CensusDataSchoolValue < ActiveRecord::Base
   self.table_name = 'census_data_school_value'
 
-  include CensusValues::CommonCensusValueMethods
+  include CensusValueConcerns
   include ReadOnlyRecord
 
   belongs_to :school, foreign_key: 'school_id'
