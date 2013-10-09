@@ -66,10 +66,10 @@ module ApplicationHelper
 
   def write_review_count text_s
     write_s = ''
-    if @review_filter_totals.all != 1
+    if @school_reviews_global.review_filter_totals.all != 1
       write_s = 's'
     end
-    @review_filter_totals.all.to_s + ' ' + text_s + write_s
+    @school_reviews_global.review_filter_totals.all.to_s + ' ' + text_s + write_s
   end
 
   def to_bar_chart_array(data_hash)

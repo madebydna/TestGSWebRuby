@@ -14,20 +14,20 @@
                                     <h4>Community Ratings</h4>
                                     <div class="clearfix">
                                         <div class="fl prm">overall:</div>
-                                        <%= draw_stars_16 @rating_averages.overall.avg_score %>
-                                        <div class="fl pll">number of responses:<%= @rating_averages.overall.counter %></div>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
+                                        <div class="fl pll">number of responses:<%= @school_reviews_global.rating_averages.overall.counter %></div>
                                     </div>
                                     <div class="clearfix">
                                         <div class="fl prm">principal:</div>
-                                        <%= draw_stars_16 @rating_averages.principal.avg_score %>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.principal.avg_score %>
                                     </div>
                                     <div class="clearfix">
                                         <div class="fl prm">teacher:</div>
-                                        <%= draw_stars_16 @rating_averages.teacher.avg_score %>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.teacher.avg_score %>
                                     </div>
                                     <div class="clearfix">
                                         <div class="fl prm">parent:</div>
-                                        <%= draw_stars_16 @rating_averages.parent.avg_score %>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.parent.avg_score %>
                                     </div>
                                 </div>
                             </div>
@@ -35,11 +35,11 @@
                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="pam bg-white">
                                     <h4>Ratings Distribution</h4>
-                                    five stars: <%= @star_counts[5] %>   <br />
-                                    four stars: <%= @star_counts[4] %>   <br />
-                                    three stars: <%= @star_counts[3] %>   <br />
-                                    two stars: <%= @star_counts[2] %>   <br />
-                                    one stars: <%= @star_counts[1] %>   <br />
+                                    five stars: <%= @school_reviews_global.star_counts[5] %>   <br />
+                                    four stars: <%= @school_reviews_global.star_counts[4] %>   <br />
+                                    three stars: <%= @school_reviews_global.star_counts[3] %>   <br />
+                                    two stars: <%= @school_reviews_global.star_counts[2] %>   <br />
+                                    one stars: <%= @school_reviews_global.star_counts[1] %>   <br />
                                 </div>
                             </div>
 
@@ -87,8 +87,8 @@
         <div class="js_reviewsList">
             <%= render '/shared/review_module', school_reviews_pagination: @school_reviews %>
         </div>
-        <% if @review_filter_totals.all > 10 %>
-            <button data-total-count="<%= @review_filter_totals.all %>" data-all-count="<%= @review_filter_totals.all %>" data-parent-count="<%= @review_filter_totals.parent %>" data-student-count="<%= @review_filter_totals.student %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
+        <% if @school_reviews_global.review_filter_totals.all > 10 %>
+            <button data-total-count="<%= @school_reviews_global.review_filter_totals.all %>" data-all-count="<%= @school_reviews_global.review_filter_totals.all %>" data-parent-count="<%= @school_reviews_global.review_filter_totals.parent %>" data-student-count="<%= @school_reviews_global.review_filter_totals.student %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen">Get Next Ten</button>
         <% end %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">

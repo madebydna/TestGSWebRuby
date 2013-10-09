@@ -4,8 +4,7 @@
 <div class="row">
     <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
         <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >
-           <% @category_placements.each_pair do |key,cat_place| %>
-
+            <% @category_placements.each_pair do |key,cat_place| %>
                 <% if cat_place && cat_place[:placement] %>
                     <% placement=cat_place[:placement] %>
                     <li style="position: relative; float:left; right: 50%;">
@@ -13,8 +12,7 @@
                             <%= (placement.title && placement.title.size > 0)? placement.title : placement.category.name %>
                         </a>
                     </li>
-
-        <% end %>
+                <% end %>
             <% end %>
         </ul>
     </div>
