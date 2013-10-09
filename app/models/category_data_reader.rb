@@ -1,4 +1,5 @@
 class CategoryDataReader
+  include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
     esp_responses = EspResponse.using(school.state.upcase.to_sym).where(school_id: school.id)
@@ -44,5 +45,6 @@ class CategoryDataReader
     school.test_scores
   end
 
+  #cache_methods :student_ethnicity, :test_scores
 
 end

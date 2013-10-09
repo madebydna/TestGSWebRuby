@@ -64,12 +64,12 @@ SchoolCollection.create!(school:@maret_school, collection:dc_schools)
 
 
 # Categories
-school_basics = Category.create!(name: 'School basics')
-programs = Category.create!(name: 'Programs')
-sports = Category.create!(name: 'Sports')
-arts_music = Category.create!(name: 'Arts & Music')
-student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'StudentEthnicity')
-category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source: 'EspResponse')
+school_basics = Category.create!(name: 'School basics', source:'esp_response')
+programs = Category.create!(name: 'Programs', source:'esp_response')
+sports = Category.create!(name: 'Sports', source:'esp_response')
+arts_music = Category.create!(name: 'Arts & Music', source:'esp_response')
+student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student_ethnicity')
+category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 
 
 # Category placements
