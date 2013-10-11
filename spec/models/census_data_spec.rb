@@ -27,7 +27,8 @@ describe CensusData do
 
       result = CensusData.data_for_school school
 
-      result['Enrollment'].should have(1)
+      result['Enrollment'].should have(1).hashes
+      result['Ethnicity'].should have(5).hashes
 
       expect(CensusData.data_for_school(school)).to_not be_empty
     end
