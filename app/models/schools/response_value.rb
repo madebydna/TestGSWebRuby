@@ -1,6 +1,7 @@
 class ResponseValue < ActiveRecord::Base
   attr_accessible :collection_id, :collection, :response_label, :response_value
   has_paper_trail
+  db_magic :connection => :profile_config
 
   belongs_to :collection
 
@@ -51,7 +52,7 @@ class ResponseValue < ActiveRecord::Base
     default_values = {}
     collection_values = {}
 
-    ResponseValue.using(:master).all.each do |response_value|
+    ResponseValue.all.each do |response_value|
 
       if response_value.collection.nil?
         default_values[response_value.response_value] = response_value.response_label

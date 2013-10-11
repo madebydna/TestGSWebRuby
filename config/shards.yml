@@ -31,7 +31,7 @@ octopus:
     <% States.state_hash.values.each do |abbreviation| %>
       <%= abbreviation.upcase %>:
         <<: *mysql_localhost
-        database: _<%= abbreviation.downcase %>_test
+        database: _<%= abbreviation.downcase %>
     <% end %>
     localized_profiles:
       gs_schooldb:

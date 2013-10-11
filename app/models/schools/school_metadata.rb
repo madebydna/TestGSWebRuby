@@ -1,5 +1,5 @@
 class SchoolMetadata < ActiveRecord::Base
-  #octopus_establish_connection(:adapter => "mysql2", :database => "surveys")
+  include StateSharding
 
   self.table_name='school_metadata'
 

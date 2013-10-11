@@ -1,5 +1,5 @@
 class SchoolRating < ActiveRecord::Base
-  octopus_establish_connection(:adapter => "mysql2", :database => "surveys")
+  db_magic :connection => :surveys
 
   self.table_name='school_rating'
 

@@ -1,5 +1,5 @@
 
-SchoolCategoryData.using(@alameda_high_school.state.upcase.to_sym).create!(key: 'student_ethnicity',school: @alameda_high_school,school_data: {
+SchoolCategoryData.on_db(@alameda_high_school.shard).create!(key: 'student_ethnicity',school: @alameda_high_school,school_data: {
   rows: [
     {
         ethnicity: 'Asian',

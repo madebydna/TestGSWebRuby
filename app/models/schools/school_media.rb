@@ -1,5 +1,5 @@
 class SchoolMedia < ActiveRecord::Base
-  octopus_establish_connection(:adapter => "mysql2", :database => "gs_schooldb")
+  db_magic :connection => :gs_schooldb
 
   self.table_name='school_media'
 

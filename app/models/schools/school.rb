@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
   include ActionView::Helpers
   self.table_name='school'
+  include StateSharding
 
   attr_accessible :name, :state, :school_collections
   has_many :school_metadatas
@@ -11,19 +12,19 @@ class School < ActiveRecord::Base
   self.inheritance_column = nil
 
   def census_data_for_data_types(data_types = [])
-    CensusDataSet.using(state.upcase.to_sym).by_data_types(state, data_types)
+    CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
   end
 
   def census_data_school_values
-    CensusDataSchoolValue.using(state.upcase.to_sym).where(school_id: id)
+    CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
   def self.all
-    School.using(:CA).all
+    School.on_db(:CA).all
   end
 
   def school_collections
-    SchoolCollection.using(:master).where(state: state, school_id: id)
+    SchoolCollection.where(state: state, school_id: id)
   end
 
   def collections

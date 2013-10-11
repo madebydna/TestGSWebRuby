@@ -457,7 +457,7 @@ RailsAdmin.config do |config|
                # scoping all Players currently, let's limit them to the team's league
                # Be sure to limit if there are a lot of Players and order them by position
                #scope = scope.using(state.upcase.to_sym)
-               scope = scope.using(state.upcase.to_sym)
+               scope = scope.on_db(state.downcase.to_sym)
              }
            end
          end

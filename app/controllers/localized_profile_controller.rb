@@ -50,7 +50,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def page(name)
-    @page = Page.using(:master).where(name: name).first
+    @page = Page.where(name: name).first
   end
 
   def find_user

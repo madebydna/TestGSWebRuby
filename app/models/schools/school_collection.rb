@@ -2,6 +2,7 @@ require 'states'
 class SchoolCollection < ActiveRecord::Base
   attr_accessible :collection, :schools, :collection_id, :school_id, :state
   has_paper_trail
+  db_magic :connection => :profile_config
 
   belongs_to :school
   belongs_to :collection
@@ -14,9 +15,9 @@ class SchoolCollection < ActiveRecord::Base
     return nil if school_id.nil? || state.nil?
 
     shard = state
-    shard = 'CA' if shard.nil? || shard == ''
-    shard = shard.upcase.to_sym
-    School.using(shard).find school_id
+    shard = 'ca' if shard.nil? || shard == ''
+    shard = shard.downcase.to_sym
+    School.on_db(shard).find school_id
   end
 
   def school=(school)

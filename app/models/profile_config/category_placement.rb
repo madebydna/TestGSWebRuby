@@ -1,6 +1,7 @@
 class CategoryPlacement < ActiveRecord::Base
   attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :size, :title
   has_paper_trail
+  db_magic :connection => :profile_config
 
   belongs_to :category
   belongs_to :collection
@@ -41,7 +42,7 @@ class CategoryPlacement < ActiveRecord::Base
 
   def self.placements_for_page(page)
     Rails.cache.fetch("CategoryPlacement/page_#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id)
+      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id).all
     end
   end
 

@@ -1,6 +1,6 @@
 class TestDataSet < ActiveRecord::Base
   self.table_name = 'TestDataSet'
-  octopus_establish_connection(:adapter => 'mysql2', :database => '_ca')
+  include StateSharding
   attr_accessible :active, :breakdown_id, :data_type_id, :display_target, :grade, :level_code, :proficiency_band_id, :school_decile_tops, :subject_id, :year
 
   has_many :test_data_school_values, class_name: 'TestDataSchoolValue', foreign_key: 'data_set_id'

@@ -2,7 +2,7 @@ class CategoryDataReader
   include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
-    esp_responses = EspResponse.using(school.state.upcase.to_sym).where(school_id: school.id)
+    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id)
 
     keys_to_use = category.category_data(school.collections).map(&:response_key)
 

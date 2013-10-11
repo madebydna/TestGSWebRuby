@@ -3,7 +3,7 @@ class CensusData
   def self.data_for_school(school)
     ethnicity_data_types = [9, 17]
 
-    results = CensusDataSet.using(school.state.upcase.to_sym)
+    results = CensusDataSet.on_db(school.shard)
       .by_data_types(school.state, ethnicity_data_types)
       .include_school_district_state(school.id)
       .all

@@ -37,7 +37,6 @@ class CensusDataSet < ActiveRecord::Base
     census_data_state_values[0] if census_data_state_values.any?
   end
 
-
   scope :with_data_types, lambda { |data_type_ids|
     where(data_type_id: Array(data_type_ids))
   }
@@ -53,7 +52,7 @@ class CensusDataSet < ActiveRecord::Base
     @state_max_years ||= {}
 
     #Rails.cache.fetch("census_data_set/max_year_per_data_type/#{state}", expires_in: 5.minutes) do
-    @state_max_years[state] ||= using(state.upcase.to_sym).having_school_values.group(:data_type_id).maximum(:year)
+    @state_max_years[state] ||= on_db(state.downcase.to_sym).having_school_values.group(:data_type_id).maximum(:year)
     #end
 
     @state_max_years[state]
@@ -65,7 +64,7 @@ class CensusDataSet < ActiveRecord::Base
     #max_years = max_year_per_data_type(state)
     #max_years.select! { |data_type_id| data_type_ids.include? data_type_id }
 
-    using(state.upcase.to_sym)
+    on_db(state.downcase.to_sym)
       .with_data_types(data_type_ids)
       .active
       .where(year: 2011)

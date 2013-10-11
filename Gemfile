@@ -19,7 +19,8 @@ gem 'ckeditor'
 gem 'devise'
 
 # Add database sharding support to Active Record
-gem 'ar-octopus', '0.6.0'
+# gem 'ar-octopus', '0.6.0' <-- evil
+gem 'db-charmer', :require => 'db_charmer'
 
 # Adds support for reserved-word column names as model attributes. Useful when writing models for legacy schemas
 gem 'safe_attributes'
@@ -60,6 +61,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 
   # testing frameworks
+  gem 'rspec'
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false
@@ -76,6 +78,7 @@ group :development, :test do
   gem 'mechanize'
   gem 'capybara'
   gem 'capybara-mechanize'
+  gem 'machinist', '>= 2.0.0.beta2'
 end
 
 # Gems used only for assets and not required

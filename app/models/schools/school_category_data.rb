@@ -1,5 +1,6 @@
 class SchoolCategoryData < ActiveRecord::Base
   attr_accessible :key, :schools, :school_data, :school_id, :state
+  include StateSharding
 
   belongs_to :school
 
@@ -9,7 +10,7 @@ class SchoolCategoryData < ActiveRecord::Base
   end
 
   def school
-    School.using(state.upcase.to_sym).find school_id
+    School.on_db(state.downcase.to_sym).find school_id
   end
 
 end

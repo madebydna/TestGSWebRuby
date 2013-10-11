@@ -8,6 +8,8 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+<% require 'States' %>
+
 mysql: &mysql
   adapter: mysql2
   encoding: utf8
@@ -27,14 +29,46 @@ mysql_dev: &mysql_dev
 
 development:
   <<: *mysql_localhost
-  database: LocalizedProfiles_development
+  LocalizedProfiles_development:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_development
+  profile_config:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_development
+<% States.state_hash.values.each do |abbreviation| %>
+  <%= abbreviation.downcase %>:
+    <<: *mysql_localhost
+    database: _<%= abbreviation.downcase %>
+<% end %>
+  gs_schooldb:
+    <<: *mysql_localhost
+    database: gs_schooldb
+  surveys:
+    <<: *mysql_localhost
+    database: surveys
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
   <<: *mysql_localhost
-  database: LocalizedProfiles_test
+  LocalizedProfiles_development:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_test
+  profile_config:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_development
+<% States.state_hash.values.each do |abbreviation| %>
+  <%= abbreviation.downcase %>:
+    <<: *mysql_localhost
+    database: _<%= abbreviation.downcase %>
+<% end %>
+  gs_schooldb:
+    <<: *mysql_localhost
+    database: gs_schooldb
+  surveys:
+    <<: *mysql_localhost
+    database: surveys
 
 cucumber:
   <<: *test

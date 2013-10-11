@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   attr_accessible :description, :name, :parent, :source
-
   has_paper_trail
+  db_magic :connection => :profile_config
 
   has_many :category_placements, :order => 'collection_id desc'
 
@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 
 
   def category_data(collections = nil)
-      CategoryData.using(:master).belonging_to_collections(self, collections)
+      CategoryData.on_db(:profile_config).belonging_to_collections(self, collections)
   end
 
   def key_label_map(collections = nil)
@@ -35,7 +35,7 @@ class Category < ActiveRecord::Base
   def values_for_school(school)
     #key_label_map = school.key_label_map(self)
 
-    all_school_data = EspResponse.using(school.state.upcase.to_sym).where(school_id: school.id)
+    all_school_data = EspResponse.on_db(school.shard).where(school_id: school.id)
 
     #pp key_label_map.keys
 

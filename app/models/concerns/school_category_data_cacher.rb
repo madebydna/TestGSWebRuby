@@ -19,7 +19,7 @@ module SchoolCategoryDataCacher
 
             key = key(category, name)
 
-            school_category_data = SchoolCategoryData.using(school.state.upcase.to_sym).where(school_id: school.id, key: key).first
+            school_category_data = SchoolCategoryData.on_db(school.shard).where(school_id: school.id, key: key).first
 
             if school_category_data
               puts "Got cached data for key #{key}"
@@ -28,7 +28,7 @@ module SchoolCategoryDataCacher
               result = m.(*args, &block)
               data_to_cache = YAML::dump(result)
               puts "Caching data for key #{key}"
-              SchoolCategoryData.using(school.state.upcase.to_sym).create!(
+              SchoolCategoryData.on_db(school.shard).create!(
                 school_id: school.id,
                 key: key,
                 school_data: data_to_cache

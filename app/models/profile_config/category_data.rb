@@ -1,6 +1,7 @@
 class CategoryData < ActiveRecord::Base
   attr_accessible :category_id, :category, :collection_id, :collection, :response_key
   has_paper_trail
+  db_magic :connection => :profile_config
 
   belongs_to :collection
   belongs_to :category
@@ -17,7 +18,7 @@ class CategoryData < ActiveRecord::Base
 
   def self.all_data_for_category(category)
     Rails.cache.fetch("CategoryData/category_#{category.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('category_id asc').order('collection_id desc').where(category_id:category.id)
+      order('category_id asc').order('collection_id desc').where(category_id:category.id).all
     end
   end
 
