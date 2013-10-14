@@ -23,13 +23,32 @@ class CategoryDataReader
     end
   end
 
+  def self.enrollment(school, _)
+
+    results = CensusDataForSchoolQuery.new(school)
+    .data_for_school
+    .filter_to_max_year_per_data_type!(school.state)
+    .for_data_type!('enrollment')
+
+    if results && results.any?
+      results.first.school_value
+    end
+
+  end
+
   def self.student_ethnicity(school, _)
-    rows = CensusData.data_for_school(school)['Ethnicity'].map do |census_data|
-      if census_data[:state_value] && census_data[:school_value]
+
+    results = CensusDataForSchoolQuery.new(school)
+      .data_for_school
+      .filter_to_max_year_per_data_type!(school.state)
+      .for_data_type!('ethnicity')
+
+    rows = results.map do |census_data_set|
+      if census_data_set.state_value && census_data_set.school_value
         {
-            ethnicity: census_data[:breakdown],
-            school_value: census_data[:school_value].round,
-            state_value: census_data[:state_value].round
+            ethnicity: census_data_set.census_breakdown,
+            school_value: census_data_set.school_value.round,
+            state_value: census_data_set.state_value.round
         }
       end
     end.compact

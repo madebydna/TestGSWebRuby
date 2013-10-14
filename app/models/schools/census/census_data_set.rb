@@ -41,6 +41,14 @@ class CensusDataSet < ActiveRecord::Base
     where(data_type_id: Array(data_type_ids))
   }
 
+  scope :with_max_years_for_data_types, lambda { |state, data_type_ids|
+    max_years = max_year_per_data_type(state)
+    years = max_years.select { |data_type_id| data_type_ids.include? data_type_id }.values
+    years << 0
+
+    where(year: years)
+  }
+
   scope :include_school_district_state, lambda { |school_id|
     includes(:census_data_school_values).where('census_data_school_value.school_id = 1')
     .includes(:census_data_state_values)
@@ -49,28 +57,12 @@ class CensusDataSet < ActiveRecord::Base
   scope :active, where(active: true)
 
   def self.max_year_per_data_type(state)
-    @state_max_years ||= {}
-
-    #Rails.cache.fetch("census_data_set/max_year_per_data_type/#{state}", expires_in: 5.minutes) do
-    @state_max_years[state] ||= on_db(state.downcase.to_sym).having_school_values.group(:data_type_id).maximum(:year)
-    #end
-
-    @state_max_years[state]
+    Rails.cache.fetch("census_data_set/max_year_per_data_type/#{state}", expires_in: 5.minutes) do
+      on_db(state.downcase.to_sym).having_school_values.group(:data_type_id).maximum(:year)
+    end
   end
 
   scope :having_school_values, joins(:census_data_school_values)
-
-  def self.by_data_types(state, data_type_ids = [])
-    #max_years = max_year_per_data_type(state)
-    #max_years.select! { |data_type_id| data_type_ids.include? data_type_id }
-
-    on_db(state.downcase.to_sym)
-      .with_data_types(data_type_ids)
-      .active
-      .where(year: 2011)
-
-    #results.select { |result| result.year == 0 || max_year_per_data_type(state)[result.data_type_id] == result.year }
-  end
 
   def to_hash
     Hashie::Mash.new(
@@ -83,6 +75,25 @@ class CensusDataSet < ActiveRecord::Base
       school_value: school_value,
       state_value: state_value
     )
+  end
+
+  def data_for_school(school)
+    data_type_ids = [9, 17]
+
+    max_years = max_year_per_data_type(school.state)
+
+    years = max_years.select { |data_type_id| data_type_ids.include? data_type_id }.values
+
+    years << 0
+
+    results =
+      active
+      .with_data_types(data_type_ids)
+      .where(year: years)
+      .include_school_district_state(school.id)
+      .all
+
+    CensusDataResults.new(results)
   end
 
   def census_breakdown
