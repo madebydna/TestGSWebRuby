@@ -2,12 +2,12 @@ class TestConnectionManagement
 
   def self.test
     ActiveRecord::Base.logger = nil
-    run_a_query_in_new_thread(Admin, :profile_config).join
+    run_a_query_in_new_thread(Admin, :LocalizedProfiles_development).join
     run_a_query_in_new_thread(School, :ca).join
     run_a_query_in_new_thread(School, :ca).join
     run_a_query_in_new_thread(School, :dc).join
     run_a_query_in_new_thread(School, :me).join
-    run_a_query_in_new_thread(ResponseValue, :profile_config).join
+    run_a_query_in_new_thread(ResponseValue, :LocalizedProfiles_development).join
     run_a_query_in_new_thread(CensusDataSchoolValue, :ca).join
     run_a_query_in_new_thread(CensusDataSchoolValue, :ca).join
     run_a_query_in_new_thread(CensusDataSchoolValue, :dc).join
@@ -35,7 +35,6 @@ class TestConnectionManagement
 
       print_connection_report "Done running query on #{klass}", db, klass
 
-      klass.verify_active_connections!
       print_connection_report "After verify_active_connections! #{klass}", db, klass
     end
   end
@@ -48,7 +47,7 @@ class TestConnectionManagement
       print_connection_report "Checking out connection for #{klass}", db, klass
       klass.connection_pool.with_connection do
         print_connection_report "Got new connection for #{klass}", db, klass
-        klass.on_db(db).first
+        klass.on_db(db).find @id
       end
       print_connection_report "Done using new connection on #{klass}", db, klass
     end

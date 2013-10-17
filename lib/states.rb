@@ -66,4 +66,9 @@ module States
     regex = regex[0..-2]
     return regex
   end
+
+  # lowercased array of state abbreviations as symbols
+  def self.abbreviations_as_symbols
+    state_hash.values.map{ |state| state.downcase.to_sym }
+  end
 end

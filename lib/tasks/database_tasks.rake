@@ -1,5 +1,4 @@
 require 'states'
-require 'octopus'
 
 $tables_receiving_mysql_dump = {
     state_tables: %w(
@@ -55,8 +54,8 @@ namespace :db do
 
     filename = "#{Rails.root}/db/#{filename}.rb"
     File.open(filename, 'w:utf-8') do |file|
-      ActiveRecord::Base.custom_octopus_connection = true
-      ActiveRecord::Base.establish_connection(config)
+      # ActiveRecord::Base.custom_octopus_connection = true
+      # ActiveRecord::Base.establish_connection(config)
       ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, file)
     end
   end
@@ -171,20 +170,20 @@ end
 
 
 task :use_standard_connection do
-  ActiveRecord::Base.custom_octopus_connection = true
+  # ActiveRecord::Base.custom_octopus_connection = true
   ActiveRecord::Base.establish_connection
 end
 
 task :use_octopus_connection do
-  ActiveRecord::Base.custom_octopus_connection = false
-  ActiveRecord::Base.establish_connection
+  # ActiveRecord::Base.custom_octopus_connection = false
+  # ActiveRecord::Base.establish_connection
 end
 
 task :'db:setup' => :use_standard_connection
 task :'db:create' => :use_standard_connection
 task :'db:schema:load_if_ruby' => :use_standard_connection
-task :'db:schema:load' => :use_octopus_connection
-task :'db:migrate' => :use_octopus_connection
+# task :'db:schema:load' => :use_octopus_connection
+# task :'db:migrate' => :use_octopus_connection
 task :'db:drop' => :use_standard_connection
 task :'db:test:purge' => :use_standard_connection
 

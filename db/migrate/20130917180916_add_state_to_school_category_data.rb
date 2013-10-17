@@ -1,5 +1,5 @@
 class AddStateToSchoolCategoryData < ActiveRecord::Migration
-  using(:state_dbs)
+  db_magic connections: States.abbreviations_as_symbols
   def change
     add_column :school_category_data, :state, :string
   end

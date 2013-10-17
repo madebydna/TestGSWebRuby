@@ -13,7 +13,7 @@
 mysql: &mysql
   adapter: mysql2
   encoding: utf8
-  pool: 5
+  pool: 7
   username: root
 
 mysql_localhost: &mysql_localhost

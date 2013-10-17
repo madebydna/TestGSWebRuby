@@ -28,9 +28,4 @@ describe CensusDataSet do
 
 
 
-
-
-
-
-
 end

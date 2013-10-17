@@ -43,6 +43,8 @@ class CategoryDataReader
       .filter_to_max_year_per_data_type!(school.state)
       .for_data_type!('ethnicity')
 
+    results ||= []
+
     rows = results.map do |census_data_set|
       if census_data_set.state_value && census_data_set.school_value
         {

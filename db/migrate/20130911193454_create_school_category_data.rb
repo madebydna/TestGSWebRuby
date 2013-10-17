@@ -1,5 +1,6 @@
+require 'states'
 class CreateSchoolCategoryData < ActiveRecord::Migration
-  using_group(:state_dbs)
+  db_magic connections: States.abbreviations_as_symbols
 
   def self.up
     create_table :school_category_data do |t|
