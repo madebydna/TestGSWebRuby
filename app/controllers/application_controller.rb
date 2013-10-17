@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     state = params[:state] || 'ca'
     state.gsub! '-', ' '
     state_abbreviation = States.abbreviation(state)
-    school_id = params[:schoolId] || 1
+    school_id = params[:schoolId].to_i || 1
 
     if school_id.nil?
       # todo: redirect to school controller, school_not_found action
