@@ -41,6 +41,8 @@ gem 'hashie'
 
 gem 'to_regexp'
 
+gem 'composite_primary_keys'
+
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
