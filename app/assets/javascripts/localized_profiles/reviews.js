@@ -6,7 +6,7 @@ GS.reviews = GS.reviews || function($) {
         var filterByGroup = $(".js_reviewFilterButton");
         var selectOrderDropDown = $(".js_reviewFilterDropDown");
         var selectOrderDropDownText = $(".js_reviewFilterDropDownText");
-        var reviewContentLayer = $(".js_reviewsList")
+        var reviewContentLayer = $(".js_reviewsList");
 
         nextTenButton.on("click", function(){
             $(this).addClass("dn");
@@ -61,7 +61,14 @@ GS.reviews = GS.reviews || function($) {
             jQuery.ajax({
                 type:'GET',
                 url:"/ajax/reviews_pagination",
-                data:{offset:offset, limit:limit, filter_by:filter_by, order_by:order_by},
+                data:{
+                    state: GS.uri.Uri.getFromQueryString('state'),
+                    schoolId: GS.uri.Uri.getFromQueryString('schoolId'),
+                    offset: offset,
+                    limit: limit,
+                    filter_by: filter_by,
+                    order_by: order_by
+                },
                 dataType:'text',
                 async:true
             }).done(function (html) {

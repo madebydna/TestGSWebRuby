@@ -30,13 +30,15 @@ class LocalizedProfileReviewsPage < LocalizedProfilePage
       wait_for_reviews
     }
 
+    expect(reviews).to_not be_empty
+
     if (select_box.text != option)
       (expect sort).to change{ reviews.first.text + reviews.last.text }
     else
       (expect sort).not_to change{ reviews.first.text + reviews.last.text }
     end
 
-    select_box.text.should == option
+    expect(select_box.text).to eq(option)
   end
 
 end
