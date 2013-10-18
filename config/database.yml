@@ -21,6 +21,9 @@ mysql_localhost: &mysql_localhost
   host: 127.0.0.1
   password:
 
+mysql_production: &mysql_production
+  <<: *mysql
+
 mysql_dev: &mysql_dev
   <<: *mysql
   host: dev.greatschools.org
@@ -29,9 +32,6 @@ mysql_dev: &mysql_dev
 
 development:
   <<: *mysql_localhost
-  LocalizedProfiles_development:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_development
   profile_config:
     <<: *mysql_localhost
     database: LocalizedProfiles_development
@@ -52,9 +52,6 @@ development:
 # Do not set this db to the same as development or production.
 test: &test
   <<: *mysql_localhost
-  LocalizedProfiles_development:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_test
   profile_config:
     <<: *mysql_localhost
     database: LocalizedProfiles_development
