@@ -11,7 +11,14 @@ class ApplicationController < ActionController::Base
     render 'error/school_not_found', layout: 'error', status: 404 if state.nil? || state.blank?
 
     state.gsub! '-', ' '
-    params[:state] = States.abbreviation(state).downcase
+
+    state_abbreviation = States.abbreviation(state)
+
+    if state_abbreviation
+      params[:state] = state_abbreviation.downcase
+    else
+      render 'error/school_not_found', layout: 'error', status: 404
+    end
     @state = params[:state]
   end
 
