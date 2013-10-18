@@ -32,7 +32,7 @@ class PageConfig
     @category_placements[position_number][:data]
   end
 
-  # An array of the chosen categories, ordered by position
+  # An array of the chosen category placements, ordered by position
   def placements
     @category_placements.values.map{ |placement_and_data| placement_and_data[:placement] }
   end
