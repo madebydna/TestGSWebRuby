@@ -6,12 +6,8 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :exception_handler
 
   def require_state
-    state = params[:state]
-
-    render 'error/school_not_found', layout: 'error', status: 404 if state.nil? || state.blank?
-
-    state.gsub! '-', ' '
-
+    state = params[:state] || ''
+    state.gsub! '-', ' ' if state.length > 2
     state_abbreviation = States.abbreviation(state)
 
     if state_abbreviation
@@ -19,6 +15,7 @@ class ApplicationController < ActionController::Base
     else
       render 'error/school_not_found', layout: 'error', status: 404
     end
+
     @state = params[:state]
   end
 

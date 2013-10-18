@@ -1,14 +1,13 @@
 class LocalizedProfileAjaxController < ApplicationController
   protect_from_forgery
 
-  # Find school before executing culture action
-  before_filter :find_school
+  before_filter :require_state, :require_school
 
   layout :choose_profile_layout
+
   def choose_profile_layout
     'blank_container'
   end
-
 
   def reviews_pagination
     offset = params[:offset] || '0'

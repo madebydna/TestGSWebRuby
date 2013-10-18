@@ -56,6 +56,12 @@ describe LocalizedProfileController do
       expect(response.code).to eq('404')
     end
 
+    it 'should 404 with no state' do
+      controller.unstub(:require_state)
+      get 'overview'
+      expect(response.code).to eq('404')
+    end
+
     it 'should 404 with non-existent school' do
       controller.unstub(:find_school)
       get 'overview', schoolId: 0, state: 'ca'
