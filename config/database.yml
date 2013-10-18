@@ -21,9 +21,6 @@ mysql_localhost: &mysql_localhost
   host: 127.0.0.1
   password:
 
-mysql_production: &mysql_production
-  <<: *mysql
-
 mysql_dev: &mysql_dev
   <<: *mysql
   host: dev.greatschools.org
@@ -32,6 +29,10 @@ mysql_dev: &mysql_dev
 
 development:
   <<: *mysql_localhost
+  database: LocalizedProfiles_development
+  LocalizedProfiles_development:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_development
   profile_config:
     <<: *mysql_localhost
     database: LocalizedProfiles_development
@@ -50,22 +51,25 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+
+#Just using _ca_test for testing. We can add other states for testing if needed.
 test: &test
   <<: *mysql_localhost
-  profile_config:
+  LocalizedProfiles_test:
     <<: *mysql_localhost
-    database: LocalizedProfiles_development
-<% States.state_hash.values.each do |abbreviation| %>
-  <%= abbreviation.downcase %>:
+    database: LocalizedProfiles_test
+  profile_config_test:
     <<: *mysql_localhost
-    database: _<%= abbreviation.downcase %>
-<% end %>
-  gs_schooldb:
+    database: LocalizedProfiles_test
+  ca_test:
     <<: *mysql_localhost
-    database: gs_schooldb
-  surveys:
+    database: _ca_test
+  gs_schooldb_test:
     <<: *mysql_localhost
-    database: surveys
+    database: gs_schooldb_test
+  surveys_test:
+    <<: *mysql_localhost
+    database: surveys_test
 
 cucumber:
   <<: *test

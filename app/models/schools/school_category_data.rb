@@ -1,5 +1,5 @@
 class SchoolCategoryData < ActiveRecord::Base
-  attr_accessible :key, :schools, :school_data, :school_id, :state
+  attr_accessible :key, :school, :school_data, :school_id, :state
   include StateSharding
 
   belongs_to :school

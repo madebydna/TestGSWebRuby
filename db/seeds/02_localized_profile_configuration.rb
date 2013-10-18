@@ -26,15 +26,15 @@ user.password = 'railsadmin'
 user.save!
 
 # Schools
-@alameda_high_school = School.create!(state: 'CA', name: 'Alameda High School')
-@lowell_high_school = School.create!(state: 'CA', name: 'Lowell High School')
-@lowell_middle_school = School.create!(state: 'CA', name: 'Lowell Middle School')
-@page_private_school = School.create!(state: 'CA', name: 'Page Private School')
+@alameda_high_school = School.on_db(:ca).where(name: 'Alameda High School').first
+@lowell_high_school = School.on_db(:ca).where(name: 'Lowell High School').first
+@lowell_middle_school = School.on_db(:ca).where(name: 'Lowell Middle School').first
+@page_private_school = School.on_db(:ca).where(name: 'Page Private School').first
 
-@hart_middle_school = School.create!(state: 'DC', name: 'Hart Middle School')
-@kramer_middle_school = School.create!(state: 'DC', name: 'Kramer Middle School')
-@sheridan_school = School.create!(state: 'DC', name: 'Sheridan School')
-@maret_school = School.create!(state: 'DC', name: 'Maret School')
+@hart_middle_school = School.on_db(:dc).where(name: 'Hart Middle School').first
+@kramer_middle_school = School.on_db(:dc).where(name: 'Kramer Middle School').first
+@sheridan_school = School.on_db(:dc).where(name: 'Sheridan School').first
+@maret_school = School.on_db(:dc).where(name: 'Maret School').first
 
 
 # Pages

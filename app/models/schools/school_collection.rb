@@ -1,6 +1,6 @@
 require 'states'
 class SchoolCollection < ActiveRecord::Base
-  attr_accessible :collection, :schools, :collection_id, :school_id, :state
+  attr_accessible :collection, :school, :collection_id, :school_id, :state
   has_paper_trail
   db_magic :connection => :profile_config
 
