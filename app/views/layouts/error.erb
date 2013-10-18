@@ -1,5 +1,8 @@
 <% content_for :content do %>
     <%= render 'nav/topnav' %>
+
+    <%= yield %>
 <% end %>
 
 <%= render :file => 'layouts/application' %>
+

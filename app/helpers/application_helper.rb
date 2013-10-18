@@ -2,30 +2,24 @@ module ApplicationHelper
 
   def render_all_positions
     result = ''
-    @category_positions.keys.sort.each { |position| result << String(render_position position) }
+    @page_config.category_positions.keys.sort.each { |position| result << String(render_position position) }
     result.html_safe
   end
 
   def render_position(position_number)
-    if @category_positions[position_number]
+    if @page_config.position_has_data? position_number
 
-      placement_and_data = @category_placements[position_number]
-      return if placement_and_data.nil?
-
-      category_placement = placement_and_data[:placement]
+      category_placement = @page_config.category_placement_at_position position_number
+      data = @page_config.data_at_position position_number
       category = category_placement.category
-      data = placement_and_data[:data]
 
       # different layout for debugging. triggered via url param
-      if params[:category_placement_debugging] && placement_and_data
+      if params[:category_placement_debugging]
         return render 'data_layouts/category_placement_debug',
           category_placements: @category_positions[position_number],
-          picked_placement: placement_and_data[:placement],
+          picked_placement: category_placement,
           school: @school
       end
-
-      # mark the Category itself as picked
-      mark_category_layout_picked category_placement
 
       # figure out which partial to render
       partial = "data_layouts/#{category_placement.layout}"
@@ -50,11 +44,14 @@ module ApplicationHelper
     end
   end
 
-  def mark_category_layout_picked(placement)
-    key = placement.page_category_layout_key
-    @category_layouts_already_picked_by_a_position ||= []
-    @category_layouts_already_picked_by_a_position << key
+  def category_placement_anchor(category_placement)
+    category_placement.category.code_name
   end
+
+  def category_placement_title(category_placement)
+    category_placement.title || category_placement.category.name
+  end
+
 
   def draw_stars_16(on_star_count)
     off_star_count = 5 - on_star_count

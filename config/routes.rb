@@ -3,9 +3,10 @@ LocalizedProfiles::Application.routes.draw do
   resources :census_data_sets
 
   # Handle existing school profile links. Point them to overview action
-  get '/:state/:city/:school_name', to: 'localized_profile#overview', constraints: {
+  get '/:state/:city/:schoolId-:school_name', to: 'localized_profile#overview', constraints: {
       state: States.any_state_name_regex,
-      school_name: /\d+.+/
+      schoolId: /\d+/,
+      school_name: /.+/
   }
 
   get '/profile/overview', :to => 'localized_profile#overview'
@@ -18,6 +19,15 @@ LocalizedProfiles::Application.routes.draw do
   devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+
+  # error handlers
+  match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
+  match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
+  match '/error/internal_error' => 'error#internal_error', :as => :internal_error
+
+  # route not found catch-all
+  match '*path' => 'error#page_not_found'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

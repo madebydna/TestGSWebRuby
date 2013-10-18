@@ -4,15 +4,11 @@
 <div class="row">
     <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
         <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >
-            <% @category_placements.each_pair do |key,cat_place| %>
-                <% if cat_place && cat_place[:placement] %>
-                    <% placement=cat_place[:placement] %>
-                    <li style="position: relative; float:left; right: 50%;">
-                        <a href="#<%= key.to_s + cat_place[:placement].category.code_name %>">
-                            <%= (placement.title && placement.title.size > 0)? placement.title : placement.category.name %>
-                        </a>
-                    </li>
-                <% end %>
+            <% @page_config.placements.each do |placement| %>
+                <li style="position: relative; float:left; right: 50%;">
+                    <a href="#<%= category_placement_anchor placement %>">
+                        <%= category_placement_title placement %></a>
+                </li>
             <% end %>
         </ul>
     </div>

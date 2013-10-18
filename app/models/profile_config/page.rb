@@ -9,7 +9,7 @@ class Page < ActiveRecord::Base
   has_many :pages, :foreign_key => 'parent_id'
 
 
-  # Returns a hash of {position number => Category}
+  # Returns a hash of { position number => [ Categories ] }
   # If collection(s) are passed in, the hash will only contain entries for categories that match the collections
   def categories_per_position(collections = nil)
 
