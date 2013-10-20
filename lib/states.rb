@@ -64,7 +64,7 @@ module States
     regex = ''
     state_hash.keys.each {|s| regex << ("#{s}|".downcase.gsub(/\s+/, '-')) }
     regex = regex[0..-2]
-    return regex
+    return Regexp.new regex, 'i'
   end
 
   # lowercased array of state abbreviations as symbols

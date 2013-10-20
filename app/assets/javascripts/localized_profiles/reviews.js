@@ -62,8 +62,8 @@ GS.reviews = GS.reviews || function($) {
                 type:'GET',
                 url:"/ajax/reviews_pagination",
                 data:{
-                    state: GS.uri.Uri.getFromQueryString('state'),
-                    schoolId: GS.uri.Uri.getFromQueryString('schoolId'),
+                    state: GS.stateAbbreviationFromUrl(),
+                    schoolId: GS.schoolIdFromUrl(),
                     offset: offset,
                     limit: limit,
                     filter_by: filter_by,

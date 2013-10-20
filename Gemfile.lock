@@ -156,6 +156,8 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    lodash-rails (2.2.1)
+      railties (>= 3.1)
     machinist (2.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -335,6 +337,7 @@ DEPENDENCIES
   hashie
   jbuilder (~> 1.2)
   jquery-rails
+  lodash-rails
   machinist (>= 2.0.0.beta2)
   mechanize
   mysql2

@@ -2,6 +2,11 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   resources :census_data_sets
 
+  get '/:state/:city/:schoolId-:school_name/reviews', to: 'localized_profile#reviews', constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/
+  }
   # Handle existing school profile links. Point them to overview action
   get '/:state/:city/:schoolId-:school_name', to: 'localized_profile#overview', constraints: {
       state: States.any_state_name_regex,

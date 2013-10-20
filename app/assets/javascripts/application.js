@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require lodash
 //= require_tree .
 
 Function.prototype.gs_bind = function(obj) {
