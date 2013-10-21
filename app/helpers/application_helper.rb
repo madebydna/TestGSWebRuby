@@ -2,24 +2,30 @@ module ApplicationHelper
 
   def render_all_positions
     result = ''
-    @page_config.category_positions.keys.sort.each { |position| result << String(render_position position) }
+    @category_positions.keys.sort.each { |position| result << String(render_position position) }
     result.html_safe
   end
 
   def render_position(position_number)
-    if @page_config.position_has_data? position_number
+    if @category_positions[position_number]
 
-      category_placement = @page_config.category_placement_at_position position_number
-      data = @page_config.data_at_position position_number
+      placement_and_data = @category_placements[position_number]
+      return if placement_and_data.nil?
+
+      category_placement = placement_and_data[:placement]
       category = category_placement.category
+      data = placement_and_data[:data]
 
       # different layout for debugging. triggered via url param
-      if params[:category_placement_debugging]
+      if params[:category_placement_debugging] && placement_and_data
         return render 'data_layouts/category_placement_debug',
           category_placements: @category_positions[position_number],
-          picked_placement: category_placement,
+          picked_placement: placement_and_data[:placement],
           school: @school
       end
+
+      # mark the Category itself as picked
+      mark_category_layout_picked category_placement
 
       # figure out which partial to render
       partial = "data_layouts/#{category_placement.layout}"
@@ -44,14 +50,11 @@ module ApplicationHelper
     end
   end
 
-  def category_placement_anchor(category_placement)
-    category_placement.category.code_name
+  def mark_category_layout_picked(placement)
+    key = placement.page_category_layout_key
+    @category_layouts_already_picked_by_a_position ||= []
+    @category_layouts_already_picked_by_a_position << key
   end
-
-  def category_placement_title(category_placement)
-    category_placement.title || category_placement.category.name
-  end
-
 
   def draw_stars_16(on_star_count)
     off_star_count = 5 - on_star_count
@@ -76,6 +79,7 @@ module ApplicationHelper
   end
 
   def generate_img_path ( img_size, media_hash )
+    # TODO move to global variable definition config file
     default_url = "http://dev.greatschools.org/"
     comm_media_prefix = "library/"
     default_url + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
@@ -96,4 +100,45 @@ module ApplicationHelper
       school_name: serialize_param(school.name.downcase)
     }
   end
+
+  def urlSafeBase64Decode(base64String)
+    return Base64.decode64(base64String.tr('-_','+/'))
+  end
+
+  def urlSafeBase64Encode(raw)
+    return Base64.encode64(raw).tr('+/','-_')
+  end
+
+  def google_formatted_street_address
+    address = @school.street+","+@school.city+","+@school.state+"+"+@school.zipcode
+    address.gsub!(/\s+/,'+')
+  end
+  def sign_url(url)
+
+    # TODO move to global variable definition config file
+    # GOOGLE_PRIVATE_KEY = "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
+    # GOOGLE_CLIENT_ID = "gme-greatschoolsinc"
+    google_private_key = "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
+    google_client_id = "gme-greatschoolsinc"
+
+    parsed_url = URI.parse(url)
+    url_to_sign = parsed_url.path + '?' + parsed_url.query + '&client=' + google_client_id
+
+    # Decode the private key
+    rawKey = urlSafeBase64Decode(google_private_key)
+
+    # create a signature using the private key and the URL
+    sha1 = HMAC::SHA1.new(rawKey)
+    sha1 << url_to_sign
+    raw_signature = sha1.digest()
+
+    # encode the signature into base64 for url use form.
+    signature =  urlSafeBase64Encode(raw_signature)
+
+    # prepend the server and append the signature.
+    signed_url = parsed_url.scheme+"://"+ parsed_url.host + url_to_sign + "&signature=#{signature}"
+    return signed_url
+  end
+
+
 end

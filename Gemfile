@@ -41,6 +41,8 @@ gem 'hashie'
 
 gem 'to_regexp'
 
+# This module provides common interface to HMAC functionality. HMAC is a kind of "Message Authentication Code" (MAC) algorithm whose standard is documented in RFC2104.
+gem "ruby-hmac", "~> 0.4.0", :require => 'HMAC'
 gem 'composite_primary_keys'
 
 gem 'lodash-rails'

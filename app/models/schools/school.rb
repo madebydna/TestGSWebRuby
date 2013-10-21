@@ -63,16 +63,18 @@ class School < ActiveRecord::Base
 
   # returns all reviews for
   def reviews
-    SchoolRating.fetch_reviews self, '', '', '', ''
+    SchoolRating.fetch_reviews self
   end
-  def reviews_filter(group_type, order_results_by, offset_start, quantity_to_return)
+
+  # group_to_fetch, order_results_by, offset_start, quantity_to_return
+  def reviews_filter( options ={} )
     #second parameter is group to filter by leave it as empty string '' for all
     #third parameter is order by - options are
     #   '' empty string is most recent first
     #   'oldest' is oldest first
     #   'rating_top' is by highest rating
     #   'rating_bottom' is by lowest rating
-    SchoolRating.fetch_reviews self, group_type, order_results_by, offset_start, quantity_to_return
+    SchoolRating.fetch_reviews self, group_to_fetch: options[:group_type], order_results_by: options[:order_results_by], offset_start: options[:offset_start], quantity_to_return: options[:quantity_to_return]
   end
 
   def test_scores

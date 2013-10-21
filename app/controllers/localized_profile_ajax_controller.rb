@@ -12,9 +12,8 @@ class LocalizedProfileAjaxController < ApplicationController
   def reviews_pagination
     offset = params[:offset] || '0'
     limit = params[:limit] || '10'
-    filter_by = params[:filter_by] || ''
-    order_by = params[:order_by] || ''
+    filter_by = params[:filter_by] || nil
+    order_by = params[:order_by] || nil
     @school_reviews_pagination = @school.reviews_filter filter_by, order_by, offset.to_i, limit.to_i
   end
-
 end
