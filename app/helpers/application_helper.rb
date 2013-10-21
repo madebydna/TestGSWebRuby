@@ -1,3 +1,4 @@
+require "hmac-sha1"
 module ApplicationHelper
 
   def render_all_positions
