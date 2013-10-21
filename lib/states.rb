@@ -1,6 +1,5 @@
 module States
-  def self.state_hash
-    {
+  STATE_HASH = {
      'alabama' => 'AL',
      'alaska' => 'AK',
      'arizona' => 'AZ',
@@ -51,13 +50,25 @@ module States
      'washington' => 'WA',
      'west virginia' => 'WV',
      'wisconsin' => 'WI',
-     'wyoming' => 'WY'}
+     'wyoming' => 'WY'
+  }
+
+  def self.state_hash
+    States::STATE_HASH
+  end
+
+  def self.abbreviation_hash
+    @@rhash ||= state_hash.invert
   end
 
   def self.abbreviation(name_or_abbreviation)
     return name_or_abbreviation.upcase if name_or_abbreviation.size == 2
 
     return state_hash[name_or_abbreviation]
+  end
+
+  def self.state_name(abbreviation)
+    abbreviation_hash[abbreviation]
   end
 
   def self.any_state_name_regex

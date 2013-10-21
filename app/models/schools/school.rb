@@ -86,6 +86,9 @@ class School < ActiveRecord::Base
     end
   end
 
+  def state_name
+    States.state_name(state)
+  end
 
 =begin
   def label_value_map_per_category(page)

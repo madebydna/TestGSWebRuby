@@ -2,31 +2,17 @@
     <nav class="nav" style="background-color: #000000; color: #FFFFFF; padding-top: 10px; padding-bottom: 10px; text-align: center">
         <ul style="margin: 0px; padding: 0px ">
             <li>
-                <%= link_to 'Overview',
-                            :controller => 'localized_profile',
-                            :action => 'overview',
-                            :schoolId => school.id,
-                            :state => school.state %>
+                <%= link_to 'Overview', school_path(school_params(school)) %>
             </li>
             <li>
-                <%= link_to 'Quality',
-                            :controller => 'localized_profile',
-                            :action => 'quality',
-                            :schoolId => school.id,
-                            :state => school.state %>
+                <%= link_to 'Quality', school_quality_path(school_params(school)) %>
             </li>
             <li>
-                <%= link_to 'Details',
-                            :controller => 'localized_profile',
-                            :action => 'details',
-                            :schoolId => school.id,
-                            :state => school.state %></li>
+                <%= link_to 'Details', school_details_path(school_params(school)) %>
+            </li>
             <li>
-                <%= link_to 'Reviews',
-                            :controller => 'localized_profile',
-                            :action => 'reviews',
-                            :schoolId => school.id,
-                            :state => school.state %></li>
+                <%= link_to 'Reviews', school_reviews_path(school_params(school)) %>
+            </li>
         </ul>
     </nav>
 </div>

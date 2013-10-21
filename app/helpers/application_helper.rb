@@ -83,4 +83,17 @@ module ApplicationHelper
   #${communityUtil.mediaPrefix}school_media/${schoolMedia.schoolState.abbreviationLowerCase}/${fn:substring(schoolMedia.hash,0,2)}/${schoolMedia.hash}-500.jpg"
     #alt="${schoolMedia.id}
   end
+
+  def serialize_param(path)
+    path.gsub(/\s+/, '-')
+  end
+
+  def school_params(school)
+    {
+      state: serialize_param(school.state_name.downcase),
+      city: serialize_param(school.city.downcase),
+      schoolId: school.id,
+      school_name: serialize_param(school.name.downcase)
+    }
+  end
 end

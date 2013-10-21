@@ -2,23 +2,23 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   resources :census_data_sets
 
-  get '/:state/:city/:schoolId-:school_name/reviews', to: 'localized_profile#reviews', constraints: {
-    state: States.any_state_name_regex,
-    schoolId: /\d+/,
-    school_name: /.+/
-  }
-  # Handle existing school profile links. Point them to overview action
-  get '/:state/:city/:schoolId-:school_name', to: 'localized_profile#overview', constraints: {
+  scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/
-  }
+  } do
+
+    get 'quality', to: 'localized_profile#quality', as: :quality
+    get 'details', to: 'localized_profile#details', as: :details
+    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get '', to: 'localized_profile#overview'
+  end
 
   get '/profile/overview', :to => 'localized_profile#overview'
   get '/profile/quality', :to => 'localized_profile#quality'
   get '/profile/details', :to => 'localized_profile#details'
   get '/profile/reviews', :to => 'localized_profile#reviews'
-  get '/profile/testscores', :to=> 'localized_profile#test_scores'
+
   get '/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
   devise_for :admins
