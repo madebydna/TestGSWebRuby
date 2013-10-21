@@ -2,9 +2,9 @@ class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
   # Find school before executing culture action
-  before_filter :find_school, :find_user
+  before_filter :require_state, :require_school, :find_user
 
-  layout :choose_profile_layout
+  layout 'application'
 
   def read_config_for_page(page_name)
     @page_config = PageConfig.new page_name, @school
@@ -51,10 +51,12 @@ class LocalizedProfileController < ApplicationController
     @cookie_session_cache_hash = session_cookie_load
   end
   def session_cookie_load
-    session_cache = cookies[:SESSION_CACHE].split(';')
-    session_hash = Hashie::Mash.new()
-    session_cache.each do |metadata|
-      session_hash[metadata.meta_key] = metadata.meta_value
+    if cookies[:SESSION_CACHE]
+      session_cache = cookies[:SESSION_CACHE].split(';')
+      session_hash = Hashie::Mash.new()
+      session_cache.each do |metadata|
+        session_hash[metadata.meta_key] = metadata.meta_value
+      end
     end
   end
 end
