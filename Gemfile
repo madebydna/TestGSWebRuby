@@ -39,12 +39,16 @@ gem 'jbuilder', '~> 1.2'
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
 
+# safe way to convert strings to regexps
 gem 'to_regexp'
 
 # This module provides common interface to HMAC functionality. HMAC is a kind of "Message Authentication Code" (MAC) algorithm whose standard is documented in RFC2104.
-gem "ruby-hmac", "~> 0.4.0", :require => 'HMAC'
+gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
+
+# Adds composite primary key support to ActiveRecord. Use minimally
 gem 'composite_primary_keys'
 
+# Adds lodash JS to the project. Version of lodash added depends on environment
 gem 'lodash-rails'
 
 
