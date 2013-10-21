@@ -1,6 +1,14 @@
 class LegacyDatabaseTasks
   require 'states'
 
+  #Rails by default assumes that all the tables exist in one database.We are a using db_charmer to manage the legacy sharded
+  #databases. The usual norm is to maintain the legacy schema in schema.rb file which is obtained by running 'rake db:schema:dump'
+  #against the legacy databases. However we decided not to go this route for
+  #a)Every time there is a change in schema in one of the legacy tables we have to keep it in sync.
+  #b)The legacy tables were not being created correctly due to mysql version differences and MYISAM differences.
+  #Hence the following workaround of dumping the schema and seeds from dev.
+
+
   @@tables_receiving_mysql_dump = {
       state_tables: %w(
       school
@@ -45,21 +53,18 @@ class LegacyDatabaseTasks
   @@state_dbs_receiving_mysql_dump.each { |state| @@databases_receiving_mysql_dump[state] = :state_tables }
 
 
-  def self.create_tables_and_seeds
-    $specific_dbs ||= []
-    mysql_dev = Rails.application.config.database_configuration['mysql_dev']
+  #Creates table schema and the seed data by doing a mysql dump.
+  def self.copy_table_schema_and_data_from_server(source_server_config,
+      source_database,
+      source_table,
+      destination_database = source_database)
 
-    $databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
-      if $specific_dbs.empty? || $specific_dbs.include?(db)
-        $tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
+    copy_table_schema_from_server source_server_config,source_database,source_table
+    copy_data_from_server source_server_config,source_database,source_table
 
-          copy_table_schema_from_server mysql_dev, db, table
-          copy_data_from_server mysql_dev, db, table
-        end
-      end
-    end
   end
 
+  #Creates table schema by doing a mysql dump.
   def self.copy_table_schema_from_server(source_server_config,
       source_database,
       source_table,
@@ -72,6 +77,7 @@ class LegacyDatabaseTasks
 
   end
 
+  #Creates the seed data by doing a mysql dump.
   def self.copy_data_from_server(source_server_config,
       source_database,
       source_table,
@@ -79,7 +85,7 @@ class LegacyDatabaseTasks
       limit = 10000000)
 
     puts "seeding #{source_database}.#{source_table} from #{source_server_config['host']}"
-    sql_command = "mysqldump -u#{source_server_config['username']} -p#{source_server_config['password']} -h#{source_server_config['host']} --compact --databases \"#{source_database}\" --tables \"#{source_table}\" --skip-set-charset --no-create-info --skip-comments --where \"1 limit #{limit}\" | tr -d \"\\`\" | mysql -uroot #{destination_database}"
+    sql_command = "mysqldump -u#{source_server_config['username']} -p#{source_server_config['password']} -h#{source_server_config['host']} --compact --databases \"#{source_database}\" --tables \"#{source_table}\" --no-create-info --where \"1 limit #{limit}\" | tr -d \"\\`\" | mysql -uroot #{destination_database}"
     system(sql_command)
     puts $?.success? ? "Seeding #{source_table} completed." : "Seeding #{source_table} failed."
   end

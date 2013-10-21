@@ -1,90 +1,129 @@
-require 'states'
 require 'legacy_database_tasks'
 
 namespace :db do
   $mysql_dev = Rails.application.config.database_configuration['mysql_dev']
 
   def environments
-    # logic taken from railties databases.rake
     environments = [Rails.env]
-    #environments << 'test' if Rails.env.development?
+    environments << 'test' if Rails.env.development?
   end
 
-  task :reset, [:specific_dbs] => [:drop, :create, :migrate]
+  def construct_database_name rails_env, db
+    rails_env.eql?("test") ? db + "_test" : db
+  end
 
+  task :reset, [:specific_dbs] => [:drop]
+
+  desc 'Rake tasks for legacy databases and tables.
+  All the legacy databases and the contained tables are hardcoded in a hash in the legacy_database_tasks.rb.
+  By defaults the tasks below are performed for all databases.Instead of all the databases, you can just seed one specific database.'
   namespace :legacy do
-    task :load_schema_and_seed  do |task, args|
-      create_tables_and_seeds
+
+    task :reset, [:specific_dbs] => [:drop, :create, :schema, :seed]
+
+    desc 'Creates seeds by doing a mysql dump from dev for the development and test databases.'
+    task :seed, [:specific_dbs] do |task, args|
+
+      #Check if a specific database was passed in the argument list
+      $specific_dbs = String(args[:specific_dbs]).split ','
+
+      environments.each do |env|
+        LegacyDatabaseTasks.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
+          if $specific_dbs.empty? || $specific_dbs.include?(db)
+            LegacyDatabaseTasks.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
+
+              #If its the _test environment then get the database name appended with "_test"
+              database_name = construct_database_name env, db
+
+              #copy_table_schema_from_server mysql_dev, db, table
+              LegacyDatabaseTasks.copy_data_from_server $mysql_dev, db, table, database_name
+            end
+          end
+        end
+      end
     end
 
-    desc 'Create state and gs_schooldb dev and test dbs on dev workstations.'
-    task :create, [:specific_dbs] => [:load_config, :rails_env] do |task, args|
+    desc 'Creates the schema for the tables in development and test databases.It does a mysql dump from dev to obtain the schema. '
+    task :schema, [:specific_dbs] do |task, args|
 
+      #Check if a specific database was passed in the argument list
+      $specific_dbs = String(args[:specific_dbs]).split ','
+
+      #creates the tables inside the databases for both development and test environment.
+      environments.each do |env|
+        LegacyDatabaseTasks.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
+          if $specific_dbs.empty? || $specific_dbs.include?(db)
+
+            #If its the _test environment then get the database name appended with "_test"
+            database_name = construct_database_name env, db
+
+            LegacyDatabaseTasks.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
+              LegacyDatabaseTasks.copy_table_schema_from_server $mysql_dev, db, table, database_name
+            end
+          end
+        end
+      end
+    end
+
+
+    desc 'Drops and then creates the legacy development and test databases.'
+    task :create, [:specific_dbs] => [:load_config, :rails_env, :drop] do |task, args|
+
+      #Make sure the config has a host.
       config = (ActiveRecord::Base.configurations.values_at(*environments).compact.reject { |config| config['host'].blank? }).first.clone
 
-
-
+      #Check if a specific database was passed in the argument list
       $specific_dbs = String(args[:specific_dbs]).split ','
+
+      #creates the databases for both development and test environment
       environments.each do |env|
         LegacyDatabaseTasks.all_legacy_dbs.each do |db|
           if $specific_dbs.empty? || $specific_dbs.include?(db)
-            puts "Creating #{env} database #{db} on #{config['host']}"
 
-            # not currently using the current environment within the db name. this may change
-            # i.e. for test env we might create "_ca_test" for california
-            config['database'] = db
+            #If its the _test environment then get the database name appended with "_test"
+            database_name = construct_database_name env, db
 
+            puts "Creating #{env} database #{database_name} on #{config['host']}"
+
+            config['database'] = database_name
             create_database config
           end
         end
       end
-
-      LegacyDatabaseTasks.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
-        if $specific_dbs.empty? || $specific_dbs.include?(db)
-          LegacyDatabaseTasks.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
-
-            LegacyDatabaseTasks.copy_table_schema_from_server $mysql_dev, db, table
-          end
-        end
-      end
-
     end
 
+
+    desc 'Drops the legacy development and test databases and the tables inside them.'
     task :drop, [:specific_dbs] => [:load_config, :rails_env] do |task, args|
 
-      ActiveRecord::Base.configurations.each_value do  |config|
-        #puts "--config----------------#{config}---------"
-        #puts "--2----------------#{config['database']}---------"
-        #config.each do |key,value|
-        #  puts "--f---------------#{key}---------"
-        #  puts "---g---------------#{value}---------"
-        #end
-      end
-      #config = (ActiveRecord::Base.configurations.values_at(*environments).compact.reject { |config| config['database'].blank? }).first.clone
+      #Make sure the config has a host.
       config = (ActiveRecord::Base.configurations.values_at(*environments).compact.reject { |config| config['host'].blank? }).first.clone
 
+      #Check if a specific database was passed in the argument list
       $specific_dbs = String(args[:specific_dbs]).split ','
-
-
 
       environments.each do |env|
         LegacyDatabaseTasks.all_legacy_dbs.each do |db|
           if $specific_dbs.empty? || $specific_dbs.include?(db)
 
-            puts "Dropping #{env} database #{db} on #{config['host']}"
+            #If its the _test environment then get the database name appended with "_test"
+            database_name = construct_database_name env, db
 
-            config['database'] = db
+            puts "Dropping #{env} database #{database_name} on #{config['host']}"
+
+            config['database'] = database_name
             drop_database_and_rescue config
           end
         end
       end
     end
 
+
   end
 end
-
 
 task :use_standard_connection do
   ActiveRecord::Base.establish_connection
 end
+
 
