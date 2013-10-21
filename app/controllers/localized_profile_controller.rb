@@ -27,7 +27,7 @@ class LocalizedProfileController < ApplicationController
 
   def reviews
     init_page
-    @school_reviews = @school.reviews_filter '', '', '', 10
+    @school_reviews = @school.reviews_filter quantity_to_return: 10
 
     @review_offset = 0
     @review_limit = 10
