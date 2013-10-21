@@ -4,6 +4,7 @@ var GS = GS || {};
 // Requires: Lo-Dash
 
 (function(GS, _) {
+    "use strict";
     var stateParam = 'state';
     var schoolIdParam = 'schoolId';
 
@@ -25,12 +26,12 @@ var GS = GS || {};
 
         schoolId = _(window.location.pathname.split('/')).map(function(pathComponent) {
             var match = schoolPathRegex.exec(pathComponent);
-            return (match === null)? null : match[1];
+            return (match === null) ? null : match[1];
         }).compact().first();
 
         schoolId = parseInt(schoolId);
 
-        return isNaN(schoolId)? undefined: schoolId;
+        return isNaN(schoolId) ? undefined : schoolId;
     };
 
     var schoolIdFromUrl = function() {
@@ -42,11 +43,11 @@ var GS = GS || {};
 
         schoolId = parseInt(schoolId);
 
-        return isNaN(schoolId)? undefined: schoolId;
+        return isNaN(schoolId) ? undefined : schoolId;
     };
 
 
     GS.stateAbbreviationFromUrl = stateAbbreviationFromUrl;
-    GS.schoolIdFromUrl =  schoolIdFromUrl;
+    GS.schoolIdFromUrl = schoolIdFromUrl;
 
 })(GS, _);
