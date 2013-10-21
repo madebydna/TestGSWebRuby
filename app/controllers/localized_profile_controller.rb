@@ -6,9 +6,8 @@ class LocalizedProfileController < ApplicationController
 
   layout :choose_profile_layout
 
-  def choose_profile_layout
-    @java = params[:java] == 'java'
-    @java? 'application' : 'application'
+  def read_config_for_page(page_name)
+    @page_config = PageConfig.new page_name, @school
   end
 
   def overview
