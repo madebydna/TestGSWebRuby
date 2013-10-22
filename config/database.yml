@@ -76,18 +76,18 @@ production: &production
   <<: *mysql_production
   database: LocalizedProfiles_production
   profile_config:
-    <<: *mysql_localhost
+    <<: *mysql_production
     database: LocalizedProfiles_production
 <% States.state_hash.values.each do |abbreviation| %>
   <%= abbreviation.downcase %>:
-    <<: *mysql_localhost
+    <<: *mysql_production
     database: _<%= abbreviation.downcase %>
 <% end %>
   gs_schooldb:
-    <<: *mysql_localhost
+    <<: *mysql_production
     database: gs_schooldb
   surveys:
-    <<: *mysql_localhost
+    <<: *mysql_production
     database: surveys
 
 cucumber:
