@@ -1,4 +1,6 @@
 LocalizedProfiles::Application.routes.draw do
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
+
   require 'states'
   resources :census_data_sets
 

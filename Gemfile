@@ -89,6 +89,11 @@ group :development, :test do
   gem 'capybara'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
+
+  # JS testing framework
+  gem 'mocha_rails'
+  # JS testing framework add-on for stubbing
+  gem 'sinon-rails'
 end
 
 # Gems used only for assets and not required

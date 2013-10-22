@@ -7,8 +7,13 @@ GS.uri.Uri = function() {
 
 };
 
+GS.uri.Uri.getHref = function() {
+    return window.location.href;
+};
 
-
+GS.uri.Uri.getPath = function() {
+    return window.location.pathname;
+};
 
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order

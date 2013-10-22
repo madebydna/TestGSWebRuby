@@ -10,21 +10,23 @@ var GS = GS || {};
 
     var stateAbbreviationFromUrl = function() {
         var state = GS.uri.Uri.getFromQueryString(stateParam);
+        var stateAbbreviation = GS.states.abbreviation(state);
 
-        if (state === undefined) {
-            state = _(window.location.pathname.split('/')).filter(function(pathComponent) {
+        if (stateAbbreviation === undefined) {
+            state = _(GS.uri.Uri.getPath().split('/')).filter(function(pathComponent) {
                 return GS.states.isStateName(pathComponent);
             }).first();
+            stateAbbreviation = GS.states.abbreviation(state);
         }
 
-        return GS.states.abbreviation(state);
+        return stateAbbreviation;
     };
 
     var schoolIdFromUrlPath = function() {
         var schoolId;
         var schoolPathRegex = /(\d+)-.+/;
 
-        schoolId = _(window.location.pathname.split('/')).map(function(pathComponent) {
+        schoolId = _(GS.uri.Uri.getPath().split('/')).map(function(pathComponent) {
             var match = schoolPathRegex.exec(pathComponent);
             return (match === null) ? null : match[1];
         }).compact().first();
@@ -45,7 +47,6 @@ var GS = GS || {};
 
         return isNaN(schoolId) ? undefined : schoolId;
     };
-
 
     GS.stateAbbreviationFromUrl = stateAbbreviationFromUrl;
     GS.schoolIdFromUrl = schoolIdFromUrl;
