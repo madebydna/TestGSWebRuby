@@ -26,8 +26,7 @@ gem 'db-charmer', :require => 'db_charmer'
 gem 'safe_attributes'
 
 # paper_trail allows implementing versioning to models
-gem 'paper_trail', :git => 'git://github.com/airblade/paper_trail.git'
-
+gem 'paper_trail'
 gem 'haml'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
