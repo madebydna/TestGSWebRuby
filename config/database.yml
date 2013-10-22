@@ -46,34 +46,44 @@ development:
   <%= abbreviation.downcase %>:
     <<: *mysql_localhost
     database: _<%= abbreviation.downcase %>
+    legacy: true
 <% end %>
   gs_schooldb:
     <<: *mysql_localhost
     database: gs_schooldb
+    legacy: true
   surveys:
     <<: *mysql_localhost
     database: surveys
+    legacy: true
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 
-#Just using _ca_test for testing. We can add other states for testing if needed.
+#Just using _ca_test and _dc_test for testing. We can add other states for testing if needed.
 test: &test
   <<: *mysql_localhost
   database: LocalizedProfiles_test
-  profile_config_test:
+  profile_config:
     <<: *mysql_localhost
     database: LocalizedProfiles_test
-  ca_test:
+  ca:
     <<: *mysql_localhost
     database: _ca_test
-  gs_schooldb_test:
+    legacy: true
+  dc:
+     <<: *mysql_localhost
+     database: _dc_test
+     legacy: true
+  gs_schooldb:
     <<: *mysql_localhost
     database: gs_schooldb_test
-  surveys_test:
+    legacy: true
+  surveys:
     <<: *mysql_localhost
     database: surveys_test
+    legacy: true
 
 production: &production
   <<: *mysql_production

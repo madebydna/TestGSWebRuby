@@ -46,8 +46,6 @@ class LegacyDatabaseTasks
 
   @@all_state_dbs = States.state_hash.values.map { |state| "_#{state.downcase}" }
 
-  @@all_legacy_dbs = (@@databases_receiving_mysql_dump.keys + @@all_state_dbs).uniq!
-
   @@state_dbs_receiving_mysql_dump = %w(_ca _dc)
 
   @@state_dbs_receiving_mysql_dump.each { |state| @@databases_receiving_mysql_dump[state] = :state_tables }
@@ -90,9 +88,7 @@ class LegacyDatabaseTasks
     puts $?.success? ? "Seeding #{source_table} completed." : "Seeding #{source_table} failed."
   end
 
-  def self.all_legacy_dbs
-  @@all_legacy_dbs
-  end
+
 
   def self.databases_receiving_mysql_dump
   @@databases_receiving_mysql_dump
