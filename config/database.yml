@@ -8,7 +8,7 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
-<% require 'States' %>
+<% require 'states' %>
 
 mysql: &mysql
   adapter: mysql2
@@ -23,6 +23,9 @@ mysql_localhost: &mysql_localhost
 
 mysql_production: &mysql_production
   <<: *mysql
+  host: omega
+  username: service
+  password: service
 
 mysql_dev: &mysql_dev
   <<: *mysql
