@@ -21,6 +21,9 @@ mysql_localhost: &mysql_localhost
   host: 127.0.0.1
   password:
 
+mysql_production: &mysql_production
+  <<: *mysql
+
 mysql_dev: &mysql_dev
   <<: *mysql
   host: dev.greatschools.org
@@ -55,9 +58,7 @@ development:
 #Just using _ca_test for testing. We can add other states for testing if needed.
 test: &test
   <<: *mysql_localhost
-  LocalizedProfiles_test:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_test
+  database: LocalizedProfiles_test
   profile_config_test:
     <<: *mysql_localhost
     database: LocalizedProfiles_test
@@ -70,6 +71,24 @@ test: &test
   surveys_test:
     <<: *mysql_localhost
     database: surveys_test
+
+production: &production
+  <<: *mysql_production
+  database: LocalizedProfiles_production
+  profile_config:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_production
+<% States.state_hash.values.each do |abbreviation| %>
+  <%= abbreviation.downcase %>:
+    <<: *mysql_localhost
+    database: _<%= abbreviation.downcase %>
+<% end %>
+  gs_schooldb:
+    <<: *mysql_localhost
+    database: gs_schooldb
+  surveys:
+    <<: *mysql_localhost
+    database: surveys
 
 cucumber:
   <<: *test
