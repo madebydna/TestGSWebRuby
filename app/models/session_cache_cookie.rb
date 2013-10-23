@@ -4,6 +4,7 @@ class SessionCacheCookie
   INTRA_COOKIE_DELIMETER = ';'
   COOKIE_ENCODING = 'ISO-8859-1'
 
+=begin
   private static final String COOKIE_LIST_DELIMETER = ",";
   private static final String INTRA_COOKIE_DELIMETER = ";";
   private static final String COOKIE_ENCODING = "ISO-8859-1";
@@ -31,5 +32,6 @@ class SessionCacheCookie
   if (version > 4) {
       _firstName = s[9];
   }
+=end
 
 end
