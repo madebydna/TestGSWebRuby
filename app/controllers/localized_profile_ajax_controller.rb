@@ -3,17 +3,14 @@ class LocalizedProfileAjaxController < ApplicationController
 
   before_filter :require_state, :require_school
 
-  layout :choose_profile_layout
-
-  def choose_profile_layout
-    'blank_container'
-  end
+  layout 'blank_container'
 
   def reviews_pagination
     offset = params[:offset] || '0'
     limit = params[:limit] || '10'
     filter_by = params[:filter_by] || nil
     order_by = params[:order_by] || nil
-    @school_reviews_pagination = @school.reviews_filter filter_by, order_by, offset.to_i, limit.to_i
+
+    @school_reviews_pagination = @school.reviews_filter group_type:filter_by, order_results_by:order_by, offset_start: offset.to_i, quantity_to_return: limit.to_i
   end
 end

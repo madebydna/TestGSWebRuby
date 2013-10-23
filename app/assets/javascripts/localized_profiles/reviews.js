@@ -8,80 +8,86 @@ GS.reviews = GS.reviews || function($) {
         var selectOrderDropDownText = $(".js_reviewFilterDropDownText");
         var reviewContentLayer = $(".js_reviewsList");
 
+        var getFieldValues = function(){
+            var result = {};
+            result['offset'] = nextTenButton.data( "offset" );
+            result['limit'] = nextTenButton.data( "limit" );
+            result['totalCount'] = nextTenButton.data( "total-count" );
+            result['filter_by'] = filterByGroup.data( "group-selected" );
+            result['order_by'] = selectOrderDropDown.data( "order-selected" );
+            return result;
+        }
+
+        // group is the button group selection -  parent, all or student
+        var setTotalCount = function(group){
+            var totalCount = nextTenButton.data( "all-count" );
+            if(group == "parent"){
+                totalCount = nextTenButton.data( "parent-count" );
+            }
+            else{
+                if(group == "student"){
+                    totalCount = nextTenButton.data( "student-count" );
+                }
+            }
+            nextTenButton.data( "total-count", totalCount );
+        }
+
         nextTenButton.on("click", function(){
             $(this).addClass("dn");
-            var offset = $(this).data( "offset" );
-            var limit = $(this).data( "limit" );
-            var totalCount = $(this).data( "total-count" );
-            var filter_by = filterByGroup.data( "group-selected" );
-            var order_by = selectOrderDropDown.data( "order-selected" );
-            callReviewsAjax(offset, limit, totalCount, filter_by, order_by);
+            var results = getFieldValues();
+            callReviewsAjax(results);
         });
 
+        // group is the button group selection -  parent, all or student
         filterByGroup.on("click", "button", function(){
             if(filterByGroup.data( "group-selected"  ) != $(this).data( "group-name" )){
                 nextTenButton.addClass("dn");
-                var offset = 0;
-                var limit = nextTenButton.data( "limit" );
-                var filter_by_group = $(this).data( "group-name" );
-                var totalCount = nextTenButton.data( "all-count" );
-                if(filter_by_group == "parent"){
-                    totalCount = nextTenButton.data( "parent-count" );
-                }
-                else{
-                   if(filter_by_group == "student"){
-                       totalCount = nextTenButton.data( "student-count" );
-                   }
-                }
-                nextTenButton.data( "total-count", totalCount );
+                setTotalCountByGroup($(this).data( "group-name" ));
                 reviewContentLayer.html('');
-                $(this).siblings().removeClass("active");
-                $(this).addClass("active");
                 filterByGroup.data( "group-selected", filter_by_group);
-                var order_by = selectOrderDropDown.data( "order-selected" );
-                callReviewsAjax(offset, limit, totalCount, filter_by_group, order_by);
+                var results = getFieldValues();
+                results['offset'] = 0;
+                callReviewsAjax(results);
             }
         });
+
         selectOrderDropDown.on("click", "a", function(){
             nextTenButton.addClass("dn");
             var order_by = $(this).data( "order-review" );
-
             if(selectOrderDropDown.data( "order-selected"  ) != order_by){
                 selectOrderDropDown.data( "order-selected", order_by);
                 selectOrderDropDownText.html($(this).html()+' <b class="caret"></b>');
-                var offset = 0;
-                var limit = nextTenButton.data( "limit" );
-                var totalCount = nextTenButton.data( "total-count" );
-                var filter_by = filterByGroup.data( "group-selected" );
                 reviewContentLayer.html('');
-                callReviewsAjax(offset, limit, totalCount, filter_by, order_by);
+                var results = getFieldValues();
+                results['offset'] = 0;
+                callReviewsAjax(results);
             }
         });
-        var callReviewsAjax = function(offset, limit, totalCount, filter_by, order_by){
+
+        var callReviewsAjax = function(results){
             jQuery.ajax({
                 type:'GET',
                 url:"/ajax/reviews_pagination",
                 data:{
                     state: GS.stateAbbreviationFromUrl(),
                     schoolId: GS.schoolIdFromUrl(),
-                    offset: offset,
-                    limit: limit,
-                    filter_by: filter_by,
-                    order_by: order_by
+                    offset: results['offset'],
+                    limit: results['limit'],
+                    filter_by: results['filter_by'],
+                    order_by: results['order_by']
                 },
                 dataType:'text',
                 async:true
             }).done(function (html) {
-                reviewContentLayer.append(html);
-            }.gs_bind(this));
+                    reviewContentLayer.append(html);
+                }.gs_bind(this));
 
-            var new_offset = offset+limit;
+            var new_offset = results['offset'] + results['limit'];
             nextTenButton.data( "offset", new_offset );
-            if(totalCount > new_offset){
+            if(results['totalCount'] > new_offset){
                 nextTenButton.removeClass("dn");
             }
         };
-
     };
     return {
         initializeReviewHandlers: initializeReviewHandlers

@@ -55,7 +55,7 @@ class LocalizedProfileController < ApplicationController
       session_cache = cookies[:SESSION_CACHE].split(';')
       session_hash = Hashie::Mash.new()
       session_cache.each do |metadata|
-        session_hash[metadata.meta_key] = metadata.meta_value
+        #session_hash[metadata.meta_key] = metadata.meta_value
       end
     end
   end
