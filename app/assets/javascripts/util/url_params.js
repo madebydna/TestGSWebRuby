@@ -8,15 +8,28 @@ var GS = GS || {};
     var stateParam = 'state';
     var schoolIdParam = 'schoolId';
 
+    var spacesToHyphens = function(str) {
+        return str.replace(/ /g, '-');
+    };
+
+    var hyphensToSpaces = function(str) {
+        if (!_.isString(str)) {
+            return;
+        }
+
+        return str.replace(/-/g, ' ');
+    };
+
     var stateAbbreviationFromUrl = function() {
         var state = GS.uri.Uri.getFromQueryString(stateParam);
         var stateAbbreviation = GS.states.abbreviation(state);
 
         if (stateAbbreviation === undefined) {
             state = _(GS.uri.Uri.getPath().split('/')).filter(function(pathComponent) {
-                return GS.states.isStateName(pathComponent);
+                return GS.states.isStateName(hyphensToSpaces(pathComponent));
             }).first();
-            stateAbbreviation = GS.states.abbreviation(state);
+            console.log('state name is ' + state);
+            stateAbbreviation = GS.states.abbreviation(hyphensToSpaces(state));
         }
 
         return stateAbbreviation;

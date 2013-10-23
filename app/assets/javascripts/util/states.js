@@ -11,6 +11,7 @@ GS.states = (function(_) {
      'connecticut': 'ct',
      'delaware': 'de',
      'district of columbia': 'dc',
+     'washington dc': 'dc',
      'florida': 'fl',
      'georgia': 'ga',
      'hawaii': 'hi',
@@ -55,19 +56,13 @@ GS.states = (function(_) {
      'wyoming': 'wy'
     };
 
+    var abbreviationHash = _.invert(statesHash);
+
     var stateAbbreviations = _.values(statesHash);
-
-    var encode = function(str) {
-        return str.replace(/ /g, '-');
-    };
-
-    var decode = function(str) {
-        return str.replace(/-/g, ' ');
-    };
 
     var anyStateNameRegex = function() {
         var components = _(statesHash).keys().map(function(stateName) {
-            return '^' + encode(stateName) + '$';
+            return '^' + stateName + '$';
         });
 
         return new RegExp(components.join('|'), 'i');
@@ -78,8 +73,8 @@ GS.states = (function(_) {
     };
 
     var abbreviation = function(str) {
-        if (str === undefined) {
-            return;
+        if (!_.isString(str)) {
+            return undefined;
         }
 
         str = str.toLowerCase();
@@ -87,14 +82,23 @@ GS.states = (function(_) {
         if (str.length === 2 && _(stateAbbreviations).contains(str)) {
             return str;
         } else {
-            return statesHash[ decode(str) ];
+            return statesHash[str];
         }
+    };
+
+    var name = function(str) {
+        if (!_.isString(str) || str.length !== 2) {
+            return;
+        }
+
+        return abbreviationHash[str];
     };
 
     return {
         anyStateNameRegex: anyStateNameRegex,
         isStateName: isStateName,
-        abbreviation: abbreviation
+        abbreviation: abbreviation,
+        name: name
     }
 
 })(_);
