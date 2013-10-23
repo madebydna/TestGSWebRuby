@@ -24,15 +24,18 @@ class TestDataSet < ActiveRecord::Base
   def self.fetch_test_scores(school)
     @data_sets_and_values = TestDataSet.for_school(school,1,1)
     @all_data_set_ids = @data_sets_and_values.pluck("TestDataSet.id")
+
+    #TODO join this table as well?
+    #Get the data set Ids that have a corresponding entry in TestDataSetFile. This table is in
+    #gs_schooldb, hence could not join with the tables in state dbs.
     @valid_data_set_ids = TestDataSetFile.get_valid_data_set_ids(@all_data_set_ids,school)
 
     test_data = TestData.new
     test_meta_data = TestData.new
+
     @data_sets_and_values.each do |result|
 
       #Todo get the test data type, subject, grade, level code objects?
-      #Todo query the testdatatype table for the tests
-      #Todo consider a different data structure instead of nested maps.
 
       if @valid_data_set_ids.include?(result.data_set_id)
         test_data_type_id = result.data_type_id
@@ -46,10 +49,12 @@ class TestDataSet < ActiveRecord::Base
         breakdown_id = result.breakdown_id
         number_tested = result.number_tested
 
+        #Todo Query just 1 once
         unless test_meta_data.key?(test_data_type_id)
           test_meta_data.deep_merge!({test_data_type_id => TestDataType.by_id(test_data_type_id)})
         end
 
+        #construct the Map of test ids to grades to level code to subject to year.
         test_data.deep_merge!(
             {test_data_type_id =>
                  {
@@ -74,8 +79,6 @@ class TestDataSet < ActiveRecord::Base
         )
       end
 
-      #my_hash = { :nested_hash => { :first_key => 'Hello' } }
-      #Map<CustomTestDataType, Map<Grade, Map<LevelCode, Map<Subject, Map<CustomTestDataSet, Pair<String,Integer>>>>>> testScoresMap,
     end
     test_data
   end
