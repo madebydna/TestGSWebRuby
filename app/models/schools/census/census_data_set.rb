@@ -3,6 +3,7 @@ class CensusDataSet < ActiveRecord::Base
   self.inheritance_column = nil
 
   include ReadOnlyRecord
+  include StateSharding
   include LookupDataPreloading
 
   #has_lookup :census_data_type, :class_name => 'CensusDataType', :foreign_key => 'data_type_id'

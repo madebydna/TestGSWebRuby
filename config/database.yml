@@ -10,6 +10,21 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 <% require 'states' %>
 
+<%
+def define_db(name, db, legacy, includes)
+  <<-EOF
+  #{name}:
+    <<: *#{includes}
+    database: #{db}
+    legacy: #{legacy}
+  #{name}_ro:
+    <<: *#{includes}_ro
+    database: #{db}
+  EOF
+end
+%>
+
+
 mysql: &mysql
   adapter: mysql2
   encoding: utf8
@@ -20,42 +35,32 @@ mysql_localhost: &mysql_localhost
   <<: *mysql
   host: 127.0.0.1
   password:
-
-mysql_production: &mysql_production
-  <<: *mysql
-  host: omega
-  username: service
-  password: service
+mysql_localhost_rw: &mysql_localhost_rw
+  <<: *mysql_localhost
+mysql_localhost_ro: &mysql_localhost_ro
+  <<: *mysql_localhost
 
 mysql_dev: &mysql_dev
   <<: *mysql
   host: dev.greatschools.org
   username: service
   password: service
+mysql_dev_rw: &mysql_dev_rw
+  <<: *mysql_dev
+mysql_dev_ro: &mysql_dev_ro
+  <<: *mysql_dev
+
 
 development:
   <<: *mysql_localhost
   database: LocalizedProfiles_development
-  LocalizedProfiles_development:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_development
-  profile_config:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_development
+<%= define_db('profile_config', 'LocalizedProfiles_development', false, 'mysql_localhost') %>
 <% States.state_hash.values.each do |abbreviation| %>
-  <%= abbreviation.downcase %>:
-    <<: *mysql_localhost
-    database: _<%= abbreviation.downcase %>
-    legacy: true
+<%= define_db(abbreviation.downcase, '_' + abbreviation.downcase, true, 'mysql_localhost') %>
 <% end %>
-  gs_schooldb:
-    <<: *mysql_localhost
-    database: gs_schooldb
-    legacy: true
-  surveys:
-    <<: *mysql_localhost
-    database: surveys
-    legacy: true
+<%= define_db('gs_schooldb', 'gs_schooldb', true, 'mysql_localhost') %>
+<%= define_db('surveys', 'surveys', true, 'mysql_localhost') %>
+
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -85,23 +90,8 @@ test: &test
     database: surveys_test
     legacy: true
 
-production: &production
-  <<: *mysql_production
-  database: LocalizedProfiles_production
-  profile_config:
-    <<: *mysql_production
-    database: LocalizedProfiles_production
-<% States.state_hash.values.each do |abbreviation| %>
-  <%= abbreviation.downcase %>:
-    <<: *mysql_production
-    database: _<%= abbreviation.downcase %>
-<% end %>
-  gs_schooldb:
-    <<: *mysql_production
-    database: gs_schooldb
-  surveys:
-    <<: *mysql_production
-    database: surveys
-
 cucumber:
   <<: *test
+
+<%= file = File.join('', 'usr', 'local', 'etc', 'localized-profiles-database.yml') ; File.read(file) if File.exist?(file) %>
+
