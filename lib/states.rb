@@ -64,13 +64,16 @@ module States
   end
 
   def self.abbreviation(name_or_abbreviation)
-    return name_or_abbreviation.upcase if name_or_abbreviation.size == 2
+    str = name_or_abbreviation.downcase
+    if str.size == 2 && abbreviation_hash.include?(str)
+      return str
+    end
 
-    return state_hash[name_or_abbreviation]
+    return state_hash[str]
   end
 
   def self.state_name(abbreviation)
-    abbreviation_hash[abbreviation]
+    abbreviation_hash[abbreviation.downcase]
   end
 
   def self.any_state_name_regex
