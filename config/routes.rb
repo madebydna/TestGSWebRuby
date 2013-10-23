@@ -4,6 +4,12 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   resources :census_data_sets
 
+  get '/district-of-columbia/:city/:schoolId-:school_name', constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/
+  }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}"}
+
   scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
