@@ -29,6 +29,9 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
+  get '/signin', :to => 'signin#signin'
+  match '/register', :to => 'signin#register'
+
   devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'

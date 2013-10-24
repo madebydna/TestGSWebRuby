@@ -1,0 +1,89 @@
+<%= render 'nav/topnav' %>
+
+
+<% content_for :head do %>
+    <%= javascript_include_tag 'http://connect.facebook.net/en_US/all.js' %>
+    <% app_id = '178930405559082' # TODO: will not work in production: set correct id from var %>
+
+    <div id="fb-root"><!--Do not collapse--></div>
+    <script type="text/javascript">
+        // Additional JS functions here
+        window.fbAsyncInit = function() {
+            FB.init({
+                        appId      : <%= app_id %>,
+                        channelUrl : 'http://dev.greatschools.org/res/channel.html', // Channel File
+                        status     : true, // check login status
+                        cookie     : true, // enable cookies to allow the server to access the session
+                        xfbml      : true  // parse XFBML
+                    });
+
+            // Additional init code here
+            GS.facebook.init();
+
+        };
+
+        // Load the SDK Asynchronously
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+    </script>
+    <%= javascript_include_tag 'localized_profiles/signin_page' %>
+<% end %>
+
+
+
+<div class="outer">
+    <div class="fr">
+        <span class="iconx24 i-24-close  js_closeHover"></span>
+    </div>
+    <div class="inner">
+        <div class="hoverTitle hd">
+            <h1 class="js-smallSpacingTitle">Sign in to GreatSchools</h1>
+
+            <p class="tal mbn pbm">Sign in with an existing GreatSchools account or using Facebook:</p>
+        </div>
+        <div class="messages pbm dn">
+        </div>
+
+        <form method="post" action="javascript:alert('no action defined for form post');" id="signin">
+            <div class="body pal">
+                <div class="js-facebookSignInModule">
+                    <div class="tac">
+                        <div class="button js-facebook-login js-facebook-login-signin">
+                            SIGN IN WITH FACEBOOK
+                        </div>
+                    </div>
+                    <h5 class="orText"><span>OR</span></h5>
+                </div>
+                <div class="line"><label class="small_bold bottom" for="semail">Email
+                    address</label><br><input onblur="if(this.value==''){this.value='[Enter email address]';}" onfocus="if(this.value=='[Enter email address]'){this.value='';}" name="email" tabindex="1" class="fl small bottom input_5 setemail" id="semail" type="text">
+
+                    <div style="margin-top: 5px; margin-left: 5px;" class="fl errors">
+                        <p class="error" style="display: none;"></p></div>
+                </div>
+                <div class="line clearfix ptl">
+                    <div style="width:320px;">
+                        <label class="fl small_bold bottom" for="spword">Password</label><span class="fr"><a class="no_interrupt smaller make-787878" tabindex="5" onclick="" id="signInHover_launchForgotPassword" href="javascript:void(0);">Forgot
+                        your password?</a></span></div>
+                    <br><input name="password" tabindex="2" class="fl small bottom input_5" id="spword" type="password">
+
+                    <div style="margin-top: 5px; margin-left: 5px;" class="fl errors"><p class="error2"></p></div>
+                </div>
+                <div class="clearfix ptl">
+                    <button id="signinBtn" tabindex="3" name="signinBtn" type="submit" class="fl but but-rg but-1 signinBtn">Sign
+                        in
+                    </button>
+                    <div class="pll pts fl smaller bottom">
+                        Not a member?
+                        <strong><a tabindex="4" id="signInHover_launchJoin" href="#">Join GreatSchools</a></strong>.
+                    </div>
+                </div>
+                <input value="true" name="rememberMe" type="hidden"><input value="http://www.greatschools.org/" class="redirect_field" name="redirect" type="hidden">
+            </div>
+        </form>
+    </div>
+</div>
