@@ -10,9 +10,13 @@ namespace :db do
 
   task :reset, [:specific_dbs] => [:drop, :create, :migrate, :seed]
 
-  desc 'Rake tasks for legacy databases and tables.
+  desc 'Legacy databases and tables are those that already existed. Rake tasks for legacy databases and tables.
   All the legacy databases and the contained tables are hardcoded in a hash in the legacy_database_tasks.rb.
   By defaults the tasks below are performed for all databases.Instead of all the databases, you can just seed one specific database.'
+
+  #Steps for a new legacy database or tables:- The database should be specified in the database.yml file and the
+  #legacy table should be specified in the legacy_database_tasks.rb file
+
   namespace :legacy do
 
     task :reset, [:specific_dbs] => [:drop, :create, :schema, :seed]
@@ -58,7 +62,9 @@ namespace :db do
 
 
     desc 'Drops and then creates the legacy development and test databases.'
-    task :create, [:specific_dbs] => [:load_config, :rails_env, :drop] do |task, args|
+    task :create, [:specific_dbs] => [:load_config, :rails_env ] do |task, args|
+
+      $specific_dbs = String(args[:specific_dbs]).split ','
 
       #parse the database configurations in the database.yml file.
       environments.each do |env|
@@ -68,7 +74,7 @@ namespace :db do
 
         #Check if a specific database was passed in the argument list
         unless $specific_dbs.nil? || $specific_dbs.empty?
-          configs.select { |config| $specific_dbs.detect { |db| config['database'].matches(db) } }
+          configs.select! { |config| $specific_dbs.detect { |db| config['database'].match(db) } }
         end
 
         configs.each do |config|
@@ -83,6 +89,8 @@ namespace :db do
     desc 'Drops the legacy development and test databases and the tables inside them.'
     task :drop, [:specific_dbs] => [:load_config, :rails_env] do |task, args|
 
+      $specific_dbs = String(args[:specific_dbs]).split ','
+
       #parse the database configurations in the database.yml file.
       environments.each do |env|
         configs = ActiveRecord::Base.configurations.values_at(env).first.values.select { |value|
@@ -91,7 +99,7 @@ namespace :db do
 
         #Check if a specific database was passed in the argument list
         unless $specific_dbs.nil? || $specific_dbs.empty?
-          configs.select { |config| $specific_dbs.include?(config['database']) }
+          configs.select! { |config| $specific_dbs.include?(config['database']) }
         end
 
         configs.each do |config|

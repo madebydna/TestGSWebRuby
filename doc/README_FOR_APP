@@ -1,2 +1,14 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+
+1) "rake db:reset" to drop,created migrate and seed the new tables created for the localized profiles.
+   You can run individual rake tasks as well like "rake db:drop" "rake db:create" "rake db:migrate" "rake db:seed"
+2) Legacy databases and tables are the ones that already existed. For example surveys.school_rating
+   "rake db:legacy:reset" to create,drop and seed all the legacy databases.
+   You can also run reset for a specific database. The syntax is "rake db:legacy:reset[<database_name>]"
+   Individual rake tasks for legacy databases are "rake db:legacy:drop" "rake db:legacy:create" "rake db:legacy:schema"
+   and "rake db:legacy:seed" .Its possible to specify a single database as well like "rake db:legacy:drop[<database_name>]"
+
+
+
