@@ -31,7 +31,14 @@
             ref.parentNode.insertBefore(js, ref);
         }(document));
     </script>
+
     <%= javascript_include_tag 'localized_profiles/signin_page' %>
+
+    <script>
+        $('.js-facebook-login').on('click', function() {
+            GS.facebook.login();
+        });
+    </script>
 <% end %>
 
 
