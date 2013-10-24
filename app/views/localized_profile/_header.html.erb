@@ -1,5 +1,5 @@
 <div class="row pal">
-    <div class="col-xs-0 col-sm-2 col-md-3 tar ptl prl">
+    <div class="hidden-xs col-sm-2 col-md-3 tar ptl prl">
         <% media_hash = @school.school_media_first_hash %>
         <% if media_hash %>
            <img src="<%= generate_img_path "130", media_hash %>" />
@@ -9,7 +9,7 @@
             %>
         <% end %>
     </div>
-    <div class="col-xs-12 col-sm-10 col-md-9 tal">
+    <div class="col-xs-12 col-sm-7 col-md-6 tal">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 tal pbl"><h1><%= @school.name %></h1></div>
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
@@ -28,6 +28,17 @@
                 <div class="fl phm">Contact info</div>
             </div>
 
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 ptl">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Review school</button></div>
+                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
+                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
