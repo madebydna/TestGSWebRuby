@@ -70,7 +70,7 @@ sports = Category.create!(name: 'Sports', source:'esp_response')
 arts_music = Category.create!(name: 'Arts & Music', source:'esp_response')
 student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student_ethnicity')
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
-test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
+test_scores = Category.create!(name: 'Test scores', source: 'test_scores', layout: 'test_data')
 
 
 # Category placements
