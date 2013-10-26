@@ -11,7 +11,7 @@ class SigninController < ApplicationController
     # worst code ever, will rewrite
 
 
-    url_string = 'http://dev.greatschools.org/community/registration/socialRegistrationAndLogin.json'
+    url_string = 'http://omega.greatschools.org/community/registration/socialRegistrationAndLogin.json'
 
     res = Net::HTTP.post_form(URI.parse(url_string), params)
 

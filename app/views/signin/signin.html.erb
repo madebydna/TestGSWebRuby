@@ -2,7 +2,6 @@
 
 
 <% content_for :head do %>
-    <%= javascript_include_tag 'http://connect.facebook.net/en_US/all.js' %>
     <% app_id = '178930405559082' # TODO: will not work in production: set correct id from var %>
 
     <div id="fb-root"><!--Do not collapse--></div>
@@ -11,7 +10,7 @@
         window.fbAsyncInit = function() {
             FB.init({
                         appId      : <%= app_id %>,
-                        channelUrl : 'http://dev.greatschools.org/res/channel.html', // Channel File
+                        channelUrl : 'http://omega.greatschools.org/res/channel.html', // Channel File
                         status     : true, // check login status
                         cookie     : true, // enable cookies to allow the server to access the session
                         xfbml      : true  // parse XFBML
