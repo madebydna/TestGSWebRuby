@@ -1,9 +1,12 @@
 var GS = GS || {};
 GS.reviews = GS.reviews || function($) {
+
+
     var initializeReviewHandlers = function () {
         // the next ten button
         var nextTenButton = $(".js_reviewsGetNextTen");
         var filterByGroup = $(".js_reviewFilterButton");
+
         var selectOrderDropDown = $(".js_reviewFilterDropDown");
         var selectOrderDropDownText = $(".js_reviewFilterDropDownText");
         var reviewContentLayer = $(".js_reviewsList");
@@ -16,10 +19,10 @@ GS.reviews = GS.reviews || function($) {
             result['filter_by'] = filterByGroup.data( "group-selected" );
             result['order_by'] = selectOrderDropDown.data( "order-selected" );
             return result;
-        }
+        };
 
         // group is the button group selection -  parent, all or student
-        var setTotalCount = function(group){
+        var setTotalCountByGroup = function(group){
             var totalCount = nextTenButton.data( "all-count" );
             if(group == "parent"){
                 totalCount = nextTenButton.data( "parent-count" );
@@ -30,7 +33,7 @@ GS.reviews = GS.reviews || function($) {
                 }
             }
             nextTenButton.data( "total-count", totalCount );
-        }
+        };
 
         nextTenButton.on("click", function(){
             $(this).addClass("dn");
@@ -40,11 +43,12 @@ GS.reviews = GS.reviews || function($) {
 
         // group is the button group selection -  parent, all or student
         filterByGroup.on("click", "button", function(){
-            if(filterByGroup.data( "group-selected"  ) != $(this).data( "group-name" )){
+            var groupSelected = $(this).data( "group-name" )
+            if(filterByGroup.data( "group-selected"  ) != groupSelected){
                 nextTenButton.addClass("dn");
-                setTotalCountByGroup($(this).data( "group-name" ));
+                setTotalCountByGroup(groupSelected);
                 reviewContentLayer.html('');
-                filterByGroup.data( "group-selected", filter_by_group);
+                filterByGroup.data( "group-selected", groupSelected);
                 var results = getFieldValues();
                 results['offset'] = 0;
                 callReviewsAjax(results);

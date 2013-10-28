@@ -1,5 +1,3 @@
-var COOKIE_LIST_DELIMETER = ',';
-var INTRA_COOKIE_DELIMETER = ';';
 /*!
  * jQuery Cookie Plugin v1.4.0
  * https://github.com/carhartl/jquery-cookie
@@ -118,8 +116,3 @@ var INTRA_COOKIE_DELIMETER = ';';
     };
 
 }));
-//    var session_cache_value = getCookie('SESSION_CACHE');
-//    if (session_cache_value != null &&  session_cache_value != ""){
-//        $(".js_reviewsList").append(value.split(INTRA_COOKIE_DELIMETER)[1]);
-//    }
-//});
