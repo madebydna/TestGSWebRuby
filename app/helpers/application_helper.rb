@@ -71,7 +71,7 @@ module ApplicationHelper
 
   def to_bar_chart_array(data_hash)
     @bar_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
-      [key.to_s, value.score, index == data_hash.size-1 ? value.state_avg : 0]
+      [key.to_s, value["score"], index == data_hash.size-1 ? value["state_avg"] : 0]
     }
   end
 

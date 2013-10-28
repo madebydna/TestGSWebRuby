@@ -24,14 +24,16 @@ class TestDataSet < ActiveRecord::Base
   def self.fetch_test_scores(school)
     @data_sets_and_values = TestDataSet.for_school(school,1,1)
     @all_data_set_ids = @data_sets_and_values.pluck("TestDataSet.id")
+    test_meta_data = Hash.new
+    test_data = Hash.new
 
     #TODO join this table as well?
     #Get the data set Ids that have a corresponding entry in TestDataSetFile. This table is in
     #gs_schooldb, hence could not join with the tables in state dbs.
     @valid_data_set_ids = TestDataSetFile.get_valid_data_set_ids(@all_data_set_ids,school)
 
-    test_data = TestData.new
-    test_meta_data = TestData.new
+    #test_data = TestData.new
+    #test_meta_data = TestData.new
 
     @data_sets_and_values.each do |result|
 
@@ -49,37 +51,149 @@ class TestDataSet < ActiveRecord::Base
         breakdown_id = result.breakdown_id
         number_tested = result.number_tested
 
-        #Todo Query just 1 once
-        unless test_meta_data.key?(test_data_type_id)
-          test_meta_data.deep_merge!({test_data_type_id => TestDataType.by_id(test_data_type_id)})
+        if test_meta_data[test_data_type_id].nil?
+          test_meta_data[test_data_type_id] = TestDataType.by_id(test_data_type_id)
         end
 
-        #construct the Map of test ids to grades to level code to subject to year.
-        test_data.deep_merge!(
-            {test_data_type_id =>
-                 {
-                     test_label: test_meta_data[test_data_type_id].display_name,
-                     test_description: test_meta_data[test_data_type_id].description,
-                     grades: {
-                         grade =>
-                             {level_code =>
-                                  {subject =>
-                                       {year =>
-                                            {
-                                                "score" => test_score,
-                                                "number_tested" => number_tested,
-                                                "state_avg" => state_avg
-                                            }
-                                       }
-                                  }
-                             }
+        #Check if the test is already in the map.
+        if test_data[test_data_type_id].nil?
+          #Test not present
+
+          test_data[test_data_type_id] = {
+              test_label: test_meta_data[test_data_type_id].display_name,
+              test_description: test_meta_data[test_data_type_id].description,
+              grades: {
+                  grade =>
+                      {level_code =>
+                           {subject =>
+                                {year =>
+                                     {
+                                         "score" => test_score,
+                                         "number_tested" => number_tested,
+                                         "state_avg" => state_avg
+                                     }
+                                }
+                           }
+                      }
+              }
+          }
+
+
+        else
+          #Test already present.
+          data_type_id_to_data = test_data[test_data_type_id]
+
+          #Check if grade is already in the map.
+          if data_type_id_to_data[:grades].nil? || data_type_id_to_data[:grades][grade].nil?
+            #Grade not present.
+
+            grade_map =
+                {level_code =>
+                     {subject =>
+                          {year =>
+                               {
+                                   "score" => test_score,
+                                   "number_tested" => number_tested,
+                                   "state_avg" => state_avg
+                               }
+                          }
                      }
-                 }
-            }
-        )
+                }
+
+            if test_data[test_data_type_id][:grades].nil?
+              test_data[test_data_type_id][:grades] = Hash.new
+              test_data[test_data_type_id][:grades][grade] =grade_map
+            elsif test_data[test_data_type_id][:grades][grade].nil?
+              test_data[test_data_type_id][:grades][grade] =grade_map
+            end
+
+
+          else
+            #Grade already present
+
+            #Check if level code is already in the map
+            if data_type_id_to_data[:grades][grade][level_code].nil?
+
+              #Level code not present
+              test_data[test_data_type_id][:grades][grade][level_code] =
+                  {subject =>
+                       {year =>
+                            {
+                                "score" => test_score,
+                                "number_tested" => number_tested,
+                                "state_avg" => state_avg
+                            }
+                       }
+                  }
+
+            else
+              #Level code already present.
+
+              #Check if subject is already in the map
+              if test_data[test_data_type_id][:grades][grade][level_code][subject].nil?
+
+                #Subject not present.
+                test_data[test_data_type_id][:grades][grade][level_code][subject] = {year =>
+                                                                                         {
+                                                                                             "score" => test_score,
+                                                                                             "number_tested" => number_tested,
+                                                                                             "state_avg" => state_avg
+                                                                                         }
+                }
+
+              else
+                #Subject already present.
+
+                #Check if year is already in the map
+                if test_data[test_data_type_id][:grades][grade][level_code][subject][year].nil?
+                  #year is not present.
+                  test_data[test_data_type_id][:grades][grade][level_code][subject][year] =
+                      {
+                          "score" => test_score,
+                          "number_tested" => number_tested,
+                          "state_avg" => state_avg
+                      }
+
+                end
+              end
+            end
+          end
+        end
+
+
+        ##Todo use Hashie or not?
+        #unless test_meta_data.key?(test_data_type_id)
+        #
+        #  test_meta_data.deep_merge!({test_data_type_id => TestDataType.by_id(test_data_type_id)})
+        #end
+
+        #construct the Map of test ids to grades to level code to subject to year.
+        #test_data.deep_merge!(
+        #    {test_data_type_id =>
+        #         {
+        #             test_label: test_meta_data[test_data_type_id].display_name,
+        #             test_description: test_meta_data[test_data_type_id].description,
+        #             grades: {
+        #                 grade =>
+        #                     {level_code =>
+        #                          {subject =>
+        #                               {year =>
+        #                                    {
+        #                                        "score" => test_score,
+        #                                        "number_tested" => number_tested,
+        #                                        "state_avg" => state_avg
+        #                                    }
+        #                               }
+        #                          }
+        #                     }
+        #             }
+        #         }
+        #    }
+        #)
       end
 
     end
+
     test_data
   end
 

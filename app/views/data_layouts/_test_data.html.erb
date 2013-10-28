@@ -4,21 +4,23 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
 
-                    <%= value.test_label %><br/><br/>
+                    <%= value[:test_label] %><br/><br/>
                     <div class="btn-group js_grades_div">
-                        <% value.grades.each do |grade,value| %>
+                        <% value[:grades].each do |grade,value| %>
                             <div id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></div>
                         <% end %>
                     </div>
 
-                    <% value.grades.each do |grade,value| %>
+                    <% value[:grades].each do |grade,value| %>
                         <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
 
                             <% value.each do |levelcode,value| %>
                                 <% value.each do |subject,value| %>
                                     <br/><%= subject %>
                                     <!--TODO change this to test id-->
-                                    <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
+                                    <% bar_chart_div_id = "js_bar_chart_div_#{test.to_s.gsub(/\s/,'')}_#{grade.to_s}_#{subject.to_s.gsub(/\s/,'')}" %>
+
+
                                     <div id="<%= bar_chart_div_id %>"><!--Div for bar chart--></div>
                                     <% content_for :head do %>
                                         <script type="text/javascript">
@@ -29,6 +31,8 @@
                             <% end %>
                         </div>
                     <% end %>
+
+
                 </div>
             </div>
         </div>
