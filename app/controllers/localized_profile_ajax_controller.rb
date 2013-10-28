@@ -3,7 +3,7 @@ class LocalizedProfileAjaxController < ApplicationController
 
   before_filter :require_state, :require_school
 
-  layout 'blank_container'
+  layout false
 
   def reviews_pagination
     offset = params[:offset] || '0'
