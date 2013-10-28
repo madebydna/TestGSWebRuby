@@ -59,6 +59,8 @@ class CategoryDataReader
 
     if rows.any?
       TableData.new rows
+    else
+      nil
     end
   end
 

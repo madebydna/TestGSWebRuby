@@ -1,6 +1,7 @@
 <h4><%= category.name %></h4>
 <table class="table table-striped">
     <% last_key = nil %>
+    <% begin %>
     <% data.rows.each do |row| %>
 
         <% label = row[:label] %>
@@ -26,5 +27,9 @@
         </tr>
         <% last_key = label %>
     <% end %>
+    <% rescue  %>
+    Sorry, something went wrong
+    <% end %>
+
 </table>
 
