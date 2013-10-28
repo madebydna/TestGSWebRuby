@@ -59,4 +59,5 @@ class LocalizedProfileController < ApplicationController
       end
     end
   end
+
 end

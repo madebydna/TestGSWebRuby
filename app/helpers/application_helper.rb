@@ -76,12 +76,35 @@ module ApplicationHelper
   end
 
   def generate_img_path ( img_size, media_hash )
-    default_url = "http://dev.greatschools.org/"
+    default_url = "http://www.gscdn.org/"
     comm_media_prefix = "library/"
+
     default_url + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
 
   #${communityUtil.mediaPrefix}school_media/${schoolMedia.schoolState.abbreviationLowerCase}/${fn:substring(schoolMedia.hash,0,2)}/${schoolMedia.hash}-500.jpg"
     #alt="${schoolMedia.id}
+  end
+
+  def include_lightbox
+    media_hash = @school.school_media
+    r_str = ''
+    if media_hash
+      #debugger
+
+      media_hash.each { | x  |
+        if media_hash
+          r_str <<  '<a href="' + generate_img_path("500", x["hash"])  + '">' + "\n"
+          r_str <<  '<img '
+          r_str <<  'src="' + generate_img_path("130", x["hash"]) + '",' + "\n"
+          r_str <<  'data-big="'+  generate_img_path("500", x["hash"]) +'"'  + "\n"
+          r_str <<  'data-title=""' + "\n"
+          r_str <<  'data-description="" >'  + "\n"
+          r_str <<  '</a>' + "\n"
+        end
+      }
+
+      return r_str.html_safe
+    end
   end
 
   def serialize_param(path)
