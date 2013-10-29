@@ -76,17 +76,35 @@ module ApplicationHelper
   end
 
   def generate_img_path ( img_size, media_hash )
-    default_url = "http://www.gscdn.org/"
     comm_media_prefix = "library/"
-
-    default_url + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
-
-  #${communityUtil.mediaPrefix}school_media/${schoolMedia.schoolState.abbreviationLowerCase}/${fn:substring(schoolMedia.hash,0,2)}/${schoolMedia.hash}-500.jpg"
-    #alt="${schoolMedia.id}
+    ENV_GLOBAL['media_server'] + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
   end
 
-  def include_lightbox
-    media_hash = @school.school_media
+  def youtube_parse_id (video_str, youtube_match_string)
+    youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
+  end
+  # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
+  def include_lightbox_youtube_video (video_str)
+    youtube_match_string = "youtube.com/watch?v="
+    r_str = ''
+    if video_str && video_str != ''
+      if video_str.include? youtube_match_string
+        youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
+        r_str <<  '<a href="https://www.youtube.com/watch?v=' + youtube_id + '">'  + "\n"
+        r_str <<  '<img ' + "\n"
+        r_str <<  'src="https://img.youtube.com/vi/' + youtube_id + '/0.jpg"'
+        r_str <<  'data-big="https://img.youtube.com/vi/' + youtube_id + '/2.jpg"'
+        r_str <<  'data-title=""'
+        r_str <<  'data-description=""'
+        r_str <<  '>'
+        r_str <<  '</a>'
+      end
+      return r_str.html_safe
+    end
+  end
+
+  # This is used to include all the media assets for a school to the lightbox.
+  def include_lightbox_media (media_hash)
     r_str = ''
     if media_hash
       #debugger
@@ -139,8 +157,9 @@ module ApplicationHelper
     # TODO move to global variable definition config file
     # GOOGLE_PRIVATE_KEY = "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
     # GOOGLE_CLIENT_ID = "gme-greatschoolsinc"
-    google_private_key = "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
-    google_client_id = "gme-greatschoolsinc"
+
+    google_private_key = ENV_GLOBAL['GOOGLE_PRIVATE_KEY']
+    google_client_id = ENV_GLOBAL['GOOGLE_CLIENT_ID']
 
     parsed_url = URI.parse(url)
     url_to_sign = parsed_url.path + '?' + parsed_url.query + '&client=' + google_client_id

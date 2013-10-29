@@ -59,8 +59,7 @@
     right: 10px;
     z-index: 2;
     display: none;
-    /*background-image: url(<%= asset_path 'classic-loader.gif' %>) no-repeat 2px 2px;*/
-   /*background: url(../../../../../../../Users/mseltzer/Downloads/galleria-1.3.1/galleria/themes/classic/classic-loader.gif) no-repeat 2px 2px;  */
+    background: url('classic-loader.gif') no-repeat 2px 2px;
 }
 .galleria-info {
     width: 50%;
@@ -213,7 +212,7 @@
 .galleria-info-close,
 .galleria-image-nav-left,
 .galleria-image-nav-right {
-    background-image: url(../../../../../../../Users/mseltzer/Downloads/galleria-1.3.1/galleria/themes/classic/classic-map.png);
+    background-image: url('classic-map.png');
     background-repeat: no-repeat;
 }
 .galleria-container.videoplay .galleria-info,

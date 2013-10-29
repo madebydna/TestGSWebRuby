@@ -1,0 +1,1 @@
+ENV_GLOBAL = YAML.load_file("#{Rails.root}/config/env_global.yml")[Rails.env]
