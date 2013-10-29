@@ -100,11 +100,8 @@ GS.reviews = GS.reviews || function($) {
 
 $(function () {
     GS.reviews.initializeReviewHandlers();
-
-    //Galleria.loadTheme('/assets/util/galleria.classic.js');
-//    Galleria.theme
-    // Initialize Galleria
-    //$('#galleria').galleria();
-    Galleria.run('#galleria');
+    if($("#galleria").get(0)){
+        Galleria.run('#galleria');
+    }
 });
 

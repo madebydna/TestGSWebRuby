@@ -78,4 +78,7 @@ GS.session = GS.session || function($) {
 
 $(function () {
     GS.session.initializeSessionHandlers();
+    if(GS.session.getUserEmail() != ''){
+        $("#js_headerAccountMessage").html("Welcome "+GS.session.getUserFirstName());
+    }
 });
