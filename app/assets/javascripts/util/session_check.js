@@ -35,16 +35,16 @@ GS.session = GS.session || function($) {
                 userObj.nonMssCookie = $.trim(session_array[4]);
                 userObj.mslCount = parseInt(session_array[5]);
 
-                if (version > 1) {
+                if (userObj.version > 1) {
                     userObj.memberId = session_array[6];
                 }
-                if (version > 2) {
+                if (userObj.version > 2) {
                     userObj.userHash = session_array[7];
                 }
-                if (version > 3) {
+                if (userObj.version > 3) {
                     userObj.screenName = session_array[8];
                 }
-                if (version > 4) {
+                if (userObj.version > 4) {
                     userObj.firstName = session_array[9];
                 }
             }

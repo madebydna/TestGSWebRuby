@@ -4,34 +4,43 @@ class SessionCacheCookie
   INTRA_COOKIE_DELIMETER = ';'
   COOKIE_ENCODING = 'ISO-8859-1'
 
-=begin
-  private static final String COOKIE_LIST_DELIMETER = ",";
-  private static final String INTRA_COOKIE_DELIMETER = ";";
-  private static final String COOKIE_ENCODING = "ISO-8859-1";
+  @@userObj = {
+      version:0,
+      email: '',
+      nickname: '',
+      mssCookie: '',
+      nonMssCookie: '',
+      mslCount: 0,
+      memberId: 0,
+      userHash: '',
+      screenName: '',
+      firstName: ''
+  }
+  if cookies[:SESSION_CACHE]
+    session_cache = cookies[:SESSION_CACHE].split(INTRA_COOKIE_DELIMETER)
+    if session_cache && session_cache.length > 5
+      userObj['version'] = session_cache[0];
+      userObj['email'] = session_cache[1];
+      userObj['nickname'] = session_cache[2];
+      userObj['mssCookie'] = session_cache[3];
+      userObj['nonMssCookie'] = session_cache[4];
+      userObj['mslCount'] = session_cache[5];
+      if userObj['version'] > 1
+          userObj['memberId'] = session_cache[6];
+      end
+      if userObj['version'] > 2
+        userObj['userHash'] = session_cache[7];
+      end
+      if userObj['version'] > 3
+        userObj['screenName'] = session_cache[8];
+      end
+      if userObj['version'] > 4
+        userObj['firstName'] = session_cache[9];
+      end
+    end
+  end
 
-  if (s.length < 6) {
-      throw new IllegalArgumentException("Not enough components to the cookie: " + cookie + " (" + decoded + ")");
-  }
-  int version = Integer.parseInt(s[0]);
-  _email = s[1];
-  _nickname = s[2];
-  String mssCookie = StringUtils.trimToEmpty(s[3]);
-  setMssCookie(mssCookie);
-  String nonMssCookie = StringUtils.trimToEmpty(s[4]);
-  setNonMssCookie(nonMssCookie);
-  _mslCount = Integer.parseInt(s[5]);
-  if (version > 1) {
-      _memberId = new Integer(s[6]);
-  }
-  if (version > 2) {
-      _userHash = s[7];
-  }
-  if (version > 3) {
-      _screenName = s[8];
-  }
-  if (version > 4) {
-      _firstName = s[9];
-  }
-=end
-
+  def get_session_cache
+    @@userObj
+  end
 end
