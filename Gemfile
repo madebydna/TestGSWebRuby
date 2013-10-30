@@ -108,6 +108,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-wysihtml5-rails'
   gem 'css_splitter', '~> 0.1.1'
+  gem "yui-compressor", "~> 0.12.0"
 end
 
 group :doc do
