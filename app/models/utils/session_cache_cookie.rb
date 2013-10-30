@@ -1,4 +1,4 @@
-class SessionCacheCookie
+module SessionCacheCookie
 
   COOKIE_LIST_DELIMETER = ','
   INTRA_COOKIE_DELIMETER = ';'
@@ -16,26 +16,29 @@ class SessionCacheCookie
       screenName: '',
       firstName: ''
   }
-  if cookies[:SESSION_CACHE]
-    session_cache = cookies[:SESSION_CACHE].split(INTRA_COOKIE_DELIMETER)
-    if session_cache && session_cache.length > 5
-      userObj['version'] = session_cache[0];
-      userObj['email'] = session_cache[1];
-      userObj['nickname'] = session_cache[2];
-      userObj['mssCookie'] = session_cache[3];
-      userObj['nonMssCookie'] = session_cache[4];
-      userObj['mslCount'] = session_cache[5];
-      if userObj['version'] > 1
-          userObj['memberId'] = session_cache[6];
-      end
-      if userObj['version'] > 2
-        userObj['userHash'] = session_cache[7];
-      end
-      if userObj['version'] > 3
-        userObj['screenName'] = session_cache[8];
-      end
-      if userObj['version'] > 4
-        userObj['firstName'] = session_cache[9];
+
+  def initialize
+    if cookies[:SESSION_CACHE]
+      session_cache = cookies[:SESSION_CACHE].split(INTRA_COOKIE_DELIMETER)
+      if session_cache && session_cache.length > 5
+        userObj['version'] = session_cache[0];
+        userObj['email'] = session_cache[1];
+        userObj['nickname'] = session_cache[2];
+        userObj['mssCookie'] = session_cache[3];
+        userObj['nonMssCookie'] = session_cache[4];
+        userObj['mslCount'] = session_cache[5];
+        if userObj['version'] > 1
+            userObj['memberId'] = session_cache[6];
+        end
+        if userObj['version'] > 2
+          userObj['userHash'] = session_cache[7];
+        end
+        if userObj['version'] > 3
+          userObj['screenName'] = session_cache[8];
+        end
+        if userObj['version'] > 4
+          userObj['firstName'] = session_cache[9];
+        end
       end
     end
   end
