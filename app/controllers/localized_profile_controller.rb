@@ -48,8 +48,6 @@ class LocalizedProfileController < ApplicationController
   def init_page
     @headerMetadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
-    #include SessionCacheCookie
-    #@cookie_session_cache_hash = get_session_cache
   end
 
 end
