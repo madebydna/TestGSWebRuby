@@ -1,0 +1,30 @@
+<div class="col-xs-12 col-sm-12 col-md-12">
+    <hr />
+    <h2 class="pll">Student Ethnicity</h2>
+    <div style=" ">
+
+        <div id="piechart" style="width: 768px;margin: auto">
+
+        </div>
+
+        <% ethnicity_array = data.to_piechart :ethnicity, :school_value %>
+        <% piechart_options = {
+                width: 768,
+                height: 350,
+                fontSize: '13',
+                title: category.name
+            }.stringify_keys;
+        %>
+
+        <% content_for :head do %>
+            <script type="text/javascript">
+                GS.visualchart.drawPieChart(
+                    <%= raw ethnicity_array.to_json %>,
+                    'piechart',
+                    null,
+                    <%= raw config.config.merge(piechart_options).to_json %>
+                );
+            </script>
+        <% end %>
+    </div>
+</div>

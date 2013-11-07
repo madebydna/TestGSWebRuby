@@ -21,6 +21,7 @@ class CategoryPlacement < ActiveRecord::Base
         'Default two column table' => 'default_two_column_table',
         'Configured table' => 'configured_table',
         'Pie chart' => 'pie_chart',
+        'Pie chart overview' => 'pie_chart_overview',
         'Blank layout' => 'blank_layout',
         'Test Data' => 'test_data'
     }

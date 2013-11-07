@@ -1,6 +1,4 @@
-<div class="col-xs-12 col-sm-6 col-md-<%= size %>">
-    <div class="contents">
-        <div class="main">
+
             <a name="<%= category_placement.position.to_s + category.code_name %>"></a>
             <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
             <%= render partial,
@@ -8,6 +6,3 @@
               category: category,
               config: config || nil
             %>
-        </div>
-    </div>
-</div>

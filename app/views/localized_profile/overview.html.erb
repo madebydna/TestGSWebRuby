@@ -1,18 +1,7 @@
 <%= render 'nav/topnav' %>
 <%= render 'localized_profile/header', school: @school %>
 <%= render 'localized_profile/profile-nav', school: @school %>
-<div class="row">
-    <div style="text-align: center; padding: 20px; width: 100%; overflow: hidden">
-        <ul class="nav nav-pills" style="left: 50%; float: left; position: relative" >
-            <% @page_config.placements.each do |placement| %>
-                <li style="position: relative; float:left; right: 50%;">
-                    <a href="#<%= category_placement_anchor placement %>">
-                        <%= category_placement_title placement %></a>
-                </li>
-            <% end %>
-        </ul>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
         <div class="row">
