@@ -78,7 +78,7 @@ class School < ActiveRecord::Base
   end
 
   def test_scores
-    TestDataSet.fetch_test_scores self
+    TestDataResults.new.fetch_results self
   end
 
   def enrollment
