@@ -48,6 +48,6 @@ class LocalizedProfileController < ApplicationController
   def init_page
     @headerMetadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
+    @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
   end
-
 end

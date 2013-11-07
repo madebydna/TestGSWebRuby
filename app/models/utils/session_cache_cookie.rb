@@ -1,4 +1,4 @@
-module SessionCacheCookie
+class SessionCacheCookie
 
   COOKIE_LIST_DELIMETER = ','
   INTRA_COOKIE_DELIMETER = ';'
@@ -17,9 +17,9 @@ module SessionCacheCookie
       firstName: ''
   }
 
-  def initialize
-    if cookies[:SESSION_CACHE]
-      session_cache = cookies[:SESSION_CACHE].split(INTRA_COOKIE_DELIMETER)
+  def initialize (cookie_session_cache)
+    if cookie_session_cache
+      session_cache = cookie_session_cache.split(INTRA_COOKIE_DELIMETER)
       if session_cache && session_cache.length > 5
         userObj['version'] = session_cache[0];
         userObj['email'] = session_cache[1];
