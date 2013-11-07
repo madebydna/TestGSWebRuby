@@ -1,0 +1,31 @@
+<% if !@school.reviews.nil? %>
+    <% hide_reviews_overview = "" %>
+    <%  @school.reviews.to_enum.with_index(0).each do |review, i| %>
+        <% if i > 1 %>
+            <% hide_reviews_overview = " dn" %>
+        <% end %>
+        <% if i % 2 == 0 %>
+            <div class=" row<%= hide_reviews_overview %>">
+        <% end %>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pal">
+             <%= review[:comments] %>
+            <br /><br />
+            <div>
+                <%= draw_stars_16 review[:quality].to_i %>
+            </div>
+            <br />
+            posted on: <%= review[:posted] %><br />
+            posted by: <span class="cuc_posted-by"><%= review[:who] %></span>
+        </div>
+
+        <% if i % 2 == 1 %>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+<!-- need final close on div for odd totals -->
+<% if @school_reviews_global.review_filter_totals.all % 2 == 1 %>
+    </div>
+<% end %>
+

@@ -20,6 +20,8 @@
         </div>
         <% media_hash = @school.school_media %>
         <% if media_hash != [] || @headerMetadata.school_video1 %>
+            <hr />
+            <h2 class="pll">Media Gallery</h2>
             <div class="row ">
                 <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
                 <div id="galleria" style="height:320px; width:320px; margin: auto">
@@ -29,12 +31,81 @@
                 </div>
             </div>
         <% end %>
+        <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
+            <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+                <div class="contents">
+                    <div class="main">
+                        BE THE FIRST TO REVIEW
+                    </div>
+                </div>
+            </div>
+        <% else %>
+            <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
+                <hr />
+                <h2 class="pll">Reviews</h2>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="contents">
+                                <div class="main clearfix">
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="mrm pam bg-white">
+                                            <h4>Community Ratings</h4>
+                                            <div class="clearfix">
+                                                <div class="fl prm">overall:</div>
+                                                <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
+                                                <div class="fl pll">number of responses:<%= @school_reviews_global.rating_averages.overall.counter %></div>
+                                            </div>
+                                            <div class="clearfix">
+                                                <div class="fl prm">principal:</div>
+                                                <%= draw_stars_16 @school_reviews_global.rating_averages.principal.avg_score %>
+                                            </div>
+                                            <div class="clearfix">
+                                                <div class="fl prm">teacher:</div>
+                                                <%= draw_stars_16 @school_reviews_global.rating_averages.teacher.avg_score %>
+                                            </div>
+                                            <div class="clearfix">
+                                                <div class="fl prm">parent:</div>
+                                                <%= draw_stars_16 @school_reviews_global.rating_averages.parent.avg_score %>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="pam bg-white">
+                                            <h4>Ratings Distribution</h4>
+                                            five stars: <%= @school_reviews_global.star_counts[5] %>   <br />
+                                            four stars: <%= @school_reviews_global.star_counts[4] %>   <br />
+                                            three stars: <%= @school_reviews_global.star_counts[3] %>   <br />
+                                            two stars: <%= @school_reviews_global.star_counts[2] %>   <br />
+                                            one stars: <%= @school_reviews_global.star_counts[1] %>   <br />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="contents">
+                            <div class="main tac">
+                                <h4>Do you know this school?</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="js_reviewsList">
+
+                    <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>
+                </div>
+            </div>
+        <% end %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
         <div class="contents">
             <div class="main">
                 <a name="Fascination"></a>
-                <h2 style="padding-top: 50px; margin-top: -50px;">Fascination</h2>
+                <h2 style="padding-top: 50px; margin-top: -50px;">School Sim</h2>
                 6 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
         </div>

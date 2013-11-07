@@ -14,7 +14,9 @@
             <div class="col-xs-12 col-sm-12 col-md-12 tal pbl"><h1><%= @school.name %></h1></div>
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                 <div class="fl"><strong>GreatSchools rating <%= @headerMetadata.overallRating %></strong></div>
-                <div class="fl pll"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count 'rating' %></div></div>
+                <% if @school_reviews_global.review_filter_totals.all > 0 %>
+                    <div class="fl pll"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count 'rating' %></div></div>
+                <% end %>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                 <% if @school.enrollment %>
