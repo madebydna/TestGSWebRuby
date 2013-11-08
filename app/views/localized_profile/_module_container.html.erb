@@ -1,8 +1,7 @@
-
-            <a name="<%= category_placement.position.to_s + category.code_name %>"></a>
-            <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
-            <%= render partial,
-              data: data,
-              category: category,
-              config: config || nil
-            %>
+    <%= render partial,
+               data: data,
+               category: category,
+               config: config || nil,
+               size: size,
+               category_placement: category_placement
+    %>

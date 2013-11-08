@@ -1,11 +1,10 @@
 <div class="col-xs-12 col-sm-12 col-md-12">
     <hr />
-    <h2 class="pll">Student Ethnicity</h2>
-    <div style=" ">
+    <h3 class="pll">Student Ethnicity</h3>
 
-        <div id="piechart" style="width: 768px;margin: auto">
+    <div id="piechart" style="width: 768px;margin: auto">
 
-        </div>
+    </div>
 
         <% ethnicity_array = data.to_piechart :ethnicity, :school_value %>
         <% piechart_options = {
@@ -26,5 +25,5 @@
                 );
             </script>
         <% end %>
-    </div>
+
 </div>
