@@ -3,40 +3,40 @@
         <div class="main">
             <a name="<%= category_placement.position.to_s + category.code_name %>"></a>
             <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
-<h4><%= category.name %></h4>
-<table class="table table-striped">
-    <% last_key = nil %>
-    <% begin %>
-    <% data.rows.each do |row| %>
+            <h4><%= category.name %></h4>
+            <table class="table table-striped">
+                <% last_key = nil %>
+                <% begin %>
+                <% data.rows.each do |row| %>
 
-        <% label = row[:label] %>
-        <% value = row[:value] %>
-        <% if value.nil? %>
-            <% value = ["na"] %>
-        <% end %>
-        <tr>
-            <td>
-                <% if last_key && last_key == label %>
-                &nbsp;
-                <% else %>
-                    <strong>
-                        <%= label.capitalize unless label.nil? %>
-                    </strong>
+                    <% label = row[:label] %>
+                    <% value = row[:value] %>
+                    <% if value.nil? %>
+                        <% value = ["na"] %>
+                    <% end %>
+                    <tr>
+                        <td>
+                            <% if last_key && last_key == label %>
+                            &nbsp;
+                            <% else %>
+                                <strong>
+                                    <%= label.capitalize unless label.nil? %>
+                                </strong>
+                            <% end %>
+                        </td>
+                        <td>
+                            <% value.each do |pretty| %>
+                                <%= pretty.capitalize unless pretty.nil? %> <br/>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <% last_key = label %>
                 <% end %>
-            </td>
-            <td>
-                <% value.each do |pretty| %>
-                    <%= pretty.capitalize unless pretty.nil? %> <br/>
+                <% rescue  %>
+                Sorry, something went wrong
                 <% end %>
-            </td>
-        </tr>
-        <% last_key = label %>
-    <% end %>
-    <% rescue  %>
-    Sorry, something went wrong
-    <% end %>
 
-</table>
- </div>
-</div>
+            </table>
+        </div>
+    </div>
 </div>

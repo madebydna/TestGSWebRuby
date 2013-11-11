@@ -3,44 +3,44 @@
         <div class="main">
             <a name="<%= category_placement.position.to_s + category.code_name %>"></a>
             <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
-<h4><%= category.name %></h4>
-<table class="table table-striped no-more-tables">
-    <thead>
-        <tr>
-            <% config.columns_to_print(data).each do |column| %>
-                <% if column['display_type'] == :data_and_header %>
-                    <th><%= column['label'] %></th>
-                <% else %>
-                    <th>&nbsp;</th>
-                <% end %>
-            <% end %>
-        </tr>
-    </thead>
-    <tbody>
-
-    <% data.rows.each do |hash| %>
-        <tr>
-
-            <% config.columns_to_print(data).each do |column| %>
-                <% if hash[column['key'].to_sym] %>
-                    <td data-title="<%= column['label'] %>">
-                        <% value = hash[column['key'].to_sym] %>
-                        <% if value.class == 'Array' %>
-                            <% value.each do |val| %>
-                                <%= val %><br/>
+            <h4><%= category.name %></h4>
+            <table class="table table-striped no-more-tables">
+                <thead>
+                    <tr>
+                        <% config.columns_to_print(data).each do |column| %>
+                            <% if column['display_type'] == :data_and_header %>
+                                <th><%= column['label'] %></th>
+                            <% else %>
+                                <th>&nbsp;</th>
                             <% end %>
-                        <% else %>
-                            <%= value %>
                         <% end %>
-                    </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <% data.rows.each do |hash| %>
+                    <tr>
+
+                        <% config.columns_to_print(data).each do |column| %>
+                            <% if hash[column['key'].to_sym] %>
+                                <td data-title="<%= column['label'] %>">
+                                    <% value = hash[column['key'].to_sym] %>
+                                    <% if value.class == 'Array' %>
+                                        <% value.each do |val| %>
+                                            <%= val %><br/>
+                                        <% end %>
+                                    <% else %>
+                                        <%= value %>
+                                    <% end %>
+                                </td>
+                            <% end %>
+                        <% end %>
+
+                    </tr>
                 <% end %>
-            <% end %>
+                </tbody>
+            </table>
 
-        </tr>
-    <% end %>
-    </tbody>
-</table>
-
-</div>
-</div>
+        </div>
+    </div>
 </div>
