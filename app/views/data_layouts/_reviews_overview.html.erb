@@ -1,0 +1,69 @@
+<% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+        <div class="contents">
+            <div class="main">
+                BE THE FIRST TO REVIEW
+            </div>
+        </div>
+    </div>
+<% else %>
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
+        <hr />
+        <h3 class="pll">Reviews</h3>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="contents">
+                        <div class="main clearfix">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="mrm pam bg-white">
+                                    <h4>Community Ratings</h4>
+                                    <div class="clearfix">
+                                        <div class="fl prm">overall:</div>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
+                                        <div class="fl pll">number of responses:<%= @school_reviews_global.rating_averages.overall.counter %></div>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">principal:</div>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.principal.avg_score %>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">teacher:</div>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.teacher.avg_score %>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="fl prm">parent:</div>
+                                        <%= draw_stars_16 @school_reviews_global.rating_averages.parent.avg_score %>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="pam bg-white">
+                                    <h4>Ratings Distribution</h4>
+                                    five stars: <%= @school_reviews_global.star_counts[5] %>   <br />
+                                    four stars: <%= @school_reviews_global.star_counts[4] %>   <br />
+                                    three stars: <%= @school_reviews_global.star_counts[3] %>   <br />
+                                    two stars: <%= @school_reviews_global.star_counts[2] %>   <br />
+                                    one stars: <%= @school_reviews_global.star_counts[1] %>   <br />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="contents">
+                    <div class="main tac">
+                        <h4>Do you know this school?</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js_reviewsList">
+
+            <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>
+        </div>
+    </div>
+<% end %>

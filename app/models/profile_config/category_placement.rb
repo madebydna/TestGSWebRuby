@@ -18,12 +18,15 @@ class CategoryPlacement < ActiveRecord::Base
   # layout name => partial name
   def possible_layouts
     {
-        'Default two column table' => 'default_two_column_table',
         'Configured table' => 'configured_table',
+        'Reviews overview' => 'reviews_overview',
+        'Contact overview' => 'contact_overview',
         'Pie chart' => 'pie_chart',
         'Pie chart overview' => 'pie_chart_overview',
+        'Light box overview' => 'lightbox_overview',
         'Blank layout' => 'blank_layout',
-        'Test Data' => 'test_data'
+        'Test Data' => 'test_data',
+        'Default two column table' => 'default_two_column_table'
     }
   end
 
