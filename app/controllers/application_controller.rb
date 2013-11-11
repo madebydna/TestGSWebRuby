@@ -1,9 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include SessionManagement
+
   helper :all
 
   rescue_from Exception, :with => :exception_handler
+
+  before_filter :login_from_cookie
+
+  helper_method :logged_in?, :current_user
 
   def require_state
     state = params[:state] || ''
@@ -35,6 +41,28 @@ class ApplicationController < ActionController::Base
     @school = find_school
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
+  end
+
+
+  # authorization
+
+  def login_required
+    logged_in? && authorized? ? true : access_denied
+  end
+
+  def access_denied
+    respond_to do |accepts|
+      accepts.html do
+        if request.xhr?
+          store_location(request.referrer)
+          render :js => "window.location='#{signin_path}';", :content_type => 'text/javascript'
+        else
+          store_location
+          redirect_to signin_path
+        end
+      end
+    end
+    false
   end
 
 

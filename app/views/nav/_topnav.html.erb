@@ -17,7 +17,13 @@
             <li><a href="#find-a-school">Find A School</a></li>
             <li><a href="#review-a-school">Review A School</a></li>
             <li><a href="#back-to-school">Back To School</a></li>
-            <li id="#js_headerAccountMessage"><a href="/signin">Sign In</a></li>
+            <li id="#js_headerAccountMessage">
+                <% if logged_in? %>
+                    <%= link_to('Logout', logout_path, :method => :delete) %>
+                <% else %>
+                    <%= link_to('Sign In', new_user_session_path)  %>
+                <% end %>
+            </li>
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

@@ -29,10 +29,15 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
-  get '/signin', :to => 'signin#signin'
-  match '/register', :to => 'signin#register'
+  get '/signin', :to => 'signin#new', :as => :signin
+  match '/logout', :to => 'signin#destroy', :as => :logout
+  post '/user/auth', :to => 'signin#create', :as => :authenticate_user
 
-  devise_for :admins
+  get '/reviews/new', :to => 'reviews#new', :as => :new_school_rating
+  post '/reviews', :to => 'reviews#create', :as => :school_ratings
+
+  # devise_for :admins
+  devise_for :users
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 

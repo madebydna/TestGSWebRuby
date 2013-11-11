@@ -211,10 +211,11 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
+  config.warden do |manager|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
-  # end
+    manager.default_strategies(:scope => :user).unshift :custom_strategy_name
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -231,4 +232,22 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = "/my_engine/users/auth"
   config.secret_key = '3eda4d5ea83781bf2fa69c5b11ed315ba23254ac5832ef379117714ef87cf4c685529948c1102437105d8b2f5c0de7ff8842d2952d4d064a1948357fc17033cf'
 
+end
+
+
+Warden::Strategies.add(:custom_strategy_name) do
+  def valid?
+    # code here to check whether to try and authenticate using this strategy;
+    return true
+  end
+
+  def authenticate!
+    success = true
+
+    if success
+      success!(User.first)
+    else
+      fail!("YOU SHALL NOT PASS")
+    end
+  end
 end

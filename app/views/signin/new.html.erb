@@ -47,7 +47,7 @@
         <span class="iconx24 i-24-close  js_closeHover"></span>
     </div>
     <div class="inner">
-        <form method="post" action="javascript:alert('no action defined for form post');" id="signin">
+        <form method="post" action="<%= authenticate_user_path %>" id="signin">
             <div class="body pal">
                 <div class="js-facebookSignInModule">
                         <div class="button js-facebook-login js-facebook-login-signin">
@@ -57,6 +57,8 @@
                         </div>
                     <h5 class="orText"><span>OR</span></h5>
                 </div>
+
+
                 <div class="line">
                     <label class="small_bold bottom" for="semail">Email address</label><br>
                     <input onblur="if(this.value==''){this.value='[Enter email address]';}" onfocus="if(this.value=='[Enter email address]'){this.value='';}" name="email" tabindex="1" class="fl small bottom input_5 setemail" id="semail" type="text">

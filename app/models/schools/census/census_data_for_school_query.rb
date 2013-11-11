@@ -19,13 +19,13 @@ class CensusDataForSchoolQuery
     years << 0
 
     results =
-      @relation.active
+      @relation.on_db(@school.shard)
+      .active
       .with_data_types(data_type_ids)
       .where(year: years)
       .include_school_district_state(@school.id)
-      .all
 
-    CensusDataResults.new(results)
+    CensusDataResults.new(results.all)
   end
 
 end

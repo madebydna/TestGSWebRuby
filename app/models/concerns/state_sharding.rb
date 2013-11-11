@@ -4,7 +4,7 @@ module StateSharding
   extend ActiveSupport::Concern
 
   included do
-    db_magic :connection => :ca, slave: :ca
+    db_magic :connection => :dc, slave: :dc
 
     def self.first_level_on_slave
       first_level = db_charmer_top_level_connection? && on_master.connection.open_transactions.zero?

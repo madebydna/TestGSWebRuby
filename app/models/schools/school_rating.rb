@@ -9,6 +9,17 @@ class SchoolRating < ActiveRecord::Base
   scope :published, where(:status => ['a', 'p'])
   scope :quality_decline, where("quality != 'decline'")
 
+  alias_attribute :review_text, :comments
+  alias_attribute :overall, :quality
+
+
+  def uniqueness_attributes
+    {
+      school_id: school_id,
+      state: state,
+      member_id: member_id
+    }
+  end
   def self.order_by_selection(order_selection)
     case order_selection
       when 'oldToNew'
