@@ -23,6 +23,15 @@ class CategoryDataReader
     end
   end
 
+  def self.details(school, category)
+    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id && active=1)
+
+    keys_to_use = category.category_data(school.collections).map(&:response_key)
+
+    # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
+    data = esp_responses.select! { |response| keys_to_use.include? response.response_key}
+  end
+
   def self.enrollment(school, _)
 
     results = CensusDataForSchoolQuery.new(school)

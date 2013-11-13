@@ -12,20 +12,24 @@ class LocalizedProfileController < ApplicationController
 
   def overview
     read_config_for_page 'Overview'
+    gon.pagename = "Overview"
     init_page
   end
 
   def quality
     read_config_for_page 'Quality'
+    gon.pagename = "Quality"
     init_page
   end
 
   def details
     read_config_for_page 'Details'
+    gon.pagename = "Details"
     init_page
   end
 
   def reviews
+    gon.pagename = "Reviews"
     init_page
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 

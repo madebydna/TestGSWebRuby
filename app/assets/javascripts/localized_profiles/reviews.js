@@ -97,11 +97,3 @@ GS.reviews = GS.reviews || function($) {
         initializeReviewHandlers: initializeReviewHandlers
     }
 }(jQuery);
-
-$(function () {
-    GS.reviews.initializeReviewHandlers();
-    if($("#galleria").get(0)){
-        Galleria.run('#galleria');
-    }
-});
-

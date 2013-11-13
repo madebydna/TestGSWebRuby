@@ -1,9 +1,9 @@
 <% media_hash = @school.school_media %>
 <% if media_hash != [] || @headerMetadata.school_video1 %>
-    <hr />
-    <h3 class="pll">Media Gallery</h3>
     <div class="row ">
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+            <hr />
+            <h3 class="pll">Media Gallery</h3>
             <div id="galleria" style="height:320px; width:320px; margin: auto">
                 <%= include_lightbox_youtube_video @headerMetadata.school_video1 %>
                 <%= include_lightbox_media media_hash %>

@@ -50,6 +50,9 @@ gem 'composite_primary_keys'
 # Adds lodash JS to the project. Version of lodash added depends on environment
 gem 'lodash-rails'
 
+# for passing vars from ruby rails to javascript
+gem 'gon'
+gem 'rabl-rails'
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
