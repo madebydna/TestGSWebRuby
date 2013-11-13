@@ -123,6 +123,9 @@ GEM
       multi_json (~> 1.3)
     gherkin (2.12.1-x86-mingw32)
       multi_json (~> 1.3)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -185,6 +188,9 @@ GEM
       activerecord (~> 3.0)
       railties (~> 3.0)
     polyglot (0.3.3)
+    rabl-rails (0.3.3)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -334,6 +340,7 @@ DEPENDENCIES
   db-charmer
   devise
   factory_girl_rails (~> 4.2.1)
+  gon
   haml
   haml-rails
   hashie
@@ -345,6 +352,7 @@ DEPENDENCIES
   mocha_rails
   mysql2
   paper_trail
+  rabl-rails
   rails (= 3.2.11)
   rails_admin
   rails_best_practices
