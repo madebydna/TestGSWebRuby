@@ -18,6 +18,7 @@ class SessionCacheCookie
   }
 
   def initialize (cookie_session_cache)
+    return nil
     if cookie_session_cache
       session_cache = cookie_session_cache.split(INTRA_COOKIE_DELIMETER)
       if session_cache && session_cache.length > 5
