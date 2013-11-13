@@ -1,49 +1,5 @@
 module ApplicationHelper
 
-  def render_all_positions
-    result = ''
-    @page_config.category_positions.keys.sort.each { |position| result << String(render_position position) }
-    result.html_safe
-  end
-
-  def render_position(position_number)
-    if @page_config.position_has_data? position_number
-
-      category_placement = @page_config.category_placement_at_position position_number
-      data = @page_config.data_at_position position_number
-      category = category_placement.category
-
-      # different layout for debugging. triggered via url param
-      if params[:category_placement_debugging]
-        return render 'data_layouts/category_placement_debug',
-          category_placements: @category_positions[position_number],
-          picked_placement: category_placement,
-          school: @school
-      end
-
-      # figure out which partial to render
-      partial = "data_layouts/#{category_placement.layout}"
-
-      # build json object for layout config
-      if category_placement.layout_config.present?
-        # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
-        layout_config = category_placement.layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
-        layout_config_json = {}.to_json
-        layout_config_json = JSON.parse(layout_config) unless layout_config.nil? || layout_config == ''
-      end
-
-      # render the category data
-      render 'module_container',
-        partial:partial,
-        category_placement:category_placement,
-        data: data,
-        category: category,
-        config: category_placement.layout_config.present? ? TableConfig.new(layout_config_json) : nil,
-        size: category_placement.size || 12
-
-    end
-  end
-
   def category_placement_anchor(category_placement)
     category_placement.category.code_name
   end
@@ -51,7 +7,6 @@ module ApplicationHelper
   def category_placement_title(category_placement)
     category_placement.title || category_placement.category.name
   end
-
 
   def draw_stars_16(on_star_count)
     off_star_count = 5 - on_star_count

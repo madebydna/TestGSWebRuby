@@ -54,4 +54,18 @@ class CategoryPlacement < ActiveRecord::Base
     self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
   end
 
+  def layout_config_json
+    if layout_config.present?
+      # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
+      cleaned_layout_config = layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
+      layout_config_json = {}.to_json
+      layout_config_json = JSON.parse(cleaned_layout_config) unless cleaned_layout_config.nil? || cleaned_layout_config == ''
+      layout_config_json
+    end
+  end
+
+  def table_config
+    layout_config.present? ? TableConfig.new(layout_config_json) : nil
+  end
+
 end
