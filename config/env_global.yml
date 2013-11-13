@@ -1,16 +1,5 @@
-development:
-  media_server: "http://www.gscdn.org/"
-  GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
-  GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-test:
-  media_server: "http://www.gscdn.org/"
-  GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
-  GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-production:
-  media_server: "http://www.gscdn.org/"
-  GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
-  GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-default:
-  media_server: "http://www.gscdn.org/"
-  GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
-  GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
+media_server: "http://www.gscdn.org/"
+gsweb_host: "http://localhost:8080"
+GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
+GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
+

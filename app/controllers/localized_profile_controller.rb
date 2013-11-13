@@ -35,13 +35,10 @@ class LocalizedProfileController < ApplicationController
 
     @review_offset = 0
     @review_limit = 10
-
   end
 
   def find_user
-    member_id = cookies[:MEMID]
-    @user = User.find member_id unless member_id.nil?
-    @user_first_name = @user.first_name unless @user.nil?
+    @user_first_name = current_user.first_name unless !logged_in?
   end
 
   def test_scores

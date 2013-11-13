@@ -1,7 +1,13 @@
 class ReviewsController < ApplicationController
   include ReviewControllerConcerns
 
-  before_filter :authenticate_user!, only: [:create]
+  # Find school before executing culture action
+  before_filter :require_state, :require_school, :find_user, except: :create
+
+  def new
+    init_page
+  end
+
 
   # TODO: Remove these two methods to dry up code
   def serialize_param(path)
@@ -23,20 +29,29 @@ class ReviewsController < ApplicationController
       respond_to do |format|
         if save_review(review_params)
           format.html {
-            redirect_to(
-              successful_save_redirect(review_params),
-              :notice => 'Sweet, your list has been created.'
-            )
+            flash_notice 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
+            redirect_to successful_save_redirect(review_params)
           }
         else
+          # TODO: handle failure
         end
       end
     else
       save_review_params
       store_location(successful_save_redirect(review_params))
+      flash_error 'You need to log in or register your email in order to post a review.'
       redirect_to signin_path
     end
   end
 
+  def find_user
+    @user_first_name = current_user.first_name unless !logged_in?
+  end
+
+  def init_page
+    @headerMetadata = @school.school_metadata
+    @school_reviews_global = SchoolReviews.set_reviews_objects @school
+    @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
+  end
 
 end

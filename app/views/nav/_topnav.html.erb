@@ -19,9 +19,9 @@
             <li><a href="#back-to-school">Back To School</a></li>
             <li id="#js_headerAccountMessage">
                 <% if logged_in? %>
-                    <%= link_to('Logout', logout_path, :method => :delete) %>
+                    <%= link_to("not #{current_user.email}?  Logout ", logout_path, :method => :delete) %>
                 <% else %>
-                    <%= link_to('Sign In', new_user_session_path)  %>
+                    <%= link_to('Sign In', signin_path)  %>
                 <% end %>
             </li>
         </ul>

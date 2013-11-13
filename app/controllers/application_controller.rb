@@ -65,6 +65,18 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def flash_message(type, text)
+    flash[type] = Array(flash[type])
+    flash[type] << text
+  end
+
+  def flash_error(text)
+    flash_message :error, text
+  end
+
+  def flash_notice(text)
+    flash_message :notice, text
+  end
 
   def exception_handler(e)
     logger.error e

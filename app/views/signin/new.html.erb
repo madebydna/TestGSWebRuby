@@ -42,48 +42,141 @@
 
 
 
-<div class="outer">
-    <div class="fr">
-        <span class="iconx24 i-24-close  js_closeHover"></span>
-    </div>
-    <div class="inner">
-        <form method="post" action="<%= authenticate_user_path %>" id="signin">
-            <div class="body pal">
-                <div class="js-facebookSignInModule">
-                        <div class="button js-facebook-login js-facebook-login-signin">
-                            <a href="#">
-                                SIGN IN WITH FACEBOOK
-                            </a>
-                        </div>
-                    <h5 class="orText"><span>OR</span></h5>
-                </div>
+<div class="" id="loginModal">
+    <!--<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Have an Account?</h3>
+    </div>-->
+    <div class="modal-body">
+        <div class="well">
+            <ul class="nav nav-tabs">
+                <li class="active js-login-tab"><a href="#login" data-toggle="tab">Login</a></li>
+                <li class="js-join-tab"><a href="#join" data-toggle="tab">Create account</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active in" id="login">
+                    <form class="form-horizontal" action='<%= authenticate_user_path %>' method="post">
+                        <fieldset>
+                            <br/>
+                            <div id="legend">
+                                <legend>Login</legend>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" >
+                                    <br/>
+                                    <div class="control-group">
+                                        <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
+                                        <button class="btn btn-facebook js-facebook-login js-facebook-login-signin">
+                                            Connect with Facebook
+                                        </button>
+                                    </div>
 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <!-- Email -->
+                                        <label class="control-label"  for="email">Email</label>
+                                        <div class="controls">
+                                            <input type="text" id="email" name="email" placeholder="" class="input-xlarge js-login-email">
+                                        </div>
+                                    </div>
 
-                <div class="line">
-                    <label class="small_bold bottom" for="semail">Email address</label><br>
-                    <input onblur="if(this.value==''){this.value='[Enter email address]';}" onfocus="if(this.value=='[Enter email address]'){this.value='';}" name="email" tabindex="1" class="fl small bottom input_5 setemail" id="semail" type="text">
+                                    <div class="control-group">
+                                        <!-- Password-->
+                                        <label class="control-label" for="password">Password</label>
+                                        <div class="controls">
+                                            <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                                        </div>
+                                    </div>
 
-                    <div style="margin-top: 5px; margin-left: 5px;" class="fl errors">
-                        <p class="error" style="display: none;"></p>
-                    </div>
-                </div>
-                <div class="line ptl" style="clear:both">
-                    <div style="width:320px;">
-                        <label class="small_bold bottom" for="spword">Password</label>
-                    </div>
-                    <input name="password" tabindex="2" style="float:left" class="small bottom input_5" id="spword" type="password">
+                                    <br/>
 
-                    <div style="margin-top: 5px; margin-left: 5px;" class="fl errors">
-                        <p class="error2"></p>
-                    </div>
+                                    <div class="control-group">
+                                        <!-- Button -->
+                                        <div class="controls">
+                                            <button class="btn btn-success">Login</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-                <div class="clearfix ptl" style="clear:both">
-                    <button id="signinBtn" tabindex="3" name="signinBtn" type="submit" class="fl but but-rg but-1 signinBtn">Sign
-                        in
-                    </button>
+                <div class="tab-pane fade" id="join">
+                    <form class="form-horizontal" action='<%= authenticate_user_path %>' method="post">
+                        <fieldset>
+                            <br/>
+                            <div id="legend">
+                                <legend>Create an account</legend>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" >
+                                    <br/>
+                                    <div class="control-group">
+                                        <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
+                                        <button class="btn btn-facebook js-facebook-login js-facebook-login-signin">
+                                            Connect with Facebook
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="control-group">
+                                        <!-- Email -->
+                                        <label class="control-label" for="email">Email</label>
+                                        <div class="controls">
+                                            <input type="text" id="email" name="email" placeholder="" class="input-xlarge js-join-email">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <!-- Email -->
+                                        <label class="control-label" for="terms">I accept the terms of use</label>
+                                        <div class="controls">
+                                            <input type="checkbox" id="terms" name="terms" placeholder="" class="input-xlarge">
+                                        </div>
+                                    </div>
+                                    <br/>
+
+                                    <div class="control-group">
+                                        <!-- Button -->
+                                        <div class="controls">
+                                            <button class="btn btn-success">Register email</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-                <input value="true" name="rememberMe" type="hidden"><input value="http://www.greatschools.org/" class="redirect_field" name="redirect" type="hidden">
             </div>
-        </form>
+        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    // TODO: move this method elsewhere and write tests
+    var GS_bind_and_sync = function(selector1, selector2) {
+        var $input1 = $(selector1);
+        var $input2 = $(selector2);
+
+        $input1.bind("keyup paste", function() {
+            setTimeout(function() {
+                $input2.val($input1.val());
+            }, 20);
+        });
+        $input2.bind("keyup paste", function() {
+            setTimeout(function() {
+                $input1.val($input2.val());
+            }, 20);
+        });
+    };
+
+
+    $(function() {
+        GS_bind_and_sync('.js-login-email', '.js-join-email');
+
+    })
+</script>

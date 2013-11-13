@@ -20,15 +20,5 @@
         </div>
     </div>
 
-    <div>
-        <%= form_for(SchoolRating.new) do |f| %>
-            <%= f.hidden_field :school_id, value: @school.id %>
-            <%= f.hidden_field :state, value: @school.state %>
-            overall rating: <%= f.text_field :overall %>
-            poster: <%= f.text_field :submitter %>
-            review text: <%= f.text_field :review_text %>
-            <%= f.submit %>
-        <% end %>
-    </div>
 </div>
 <%= render 'nav/footer' %>

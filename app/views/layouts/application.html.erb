@@ -12,11 +12,18 @@
 </head>
 <body>
 
-<% flash.each do |key, value| %>
-<div style="border: 1px solid #ffff00">
-    <%= content_tag(:div, value, :class => "flash #{key}") %>
+<div class="js-header-message" style="display:none">
+    <% flash.each do |key, value| %>
+        <% value = Array(value) %>
+        <% value.each do |msg| %>
+            <%= content_tag(:div, msg, :class => "flash_#{key}",
+                :style => 'border-bottom: 1px solid #eee; background-color:#ffffa3; color:#333; font-weight:semibold; padding:5px') %>
+        <% end %>
+    <% end %>
 </div>
-<% end %>
+<script type="text/javascript">
+    $(".js-header-message").slideDown("slow");
+</script>
 
 <%= content_for?(:content) ? yield(:content) : yield %>
 

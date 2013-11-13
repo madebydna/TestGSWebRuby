@@ -1,0 +1,70 @@
+<%= render 'nav/topnav' %>
+<%= render 'localized_profile/header', school: @school %>
+<%= render 'localized_profile/profile-nav', school: @school %>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
+        <div class="row">
+                <div class="" >
+                    <!--<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3>Have an Account?</h3>
+                    </div>-->
+                    <div class="modal-body">
+                        <div class="well">
+                                <div class="tab-pane active in" id="login">
+                                    <%= form_for(SchoolRating.new) do |f| %>
+                                        <%= f.hidden_field :school_id, value: @school.id %>
+                                        <%= f.hidden_field :state, value: @school.state %>
+                                        <fieldset>
+                                            <br/>
+                                            <div id="legend">
+                                                <legend>Write a review about <%= @school.name %></legend>
+                                            </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="user_type">Are you a ...</label>
+                                                    <div class="controls">
+                                                        <select id="user_type" name="user_type">
+                                                            <option value="parent">Parent</option>
+                                                            <option value="student">Student</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label" for="overall_rating">5 star rating</label>
+                                                    <div class="controls">
+                                                        <input type="text" id="overall_rating" name="review_text" placeholder="" class="input-xlarge">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label" for="review_text">What do you have to say?</label>
+                                                    <div class="controls">
+                                                        <textarea cols="50" rows="8" id="review_text" name="review_text" placeholder="" class="input-xlarge"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <br/>
+
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <%= f.submit class:'btn btn-success', value:'Submit your review' %>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                    <% end %>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div>
+            </div>
+        </div>
+    </div>
+</div>
+<%= render 'nav/footer' %>

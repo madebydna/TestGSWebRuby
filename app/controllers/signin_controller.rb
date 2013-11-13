@@ -7,35 +7,82 @@ class SigninController < ApplicationController
 
   # gets the reg / sigin form page
   def new
+  end
 
+  def authenticate
+    existing_user = User.where(email: params[:email]).first
+    error = nil
+
+    if existing_user
+      if existing_user.password_matches params[:password]
+        # no op
+      elsif existing_user.provisional?
+        error = 'You must validate your email in order to log in'
+      else
+        error = 'Sorry, your email or password was incorrect.'
+      end
+    else
+      # no matching user
+      error = 'Sorry, your email or password was incorrect.'
+    end
+
+    return existing_user, error
+  end
+
+  def register
+    json = social_registration_and_login
+
+    if json[:success]
+      return nil, nil
+    else
+      return nil, json[:error_message]
+    end
+  end
+
+  # rather than invoke different controller actions for login / join, determine intent by presence of certain params
+  def should_attempt_login
+    is_registration = params[:password].nil? && params[:confirm_password].nil?
+    return !is_registration
   end
 
   # handles registration and login
   def create
-    # url_string = 'http://omega.greatschools.org/community/registration/socialRegistrationAndLogin.json'
-    # make call to java to register or sign in
 
-    # is response code 200 and got a success from java json response?
-    if true
-      log_user_in
-      process_pending_actions
-      #redirect_back_or_default('/index.page') # should not go to index page
+    if should_attempt_login
+      user, error = authenticate  # log in
     else
-      # calculate error based on whether there was a registration validation error or if a login attempt failed
-      flash[:error] = '[Error message goes here]'
-      redirect_to :new
+      user, error = register      # join
+    end
+
+    # successful login or registration is determined by presence of error
+    if error
+      flash_error error
+      redirect_to signin_path
+    else
+      if should_attempt_login
+        log_user_in(user)
+        flash_notice 'Welcome to GreatSchools!'
+        process_pending_actions
+      else
+        flash_notice 'Please verify your email address so we can finish setting up your account. [verification not implemented, go ahead and log in. password = "password"]'
+        if get_review_params
+          flash_notice 'Thanks for your school review! We\'ll post it once your email address has been verified.'
+        end
+        redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
+      end
     end
   end
 
+  # upon successful authentication, handle whatever user was trying to do previously
+  # save pending form posts and/or redirect user
   def process_pending_actions
     review_params = get_review_params
     if review_params
-      # session[:review].delete
       if save_review(review_params)
         clear_review_params
+        flash_notice 'Thanks, your review has been posted. Your feedback helps other parents choose the right schools!'
         redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
       else
-        ap 'COULD NOT SAVE REVIEW ---------'
         redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
         # TODO: what to do here?
       end
@@ -44,55 +91,19 @@ class SigninController < ApplicationController
     end
   end
 
+  # handle logout
   def destroy
-    reset_session
-    self.current_user = nil
-    flash[:notice] = 'Signed out'
+    log_user_out
+    flash_notice 'Signed out'
     redirect_to(signin_url)
   end
 
-  def register
-    # worst code ever, will rewrite
-
-    url_string = 'http://omega.greatschools.org/community/registration/socialRegistrationAndLogin.json'
-
-    res = Net::HTTP.post_form(URI.parse(url_string), params)
-
-    #response.headers = res.header.to_hash
-    c = res.get_fields('Set-Cookie')
-
-    c.each do |cookie|
-
-      parts = cookie.split(';')
-      hash = {}
-      parts.each do |part|
-        n = part.split('=')[0]
-        v = part.split('=')[1]
-        hash[n]=v
-      end
-
-      name = hash.keys.first
-      value = hash.values.first
-      hash.delete(name)
-
-      new_hash = {}
-      hash.each_pair do |k,v|
-        new_hash.merge!({k.downcase => v})
-      end
-      hash = new_hash
-      hash.symbolize_keys!
-
-      cookies[name.to_sym] = {
-        :value => value,
-        :expires => hash[:expires],
-        :domain => hash[:domain]
-      }
-    end
+  def facebook_authentication
+    json = social_registration_and_login
 
     respond_to do |format|
-      format.json  { render :json => res.body.to_json }
+      format.json  { render :json => json }
     end
-
   end
 
 end

@@ -4,6 +4,13 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   resources :census_data_sets
 
+  post '/reviews', :to => 'reviews#create', :as => :school_ratings
+  get '/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/
+  }
+
   get '/district-of-columbia/:city/:schoolId-:school_name', constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
@@ -22,6 +29,7 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
+
   get '/profile/overview', :to => 'localized_profile#overview'
   get '/profile/quality', :to => 'localized_profile#quality'
   get '/profile/details', :to => 'localized_profile#details'
@@ -33,11 +41,8 @@ LocalizedProfiles::Application.routes.draw do
   match '/logout', :to => 'signin#destroy', :as => :logout
   post '/user/auth', :to => 'signin#create', :as => :authenticate_user
 
-  get '/reviews/new', :to => 'reviews#new', :as => :new_school_rating
-  post '/reviews', :to => 'reviews#create', :as => :school_ratings
 
-  # devise_for :admins
-  devise_for :users
+  devise_for :admins
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
