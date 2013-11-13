@@ -1,18 +1,17 @@
 <% if @page_config.position_has_data? position_number %>
-<% category_placement = @page_config.category_placement_at_position position_number %>
-<%    data = @page_config.data_at_position position_number %>
-<%   category = category_placement.category %>
+    <%
+        category_placement = @page_config.category_placement_at_position position_number
+        data = @page_config.data_at_position position_number
+        category = category_placement.category
+        partial = "data_layouts/#{category_placement.layout}"
+        config = category_placement.table_config
+        size = category_placement.size || 12 # TODO: just default this in the model
+    %>
 
-   <%    partial = "data_layouts/#{category_placement.layout}" %>
-
-   <%    config = category_placement.table_config %>
-
-   <%    size = category_placement.size || 12 # TODO: just default this in the model %>
-
-<%=   render partial,
-          category_placement: category_placement,
-          data: data,
-          category: category,
-          config: config,
-          size: size  %>
+    <%=   render partial,
+      category_placement: category_placement,
+      data: data,
+      category: category,
+      config: config,
+      size: size  %>
 <% end %>
