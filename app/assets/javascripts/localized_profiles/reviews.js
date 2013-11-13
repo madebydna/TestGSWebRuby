@@ -1,7 +1,5 @@
 var GS = GS || {};
 GS.reviews = GS.reviews || function($) {
-
-
     var initializeReviewHandlers = function () {
         // the next ten button
         var nextTenButton = $(".js_reviewsGetNextTen");
