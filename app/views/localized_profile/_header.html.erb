@@ -36,9 +36,15 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="row">
-                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Review school</button></div>
-                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
-                    <div class="col-xs-4 col-sm-12 col-md-12  pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
+                    <div class="col-xs-4 col-sm-12 col-md-12 pas">
+                        <%= link_to new_school_rating_path(school_params(school)) do %>
+                            <button class="btn btn-default" style="width:100%">
+                                Write a review!
+                            </button>
+                        <% end %>
+                    </div>
+                    <div class="col-xs-4 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
+                    <div class="col-xs-4 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
                 </div>
             </div>
         </div>
