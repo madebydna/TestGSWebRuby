@@ -49,7 +49,7 @@ class ReviewsController < ApplicationController
   end
 
   def init_page
-    @headerMetadata = @school.school_metadata
+    @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
   end
