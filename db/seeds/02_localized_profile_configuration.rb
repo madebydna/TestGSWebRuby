@@ -196,6 +196,14 @@ ResponseValue.create!(response_value: 'student_teacher_ratio',response_label:'St
 ResponseValue.create!(response_value: 'licensed_enrollment',response_label:'Licensed Enrollment')
 
 
+ResponseValue.create!(response_value: 'enrollment',response_label:'Number of Students', category: snapshot)
+ResponseValue.create!(response_value: 'head official name',response_label:'Principal name', category: snapshot)
+ResponseValue.create!(response_value: 'transportation',response_label:'Transportation', category: snapshot)
+ResponseValue.create!(response_value: 'students per teacher',response_label:'Student teacher ratio', category: snapshot)
+ResponseValue.create!(response_value: 'capacity',response_label:'Licensed enrollment', category: snapshot)
+ResponseValue.create!(response_value: 'district',response_label:'District', category: snapshot)
+ResponseValue.create!(response_value: 'type',response_label:'Type', category: snapshot)
+
 #esp response values and their pretty labels
 schools_per_state = 4
 state_dbs_to_seed.each_with_index do |db, index|

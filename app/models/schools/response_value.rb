@@ -1,9 +1,10 @@
 class ResponseValue < ActiveRecord::Base
-  attr_accessible :collection_id, :collection, :response_label, :response_value
+  attr_accessible :collection_id, :collection, :response_label, :response_value,:category_id, :category
   has_paper_trail
   db_magic :connection => :profile_config
 
   belongs_to :collection
+  belongs_to :category
 
   def self.pretty_value(value, collections = [])
     cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
