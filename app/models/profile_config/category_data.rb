@@ -1,5 +1,5 @@
 class CategoryData < ActiveRecord::Base
-  attr_accessible :category_id, :category, :collection_id, :collection, :response_key
+  attr_accessible :category_id, :category, :collection_id, :collection, :response_key, :sort_order
   has_paper_trail
   db_magic :connection => :profile_config
 

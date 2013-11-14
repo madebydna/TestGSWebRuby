@@ -115,7 +115,7 @@ class CategoryDataReader
 
   def self.snapshot(school, category)
 
-    snapshot_results = {}
+    snapshot_results = []
 
     key_source = {
         enrollment: 'census_data_points',
@@ -155,7 +155,7 @@ class CategoryDataReader
           if data_for_source.present? && data_for_source.any?
             value =  data_for_source[key]
             if value.present?
-              snapshot_results[key] = value
+              snapshot_results << {key => value}
             end
           end
         end

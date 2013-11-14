@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130918042153) do
+ActiveRecord::Schema.define(:version => 20131114184219) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20130918042153) do
     t.integer  "collection_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "sort_order"
   end
 
   add_index "category_data", ["category_id"], :name => "index_category_data_on_category_id"

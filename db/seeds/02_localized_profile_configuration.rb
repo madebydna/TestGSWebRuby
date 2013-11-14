@@ -155,16 +155,16 @@ CategoryData.create!(category: programs, response_key:'foreign_language')
 CategoryData.create!(category: category_no_osp_data, response_key:'_bogus')
 
 
-CategoryData.create!(category: snapshot, response_key:'enrollment')
-CategoryData.create!(category: snapshot, response_key:'start_time')
-CategoryData.create!(category: snapshot, response_key:'end_time')
-CategoryData.create!(category: snapshot, response_key:'head official name')
-CategoryData.create!(category: snapshot, response_key:'transportation')
-CategoryData.create!(category: snapshot, response_key:'students per teacher')
-CategoryData.create!(category: snapshot, response_key:'capacity')
-CategoryData.create!(category: snapshot, response_key:'before_after_care')
-CategoryData.create!(category: snapshot, response_key:'district')
-CategoryData.create!(category: snapshot, response_key:'type')
+CategoryData.create!(category: snapshot, response_key:'enrollment',sort_order: 1)
+CategoryData.create!(category: snapshot, response_key:'start_time',sort_order: 2)
+CategoryData.create!(category: snapshot, response_key:'end_time',sort_order: 3)
+CategoryData.create!(category: snapshot, response_key:'head official name',sort_order: 4)
+CategoryData.create!(category: snapshot, response_key:'transportation',sort_order: 5)
+CategoryData.create!(category: snapshot, response_key:'students per teacher',sort_order: 6)
+CategoryData.create!(category: snapshot, response_key:'capacity',sort_order: 7)
+CategoryData.create!(category: snapshot, response_key:'before_after_care',sort_order: 8)
+CategoryData.create!(category: snapshot, response_key:'district',sort_order: 9)
+CategoryData.create!(category: snapshot, response_key:'type',sort_order: 10)
 
 
 # response value - this table is used to store the keys or values and their pretty labels.

@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 
 
   def category_data(collections = nil)
-      CategoryData.on_db(:profile_config).belonging_to_collections(self, collections)
+      CategoryData.on_db(:profile_config).order('sort_order asc').belonging_to_collections(self, collections)
   end
 
   def key_label_map(collections = nil)
