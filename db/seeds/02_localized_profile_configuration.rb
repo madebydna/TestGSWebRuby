@@ -72,7 +72,7 @@ student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
-details = Category.create!(name: 'Details', source:'esp_response')
+detail_overview = Category.create!(name: 'Details', source:'esp_response')
 
 
 # Category placements
@@ -165,14 +165,14 @@ CategoryData.create!(category: snapshot, response_key:'before_after_care',sort_o
 CategoryData.create!(category: snapshot, response_key:'district',sort_order: 9)
 CategoryData.create!(category: snapshot, response_key:'type',sort_order: 10)
 
-CategoryData.create!(category: details, response_key:'arts_media')
-CategoryData.create!(category: details, response_key:'arts_music')
-CategoryData.create!(category: details, response_key:'arts_performing_written')
-CategoryData.create!(category: details, response_key:'arts_visual')
-CategoryData.create!(category: details, response_key:'girls_sports')
-CategoryData.create!(category: details, response_key:'boys_sports')
-CategoryData.create!(category: details, response_key:'student_clubs')
-CategoryData.create!(category: details, response_key:'foreign_language')
+CategoryData.create!(category: detail_overview, response_key:'arts_media')
+CategoryData.create!(category: detail_overview, response_key:'arts_music')
+CategoryData.create!(category: detail_overview, response_key:'arts_performing_written')
+CategoryData.create!(category: detail_overview, response_key:'arts_visual')
+CategoryData.create!(category: detail_overview, response_key:'girls_sports')
+CategoryData.create!(category: detail_overview, response_key:'boys_sports')
+CategoryData.create!(category: detail_overview, response_key:'student_clubs')
+CategoryData.create!(category: detail_overview, response_key:'foreign_language')
 
 
 # response value - this table is used to store the keys or values and their pretty labels.
