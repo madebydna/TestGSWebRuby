@@ -72,6 +72,8 @@ student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
+details = Category.create!(name: 'Details', source:'esp_response')
+
 
 # Category placements
 # defaults (no collection)
@@ -89,16 +91,13 @@ CategoryPlacement.create!(category: programs, page: details, position: 5, size: 
 
 # different config for different page
 CategoryPlacement.create!(
-    category: student_ethnicity, page: overview, position: 5, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
+    category: student_ethnicity, page: overview, position: 4, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', size: 12,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
-CategoryPlacement.create!(
-    category: student_ethnicity, page: overview, title: 'Ethnicity data', position: 4, layout: 'configured_table', size: 8,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(category: school_basics, page: overview, position: 1, size: 6 )
-CategoryPlacement.create!(category: arts_music, page: overview, position: 2, size: 6 )
-CategoryPlacement.create!(category: programs, page: overview, position: 3, size: 12 )
+
+CategoryPlacement.create!( layout: 'contact_overview', page: overview, position: 1, size: 12 )
+CategoryPlacement.create!( layout: 'reviews_overview', page: overview, position: 2, size: 12 )
+CategoryPlacement.create!( layout: 'lightbox_overview', page: overview, position: 3, size: 12 )
 
 # different config for different page
 CategoryPlacement.create!(
@@ -165,6 +164,15 @@ CategoryData.create!(category: snapshot, response_key:'capacity',sort_order: 7)
 CategoryData.create!(category: snapshot, response_key:'before_after_care',sort_order: 8)
 CategoryData.create!(category: snapshot, response_key:'district',sort_order: 9)
 CategoryData.create!(category: snapshot, response_key:'type',sort_order: 10)
+
+CategoryData.create!(category: details, response_key:'arts_media')
+CategoryData.create!(category: details, response_key:'arts_music')
+CategoryData.create!(category: details, response_key:'arts_performing_written')
+CategoryData.create!(category: details, response_key:'arts_visual')
+CategoryData.create!(category: details, response_key:'girls_sports')
+CategoryData.create!(category: details, response_key:'boys_sports')
+CategoryData.create!(category: details, response_key:'student_clubs')
+CategoryData.create!(category: details, response_key:'foreign_language')
 
 
 # response value - this table is used to store the keys or values and their pretty labels.
