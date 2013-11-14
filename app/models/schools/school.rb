@@ -3,7 +3,7 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessible :name, :state, :school_collections
+  attr_accessible :name, :state, :school_collections, :district_id
   has_many :school_metadatas
   #has_many :school_collections
   #has_many :collections, through: :school_collections
@@ -91,6 +91,12 @@ class School < ActiveRecord::Base
   def state_name
     States.state_name(state)
   end
+
+  def level_codes
+    level_code.split(',') if level_code.present?
+  end
+
+
 
 =begin
   def label_value_map_per_category(page)

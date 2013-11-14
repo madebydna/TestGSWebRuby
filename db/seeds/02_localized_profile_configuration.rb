@@ -71,7 +71,7 @@ arts_music = Category.create!(name: 'Arts & Music', source:'esp_response')
 student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student_ethnicity')
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
-
+snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
 
 # Category placements
 # defaults (no collection)
@@ -126,6 +126,7 @@ CategoryPlacement.create!(category: school_basics, page: reviews, position: 5, s
 CategoryPlacement.create!(category: arts_music, page: reviews, position: 1, size: 12 )
 CategoryPlacement.create!(category: programs, page: reviews, position: 2, size: 12 )
 CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
+CategoryPlacement.create!(category: snapshot, page: overview, position: 6, layout: 'snapshot')
 
 
 # Category data
@@ -154,6 +155,17 @@ CategoryData.create!(category: programs, response_key:'foreign_language')
 CategoryData.create!(category: category_no_osp_data, response_key:'_bogus')
 
 
+CategoryData.create!(category: snapshot, response_key:'enrollment')
+CategoryData.create!(category: snapshot, response_key:'start_time')
+CategoryData.create!(category: snapshot, response_key:'end_time')
+CategoryData.create!(category: snapshot, response_key:'head official name')
+CategoryData.create!(category: snapshot, response_key:'transportation')
+CategoryData.create!(category: snapshot, response_key:'students per teacher')
+CategoryData.create!(category: snapshot, response_key:'capacity')
+CategoryData.create!(category: snapshot, response_key:'before_after_care')
+CategoryData.create!(category: snapshot, response_key:'district')
+CategoryData.create!(category: snapshot, response_key:'type')
+
 
 # response value - this table is used to store the keys or values and their pretty labels.
 
@@ -174,6 +186,15 @@ ResponseValue.create!(response_value: 'arts_music',response_label:'Music')
 ResponseValue.create!(response_value: 'arts_performing_written',response_label:'Performing arts')
 ResponseValue.create!(response_value: 'special_ed_programs',response_label:'Specialized programs for specific types of special education students')
 ResponseValue.create!(response_value: 'foreign_language',response_label:'Foreign languages taught')
+
+ResponseValue.create!(response_value: 'enrollment',response_label:'Enrollment')
+ResponseValue.create!(response_value: 'hours',response_label:'Hours')
+ResponseValue.create!(response_value: 'principal_name',response_label:'Principal')
+ResponseValue.create!(response_value: 'transportation',response_label:'Transportation')
+ResponseValue.create!(response_value: 'district',response_label:'District')
+ResponseValue.create!(response_value: 'student_teacher_ratio',response_label:'Student teacher ratio')
+ResponseValue.create!(response_value: 'licensed_enrollment',response_label:'Licensed Enrollment')
+
 
 #esp response values and their pretty labels
 schools_per_state = 4

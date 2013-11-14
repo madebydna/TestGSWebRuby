@@ -26,7 +26,8 @@ class CategoryPlacement < ActiveRecord::Base
         'Light box overview' => 'lightbox_overview',
         'Blank layout' => 'blank_layout',
         'Test Data' => 'test_data',
-        'Default two column table' => 'default_two_column_table'
+        'Default two column table' => 'default_two_column_table',
+        'Snapshot' => 'snapshot'
     }
   end
 

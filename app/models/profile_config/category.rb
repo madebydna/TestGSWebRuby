@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  attr_accessible :description, :name, :parent, :source
+  attr_accessible :description, :name, :parent, :source, :layout
   has_paper_trail
   db_magic :connection => :profile_config
 
