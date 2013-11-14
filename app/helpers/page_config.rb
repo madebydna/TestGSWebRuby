@@ -34,7 +34,7 @@ class PageConfig
 
   # An array of the chosen category placements, ordered by position
   def placements
-    @category_placements.values.map{ |placement_and_data| placement_and_data[:placement] }
+    @category_placements.values.compact.map{ |placement_and_data| placement_and_data[:placement] }
   end
 
   def choose_category_placements
