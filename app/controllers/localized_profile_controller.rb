@@ -1,7 +1,6 @@
 class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
-  # Find school before executing culture action
   before_filter :require_state, :require_school
   before_filter :read_config_for_page, except: :reviews
   before_filter :init_page, :set_header_data

@@ -53,6 +53,7 @@ class CategoryPlacement < ActiveRecord::Base
 
   def set_defaults
     self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
+    self.size ||= 12 if self.has_attribute? :size
   end
 
   def layout_config_json

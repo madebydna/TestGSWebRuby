@@ -1,3 +1,4 @@
+<% data_config = category_placement.table_config %>
 <div class="col-xs-12 col-sm-<%= size %> col-md-<%= size %>">
     <div class="contents">
         <div class="main">
@@ -7,7 +8,7 @@
             <table class="table table-striped no-more-tables">
                 <thead>
                     <tr>
-                        <% config.columns_to_print(data).each do |column| %>
+                        <% data_config.columns_to_print(data).each do |column| %>
                             <% if column['display_type'] == :data_and_header %>
                                 <th><%= column['label'] %></th>
                             <% else %>
@@ -21,7 +22,7 @@
                 <% data.rows.each do |hash| %>
                     <tr>
 
-                        <% config.columns_to_print(data).each do |column| %>
+                        <% data_config.columns_to_print(data).each do |column| %>
                             <% if hash[column['key'].to_sym] %>
                                 <td data-title="<%= column['label'] %>">
                                     <% value = hash[column['key'].to_sym] %>
