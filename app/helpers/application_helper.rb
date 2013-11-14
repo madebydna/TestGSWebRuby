@@ -135,6 +135,4 @@ module ApplicationHelper
     return signed_url
   end
 
-
-
 end
