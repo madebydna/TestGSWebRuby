@@ -72,7 +72,8 @@ student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
-detail_overview = Category.create!(name: 'Details', source:'esp_response')
+details_summary = Category.create!(name: 'Details', source:'details')
+dummy_category = Category.create!(name: 'Dummy', source:'dummy')
 
 
 # Category placements
@@ -95,9 +96,9 @@ CategoryPlacement.create!(
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
 
-CategoryPlacement.create!( layout: 'contact_overview', title: 'Contact Information', page: overview, position: 1, size: 12 )
-CategoryPlacement.create!( layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 2, size: 12 )
-CategoryPlacement.create!( layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 3, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 1, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 2, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 3, size: 12 )
 
 # different config for different page
 CategoryPlacement.create!(
@@ -126,6 +127,7 @@ CategoryPlacement.create!(category: arts_music, page: reviews, position: 1, size
 CategoryPlacement.create!(category: programs, page: reviews, position: 2, size: 12 )
 CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
 CategoryPlacement.create!(category: snapshot, page: overview, position: 6, layout: 'snapshot')
+CategoryPlacement.create!(category: details_summary, page: overview, position: 7, layout: 'details')
 
 
 # Category data
@@ -165,14 +167,14 @@ CategoryData.create!(category: snapshot, response_key:'capacity',sort_order: 8)
 CategoryData.create!(category: snapshot, response_key:'before_care',sort_order: 9)
 CategoryData.create!(category: snapshot, response_key:'after_care',sort_order: 10)
 
-CategoryData.create!(category: detail_overview, response_key:'arts_media')
-CategoryData.create!(category: detail_overview, response_key:'arts_music')
-CategoryData.create!(category: detail_overview, response_key:'arts_performing_written')
-CategoryData.create!(category: detail_overview, response_key:'arts_visual')
-CategoryData.create!(category: detail_overview, response_key:'girls_sports')
-CategoryData.create!(category: detail_overview, response_key:'boys_sports')
-CategoryData.create!(category: detail_overview, response_key:'student_clubs')
-CategoryData.create!(category: detail_overview, response_key:'foreign_language')
+CategoryData.create!(category: details_summary, response_key:'arts_media')
+CategoryData.create!(category: details_summary, response_key:'arts_music')
+CategoryData.create!(category: details_summary, response_key:'arts_performing_written')
+CategoryData.create!(category: details_summary, response_key:'arts_visual')
+CategoryData.create!(category: details_summary, response_key:'girls_sports')
+CategoryData.create!(category: details_summary, response_key:'boys_sports')
+CategoryData.create!(category: details_summary, response_key:'student_clubs')
+CategoryData.create!(category: details_summary, response_key:'foreign_language')
 
 
 # response value - this table is used to store the keys or values and their pretty labels.
