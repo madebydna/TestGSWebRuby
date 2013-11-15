@@ -5,6 +5,7 @@ class School < ActiveRecord::Base
 
   attr_accessible :name, :state, :school_collections, :district_id
   has_many :school_metadatas
+  belongs_to :district
   #has_many :school_collections
   #has_many :collections, through: :school_collections
   #has_many :census_data_school_values, :class_name => 'CensusDataSchoolValue'
@@ -96,6 +97,11 @@ class School < ActiveRecord::Base
     level_code.split(',') if level_code.present?
   end
 
+  #Temporary work around, since with db charmer we cannot directly say school.district.name.
+  #It looks at the wrong database in that case.
+  def district
+    @district ||= District.on_db(self.shard).find(self.district_id)
+  end
 
 
 =begin

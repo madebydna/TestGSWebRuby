@@ -158,7 +158,7 @@ class CategoryDataReader
   end
 
   def self.school_data(school, _)
-  {"district" => school.district_id, "type" => school.subtype}
+  {"district" => school.district.name, "type" => school.subtype}
   end
 
   def self.snapshot(school, category)
@@ -211,7 +211,6 @@ class CategoryDataReader
             #esp_data returns an array and census does not return an array. Therefore cast everything to an array and read
             #the first value.
             value = Array(data_for_source[key]).first
-
             #Get the labels for the response keys from the ResponseValue table.
             key = lookup_table_for_labels[key] || key
 

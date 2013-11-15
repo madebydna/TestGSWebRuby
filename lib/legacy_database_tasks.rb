@@ -22,6 +22,7 @@ class LegacyDatabaseTasks
       TestDataStateValue
       TestDataDistrictValue
       TestDataSchoolValue
+      district
     ),
       gs_schooldb_tables: %w(
       list_member
