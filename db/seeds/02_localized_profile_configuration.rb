@@ -95,9 +95,9 @@ CategoryPlacement.create!(
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
 
-CategoryPlacement.create!( layout: 'contact_overview', page: overview, position: 1, size: 12 )
-CategoryPlacement.create!( layout: 'reviews_overview', page: overview, position: 2, size: 12 )
-CategoryPlacement.create!( layout: 'lightbox_overview', page: overview, position: 3, size: 12 )
+CategoryPlacement.create!( layout: 'contact_overview', title: 'Contact Information', page: overview, position: 1, size: 12 )
+CategoryPlacement.create!( layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 2, size: 12 )
+CategoryPlacement.create!( layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 3, size: 12 )
 
 # different config for different page
 CategoryPlacement.create!(

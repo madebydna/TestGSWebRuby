@@ -27,7 +27,8 @@ class CategoryPlacement < ActiveRecord::Base
         'Blank layout' => 'blank_layout',
         'Test Data' => 'test_data',
         'Default two column table' => 'default_two_column_table',
-        'Snapshot' => 'snapshot'
+        'Snapshot' => 'snapshot',
+        'Details' => 'details'
     }
   end
 
@@ -69,5 +70,4 @@ class CategoryPlacement < ActiveRecord::Base
   def table_config
     layout_config.present? ? TableConfig.new(layout_config_json) : nil
   end
-
 end

@@ -5,7 +5,7 @@ class CategoryDataReader
   include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
-    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id)
+    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).where(active: 1)
 
     keys_to_use = category.category_data(school.collections).map(&:response_key)
 
@@ -26,14 +26,45 @@ class CategoryDataReader
     end
   end
 
-  def self.details(school, category)
-    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id && active=1)
-
-    keys_to_use = category.category_data(school.collections).map(&:response_key)
-
-    # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    data = esp_responses.select! { |response| keys_to_use.include? response.response_key }
+  def self.dummy(school, _)
+    return {dummy:true}
   end
+
+  def self.details(school, category)
+    data_details = esp_data_points(school, category);
+
+    details_response_keys = {
+        art: ['arts_media', 'arts_music', 'arts_performing_written', 'arts_visual'],
+        sport: ['girls_sports', 'boys_sports'],
+        club: ['student_clubs'],
+        lang: ['foreign_language']
+    }
+    return_counts_details = {
+        art: "-",
+        sport:"-",
+        club: "-",
+        lang: "-"
+    }
+
+    # loop through details and handle total count for 0, infinity cases
+    #  zero is a dash -
+    #  check if value for all is none
+    #  don't add none to count
+    details_response_keys.keys.each do |osp_key|
+       return_counts_details[osp_key] = details_response_keys[osp_key].sum do | key |
+          (Array(data_details[key]).count{|item| item != "none"})
+        end
+      if return_counts_details[osp_key] == 0
+        none_count = details_response_keys[osp_key].sum do | key |
+          (Array(data_details[key]).count{|item| item == "none"})
+        end
+        return_counts_details[osp_key] = none_count == 0 ?  "-" : 0
+      end
+    end
+    return_counts_details
+  end
+
+
 
   def self.esp_data_points(school, _)
     data = EspResponse.on_db(school.shard).where(school_id: school.id)
