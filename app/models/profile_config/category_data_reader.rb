@@ -1,4 +1,5 @@
 require 'table_data'
+require 'hash_utils'
 
 class CategoryDataReader
   include SchoolCategoryDataCacher
@@ -41,6 +42,22 @@ class CategoryDataReader
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
       responses_per_key = data.group_by(&:response_key)
       responses_per_key.values.each { |values| values.map!(&:response_value) }
+    end
+
+    #Merge start_time and end_time into hours.
+    HashUtils.merge_keys responses_per_key, 'start_time', 'end_time', 'hours' do |value1 ,value2|
+      value1.first.to_s + '-' + value2.first.to_s
+    end
+
+    #Split before_after_care into before_care and after_care.
+    HashUtils.split_keys responses_per_key, 'before_after_care' do |value|
+      result_hash = {}
+      if value.kind_of?(Array)
+        value.each do |val|
+          result_hash[val.downcase  + "_care"] =  val.downcase  unless val.nil?
+        end
+      end
+      result_hash
     end
 
     responses_per_key
@@ -119,54 +136,67 @@ class CategoryDataReader
 
     key_source = {
         enrollment: 'census_data_points',
-        start_time: 'esp_data_points',
-        end_time: 'esp_data_points',
+        hours: 'esp_data_points',
         :"head official name" => 'census_data_points',
         transportation: 'esp_data_points',
         :"students per teacher" => 'census_data_points',
         capacity: 'census_data_points',
-        before_after_care: 'esp_data_points',
+        before_care: 'esp_data_points',
+        after_care: 'esp_data_points',
         district: 'school_data',
         type: 'school_data'
     }
 
-    key_filters = { enrollment: {level_codes: ['p','e','m','h'], school_types: ['public','charter','private'] },
-                    start_time: {level_codes: ['p','e','m','h'], school_types: ['public','charter','private'] },
-                    end_time: {level_codes: ['p','e','m','h'], school_types: ['public','charter','private'] },
-                    :"head official name" => {level_codes: ['p','e','m','h'], school_types: ['public','charter','private'] },
-                    transportation: {level_codes: ['p','e','m','h'], school_types: ['public','charter','private'] },
-                    :"students per teacher" => {level_codes: ['p'], school_types: ['public','charter','private'] },
-                    capacity: {level_codes: ['p'], school_types: ['public','charter','private'] },
-                    before_after_care: {level_codes: ['e','m'], school_types: ['public','charter','private'] },
-                    district: {level_codes: ['p','e','m','h'], school_types: ['public','charter'] },
-                    type: {level_codes: ['p','e','m','h'], school_types: ['private']}
+    key_filters = {enrollment: {level_codes: ['p', 'e', 'm', 'h'], school_types: ['public', 'charter', 'private']},
+                   hours: {level_codes: ['p', 'e', 'm', 'h'], school_types: ['public', 'charter', 'private']},
+                   :"head official name" => {level_codes: ['p', 'e', 'm', 'h'], school_types: ['public', 'charter', 'private']},
+                   transportation: {level_codes: ['p', 'e', 'm', 'h'], school_types: ['public', 'charter', 'private']},
+                   :"students per teacher" => {level_codes: ['p'], school_types: ['public', 'charter', 'private']},
+                   capacity: {level_codes: ['p'], school_types: ['public', 'charter', 'private']},
+                   before_care: {level_codes: ['e', 'm'], school_types: ['public', 'charter', 'private']},
+                   after_care: {level_codes: ['e', 'm'], school_types: ['public', 'charter', 'private']},
+                   district: {level_codes: ['p', 'e', 'm', 'h'], school_types: ['public', 'charter']},
+                   type: {level_codes: ['p', 'e', 'm', 'h'], school_types: ['private']}
     }
 
     all_snapshot_keys = category.category_data(school.collections).map(&:response_key)
 
+    #Get the labels for the response keys from the ResponseValue table.
+    lookup_table_for_labels = ResponseValue.lookup_table(category)
+
     all_snapshot_keys.each do  |key|
 
+      #Filter out the keys based on level codes and school type
       if (key_filters[key.to_sym][:level_codes].include? school.level_code) && (key_filters[key.to_sym][:school_types].include? school.type)
 
+        #get the source for the response key
         source = key_source[key.to_sym]
-
         if source.present?
-          data_for_source = self.send(source.to_sym ,school,category)
+
+          #Get the data. data_for_source is a map with a key.
+          data_for_source = self.send(source.to_sym, school, category)
           if data_for_source.present? && data_for_source.any?
-            value =  data_for_source[key]
+
+            #esp_data returns an array and census does not return an array. Therefore cast everything to an array and read
+            #the first value.
+            value = Array(data_for_source[key]).first
+
+            #Get the labels for the response keys from the ResponseValue table.
+            key = lookup_table_for_labels[key] || key
+
             if value.present?
-              snapshot_results << {key => value}
+                snapshot_results << {key => value}
+            else
+              snapshot_results << {key => "n/a"}
             end
+
           end
         end
       end
-
-      #TODO special keys, district name, key names, comments
 
     end
     snapshot_results
   end
 
   cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response
-
 end

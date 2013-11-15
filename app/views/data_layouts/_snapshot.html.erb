@@ -1,1 +1,9 @@
-            <%= data.inspect %>
+<%= data.inspect %>
+
+<% data.each do |value_hash| %>
+    <% value_hash.each do |key, value| %>
+
+        <%= key %><%= value %>
+
+    <% end %>
+<% end %>

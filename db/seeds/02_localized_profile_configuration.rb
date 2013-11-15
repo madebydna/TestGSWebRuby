@@ -155,15 +155,15 @@ CategoryData.create!(category: category_no_osp_data, response_key:'_bogus')
 
 
 CategoryData.create!(category: snapshot, response_key:'enrollment',sort_order: 1)
-CategoryData.create!(category: snapshot, response_key:'start_time',sort_order: 2)
-CategoryData.create!(category: snapshot, response_key:'end_time',sort_order: 3)
-CategoryData.create!(category: snapshot, response_key:'head official name',sort_order: 4)
-CategoryData.create!(category: snapshot, response_key:'transportation',sort_order: 5)
-CategoryData.create!(category: snapshot, response_key:'students per teacher',sort_order: 6)
-CategoryData.create!(category: snapshot, response_key:'capacity',sort_order: 7)
-CategoryData.create!(category: snapshot, response_key:'before_after_care',sort_order: 8)
-CategoryData.create!(category: snapshot, response_key:'district',sort_order: 9)
-CategoryData.create!(category: snapshot, response_key:'type',sort_order: 10)
+CategoryData.create!(category: snapshot, response_key:'hours',sort_order: 2)
+CategoryData.create!(category: snapshot, response_key:'head official name',sort_order: 3)
+CategoryData.create!(category: snapshot, response_key:'transportation',sort_order: 4)
+CategoryData.create!(category: snapshot, response_key:'district',sort_order: 5)
+CategoryData.create!(category: snapshot, response_key:'type',sort_order: 6)
+CategoryData.create!(category: snapshot, response_key:'students per teacher',sort_order: 7)
+CategoryData.create!(category: snapshot, response_key:'capacity',sort_order: 8)
+CategoryData.create!(category: snapshot, response_key:'before_care',sort_order: 9)
+CategoryData.create!(category: snapshot, response_key:'after_care',sort_order: 10)
 
 CategoryData.create!(category: detail_overview, response_key:'arts_media')
 CategoryData.create!(category: detail_overview, response_key:'arts_music')
@@ -205,12 +205,15 @@ ResponseValue.create!(response_value: 'licensed_enrollment',response_label:'Lice
 
 
 ResponseValue.create!(response_value: 'enrollment',response_label:'Number of Students', category: snapshot)
-ResponseValue.create!(response_value: 'head official name',response_label:'Principal name', category: snapshot)
+ResponseValue.create!(response_value: 'head official name',response_label:'Principal', category: snapshot)
 ResponseValue.create!(response_value: 'transportation',response_label:'Transportation', category: snapshot)
 ResponseValue.create!(response_value: 'students per teacher',response_label:'Student teacher ratio', category: snapshot)
 ResponseValue.create!(response_value: 'capacity',response_label:'Licensed enrollment', category: snapshot)
 ResponseValue.create!(response_value: 'district',response_label:'District', category: snapshot)
 ResponseValue.create!(response_value: 'type',response_label:'Type', category: snapshot)
+ResponseValue.create!(response_value: 'hours',response_label:'Hours', category: snapshot)
+ResponseValue.create!(response_value: 'before_care',response_label:'Before care', category: snapshot)
+ResponseValue.create!(response_value: 'after_care',response_label:'After care', category: snapshot)
 
 #esp response values and their pretty labels
 schools_per_state = 4
