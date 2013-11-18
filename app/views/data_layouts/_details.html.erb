@@ -1,9 +1,14 @@
 <div class="row">
-<div class="col-xs-12 col-sm-<%= size %> col-md-<%= size %>">
-    <div class="contents">
-        <div class="main">
-            <%= data.inspect %>
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+        <hr />
+        <h3 class="pll">Details</h3>
+        <div class="pal">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #fcf8e3">Art (<%= data[:art] %>)</div></div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #f8fce3">Sports (<%= data[:sport] %>)</div></div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #fce3f8">Student clubs (<%= data[:club] %>)</div></div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #e3fcf8">Foreign languages (<%= data[:lang] %>)</div></div>
+            </div>
         </div>
     </div>
-</div>
 </div>

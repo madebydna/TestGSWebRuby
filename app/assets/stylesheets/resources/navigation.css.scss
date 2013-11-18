@@ -34,19 +34,35 @@
 #navigation3 li {
   list-style-type: none;
   display: inline;
-  margin-left: 10px;
+  //margin-left: 10px;
+
 }
+
 /* line 19, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
 #navigation3 li a {
-  color: #CCCCCC;
+  color: #000000;
   text-decoration: none;
+  padding: 10px;
+  //line-height: 2em;
   //font-size: 1.125em;
 }
 /* line 22, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
 #navigation3 li a:hover {
-  color: #AAAA50;
-}
+  background-color: #ffAA12;
+  color: #666666;
 
+}
+#navigation3 nav{
+  border-top: #ffAA12 1px solid;
+  background-color: #ffbb23;
+  color: #000000;
+  text-align: center;
+  padding-top: 8px;
+}
+#navigation3 nav ul{
+  //height:100%;
+  padding-left: 0px;
+}
 /* line 27, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
 #mobile-header {
   display: none;
