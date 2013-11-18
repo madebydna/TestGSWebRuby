@@ -1,50 +1,54 @@
 <div class="row pal">
-    <div class="hidden-xs col-sm-2 col-md-3 tar ptl prl">
-        <% media_hash = @school.school_media_first_hash %>
-        <% if media_hash %>
-           <img src="<%= generate_img_path "130", media_hash %>" />
-        <% else %>
-            <%= image_tag sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+google_formatted_street_address+"&sensor=false")%>
-            <%= #image_tag "temp/cute-puppy-dog-wallpapers.jpg" , :width => 130, :height => 97
-            %>
-        <% end %>
-    </div>
-    <div class="col-xs-12 col-sm-7 col-md-6 tal">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 tal pbl"><h1><%= @school.name %></h1></div>
-            <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                <div class="fl"><strong>GreatSchools rating <%= @header_metadata.overallRating %></strong></div>
-                <% if @school_reviews_global.review_filter_totals.all > 0 %>
-                    <div class="fl pll"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count 'rating' %></div></div>
-                <% end %>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                <% if @school.enrollment %>
-                    <div class="fl prm" style="border-right: 1px #CCCCCC solid;"><%= @school.enrollment %> students</div>
-                <% end %>
-                <% if @school.process_level %>
-                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.process_level %></div>
-                <% end %>
-                <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.type.capitalize %></div>
-                <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.city.capitalize + " " + @school.state.upcase %></div>
-                <div class="fl phm">Contact info</div>
-            </div>
+    <!--<div class="hidden-xs col-sm-2 col-md-3 tar ptl prl">-->
 
+    <!--</div>-->
+    <div class="col-xs-12 col-sm-10 col-md-10 tal clearfix">
+        <div class="fl prl">
+            <% media_hash = @school.school_media_first_hash %>
+            <% if media_hash %>
+                <img src="<%= generate_img_path "130", media_hash %>" />
+            <% else %>
+                <%= image_tag sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+google_formatted_street_address+"&sensor=false")%>
+                <%= #image_tag "temp/cute-puppy-dog-wallpapers.jpg" , :width => 130, :height => 97
+                %>
+            <% end %>
+        </div>
+        <div class="fl">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1><%= @school.name %></h1></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                    <div class="fl phm ptm"><strong>GreatSchools rating <%= @header_metadata.overallRating %></strong></div>
+                    <% if @school_reviews_global.review_filter_totals.all > 0 %>
+                        <div class="fl phm ptm"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count 'rating' %></div></div>
+                    <% end %>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                    <% if @school.enrollment %>
+                        <div class="fl prm" style="border-right: 1px #CCCCCC solid;"><%= @school.enrollment %> students</div>
+                    <% end %>
+                    <% if @school.process_level %>
+                        <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.process_level %></div>
+                    <% end %>
+                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.type.capitalize %></div>
+                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.city.capitalize + " " + @school.state.upcase %></div>
+                    <div class="fl phm">Contact info</div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-3 col-md-3 ptl">
+    <div class="col-xs-12 col-sm-2 col-md-2 ptl">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="row">
-                    <div class="col-xs-4 col-sm-12 col-md-12 pas">
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
                         <%= link_to new_school_rating_path(school_params(school)) do %>
                             <button class="btn btn-default" style="width:100%">
                                 Write a review!
                             </button>
                         <% end %>
                     </div>
-                    <div class="col-xs-4 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
-                    <div class="col-xs-4 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
                 </div>
             </div>
         </div>
