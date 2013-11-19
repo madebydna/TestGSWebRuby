@@ -7,13 +7,13 @@ class TestDataSet < ActiveRecord::Base
   has_many :test_data_state_values, class_name: 'TestDataStateValue', foreign_key: 'data_set_id'
   belongs_to :test_data_type, :class_name => 'TestDataType', foreign_key: 'data_type_id'
 
-  def self.fetch_data_sets_and_values(school_id, breakdown_id, active)
-    TestDataSet.select("*,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
-                          TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text ")
+  def self.fetch_data_sets_and_values(school, breakdown_id, active)
+    TestDataSet.on_db(school.shard).select("*,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
+                          TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text")
                       .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
                       .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
                       .where(proficiency_band_id: nil, breakdown_id: breakdown_id,
-                             TestDataSchoolValue: {school_id: school_id, active: active},
+                             TestDataSchoolValue: {school_id: school.id, active: active},
                              TestDataStateValue: {active: active}).where("display_target like '%desktop%' ")
   end
 

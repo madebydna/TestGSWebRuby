@@ -3,7 +3,10 @@ class TestDataResults
   def fetch_results(school)
     data_sets_and_values = TestDataSet.fetch_test_scores school
 
-    all_data_set_ids = data_sets_and_values.blank? ? [] : data_sets_and_values.pluck("TestDataSet.id")
+    all_data_set_ids =  []
+    if !data_sets_and_values.blank?
+      data_sets_and_values.each {|value| all_data_set_ids << value.data_set_id }
+    end
 
     valid_data_set_ids = all_data_set_ids.blank? ? [] : TestDataSetFile.get_valid_data_set_ids(all_data_set_ids, school)
 
