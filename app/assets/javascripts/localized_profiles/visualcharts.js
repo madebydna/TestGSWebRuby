@@ -10,8 +10,48 @@
  */
 
 
+
 var GS = GS || {};
 GS.visualchart = GS.visualchart || function($) {
+
+    var getPieWidth = function(){
+        if($(window).width() >= 990){
+            return 990;
+        }
+        else{
+            if($(window).width() < 990 && $(window).width() >= 768 ){
+                return 700;
+            }
+            else{
+                if($(window).width() < 768 && $(window).width() > 480 ){
+                    return 460;
+                }
+                else{
+                    if($(window).width() <= 480){
+                        return 280;
+                    }
+                }
+            }
+        }
+    }
+
+    var getPieHeight = function(){
+        if($(window).width() >= 990){
+            return 300;
+        }
+        else{
+            if($(window).width() < 990 && $(window).width() > 480 ){
+                return 200;
+            }
+        }
+    }
+    var getPieChartWidthToSet = function(){
+
+    }
+
+    var getBarChartWidthToSet = function(){
+
+    }
 
     var loader = [];
     $.getScript("https://www.google.com/jsapi", function() {
@@ -34,13 +74,11 @@ GS.visualchart = GS.visualchart || function($) {
         var func = function() {
             // Create and populate the data table.
             var data = google.visualization.arrayToDataTable(dataIn, true);
-
+            $("#"+divId).css("width", GS.window.sizing.overviewPieChartWidth());
             var defaultOptions = {
-                width: 200,
-                height: 200,
-                legend: {
-                    alignment: 'center'
-                },
+                width: GS.window.sizing.overviewPieChartWidth(),
+                height: GS.window.sizing.overviewPieChartHeight(),
+                legend: GS.window.sizing.overviewPieChartLegend(),
                 tooltip: {
                     showColorCode: true,
                     text:'value',
@@ -52,7 +90,7 @@ GS.visualchart = GS.visualchart || function($) {
                 },
                 colors: colors,
                 pieSliceText: 'none',
-                chartArea:{left:15,top:15,bottom:10,right:10,width:"80%",height:"80%"},
+                chartArea:{left:15,top:15,bottom:10,right:10,width:"90%",height:"90%"},
                 pieSliceBorderColor:'white'
 
             };

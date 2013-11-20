@@ -4,14 +4,13 @@
     <hr />
     <h3 class="pll">Student Ethnicity</h3>
 
-    <div id="piechart" style="width: 768px;margin: auto">
+    <div id="piechart" style="margin: auto">
 
     </div>
 
     <% ethnicity_array = data.to_piechart :ethnicity, :school_value %>
     <% piechart_options = {
-            width: 768,
-            height: 350,
+
             fontSize: '13',
             title: category.name
         }.stringify_keys;
