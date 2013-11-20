@@ -217,3 +217,9 @@ body .galleria-thumbnails{margin:auto}
 }
 .galleria-container.videoplay .galleria-info,
 .galleria-container.videoplay .galleria-counter{ display:none!important; }
+
+#galleria{height:320px; width:600px; margin: auto}
+
+@media (max-width: 480px) {
+  #galleria{height:300px; width:300px; margin: auto}
+}
