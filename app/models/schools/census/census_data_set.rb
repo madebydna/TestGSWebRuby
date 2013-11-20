@@ -51,7 +51,7 @@ class CensusDataSet < ActiveRecord::Base
   }
 
   scope :include_school_district_state, lambda { |school_id|
-    includes(:census_data_school_values).where('census_data_school_value.school_id = 1')
+    includes(:census_data_school_values).where('census_data_school_value.school_id = ?',school_id)
     .includes(:census_data_state_values)
   }
 
@@ -76,25 +76,6 @@ class CensusDataSet < ActiveRecord::Base
       school_value: school_value,
       state_value: state_value
     )
-  end
-
-  def data_for_school(school)
-    data_type_ids = [9, 17]
-
-    max_years = max_year_per_data_type(school.state)
-
-    years = max_years.select { |data_type_id| data_type_ids.include? data_type_id }.values
-
-    years << 0
-
-    results =
-      active
-      .with_data_types(data_type_ids)
-      .where(year: years)
-      .include_school_district_state(school.id)
-      .all
-
-    CensusDataResults.new(results)
   end
 
   def census_breakdown
