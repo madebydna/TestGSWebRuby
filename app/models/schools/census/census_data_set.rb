@@ -17,6 +17,8 @@ class CensusDataSet < ActiveRecord::Base
            to: :census_data_school_value, prefix: 'school', allow_nil: true
   delegate :value, :modified, :modified_by,
            to: :census_data_state_value, prefix: 'state', allow_nil: true
+  delegate :value_int,
+           to: :census_data_school_value, prefix: 'school', allow_nil: true
 
 
   # If we only want one field from a lookup table, we can do this
@@ -74,6 +76,7 @@ class CensusDataSet < ActiveRecord::Base
       level_code: level_code,
       breakdown: census_breakdown || '',
       school_value: school_value,
+      school_value_int: int_value,
       state_value: state_value
     )
   end

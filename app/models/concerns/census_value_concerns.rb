@@ -14,4 +14,9 @@ module CensusValueConcerns
   def value
     value_float || value_text
   end
+
+  def value_int
+    value_float? ? value_float.round : 0
+  end
+
 end
