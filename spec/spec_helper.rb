@@ -44,4 +44,9 @@ RSpec.configure do |config|
 
   # Use the specified formatter
   config.formatter = :documentation # :progress, :html, :textmate
+
+  # remove support for "should" syntax, since it is deprecated. Use expect syntax instead
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 end

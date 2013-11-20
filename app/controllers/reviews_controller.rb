@@ -27,13 +27,13 @@ class ReviewsController < ApplicationController
 
     if logged_in?
       respond_to do |format|
-        if save_review(review_params)
-          format.html {
-            flash_notice 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
-            redirect_to successful_save_redirect(review_params)
-          }
+        review, error = save_review(current_user, review_params)
+        if error.nil?
+          flash_notice t('actions.review.activated')
+          redirect_to successful_save_redirect(review_params)
         else
-          # TODO: handle failure
+          flash_error error
+          redirect_back_or_default
         end
       end
     else

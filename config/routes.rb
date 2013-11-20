@@ -40,6 +40,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/signin', :to => 'signin#new', :as => :signin
   match '/logout', :to => 'signin#destroy', :as => :logout
   post '/user/auth', :to => 'signin#create', :as => :authenticate_user
+  match '/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
+  match '/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
 
 
   devise_for :admins
@@ -51,6 +53,10 @@ LocalizedProfiles::Application.routes.draw do
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
   match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
   match '/error/internal_error' => 'error#internal_error', :as => :internal_error
+
+  # this route only affects local development environments right now, since tomcat will handle this URL,
+  # and execute existing java code
+  get '/community/registrationConfirm.page' => redirect('/community/registrationConfirm.page', port: 8080), as: :verify_email
 
   # route not found catch-all
   match '*path' => 'error#page_not_found'

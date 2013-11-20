@@ -1,23 +1,42 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
 
-  def save_review(review_params)
-    review = review_from_params(review_params)
-    existing_review = SchoolRating.where(review.uniqueness_attributes).first
+  def save_review(current_user, review_params)
+    error = nil
+    review_from_params = review_from_params(review_params)
+    review_from_params.member_id = current_user.id
+    existing_review = SchoolRating.where(review_from_params.uniqueness_attributes).first
+    review = existing_review || review_from_params
+
     if existing_review
-      existing_review.update_attributes(review.attributes)
-      existing_review.save!
-    else
-      review.save!
+      review.update_attributes(review_from_params.attributes)
     end
+
+    # TODO: lots of work to support saving review. check for other statuses, alert word filter, etc
+    if current_user.provisional?
+      review.status = 'pp'
+    else
+      review.status = 'p'
+    end
+
+    begin
+      review.id = 99999 # TODO: review code
+      #review.save!
+    rescue
+      error = review.errors.messages.first[1].first
+    end
+
+    return review, error
   end
 
   def review_from_params(review_params)
+    school = School.on_db(review_params[:state].downcase.to_sym).find(review_params[:school_id])
+
     review = SchoolRating.new
-    review.member_id = current_user.id
     review.state = review_params[:state]
     review.school_id = review_params[:school_id]
     review.comments = review_params[:review_text]
+    review.school_type = school.type
     review
   end
 
@@ -25,7 +44,7 @@ module ReviewControllerConcerns
     state = review_params[:state]
     school_id = review_params[:school_id]
     school = School.on_db(state.downcase.to_sym).find(school_id)
-    school_path(school_params(school))
+    school_url(school_params(school))
   end
 
   def save_review_params

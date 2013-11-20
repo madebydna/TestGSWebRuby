@@ -7,7 +7,9 @@ class SchoolRating < ActiveRecord::Base
   scope :limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.nil? }
   scope :offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.nil? }
   scope :published, where(:status => ['a', 'p'])
+  scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :quality_decline, where("quality != 'decline'")
+  scope :belonging_to, lambda { |user| where(member_id: user.id) }
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
@@ -41,5 +43,19 @@ class SchoolRating < ActiveRecord::Base
       .offset_number(options[:offset_start])
       .published
       .quality_decline
+  end
+
+  def remove_provisional_status!
+    if status.present? && status.length > 1 && status[0] == 'p'
+      self.status = status[1..-1]
+    end
+  end
+
+  def publish!
+    self.status = 'p'
+  end
+
+  def published?
+    self.status == 'p'
   end
 end

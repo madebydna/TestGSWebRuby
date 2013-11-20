@@ -1,5 +1,6 @@
 module ApplicationHelper
 
+
   def category_placement_anchor(category_placement)
     category_placement.category.code_name
   end
@@ -134,5 +135,7 @@ module ApplicationHelper
     signed_url = parsed_url.scheme+"://"+ parsed_url.host + url_to_sign + "&signature=#{signature}"
     return signed_url
   end
+
+
 
 end

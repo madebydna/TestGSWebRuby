@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  include SessionManagement
+  include AuthenticationConcerns
+  include SessionConcerns
 
   helper :all
 
@@ -65,17 +66,25 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def flash_message(type, text)
+  def flash_message(type, message)
     flash[type] = Array(flash[type])
-    flash[type] << text
+    if message.is_a? Array
+      flash[type] += message
+    else
+      flash[type] << message
+    end
   end
 
-  def flash_error(text)
-    flash_message :error, text
+  def flash_error(message)
+    flash_message :error, message
   end
 
-  def flash_notice(text)
-    flash_message :notice, text
+  def flash_notice(message)
+    flash_message :notice, message
+  end
+
+  def came_from_email_verification?
+    String(params[:from_email_verification]).downcase == 'true'
   end
 
   def exception_handler(e)

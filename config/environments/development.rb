@@ -1,4 +1,8 @@
 LocalizedProfiles::Application.configure do
+  require 'socket'
+  hostname = "#{Socket.gethostname}"
+  hostname_and_port = "#{hostname}:3000"
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -12,6 +16,17 @@ LocalizedProfiles::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+
+  # For setting up Devise.
+  config.action_mailer.default_url_options = { :host => hostname_and_port }
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    :address => 'mail.greatschools.org',
+    :domain => 'greatschools.org',
+  }
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -33,11 +48,10 @@ LocalizedProfiles::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   # Don't cache in dev environment
   config.cache_store = :null_store
 
-  require 'socket'
-  config.action_controller.asset_host = "#{Socket.gethostname}:3000"
+  config.action_controller.asset_host = hostname_and_port
 end

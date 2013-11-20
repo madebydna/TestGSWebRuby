@@ -65,10 +65,16 @@
                                 <div class="col-md-2" >
                                     <br/>
                                     <div class="control-group">
-                                        <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
-                                        <button class="btn btn-facebook js-facebook-login js-facebook-login-signin">
-                                            Connect with Facebook
-                                        </button>
+
+
+                                        <%= link_to facebook_connect_url do %>
+                                            <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
+                                            <button type="button" class="btn btn-facebook">
+                                                Connect with Facebook
+                                            </button>
+                                        <% end %>
+
+
                                     </div>
 
                                 </div>
@@ -114,10 +120,12 @@
                                 <div class="col-md-2" >
                                     <br/>
                                     <div class="control-group">
-                                        <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
-                                        <button class="btn btn-facebook js-facebook-login js-facebook-login-signin">
-                                            Connect with Facebook
-                                        </button>
+                                        <%= link_to facebook_connect_url do %>
+                                            <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
+                                            <button type="button" class="btn btn-facebook">
+                                                Connect with Facebook
+                                            </button>
+                                        <% end %>
                                     </div>
 
                                 </div>

@@ -7,6 +7,7 @@ class SigninController < ApplicationController
 
   # gets the reg / sigin form page
   def new
+    store_location(request.referer, false) if request.referer.present? && request.referer.index('greatschools')
   end
 
   def authenticate
@@ -14,40 +15,43 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.password_matches params[:password]
+      if existing_user.password_is? params[:password]
         # no op
       elsif existing_user.provisional?
-        error = 'You must validate your email in order to log in'
+        error = t('forms.errors.email.provisional')
       else
-        error = 'Sorry, your email or password was incorrect.'
+        error = t('forms.errors.password.invalid')
       end
     else
       # no matching user
-      error = 'Sorry, your email or password was incorrect.'
+      error = t('forms.errors.email.nonexistent')
     end
 
     return existing_user, error
   end
 
   def register
-    json = social_registration_and_login
 
-    if json[:success]
-      return nil, nil
-    else
-      return nil, json[:error_message]
+    user, error = register_user(false, {
+      email: params[:email]
+    })
+
+    if user && error.nil?
+      UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
     end
+
+    return user, error
   end
 
   # rather than invoke different controller actions for login / join, determine intent by presence of certain params
   def should_attempt_login
     is_registration = params[:password].nil? && params[:confirm_password].nil?
+
     return !is_registration
   end
 
   # handles registration and login
   def create
-
     if should_attempt_login
       user, error = authenticate  # log in
     else
@@ -59,51 +63,48 @@ class SigninController < ApplicationController
       flash_error error
       redirect_to signin_path
     else
+      # no errors, log in if this was an authentication(login) request
       if should_attempt_login
         log_user_in(user)
-        flash_notice 'Welcome to GreatSchools!'
-        process_pending_actions
+        process_pending_actions user
       else
-        flash_notice 'Please verify your email address so we can finish setting up your account. [verification not implemented, go ahead and log in. password = "password"]'
-        if get_review_params
-          flash_notice 'Thanks for your school review! We\'ll post it once your email address has been verified.'
-        end
-        redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
-      end
-    end
-  end
+        flash_notice t('actions.account.pending_email_verification')
 
-  # upon successful authentication, handle whatever user was trying to do previously
-  # save pending form posts and/or redirect user
-  def process_pending_actions
-    review_params = get_review_params
-    if review_params
-      if save_review(review_params)
-        clear_review_params
-        flash_notice 'Thanks, your review has been posted. Your feedback helps other parents choose the right schools!'
-        redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
-      else
-        redirect_back_or_default('/california/alameda/1-alameda-high-school') # should not go to index page
-        # TODO: what to do here?
+        # call process_pending_actions here since we save the review before user has verified email
+        # review will be provisional, though
+        process_pending_actions user
       end
-    else
-      redirect_back_or_default('/california/alameda/1-alameda-high-school') # TODO: where do we redirect if no cookie set?
     end
   end
 
   # handle logout
   def destroy
     log_user_out
-    flash_notice 'Signed out'
+    flash_notice t('actions.session.signed_out')
     redirect_to(signin_url)
   end
 
-  def facebook_authentication
-    json = social_registration_and_login
+  # send to FB to login via Facebook Connect
+  def facebook_connect
+    redirect_to(FacebookAccess.facebook_connect_url(facebook_callback_url))
+  end
 
-    respond_to do |format|
-      format.json  { render :json => json }
+  # callback action at completion of Facebook Connect
+  def facebook_callback
+    code = params['code']
+    access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
+    unless access_token
+      flash_error 'Could not log in with Facebook.'
+      redirect_to(signin_path)
+      return nil
     end
+
+    # attempt login with FB info
+    user, error = facebook_login(access_token)
+
+    log_user_in user if error.nil?
+
+    process_pending_actions user
   end
 
 end

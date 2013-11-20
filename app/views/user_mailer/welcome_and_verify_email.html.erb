@@ -1,0 +1,71 @@
+<html>
+<head>
+    <style>
+        body {
+            color: #444444;
+            font: 13px/16px Trebuchet MS, Helvetica, Arial, Verdana, sans-serif;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font: 13px/16px Trebuchet MS, Helvetica, Arial, Verdana, sans-serif;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            font-weight: bold;
+            color: #777777;
+        }
+
+        a {
+            color: #3399aa;
+            text-decoration: underline;
+        }
+
+        div.footer p {
+            color: #999999;
+            font: 11/13px Trebuchet MS, Helvetica, Arial, Verdana, sans-serif;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }</style>
+</head>
+<body><p>Hi,</p>
+
+<p>Thanks for joining GreatSchools! We're really excited you're here.</p>
+
+<% if @password.present? %>
+    <p>To get you started, we've created a password for you: <strong><%= @password %></strong></p>
+<% end %>
+
+<p>To complete your registration, you'll just need to verify your email by clicking on the link below:</p>
+
+<p>
+    <a href="<%= @url %>"><%= @url %></a>
+</p>
+
+<p>If that doesn't work, copy and paste it into your browser's address bar.
+    If you didn't join GreatSchools with this email address, please ignore this message.</p>
+
+<p>Thanks again,<br/>
+    GreatSchools</p>
+
+<br/>
+
+<div class="footer">
+    <hr/>
+    <p><a href="http://www.greatschools.org">GreatSchools</a> is a national nonprofit that helps parents get a great
+        education for their children. Founded in 1998, GreatSchools.org is the nation's leading guide to PreK-12
+        schools, with profiles of 200,000 public and private schools and more than one million ratings and reviews by
+        parents, teachers and students. In addition, GreatSchools.org offers thousands of articles, videos and
+        worksheets that give parents practical ways to support their children's learning. Last year we reached 44
+        million people, including half of all American families with school-age children.
+
+    <p>This message was sent to GreatSchools subscriber <%= @email %>.</p>
+
+    <p>GreatSchools, 160 Spear St., Suite 1020, San Francisco, CA 94105.
+        <br/>All other rights reserved. &copy; 2013</p>
+</div>
+</body>
+</html>

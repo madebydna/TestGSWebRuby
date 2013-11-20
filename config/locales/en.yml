@@ -2,4 +2,36 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 'Please enter an email address.'
+              taken: 'Sorry, but the email you chose has already been taken.'
+              format: 'Please enter a valid email address.'
+  forms:
+    errors:
+      email:
+        blank: 'Please enter an email address.'
+        format: 'Please enter a valid email address.'
+        nonexistent: 'Sorry, we do not have an account with that email address.'
+        provisional: 'Before logging in, you must verify your email by clicking the link in the email we sent you.'
+      password:
+        invalid: 'Sorry, the email address or password you entered is invalid.'
+        invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
+      facebook: 'Sorry, there was an error logging in with Facebook.'
+  actions:
+    session:
+      signed_out: 'Signed out successfully.'
+    review:
+      pending_email_verification: 'Thanks for your school review! We''ll post it once your email address has been verified.'
+      pending_moderation: 'Thanks for your school review!'
+      activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
+    account:
+      pending_email_verification: 'Almost done! We''ve sent you an email so that we can verify your email address. Just click the link in the email to finish setting up your account.'
+      email_verified: 'Your email address has been verified. Welcome to GreatSchools!'
+      created_via_facebook: 'Great, we''ve finished setting up your account! From now on you can log in using Facebook.'
+      facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
+
