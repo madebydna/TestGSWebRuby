@@ -126,7 +126,8 @@ CategoryPlacement.create!(category: school_basics, page: reviews, position: 5, s
 CategoryPlacement.create!(category: arts_music, page: reviews, position: 1, size: 12 )
 CategoryPlacement.create!(category: programs, page: reviews, position: 2, size: 12 )
 CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
-CategoryPlacement.create!(category: snapshot, page: overview, position: 6, layout: 'snapshot')
+CategoryPlacement.create!(category: snapshot, page: overview, position: 7, layout: 'snapshot',
+                          layout_config: "{ \"enrollment\": {\"format\": \"integer\"}}" )
 CategoryPlacement.create!(category: details_summary, page: overview, position: 7, layout: 'details')
 
 

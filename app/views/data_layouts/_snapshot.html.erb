@@ -6,7 +6,7 @@
             <% if index < 5 %>
                 <% value_hash.each do |key, value| %>
                     <%= value[:label] %>
-                    <% if config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
+                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                         <%= value[:school_value].round %>
                     <% else %>
                         <%= value[:school_value] %>
@@ -22,7 +22,7 @@
             <% if index >= 5 %>
                 <% value_hash.each do |key, value| %>
                     <%= value[:label] %>
-                    <% if config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
+                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                         <%= value[:school_value].round %>
                     <% else %>
                         <%= value[:school_value] %>
