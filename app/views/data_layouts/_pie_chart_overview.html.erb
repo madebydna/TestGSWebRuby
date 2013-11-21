@@ -22,7 +22,8 @@
                 <%= raw ethnicity_array.to_json %>,
                 'piechart',
                 null,
-                <%= raw data_config.config.merge(piechart_options).to_json %>
+                <%= raw data_config.config.merge(piechart_options).to_json %>,
+                'overview'
             );
         </script>
     <% end %>

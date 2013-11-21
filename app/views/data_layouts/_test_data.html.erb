@@ -5,9 +5,9 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
 
                     <%= value[:test_label] %><br/><br/>
-                    <div class="btn-group js_grades_div">
+                    <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
                         <% value[:grades].each do |grade,value| %>
-                            <div id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></div>
+                            <button id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></button>
                         <% end %>
                     </div>
 

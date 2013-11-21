@@ -6,19 +6,19 @@ GS.window.sizing.width = function(){
     return $(window).width();
 }
 
-GS.window.sizing.overviewPieChartWidth = function(){
+GS.window.sizing.pieChartWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
-    return obj.overview.pieChartWidth;
+    return eval("obj."+chartname+".pieChartWidth");
 }
 
-GS.window.sizing.overviewPieChartHeight = function(){
+GS.window.sizing.pieChartHeight = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
-    return obj.overview.pieChartHeight;
+    return eval("obj."+chartname+".pieChartHeight");
 }
 
-GS.window.sizing.overviewPieChartLegend = function(){
+GS.window.sizing.pieChartLegend = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
-    return obj.overview.pieChartLegend;
+    return eval("obj."+chartname+".pieChartLegend");
 }
 
 GS.window.sizing.globalMapWidth = function(){
@@ -35,6 +35,8 @@ GS.window.sizing.sizeBasedObjHash = function() {
     var sizeHash ={}
     sizeHash.overview = {}
     sizeHash.details = {}
+    sizeHash.ethnicity = {}
+    sizeHash.ethnicity.pieChartLegend = 'none';
     sizeHash.quality = {}
     sizeHash.global = {}
     //default
@@ -43,24 +45,32 @@ GS.window.sizing.sizeBasedObjHash = function() {
     if(windowWidth >= 990){
         sizeHash.overview.pieChartWidth = 960;
         sizeHash.overview.pieChartHeight = 300;
+        sizeHash.ethnicity.pieChartWidth = 280;
+        sizeHash.ethnicity.pieChartHeight = 280;
         sizeHash.global.map = gon.contact_map.lg;
     }
     else{
         if(windowWidth < 990 && windowWidth >= 768 ){
             sizeHash.overview.pieChartWidth = 700;
             sizeHash.overview.pieChartHeight = 300;
+            sizeHash.ethnicity.pieChartWidth = 280;
+            sizeHash.ethnicity.pieChartHeight = 280;
             sizeHash.global.map = gon.contact_map.lg;
         }
         else{
             if(windowWidth  < 768 && windowWidth  > 480 ){
                 sizeHash.overview.pieChartWidth = 460;
                 sizeHash.overview.pieChartHeight = 200;
+                sizeHash.ethnicity.pieChartWidth = 280;
+                sizeHash.ethnicity.pieChartHeight = 280;
                 sizeHash.global.map = gon.contact_map.md;
             }
             else{
                 if(windowWidth  <= 480){
                     sizeHash.overview.pieChartWidth = 280;
                     sizeHash.overview.pieChartHeight = 280;
+                    sizeHash.ethnicity.pieChartWidth = 280;
+                    sizeHash.ethnicity.pieChartHeight = 280;
                     sizeHash.overview.pieChartLegend = 'none';
                     sizeHash.global.map = gon.contact_map.sm;
                 }

@@ -14,45 +14,6 @@
 var GS = GS || {};
 GS.visualchart = GS.visualchart || function($) {
 
-    var getPieWidth = function(){
-        if($(window).width() >= 990){
-            return 990;
-        }
-        else{
-            if($(window).width() < 990 && $(window).width() >= 768 ){
-                return 700;
-            }
-            else{
-                if($(window).width() < 768 && $(window).width() > 480 ){
-                    return 460;
-                }
-                else{
-                    if($(window).width() <= 480){
-                        return 280;
-                    }
-                }
-            }
-        }
-    }
-
-    var getPieHeight = function(){
-        if($(window).width() >= 990){
-            return 300;
-        }
-        else{
-            if($(window).width() < 990 && $(window).width() > 480 ){
-                return 200;
-            }
-        }
-    }
-    var getPieChartWidthToSet = function(){
-
-    }
-
-    var getBarChartWidthToSet = function(){
-
-    }
-
     var loader = [];
     $.getScript("https://www.google.com/jsapi", function() {
         google.load("visualization", "1", {packages:["corechart"], callback:function(){
@@ -70,15 +31,15 @@ GS.visualchart = GS.visualchart || function($) {
 
     var colors = ['#4393B5','#38A37A','#84D07C','#E2B66C','#E2937D','#DA5F6E','#B66483','#7B498F','#414F7B','#A7A7A7','#7CC7CE','#489A9D','#A4CEBB','#649644','#E0D152','#F1A628','#A3383A','#8C734D','#EA6394','#CE92C0','#5A78B1'];
 
-    var drawPieChart = function(dataIn, divId, selectHandler, options) {
+    var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {
             // Create and populate the data table.
             var data = google.visualization.arrayToDataTable(dataIn, true);
-            $("#"+divId).css("width", GS.window.sizing.overviewPieChartWidth());
+            $("#"+divId).css("width", GS.window.sizing.pieChartWidth(chartname));
             var defaultOptions = {
-                width: GS.window.sizing.overviewPieChartWidth(),
-                height: GS.window.sizing.overviewPieChartHeight(),
-                legend: GS.window.sizing.overviewPieChartLegend(),
+                width: GS.window.sizing.pieChartWidth(chartname),
+                height: GS.window.sizing.pieChartHeight(chartname),
+                legend: GS.window.sizing.pieChartLegend(chartname),
                 tooltip: {
                     showColorCode: true,
                     text:'value',
@@ -117,7 +78,7 @@ GS.visualchart = GS.visualchart || function($) {
         var func = function () {
             var data = google.visualization.arrayToDataTable(barChartData);
 
-            var options = {colors: ['#808080','#C0C0C0'],hAxis: {maxValue: 100, minValue:0},width:350, chartArea: {left:50,top:20, width:"55%"}};
+            var options = {colors: ['#808080','#C0C0C0'],hAxis: {maxValue: 100, minValue:0},width:700, chartArea: {left:50,top:20, width:"55%"}};
 
             var chart = new google.visualization.BarChart(document.getElementById(div));
             chart.draw(data, options);
