@@ -99,6 +99,7 @@ CategoryPlacement.create!(
 CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 1, size: 12 )
 CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 2, size: 12 )
 CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 3, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'details', title: 'Details', page: overview, position: 4, size: 12 )
 
 # different config for different page
 CategoryPlacement.create!(
