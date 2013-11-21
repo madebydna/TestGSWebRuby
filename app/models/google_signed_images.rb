@@ -21,9 +21,9 @@ class GoogleSignedImages
 
   def createSizedMaps
     gon.contact_map ||= {}
-    gon.contact_map['sm'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=300x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
-    gon.contact_map['md'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=350x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
-    gon.contact_map['lg'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=450x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
+    gon.contact_map['sm'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=280x280&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
+    gon.contact_map['md'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=400x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
+    gon.contact_map['lg'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=500x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
 
   end
 
