@@ -7,7 +7,8 @@
             <%= @school.city+","+@school.state+" "+@school.zipcode %><br /><br />
                 <%= @school.phone %><br /><br />
                 <a href='http://<%= @school.home_page_url %>'><%= @school.home_page_url %></a><br /><br /></div>
-            <div class="fr prl"><%= image_tag sign_url("http://maps.googleapis.com/maps/api/staticmap?size=450x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")%></div>
+            <div class="fr prl"><%= image_tag("", :class => "js-contact_map_image") %>
+               </div>
         </div>
     </div>
 </div>

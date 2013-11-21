@@ -26,9 +26,9 @@ GS.window.sizing.globalMapWidth = function(){
     return obj.global.googleMapWidth;
 }
 
-GS.window.sizing.globalMapHeight = function(){
+GS.window.sizing.globalContactMap = function(id){
     var obj =  GS.window.sizing.sizeBasedObjHash();
-    return obj.global.googleMapHeight;
+    $("."+id).attr("src", obj.global.map);
 }
 
 GS.window.sizing.sizeBasedObjHash = function() {
@@ -43,30 +43,26 @@ GS.window.sizing.sizeBasedObjHash = function() {
     if(windowWidth >= 990){
         sizeHash.overview.pieChartWidth = 960;
         sizeHash.overview.pieChartHeight = 300;
-        sizeHash.global.googleMapWidth = 450;
-        sizeHash.global.googleMapHeight = 250;
+        sizeHash.global.map = gon.contact_map.lg;
     }
     else{
         if(windowWidth < 990 && windowWidth >= 768 ){
             sizeHash.overview.pieChartWidth = 700;
             sizeHash.overview.pieChartHeight = 300;
-            sizeHash.global.googleMapWidth = 350;
-            sizeHash.global.googleMapHeight = 250;
+            sizeHash.global.map = gon.contact_map.lg;
         }
         else{
             if(windowWidth  < 768 && windowWidth  > 480 ){
                 sizeHash.overview.pieChartWidth = 460;
                 sizeHash.overview.pieChartHeight = 200;
-                sizeHash.global.googleMapWidth = 350;
-                sizeHash.global.googleMapHeight = 250;
+                sizeHash.global.map = gon.contact_map.md;
             }
             else{
                 if(windowWidth  <= 480){
                     sizeHash.overview.pieChartWidth = 280;
                     sizeHash.overview.pieChartHeight = 280;
                     sizeHash.overview.pieChartLegend = 'none';
-                    sizeHash.global.googleMapWidth = 280;
-                    sizeHash.global.googleMapHeight = 280;
+                    sizeHash.global.map = gon.contact_map.sm;
                 }
             }
         }

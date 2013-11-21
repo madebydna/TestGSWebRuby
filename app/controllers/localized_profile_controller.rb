@@ -8,6 +8,7 @@ class LocalizedProfileController < ApplicationController
   layout 'application'
 
   def overview
+    @google_signed_image = GoogleSignedImages.new @school, gon
   end
 
   def quality

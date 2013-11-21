@@ -1,16 +1,11 @@
-<div class="row pal">
-    <!--<div class="hidden-xs col-sm-2 col-md-3 tar ptl prl">-->
-
-    <!--</div>-->
+<div class="row pal header_bg_image">
     <div class="col-xs-12 col-sm-10 col-md-10 tal clearfix">
         <div class="fl prl">
             <% media_hash = @school.school_media_first_hash %>
             <% if media_hash %>
                 <img src="<%= generate_img_path "130", media_hash %>" />
             <% else %>
-                <%= image_tag sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+google_formatted_street_address+"&sensor=false")%>
-                <%= #image_tag "temp/cute-puppy-dog-wallpapers.jpg" , :width => 130, :height => 97
-                %>
+                <%= image_tag @google_signed_image.sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+@google_signed_image.google_formatted_street_address+"&sensor=false")%>
             <% end %>
         </div>
         <div class="fl">
