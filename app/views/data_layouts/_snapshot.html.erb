@@ -1,35 +1,39 @@
 <% config=category_placement.layout_config_json %>
-<div class="row">
-    <!--Refactor so that we are no looping twice ovre the results-->
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <% data.each_with_index do |value_hash, index| %>
-            <% if index < 5 %>
-                <% value_hash.each do |key, value| %>
-                    <%= value[:label] %>
-                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
-                        <%= value[:school_value].round %>
-                    <% else %>
-                        <%= value[:school_value] %>
-                    <% end %>
 
-                <% end %>
-                <br/>
-            <% end %>
-        <% end %>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-        <% data.each_with_index do |value_hash, index| %>
-            <% if index >= 5 %>
-                <% value_hash.each do |key, value| %>
-                    <%= value[:label] %>
+<% column_1_contents = data[0..4] %>
+<% column_2_contents = data[5..10] %>
+
+<table class="table table-striped">
+    <% column_1_contents.each_with_index do |value_hash, index| %>
+        <tr>
+            <% value_hash.each do |key, value| %>
+                <td> <%= value[:label] %> <%= config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? %> </td>
+                <td>
                     <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                         <%= value[:school_value].round %>
                     <% else %>
                         <%= value[:school_value] %>
                     <% end %>
-                <% end %>
-                <br/>
+                </td>
             <% end %>
-        <% end %>
-    </div>
-</div>
+            <% value_hash_col2 = column_2_contents[index] %>
+            <% if value_hash_col2.present? %>
+                <% value_hash_col2.each do |key, value| %>
+                    <td><%= value[:label] %></td>
+                    <td>
+                        <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
+                            <%= value[:school_value].round %>
+                        <% else %>
+                            <%= value[:school_value] %>
+                        <% end %>
+                    </td>
+                <% end %>
+            <% else %>
+                <td></td>
+                <td></td>
+            <% end %>
+        </tr>
+    <% end %>
+</table>
+
+
