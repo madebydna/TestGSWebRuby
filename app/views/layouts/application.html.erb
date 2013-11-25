@@ -12,12 +12,12 @@
 </head>
 <body>
 
-<div class="js-header-message" style="display:none">
+<div class="js-header-message" style="display:none; margin-top: 8px;">
     <% flash.each do |key, value| %>
         <% value = Array(value) %>
         <% value.each do |msg| %>
             <%= content_tag(:div, msg, :class => "flash_#{key}",
-                :style => 'border-bottom: 1px solid #eee; background-color:#ffffa3; color:#333; font-weight:semibold; padding:5px') %>
+                :style => 'border-bottom: 1px solid #eee; background-color:#ffffa3; color:#333; font-weight:semibold; padding:5px;') %>
         <% end %>
     <% end %>
 </div>

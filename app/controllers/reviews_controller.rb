@@ -26,15 +26,13 @@ class ReviewsController < ApplicationController
     review_params = params[:school_rating]
 
     if logged_in?
-      respond_to do |format|
-        review, error = save_review(current_user, review_params)
-        if error.nil?
-          flash_notice t('actions.review.activated')
-          redirect_to successful_save_redirect(review_params)
-        else
-          flash_error error
-          redirect_back_or_default
-        end
+      review, error = save_review(current_user, review_params)
+      if error.nil?
+        flash_notice t('actions.review.activated')
+        redirect_to successful_save_redirect(review_params)
+      else
+        flash_error error
+        redirect_back_or_default
       end
     else
       save_review_params
@@ -49,6 +47,8 @@ class ReviewsController < ApplicationController
   end
 
   def init_page
+    gon.pagename = 'write_review'
+    @google_signed_image = GoogleSignedImages.new @school, gon
     @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
