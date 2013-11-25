@@ -21,6 +21,7 @@ class FacebookAccess
     app_id = FB_APP_ID_TEST
 
     # get access token
+    # TODO: handle 400 Bad Request
     unless code && (access_token_hash = MiniFB.oauth_access_token(app_id, callback_url, app_secret, code))
       return nil
     end

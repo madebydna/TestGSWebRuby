@@ -2,9 +2,14 @@ LocalizedProfiles::Application.routes.draw do
   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
   require 'states'
-  resources :census_data_sets
 
-  post '/reviews', :to => 'reviews#create', :as => :school_ratings
+  get '/join', :to => 'signin#new', :as => :signin
+  match '/logout', :to => 'signin#destroy', :as => :logout
+
+  post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
+  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
+  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
+
   get '/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
@@ -29,24 +34,13 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
+  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
-  get '/profile/overview', :to => 'localized_profile#overview'
-  get '/profile/quality', :to => 'localized_profile#quality'
-  get '/profile/details', :to => 'localized_profile#details'
-  get '/profile/reviews', :to => 'localized_profile#reviews'
+  scope '/gsr' do
+    devise_for :admins
+  end
 
-  get '/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
-
-  get '/signin', :to => 'signin#new', :as => :signin
-  match '/logout', :to => 'signin#destroy', :as => :logout
-  post '/user/auth', :to => 'signin#create', :as => :authenticate_user
-  match '/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
-  match '/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
-
-
-  devise_for :admins
-
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+  mount RailsAdmin::Engine => '/gsr/admin', :as => 'rails_admin'
 
 
   # error handlers

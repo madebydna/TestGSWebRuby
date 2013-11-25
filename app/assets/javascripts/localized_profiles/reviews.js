@@ -69,7 +69,7 @@ GS.reviews = GS.reviews || function($) {
         var callReviewsAjax = function(results){
             jQuery.ajax({
                 type:'GET',
-                url:"/ajax/reviews_pagination",
+                url:"/gsr/ajax/reviews_pagination",
                 data:{
                     state: GS.stateAbbreviationFromUrl(),
                     schoolId: GS.schoolIdFromUrl(),
