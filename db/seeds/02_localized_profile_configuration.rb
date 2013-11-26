@@ -52,6 +52,7 @@ reviews = Page.create!(name: 'Reviews')
 bay_area_schools = Collection.create!(name: 'Bay Area schools')
 private_schools = Collection.create!(name: 'Private schools')
 dc_schools = Collection.create!(name: 'Washington dc schools')
+detroit_schools = Collection.create!(name: 'Detroit schools')
 
 # School collections
 SchoolCollection.create!(school:@alameda_high_school, collection:bay_area_schools)
@@ -78,58 +79,36 @@ dummy_category = Category.create!(name: 'Dummy', source:'dummy')
 
 # Category placements
 # defaults (no collection)
-CategoryPlacement.create!(
-    category: student_ethnicity, page: details, position: 1, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(
-    category: student_ethnicity, page: details, title: 'Ethnicity data', position: 2, layout: 'configured_table', size: 8,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
+# different config for different page  - Details
 CategoryPlacement.create!(category: school_basics, page: details, position: 3, size: 12 )
 CategoryPlacement.create!(category: arts_music, page: details, position: 4, size: 6 )
 CategoryPlacement.create!(category: programs, page: details, position: 5, size: 6 )
-
-# different config for different page
 CategoryPlacement.create!(
-    category: student_ethnicity, page: overview, position: 4, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', size: 12,
+    category: student_ethnicity, page: details, position: 7, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
+    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+)
+CategoryPlacement.create!(
+    category: student_ethnicity, page: details, title: 'Ethnicity data', position: 8, layout: 'configured_table', size: 8,
     layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
 )
 
-CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 1, size: 12 )
-CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 2, size: 12 )
-CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 3, size: 12 )
-CategoryPlacement.create!(category: dummy_category, layout: 'details', title: 'Details', page: overview, position: 4, size: 12 )
 
-# different config for different page
-CategoryPlacement.create!(
-    category: student_ethnicity, page: quality, position: 2, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(
-    category: student_ethnicity, page: quality, title: 'Ethnicity data', position: 3, layout: 'configured_table', size: 8,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(category: school_basics, page: quality, position: 1, size: 12 )
-CategoryPlacement.create!(category: arts_music, page: quality, position: 4, size: 12 )
-CategoryPlacement.create!(category: programs, page: quality, position: 5, size: 12 )
-
-# different config for different page
-CategoryPlacement.create!(
-    category: student_ethnicity, page: reviews, position: 3, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 6,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(
-    category: student_ethnicity, page: reviews, title: 'Ethnicity data', position: 4, layout: 'configured_table', size: 6,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
-)
-CategoryPlacement.create!(category: school_basics, page: reviews, position: 5, size: 12 )
-CategoryPlacement.create!(category: arts_music, page: reviews, position: 1, size: 12 )
-CategoryPlacement.create!(category: programs, page: reviews, position: 2, size: 12 )
-CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
-CategoryPlacement.create!(category: snapshot, page: overview, position: 7, layout: 'snapshot',
+# different config for different page  - Overview
+CategoryPlacement.create!(category: snapshot, page: overview, position: 1, layout: 'snapshot',
                           layout_config: "{ \"enrollment\": {\"format\": \"integer\"}}" )
-CategoryPlacement.create!(category: details_summary, page: overview, position: 7, layout: 'details')
+CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 3, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 4, size: 12 )
+#CategoryPlacement.create!(category: dummy_category, layout: 'details', title: 'Details', page: overview, position: 5, size: 12 )
+CategoryPlacement.create!(category: details_summary, page: overview, position: 7, title: 'Details', layout: 'details')
+CategoryPlacement.create!(
+    category: student_ethnicity, page: overview, position: 8, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', size: 12,
+    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+)
+CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 9, size: 12 )
+
+# different config for different page - Quality
+CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
+
 
 
 # Category data
