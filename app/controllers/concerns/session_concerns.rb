@@ -25,6 +25,10 @@ module SessionConcerns
     end
   end
 
+  def has_stored_location?
+    stored_location.present?
+  end
+
   # Redirect to the URI stored by the most recent store_location call or to the passed default.
   def redirect_back_or_default(default = request.referer || request.original_url) # TODO: change default
     stored_location = cookies[:return_to]

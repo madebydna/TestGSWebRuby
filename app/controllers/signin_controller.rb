@@ -5,7 +5,11 @@ class SigninController < ApplicationController
 
   layout 'application'
 
-  # gets the reg / sigin form page
+  # store this join / login url only if another location isn't stored
+  # If the user was looking at a profile page, we want to go back there instead
+  before_filter :store_location, only: [:new], unless: :has_stored_location?
+
+  # gets the join / login form page
   def new
     store_location(request.referer, false) if request.referer.present? && request.referer.index('greatschools')
   end

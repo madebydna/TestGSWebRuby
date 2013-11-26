@@ -17,14 +17,20 @@ class FacebookAccess
   end
 
   def self.facebook_code_to_access_token(code, callback_url)
+    return nil unless code.present?
+
     app_secret = FB_APP_SECRET_TEST
     app_id = FB_APP_ID_TEST
+    access_token_hash = nil
 
     # get access token
-    # TODO: handle 400 Bad Request
-    unless code && (access_token_hash = MiniFB.oauth_access_token(app_id, callback_url, app_secret, code))
-      return nil
+    begin
+      access_token_hash = MiniFB.oauth_access_token(app_id, callback_url, app_secret, code)
+    rescue
+      Rails.logger.error($!)
     end
+
+    return nil unless access_token_hash.present?
 
     access_token_hash['access_token']
   end
