@@ -3,8 +3,8 @@ LocalizedProfiles::Application.routes.draw do
 
   require 'states'
 
-  get '/join', :to => 'signin#new', :as => :signin
-  match '/logout', :to => 'signin#destroy', :as => :logout
+  get '/join/', :to => 'signin#new', :as => :signin
+  match '/logout/', :to => 'signin#destroy', :as => :logout
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
