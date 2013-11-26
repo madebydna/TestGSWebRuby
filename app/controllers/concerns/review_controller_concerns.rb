@@ -48,7 +48,10 @@ module ReviewControllerConcerns
   end
 
   def save_review_params
-    cookies[:review] = params[:school_rating].to_json
+    cookies[:review] = {
+      value: params[:school_rating].to_json,
+      domain: :all
+    }
   end
 
   def get_review_params
@@ -63,7 +66,7 @@ module ReviewControllerConcerns
   end
 
   def clear_review_params
-    cookies.delete(:review)
+    cookies.delete :review, domain: :all
   end
 
 end

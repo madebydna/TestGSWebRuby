@@ -15,8 +15,14 @@ module AuthenticationConcerns
 
   def set_auth_cookie
     # cookies[:auth_token] = {:value => current_user.session_token, :expires => current_user.session_expires_at} if current_user
-    cookies[:auth_token] = current_user.auth_token
-    cookies[:MEMID] = current_user.id
+    cookies[:auth_token] = {
+      value: current_user.auth_token,
+      domain: :all
+    }
+    cookies[:MEMID] = {
+      value: current_user.id,
+      domain: :all
+    }
   end
 
   def login_from_cookie
@@ -59,13 +65,16 @@ module AuthenticationConcerns
   def log_user_in(user)
     self.current_user = user
     self.auth_token = user.auth_token
-    cookies[:MEMID] = user.id
+    cookies[:MEMID] = {
+      value: user.id,
+      domain: :all
+    }
   end
 
   def log_user_out
     reset_session
-    cookies.delete legacy_community_cookie_name
-    cookies.delete :MEMID
+    cookies.delete legacy_community_cookie_name, domain: :all
+    cookies.delete :MEMID, domain: :all
     self.current_user = nil
   end
 

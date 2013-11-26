@@ -12,6 +12,7 @@ module SessionConcerns
 
     cookie = {
       value: value,
+      domain: :all,
       expires: STORED_LOCATION_EXPIRATION.from_now
     }
 
@@ -37,7 +38,7 @@ module SessionConcerns
     else
       redirect_to default
     end
-    cookies.delete :return_to
+    cookies.delete :return_to, domain: :all
   end
 
   # upon successful authentication, handle whatever user was trying to do previously
