@@ -7,7 +7,9 @@ describe User do
 
     before(:each) { user.encrypt_plain_text_password }
 
-    it 'should be provisional' do
+    it 'should be provisional after being saved' do
+      user.save!
+      user.password = 'password'
       expect(user).to be_provisional
     end
 
@@ -20,6 +22,10 @@ describe User do
       user.password = 'pass'
       user.encrypt_plain_text_password
       expect{user.save!}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+    it 'should have a value for time_added' do
+      expect(user.time_added).to_not be_nil
     end
 
     describe '#password_is?' do
@@ -75,7 +81,7 @@ describe User do
         end
 
         it 'returns false if date is expired' do
-          expired_date = Time.now - User::EMAIL_TOKEN_EXPIRATION
+          expired_date = Time.now - EmailVerificationToken::EMAIL_TOKEN_EXPIRATION
           expect(User.validate_email_verification_token @token, expired_date).to be_false
         end
 

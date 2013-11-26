@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, message: 'Please enter a valid email address.'
   validates :plain_text_password, length: { in: 6..14 }, if: :should_validate_password?
 
+  after_initialize :set_defaults
+
   attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how
   attr_accessor :updating_password
 
@@ -35,7 +37,7 @@ class User < ActiveRecord::Base
   end
 
   def provisional?
-    encrypted_password.index(PROVISIONAL_PREFIX) || !email_verified?
+    encrypted_password.present? && encrypted_password.index(PROVISIONAL_PREFIX) || !email_verified?
   end
 
   def self.validate_email_verification_token(token, time_string)
@@ -59,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def password=(password)
-    write_attribute(:plain_text_password, password)
+    write_attribute :plain_text_password, password
   end
   def password
     read_attribute(:plain_text_password)
@@ -161,6 +163,10 @@ class User < ActiveRecord::Base
     if profile.nil?
       UserProfile.create!(member_id: id, screen_name: "user#{id}", private:true, how:self.how, active: true, state:'ca')
     end
+  end
+
+  def set_defaults
+    self.time_added = Time.now
   end
 
 end
