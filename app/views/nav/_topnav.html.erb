@@ -1,29 +1,75 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div style="float: left; padding:10px"><%= image_tag "nav/GS_logo_189x38.png" %></div>
-    </div>
+    <div class="limit_width_1200">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div style="float: left; padding:10px"><%= image_tag "nav/GS_logo_189x38.png" %></div>
+        </div>
+        <% hub_city = "detroit" %>
+        <% hub_state = "michigan" %>
+        <% path_to_hub = "/"+hub_state+"/"+hub_city %>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
+            <ul class="nav navbar-nav">
+                <li><a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#home" style="text-transform:capitalize;"><%=hub_city %>, MI  <b class="caret"></b></a>
+                    <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
+                        <li>
+                            <a href="<%=path_to_hub %>" style="text-transform:capitalize;"><%=hub_city %> Home</a>
+                        </li>
+                        <li>
+                            <a href="<%=path_to_hub %>/choosing-schools">Choosing a School</a>
+                        </li>
+                        <li>
+                            <a href="<%=path_to_hub %>/education-community">Education Community</a>
+                        </li>
+                        <li>
+                            <a href="<%=path_to_hub %>/enrollment">Enrollment Information</a>
+                        </li>
+                        <li>
+                            <a href="<%=path_to_hub %>/events">Events</a>
+                        </li>
+                        <li>
+                            <a href="/"
+                               onclick="javascript:GS.hubs.clearLocalUserCookies();">Not in <span style="text-transform:capitalize;"><%=hub_city %></span>?</a>
+                        </li>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#find-a-school">Find A School</a></li>
-            <li><a href="#review-a-school">Review A School</a></li>
-            <li><a href="#back-to-school">Back To School</a></li>
-            <li id="#js_headerAccountMessage">
-                <% if logged_in? %>
-                    <%= link_to("not #{current_user.email}?  Logout ", logout_path, :method => :delete) %>
-                <% else %>
-                    <%= link_to('Sign In', signin_path)  %>
-                <% end %>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
+                    </ul>
+                </li>
+                <li><a href="#find-a-school">Find A School</a></li>
+                <li><a href="#review-a-school">Review A School</a></li>
+                <li><a class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#back-to-school">Resources <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/worksheets-activities.topic?content=4313">Worksheets &amp; Activities</a>
+                        </li>
+                        <li>
+                            <a href="/parenting-dilemmas.topic?content=4321">Parenting Dilemmas</a>
+                        </li>
+                        <li>
+                            <a href="/special-education.topic?content=1541">Learning Difficulties</a>
+                        </li>
+                        <li>
+                            <a href="/parenting.topic?content=1539">Health &amp; Behavior</a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="#js_headerAccountMessage">
+                    <% if logged_in? %>
+                        <%= link_to("not #{current_user.email}?  Logout ", logout_path, :method => :delete) %>
+                    <% else %>
+                        <%= link_to('Sign In', signin_path)  %>
+                    <% end %>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
 </nav>

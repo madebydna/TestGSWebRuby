@@ -2,7 +2,7 @@
 <%= render 'localized_profile/header', school: @school %>
 <%= render 'localized_profile/profile-nav', school: @school %>
 
-<div class="row">
+<div class="row limit_width_1200">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10">
         <%= render partial: 'position', collection: (1..10).to_a, as: :position_number %>
     </div>
