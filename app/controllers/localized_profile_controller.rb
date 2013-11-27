@@ -30,7 +30,6 @@ class LocalizedProfileController < ApplicationController
   def init_page
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
-    @google_signed_image = GoogleSignedImages.new @school, gon
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
   end
 
