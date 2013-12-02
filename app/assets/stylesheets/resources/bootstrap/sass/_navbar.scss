@@ -417,8 +417,8 @@
     // Caret should match text color on hover
     > .dropdown > a:hover .caret,
     > .dropdown > a:focus .caret {
-      border-top-color: $navbar-default-link-hover-color;
-      border-bottom-color: $navbar-default-link-hover-color;
+      border-top-color: $brand-secondary;
+      border-bottom-color: $brand-secondary;
     }
 
     // Remove background color from open dropdown

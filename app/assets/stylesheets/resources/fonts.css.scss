@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'SourceSansPro-Regular';
+  src:  url('SourceSansPro-Regular-webfont.eot');
+  src:  local('?'),
+        //url('SourceSansPro-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('SourceSansPro-Regular-webfont.woff') format('woff'),
+        url('SourceSansPro-Regular-webfont.ttf')  format('truetype'),
+        url('SourceSansPro-Regular-webfont.svg#SourceSansPro-Regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SourceSansPro-It';
+  src:  url('SourceSansPro-It-webfont.eot');
+  src:  local('?'),
+        //url('SourceSansPro-It-webfont.eot?#iefix') format('embedded-opentype'),
+        url('SourceSansPro-It-webfont.woff') format('woff'),
+        url('SourceSansPro-It-webfont.ttf')  format('truetype'),
+        url('SourceSansPro-It-webfont.svg#SourceSansPro-It') format('svg');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'SourceSansPro-Semibold';
+  //src: url('SourceSansPro-Semibold-webfont.eot?') format('eot'), url('SourceSansPro-Semibold-webfont.woff') format('woff'), url('GraublauWeb.ttf') format('truetype');
+
+  src:  url('SourceSansPro-Semibold-webfont.eot?');
+  src:  local('?'),
+        //url('SourceSansPro-Semibold-webfont.eot?#iefix') format('embedded-opentype'),
+        url('SourceSansPro-Semibold-webfont.woff') format('woff'),
+        url('SourceSansPro-Semibold-webfont.ttf')  format('truetype'),
+        url('SourceSansPro-Semibold-webfont.svg#SourceSansPro-Semibold') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.source_sans {
+   font-family: 'SourceSansPro-Regular';
+   font-weight: 400;
+   font-style: normal;
+}
+
+.source_sans_i {
+   font-family: 'SourceSansPro-It';
+   font-weight: 400;
+   font-style: italic;
+}
+
+.source_sans_sb {
+   font-family: 'SourceSansPro-Semibold';
+   font-weight: 700;
+   font-style: normal;
+}

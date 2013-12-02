@@ -14,14 +14,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "resources/normalize.css.scss";
-@import "resources/bootstrap/sass/sass-bootstrap.css.scss";
+@import "resources/normalize";
+@import "resources/bootstrap/sass/sass-bootstrap";
 @import "resources/navigation";
 @import "tables";
 @import "spacing";
 @import "icons/130930-16x16_stars";
-@import "resources/galleria.classic.css.scss";
+@import "resources/galleria.classic";
 @import "social-buttons";
+@import "resources/fonts";
 
 // Variable Definitions
 

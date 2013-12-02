@@ -15,16 +15,16 @@
         <% path_to_hub = "/"+hub_state+"/"+hub_city %>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
-            <ul class="nav navbar-nav">
-                <li><a class="dropdown-toggle"
+            <ul class="nav navbar-nav ">
+                <li><a class="dropdown-toggle source_sans"
                        data-toggle="dropdown"
                        href="#home" style="text-transform:capitalize;"><%=hub_city %>, MI  <b class="caret"></b></a>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <li>
-                            <a href="<%=path_to_hub %>" style="text-transform:capitalize;"><%=hub_city %> Home</a>
+                            <a href="<%=path_to_hub %>" class="source_sans" style="text-transform:capitalize;"><%=hub_city %> Home</a>
                         </li>
                         <li>
-                            <a href="<%=path_to_hub %>/choosing-schools">Choosing a School</a>
+                            <a href="<%=path_to_hub %>/choosing-schools"  class="source_sans" >Choosing a School</a>
                         </li>
                         <li>
                             <a href="<%=path_to_hub %>/education-community">Education Community</a>
