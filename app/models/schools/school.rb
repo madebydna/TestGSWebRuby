@@ -79,7 +79,7 @@ class School < ActiveRecord::Base
   end
 
   def test_scores
-    TestDataResults.new.fetch_results self
+    TestScoreResults.new.fetch_test_scores self
   end
 
   def enrollment

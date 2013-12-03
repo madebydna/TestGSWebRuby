@@ -107,7 +107,7 @@ CategoryPlacement.create!(
 CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 9, size: 12 )
 
 # different config for different page - Quality
-CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_data')
+CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_scores')
 
 
 

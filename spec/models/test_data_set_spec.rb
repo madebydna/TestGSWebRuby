@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TestDataResults do
+describe TestScoreResults do
   let(:school) { FactoryGirl.build(:school) }
 
   context 'no test data found' do

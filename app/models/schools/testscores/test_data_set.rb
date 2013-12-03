@@ -18,7 +18,25 @@ class TestDataSet < ActiveRecord::Base
   end
 
   def self.fetch_test_scores(school)
-    TestDataSet.fetch_data_sets_and_values(school, 1, 1)
+    results = TestDataSet.fetch_data_sets_and_values(school, 1, 1)
+
+    #convert into a custom map to make rspec testing easier
+    results_array = results.map do |result|
+      {test_data_type_id: result.data_type_id,
+       test_data_set_id: result.data_set_id,
+       grade: result.grade,
+       level_code: result.level_code,
+       subject_id: result.subject_id,
+       year: result.year,
+       school_value_text: result.school_val_text,
+       school_value_float: result.school_val_float,
+       state_value_text: result.state_val_text,
+       state_value_float: result.state_val_float,
+       breakdown_id: result.breakdown_id,
+       number_tested: result.number_tested
+      }
+    end
+    results_array
   end
 
   def self.lookup_subject
