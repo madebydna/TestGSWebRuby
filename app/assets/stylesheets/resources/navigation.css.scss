@@ -135,6 +135,11 @@ body {padding-top: 50px}
     float: right;
   }
 }
+@media only screen and (min-width: 650px) {
+  .header_title_width{
+    width: 75%;
+  }
+}
 
 
 

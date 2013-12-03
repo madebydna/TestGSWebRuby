@@ -9,7 +9,7 @@
                 <%= image_tag @google_signed_image.sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+@google_signed_image.google_formatted_street_address+"&sensor=false")%>
             <% end %>
         </div>
-        <div class="fl">
+        <div class="fl header_title_width" >
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="source_sans"><%= @school.name %></h1></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
