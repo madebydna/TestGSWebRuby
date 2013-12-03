@@ -2,7 +2,7 @@
 <%= render 'localized_profile/header', school: @school %>
 <%= render 'localized_profile/profile-nav', school: @school %>
 
-<div class="row">
+<div class="row limit_width_1200">
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10"  style="z-index: 1;">
             <div class="contents">
