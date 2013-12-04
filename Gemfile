@@ -98,6 +98,10 @@ group :development, :test do
   gem 'mocha_rails'
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'
+
+  # Test coverage tool
+  gem 'simplecov', '~> 0.8.2'
+  gem 'simplecov-html', '~> 0.8.0'
 end
 
 # Gems used only for assets and not required
