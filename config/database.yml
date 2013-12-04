@@ -93,5 +93,5 @@ test: &test
 cucumber:
   <<: *test
 
-<%= file = File.join('', 'usr', 'local', 'etc', 'localized-profiles-database.yml') ; File.read(file) if File.exist?(file) %>
+<%= file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-database.yml') ; File.read(file) if File.exist?(file) %>
 
