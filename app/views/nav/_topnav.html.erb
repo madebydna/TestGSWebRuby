@@ -10,15 +10,15 @@
             </button>
             <div style="float: left; padding:10px"><%= image_tag "nav/GS_logo_189x38.png" %></div>
         </div>
-        <% hub_city = "detroit" %>
-        <% hub_state = "michigan" %>
-        <% path_to_hub = "/"+hub_state+"/"+hub_city %>
+        <% hub_city = @school.city %>
+        <% hub_state = @school.state %>
+        <% path_to_hub = city_path(school_params(@school)) %>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
                 <li><a class="dropdown-toggle source_sans"
                        data-toggle="dropdown"
-                       href="#home" style="text-transform:capitalize;"><%=hub_city %>, MI  <b class="caret"></b></a>
+                       href="#home" style="text-transform:capitalize;"><%="#{hub_city}, #{hub_state}" %>  <b class="caret"></b></a>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <li>
                             <a href="<%=path_to_hub %>" class="source_sans" style="text-transform:capitalize;"><%=hub_city %> Home</a>

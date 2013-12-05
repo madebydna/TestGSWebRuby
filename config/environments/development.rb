@@ -56,5 +56,16 @@ LocalizedProfiles::Application.configure do
   # Don't cache in dev environment
   config.cache_store = :null_store
 
-  config.action_controller.asset_host = hostname_and_port
+  def local_ip
+    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
+
+    UDPSocket.open do |s|
+      s.connect 'greatschools.org', 1
+      s.addr.last
+    end
+  ensure
+    Socket.do_not_reverse_lookup = orig
+  end
+
+  config.action_controller.asset_host = 'http://' + local_ip + ':3000'
 end

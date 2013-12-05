@@ -9,6 +9,7 @@ module ApplicationHelper
     category_placement.title || category_placement.category.name
   end
 
+
   def draw_stars_16(on_star_count)
     off_star_count = 5 - on_star_count
     class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ' fl'
@@ -84,6 +85,14 @@ module ApplicationHelper
   def serialize_param(path)
     path.gsub(/\s+/, '-')
   end
+
+  #get '/:state/:city/', as: :city, constraints: {
+  #    state: States.any_state_name_regex,
+  #}
+  def city_path(hash)
+    '/'+hash[:state] + '/' +hash[:city]+'/'
+  end
+
 
   def school_params(school)
     {
