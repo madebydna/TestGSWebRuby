@@ -11,47 +11,6 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
-    store_location(request.referer, false) if request.referer.present? && request.referer.index('greatschools')
-  end
-
-  def authenticate
-    existing_user = User.where(email: params[:email]).first
-    error = nil
-
-    if existing_user
-      if existing_user.password_is? params[:password]
-        # no op
-      elsif existing_user.provisional?
-        error = t('forms.errors.email.provisional')
-      else
-        error = t('forms.errors.password.invalid')
-      end
-    else
-      # no matching user
-      error = t('forms.errors.email.nonexistent')
-    end
-
-    return existing_user, error
-  end
-
-  def register
-
-    user, error = register_user(false, {
-      email: params[:email]
-    })
-
-    if user && error.nil?
-      UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
-    end
-
-    return user, error
-  end
-
-  # rather than invoke different controller actions for login / join, determine intent by presence of certain params
-  def should_attempt_login
-    is_registration = params[:password].nil? && params[:confirm_password].nil?
-
-    return !is_registration
   end
 
   # handles registration and login
@@ -70,14 +29,13 @@ class SigninController < ApplicationController
       # no errors, log in if this was an authentication(login) request
       if should_attempt_login
         log_user_in(user)
-        process_pending_actions user
       else
         flash_notice t('actions.account.pending_email_verification')
-
-        # call process_pending_actions here since we save the review before user has verified email
-        # review will be provisional, though
-        process_pending_actions user
       end
+
+      # call process_pending_actions here since we save the review before user has verified email
+      # review will be provisional, though
+      process_pending_actions user
     end
   end
 
@@ -109,6 +67,48 @@ class SigninController < ApplicationController
     log_user_in user if error.nil?
 
     process_pending_actions user
+  end
+
+  protected
+
+  # rather than invoke different controller actions for login / join, determine intent by presence of certain params
+  def should_attempt_login
+    is_registration = params[:password].nil? && params[:confirm_password].nil?
+
+    return !is_registration
+  end
+
+  def authenticate
+    existing_user = User.with_email params[:email]
+    error = nil
+
+    if existing_user
+      if existing_user.password_is? params[:password]
+        # no op
+      elsif existing_user.provisional?
+        error = t('forms.errors.email.provisional')
+      else
+        error = t('forms.errors.password.invalid')
+      end
+    else
+      # no matching user
+      error = t('forms.errors.email.nonexistent')
+    end
+
+    return existing_user, error
+  end
+
+  def register
+
+    user, error = register_user(false, {
+      email: params[:email]
+    })
+
+    if user && error.nil?
+      UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
+    end
+
+    return user, error
   end
 
 end

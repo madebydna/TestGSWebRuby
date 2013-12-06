@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   SECRET = 23088
   PROVISIONAL_PREFIX = 'provisional:'
 
+  scope :with_email, lambda { |email| where(email: email).first }
+
   def school_reviews
     SchoolRating.belonging_to(self).order('posted desc')
   end

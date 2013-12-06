@@ -56,13 +56,16 @@ gem 'rabl-rails'
 
 gem 'mini_fb'
 
+group :development do
+  # better_errors and binding_of_caller work together as in-browser debugging tools
+  # these cannot be in the test group, or a segmentation fault will occur when running tests
+  gem 'better_errors', '~> 0.9.0'
+  gem 'binding_of_caller', '~> 0.7.2'
+end
+
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
   gem 'awesome_print', :require => 'ap'
-
-  # better_errors and binding_of_caller work together as in-browser debugging tools
-  gem 'better_errors', '~> 0.9.0'
-  gem 'binding_of_caller', '~> 0.7.2'
 
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'
