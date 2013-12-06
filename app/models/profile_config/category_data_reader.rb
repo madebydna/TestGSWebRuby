@@ -5,7 +5,7 @@ class CategoryDataReader
   include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
-    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).where(active: 1)
+    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).active
 
     keys_to_use = category.category_data(school.collections).map(&:response_key)
 
@@ -52,11 +52,11 @@ class CategoryDataReader
     #  don't add none to count
     details_response_keys.keys.each do |osp_key|
        return_counts_details[osp_key] = details_response_keys[osp_key].sum do | key |
-          (Array(data_details[key]).count{|item| item != "none"})
+          (Array(data_details[key]).count{|item| item.downcase != "none"})
         end
       if return_counts_details[osp_key] == 0
         none_count = details_response_keys[osp_key].sum do | key |
-          (Array(data_details[key]).count{|item| item == "none"})
+          (Array(data_details[key]).count{|item| item.downcase == "none"})
         end
         return_counts_details[osp_key] = none_count == 0 ?  "-" : 0
       end
@@ -67,7 +67,7 @@ class CategoryDataReader
 
 
   def self.esp_data_points(school, _)
-    data = EspResponse.on_db(school.shard).where(school_id: school.id)
+    data = EspResponse.on_db(school.shard).where(school_id: school.id).active
 
     unless data.nil?
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
@@ -232,5 +232,5 @@ class CategoryDataReader
     snapshot_results
   end
 
-  cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
+  #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
 end
