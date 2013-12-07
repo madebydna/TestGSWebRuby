@@ -12,18 +12,19 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :current_user
 
-  def require_state
+  def state_param
     state = params[:state] || ''
     state.gsub! '-', ' ' if state.length > 2
     state_abbreviation = States.abbreviation(state)
+    state_abbreviation.downcase! if state_abbreviation.present?
+    params[:state] = state_abbreviation
+    state_abbreviation
+  end
 
-    if state_abbreviation
-      params[:state] = state_abbreviation.downcase
-    else
-      render 'error/school_not_found', layout: 'error', status: 404
-    end
+  def require_state
+    @state = state_param
 
-    @state = params[:state]
+    render 'error/school_not_found', layout: 'error', status: 404 if @state.blank?
   end
 
   # Finds school given request param schoolId
@@ -39,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_school
-    @school = find_school
+    @school = find_school if params[:schoolId].to_i > 0
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end

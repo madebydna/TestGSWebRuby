@@ -20,11 +20,21 @@ class GoogleSignedImages
   end
 
   def createSizedMaps
-    gon.contact_map ||= {}
-    gon.contact_map['sm'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=280x280&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
-    gon.contact_map['md'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=400x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
-    gon.contact_map['lg'] = sign_url("http://maps.googleapis.com/maps/api/staticmap?size=500x200&center="+google_formatted_street_address+"&markers="+google_formatted_street_address+"&sensor=false")
+    google_apis_path = 'http://maps.googleapis.com/maps/api/staticmap'
+    address = google_formatted_street_address
 
+    sizes = {
+        'sm' => [280, 280],
+        'md' => [400, 200],
+        'lg' => [500, 200]
+    }
+
+    gon.contact_map ||= sizes.inject({}) do |sized_maps, element|
+      label = element[0]
+      size = element[1]
+      sized_maps[label] = sign_url("#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false")
+      sized_maps
+    end
   end
 
   def sign_url(url)
