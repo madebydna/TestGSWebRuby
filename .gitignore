@@ -10,10 +10,14 @@
 *.iml
 .#*.*[0-9]
 atlassian-ide-plugin.xml
+.idea
 
 # Vim
 *.swp
 .*un~
 
 tmp
+
+# simplecov code coverage
+coverage/
 

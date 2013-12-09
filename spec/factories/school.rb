@@ -6,5 +6,6 @@ FactoryGirl.define do
           FactoryGirl.build(:school_metadata)
         end
       }
+      created { Time.now.to_s }
     end
 end
