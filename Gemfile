@@ -105,6 +105,16 @@ group :development, :test do
   # Test coverage tool
   gem 'simplecov', '~> 0.8.2'
   gem 'simplecov-html', '~> 0.8.0'
+
+
+  # Guard and Spork for faster rspec testing
+  gem 'spork-rails', '~> 4.0.0'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'guard-livereload'
+  gem 'childprocess'
 end
 
 # Gems used only for assets and not required
@@ -116,7 +126,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'compass-rails', '~> 2.0.alpha.0'
+  # gem 'compass-rails'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-wysihtml5-rails'
   gem 'css_splitter', '~> 0.1.1'
