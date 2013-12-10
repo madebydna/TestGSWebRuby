@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem 'rails', '3.2.11'
 
-gem 'mysql2'
+gem 'mysql2', '0.3.13'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -27,7 +27,7 @@ gem 'safe_attributes'
 
 # paper_trail allows implementing versioning to models
 gem 'paper_trail'
-gem 'haml'
+gem 'haml', '4.0.3'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -115,6 +115,8 @@ group :development, :test do
   gem 'guard-spork'
   gem 'guard-livereload'
   gem 'childprocess'
+
+  gem 'ruby_gntp'
 end
 
 # Gems used only for assets and not required
