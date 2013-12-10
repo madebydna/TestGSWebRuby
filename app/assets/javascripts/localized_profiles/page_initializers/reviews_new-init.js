@@ -47,7 +47,7 @@ if(gon.pagename == 'reviews/new'){
                 var rating = $this.index() + 1;
                 $(hiddenField).val(rating);
                 selectStar(rating);
-                $( '#new_school_rating' ).parsley( 'validate' );
+                $(hiddenField).parsley( 'validate' );
             });
 
             $(container).on('mouseover', INDIVIDUAL_STAR_SELECTOR, function() {
