@@ -26,3 +26,5 @@ guard 'rspec', :rspec_env => {'RAILS_ENV' => 'test'}, after_all_pass: false, all
   watch('spec/spec_helper.rb')                        { "spec" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 end
+
+notification :gntp
