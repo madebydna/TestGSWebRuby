@@ -35,7 +35,6 @@ class LocalizedProfileController < ApplicationController
 
   def read_config_for_page
     @page_config = PageConfig.new configured_page_name, @school
-    @page_config = 1
   end
 
   def set_header_data
