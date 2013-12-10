@@ -16,14 +16,17 @@ class SchoolRating < ActiveRecord::Base
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
 
-
   validates_presence_of :state
   #validates_format_of :state, with: /#{States.state_hash.values.join '|'}/
   validates_presence_of :school
   validates_presence_of :user
   validates_presence_of :status
-  validates :comments, length: {minimum: 0, maximum: 1200}
+  validates_presence_of :overall
+  validates :comments, length: { minimum: 0, maximum: 1200 }
   validate :comments_word_count
+
+  before_save :calculate_and_set_status, :set_processed_date_if_published
+  after_save :auto_report_bad_language
 
   def school=(school)
     @school = school
@@ -50,6 +53,32 @@ class SchoolRating < ActiveRecord::Base
       state: state,
       member_id: member_id
     }
+  end
+
+  def provisional?
+    status.present? && status.length == 2 && status[0] == 'p'
+  end
+
+  def disabled?
+    status.present? && status[-1] == 'd'
+  end
+  alias_method :rejected?, :disabled?
+
+  def held?
+    status.present? && status[-1] == 'h'
+  end
+
+  # Note that a review can be published *and* provisional
+  def provisional_published?
+    status == 'pp'
+  end
+
+  def published?
+    status == 'p'
+  end
+
+  def unpublished?
+    status.present? && status[-1] == 'u'
   end
 
   def self.order_by_selection(order_selection)
@@ -86,8 +115,60 @@ class SchoolRating < ActiveRecord::Base
     self.status = 'p'
   end
 
-  def published?
-    self.status == 'p'
+  def has_any_bad_language?
+    AlertWord.search(review_text).any?
+  end
+
+  def calculate_and_set_status
+    held = school.held?
+    ip_banned = false # TODO: handle IP banned
+
+    if held
+      status = 'h'
+    elsif ip_banned || who == 'student'
+      status = 'u'
+    elsif AlertWord.search(review_text).has_really_bad_words?
+      status = 'd'
+    else
+      status = 'p'
+    end
+
+    if user.provisional?
+      status = 'p' + status
+    end
+
+    self.status = status
+  end
+
+  def auto_report_bad_language
+    alert_word_results = AlertWord.search(review_text)
+
+    if alert_word_results.any?
+      reason = 'Review contained '
+      if alert_word_results.has_alert_words?
+        reason << "warning words (#{ alert_word_results.alert_words.join(',') })"
+      end
+      if alert_word_results.has_alert_words? && alert_word_results.has_really_bad_words?
+        reason << ' and '
+      end
+      if alert_word_results.has_really_bad_words?
+        reason << "really bad words (#{ alert_word_results.really_bad_words.join(',') })"
+      end
+
+      report = ReportedEntity.from_review(self, reason)
+
+      begin
+        report.save!
+      rescue
+        Rails.logger.error "Could not save reported_entity for review with ID #{id}"
+      end
+    end
+  end
+
+  def set_processed_date_if_published
+    if published?
+      self.process_date = Time.now.to_s
+    end
   end
 
   private
