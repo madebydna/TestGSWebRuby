@@ -8,7 +8,6 @@ class ReviewsController < ApplicationController
     init_page
   end
 
-
   # TODO: Remove these two methods to dry up code
   def serialize_param(path)
     path.gsub(/\s+/, '-')
@@ -47,7 +46,7 @@ class ReviewsController < ApplicationController
   end
 
   def init_page
-    gon.pagename = 'write_review'
+    gon.pagename = 'reviews/new'
     @google_signed_image = GoogleSignedImages.new @school, gon
     @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
