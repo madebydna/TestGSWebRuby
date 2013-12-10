@@ -74,4 +74,12 @@ Spork.each_run do
 
     config.use_transactional_fixtures = true
   end
+
+=begin
+  # found this suggestion on a blog, for how to make FactoryGirl clear data between examples, but it didnt work
+  FactoryGirl.sequences.clear
+  FactoryGirl.factories.clear
+  Dir["#{Rails.root}/spec/support/*.rb"].each {|f| load f}
+=end
+  FactoryGirl.reload
 end
