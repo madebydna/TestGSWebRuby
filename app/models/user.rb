@@ -63,7 +63,10 @@ class User < ActiveRecord::Base
   end
 
   def password=(password)
-    write_attribute :plain_text_password, password
+    # TODO: expose this behavior as a different method to users of User class, such as plain_text_password=
+    ActiveSupport::Deprecation.silence do
+      self[:plain_text_password] = password
+    end
   end
   def password
     read_attribute(:plain_text_password)
@@ -136,7 +139,11 @@ class User < ActiveRecord::Base
   private
 
   def encrypted_password=(encrypted_password)
-    write_attribute(:password, encrypted_password)
+    # TODO: expose this behavior as a method password= using the attr_writer helper.
+    # force users of User class to set plain text password using a different method name, such as plain_text_password=
+    ActiveSupport::Deprecation.silence do
+      write_attribute(:password, encrypted_password)
+    end
   end
 
   def encrypted_password
