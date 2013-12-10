@@ -20,7 +20,7 @@ gem 'devise'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
-gem 'db-charmer', :require => 'db_charmer'
+gem 'db-charmer', '1.8.4', :require => 'db_charmer'
 
 # Adds support for reserved-word column names as model attributes. Useful when writing models for legacy schemas
 gem 'safe_attributes'
@@ -126,7 +126,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-  # gem 'compass-rails'
+  #gem 'compass-rails', '~> 2.0.alpha.0'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-wysihtml5-rails'
   gem 'css_splitter', '~> 0.1.1'
