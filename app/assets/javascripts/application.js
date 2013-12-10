@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require parsley
+//= require parsley.extend
 //= require lodash
 //= require_tree .
 
