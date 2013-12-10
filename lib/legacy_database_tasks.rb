@@ -10,7 +10,7 @@ class LegacyDatabaseTasks
 
 
   @@tables_receiving_mysql_dump = {
-      state_tables: %w(
+    state_tables: %w(
       school
       school_metadata
       esp_response
@@ -24,7 +24,7 @@ class LegacyDatabaseTasks
       TestDataSchoolValue
       district
     ),
-      gs_schooldb_tables: %w(
+    gs_schooldb_tables: %w(
       list_member
       TestDataSetFile
       TestDataBreakdown
@@ -33,8 +33,12 @@ class LegacyDatabaseTasks
       census_data_type
       school_media
     ),
-      surveys_tables: %w(
+    surveys_tables: %w(
       school_rating
+    ),
+    community_tables: %w(
+      reported_content
+      alert_words
     )
   }.stringify_keys!
 
@@ -42,7 +46,8 @@ class LegacyDatabaseTasks
       _ca: :state_tables,
       _dc: :state_tables,
       gs_schooldb: :gs_schooldb_tables,
-      surveys: :surveys_tables
+      surveys: :surveys_tables,
+      community: :community_tables
   }.stringify_keys!
 
   @@all_state_dbs = States.state_hash.values.map { |state| "_#{state.downcase}" }

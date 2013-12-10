@@ -60,6 +60,7 @@ development:
 <% end %>
 <%= define_db('gs_schooldb', 'gs_schooldb', true, 'mysql_localhost') %>
 <%= define_db('surveys', 'surveys', true, 'mysql_localhost') %>
+<%= define_db('community', 'community', true, 'mysql_localhost') %>
 
 
 # Warning: The database defined as "test" will be erased and
@@ -89,6 +90,10 @@ test: &test
     <<: *mysql_localhost
     database: surveys_test
     legacy: true
+  community:
+      <<: *mysql_localhost
+      database: community_test
+      legacy: true
 
 cucumber:
   <<: *test
