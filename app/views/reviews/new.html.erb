@@ -10,58 +10,101 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h3>Have an Account?</h3>
                     </div>-->
-                    <div class="modal-body">
-                        <div class="well">
-                                <div class="tab-pane active in" id="login">
-                                    <%= form_for(SchoolRating.new) do |f| %>
-                                        <%= f.hidden_field :school_id, value: @school.id %>
-                                        <%= f.hidden_field :state, value: @school.state %>
-                                        <fieldset>
-                                            <br/>
-                                            <div id="legend">
-                                                <legend>Write a review about <%= @school.name %></legend>
-                                            </div>
-                                            <div class="row">
-                                                <div class="control-group">
-                                                    <label class="control-label" for="user_type">Are you a ...</label>
-                                                    <div class="controls">
-                                                        <select id="user_type" name="user_type">
-                                                            <option value="parent">Parent</option>
-                                                            <option value="student">Student</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                  <div class="modal-body col-md-6">
+                    <div class="well">
+                      <div class="tab-pane active in" id="login">
 
-                                                <div class="control-group">
-                                                    <label class="control-label" for="overall_rating">5 star rating</label>
-                                                    <div class="controls">
-                                                        <input type="text" id="overall_rating" name="review_text" placeholder="" class="input-xlarge">
-                                                    </div>
-                                                </div>
 
-                                                <div class="control-group">
-                                                    <label class="control-label" for="review_text">What do you have to say?</label>
-                                                    <div class="controls">
-                                                        <textarea cols="50" rows="8" id="review_text" name="review_text" placeholder="" class="input-xlarge"></textarea>
-                                                    </div>
-                                                </div>
+                        <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}) do |f| %>
+                          <fieldset>
+                            <legend>Write a review about <%= @school.name %></legend>
 
-                                                <br/>
+                            <!-- <div class="control-group">
+                              <label class="control-label" for="input01">Text input</label>
+                              <div class="controls">
+                                <input type="text" class="input-xlarge" id="input01">
+                                <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+                              </div>
+                            </div>-->
 
-                                                <div class="control-group">
-                                                    <div class="controls">
-                                                        <%= f.submit class:'btn btn-success', value:'Submit your review' %>
-                                                    </div>
-                                                </div>
 
-                                            </div>
-                                        </fieldset>
-                                    <% end %>
+                            <div class="form-group">
+                              <label class="control-label" for="input01">How do you rate your school?</label>
+                              <div class="controls">
 
+
+                                <div class="fl phm ptm js-review-rating-stars">
+                                  <div class="iconx16-stars i-16-grey-star i-16-star-1 fl review-star"></div>
+                                  <div class="iconx16-stars i-16-grey-star i-16-star-1 fl review-star"></div>
+                                  <div class="iconx16-stars i-16-grey-star i-16-star-1 fl review-star"></div>
+                                  <div class="iconx16-stars i-16-grey-star i-16-star-1 fl review-star"></div>
+                                  <div class="iconx16-stars i-16-grey-star i-16-star-1 fl review-star"></div>
                                 </div>
+
+                                <%= f.hidden_field :overall, value: '', id: 'overall_rating', class: 'input-xlarge',
+                                   'data-parsley-required' => 'true',
+                                   'data-parsley-error-message' => 'Please select a star rating for this school.',
+                                   'data-parsley-error-container' => '#js-overall_rating-errors',
+                                   'data-parsley-trigger' => 'change' %>
+                                <label class="control-label js-review-rating-label" for="overall_rating">Click on
+                                  stars to rate</label>
+                                <p id="js-overall_rating-errors" class="help-block"></p>
+
+                                <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+                              </div>
                             </div>
-                        </div>
+
+
+
+                            <div class="form-group">
+                              <label class="control-label" for="school_rating_user_type">Affiliation</label>
+                              <div class="controls">
+                                <%= f.select :user_type, [['Parent', 'parent'], ['Student', 'student']], {}, {:class => 'form-control' } %>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label class="control-label" for="textarea">Tell us about your school!</label>
+                              <div class="controls">
+                                <%= f.text_area :review_text, value: '',
+                                                id: 'review_text', cols: 80, rows: 8, class: 'input-xlarge',
+                                                'data-parsley-required' => 'true',
+                                                'data-parsley-minwords' => '6',
+                                                'data-parsley-maxlength' => '1200',
+                                                'data-parsley-trigger' => 'change',
+                                                'data-parsley-error-container' => '#js-review_text-errors' %>
+                                <!--<textarea class="input-xlarge" id="textarea" rows="3"></textarea>-->
+                                <p id="js-review_text-errors" class="help-block"></p>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <div class="controls">
+                                <label class="checkbox">
+                                  <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
+                                                'data-parsley-error-message' => 'You must agree to the terms of use before submitting your review.',
+                                                'data-parsley-error-container' => '#js-terms-errors' %>
+                                  <!--<input type="checkbox" id="school_rating_terms" name="school_rating[terms]" value="terms">-->
+                                  I agree to the GreatSchools Terms of Use and School Review Guidelines.
+                                </label>
+                                <p id="js-terms-errors" class="help-block"></p>
+                              </div>
+                            </div>
+
+                            <div class="form-actions">
+                              <button type="submit" class="btn btn-primary">Submit your review</button>
+                            </div>
+                          </fieldset>
+                        <% end %>
+
+
+
+
+                      </div>
                     </div>
+                  </div>
+                </div>
                 <div>
             </div>
         </div>
