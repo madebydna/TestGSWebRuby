@@ -20,10 +20,6 @@ class School < ActiveRecord::Base
     CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
-  def self.all
-    School.on_db(:CA).all
-  end
-
   def school_collections
     SchoolCollection.where(state: state, school_id: id)
   end
@@ -101,6 +97,12 @@ class School < ActiveRecord::Base
   #It looks at the wrong database in that case.
   def district
     @district ||= District.on_db(self.shard).find(self.district_id)
+  end
+
+  # returns true if school is on held school list (associated with school reviews)
+  def held?
+    # TODO: implementation
+    return false
   end
 
 
