@@ -36,6 +36,7 @@ module ReviewControllerConcerns
     review.state = review_params[:state]
     review.school_id = review_params[:school_id]
     review.comments = review_params[:review_text]
+    review.overall = review_params[:overall]
     review.school_type = school.type
     review
   end
