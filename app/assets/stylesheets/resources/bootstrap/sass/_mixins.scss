@@ -388,6 +388,7 @@
   background-color: $color;
 }
 
+
 // Panels
 // -------------------------
 @mixin panel-variant($border, $heading-text-color, $heading-bg-color, $heading-border) {
@@ -455,6 +456,18 @@
   }
 }
 
+
+//GS
+@function color-button-darken($color){
+  @if ($color == transparent){
+      @return $color;
+  }
+  @else{
+    @return darken($color, 8%)
+  }
+}
+
+
 // Button variants
 // -------------------------
 // Easily pump out default styles, as well as :hover, :focus, :active,
@@ -469,13 +482,13 @@
   &:active,
   &.active {
     color: $color;
-    background-color: darken($background, 8%);
-        border-color: darken($border, 12%);
+    background-color: color-button-darken($background);
+        border-color: color-button-darken($border);
   }
   .open & { &.dropdown-toggle {
     color: $color;
-    background-color: darken($background, 8%);
-        border-color: darken($border, 12%);
+    background-color: color-button-darken($background);
+        border-color: color-button-darken($border);
   } }
   &:active,
   &.active {
