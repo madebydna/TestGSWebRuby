@@ -10,19 +10,26 @@
             </button>
             <div style="float: left; padding:10px"><%= image_tag "nav/GS_logo_189x38.png" %></div>
         </div>
-        <% hub_city = @school.city %>
-        <% hub_state = @school.state %>
-        <% path_to_hub = city_path(school_params(@school)) %>
+        <%- if @school.present? %>
+            <% hub_city = @school.city %>
+            <% hub_state = @school.state %>
+            <% path_to_hub = city_path(school_params(@school)) %>
+        <% end %>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
-                <li><a class="dropdown-toggle source_sans"
-                       data-toggle="dropdown"
-                       href="#home" style="text-transform:capitalize;"><%="#{hub_city}, #{hub_state}" %>  <b class="caret"></b></a>
+                <li>
+                    <%- if @school.present? %>
+                    <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
+                        <%="#{hub_city}, #{hub_state}" %>  <b class="caret"></b>
+                    </a>
+                    <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
+                        <%- if @school.present? %>
                         <li>
                             <a href="<%=path_to_hub %>" class="source_sans" style="text-transform:capitalize;"><%=hub_city %> Home</a>
                         </li>
+                        <% end %>
                         <li>
                             <a href="<%=path_to_hub %>/choosing-schools"  class="source_sans" >Choosing a School</a>
                         </li>
@@ -62,11 +69,27 @@
                         </li>
                     </ul>
                 </li>
-                <li id="#js_headerAccountMessage">
+
+                <li>
                     <% if logged_in? %>
-                        <%= link_to("not #{current_user.email}?  Logout ", logout_path, :method => :delete) %>
+                        <a class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           href="#back-to-school">Welcome <b class="caret"></b>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a rel="nofollow" href="/mySchoolList.page">My School List (0)</a>
+                            </li>
+                            <li>
+                                <a href="/account/">Account Settings</a>
+                            </li>
+                            <li>
+                                <%= link_to('Sign Out', logout_path, :method => :delete) %>
+                            </li>
+                        </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_path)  %>
+                        <%= link_to('Sign In', signin_path, class: 'secondary-color')  %>
                     <% end %>
                 </li>
             </ul>
