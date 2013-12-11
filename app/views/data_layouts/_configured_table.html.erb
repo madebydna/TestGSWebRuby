@@ -1,5 +1,5 @@
 <% data_config = category_placement.table_config %>
-<div class="col-xs-12 col-sm-<%= size %> col-md-<%= size %> pal">
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
     <a name="<%= category.code_name %>"></a>
     <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
@@ -7,7 +7,7 @@
     <table class="table table-striped no-more-tables">
         <thead>
             <tr>
-                <% data_config.columns_to_print(data).each do |column| %>
+                <% category_placement.table_config.columns_to_print(data).each do |column| %>
                     <% if column['display_type'] == :data_and_header %>
                         <th><%= column['label'] %></th>
                     <% else %>
@@ -41,5 +41,4 @@
         </tbody>
     </table>
 
-
-</div>
+<% end %>

@@ -1,14 +1,16 @@
 class CategoryPlacement < ActiveRecord::Base
   attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :size, :title
   has_paper_trail
+  has_ancestry
   db_magic :connection => :profile_config
 
   belongs_to :category
   belongs_to :collection
   belongs_to :page
 
-  after_initialize :set_defaults
+  delegate :data_for_school, :has_data?, to: :category
 
+  after_initialize :set_defaults
 
   # creates a key that identifies this placement's category on a specific page, with a specific format
   def page_category_layout_key
@@ -67,10 +69,71 @@ class CategoryPlacement < ActiveRecord::Base
       layout_config_json = {}.to_json
       layout_config_json = JSON.parse(cleaned_layout_config) unless cleaned_layout_config.nil? || cleaned_layout_config == ''
       layout_config_json
+    else
+      {}
     end
   end
 
   def table_config
     layout_config.present? ? TableConfig.new(layout_config_json) : nil
   end
+
+  def full_width_on_display?(display_size)
+    return true if root?
+
+    return self.size_for_display(display_size) == 12
+  end
+
+  def full_width_on_all_displays?
+    sizes.values == [12,12,12,12]
+  end
+
+  def my_sizes
+    sizes = { 'xs' => 12, 'sm' => 12, 'md' => 12, 'lg' => 12 }
+    if layout_config_json['sizes']
+      sizes.merge! layout_config_json['sizes'] if layout_config_json['sizes']
+    end
+    sizes
+  end
+
+  def parent_enforced_sizes
+    sizes = {}
+    position_among_siblings = siblings.index(self)
+    parent_json = parent.layout_config_json
+    if parent_json['child_sizes'].present? && parent_json['child_sizes'].length > position_among_siblings
+      sizes = parent_json['child_sizes'][position_among_siblings]
+    end
+    sizes
+  end
+
+  def sizes
+    sizes = self.my_sizes
+    sizes.merge! parent_enforced_sizes if !root?
+    sizes
+  end
+
+  def sizes_css_string
+    string = ''
+    sizes.each do |key, value|
+      string << " col-#{key}-#{value}"
+    end
+    string
+  end
+
+  def size_for_display(display_size)
+    self.sizes[display_size]
+  end
+
+  def first_sibling?
+    siblings.first == self
+  end
+
+  def last_sibling?
+    siblings.last == self
+  end
+
+  def partial
+    "data_layouts/#{layout}"
+  end
+
 end

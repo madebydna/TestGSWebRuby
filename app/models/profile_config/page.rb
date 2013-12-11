@@ -8,6 +8,9 @@ class Page < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Page'
   has_many :pages, :foreign_key => 'parent_id'
 
+  def self.by_name(name)
+    where(name: name).first
+  end
 
   # Returns a hash of { position number => [ Categories ] }
   # If collection(s) are passed in, the hash will only contain entries for categories that match the collections

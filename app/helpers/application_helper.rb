@@ -2,7 +2,7 @@ module ApplicationHelper
 
 
   def category_placement_anchor(category_placement)
-    category_placement.category.code_name
+    "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
   end
 
   def category_placement_title(category_placement)
@@ -112,4 +112,17 @@ module ApplicationHelper
       object
     end
   end
+
+  def category_placement_data(category_placement)
+    @data_cache ||= {}
+    @data_cache[category_placement] ||= category_placement.category.data_for_school(@school)
+  end
+
+  def log_view_error(message, e)
+    Rails.logger.debug "#{message}: #{e}"
+    if Rails.application.config.consider_all_requests_local
+      render inline: '<div class="row"><strong>' + message + '</strong></div>'
+    end
+  end
+
 end

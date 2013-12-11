@@ -56,7 +56,11 @@ gem 'rabl-rails'
 
 gem 'mini_fb'
 
-#gem 'parsley-rails', '~> 1.2.2.0'
+# Uses the materialized path pattern to implement a tree on a model
+gem 'ancestry'
+
+# gem to extend railsadmin with a view for working with models that are trees
+gem 'rails_admin_nestable'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools

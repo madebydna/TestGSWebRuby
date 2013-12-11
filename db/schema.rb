@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131114194531) do
+ActiveRecord::Schema.define(:version => 20131218080556) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -66,8 +66,10 @@ ActiveRecord::Schema.define(:version => 20131114194531) do
     t.text     "layout_config"
     t.integer  "size"
     t.string   "title"
+    t.string   "ancestry"
   end
 
+  add_index "category_placements", ["ancestry"], :name => "index_category_placements_on_ancestry"
   add_index "category_placements", ["category_id"], :name => "index_category_placements_on_category_id"
   add_index "category_placements", ["collection_id"], :name => "index_category_placements_on_collection_id"
   add_index "category_placements", ["page_id"], :name => "index_category_placements_on_page_id"

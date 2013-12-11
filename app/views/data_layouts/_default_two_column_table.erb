@@ -1,11 +1,10 @@
-<div class="col-xs-12 col-sm-<%= size %> col-md-<%= size %> pal">
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
     <a name="<%= category.code_name %>"></a>
     <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
     <h4><%= category.name %></h4>
     <table class="table table-striped">
         <% last_key = nil %>
-        <% begin %>
         <% data.rows.each do |row| %>
 
             <% label = row[:label] %>
@@ -31,9 +30,6 @@
             </tr>
             <% last_key = label %>
         <% end %>
-        <% rescue  %>
-        Sorry, something went wrong
-        <% end %>
 
     </table>
-</div>
+<% end %>

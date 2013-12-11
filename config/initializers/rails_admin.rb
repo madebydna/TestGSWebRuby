@@ -112,6 +112,12 @@ RailsAdmin.config do |config|
 ###  CategoryPlacement  ###
 
  config.model 'CategoryPlacement' do
+   nestable_tree({
+     position_field: :position,
+     max_depth: 3,
+     scope: :page,
+
+   })
 
    # You can copy this to a 'rails_admin do ... end' block inside your category_placement.rb model definition
 
@@ -153,6 +159,7 @@ RailsAdmin.config do |config|
    #  export do; end
 
    list do
+     filters [:page]
      field :page
      field :title
      field :position
@@ -183,6 +190,7 @@ RailsAdmin.config do |config|
        end
      end
      field :collection
+     field :parent
      field :layout, :enum do
        enum_method do
          :possible_layouts
@@ -190,6 +198,12 @@ RailsAdmin.config do |config|
      end
      field :layout_config, :text do
        codemirror true
+     end
+     field :ancestry, :enum do
+       enum do
+         except = bindings[:object].id
+         CategoryPlacement.where("id != ?", except).map { |c| [ c.title, c.id ] }
+       end
      end
    end
      # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
@@ -526,5 +540,6 @@ RailsAdmin.config do |config|
   config.actions do
     all
     undo
+    nestable
   end
 end

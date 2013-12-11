@@ -1,5 +1,4 @@
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+<%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
         <hr />
         <h3 class="pll">Details</h3>
         <div class="pal">
@@ -16,5 +15,4 @@
                 <% end %>
             </div>
         </div>
-    </div>
-</div>
+<% end %>

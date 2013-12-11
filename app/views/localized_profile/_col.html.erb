@@ -1,0 +1,16 @@
+<%-# if all the sizes are 12, print a row -%>
+<% print_row = category_placement.full_width_on_all_displays? %>
+
+<% if print_row %>
+    <div class="row">
+<% end %>
+
+<div class="<%= css_class %> <%= category_placement.sizes_css_string %>">
+
+    <%= yield %>
+</div>
+
+<% if print_row %>
+    </div>
+<% end %>
+

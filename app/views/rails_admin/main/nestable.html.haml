@@ -1,0 +1,34 @@
+:javascript
+  var filter = function() {
+    page = $('#page_filter').val();
+    query_string = 'page%5D%5B1%5D%5Bo%5D=like&f%5Bpage%5D%5B1%5D%5Bv%5D=' + page;
+    destination = window.location.protocol + '//' + window.location.host + window.location.pathname + '?' + query_string;
+    window.location.href = destination;
+  };
+.row-fluid
+  .span12
+    %select#page_filter{ onchange: 'filter();'}
+      %option{ value: ''}
+        \--
+      %option{ value: 'Overview'}
+        Overview
+      %option{ value: 'Quality' }
+        Quality
+      %option{ value: 'Details' }
+        Details
+      %option{ value: 'Reviews' }
+        Reviews
+
+  .span12#rails_admin_nestable
+    .control-group
+      %label{:class => 'checkbox inline' }
+        %input{ :type => 'checkbox' }= t('admin.actions.nestable.live_update')
+    #tree_nodes.dd{:'data-update-path' => nestable_path(model_name: @abstract_model), :'data-max-depth' => tree_max_depth}
+      %ol.dd-list
+        = nested_tree_nodes @tree_nodes
+    .form-actions
+      %button{ :type => 'submit', :class => 'btn btn-small btn-primary' }= t('admin.actions.nestable.update')
+
+= stylesheet_link_tag    'rails_admin/rails_admin_nestable'
+= javascript_include_tag 'rails_admin/jquery.nestable'
+= javascript_include_tag 'rails_admin/rails_admin_nestable'

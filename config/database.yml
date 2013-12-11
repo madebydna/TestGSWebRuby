@@ -33,7 +33,7 @@ mysql: &mysql
 
 mysql_localhost: &mysql_localhost
   <<: *mysql
-  host: 127.0.0.1
+  host: localhost
   password:
 mysql_localhost_rw: &mysql_localhost_rw
   <<: *mysql_localhost
