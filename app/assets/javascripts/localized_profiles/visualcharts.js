@@ -29,7 +29,7 @@ GS.visualchart = GS.visualchart || function($) {
         GS.tabManager.showTabWithOptions({tab:'demographics', hash:'header'});
     };
 
-    var colors = ['#4393B5','#38A37A','#84D07C','#E2B66C','#E2937D','#DA5F6E','#B66483','#7B498F','#414F7B','#A7A7A7','#7CC7CE','#489A9D','#A4CEBB','#649644','#E0D152','#F1A628','#A3383A','#8C734D','#EA6394','#CE92C0','#5A78B1'];
+    var colors = ['#0083b2','#66b5d1','#99cde0','#CCE6F0','#ffb725','#ffd173','#38137a','#84d07c','#ff9326','#ffbe7d','#A7A7A7','#7CC7CE','#489A9D','#A4CEBB','#649644','#E0D152','#F1A628','#A3383A','#8C734D','#EA6394','#CE92C0','#5A78B1'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {

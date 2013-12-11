@@ -17,7 +17,7 @@
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid transparent;
   white-space: nowrap;
-  @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
+  @include button-size($padding-base-vertical, $padding-base-button-horizontal, $font-size-base, $line-height-base, $border-radius-base);
   @include user-select(none);
 
   &:focus {
@@ -121,15 +121,15 @@
 
 .btn-lg {
   // line-height: ensure even-numbered height of button next to large input
-  @include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $border-radius-large);
+  @include button-size($padding-large-vertical, $padding-large-button-horizontal, $font-size-large, $line-height-large, $border-radius-base);
 }
 .btn-sm,
 .btn-xs {
   // line-height: ensure proper height of button next to small input
-  @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
+  @include button-size($padding-small-vertical, $padding-small-button-horizontal, $font-size-small, $line-height-small, $border-radius-base);
 }
 .btn-xs {
-  padding: 1px 5px;
+  padding: 1px 15px;
 }
 
 

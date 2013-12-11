@@ -110,12 +110,15 @@ $icon-font-name:          "glyphicons-halflings-regular" !default;
 
 $padding-base-vertical:          6px !default;
 $padding-base-horizontal:        12px !default;
+$padding-base-button-horizontal:        20px; //GS
 
 $padding-large-vertical:         10px !default;
 $padding-large-horizontal:       16px !default;
+$padding-large-button-horizontal:       30px; //GS
 
 $padding-small-vertical:         5px !default;
 $padding-small-horizontal:       10px !default;
+$padding-small-button-horizontal:       15px; //GS
 
 $line-height-large:              1.33 !default;
 $line-height-small:              1.5 !default;
@@ -284,7 +287,7 @@ $grid-gutter-width:         30px !default;
 // Point at which the navbar stops collapsing
 $grid-float-breakpoint:     $screen-sm-min !default;
 
-/////////////////MS
+/////////////////GS
 $grid-gutter-width:         0px;
 
 // Navbar
@@ -294,7 +297,7 @@ $grid-gutter-width:         0px;
 // Basics of a navbar
 $navbar-height:                    50px !default;
 
-////////////////MS
+////////////////GS
 $navbar-height:                    58px;
 
 $navbar-margin-bottom:             $line-height-computed !default;
@@ -305,7 +308,7 @@ $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2
 $navbar-default-color:             #777 !default;
 $navbar-default-bg:                #f8f8f8 !default;
 
-///////////////////MS
+///////////////////GS
 $navbar-default-color:             #CCE5ED;
 $navbar-default-bg:                #007EAA;
 
@@ -315,7 +318,7 @@ $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 $navbar-default-link-color:                #777 !default;
 $navbar-default-link-hover-color:          #333 !default;
 
-////////////////////MS
+////////////////////GS
 $navbar-default-link-color:                #CCE5ED;
 $navbar-default-link-hover-color:          #FFF;
 

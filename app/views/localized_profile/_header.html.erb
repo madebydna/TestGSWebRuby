@@ -4,7 +4,7 @@
         <div class="fl prl">
             <% media_hash = @school.school_media_first_hash %>
             <% if media_hash %>
-                <img src="<%= generate_img_path "130", media_hash %>" />
+                <img class="thumbnail_border" src="<%= generate_img_path "130", media_hash %>" />
             <% else %>
                 <%= image_tag @google_signed_image.sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+@google_signed_image.google_formatted_street_address+"&sensor=false")%>
             <% end %>
