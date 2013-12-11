@@ -158,7 +158,9 @@ class CategoryDataReader
   end
 
   def self.school_data(school, _)
-  {"district" => school.district.name, "type" => school.subtype}
+    hash = {}
+    hash['district'] = school.district.name if school.district.present?
+    hash['type']= school.subtype
   end
 
   def self.snapshot(school, category)
