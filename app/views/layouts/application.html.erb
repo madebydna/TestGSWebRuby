@@ -16,8 +16,8 @@
     <% flash.each do |key, value| %>
         <% value = Array(value) %>
         <% value.each do |msg| %>
-            <% if key == 'error' %>
-                <%= content_tag(:div, :class => "flash_#{key} alert alert-error alert-dismissable") do -%>
+            <% if key =~ /error/ %>
+                <%= content_tag(:div, :class => "flash_#{key} alert alert-danger alert-dismissable") do -%>
                     <%= msg %> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <% end -%>
             <% else %>
