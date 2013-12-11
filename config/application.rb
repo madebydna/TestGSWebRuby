@@ -72,5 +72,18 @@ module LocalizedProfiles
 
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }
+
+=begin
+    def config.database_configuration
+      parsed = super
+      #raise parsed.to_yaml  # Replace this line to add custom connections to the hash from database.yml
+
+
+      YAML.load(
+        ERB.new(File.read("#{Rails.root}/config/database.yml")).result +
+        ERB.new(File.read("#{Rails.root}/config/GSWebRuby-database.yml")).result
+      )
+    end
+=end
   end
 end

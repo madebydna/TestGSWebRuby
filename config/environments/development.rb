@@ -68,4 +68,13 @@ LocalizedProfiles::Application.configure do
   end
 
   config.action_controller.asset_host = 'http://' + local_ip + ':3000'
+
+  # For dev environments, use domain: all which will makes session cookies have a domain of localhost
+  # or a domain of blah.greatschools.org
+  config.session_store :cookie_store, key: '_LocalizedProfiles_session', :domain => :all
+
+  # If you don't need localhost:3000 to work with session cookies, but you DO want to test session cookies to have
+  # a domain of .greatschools.org (so that they're shared across subdomains) then uncomment out the below line
+  # config.session_store :cookie_store, key: '_LocalizedProfiles_session', :domain => :all, :tld_length => 2
+
 end
