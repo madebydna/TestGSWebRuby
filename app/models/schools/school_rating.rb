@@ -15,7 +15,7 @@ class SchoolRating < ActiveRecord::Base
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
-  alias_attribute :user_type, :who
+  alias_attribute :affiliation, :who
 
   validates_presence_of :state
   #validates_format_of :state, with: /#{States.state_hash.values.join '|'}/
