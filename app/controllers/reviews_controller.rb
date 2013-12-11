@@ -31,7 +31,7 @@ class ReviewsController < ApplicationController
         redirect_to successful_save_redirect(review_params)
       else
         flash_error error
-        redirect_back_or_default
+        redirect_to action: :new
       end
     else
       save_review_params

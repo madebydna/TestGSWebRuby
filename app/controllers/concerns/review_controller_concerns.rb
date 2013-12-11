@@ -13,7 +13,6 @@ module ReviewControllerConcerns
     end
 
     begin
-      ap review
       review.save!
     rescue
       error = review.errors.messages.first[1].first
