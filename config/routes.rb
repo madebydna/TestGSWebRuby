@@ -41,6 +41,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
+  get '/gsr/validations/email_available', :to => 'user#email_available'
+
   scope '/gsr' do
     devise_for :admins
   end

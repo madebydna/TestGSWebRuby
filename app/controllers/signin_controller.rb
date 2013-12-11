@@ -11,6 +11,7 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
+    gon.pagename = 'signin/new'
   end
 
   # handles registration and login
