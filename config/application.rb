@@ -15,6 +15,12 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+# Create an ENV_GLOBAL constant with config options that we can use throughout the app
+# Look for /usr/local/etc/GSWebRuby-config.yml which can be a machine-specific config to overwrite the defaults
+ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
+file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
+YAML.load_file(file) if File.exist?(file)
+
 module LocalizedProfiles
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -69,6 +75,7 @@ module LocalizedProfiles
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
 
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }

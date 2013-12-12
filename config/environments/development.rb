@@ -10,7 +10,6 @@ LocalizedProfiles::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
 
   # Log error messages when you accidentally call methods on nil.
@@ -19,6 +18,10 @@ LocalizedProfiles::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+
+  # set host that rails should use when building absolute urls
+  config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
+  config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 
   # For setting up Devise.
   config.action_mailer.default_url_options = { :host => hostname_and_port }

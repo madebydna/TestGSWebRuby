@@ -23,6 +23,10 @@ module AuthenticationConcerns
       value: current_user.id,
       domain: :all
     }
+    cookies[legacy_community_cookie_name] = {
+      value: current_user.auth_token.gsub('=', '~'),
+      domain: :all
+    }
   end
 
   def login_from_cookie
@@ -64,11 +68,7 @@ module AuthenticationConcerns
 
   def log_user_in(user)
     self.current_user = user
-    self.auth_token = user.auth_token
-    cookies[:MEMID] = {
-      value: user.id,
-      domain: :all
-    }
+    set_auth_cookie
   end
 
   def log_user_out

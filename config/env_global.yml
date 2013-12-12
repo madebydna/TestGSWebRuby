@@ -2,4 +2,5 @@ media_server: "http://www.gscdn.org/"
 gsweb_host: "http://localhost:8080"
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
 GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-
+app_host: "samson.greatschools.org"
+app_port: "8080"
