@@ -6,16 +6,20 @@ class TestScoreResults
     data_sets_and_values = TestDataSet.fetch_test_scores school
 
     #construct a list of all the data set ids for the school.
-    all_data_set_ids =  []
+    all_data_set_ids = []
     if !data_sets_and_values.blank?
-      data_sets_and_values.each {|value| all_data_set_ids << value[:test_data_set_id] }
+      data_sets_and_values.each { |value| all_data_set_ids << value[:test_data_set_id] }
     end
 
     #Get the list of valid data set ids for the school based on the  school_type.
     valid_data_set_ids = all_data_set_ids.blank? ? [] : TestDataSetFile.get_valid_data_set_ids(all_data_set_ids, school)
 
-    #Filter the data sets against the valid ones.
-    data_sets_and_values.select!{|result| valid_data_set_ids.include?(result[:test_data_set_id])}
+    if valid_data_set_ids.blank?
+      return []
+    elsif !data_sets_and_values.blank?
+      #Filter the data sets against the valid ones.
+      data_sets_and_values.select! { |result| valid_data_set_ids.include?(result[:test_data_set_id]) }
+    end
 
     data_sets_and_values
   end
@@ -35,9 +39,10 @@ class TestScoreResults
     test_meta_data = Hash.new
     test_scores = Hash.new
 
-    data_sets_and_values.each do |result_hash|
-      #Todo get the test data type, subject, grade, level code objects
-      #TODO grade all
+    if !data_sets_and_values.blank?
+      data_sets_and_values.each do |result_hash|
+        #Todo get the test data type, subject, grade, level code objects
+        #TODO grade all
 
         test_data_type_id = result_hash[:test_data_type_id]
         test_data_set_id = result_hash[:test_data_set_id]
@@ -62,7 +67,7 @@ class TestScoreResults
           test_scores[test_data_type_id] = {
               test_label: test_meta_data[test_data_type_id].display_name,
               test_description: test_meta_data[test_data_type_id].description,
-              lowest_grade: grade,
+              lowest_grade: grade.to_i,
               grades: {
                   grade =>
                       {level_code =>
@@ -87,7 +92,7 @@ class TestScoreResults
             #Grade not present.
 
             if (test_scores[test_data_type_id][:lowest_grade]).to_i > grade.to_i
-              test_scores[test_data_type_id][:lowest_grade] = grade
+              test_scores[test_data_type_id][:lowest_grade] = grade.to_i
             end
 
 
@@ -163,6 +168,7 @@ class TestScoreResults
             end
           end
         end
+      end
     end
 
     test_scores
@@ -185,10 +191,11 @@ class TestScoreResults
         end
       end
       #sort grades
-      test_scores[test_id][:grades] = grades_hash[:grades].sort_by { |k, v| k.to_i }
+      test_scores[test_id][:grades] = Hash[grades_hash[:grades].sort_by { |k, v| k.to_i }]
     end
+
     #Sort the tests by lowest grade in the test
-    test_scores.sort_by { |k, v| v[:lowest_grade] }.reverse!
+    Hash[test_scores.sort_by { |k, v| v[:lowest_grade] }]
   end
 
 
