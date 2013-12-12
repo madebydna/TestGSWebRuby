@@ -56,7 +56,7 @@ gem 'rabl-rails'
 
 gem 'mini_fb'
 
-gem 'parsley-rails', '~> 1.2.2.0'
+#gem 'parsley-rails', '~> 1.2.2.0'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools

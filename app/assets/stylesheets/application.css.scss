@@ -16,15 +16,16 @@
 
 
 @import "resources/normalize";
-@import "resources/fonts-opensans";
+@import "gs/fonts-opensans";
+@import "icons/131211-sprite-60x60";
+@import "icons/130930-stars_16x16";
 @import "resources/bootstrap/sass/sass-bootstrap";
-@import "resources/typography";
-@import "resources/navigation";
-@import "tables";
-@import "spacing";
-@import "icons/130930-16x16_stars";
+@import "gs/typography";
+@import "gs/navigation";
+@import "gs/tables";
+@import "gs/spacing";
 @import "resources/galleria.classic";
-@import "social-buttons";
+@import "gs/social-buttons";
 
 
 // Variable Definitions
