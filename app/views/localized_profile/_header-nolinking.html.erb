@@ -33,21 +33,23 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 ptl">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                        <%= link_to new_school_rating_path(school_params(school)) do %>
-                            <button class="btn btn-default" style="width:100%">
-                                Back to school profile
-                            </button>
-                        <% end %>
-                    </div>
+    <% if request.referrer.present? %>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 ptl">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                            <%= link_to request.referrer do %>
+                                <button class="btn btn-default" style="width:100%">
+                                    Back to school profile
+                                </button>
+                            <% end %>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <% end %>
 </div>
 </div>
