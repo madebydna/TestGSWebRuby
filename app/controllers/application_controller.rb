@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
     host = ENV_GLOBAL['host'] || request.host
     port = ENV_GLOBAL['port'] || request.port
-    host << ':' + port if port && port.to_i != 80
+    host << ':' + port.to_s if port && port.to_i != 80
     host
   end
 
