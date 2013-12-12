@@ -12,6 +12,23 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :current_user
 
+  # methods for getting request URL / path info
+
+  def host
+    return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
+
+    host = ENV_GLOBAL['host'] || request.host
+    port = ENV_GLOBAL['port'] || request.port
+    host << ':' + port if port && port.to_i != 80
+    host
+  end
+
+  def original_url
+    path = request.path + '/'
+    path << '?' << request.query_string unless request.query_string.empty?
+    "#{request.protocol}#{host}#{path}"
+  end
+
   def state_param
     state = params[:state] || ''
     state.gsub! '-', ' ' if state.length > 2

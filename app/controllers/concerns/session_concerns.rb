@@ -5,9 +5,9 @@ module SessionConcerns
 
   def store_location(uri = nil, overwrite = true)
     if overwrite
-      value = uri || request.original_url
+      value = uri || original_url
     else
-      value = cookies[:return_to] || uri || request.original_url
+      value = cookies[:return_to] || uri || original_url
     end
 
     cookie = {
@@ -31,7 +31,7 @@ module SessionConcerns
   end
 
   # Redirect to the URI stored by the most recent store_location call or to the passed default.
-  def redirect_back_or_default(default = request.referer || request.original_url) # TODO: change default
+  def redirect_back_or_default(default = request.referrer || original_url) # TODO: change default
     stored_location = cookies[:return_to]
     if stored_location.present? && stored_location.include?('://')
       redirect_to stored_location

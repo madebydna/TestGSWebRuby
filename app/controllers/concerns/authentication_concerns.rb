@@ -47,9 +47,9 @@ module AuthenticationConcerns
   def legacy_community_cookie_name
 
     suffix = 'www'
-    if request.host.match /staging\.|clone\.|willow\./
+    if host.match /staging\.|clone\.|willow\./
       suffix = 'staging'
-    elsif (Rails.env == 'development') || (request.host.match /dev\.|dev$|qa\.|127\.0\.0\.1$|127\.18\.1\.\d+|\.*carbonfive\.com/)
+    elsif (Rails.env == 'development') || host.match(/dev\.|dev$|qa\.|127\.0\.0\.1$|127\.18\.1\.\d+|\.*carbonfive\.com/)
        suffix = 'dev'
     end
 
