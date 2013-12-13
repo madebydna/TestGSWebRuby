@@ -16,20 +16,22 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   # layout name => partial name
+  # Used by rails_admin to populate dropdown list of layouts
   def possible_layouts
-    {
-        'Configured table' => 'configured_table',
-        'Reviews overview' => 'reviews_overview',
-        'Contact overview' => 'contact_overview',
-        'Pie chart' => 'pie_chart',
-        'Pie chart overview' => 'pie_chart_overview',
-        'Light box overview' => 'lightbox_overview',
-        'Blank layout' => 'blank_layout',
-        'Test Scores' => 'test_scores',
-        'Default two column table' => 'default_two_column_table',
-        'Snapshot' => 'snapshot',
-        'Details' => 'details'
-    }
+    file_names = Dir.entries(Rails.root.join('app', 'views', 'data_layouts').to_s)
+
+    # Remove invalid files from listing, e.g. '.' and '..'
+    file_names.reject! { |f| f =~ /^\W+$/ }
+
+    # Remove file extensions
+    file_names.each { |f| f.slice!(f.index('.')..-1) }
+
+    # creates something like  { "Layout name" => "layout_name" }
+    file_names.inject({}) do |hash, file_name|
+      pretty_name = file_name.gsub(/_/, ' ').strip.capitalize
+      hash[pretty_name] = file_name
+      hash
+    end
   end
 
   def possible_sizes
