@@ -4,11 +4,11 @@ class UserMailer < ActionMailer::Base
   default from: 'gs-batch@greatschools.org'
   default subject: 'Please verify your email for GreatSchools'
 
-  def host(request)
+  def gsweb_host(request)
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
 
-    host = ENV_GLOBAL['host'] || request.host
-    port = ENV_GLOBAL['port'] || request.port
+    host = ENV_GLOBAL['gsweb_host'] || request.host
+    port = ENV_GLOBAL['gsweb_port'] || request.port
     host << ':' + port if port && port.to_i != 80
     host
   end
@@ -25,7 +25,7 @@ class UserMailer < ActionMailer::Base
     })
 
     path = verify_email_path(options)
-    @url = request.protocol + host(request) + path
+    @url = request.protocol + gsweb_host(request) + path
     @password = user.password
 
     mail(to: @user.email)
