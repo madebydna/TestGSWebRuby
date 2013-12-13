@@ -46,6 +46,19 @@ class School < ActiveRecord::Base
     SchoolMedia.fetch_school_media self, ''
   end
 
+# returns true or false - takes p,e,m,h as an array
+  def includes_level_code? (arr_levels)
+    (level_code_array & (Array(arr_levels))).any?
+  end
+
+  def includes_preschool?
+    includes_level_code? 'p'
+  end
+
+  def level_code_array
+    level_code.split ','
+  end
+
   def process_level
     l = level.split ','
     case l.size
