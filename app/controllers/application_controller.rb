@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
 
-    host = ENV_GLOBAL['host'] || request.host
-    port = ENV_GLOBAL['port'] || request.port
+    host = ENV_GLOBAL['host'].presence || request.host
+    port = ENV_GLOBAL['port'].presence || request.port
     host << ':' + port.to_s if port && port.to_i != 80
     host
   end
