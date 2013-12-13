@@ -4,10 +4,12 @@
         <h3 class="pll">Details</h3>
         <div class="pal">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #fcf8e3">Art (<%= data[:art] %>)</div></div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #f8fce3">Sports (<%= data[:sport] %>)</div></div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #fce3f8">Student clubs (<%= data[:club] %>)</div></div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><div class="tac mas" style="padding-top: 60px;padding-bottom: 60px; background-color: #e3fcf8">Foreign languages (<%= data[:lang] %>)</div></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art] %></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sport] %></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club] %></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang] %></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sched] %></div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:commu] %></div>
             </div>
         </div>
     </div>

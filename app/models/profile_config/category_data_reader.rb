@@ -39,11 +39,15 @@ class CategoryDataReader
         club: ['student_clubs'],
         lang: ['foreign_language']
     }
+
+     #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
-        art: "-",
-        sport:"-",
-        club: "-",
-        lang: "-"
+        art:   {count: '-', sprite: 'art', color: '#37BFBB', content: 'Arts & music'},
+        sport: {count: '-', sprite: 'sports', color: '#5EC5DB', content: 'Sports'},
+        club:  {count: '-', sprite: 'clubs', color: '#376592', content: 'Clubs'},
+        lang:  {count: '-', sprite: 'language', color: '#A62019', content: 'Foreign languages'},
+        sched: {count: 'Half day', sprite: 'schedule', color: '#9BB149', content: 'Preschool schedule'},
+        commu: {count: 'Community center', sprite: 'community', color: '#E67E22', content: 'Care setting'}
     }
 
     # loop through details and handle total count for 0, infinity cases
@@ -51,14 +55,14 @@ class CategoryDataReader
     #  check if value for all is none
     #  don't add none to count
     details_response_keys.keys.each do |osp_key|
-       return_counts_details[osp_key] = details_response_keys[osp_key].sum do | key |
+       return_counts_details[osp_key][:count] = details_response_keys[osp_key].sum do | key |
           (Array(data_details[key]).count{|item| item.downcase != "none"})
         end
-      if return_counts_details[osp_key] == 0
+      if return_counts_details[osp_key][:count] == 0
         none_count = details_response_keys[osp_key].sum do | key |
           (Array(data_details[key]).count{|item| item.downcase == "none"})
         end
-        return_counts_details[osp_key] = none_count == 0 ?  "-" : 0
+        return_counts_details[osp_key][:count] = none_count == 0 ?  "-" : 0
       end
     end
     return_counts_details
