@@ -2,9 +2,12 @@ class GsPage < SitePrism::Page
 
   include RSpec::Matchers
 
+  # Maps patterns to Page Objects defined in this features/pages directory
+  # If you're adding brand new pages or brand new Page Object, add a regex to PageObject mapping here
   PAGE_MAPPING = {
       /localized( school)? profile( page)?$/i => :LocalizedProfilePage,
       /localized( school)? profile reviews( page)?$/i => :LocalizedProfileReviewsPage,
+      /localized signin( page)?$/i => :LocalizedProfileSigninPage,
   }
 
   # ----------------------------------------------------------------------------------

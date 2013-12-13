@@ -6,14 +6,14 @@ class LocalizedProfileReviewsPage < LocalizedProfilePage
   elements /more than (\d+) reviews/, :more_than_n_reviews, '.js_reviewsList .contents'
   elements :posters, '.cuc_posted-by'
 
-  element :parents_filter, :xpath, '//div[contains(@class, "js_reviewFilterButton")]/button[text()="Parents"]'
-  element :students_filter, :xpath, '//div[contains(@class, "js_reviewFilterButton")]/button[text()="Students"]'
+  element :parents_filter, '[data-group-name="parent"]'
+  element :students_filter, '[data-group-name="student"]'
   element :all_filter, :xpath, '//div[contains(@class, "js_reviewFilterButton")]/button[text()="All"]'
   element :sort_reviews_dropdown, '.js_reviewFilterDropDownText'
 
   URLS = {
-    /^.+?/ => '/profile/reviews?state=ca&schoolId=1', # any url that we know should have reviews
-    /^(a )?school with more than (10|ten) reviews/ => '/profile/reviews?state=ca&schoolId=1', # any url that we know should have reviews
+    /^.+?/ => '/california/alameda/1-alameda-high-school/reviews/', # any url that we know should have reviews
+    /^(a )?school with more than (10|ten) reviews/ => '/california/alameda/1-alameda-high-school/reviews/', # any url that we know should have reviews
   }
 
   # return all the reviews we have if there are > 10, otherwise none
