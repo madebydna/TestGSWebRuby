@@ -221,8 +221,6 @@ GEM
     paper_trail (2.7.2)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    parsley-rails (1.2.2.0)
-      railties (>= 3.0.0)
     polyglot (0.3.3)
     pry (0.9.12.4)
       coderay (~> 1.0)
@@ -421,7 +419,6 @@ DEPENDENCIES
   mocha_rails
   mysql2 (= 0.3.13)
   paper_trail
-  parsley-rails (~> 1.2.2.0)
   rabl-rails
   rails (= 3.2.11)
   rails_admin
