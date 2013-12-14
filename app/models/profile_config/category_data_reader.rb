@@ -81,7 +81,7 @@ class CategoryDataReader
 
     #Merge start_time and end_time into hours.
     HashUtils.merge_keys responses_per_key, 'start_time', 'end_time', 'hours' do |value1 ,value2|
-      value1.first.to_s + '-' + value2.first.to_s
+      value1.first.to_s + ' - ' + value2.first.to_s
     end
 
     #Split before_after_care into before_care and after_care.
