@@ -18,6 +18,10 @@ class PageConfig
     @category_positions[position_number].present?
   end
 
+  def highest_position
+    @highest_position ||= @category_positions.max[0]
+  end
+
   def position_has_data?(position_number)
     return false if @category_positions[position_number].nil?
     placement_and_data = @category_placements[position_number]
