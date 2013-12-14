@@ -21,11 +21,11 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
 
-  get '/district-of-columbia/:city/:schoolId-:school_name', constraints: {
+  get '/district-of-columbia/:city/:schoolId-:school_name/(/*other)', constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
     school_name: /.+/
-  }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}"}
+  }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
 
   scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
