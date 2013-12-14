@@ -29,7 +29,8 @@ class CategoryPlacement < ActiveRecord::Base
     # creates something like  { "Layout name" => "layout_name" }
     file_names.inject({}) do |hash, file_name|
       pretty_name = file_name.gsub(/_/, ' ').strip.capitalize
-      hash[pretty_name] = file_name
+      # [1..-1] to remove the underscore in front of the filename
+      hash[pretty_name] = file_name[1..-1]
       hash
     end
   end
