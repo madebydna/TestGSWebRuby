@@ -80,8 +80,20 @@ class TableData
   # If a match is found, overwrite the value
   def transform_column!(column, lookup_table)
     rows.each do |row|
-      if lookup_table[row[column]]
-        row[column] = lookup_table[row[column]]
+      data = row[column]
+
+      if data.is_a? Array
+        row[column] = data.map do |d|
+          if lookup_table[d]
+            lookup_table[d]
+          else
+            d
+          end
+        end
+      else
+        if lookup_table[data]
+          row[column] = lookup_table[data]
+        end
       end
     end
     self
