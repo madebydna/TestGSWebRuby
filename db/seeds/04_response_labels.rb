@@ -1,3 +1,5 @@
+#esp response keys and their pretty labels
+
 key_file_name = File.join("#{Rails.root}/db/osp_key_label_map.txt")
 value_file_name = File.join("#{Rails.root}/db/osp_value_label_map.txt")
 
