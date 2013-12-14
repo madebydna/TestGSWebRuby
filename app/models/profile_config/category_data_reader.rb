@@ -225,10 +225,14 @@ class CategoryDataReader
 
             #esp_data_points returns an array and census_data_points does not return an array. Therefore cast everything
             #to an array and read the first value.
-            value = data_for_source[key].present? ? Array(data_for_source[key]).first : "n/a"
+            value = data_for_source[key].present? ? Array(data_for_source[key]).first : 'N/A'
 
             #Get the labels for the response keys from the ResponseValue table.
             label = lookup_table_for_labels[key] || key
+
+            # Uppercase only first letter of label and value
+            label[0] = label[0].upcase
+            value[0] = value[0].upcase if value.is_a? String
 
             snapshot_results << {key => {school_value: value, label: label}}
           end
