@@ -1,0 +1,290 @@
+academic_award_1	Academic award
+academic_award_1_year	Year received
+academic_award_2	Academic award
+academic_award_2_year	Year received
+academic_award_3	Academic award
+academic_award_3_year	Year received
+academic_focus	Academic themes / Areas of focus
+academic_focus_other	Academic themes / Areas of focus (misc.)
+admissions_url	Admissions webpage
+after_school	After school program offered
+after_school_activities_1	Types of activities
+after_school_activities_2	Types of activities
+after_school_activities_3	Types of activities
+after_school_activities_4	Types of activities
+after_school_activities_5	Types of activities
+after_school_activities_other_1	Types of activities (misc.)
+after_school_activities_other_2	Types of activities (misc.)
+after_school_activities_other_3	Types of activities (misc.)
+after_school_activities_other_4	Types of activities (misc.)
+after_school_activities_other_5	Types of activities (misc.)
+after_school_attendance_restriction_1	Enrollment limited to students attending the school
+after_school_attendance_restriction_2	Enrollment limited to students attending the school
+after_school_attendance_restriction_3	Enrollment limited to students attending the school
+after_school_attendance_restriction_4	Enrollment limited to students attending the school
+after_school_attendance_restriction_5	Enrollment limited to students attending the school
+after_school_day_1	Days offered
+after_school_day_2	Days offered
+after_school_day_3	Days offered
+after_school_day_4	Days offered
+after_school_day_5	Days offered
+after_school_description_1	About the program
+after_school_description_2	About the program
+after_school_description_3	About the program
+after_school_description_4	About the program
+after_school_description_5	About the program
+after_school_end_1	End time
+after_school_end_2	End time
+after_school_end_3	End time
+after_school_end_4	End time
+after_school_end_5	End time
+after_school_fee_1	Fee
+after_school_fee_2	Fee
+after_school_fee_3	Fee
+after_school_fee_4	Fee
+after_school_fee_5	Fee
+after_school_fee_learn_more_1	Learn more about fees
+after_school_fee_learn_more_2	Learn more about fees
+after_school_fee_learn_more_3	Learn more about fees
+after_school_fee_learn_more_4	Learn more about fees
+after_school_fee_learn_more_5	Learn more about fees
+after_school_financial_aid_1	Financial aid
+after_school_financial_aid_2	Financial aid
+after_school_financial_aid_3	Financial aid
+after_school_financial_aid_4	Financial aid
+after_school_financial_aid_5	Financial aid
+after_school_grade_1	Participating grades
+after_school_grade_2	Participating grades
+after_school_grade_3	Participating grades
+after_school_grade_4	Participating grades
+after_school_grade_5	Participating grades
+after_school_name_1	After school program
+after_school_name_2	After school program
+after_school_name_3	After school program
+after_school_name_4	After school program
+after_school_name_5	After school program
+after_school_operator_1	Operator
+after_school_operator_2	Operator
+after_school_operator_3	Operator
+after_school_operator_4	Operator
+after_school_operator_5	Operator
+after_school_phone_1	Phone number
+after_school_phone_2	Phone number
+after_school_phone_3	Phone number
+after_school_phone_4	Phone number
+after_school_phone_5	Phone number
+after_school_start_1	Start time
+after_school_start_2	Start time
+after_school_start_3	Start time
+after_school_start_4	Start time
+after_school_start_5	Start time
+after_school_website_1	Website
+after_school_website_2	Website
+after_school_website_3	Website
+after_school_website_4	Website
+after_school_website_5	Website
+age_pk_start	Starting age for early childhood
+anything_else	Message from the school
+application_deadline	Type of application deadline
+application_deadline_date	Application deadline
+application_process	Application or enrollment process
+applications_received	# of applications received
+applications_received_year	For the year
+arts_media	Media arts
+arts_music	Music
+arts_performing_written	Performing & written arts
+arts_visual	Visual arts
+before_after_care	Extended care / Extended programs
+before_after_care_end	After care end time
+before_after_care_start	Before care start time
+best_known_for	Tagline
+boarding	Day or Boarding offered
+boys_sports	Boys sports
+boys_sports_other	Boys sports (misc.)
+bullying_policy	Bullying / cyber bullying policy
+college_destination_1	Colleges students typically attend after graduation
+college_destination_2	Colleges students typically attend after graduation
+college_destination_3	Colleges students typically attend after graduation
+college_prep	College preparation resources
+college_prep_other	College preparation resources (misc.)
+contact_method	Best ways for parents to contact the school
+contact_method_email	School contact email
+contact_method_other	Best ways for parents to contact the school (misc.)
+destination_school_1	Students typically continue on to these schools
+destination_school_2	Students typically continue on to these schools
+destination_school_3	Students typically continue on to these schools
+dress_code	Dress code
+early_childhood_programs	Early childhood program offered
+ell_languages	Languages supported by ESL/ELL programs
+ell_level	Level of ESL/ELL programming
+end_time	School end time
+extra_learning_resources	Extra learning resources
+extra_learning_resources_other	Extra learning resources (misc.)
+facilities	Facilities
+feeder_school_1	Students typically come from these schools
+feeder_school_2	Students typically come from these schools
+feeder_school_3	Students typically come from these schools
+financial_aid	Financial aid offered
+financial_aid_type	Financial aid type
+financial_aid_type_other	Financial aid type (misc.)
+foreign_language	Foreign languages taught
+foreign_language_other	Foreign languages taught (misc.)
+girls_sports	Girls sports
+girls_sports_other	Girls sports (misc.)
+immersion	Bi-lingual or language immersion programs offered
+immersion_language	Bi-lingual or language immersion languages
+immersion_language_other	Bi-lingual or language immersion languages (misc.)
+instructional_model	Instructional / curriculum models used
+instructional_model_other	Instructional / curriculum models used (misc.)
+parent_involvement	Parent involvement
+parent_involvement_other	Parent involvement (misc.)
+partnerships	Partnerships with local resources and organizations
+partnerships_name_1	Partner
+partnerships_name_2	Partner
+partnerships_name_3	Partner
+partnerships_name_4	Partner
+partnerships_name_5	Partner
+partnerships_url_1	Partner website
+partnerships_url_2	Partner website
+partnerships_url_3	Partner website
+partnerships_url_4	Partner website
+partnerships_url_5	Partner website
+post_graduation_2yr	% Graduates going to a 2 year college
+post_graduation_4yr	% Graduates going to a 4 year college
+post_graduation_military	% Graduates going into military service
+post_graduation_vocational	% Graduates going into vocational programs
+post_graduation_workforce	% Graduates going directly into the workforce
+post_graduation_year	For the year
+schedule	Special schedule
+schedule_exists	Special schedule offered
+school_type_affiliation	Religious / Parochial
+school_type_affiliation_other	Affiliation
+service_award_1	Community service award
+service_award_1_year	Year received
+service_award_2	Community service award
+service_award_2_year	Year received
+service_award_3	Community service award
+service_award_3_year	Year received
+skills_training	Vocational or skills-based training
+skills_training_other	Vocational or skills-based training (misc.)
+spec_ed_level	Level of special education programming
+special_ed_programs	Specialized programs for specific types of special education students
+staff_languages	Foreign languages spoken by staff
+staff_languages_other	Foreign languages spoken by staff (misc.)
+staff_resources	Staff
+start_time	School start time
+student_clubs	Clubs
+student_clubs_dance	Clubs - dance
+student_clubs_language	Clubs - language
+student_clubs_other_1	Clubs (misc.)
+student_clubs_other_2	Clubs (misc.)
+student_clubs_other_3	Clubs (misc.)
+students_accepted	# of students accepted
+students_accepted_year	For the year
+students_vouchers	Vouchers accepted
+summer_program	Summer program offered
+summer_program_activities_1	Types of activities
+summer_program_activities_2	Types of activities
+summer_program_activities_3	Types of activities
+summer_program_activities_4	Types of activities
+summer_program_activities_5	Types of activities
+summer_program_activities_other_1	Types of activities (misc.)
+summer_program_activities_other_2	Types of activities (misc.)
+summer_program_activities_other_3	Types of activities (misc.)
+summer_program_activities_other_4	Types of activities (misc.)
+summer_program_activities_other_5	Types of activities (misc.)
+summer_program_attendance_restriction_1	Enrollment limited to students attending the school
+summer_program_attendance_restriction_2	Enrollment limited to students attending the school
+summer_program_attendance_restriction_3	Enrollment limited to students attending the school
+summer_program_attendance_restriction_4	Enrollment limited to students attending the school
+summer_program_attendance_restriction_5	Enrollment limited to students attending the school
+summer_program_before_after_care_1	Before / after care
+summer_program_before_after_care_2	Before / after care
+summer_program_before_after_care_3	Before / after care
+summer_program_before_after_care_4	Before / after care
+summer_program_before_after_care_5	Before / after care
+summer_program_before_after_care_end_1	After care end time
+summer_program_before_after_care_end_2	After care end time
+summer_program_before_after_care_end_3	After care end time
+summer_program_before_after_care_end_4	After care end time
+summer_program_before_after_care_end_5	After care end time
+summer_program_before_after_care_start_1	Before care start time
+summer_program_before_after_care_start_2	Before care start time
+summer_program_before_after_care_start_3	Before care start time
+summer_program_before_after_care_start_4	Before care start time
+summer_program_before_after_care_start_5	Before care start time
+summer_program_date_end_1	End date
+summer_program_date_end_2	End date
+summer_program_date_end_3	End date
+summer_program_date_end_4	End date
+summer_program_date_end_5	End date
+summer_program_date_start_1	Start date
+summer_program_date_start_2	Start date
+summer_program_date_start_3	Start date
+summer_program_date_start_4	Start date
+summer_program_date_start_5	Start date
+summer_program_day_1	Days offered
+summer_program_day_2	Days offered
+summer_program_day_3	Days offered
+summer_program_day_4	Days offered
+summer_program_day_5	Days offered
+summer_program_description_1	About the program
+summer_program_description_2	About the program
+summer_program_description_3	About the program
+summer_program_description_4	About the program
+summer_program_description_5	About the program
+summer_program_end_1	End time
+summer_program_end_2	End time
+summer_program_end_3	End time
+summer_program_end_4	End time
+summer_program_end_5	End time
+summer_program_fee_1	Fee
+summer_program_fee_2	Fee
+summer_program_fee_3	Fee
+summer_program_fee_4	Fee
+summer_program_fee_5	Fee
+summer_program_fee_learn_more_1	Learn more about fees
+summer_program_fee_learn_more_2	Learn more about fees
+summer_program_fee_learn_more_3	Learn more about fees
+summer_program_fee_learn_more_4	Learn more about fees
+summer_program_fee_learn_more_5	Learn more about fees
+summer_program_financial_aid_1	Financial aid
+summer_program_financial_aid_2	Financial aid
+summer_program_financial_aid_3	Financial aid
+summer_program_financial_aid_4	Financial aid
+summer_program_financial_aid_5	Financial aid
+summer_program_grade_1	Participating grades
+summer_program_grade_2	Participating grades
+summer_program_grade_3	Participating grades
+summer_program_grade_4	Participating grades
+summer_program_grade_5	Participating grades
+summer_program_name_1	Summer program
+summer_program_name_2	Summer program
+summer_program_name_3	Summer program
+summer_program_name_4	Summer program
+summer_program_name_5	Summer program
+summer_program_operator_1	Operator
+summer_program_operator_2	Operator
+summer_program_operator_3	Operator
+summer_program_operator_4	Operator
+summer_program_operator_5	Operator
+summer_program_phone_1	Phone number
+summer_program_phone_2	Phone number
+summer_program_phone_3	Phone number
+summer_program_phone_4	Phone number
+summer_program_phone_5	Phone number
+summer_program_start_1	Start time
+summer_program_start_2	Start time
+summer_program_start_3	Start time
+summer_program_start_4	Start time
+summer_program_start_5	Start time
+summer_program_website_1	Website
+summer_program_website_2	Website
+summer_program_website_3	Website
+summer_program_website_4	Website
+summer_program_website_5	Website
+transportation	Transportation options
+transportation_other	Transportation options (misc.)
+tuition_high	Tuition range (high)
+tuition_low	Tuition range (low)
+tuition_year	For the year

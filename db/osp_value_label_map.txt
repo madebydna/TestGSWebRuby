@@ -1,0 +1,338 @@
+engineering	Engineering
+music	Music
+religious	Religious
+science	Science
+technology	Technology
+academic	Academic (homework help and/or standards-based programs)
+arts	"Arts (visual, literary, dance, theater, and/or music)"
+athletic	Athletics
+athletics	Athletics
+life_skills	Life skills
+other	Other
+call	Call
+website	Visit website
+yearround	Rolling
+dance	Dance
+design	Design
+after	After
+before	Before
+neither	None
+other	Other
+basic	Basic
+intensive	Intensive
+moderate	Moderate
+music	Music
+outdoor	Outdoor
+science	Science
+swimming	Swimming
+martial_arts	Martial arts / Judo
+swimming	Swimming
+outdoor	Outdoor
+yearround	Yearround
+religious	Yes
+design	Design
+engineering	Engineering
+basic	Basic
+intensive	Intensive
+moderate	Moderate
+other	Other
+dance	Dance
+martial_arts	Martial Arts
+technology	Technology
+all_arts	Arts (all)
+business	Business
+environmental	Environmental
+foreign_lang	Foreign languages
+global	Multiculturalism / Global
+humanities	Humanities
+mathematics	Mathematics
+medical	Medical
+performing_arts	Performing arts
+service_learning	Service learning
+social_justice	Social justice
+special_ed	Special Education
+special_education	Special Education
+visual_arts	Visual arts
+vocational	Vocational education
+writing	Writing
+academics	Academic (homework help and/or standards-based programs)
+2	2 years old
+3	3 years old
+4	4 years old
+0/1	Infant
+date	One deadline
+parents_contact	Contact the school / Multiple deadlines
+animation	Computer animation
+graphics	Graphics
+tech_design	Technical design and production
+video	Video and film production
+band	Band
+bells	Bell / handbell choir
+chamber_music	Chamber music
+chorus	Choir / Chorus
+jazz_band	Jazz band
+music_lessons	Instrumental music lessons
+music_theory	Theory
+opera	Opera
+orchestra	Orchestra
+rock_band	Rock band
+voice	Vocal lessons / coaching
+creative_writing	Creative writing
+drama	Drama
+improv	Improv
+poetry	Poetry
+architecture	Architecture
+ceramics	Ceramics
+drawing	Drawing / Sketching
+painting	Painting
+photography	Photography
+printmaking	Printmaking
+sculpture	Sculpture
+textiles	Textiles
+boarding	Boarding school
+day	Day school
+day/boarding	"Some boarding, some day"
+football	Football
+college_trips	School-sponsored trips to college campuses
+community_college	Community college courses
+info_sessions	Info Sessions
+prep_classes	Prep Classes
+sat_act_prep	Sat Act Prep
+summer_prep	Summer Prep
+visiting_lecturers	Visiting Lecturers
+email	Email
+phone	Phone
+dress_code	Dress Code
+no_dress_code	No Dress Code
+uniform	Uniform
+amharic	Amharic
+arabic	Arabic
+cantonese	Cantonese
+dutch	Dutch
+french	French
+german	German
+hmong	Hmong
+italian	Italian
+japanese	Japanese
+korean	Korean
+mandarin	Mandarin
+russian	Russian
+spanish	Spanish
+tagalog	Tagalog
+urdu	Urdu
+vietnamese	Vietnamese
+advanced	Advanced
+acceleration	Acceleration
+career_counseling	Career Counseling
+counseling	Counseling
+differentiated	Differentiated
+mentoring	Mentoring
+remediation	Remediation
+tutoring	Tutoring
+art	Art
+audiovisual	Audiovisual
+auditorium	Auditorium
+cafeteria	Cafeteria
+chapel	Chapel
+college_center	College Center
+computer	Computer
+farm	Farm
+garden	Garden
+gym	Gym
+industrial	Industrial
+internet	Internet
+kitchen	Kitchen
+learning_lab	Learning Lab
+library	Library
+multi_purpose	Multi Purpose
+multi-purpose	Multi-Purpose
+parent	Parent
+performance	Performance
+playground	Playground
+sports_fields	Sports Fields
+outside	Outside
+school_based	School Based
+tax_credits	Tax Credits
+hebrew	Hebrew
+latin	Latin
+badminton	Badminton
+baseball	Baseball
+basketball	Basketball
+cheerleading	Cheerleading
+crew	Crew / Rowing
+cross_country	Cross country
+cycling	Cycling
+diving	Diving
+equestrian	Equestrian
+fencing	Fencing
+field_hockey	Field hockey
+flag_football	Flag football
+golf	Golf
+gymnastics	Gymnastics
+ice_hockey	Ice hockey
+kayaking	Kayaking
+kickball	Kickball
+lacrosse	Lacrosse
+rugby	Rugby
+sailing	Sailing
+ski	Skiing
+soccer	Soccer
+softball	Softball
+squash	Squash
+surfing	Surfing
+tennis	Tennis
+track	Track
+ultimate	Ultimate Frisbee
+volleyball	Volleyball
+water_polo	Water polo
+weight_lifting	Power lifting / Weight lifting
+wrestling	Wrestling
+american_sign_language	American Sign Language
+accelerated_credit	Accelerated Credit
+adult_ed	Adult Ed
+AP_courses	Ap Courses
+classical	Classical
+college_prep	College Prep
+continuation	Continuation
+core_knowledge	Core Knowledge
+direct_instruction	Direct Instruction
+ged	Ged
+gifted	Gifted
+honors	Honors
+hybrid	Hybrid
+ib	Ib
+independent_study	Independent Study
+individual_instruction	Individual Instruction
+internships	Internships
+montessori	Montessori
+multi-aged	Multi-Aged
+project_based	Project Based
+reggio	Reggio
+standards-based	Standards-Based
+STEM	Stem
+teacher-run	Teacher-Run
+therapeutic	Therapeutic
+virtual	Virtual
+waldorf	Waldorf
+after_school_req	After School Req
+chaperone_req	Chaperone Req
+classroom_req	Classroom Req
+coach_req	Coach Req
+cultural_req	Cultural Req
+fundraising_req	Fundraising Req
+governance_req	Governance Req
+parent_nights_req	Parent Nights Req
+playground_req	Playground Req
+presentation_req	Presentation Req
+pto_pta_req	Pto Pta Req
+tutor_req	Tutor Req
+block	Block
+extended	Extended
+parttime	Parttime
+agriculture	Agriculture
+construction	Construction
+cosmetology	Cosmetology
+culinary	Culinary
+electrical	Electrical
+it_support	It Support
+management	Management
+mechanics	Mechanics
+prelaw	Prelaw
+programming	Programming
+welding	Welding
+autism	Autism
+blindness	Blindness
+cognitive	Cognitive
+deafness	Deafness
+developmental_delay	Developmental Delay
+emotional	Emotional
+ld	Ld
+multiple	Multiple
+orthopedic	Orthopedic
+speech	Speech
+art_teacher	Art Teacher
+assistant_principal	Assistant Principal
+college_counselor	College Counselor
+computer_specialist	Computer Specialist
+cooking_teacher	Cooking Teacher
+dance_teacher	Dance Teacher
+ell_esl_coord	Ell Esl Coord
+garden_teacher	Garden Teacher
+gifted_specialist	Gifted Specialist
+instructional_aid	Instructional Aid
+librarian	Librarian
+math_specialist	Math Specialist
+music_teacher	Music Teacher
+nurse	Nurse
+pe_instructor	Pe Instructor
+poetry_teacher	Poetry Teacher
+priest	Priest
+reading_specialist	Reading Specialist
+robotics_teacher	Robotics Teacher
+school_counselor	School Counselor
+school_psychologist	School Psychologist
+security	Security
+special_ed_coordinator	Special Ed Coordinator
+speech_therapist	Speech Therapist
+teacher_aid	Teacher Aid
+tutor	Tutor
+amnesty_international	Amnesty International
+anime	Anime
+art_club	Art Club
+arts_crafts	Arts Crafts
+book_club	Book Club
+boy_scouts	Boy Scouts
+chess	Chess
+community_service	Community Service
+cooking	Cooking
+cub_scouts	Cub Scouts
+debate	Debate
+deca	Deca
+drama_club	Drama Club
+drill_team	Drill Team
+drum_line	Drum Line
+fbla	Fbla
+fca	Fca
+flag_girls	Flag Girls
+forensics	Forensics
+game_club	Game Club
+gardening	Gardening
+girl_scouts	Girl Scouts
+girls_on_the_run	Girls On The Run
+habitat	Habitat
+homework_help	Homework Help
+its_academic	Its Academic
+jrotc	Jrotc
+language_club	Language Club
+lesbian_gay_transgender	Lesbian Gay Transgender
+literary_mag	Literary Mag
+marching_band	Marching Band
+math_club	Math Club
+mock_trial	Mock Trial
+model_congress	Model Congress
+model_un	Model Un
+nhs	Nhs
+origami	Origami
+recycling	Recycling
+robotics	Robotics
+sadd	Sadd
+science_club	Science Club
+sewing_knitting	Sewing Knitting
+special_olympics	Special Olympics
+step_team	Step Team
+student_govt	Student Govt
+student_newspaper	Student Newspaper
+tech_club	Tech Club
+tv_radio_news	Tv Radio News
+woodshop	Woodshop
+yearbook	Yearbook
+yoga	Yoga
+language	Language
+science_nature	Science Nature
+special_needs	Special Needs
+accessible_via_public_transportation	Accessible Via Public Transportation
+busses	Busses
+passes	Passes
+shared_bus	Shared Bus
+special_ed_only	Special Ed Only
+	
