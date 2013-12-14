@@ -78,7 +78,7 @@ module States
 
   def self.any_state_name_regex
     regex = ''
-    state_hash.keys.each {|s| regex << ("#{s}|".downcase.gsub(/\s+/, '-')) }
+    state_hash.keys.each {|s| regex << ("#{s}|".downcase.gsub(/\s+/, '\-')) }
     regex = regex[0..-2]
     return Regexp.new regex, 'i'
   end
