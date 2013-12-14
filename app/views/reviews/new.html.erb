@@ -18,7 +18,7 @@
                       <div class="tab-pane active in" id="login">
 
 
-                        <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}) do |f| %>
+                        <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}, url: school_ratings_path(school_params(@school))) do |f| %>
                           <fieldset>
                             <legend>Write a review about <%= @school.name %></legend>
 
@@ -78,7 +78,8 @@
                                 <%= f.text_area :review_text, value: '',
                                                 id: 'review_text', rows: 8, class: 'input-xlarge',
                                                 'data-parsley-required' => 'true',
-                                                'data-parsley-minwords' => '6',
+                                                'data-parsley-minwords' => '15',
+                                                'data-parsley-minwords-message' => 'Please use at least 15 words in your comment.',
                                                 'data-parsley-maxlength' => '1200',
                                                 'data-parsley-trigger' => 'change',
                                                 'data-parsley-error-container' => '#js-review_text-errors',
