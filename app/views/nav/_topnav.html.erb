@@ -51,7 +51,7 @@
                 </li>
                 <li><a href="#find-a-school">Find A School</a></li>
                 <li>
-                    <%= link_to 'Review A School', new_school_rating_path(school_params(@school)) %>
+                    <%= link_to 'Review A School', (@school? new_school_rating_path(school_params(@school)) : '/') %>
                 </li>
                 <li><a class="dropdown-toggle"
                        data-toggle="dropdown"
