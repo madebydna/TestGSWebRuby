@@ -55,9 +55,11 @@ class TestScoreResults
         breakdown_id = result_hash[:breakdown_id]
         number_tested = result_hash[:number_tested]
 
+        next if subject.nil? # skip this test data if subject is nil
 
         if test_meta_data[test_data_type_id].nil?
           test_meta_data[test_data_type_id] = TestDataType.by_id(test_data_type_id)
+          next if test_meta_data[test_data_type_id].nil? # skip this test data if data type not found
         end
 
         #Check if the test is already in the map.

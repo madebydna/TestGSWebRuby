@@ -102,4 +102,14 @@ module ApplicationHelper
       school_name: serialize_param(school.name.downcase)
     }
   end
+
+  # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
+  # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string
+  def capitalize_if_string(object)
+    if object.is_a? String
+      object.gs_capitalize_first
+    else
+      object
+    end
+  end
 end

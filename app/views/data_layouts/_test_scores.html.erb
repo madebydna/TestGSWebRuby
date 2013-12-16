@@ -16,7 +16,7 @@
 
                             <% value.each do |levelcode,value| %>
                                 <% value.each do |subject,value| %>
-                                    <br/><%= subject %>
+                                    <br/><%= subject.gs_capitalize_first %>
                                     <!--TODO change this to test id-->
                                     <% bar_chart_div_id = "js_bar_chart_div_#{test.to_s.gsub(/\s/,'')}_#{grade.to_s}_#{subject.to_s.gsub(/\s/,'')}" %>
 

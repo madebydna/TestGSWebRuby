@@ -7,24 +7,24 @@
     <% column_1_contents.each_with_index do |value_hash, index| %>
         <tr>
             <% value_hash.each do |key, value| %>
-                <td> <%= value[:label] %> </td>
+                <td> <%= capitalize_if_string value[:label] %> </td>
                 <td>
                     <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                         <%= value[:school_value].round %>
                     <% else %>
-                        <%= value[:school_value] %>
+                        <%= capitalize_if_string value[:school_value] %>
                     <% end %>
                 </td>
             <% end %>
-            <% value_hash_col2 = column_2_contents[index] %>
+            <% value_hash_col2 = column_2_contents[index] if column_2_contents.present? %>
             <% if value_hash_col2.present? %>
                 <% value_hash_col2.each do |key, value| %>
-                    <td><%= value[:label] %></td>
+                    <td><%= capitalize_if_string value[:label] %></td>
                     <td>
                         <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                             <%= value[:school_value].round %>
                         <% else %>
-                            <%= value[:school_value] %>
+                            <%= capitalize_if_string value[:school_value] %>
                         <% end %>
                     </td>
                 <% end %>

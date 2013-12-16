@@ -7,6 +7,10 @@ class TestDataType < ActiveRecord::Base
   #self.inheritance_column = nil
   self.inheritance_column = :_type_disabled
   def self.by_id(data_type_ids)
-     TestDataType.find(data_type_ids)
+    begin
+      TestDataType.find(data_type_ids)
+    rescue
+      Rails.logger.debug "Could not locate TestDataType for id #{data_type_ids}"
+    end
   end
 end

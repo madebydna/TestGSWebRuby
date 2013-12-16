@@ -230,10 +230,6 @@ class CategoryDataReader
             #Get the labels for the response keys from the ResponseValue table.
             label = lookup_table_for_labels[key] || key
 
-            # Uppercase only first letter of label and value
-            label[0] = label[0].upcase if value.is_a? String
-            value[0] = value[0].upcase if value.is_a? String
-
             snapshot_results << {key => {school_value: value, label: label}}
           end
         end
