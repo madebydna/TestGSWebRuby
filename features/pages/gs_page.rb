@@ -72,8 +72,7 @@ class GsPage < SitePrism::Page
     raise "Element '#{element_name}' not found on page #{self.class}" if result.nil?
 
     if result.is_a? Enumerable
-      result.count.should > 0
-      result.first.visible?
+      result.count > 0 && result.first.visible?
     else
       result.visible?
     end

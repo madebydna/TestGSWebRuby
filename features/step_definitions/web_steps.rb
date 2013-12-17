@@ -72,16 +72,22 @@ When /^I click the button "([^\"]+)"$/ do |button_name|
   page.click_button button_name
 end
 
+When /^I click(?: on)? the "([^\"]+)" button$/ do |button_name|
+  page.click_button button_name
+end
+
 When /^I click on "([^\"]+)"$/ do |scope|
   find(selector_for(scope)).click
 end
 
+=begin
 When /^I type "([^\"]*)" into "([^\"]*)"$/ do |text, field|
   value_to_enter = text
   timestamp = Time.new.to_time.to_i.to_s
   value_to_enter.gsub! '[TIMESTAMP]', timestamp
   fill_in field, :with => value_to_enter
 end
+=end
 
 When /^I select "([^\"]*)" from "([^\"]*)"$/ do |label, selector|
   page.select label, :from => selector

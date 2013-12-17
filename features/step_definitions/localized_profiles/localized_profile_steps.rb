@@ -42,6 +42,10 @@ Given /I see(?: the)? ([^\"]+)/ do |element_name|
   @page.element_visible? element_name
 end
 
+Given /I don\'t see(?: the)? ([^\"]+)/ do |element_name|
+  expect(@page.element_visible? element_name).to be_false
+end
+
 Given /I wait to see(?: the)? ([^\"]+)/ do |element_name|
   @page.wait_for_element element_name
   @page.element_visible? element_name
@@ -51,3 +55,9 @@ Given /I(?: can)? sort(?: the)? (.+) (?:on|by) (.*)/ do |element_name, sort_by|
   @page.send "sort_#{element_name}", sort_by
 end
 
+When /^I type "([^\"]*)" into(?: the)? "([^\"]*)"$/ do |text, field|
+  value_to_enter = text
+  timestamp = Time.new.to_time.to_i.to_s
+  value_to_enter.gsub! '[TIMESTAMP]', timestamp
+  @page.element(field).set value_to_enter
+end
