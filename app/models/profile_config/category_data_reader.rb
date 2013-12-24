@@ -292,5 +292,65 @@ class CategoryDataReader
     methods(false) - [:key, :cache_methods, :all_configured_keys, :sources]
   end
 
+  def self.state_city_rating_data_type_ids
+    #TODO every state and city has a own data type id
+    [164, 165, 166, 197, 198, 199, 200, 201]
+  end
+
+  def self.data_description_keys
+    ['mi_state_accountability_summary','mi_esd_summary','what_is_gs_rating_summary']
+    #descriptions.map(&:data_key)
+  end
+
+
+  def self.rating_data (school, _)
+    results = TestDataSet.by_data_type_id(school, state_city_rating_data_type_ids)
+    #descriptions = DataDescription.fetch_descriptions(['mi_state_accountability_summary','mi_esd_summary','what_is_gs_rating_summary'])
+    #description_hash = {}
+    #TODO use .map on the collection
+    #descriptions.each do |description| description_hash[description["data_key"]] = description["value"] end
+
+    json_result = {}
+    json_result["gs_rating"] = {"rating" => school.school_metadata.overallRating,"description" => "blah"}
+    results.each do |result|
+
+      case result.data_type_id
+        when 197 then
+          json_result["state_rating"] = {"rating" => result.test_data_school_values[0].value_text, "description" => "blah"}
+        when 198, 199, 200, 201 then
+          city_rating_hash = json_result["city_rating"].nil? ? {} : json_result["city_rating"]
+          city_rating_hash["description"] =  "blah"
+          city_sub_rating_hash = city_rating_hash["sub_rating"].nil? ? {} : city_rating_hash["sub_rating"]
+          if result.data_type_id == 198
+            city_sub_rating_hash["status"] = result.test_data_school_values[0].value_text
+          elsif result.data_type_id == 199
+            city_sub_rating_hash["progress"] = result.test_data_school_values[0].value_text
+          elsif result.data_type_id == 200
+            city_sub_rating_hash["climate"] = result.test_data_school_values[0].value_text
+          elsif result.data_type_id == 201
+            city_rating_hash["rating"] = result.test_data_school_values[0].value_text
+          end
+          json_result["city_rating"] = city_rating_hash
+          json_result["city_rating"]["sub_rating"] = city_sub_rating_hash
+        when 164, 165, 166 then
+          gs_rating_hash = json_result["gs_rating"]
+          gs_sub_rating_hash = gs_rating_hash["sub_rating"].nil? ? {} : gs_rating_hash["sub_rating"]
+          if result.data_type_id == 164
+            gs_sub_rating_hash["test_scores"] = result.test_data_school_values[0].value_float
+          elsif result.data_type_id == 165
+            gs_sub_rating_hash["progress"] = result.test_data_school_values[0].value_float
+          elsif result.data_type_id == 166
+            gs_sub_rating_hash["college_readiness"] = result.test_data_school_values[0].value_float
+          end
+          json_result["gs_rating"] = gs_rating_hash
+          json_result["gs_rating"]["sub_rating"] = gs_sub_rating_hash
+      end
+
+
+    end
+    json_result
+
+  end
+
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
 end
