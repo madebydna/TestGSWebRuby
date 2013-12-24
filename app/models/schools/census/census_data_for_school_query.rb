@@ -6,11 +6,15 @@ class CensusDataForSchoolQuery
     @state = school.state
   end
 
-  def default_data_type_ids
+  def base_data_type_ids
     [9, 17, 41, 5, 110]
   end
 
-  def data_for_school(data_type_ids = default_data_type_ids)
+  def data_for_school(data_type_names = [])
+    data_type_names = Array(data_type_names)
+
+    data_type_ids = base_data_type_ids + CensusDataType.reverse_lookup(data_type_names).map(&:id)
+    data_type_ids.uniq!
 
     max_years = CensusDataSet.max_year_per_data_type(@state)
 
@@ -26,6 +30,12 @@ class CensusDataForSchoolQuery
       .include_school_district_state(@school.id)
 
     CensusDataResults.new(results.all)
+  end
+
+  def latest_data_for_school(*args)
+    results = data_for_school *args
+    results.filter_to_max_year_per_data_type! @state
+    results
   end
 
 end

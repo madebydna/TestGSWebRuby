@@ -1,4 +1,5 @@
 <% data_config = category_placement.table_config %>
+<% data = TableData.new data %>
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>
 
     <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
@@ -6,7 +7,11 @@
 
     </div>
 
-    <% ethnicity_array = data.to_piechart :ethnicity, :school_value %>
+    <% first_key = data_config.config['columns'][0]['key'].to_sym %>
+    <% second_key = data_config.config['columns'][1]['key'].to_sym %>
+    <% chart_name = data_config.config['chart_name'] %>
+
+    <% data_array = data.to_piechart first_key, second_key %>
     <% piechart_options = {
             fontSize: '13',
             title: category.name
@@ -16,11 +21,11 @@
     <% content_for :head do %>
         <script type="text/javascript">
             GS.visualchart.drawPieChart(
-                <%= raw ethnicity_array.to_json %>,
+                <%= raw data_array.to_json %>,
                 'piechart',
                 null,
                 <%= raw data_config.config.merge(piechart_options).to_json %>,
-                'ethnicity'
+                '<%= raw chart_name %>'
             );
         </script>
     <% end %>

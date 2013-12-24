@@ -132,8 +132,7 @@ class CategoryDataReader
   def self.student_ethnicity(school, _)
 
     results = CensusDataForSchoolQuery.new(school)
-      .data_for_school
-      .filter_to_max_year_per_data_type!(school.state)
+      .latest_data_for_school
       .for_data_type!('ethnicity')
 
     results ||= []
@@ -151,10 +150,61 @@ class CategoryDataReader
     rows.sort_by! { |row| row[:school_value] }.reverse!
 
     if rows.any?
-      TableData.new rows
+      rows
     else
       nil
     end
+  end
+
+  # This method will return all of the various data keys that are configured to display for a certain *source*
+  # This works by aggregating all of the CategoryData keys for Categories which use this source
+  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
+  # this method would return all the keys configured for both Ethnicity and Details
+  def self.all_configured_keys(source = caller[0][/`.*'/][1..-2])
+
+    Rails.cache.fetch("all_configured_keys/#{source}", expires_in: 1.hour) do
+      categories_using_source = Category.where(source: source).all
+
+      all_keys = []
+      categories_using_source.each{ |category| all_keys += category.keys }
+
+      # Add in keys where source is specified in CategoryData
+      all_keys += CategoryData.where(source: source).pluck(:response_key)
+    end
+  end
+
+  def self.census_data(school, category)
+    all_configured_data_types = all_configured_keys
+
+    # Get data for all data types
+    results = CensusDataForSchoolQuery.new(school).latest_data_for_school all_configured_data_types
+
+    # Filter data: return only data for this category's chosen data types
+    results.for_data_types! category.keys(school.collections)
+
+    data_type_to_results_map = results.group_by(&:data_type)
+
+    data = {}
+
+    # TODO: round the values from within the view's TableData object
+    data_type_to_results_map.each do |key, results|
+      rows = results.map do |census_data_set|
+        if census_data_set.state_value || census_data_set.school_value
+          {
+              breakdown: census_data_set.census_breakdown,
+              school_value: census_data_set.school_value,
+              district_value: census_data_set.district_value,
+              state_value: census_data_set.state_value
+          }
+        end
+      end.compact
+
+      rows.sort_by! { |row| row[:school_value] }.reverse! # TODO: turn this into config option in layout json or hardcode in view
+
+      data[key] = rows
+    end
+
+    data
   end
 
   def self.test_scores(school, _)

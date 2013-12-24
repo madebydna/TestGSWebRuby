@@ -69,7 +69,8 @@ school_basics = Category.create!(name: 'School basics', source:'esp_response')
 programs = Category.create!(name: 'Programs', source:'esp_response')
 sports = Category.create!(name: 'Sports', source:'esp_response')
 arts_music = Category.create!(name: 'Arts & Music', source:'esp_response')
-student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'student_ethnicity')
+student_ethnicity = Category.create!(name: 'Student ethnicity', source: 'census_data')
+english_language_learners = Category.create!(name: 'English language learners', source: 'census_data')
 category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', source:'esp_response')
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
@@ -80,34 +81,104 @@ dummy_category = Category.create!(name: 'Dummy', source:'dummy')
 # Category placements
 # defaults (no collection)
 # different config for different page  - Details
-CategoryPlacement.create!(category: school_basics, page: details, position: 3, size: 12 )
-CategoryPlacement.create!(category: arts_music, page: details, position: 4, size: 6 )
-CategoryPlacement.create!(category: programs, page: details, position: 5, size: 6 )
-CategoryPlacement.create!(
-    category: student_ethnicity, page: details, position: 7, title: 'Ethnicity pie chart', layout: 'pie_chart', size: 4,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+CategoryPlacement.create!(category: school_basics, page: details)
+CategoryPlacement.create!(category: arts_music, page: details)
+CategoryPlacement.create!(category: programs, page: details)
+ethnicity_group = CategoryPlacement.create!(category: dummy_category, page: details, title: 'Student ethnicity', layout: 'group', layout_config: (
+  {
+      child_sizes: [
+          { xs: 4, sm: 4, md: 4, lg: 4 },
+          { xs: 8, sm: 8, md: 8, lg: 8 }
+      ]
+  }).to_json
 )
+ethnicity_pie = CategoryPlacement.create!(
+    category: student_ethnicity, page: details, title: 'Ethnicity pie chart', layout: 'pie_chart', layout_config: (
+    {
+      chart_name: 'ethnicity',
+      columns: [
+          { key: 'breakdown' },
+          { key: 'school_value' }
+      ]
+    }).to_json
+)
+ethnicity_pie.parent = ethnicity_group
+ethnicity_pie.save!
+
+ethnicity_data = CategoryPlacement.create!(
+    category: student_ethnicity, page: details, title: 'Ethnicity data', layout: 'configured_table',
+    layout_config: ({
+        hide_header: true,
+        columns: [
+            {
+                label: 'Student ethnicity',
+                hide_header: true,
+                key: 'breakdown'
+            },
+            {
+                label: 'This school',
+                key: 'school_value',
+                format: 'percentage',
+                precision: 0
+            },
+            {
+                label: 'State average',
+                key: 'state_value',
+                format: 'percentage',
+                precision: 0
+            }
+        ]
+    }).to_json
+)
+ethnicity_data.parent = ethnicity_group
+ethnicity_data.save!
+
 CategoryPlacement.create!(
-    category: student_ethnicity, page: details, title: 'Ethnicity data', position: 8, layout: 'configured_table', size: 8,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+    category: english_language_learners, page: details, title: 'English language learners', layout: 'configured_table',
+    layout_config: ({
+        columns: [
+            {
+                label: 'Language',
+                hide_header: true,
+                key: 'breakdown'
+            },
+            {
+                label: 'This school',
+                key: 'school_value',
+                format: 'percentage',
+                precision: 0
+            },
+            {
+                label: 'State average',
+                key: 'state_value',
+                format: 'percentage',
+                precision: 0
+            }
+        ]
+    }).to_json
 )
 
 
 # different config for different page  - Overview
-CategoryPlacement.create!(category: snapshot, page: overview, position: 1, layout: 'snapshot',
-                          layout_config: "{ \"enrollment\": {\"format\": \"integer\"}}" )
-CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview, position: 3, size: 12 )
-CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview, position: 4, size: 12 )
-#CategoryPlacement.create!(category: dummy_category, layout: 'details', title: 'Details', page: overview, position: 5, size: 12 )
-CategoryPlacement.create!(category: details_summary, page: overview, position: 7, title: 'Details', layout: 'details')
+CategoryPlacement.create!(category: snapshot, page: overview, layout: 'snapshot', layout_config: "{ \"enrollment\": {\"format\": \"integer\"}}" )
+CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview)
+CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview)
+CategoryPlacement.create!(category: details_summary, page: overview, title: 'Details', layout: 'details')
 CategoryPlacement.create!(
-    category: student_ethnicity, page: overview, position: 8, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', size: 12,
-    layout_config: "{ \"columns\": \r\n  [ \r\n  \t{ \r\n    \t\"label\": \"Student ethnicity\", \r\n    \t\"hide_header\": true, \r\n    \t\"key\": \"ethnicity\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"School value\", \r\n    \t\"key\": \"school_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t}, \r\n  \t{ \r\n    \t\"label\": \"State value\", \r\n    \t\"key\": \"state_value\", \r\n    \t\"format\": \"percentage\" \r\n  \t} \r\n  ] \r\n}"
+    category: student_ethnicity, page: overview, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', layout_config: (
+    {
+        chart_name: 'overview',
+        columns: [
+            { key: 'breakdown' },
+            { key: 'school_value' }
+        ]
+    }).to_json
 )
-CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview, position: 9, size: 12 )
+CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview)
+
 
 # different config for different page - Quality
-CategoryPlacement.create!(category: test_scores, page: quality, position: 6, size: 12, layout: 'test_scores')
+CategoryPlacement.create!(category: test_scores, page: quality, layout: 'test_scores')
 
 
 
@@ -157,4 +228,5 @@ CategoryData.create!(category: details_summary, response_key:'boys_sports')
 CategoryData.create!(category: details_summary, response_key:'student_clubs')
 CategoryData.create!(category: details_summary, response_key:'foreign_language')
 
-
+CategoryData.create!(category: student_ethnicity, response_key:'Ethnicity')
+CategoryData.create!(category: english_language_learners, response_key:'Home language')

@@ -6,17 +6,18 @@ class CensusDataSet < ActiveRecord::Base
   include StateSharding
   include LookupDataPreloading
 
-  #has_lookup :census_data_type, :class_name => 'CensusDataType', :foreign_key => 'data_type_id'
-
   has_many :census_data_school_values, class_name: 'CensusDataSchoolValue', foreign_key: 'data_set_id'
   has_many :census_data_district_values, class_name: 'CensusDataDistrictValue', foreign_key: 'data_set_id'
   has_many :census_data_state_values, class_name: 'CensusDataStateValue', foreign_key: 'data_set_id'
-  has_one :census_breakdown, foreign_key: 'datatype_id'
+  belongs_to :census_data_breakdown, foreign_key: 'breakdown_id'
 
   delegate :value, :modified, :modified_by,
            to: :census_data_school_value, prefix: 'school', allow_nil: true
   delegate :value, :modified, :modified_by,
+           to: :census_data_district_value, prefix: 'district', allow_nil: true
+  delegate :value, :modified, :modified_by,
            to: :census_data_state_value, prefix: 'state', allow_nil: true
+
   delegate :value_int,
            to: :census_data_school_value, prefix: 'school', allow_nil: true
 
@@ -35,6 +36,9 @@ class CensusDataSet < ActiveRecord::Base
 
   def census_data_school_value
     census_data_school_values[0] if census_data_school_values.any?
+  end
+  def census_data_district_value
+    census_data_district_values[0] if census_data_district_values.any?
   end
   def census_data_state_value
     census_data_state_values[0] if census_data_state_values.any?
@@ -76,59 +80,14 @@ class CensusDataSet < ActiveRecord::Base
       level_code: level_code,
       breakdown: census_breakdown || '',
       school_value: school_value,
+      district_value: district_value,
       school_value_int: int_value,
       state_value: state_value
     )
   end
 
   def census_breakdown
-    # TODO: fix hardcoded value
-    #CensusBreakdown.using(:master).where(datatype_id: '11', id: lookup[breakdown_id]).first
-    breakdown = lookup[breakdown_id]
-    lookup_breakdown_text[breakdown]
-  end
-
-  def lookup_breakdown_text
-    {
-      1 => 'White, non-Hispanic',
-      2 => 'Black, non-Hispanic',
-      3 => 'Hispanic',
-      4 => 'American Indian/Alaskan Native',
-      5 => 'Asian/Pacific Islander',
-      6 => 'Multiracial',
-      7 => 'Asian',
-      8 => 'Pacific Islander',
-      10 => 'Native American or Native Alaskan',
-      11 => 'Hawaiian',
-      12 => 'Unspecified',
-      13 => 'Filipino',
-      14 => 'Native Hawaiian or Other Pacific Islander'
-    }
-  end
-
-  def lookup
-    {
-      1 => 1,
-      2 => 2,
-      3 => 3,
-      4 => 4,
-      5 => 5,
-      6 => 6,
-      7 => 7,
-      8 => 8,
-      9 => 9,
-      10 => 10,
-      11 => 11,
-      12 => 12,
-      162 => 13,
-      209 => 14,
-      201 => 18,
-      202 => 15,
-      203 => 16,
-      204 => 17,
-      207 => 19,
-      208 => 20
-    }
+    census_data_breakdown.breakdown if census_data_breakdown
   end
 
 end

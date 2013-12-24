@@ -1,5 +1,5 @@
 class CategoryPlacement < ActiveRecord::Base
-  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :size, :title
+  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :title
   has_paper_trail
   has_ancestry
   db_magic :connection => :profile_config
@@ -11,6 +11,7 @@ class CategoryPlacement < ActiveRecord::Base
   delegate :data_for_school, :has_data?, to: :category
 
   after_initialize :set_defaults
+  before_validation :parse_layout_json
 
   # creates a key that identifies this placement's category on a specific page, with a specific format
   def page_category_layout_key
@@ -37,10 +38,6 @@ class CategoryPlacement < ActiveRecord::Base
     end
   end
 
-  def possible_sizes
-    (1..12)
-  end
-
   # return CategoryPlacements with collection_id in the provided
   # collections. If a single object is passed in, the Array(...) call will convert it to an array
   # Will return CategoryPlacements with nil collection_id
@@ -59,23 +56,22 @@ class CategoryPlacement < ActiveRecord::Base
 
   def set_defaults
     self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
-    self.size ||= 12 if self.has_attribute? :size
+  end
+
+  def parse_layout_json
+      self.layout_config = JSON.parse(layout_config).to_json if layout_config.present?
   end
 
   def layout_config_json
     if layout_config.present?
-      # TODO: handle unparsable layout_config. Maybe try to parse it upon insert, so bad data can't get in db
-      cleaned_layout_config = layout_config.gsub(/\t|\r|\n/, '').gsub(/[ ]+/i, ' ').gsub(/\\"/, '"')
-      layout_config_json = {}.to_json
-      layout_config_json = JSON.parse(cleaned_layout_config) unless cleaned_layout_config.nil? || cleaned_layout_config == ''
-      layout_config_json
+      JSON.parse(layout_config) if layout_config.present?
     else
       {}
     end
   end
 
   def table_config
-    layout_config.present? ? TableConfig.new(layout_config_json) : nil
+    TableConfig.new(layout_config_json)
   end
 
   def full_width_on_display?(display_size)

@@ -51,6 +51,27 @@ RailsAdmin.config do |config|
   # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
 
 
+  ###  CategoryData  ###
+
+  config.model 'CategoryData' do
+    list do
+      filters [:category]
+      field :category
+      field :response_key
+      field :collection
+      field :sort_order
+      field :source
+      field :updated_at
+    end
+
+    edit do
+      field :category
+      field :response_key
+      field :sort_order
+      field :source
+      field :collection
+    end
+  end
 
   ###  Category  ###
 
@@ -162,13 +183,6 @@ RailsAdmin.config do |config|
      filters [:page]
      field :page
      field :title
-     field :position
-     field :size, :enum do
-       enum_method do
-         :possible_sizes
-       end
-     end
-     #field :priority
      field :collection
      field :category
      field :layout, :enum do
@@ -180,23 +194,19 @@ RailsAdmin.config do |config|
 
    edit do
      field :title
-     #field :priority
      field :category
      field :page
-     field :position
-     field :size, :enum do
-       enum_method do
-         :possible_sizes
-       end
-     end
      field :collection
-     field :parent
      field :layout, :enum do
        enum_method do
          :possible_layouts
        end
      end
      field :layout_config, :text do
+       def value
+         data = super
+         JSON.pretty_unparse(JSON.parse(data)) if data.present?
+       end
        codemirror true
      end
      field :ancestry, :enum do

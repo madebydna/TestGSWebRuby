@@ -15,6 +15,10 @@ class Category < ActiveRecord::Base
       CategoryData.on_db(:profile_config).order('sort_order asc').belonging_to_collections(self, collections)
   end
 
+  def keys(collections = nil)
+    category_data(collections).map(&:response_key)
+  end
+
   def key_label_map(collections = nil)
     category_data(collections).inject({}) do |map, category_data_row|
       map[category_data_row.response_key] ||= category_data_row.response_key

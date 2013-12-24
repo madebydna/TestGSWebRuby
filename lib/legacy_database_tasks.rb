@@ -30,8 +30,11 @@ class LegacyDatabaseTasks
       TestDataBreakdown
       TestDataSubject
       TestDataType
+      census_data_breakdown
       census_data_type
       school_media
+      ethnicity
+      language
     ),
     surveys_tables: %w(
       school_rating

@@ -33,6 +33,14 @@ class TableData
   def initialize(rows = [], pluck_columns = [])
     @columns = Set.new
 
+    if rows.is_a? Hash
+      rows = rows.values
+    end
+
+    if rows.first.is_a? Array
+      rows = rows.inject([], &:+)
+    end
+
     if pluck_columns.any?
       rows = pluck_attributes rows, pluck_columns
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131218080556) do
+ActiveRecord::Schema.define(:version => 20131224043314) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -49,10 +49,12 @@ ActiveRecord::Schema.define(:version => 20131218080556) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "sort_order"
+    t.string   "source"
   end
 
   add_index "category_data", ["category_id"], :name => "index_category_data_on_category_id"
   add_index "category_data", ["response_key"], :name => "index_category_data_on_response_key"
+  add_index "category_data", ["source"], :name => "index_category_data_on_source"
 
   create_table "category_placements", :force => true do |t|
     t.integer  "category_id"
@@ -64,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20131218080556) do
     t.string   "layout"
     t.integer  "priority"
     t.text     "layout_config"
-    t.integer  "size"
     t.string   "title"
     t.string   "ancestry"
   end
