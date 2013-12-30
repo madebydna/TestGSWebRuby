@@ -76,6 +76,7 @@ test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
 details_summary = Category.create!(name: 'Details', source:'details')
 dummy_category = Category.create!(name: 'Dummy', source:'dummy')
+student_subgroups = Category.create!(name: 'Student subgroups', source:'census_data')
 
 
 # Category placements
@@ -180,6 +181,16 @@ CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', 
 # different config for different page - Quality
 CategoryPlacement.create!(category: test_scores, page: quality, layout: 'test_scores')
 
+CategoryPlacement.create!(category: student_subgroups, page: details, layout: 'configured_table', layout_config: ({
+    hide_header: false,
+    columns: [
+      { label: 'Label', key: 'key', hide_header: true },
+      { label: 'This school', key: 'school_value', format: 'percentage', precision: 0 },
+      { label: 'State average', key: 'state_value', format: 'percentage', precision: 0 }
+    ]
+  }).to_json
+)
+
 
 
 # Category data
@@ -230,3 +241,6 @@ CategoryData.create!(category: details_summary, response_key:'foreign_language')
 
 CategoryData.create!(category: student_ethnicity, response_key:'Ethnicity')
 CategoryData.create!(category: english_language_learners, response_key:'Home language')
+
+CategoryData.create!(category: student_subgroups, response_key:'English learners')
+CategoryData.create!(category: student_subgroups, response_key:'Students participating in free or reduced-price lunch program')
