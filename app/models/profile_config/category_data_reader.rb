@@ -17,12 +17,12 @@ class CategoryDataReader
       responses_per_key = data.group_by(&:response_key)
       responses_per_key.values.each { |values| values.map!(&:response_value) }
 
-      table_data = TableData.from_hash responses_per_key, :label, :value
-
       lookup_table = ResponseValue.lookup_table(school.collections)
-      table_data.transform_column! :label, lookup_table
-      table_data.transform_column! :value, lookup_table
-      table_data
+
+      responses_per_key.gs_rename_keys! { |key| lookup_table[key] || key }
+      responses_per_key.gs_transform_values! { |value| lookup_table[value] || value }
+
+      responses_per_key
     end
   end
 
@@ -186,7 +186,6 @@ class CategoryDataReader
 
     data = {}
 
-    # TODO: round the values from within the view's TableData object
     data_type_to_results_map.each do |key, results|
       rows = results.map do |census_data_set|
         if census_data_set.state_value || census_data_set.school_value
@@ -287,6 +286,10 @@ class CategoryDataReader
 
     end
     snapshot_results
+  end
+
+  def self.sources
+    methods(false) - [:key, :cache_methods, :all_configured_keys, :sources]
   end
 
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot

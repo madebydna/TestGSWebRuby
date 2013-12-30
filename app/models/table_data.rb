@@ -7,20 +7,17 @@ class TableData
 
   attr_reader :columns
 
-  # Generate a TableData from a json object
-  def self.from_json(json)
-    table_data = TableData.new
-    json.each { |k, v| table_data.send "#{k}=", v }
-    return table_data
-  end
-
   # Turn a hash into an array of hashes, using column1_name and column2_name as the keys for the new hashes
   def self.from_hash(hash, column1_name, column2_name)
     rows =
       hash.inject([]) do |array, (key, val)|
         h = {}
         h[column1_name] = key
-        h[column2_name] = val
+        if Array(val).first.is_a? Hash
+          h[column2_name] = Array(val).first[:school_value]
+        else
+          h[column2_name] = val
+        end
         array << h
         array
       end
@@ -34,6 +31,11 @@ class TableData
     @columns = Set.new
 
     if rows.is_a? Hash
+      rows.each do |key, value|
+        Array(value).each do |v|
+          v[:key] = key unless v[:key].present?
+        end
+      end
       rows = rows.values
     end
 

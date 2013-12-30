@@ -1,4 +1,6 @@
+<%= debug data if params[:debug] %>
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
+    <% data = TableData.from_hash(data, :label, :value) if !data.is_a? TableData %>
 
     <a name="<%= category.code_name %>"></a>
     <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
@@ -8,7 +10,7 @@
         <% data.rows.each do |row| %>
 
             <% label = row[:label] %>
-            <% value = row[:value] %>
+            <% value = Array(row[:value]) %>
             <% if value.nil? %>
                 <% value = ["na"] %>
             <% end %>
@@ -24,7 +26,7 @@
                 </td>
                 <td>
                     <% value.each do |pretty| %>
-                        <%= pretty.capitalize unless pretty.nil? %> <br/>
+                        <%= capitalize_if_string pretty %> <br/>
                     <% end %>
                 </td>
             </tr>

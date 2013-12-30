@@ -1,4 +1,5 @@
 <% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
 <% data = TableData.new data %>
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 

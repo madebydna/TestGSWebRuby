@@ -1,5 +1,5 @@
 class CategoryData < ActiveRecord::Base
-  attr_accessible :category_id, :category, :collection_id, :collection, :response_key, :sort_order
+  attr_accessible :category_id, :category, :collection_id, :collection, :response_key, :source, :sort_order
   has_paper_trail
   db_magic :connection => :profile_config
 
@@ -20,6 +20,10 @@ class CategoryData < ActiveRecord::Base
     Rails.cache.fetch("CategoryData/category_#{category.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
       order('category_id asc').order('collection_id desc').where(category_id:category.id).all
     end
+  end
+
+  def possible_sources
+    CategoryDataReader.sources
   end
 
 end

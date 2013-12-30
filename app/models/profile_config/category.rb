@@ -65,4 +65,8 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def possible_sources
+    CategoryDataReader.sources
+  end
+
 end

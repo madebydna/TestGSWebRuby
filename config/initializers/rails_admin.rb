@@ -68,7 +68,11 @@ RailsAdmin.config do |config|
       field :category
       field :response_key
       field :sort_order
-      field :source
+      field :source, :enum do
+        enum_method do
+          :possible_sources
+        end
+      end
       field :collection
     end
   end
@@ -119,9 +123,12 @@ RailsAdmin.config do |config|
       edit do
         field :parent
         field :name
-        field :source
+        field :source, :enum do
+          enum_method do
+            :possible_sources
+          end
+        end
         field :description
-        field :updated_at
       end
   #     export do; end
   #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
@@ -185,11 +192,7 @@ RailsAdmin.config do |config|
      field :title
      field :collection
      field :category
-     field :layout, :enum do
-       enum_method do
-         :possible_layouts
-       end
-     end
+     field :layout
    end
 
    edit do
