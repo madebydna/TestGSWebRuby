@@ -4,6 +4,15 @@ class TestDataSchoolValue < ActiveRecord::Base
   attr_accessible :active, :data_set_id, :number_tested, :school_id, :value_float, :value_text
   belongs_to :test_data_set, :class_name => 'TestDataSet', foreign_key: 'data_set_id'
 
+
+  def modified_by
+    modifiedBy
+  end
+
+  def modified_by=(arg)
+    self.modifiedBy = arg
+  end
+
   scope :active, where(active: 1)
   def self.for_school school, data_set_ids
     TestDataSchoolValue.on_db(school.shard).active.where(data_set_id: data_set_ids, school_id: school.id)

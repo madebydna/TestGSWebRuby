@@ -7,7 +7,7 @@
         <div  data-spy="affix" class="spy-nav">
             <ul class="nav nav-list nav-stacked">
                 <% @page_config.placements.compact.each do |placement| %>
-                    <% if placement.full_width_on_display? 'lg' %>
+                    <% if placement.root? %>
                         <li>
                             <a href="#<%= category_placement_anchor placement %>">
                                 <%= category_placement_title placement %></a>

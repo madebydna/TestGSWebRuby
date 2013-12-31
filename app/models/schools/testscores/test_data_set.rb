@@ -7,6 +7,16 @@ class TestDataSet < ActiveRecord::Base
   has_many :test_data_state_values, class_name: 'TestDataStateValue', foreign_key: 'data_set_id'
   belongs_to :test_data_type, :class_name => 'TestDataType', foreign_key: 'data_type_id'
 
+  delegate :value_text, :modified, :modified_by,
+           to: :test_data_school_value, prefix: 'school', allow_nil: true
+  delegate :value_float, :modified, :modified_by,
+           to: :test_data_school_value, prefix: 'school', allow_nil: true
+
+  def test_data_school_value
+    test_data_school_values[0] if test_data_school_values.any?
+  end
+
+
   def self.fetch_data_sets_and_values(school, breakdown_id, active)
     TestDataSet.on_db(school.shard).select("*,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
                           TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text")
@@ -80,8 +90,5 @@ class TestDataSet < ActiveRecord::Base
     TestDataSet.on_db(school.shard).active.where(data_type_id: data_type_ids)
     .includes(:test_data_school_values).active.where('TestDataSchoolValue.school_id = ?', school.id)
   end
-
-
-
 
 end

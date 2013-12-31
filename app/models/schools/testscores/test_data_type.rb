@@ -13,4 +13,17 @@ class TestDataType < ActiveRecord::Base
       Rails.logger.debug "Could not locate TestDataType for id #{data_type_ids}"
     end
   end
+
+
+  def self.city_rating_data_type_ids
+    { "mi" => [198, 199, 200, 201]}
+  end
+
+  def self.state_rating_data_type_ids
+    { "mi" => [197]}
+  end
+
+  def self.gs_rating_data_type_ids
+    [164, 165, 166]
+  end
 end
