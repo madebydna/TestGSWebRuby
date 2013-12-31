@@ -292,12 +292,6 @@ class CategoryDataReader
     methods(false) - [:key, :cache_methods, :all_configured_keys, :sources]
   end
 
-  def self.data_description_keys
-    ['mi_state_accountability_summary','mi_esd_summary','what_is_gs_rating_summary']
-    #descriptions.map(&:data_key)
-  end
-
-
   def self.rating_data (school, _)
     city_rating_data_type_ids =  TestDataType.city_rating_data_type_ids[school.shard.to_s]
     state_rating_data_type_ids = TestDataType.state_rating_data_type_ids[school.shard.to_s]
@@ -305,21 +299,21 @@ class CategoryDataReader
     all_data_type_ids = city_rating_data_type_ids + state_rating_data_type_ids + gs_rating_data_type_ids
 
     results = TestDataSet.by_data_type_id(school, all_data_type_ids)
-    #descriptions = DataDescription.fetch_descriptions(['mi_state_accountability_summary','mi_esd_summary','what_is_gs_rating_summary'])
-    #description_hash = {}
-    #TODO use .map on the collection
-    #descriptions.each do |description| description_hash[description["data_key"]] = description["value"] end
+    descriptions = DataDescription.fetch_descriptions(DataDescription.data_description_keys)
+    description_hash = {}
+    #TODO can i use .map on the collection?
+    descriptions.each do |description| description_hash[description["data_key"]] = description["value"] end
 
     json_result = {}
-    json_result["gs_rating"] = {"rating" => school.school_metadata.overallRating,"description" => "blah"}
+    json_result["gs_rating"] = {"rating" => school.school_metadata.overallRating,"description" => description_hash["what_is_gs_rating_summary"]}
     results.each do |result|
 
 
         if (state_rating_data_type_ids.include? result.data_type_id )
-          json_result["state_rating"] = {"rating" => result.school_value_text, "description" => "blah"}
+          json_result["state_rating"] = {"rating" => result.school_value_text, "description" => description_hash["mi_state_accountability_summary"]}
         elsif city_rating_data_type_ids.include? result.data_type_id
           city_rating_hash = json_result["city_rating"].nil? ? {} : json_result["city_rating"]
-          city_rating_hash["description"] =  "blah"
+          city_rating_hash["description"] =  description_hash["mi_esd_summary"]
           city_sub_rating_hash = city_rating_hash["sub_rating"].nil? ? {} : city_rating_hash["sub_rating"]
           if result.data_type_id == 198
             city_sub_rating_hash["status"] = result.school_value_text
