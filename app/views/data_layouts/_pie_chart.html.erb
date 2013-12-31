@@ -1,9 +1,10 @@
 <% data_config = category_placement.table_config %>
 <% data = TableData.new data %>
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>
+    <% piechart_id = "piechart-#{category_placement_anchor category_placement}" %>
 
     <p style="padding-top: 50px; margin-top: -50px;"><!-- do not collapse --></p>
-    <div id="piechart" class="ma">
+    <div id="<%= piechart_id %>" class="ma">
 
     </div>
 
@@ -22,7 +23,7 @@
         <script type="text/javascript">
             GS.visualchart.drawPieChart(
                 <%= raw data_array.to_json %>,
-                'piechart',
+                "<%= piechart_id %>",
                 null,
                 <%= raw data_config.config.merge(piechart_options).to_json %>,
                 '<%= raw chart_name %>'
