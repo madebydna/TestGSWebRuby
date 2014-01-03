@@ -31,7 +31,7 @@ class School < ActiveRecord::Base
   # get the schools metadata
   def school_metadata
     schoolMetadata = Hashie::Mash.new()
-    school_metadatas.each do |metadata|
+    on_db(shard).school_metadatas.each do |metadata|
       schoolMetadata[metadata.meta_key] = metadata.meta_value
     end
     return schoolMetadata
