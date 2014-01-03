@@ -1,6 +1,7 @@
-<div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["state_rating"]["overall_rating"] %></div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>State Rating</strong>
-        <br/> <%= data["state_rating"]["description"] %> </div>
-</div>
-
+<% if !data["state_rating"].nil? && !data["state_rating"]["overall_rating"].nil? %>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["state_rating"]["overall_rating"] %></div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>State Rating</strong>
+            <br/> <%= data["state_rating"]["description"] %> </div>
+    </div>
+<% end %>

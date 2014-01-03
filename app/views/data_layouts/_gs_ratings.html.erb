@@ -1,11 +1,19 @@
-<div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["gs_rating"]["overall_rating"] %></div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>GreatSchools Rating</strong>
-        <br/> <%= data["gs_rating"]["description"] %> </div>
-    Learn More >> <br/>
-    <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
-        <%= key %>  <%= value %>    <br/>
-    <% end %>
-</div>
+<% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["gs_rating"]["overall_rating"] %></div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>GreatSchools Rating</strong>
+            <br/> <%= data["gs_rating"]["description"] %> </div>
+
+        <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
+            Learn More >> <br/>
+            <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
+                <%= key %>  <%= value %>    <br/>
+            <% end %>
+        <% end %>
+
+        <br/>
+        <br/>
+    </div>
+<% end %>
 
 

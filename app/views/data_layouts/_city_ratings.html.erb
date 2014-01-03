@@ -1,12 +1,19 @@
-<div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["city_rating"]["overall_rating"] %></div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong><%= data["city_rating"]["label"] %></strong>
-        <br/> <%= data["city_rating"]["description"] %><%= data["city_rating"]["sub_rating"] %></div>
+<% if !data["city_rating"].nil? && !data["city_rating"]["overall_rating"].nil? %>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["city_rating"]["overall_rating"] %></div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10">
+            <strong><%= data["city_rating"]["city_rating_label"] %></strong>
+            <br/> <%= data["city_rating"]["description"] %></div>
 
-    Learn More >> <br/>
-    <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
-        <%= key %>  <%= value %>    <br/>
-    <% end %>
+        <% if !data["city_rating"]["rating_breakdowns"].nil? %>
+            Learn More >> <br/>
+            <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
+                <%= key %>  <%= value %>    <br/>
+            <% end %>
+        <% end %>
 
-</div>
+        <br/>
+        <br/>
+    </div>
+<% end %>
 

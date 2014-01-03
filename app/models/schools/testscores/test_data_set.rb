@@ -92,7 +92,7 @@ class TestDataSet < ActiveRecord::Base
 
   scope :active, where(active: 1)
 
-  def self.by_data_type_id school, data_type_ids
+  def self.by_data_type_ids school, data_type_ids
     #TODO pass in the display target?
     TestDataSet.on_db(school.shard).active.where(data_type_id: data_type_ids)
     .includes(:test_data_school_values).active.where('TestDataSchoolValue.school_id = ?', school.id)
