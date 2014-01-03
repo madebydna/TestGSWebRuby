@@ -1,3 +1,6 @@
-STATE RATING:     <br/>
-<%= data["state_rating"]%>   <br/>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["state_rating"]["overall_rating"] %></div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>State Rating</strong>
+        <br/> <%= data["state_rating"]["description"] %> </div>
+</div>
 

@@ -308,51 +308,59 @@ class CategoryDataReader
   end
 
   def self.rating_data (school, _)
-    city_rating_data_type_ids =  TestDataType.city_rating_data_type_ids[school.shard.to_s]
-    state_rating_data_type_ids = TestDataType.state_rating_data_type_ids[school.shard.to_s]
-    gs_rating_data_type_ids = TestDataType.gs_rating_data_type_ids
+
+    city_rating_configuration = TestDataType.city_rating_configuration[school.shard.to_s]
+    city_rating_data_type_ids = city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
+    state_rating_configuration = TestDataType.state_rating_configuration[school.shard.to_s]
+    state_rating_data_type_ids =  Array(state_rating_configuration.overall.data_type_id)
+    gs_rating_data_type_ids = TestDataType.gs_rating_configuration.rating_breakdowns.values.map(&:data_type_id)
+
     all_data_type_ids = city_rating_data_type_ids + state_rating_data_type_ids + gs_rating_data_type_ids
 
     results = TestDataSet.by_data_type_id(school, all_data_type_ids)
     descriptions = DataDescription.fetch_descriptions(DataDescription.data_description_keys)
     description_hash = {}
     #TODO can i use .map on the collection?
-    descriptions.each do |description| description_hash[description["data_key"]] = description["value"] end
+    descriptions.each do |description|
+      description_hash[description["data_key"]] = description["value"]
+    end
 
     json_result = {}
-    json_result["gs_rating"] = {"rating" => school.school_metadata.overallRating,"description" => description_hash["what_is_gs_rating_summary"]}
+    json_result["gs_rating"] = {"overall_rating" => school.school_metadata.overallRating, "description" => description_hash["what_is_gs_rating_summary"]}
     results.each do |result|
 
 
-        if (state_rating_data_type_ids.include? result.data_type_id )
-          json_result["state_rating"] = {"rating" => result.school_value_text, "description" => description_hash["mi_state_accountability_summary"]}
-        elsif city_rating_data_type_ids.include? result.data_type_id
-          city_rating_hash = json_result["city_rating"].nil? ? {} : json_result["city_rating"]
-          city_rating_hash["description"] =  description_hash["mi_esd_summary"]
-          city_sub_rating_hash = city_rating_hash["sub_rating"].nil? ? {} : city_rating_hash["sub_rating"]
-          if result.data_type_id == 198
-            city_sub_rating_hash["status"] = result.school_value_text
-          elsif result.data_type_id == 199
-            city_sub_rating_hash["progress"] = result.school_value_text
-          elsif result.data_type_id == 200
-            city_sub_rating_hash["climate"] = result.school_value_text
-          elsif result.data_type_id == 201
-            city_rating_hash["rating"] = result.school_value_text
+      if (state_rating_data_type_ids.include? result.data_type_id)
+        json_result["state_rating"] = {"overall_rating" => result.school_value_text, "description" => description_hash["mi_state_accountability_summary"]}
+      elsif city_rating_data_type_ids.include? result.data_type_id
+        city_rating_hash = json_result["city_rating"].nil? ? {} : json_result["city_rating"]
+        city_rating_hash["description"] = description_hash["mi_esd_summary"]
+        city_rating_hash["label"] = result.display_name
+        city_sub_rating_hash = city_rating_hash["rating_breakdowns"].nil? ? {} : city_rating_hash["rating_breakdowns"]
+
+        city_rating_configuration.rating_breakdowns.each do |key, config|
+          if result.data_type_id == config.data_type_id
+            city_sub_rating_hash[config.label] = result.school_value_text
           end
-          json_result["city_rating"] = city_rating_hash
-          json_result["city_rating"]["sub_rating"] = city_sub_rating_hash
-        elsif gs_rating_data_type_ids.include? result.data_type_id then
-          gs_rating_hash = json_result["gs_rating"]
-          gs_sub_rating_hash = gs_rating_hash["sub_rating"].nil? ? {} : gs_rating_hash["sub_rating"]
-          if result.data_type_id == 164
-            gs_sub_rating_hash["test_scores"] = result.school_value_float
-          elsif result.data_type_id == 165
-            gs_sub_rating_hash["progress"] = result.school_value_float
-          elsif result.data_type_id == 166
-            gs_sub_rating_hash["college_readiness"] = result.school_value_float
+        end
+
+        if result.data_type_id == city_rating_configuration.overall.data_type_id
+          city_rating_hash["overall_rating"] = result.school_value_text
+        end
+
+        json_result["city_rating"] = city_rating_hash
+        json_result["city_rating"]["rating_breakdowns"] = city_sub_rating_hash
+      elsif gs_rating_data_type_ids.include? result.data_type_id then
+        gs_rating_hash = json_result["gs_rating"]
+        gs_sub_rating_hash = gs_rating_hash["rating_breakdowns"].nil? ? {} : gs_rating_hash["rating_breakdowns"]
+
+        TestDataType.gs_rating_configuration.rating_breakdowns.each do |key, config|
+          if result.data_type_id == config.data_type_id
+            gs_sub_rating_hash[config.label] = result.school_value_float.round
           end
-          json_result["gs_rating"] = gs_rating_hash
-          json_result["gs_rating"]["sub_rating"] = gs_sub_rating_hash
+        end
+        json_result["gs_rating"] = gs_rating_hash
+        json_result["gs_rating"]["rating_breakdowns"] = gs_sub_rating_hash
       end
 
     end

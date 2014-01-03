@@ -1,3 +1,12 @@
-CITY RATING:     <br/>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["city_rating"]["overall_rating"] %></div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong><%= data["city_rating"]["label"] %></strong>
+        <br/> <%= data["city_rating"]["description"] %><%= data["city_rating"]["sub_rating"] %></div>
 
-<%= data["city_rating"]%>  <br/>
+    Learn More >> <br/>
+    <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
+        <%= key %>  <%= value %>    <br/>
+    <% end %>
+
+</div>
+
