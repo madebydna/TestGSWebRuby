@@ -65,6 +65,9 @@ gem 'rails_admin_nestable'
 # Gives syntax highlighting functionality for code displayed on page
 gem 'coderay'
 
+# JS testing framework
+gem 'mocha_rails'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
@@ -106,8 +109,6 @@ group :development, :test do
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
 
-  # JS testing framework
-  gem 'mocha_rails'
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'
 
