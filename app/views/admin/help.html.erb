@@ -42,7 +42,7 @@
 </div>
 <div class="rightcolumn col-lg-10">
 <h3>Some example data:</h3>
-<%= raw CodeRay.scan(JSON.pretty_unparse(@data), :ruby).div(:line_numbers => :table) %>
+<%= raw CodeRay.scan(JSON.pretty_unparse(@data), :ruby).div %>
 
 <h3>Effects of various JSON configurations on different layouts:</h3>
 <br/>
@@ -81,7 +81,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -121,7 +121,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -164,7 +164,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -193,7 +193,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -229,7 +229,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -265,7 +265,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -302,7 +302,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -339,7 +339,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -379,7 +379,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -425,7 +425,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -465,7 +465,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
@@ -499,7 +499,7 @@
     %>
     <% category_placement.layout_config = config.to_json %>
 
-    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div %>
   </div>
   <div class="col-lg-9">
     <%= render 'data_layouts/pie_chart', category_placement: category_placement, data: @data, category: category %>
