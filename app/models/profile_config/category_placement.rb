@@ -8,7 +8,7 @@ class CategoryPlacement < ActiveRecord::Base
   belongs_to :collection
   belongs_to :page
 
-  delegate :data_for_school, :has_data?, to: :category
+  delegate :data_for_school, to: :category
 
   after_initialize :set_defaults
   before_validation :parse_layout_json
@@ -16,6 +16,14 @@ class CategoryPlacement < ActiveRecord::Base
   # creates a key that identifies this placement's category on a specific page, with a specific format
   def page_category_layout_key
     "page#{page.id}_category#{category.id}_layout#{layout}"
+  end
+
+  def has_data?(school)
+    if has_children?
+      children.map { |child| child.has_data?(school) }.any?
+    else
+      category.has_data? school
+    end
   end
 
   # layout name => partial name

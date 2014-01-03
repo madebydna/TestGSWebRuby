@@ -1,5 +1,5 @@
 class PageConfig
-  attr_reader :configured_placements_per_position, :position_datas
+  attr_reader :configured_placements_per_position, :position_datas, :school
 
   def initialize(page_name, school)
     @school = school
@@ -19,6 +19,10 @@ class PageConfig
 
   def root_placements
     @position_datas.select(&:root?).sort_by(&:position)
+  end
+
+  def root_placements_with_data
+    root_placements.select{ |placement| placement.has_data?(school) }
   end
 
 end

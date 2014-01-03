@@ -15,6 +15,10 @@ class Category < ActiveRecord::Base
       CategoryData.on_db(:profile_config).order('sort_order asc').belonging_to_collections(self, collections)
   end
 
+  def has_data?(school)
+    data_for_school(school).present?
+  end
+
   def keys(collections = nil)
     category_data(collections).map(&:response_key)
   end
