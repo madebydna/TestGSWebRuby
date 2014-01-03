@@ -56,7 +56,7 @@ class TableConfig
 
         yield label, value
       else
-        yield label, column['default'] || nil
+        yield label, column['default'] || 'N/A'
       end
     end
 

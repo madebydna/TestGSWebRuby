@@ -131,7 +131,7 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Set default text (N/A)</h5><p>If you want to customize what the "no value" text will be, use the "default" attribute</p>
+  <h5>Set default text (defaults to N/A)</h5><p>If you want to customize what the "no value" text will be, use the "default" attribute</p>
   <div class="col-lg-5">
     <%
        config = {
@@ -147,7 +147,7 @@
            {
              key: 'phone',
              label: 'Phone',
-             default: 'N/A'
+             default: ''
            },
            {
              key: 'score',
@@ -157,7 +157,7 @@
              key: 'website',
              label: 'Website',
              always_show: true,
-             default: 'N/A'
+             default: ''
            }
          ]
        }
