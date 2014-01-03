@@ -1,6 +1,8 @@
 <% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
 <% data = TableData.new data %>
+<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
     <a name="<%= category.code_name %>"></a>

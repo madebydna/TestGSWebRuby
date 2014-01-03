@@ -3,7 +3,7 @@ require 'forwardable'
 class TableData
   include Enumerable
   extend Forwardable
-  def_delegators :rows, :each, :<<
+  def_delegators :rows, :each, :<<, :gs_multisort!
 
   attr_reader :columns
 
@@ -123,6 +123,10 @@ class TableData
 
   def sort_descending(column)
     rows.sort_by { |row| row[column] }.reverse!
+  end
+
+  def sort!(array_of_options)
+    gs_multisort! array_of_options
   end
 
   def sort_by(column, order_lookup_map)

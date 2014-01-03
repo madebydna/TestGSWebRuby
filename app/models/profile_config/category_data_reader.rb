@@ -7,7 +7,8 @@ class CategoryDataReader
   def self.esp_response(school, category)
     esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).active
 
-    keys_to_use = category.category_data(school.collections).map(&:response_key)
+    # Find out which keys the Category is interested in
+    keys_to_use = category.keys(school.collections)
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
     data = esp_responses.select! { |response| keys_to_use.include? response.response_key}
@@ -15,10 +16,15 @@ class CategoryDataReader
     unless data.nil?
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
       responses_per_key = data.group_by(&:response_key)
+
+      # Sort the data the same way the keys are sorted in the config
+      responses_per_key = Hash[responses_per_key.sort_by { |key, value| keys_to_use.index(key) }]
+
+      # Instead of the hash values being EspResponse objects, make them be the response value
       responses_per_key.values.each { |values| values.map!(&:response_value) }
 
+      # Look up all keys and values in a lookup table. Replace the key or value if there's a match in the lookup table
       lookup_table = ResponseValue.lookup_table(school.collections)
-
       responses_per_key.gs_rename_keys! { |key| lookup_table[key] || key }
       responses_per_key.gs_transform_values! { |value| lookup_table[value] || value }
 
@@ -179,10 +185,18 @@ class CategoryDataReader
     # Get data for all data types
     results = CensusDataForSchoolQuery.new(school).latest_data_for_school all_configured_data_types
 
+    # Get the data types that this category needs. These come sorted based on sort_order
+    data_types = category.keys(school.collections)
+
     # Filter data: return only data for this category's chosen data types
-    results.for_data_types! category.keys(school.collections)
+    results.for_data_types! data_types
 
     data_type_to_results_map = results.group_by(&:data_type)
+
+    # Sort the data types the same way the keys are sorted in the config
+    data_type_to_results_map = Hash[data_type_to_results_map.sort_by {
+        |data_type_desc, value| data_types.index(data_type_desc.downcase)
+    }]
 
     data = {}
 
@@ -198,7 +212,8 @@ class CategoryDataReader
         end
       end.compact
 
-      rows.sort_by! { |row| row[:school_value] }.reverse! # TODO: turn this into config option in layout json or hardcode in view
+      # Default the sort order of rows within a data type to school_value descending
+      rows.sort_by! { |row| row[:school_value] }.reverse!
 
       data[key] = rows
     end
