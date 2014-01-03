@@ -35,6 +35,12 @@
   }
 ] %>
 
+
+<div class="row">
+<div class="leftcolumn col-lg-2 prm">
+  <div class="toc"></div>
+</div>
+<div class="rightcolumn col-lg-10">
 <h3>Some example data:</h3>
 <%= raw CodeRay.scan(JSON.pretty_unparse(@data), :ruby).div(:line_numbers => :table) %>
 
@@ -45,8 +51,8 @@
 <br/>
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Minimal config: specify column keys, and the label to use</h5>
-  <div class="col-lg-6">
+  <h5>Minimal config</h5><p>Specify column keys, and the label to use</p>
+  <div class="col-lg-5">
     <%
       config = {
         columns: [
@@ -77,15 +83,15 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>By default, columns which no values will be hidden. To prevent this, use the always_show flag</h5>
-  <div class="col-lg-6">
+  <h5>Show columns with no values</h5><p>By default, columns which no values will be hidden. To prevent this, use the always_show flag</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -117,7 +123,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -125,8 +131,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>If you want to customize what the "no value" text will be, use the "default" attribute</h5>
-  <div class="col-lg-6">
+  <h5>Set default text (N/A)</h5><p>If you want to customize what the "no value" text will be, use the "default" attribute</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -160,7 +166,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -168,8 +174,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Specifying a subset of columns:  Just remove the columns you don't want</h5>
-  <div class="col-lg-6">
+  <h5>Hide entire columns</h5><p>Specifying a subset of columns:  Just remove the columns you don't want</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -189,15 +195,15 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Hide a column header: Use the hide_header boolean flag on the specific column</h5>
-  <div class="col-lg-6">
+  <h5>Hiding a column header</h5><p>Use the hide_header boolean flag on the specific column</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -225,15 +231,15 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Hide the table header: Use the hide_header flag at the top level:</h5>
-  <div class="col-lg-6">
+  <h5>Hide the table header</h5><p>Use the hide_header flag at the top level:</p>
+  <div class="col-lg-5">
     <%
        config = {
          hide_header: true,
@@ -261,7 +267,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -269,8 +275,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Format a column: specify the format</h5>
-  <div class="col-lg-6">
+  <h5>Formatting columns</h5><p>Specify the format attribute</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -298,7 +304,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -306,8 +312,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Rounding: specify the precision (number of decimal places)</h5>
-  <div class="col-lg-6">
+  <h5>Rounding values</h5><p>Specify the precision (number of decimal places)</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -335,7 +341,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -343,8 +349,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Sorting a column: specify the column key and the sort direction</h5>
-  <div class="col-lg-6">
+  <h5>Sorting columns</h5><p>Specify the column key and the sort direction</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -375,7 +381,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -383,8 +389,8 @@
 
 
 <div class="row pam" style="border-top:1px solid grey;">
-  <h5>Sorting on more than one column: Specify an array of sorts. They will be sorted in the order provided</h5>
-  <div class="col-lg-6">
+  <h5>Sorting on more than one column</h5><p>Specify an array of sorts. They will be sorted in the order provided</p>
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -421,7 +427,7 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
@@ -430,7 +436,7 @@
 
 <div class="row pam" style="border-top:1px solid grey;">
   <h5>Null values are always sorted last:</h5>
-  <div class="col-lg-6">
+  <div class="col-lg-5">
     <%
        config = {
          columns: [
@@ -461,13 +467,10 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-7">
     <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
-
-
-
 
 
 
@@ -480,7 +483,7 @@
 
 <div class="row pam" style="border-top:1px solid grey;">
   <h5>For pie charts, you must specify a chart name and two columns. The first column is used for legend / labels</h5>
-  <div class="col-lg-6">
+  <div class="col-lg-3">
     <%
        config = {
          chart_name: 'overview',
@@ -498,7 +501,42 @@
 
     <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-9">
     <%= render 'data_layouts/pie_chart', category_placement: category_placement, data: @data, category: category %>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  $(function() {
+    var ToC =
+      "<nav role='navigation' class='table-of-contents'>" +
+        "<h3>Table of contents:</h3>" +
+        "<ul>";
+
+    var newLine, el, title, link;
+
+    $("h5").each(function(index) {
+
+      el = $(this);
+      title = el.text();
+      if (el.attr("id") == undefined) {
+        el.attr("id","item" + index);
+      }
+      link = "#" + el.attr("id");
+
+      newLine =
+        "<li>" +
+          "<a href='" + link + "'>" +
+          title +
+          "</a>" +
+          "</li>";
+
+      ToC += newLine;
+    });
+
+    ToC += "</ul>" + "</nav>";
+
+    $(".toc").prepend(ToC);
+  });
+</script>
