@@ -34,7 +34,7 @@ class TableConfig
 
     format = column['format']
     case format
-      when 'percentage' || 'percent'
+      when 'percentage', 'percent'
         value = "#{value}%"
       else
         value
@@ -45,7 +45,6 @@ class TableConfig
 
     columns.each do |column|
       if hash[column['key'].to_sym]
-
         label = column['label']
         value = hash[column['key'].to_sym]
 
@@ -56,6 +55,8 @@ class TableConfig
         end
 
         yield label, value
+      else
+        yield label, column['default'] || nil
       end
     end
 

@@ -21,13 +21,15 @@
 
     <% content_for :head do %>
         <script type="text/javascript">
+          $(function() {
             GS.visualchart.drawPieChart(
-                <%= raw data_array.to_json %>,
-                "<%= piechart_id %>",
-                null,
-                <%= raw data_config.config.merge(piechart_options).to_json %>,
-                '<%= raw chart_name %>'
+              <%= raw data_array.to_json %>,
+              "<%= piechart_id %>",
+              null,
+              <%= raw data_config.config.merge(piechart_options).to_json %>,
+              '<%= raw chart_name %>'
             );
+          });
         </script>
     <% end %>
 

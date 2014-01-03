@@ -80,6 +80,27 @@ describe TableData do
       end
     end
 
+    describe 'should handle nulls' do
+      let(:data) {[
+        { id: 1, name: nil, score: 3 },
+        { id: 2, name: 'b', score: nil },
+        { id: 3, name: nil, score: nil }
+      ]}
+
+      subject(:table_data) { TableData.new data }
+
+      it 'should sort in ascending order on one column' do
+        table_data.sort!(key: 'name', direction: 'ascending')
+        expect(table_data.rows.map{|row| row[:id] }).to eq [2, 1, 3]
+      end
+
+      it 'should sort in descending order on one column' do
+        table_data.sort!(key: 'name', direction: 'descending')
+        expect(table_data.rows.map{|row| row[:id] }).to eq [2, 1, 3]
+      end
+
+    end
+
   end
 
 end

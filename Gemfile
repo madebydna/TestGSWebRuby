@@ -62,6 +62,9 @@ gem 'ancestry'
 # gem to extend railsadmin with a view for working with models that are trees
 gem 'rails_admin_nestable'
 
+# Gives syntax highlighting functionality for code displayed on page
+gem 'coderay'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests

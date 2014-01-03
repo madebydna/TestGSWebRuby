@@ -47,6 +47,9 @@ class TableData
       rows = pluck_attributes rows, pluck_columns
     end
 
+    # Remove rows where all values are nil
+    rows.reject!{ |row| row.values.compact.empty? }
+
     if rows.any?
       rows.each { |row| add_columns_for_row row }
     end
@@ -75,8 +78,9 @@ class TableData
     add_columns_for_row hash
   end
 
+  # Given a table row (hash of data) add each column that contains data to our array of columns
   def add_columns_for_row(row_hash)
-    row_hash.keys.each { |column| @columns.add column }
+    @columns += row_hash.select{ |key, value| value.present? }.keys
   end
 
   # for each row, remove all keys that dont exist in provided array

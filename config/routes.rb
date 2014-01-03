@@ -6,6 +6,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/join', :to => 'signin#new', :as => :signin
   match '/logout', :to => 'signin#destroy', :as => :logout
 
+  get '/gsr/admin/help', :to => 'admin#help'
+
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback

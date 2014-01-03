@@ -5,10 +5,10 @@ module ConfiguredTableHelper
 
     if value.is_a? Array
       value.each do |val|
-        output << val << '<br/>'
+        output << val.to_s << '<br/>' if value.present?
       end
     else
-      output << value
+      output << value.to_s if value.present?
     end
 
     output << '</td>'

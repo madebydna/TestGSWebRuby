@@ -47,7 +47,10 @@ GS.window.sizing.sizeBasedObjHash = function() {
         sizeHash.overview.pieChartHeight = 300;
         sizeHash.ethnicity.pieChartWidth = 280;
         sizeHash.ethnicity.pieChartHeight = 280;
-        sizeHash.global.map = gon.contact_map.lg;
+        if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('lg')) {
+            sizeHash.global.map = gon.contact_map.lg;
+        }
+
     }
     else{
         if(windowWidth < 990 && windowWidth >= 768 ){
@@ -55,7 +58,9 @@ GS.window.sizing.sizeBasedObjHash = function() {
             sizeHash.overview.pieChartHeight = 300;
             sizeHash.ethnicity.pieChartWidth = 280;
             sizeHash.ethnicity.pieChartHeight = 280;
-            sizeHash.global.map = gon.contact_map.lg;
+            if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('lg')) {
+                sizeHash.global.map = gon.contact_map.lg;
+            }
         }
         else{
             if(windowWidth  < 768 && windowWidth  > 480 ){
@@ -63,7 +68,9 @@ GS.window.sizing.sizeBasedObjHash = function() {
                 sizeHash.overview.pieChartHeight = 200;
                 sizeHash.ethnicity.pieChartWidth = 280;
                 sizeHash.ethnicity.pieChartHeight = 280;
-                sizeHash.global.map = gon.contact_map.md;
+                if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
+                    sizeHash.global.map = gon.contact_map.md;
+                }
             }
             else{
                 if(windowWidth  <= 480){
@@ -72,7 +79,9 @@ GS.window.sizing.sizeBasedObjHash = function() {
                     sizeHash.ethnicity.pieChartWidth = 280;
                     sizeHash.ethnicity.pieChartHeight = 280;
                     sizeHash.overview.pieChartLegend = 'none';
-                    sizeHash.global.map = gon.contact_map.sm;
+                    if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
+                        sizeHash.global.map = gon.contact_map.sm;
+                    }
                 }
             }
         }

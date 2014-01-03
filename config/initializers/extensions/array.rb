@@ -50,17 +50,33 @@ class Array
 
       array_of_options.each do |config|
         config.symbolize_keys!
+
         attribute = config[:key].to_sym
         direction = config[:direction]
 
         # default direction to ascending
-        if direction == 'descending'
+        ascending = direction != 'descending'
+
+        row1_value = ((row1.is_a? Hash)? row1[attribute] : row1.send(attribute))
+        row2_value = ((row2.is_a? Hash)? row2[attribute] : row2.send(attribute))
+
+        # When we eventually compare all the left_values and right_values, we can't compare a nil with a non-nil value
+        # So if one of the values is nil, just ensure both values are of the same type, and that the nil will be _last_
+        if row1_value.nil? && row2_value
+          row1_value = ascending ? 1:0
+          row2_value = ascending ? 0:1
+        elsif row2_value.nil? && row1_value
+          row1_value = ascending ? 0:1
+          row2_value = ascending ? 1:0
+        end
+
+        if ascending
           # If object in array is a hash, look up the value. Otherwise, call a method to get the value
-          left_values << ((row2.is_a? Hash)? row2[attribute] : row2.send(attribute))
-          right_values << ((row1.is_a? Hash)? row1[attribute] : row1.send(attribute))
+          left_values << row1_value
+          right_values << row2_value
         else
-          left_values << ((row1.is_a? Hash)? row1[attribute] : row1.send(attribute))
-          right_values << ((row2.is_a? Hash)? row2[attribute] : row2.send(attribute))
+          left_values << row2_value
+          right_values << row1_value
         end
       end
 

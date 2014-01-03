@@ -1,0 +1,504 @@
+<% category_placement = CategoryPlacement.new %>
+<% category = Category.new %>
+<% category.name = 'Table Title' %>
+<% category_placement.category = category %>
+<% category_placement.id = 1 %>
+
+<% @data = [
+  {
+    name: 'Alameda High School',
+    state: 'CA',
+    phone: '123-555-1111',
+    score: 9,
+    website: nil
+  },
+  {
+    name: 'Lowell High School',
+    state: 'CA',
+    phone: nil,
+    score: 7.25,
+    website: nil
+  },
+  {
+    name: 'Lincoln Elementary School',
+    state: 'AR',
+    phone: '123-555-3333',
+    score: 9,
+    website: nil
+  },
+  {
+    name: nil,
+    state: nil,
+    phone: nil,
+    score: nil,
+    website: nil
+  }
+] %>
+
+<h3>Some example data:</h3>
+<%= raw CodeRay.scan(JSON.pretty_unparse(@data), :ruby).div(:line_numbers => :table) %>
+
+<h3>Effects of various JSON configurations on different layouts:</h3>
+<br/>
+
+<h4>Configured Table layout</h4>
+<br/>
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Minimal config: specify column keys, and the label to use</h5>
+  <div class="col-lg-6">
+    <%
+      config = {
+        columns: [
+          {
+            key: 'name',
+            label: 'School Name'
+          },
+          {
+            key: 'state',
+            label: 'State'
+          },
+          {
+            key: 'phone',
+            label: 'Phone'
+          },
+          {
+            key: 'score',
+            label: 'Score'
+          },
+          {
+            key: 'website',
+            label: 'Website'
+          }
+        ]
+      }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>By default, columns which no values will be hidden. To prevent this, use the always_show flag</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           },
+           {
+             key: 'website',
+             label: 'Website',
+             always_show: true
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>If you want to customize what the "no value" text will be, use the "default" attribute</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone',
+             default: 'N/A'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           },
+           {
+             key: 'website',
+             label: 'Website',
+             always_show: true,
+             default: 'N/A'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Specifying a subset of columns:  Just remove the columns you don't want</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name',
+             hide_header: true
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Hide a column header: Use the hide_header boolean flag on the specific column</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name',
+             hide_header: true
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Hide the table header: Use the hide_header flag at the top level:</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         hide_header: true,
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Format a column: specify the format</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score',
+             format: 'percent'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Rounding: specify the precision (number of decimal places)</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score',
+             precision: 0
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Sorting a column: specify the column key and the sort direction</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ],
+         sort: {
+           key: 'name',
+           direction: 'descending'
+         }
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Sorting on more than one column: Specify an array of sorts. They will be sorted in the order provided</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ],
+         sort: [
+           {
+             key: 'score',
+             direction: 'descending'
+           },
+           {
+             key: 'name',
+             direction: 'ascending'
+           },
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>Null values are always sorted last:</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         columns: [
+           {
+             key: 'name',
+             label: 'School Name'
+           },
+           {
+             key: 'state',
+             label: 'State'
+           },
+           {
+             key: 'phone',
+             label: 'Phone'
+           },
+           {
+             key: 'score',
+             label: 'Score'
+           }
+         ],
+         sort: {
+           key: 'phone',
+           direction: 'ascending'
+         }
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/configured_table', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<br/>
+<h4>Pie Chart layout</h4>
+<br/>
+
+
+<div class="row pam" style="border-top:1px solid grey;">
+  <h5>For pie charts, you must specify a chart name and two columns. The first column is used for legend / labels</h5>
+  <div class="col-lg-6">
+    <%
+       config = {
+         chart_name: 'overview',
+         columns: [
+           {
+             key: 'name'
+           },
+           {
+             key: 'score'
+           }
+         ]
+       }
+    %>
+    <% category_placement.layout_config = config.to_json %>
+
+    <%= raw CodeRay.scan(JSON.pretty_unparse(config), :ruby).div(:line_numbers => :table) %>
+  </div>
+  <div class="col-lg-6">
+    <%= render 'data_layouts/pie_chart', category_placement: category_placement, data: @data, category: category %>
+  </div>
+</div>

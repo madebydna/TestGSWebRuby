@@ -401,6 +401,7 @@ DEPENDENCIES
   childprocess
   ckeditor
   codemirror-rails
+  coderay
   coffee-rails (~> 3.2.1)
   composite_primary_keys
   css_splitter (~> 0.1.1)
