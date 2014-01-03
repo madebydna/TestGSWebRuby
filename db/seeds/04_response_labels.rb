@@ -11,7 +11,7 @@ value_file_name = File.join("#{Rails.root}/db/osp_value_label_map.txt")
       fields = line.strip.split /\t/
 
       if fields.length != 2
-        puts "Incorrect number of field values for: #{line}. Excepted 2 fields, got #{fields.length}."
+        puts "(Warning) Incorrect number of field values for: #{line}. Excepted 2 fields, got #{fields.length}. Skipping row"
       else
         begin
           ResponseValue.create!(response_value: fields[0].strip, response_label: fields[1].strip)
