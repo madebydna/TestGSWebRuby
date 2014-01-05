@@ -11,10 +11,10 @@ module DbCharmer
         end
 
         def connection_name(connection_config_or_name)
-          if connection_config_or_name.respond_to? :connection_name
+          if connection_config_or_name.respond_to?(:connection_name) && connection_config_or_name.connection_name != nil
             connection_config_or_name.connection_name.to_sym
           else
-            connection_config_or_name.to_sym
+            connection_config_or_name
           end
         end
 
