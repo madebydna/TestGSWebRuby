@@ -2,7 +2,7 @@
 
 <% children = category_placement.children.sort_by(&:position) %>
     <% if children.any? && category_placement.title.present? %>
-        <div class="row">
+        <div class="row phs">
             <% if category_placement.title.present? %>
                 <h4>
                     <%= category_placement.title %>

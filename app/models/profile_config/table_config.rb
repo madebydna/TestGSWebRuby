@@ -56,7 +56,8 @@ class TableConfig
 
         yield label, value
       else
-        yield label, column['default'] || 'N/A'
+        # TODO: clean up
+        yield column['label'], column['default'] || 'N/A'
       end
     end
 
