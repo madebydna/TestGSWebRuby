@@ -27,7 +27,7 @@ class CensusDataForSchoolQuery
       .active
       .with_data_types(data_type_ids)
       .where(year: years)
-      .include_school_district_state(@school.id)
+      .include_school_district_state(@school.id, @school.district_id)
 
     CensusDataResults.new(results.all)
   end
