@@ -325,14 +325,8 @@ class CategoryDataReader
     #Build an array of all the data description keys so that we can query the table only once.
     data_description_keys = Array(city_rating_configuration.overall.description_key) +  Array(state_rating_configuration.overall.description_key) + Array(gs_rating_configuration.overall.description_key)
 
-    #Get the rating descriptions.
-    descriptions = DataDescription.fetch_descriptions(data_description_keys)
-
     #Build a hash of the data_keys to the rating descriptions.
-    description_hash = {}
-    descriptions.each do |description|
-      description_hash[description["data_key"]] = description["value"]
-    end
+    description_hash = DataDescription.lookup_table
 
     #Build a hash to hold the ratings results.
     ratings_data = {}
