@@ -1,0 +1,42 @@
+/* **************** SPRITE ***************** */
+
+.iconx16 {
+  display: inline-block;
+  background-image: url("icons/140106-16x16_icons.css.scss");
+  width: 16px;
+  height: 16px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-16-map-pin {
+  background-position: 0 0;
+}
+
+.i-16-heart {
+  background-position: -16px 0px;
+}
+
+.i-16-envelop {
+  background-position: -32px 0px;
+}
+
+.i-16-pencil {
+  background-position: -48px 0px;
+}
+
+.i-16-phone {
+  background-position: -64px 0px;
+}
+
+.i-16-fax {
+  background-position: -80px 0px;
+}
+
+.i-16-computer-screen {
+  background-position: -96px 0px;
+}
+
+.i-16-home {
+  background-position: -112px 0px;
+}
