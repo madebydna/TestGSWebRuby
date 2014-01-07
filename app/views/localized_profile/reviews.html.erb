@@ -4,7 +4,7 @@
 
 <div class="row limit_width_1200">
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
-        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10"  style="z-index: 1;">
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
             <div class="contents">
                 <div class="main">
                     BE THE FIRST TO REVIEW
@@ -12,7 +12,7 @@
             </div>
         </div>
     <% else %>
-        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-10"  style="z-index: 1;">
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="row">
@@ -111,14 +111,6 @@
             <button data-total-count="<%= @school_reviews_global.review_filter_totals.all %>" data-all-count="<%= @school_reviews_global.review_filter_totals.all %>" data-parent-count="<%= @school_reviews_global.review_filter_totals.parent %>" data-student-count="<%= @school_reviews_global.review_filter_totals.student %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 js_reviewsGetNextTen <%= @review_button_hide %>">Get Next Ten</button>
         </div>
     <% end %>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-        <div class="contents">
-            <div class="main">
-                <a name="Fascination"></a>
-                <h4 style="padding-top: 50px; margin-top: -50px;">School Sim</h4>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </div>
-        </div>
-    </div>
+
 </div>
 <%= render 'nav/footer' %>

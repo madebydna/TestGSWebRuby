@@ -1,39 +1,37 @@
 <% config=category_placement.layout_config_json %>
 
-<% column_1_contents = data[0..4] %>
-<% column_2_contents = data[5..10] %>
 
-<table class="table table-striped">
-    <% column_1_contents.each_with_index do |value_hash, index| %>
-        <tr>
-            <% value_hash.each do |key, value| %>
-                <td> <%= capitalize_if_string value[:label] %> </td>
-                <td>
-                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
-                        <%= value[:school_value].round %>
-                    <% else %>
-                        <%= capitalize_if_string value[:school_value] %>
+
+<% total_array_size = data.size %>
+<% left_table_size = total_array_size / 2 + total_array_size % 2 %>
+
+<% column_1_contents = data[0..left_table_size-1] %>
+<% column_2_contents = data[left_table_size..total_array_size] %>
+<% all_columns = [column_1_contents, column_2_contents]  %>
+
+<row class="limit_width_1200">
+    <div class="mtl">
+        <%  all_columns.each_with_index do |col_arr, index_all| %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="mhm">
+                <table class="table table-striped">
+                    <% col_arr.each_with_index do |value_hash, index| %>
+                        <tr>
+                            <% value_hash.each do |key, value| %>
+                                <td style="width:50%"> <%= capitalize_if_string value[:label] %> </td>
+                                <td style="width:50%">
+                                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
+                                        <%= value[:school_value].round %>
+                                    <% else %>
+                                        <%= capitalize_if_string value[:school_value] %>
+                                    <% end %>
+                                </td>
+                            <% end %>
+                        </tr>
                     <% end %>
-                </td>
-            <% end %>
-            <% value_hash_col2 = column_2_contents[index] if column_2_contents.present? %>
-            <% if value_hash_col2.present? %>
-                <% value_hash_col2.each do |key, value| %>
-                    <td><%= capitalize_if_string value[:label] %></td>
-                    <td>
-                        <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
-                            <%= value[:school_value].round %>
-                        <% else %>
-                            <%= capitalize_if_string value[:school_value] %>
-                        <% end %>
-                    </td>
-                <% end %>
-            <% else %>
-                <td></td>
-                <td></td>
-            <% end %>
-        </tr>
-    <% end %>
-</table>
-
-
+                </table>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</row>
