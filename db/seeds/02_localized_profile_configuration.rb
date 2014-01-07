@@ -77,6 +77,7 @@ snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
 details_summary = Category.create!(name: 'Details', source:'details')
 dummy_category = Category.create!(name: 'Dummy', source:'dummy')
 student_subgroups = Category.create!(name: 'Student subgroups', source:'census_data')
+ratings = Category.create!(name: 'Ratings', source:'rating_data')
 
 
 # Category placements
@@ -180,6 +181,18 @@ CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', 
 
 # different config for different page - Quality
 CategoryPlacement.create!(category: test_scores, page: quality, layout: 'test_scores')
+
+
+ratings_section = CategoryPlacement.create!(category: dummy_category, page: quality, title: 'Rating', layout: 'section')
+gs_rating = CategoryPlacement.create!(category: ratings, page: quality, title: 'GS Rating', layout: 'gs_ratings')
+gs_rating.parent = ratings_section
+gs_rating.save!
+city_rating = CategoryPlacement.create!(category: ratings, page: quality, title: 'City Rating', layout: 'city_ratings')
+city_rating.parent = ratings_section
+city_rating.save!
+state_rating = CategoryPlacement.create!(category: ratings, page: quality, title: 'State Rating', layout: 'state_ratings')
+state_rating.parent = ratings_section
+state_rating.save!
 
 CategoryPlacement.create!(category: student_subgroups, page: details, layout: 'configured_table', layout_config: ({
     hide_header: false,
