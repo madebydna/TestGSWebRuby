@@ -27,26 +27,6 @@
 @import "resources/galleria.classic";
 @import "gs/social-buttons";
 
-
-// Variable Definitions
-
-$page-width:    800px;
-$sidebar-width: 200px;
-$primary-color: #eeeeee;
-
-// Global Attributes
-
-
-
-// Scoped Styles
-.header_bg_image {background-image: url("background_header.gif");}
-.contents {
-  .main {
-    margin: 10px;
-    padding: 10px;
-    background: $primary-color;
-  }
-}
 .bg-white { background-color: #FFFFFF;}
 
 
