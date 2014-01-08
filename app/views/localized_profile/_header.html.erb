@@ -16,7 +16,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                     <div class="fl prm open-sans_sb"><strong class="mrm">GreatSchools rating</strong><span class="vam iconx24-ratings i-24-ratings-<%= @header_metadata.overallRating %>"></span></div>
                     <% if @school_reviews_global.review_filter_totals.all > 0 %>
-                        <div class="fl phm pt2"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><span class="pls vat"><%= write_review_count 'rating' %></span></div>
+                        <div class="fl phm pt2"><div class="fl mrm  open-sans_sb"><strong>Community rating</strong></div><div class="fl pt2"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></div></div>
                     <% end %>
 
                 </div>
