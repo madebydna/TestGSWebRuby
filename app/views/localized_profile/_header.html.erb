@@ -4,34 +4,38 @@
         <div class="fl prl">
             <% media_hash = @school.school_media_first_hash %>
             <% if media_hash %>
-                <!--<img class="thumbnail_border" src="<%= generate_img_path "130", media_hash %>" />-->
                 <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail_border") %>
             <% else %>
                 <%= image_tag @google_signed_image.sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+@google_signed_image.google_formatted_street_address+"&sensor=false"), :class => "thumbnail_border"%>
             <% end %>
         </div>
+
         <div class="fl header_title_width" >
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="open-sans_sb"><%= @school.name %></h1></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                    <div class="fl prm open-sans_sb"><strong class="mrm">GreatSchools rating</strong><span class="vam iconx24-ratings i-24-ratings-<%= @header_metadata.overallRating %>"></span></div>
+                    <% if @school.school_metadata.overallRating %>
+                        <div class="fl prm open-sans_sb"><strong class="mrm">GreatSchools rating</strong><span class="vam iconx24-ratings i-24-ratings-<%= @school.school_metadata.overallRating %>"></span></div>
+                    <% end %>
                     <% if @school_reviews_global.review_filter_totals.all > 0 %>
                         <div class="fl phm pt2"><div class="fl mrm  open-sans_sb"><strong>Community rating</strong></div><div class="fl pt2"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></div></div>
                     <% end %>
 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                    <% padding_for_next = 'prm' %>
-                    <% if @school.enrollment %>
-                        <div class="fl prm hvs"><%= @school.enrollment %> students</div>
-                        <% padding_for_next = 'phm' %>
+                    <% jo_momma = [
+                                   @school.enrollment.nil? ? nil : @school.enrollment + ' students',
+                                   @school.process_level,
+                                   @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
+                                   @school.city.gs_capitalize_first + ' ' + @school.state.upcase ].compact  %>
+
+                    <% jo_momma.each_with_index do | value, index | %>
+                         <% if index == 0  %>
+                            <div class="fl prm hvs"> <%= value %></div>
+                         <% else %>
+                            <div class="fl phm hvs"> <%= value %></div>
+                         <% end %>
                     <% end %>
-                    <% if @school.process_level %>
-                        <div class="fl <%= padding_for_next %> hvs"><%= @school.process_level %></div>
-                        <% padding_for_next = 'phm' %>
-                    <% end %>
-                    <div class="fl <%= padding_for_next %> hvs"><%= @school.type.capitalize %></div>
-                    <div class="fl phm hvs"><%= @school.city.capitalize + " " + @school.state.upcase %></div>
                     <div class="fl phm">Contact info</div>
                 </div>
             </div>

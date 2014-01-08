@@ -38,7 +38,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def set_header_data
-    @header_metadata = @school.school_metadata
+    #@header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
   end
 

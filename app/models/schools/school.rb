@@ -125,6 +125,19 @@ class School < ActiveRecord::Base
     return false
   end
 
+  def gs_rating
+    rating_data = CategoryDataReader.rating_data self, nil
+  end
+
+  def city_rating
+    rating_data = CategoryDataReader.rating_data self, nil
+  end
+
+  def state_rating
+    rating_data = CategoryDataReader.rating_data self, nil
+  end
+
+
 
 =begin
   def label_value_map_per_category(page)

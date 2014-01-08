@@ -334,7 +334,6 @@ class CategoryDataReader
     #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
     ratings_data["gs_rating"] = {"overall_rating" => school.school_metadata.overallRating,
                                 "description" => description_hash[gs_rating_configuration.overall.description_key]}
-
     #Loop over the results and construct the ratings data hash
     results.each do |result|
 
