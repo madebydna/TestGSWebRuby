@@ -64,10 +64,17 @@ class School < ActiveRecord::Base
     case l.size
       when 1
         l.first
+        if l.first == 'KG'
+          'K'
+        end
       when 0
         nil
       else
-        l.first + "-" + l.last
+        first_grade_level = l.first
+        if first_grade_level == 'KG'
+          first_grade_level = 'K'
+        end
+        first_grade_level + "-" + l.last
     end
   end
 

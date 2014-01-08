@@ -14,20 +14,24 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="open-sans_sb"><%= @school.name %></h1></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                    <div class="fl prm ptm open-sans_sb"><strong>GreatSchools rating <%= @header_metadata.overallRating %></strong></div>
+                    <div class="fl prm open-sans_sb"><strong class="mrm">GreatSchools rating</strong><span class="vam iconx24-ratings i-24-ratings-<%= @header_metadata.overallRating %>"></span></div>
                     <% if @school_reviews_global.review_filter_totals.all > 0 %>
-                        <div class="fl phm ptm"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><div class="fl pls"><%= write_review_count 'rating' %></div></div>
+                        <div class="fl phm pt2"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %><span class="pls vat"><%= write_review_count 'rating' %></span></div>
                     <% end %>
+
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                    <% padding_for_next = 'prm' %>
                     <% if @school.enrollment %>
-                        <div class="fl prm" style="border-right: 1px #CCCCCC solid;"><%= @school.enrollment %> students</div>
+                        <div class="fl prm hvs"><%= @school.enrollment %> students</div>
+                        <% padding_for_next = 'phm' %>
                     <% end %>
                     <% if @school.process_level %>
-                        <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.process_level %></div>
+                        <div class="fl <%= padding_for_next %> hvs"><%= @school.process_level %></div>
+                        <% padding_for_next = 'phm' %>
                     <% end %>
-                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.type.capitalize %></div>
-                    <div class="fl phm" style="border-right: 1px #CCCCCC solid;"><%= @school.city.capitalize + " " + @school.state.upcase %></div>
+                    <div class="fl <%= padding_for_next %> hvs"><%= @school.type.capitalize %></div>
+                    <div class="fl phm hvs"><%= @school.city.capitalize + " " + @school.state.upcase %></div>
                     <div class="fl phm">Contact info</div>
                 </div>
             </div>
