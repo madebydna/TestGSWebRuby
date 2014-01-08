@@ -309,7 +309,7 @@ class CategoryDataReader
 
   def self.rating_data (school, _)
     #Get the rating configuration for the city,state and GS ratings.
-    city_rating_configuration = RatingsConfiguration.city_rating_configuration[school.shard.to_s]
+    city_rating_configuration = RatingsConfiguration.city_rating_configuration[school.shard.to_s][school.city]
     city_rating_data_type_ids = city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
     state_rating_configuration = RatingsConfiguration.state_rating_configuration[school.shard.to_s]
     state_rating_data_type_ids = Array(state_rating_configuration.overall.data_type_id)
@@ -342,6 +342,7 @@ class CategoryDataReader
         ratings_data["state_rating"] = {"overall_rating" => result.school_value_text,
                                        "description" => description_hash[state_rating_configuration.overall.description_key]}
       elsif city_rating_data_type_ids.include? result.data_type_id
+        # TODO refactor into smaller method
         city_rating_hash = ratings_data["city_rating"].nil? ? {} : ratings_data["city_rating"]
         #Nested hash to hold the rating breakdowns.
         city_sub_rating_hash = city_rating_hash["rating_breakdowns"].nil? ? {} : city_rating_hash["rating_breakdowns"]
@@ -364,6 +365,7 @@ class CategoryDataReader
           ratings_data["city_rating"]["rating_breakdowns"] = city_sub_rating_hash
         end
       elsif gs_rating_data_type_ids.include? result.data_type_id then
+        # TODO refactor into smaller method
         #The gs ratings hash is construct above when adding the gs rating.
         gs_rating_hash = ratings_data["gs_rating"]
         #Nested hash to hold the rating breakdowns.

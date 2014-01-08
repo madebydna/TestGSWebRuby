@@ -1,14 +1,14 @@
 class RatingsConfiguration
 
   def self.city_rating_configuration
-    {"mi" => Hashie::Mash.new({
+    {"mi" => { "Detroit" => Hashie::Mash.new({
                                   rating_breakdowns: {
                                       climate: {data_type_id: 200, label: "Climate"},
                                       status: {data_type_id: 198, label: "Status"},
                                       progress: {data_type_id: 199, label: "Progress"}
                                   },
                                   overall: {data_type_id: 201, label: "overall", description_key: "mi_esd_summary"}
-                              })}
+                              })}}
   end
 
   def self.state_rating_configuration
