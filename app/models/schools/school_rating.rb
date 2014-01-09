@@ -23,6 +23,7 @@ class SchoolRating < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :who
   validates_presence_of :overall
+  validates_presence_of :status
   validates :comments, length: { minimum: 0, maximum: 1200 }
   validate :comments_word_count
 
