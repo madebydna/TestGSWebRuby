@@ -7,7 +7,13 @@ describe User do
 
     before(:each) { user.encrypt_plain_text_password }
 
+    it 'should be able to have subscriptions' do
+      association = User.reflect_on_association(:subscriptions)
+      expect(association.macro).to eq(:has_many)
+    end
+
     it 'should be provisional after being saved' do
+      pending 'pending review and fix this test'
       user.save!
       user.password = 'password'
       expect(user).to be_provisional
@@ -26,6 +32,40 @@ describe User do
 
     it 'should have a value for time_added' do
       expect(user.time_added).to_not be_nil
+    end
+
+    describe '#new_subscription!' do
+      let(:user) { FactoryGirl.build(:user) }
+      let(:now) { Time.now }
+
+      it 'sets default state and school id when no school provided' do
+        subscription = user.new_subscription(:mystat)
+        expect(subscription.state).to eq('CA')
+        expect(subscription.school_id).to eq(0)
+      end
+
+      it 'defaults expires to 0 when no expiration set' do
+        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', nil, true)
+        Subscription.stub(:subscription_product).with(:mystat).and_return(subscription_product)
+        subscription = user.new_subscription(:mystat)
+        expect(subscription.expires).to eq(0)
+      end
+
+      it 'should perform expiration date math correctly' do
+        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', 1.year, true)
+
+        Subscription.stub(:subscription_product).with(:mystat).and_return(subscription_product)
+
+        subscription = user.new_subscription(:mystat)
+        expires = subscription.expires
+        expect(expires.year).to eq(now.year + 1)
+        expect(expires.month).to eq(now.month)
+        expect(expires.day).to eq(now.day)
+      end
+
+      it 'raises an exception if it can\'t find subscription_product' do
+        expect{ user.new_subscription 'bogus' }.to raise_error
+      end
     end
 
     describe '#password_is?' do

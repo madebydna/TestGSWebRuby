@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   has_one :user_profile
+  has_many :subscriptions, foreign_key: 'member_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -138,6 +139,31 @@ class User < ActiveRecord::Base
     facebook_id.present?
   end
 
+  def add_subscription!(*args)
+    subscription = new_subscription *args
+    subscription.save!
+  end
+
+  def new_subscription(list, school = nil)
+    now = Time.now
+
+    subscription_product = Subscription.subscription_product list
+
+    raise "Subscription #{list} not valid" if subscription_product.nil?
+
+    state = school.present? ? school.state : 'CA'
+    school_id = school.present? ? school.id : 0
+    expires = subscription_product.duration.present? ? now + subscription_product.duration : 0
+
+    subscriptions.build(
+      list: subscription_product.name,
+      state: state,
+      school_id: school_id,
+      updated: now.to_s,
+      expires: expires
+    )
+  end
+
   private
 
   def encrypted_password=(encrypted_password)
@@ -179,5 +205,7 @@ class User < ActiveRecord::Base
   def set_defaults
     self.time_added = Time.now
   end
+
+
 
 end
