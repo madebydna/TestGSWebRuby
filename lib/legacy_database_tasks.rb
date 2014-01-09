@@ -26,6 +26,7 @@ class LegacyDatabaseTasks
     ),
     gs_schooldb_tables: %w(
       list_member
+      list_active
       TestDataSetFile
       TestDataBreakdown
       TestDataSubject
