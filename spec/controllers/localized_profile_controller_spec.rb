@@ -24,7 +24,6 @@ describe LocalizedProfileController do
 
     it 'should set data needed for header' do
       get action, state: 'ca', schoolId: 1
-      expect(assigns[:header_metadata]).to be_present
       expect(assigns[:school_reviews_global]).to be_present
     end
 
@@ -32,13 +31,6 @@ describe LocalizedProfileController do
       controller.stub(:find_school).and_return(nil)
       get action, state: 'ca', schoolId: 1
       expect(response.code).to eq('404')
-    end
-
-    it 'should look for a signed in user' do
-      pending
-      expect(User).to receive(:find).and_return(nil)
-      request.cookies['MEMID'] = 123
-      get 'overview'
     end
 
     it 'should convert a full state name to a state abbreviation' do
@@ -99,7 +91,6 @@ describe LocalizedProfileController do
 
     it 'should set data needed for header' do
       get 'reviews', state: 'ca', schoolId: 1
-      expect(assigns[:header_metadata]).to be_present
       expect(assigns[:school_reviews_global]).to be_present
     end
   end
