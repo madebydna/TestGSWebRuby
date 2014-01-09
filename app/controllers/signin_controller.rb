@@ -1,5 +1,6 @@
 class SigninController < ApplicationController
   include ReviewControllerConcerns
+  include PostLoginConcerns
 
   protect_from_forgery
 
@@ -67,7 +68,8 @@ class SigninController < ApplicationController
 
     log_user_in user if error.nil?
 
-    process_pending_actions user
+    action, params = get_post_login_action
+    self.send(action, params)
   end
 
   protected

@@ -45,6 +45,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/validations/email_available', :to => 'user#email_available'
 
+  resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
+
   scope '/gsr' do
     devise_for :admins
   end

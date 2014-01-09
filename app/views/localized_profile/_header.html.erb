@@ -52,8 +52,12 @@
                             </button>
                         <% end %>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Save school</button></div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas"><button class="btn btn-default" style="width:100%">Send updates</button></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                        <button class="btn btn-default" style="width:100%">Save school</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                        <%= render 'shared/send_me_updates_button', school: @school %>
+                    </div>
                 </div>
             </div>
         </div>
