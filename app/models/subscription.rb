@@ -5,11 +5,11 @@ class Subscription < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'member_id'
 
-  class SubscriptionProduct < Struct.new(:name, :long_name, :duration, :isNewsletter)
-  end
+  SubscriptionProduct = Struct.new(:name, :long_name, :duration, :isNewsletter)
 
   SUBSCRIPTIONS = {
     mystat: SubscriptionProduct.new('mystat', 'My School Stats', nil, true),
+    mystat_private: SubscriptionProduct.new('mystat_private', 'My School Stats for private schools', nil, true),
   }
 
   def self.subscription_product(list)

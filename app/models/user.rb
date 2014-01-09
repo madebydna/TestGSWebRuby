@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
 
     state = school.present? ? school.state : 'CA'
     school_id = school.present? ? school.id : 0
-    expires = subscription_product.duration.present? ? now + subscription_product.duration : 0
+    expires = subscription_product.duration.present? ? now + subscription_product.duration : nil
 
     subscriptions.build(
       list: subscription_product.name,
@@ -162,6 +162,12 @@ class User < ActiveRecord::Base
       updated: now.to_s,
       expires: expires
     )
+  end
+
+  def has_subscription?(list)
+    subscriptions.any? do |subscription|
+      subscription.list == list && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+    end
   end
 
   private

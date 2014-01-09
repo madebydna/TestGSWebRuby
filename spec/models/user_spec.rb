@@ -44,11 +44,11 @@ describe User do
         expect(subscription.school_id).to eq(0)
       end
 
-      it 'defaults expires to 0 when no expiration set' do
+      it 'defaults expires to nil when no expiration set' do
         subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', nil, true)
         Subscription.stub(:subscription_product).with(:mystat).and_return(subscription_product)
         subscription = user.new_subscription(:mystat)
-        expect(subscription.expires).to eq(0)
+        expect(subscription.expires).to be_nil
       end
 
       it 'should perform expiration date math correctly' do
