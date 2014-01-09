@@ -51,6 +51,10 @@ class School < ActiveRecord::Base
     (level_code_array & (Array(arr_levels))).any?
   end
 
+  def private_school?
+    type == 'private'
+  end
+
   def includes_preschool?
     includes_level_code? 'p'
   end
