@@ -24,7 +24,10 @@ LocalizedProfiles::Application.configure do
   config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 
   # For setting up Devise.
-  config.action_mailer.default_url_options = { :host => hostname_and_port }
+  config.action_mailer.default_url_options = {
+    host: ENV_GLOBAL['app_host'] || hostname,
+    port: ENV_GLOBAL['app_port'] || 3000
+  }
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.delivery_method = :smtp
