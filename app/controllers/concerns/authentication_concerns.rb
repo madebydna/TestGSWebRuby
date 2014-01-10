@@ -30,7 +30,7 @@ module AuthenticationConcerns
   end
 
   def login_from_cookie
-    return if auth_token.blank? || current_user || cookies[:MEMID].blank?
+    return if auth_token.blank? || logged_in? || cookies[:MEMID].blank?
 
     begin
       user = User.find(cookies[:MEMID])
@@ -59,7 +59,7 @@ module AuthenticationConcerns
   def auth_token
     cookie = cookies[legacy_community_cookie_name]
     return nil if cookie.blank?
-    cookie.gsub('~','=')
+    cookie.gsub('~','=').gsub(' ', '+')
   end
 
   def auth_token=(token)
