@@ -1,5 +1,4 @@
 FactoryGirl.define do
-  CensusDataSet.switch_connection_to(:ca)
 
   factory :census_data_school_value, class: CensusDataSchoolValue do
     sequence(:value_float)
