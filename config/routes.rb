@@ -11,6 +11,7 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
+  match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
 
   post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
     state: States.any_state_name_regex,

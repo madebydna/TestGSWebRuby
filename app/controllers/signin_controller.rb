@@ -48,6 +48,17 @@ class SigninController < ApplicationController
     redirect_to(signin_url)
   end
 
+  def post_registration_confirmation
+    redirect_url = params[:redirect]
+
+    if logged_in? && redirect_url.present?
+      execute_post_login_action
+      redirect_to redirect_url
+    else
+      # TODO: redirect to user profile or homepage
+    end
+  end
+
   # send to FB to login via Facebook Connect
   def facebook_connect
     redirect_to(FacebookAccess.facebook_connect_url(facebook_callback_url))
@@ -68,8 +79,7 @@ class SigninController < ApplicationController
 
     log_user_in user if error.nil?
 
-    action, params = get_post_login_action
-    self.send(action, params)
+    execute_post_login_action
   end
 
   protected
