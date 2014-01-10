@@ -16,12 +16,12 @@ class UserMailer < ActionMailer::Base
   def welcome_and_verify_email(request, user, redirect = request.referer || request.original_url, options = {})
     @user = user
     hash, date = @user.email_verification_token
+    post_registration_redirect = Addressable::URI.parse post_registration_confirmation_url
+    post_registration_redirect.query_values ||= { redirect: redirect }
     options.merge!({
       id:hash,
       date:date,
-      # state:'CA',
-      redirect: redirect,
-      from_email_verification: true
+      redirect: post_registration_redirect.to_s
     })
 
     path = verify_email_path(options)
