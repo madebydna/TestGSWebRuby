@@ -67,33 +67,16 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 
-#Just using _ca_test and _dc_test for testing. We can add other states for testing if needed.
 test: &test
   <<: *mysql_localhost
   database: LocalizedProfiles_test
-  profile_config:
-    <<: *mysql_localhost
-    database: LocalizedProfiles_test
-  ca:
-    <<: *mysql_localhost
-    database: _ca_test
-    legacy: true
-  dc:
-     <<: *mysql_localhost
-     database: _dc_test
-     legacy: true
-  gs_schooldb:
-    <<: *mysql_localhost
-    database: gs_schooldb_test
-    legacy: true
-  surveys:
-    <<: *mysql_localhost
-    database: surveys_test
-    legacy: true
-  community:
-      <<: *mysql_localhost
-      database: community_test
-      legacy: true
+<%= define_db('profile_config', 'LocalizedProfiles_test', false, 'mysql_localhost') %>
+<% States.state_hash.values.each do |abbreviation| %>
+<%= define_db(abbreviation.downcase, "_#{abbreviation.downcase}_test", true, 'mysql_localhost') %>
+<% end %>
+<%= define_db('gs_schooldb', 'gs_schooldb_test', true, 'mysql_localhost') %>
+<%= define_db('surveys', 'surveys_test', true, 'mysql_localhost') %>
+<%= define_db('community', 'community_test', true, 'mysql_localhost') %>
 
 cucumber:
   <<: *test
