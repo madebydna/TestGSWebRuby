@@ -1,3 +1,4 @@
+require 'addressable/uri'
 class UserMailer < ActionMailer::Base
   helper ApplicationHelper
 
