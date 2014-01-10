@@ -12,10 +12,10 @@ module ApplicationHelper
 
   def draw_stars_16(on_star_count)
     off_star_count = 5 - on_star_count
-    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ' fl'
-    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ' fl'
-    content_tag(:div, '', :class => class_on)  +
-        content_tag(:div, '', :class => class_off)
+    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ''
+    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ''
+    content_tag(:span, '', :class => class_on)  +
+        content_tag(:span, '', :class => class_off)
   end
 
   def write_review_count text_s
@@ -123,6 +123,23 @@ module ApplicationHelper
     if Rails.application.config.consider_all_requests_local
       render inline: '<div class="row"><strong>' + message + '</strong></div>'
     end
+  end
+
+  def render_array_horizontally(input_array, max_array)
+    min_size = 12 / input_array.size
+    size_str = ''
+    max_array.each do |key, value|
+      sizing_str = min_size
+      if min_size < value
+        sizing_str = value
+      end
+      size_str << ' col-'+key.to_s+'-'+sizing_str.to_s
+    end
+    output = ""
+    input_array.each_with_index do | value, index |
+      output << "<div class='"+size_str+"'>"+value+"</div>"
+    end
+    output
   end
 
 end

@@ -131,14 +131,17 @@ class School < ActiveRecord::Base
 
   def gs_rating
     rating_data = CategoryDataReader.rating_data self, nil
+    rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
   end
 
-  def city_rating
+  def local_rating
     rating_data = CategoryDataReader.rating_data self, nil
+    rating_data.fetch('city_rating',{}).fetch('overall_rating',nil)
   end
 
   def state_rating
     rating_data = CategoryDataReader.rating_data self, nil
+    rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
   end
 
 

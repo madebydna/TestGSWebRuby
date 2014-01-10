@@ -14,22 +14,30 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="open-sans_sb"><%= @school.name %></h1></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                    <% if @school.school_metadata.overallRating %>
-                        <div class="fl prm open-sans_sb"><strong class="mrm">GreatSchools rating</strong><span class="vam iconx24-ratings i-24-ratings-<%= @school.school_metadata.overallRating %>"></span></div>
+
+                    <% if @school.gs_rating  %>
+                        <div class="fl prl open-sans h24"><span class="mrm">GreatSchools rating:</span><span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span></div>
                     <% end %>
                     <% if @school_reviews_global.review_filter_totals.all > 0 %>
-                        <div class="fl phm pt2"><div class="fl mrm  open-sans_sb"><strong>Community rating</strong></div><div class="fl pt2"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></div></div>
+                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Community rating:</span><span class="mt2 vam"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></span></div>
                     <% end %>
+                    <% if @school.local_rating  %>
+                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Local rating:</span><span class="open-sans_sb"><%= @school.local_rating %></span></div>
+                    <% end %>
+                    <% if @school.state_rating  %>
+                        <div class="fl prl open-sans pt2 h24"><span class="mrm">State rating:</span><span class="open-sans_sb"><%= @school.state_rating %></span></div>
+                    <% end %>
+
 
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                    <% jo_momma = [
-                                   @school.enrollment.nil? ? nil : @school.enrollment + ' students',
+                    <% subheader_content = [
+                                   #@school.enrollment.nil? ? nil : @school.enrollment + ' students',
                                    @school.process_level,
                                    @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
                                    @school.city.gs_capitalize_first + ' ' + @school.state.upcase ].compact  %>
 
-                    <% jo_momma.each_with_index do | value, index | %>
+                    <% subheader_content.each_with_index do | value, index | %>
                          <% if index == 0  %>
                             <div class="fl prm hvs"> <%= value %></div>
                          <% else %>

@@ -1,16 +1,21 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
-        <hr />
-        <h3 class="pll">Ratings</h3>
+    <% ratings_array = [] %>
+    <% if @school.gs_rating  %>
+        <%  ratings_array << (render "shared/rating/gs_rating", rating:@school.gs_rating, supporting_text:'GreatSchools rating') %>
+    <% end %>
+    <% if @school.local_rating  %>
+        <%  ratings_array << (render "shared/rating/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating, supporting_text:'Detroit rating') %>
+    <% end %>
+    <% if @school.state_rating  %>
+        <%  ratings_array << (render "shared/rating/draw_rect_72x58_rating", rating:@school.state_rating, supporting_text:'Michigan rating') %>
+    <% end %>
+
+    <% if !ratings_array.empty? %>
+        <%= render "shared/section_header", title:'Quality', link_text:'See all Quality', link_to:'quality', subtitle:'These ratings help make it easier to find and compare schools.' %>
         <div class="pal">
             <div class="row">
-                <% if @school.includes_level_code? (['e','m','h']) %>
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art] %></div>
-                <% end %>
-
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sport] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang] %></div>
-
+                <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
             </div>
         </div>
+    <% end %>
 <% end %>
