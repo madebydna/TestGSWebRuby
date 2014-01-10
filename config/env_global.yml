@@ -1,4 +1,6 @@
 media_server: "http://www.gscdn.org/"
+app_host: "localhost"
+app_port: "8080"
 gsweb_host: "localhost"
 gsweb_port: "8080"
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
