@@ -1,4 +1,7 @@
 LocalizedProfiles::Application.configure do
+  require 'socket'
+  hostname = "#{Socket.gethostname}"
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -11,6 +14,20 @@ LocalizedProfiles::Application.configure do
   # set host that rails should use when building absolute urls
   config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
   config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
+
+  # For setting up Devise.
+  config.action_mailer.default_url_options = {
+    host: ENV_GLOBAL['app_host'] || hostname,
+    port: ENV_GLOBAL['app_port'] || 3000
+  }
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    :address => 'mail.greatschools.org',
+    :domain => 'greatschools.org',
+  }
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
