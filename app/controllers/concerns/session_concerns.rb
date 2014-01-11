@@ -3,27 +3,37 @@ module SessionConcerns
 
   STORED_LOCATION_EXPIRATION = 15.minutes
 
-  def store_location(uri = nil, overwrite = true)
-    if overwrite
-      value = uri || original_url
-    else
-      value = cookies[:return_to] || uri || original_url
+  def set_last_school_visited
+    if @school.present?
+      write_cookie_value :last_school, school_params(@school)
     end
+  end
+  def last_school_visited_params
+    read_cookie_value :last_school
+  end
+  def reviews_page_for_last_school
+    params = last_school_visited_params
+    school_reviews_url(last_school_visited_params) if params.present?
+  end
+  def overview_page_for_last_school
+    params = last_school_visited_params
+    school_url(last_school_visited_params) if params.present?
+  end
+  def review_form_for_last_school
+    params = last_school_visited_params
+    new_school_rating_url(last_school_visited_params) if params.present?
+  end
 
-    cookie = {
-      value: value,
-      domain: :all,
-      expires: STORED_LOCATION_EXPIRATION.from_now
-    }
+  def user_profile_or_home
+    logged_in? ? '/account/' : '/index.page'
+  end
 
-    cookies[:return_to] = cookie
+  def store_location(uri = original_url, overwrite = true)
+    write_cookie_value :history, uri, :last_page, overwrite
   end
 
   def stored_location
-    stored_location = cookies[:return_to]
-    if stored_location.present? && stored_location.include?('://')
-      stored_location
-    end
+    read_cookie_value :history, :last_page
   end
 
   def has_stored_location?
@@ -32,13 +42,13 @@ module SessionConcerns
 
   # Redirect to the URI stored by the most recent store_location call or to the passed default.
   def redirect_back_or_default(default = request.referrer || original_url) # TODO: change default
-    stored_location = cookies[:return_to]
+    stored_location = read_cookie_value :return_to
     if stored_location.present? && stored_location.include?('://')
       redirect_to stored_location
     else
       redirect_to default
     end
-    cookies.delete :return_to, domain: :all
+    delete_cookie :return_to
   end
 
   # upon successful authentication, handle whatever user was trying to do previously

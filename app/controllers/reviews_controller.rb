@@ -1,41 +1,23 @@
 class ReviewsController < ApplicationController
   include ReviewControllerConcerns
+  include PostLoginConcerns
 
   # Find school before executing culture action
   before_filter :require_state, :require_school, :find_user, except: :create
+  before_filter :store_location, only: [:overview, :quality, :details, :reviews]
+  before_filter :set_last_school_visited, only: [:new]
 
   def new
     init_page
-  end
-
-  # TODO: Remove these two methods to dry up code
-  def serialize_param(path)
-    path.gsub(/\s+/, '-')
-  end
-  def school_params(school)
-    {
-      state: serialize_param(school.state_name.downcase),
-      city: serialize_param(school.city.downcase),
-      schoolId: school.id,
-      school_name: serialize_param(school.name.downcase)
-    }
   end
 
   def create
     review_params = params[:school_rating]
 
     if logged_in?
-      review, error = save_review(current_user, review_params)
-      if error.nil?
-        flash_notice t('actions.review.activated')
-        redirect_to successful_save_redirect(review_params)
-      else
-        flash_error error
-        redirect_to action: :new
-      end
+      save_review_and_redirect review_params
     else
-      save_review_params
-      store_location(successful_save_redirect(review_params))
+      save_post_authenticate_action :save_review_and_redirect, review_params
       flash_error 'You need to log in or register your email in order to post a review.'
       redirect_to signin_path
     end

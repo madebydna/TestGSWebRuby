@@ -38,13 +38,6 @@ describe SchoolRating do
     expect(review).to_not be_valid
   end
 
-  it 'should require a status' do
-    review.status = ''
-    expect(review).to_not be_valid
-    review.status = 'p'
-    expect(review).to be_valid
-  end
-
   it 'should require a school' do
     review.school = nil
     expect(review).to_not be_valid

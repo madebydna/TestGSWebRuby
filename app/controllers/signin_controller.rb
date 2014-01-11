@@ -1,6 +1,7 @@
 class SigninController < ApplicationController
   include ReviewControllerConcerns
   include PostLoginConcerns
+  include SubscriptionConcerns
 
   protect_from_forgery
 
@@ -35,9 +36,8 @@ class SigninController < ApplicationController
         flash_notice t('actions.account.pending_email_verification')
       end
 
-      # call process_pending_actions here since we save the review before user has verified email
-      # review will be provisional, though
-      process_pending_actions user
+      execute_post_authenticate_action
+      redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
     end
   end
 
@@ -52,10 +52,10 @@ class SigninController < ApplicationController
     redirect_url = params[:redirect]
 
     if logged_in? && redirect_url.present?
-      execute_post_login_action
-      redirect_to redirect_url
+      execute_post_email_verification_action
+      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !@performed_render
     else
-      # TODO: redirect to user profile or homepage
+      redirect_to user_profile_or_home
     end
   end
 
@@ -70,7 +70,7 @@ class SigninController < ApplicationController
     access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
     unless access_token
       flash_error 'Could not log in with Facebook.'
-      redirect_to(signin_path)
+      redirect_to signin_path
       return nil
     end
 
@@ -79,7 +79,8 @@ class SigninController < ApplicationController
 
     log_user_in user if error.nil?
 
-    execute_post_login_action
+    execute_post_authenticate_action
+    redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
   end
 
   protected

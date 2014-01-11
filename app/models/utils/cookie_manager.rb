@@ -1,3 +1,0 @@
-class CookieManager
-
-end

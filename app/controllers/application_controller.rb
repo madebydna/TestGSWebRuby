@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include CookieConcerns
   include AuthenticationConcerns
   include SessionConcerns
 
@@ -62,6 +63,18 @@ class ApplicationController < ActionController::Base
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end
 
+  def serialize_param(path)
+    path.gsub(/\s+/, '-')
+  end
+
+  def school_params(school)
+    {
+      state: serialize_param(school.state_name.downcase),
+      city: serialize_param(school.city.downcase),
+      schoolId: school.id,
+      school_name: serialize_param(school.name.downcase)
+    }
+  end
 
   # authorization
 
@@ -101,8 +114,9 @@ class ApplicationController < ActionController::Base
     flash_message :notice, message
   end
 
-  def came_from_email_verification?
-    String(params[:from_email_verification]).downcase == 'true'
+  def already_redirecting?
+    # Based on rails source code for redirect_to
+    response_body
   end
 
   def exception_handler(e)
