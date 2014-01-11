@@ -19,7 +19,7 @@ end
 # Look for /usr/local/etc/GSWebRuby-config.yml which can be a machine-specific config to overwrite the defaults
 ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
 file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
-YAML.load_file(file) if File.exist?(file)
+ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
 
 module LocalizedProfiles
   class Application < Rails::Application
