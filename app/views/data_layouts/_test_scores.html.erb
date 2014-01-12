@@ -5,12 +5,12 @@
                     <%= value[:test_label] %><br/><br/>
                     <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
                         <% value[:grades].each do |grade,value| %>
-                            <button id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></button>
+                            <button id="js_<%= test %>_<%= grade.get_value %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade.get_value %></button>
                         <% end %>
                     </div>
 
                     <% value[:grades].each do |grade,value| %>
-                        <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
+                        <div id="js_<%= test %>_<%= grade.get_value %>_scores" class="js_<%= test %>_grades">
 
                             <% value.each do |levelcode,value| %>
                                 <% value.each do |subject,value| %>

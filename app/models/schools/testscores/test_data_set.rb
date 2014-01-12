@@ -25,13 +25,13 @@ class TestDataSet < ActiveRecord::Base
 
 
   def self.fetch_data_sets_and_values(school, breakdown_id, active)
-    TestDataSet.on_db(school.shard).select("*,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
+    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as ds_id,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
                           TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text")
                       .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-                      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
                       .where(proficiency_band_id: nil, breakdown_id: breakdown_id,
-                             TestDataSchoolValue: {school_id: school.id, active: active},
-                             TestDataStateValue: {active: active}).where("display_target like '%desktop%' ")
+                             TestDataSchoolValue: {school_id: school.id, active: active}).where("display_target like '%desktop%' ")
+                      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+
   end
 
   def self.fetch_test_scores(school)
@@ -40,7 +40,7 @@ class TestDataSet < ActiveRecord::Base
     #convert into a custom map to make rspec testing easier
     results_array = results.map do |result|
       {test_data_type_id: result.data_type_id,
-       test_data_set_id: result.data_set_id,
+       test_data_set_id: result.ds_id,
        grade: result.grade,
        level_code: result.level_code,
        subject_id: result.subject_id,
