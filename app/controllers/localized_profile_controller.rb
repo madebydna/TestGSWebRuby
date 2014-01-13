@@ -16,6 +16,10 @@ class LocalizedProfileController < ApplicationController
   end
 
   def details
+    gon.omniture_pagename = "details"
+    gon.omniture_heirarchy = "details,heirarchy"
+    gon.omniture_sprops = {"some_sprop" => "details","some_sprop_test" =>"detailstest"}
+    gon.omniture_evars = {"some_evars" => "details","some_evars_test" =>"detailstest"}
   end
 
   def reviews
