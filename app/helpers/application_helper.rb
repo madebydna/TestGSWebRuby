@@ -18,6 +18,14 @@ module ApplicationHelper
         content_tag(:span, '', :class => class_off)
   end
 
+  def draw_stars_24(on_star_count)
+    off_star_count = 5 - on_star_count
+    class_on = 'iconx24-stars i-24-orange-star  i-24-star-' + on_star_count.to_s + ''
+    class_off = 'iconx24-stars i-24-grey-star  i-24-star-' + off_star_count.to_s + ''
+    content_tag(:span, '', :class => class_on)  +
+        content_tag(:span, '', :class => class_off)
+  end
+
   def write_review_count text_s
     write_s = ''
     if @school_reviews_global.review_filter_totals.all != 1
@@ -28,6 +36,12 @@ module ApplicationHelper
 
   def to_bar_chart_array(data_hash)
     @bar_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
+      [key.to_s, value["score"], index == 0 ? value["state_avg"] : 0]
+    }
+  end
+
+  def to_bar_chart_review_array(data_hash)
+    @review_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
       [key.to_s, value["score"], index == 0 ? value["state_avg"] : 0]
     }
   end
