@@ -1,5 +1,5 @@
 <div class="tac pal">
-    <% rating["+"] = "plus" %>
+    <% rating.gsub!("+", "plus") %>
     <div style="margin-bottom:7px;margin-top: 7px; "><span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span><br /></div>
     <div><%= supporting_text %></div>
 </div>

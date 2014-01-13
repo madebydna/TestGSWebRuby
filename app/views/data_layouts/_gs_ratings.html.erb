@@ -1,6 +1,6 @@
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
     <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><%= data["gs_rating"]["overall_rating"] %></div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>GreatSchools Rating</strong>
             <br/> <%= data["gs_rating"]["description"] %> </div>
 
