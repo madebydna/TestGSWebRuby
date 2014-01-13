@@ -1,5 +1,14 @@
 class TestScoreResults
 
+  def fetch_test_scores(school)
+    data_sets_and_values = fetch_test_data_sets_and_values school
+
+    if !data_sets_and_values.blank?
+      test_scores = build_test_scores_hash data_sets_and_values
+      sort_test_scores test_scores
+    end
+  end
+
   def fetch_test_data_sets_and_values(school)
 
     #Get all the test data sets and values for the school
@@ -23,17 +32,6 @@ class TestScoreResults
 
     data_sets_and_values
   end
-
-
-  def fetch_test_scores(school)
-    data_sets_and_values = fetch_test_data_sets_and_values school
-
-    if !data_sets_and_values.blank?
-      test_scores = build_test_scores_hash data_sets_and_values
-      sort_test_scores test_scores
-    end
-  end
-
 
   def build_test_scores_hash(data_sets_and_values)
     test_meta_data = Hash.new
@@ -178,7 +176,6 @@ class TestScoreResults
 
 
   def sort_test_scores test_scores
-
     test_scores.each do |test_id, grades_hash|
       test_scores[test_id][:grades].each do |grade, level_codes_hash|
         level_codes_hash.each do |level_code, subjects_hash|

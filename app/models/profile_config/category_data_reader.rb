@@ -308,82 +308,122 @@ class CategoryDataReader
   end
 
   def self.rating_data (school, _)
-    #Get the rating configuration for the city,state and GS ratings.
-    city_rating_configuration = RatingsConfiguration.city_rating_configuration[school.shard.to_s][school.city]
-    city_rating_data_type_ids = city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
-    state_rating_configuration = RatingsConfiguration.state_rating_configuration[school.shard.to_s]
-    state_rating_data_type_ids = Array(state_rating_configuration.overall.data_type_id)
-    gs_rating_configuration = RatingsConfiguration.gs_rating_configuration
-    gs_rating_data_type_ids = gs_rating_configuration.rating_breakdowns.values.map(&:data_type_id)
-
-    #Build an array of all the data type ids so that we can query the database only once.
-    all_data_type_ids = city_rating_data_type_ids + state_rating_data_type_ids + gs_rating_data_type_ids
-
     #Get the ratings from the database.
-    results = TestDataSet.by_data_type_ids(school, all_data_type_ids)
+    results = fetch_rating_results school
 
-    #Build an array of all the data description keys so that we can query the table only once.
-    data_description_keys = Array(city_rating_configuration.overall.description_key) +  Array(state_rating_configuration.overall.description_key) + Array(gs_rating_configuration.overall.description_key)
+    #Get the data type ids for the city,state and GS ratings.
+    city_rating_data_type_ids = fetch_city_rating_data_type_ids school
+    state_rating_data_type_ids = fetch_state_rating_data_type_ids school
+    gs_rating_data_type_ids = fetch_gs_rating_data_type_ids
 
-    #Build a hash of the data_keys to the rating descriptions.
+    #Loop up table for rating descriptions.
     description_hash = DataDescription.lookup_table
 
     #Build a hash to hold the ratings results.
     ratings_data = {}
 
     #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
-    ratings_data["gs_rating"] = {"overall_rating" => school.school_metadata.overallRating,
-                                "description" => description_hash[gs_rating_configuration.overall.description_key]}
+    ratings_data["gs_rating"] = {"overall_rating" => school.school_metadata.overallRating}
+    if !RatingsConfiguration.gs_rating_configuration.nil? && !RatingsConfiguration.gs_rating_configuration.overall.nil?
+      ratings_data["gs_rating"]["description"] =  description_hash[RatingsConfiguration.gs_rating_configuration.overall.description_key]
+    end
+
     #Loop over the results and construct the ratings data hash
     results.each do |result|
-
       if (state_rating_data_type_ids.include? result.data_type_id)
-        ratings_data["state_rating"] = {"overall_rating" => result.school_value_text,
-                                       "description" => description_hash[state_rating_configuration.overall.description_key]}
+        construct_state_ratings ratings_data,  result, school
       elsif city_rating_data_type_ids.include? result.data_type_id
-        # TODO refactor into smaller method
-        city_rating_hash = ratings_data["city_rating"].nil? ? {} : ratings_data["city_rating"]
-        #Nested hash to hold the rating breakdowns.
-        city_sub_rating_hash = city_rating_hash["rating_breakdowns"].nil? ? {} : city_rating_hash["rating_breakdowns"]
-        #Put the overall city rating in the results.
-        if result.data_type_id == city_rating_configuration.overall.data_type_id
-          city_rating_hash["overall_rating"] = result.school_value_text
-        end
-        city_rating_hash["description"] = description_hash[city_rating_configuration.overall.description_key]
-        #City rating label in the results
-        city_rating_hash["city_rating_label"] = result.display_name
-
-        #Loop over the configuration to put the ratings breakdowns in the results.
-        city_rating_configuration.rating_breakdowns.each do |key, config|
-          if (result.data_type_id == config.data_type_id && (!result.school_value_text.nil?))
-            city_sub_rating_hash[config.label] = result.school_value_text
-          end
-        end
-        ratings_data["city_rating"] = city_rating_hash
-        if city_sub_rating_hash.any?
-          ratings_data["city_rating"]["rating_breakdowns"] = city_sub_rating_hash
-        end
+        construct_city_ratings ratings_data, result, school
       elsif gs_rating_data_type_ids.include? result.data_type_id then
-        # TODO refactor into smaller method
-        #The gs ratings hash is construct above when adding the gs rating.
-        gs_rating_hash = ratings_data["gs_rating"]
-        #Nested hash to hold the rating breakdowns.
-        gs_sub_rating_hash = gs_rating_hash["rating_breakdowns"].nil? ? {} : gs_rating_hash["rating_breakdowns"]
-
-        #Loop over the configuration to put the ratings breakdowns in the results.
-        gs_rating_configuration.rating_breakdowns.each do |key, config|
-          if (result.data_type_id == config.data_type_id && (!result.school_value_float.nil?))
-            gs_sub_rating_hash[config.label] = result.school_value_float.round
-          end
-        end
-        ratings_data["gs_rating"] = gs_rating_hash
-        if gs_sub_rating_hash.any?
-          ratings_data["gs_rating"]["rating_breakdowns"] = gs_sub_rating_hash
-        end
+        construct_GS_ratings ratings_data, result
       end
 
     end
     ratings_data
+  end
+
+  def self.construct_state_ratings ratings_data,test_data_set, school
+    state_rating_configuration = RatingsConfiguration.state_rating_configuration[school.shard.to_s]
+    #Build a hash of the data_keys to the rating descriptions.
+    description_hash = DataDescription.lookup_table
+    ratings_data["state_rating"] = {"overall_rating" => test_data_set.school_value_text,
+                                    "description" => description_hash[state_rating_configuration.overall.description_key]}
+  end
+
+  def self.construct_city_ratings ratings_data, test_data_set, school
+    city_rating_configuration = city_rating_config_exists?(school) ? RatingsConfiguration.city_rating_configuration[school.shard.to_s][school.city] : nil
+    #Build a hash of the data_keys to the rating descriptions.
+    description_hash = DataDescription.lookup_table
+    city_rating_hash = ratings_data["city_rating"].nil? ? {} : ratings_data["city_rating"]
+    #Nested hash to hold the rating breakdowns.
+    city_sub_rating_hash = city_rating_hash["rating_breakdowns"].nil? ? {} : city_rating_hash["rating_breakdowns"]
+    #Put the overall city rating in the results.
+    if test_data_set.data_type_id == city_rating_configuration.overall.data_type_id
+      city_rating_hash["overall_rating"] = test_data_set.school_value_text
+    end
+    city_rating_hash["description"] = description_hash[city_rating_configuration.overall.description_key]
+    #City rating label in the results
+    city_rating_hash["city_rating_label"] = test_data_set.display_name
+
+    #Loop over the configuration to put the ratings breakdowns in the results.
+    city_rating_configuration.rating_breakdowns.each do |key, config|
+      if (test_data_set.data_type_id == config.data_type_id && (!test_data_set.school_value_text.nil?))
+        city_sub_rating_hash[config.label] = test_data_set.school_value_text
+      end
+    end
+    ratings_data["city_rating"] = city_rating_hash
+    if city_sub_rating_hash.any?
+      ratings_data["city_rating"]["rating_breakdowns"] = city_sub_rating_hash
+    end
+  end
+
+  def self.construct_GS_ratings ratings_data, test_data_set
+    #The gs ratings hash is construct above when adding the gs rating.
+    gs_rating_hash = ratings_data["gs_rating"]
+    #Nested hash to hold the rating breakdowns.
+    gs_sub_rating_hash = gs_rating_hash["rating_breakdowns"].nil? ? {} : gs_rating_hash["rating_breakdowns"]
+
+    #Loop over the configuration to put the ratings breakdowns in the results.
+    RatingsConfiguration.gs_rating_configuration.rating_breakdowns.each do |key, config|
+      if (test_data_set.data_type_id == config.data_type_id && (!test_data_set.school_value_float.nil?))
+        gs_sub_rating_hash[config.label] = test_data_set.school_value_float.round
+      end
+    end
+    ratings_data["gs_rating"] = gs_rating_hash
+    if gs_sub_rating_hash.any?
+      ratings_data["gs_rating"]["rating_breakdowns"] = gs_sub_rating_hash
+    end
+  end
+
+  def self.fetch_rating_results school
+    #Build an array of all the data type ids so that we can query the database only once.
+    all_data_type_ids = fetch_city_rating_data_type_ids(school) + fetch_state_rating_data_type_ids(school) + fetch_gs_rating_data_type_ids
+
+    #Get the ratings from the database.
+    TestDataSet.by_data_type_ids(school, all_data_type_ids)
+  end
+
+  def self.fetch_state_rating_data_type_ids school
+    state_rating_configuration = RatingsConfiguration.state_rating_configuration[school.shard.to_s]
+    state_rating_configuration.nil? ? [] : Array(state_rating_configuration.overall.data_type_id)
+  end
+
+  def self.fetch_gs_rating_data_type_ids
+    gs_rating_configuration = RatingsConfiguration.gs_rating_configuration
+    gs_rating_configuration.nil? ? [] : gs_rating_configuration.rating_breakdowns.values.map(&:data_type_id)
+  end
+
+  def self.fetch_city_rating_data_type_ids school
+    city_rating_configuration = city_rating_config_exists?(school) ? RatingsConfiguration.city_rating_configuration[school.shard.to_s][school.city] : nil
+    city_rating_configuration.nil? ? [] : city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
+  end
+
+  def self.city_rating_config_exists? school
+    !RatingsConfiguration.city_rating_configuration[school.shard.to_s].nil? && !RatingsConfiguration.city_rating_configuration[school.shard.to_s][school.city].nil?
+  end
+
+  def self.state_rating_config_exists? school
+    !RatingsConfiguration.city_rating_configuration[school.shard.to_s].nil?
   end
 
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
