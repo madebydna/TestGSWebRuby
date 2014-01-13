@@ -30,7 +30,7 @@ en:
       pending_moderation: 'Thanks for your school review!'
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
     account:
-      pending_email_verification: 'Almost done! We''ve sent you an email so that we can verify your email address. Just click the link in the email to finish setting up your account.'
+      pending_email_verification: 'Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.'
       email_verified: 'Your email address has been verified. Welcome to GreatSchools!'
       created_via_facebook: 'Great, we''ve finished setting up your account! From now on you can log in using Facebook.'
       facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
