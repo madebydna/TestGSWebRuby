@@ -58,6 +58,7 @@ RailsAdmin.config do |config|
       filters [:category]
       field :category
       field :response_key
+      field :label
       field :collection
       field :sort_order
       field :source
@@ -67,6 +68,7 @@ RailsAdmin.config do |config|
     edit do
       field :category
       field :response_key
+      field :label
       field :sort_order
       field :source, :enum do
         enum_method do

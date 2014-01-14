@@ -25,7 +25,7 @@ class Category < ActiveRecord::Base
 
   def key_label_map(collections = nil)
     category_data(collections).inject({}) do |map, category_data_row|
-      map[category_data_row.response_key] ||= category_data_row.response_key
+      map[category_data_row.response_key] ||= category_data_row.label
       map
     end
   end

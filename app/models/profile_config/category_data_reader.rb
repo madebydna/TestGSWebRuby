@@ -9,6 +9,7 @@ class CategoryDataReader
 
     # Find out which keys the Category is interested in
     keys_to_use = category.keys(school.collections)
+    keys_and_labels = category.key_label_map
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
     data = esp_responses.select! { |response| keys_to_use.include? response.response_key}
@@ -25,7 +26,7 @@ class CategoryDataReader
 
       # Look up all keys and values in a lookup table. Replace the key or value if there's a match in the lookup table
       lookup_table = ResponseValue.lookup_table(school.collections)
-      responses_per_key.gs_rename_keys! { |key| lookup_table[key] || key }
+      responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
       responses_per_key.gs_transform_values! { |value| lookup_table[value] || value }
 
       responses_per_key
