@@ -42,7 +42,7 @@ module ApplicationHelper
 
   def to_bar_chart_review_array(star_counts)
     [
-      ['Star Count', ''],
+      ['Star Count', 'count'],
       ['5 stars',  star_counts[5]],
       ['4 stars',  star_counts[4]],
       ['3 stars',  star_counts[3]],

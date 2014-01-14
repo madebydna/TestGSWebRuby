@@ -92,11 +92,28 @@ GS.visualchart = GS.visualchart || function($) {
 
     };
 
+    var drawBarChartReviews = function (barChartData, div, options) {
+        var func = function () {
+            var data = google.visualization.arrayToDataTable(barChartData);
+
+            var chart = new google.visualization.BarChart(document.getElementById(div));
+            chart.draw(data, options);
+
+        }
+        if (loader) {
+            loader.push(func);
+        } else {
+            google.setOnLoadCallback(func);
+        }
+
+    };
+
     return {
         colors: colors,
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
         drawBarChart: drawBarChart,
+        drawBarChartReviews:drawBarChartReviews,
         loader: loader
     }
 

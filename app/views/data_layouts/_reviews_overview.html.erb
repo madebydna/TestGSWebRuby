@@ -1,75 +1,87 @@
 <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
     <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
-        <div class="contents">
-            <div class="main">
-                BE THE FIRST TO REVIEW
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+            <div class="contents">
+                <div class="main">
+                    BE THE FIRST TO REVIEW
+                </div>
             </div>
         </div>
-    </div>
     </div>
 <% else %>
     <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
-        <% review_total_count = 'See all ' + @school_reviews_global.rating_averages.overall.counter.to_s + ' Reviews' %>
-        <%= render "shared/section_header", title:'Reviews', link_text: review_total_count, link_to:'reviews' %>
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
+            <% review_total_count = 'See all ' + @school_reviews_global.rating_averages.overall.counter.to_s + ' Reviews' %>
+            <%= render "shared/section_header", title:'Reviews', link_text: review_total_count, link_to:'reviews' %>
+           <div class="row ptl">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
+                    <div class="tac">
+                            <%= draw_stars_24 @school_reviews_global.rating_averages.overall.avg_score %>
+                            <h3 class="mbn mtm"><%= @school_reviews_global.rating_averages.overall.avg_score %> stars</h3>
+                            <span>Based on <%= @school_reviews_global.rating_averages.overall.counter %> ratings</span>
+                    </div>
+                </div>
 
-                <div class="row ptl">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
+                    <div class="ma" style="width:250px;">
+                    <% reviews_chart_array = to_bar_chart_review_array ( @school_reviews_global.star_counts )%>
+                    <% reviews_bar_chart_div_id = "js_reviews_bar_chart_div" %>
 
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                                <div class="tac">
 
-
-
-                                        <%= draw_stars_24 @school_reviews_global.rating_averages.overall.avg_score %>
-                                        <h1 class="mbn mtm"><%= @school_reviews_global.rating_averages.overall.avg_score %> stars</h1>
-                                        <span>Based on <%= @school_reviews_global.rating_averages.overall.counter %> ratings</span>
-
-                                    <!--<div class="clearfix">-->
-                                        <!--<div class="fl prm">principal:</div>-->
-                                        <!--<%= draw_stars_16 @school_reviews_global.rating_averages.principal.avg_score %>-->
-                                    <!--</div>-->
-                                    <!--<div class="clearfix">-->
-                                        <!--<div class="fl prm">teacher:</div>-->
-                                        <!--<%= draw_stars_16 @school_reviews_global.rating_averages.teacher.avg_score %>-->
-                                    <!--</div>-->
-                                    <!--<div class="clearfix">-->
-                                        <!--<div class="fl prm">parent:</div>-->
-                                        <!--<%= draw_stars_16 @school_reviews_global.rating_averages.parent.avg_score %>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-
-                                <% chart_array = to_bar_chart_review_array ( @school_reviews_global.star_counts )%>
-                                    <h4>Ratings Distribution</h4>
-                                    five stars: <%= @school_reviews_global.star_counts[5] %>   <br />
-                                    four stars: <%= @school_reviews_global.star_counts[4] %>   <br />
-                                    three stars: <%= @school_reviews_global.star_counts[3] %>   <br />
-                                    two stars: <%= @school_reviews_global.star_counts[2] %>   <br />
-                                    one stars: <%= @school_reviews_global.star_counts[1] %>   <br />
-
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                    <div class=" tac">
-                                        <p class="bold">Let others know what you<br />think about this school</p>
-                                        <%= link_to new_school_rating_path(school_params(@school)) do %>
-                                            <button type="button" class="btn btn-primary mtm">
-                                                Write a review
-                                            </button>
-                                        <% end %>
-                                    </div>
-
-                            </div>
+                    <div id="<%= reviews_bar_chart_div_id %>"><!--Div for bar chart--></div>
+                    <% content_for :head do %>
+                        <script type="text/javascript">
+                            var options = {
+                                colors: ['#ffb725'],
+                                legend:{
+                                    position: 'none'
+                                },
+                                hAxis:{
+                                    title: 'Ratings Distribution',
+                                    titleTextStyle:{
+                                        fontName: 'Arial',
+                                        fontSize: 10,
+                                        italic: false
+                                    },
+                                    textStyle:{
+                                        fontName: 'Arial',
+                                        fontSize: 10,
+                                        italic: false
+                                    }
+                                },
+                                vAxis:{
+                                    textStyle:{
+                                        fontName: 'Arial',
+                                        fontSize: 10,
+                                        italic: false
+                                    }
+                                },
+                                width:250,
+                                height:130,
+                                chartArea:{
+                                    top:0
+                                }
+                            };
+                            GS.visualchart.drawBarChartReviews(<%= raw (reviews_chart_array).to_s %>,<%= raw '"'+reviews_bar_chart_div_id+'"' %>, options);
+                        </script>
+                    <% end %>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4  pbl">
+                        <div class=" tac">
+                            <p class="bold">Let others know what you<br />think about this school</p>
+                            <%= link_to new_school_rating_path(school_params(@school)) do %>
+                                <button type="button" class="btn btn-primary mtm">
+                                    Write a review
+                                </button>
+                            <% end %>
                         </div>
+
+                </div>
             </div>
-
+            <div class="js_reviewsList">
+                <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>
+            </div>
         </div>
-        <div class="js_reviewsList">
-
-            <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>
-        </div>
-    </div>
     </div>
 <% end %>

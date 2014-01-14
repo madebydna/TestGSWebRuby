@@ -8,15 +8,16 @@
             <div class=" row<%= hide_reviews_overview %>">
         <% end %>
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pal">
-             <%= review[:comments] %>
-            <br /><br />
-            <div>
-                <%= draw_stars_16 review[:quality].to_i %>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pal mbl">
+            <div class="well bg-white">
+                <div class="mbl">
+                    <%= draw_stars_16 review[:quality].to_i %>
+                    <span class="mlm vat"><%= review[:posted] %></span>
+                </div>
+                 <%= review[:comments] %>
+                <br /><br />
+                - submitted by a <span class="cuc_posted-by"><%= review[:who] %></span>
             </div>
-            <br />
-            posted on: <%= review[:posted] %><br />
-            posted by: <span class="cuc_posted-by"><%= review[:who] %></span>
         </div>
 
         <% if i % 2 == 1 %>
