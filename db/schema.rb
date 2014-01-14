@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114185644) do
+ActiveRecord::Schema.define(:version => 20140114224135) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20140114185644) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.integer  "category_id"
+    t.string   "response_key"
   end
 
   add_index "response_values", ["collection_id"], :name => "index_response_values_on_collection_id"

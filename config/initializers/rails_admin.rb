@@ -552,6 +552,25 @@ RailsAdmin.config do |config|
   #     # using `field` instead of `configure` will exclude all other fields and force the ordering
   # end
 
+  ###  CategoryData  ###
+
+  config.model 'ResponseValue' do
+    list do
+      field :response_key
+      field :response_value
+      field :response_label
+      field :collection
+      field :updated_at
+    end
+
+    edit do
+      field :response_key
+      field :response_value
+      field :response_label
+      field :collection
+    end
+  end
+
   config.actions do
     all
     undo
