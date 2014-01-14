@@ -1,6 +1,6 @@
 class SigninController < ApplicationController
   include ReviewControllerConcerns
-  include PostLoginConcerns
+  include DeferredActionConcerns
   include SubscriptionConcerns
 
   protect_from_forgery
@@ -36,7 +36,7 @@ class SigninController < ApplicationController
         flash_notice t('actions.account.pending_email_verification')
       end
 
-      execute_post_authenticate_action
+      executed_deferred_action
       redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
     end
   end
@@ -52,7 +52,7 @@ class SigninController < ApplicationController
     redirect_url = params[:redirect]
 
     if logged_in? && redirect_url.present?
-      execute_post_email_verification_action
+      executed_deferred_action
       redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !@performed_render
     else
       redirect_to user_profile_or_home
@@ -79,7 +79,7 @@ class SigninController < ApplicationController
 
     log_user_in user if error.nil?
 
-    execute_post_authenticate_action
+    executed_deferred_action
     redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
   end
 

@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  include PostLoginConcerns
+  include DeferredActionConcerns
   include SubscriptionConcerns
 
   def create
@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
       create_subscription subscription_params
       redirect_back_or_default
     else
-      save_post_email_verification_action :create_subscription, subscription_params
+      save_deferred_action :create_subscription_deferred, subscription_params
       flash_error 'Please log in or register your email in order to get updates on this school.'
       redirect_to signin_path
     end

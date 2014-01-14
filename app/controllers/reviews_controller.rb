@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   include ReviewControllerConcerns
-  include PostLoginConcerns
+  include DeferredActionConcerns
 
   # Find school before executing culture action
   before_filter :require_state, :require_school, :find_user, except: :create
@@ -17,7 +17,7 @@ class ReviewsController < ApplicationController
     if logged_in?
       save_review_and_redirect review_params
     else
-      save_post_authenticate_action :save_review_and_redirect, review_params
+      save_deferred_action :save_review_deferred, review_params
       flash_error 'You need to log in or register your email in order to post a review.'
       redirect_to signin_path
     end

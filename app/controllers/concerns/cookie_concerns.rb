@@ -19,11 +19,7 @@ module CookieConcerns
       hash: false,
       duration: 1.day,
     },
-    after_email_verification: {
-      hash: true,
-      duration: 1.day,
-    },
-    after_authenticate: {
+    deferred_action: {
       hash: true,
       duration: 1.day,
     }
