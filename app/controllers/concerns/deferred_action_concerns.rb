@@ -1,6 +1,10 @@
 module DeferredActionConcerns
   extend ActiveSupport::Concern
 
+  include ReviewControllerConcerns
+  include SubscriptionConcerns
+  include FavoriteSchoolsConcerns
+
   def save_deferred_action(action, params)
     write_cookie_value :deferred_action, [action, params]
   end
@@ -47,6 +51,14 @@ module DeferredActionConcerns
     save_review_and_redirect params
 
     return true
+  end
+
+  def add_favorite_school_deferred(params)
+    return false if !logged_in? || current_user.provisional?
+
+    add_favorite_school params
+
+    true
   end
 
 end

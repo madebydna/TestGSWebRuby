@@ -1,0 +1,7 @@
+<%= form_for FavoriteSchool.new do |f| %>
+    <%= f.hidden_field :school_id, :value => school.id %>
+    <%= f.hidden_field :state, :value => school.state %>
+    <%= f.hidden_field :message, :value => t('actions.my_school_list.school_added', school_name: school.name) %>
+
+    <%= f.submit 'Save school', class: 'btn btn-default', style: 'width:100%' %>
+<% end %>

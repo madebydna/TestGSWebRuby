@@ -1,7 +1,5 @@
 class SigninController < ApplicationController
-  include ReviewControllerConcerns
   include DeferredActionConcerns
-  include SubscriptionConcerns
 
   protect_from_forgery
 

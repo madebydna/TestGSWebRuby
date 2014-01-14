@@ -34,4 +34,6 @@ en:
       email_verified: 'Your email address has been verified. Welcome to GreatSchools!'
       created_via_facebook: 'Great, we''ve finished setting up your account! From now on you can log in using Facebook.'
       facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
+    my_school_list:
+      school_added: "%{school_name} has been saved to your school list."
 
