@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require lodash
+//= require omniture.js
+//= require tracking.js
 //= require_tree .
 
 Function.prototype.gs_bind = function(obj) {
