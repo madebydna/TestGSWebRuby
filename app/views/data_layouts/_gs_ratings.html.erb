@@ -1,18 +1,20 @@
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
-    <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10"><strong>GreatSchools Rating</strong>
-            <br/> <%= data["gs_rating"]["description"] %> </div>
+    <div class="row mbl pam">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><strong>GreatSchools Rating</strong>
+        <br/><%= data["gs_rating"]["description"] %>
 
         <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
-            Learn More >> <br/>
-            <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
-                <%= key %>  <%= value %>    <br/>
-            <% end %>
+            <a href="javascript:void(0)" onclick='$( "#js_GSRatingLearnMore" ).slideToggle( "fast")'>Learn More >></a><br /><br />
+            <div class="dn well bg-white" id="js_GSRatingLearnMore">
+                <table class="table table-striped">
+                    <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
+                        <tr><td><%= key %></td><td><%= value %></td></tr>
+                    <% end %>
+                </table>
+            </div>
         <% end %>
-
-        <br/>
-        <br/>
+        </div>
     </div>
 <% end %>
 

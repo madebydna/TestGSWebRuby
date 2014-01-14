@@ -1,25 +1,27 @@
 <% if !data["city_rating"].nil? && !data["city_rating"]["overall_rating"].nil? %>
-    <div class="row">
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+    <div class="row mbl pam">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
             <% rating = data["city_rating"]["overall_rating"] %>
             <% rating.gsub!("+", "plus") %>
             <% icon_to_use = 'iconx72-ESD-ratings' %>
             <% icon_to_choose = 'i-72-ratings-' %>
             <span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-10">
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
             <strong><%= data["city_rating"]["city_rating_label"] %></strong>
-            <br/> <%= data["city_rating"]["description"] %></div>
+            <br/><%= data["city_rating"]["description"] %>
 
         <% if !data["city_rating"]["rating_breakdowns"].nil? %>
-            Learn More >> <br/>
-            <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
-                <%= key %>  <%= value %>    <br/>
-            <% end %>
+            <a href="javascript:void(0)" onclick='$( "#js_CityRatingLearnMore" ).slideToggle( "fast")'>Learn More >></a><br /><br />
+            <div class="dn well bg-white" id="js_CityRatingLearnMore">
+                <table class="table table-striped">
+                    <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
+                        <tr><td><%= key %></td><td><%= value %></td></tr>
+                    <% end %>
+                </table>
+            </div>
         <% end %>
-
-        <br/>
-        <br/>
+        </div>
     </div>
 <% end %>
 
