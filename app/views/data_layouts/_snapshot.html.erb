@@ -9,8 +9,8 @@
 <% column_2_contents = data[left_table_size..total_array_size] %>
 <% all_columns = [column_1_contents, column_2_contents]  %>
 
-<row class="limit_width_1200">
-    <div class="mtl">
+<div class="row limit_width_1200">
+    <div class="mtl pvl clearfix">
         <%  all_columns.each_with_index do |col_arr, index_all| %>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="mhm">
@@ -34,4 +34,4 @@
             </div>
         <% end %>
     </div>
-</row>
+</div>

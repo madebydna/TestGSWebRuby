@@ -1,22 +1,16 @@
-    <% school_reviews_pagination.each do |review| %>
-        <div class="contents">
-            <div class="main">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-                        <div>
-                            <%= draw_stars_16 review[:quality].to_i %>
-                        </div>
-                        <br />
-                        posted on: <%= review[:posted] %><br />
-                        posted by: <span class="cuc_posted-by"><%= review[:who] %></span>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-                         <%= review[:comments] %>
-                     </div>
-
-                </div>
+<% school_reviews_pagination.each do |review| %>
+    <hr />
+    <div class="row mam">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <div>
+                <%= draw_stars_16 review[:quality].to_i %>
             </div>
+            <br />
+            Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
+            - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
         </div>
-    <% end %>
-
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+             <%= review[:comments] %>
+         </div>
+    </div>
+<% end %>
