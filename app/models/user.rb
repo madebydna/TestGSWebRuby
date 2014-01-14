@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
+  has_many :favorite_schools, foreign_key: 'member_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -162,6 +163,12 @@ class User < ActiveRecord::Base
       updated: now.to_s,
       expires: expires
     )
+  end
+
+  def add_favorite_school(school)
+    favorite_school = FavoriteSchool.build_for_school school
+    favorite_schools << favorite_school
+    favorite_school.save!
   end
 
   def has_subscription?(list)
