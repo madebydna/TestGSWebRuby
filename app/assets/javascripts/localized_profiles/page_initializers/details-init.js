@@ -6,11 +6,13 @@ if (gon.pagename == "Details") {
     GS.track.setSProps(sprops_hash);
     GS.track.setEVars(evars_hash);
 
-
     $(function () {
         $('body').scrollspy({ target:'.spy-nav' })
-  //Set events on a particular event.
-    var omniture_events = "details_event1,details_event2";
-    GS.track.trackEvent(omniture_events);
+        //Set sample events
+        var omniture_events = "details_event1,details_event2";
+        GS.track.trackEvent(omniture_events);
+        //Set sample custom link
+        GS.track.customLink('details_custom_test');
+
     });
 }
