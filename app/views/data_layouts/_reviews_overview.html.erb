@@ -42,6 +42,7 @@
 
                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 
+                                <% chart_array = to_bar_chart_review_array ( @school_reviews_global.star_counts )%>
                                     <h4>Ratings Distribution</h4>
                                     five stars: <%= @school_reviews_global.star_counts[5] %>   <br />
                                     four stars: <%= @school_reviews_global.star_counts[4] %>   <br />

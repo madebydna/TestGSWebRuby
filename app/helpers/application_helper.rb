@@ -40,10 +40,15 @@ module ApplicationHelper
     }
   end
 
-  def to_bar_chart_review_array(data_hash)
-    @review_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
-      [key.to_s, value["score"], index == 0 ? value["state_avg"] : 0]
-    }
+  def to_bar_chart_review_array(star_counts)
+    [
+      ['Star Count', ''], +
+      ['5 stars',  star_counts[5]], +
+      ['4 stars',  star_counts[4]], +
+      ['3 stars',  star_counts[3]], +
+      ['2 stars',  star_counts[2]], +
+      ['1 stars',  star_counts[1]]
+    ]
   end
 
   def generate_img_path ( img_size, media_hash )
