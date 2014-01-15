@@ -4,40 +4,38 @@
 
 
 <% @school.test_scores.each_with_index do |(test,value),index| %>
-    <div class="contents">
-        <div class="main">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
+    <%= render "shared/section_header", title:'Test Scores', link_text:'', link_to:'', subtitle:'' %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix pam">
 
-                        <%= value.test_label %><br/><br/>
-                        <div class="btn-group js_grades_div">
-                        <% value.grades.each do |grade,value| %>
-                            <div id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></div>
-                        <% end %>
-                        </div>
-
-                        <% value.grades.each do |grade,value| %>
-                            <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
-
-                                <% value.each do |levelcode,value| %>
-                                    <% value.each do |subject,value| %>
-                                        <br/><%= subject %>
-                                        <!--TODO change this to test id-->
-                                        <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
-                                        <div id="<%= bar_chart_div_id %>"><!--Div for bar chart--></div>
-                                        <% content_for :head do %>
-                                            <script type="text/javascript">
-                                                GS.visualchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
-                                            </script>
-                                        <% end %>
-                                    <% end %>
-                                <% end %>
-                            </div>
-                        <% end %>
-                </div>
+            <%= value.test_label %><br/><br/>
+            <div class="btn-group js_grades_div">
+            <% value.grades.each do |grade,value| %>
+                <div id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades">GRADE <%= grade %></div>
+            <% end %>
             </div>
+
+            <% value.grades.each do |grade,value| %>
+                <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
+
+                    <% value.each do |levelcode,value| %>
+                        <% value.each do |subject,value| %>
+                            <br/><%= subject %>
+                            <!--TODO change this to test id-->
+                            <% bar_chart_div_id = "js_bar_chart_div_#{test.gsub(/\s/,'')}_#{grade}_#{subject.gsub(/\s/,'')}" %>
+                            <div id="<%= bar_chart_div_id %>"><!--Div for bar chart--></div>
+                            <% content_for :head do %>
+                                <script type="text/javascript">
+                                    GS.visualchart.drawBarChart(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>);
+                                </script>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+            <% end %>
         </div>
     </div>
+
 <% end %>
 
 <%= render 'nav/footer' %>

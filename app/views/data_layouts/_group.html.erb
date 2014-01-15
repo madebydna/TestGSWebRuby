@@ -4,9 +4,7 @@
     <% if children.any? && category_placement.title.present? %>
         <div class="row phs">
             <% if category_placement.title.present? %>
-                <h4>
-                    <%= category_placement.title %>
-                </h4>
+                <%= render "shared/section_header", title:category_placement.title, link_text:'', link_to:'', subtitle:'' %>
             <% end %>
 
             <%= render partial: 'category_placement', collection: children, as: :category_placement %>
