@@ -64,13 +64,13 @@ class CategoryDataReader
     details_response_keys.keys.each do |osp_key|
        return_counts_details[osp_key][:count] = details_response_keys[osp_key].sum do | key |
           (Array(data_details[key]).count{|item| item.downcase != "none"})
-        end
-      if return_counts_details[osp_key][:count] == 0
-        none_count = details_response_keys[osp_key].sum do | key |
-          (Array(data_details[key]).count{|item| item.downcase == "none"})
-        end
-        return_counts_details[osp_key][:count] = none_count == 0 ?  "-" : 0
-      end
+       end
+       if return_counts_details[osp_key][:count] == 0
+          none_count = details_response_keys[osp_key].sum do | key |
+            (Array(data_details[key]).count{|item| item.downcase == "none"})
+          end
+          return_counts_details[osp_key][:count] = none_count == 0 ?  "-" : 0
+       end
     end
     return_counts_details
   end
