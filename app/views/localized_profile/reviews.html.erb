@@ -5,10 +5,12 @@
 <div class="row limit_width_1200">
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
-            <div class="contents">
-                <div class="main">
-                    BE THE FIRST TO REVIEW
-                </div>
+            <div class="well">
+                <%= link_to new_school_rating_path(school_params(@school)) do %>
+                    <button type="button" class="btn btn-primary mtm">
+                        BE THE FIRST TO REVIEW
+                    </button>
+                <% end %>
             </div>
         </div>
     <% else %>
@@ -26,7 +28,7 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 clearfix pam">
-                    <div class="dropdown fr pll">
+                    <div class="dropdown fr pll margin-mobile">
                         <button type="button" class="btn btn-default js_reviewFilterDropDownText js_bootstrapExtDropdownText" data-toggle="dropdown" href="#">Date newest to oldest <b class="caret"></b></button>
                         <ul class="dropdown-menu mll js_reviewFilterDropDown" data-order-selected="newToOld">
                             <li><a data-order-review="newToOld">Date newest to oldest</a></li>
