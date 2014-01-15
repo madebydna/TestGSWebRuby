@@ -40,35 +40,6 @@ class Category < ActiveRecord::Base
     CategoryDataReader.send method_name, school, self
   end
 
-  # returns a label => pretty value map for this category
-  def values_for_school(school)
-    #key_label_map = school.key_label_map(self)
-
-    all_school_data = EspResponse.on_db(school.shard).where(school_id: school.id)
-
-    #pp key_label_map.keys
-
-    keys_to_use = category_data(school.collections).map(&:response_key)
-
-
-    # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    all_school_data.select! { |data| keys_to_use.include? data.key}
-
-    all_school_data.inject({}) do |hash, school_data|
-      key = school_data.response_key
-      value = school_data.response_value
-
-      hash[key] ||= []
-      pretty_value = ResponseValue.pretty_value(value, school.collections)
-
-      hash[key] << pretty_value
-
-      # remove duplicates from the array
-      hash[key].uniq!
-      hash
-    end
-  end
-
   def possible_sources
     CategoryDataReader.sources
   end

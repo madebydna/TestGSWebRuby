@@ -6,28 +6,6 @@ class ResponseValue < ActiveRecord::Base
   belongs_to :collection
   belongs_to :category
 
-  def self.pretty_value(value, collections = [])
-    cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
-      all_values
-    end
-
-    default_values = cached_all_values[:default_values]
-    collection_values = cached_all_values[:collection_values]
-
-    result = nil
-
-    Array(collections).each do |collection|
-      if collection && collection_values[collection]
-        result =  collection_values[collection][value]
-      end
-    end
-
-    result = default_values[value] if result.nil?
-    result = value if result.nil?
-
-    return result
-  end
-
   def self.lookup_table(collections = [], categories = [])
     hash = {}
 
