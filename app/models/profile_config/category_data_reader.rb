@@ -37,6 +37,11 @@ class CategoryDataReader
     return {dummy:true}
   end
 
+  def self.best_known_for(school)
+    data_details = esp_data_points(school, nil)
+    data_details['best_known_for']
+  end
+
   def self.details(school, category)
     data_details = esp_data_points(school, category);
 
