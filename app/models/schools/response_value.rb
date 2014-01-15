@@ -43,15 +43,15 @@ class ResponseValue < ActiveRecord::Base
     ResponseValue.all.each do |response_value|
 
       if response_value.collection.nil?
-        default_values[response_value.response_value] = response_value.response_label
+        default_values[response_value.response_value] = response_value
       else
         collection_values[response_value.collection] ||= {}
-        collection_values[response_value.collection].merge!({response_value.response_value => response_value.response_label})
+        collection_values[response_value.collection].merge!({response_value.response_value => response_value})
       end
 
       if response_value.category
         category_values[response_value.category] ||= {}
-        category_values[response_value.category].merge!({response_value.response_value => response_value.response_label})
+        category_values[response_value.category].merge!({response_value.response_value => response_value})
       end
 
     end

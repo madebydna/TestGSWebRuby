@@ -27,7 +27,17 @@ class CategoryDataReader
       # Look up all keys and values in a lookup table. Replace the key or value if there's a match in the lookup table
       lookup_table = ResponseValue.lookup_table(school.collections)
       responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
-      responses_per_key.gs_transform_values! { |value| lookup_table[value] || value }
+
+      responses_per_key.each do |key, values|
+        values.each do |value|
+          lookup_value = lookup_table.fetch(value, {})
+          value = if lookup_value.nil? || (lookup_value[:response_key].present? && lookup_value[:response_key] != key)
+            value
+          else
+            lookup_value[:response_label]
+          end
+        end
+      end
 
       responses_per_key
     end
