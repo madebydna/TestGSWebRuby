@@ -1,6 +1,6 @@
 <% config=category_placement.layout_config_json %>
 
-
+<% debug data %>
 
 <% total_array_size = data.size %>
 <% left_table_size = total_array_size / 2 + total_array_size % 2 %>
@@ -21,7 +21,8 @@
                                 <td style="width:50%"> <%= capitalize_if_string value[:label] %> </td>
                                 <td style="width:50%">
                                     <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
-                                        <%= value[:school_value].round %>
+                                        <%= (value[:school_value].is_a? Numeric) ? value[:school_value].round : value[:school_value] %>
+
                                     <% else %>
                                         <%= capitalize_if_string value[:school_value] %>
                                     <% end %>
