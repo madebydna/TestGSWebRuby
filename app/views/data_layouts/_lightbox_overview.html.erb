@@ -1,12 +1,12 @@
 <% media_hash = @school.school_media %>
 <% if media_hash != [] || @header_metadata.school_video1 %>
     <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>
-        <div class="pbl">
+        <!--<div class="pbl">-->
         <%= render "shared/section_header", title:'Media Gallery', link_text:'', link_to:'' %>
             <div id="galleria">
                 <%= include_lightbox_youtube_video @header_metadata.school_video1 %>
                 <%= include_lightbox_media media_hash %>
             </div>
-        </div>
+        <!--</div>-->
     <% end %>
 <% end %>

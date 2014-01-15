@@ -3,8 +3,7 @@
     <% data = TableData.from_hash(data, :label, :value) if !data.is_a? TableData %>
 
     <a name="<%= category.code_name %>"></a>
-    <p></p>
-    <h4><%= category.name %></h4>
+    <%= render "shared/section_header", title:category.name, link_text:'', link_to:'', subtitle:'' %>
     <table class="table table-striped">
         <% last_key = nil %>
         <% data.rows.each do |row| %>

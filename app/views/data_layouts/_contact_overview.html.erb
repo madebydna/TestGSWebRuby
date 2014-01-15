@@ -2,11 +2,14 @@
     <hr />
     <h3 class="pll">Contact Information</h3>
     <div class="clearfix">
-        <div class="phl fl"><%= @school.street %><br />
-        <%= @school.city+","+@school.state+" "+@school.zipcode %><br /><br />
+        <div class="phl fl">
+            <%= @school.street %><br />
+            <%= @school.city+","+@school.state+" "+@school.zipcode %><br /><br />
             <%= @school.phone %><br /><br />
-            <a href='http://<%= @school.home_page_url %>'><%= @school.home_page_url %></a><br /><br /></div>
-        <div class="fr prl"><%= image_tag("pixel.gif", :class => "js-contact_map_image") %>
-           </div>
+            <a href='http://<%= @school.home_page_url %>'><%= @school.home_page_url %></a><br /><br />
+        </div>
+        <div class="fr prl">
+            <%= image_tag("pixel.gif", :class => "js-contact_map_image") %>
+        </div>
     </div>
 <% end %>

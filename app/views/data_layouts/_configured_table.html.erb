@@ -7,10 +7,9 @@
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
     <a name="<%= category.code_name %>"></a>
-    <p></p>
 
     <% unless data_config.config['hide_header'] == true %>
-        <h4><%= category.name %></h4>
+        <%= render "shared/section_header", title:category.name, link_text:'', link_to:'', subtitle:'' %>
     <% end %>
 
     <table class="table table-striped no-more-tables">
