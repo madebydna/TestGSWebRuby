@@ -1,7 +1,7 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
-    <% if !data.nil? %>
+    <% if data && data["best_known_for"] %>
         <div class="row pal">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h3><%= data.to_s %></h3></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h3><%= data["best_known_for"] %></h3></div>
         </div>
     <% end %>
 <% end %>
