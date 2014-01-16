@@ -29,9 +29,9 @@ class CategoryDataReader
       responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
 
       responses_per_key.each do |key, values|
-        values.each do |value|
-          lookup_value = lookup_table.fetch(value, {})
-          value = if lookup_value.nil? || (lookup_value[:response_key].present? && lookup_value[:response_key] != key)
+        values.map! do |value|
+          lookup_value = lookup_table[value]
+          if lookup_value.nil? || (lookup_value[:response_key].present? && lookup_value[:response_key] != key)
             value
           else
             lookup_value[:response_label]
