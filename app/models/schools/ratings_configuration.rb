@@ -1,5 +1,5 @@
 class RatingsConfiguration
-
+  # TODO move into the database
   def self.city_rating_configuration
     {"mi" => { "Detroit" => Hashie::Mash.new({
                                   rating_breakdowns: {
@@ -26,6 +26,46 @@ class RatingsConfiguration
                          },
                          overall: {description_key: "what_is_gs_rating_summary"}
                      })
+  end
+
+
+  def self.fetch_city_rating_configuration school
+    city_rating_config_exists?(school) ? city_rating_configuration[school.shard.to_s][school.city] : nil
+  end
+
+  def self.fetch_gs_rating_configuration
+    gs_rating_configuration
+  end
+
+  def self.fetch_state_rating_configuration school
+    state_rating_config_exists?(school) ? state_rating_configuration[school.shard.to_s] : nil
+  end
+
+  def self.fetch_state_rating_data_type_ids school
+    state_rating_configuration = fetch_state_rating_configuration school
+    state_rating_configuration.nil? ? [] : Array(state_rating_configuration.overall.data_type_id)
+  end
+
+  def self.fetch_gs_rating_data_type_ids
+    gs_rating_configuration = fetch_gs_rating_configuration
+    gs_rating_configuration.nil? ? [] : gs_rating_configuration.rating_breakdowns.values.map(&:data_type_id)
+  end
+
+  def self.fetch_city_rating_data_type_ids school
+    city_rating_configuration = fetch_city_rating_configuration school
+    city_rating_configuration.nil? ? [] : city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
+  end
+
+  def self.city_rating_config_exists? school
+    !city_rating_configuration[school.shard.to_s].nil? && !city_rating_configuration[school.shard.to_s][school.city].nil?
+  end
+
+  def self.state_rating_config_exists? school
+    !city_rating_configuration[school.shard.to_s].nil?
+  end
+
+  def self.gs_rating_config_exists?
+    !gs_rating_configuration.nil?
   end
 
 end
