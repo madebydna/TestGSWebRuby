@@ -1,3 +1,4 @@
+key	label
 academic_award_1	Academic award
 academic_award_1_year	Year received
 academic_award_2	Academic award
@@ -108,7 +109,6 @@ college_destination_3	Colleges students typically attend after graduation
 college_prep	College preparation resources
 college_prep_other	College preparation resources (misc.)
 contact_method	Best ways for parents to contact the school
-contact_method_email	School contact email
 contact_method_other	Best ways for parents to contact the school (misc.)
 destination_school_1	Students typically continue on to these schools
 destination_school_2	Students typically continue on to these schools
@@ -156,7 +156,6 @@ post_graduation_vocational	% Graduates going into vocational programs
 post_graduation_workforce	% Graduates going directly into the workforce
 post_graduation_year	For the year
 schedule	Special schedule
-schedule_exists	Special schedule offered
 school_type_affiliation	Religious / Parochial
 school_type_affiliation_other	Affiliation
 service_award_1	Community service award
@@ -288,3 +287,7 @@ transportation_other	Transportation options (misc.)
 tuition_high	Tuition range (high)
 tuition_low	Tuition range (low)
 tuition_year	For the year
+transportation_shuttle	School-run shuttle from nearby metro and bus stops
+transportation_shuttle_other	Metro/Bus lines
+school_mascot	School mascot
+school_colors	School colors

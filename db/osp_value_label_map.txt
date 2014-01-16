@@ -1,338 +1,337 @@
-engineering	Engineering
-music	Music
-religious	Religious
-science	Science
-technology	Technology
-academic	Academic (homework help and/or standards-based programs)
-arts	"Arts (visual, literary, dance, theater, and/or music)"
-athletic	Athletics
-athletics	Athletics
-life_skills	Life skills
-other	Other
-call	Call
-website	Visit website
-yearround	Rolling
-dance	Dance
-design	Design
-after	After
-before	Before
-neither	None
-other	Other
-basic	Basic
-intensive	Intensive
-moderate	Moderate
-music	Music
-outdoor	Outdoor
-science	Science
-swimming	Swimming
-martial_arts	Martial arts / Judo
-swimming	Swimming
-outdoor	Outdoor
-yearround	Yearround
-religious	Yes
-design	Design
-engineering	Engineering
-basic	Basic
-intensive	Intensive
-moderate	Moderate
-other	Other
-dance	Dance
-martial_arts	Martial Arts
-technology	Technology
-all_arts	Arts (all)
-business	Business
-environmental	Environmental
-foreign_lang	Foreign languages
-global	Multiculturalism / Global
-humanities	Humanities
-mathematics	Mathematics
-medical	Medical
-performing_arts	Performing arts
-service_learning	Service learning
-social_justice	Social justice
-special_ed	Special Education
-special_education	Special Education
-visual_arts	Visual arts
-vocational	Vocational education
-writing	Writing
-academics	Academic (homework help and/or standards-based programs)
-2	2 years old
-3	3 years old
-4	4 years old
-0/1	Infant
-date	One deadline
-parents_contact	Contact the school / Multiple deadlines
-animation	Computer animation
-graphics	Graphics
-tech_design	Technical design and production
-video	Video and film production
-band	Band
-bells	Bell / handbell choir
-chamber_music	Chamber music
-chorus	Choir / Chorus
-jazz_band	Jazz band
-music_lessons	Instrumental music lessons
-music_theory	Theory
-opera	Opera
-orchestra	Orchestra
-rock_band	Rock band
-voice	Vocal lessons / coaching
-creative_writing	Creative writing
-drama	Drama
-improv	Improv
-poetry	Poetry
-architecture	Architecture
-ceramics	Ceramics
-drawing	Drawing / Sketching
-painting	Painting
-photography	Photography
-printmaking	Printmaking
-sculpture	Sculpture
-textiles	Textiles
-boarding	Boarding school
-day	Day school
-day/boarding	"Some boarding, some day"
-football	Football
-college_trips	School-sponsored trips to college campuses
-community_college	Community college courses
-info_sessions	Info Sessions
-prep_classes	Prep Classes
-sat_act_prep	Sat Act Prep
-summer_prep	Summer Prep
-visiting_lecturers	Visiting Lecturers
-email	Email
-phone	Phone
-dress_code	Dress Code
-no_dress_code	No Dress Code
-uniform	Uniform
-amharic	Amharic
-arabic	Arabic
-cantonese	Cantonese
-dutch	Dutch
-french	French
-german	German
-hmong	Hmong
-italian	Italian
-japanese	Japanese
-korean	Korean
-mandarin	Mandarin
-russian	Russian
-spanish	Spanish
-tagalog	Tagalog
-urdu	Urdu
-vietnamese	Vietnamese
-advanced	Advanced
-acceleration	Acceleration
-career_counseling	Career Counseling
-counseling	Counseling
-differentiated	Differentiated
-mentoring	Mentoring
-remediation	Remediation
-tutoring	Tutoring
-art	Art
-audiovisual	Audiovisual
-auditorium	Auditorium
-cafeteria	Cafeteria
-chapel	Chapel
-college_center	College Center
-computer	Computer
-farm	Farm
-garden	Garden
-gym	Gym
-industrial	Industrial
-internet	Internet
-kitchen	Kitchen
-learning_lab	Learning Lab
-library	Library
-multi_purpose	Multi Purpose
-multi-purpose	Multi-Purpose
-parent	Parent
-performance	Performance
-playground	Playground
-sports_fields	Sports Fields
-outside	Outside
-school_based	School Based
-tax_credits	Tax Credits
-hebrew	Hebrew
-latin	Latin
-badminton	Badminton
-baseball	Baseball
-basketball	Basketball
-cheerleading	Cheerleading
-crew	Crew / Rowing
-cross_country	Cross country
-cycling	Cycling
-diving	Diving
-equestrian	Equestrian
-fencing	Fencing
-field_hockey	Field hockey
-flag_football	Flag football
-golf	Golf
-gymnastics	Gymnastics
-ice_hockey	Ice hockey
-kayaking	Kayaking
-kickball	Kickball
-lacrosse	Lacrosse
-rugby	Rugby
-sailing	Sailing
-ski	Skiing
-soccer	Soccer
-softball	Softball
-squash	Squash
-surfing	Surfing
-tennis	Tennis
-track	Track
-ultimate	Ultimate Frisbee
-volleyball	Volleyball
-water_polo	Water polo
-weight_lifting	Power lifting / Weight lifting
-wrestling	Wrestling
-american_sign_language	American Sign Language
-accelerated_credit	Accelerated Credit
-adult_ed	Adult Ed
-AP_courses	Ap Courses
-classical	Classical
-college_prep	College Prep
-continuation	Continuation
-core_knowledge	Core Knowledge
-direct_instruction	Direct Instruction
-ged	Ged
-gifted	Gifted
-honors	Honors
-hybrid	Hybrid
-ib	Ib
-independent_study	Independent Study
-individual_instruction	Individual Instruction
-internships	Internships
-montessori	Montessori
-multi-aged	Multi-Aged
-project_based	Project Based
-reggio	Reggio
-standards-based	Standards-Based
-STEM	Stem
-teacher-run	Teacher-Run
-therapeutic	Therapeutic
-virtual	Virtual
-waldorf	Waldorf
-after_school_req	After School Req
-chaperone_req	Chaperone Req
-classroom_req	Classroom Req
-coach_req	Coach Req
-cultural_req	Cultural Req
-fundraising_req	Fundraising Req
-governance_req	Governance Req
-parent_nights_req	Parent Nights Req
-playground_req	Playground Req
-presentation_req	Presentation Req
-pto_pta_req	Pto Pta Req
-tutor_req	Tutor Req
-block	Block
-extended	Extended
-parttime	Parttime
-agriculture	Agriculture
-construction	Construction
-cosmetology	Cosmetology
-culinary	Culinary
-electrical	Electrical
-it_support	It Support
-management	Management
-mechanics	Mechanics
-prelaw	Prelaw
-programming	Programming
-welding	Welding
-autism	Autism
-blindness	Blindness
-cognitive	Cognitive
-deafness	Deafness
-developmental_delay	Developmental Delay
-emotional	Emotional
-ld	Ld
-multiple	Multiple
-orthopedic	Orthopedic
-speech	Speech
-art_teacher	Art Teacher
-assistant_principal	Assistant Principal
-college_counselor	College Counselor
-computer_specialist	Computer Specialist
-cooking_teacher	Cooking Teacher
-dance_teacher	Dance Teacher
-ell_esl_coord	Ell Esl Coord
-garden_teacher	Garden Teacher
-gifted_specialist	Gifted Specialist
-instructional_aid	Instructional Aid
-librarian	Librarian
-math_specialist	Math Specialist
-music_teacher	Music Teacher
-nurse	Nurse
-pe_instructor	Pe Instructor
-poetry_teacher	Poetry Teacher
-priest	Priest
-reading_specialist	Reading Specialist
-robotics_teacher	Robotics Teacher
-school_counselor	School Counselor
-school_psychologist	School Psychologist
-security	Security
-special_ed_coordinator	Special Ed Coordinator
-speech_therapist	Speech Therapist
-teacher_aid	Teacher Aid
-tutor	Tutor
-amnesty_international	Amnesty International
-anime	Anime
-art_club	Art Club
-arts_crafts	Arts Crafts
-book_club	Book Club
-boy_scouts	Boy Scouts
-chess	Chess
-community_service	Community Service
-cooking	Cooking
-cub_scouts	Cub Scouts
-debate	Debate
-deca	Deca
-drama_club	Drama Club
-drill_team	Drill Team
-drum_line	Drum Line
-fbla	Fbla
-fca	Fca
-flag_girls	Flag Girls
-forensics	Forensics
-game_club	Game Club
-gardening	Gardening
-girl_scouts	Girl Scouts
-girls_on_the_run	Girls On The Run
-habitat	Habitat
-homework_help	Homework Help
-its_academic	Its Academic
-jrotc	Jrotc
-language_club	Language Club
-lesbian_gay_transgender	Lesbian Gay Transgender
-literary_mag	Literary Mag
-marching_band	Marching Band
-math_club	Math Club
-mock_trial	Mock Trial
-model_congress	Model Congress
-model_un	Model Un
-nhs	Nhs
-origami	Origami
-recycling	Recycling
-robotics	Robotics
-sadd	Sadd
-science_club	Science Club
-sewing_knitting	Sewing Knitting
-special_olympics	Special Olympics
-step_team	Step Team
-student_govt	Student Govt
-student_newspaper	Student Newspaper
-tech_club	Tech Club
-tv_radio_news	Tv Radio News
-woodshop	Woodshop
-yearbook	Yearbook
-yoga	Yoga
-language	Language
-science_nature	Science Nature
-special_needs	Special Needs
-accessible_via_public_transportation	Accessible Via Public Transportation
-busses	Busses
-passes	Passes
-shared_bus	Shared Bus
-special_ed_only	Special Ed Only
-	
+key	value	label	specify key?
+academic_focus	all_arts	Arts (all)	
+academic_focus	business	Business	
+academic_focus	engineering	Engineering	
+academic_focus	environmental	Environmental	
+academic_focus	foreign_lang	Foreign languages	
+academic_focus	global	Multiculturalism / Global	
+academic_focus	humanities	Humanities	
+academic_focus	mathematics	Mathematics	
+academic_focus	medical	Medical	
+academic_focus	music	Music	yes
+academic_focus	none	None	
+academic_focus	performing_arts	Performing arts	
+academic_focus	religious	Religious	yes
+academic_focus	science	Science	yes
+academic_focus	service_learning	Service learning	
+academic_focus	social_justice	Social justice	
+academic_focus	special_ed	Special Education	
+academic_focus	special_education	Special Education	
+academic_focus	technology	Technology	
+academic_focus	visual_arts	Visual arts	
+academic_focus	vocational	Vocational education	
+academic_focus	writing	Writing	
+after_school_activities_1	academic	Academic (homework help and/or standards-based programs)	
+after_school_activities_1	academics	Academic (homework help and/or standards-based programs)	
+after_school_activities_1	arts	"Arts (visual, literary, dance, theater, and/or music)"	
+after_school_activities_1	athletic	Athletics	
+after_school_activities_1	athletics	Athletics	
+after_school_activities_1	life_skills	Life skills	
+after_school_activities_1	other	Other	
+after_school_fee_learn_more_1	call	Call	
+after_school_fee_learn_more_1	website	Visit website	
+age_pk_start	2	2 years old	
+age_pk_start	3	3 years old	
+age_pk_start	4	4 years old	
+age_pk_start	0/1	Infant	
+application_deadline	date	One deadline	
+application_deadline	parents_contact	Contact the school / Multiple deadlines	
+application_deadline	yearround	Rolling	yes
+arts_media	animation	Computer animation	
+arts_media	graphics	Graphics	
+arts_media	tech_design	Technical design and production	
+arts_media	video	Video and film production	
+arts_music	band	Band	
+arts_music	bells	Bell / handbell choir	
+arts_music	chamber_music	Chamber music	
+arts_music	chorus	Choir / Chorus	
+arts_music	jazz_band	Jazz band	
+arts_music	music_lessons	Instrumental music lessons	
+arts_music	music_theory	Theory	
+arts_music	opera	Opera	
+arts_music	orchestra	Orchestra	
+arts_music	rock_band	Rock band	
+arts_music	voice	Vocal lessons / coaching	
+arts_performing_written	creative_writing	Creative writing	
+arts_performing_written	dance	Dance	yes
+arts_performing_written	drama	Drama	
+arts_performing_written	improv	Improv	
+arts_performing_written	poetry	Poetry	
+arts_visual	architecture	Architecture	
+arts_visual	ceramics	Ceramics	
+arts_visual	design	Design	yes
+arts_visual	drawing	Drawing / Sketching	
+arts_visual	painting	Painting	
+arts_visual	photography	Photography	
+arts_visual	printmaking	Printmaking	
+arts_visual	sculpture	Sculpture	
+arts_visual	textiles	Textiles	
+before_after_care	after	After	
+before_after_care	before	Before	
+before_after_care	neither	None	
+boarding	boarding	Boarding school	
+boarding	day	Day school	
+boarding	day/boarding	"Some boarding, some day"	
+boys_sports	badminton	Badminton	
+boys_sports	baseball	Baseball	
+boys_sports	basketball	Basketball	
+boys_sports	cheerleading	Cheerleading	
+boys_sports	crew	Crew / Rowing	
+boys_sports	cross_country	Cross country	
+boys_sports	cycling	Cycling	
+boys_sports	diving	Diving	
+boys_sports	equestrian	Equestrian	
+boys_sports	fencing	Fencing	
+boys_sports	flag_football	Flag football	
+boys_sports	football	Football	
+boys_sports	golf	Golf	
+boys_sports	gymnastics	Gymnastics	
+boys_sports	ice_hockey	Ice hockey	
+boys_sports	kayaking	Kayaking	
+boys_sports	kickball	Kickball	
+boys_sports	lacrosse	Lacrosse	
+boys_sports	None	None	
+boys_sports	rugby	Rugby	
+boys_sports	sailing	Sailing	
+boys_sports	ski	Skiing	
+boys_sports	soccer	Soccer	
+boys_sports	softball	Softball	
+boys_sports	squash	Squash	
+boys_sports	surfing	Surfing	
+boys_sports	swimming	Swimming	yes
+girls_sports	swimming	Swimming	yes
+boys_sports	tennis	Tennis	
+boys_sports	track	Track	
+boys_sports	ultimate	Ultimate Frisbee	
+boys_sports	volleyball	Volleyball	
+boys_sports	water_polo	Water polo	
+boys_sports	weight_lifting	Power lifting / Weight lifting	
+boys_sports	wrestling	Wrestling	
+college_prep	college_trips	School-sponsored trips to college campuses	
+college_prep	community_college	Community college courses	
+college_prep	info_sessions	College presentations or information sessions	
+college_prep	prep_classes	College prep programs/courses during the year	
+college_prep	sat_act_prep	SAT/ACT prep classes	
+college_prep	summer_prep	Summer college prep programs	
+college_prep	visiting_lecturers	Visiting teachers or lecturers from colleges	
+contact_method	email	Email	
+contact_method	phone	Phone	
+dress_code	dress_code	Dress code	
+dress_code	no_dress_code	None	
+dress_code	uniform	Uniforms	
+ell_level	basic	Basic - school offers or partners to provide services based on the needs of individual students	yes
+ell_level	intensive	Intensive - school offers a full program for many languages and/or offers at least one very comprehensive program school-wide for at least 25% of the population	yes
+ell_level	moderate	Moderate - school consistently offers a full program for particular ESL/ELL needs	yes
+extra_learning_resources	acceleration	Acceleration	
+extra_learning_resources	career_counseling	Career/college counseling	
+extra_learning_resources	counseling	Counseling	
+extra_learning_resources	differentiated	Differentiated learning programs	
+extra_learning_resources	mentoring	Mentoring	
+extra_learning_resources	remediation	Remediation	
+extra_learning_resources	tutoring	Tutoring	
+facilities	art	Art room	
+facilities	audiovisual	Audiovisual aids	
+facilities	auditorium	Auditorium	
+facilities	cafeteria	Cafeteria	
+facilities	chapel	Chapel / spiritual reflection center	
+facilities	college_center	College / career center	
+facilities	computer	Computer lab	
+facilities	farm	Access to farm or natural area	
+facilities	garden	Garden / Greenhouse	
+facilities	gym	Gym	
+facilities	industrial	Industrial shop	
+facilities	internet	Internet access	
+facilities	kitchen	Kitchen	
+facilities	learning_lab	Learning lab	
+facilities	library	Library	
+facilities	multi_purpose	"Multi-purpose room (""cafegymatorium"")"	
+facilities	multi-purpose	"Multi-purpose room (""cafegymatorium"")"	
+facilities	music	Music room	yes
+facilities	outdoor	Outdoor learning lab	yes
+facilities	parent	Parent center	
+facilities	performance	Performance stage	
+facilities	playground	Playground	
+facilities	science	Science lab	yes
+facilities	sports_fields	Sports Fields	
+facilities	swimming	Swimming pool	yes
+financial_aid_type	outside	Outside scholarships	
+financial_aid_type	school_based	School-based aid	
+financial_aid_type	tax_credits	Tax credits	
+foreign_language	american_sign_language	American Sign Language (ASL)	
+foreign_language	amharic	Amharic	
+foreign_language	arabic	Arabic	
+foreign_language	cantonese	Chinese - Cantonese	
+foreign_language	dutch	Dutch	
+foreign_language	french	French	
+foreign_language	german	German	
+foreign_language	hebrew	Hebrew	
+foreign_language	hmong	Hmong	
+foreign_language	italian	Italian	
+foreign_language	japanese	Japanese	
+foreign_language	korean	Korean	
+foreign_language	latin	Latin	
+foreign_language	mandarin	Chinese - Mandarin	
+foreign_language	russian	Russian	
+foreign_language	spanish	Spanish	
+foreign_language	tagalog	Tagalog	
+foreign_language	urdu	Urdu	
+foreign_language	vietnamese	Vietnamese	
+girls_sports	field_hockey	Field hockey	
+instructional_model	accelerated_credit	Accelerated credit learning	
+instructional_model	adult_ed	Adult education	
+instructional_model	AP_courses	Advanced placement (AP) courses	
+instructional_model	classical	Classical	
+instructional_model	college_prep	College preparatory	
+instructional_model	continuation	Continuation	
+instructional_model	core_knowledge	Core Knowledge	
+instructional_model	direct_instruction	Direct instruction	
+instructional_model	ged	GED	
+instructional_model	gifted	Gifted / High performing	
+instructional_model	honors	Honors track	
+instructional_model	hybrid	Hybrid / Blended learning	
+instructional_model	ib	International Baccalaureate (IB)	
+instructional_model	independent_study	Independent study	
+instructional_model	individual_instruction	Individually guided instruction	
+instructional_model	internships	Internships	
+instructional_model	montessori	Montessori	
+instructional_model	multi-aged	Multi-aged classrooms	
+instructional_model	outdoor	Outdoor / Farm-based	yes
+instructional_model	project_based	Project-based	
+instructional_model	reggio	Reggio Emilia	
+instructional_model	standards-based	Standards-based	
+instructional_model	STEM	"STEM (Science, Technology, Engineering, and Mathematics)"	
+instructional_model	teacher-run	Teacher-run	
+instructional_model	therapeutic	Therapeutic	
+instructional_model	virtual	Virtual school	
+instructional_model	waldorf	Waldorf	
+parent_involvement	after_school_req	Volunteer time after school	
+parent_involvement	chaperone_req	Chaperone school trips	
+parent_involvement	classroom_req	Volunteer in the classroom	
+parent_involvement	coach_req	Coach sports teams or extracurricular activities	
+parent_involvement	cultural_req	Organize cultural events	
+parent_involvement	fundraising_req	Organize fundraising events	
+parent_involvement	governance_req	Serve on school improvement team or governance council	
+parent_involvement	parent_nights_req	Attend parent nights	
+parent_involvement	playground_req	Monitor the playground	
+parent_involvement	presentation_req	Present special topics during curricular units	
+parent_involvement	pto_pta_req	Join PTO / PTA	
+parent_involvement	tutor_req	Tutor	
+schedule	block	Block scheduling	
+schedule	extended	Extended / longer school day	
+schedule	parttime	Part-time study	
+schedule	yearround	Year-round	yes
+school_type_affiliation	religious	Yes	yes
+skills_training	agriculture	Agriculture	
+skills_training	construction	Construction / Building	
+skills_training	cosmetology	Cosmetology	
+skills_training	culinary	Culinary	
+skills_training	design	Industrial / Graphic Design	yes
+skills_training	electrical	Electrical	
+skills_training	it_support	IT support	
+skills_training	management	Business management	
+skills_training	mechanics	Auto mechanics	
+skills_training	prelaw	Pre-law	
+skills_training	programming	Computer programming	
+skills_training	welding	Welding certification	
+spec_ed_level	basic	Basic - school offers or partners to provide services based on the needs of individual students	yes
+spec_ed_level	intensive	Intensive - school offers a full program for many needs and/or offers at least one very comprehensive program for very challenging needs	yes
+spec_ed_level	moderate	Moderate - school consistently offers a full program for particular special education needs	yes
+special_ed_programs	autism	Autism	
+special_ed_programs	blindness	Visual impairments	
+special_ed_programs	cognitive	Cognitive disability	
+special_ed_programs	deafness	Hearing impairments	
+special_ed_programs	developmental_delay	Significant developmental delay	
+special_ed_programs	emotional	Emotional behavioral disabilities	
+special_ed_programs	ld	Specific learning disabilities	
+special_ed_programs	multiple	Multiple disabilities	
+special_ed_programs	orthopedic	Orthopedic impairments	
+special_ed_programs	speech	Speech and language impairments	
+staff_resources	art_teacher	Art teacher	
+staff_resources	assistant_principal	Assistant principal	
+staff_resources	college_counselor	College counselor	
+staff_resources	computer_specialist	Computer specialist	
+staff_resources	cooking_teacher	Cooking / nutrition teacher	
+staff_resources	dance_teacher	Dance teacher	
+staff_resources	ell_esl_coord	ELL / ESL Coordinator	
+staff_resources	garden_teacher	Gardening teacher	
+staff_resources	gifted_specialist	Gifted Specialist	
+staff_resources	instructional_aid	Instructional aide / coach	
+staff_resources	librarian	Librarian / media specialist	
+staff_resources	math_specialist	Math specialist	
+staff_resources	music_teacher	Music teacher	
+staff_resources	nurse	Nurse	
+staff_resources	pe_instructor	PE instructor	
+staff_resources	poetry_teacher	Poetry / Creative writing teacher	
+staff_resources	priest	"Priest, pastor, or other religious personnel"	
+staff_resources	reading_specialist	Reading specialist	
+staff_resources	robotics_teacher	Robotics / Technology specialist	
+staff_resources	school_counselor	School social worker / counselor	
+staff_resources	school_psychologist	School psychologist	
+staff_resources	security	Security personnel	
+staff_resources	special_ed_coordinator	Special education coordinator	
+staff_resources	speech_therapist	Speech and language therapist	
+staff_resources	teacher_aid	Teacher aide / assistant teacher	
+staff_resources	tutor	Tutor	
+student_clubs	amnesty_international	Amnesty International	
+student_clubs	anime	Anime club	
+student_clubs	art_club	Art club	
+student_clubs	arts_crafts	Art club	
+student_clubs	book_club	Book / reading club	
+student_clubs	boy_scouts	Boy Scouts	
+student_clubs	chess	Chess club	
+student_clubs	community_service	Community service	
+student_clubs	cooking	Cooking club	
+student_clubs	cub_scouts	Cub Scouts	
+student_clubs	dance	Dance club	yes
+student_clubs	debate	Debate	
+student_clubs	deca	DECA	
+student_clubs	drama_club	Drama club	
+student_clubs	drill_team	Drill team	
+student_clubs	drum_line	Drum line	
+student_clubs	fbla	Future Business Leaders of America (FBLA)	
+student_clubs	fca	Fellowship of Christian Athletes (FCA)	
+student_clubs	flag_girls	Flag girls	
+student_clubs	forensics	Forensics club	
+student_clubs	game_club	Game club	
+student_clubs	gardening	Gardening	
+student_clubs	girl_scouts	Girl Scouts	
+student_clubs	girls_on_the_run	Girls on the Run	
+student_clubs	habitat	Habitat for Humanity	
+student_clubs	homework_help	Homework help / Study buddy club	
+student_clubs	its_academic	It's Academic	
+student_clubs	jrotc	JROTC	
+student_clubs	language_club	Foreign language and culture club	
+student_clubs	lesbian_gay_transgender	"Lesbian, gay, transgender club"	
+student_clubs	literary_mag	Literary magazine	
+student_clubs	marching_band	Marching band	
+student_clubs	martial_arts	"Martial arts (judo, tae kwon do, karate, etc)"	
+student_clubs	math_club	Math club	
+student_clubs	mime	Mime club	
+student_clubs	mock_trial	Mock trial competition club	
+student_clubs	model_congress	Model Congress	
+student_clubs	model_oas	Model OAS	
+student_clubs	model_un	Model UN	
+student_clubs	nhs	National Honor Society (NHS)	
+student_clubs	origami	Origami club	
+student_clubs	recycling	Recycling club	
+student_clubs	robotics	Robotics club	
+student_clubs	sadd	SADD	
+student_clubs	science_club	Science club	
+student_clubs	sewing_knitting	Sewing / knitting club	
+student_clubs	special_olympics	Special Olympics	
+student_clubs	step_team	Step team	
+student_clubs	student_govt	Student council / government	
+student_clubs	student_newspaper	Student newspaper	
+student_clubs	tech_club	Technology club	
+student_clubs	tv_radio_news	Television / Radio News	
+student_clubs	woodshop	Woodshop	
+student_clubs	yearbook	Yearbook	
+student_clubs	yoga	Yoga club	
+summer_program_activities_1	language	Language	
+summer_program_activities_1	science_nature	Science Nature	
+summer_program_activities_1	special_needs	Special Needs	
+transportation	accessible_via_public_transportation	Accessible via public transportation	
+transportation	busses	Buses / vans provided for students	
+transportation	passes	Passes / tokens provided for public transportation	
+transportation	shared_bus	Buses / vans shared with other schools	
+transportation	special_ed_only	Transportation provided for special education students	
