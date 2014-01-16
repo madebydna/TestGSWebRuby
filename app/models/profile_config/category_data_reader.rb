@@ -24,10 +24,15 @@ class CategoryDataReader
       # Instead of the hash values being EspResponse objects, make them be the response value
       responses_per_key.values.each { |values| values.map!(&:response_value) }
 
-      # Look up all keys and values in a lookup table. Replace the key or value if there's a match in the lookup table
-      lookup_table = ResponseValue.lookup_table(school.collections)
-      responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
+      # Next, we want to transform the response keys and values into their "pretty" versions
+      # The order in which we do this is important. The pretty labels for response_values are sometimes broken down
+      # by response_key, and the response_keys used are the "raw" unprettified versions. If we transform the keys
+      # first, the values won't transform correctly
 
+      # First, get hash of response value string to ResponseValue
+      lookup_table = ResponseValue.lookup_table(school.collections)
+
+      # Transform the values
       responses_per_key.each do |key, values|
         values.map! do |value|
           lookup_value = lookup_table[value]
@@ -38,6 +43,9 @@ class CategoryDataReader
           end
         end
       end
+
+      # Second, transform the keys
+      responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
 
       responses_per_key
     end
