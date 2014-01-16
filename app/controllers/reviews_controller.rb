@@ -1,11 +1,13 @@
 class ReviewsController < ApplicationController
   include ReviewControllerConcerns
   include DeferredActionConcerns
+  include LocalizationConcerns
 
   # Find school before executing culture action
   before_filter :require_state, :require_school, :find_user, except: :create
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:new]
+  before_filter :set_hub_cookies
 
   def new
     init_page
