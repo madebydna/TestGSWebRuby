@@ -1,18 +1,16 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
     <!-- needs three fields: title, link_text, link_to -->
     <%= render "shared/section_header", title:'Details', link_text:'See all Details', link_to:'details' %>
-    <!--<div class="pal">-->
-        <div class="row">
-            <% if @school.includes_level_code? (['e','m','h']) %>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sport] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang] %></div>
-            <% end %>
-            <% if @school.includes_preschool? %>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sched] %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:commu] %></div>
-            <% end %>
-        </div>
-    <!--</div>-->
+    <div class="row">
+        <% if @school.includes_level_code? (['e','m','h']) %>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art], sprite: 'art' %></div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sport], sprite: 'sports' %></div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club], sprite: 'clubs' %></div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang], sprite: 'language' %></div>
+        <% end %>
+        <% if @school.includes_preschool? %>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sched], sprite: 'schedule' %></div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:commu], sprite: 'community' %></div>
+        <% end %>
+    </div>
 <% end %>

@@ -67,12 +67,13 @@ class CategoryDataReader
 
      #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
-        art:   {count: '-', sprite: 'art', color: '#37BFBB', content: 'Arts & music'},
-        sport: {count: '-', sprite: 'sports', color: '#5EC5DB', content: 'Sports'},
-        club:  {count: '-', sprite: 'clubs', color: '#376592', content: 'Clubs'},
-        lang:  {count: '-', sprite: 'language', color: '#A62019', content: 'Foreign languages'},
-        sched: {count: 'Half day', sprite: 'schedule', color: '#9BB149', content: 'Preschool schedule'},
-        commu: {count: 'Community center', sprite: 'community', color: '#E67E22', content: 'Care setting'}
+
+        art:   {count: '-', content: 'Arts & music'},
+        sport: {count: '-', content: 'Sports'},
+        club:  {count: '-', content: 'Clubs'},
+        lang:  {count: '-', content: 'Foreign languages'},
+        sched: {count: 'Half day', content: 'Preschool schedule'},
+        commu: {count: 'Community center', content: 'Care setting'}
     }
 
     # loop through details and handle total count for 0, infinity cases
