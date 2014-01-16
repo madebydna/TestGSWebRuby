@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with => :exception_handler
 
-  before_filter :login_from_cookie
+  before_filter :login_from_cookie, :init_omniture
 
   helper_method :logged_in?, :current_user
 
@@ -136,6 +136,11 @@ class ApplicationController < ActionController::Base
       else
         render 'error/internal_error', layout: 'error', status: 500
     end
+  end
+
+  def init_omniture
+    gon.omniture_account = ENV_GLOBAL['omniture_account']
+    gon.omniture_server = ENV_GLOBAL['omniture_server']
   end
 
 end

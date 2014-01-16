@@ -38,8 +38,6 @@ class LocalizedProfileController < ApplicationController
   def init_page
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
-    gon.omniture_account = ENV_GLOBAL['omniture_account']
-    gon.omniture_server = ENV_GLOBAL['omniture_server']
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
   end
 
