@@ -18,24 +18,27 @@ LocalizedProfiles::Application.routes.draw do
     schoolId: /\d+/,
     school_name: /.+/
   }
+
+  # Route for "review a school" form
   get '/gsr/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
     school_name: /.+/
   }
 
+  # Redirect /district-of-columbia school profile pages to /washington-dc
   get '/district-of-columbia/:city/:schoolId-:school_name/(/*other)', constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
     school_name: /.+/
   }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
 
+  # Routes for school profile pages
   scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/
   } do
-
     get 'quality', to: 'localized_profile#quality', as: :quality
     get 'details', to: 'localized_profile#details', as: :details
     get 'reviews', to: 'localized_profile#reviews', as: :reviews
@@ -44,6 +47,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
+  # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
 
   resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
