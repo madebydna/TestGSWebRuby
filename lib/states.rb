@@ -72,8 +72,10 @@ module States
     return state_hash[str]
   end
 
-  def self.state_name(abbreviation)
-    abbreviation_hash[abbreviation.downcase]
+  def self.state_name(str)
+    return nil unless str.present?
+    str = str.downcase
+    abbreviation_hash[str] || state_hash.keys.find { |obj| obj == str }
   end
 
   def self.any_state_name_regex

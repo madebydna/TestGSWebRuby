@@ -13,7 +13,7 @@
         <%- if @school.present? %>
             <% hub_city = @school.city %>
             <% hub_state = @school.state %>
-            <% path_to_hub = city_path(school_params(@school)) %>
+            <% path_to_hub = city_path(state: @school.state, city: @school.city) %>
         <% end %>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
