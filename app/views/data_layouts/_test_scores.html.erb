@@ -8,12 +8,12 @@
                     <%= value[:test_label] %><br/><br/>
                     <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
                         <% value[:grades].each_with_index do | (grade, value), index_grade| %>
-                            <button id="js_<%= test %>_<%= grade.get_value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>">GRADE <%= grade.get_value %></button>
+                            <button id="js_<%= test %>_<%= grade.value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>">GRADE <%= grade.value %></button>
                         <% end %>
                     </div>
 
                     <% value[:grades].each_with_index do |(grade,value), index_grade| %>
-                        <div id="js_<%= test %>_<%= grade.get_value %>_scores" class="js_<%= test %>_grades">
+                        <div id="js_<%= test %>_<%= grade.value %>_scores" class="js_<%= test %>_grades">
 
                             <% value.each do |levelcode,value| %>
                                 <% value.each do |subject,value| %>

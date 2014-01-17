@@ -39,14 +39,13 @@ class TestScoreResults
 
     if !data_sets_and_values.blank?
       data_sets_and_values.each do |result_hash|
-        #Todo get the subject, level code objects
+        #Todo get the subject
         #TODO grade all
 
         test_data_type_id = result_hash[:test_data_type_id]
         test_data_set_id = result_hash[:test_data_set_id]
-        grade = Grade.get_grade(result_hash[:grade])
-        level_code = result_hash[:level_code]
-        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
+        grade = Grade.from_string(result_hash[:grade])
+        level_code = result_hash[:level_code]        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
         year = result_hash[:year]
         test_score = result_hash[:school_value_text].nil? ? result_hash[:school_value_float] : result_hash[:school_value_text]
         state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
@@ -67,7 +66,7 @@ class TestScoreResults
           test_scores[test_data_type_id] = {
               test_label: test_meta_data[test_data_type_id].display_name,
               test_description: test_meta_data[test_data_type_id].description,
-              lowest_grade: grade.get_value,
+              lowest_grade: grade.value,
               grades: {
                   grade =>
                       {level_code =>
@@ -91,8 +90,8 @@ class TestScoreResults
 
             #Grade not present.
 
-            if (test_scores[test_data_type_id][:lowest_grade]).to_i > grade.get_value
-              test_scores[test_data_type_id][:lowest_grade] = grade.get_value
+            if (test_scores[test_data_type_id][:lowest_grade]).to_i > grade.value
+              test_scores[test_data_type_id][:lowest_grade] = grade.value
             end
 
 
@@ -170,7 +169,6 @@ class TestScoreResults
         end
       end
     end
-
     test_scores
   end
 
@@ -190,7 +188,7 @@ class TestScoreResults
         end
       end
       #sort grades
-      test_scores[test_id][:grades] = Hash[grades_hash[:grades].sort_by { |k, v| k.get_value }]
+      test_scores[test_id][:grades] = Hash[grades_hash[:grades].sort_by { |k, v| k.value }]
     end
 
     #Sort the tests by lowest grade in the test
