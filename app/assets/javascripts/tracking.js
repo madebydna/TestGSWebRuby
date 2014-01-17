@@ -78,16 +78,16 @@ GS.track.doUnlessTrackingIsDisabled = function (cb) {
 };
 
 GS.track.prop_lookup = {
-    'some_sprop':1,
-    'some_sprop_test':3
+    'test_1_sprop':1,
+    'test_2_sprop':2
 };
 
 GS.track.event_lookup = {
-    'details_event1':'event4',
-    'details_event2':'event5'
+    'test_event1':'event1',
+    'test_event2':'event2'
 };
 
 GS.track.evars_lookup = {
-    'some_evars':1,
-    'some_evars_test':2
+    'test_1_evar':1,
+    'test_2_evar':2
 };

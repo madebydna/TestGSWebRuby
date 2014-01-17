@@ -19,10 +19,6 @@ class LocalizedProfileController < ApplicationController
   end
 
   def details
-    gon.omniture_pagename = "details"
-    gon.omniture_heirarchy = "details,heirarchy"
-    gon.omniture_sprops = {"some_sprop" => "details","some_sprop_test" =>"detailstest"}
-    gon.omniture_evars = {"some_evars" => "details","some_evars_test" =>"detailstest"}
   end
 
   def reviews
@@ -32,6 +28,12 @@ class LocalizedProfileController < ApplicationController
     @review_limit = 10
   end
 
+  def omniture_test
+    gon.omniture_pagename = 'omniture_test'
+    gon.omniture_heirarchy = 'overview,omniture_test'
+    gon.omniture_sprops = {'test_1_sprop' => 'testprop1', 'test_2_sprop' => 'testprop2'}
+    gon.omniture_evars = {'test_1_evar' => 'testevar1', 'test_2_evar' => 'testevar2'}
+  end
 
   private
 
@@ -55,4 +57,5 @@ class LocalizedProfileController < ApplicationController
     # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
     action_name.gsub(' ', '_').capitalize
   end
+
 end

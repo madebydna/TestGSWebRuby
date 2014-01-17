@@ -42,6 +42,7 @@ LocalizedProfiles::Application.routes.draw do
     get 'quality', to: 'localized_profile#quality', as: :quality
     get 'details', to: 'localized_profile#details', as: :details
     get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get 'omniture-test', to: 'localized_profile#omniture_test', as: :omniture_test
     get '', to: 'localized_profile#overview'
   end
 
