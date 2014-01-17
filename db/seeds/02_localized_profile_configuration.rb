@@ -42,6 +42,7 @@ overview = Page.create!(name: 'Overview')
 quality = Page.create!(name: 'Quality')
 details = Page.create!(name: 'Details')
 reviews = Page.create!(name: 'Reviews')
+omniture = Page.create!(name: 'Omniture_Test')
 
 #highlights = Page.create!(name: 'Highlights', parent:programs_culture)
 #programs_resources = Page.create!(name: 'Programs & resources', parent:programs_culture)
