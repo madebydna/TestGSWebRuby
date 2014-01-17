@@ -45,7 +45,8 @@ class TestScoreResults
         test_data_type_id = result_hash[:test_data_type_id]
         test_data_set_id = result_hash[:test_data_set_id]
         grade = Grade.from_string(result_hash[:grade])
-        level_code = result_hash[:level_code]        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
+        level_code = result_hash[:level_code]
+        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
         year = result_hash[:year]
         test_score = result_hash[:school_value_text].nil? ? result_hash[:school_value_float] : result_hash[:school_value_text]
         state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
