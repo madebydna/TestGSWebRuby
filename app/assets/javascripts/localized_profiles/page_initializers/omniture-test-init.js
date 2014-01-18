@@ -1,4 +1,4 @@
-if (gon.pagename == 'Omniture_test') {
+if (gon.pagename == 'omniture_test') {
     GS.track.base_omniture_object.pageName = gon.omniture_pagename;
     GS.track.base_omniture_object.hier1 = gon.omniture_pagename;
     var sprops_hash = gon.omniture_sprops;

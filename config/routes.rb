@@ -42,9 +42,10 @@ LocalizedProfiles::Application.routes.draw do
     get 'quality', to: 'localized_profile#quality', as: :quality
     get 'details', to: 'localized_profile#details', as: :details
     get 'reviews', to: 'localized_profile#reviews', as: :reviews
-    get 'omniture-test', to: 'localized_profile#omniture_test', as: :omniture_test
     get '', to: 'localized_profile#overview'
   end
+
+  get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
 
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
