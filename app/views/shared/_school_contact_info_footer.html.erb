@@ -1,0 +1,27 @@
+<% if @school %>
+  <div class="row" id="">
+    <div id="school-contact-info-footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac" style="padding:10px;">
+      <div class="limit_width_1200 row text-left pvl">
+        <a name="ContactInfo"></a>
+
+        <h3>Contact Information</h3>
+
+        <div class="row">
+
+          <p class="col-sm-4 col-md-4 col-lg-5">
+            <span><%= @school.street %></span><br/>
+            <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
+            <br/>
+            <a href='http://<%= @school.home_page_url %>'><%= @school.home_page_url %></a><br/>
+            <span><%= @school.phone %></span><br/>
+            <br/>
+          </p>
+
+          <div class="col-md-8 col-md-8 col-lg-7 pbl">
+            <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

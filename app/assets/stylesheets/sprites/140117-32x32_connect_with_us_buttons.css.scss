@@ -1,0 +1,61 @@
+/* **************** SPRITE ***************** */
+
+.iconx32-connect_with_us_buttons {
+  display: inline-block;
+  background-image: url("icons/140117-32x32_connect_with_us_buttons.png");
+  width: 32px;
+  height: 32px;
+
+  /* **************** VIEWPORT ***************** */
+}
+
+.i-32-connect-fb {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: 0 0;
+}
+
+.i-32-connect-twitter {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -32px 0px;
+}
+
+.i-32-connect-pinterest {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -64px 0px;
+}
+
+.i-32-connect-gs-blog  {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -96px 0px;
+}
+
+.i-32-connect-youtube {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -128px 0px;
+}
+
+// -c suffix means 'color'
+.i-32-connect-fb-c {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: 0 32px;
+}
+
+.i-32-connect-twitter-c {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -32px 32px;
+}
+
+.i-32-connect-pinterest-c {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -64px 32px;
+}
+
+.i-32-connect-gs-blog-c  {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -96px 32px;
+}
+
+.i-32-connect-youtube-c {
+  @extend .iconx32-connect_with_us_buttons;
+  background-position: -128px 32px;
+}

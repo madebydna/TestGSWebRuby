@@ -24,9 +24,9 @@ class GoogleSignedImages
     address = google_formatted_street_address
 
     sizes = {
-        'sm' => [280, 280],
-        'md' => [400, 200],
-        'lg' => [500, 200]
+        'sm' => [280, 150],
+        'md' => [400, 150],
+        'lg' => [500, 150]
     }
 
     gon.contact_map ||= sizes.inject({}) do |sized_maps, element|
