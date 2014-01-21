@@ -96,8 +96,8 @@ GS.visualchart = GS.visualchart || function($) {
 //                chartArea:{left:15,top:15,bottom:10,right:10,width:"90%",height:"90%"},
 
                 colors: colors,
-                hAxis: {maxValue: 100, minValue:0},
-                chartArea: {left:50,top:20}
+                hAxis: {maxValue: '100', minValue:'0'},
+                chartArea: {left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%"}
             };
 
 

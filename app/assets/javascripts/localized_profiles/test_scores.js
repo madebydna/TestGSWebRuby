@@ -21,8 +21,8 @@ GS.testScores = GS.testScores || function($) {
             var classToHide = ".js_"+test_id+"_grades";
             var idToShow = "#js_"+test_id+"_"+grade_id+"_scores";
 
-            $(classToHide).hide();
-            $(idToShow).show();
+            $(classToHide).addClass("dn");
+            $(idToShow).removeClass("dn");
         });
     };
 

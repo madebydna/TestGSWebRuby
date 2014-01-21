@@ -2,40 +2,35 @@
     <%= render "shared/section_header", title:'Test Scores', link_text:'', link_to:'', subtitle:'' %>
 <% end %>
 <% data.each_with_index do |(test,value),index| %>
-    <!--<div class="pvl">-->
-
-            <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
-                    <h4><%= value[:test_label] %></h4><br/>
-                    <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
-                        <% value[:grades].each_with_index do | (grade, value), index_grade| %>
-                            <button id="js_<%= test %>_<%= grade.value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>">GRADE <%= grade.value %></button>
-                        <% end %>
-                    </div>
-
-                    <% value[:grades].each_with_index do |(grade,value), index_grade| %>
-                        <div id="js_<%= test %>_<%= grade.value %>_scores" class="js_<%= test %>_grades">
-
-                            <% value.each do |levelcode,value| %>
-                                <% value.each_with_index do |(subject,value),  index_subject| %>
-                                    <% first_time_spacing = ((index_subject == 0) ? 'ptl' : '') %>
-                                    <h5 class="<%= first_time_spacing %>"><%= subject.gs_capitalize_first %></h5>
-                                    <!--TODO change this to test id-->
-
-                                    <% bar_chart_div_id = "js_bar_chart_div_#{test.to_s.gsub(/\s/,'')}_#{grade.value}_#{subject.to_s.gsub(/\s/,'')}" %>
-
-
-                                    <div id="<%= bar_chart_div_id %>" class="ma"><!--Div for bar chart--></div>
-
-                                    <% content_for :head do %>
-                                        <script type="text/javascript">
-                                            GS.visualchart.drawBarChartTestScores(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>, 'testscores');
-                                        </script>
-                                    <% end %>
-                                <% end %>
-                            <% end %>
-                        </div>
-                    <% end %>
-
+    <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
+        <h4><%= value[:test_label] %></h4><br/>
+        <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
+            <% value[:grades].each_with_index do | (grade, value), index_grade| %>
+                <button id="js_<%= test %>_<%= grade.value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>">GRADE <%= grade.value %></button>
             <% end %>
-        <!--</div>-->
+        </div>
+
+        <% value[:grades].each_with_index do |(grade,value), index_grade| %>
+            <div id="js_<%= test %>_<%= grade.value %>_scores" class="js_<%= test %>_grades">
+
+                <% value.each do |levelcode,value| %>
+                    <% value.each_with_index do |(subject,value),  index_subject| %>
+
+                        <h5 <%= ((index_subject == 0) ? "class=ptl" : '') %>><%= subject.gs_capitalize_first %></h5>
+                        <!--TODO change this to test id-->
+
+                        <% bar_chart_div_id = "js_bar_chart_div_#{test.to_s.gsub(/\s/,'')}_#{grade.value}_#{subject.to_s.gsub(/\s/,'')}" %>
+
+                        <div id="<%= bar_chart_div_id %>" class="ma"><!--Div for bar chart--></div>
+
+                        <% content_for :head do %>
+                            <script type="text/javascript">
+                                GS.visualchart.drawBarChartTestScores(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>, 'testscores');
+                            </script>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            </div>
+        <% end %>
+    <% end %>
 <% end %>

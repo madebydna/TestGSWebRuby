@@ -35,6 +35,10 @@ GS.window.sizing.barChartLegend = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".barChartLegend");
 }
+GS.window.sizing.barChartAreaWidth = function(chartname){
+    var obj = GS.window.sizing.sizeBasedObjHash();
+    return eval("obj."+chartname+".barChartAreaWidth");
+}
 
 
 GS.window.sizing.globalMapWidth = function(){
@@ -58,6 +62,9 @@ GS.window.sizing.sizeBasedObjHash = function() {
     sizeHash.global = {}
     //default
     sizeHash.overview.pieChartLegend = "{position: 'right',alignment: 'center'}";
+    sizeHash.testscores.barChartLegend = 'right';
+    sizeHash.testscores.barChartAreaWidth = '60%';
+
     var windowWidth = GS.window.sizing.width();
     if(windowWidth >= 990){
         sizeHash.overview.pieChartWidth = 960;
@@ -102,9 +109,10 @@ GS.window.sizing.sizeBasedObjHash = function() {
                     sizeHash.ethnicity.pieChartWidth = 280;
                     sizeHash.ethnicity.pieChartHeight = 280;
                     sizeHash.overview.pieChartLegend = 'none';
-                    sizeHash.testscores.barChartWidth = 300;
+                    sizeHash.testscores.barChartWidth = 270;
                     sizeHash.testscores.barChartHeight = 170;
                     sizeHash.testscores.barChartLegend = 'bottom';
+                    sizeHash.testscores.barChartAreaWidth = '75%';
                     if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
                         sizeHash.global.map = gon.contact_map.sm;
                     }
