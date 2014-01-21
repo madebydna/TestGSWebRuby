@@ -12,7 +12,7 @@
             <span><%= @school.street %></span><br/>
             <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
             <br/>
-            <a href='http://<%= @school.home_page_url %>'><%= @school.home_page_url %></a><br/>
+            <a href='<%= @school.home_page_url %>' target="_blank"><%= @school.home_page_url %></a><br/>
             <span><%= @school.phone %></span><br/>
             <br/>
           </p>
