@@ -22,7 +22,7 @@
                         <div class="fl prl open-sans pt2 h24"><span class="mrm">Community rating:</span><span class="mt2 vam"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></span></div>
                     <% end %>
                     <% if @school.local_rating  %>
-                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Local rating:</span><span class="open-sans_sb"><%= @school.local_rating %></span></div>
+                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Local rating:</span><span class="open-sans_sb"><%= (@school.local_rating == 'NG')? 'No Grade':@school.local_rating %></span></div>
                     <% end %>
                     <% if @school.state_rating  %>
                         <div class="fl prl open-sans pt2 h24"><span class="mrm">State rating:</span><span class="open-sans_sb"><%= @school.state_rating %></span></div>
