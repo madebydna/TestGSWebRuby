@@ -21,6 +21,22 @@ GS.window.sizing.pieChartLegend = function(chartname){
     return eval("obj."+chartname+".pieChartLegend");
 }
 
+GS.window.sizing.barChartWidth = function(chartname){
+    var obj = GS.window.sizing.sizeBasedObjHash();
+    return eval("obj."+chartname+".barChartWidth");
+}
+
+GS.window.sizing.barChartHeight = function(chartname){
+    var obj = GS.window.sizing.sizeBasedObjHash();
+    return eval("obj."+chartname+".barChartHeight");
+}
+
+GS.window.sizing.barChartLegend = function(chartname){
+    var obj = GS.window.sizing.sizeBasedObjHash();
+    return eval("obj."+chartname+".barChartLegend");
+}
+
+
 GS.window.sizing.globalMapWidth = function(){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return obj.global.googleMapWidth;
@@ -38,6 +54,7 @@ GS.window.sizing.sizeBasedObjHash = function() {
     sizeHash.ethnicity = {}
     sizeHash.ethnicity.pieChartLegend = 'none';
     sizeHash.quality = {}
+    sizeHash.testscores = {}
     sizeHash.global = {}
     //default
     sizeHash.overview.pieChartLegend = "{position: 'right',alignment: 'center'}";
@@ -47,6 +64,8 @@ GS.window.sizing.sizeBasedObjHash = function() {
         sizeHash.overview.pieChartHeight = 300;
         sizeHash.ethnicity.pieChartWidth = 280;
         sizeHash.ethnicity.pieChartHeight = 280;
+        sizeHash.testscores.barChartWidth = 700;
+        sizeHash.testscores.barChartHeight = 300;
         if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('lg')) {
             sizeHash.global.map = gon.contact_map.lg;
         }
@@ -58,6 +77,8 @@ GS.window.sizing.sizeBasedObjHash = function() {
             sizeHash.overview.pieChartHeight = 300;
             sizeHash.ethnicity.pieChartWidth = 280;
             sizeHash.ethnicity.pieChartHeight = 280;
+            sizeHash.testscores.barChartWidth = 700;
+            sizeHash.testscores.barChartHeight = 300;
             if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('lg')) {
                 sizeHash.global.map = gon.contact_map.lg;
             }
@@ -68,6 +89,8 @@ GS.window.sizing.sizeBasedObjHash = function() {
                 sizeHash.overview.pieChartHeight = 200;
                 sizeHash.ethnicity.pieChartWidth = 280;
                 sizeHash.ethnicity.pieChartHeight = 280;
+                sizeHash.testscores.barChartWidth = 420;
+                sizeHash.testscores.barChartHeight = 250;
                 if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
                     sizeHash.global.map = gon.contact_map.md;
                 }
@@ -79,6 +102,9 @@ GS.window.sizing.sizeBasedObjHash = function() {
                     sizeHash.ethnicity.pieChartWidth = 280;
                     sizeHash.ethnicity.pieChartHeight = 280;
                     sizeHash.overview.pieChartLegend = 'none';
+                    sizeHash.testscores.barChartWidth = 300;
+                    sizeHash.testscores.barChartHeight = 170;
+                    sizeHash.testscores.barChartLegend = 'bottom';
                     if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
                         sizeHash.global.map = gon.contact_map.sm;
                     }
