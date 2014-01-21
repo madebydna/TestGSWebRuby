@@ -68,10 +68,10 @@ class CategoryDataReader
      #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
 
-        art:   {count: '-', content: 'Arts & music'},
-        sport: {count: '-', content: 'Sports'},
-        club:  {count: '-', content: 'Clubs'},
-        lang:  {count: '-', content: 'Foreign languages'},
+        art:   {count: 'n/a', content: 'Arts & music'},
+        sport: {count: 'n/a', content: 'Sports'},
+        club:  {count: 'n/a', content: 'Clubs'},
+        lang:  {count: 'n/a', content: 'Foreign languages'},
         sched: {count: 'Half day', content: 'Preschool schedule'},
         commu: {count: 'Community center', content: 'Care setting'}
     }
@@ -88,7 +88,7 @@ class CategoryDataReader
           none_count = details_response_keys[osp_key].sum do | key |
             (Array(data_details[key]).count{|item| item.downcase == "none"})
           end
-          return_counts_details[osp_key][:count] = none_count == 0 ?  "-" : 0
+          return_counts_details[osp_key][:count] = none_count == 0 ?  "n/a" : 0
        end
     end
     return_counts_details
