@@ -3,7 +3,7 @@
         <div class="tac">
             <%= draw_stars_24 @school_reviews_global.rating_averages.overall.avg_score %>
             <h3 class="mbn mtm"><%= @school_reviews_global.rating_averages.overall.avg_score %> stars</h3>
-            <span>Based on <%= @school_reviews_global.rating_averages.overall.counter %> ratings</span>
+            <span>Based on <%= @school_reviews_global.rating_averages.overall.counter %> <%= (@school_reviews_global.rating_averages.overall.counter == 1)? 'rating':'ratings' %></span>
         </div>
     </div>
 
