@@ -51,7 +51,7 @@ class SigninController < ApplicationController
 
     if logged_in? && redirect_url.present?
       executed_deferred_action
-      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !@performed_render
+      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !already_redirecting?
     else
       redirect_to user_profile_or_home
     end
