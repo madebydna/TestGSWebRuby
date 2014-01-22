@@ -61,22 +61,112 @@ class School < ActiveRecord::Base
   end
 
   def process_level
-    l = level.split ','
-    case l.size
-      when 1
-        l.first
-        if l.first == 'KG'
-          'K'
-        end
-      when 0
-        nil
-      else
-        first_grade_level = l.first
-        if first_grade_level == 'KG'
-          first_grade_level = 'K'
-        end
-        first_grade_level + "-" + l.last
+
+    level_array = level.split ','
+
+    # need to find contiguous grade levels and insert a dash "-" between first and last
+    # pre K or PK is smallest
+    # KG or K is second smallest - convert KG to K
+    # Breaks in grade sequence is separated by a comma
+    # UG if alone will be written as Ungraded if at the end of a series append as "& Ungraded"
+
+    if level_array.length == 1
+      if level_array[0] == 'KG'
+        return 'K'
+      elsif level_array[0] == 'UG'
+        return "Ungraded"
+      end
+      return level_array[0]
     end
+
+    ungraded = false
+    result = []
+    level_array.each_with_index do | value, index |
+      if value == 'PK'
+        result[index] = -1
+      elsif (value == 'KG' || value == 'K' )
+        result[index] = 0
+      elsif (value == 'UG' )
+        ungraded = true
+      else
+        result[index] = value.to_i
+      end
+    end
+
+
+
+    # set first value
+    if result.empty?
+      if ungraded == true
+         return "Ungraded"
+      end
+      return nil
+    end
+
+    array_count = result.length - 1
+    first_value = result[0]
+
+    return_str = ''
+    # just so it is not one less then the first value.
+    series_started = false
+    previous_value = first_value
+
+    for i in 1..array_count
+      value = result[i]
+      if value == previous_value + 1
+        if series_started == false
+          if return_str != ''
+            return_str += ', '
+          end
+          if previous_value == -1
+            return_str += 'PK'
+          elsif previous_value == 0
+              return_str += '-K'
+          else
+            if value == 5
+              raise('')
+            end
+            return_str += previous_value.to_s
+          end
+        end
+        if i == array_count
+          if value == 0
+            return_str += '-K'
+          else
+            return_str += '-' + value.to_s
+          end
+          next
+        end
+
+        previous_value = value
+        series_started = true
+        next
+      end
+
+      if previous_value == -1
+        return_str += 'PK'
+      elsif previous_value == 0
+        if series_started
+          return_str += '-K'
+        else
+          return_str += 'K'
+        end
+      elsif i == array_count
+        if series_started
+          return_str += '-'
+        end
+        return_str += previous_value.to_s + ', ' + value.to_s
+      elsif series_started
+        return_str += '-' + value.to_s
+      end
+
+      series_started = false
+      previous_value = value
+    end
+    if ungraded == true
+      return_str += " & Ungraded"
+    end
+    return_str
   end
 
   # returns all reviews for
