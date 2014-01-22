@@ -61,16 +61,16 @@
                         <% end %>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                        <button class="btn btn-default" style="width:100%">
-                            <span class="vam iconx16 i-16-heart"></span> Save This School
-                        </button>
-                        <!--<%= render 'shared/add_to_my_school_list_button', school: @school %>-->
+                      <%= render 'shared/add_to_my_school_list_form', school: @school %>
+                      <button class="btn btn-default js-save-this-school-button" style="width:100%">
+                        <span class="vam iconx16 i-16-heart"></span> Save This School
+                      </button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                        <button class="btn btn-default" style="width:100%">
-                            <span class="vam iconx16 i-16-envelop"></span> Send me updates
-                        </button>
-                        <!--<%= render 'shared/send_me_updates_button', school: @school %>-->
+                      <%= render 'shared/send_me_updates_form', school: @school %>
+                      <button class="btn btn-default js-send-me-updates-button" style="width:100%">
+                        <span class="vam iconx16 i-16-envelop"></span> Send me updates
+                      </button>
                     </div>
                 </div>
             </div>

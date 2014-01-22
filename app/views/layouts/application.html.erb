@@ -32,6 +32,10 @@
     $(".js-header-message").slideDown("slow");
 </script>
 
+<div class="dn">
+  <%= unique_content_for(:global_hidden_content) %>
+</div>
+
 <%= content_for?(:content) ? yield(:content) : yield %>
 
 <%=  render 'omniture/omniture' %>

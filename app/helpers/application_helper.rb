@@ -161,4 +161,20 @@ module ApplicationHelper
     output
   end
 
+  # When passed a content string or a block, adds that content to an array, which will get uniqued before being
+  # displayed
+  # If the layout erb file asks for unique_content_for(:blah) without passing content or block, then the uniqued
+  # content will be returned
+  def unique_content_for(name, content = nil, &block)
+    @content_array ||= {}
+    if content || block_given?
+      content = capture(&block) if block_given?
+      @content_array[name] ||= []
+      @content_array[name] << content if content
+      nil
+    else
+      raw (@content_array[name] || []).uniq.join
+    end
+  end
+
 end
