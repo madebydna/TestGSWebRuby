@@ -3,7 +3,7 @@ class CategoryData < ActiveRecord::Base
   has_paper_trail
   db_magic :connection => :profile_config
 
-  belongs_to :collection
+  include BelongsToCollectionConcerns
   belongs_to :category
 
   # return CategoryData with collection_id in the provided

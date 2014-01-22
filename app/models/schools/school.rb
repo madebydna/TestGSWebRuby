@@ -6,9 +6,6 @@ class School < ActiveRecord::Base
   attr_accessible :name, :state, :school_collections, :district_id
   has_many :school_metadatas
   belongs_to :district
-  #has_many :school_collections
-  #has_many :collections, through: :school_collections
-  #has_many :census_data_school_values, :class_name => 'CensusDataSchoolValue'
 
   self.inheritance_column = nil
 
@@ -21,11 +18,11 @@ class School < ActiveRecord::Base
   end
 
   def school_collections
-    SchoolCollection.where(state: state, school_id: id)
+    SchoolCollection.for_school(self)
   end
 
   def collections
-    school_collections.map(&:collection)
+    school_collections.map(&:collection).uniq
   end
 
   # get the schools metadata

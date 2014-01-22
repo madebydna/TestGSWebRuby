@@ -1,9 +1,10 @@
 class ResponseValue < ActiveRecord::Base
-  attr_accessible :collection_id, :collection, :response_label, :response_key, :response_value, :category_id, :category
+  attr_accessible :response_label, :response_key, :response_value, :category_id, :category
   has_paper_trail
   db_magic :connection => :profile_config
 
-  belongs_to :collection
+  include BelongsToCollectionConcerns
+
   belongs_to :category
 
   def self.lookup_table(collections = [], categories = [])

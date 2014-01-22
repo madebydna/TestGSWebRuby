@@ -1,11 +1,11 @@
 class CategoryPlacement < ActiveRecord::Base
-  attr_accessible :category, :collection, :page, :position, :category_id, :collection_id, :page_id, :layout, :layout_config, :priority, :title
+  attr_accessible :category, :page, :position, :category_id, :page_id, :layout, :layout_config, :priority, :title
   has_paper_trail
   has_ancestry
   db_magic :connection => :profile_config
 
+  include BelongsToCollectionConcerns
   belongs_to :category
-  belongs_to :collection
   belongs_to :page
 
   delegate :data_for_school, to: :category
