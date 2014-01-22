@@ -58,10 +58,16 @@
             <div class="js_reviewsList">
                 <%= render '/shared/review_module', school_reviews_pagination: @school_reviews %>
             </div>
-            <% if @school_reviews_global.review_filter_totals.all < 10 %>
+            <% if @school_reviews_global.review_filter_totals.all <= 10 %>
                 <% @review_button_hide ="dn" %>
             <% end %>
-            <button data-total-count="<%= @school_reviews_global.review_filter_totals.all %>" data-all-count="<%= @school_reviews_global.review_filter_totals.all %>" data-parent-count="<%= @school_reviews_global.review_filter_totals.parent %>" data-student-count="<%= @school_reviews_global.review_filter_totals.student %>" data-offset="<%= @review_limit %>" data-limit="<%= @review_limit %>" class="mtm col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-default js_reviewsGetNextTen <%= @review_button_hide %>">Get Next Ten</button>
+            <button data-total-count="<%= @school_reviews_global.review_filter_totals.all %>"
+                    data-all-count="<%= @school_reviews_global.review_filter_totals.all %>"
+                    data-parent-count="<%= @school_reviews_global.review_filter_totals.parent %>"
+                    data-student-count="<%= @school_reviews_global.review_filter_totals.student %>"
+                    data-offset="<%= @review_limit %>"
+                    data-limit="<%= @review_limit %>"
+                    class="mtm col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-default js_reviewsGetNextTen <%= @review_button_hide %>">Get Next Ten</button>
         </div>
     <% end %>
 
