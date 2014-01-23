@@ -75,4 +75,8 @@ module SessionConcerns
     end
   end
 
+  def redirect_back
+    redirect_to(request.referer)
+  end
+
 end
