@@ -1,5 +1,6 @@
 module SessionConcerns
   extend ActiveSupport::Concern
+  include UrlHelper
 
   STORED_LOCATION_EXPIRATION = 15.minutes
 

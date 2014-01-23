@@ -4,6 +4,32 @@ module UrlHelper
     param.downcase.gsub('-', '_').gsub(/\s+/, '-')
   end
 
+  def encode_school_name(param)
+    param.gsub!(' ', '-')
+    param.gsub!('/', '-')
+    param.gsub!('#', '')
+    param.gsub!('`', '')
+
+    # Replaces non-ASCII characters with an ASCII approximation, or if none exists,
+    # a replacement character which defaults to “?”
+    param = ActiveSupport::Inflector.transliterate param, ''
+
+    param.gs_capitalize_words!
+
+    param = CGI.escape param
+
+    param.gsub '&..', ''
+  end
+
+  def school_params(school)
+    {
+      state: gs_legacy_url_encode(school.state_name),
+      city: gs_legacy_url_encode(school.city),
+      schoolId: school.id,
+      school_name: encode_school_name(school.name)
+    }
+  end
+
   def state_path(options)
     state = options[:state] || ''
     state_name = States.state_name(state)
@@ -24,6 +50,10 @@ module UrlHelper
     "#{state_path(options)}/#{city}"
   end
 
+
+
+  # Create a methodname_url method for every methodname_path method in this file.
+  # e.g. create city_url and state_url methods which give absolute URLs for those pages
   self.instance_methods.grep(/_path$/).each do |method|
     define_method "#{method[0..-6]}_url" do |options, params = {}|
       options = (options || {}).reverse_merge!(controller.default_url_options)

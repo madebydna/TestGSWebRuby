@@ -4,6 +4,7 @@ class LocalizedProfileController < ApplicationController
   include LocalizationConcerns
 
   before_filter :require_state, :require_school
+  before_filter :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
   before_filter :read_config_for_page, except: :reviews
   before_filter :init_page, :set_header_data
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
@@ -50,6 +51,17 @@ class LocalizedProfileController < ApplicationController
   def configured_page_name
     # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
     action_name.gsub(' ', '_').capitalize
+  end
+
+  # requires that @school has already been obtained from db
+  def redirect_to_canonical_url
+    route_path_helper = 'school_'
+    route_path_helper << "#{action_name}_" if action_name != 'overview'
+    route_path_helper << 'path'
+
+    canonical_path = self.send route_path_helper.to_sym, school_params(@school)
+
+    redirect_to canonical_path if canonical_path != request.path + '/'
   end
 
 end

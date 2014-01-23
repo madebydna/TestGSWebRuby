@@ -42,7 +42,7 @@ class GoogleSignedImages
     google_private_key = ENV_GLOBAL['GOOGLE_PRIVATE_KEY']
     google_client_id = ENV_GLOBAL['GOOGLE_CLIENT_ID']
 
-    parsed_url = URI.parse(url)
+    parsed_url = URI.parse(URI.encode(url))
     url_to_sign = parsed_url.path + '?' + parsed_url.query + '&client=' + google_client_id
 
     # Decode the private key

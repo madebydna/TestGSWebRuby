@@ -101,26 +101,6 @@ module ApplicationHelper
     end
   end
 
-  def serialize_param(path)
-    path.gsub(/\s+/, '-')
-  end
-
-  #get '/:state/:city/', as: :city, constraints: {
-  #    state: States.any_state_name_regex,
-  #}
-  def city_path(hash)
-    '/'+hash[:state] + '/' +hash[:city]+'/'
-  end
-
-
-  def school_params(school)
-    {
-      state: serialize_param(school.state_name.downcase),
-      city: serialize_param(school.city.downcase),
-      schoolId: school.id,
-      school_name: serialize_param(school.name.downcase)
-    }
-  end
 
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
   # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string

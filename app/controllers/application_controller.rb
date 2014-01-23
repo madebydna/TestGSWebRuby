@@ -63,18 +63,7 @@ class ApplicationController < ActionController::Base
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end
 
-  def serialize_param(path)
-    path.gsub(/\s+/, '-')
-  end
 
-  def school_params(school)
-    {
-      state: serialize_param(school.state_name.downcase),
-      city: serialize_param(school.city.downcase),
-      schoolId: school.id,
-      school_name: serialize_param(school.name.downcase)
-    }
-  end
 
   # authorization
 
