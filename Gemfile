@@ -76,6 +76,7 @@ group :development do
 
   # Use the Thin server in development for speed and other improvements
   gem 'thin'
+
 end
 
 group :development, :test do
@@ -129,7 +130,11 @@ group :development, :test do
   gem 'guard-livereload'
   gem 'childprocess'
 
+  # Allows Ruby to communicate with growl, for system messaging. e.g. you can pop up an alert when your tests fail
   gem 'ruby_gntp'
+
+  # Turn off assets logging in development
+  gem 'quiet_assets'
 end
 
 # Gems used only for assets and not required

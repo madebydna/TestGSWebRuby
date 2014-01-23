@@ -59,6 +59,9 @@ LocalizedProfiles::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
 
+  # If you want to temporarily turn assets logging back on in development, just set quet_assets to false below
+  config.quiet_assets = true
+
   # Don't cache in dev environment
   config.cache_store = :null_store
 
@@ -83,4 +86,9 @@ LocalizedProfiles::Application.configure do
   # a domain of .greatschools.org (so that they're shared across subdomains) then uncomment out the below line
   # config.session_store :cookie_store, key: '_LocalizedProfiles_session', :domain => :all, :tld_length => 2
 
+
+  # Move sql logging into separate file in development
+  sql_logger = Logger.new Rails.root.join('log', 'development_sql.log')
+  # sql_logger.formatter = Logger::Formatter.new
+  config.active_record.logger = sql_logger
 end
