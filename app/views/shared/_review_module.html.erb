@@ -10,7 +10,7 @@
             - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-             <%= review[:comments] %>
+            <%= raw (review[:comments].strip == '') ? '<div class="well mbn">This review submitted without content.</div>': review[:comments] %>
          </div>
     </div>
 <% end %>

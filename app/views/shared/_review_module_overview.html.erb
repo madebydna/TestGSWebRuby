@@ -14,7 +14,7 @@
                     <%= draw_stars_16 review[:quality].to_i %>
                     <span class="mlm vat"><%= review[:posted].strftime "%B %d, %Y" %></span>
                 </div>
-                 <%= review[:comments] %>
+                <%= raw (review[:comments].strip == '') ? '<div class="well mbn">This review submitted without content.</div>': review[:comments] %>
                 <br /><br />
                 - submitted by a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
             </div>

@@ -1,7 +1,7 @@
 <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
-            <div class="well">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mvl">
+            <div class="well tac">
                 <%= link_to new_school_rating_path(school_params(@school)) do %>
                     <button type="button" class="btn btn-primary">
                         BE THE FIRST TO REVIEW
