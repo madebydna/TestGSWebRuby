@@ -6,7 +6,7 @@ module DeferredActionConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
 
-  ALLOWED_DEFERRED_ACTION_NAMES = [
+  ALLOWED_DEFERRED_ACTIONS = [
     :create_subscription_deferred,
     :save_review_deferred,
     :add_favorite_school_deferred
@@ -23,7 +23,7 @@ module DeferredActionConcerns
   def executed_deferred_action
     action, params = get_deferred_action
 
-    if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTION_NAMES.include?(action)
+    if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTIONS.include?(action)
       begin
         success = self.send action, params
         delete_cookie :deferred_action if success
