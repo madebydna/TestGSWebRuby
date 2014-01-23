@@ -1,7 +1,7 @@
 module UrlHelper
 
   def gs_legacy_url_encode(param)
-    param.downcase.gsub('-', '_').gsub(/\s+/, '-')
+    param.downcase.gsub('-', '_').gsub(' ', '-')
   end
 
   def encode_school_name(param)
