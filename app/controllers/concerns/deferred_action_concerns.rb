@@ -6,6 +6,12 @@ module DeferredActionConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
 
+  ALLOWED_DEFERRED_ACTION_NAMES = [
+    :create_subscription_deferred,
+    :save_review_deferred,
+    :add_favorite_school_deferred
+  ]
+
   def save_deferred_action(action, params)
     write_cookie_value :deferred_action, [action, params]
   end
@@ -17,12 +23,12 @@ module DeferredActionConcerns
   def executed_deferred_action
     action, params = get_deferred_action
 
-    if action.present? && self.respond_to?(action)
+    if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTION_NAMES.include?(action)
       begin
         success = self.send action, params
         delete_cookie :deferred_action if success
       rescue => error
-        Rails.logger.debug "Error when executing post authenticate action: #{action} on #{self.class}. " +
+        Rails.logger.debug "Error when executing deferred action: #{action} on #{self.class}. " +
                              "Deleting cookie to prevent future errors. Exception message: #{error.message}"
         delete_cookie :deferred_action
       end
@@ -51,7 +57,7 @@ module DeferredActionConcerns
 
     save_review_and_redirect params
 
-    return true
+    true
   end
 
   def add_favorite_school_deferred(params)
