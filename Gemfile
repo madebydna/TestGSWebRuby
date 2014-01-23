@@ -73,6 +73,9 @@ group :development do
   # these cannot be in the test group, or a segmentation fault will occur when running tests
   gem 'better_errors', '~> 0.9.0'
   gem 'binding_of_caller', '~> 0.7.2'
+
+  # Use the Thin server in development for speed and other improvements
+  gem 'thin'
 end
 
 group :development, :test do
