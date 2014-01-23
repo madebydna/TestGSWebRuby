@@ -18,7 +18,7 @@ module UrlHelper
 
     param = CGI.escape param
 
-    param.gsub '&..', ''
+    param.gsub /%../, ''
   end
 
   def school_params(school)
