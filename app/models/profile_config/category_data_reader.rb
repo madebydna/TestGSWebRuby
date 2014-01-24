@@ -44,10 +44,22 @@ class CategoryDataReader
         end
       end
 
-      # Second, transform the keys
-      responses_per_key.gs_rename_keys! { |key| keys_and_labels[key] || key }
+      # Originally we were making esp_response return a simple hash of key value pairs. But due to a requirement
+      # We need to return an array of hashes, where each hash has a key, label, and value(s). This is because
+      # we want to support multiple items with the same label. An array of 2-element arrays would work, but this is more
+      # flexible
+      array_of_hashes = []
 
-      responses_per_key
+      responses_per_key.each do |key, values|
+        label = keys_and_labels[key]
+        array_of_hashes << {
+          key: key,
+          label: label,
+          value: values
+        }
+      end
+
+      array_of_hashes
     end
   end
 
