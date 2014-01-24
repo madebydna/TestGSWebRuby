@@ -13,6 +13,9 @@
     <% chart_name = data_config.config['chart_name'] %>
 
     <% data_array = data.to_piechart first_key, second_key %>
+
+    <%= debug ['Pie chart data', data_array] if params[:debug] %>
+
     <% piechart_options = {
             fontSize: '13',
             title: category.name
