@@ -6,11 +6,11 @@ module DeferredActionConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
 
-  ALLOWED_DEFERRED_ACTIONS = [
-    :create_subscription_deferred,
-    :save_review_deferred,
-    :add_favorite_school_deferred
-  ]
+  ALLOWED_DEFERRED_ACTIONS = %w(
+    create_subscription_deferred
+    save_review_deferred
+    add_favorite_school_deferred
+  )
 
   def save_deferred_action(action, params)
     write_cookie_value :deferred_action, [action, params]
@@ -23,17 +23,21 @@ module DeferredActionConcerns
   def executed_deferred_action
     action, params = get_deferred_action
 
-    if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTIONS.include?(action)
-      begin
-        success = self.send action, params
-        delete_cookie :deferred_action if success
-      rescue => error
-        Rails.logger.debug "Error when executing deferred action: #{action} on #{self.class}. " +
-                             "Deleting cookie to prevent future errors. Exception message: #{error.message}"
-        delete_cookie :deferred_action
+    if ALLOWED_DEFERRED_ACTIONS.include?(action)
+      if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTIONS.include?(action)
+        begin
+          success = self.send action, params
+          delete_cookie :deferred_action if success
+        rescue => error
+          Rails.logger.debug "Error when executing deferred action: #{action} on #{self.class}. " +
+                               "Deleting cookie to prevent future errors. Exception message: #{error.message}"
+          delete_cookie :deferred_action
+        end
+      else
+        Rails.logger.debug "Action: #{action} not present on #{self.class}."
       end
     else
-      Rails.logger.debug "Action: #{action} not present on #{self.class}."
+      Rails.logger.warn "Warning: action: #{action} not allowed on #{self.class}. User potentially tried to do Bad Things"
     end
   end
 
