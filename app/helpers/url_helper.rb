@@ -5,10 +5,10 @@ module UrlHelper
   end
 
   def encode_school_name(param)
-    param.gsub!(' ', '-')
-    param.gsub!('/', '-')
-    param.gsub!('#', '')
-    param.gsub!('`', '')
+    param = param.gsub(' ', '-')
+      .gsub('/', '-')
+      .gsub('#', '')
+      .gsub('`', '')
 
     # Replaces non-ASCII characters with an ASCII approximation, or if none exists,
     # a replacement character which defaults to “?”
