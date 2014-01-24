@@ -35,9 +35,9 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
-    # TODO: don't fall back to EspResponse - update seeds to specify it in the config
-    method_name = (source || 'EspResponse').underscore.to_sym
-    CategoryDataReader.send method_name, school, self
+    if self.source.present? && CategoryDataReader.respond_to?(self.source)
+      CategoryDataReader.send(source, school, self)
+    end
   end
 
   def possible_sources
