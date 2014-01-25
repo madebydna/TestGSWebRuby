@@ -22,7 +22,7 @@ class CategoryPlacement < ActiveRecord::Base
     if has_children?
       children.map { |child| child.has_data?(school) }.any?
     else
-      category.has_data? school
+      category.nil? || category.has_data?(school)
     end
   end
 

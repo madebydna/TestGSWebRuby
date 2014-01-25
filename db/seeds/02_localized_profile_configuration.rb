@@ -75,7 +75,6 @@ category_no_osp_data = Category.create!(name: 'Bogus Category w/o OSP Data', sou
 test_scores = Category.create!(name: 'Test scores', source: 'test_scores')
 snapshot = Category.create!(name: 'Snapshot', source: 'snapshot')
 details_summary = Category.create!(name: 'Details', source:'details')
-dummy_category = Category.create!(name: 'Dummy', source:'dummy')
 student_subgroups = Category.create!(name: 'Student subgroups', source:'census_data')
 ratings = Category.create!(name: 'Ratings', source:'rating_data')
 
@@ -86,7 +85,7 @@ ratings = Category.create!(name: 'Ratings', source:'rating_data')
 CategoryPlacement.create!(category: school_basics, page: details)
 CategoryPlacement.create!(category: arts_music, page: details)
 CategoryPlacement.create!(category: programs, page: details)
-ethnicity_group = CategoryPlacement.create!(category: dummy_category, page: details, title: 'Student ethnicity', layout: 'group', layout_config: (
+ethnicity_group = CategoryPlacement.create!(page: details, title: 'Student ethnicity', layout: 'group', layout_config: (
   {
       child_sizes: [
           { xs: 4, sm: 4, md: 4, lg: 4 },
@@ -163,8 +162,8 @@ CategoryPlacement.create!(
 
 # different config for different page  - Overview
 CategoryPlacement.create!(category: snapshot, page: overview, layout: 'snapshot', layout_config: "{ \"enrollment\": {\"format\": \"integer\"}}" )
-CategoryPlacement.create!(category: dummy_category, layout: 'reviews_overview', title: 'Reviews Overview', page: overview)
-CategoryPlacement.create!(category: dummy_category, layout: 'lightbox_overview', title: 'Media Gallery', page: overview)
+CategoryPlacement.create!(layout: 'reviews_overview', title: 'Reviews Overview', page: overview)
+CategoryPlacement.create!(layout: 'lightbox_overview', title: 'Media Gallery', page: overview)
 CategoryPlacement.create!(category: details_summary, page: overview, title: 'Details', layout: 'details')
 CategoryPlacement.create!(
     category: student_ethnicity, page: overview, title: 'Ethnicity pie chart', layout: 'pie_chart_overview', layout_config: (
@@ -176,14 +175,14 @@ CategoryPlacement.create!(
         ]
     }).to_json
 )
-CategoryPlacement.create!(category: dummy_category, layout: 'contact_overview', title: 'Contact Information', page: overview)
+CategoryPlacement.create!(layout: 'contact_overview', title: 'Contact Information', page: overview)
 
 
 # different config for different page - Quality
 CategoryPlacement.create!(category: test_scores, page: quality, layout: 'test_scores')
 
 
-ratings_section = CategoryPlacement.create!(category: dummy_category, page: quality, title: 'Rating', layout: 'section')
+ratings_section = CategoryPlacement.create!(page: quality, title: 'Rating', layout: 'section')
 gs_rating = CategoryPlacement.create!(category: ratings, page: quality, title: 'GS Rating', layout: 'gs_ratings')
 gs_rating.parent = ratings_section
 gs_rating.save!

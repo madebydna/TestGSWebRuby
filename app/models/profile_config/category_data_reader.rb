@@ -63,10 +63,6 @@ class CategoryDataReader
     end
   end
 
-  def self.dummy(school, _)
-    return {dummy:true}
-  end
-
   def self.details(school, category)
     data_details = esp_data_points(school, category);
 

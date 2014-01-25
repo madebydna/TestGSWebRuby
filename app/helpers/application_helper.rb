@@ -114,7 +114,9 @@ module ApplicationHelper
 
   def category_placement_data(category_placement)
     @data_cache ||= {}
-    @data_cache[category_placement] ||= category_placement.category.data_for_school(@school)
+    if category_placement.category
+      @data_cache[category_placement] ||= category_placement.category.data_for_school(@school)
+    end
   end
 
   def log_view_error(message, e)
