@@ -190,9 +190,10 @@ class School < ActiveRecord::Base
   end
 
   def enrollment
-    enrollment = CategoryDataReader.enrollment(self, nil)
+    census_data = CategoryDataReader.census_data_points(self, nil)
+    enrollment = census_data['enrollment']
     if enrollment
-      number_with_delimiter(enrollment.to_i, :delimiter => ',')
+      number_with_delimiter(enrollment.round, :delimiter => ',')
     end
   end
 

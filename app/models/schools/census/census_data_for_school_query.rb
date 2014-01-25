@@ -16,25 +16,23 @@ class CensusDataForSchoolQuery
     data_type_ids = base_data_type_ids + CensusDataType.reverse_lookup(data_type_names).map(&:id)
     data_type_ids.uniq!
 
-    max_years = CensusDataSet.max_year_per_data_type(@state)
-
-    years = max_years.select { |data_type_id| data_type_ids.include? data_type_id }.values
-
-    years << 0
-
-    results =
+    census_data_sets =
       @relation.on_db(@school.shard)
       .active
       .with_data_types(data_type_ids)
-      .where(year: years)
       .include_school_district_state(@school.id, @school.district_id)
 
-    CensusDataResults.new(results.all)
+    # If there is no district for a school and hence no district values, prevent the district from being
+    # lookup up via association chaining on these resulting census_data_sets
+    # If caller asks for census_data_set.district_value, they'll just get nil
+    census_data_sets.each { |r| r.association(:census_data_district_values).target = [] } if @school.district_id < 1
+
+    CensusDataResults.new(census_data_sets.all)
   end
 
   def latest_data_for_school(*args)
     results = data_for_school *args
-    results.filter_to_max_year_per_data_type! @state
+    results.filter_to_max_year_per_data_type!
     results
   end
 

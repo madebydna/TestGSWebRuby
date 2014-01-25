@@ -57,9 +57,14 @@ class CensusDataSet < ActiveRecord::Base
   }
 
   scope :include_school_district_state, lambda { |school_id, district_id|
-    includes(:census_data_school_values).where('census_data_school_value.school_id = ?', school_id)
-    .includes(:census_data_state_values)
-    .includes(:census_data_district_values).where('census_data_district_value.district_id IS NULL OR census_data_district_value.district_id= ?', district_id)
+    if district_id && district_id > 0
+      includes(:census_data_school_values).where('census_data_school_value.school_id = ?', school_id)
+      .includes(:census_data_state_values)
+      .includes(:census_data_district_values).where('census_data_district_value.district_id IS NULL OR census_data_district_value.district_id= ?', district_id)
+    else
+      includes(:census_data_school_values).where('census_data_school_value.school_id = ?', school_id)
+      .includes(:census_data_state_values)
+    end
   }
 
   scope :active, where(active: true)

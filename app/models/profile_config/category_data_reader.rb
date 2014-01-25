@@ -144,61 +144,17 @@ class CategoryDataReader
     responses_per_key
   end
 
-  def self.enrollment(school, _)
-
-    results = CensusDataForSchoolQuery.new(school)
-    .data_for_school
-    .filter_to_max_year_per_data_type!(school.state)
-    .for_data_type!('enrollment')
-
-    if results && results.any?
-      results.first.school_value
-    end
-
-  end
-
   def self.census_data_points(school, _)
     results = CensusDataForSchoolQuery.new(school)
     .data_for_school
-    .filter_to_max_year_per_data_type!(school.state)
+    .filter_to_max_year_per_data_type!
 
     results ||= []
 
-    results_hash = {}
-
-    results.each do |census_data_set|
+    results.each_with_object({}) do |census_data_set, hash|
       if census_data_set.school_value
-        results_hash[census_data_set.data_type.downcase] = census_data_set.school_value
+        hash[census_data_set.data_type.downcase] = census_data_set.school_value
       end
-    end
-
-    results_hash
-  end
-
-  def self.student_ethnicity(school, _)
-
-    results = CensusDataForSchoolQuery.new(school)
-      .latest_data_for_school
-      .for_data_type!('ethnicity')
-
-    results ||= []
-
-    rows = results.map do |census_data_set|
-      if census_data_set.state_value && census_data_set.school_value
-        {
-            ethnicity: census_data_set.census_breakdown,
-            school_value: census_data_set.school_value.round,
-            state_value: census_data_set.state_value.round
-        }
-      end
-    end.compact
-
-    rows.sort_by! { |row| row[:school_value] }.reverse!
-
-    if rows.any?
-      rows
-    else
-      nil
     end
   end
 
