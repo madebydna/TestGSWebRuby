@@ -20,6 +20,7 @@
       position: relative;
       display: block;
       padding: $nav-link-padding;
+      &.active,
       &:hover,
       &:focus {
         text-decoration: none;

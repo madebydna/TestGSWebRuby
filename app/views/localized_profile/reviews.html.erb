@@ -1,6 +1,6 @@
 <%= render 'nav/topnav' %>
 <%= render 'localized_profile/header', school: @school %>
-<%= render 'localized_profile/profile-nav', school: @school %>
+<%= render 'localized_profile/profile-nav', school: @school, page_name: :reviews %>
 
 <div class="row limit_width_1200">
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
