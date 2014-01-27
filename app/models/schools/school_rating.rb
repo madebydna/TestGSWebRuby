@@ -5,7 +5,7 @@ class SchoolRating < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'member_id'
 
-  scope :selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.nil? }
+  scope :selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
   scope :limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.nil? }
   scope :offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.nil? }
   scope :published, where(:status => ['a', 'p'])
