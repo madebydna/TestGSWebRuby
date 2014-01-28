@@ -25,14 +25,19 @@ GS.visualchart = GS.visualchart || function($) {
     });
 
     var pieSelectHandler = function selectHandler() {
-        GS.tracking.sendOmnitureData('demographics');
-        GS.tabManager.showTabWithOptions({tab:'demographics', hash:'header'});
+        // TODO: need to track omniture data?
     };
 
     var colors = ['#0083b2','#66b5d1','#99cde0','#CCE6F0','#ffb725','#ffd173','#38137a','#84d07c','#ff9326','#ffbe7d','#A7A7A7','#7CC7CE','#489A9D','#A4CEBB','#649644','#E0D152','#F1A628','#A3383A','#8C734D','#EA6394','#CE92C0','#5A78B1'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {
+            var domNode = document.getElementById(divId);
+            // If the dom node that the chart wants to fill is not on the page, just early exit
+            if(domNode == null) {
+                return false;
+            }
+
             // Create and populate the data table.
             var data = google.visualization.arrayToDataTable(dataIn, true);
             $("#"+divId).css("width", GS.window.sizing.pieChartWidth(chartname));
@@ -59,7 +64,7 @@ GS.visualchart = GS.visualchart || function($) {
             $.extend(true, defaultOptions, options);
 
             // Create and draw the visualization.
-            var pieChart = new google.visualization.PieChart(document.getElementById(divId));
+            var pieChart = new google.visualization.PieChart(domNode);
             pieChart.draw(data, defaultOptions);
 
             if(selectHandler){
@@ -76,6 +81,12 @@ GS.visualchart = GS.visualchart || function($) {
 
     var drawBarChartTestScores = function (barChartData, divId, chartname) {
         var func = function () {
+            var domNode = document.getElementById(divId);
+            // If the dom node that the chart wants to fill is not on the page, just early exit
+            if(domNode == null) {
+                return false;
+            }
+
             var data = google.visualization.arrayToDataTable(barChartData);
 
             $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
@@ -103,10 +114,10 @@ GS.visualchart = GS.visualchart || function($) {
 
            // var options = {chartArea: {left:50,top:20, width:"55%"}};
            // $.extend(true, defaultOptions, options);
-            var chart = new google.visualization.BarChart(document.getElementById(divId));
+            var chart = new google.visualization.BarChart(domNode);
             chart.draw(data, defaultOptions);
 
-        }
+        };
         if (loader) {
             loader.push(func);
         } else {
@@ -117,18 +128,19 @@ GS.visualchart = GS.visualchart || function($) {
 
     var drawBarChartReviews = function (barChartData, div, options) {
         var func = function () {
-            var data = google.visualization.arrayToDataTable(barChartData);
+            var domNode = document.getElementById(div);
 
-            var chart = new google.visualization.BarChart(document.getElementById(div));
-            chart.draw(data, options);
-
-        }
+            if (domNode != null) {
+                var data = google.visualization.arrayToDataTable(barChartData);
+                var chart = new google.visualization.BarChart(domNode);
+                chart.draw(data, options);
+            }
+        };
         if (loader) {
             loader.push(func);
         } else {
             google.setOnLoadCallback(func);
         }
-
     };
 
     return {
