@@ -36,7 +36,14 @@ module ApplicationHelper
 
   def to_bar_chart_array(data_hash)
     @bar_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
-      [key.to_s, value["score"], index == 0 ? value["state_avg"] : 0]
+      #Display the state average only for the latest year.
+      #The google bar chart requires it be a numerical value.
+      #Hence set default to 0(This also catches the case when there is no data for state average ie. value['state_avg']= nil).
+      state_value = 0
+      if index == 0 && !value["state_avg"].nil?
+        state_value = value["state_avg"]
+      end
+      [key.to_s, value["score"], state_value]
     }
   end
 
