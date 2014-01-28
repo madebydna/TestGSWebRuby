@@ -14,15 +14,15 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
                 <li>
-                    <%- if @school.present? %>
+                    <%- if hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
                         <%="#{hub_params[:city]}, #{hub_params[:state]}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
-                        <%- if @school.present? %>
+                        <%- if hub_params.present? %>
                         <li>
-                            <%= link_to "#{@school.city} Home",
+                            <%= link_to "#{hub_params[:city]} Home",
                                 city_path(hub_params), {
                                     class: 'source_sans', style: 'text-transform:capitalize;'
                                 }

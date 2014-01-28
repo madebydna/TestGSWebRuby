@@ -93,7 +93,7 @@ module UrlHelper
 			}
 		elsif cookies[:ishubUser] == 'y' && cookies[:hubState].present? && cookies[:hubCity].present?
 			{
-				state: gs_legacy_url_encode(cookies[:hubState]),
+				state: gs_legacy_url_encode(States.state_name cookies[:hubState]),
 				city: gs_legacy_url_encode(cookies[:hubCity])
 			}
 		else
