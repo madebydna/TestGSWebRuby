@@ -56,6 +56,10 @@ class School < ActiveRecord::Base
     includes_level_code? 'p'
   end
 
+  def includes_highschool?
+    includes_level_code? 'h'
+  end
+
   def level_code_array
     level_code.split ','
   end
@@ -216,6 +220,7 @@ class School < ActiveRecord::Base
     # TODO: implementation
     return false
   end
+
 
   def gs_rating
     rating_data = CategoryDataReader.rating_data self, nil

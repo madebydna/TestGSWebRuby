@@ -65,9 +65,13 @@
                             <div class="form-group">
                               <label class="control-label" for="school_rating_user_type">I am a:</label>
                               <div class="controls">
-                                <%= f.select :affiliation,
-                                  [['Parent', 'parent'], ['Teacher/staff member', 'teacher'], ['Student', 'student'], ['Other', 'other']],
-                                  {}, {:class => 'form-control', style: 'width:50%' } %>
+                                  <% valid_affiliations = [] %>
+                                  <% valid_affiliations << ['Parent', 'parent'] %>
+                                  <% valid_affiliations << ['Student', 'student'] if @school.includes_highschool? %>
+                                  <% valid_affiliations << ['Teacher/staff member', 'teacher'] %>
+                                  <% valid_affiliations << ['Other', 'other'] %>
+                                <%= f.select :affiliation, valid_affiliations,
+                                  {}, { :class => 'form-control', style: 'width:50%' } %>
                               </div>
                             </div>
 

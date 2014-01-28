@@ -67,6 +67,22 @@ describe SchoolRating do
     expect(review).to be_valid
   end
 
+  it 'should NOT be valid if user is a student and school is not a high school' do
+    review.user = user
+    review.who = 'student'
+    review.school = school
+    school.level_code = 'e,m'
+    expect(review).to_not be_valid
+  end
+
+  it 'should be valid if user is a student and school is a high school' do
+    review.user = user
+    review.who = 'student'
+    review.school = school
+    school.level_code = 'm,h'
+    expect(review).to be_valid
+  end
+
   describe '#auto_report_bad_language' do
 
     it 'should not report a review with no bad language' do

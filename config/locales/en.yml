@@ -27,7 +27,7 @@ en:
       signed_out: 'Signed out successfully.'
     review:
       pending_email_verification: 'Thanks for your school review! We''ll post it once your email address has been verified.'
-      pending_moderation: 'Thanks for your school review!'
+      pending_moderation: 'Please note that it can take up to 48 hours for your review to be posted to our site.'
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
     account:
       pending_email_verification: 'Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.'

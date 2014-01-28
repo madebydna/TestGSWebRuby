@@ -21,7 +21,8 @@ class SchoolRating < ActiveRecord::Base
   #validates_format_of :state, with: /#{States.state_hash.values.join '|'}/
   validates_presence_of :school
   validates_presence_of :user
-  validates_presence_of :who
+  validates :who, inclusion: { in: %w(parent teacher other student) }, if: 'school.includes_highschool?'
+  validates :who, inclusion: { in: %w(parent teacher other) }, unless: 'school.includes_highschool?'
   validates_presence_of :overall
   validates :comments, length: { minimum: 0, maximum: 1200 }
   validate :comments_word_count

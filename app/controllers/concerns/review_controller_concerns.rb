@@ -37,6 +37,8 @@ module ReviewControllerConcerns
     if error.nil?
       if review.published?
         flash_notice t('actions.review.activated')
+      elsif review.who = 'student'
+        flash_notice t('actions.review.pending_moderation')
       else
         flash_notice t('actions.review.pending_email_verification')
       end
