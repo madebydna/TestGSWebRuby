@@ -299,14 +299,21 @@ class CategoryDataReader
     results = RatingsHelper.fetch_ratings_for_school school
 
     #Build a hash to hold the ratings results.
-    {"gs_rating" => (RatingsHelper.construct_GS_ratings results, school),
-                    "city_rating" => (RatingsHelper.construct_city_ratings results, school),
-                    "state_rating" => (RatingsHelper.construct_state_ratings results, school)
-    }
+    gs_rating_value = RatingsHelper.construct_GS_ratings results, school
+    city_rating_value =  RatingsHelper.construct_city_ratings results, school
+    state_rating_value = RatingsHelper.construct_state_ratings results, school
+
+    return_var = {}
+    if gs_rating_value.present?
+      return_var["gs_rating"] = (RatingsHelper.construct_GS_ratings results, school)
+    end
+    if city_rating_value.present?
+      return_var["city_rating"] = (RatingsHelper.construct_city_ratings results, school)
+    end
+    if state_rating_value.present?
+      return_var["state_rating"] = (RatingsHelper.construct_state_ratings results, school)
+    end
+    return_var
   end
-
-
-
-
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
 end

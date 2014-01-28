@@ -1,15 +1,14 @@
 <% begin %>
-
 <% children = category_placement.children.sort_by(&:position) %>
     <% if children.any? && category_placement.title.present? %>
-        <div class="row">
-            <% if category_placement.title.present? %>
-                <%= render "shared/section_header", title:category_placement.title, link_text:'', link_to:'', subtitle:'' %>
-            <% end %>
+            <div class="row">
+                <% if category_placement.title.present? %>
+                    <%= render "shared/section_header", title:category_placement.title, link_text:'', link_to:'', subtitle:'' %>
+                <% end %>
 
-            <%= render partial: 'category_placement', collection: children, as: :category_placement %>
-        </div>
-    <% end %>
+                <%= render partial: 'category_placement', collection: children, as: :category_placement %>
+            </div>
+       <% end %>
 
 <% rescue => e %>
     <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>

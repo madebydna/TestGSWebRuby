@@ -40,7 +40,6 @@ class RatingsHelper
 
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
-
     #If configuration exists then loop over the results
     if !city_rating_configuration.nil? && !city_rating_data_type_ids.empty?
       results.each do |test_data_set|
@@ -50,19 +49,20 @@ class RatingsHelper
             city_ratings_results["overall_rating"] = test_data_set.school_value_text
             city_ratings_results["description"] = description_hash[city_rating_configuration.overall.description_key]
             city_ratings_results["city_rating_label"] = test_data_set.display_name
-          end
 
-          #Nested hash to hold the rating breakdowns.
-          city_sub_rating_hash ||= city_ratings_results["rating_breakdowns"].nil? ? {} : city_ratings_results["rating_breakdowns"]
 
-          #Loop over the configuration to put the ratings breakdowns in the results.
-          city_rating_configuration.rating_breakdowns.each do |key, config|
-            if (test_data_set.data_type_id == config.data_type_id && (!test_data_set.school_value_text.nil?))
-              city_sub_rating_hash[config.label] = test_data_set.school_value_text
+            #Nested hash to hold the rating breakdowns.
+            city_sub_rating_hash ||= city_ratings_results["rating_breakdowns"].nil? ? {} : city_ratings_results["rating_breakdowns"]
+
+            #Loop over the configuration to put the ratings breakdowns in the results.
+            city_rating_configuration.rating_breakdowns.each do |key, config|
+              if (test_data_set.data_type_id == config.data_type_id && (!test_data_set.school_value_text.nil?))
+                city_sub_rating_hash[config.label] = test_data_set.school_value_text
+              end
             end
-          end
-          if city_sub_rating_hash.any?
-            city_ratings_results["rating_breakdowns"] = city_sub_rating_hash
+            if city_sub_rating_hash.any?
+              city_ratings_results["rating_breakdowns"] = city_sub_rating_hash
+            end
           end
         end
       end
@@ -71,19 +71,21 @@ class RatingsHelper
   end
 
   def self.construct_GS_ratings results, school
-
+    return {} if results.empty?
+    #raise()
     gs_rating_configuration = RatingsConfiguration.fetch_gs_rating_configuration
     gs_rating_data_type_ids = RatingsConfiguration.fetch_gs_rating_data_type_ids
 
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
 
-    #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
-    gs_ratings_results = {"overall_rating" => school.school_metadata.overallRating}
+    gs_ratings_results ={}
+
+    school_rating_value = school.school_metadata.overallRating
 
     #If configuration exists then loop over the results
     if !gs_rating_data_type_ids.empty?
-      gs_ratings_results["description"] = description_hash[gs_rating_configuration.overall.description_key]
+      gs_ratings_results["description"] = description_hash[gs_rating_configuration.overall.description_key] if school_rating_value.present?
       results.each do |test_data_set|
         if (gs_rating_data_type_ids.include? test_data_set.data_type_id)
           #Nested hash to hold the rating breakdowns.
@@ -100,6 +102,8 @@ class RatingsHelper
           end
         end
       end
+      #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
+      gs_ratings_results = {"overall_rating" => school_rating_value}  if school_rating_value.present?
     end
     gs_ratings_results
   end
