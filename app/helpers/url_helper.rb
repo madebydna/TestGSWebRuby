@@ -7,12 +7,12 @@ module UrlHelper
   LEGACY_URL_MAP = {
     terms_of_use: '/terms/',
     school_review_guidelines: '/about/guidelines.page',
-    state: '/:state/',
-    city: '/:state/:city/',
-    choosing_schools: '/:state/:city/choosing-schools/',
-    education_community: '/:state/:city/education-community/',
-    enrollment: '/:state/:city/enrollment/',
-    events: '/:state/:city/events/'
+    state: '/{state}/',
+    city: '/{state}/{city}/',
+    choosing_schools: '/{state}/{city}/choosing-schools/',
+    education_community: '/{state}/{city}/education-community/',
+    enrollment: '/{state}/{city}/enrollment/',
+    events: '/{state}/{city}/events/'
   }
 
   LEGACY_URL_MAP.each do |name, pattern|
@@ -33,8 +33,8 @@ module UrlHelper
 
 			# Perform replacements on the path pattern
       params.each do |key, value|
-        if path.match /:#{key}/
-          path = path.gsub /:#{key}/, value
+        if path.match /{#{key}}/
+          path = path.gsub /{#{key}}/, value
           params.delete key
         end
 			end
