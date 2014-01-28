@@ -1,0 +1,36 @@
+<% data_config = category_placement.table_config %>
+<% data = TableData.new data %>
+
+<% piechart_id = "piechart-#{category_placement_anchor category_placement}" %>
+
+<div id="<%= piechart_id %>" class="ma">
+
+</div>
+
+<% first_key = data_config.config['columns'][0]['key'].to_sym %>
+<% second_key = data_config.config['columns'][1]['key'].to_sym %>
+<% chart_name = data_config.config['chart_name'] %>
+
+<% data_array = data.to_piechart first_key, second_key %>
+
+<%= debug ['Pie chart data', data_array] if params[:debug] %>
+
+<% piechart_options = {
+    fontSize: '13',
+    title: category_placement.category.name
+}.stringify_keys;
+%>
+
+<% content_for :head do %>
+    <script type="text/javascript">
+        $(function() {
+            GS.visualchart.drawPieChart(
+                <%= raw data_array.to_json %>,
+                "<%= piechart_id %>",
+                null,
+                <%= raw data_config.config.merge(piechart_options).to_json %>,
+                '<%= raw chart_name %>'
+            );
+        });
+    </script>
+<% end %>
