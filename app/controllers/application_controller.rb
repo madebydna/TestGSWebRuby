@@ -130,6 +130,7 @@ class ApplicationController < ActionController::Base
   def init_omniture
     gon.omniture_account = ENV_GLOBAL['omniture_account']
     gon.omniture_server = ENV_GLOBAL['omniture_server']
+    gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
   end
 
 end

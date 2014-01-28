@@ -3,6 +3,6 @@
     if (s_code)document.write(s_code)
 </script>
 <noscript>
-    <img src="http://<%= ENV_GLOBAL['omniture_server'] %>/b/ss/<%= ENV_GLOBAL['omniture_account'] %>/1/H.2--NS/0" alt="" height="1" width="1" border="0"/>
+    <img src="<%=request.scheme%>://<%= ENV_GLOBAL['omniture_server'] %>/b/ss/<%= ENV_GLOBAL['omniture_account'] %>/1/H.2--NS/0" alt="" height="1" width="1" border="0"/>
 </noscript>
 
