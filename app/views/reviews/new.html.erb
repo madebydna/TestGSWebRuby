@@ -96,7 +96,9 @@
                                                 'data-parsley-error-message' => 'You must agree to the terms of use before submitting your review.',
                                                 'data-parsley-error-container' => '#js-terms-errors' %>
                                   <!--<input type="checkbox" id="school_rating_terms" name="school_rating[terms]" value="terms">-->
-                                  I agree to the GreatSchools Terms of Use and School Review Guidelines.
+                                  I agree to the
+                                    <%= link_to 'GreatSchools Terms of Use', terms_of_use_path %> and
+                                    <%= link_to 'School Review Guidelines', school_review_guidelines_path %>.
                                 </label>
                                 <p id="js-terms-errors" class="help-block"></p>
                               </div>

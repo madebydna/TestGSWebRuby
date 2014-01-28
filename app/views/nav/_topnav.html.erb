@@ -10,41 +10,42 @@
             </button>
             <div style="float: left; padding:10px"><%= image_tag "nav/GS_logo_189x38.png" %></div>
         </div>
-        <%- if @school.present? %>
-            <% hub_city = @school.city %>
-            <% hub_state = @school.state %>
-            <% path_to_hub = city_path(state: @school.state, city: @school.city) %>
-        <% end %>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
                 <li>
                     <%- if @school.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_city}, #{hub_state}" %>  <b class="caret"></b>
+                        <%="#{hub_params[:city]}, #{hub_params[:state]}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <%- if @school.present? %>
                         <li>
-                            <a href="<%=path_to_hub %>" class="source_sans" style="text-transform:capitalize;"><%=hub_city %> Home</a>
+                            <%= link_to "#{@school.city} Home",
+                                city_path(hub_params), {
+                                    class: 'source_sans', style: 'text-transform:capitalize;'
+                                }
+                            %>
                         </li>
                         <% end %>
                         <li>
-                            <a href="<%=path_to_hub %>/choosing-schools"  class="source_sans" >Choosing a School</a>
+                            <%= link_to 'Choosing a School',
+                                choosing_schools_path(hub_params),
+                                class: 'source_sans' %>
                         </li>
                         <li>
-                            <a href="<%=path_to_hub %>/education-community">Education Community</a>
+                            <%= link_to 'Education Community', education_community_path(hub_params) %>
                         </li>
                         <li>
-                            <a href="<%=path_to_hub %>/enrollment">Enrollment Information</a>
+                            <%= link_to 'Enrollment Information', enrollment_path(hub_params) %>
                         </li>
                         <li>
-                            <a href="<%=path_to_hub %>/events">Events</a>
+                            <%= link_to 'Events', events_path(hub_params) %>
                         </li>
                         <li>
                             <a href="/"
-                               onclick="javascript:GS.hubs.clearLocalUserCookies();">Not in <span style="text-transform:capitalize;"><%=hub_city %></span>?</a>
+                               onclick="javascript:GS.hubs.clearLocalUserCookies();">Not in <span style="text-transform:capitalize;"><%= hub_params[:state] %></span>?</a>
                         </li>
 
                     </ul>
