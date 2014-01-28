@@ -13,7 +13,8 @@ module UrlHelper
     education_community: '/{state}/{city}/education-community/',
     enrollment: '/{state}/{city}/enrollment/',
     events: '/{state}/{city}/events/',
-    find_schools: '/find-schools/'
+    find_schools: '/find-schools/',
+    home: '/index.page'
   }
 
   LEGACY_URL_MAP.each do |name, pattern|
