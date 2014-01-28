@@ -305,13 +305,13 @@ class CategoryDataReader
 
     return_var = {}
     if gs_rating_value.present?
-      return_var["gs_rating"] = (RatingsHelper.construct_GS_ratings results, school)
+      return_var["gs_rating"] = gs_rating_value
     end
     if city_rating_value.present?
-      return_var["city_rating"] = (RatingsHelper.construct_city_ratings results, school)
+      return_var["city_rating"] = city_rating_value
     end
     if state_rating_value.present?
-      return_var["state_rating"] = (RatingsHelper.construct_state_ratings results, school)
+      return_var["state_rating"] = state_rating_value
     end
     return_var
   end

@@ -71,8 +71,9 @@ class RatingsHelper
   end
 
   def self.construct_GS_ratings results, school
-    return {} if results.empty?
-    #raise()
+    school_rating_value = school.school_metadata.overallRating
+    return {} if school_rating_value.empty?
+
     gs_rating_configuration = RatingsConfiguration.fetch_gs_rating_configuration
     gs_rating_data_type_ids = RatingsConfiguration.fetch_gs_rating_data_type_ids
 
