@@ -33,6 +33,19 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
 
+  # Handle preschool URLs
+  scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
+      state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /.+/
+  } do
+
+    get 'quality', to: 'localized_profile#quality', as: :quality
+    get 'details', to: 'localized_profile#details', as: :details
+    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get '', to: 'localized_profile#overview'
+  end
+
   # Routes for school profile pages
   scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
