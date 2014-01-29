@@ -64,109 +64,57 @@ class School < ActiveRecord::Base
     level_code.split ','
   end
 
+# need to find contiguous grade levels and insert a dash "-" between first and last
+# pre K or PK is smallest
+# KG or K is second smallest - convert KG to K
+# Breaks in grade sequence is separated by a comma
+# UG if alone will be written as Ungraded if at the end of a series append as "& Ungraded"
   def process_level
-
     level_array = level.split ','
-
-    # need to find contiguous grade levels and insert a dash "-" between first and last
-    # pre K or PK is smallest
-    # KG or K is second smallest - convert KG to K
-    # Breaks in grade sequence is separated by a comma
-    # UG if alone will be written as Ungraded if at the end of a series append as "& Ungraded"
+    if level_array.blank?
+      return nil
+    end
 
     if level_array.length == 1
       if level_array[0] == 'KG'
         return 'K'
       elsif level_array[0] == 'UG'
-        return "Ungraded"
+        return 'Ungraded'
       end
       return level_array[0]
     end
 
+    # some prep of array and detect ungraded
     ungraded = false
-    result = []
     level_array.each_with_index do | value, index |
-      if value == 'PK'
-        result[index] = -1
-      elsif (value == 'KG' || value == 'K' )
-        result[index] = 0
+      if (value == 'KG')
+        level_array[index] = 'K'
       elsif (value == 'UG' )
         ungraded = true
-      else
-        result[index] = value.to_i
-      end
+        end
     end
-
-
-
-    # set first value
-    if result.empty?
-      if ungraded == true
-         return "Ungraded"
-      end
-      return nil
-    end
-
-    array_count = result.length - 1
-    first_value = result[0]
 
     return_str = ''
-    # just so it is not one less then the first value.
-    series_started = false
-    previous_value = first_value
 
-    for i in 1..array_count
-      value = result[i]
-      if value == previous_value + 1
-        if series_started == false
-          if return_str != ''
-            return_str += ', '
-          end
-          if previous_value == -1
-            return_str += 'PK'
-          elsif previous_value == 0
-              return_str += '-K'
-          else
-            if value == 5
-              raise('')
-            end
-            return_str += previous_value.to_s
-          end
-        end
-        if i == array_count
-          if value == 0
-            return_str += '-K'
-          else
-            return_str += '-' + value.to_s
-          end
-          next
-        end
+    temp_array = ['PK','K','1','2','3','4','5','6','7','8','9','10','11','12']
+      .map { |i| (level_array.include? i.to_s) ? i : '|' }
+      .join(' ')
+      .split('|')
+      .each{|obj| obj.strip!}
+      .reject!(&:empty?)
 
-        previous_value = value
-        series_started = true
-        next
+    temp_array.each_with_index do |value, index|
+      if index != 0
+        return_str += ', '
       end
-
-      if previous_value == -1
-        return_str += 'PK'
-      elsif previous_value == 0
-        if series_started
-          return_str += '-K'
-        else
-          return_str += 'K'
-        end
-      elsif i == array_count
-        if series_started
-          return_str += '-'
-        end
-        return_str += previous_value.to_s + ', ' + value.to_s
-      elsif series_started
-        return_str += '-' + value.to_s
+      inner_array = value.split(' ')
+      return_str += inner_array.first
+      if inner_array.length > 1
+        # use first and last with dash
+        return_str += '-' + inner_array.last
       end
-
-      series_started = false
-      previous_value = value
     end
+
     if ungraded == true
       return_str += " & Ungraded"
     end
