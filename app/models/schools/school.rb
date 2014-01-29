@@ -52,6 +52,10 @@ class School < ActiveRecord::Base
     type == 'private'
   end
 
+  def preschool?
+    level_code == 'p'
+  end
+
   def includes_preschool?
     includes_level_code? 'p'
   end

@@ -55,7 +55,7 @@ class LocalizedProfileController < ApplicationController
 
   # requires that @school has already been obtained from db
   def redirect_to_canonical_url
-    route_path_helper = 'school_'
+    route_path_helper = @school.preschool? ? 'preschool_' : 'school_'
     route_path_helper << "#{action_name}_" if action_name != 'overview'
     route_path_helper << 'path'
 
