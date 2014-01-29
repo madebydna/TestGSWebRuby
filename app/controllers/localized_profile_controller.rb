@@ -10,6 +10,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
+  before_filter :set_seo_meta_tags
 
   layout 'application'
 
@@ -77,5 +78,54 @@ class LocalizedProfileController < ApplicationController
 
     redirect_to canonical_path if canonical_path != request.path + '/'
   end
+  def set_seo_meta_tags
+    set_meta_tags :title => set_seo_meta_tags_title,
+                  :description => set_seo_meta_tags_description,
+                  :keywords =>  set_seo_meta_tags_keywords
+  end
 
+  # title logic
+  # schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
+  def set_seo_meta_tags_title
+     return_title_str = @school.name + ' - '
+     if @school.state.downcase == 'dc'
+       return_title_str += 'Washington, DC'
+     else
+       return_title_str += @school.city + ', '+States.state_name(@school.state ).capitalize + ' - ' + @school.state
+     end
+     return_title_str += ' - School ' + action_name
+
+  end
+
+  def set_seo_meta_tags_description
+    return_description_str = @school.name
+    if @school.preschool?
+      return_description_str += ' in '+@school.city + ', '+States.state_name(@school.state ).capitalize + ' (' + @school.state + ')'
+      return_description_str += ". Read parent reviews and get the scoop on the school environment, teachers,"
+      return_description_str += " students, programs and services available from this preschool."
+    else
+      return_description_str += ' located in ' + @school.city + ', ' + States.state_name(@school.state ).capitalize + ' - ' + @school.state
+      return_description_str += '. Find ' +  @school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
+    end
+    return_description_str
+  end
+
+  def set_seo_meta_tags_keywords
+    name = @school.name
+    return_keywords_str = name
+    if @school.preschool?
+      if name.downcase.end_with? 'pre-school'
+        return_keywords_str += ', ' + name.downcase.gsub!(/\ (pre-school)$/, ' preschool')
+      elsif name.downcase.end_with? 'preschool'
+        return_keywords_str += ', ' + name.downcase.gsub!(/\ (preschool)$/, ' pre-school')
+      end
+    else
+      return_keywords_str += ', ' + name + ' ' + @school.city
+      return_keywords_str += ', ' + name + ' ' + @school.city + ' ' +  States.state_name(@school.state ).capitalize
+      return_keywords_str += ', ' + name + ' ' + @school.city + ' ' + @school.state
+      return_keywords_str += ', ' + name + ' ' + States.state_name(@school.state ).capitalize
+      return_keywords_str += ', ' + name + ' ' + action_name
+    end
+    return_keywords_str
+  end
 end

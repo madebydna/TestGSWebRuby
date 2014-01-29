@@ -68,6 +68,8 @@ gem 'coderay'
 # JS testing framework
 gem 'mocha_rails'
 
+gem 'meta-tags', :require => 'meta_tags'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
