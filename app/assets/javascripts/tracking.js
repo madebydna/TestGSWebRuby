@@ -2,17 +2,20 @@ var GS = GS || {};
 GS.track = GS.track || {};
 GS.track.base_omniture_object = GS.track.base_omniture_object || {};
 GS.track.setSProps = function (s_props) {
+    //TODO do we need linkTrackVars and linkTrackEvents while setting sprops and evars?
+    //TODO add the linkTrackVars and linkTrackEvents when needed.
+
     GS.track.doUnlessTrackingIsDisabled(function () {
-        var myLinkTrackVars = "events,"; //Always include events, even if we don't need it
+//        var myLinkTrackVars = "events,"; //Always include events, even if we don't need it
         for (var p in s_props) {
             if (!GS.track.prop_lookup[p]) {
                 throw "No mapping found for " + p;
             }
-            myLinkTrackVars += "prop" + GS.track.prop_lookup[p] + ",";
+//            myLinkTrackVars += "prop" + GS.track.prop_lookup[p] + ",";
         }
-        GS.track.base_omniture_object.linkTrackVars = myLinkTrackVars;
+//        GS.track.base_omniture_object.linkTrackVars = myLinkTrackVars;
 
-        GS.track.base_omniture_object.linkTrackEvents = 'None';
+//        GS.track.base_omniture_object.linkTrackEvents = 'None';
 
         for (var p in s_props) {
             GS.track.base_omniture_object['prop' + GS.track.prop_lookup[p]] = s_props[p];
@@ -22,16 +25,16 @@ GS.track.setSProps = function (s_props) {
 
 GS.track.setEVars = function (evars) {
     GS.track.doUnlessTrackingIsDisabled(function () {
-        var myLinkTrackVars = "events,"; //Always include events, even if we don't need it
+//        var myLinkTrackVars = "events,"; //Always include events, even if we don't need it
         for (var p in evars) {
             if (!GS.track.evars_lookup[p]) {
                 throw "No mapping found for " + p;
             }
-            myLinkTrackVars += "eVar" + GS.track.evars_lookup[p] + ",";
+//            myLinkTrackVars += "eVar" + GS.track.evars_lookup[p] + ",";
         }
-        GS.track.base_omniture_object.linkTrackVars = myLinkTrackVars;
-
-        GS.track.base_omniture_object.linkTrackEvents = 'None';
+//        GS.track.base_omniture_object.linkTrackVars = myLinkTrackVars;
+//
+//        GS.track.base_omniture_object.linkTrackEvents = 'None';
 
         for (var p in evars) {
             GS.track.base_omniture_object['eVar' + GS.track.evars_lookup[p]] = evars[p];
@@ -69,6 +72,12 @@ GS.track.customLink = function (link_name) {
     }
     return true;
 };
+
+//GS.track.getOmnitureObject = function() {
+  //create/copy/clone new object from base_omniture_object.
+  //copy evars and sprops onto new object from base_omniture_object. this is required if you dont clone the original one.
+  //iterate over all sprops and evars and use them to set linktrackvars on object.
+//};
 
 
 GS.track.doUnlessTrackingIsDisabled = function (cb) {

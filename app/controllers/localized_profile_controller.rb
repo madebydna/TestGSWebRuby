@@ -14,15 +14,29 @@ class LocalizedProfileController < ApplicationController
   layout 'application'
 
   def overview
+    gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
+    gon.omniture_hierarchy_1 = 'School'
+    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
   end
 
   def quality
+
+    gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
+    gon.omniture_hierarchy_1 = 'School'
+    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
   end
 
   def details
+    gon.omniture_pagename = 'GS:SchoolProfiles:Details'
+    gon.omniture_hierarchy_1 = 'School'
+    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
   end
 
   def reviews
+    gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
+    gon.omniture_hierarchy_1 = 'School'
+    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
     @review_offset = 0

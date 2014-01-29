@@ -11,6 +11,10 @@ class ReviewsController < ApplicationController
 
   def new
     init_page
+
+    gon.omniture_pagename = 'GS:SchoolProfiles:WriteAReview'
+    gon.omniture_hierarchy_1 = 'School'
+    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
   end
 
   def create
