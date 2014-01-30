@@ -467,12 +467,21 @@
   }
 }
 
+@function color-button-background($color, $active){
+  @if ($active != $color){
+    @return $active;
+  }
+  @else{
+    @return darken($color, 8%)
+  }
+}
+
 
 // Button variants
 // -------------------------
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
-@mixin button-variant($color, $background, $border) {
+@mixin button-variant($color, $background, $border, $background_active, $active_color) {
   color: $color;
   background-color: $background;
   border-color: $border;
@@ -481,8 +490,8 @@
   &:focus,
   &:active,
   &.active {
-    color: $color;
-    background-color: color-button-darken($background);
+    color: $active_color;
+    background-color: color-button-background($background, $background_active);
         border-color: color-button-darken($border);
   }
   .open & { &.dropdown-toggle {
