@@ -199,6 +199,8 @@ GEM
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
+    meta-tags (1.5.0)
+      actionpack
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_fb (2.0.0)
@@ -432,6 +434,7 @@ DEPENDENCIES
   lodash-rails
   machinist (>= 2.0.0.beta2)
   mechanize
+  meta-tags
   mini_fb
   mocha_rails
   mysql2 (= 0.3.13)
