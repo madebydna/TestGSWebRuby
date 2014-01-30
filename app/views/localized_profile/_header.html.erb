@@ -55,21 +55,21 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
                         <%= link_to new_school_rating_path(school_params(school)) do %>
-                            <button class="btn btn-default tal" style="width:100%">
-                                <span class="vam iconx16 i-16-pencil"></span> Rate & Review
+                            <button class="btn btn-default tal" style="width:100%; padding-left: 8px">
+                                <span class="vam iconx16 i-16-pencil mrm"></span>Rate &amp; Review
                             </button>
                         <% end %>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
                       <%= render 'shared/add_to_my_school_list_form', school: @school %>
-                      <button class="btn btn-default tal js-save-this-school-button" style="width:100%">
-                        <span class="vam iconx16 i-16-heart"></span> Add to My School List
+                      <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px">
+                        <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
                       </button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
                       <%= render 'shared/send_me_updates_form', school: @school %>
-                      <button class="btn btn-default tal js-send-me-updates-button" style="width:100%">
-                        <span class="vam iconx16 i-16-envelop"></span> Send me updates
+                      <button class="btn btn-default tal js-send-me-updates-button" style="width:100%; padding-left: 8px">
+                        <span class="vam iconx16 i-16-envelop mrm"></span>Send me updates
                       </button>
                     </div>
                 </div>

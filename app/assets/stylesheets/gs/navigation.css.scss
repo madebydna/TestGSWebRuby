@@ -2,56 +2,42 @@
   list-style-type: none;
   display: inline;
   margin-left: 20px;
+  a {
+    color: #AAAAAA;
+    text-decoration: none;
+    &:hover {
+      color: #ffb3ff;
+    }
+  }
 }
 
-#navigation li a {
-  color: #AAAAAA;
-  text-decoration: none;
+#navigation2 nav{
+  border-top: #e5a421 3px solid;
+  background-color: #ffb725;
+  text-align: center;
+  padding-top: 8px;
+  ul{
+    padding-left: 0px;
+  }
 }
-
-#navigation li a:hover {
-  color: #ffb3ff;
-}
-
-
-
 
 #navigation2 li {
   list-style-type: none;
   display: inline;
-  //margin-left: 10px;
+  a {
+    color: #ffe2a8;
+    text-decoration: none;
+    padding: 10px;
+    &:hover {
+      background-color: #efae29;
+      color: #FFFFFF;
+    }
+  }
+  &.active a {
+    background-color: #efae29;
+    color: #FFFFFF;
 
-}
-
-
-#navigation2 li a {
-  color: #ffe2a8;
-  text-decoration: none;
-  padding: 10px;
-  //line-height: 2em;
-  //font-size: 1.125em;
-}
-
-#navigation2 li a:hover {
-  background-color: #efae29;
-  color: #FFFFFF;
-
-}
-#navigation2 li.active a {
-  background-color: #efae29;
-  color: #FFFFFF;
-
-}
-#navigation2 nav{
-  border-top: #e5a421 3px solid;
-  background-color: #ffb725;
-  //color: #ffe2a8;
-  text-align: center;
-  padding-top: 8px;
-}
-#navigation2 nav ul{
-  //height:100%;
-  padding-left: 0px;
+  }
 }
 
 #mobile-header {
@@ -90,16 +76,15 @@
     display: block;
   }
 
-
-  #navigation2 li {
-    list-style-type: none;
-    display: inline;
-    margin-left: 20px;
-    font-size:1.25em;
-  }
   #navigation2 {
     background-color: #000000;
     display: block;
+    li {
+      list-style-type: none;
+      display: inline;
+      margin-left: 20px;
+      font-size:1.25em;
+    }
   }
 }
 /* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
