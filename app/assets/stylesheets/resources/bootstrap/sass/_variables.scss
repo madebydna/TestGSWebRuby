@@ -68,32 +68,33 @@ $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace !def
 $font-family-base:        $font-family-sans-serif !default;
 
 ///////////////MS
-$font-family-sans-serif:  "opensans", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
 
 
 
-$font-size-base:          14px !default;
-$font-size-large:         ceil($font-size-base * 1.25) !default; // ~18px
-$font-size-small:         ceil($font-size-base * 0.85) !default; // ~12px
+$font-size-base:          16px !default;
+$font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
+$font-size-small:         ceil($font-size-base * 0.75) !default; // ~12px
 
-$font-size-h1:            floor($font-size-base * 2.6) !default; // ~36px
-$font-size-h2:            floor($font-size-base * 2.15) !default; // ~30px
-$font-size-h3:            ceil($font-size-base * 1.7) !default; // ~24px
-$font-size-h4:            ceil($font-size-base * 1.25) !default; // ~18px
+$font-size-h1:            floor($font-size-base * 2.5) !default; // ~40px
+$font-size-h2:            floor($font-size-base * 1.875) !default; // ~30px
+$font-size-h3:            ceil($font-size-base * 1.375) !default; // ~24px
+$font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
 $font-size-h5:            $font-size-base !default;
-$font-size-h6:            ceil($font-size-base * 0.85) !default; // ~12px
+$font-size-h6:            $font-size-base !default; // ~12px
 
-$line-height-base:        1.428571429 !default; // 20/14
+$line-height-base:        1.5 !default; // 24/16
 $line-height-computed:    floor($font-size-base * $line-height-base) !default; // ~20px
 
 $headings-font-family:    $font-family-base !default;
-$headings-font-weight:    500 !default;
+$headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
 /////////////////MS
-$headings-font-family:    "opensans-semibold", Helvetica, Arial, sans-serif;
+$headings-font-family:    "opensans-regular", Helvetica, Arial, sans-serif;
+$headings-font-weight:    400;
 $headings-line-height:    1.2;
 $headings-color:          $gray-darkest;
 
