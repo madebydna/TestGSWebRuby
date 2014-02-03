@@ -11,7 +11,13 @@
   }
 }
 
+#navigation2 {
+  position: relative;
+  z-index: 1;
+}
+
 #navigation2 nav{
+
   border-top: #e5a421 3px solid;
   background-color: #ffb725;
   text-align: center;
@@ -52,11 +58,13 @@
     display: block;
   }
 
-
   #navigation {
     display: none;
   }
 
+  #navigation2 li a {
+      padding: 10px 10px 8px 10px;
+  }
 
   .sub-navigation { display: block;}
 
@@ -80,7 +88,6 @@
   }
   .sub-navigation { display: none;}
 
-
   #navigation {
     display: block;
   }
@@ -103,7 +110,6 @@
 //  width: 100%;
 //  z-index: 10;
 //}
-body {padding-top: 50px}
 
 @media only screen and (min-width: 1200px) {
   .limit_width_1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
