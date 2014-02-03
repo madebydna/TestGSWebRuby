@@ -53,7 +53,9 @@
     right: 0;
     left: auto;
   }
-
+  &.top_nav{
+    background-color: $brand-primary;
+  }
   // Dividers (basically an hr) within the dropdown
   .divider {
     @include nav-divider($dropdown-divider-bg);

@@ -443,10 +443,10 @@
       &:hover,
       &:focus {
         background-color: $navbar-default-link-active-bg;
-        color: $navbar-default-link-active-color;
+        color: #FFFFFF;//$navbar-default-link-active-color;
         .caret {
-          border-top-color: $navbar-default-link-active-color;
-          border-bottom-color: $navbar-default-link-active-color;
+          border-top-color: $brand-secondary;//$navbar-default-link-active-color;
+          border-bottom-color: $brand-secondary;//$navbar-default-link-active-color;
         }
       }
     }
