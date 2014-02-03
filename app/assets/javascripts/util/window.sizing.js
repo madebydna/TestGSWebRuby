@@ -69,8 +69,8 @@ GS.window.sizing.sizeBasedObjHash = function() {
     if(windowWidth >= 990){
         sizeHash.overview.pieChartWidth = 960;
         sizeHash.overview.pieChartHeight = 300;
-        sizeHash.ethnicity.pieChartWidth = 280;
-        sizeHash.ethnicity.pieChartHeight = 280;
+        sizeHash.ethnicity.pieChartWidth = 250;
+        sizeHash.ethnicity.pieChartHeight = 250;
         sizeHash.testscores.barChartWidth = 700;
         sizeHash.testscores.barChartHeight = 300;
         if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('lg')) {
