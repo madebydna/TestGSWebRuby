@@ -2,6 +2,7 @@ class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
   include LocalizationConcerns
+  include OmnitureConcerns
 
   before_filter :require_state, :require_school
   before_filter :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
@@ -15,28 +16,27 @@ class LocalizedProfileController < ApplicationController
   layout 'application'
 
   def overview
+    #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
-    gon.omniture_hierarchy_1 = 'School'
-    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+    set_common_omniture_data
   end
 
   def quality
-
+    #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
-    gon.omniture_hierarchy_1 = 'School'
-    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+    set_common_omniture_data
   end
 
   def details
+    #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Details'
-    gon.omniture_hierarchy_1 = 'School'
-    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+    set_common_omniture_data
   end
 
   def reviews
+    #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
-    gon.omniture_hierarchy_1 = 'School'
-    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+    set_common_omniture_data
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
@@ -132,4 +132,5 @@ class LocalizedProfileController < ApplicationController
     end
     return_keywords_str
   end
+
 end

@@ -12,6 +12,22 @@ class SigninController < ApplicationController
   # gets the join / login form page
   def new
     gon.pagename = 'signin/new'
+
+    gon.omniture_pagename = 'GS:Admin:Login'
+    gon.omniture_hier1 = 'Account,LogIn'
+
+    user_login_status = logged_in? ? 'Logged in' : 'Not logged in'
+    request_url =  request.original_url[0,request.original_url.index('?').nil? ? request.original_url.length : request.original_url.index('?') ]
+    nav_bar_variant = read_cookie_value('ishubUser') == 'y' ? 'N2' : 'PN'
+
+    gon.omniture_sprops = {'user_login_status' => user_login_status,
+                           'request_url' => request_url,'query_string' => request.query_string,
+                           'nav_bar_variant' => nav_bar_variant}
+
+    if !request.query_string.nil?
+      gon.omniture_sprops['query_string'] = request.query_string
+    end
+
   end
 
   # handles registration and login

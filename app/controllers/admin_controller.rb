@@ -12,8 +12,8 @@ class AdminController < ApplicationController
   def omniture_test
     gon.pagename = 'omniture_test'
     gon.omniture_pagename = 'omniture_test'
-    gon.omniture_hierarchy = 'overview,omniture_test'
-    gon.omniture_sprops = {'test_1_sprop' => 'testprop1', 'test_2_sprop' => 'testprop2'}
+    gon.omniture_hier1 = 'omniture_test,test_page'
+    gon.omniture_sprops = {'user_login_status' => 'Logged In', 'school_rating' => 7}
     gon.omniture_evars = {'test_1_evar' => 'testevar1', 'test_2_evar' => 'testevar2'}
   end
 

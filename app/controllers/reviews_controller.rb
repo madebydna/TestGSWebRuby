@@ -2,6 +2,7 @@ class ReviewsController < ApplicationController
   include ReviewControllerConcerns
   include DeferredActionConcerns
   include LocalizationConcerns
+  include OmnitureConcerns
 
   # Find school before executing culture action
   before_filter :require_state, :require_school, :find_user, except: :create
@@ -12,9 +13,9 @@ class ReviewsController < ApplicationController
   def new
     init_page
 
+    #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:WriteAReview'
-    gon.omniture_hierarchy_1 = 'School'
-    gon.omniture_hierarchy_2 = 'SchoolProfileSuite'
+    set_common_omniture_data
   end
 
   def create
