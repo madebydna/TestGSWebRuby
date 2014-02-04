@@ -1,11 +1,22 @@
-<div class="pam clearfix mtm">
-    <div class="gold-bar" /></div>
-    <div class="fl">
-        <h3 class="mvn"><%= title %></h3>
-    </div>
-    <% if !link_text.empty? && !link_to.empty? %>
-        <div class="fr prm pt8">
-            <a href="<%= link_to %>"><%= link_text %></a>
+<% if category_placement.title.present? %>
+    <% if category_placement.depth == 0 %>
+        <div class="pam clearfix mvm">
+            <div class="gold-bar" /></div>
+            <div class="fl">
+                <h3 class="mvn"><%= category_placement.title %></h3>
+            </div>
+            <% if (defined? link_text) && (defined? link_to) %>
+                <div class="fr prm pt8">
+                    <a href="<%= link_to %>"><%= link_text %></a>
+                </div>
+            <% end %>
         </div>
-    <% end %>
-</div>
+     <% elsif category_placement.depth == 1 %>
+        <div class="plm clearfix mbl">
+            <div class="fl">
+                <h4 class="mvn"><%= category_placement.title %></h4>
+            </div>
+
+        </div>
+     <% end %>
+<% end %>

@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
             <% review_total_count = ((@school_reviews_global.rating_averages.overall.counter == 1)? 'See ' + @school_reviews_global.rating_averages.overall.counter.to_s + ' Review': 'See all ' + @school_reviews_global.rating_averages.overall.counter.to_s + ' Reviews') %>
-            <%= render "shared/section_header", title:'Reviews', link_text: review_total_count, link_to:'reviews' %>
+            <%= render "shared/section_header", category_placement:category_placement, link_text: review_total_count, link_to:'reviews' %>
             <%= render "shared/review_top_sections" %>
             <div class="js_reviewsList">
                 <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>

@@ -1,8 +1,7 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>
 
     <% if action_name == 'overview' %>
-        <hr />
-        <h3 class="pll">Student Ethnicity</h3>
+        <%= render "shared/section_header", category_placement:category_placement %>
     <% else %>
         <p class="ptl"></p>
     <% end %>

@@ -3,7 +3,7 @@
     <% data = TableData.new data if !data.is_a? TableData %>
 
     <a name="<%= category.code_name %>"></a>
-    <%= render "shared/section_header", title:category.name, link_text:'', link_to:'', subtitle:'' %>
+    <%= render "shared/section_header", category_placement:category_placement %>
     <table class="table table-striped">
         <% last_key = nil %>
         <% data.rows.each do |row| %>

@@ -3,10 +3,7 @@
 <% children = category_placement.children.sort_by(&:position) %>
     <% if children.any? && category_placement.title.present? %>
         <div class="row phs">
-            <% if category_placement.title.present? %>
-                <%= render "shared/section_header", title:category_placement.title, link_text:'', link_to:'', subtitle:'' %>
-            <% end %>
-
+            <%= render "shared/section_header", category_placement:category_placement %>
             <%= render partial: 'category_placement', collection: children, as: :category_placement %>
         </div>
     <% end %>
