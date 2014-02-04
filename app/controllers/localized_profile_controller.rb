@@ -70,11 +70,11 @@ class LocalizedProfileController < ApplicationController
 
   # requires that @school has already been obtained from db
   def redirect_to_canonical_url
-    route_path_helper = @school.preschool? ? 'preschool_' : 'school_'
-    route_path_helper << "#{action_name}_" if action_name != 'overview'
-    route_path_helper << 'path'
+    helper_name = 'school_'
+    helper_name << "#{action_name}_" if action_name != 'overview'
+    helper_name << 'path'
 
-    canonical_path = self.send route_path_helper.to_sym, school_params(@school)
+    canonical_path = self.send helper_name.to_sym, @school
 
     redirect_to canonical_path if canonical_path != request.path + '/'
   end

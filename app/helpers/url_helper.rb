@@ -108,6 +108,16 @@ module UrlHelper
 			state: gs_legacy_url_encode(States.state_name state),
 			city: gs_legacy_url_encode(city)
 		}
-	end
+  end
+
+  %w(school school_details school_quality school_reviews).each do |helper_name|
+    define_method "#{helper_name}_path" do |school|
+      if school.preschool?
+        send "pre#{helper_name}_path", school_params(school)
+      else
+        super school_params(school)
+      end
+    end
+  end
 
 end

@@ -19,6 +19,7 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
 
+  # TODO: Update this route to handle PK, like other school profile routes
   # Route for "review a school" form
   get '/gsr/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
     state: States.any_state_name_regex,
@@ -26,6 +27,7 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
 
+  # TODO: Update this route to handle PK, like other school profile routes
   # Redirect /district-of-columbia school profile pages to /washington-dc
   get '/district-of-columbia/:city/:schoolId-:school_name/(/*other)', constraints: {
     state: States.any_state_name_regex,
@@ -33,11 +35,13 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
 
+
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
-      school_name: /.+/
+      school_name: /.+/,
+      subdomain: /pk\..*/
   } do
 
     get 'quality', to: 'localized_profile#quality', as: :quality
@@ -50,13 +54,29 @@ LocalizedProfiles::Application.routes.draw do
   scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
-      school_name: /.+/
+      school_name: /.+/,
+      subdomain: /^(?!pk\.).*/
   } do
     get 'quality', to: 'localized_profile#quality', as: :quality
     get 'details', to: 'localized_profile#details', as: :details
     get 'reviews', to: 'localized_profile#reviews', as: :reviews
     get '', to: 'localized_profile#overview'
   end
+
+  # Notice that this scope doesnt have the subdomain constraint. Preschool requests missing pk subdomain will fall
+  # through and be handled by this route scope
+  get '/:state/:city/preschools/:school_name/:schoolId/(/*other)', constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/,
+  }, to: redirect { |params, request|
+    current_subdomain = request.subdomain
+    new_subdomain = 'pk'
+    if current_subdomain != 'www'
+      new_subdomain  << '.' << current_subdomain
+    end
+    new_url = request.original_url.sub "#{current_subdomain}.", "#{new_subdomain}."
+  }
 
   get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
 
@@ -74,6 +94,13 @@ LocalizedProfiles::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/gsr/admin', :as => 'rails_admin'
 
+  # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
+  match '*path', subdomain: /pk\.*/, to: redirect { |params, request|
+    current_subdomain = request.subdomain
+    new_subdomain = current_subdomain.sub('pk.', '')
+    new_subdomain = 'www' if new_subdomain.blank?
+    new_url = request.original_url.sub "#{current_subdomain}.", "#{new_subdomain}."
+  }
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
