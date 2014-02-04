@@ -25,7 +25,7 @@ class ReviewsController < ApplicationController
     else
       save_deferred_action :save_review_deferred, review_params
       flash_error 'You need to log in or register your email in order to post a review.'
-      redirect_to signin_path
+      redirect_to signin_url
     end
   end
 

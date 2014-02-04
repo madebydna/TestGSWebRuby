@@ -11,7 +11,7 @@ class FavoriteSchoolsController < ApplicationController
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
       flash_error 'Please log in or register your email to begin tracking your favorite schools.'
-      redirect_to signin_path
+      redirect_to signin_url
     end
   end
 

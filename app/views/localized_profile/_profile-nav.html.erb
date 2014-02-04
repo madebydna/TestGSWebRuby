@@ -7,16 +7,16 @@
     <nav class="nav">
         <ul>
             <li <%= nav_on_hash[:overview] %>>
-                <%= link_to 'Overview', school_path(school) %>
+                <%= link_to 'Overview', school_url(school) %>
             </li>
             <li <%= nav_on_hash[:reviews] %>>
-                <%= link_to 'Reviews', school_reviews_path(school) %>
+                <%= link_to 'Reviews', school_reviews_url(school) %>
             </li>
             <li <%= nav_on_hash[:quality] %>>
-                <%= link_to 'Quality', school_quality_path(school) %>
+                <%= link_to 'Quality', school_quality_url(school) %>
             </li>
             <li <%= nav_on_hash[:details] %>>
-                <%= link_to 'Details', school_details_path(school) %>
+                <%= link_to 'Details', school_details_url(school) %>
             </li>
         </ul>
     </nav>

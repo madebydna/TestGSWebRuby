@@ -23,7 +23,7 @@
                         <%- if hub_params.present? %>
                         <li>
                             <%= link_to "#{hub_params[:city]} Home",
-                                city_path(hub_params), {
+                                city_url(hub_params), {
                                     class: 'source_sans', style: 'text-transform:capitalize;'
                                 }
                             %>
@@ -31,17 +31,17 @@
                         <% end %>
                         <li>
                             <%= link_to 'Choosing a School',
-                                choosing_schools_path(hub_params),
+                                choosing_schools_url(hub_params),
                                 class: 'source_sans' %>
                         </li>
                         <li>
-                            <%= link_to 'Education Community', education_community_path(hub_params) %>
+                            <%= link_to 'Education Community', education_community_url(hub_params) %>
                         </li>
                         <li>
-                            <%= link_to 'Enrollment Information', enrollment_path(hub_params) %>
+                            <%= link_to 'Enrollment Information', enrollment_url(hub_params) %>
                         </li>
                         <li>
-                            <%= link_to 'Events', events_path(hub_params) %>
+                            <%= link_to 'Events', events_url(hub_params) %>
                         </li>
                         <li>
                             <a href="/"
@@ -50,9 +50,9 @@
 
                     </ul>
                 </li>
-                <li><%= link_to 'Find a School', find_schools_path %></li>
+                <li><%= link_to 'Find a School', find_schools_url %></li>
                 <li>
-                    <%= link_to 'Review Your School', (@school? new_school_rating_path(school_params(@school)) : '/') %>
+                    <%= link_to 'Review Your School', (@school? new_school_rating_url(school_params(@school)) : '/') %>
                 </li>
                 <li><a class="dropdown-toggle"
                        data-toggle="dropdown"
@@ -91,11 +91,11 @@
                                 <a href="/account/">Account Settings</a>
                             </li>
                             <li>
-                                <%= link_to('Sign Out', logout_path, :method => :delete) %>
+                                <%= link_to('Sign Out', logout_url, :method => :delete) %>
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_path, class: 'secondary-color')  %>
+                        <%= link_to('Sign In', signin_url, class: 'secondary-color')  %>
                     <% end %>
                 </li>
             </ul>

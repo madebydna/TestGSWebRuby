@@ -25,7 +25,7 @@ class SigninController < ApplicationController
     # successful login or registration is determined by presence of error
     if error
       flash_error error
-      redirect_to signin_path
+      redirect_to signin_url
     else
       # no errors, log in if this was an authentication(login) request
       if should_attempt_login
@@ -68,7 +68,7 @@ class SigninController < ApplicationController
     access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
     unless access_token
       flash_error 'Could not log in with Facebook.'
-      redirect_to signin_path
+      redirect_to signin_url
       return nil
     end
 
