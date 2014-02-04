@@ -118,6 +118,13 @@ module UrlHelper
         super school_params(school)
       end
     end
+    define_method "#{helper_name}_url" do |school|
+      if school.preschool?
+        send "pre#{helper_name}_url", school_params(school)
+      else
+        super school_params(school)
+      end
+    end
   end
 
 end
