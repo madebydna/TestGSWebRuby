@@ -43,10 +43,11 @@ GS.track.trackEvent = function (event_name) {
         var myLinkTrackVars = "events";
         var omniture_object = {};
         var mappedEvents = [];
+        var missing_events = [];
         var eventArray = event_name.split(",");
         for (var i = 0; i < eventArray.length; i++) {
             if (!GS.track.event_lookup[eventArray[i]]) {
-                throw "Could not find event mapping for " + eventArray[i];
+                missing_events.push(eventArray[i]);
             }
             mappedEvents.push(GS.track.event_lookup[eventArray[i]]);
         }
@@ -56,10 +57,13 @@ GS.track.trackEvent = function (event_name) {
         omniture_object.pageName = GS.track.base_omniture_object.pageName;
         omniture_object.events = mappedEvents.join(',');
         s.tl(null, 'o', null, omniture_object);
+        if(missing_events.length >0){
+            if(window.console) console.log('Events missing for the following:'+missing_events);
+        }
     });
 };
 
-GS.track.customLink = function (link_name) {
+GS.track.sendCustomLink = function (link_name) {
     var omniture_object = {};
     omniture_object.pageName = GS.track.base_omniture_object.pageName;
     if (s.tl) {

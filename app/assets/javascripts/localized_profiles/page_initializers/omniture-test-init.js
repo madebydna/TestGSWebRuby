@@ -16,7 +16,7 @@ if (gon.pagename == 'omniture_test') {
 
         //Test omniture custom link.
         $('#omniture_custom_link_test').on('click', function () {
-            GS.track.customLink('custom_link_test');
+            GS.track.sendCustomLink('custom_link_test');
         })
 
     });
