@@ -73,24 +73,13 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'localized_profile#overview'
     end
 
-
     # Notice that this scope doesnt have the subdomain constraint. Preschool requests missing pk subdomain will fall
     # through and be handled by this route scope
     get '/:state/:city/preschools/:school_name/:schoolId/(/*other)', constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/,
-    }, to: redirect { |params, request|
-      if request.subdomain.present?
-        if request.subdomain == 'www'
-          new_url = request.original_url.sub "www.", "pk."
-        else
-          new_url = request.original_url.sub "#{request.subdomain}.", "pk.#{request.subdomain}."
-        end
-      else
-        new_url = request.original_url.sub "#{request.domain}.", "pk.#{request.domain}."
-      end
-    }
+    }, to: redirect(PreschoolSubdomain.method(:current_url_on_pk_subdomain))
 
     get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
 
@@ -108,8 +97,6 @@ LocalizedProfiles::Application.routes.draw do
 
     mount RailsAdmin::Engine => '/gsr/admin', :as => 'rails_admin'
 
-
-
     # error handlers
     match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
     match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
@@ -124,18 +111,7 @@ LocalizedProfiles::Application.routes.draw do
   constraints(PreschoolSubdomain) do
 
     # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
-    match '*path', to: redirect { |params, request|
-      if request.subdomain.present?
-        if request.subdomain == 'pk'
-          new_url = request.original_url.sub 'pk.', 'www.'
-        else
-          # The subdomain is more than just 'pk'. Such as pk.dev.
-          new_url = request.original_url.sub 'pk.', ''
-        end
-      else
-        new_url = request.original_url.sub 'pk.', ''
-      end
-    }
+    match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
 
   end
 
