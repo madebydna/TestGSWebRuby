@@ -7,8 +7,8 @@ if(gon.pagename == 'reviews/new'){
     var GS = GS || {};
     GS.form = GS.form || {};
     GS.form.starRating = (function() {
-        var YELLOW_STAR_SELECTOR = 'i-16-yellow-star';
-        var GREY_STAR_SELECTOR = 'i-16-grey-star';
+        var YELLOW_STAR_SELECTOR = 'i-24-orange-star';
+        var GREY_STAR_SELECTOR = 'i-24-grey-star';
         var INDIVIDUAL_STAR_SELECTOR = '.review-star';
 
         var labelFromRating = function(rating) {
