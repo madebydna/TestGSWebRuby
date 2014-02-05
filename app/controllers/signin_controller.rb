@@ -72,6 +72,7 @@ class SigninController < ApplicationController
     code = params['code']
     access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
     unless access_token
+      Rails.logger.debug('Could not log in with Facebook.')
       flash_error 'Could not log in with Facebook.'
       redirect_to signin_url
       return nil
