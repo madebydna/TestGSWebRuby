@@ -6,25 +6,30 @@ module SessionConcerns
 
   def set_last_school_visited
     if @school.present?
-      params = school_params(@school)
-      params.merge!(preschool: 'true') if @school.preschool?
+      params = { id: @school.id, state: @school.state }
       write_cookie_value :last_school, params
     end
+  end
+  def last_school_visited
+    params = self.last_school_visited_params
+    id = params[:id]
+    state = params[:state]
+    @last_school ||= School.on_db(state.downcase.to_sym).find(id) rescue nil
   end
   def last_school_visited_params
     read_cookie_value :last_school
   end
   def reviews_page_for_last_school
     params = last_school_visited_params
-    school_reviews_url(last_school_visited_params) if params.present?
+    school_reviews_url(last_school_visited) if params.present?
   end
   def overview_page_for_last_school
     params = last_school_visited_params
-    school_url(last_school_visited_params) if params.present?
+    school_url(last_school_visited) if params.present?
   end
   def review_form_for_last_school
     params = last_school_visited_params
-    new_school_rating_url(last_school_visited_params) if params.present?
+    new_school_rating_url(last_school_visited) if params.present?
   end
 
   def user_profile_or_home
