@@ -87,6 +87,7 @@ class ApplicationController < ActionController::Base
   end
 
   def flash_message(type, message)
+    Rails.logger.debug("Setting flash #{type} message: #{message}")
     flash[type] = Array(flash[type])
     if message.is_a? Array
       flash[type] += message
