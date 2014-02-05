@@ -1,73 +1,73 @@
 var GS = GS || {};
 GS.track = GS.track || {};
-GS.track.base_omniture_object = GS.track.base_omniture_object || {};
+GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
 //TODO do we need linkTrackVars and linkTrackEvents while setting sprops and evars?
 //TODO add the linkTrackVars and linkTrackEvents when needed.
 
-GS.track.setSProps = function (s_props) {
+GS.track.setSProps = function (sProps) {
     GS.track.doUnlessTrackingIsDisabled(function () {
-        var missing_props = [];
-        for (var p in s_props) {
-            if (!GS.track.prop_lookup[p]) {
-                missing_props.push(p);
+        var missingProps = [];
+        for (var p in sProps) {
+            if (!GS.track.propLookup[p]) {
+                missingProps.push(p);
             } else {
-                GS.track.base_omniture_object['prop' + GS.track.prop_lookup[p]] = s_props[p];
+                GS.track.baseOmnitureObject['prop' + GS.track.propLookup[p]] = sProps[p];
             }
         }
-        if(missing_props.length >0){
-            if(window.console) console.log('Sprops missing for the following:'+missing_props);
+        if (missingProps.length > 0) {
+            GS.util.log('Sprops missing for the following:' + missingProps);
         }
     });
 };
 
-GS.track.setEVars = function (evars) {
+GS.track.setEVars = function (eVars) {
     GS.track.doUnlessTrackingIsDisabled(function () {
-        var missing_evars = [];
-        for (var p in evars) {
-            if (!GS.track.evars_lookup[p]) {
-                missing_evars.push(p);
+        var missingEvars = [];
+        for (var p in eVars) {
+            if (!GS.track.evarsLookup[p]) {
+                missingEvars.push(p);
             } else {
-                GS.track.base_omniture_object['eVar' + GS.track.evars_lookup[p]] = evars[p];
+                GS.track.baseOmnitureObject['eVar' + GS.track.evarsLookup[p]] = eVars[p];
             }
         }
-        if(missing_evars.length >0){
-            if(window.console) console.log('Evars missing for the following:'+missing_evars);
+        if (missingEvars.length > 0) {
+            GS.util.log('Evars missing for the following:' + missingEvars);
         }
     });
 };
 
-
-GS.track.trackEvent = function (event_name) {
+GS.track.trackEvent = function (eventName) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var myLinkTrackVars = "events";
-        var omniture_object = {};
+        var omnitureObject = {};
         var mappedEvents = [];
-        var missing_events = [];
-        var eventArray = event_name.split(",");
+        var missingEvents = [];
+        var eventArray = eventName.split(",");
         for (var i = 0; i < eventArray.length; i++) {
-            if (!GS.track.event_lookup[eventArray[i]]) {
-                missing_events.push(eventArray[i]);
+            if (!GS.track.eventLookup[eventArray[i]]) {
+                missingEvents.push(eventArray[i]);
+            }else{
+                mappedEvents.push(GS.track.eventLookup[eventArray[i]]);
             }
-            mappedEvents.push(GS.track.event_lookup[eventArray[i]]);
         }
 
-        omniture_object.myLinkTrackVars = myLinkTrackVars;
-        omniture_object.linkTrackEvents = mappedEvents.join(',');
-        omniture_object.pageName = GS.track.base_omniture_object.pageName;
-        omniture_object.events = mappedEvents.join(',');
-        s.tl(null, 'o', null, omniture_object);
-        if(missing_events.length >0){
-            if(window.console) console.log('Events missing for the following:'+missing_events);
+        omnitureObject.myLinkTrackVars = myLinkTrackVars;
+        omnitureObject.linkTrackEvents = mappedEvents.join(',');
+        omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
+        omnitureObject.events = mappedEvents.join(',');
+        s.tl(null, 'o', null, omnitureObject);
+        if (missingEvents.length > 0) {
+            GS.util.log('Events missing for the following:' + missingEvents);
         }
     });
 };
 
-GS.track.sendCustomLink = function (link_name) {
-    var omniture_object = {};
-    omniture_object.pageName = GS.track.base_omniture_object.pageName;
+GS.track.sendCustomLink = function (linkName) {
+    var omnitureObject = {};
+    omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
     if (s.tl) {
-        s.tl(this, 'o', link_name, omniture_object);
+        s.tl(this, 'o', linkName, omnitureObject);
     }
     return true;
 };
@@ -78,39 +78,42 @@ GS.track.doUnlessTrackingIsDisabled = function (cb) {
     }
 };
 
-GS.track.prop_lookup = {
-    'school_id':1,
-    'school_type':2,
-    'school_level':3,
-    'school_locale':4,
-    'school_rating':31,
-    'user_login_status':5,
-    'request_url':59,
-    'query_string':60,
-    'local_page_name':57,
-    'nav_bar_variant':58
+GS.track.propLookup = {
+    'schoolId':1,
+    'schoolType':2,
+    'schoolLevel':3,
+    'schoolLocale':4,
+    'schoolRating':31,
+    'userLoginStatus':5,
+    'requestUrl':59,
+    'queryString':60,
+    'localPageName':57,
+    'navBarVariant':58
 };
 
 //TODO replace these with actual evars and events when the requirements come in.
-GS.track.event_lookup = {
-    'test_event1':'event1',
-    'test_event2':'event2'
+GS.track.eventLookup = {
+    'testEvent1':'event1',
+    'testEvent2':'event2'
 };
 
-GS.track.evars_lookup = {
-    'test_1_evar':1,
-    'test_2_evar':2
+GS.track.evarsLookup = {
+    'testEvar1':1,
+    'testEvar2':2
 };
 
-GS.track.set_common_omniture_data = function () {
-    GS.track.base_omniture_object.pageName = gon.omniture_pagename;
-    GS.track.base_omniture_object.hier1 = gon.omniture_hier1;
-    var sprops_hash = gon.omniture_sprops;
-    GS.track.setSProps(sprops_hash);
+GS.track.setOmnitureData = function () {
+    GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
+    GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
+    if(gon.omniture_school_state != ''){
+        GS.track.baseOmnitureObject.channel = gon.omniture_school_state;
+    }
+    var spropsHash = gon.omniture_sprops;
+    GS.track.setSProps(spropsHash);
 };
 
-GS.track.get_omniture_object = function () {
+GS.track.getOmnitureObject = function () {
     //use lowdash to deep clone the omniture object.
-    var omniture_object = _.clone(GS.track.base_omniture_object, true);
-    return omniture_object;
+    var omnitureObject = _.clone(GS.track.baseOmnitureObject, true);
+    return omnitureObject;
 };

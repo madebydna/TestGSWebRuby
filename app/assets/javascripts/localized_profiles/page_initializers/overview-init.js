@@ -1,6 +1,6 @@
 if(gon.pagename == "Overview"){
 
-    GS.track.set_common_omniture_data();
+    GS.track.setOmnitureData();
 
     $(function () {
         if($("#galleria").get(0)){

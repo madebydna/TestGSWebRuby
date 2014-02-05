@@ -1,6 +1,6 @@
 if(gon.pagename == "Quality"){
 
-    GS.track.set_common_omniture_data();
+    GS.track.setOmnitureData();
 
     $(function () {
         GS.testScores.initializeHandlers();

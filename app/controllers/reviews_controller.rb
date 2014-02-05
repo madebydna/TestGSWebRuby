@@ -15,7 +15,9 @@ class ReviewsController < ApplicationController
 
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:WriteAReview'
-    set_common_omniture_data
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school
+    set_omniture_data_for_user_request
   end
 
   def create

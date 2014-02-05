@@ -13,8 +13,8 @@ class AdminController < ApplicationController
     gon.pagename = 'omniture_test'
     gon.omniture_pagename = 'omniture_test'
     gon.omniture_hier1 = 'omniture_test,test_page'
-    gon.omniture_sprops = {'user_login_status' => 'Logged In', 'school_rating' => 7}
-    gon.omniture_evars = {'test_1_evar' => 'testevar1', 'test_2_evar' => 'testevar2'}
+    gon.omniture_sprops = {'userLoginStatus' => 'Logged In', 'schoolRating' => 7}
+    gon.omniture_evars = {'testEvar1' => 'testEvar1', 'testEvar2' => 'testEvar2'}
   end
 
   private

@@ -18,25 +18,34 @@ class LocalizedProfileController < ApplicationController
   def overview
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
-    set_common_omniture_data
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school
+    set_omniture_data_for_user_request
+
   end
 
   def quality
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
-    set_common_omniture_data
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school
+    set_omniture_data_for_user_request
   end
 
   def details
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Details'
-    set_common_omniture_data
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school
+    set_omniture_data_for_user_request
   end
 
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
-    set_common_omniture_data
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school
+    set_omniture_data_for_user_request
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
