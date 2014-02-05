@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
+  before_save :verify_email!, if: "facebook_id != nil"
   before_save :encrypt_plain_text_password
   after_save :create_user_profile, :encrypt_plain_text_password_after_first_save
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, message: 'Please enter a valid email address.'
