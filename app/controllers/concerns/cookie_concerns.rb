@@ -28,7 +28,7 @@ module CookieConcerns
   # Given a cookie name, return the cookie's configuration with possible options merged on top
   def cookie_config(cookie_name, options = {})
     if COOKIE_CONFIG[cookie_name]
-      config = COOKIE_CONFIG[cookie_name]
+      config = COOKIE_CONFIG[:_default].merge COOKIE_CONFIG[cookie_name]
     else
       config = COOKIE_CONFIG[:_default]
     end
