@@ -111,18 +111,36 @@ module UrlHelper
   end
 
   %w(school school_details school_quality school_reviews).each do |helper_name|
-    define_method "#{helper_name}_path" do |school|
-      if school.preschool?
-        send "pre#{helper_name}_path", school_params(school)
+    define_method "#{helper_name}_path" do |school_or_hash|
+      if school_or_hash.is_a? School
+        preschool = school_or_hash.preschool?
+        params = self.school_params(school_or_hash)
       else
-        super school_params(school)
+        preschool = school_or_hash[:preschool] == 'true'
+        params = school_or_hash.clone
+        params.delete :preschool
+      end
+
+      if preschool
+        send "pre#{helper_name}_path", params
+      else
+        super params
       end
     end
-    define_method "#{helper_name}_url" do |school|
-      if school.preschool?
-        send "pre#{helper_name}_url", (school_params(school).merge(subdomain: PreschoolSubdomain.pk_subdomain(request)))
+    define_method "#{helper_name}_url" do |school_or_hash|
+      if school_or_hash.is_a? School
+        preschool = school_or_hash.preschool?
+        params = self.school_params(school_or_hash)
       else
-        super (school_params(school).merge(subdomain: PreschoolSubdomain.regular_subdomain(request)))
+        preschool = school_or_hash[:preschool] == 'true'
+        params = school_or_hash.clone
+        params.delete :preschool
+      end
+
+      if preschool
+        send "pre#{helper_name}_url", (params.merge(subdomain: PreschoolSubdomain.pk_subdomain(request)))
+      else
+        super (params.merge(subdomain: PreschoolSubdomain.regular_subdomain(request)))
       end
     end
   end

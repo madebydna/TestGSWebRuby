@@ -18,20 +18,6 @@ LocalizedProfiles::Application.routes.draw do
     match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
     match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
 
-    post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/
-    }
-
-    # TODO: Update this route to handle PK, like other school profile routes
-    # Route for "review a school" form
-    get '/gsr/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/
-    }
-
     # TODO: Update this route to handle PK, like other school profile routes
     # Redirect /district-of-columbia school profile pages to /washington-dc
     get '/district-of-columbia/:city/:schoolId-:school_name/(/*other)', constraints: {
@@ -41,6 +27,19 @@ LocalizedProfiles::Application.routes.draw do
     }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
 
   end
+
+  # TODO: Do we need to update these two routes to handle PK, like other school profile routes
+  post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/
+  }
+  # Route for "review a school" form
+  get '/gsr/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/
+  }
 
   constraints(PreschoolSubdomain) do
 

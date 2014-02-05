@@ -6,7 +6,9 @@ module SessionConcerns
 
   def set_last_school_visited
     if @school.present?
-      write_cookie_value :last_school, school_params(@school)
+      params = school_params(@school)
+      params.merge!(preschool: 'true') if @school.preschool?
+      write_cookie_value :last_school, params
     end
   end
   def last_school_visited_params

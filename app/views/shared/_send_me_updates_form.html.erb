@@ -1,5 +1,5 @@
 <% unique_content_for :global_hidden_content do %>
-  <%= form_for Subscription.new, html: { id: 'js-send-me-updates-form' } do |f| %>
+  <%= form_for Subscription.new, url: subscriptions_url, html: { id: 'js-send-me-updates-form' } do |f| %>
     <%= f.hidden_field :list, :value => school.private_school? ? 'mystat_private' : 'mystat' %>
     <%= f.hidden_field :school_id, :value => school.id %>
     <%= f.hidden_field :state, :value => school.state %>
