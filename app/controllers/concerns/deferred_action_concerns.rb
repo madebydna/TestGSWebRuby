@@ -26,6 +26,7 @@ module DeferredActionConcerns
     if ALLOWED_DEFERRED_ACTIONS.include?(action)
       if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTIONS.include?(action)
         begin
+          Rails.logger.debug("Executing deferred action: #{action}")
           success = self.send action, params
           delete_cookie :deferred_action if success
         rescue => error
