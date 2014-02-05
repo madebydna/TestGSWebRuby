@@ -120,9 +120,9 @@ module UrlHelper
     end
     define_method "#{helper_name}_url" do |school|
       if school.preschool?
-        send "pre#{helper_name}_url", school_params(school)
+        send "pre#{helper_name}_url", (school_params(school).merge(subdomain: PreschoolSubdomain.pk_subdomain(request)))
       else
-        super school_params(school)
+        super (school_params(school).merge(subdomain: PreschoolSubdomain.regular_subdomain(request)))
       end
     end
   end
