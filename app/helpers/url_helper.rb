@@ -78,6 +78,11 @@ module UrlHelper
     param.gsub /%../, ''
   end
 
+  def zillow_url(params_hash)
+    # test that values needed are populated
+
+  end
+
   def school_params(school)
     {
       state: gs_legacy_url_encode(school.state_name),

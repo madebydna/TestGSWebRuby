@@ -213,6 +213,15 @@ class CategoryDataReader
     data
   end
 
+
+  def self.zillow(school, _)
+    hash= {}
+    hash['region_id'] = ZillowRegionId.by_school(school)
+    hash['zillow_formatted_location'] = school.city.downcase.gsub(/ /, '-') + '-'+States.abbreviation(school.state).downcase
+
+    hash
+  end
+
   def self.test_scores(school, _)
     school.test_scores
   end

@@ -77,7 +77,7 @@ $font-size-base:          16px !default;
 $font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
 $font-size-small:         ceil($font-size-base * 0.75) !default; // ~12px
 
-$font-size-h1:            floor($font-size-base * 2.5) !default; // ~40px
+$font-size-h1:            floor($font-size-base * 2.4375) !default; // ~40px
 $font-size-h2:            floor($font-size-base * 1.875) !default; // ~30px
 $font-size-h3:            ceil($font-size-base * 1.375) !default; // ~24px
 $font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
@@ -671,7 +671,7 @@ $page-header-border-color:    $gray-lighter !default;
 // -------------------------
 
 // Hr border color
-$hr-border:                   $gray-lighter !default;
+$hr-border:                   $gray-light !default;
 
 // Horizontal forms & lists
 $component-offset-horizontal: 180px !default;

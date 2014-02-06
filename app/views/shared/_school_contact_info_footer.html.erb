@@ -1,5 +1,5 @@
 <% if @school %>
-  <div class="row" id="">
+  <div class="row mtl">
     <div id="school-contact-info-footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac mtl" style="padding:10px;">
       <div class="limit_width_1200 row text-left pvl">
         <a name="ContactInfo"><p class="link_down_compensate"></p></a>
@@ -12,13 +12,23 @@
             <span><%= @school.street %></span><br/>
             <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
             <br/>
-            <a href='<%= @school.home_page_url %>' target="_blank"><%= @school.home_page_url %></a><br/>
-            <span><%= @school.phone %></span><br/>
-            <br/>
+            <% if @school.home_page_url.present? %>
+                  <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam" href='<%= @school.home_page_url %>' target="_blank"><%= @school.home_page_url %></a><br/>
+            <% end %>
+            <% if @school.phone.present? %>
+                  <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
+            <% end %>
+            <% if @school.fax.present? %>
+                <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span>
+            <% end %>
           </p>
 
           <div class="col-md-8 col-md-8 col-lg-7 pbl">
-            <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image') %>
+            <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image') %><br />
+              <span class="iconx16 i-16-home vam"></span><a class="mlm vam" href='<%= "EMPTY" %>' target="_blank">Nearby homes for sale</a>
+
+              <!--<c:set var="onclick">if (s.tl) {s.tl(this,'o', '${customLinkValue}');} return true;</c:set>-->
+              <!--http://www.zillow.com/${requestScope.context.stateOrDefault.abbreviation}-${address.zip}?utm_source=GreatSchools&amp;amp;utm_medium=referral&amp;amp;utm_campaign=${zillowTrackingCode}&amp;amp;cbpartner=Great+Schools" onclick="${onclick}" target="_blank" rel="nofollow">-->
           </div>
         </div>
       </div>

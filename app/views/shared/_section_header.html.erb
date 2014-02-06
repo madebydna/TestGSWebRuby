@@ -1,9 +1,10 @@
 <% if category_placement.title.present? %>
     <% if category_placement.depth == 0 %>
         <div class="pam clearfix mvm">
-            <div class="gold-bar" /></div>
+            <!--<div class="gold-bar" /></div>-->
+            <hr />
             <div class="fl">
-                <h3 class="mvn"><%= category_placement.title %></h3>
+                <h2 class="mvn"><%= category_placement.title %></h2>
             </div>
             <% if (defined? link_text) && (defined? link_to) %>
                 <div class="fr prm pt8">
@@ -14,7 +15,7 @@
      <% elsif category_placement.depth == 1 %>
         <div class="plm clearfix mbl">
             <div class="fl">
-                <h4 class="mvn"><%= category_placement.title %></h4>
+                <h3 class="mvn"><%= category_placement.title %></h3>
             </div>
 
         </div>
