@@ -47,6 +47,8 @@ class LocalizedProfileController < ApplicationController
     set_omniture_data_for_school
     set_omniture_data_for_user_request
 
+    read_omniture_events_from_session
+
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
     @review_offset = 0

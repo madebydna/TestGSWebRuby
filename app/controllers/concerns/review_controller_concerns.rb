@@ -1,5 +1,6 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
+  include OmnitureConcerns
 
   def save_review(current_user, review_params)
     error = nil
@@ -37,6 +38,8 @@ module ReviewControllerConcerns
     if error.nil?
       if review.published?
         flash_notice t('actions.review.activated')
+        #set omniture events and props after the review has been published.
+        set_omniture_events_in_session({'custom_completion_sprop' => 'PublishReview'},['review_updates_mss_event'])
       elsif review.who = 'student'
         flash_notice t('actions.review.pending_moderation')
       else

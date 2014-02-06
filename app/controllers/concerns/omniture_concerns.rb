@@ -34,10 +34,43 @@ module OmnitureConcerns
     gon.omniture_sprops.merge!({'userLoginStatus' => user_login_status,
                                 'requestUrl' => request_url,
                                 'navBarVariant' => nav_bar_variant})
-
-    if !request.query_string.nil?
+    if !request.query_string.empty?
       gon.omniture_sprops['queryString'] = request.query_string
     end
+  end
+
+  def set_omniture_events_in_session sprops_hash=nil, events_array=nil
+    props_events_hash = {}
+    if !sprops_hash.nil?
+      props_events_hash['sprops'] = sprops_hash
+    end
+
+    if !events_array.nil?
+      props_events_hash['events'] = events_array
+    end
+    session[:omniture_tracking] = props_events_hash.to_json
+  end
+
+  def read_omniture_events_from_session
+    cookie_value = session[:omniture_tracking]
+    gon.omniture_sprops ||= {}
+
+    if !cookie_value.nil?
+      props_events_hash = JSON.parse(cookie_value)
+      if props_events_hash
+        sprops_hash = props_events_hash['sprops']
+        if sprops_hash && sprops_hash.any?
+          gon.omniture_sprops.merge!(sprops_hash)
+        end
+
+        events_array = props_events_hash['events']
+        if events_array && events_array.any?
+          gon.omniture_events = events_array
+        end
+
+      end
+    end
+    session.delete(:omniture_tracking)
   end
 
 
