@@ -49,8 +49,7 @@ class RatingsHelper
             city_ratings_results["overall_rating"] = test_data_set.school_value_text
             city_ratings_results["description"] = description_hash[city_rating_configuration.overall.description_key]
             city_ratings_results["city_rating_label"] = test_data_set.display_name
-
-
+          else
             #Nested hash to hold the rating breakdowns.
             city_sub_rating_hash ||= city_ratings_results["rating_breakdowns"].nil? ? {} : city_ratings_results["rating_breakdowns"]
 
@@ -64,11 +63,13 @@ class RatingsHelper
               city_ratings_results["rating_breakdowns"] = city_sub_rating_hash
             end
           end
+
         end
       end
     end
     city_ratings_results
   end
+
 
   def self.construct_GS_ratings results, school
     school_rating_value = school.school_metadata.overallRating
@@ -82,11 +83,13 @@ class RatingsHelper
 
     gs_ratings_results ={}
 
-    school_rating_value = school.school_metadata.overallRating
+    #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
+    if school_rating_value.present?
+      gs_ratings_results = {"overall_rating" => school_rating_value, "description" => description_hash[gs_rating_configuration.overall.description_key]}
+    end
 
     #If configuration exists then loop over the results
     if !gs_rating_data_type_ids.empty?
-      gs_ratings_results["description"] = description_hash[gs_rating_configuration.overall.description_key] if school_rating_value.present?
       results.each do |test_data_set|
         if (gs_rating_data_type_ids.include? test_data_set.data_type_id)
           #Nested hash to hold the rating breakdowns.
@@ -103,8 +106,6 @@ class RatingsHelper
           end
         end
       end
-      #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
-      gs_ratings_results = {"overall_rating" => school_rating_value}  if school_rating_value.present?
     end
     gs_ratings_results
   end
