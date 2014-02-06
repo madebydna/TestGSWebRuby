@@ -3,6 +3,7 @@
 <%= render 'localized_profile/profile-nav', school: @school, page_name: :quality %>
 
 <div class="row limit_width_1200">
+    <%= render 'shared/breadcrumbs' %>
     <% root_placements = @page_config.root_placements_with_data %>
     <% if root_placements.empty? %>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="mvl well tac"><h2>No quality content</h2></div></div>
