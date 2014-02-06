@@ -1,5 +1,5 @@
 <% if !data["city_rating"].nil? && !data["city_rating"]["overall_rating"].nil? %>
-    <hr class="rating_divider">
+
     <div class="row mbl pam">
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
             <% rating = data["city_rating"]["overall_rating"] %>
@@ -9,7 +9,7 @@
             <span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span>
         </div>
         <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-            <strong><%= data["city_rating"]["city_rating_label"] %></strong>
+            <h5><%= data["city_rating"]["city_rating_label"] %></h5>
             <br/><%= data["city_rating"]["description"] %>
 
         <% if !data["city_rating"]["rating_breakdowns"].nil? %>

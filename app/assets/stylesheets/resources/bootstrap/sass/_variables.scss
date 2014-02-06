@@ -70,7 +70,7 @@ $font-family-base:        $font-family-sans-serif !default;
 ///////////////MS
 $font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
-
+$font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetica, sans-serif;
 
 
 $font-size-base:          16px !default;
@@ -149,6 +149,7 @@ $table-border-color:                 #ddd !default; // table and cell border
 
 $table-border-color:                 #ccc; // table and cell border  ////////////GS
 $table-cell-padding:                 10px;   ////////////GS
+$table-border-color-th:              #ddd; // table and cell border  ////////////GS
 
 // Buttons
 // -------------------------
@@ -156,7 +157,7 @@ $table-cell-padding:                 10px;   ////////////GS
 $btn-font-weight:                normal !default;
 
 $btn-default-color:              #333 !default;
-$btn-default-bg:                 transparent !default;
+$btn-default-bg:                 #F8F8F8 !default;
 $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;

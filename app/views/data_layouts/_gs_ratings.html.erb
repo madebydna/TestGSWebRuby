@@ -1,8 +1,8 @@
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
-    <hr class="rating_divider">
+
     <div class="row mbl pam">
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><strong>GreatSchools Rating</strong>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h5>GreatSchools Rating</h5>
         <br/><%= data["gs_rating"]["description"] %>
 
         <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
