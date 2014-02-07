@@ -6,10 +6,12 @@ GS.track.setSProps = function (sProps) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var missingProps = [];
         for (var p in sProps) {
-            if (!GS.track.propLookup[p]) {
-                missingProps.push(p);
-            } else {
-                GS.track.baseOmnitureObject['prop' + GS.track.propLookup[p]] = sProps[p];
+            if (sProps.hasOwnProperty(p)) {
+                if (!GS.track.propLookup[p]) {
+                    missingProps.push(p);
+                } else {
+                    GS.track.baseOmnitureObject['prop' + GS.track.propLookup[p]] = sProps[p];
+                }
             }
         }
         if (missingProps.length > 0) {
@@ -22,10 +24,12 @@ GS.track.setEVars = function (eVars) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var missingEvars = [];
         for (var p in eVars) {
-            if (!GS.track.evarsLookup[p]) {
-                missingEvars.push(p);
-            } else {
-                GS.track.baseOmnitureObject['eVar' + GS.track.evarsLookup[p]] = eVars[p];
+            if (eVars.hasOwnProperty(p)) {
+                if (!GS.track.evarsLookup[p]) {
+                    missingEvars.push(p);
+                } else {
+                    GS.track.baseOmnitureObject['eVar' + GS.track.evarsLookup[p]] = eVars[p];
+                }
             }
         }
         if (missingEvars.length > 0) {
@@ -38,11 +42,13 @@ GS.track.setEvents = function (eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var mappedEvents = [];
         var missingEvents = [];
-        for (var i = 0; i < eventNames.length; i++) {
-            if (!GS.track.eventLookup[eventNames[i]]) {
-                missingEvents.push(eventNames[i]);
-            } else {
-                mappedEvents.push(GS.track.eventLookup[eventNames[i]]);
+        for (var eventName in eventNames) {
+            if (eventNames.hasOwnProperty(eventName)) {
+                if (!GS.track.eventLookup[eventName]) {
+                    missingEvents.push(eventName);
+                } else {
+                    mappedEvents.push(GS.track.eventLookup[eventName]);
+                }
             }
         }
         //Events should be comma-separated, NOT semi-colon separated.Java project has it wrong.
