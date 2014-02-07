@@ -97,5 +97,9 @@ module LocalizedProfiles
 
       parsed
     end
+
+    # Add in StatusPage as rack middleware
+    require File.join(config.root, 'lib', 'status_page')
+    config.middleware.insert_before ActiveRecord::ConnectionAdapters::ConnectionManagement, ::StatusPage
   end
 end
