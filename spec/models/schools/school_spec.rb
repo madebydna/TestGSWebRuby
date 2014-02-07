@@ -53,5 +53,11 @@ describe School do
       school = FactoryGirl.build(:school, level: 'PK,1,2,3,6,9,10,11,12')
       expect(school.process_level).to eq 'PK, 1-3, 6, 9-12'
     end
+
+    it 'should transform the input array "level" to a one continuous series' do
+      school = FactoryGirl.build(:school, level: 'PK,KG,1,2,3,4,5,6,7,8,9,10,11,12')
+      expect(school.process_level).to eq 'PK-12'
+    end
+
   end
 end

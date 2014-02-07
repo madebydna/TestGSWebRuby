@@ -105,7 +105,7 @@ class School < ActiveRecord::Base
       .join(' ')
       .split('|')
       .each{|obj| obj.strip!}
-      .reject!(&:empty?)
+      .reject(&:empty?)
 
     temp_array.each_with_index do |value, index|
       if index != 0
