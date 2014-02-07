@@ -17,6 +17,8 @@ module SubscriptionConcerns
 
       unless current_user.has_subscription? list
         current_user.add_subscription!(list, school)
+        set_omniture_events_in_session(['review_updates_mss_event'])
+        set_omniture_sprops_in_session({'custom_completion_sprop' => 'SignUpForUpdates'})
       end
       flash_notice message if message
     rescue => e

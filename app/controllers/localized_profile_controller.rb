@@ -12,43 +12,31 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
-  #before_filter :init_omniture
 
   layout 'application'
 
   def overview
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
-    set_omniture_hier_for_new_profiles
-    set_omniture_data_for_school
-    set_omniture_data_for_user_request
-
+    set_omniture_data(gon.omniture_pagename)
   end
 
   def quality
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
-    set_omniture_hier_for_new_profiles
-    set_omniture_data_for_school
-    set_omniture_data_for_user_request
+    set_omniture_data(gon.omniture_pagename)
   end
 
   def details
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Details'
-    set_omniture_hier_for_new_profiles
-    set_omniture_data_for_school
-    set_omniture_data_for_user_request
+    set_omniture_data(gon.omniture_pagename)
   end
 
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
-    set_omniture_hier_for_new_profiles
-    set_omniture_data_for_school
-    set_omniture_data_for_user_request
-
-    read_omniture_events_from_session
+    set_omniture_data(gon.omniture_pagename)
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
@@ -56,16 +44,15 @@ class LocalizedProfileController < ApplicationController
     @review_limit = 10
   end
 
-
   private
 
-  #def init_omniture
-  #  #Set the pagename before setting other omniture props.
-  #  gon.omniture_pagename = 'GS:SchoolProfiles:'+configured_page_name
-  #  set_omniture_hier_for_new_profiles
-  #  set_omniture_data_for_school
-  #  set_omniture_data_for_user_request
-  #end
+  def set_omniture_data(page_name)
+    set_omniture_hier_for_new_profiles
+    set_omniture_data_for_school(page_name)
+    set_omniture_data_for_user_request
+
+    read_omniture_data_from_session
+  end
 
   def init_page
     @google_signed_image = GoogleSignedImages.new @school, gon

@@ -2,9 +2,6 @@ var GS = GS || {};
 GS.track = GS.track || {};
 GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
-//TODO do we need linkTrackVars and linkTrackEvents while setting sprops and evars?
-//TODO add the linkTrackVars and linkTrackEvents when needed.
-
 GS.track.setSProps = function (sProps) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var missingProps = [];
@@ -56,6 +53,8 @@ GS.track.setEvents = function (eventNames) {
     });
 };
 
+//TODO The following tracking is for the events and links that do not have page refresh associated with
+// them. Refactor this when omniture requirements come in for these.
 GS.track.trackEvent = function (eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var myLinkTrackVars = "events";
