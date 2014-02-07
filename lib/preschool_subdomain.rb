@@ -12,7 +12,7 @@ class PreschoolSubdomain
         new_url = request.original_url.sub "#{request.subdomain}.", "pk.#{request.subdomain}."
       end
     else
-      new_url = request.original_url.sub "#{request.domain}.", "pk.#{request.domain}."
+      new_url = request.original_url
     end
   end
 
@@ -25,13 +25,13 @@ class PreschoolSubdomain
         new_url = request.original_url.sub 'pk.', ''
       end
     else
-      new_url = request.original_url.sub 'pk.', ''
+      new_url = request.original_url
     end
   end
 
   # For a given request, return the non pk'ed version of the subdomain
   # pk.dev -> dev,  localhost -> localhost, pk -> www
-  def self.regular_subdomain(request)
+  def self.default_subdomain(request)
     if request.subdomain.present?
       if request.subdomain == 'pk'
         new_subdomain = 'www'

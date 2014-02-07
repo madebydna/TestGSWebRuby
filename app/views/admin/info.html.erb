@@ -19,6 +19,22 @@
         </tr>
         <tr>
             <td>
+                Current request host
+            </td>
+            <td>
+                <%= request.host %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Current request domain
+            </td>
+            <td>
+                <%= request.domain %>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Current request subdomain
             </td>
             <td>
@@ -30,7 +46,7 @@
                 Non-pk version of request subdomain:
             </td>
             <td>
-                <%= PreschoolSubdomain.regular_subdomain request %>
+                <%= PreschoolSubdomain.default_subdomain request %>
             </td>
         </tr>
         <tr>
@@ -41,8 +57,6 @@
                 <%= PreschoolSubdomain.pk_subdomain request %>
             </td>
         </tr>
-
-
     </tbody>
 </table>
 

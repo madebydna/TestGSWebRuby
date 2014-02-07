@@ -137,4 +137,13 @@ module UrlHelper
     end
   end
 
+  # Host will only include port if it is not 80 and not 443
+  def base_href
+    host = request.host_with_port
+    if request.subdomain.present?
+      host = host.sub request.subdomain, PreschoolSubdomain.default_subdomain(request)
+    end
+    "#{request.scheme}://#{host}"
+  end
+
 end
