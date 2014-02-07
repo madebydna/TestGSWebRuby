@@ -6,12 +6,14 @@ LocalizedProfiles::Application.routes.draw do
   require 'preschool_subdomain'
 
 
+  get '/gsr/admin/help', :to => 'admin#help'
+  get '/gsr/admin/info', :to => 'admin#info'
+
   constraints(RegularSubdomain) do
 
     get '/join', :to => 'signin#new', :as => :signin
     match '/logout', :to => 'signin#destroy', :as => :logout
 
-    get '/gsr/admin/help', :to => 'admin#help'
 
     post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
     match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect

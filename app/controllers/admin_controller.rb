@@ -9,6 +9,10 @@ class AdminController < ApplicationController
 
   end
 
+  def info
+
+  end
+
   def omniture_test
     gon.pagename = 'omniture_test'
     gon.omniture_pagename = 'omniture_test'
