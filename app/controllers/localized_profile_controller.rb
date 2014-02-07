@@ -12,6 +12,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
+  #before_filter :init_omniture
 
   layout 'application'
 
@@ -57,6 +58,14 @@ class LocalizedProfileController < ApplicationController
 
 
   private
+
+  #def init_omniture
+  #  #Set the pagename before setting other omniture props.
+  #  gon.omniture_pagename = 'GS:SchoolProfiles:'+configured_page_name
+  #  set_omniture_hier_for_new_profiles
+  #  set_omniture_data_for_school
+  #  set_omniture_data_for_user_request
+  #end
 
   def init_page
     @google_signed_image = GoogleSignedImages.new @school, gon
