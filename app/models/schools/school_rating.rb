@@ -26,6 +26,7 @@ class SchoolRating < ActiveRecord::Base
   validates_presence_of :overall
   validates :comments, length: { minimum: 0, maximum: 1200 }
   validate :comments_word_count
+  validates_presence_of :ip
 
   before_save :calculate_and_set_status, :set_processed_date_if_published
   after_save :auto_report_bad_language

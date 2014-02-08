@@ -7,6 +7,7 @@ FactoryGirl.define do
     comments 'this is a valid comments value since it contains 15 words - including the hyphen'
     who 'parent'
     quality '5'
+    ip '123.123.123.123'
   end
 
 end

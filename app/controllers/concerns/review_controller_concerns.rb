@@ -66,6 +66,7 @@ module ReviewControllerConcerns
         review.affiliation = review_params[:affiliation]
         review.school_type = school.type
         review.posted = Time.now.to_s
+        review.ip = remote_ip
         review
       rescue => e
         Rails.logger.debug "Could not find school that review was for: School #{review_params[:school_id]}. Error: #{e.message}"

@@ -83,6 +83,13 @@ describe SchoolRating do
     expect(review).to be_valid
   end
 
+  it 'should require an ip address' do
+    review.ip = nil
+    expect(review).to_not be_valid
+    review.ip = '123.123.123.123'
+    expect(review).to be_valid
+  end
+
   describe '#auto_report_bad_language' do
 
     it 'should not report a review with no bad language' do
