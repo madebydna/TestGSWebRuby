@@ -142,7 +142,9 @@ describe SchoolRating do
 
         it 'should have a status of pp' do
           subject.calculate_and_set_status
-          expect(subject).to be_provisional_published
+          # Changed because all reviews will go through moderation (for now)
+          expect(subject).to be_provisional
+          expect(subject).to be_unpublished
         end
 
         it 'should be unpublished if user is student' do
@@ -154,7 +156,9 @@ describe SchoolRating do
         it 'should not be affected by alert words' do
           AlertWord.stub(:search).and_return(alert_words)
           subject.calculate_and_set_status
-          expect(subject).to be_provisional_published
+          # Changed because all reviews will go through moderation (for now)
+          expect(subject).to be_provisional
+          expect(subject).to be_unpublished
         end
 
         it 'status should be set to disabled if there are really bad words' do
@@ -197,13 +201,15 @@ describe SchoolRating do
         it 'should be published when user is a parent' do
           subject.who = 'parent'
           subject.calculate_and_set_status
-          expect(subject).to be_published
+          # Changed because all reviews will go through moderation (for now)
+          expect(subject).to be_unpublished
         end
 
         it 'should be published when user is a principal' do
           subject.who = 'principal'
           subject.calculate_and_set_status
-          expect(subject).to be_published
+          # Changed because all reviews will go through moderation (for now)
+          expect(subject).to be_unpublished
         end
 
         it 'should be unpublished if user is student' do
