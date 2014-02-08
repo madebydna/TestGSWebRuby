@@ -1,0 +1,18 @@
+<div class="dn" itemscope="" itemtype="http://schema.org/School">
+  <span itemprop="name"><%= school.name %></span>
+  <div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+    <span itemprop="streetAddress"><%= school.street %></span>,
+    <span itemprop="addressLocality"><%= school.city %></span>,
+    <span itemprop="addressRegion"><%= school.state.upcase %></span>&nbsp;
+    <span itemscope="postalCode"><%= school.zipcode %></span>
+  </div>
+
+  <!--<img itemprop="logo" src="http://www.example.com/logo.png" />-->
+  <% if school.phone.present? %>
+    <span itemprop="telephone"><%= school.phone %></span>
+  <% end %>
+  <% if school.home_page_url.present? %>
+    <a href="<%= school.home_page_url %>" itemprop="url"><%= school.home_page_url %></a>
+  <% end %>
+</div>
+

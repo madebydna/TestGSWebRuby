@@ -1,0 +1,10 @@
+<span class="dn" itemscope="" itemtype="http://data-vocabulary.org/Review-aggregate">
+<span itemprop="itemreviewed"><%= @school.name %></span>
+   <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
+  Rating:
+  <span itemprop="average"><%= @school_reviews_global.rating_averages.overall.avg_score %></span> out of
+         <span itemprop="best">5</span>
+   </span>
+  based on
+<span itemprop="votes"><%= @school.reviews.size %></span> reviews.
+</span>

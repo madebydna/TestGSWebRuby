@@ -12,6 +12,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
+  before_filter :set_last_modified_date
 
   layout 'application'
 
@@ -138,6 +139,12 @@ class LocalizedProfileController < ApplicationController
       return_keywords_str << ', ' + name + ' ' + action_name
     end
     return_keywords_str
+  end
+
+  def set_last_modified_date
+    # TODO: smarter way of calculating profile's last modified date. Java code takes greater of school modified and
+    # date of latest non-principal review
+    @last_modified_date = @school.modified
   end
 
 end

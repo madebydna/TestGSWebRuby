@@ -1,0 +1,12 @@
+
+<% if defined? @last_modified_date && @last_modified_date.present? %>
+
+    <div class="dn alpha grid_6 omega">
+        <div class="small bottom" itemscope itemtype="http://www.schema.org/ProfilePage">
+            Last modified <time itemprop="dateModified" datetime="<%= @last_modified_date.strftime('%Y-%m-%d') %>">
+            <%= @last_modified_date.strftime('%B %e, %Y') %>
+            </time>
+        </div>
+    </div>
+
+<% end %>
