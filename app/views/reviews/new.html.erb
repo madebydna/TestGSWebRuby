@@ -17,16 +17,10 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
         <div class="row">
-                <div class="" >
-                    <!--<div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3>Have an Account?</h3>
-                    </div>-->
+                <div>
                   <div class="modal-body">
                     <div class="well">
                       <div class="tab-pane active in" id="login">
-
-
                         <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}, url: school_ratings_path(school_params(@school))) do |f| %>
                           <fieldset>
                             <legend>Write a review about <%= @school.name %></legend>
@@ -34,19 +28,9 @@
                               <%= f.hidden_field :state, value: @school.state %>
                               <%= f.hidden_field :school_id, value: @school.id %>
 
-                            <!-- <div class="control-group">
-                              <label class="control-label" for="input01">Text input</label>
-                              <div class="controls">
-                                <input type="text" class="input-xlarge" id="input01">
-                                <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
-                              </div>
-                            </div>-->
-
-
                             <div class="form-group">
                               <label class="control-label" for="input01">How do you rate your school?</label>
                               <div class="controls ptm">
-
 
                                 <div class="fl phm pts js-review-rating-stars">
                                   <div class="iconx24-stars i-24-grey-star i-24-star-1 fl review-star"></div>
@@ -64,13 +48,8 @@
                                 <label class="control-label js-review-rating-label" for="overall_rating">Click on
                                   stars to rate</label>
                                 <p id="js-overall_rating-errors" class="help-block"></p>
-
-                                <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
                               </div>
                             </div>
-
-
-
                             <div class="form-group">
                               <label class="control-label" for="school_rating_user_type">I am a:</label>
                               <div class="controls">
@@ -84,7 +63,6 @@
                               </div>
                             </div>
 
-
                             <div class="form-group">
                               <label class="control-label" for="textarea">Tell us about your school!</label>
                               <div class="controls">
@@ -97,7 +75,6 @@
                                                 'data-parsley-trigger' => 'change',
                                                 'data-parsley-error-container' => '#js-review_text-errors',
                                                 'style' => 'width: 100%' %>
-                                <!--<textarea class="input-xlarge" id="textarea" rows="3"></textarea>-->
                                 <p id="js-review_text-errors" class="help-block"></p>
                               </div>
                             </div>
@@ -108,7 +85,6 @@
                                   <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
                                                 'data-parsley-error-message' => 'You must agree to the terms of use before submitting your review.',
                                                 'data-parsley-error-container' => '#js-terms-errors' %>
-                                  <!--<input type="checkbox" id="school_rating_terms" name="school_rating[terms]" value="terms">-->
                                   I agree to the
                                     <%= link_to 'GreatSchools Terms of Use', terms_of_use_path %> and
                                     <%= link_to 'School Review Guidelines', school_review_guidelines_path %>.
@@ -123,9 +99,6 @@
                           </fieldset>
                         <% end %>
 
-
-
-
                       </div>
                     </div>
                   </div>
@@ -134,7 +107,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-0 col-sm-2 col-md-3  col-lg-3">
+    <div class="col-xs-0 col-sm-2 col-md-3 col-lg-3">
 
     </div>
 </div>
