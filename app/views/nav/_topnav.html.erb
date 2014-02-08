@@ -52,7 +52,8 @@
                 </li>
                 <li><%= link_to 'Find a School', find_schools_url %></li>
                 <li>
-                    <%= link_to 'Review Your School', (@school? new_school_rating_url(school_params(@school)) : '/') %>
+                    <%= link_to 'Review Your School',
+                        (defined?(@school) ? new_school_rating_url(school_params(@school)) : the_scoop_path) %>
                 </li>
                 <li><a class="dropdown-toggle"
                        data-toggle="dropdown"
