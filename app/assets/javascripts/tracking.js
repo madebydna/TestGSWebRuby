@@ -42,14 +42,12 @@ GS.track.setEvents = function (eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var mappedEvents = [];
         var missingEvents = [];
-        for (var eventName in eventNames) {
-            if (eventNames.hasOwnProperty(eventName)) {
-                if (!GS.track.eventLookup[eventName]) {
-                    missingEvents.push(eventName);
+        for (var i = 0; i < eventNames.length; i++) {
+                if (!GS.track.eventLookup[eventNames[i]]) {
+                    missingEvents.push(eventNames[i]);
                 } else {
-                    mappedEvents.push(GS.track.eventLookup[eventName]);
+                    mappedEvents.push(GS.track.eventLookup[eventNames[i]]);
                 }
-            }
         }
         //Events should be comma-separated, NOT semi-colon separated.Java project has it wrong.
         GS.track.baseOmnitureObject.events = mappedEvents.join(',');
