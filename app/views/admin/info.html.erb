@@ -3,6 +3,22 @@
     <tbody>
         <tr>
             <td>
+                Remote host IP via request.remote_ip
+            </td>
+            <td>
+                <%= request.remote_ip %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Remote host IP via HTTP_X_FORWARDED_FOR header
+            </td>
+            <td>
+                <%= request.env['HTTP_X_FORWARDED_FOR'] %>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Current configured host <br/>(Used for absolute URLs and html base href)
             </td>
             <td>
