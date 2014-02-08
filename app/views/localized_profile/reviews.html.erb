@@ -57,7 +57,7 @@
             </div>
 
             <div class="js_reviewsList">
-                <%= render '/shared/review_module', school_reviews_pagination: @school_reviews %>
+                <%= render '/shared/review_module', school_reviews_pagination: @school_reviews, include_rich_snippets: true %>
             </div>
             <% if @school_reviews_global.review_filter_totals.all <= 10 %>
                 <% @review_button_hide ="dn" %>
@@ -74,3 +74,7 @@
 
 </div>
 <%= render 'nav/school_profile_footer' %>
+
+<%= render 'shared/rich_snippets/rich_snippets_school_info', school: @school %>
+<%= render 'shared/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
+<%= render 'shared/rich_snippets/rich_snippets_average_review_rating', school: @school, page_shows_reviews: true %>

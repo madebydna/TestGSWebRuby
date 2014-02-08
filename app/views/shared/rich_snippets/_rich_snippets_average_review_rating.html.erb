@@ -1,3 +1,6 @@
+<% page_shows_reviews ||= false %>
+<% count_or_votes = page_shows_reviews ? 'count' : 'votes' %>
+
 <span class="dn" itemscope="" itemtype="http://data-vocabulary.org/Review-aggregate">
 <span itemprop="itemreviewed"><%= @school.name %></span>
    <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
@@ -6,5 +9,5 @@
          <span itemprop="best">5</span>
    </span>
   based on
-<span itemprop="votes"><%= @school.reviews.size %></span> reviews.
+<span itemprop="<%= count_or_votes %>"><%= @school.reviews.size %></span> reviews.
 </span>

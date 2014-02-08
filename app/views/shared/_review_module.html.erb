@@ -1,6 +1,14 @@
+<% include_rich_snippets ||= false %>
 <% school_reviews_pagination.each do |review| %>
     <hr />
-    <div class="row mam">
+    <div class="row mam" itemscope="" itemtype="http://data-vocabulary.org/Review">
+        <% if include_rich_snippets %>
+            <span itemprop="itemreviewed" style="display:none;"><%= @school.name %></span>
+            <span itemprop="reviewer" style="display:none;"><%= review[:member_id] %></span>
+            <time itemprop="dtreviewed" style="display:none;" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
+            <span itemprop="rating" style="display:none;"><%= review[:quality].to_i %></span>
+        <% end %>
+
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
             <div>
                 <%= draw_stars_16 review[:quality].to_i %>
@@ -9,8 +17,19 @@
             Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
             - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
         </div>
+
         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-            <%= raw (review[:comments].strip == '') ? '<div class="well mbn">This review submitted without content.</div>': review[:comments] %>
-         </div>
+            <% if review[:comments].strip.present? %>
+                <% if include_rich_snippets %>
+                    <span itemprop="description">
+                        <%= review[:comments] %>
+                    </span>
+                <% else %>
+                    <%= review[:comments] %>
+                <% end %>
+            <% else %>
+                <div class="well mbn">This review submitted without content.</div>
+            <% end %>
+        </div>
     </div>
 <% end %>
