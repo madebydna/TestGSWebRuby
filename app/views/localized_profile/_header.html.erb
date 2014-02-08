@@ -1,80 +1,107 @@
+<% # the ||= wouldnt do what you might expect here, since the variable in question is a boolean and might be false %>
+<% include_contact_info_link = true unless defined? include_contact_info_link %>
+<% include_cta_button_group  = true unless defined? include_cta_button_group %>
+
 <div class="header_bg_color ">
-<div class="row pal limit_width_1200 open-sans">
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
-        <div class="fl prl">
-            <% media_hash = @school.school_media_first_hash %>
-            <% if media_hash %>
-                <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail_border") %>
-            <% else %>
-                <%= image_tag @google_signed_image.sign_url("http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location="+@google_signed_image.google_formatted_street_address+"&sensor=false"), :class => "thumbnail_border"%>
-            <% end %>
-        </div>
-
-        <div class="fl header_title_width" >
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn ptm"><%= @school.name %></h1></div>
-                <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-
-                    <% if @school.gs_rating  %>
-                        <div class="fl prl open-sans h24"><span class="mrm">GreatSchools rating:</span><span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span></div>
-                    <% end %>
-                    <% if @school_reviews_global.review_filter_totals.all > 0 %>
-                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Community rating:</span><span class="mt2 vam"><%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %></span></div>
-                    <% end %>
-                    <% if @school.local_rating  %>
-                        <div class="fl prl open-sans pt2 h24"><span class="mrm">Local rating:</span><span class="open-sans_sb"><%= (@school.local_rating == 'NG')? 'No Grade':@school.local_rating %></span></div>
-                    <% end %>
-                    <% if @school.state_rating  %>
-                        <div class="fl prl open-sans pt2 h24"><span class="mrm">State rating:</span><span class="open-sans_sb"><%= @school.state_rating %></span></div>
-                    <% end %>
-
-
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                    <% subheader_content = [
-                                   #@school.enrollment.nil? ? nil : @school.enrollment + ' students',
-                                   @school.process_level,
-                                   @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
-                                   @school.city.gs_capitalize_first + ' ' + @school.state.upcase ].compact  %>
-
-                    <% subheader_content.each_with_index do | value, index | %>
-                         <% if index == 0  %>
-                            <div class="fl prm hvs"> <%= value %></div>
-                         <% else %>
-                            <div class="fl phm hvs"> <%= value %></div>
-                         <% end %>
-                    <% end %>
-                    <div class="fl phm"><a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span> Contact info</a></div>
-                </div>
+    <div class="row pal limit_width_1200 open-sans">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
+            <div class="fl prl">
+                <% media_hash = @school.school_media_first_hash %>
+                <% if media_hash %>
+                    <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail_border") %>
+                <% else %>
+                    <%= image_tag @google_signed_image.sign_url(
+                            "http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location=" +
+                            @google_signed_image.google_formatted_street_address+"&sensor=false"
+                        ), :class => "thumbnail_border" %>
+                <% end %>
             </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 ptn">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="fl header_title_width" >
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                        <%= link_to new_school_rating_path(school_params(school)) do %>
-                            <button class="btn btn-default tal" style="width:100%; padding-left: 8px; font-size: 14px;">
-                                <span class="vam iconx16 i-16-pencil mrm"></span>Rate &amp; Review
-                            </button>
+                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn ptm"><%= @school.name %></h1></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
+                        <% if @school.gs_rating  %>
+                            <div class="fl prl open-sans h24">
+                                <span class="mrm">GreatSchools rating:</span>
+                                <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
+                            </div>
+                        <% end %>
+                        <% if @school_reviews_global.review_filter_totals.all > 0 %>
+                            <div class="fl prl open-sans pt2 h24">
+                                <span class="mrm">Community rating:</span>
+                                <span class="mt2 vam">
+                                    <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
+                                </span>
+                            </div>
+                        <% end %>
+                        <% if @school.local_rating  %>
+                            <div class="fl prl open-sans pt2 h24">
+                                <span class="mrm">Local rating:</span>
+                                <span class="open-sans_sb">
+                                    <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
+                                </span>
+                            </div>
+                        <% end %>
+                        <% if @school.state_rating  %>
+                            <div class="fl prl open-sans pt2 h24">
+                                <span class="mrm">State rating:</span>
+                                <span class="open-sans_sb"><%= @school.state_rating %></span>
+                            </div>
                         <% end %>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                      <%= render 'shared/add_to_my_school_list_form', school: @school %>
-                      <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
-                        <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
-                      </button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                      <%= render 'shared/send_me_updates_form', school: @school %>
-                      <button class="btn btn-default tal js-send-me-updates-button" style="width:100%; padding-left: 8px; font-size: 14px;">
-                        <span class="vam iconx16 i-16-envelop mrm"></span>Send me updates
-                      </button>
+                    <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                        <% subheader_content = [
+                           @school.process_level,
+                           @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
+                           @school.city.gs_capitalize_first + ' ' + @school.state.upcase,
+                        ].compact  %>
+
+                        <% if include_contact_info_link %>
+                            <% subheader_content << raw('<a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span> Contact info</a>') %>
+                        <% end %>
+
+                        <% subheader_content.each_with_index do | value, index | %>
+                             <% if index == 0  %>
+                                <div class="fl prm hvs"> <%= value %></div>
+                             <% elsif index + 1 == subheader_content.length %>
+                                <div class="fl phm"> <%= value %></div>
+                             <% else %>
+                                <div class="fl phm hvs"> <%= value %></div>
+                             <% end %>
+                        <% end %>
                     </div>
                 </div>
             </div>
         </div>
+        <% if include_cta_button_group %>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 ptn">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                                <%= link_to new_school_rating_path(school_params(school)) do %>
+                                    <button class="btn btn-default tal" style="width:100%; padding-left: 8px; font-size: 14px;">
+                                        <span class="vam iconx16 i-16-pencil mrm"></span>Rate &amp; Review
+                                    </button>
+                                <% end %>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                              <%= render 'shared/add_to_my_school_list_form', school: @school %>
+                              <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                                <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
+                              </button>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                              <%= render 'shared/send_me_updates_form', school: @school %>
+                              <button class="btn btn-default tal js-send-me-updates-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                                <span class="vam iconx16 i-16-envelop mrm"></span>Send me updates
+                              </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
     </div>
-</div>
 </div>

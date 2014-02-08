@@ -1,10 +1,19 @@
 <%= render 'nav/topnav' %>
-<%= render 'localized_profile/header-nolinking', school: @school %>
+<%= render 'localized_profile/header',
+    school: @school,
+    include_contact_info_link: false,
+    include_cta_button_group: false %>
 <div id="navigation2-blank"></div>
 
 <div class="row limit_width_1200">
-    <div class="col-xs-0 col-sm-2 col-md-3 col-lg-3">
-
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div class="ptl pll">
+        <% if defined? @school %>
+            <%= link_to 'View this school\'s profile', school_url(@school) %>
+            <br/>
+        <% end %>
+        <%= link_to 'Review another school', the_scoop_url %>
+        </div>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
         <div class="row">

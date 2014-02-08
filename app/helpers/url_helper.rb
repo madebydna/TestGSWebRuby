@@ -14,7 +14,8 @@ module UrlHelper
     enrollment: '/{state}/{city}/enrollment/',
     events: '/{state}/{city}/events/',
     find_schools: '/find-schools/',
-    home: '/index.page'
+    home: '/index.page',
+    the_scoop: '/school/parentReview.page'
   }
 
   LEGACY_URL_MAP.each do |name, pattern|
