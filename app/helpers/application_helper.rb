@@ -54,7 +54,7 @@ module ApplicationHelper
       ['4 stars',  star_counts[4]],
       ['3 stars',  star_counts[3]],
       ['2 stars',  star_counts[2]],
-      ['1 stars',  star_counts[1]]
+      ['1 star',  star_counts[1]]
     ]
   end
 
