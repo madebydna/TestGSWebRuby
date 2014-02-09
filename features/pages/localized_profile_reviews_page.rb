@@ -2,8 +2,8 @@ class LocalizedProfileReviewsPage < LocalizedProfilePage
 
   # element 'navigation' inherited from LocalizedProfilePage
 
-  elements :reviews, '.js_reviewsList .contents'
-  elements /more than (\d+) reviews/, :more_than_n_reviews, '.js_reviewsList .contents'
+  elements :reviews, '.js_reviewsList .cuc_review'
+  elements /more than (\d+) reviews/, :more_than_n_reviews, '.js_reviewsList .cuc_review'
   elements :posters, '.cuc_posted-by'
 
   element :parents_filter, '[data-group-name="parent"]'
@@ -12,8 +12,8 @@ class LocalizedProfileReviewsPage < LocalizedProfilePage
   element :sort_reviews_dropdown, '.js_reviewFilterDropDownText'
 
   URLS = {
-    /^.+?/ => '/california/alameda/1-alameda-high-school/reviews/', # any url that we know should have reviews
-    /^(a )?school with more than (10|ten) reviews/ => '/california/alameda/1-alameda-high-school/reviews/', # any url that we know should have reviews
+    /^.+?/ => '/california/alameda/1-Alameda-High-School/reviews/', # any url that we know should have reviews
+    /^(a )?school with more than (10|ten) reviews/ => '/california/alameda/1-Alameda-High-School/reviews/', # any url that we know should have reviews
   }
 
   # return all the reviews we have if there are > 10, otherwise none

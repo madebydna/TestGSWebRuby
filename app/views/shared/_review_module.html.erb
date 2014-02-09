@@ -1,7 +1,7 @@
 <% include_rich_snippets ||= false %>
 <% school_reviews_pagination.each do |review| %>
     <hr />
-    <div class="row mam" itemscope="" itemtype="http://data-vocabulary.org/Review">
+    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
         <% if include_rich_snippets %>
             <span itemprop="itemreviewed" style="display:none;"><%= @school.name %></span>
             <span itemprop="reviewer" style="display:none;"><%= review[:member_id] %></span>

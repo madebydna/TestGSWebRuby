@@ -14,7 +14,7 @@ class LocalizedProfileSigninPage < LocalizedProfilePage
   element :'password required error', '.js-signin-password-errors .required'
 
   URLS = {
-    /^.+?/ => '/join/'
+    /^.+?/ => '/gsr/login/'
   }
 
 

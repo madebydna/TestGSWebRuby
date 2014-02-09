@@ -21,7 +21,7 @@ Feature: Localized Profile: View Reviews
   @javascript
   Scenario: I can pagination through reviews
     When I visit a school with more than ten reviews
-    And I click the button "Get Next Ten"
+    And I click the button "Read more"
     Then I wait to see more than 10 reviews
 
   @javascript
