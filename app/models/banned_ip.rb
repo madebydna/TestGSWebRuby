@@ -13,4 +13,8 @@ class BannedIp < ActiveRecord::Base
     end
   end
 
+  def self.ip_banned?(ip)
+    banned_ips.include? ip
+  end
+
 end

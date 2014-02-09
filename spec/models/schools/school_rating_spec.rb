@@ -124,18 +124,28 @@ describe SchoolRating do
     let(:new_user) { FactoryGirl.build(:new_user) }
 
     before do
+      subject.school = school
+      AlertWord.stub(:search).and_return(no_bad_language)
     end
 
     it 'should check for banned IP' do
-      pending('pending implementation of something to replace google spreadsheets')
+      subject.who = 'parent'
+      subject.user = user
+      BannedIp.stub(:banned_ips).and_return(['123.123.123.123'])
+
+      subject.ip = '123.123.123.123'
+      subject.calculate_and_set_status
+      expect(subject).to be_unpublished
+
+      subject.ip = '1.1.1.1'
+      subject.calculate_and_set_status
+      expect(subject).to_not be_unpublished
     end
 
     context 'with new user, parent' do
       before do
         subject.who = 'parent'
-        subject.school = school
         subject.user = new_user
-        AlertWord.stub(:search).and_return(no_bad_language)
       end
 
       after do
@@ -149,9 +159,7 @@ describe SchoolRating do
 
         it 'should have a status of pp' do
           subject.calculate_and_set_status
-          # Changed because all reviews will go through moderation (for now)
-          expect(subject).to be_provisional
-          expect(subject).to be_unpublished
+          expect(subject).to be_provisional_published
         end
 
         it 'should be unpublished if user is student' do
@@ -163,9 +171,7 @@ describe SchoolRating do
         it 'should not be affected by alert words' do
           AlertWord.stub(:search).and_return(alert_words)
           subject.calculate_and_set_status
-          # Changed because all reviews will go through moderation (for now)
-          expect(subject).to be_provisional
-          expect(subject).to be_unpublished
+          expect(subject).to be_provisional_published
         end
 
         it 'status should be set to disabled if there are really bad words' do
@@ -208,15 +214,13 @@ describe SchoolRating do
         it 'should be published when user is a parent' do
           subject.who = 'parent'
           subject.calculate_and_set_status
-          # Changed because all reviews will go through moderation (for now)
-          expect(subject).to be_unpublished
+          expect(subject).to be_published
         end
 
         it 'should be published when user is a principal' do
           subject.who = 'principal'
           subject.calculate_and_set_status
-          # Changed because all reviews will go through moderation (for now)
-          expect(subject).to be_unpublished
+          expect(subject).to be_published
         end
 
         it 'should be unpublished if user is student' do
@@ -236,6 +240,31 @@ describe SchoolRating do
           expect(subject).to be_held
         end
       end
+    end
+  end
+
+  describe '#ensure_all_reviews_moderated' do
+    it 'should change pp status to pu' do
+      subject.status = 'pp'
+      subject.ensure_all_reviews_moderated
+      expect(subject).to be_unpublished
+      expect(subject).to be_provisional
+    end
+    it 'should change p status to u' do
+      subject.status = 'p'
+      subject.ensure_all_reviews_moderated
+      expect(subject).to be_unpublished
+      expect(subject).to_not be_provisional
+    end
+    it 'should not change other held or disabled statuses' do
+      subject.status = 'ph'
+      subject.ensure_all_reviews_moderated
+      expect(subject).to be_held
+      expect(subject).to be_provisional
+
+      subject.status = 'd'
+      subject.ensure_all_reviews_moderated
+      expect(subject).to be_disabled
     end
   end
 

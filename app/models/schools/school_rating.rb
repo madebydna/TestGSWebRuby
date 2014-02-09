@@ -28,7 +28,7 @@ class SchoolRating < ActiveRecord::Base
   validate :comments_word_count
   validates_presence_of :ip
 
-  before_save :calculate_and_set_status, :set_processed_date_if_published
+  before_save :calculate_and_set_status, :ensure_all_reviews_moderated, :set_processed_date_if_published
   after_save :auto_report_bad_language
 
   def school=(school)
@@ -124,11 +124,10 @@ class SchoolRating < ActiveRecord::Base
 
   def calculate_and_set_status
     held = school.held?
-    ip_banned = false # TODO: handle IP banned
 
     if held
       status = 'h'
-    elsif ip_banned || who == 'student'
+    elsif BannedIp.ip_banned?(ip) || who == 'student'
       status = 'u'
     elsif AlertWord.search(review_text).has_really_bad_words?
       status = 'd'
@@ -136,15 +135,21 @@ class SchoolRating < ActiveRecord::Base
       status = 'p'
     end
 
-    # if the review would otherwise be published, make it unpublished instead, so that it is forced to go through
-    # moderation.
-    status = 'u' if status == 'p'
-
     if user.provisional?
       status = 'p' + status
     end
 
     self.status = status
+  end
+
+  # if the review would otherwise be published (or provisional published), make it unpublished instead, so that it is
+  # forced to go through moderation.
+  def ensure_all_reviews_moderated
+    if status == 'pp'
+      self.status = 'pu'
+    elsif self.status == 'p'
+      self.status = 'u'
+    end
   end
 
   def auto_report_bad_language
