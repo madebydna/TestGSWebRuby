@@ -38,7 +38,7 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
   # Route for "review a school" form
-  get '/gsr/:state/:city/:schoolId-:school_name/reviews/new', to: 'reviews#new', as: :new_school_rating, constraints: {
+  get '/:state/:city/:schoolId-:school_name/reviews/write', to: 'reviews#new', as: :new_school_rating, constraints: {
     state: States.any_state_name_regex,
     schoolId: /\d+/,
     school_name: /.+/
