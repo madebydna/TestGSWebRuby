@@ -12,11 +12,18 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
+    @active_tab = 'login'
     gon.pagename = 'signin/new'
 
     gon.omniture_pagename = 'GS:Admin:Login'
     gon.omniture_hier1 = 'Account,LogIn'
     set_omniture_data_for_user_request
+  end
+
+  def new_join
+    # TODO: Add correct omniture page / hier1
+    @active_tab = 'join'
+    render :template => 'signin/new'
   end
 
   # handles registration and login
@@ -106,7 +113,7 @@ class SigninController < ApplicationController
       elsif existing_user.provisional?
         error = t('forms.errors.email.provisional')
       else
-        error = t('forms.errors.password.invalid')
+        error = t('forms.errors.password.invalid', join_url: join_url).html_safe
       end
     else
       # no matching user

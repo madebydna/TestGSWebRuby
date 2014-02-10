@@ -11,7 +11,8 @@ LocalizedProfiles::Application.routes.draw do
 
   constraints(RegularSubdomain) do
 
-    get '/join', :to => 'signin#new', :as => :signin
+    get '/join', :to => 'signin#new_join', :as => :join
+    get '/gsr/login', :to => 'signin#new', :as => :signin
     match '/logout', :to => 'signin#destroy', :as => :logout
 
 

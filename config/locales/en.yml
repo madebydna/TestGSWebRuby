@@ -19,7 +19,7 @@ en:
         nonexistent: 'Sorry, we do not have an account with that email address.'
         provisional: 'Before logging in, you must verify your email by clicking the link in the email we sent you.'
       password:
-        invalid: 'Sorry, the email address or password you entered is invalid.'
+        invalid: 'The email or password you entered is invalid. Please try again or <a href="%{join_url}">create an account</a>.'
         invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
       facebook: 'Sorry, there was an error logging in with Facebook.'
   actions:
