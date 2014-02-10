@@ -1,6 +1,7 @@
+<% # this works because the the part of the statement because the conditional will initialize the var to nil %>
 <% # the ||= wouldnt do what you might expect here, since the variable in question is a boolean and might be false %>
-<% include_contact_info_link = true unless defined? include_contact_info_link %>
-<% include_cta_button_group  = true unless defined? include_cta_button_group %>
+<% include_contact_info_link = true if include_contact_info_link.nil? %>
+<% include_cta_button_group  = true if include_cta_button_group.nil? %>
 
 <div class="header_bg_color ">
     <div class="row pal limit_width_1200 open-sans">
