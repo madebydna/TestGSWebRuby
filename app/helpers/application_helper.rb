@@ -170,4 +170,33 @@ module ApplicationHelper
     request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
   end
 
+  def breadcrumb_hash
+    {
+        'Home' => home_url,
+        hub_params[:state].gs_capitalize_first => state_url(state: hub_params[:state]),
+        hub_params[:city].gs_capitalize_first => city_url(hub_params)
+    }
+  end
+
+  def zillow_url(school)
+    # test that values needed are populated
+    zillow = ''
+    zillow << 'http://www.zillow.com/'
+    zillow << States.abbreviation(school.state).upcase
+    zillow << '-'+school.zipcode
+    zillow << '?utm_source=GreatSchools&amp;utm_medium=referral&amp;utm_campaign='
+    zillow << (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
+    zillow << '&amp;cbpartner=Great+Schools'
+  end
+
+  def zillow_tracking_hash
+        hash = {
+            'overview' => 'schooloverview',
+            'reviews' => 'parentreviews',
+            'quality' => 'schoolquality',
+            'details' => 'schooldetails'
+        }
+
+  end
+
 end

@@ -1,18 +1,13 @@
-<!--home / state / city / district (if appropriate)-->
-
+<!-- for school ---- home / state / city / district (if appropriate)-->
 <div class="row mtm" style="z-index:1; position:relative">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 font-size-small">
-        <% breadcrumbs = {
-            :'Home' => home_url,
-            :"#{hub_params[:state].gs_capitalize_first}" => state_url(state: hub_params[:state]),
-            :"#{hub_params[:city].gs_capitalize_first}" => city_url(hub_params),
-        } %>
-
         <% breadcrumbs.each_with_index do |(text, url), index| %>
             <%= '/' if index > 0 %>
-            <%= render layout:'shared/breadcrumb', locals: { url: url } do %>
-                <%= text.to_s %>
-            <% end %>
+            <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                <%= link_to url, itemprop:'url' do %>
+                    <span itemprop="title"><%= text %></span>
+                <% end %>
+            </span>
         <% end %>
     </div>
 </div>
