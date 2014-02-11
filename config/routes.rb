@@ -44,21 +44,17 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
 
-  constraints(PreschoolSubdomain) do
+  # Handle preschool URLs
+  scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
+      state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /.+/,
+  } do
 
-    # Handle preschool URLs
-    scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
-        state: States.any_state_name_regex,
-        schoolId: /\d+/,
-        school_name: /.+/,
-    } do
-
-      get 'quality', to: 'localized_profile#quality', as: :quality
-      get 'details', to: 'localized_profile#details', as: :details
-      get 'reviews', to: 'localized_profile#reviews', as: :reviews
-      get '', to: 'localized_profile#overview'
-    end
-
+    get 'quality', to: 'localized_profile#quality', as: :quality
+    get 'details', to: 'localized_profile#details', as: :details
+    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get '', to: 'localized_profile#overview'
   end
 
   constraints(RegularSubdomain) do
@@ -75,13 +71,6 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'localized_profile#overview'
     end
 
-    # Notice that this scope doesnt have the subdomain constraint. Preschool requests missing pk subdomain will fall
-    # through and be handled by this route scope
-    get '/:state/:city/preschools/:school_name/:schoolId/(/*other)', constraints: {
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/,
-    }, to: redirect(PreschoolSubdomain.method(:current_url_on_pk_subdomain))
 
     get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
 
