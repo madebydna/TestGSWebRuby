@@ -45,7 +45,7 @@ class LocalizedProfileController < ApplicationController
     @review_limit = 10
   end
 
-  private
+  #protected
 
   def set_omniture_data(page_name)
     set_omniture_hier_for_new_profiles
@@ -109,13 +109,18 @@ class LocalizedProfileController < ApplicationController
 
   def seo_meta_tags_description
     return_description_str = ''
+    state_name_local = ''
     return_description_str << @school.name
+    state_name_local = @school.state_name.capitalize
+    if @school.state.downcase == 'dc'
+      state_name_local = 'Washington DC'
+    end
     if @school.preschool?
-      return_description_str << ' in ' + @school.city + ', ' + @school.state_name.capitalize + ' (' + @school.state + ')'
+      return_description_str << ' in ' + @school.city + ', ' + state_name_local + ' (' + @school.state + ')'
       return_description_str << ". Read parent reviews and get the scoop on the school environment, teachers,"
       return_description_str << " students, programs and services available from this preschool."
     else
-      return_description_str << ' located in ' + @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+      return_description_str << ' located in ' + @school.city + ', ' + state_name_local + ' - ' + @school.state
       return_description_str << '. Find ' +  @school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
     end
     return_description_str
@@ -127,9 +132,9 @@ class LocalizedProfileController < ApplicationController
     return_keywords_str << name
     if @school.preschool?
       if name.downcase.end_with? 'pre-school'
-        return_keywords_str << ', ' + name.downcase.gsub(/\ (pre-school)$/, ' preschool')
+        return_keywords_str << ', ' + name.downcase.gsub(/\ (pre-school)$/, ' preschool').gs_capitalize_words!
       elsif name.downcase.end_with? 'preschool'
-        return_keywords_str << ', ' + name.downcase.gsub(/\ (preschool)$/, ' pre-school')
+        return_keywords_str << ', ' + name.downcase.gsub(/\ (preschool)$/, ' pre-school').gs_capitalize_words!
       end
     else
       return_keywords_str << ', ' + name + ' ' + @school.city

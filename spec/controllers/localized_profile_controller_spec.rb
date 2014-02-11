@@ -95,4 +95,136 @@ describe LocalizedProfileController do
     end
   end
 
+  describe 'Check SEO for school profile page' do
+
+    describe '#seo_meta_tags_title' do
+      it 'should set the title format correctly for Alameda High School' do
+        #School.stub
+        #get 'overview'
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'overview'
+        school.level_code = 'h'
+        school.name = 'Alameda High School'
+        school.state = 'CA'
+        school.city = 'Alameda'
+        expect(controller.send(:seo_meta_tags_title)).to eq('Alameda High School - Alameda, California - CA - School overview')
+      end
+
+      it 'should set the title format correctly for the school PreK' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'overview'
+        school.level_code = 'p'
+        school.name = 'Greater St. Stephen Baptist Training'
+        school.state = 'MI'
+        school.city = 'Detroit'
+        expect(controller.send(:seo_meta_tags_title)).to eq('Greater St. Stephen Baptist Training - Detroit, Michigan - MI - School overview')
+      end
+
+      it 'should set the title format correctly for the school in DC' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'overview'
+        school.level_code = 'p'
+        school.name = 'Amazing Life Games Pre-School'
+        school.state = 'DC'
+        school.city = 'Washington'
+        expect(controller.send(:seo_meta_tags_title)).to eq('Amazing Life Games Pre-School - Washington, DC - School overview')
+      end
+
+    end
+
+    describe '#seo_meta_tags_description' do
+
+      it 'should set the description format for Alameda High School' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'h'
+        school.name = 'Alameda High School'
+        school.state = 'CA'
+        school.city = 'Alameda'
+        expect(controller.send(:seo_meta_tags_description)).to eq('Alameda High School located in Alameda, California - CA. Find Alameda High School test scores, student-teacher ratio, parent reviews and teacher stats.')
+      end
+
+      it 'should set the description format for Greater St. Stephen Baptist Training - PreK' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.name = 'Greater St. Stephen Baptist Training'
+        school.level_code = 'p'
+        school.state = 'MI'
+        school.city = 'Detroit'
+        expect(controller.send(:seo_meta_tags_description)).to eq('Greater St. Stephen Baptist Training in Detroit, Michigan (MI). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.')
+      end
+
+      it 'should set the description format for PreK in DC' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'p'
+        school.name = 'Amazing Life Games Pre-School'
+        school.state = 'DC'
+        school.city = 'Washington'
+        expect(controller.send(:seo_meta_tags_description)).to eq('Amazing Life Games Pre-School in Washington, Washington DC (DC). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.')
+      end
+
+    end
+
+    describe '#seo_meta_tags_keywords' do
+
+      it 'should set the keywords format for Alameda High School' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'h'
+        school.name = 'Alameda High School'
+        school.state = 'CA'
+        school.city = 'Alameda'
+        expect(controller.send(:seo_meta_tags_keywords)).to eq('Alameda High School, Alameda High School Alameda, Alameda High School Alameda California, Alameda High School Alameda CA, Alameda High School California, Alameda High School Overview')
+      end
+
+      it 'should set the keywords format for Greater St. Stephen Baptist Training' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'p'
+        school.name = 'Greater St. Stephen Baptist Training'
+        school.state = 'MI'
+        school.city = 'Detroit'
+        expect(controller.send(:seo_meta_tags_keywords)).to eq('Greater St. Stephen Baptist Training')
+      end
+
+      it 'should set the keywords format for a school in DC' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'p'
+        school.name = 'Amazing Life Games Pre-School'
+        school.state = 'DC'
+        school.city = 'Washington'
+
+        expect(controller.send(:seo_meta_tags_keywords)).to eq('Amazing Life Games Pre-School, Amazing Life Games Preschool')
+      end
+
+    end
+
+
+    #description
+    #Alameda High School serves grades 9-12 in the Alameda City Unified district.  It has received a GreatSchools Rating of 7 out of 10, based on its performance on state standardized tests
+    #title
+    #Alameda High School - Alameda, California - CA - School overview
+    #keywords
+    #Alameda High School, Alameda High School Alameda, Alameda High School Alameda California, Alameda High School Alameda CA, Alameda High School California, Alameda High School Overview
+
+    #prek
+    #title
+    #Greater St. Stephen Baptist Training - Detroit, Michigan - MI - School overview
+    #description
+    #Greater St. Stephen Baptist Training
+    #keywords
+    #Greater St. Stephen Baptist Training in Detroit, Michigan (MI). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.
+
+    #prek DC
+    #title
+    #Amazing Life Games Pre-School - Washington, DC - School overview
+    #description
+    #Amazing Life Games Pre-School in Washington, Washington DC (DC). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.
+    #keywords
+    #Amazing Life Games Pre-School, Amazing Life Games Preschool
+
+  end
+
 end
