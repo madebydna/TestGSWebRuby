@@ -1,6 +1,7 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
   include OmnitureConcerns
+  include ApplicationHelper
 
   def save_review(current_user, review_params)
     error = nil
