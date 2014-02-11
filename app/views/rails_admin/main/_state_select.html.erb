@@ -8,7 +8,7 @@
         if (remote_source.indexOf('state=') > -1) {
             remote_source = remote_source.replace(/state=\w\w/, 'state=' + $(this).val());
         } else {
-            remote_source = remote_source + '&state=' + $(this).val();
+            remote_source = remote_source + '&amp;state=' + $(this).val();
         }
         options['remote_source'] = remote_source;
         select.attr('data-options', JSON.stringify(options));

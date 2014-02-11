@@ -12,8 +12,8 @@
                     <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail_border") %>
                 <% else %>
                     <%= image_tag @google_signed_image.sign_url(
-                            "http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location=" +
-                            @google_signed_image.google_formatted_street_address+"&sensor=false"
+                            "http://maps.googleapis.com/maps/api/streetview?fov=70&amp;size=130x130&amp;location=" +
+                            @google_signed_image.google_formatted_street_address+"&amp;sensor=false"
                         ), :class => "thumbnail_border" %>
                 <% end %>
             </div>
