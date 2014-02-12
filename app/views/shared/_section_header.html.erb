@@ -2,7 +2,9 @@
     <% if category_placement.depth == 0 %>
         <div class="pam clearfix mbm">
             <!--<div class="gold-bar" /></div>-->
-            <hr />
+            <% if category_placement[:position] != 1 %>
+                <hr />
+            <% end %>
             <div class="fl">
                 <h2 class="mvn"><%= category_placement.title %></h2>
             </div>
