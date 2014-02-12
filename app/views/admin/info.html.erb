@@ -1,4 +1,11 @@
-<h3>Various host info</h3>
+<a href="#various-host-info">Various host info</a><br/>
+<a href="#env-global-values">ENV Global values</a><br/>
+<a href="#cookies">Cookies</a><br/>
+<a href="#session">Session</a><br/>
+<a href="#misc-configuration">Misc configuration</a><br/>
+<a href="#database-config">Database configuration</a>
+
+<h3 id="various-host-info">Various host info</h3>
 <table class="table table-striped">
     <tbody>
         <tr>
@@ -76,7 +83,7 @@
     </tbody>
 </table>
 
-<h3>ENV_GLOBAL values:</h3>
+<h3 id="env-global-values">ENV_GLOBAL values:</h3>
 <table class="table table-striped">
     <tbody>
     <% ENV_GLOBAL.each do |key, value| %>
@@ -89,7 +96,7 @@
     </tbody>
 </table>
 
-<h3>Cookies:</h3>
+<h3 id="cookies">Cookies:</h3>
 <table class="table table-striped">
     <tbody>
     <% cookies.each do |key, value| %>
@@ -106,7 +113,7 @@
     </tbody>
 </table>
 
-<h3>Session:</h3>
+<h3 id="session">Session:</h3>
 <table class="table table-striped">
     <tbody>
     <% session.each do |key, value| %>
@@ -127,7 +134,7 @@
     </tbody>
 </table>
 
-<h3>Misc configuration:</h3>
+<h3 id="misc-configuration">Misc configuration:</h3>
 <table class="table table-striped">
     <tbody>
         <% config = LocalizedProfiles::Application.config.as_json %>
@@ -147,4 +154,13 @@
         <% end %>
     </tbody>
 </table>
+
+<h3 id="database-config">Database Config loaded from database.yml (including any overrides)</h3>
+<% db_config = ActiveRecord::Base.configurations[Rails.env] %>
+<% db_config = db_config.gs_recursive_call do |key, val| %>
+    <% val = 'password hidden' if key == 'password' %>
+    <% [key, val] %>
+<% end %>
+<%= debug db_config %>
+
 
