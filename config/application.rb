@@ -29,6 +29,8 @@ module LocalizedProfiles
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += Dir[Rails.root.join('config', 'initializers', 'extensions', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'lib', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
 
@@ -82,24 +84,15 @@ module LocalizedProfiles
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }
 
+    require File.join(config.root, 'lib', 'database_configuration_loader')
     def config.database_configuration
-      parsed = super
-
-      file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-database.yml')
-      if File.exist? file
-        parsed = YAML.load(
-          ERB.new(
-            File.read("#{Rails.root}/config/database.yml") +
-            File.read(file)
-          ).result
-        )
-      end
-
-      parsed
+      config = DatabaseConfigurationLoader.config
     end
 
     # Add in StatusPage as rack middleware
     require File.join(config.root, 'lib', 'status_page')
     config.middleware.insert_before ActiveRecord::ConnectionAdapters::ConnectionManagement, ::StatusPage
+
+    config.active_record.schema_format = :sql
   end
 end

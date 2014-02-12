@@ -1,5 +1,5 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
-# 
+#
 # Install the MYSQL driver
 #   gem install mysql2
 #
@@ -23,7 +23,6 @@ def define_db(name, db, legacy, includes)
   EOF
 end
 %>
-
 
 mysql: &mysql
   adapter: mysql2
@@ -50,18 +49,49 @@ mysql_dev_rw: &mysql_dev_rw
 mysql_dev_ro: &mysql_dev_ro
   <<: *mysql_dev
 
-
 development:
   <<: *mysql_localhost
   database: LocalizedProfiles_development
-<%= define_db('profile_config', 'LocalizedProfiles_development', false, 'mysql_localhost') %>
-<% States.state_hash.values.each do |abbreviation| %>
-<%= define_db(abbreviation.downcase, '_' + abbreviation.downcase, true, 'mysql_localhost') %>
-<% end %>
-<%= define_db('gs_schooldb', 'gs_schooldb', true, 'mysql_localhost') %>
-<%= define_db('surveys', 'surveys', true, 'mysql_localhost') %>
-<%= define_db('community', 'community', true, 'mysql_localhost') %>
-
+  profile_config:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_development
+    legacy: false
+  profile_config_ro:
+    <<: *mysql_localhost_ro
+    database: LocalizedProfiles_development
+    legacy: false
+  _STATE_:
+    <<: *mysql_localhost
+    database: __STATE_
+    legacy: true
+  _STATE__ro:
+    <<: *mysql_localhost_ro
+    database: __STATE_
+    legacy: true
+  gs_schooldb:
+    <<: *mysql_localhost
+    database: gs_schooldb
+    legacy: true
+  gs_schooldb_ro:
+    <<: *mysql_localhost_ro
+    database: gs_schooldb
+    legacy: true
+  surveys:
+    <<: *mysql_localhost
+    database: surveys
+    legacy: true
+  surveys_ro:
+    <<: *mysql_localhost_ro
+    database: surveys
+    legacy: true
+  community:
+    <<: *mysql_localhost
+    database: community
+    legacy: true
+  community_ro:
+    <<: *mysql_localhost_ro
+    database: community
+    legacy: true
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -70,13 +100,46 @@ development:
 test: &test
   <<: *mysql_localhost
   database: LocalizedProfiles_test
-<%= define_db('profile_config', 'LocalizedProfiles_test', false, 'mysql_localhost') %>
-<% States.state_hash.values.each do |abbreviation| %>
-<%= define_db(abbreviation.downcase, "_#{abbreviation.downcase}_test", true, 'mysql_localhost') %>
-<% end %>
-<%= define_db('gs_schooldb', 'gs_schooldb_test', true, 'mysql_localhost') %>
-<%= define_db('surveys', 'surveys_test', true, 'mysql_localhost') %>
-<%= define_db('community', 'community_test', true, 'mysql_localhost') %>
+  profile_config:
+    <<: *mysql_localhost
+    database: LocalizedProfiles_test
+    legacy: false
+  profile_config_ro:
+    <<: *mysql_localhost_ro
+    database: LocalizedProfiles_test
+    legacy: false
+  _STATE_:
+    <<: *mysql_localhost
+    database: __STATE__test
+    legacy: true
+  _STATE__ro:
+    <<: *mysql_localhost_ro
+    database: __STATE__test
+    legacy: true
+  gs_schooldb:
+    <<: *mysql_localhost
+    database: gs_schooldb_test
+    legacy: true
+  gs_schooldb_ro:
+    <<: *mysql_localhost_ro
+    database: gs_schooldb_test
+    legacy: true
+  surveys:
+    <<: *mysql_localhost
+    database: surveys_test
+    legacy: true
+  surveys_ro:
+    <<: *mysql_localhost_ro
+    database: surveys_test
+    legacy: true
+  community:
+    <<: *mysql_localhost
+    database: community_test
+    legacy: true
+  community_ro:
+    <<: *mysql_localhost_ro
+    database: community_test
+    legacy: true
 
 cucumber:
   <<: *test

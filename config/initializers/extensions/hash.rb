@@ -32,4 +32,18 @@ class Hash
   def gs_transform_values!(&block)
     replace gs_transform_values(&block)
   end
+
+  def gs_recursive_each_with_clone(&blk)
+    new_hash = clone
+    each do |k, v|
+      if Hash === v
+        v.gs_recursive_each_with_clone(&blk)
+        blk.call([new_hash, k, v])
+      else
+        blk.call([new_hash, k, v])
+      end
+    end
+    replace new_hash
+  end
+
 end
