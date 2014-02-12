@@ -105,7 +105,6 @@ class SchoolRating < ActiveRecord::Base
       .limit_number(options[:quantity_to_return])
       .offset_number(options[:offset_start])
       .published
-      .quality_decline
   end
 
   def remove_provisional_status!
