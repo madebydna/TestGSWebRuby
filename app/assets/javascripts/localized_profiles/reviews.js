@@ -91,7 +91,60 @@ GS.reviews = GS.reviews || function($) {
             }
         };
     };
+
+    var showReportReviewForm = function(reviewId, containerDomSelector) {
+        var reportFormSelector = '.js-report-review-form-template';
+
+        var form = $(reportFormSelector).clone(true);
+
+        $(containerDomSelector).append(form.html());
+
+        var new_form = $(containerDomSelector + ' form');
+
+        new_form.attr('id', 'js-report-review-form-' + reviewId);
+
+        var old_action = new_form.attr('action');
+
+        var action = old_action.replace(new RegExp('0/$'), reviewId + '/');
+
+        new_form.attr('action', action);
+
+        new_form.parsley( 'addListener', {
+            onFieldError: function ( elem ) {
+                elem.closest('.form-group').addClass('has-error');
+            },
+            onFieldSuccess: function ( elem ) {
+                elem.closest('.form-group').removeClass('has-error');
+            }
+        } );
+
+        new_form.bind('ajax:success', function(data, status, xhr) {
+            $('.js-report-review-link-' + reviewId).html('You\'ve reported this review');
+            closeReportReviewForm(reviewId);
+        });
+        new_form.bind('ajax:error', function(data, status, xhr) {
+            $('.js-report-review-link-' + reviewId).html('Error occurred');
+            closeReportReviewForm(reviewId);
+        });
+
+        new_form.find('.js-report-review-form-cancel').on('click', function() {
+            closeReportReviewForm(reviewId);
+        });
+
+        new_form.parent().parent().show();
+    };
+
+    var closeReportReviewForm = function(reviewId) {
+        var form = $('#js-report-review-form-' + reviewId);
+        if (form !== null) {
+            form.parent().parent().hide();
+            form.remove();
+        }
+    };
+
     return {
-        initializeReviewHandlers: initializeReviewHandlers
+        initializeReviewHandlers: initializeReviewHandlers,
+        showReportReviewForm: showReportReviewForm,
+        closeReportReviewForm: closeReportReviewForm
     }
 }(jQuery);

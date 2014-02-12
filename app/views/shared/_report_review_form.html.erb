@@ -1,0 +1,19 @@
+<%= form_for(ReportedEntity.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}, remote: :true, url: reported_review_path(reported_entity_id: '0')) do |f| %>
+    <fieldset>
+      <div class="form-group">
+        <strong>Report this review as inappropriate</strong>
+        <label class="control-label small" for="textarea">
+          Please explain how this review may have violated our <%= link_to('terms of use', terms_of_use_url, target: '_blank') %>
+          or <%= link_to 'school review guidelines', school_review_guidelines_url, target: '_blank' %>:
+        </label>
+        <div class="controls">
+          <%= f.text_area :reason, value: '', rows: 4, class: 'input-xlarge', 'data-parsley-required' => 'true', 'data-parsley-trigger' => 'change', 'style' => 'width: 100%' %>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= button_tag 'Submit', type:'submit', class: 'btn btn-sm btn-primary', disable_with: 'Reporting...' %>
+        <button type="reset" class="btn btn-sm btn-secondary js-report-review-form-cancel">Cancel</button>
+      </div>
+    </fieldset>
+<% end %>

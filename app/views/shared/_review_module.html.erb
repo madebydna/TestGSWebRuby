@@ -38,5 +38,24 @@
                 <div class="well mbn">This review submitted without content.</div>
             <% end %>
         </div>
+
+        <% if review[:comments].strip.present? %>
+            <div class="pull-right small js-report-review-link-<%= review.id %>">
+              <a href="javascript:GS.reviews.showReportReviewForm(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
+            </div>
+        <% end %>
     </div>
+
+    <div class="row pam" style="display:none;">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 js-report-review-container-<%= review.id %>">
+      </div>
+    </div>
+
+    <% unique_content_for :global_hidden_content do %>
+        <div class="js-report-review-form-template">
+          <%= render 'shared/report_review_form' %>
+        </div>
+    <% end %>
 <% end %>

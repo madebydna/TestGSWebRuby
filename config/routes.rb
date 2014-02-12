@@ -10,6 +10,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/info', :to => 'admin#info'
   get '/admin/gsr/omniture-test', to: 'admin#omniture_test', as: :omniture_test
 
+  post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
+
   constraints(RegularSubdomain) do
 
     get '/join', :to => 'signin#new_join', :as => :join
