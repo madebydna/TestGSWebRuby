@@ -2,7 +2,7 @@ require 'addressable/uri'
 class UserMailer < ActionMailer::Base
   helper ApplicationHelper
 
-  default from: 'gs-batch@greatschools.org'
+  default from: 'GreatSchools <gs-batch@greatschools.org>'
   default subject: 'Please verify your email for GreatSchools'
 
   def gsweb_host(request)
