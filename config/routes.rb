@@ -37,12 +37,6 @@ LocalizedProfiles::Application.routes.draw do
     schoolId: /\d+/,
     school_name: /.+/
   }
-  # Route for "review a school" form
-  get '/:state/:city/:schoolId-:school_name/reviews/write', to: 'reviews#new', as: :new_school_rating, constraints: {
-    state: States.any_state_name_regex,
-    schoolId: /\d+/,
-    school_name: /.+/
-  }
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
@@ -54,6 +48,7 @@ LocalizedProfiles::Application.routes.draw do
     get 'quality', to: 'localized_profile#quality', as: :quality
     get 'details', to: 'localized_profile#details', as: :details
     get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get 'reviews/write', to: 'reviews#new', as: :review_form
     get '', to: 'localized_profile#overview'
   end
 
@@ -68,6 +63,7 @@ LocalizedProfiles::Application.routes.draw do
       get 'quality', to: 'localized_profile#quality', as: :quality
       get 'details', to: 'localized_profile#details', as: :details
       get 'reviews', to: 'localized_profile#reviews', as: :reviews
+      get 'reviews/write', to: 'reviews#new', as: :review_form
       get '', to: 'localized_profile#overview'
     end
 

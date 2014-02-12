@@ -29,7 +29,7 @@ module SessionConcerns
   end
   def review_form_for_last_school
     params = last_school_visited_params
-    new_school_rating_url(last_school_visited) if params.present?
+    school_review_form_path(last_school_visited) if params.present?
   end
 
   def user_profile_or_home
