@@ -37,9 +37,12 @@ class RatingsHelper
 
     #Hash to hold the city ratings results
     city_ratings_results = {}
+    #Nested hash to hold the rating breakdowns.
+    city_sub_rating_hash = {}
 
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
+
     #If configuration exists then loop over the results
     if !city_rating_configuration.nil? && !city_rating_data_type_ids.empty?
       results.each do |test_data_set|
@@ -50,8 +53,6 @@ class RatingsHelper
             city_ratings_results["description"] = description_hash[city_rating_configuration.overall.description_key]
             city_ratings_results["city_rating_label"] = test_data_set.display_name
           else
-            #Nested hash to hold the rating breakdowns.
-            city_sub_rating_hash ||= city_ratings_results["rating_breakdowns"].nil? ? {} : city_ratings_results["rating_breakdowns"]
 
             #Loop over the configuration to put the ratings breakdowns in the results.
             city_rating_configuration.rating_breakdowns.each do |key, config|
@@ -59,14 +60,17 @@ class RatingsHelper
                 city_sub_rating_hash[config.label] = test_data_set.school_value_text
               end
             end
-            if city_sub_rating_hash.any?
-              city_ratings_results["rating_breakdowns"] = city_sub_rating_hash
-            end
           end
 
         end
       end
     end
+
+    #Only put the sub-ratings if there is an overall rating.
+    if city_ratings_results['overall_rating'] && city_sub_rating_hash.any?
+      city_ratings_results["rating_breakdowns"] = city_sub_rating_hash
+    end
+
     city_ratings_results
   end
 
@@ -81,7 +85,10 @@ class RatingsHelper
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
 
+    #Hash to hold the city ratings results
     gs_ratings_results ={}
+    #Nested hash to hold the rating breakdowns.
+    gs_sub_rating_hash ={}
 
     #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
     if school_rating_value.present?
@@ -92,8 +99,6 @@ class RatingsHelper
     if !gs_rating_data_type_ids.empty?
       results.each do |test_data_set|
         if (gs_rating_data_type_ids.include? test_data_set.data_type_id)
-          #Nested hash to hold the rating breakdowns.
-          gs_sub_rating_hash = gs_ratings_results["rating_breakdowns"].nil? ? {} : gs_ratings_results["rating_breakdowns"]
 
           #Loop over the configuration to put the ratings breakdowns in the results.
           gs_rating_configuration.rating_breakdowns.each do |key, config|
@@ -101,12 +106,15 @@ class RatingsHelper
               gs_sub_rating_hash[config.label] = test_data_set.school_value_float.round
             end
           end
-          if gs_sub_rating_hash.any?
-            gs_ratings_results["rating_breakdowns"] = gs_sub_rating_hash
-          end
         end
       end
     end
+
+    #Only put the sub-ratings if there is an overall rating.
+    if school_rating_value.present? && gs_sub_rating_hash.any?
+      gs_ratings_results["rating_breakdowns"] = gs_sub_rating_hash
+    end
+
     gs_ratings_results
   end
 end
