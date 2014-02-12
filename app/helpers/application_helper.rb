@@ -191,10 +191,10 @@ module ApplicationHelper
 
   def zillow_tracking_hash
         hash = {
-            'overview' => 'schooloverview',
-            'reviews' => 'parentreviews',
-            'quality' => 'schoolquality',
-            'details' => 'schooldetails'
+            'overview' => 'localoverview',
+            'reviews' => 'localreviews',
+            'quality' => 'localquality',
+            'details' => 'localdetails'
         }
 
   end
