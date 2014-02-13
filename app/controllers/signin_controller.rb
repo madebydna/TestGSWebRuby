@@ -13,6 +13,7 @@ class SigninController < ApplicationController
   # gets the join / login form page
   def new
     set_meta_tags :title => 'Log in to GreatSchools'
+    set_meta_tags :robots => 'noindex'
 
     @active_tab = 'login'
     gon.pagename = 'signin/new'

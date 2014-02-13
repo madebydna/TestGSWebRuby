@@ -28,6 +28,7 @@ class AdminController < ApplicationController
 
   def init_page
     gon.pagename = 'admin_help'
+    set_meta_tags :robots => 'noindex'
   end
 
   def restrict_by_ip

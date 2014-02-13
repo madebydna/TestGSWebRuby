@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
 
   def new
     init_page
+    set_meta_tags :robots => 'noindex'
   end
 
   def create
