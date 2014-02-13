@@ -12,6 +12,8 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
+    set_meta_tags :title => 'Log in to GreatSchools'
+
     @active_tab = 'login'
     gon.pagename = 'signin/new'
 
@@ -21,6 +23,8 @@ class SigninController < ApplicationController
   end
 
   def new_join
+    set_meta_tags :title => 'Join GreatSchools'
+
     # TODO: Add correct omniture page / hier1
     @active_tab = 'join'
     render :template => 'signin/new'
