@@ -13,7 +13,7 @@
             <br/><%= data["city_rating"]["description"] %>
 
         <% if !data["city_rating"]["rating_breakdowns"].nil? %>
-            <a href="javascript:void(0)" onclick='$( "#js_CityRatingLearnMore" ).slideToggle( "fast")'>Learn More >></a><br /><br />
+            <a href="javascript:void(0)" onclick='$( "#js_CityRatingLearnMore" ).slideToggle( "fast")'><br/>Learn More &raquo;</a><br /><br />
             <div class="dn well bg-white" id="js_CityRatingLearnMore">
                 <table class="table table-striped">
                     <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
