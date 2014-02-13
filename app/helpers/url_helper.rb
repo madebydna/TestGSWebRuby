@@ -17,7 +17,8 @@ module UrlHelper
     home: '/index.page',
     the_scoop: '/school/parentReview.page',
     osp_register: '/official-school-profile/register.page?city={city}&schoolId={school_id}&state={state}',
-    osp_form: '/school/QandA/form.page?schoolId={school_id}&state={state}'
+    osp_form: '/school/QandA/form.page?schoolId={school_id}&state={state}',
+    forgot_password: '/community/forgotPassword.page'
   }
 
   LEGACY_URL_MAP.each do |name, pattern|
