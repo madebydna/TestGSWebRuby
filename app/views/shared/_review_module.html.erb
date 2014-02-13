@@ -2,16 +2,23 @@
 <% school_reviews_pagination.each do |review| %>
     <hr />
     <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
+        <!--use quality or p_overall(for prek) for star counts and overall score.OM-209-->
+        <% overall_review_rating = 'decline' %>
+        <% if review[:quality] != 'decline' %>
+            <% overall_review_rating = review[:quality] %>
+        <% elsif review[:p_overall] != 'decline' %>
+            <% overall_review_rating = review[:p_overall] %>
+        <% end %>
         <% if include_rich_snippets %>
             <span itemprop="itemreviewed" style="display:none;"><%= @school.name %></span>
             <span itemprop="reviewer" style="display:none;"><%= review[:member_id] %></span>
             <time itemprop="dtreviewed" style="display:none;" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
-            <span itemprop="rating" style="display:none;"><%= review[:quality].to_i %></span>
+            <span itemprop="rating" style="display:none;"><%= overall_review_rating.to_i %></span>
         <% end %>
 
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 pbm">
             <div>
-                <%= draw_stars_16 review[:quality].to_i %>
+                <%= draw_stars_16 overall_review_rating.to_i %>
             </div>
             <br />
             Posted <%= review[:posted].strftime "%B %d, %Y" %><br />

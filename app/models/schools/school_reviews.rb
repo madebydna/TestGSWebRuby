@@ -21,11 +21,16 @@ class SchoolReviews
               student: 0
           }
       )
-      #quality maps to overall_rating
 
       school_reviews_all.each do |review|
-        #use quality for star counts and overall score
-        overall_rating = review.quality
+        #use quality or p_overall(for prek) for star counts and overall score.OM-209
+        overall_rating = 'decline'
+        if review.quality != 'decline'
+          overall_rating = review.quality
+        elsif review.p_overall != 'decline'
+          overall_rating = review.p_overall
+        end
+
         if overall_rating != 'decline'
           star_counts[overall_rating.to_i] = star_counts[overall_rating.to_i]+1
         end
