@@ -177,6 +177,11 @@ class CategoryDataReader
     # Get data for all data types
     results = CensusDataForSchoolQuery.new(school).latest_data_for_school all_configured_data_types
 
+    key_label_map = CategoryData.belonging_to_collections(category, school.collections).inject({}) do |hash, category_data|
+      hash[category_data.response_key] = category_data.label
+      hash
+    end
+
     # Get the data types that this category needs. These come sorted based on sort_order
     data_types = category.keys(school.collections)
 
@@ -207,7 +212,9 @@ class CategoryDataReader
       # Default the sort order of rows within a data type to school_value descending
       rows.sort_by! { |row| row[:school_value] }.reverse!
 
-      data[key] = rows
+      # Use the data type key to look up the label to use. If no label found, default to using the key itself
+      label = key_label_map.fetch key, key
+      data[label] = rows
     end
 
     data
