@@ -62,18 +62,19 @@
     display: none;
   }
 
-  #navigation2 li a {
-      padding: 10px 10px 8px 10px;
+  #navigation2 {
+    li {
+      font-size:.875em;
+      a {
+        padding: 10px 10px 8px 10px;
+      }
+    }
   }
 
   .sub-navigation { display: block;}
 
   .margin-mobile {
     padding-bottom: 10px;
-  }
-
-  #navigation {
-    display: none;
   }
 
   .hide_for_mobile{
