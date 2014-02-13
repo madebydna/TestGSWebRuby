@@ -48,11 +48,7 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8">
         <div class="row">
-            <div class="" id="loginModal">
-                <!--<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3>Have an Account?</h3>
-                </div>-->
+            <div id="loginModal">
                 <div class="modal-body">
                     <div class="well">
                         <ul class="nav nav-tabs">
@@ -66,16 +62,11 @@
                                 >
                                     <fieldset>
                                         <br/>
-
-                                        <!--<div id="legend">
-                                            <legend>Login</legend>
-                                        </div>-->
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-6">
                                                 <legend>Sign in using Facebook</legend>
 
                                                 <div class="form-group">
-
 
                                                     <%= link_to facebook_connect_url do %>
                                                         <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
@@ -88,7 +79,6 @@
                                                 <br/>
                                             </div>
                                             <div class="col-sm-6 col-md-6 col-lg-6">
-
 
                                                 <legend>Sign in with your email</legend>
 
@@ -126,7 +116,7 @@
                                                     <div class="controls">
                                                         <button class="btn btn-primary js-signin-form-button">Login</button>
                                                     </div>
-                                                    <%= link_to 'Forgot your password?', forgot_password_path, class: 'small' %>
+                                                    <%= link_to 'Forgot your password?', forgot_password_url, class: 'small' %>
                                                 </div>
 
                                             </div>
@@ -176,16 +166,20 @@
                                                     </div>
                                                 </div>
 
-
-
-
                                                 <div class="form-group">
                                                     <div class="controls">
-                                                        <label class="checkbox">
+                                                        <label class="checkbox small">
                                                             <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
                                                                           'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
                                                                           'data-parsley-error-container' => '.js-join-terms-errors' %>
-                                                            I agree to the GreatSchools Terms of Use.
+                                                            I agree to the <%= link_to 'GreatSchools Terms of Use', terms_of_use_url %>.
+
+                                                            <% if false # comment out for now %>
+                                                            By joining GreatSchools, you agree to our <%= link_to 'GreatSchools Terms of Use', terms_of_use_url %>,
+                                                            <%= link_to 'Community Guidelines',
+                                                                terms_of_use_url(state: hub_params[:state], anchor:'#communityStandards') %>,
+                                                            and <%= link_to 'GreatSchools Privacy Policy', privacy_url(state: hub_params[:state]) %>.
+                                                            <% end %>
                                                         </label>
                                                         <p class="js-join-terms-errors help-block"></p>
                                                     </div>
