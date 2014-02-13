@@ -48,21 +48,6 @@ reviews = Page.create!(name: 'Reviews')
 #extracurriculars = Page.create!(name: 'Extracurriculars', parent: programs_culture)
 #culture = Page.create!(name: 'Culture', parent: programs_culture)
 
-# Test collections
-bay_area_schools = Collection.create!(name: 'Bay Area schools')
-private_schools = Collection.create!(name: 'Private schools')
-dc_schools = Collection.create!(name: 'Washington dc schools')
-detroit_schools = Collection.create!(name: 'Detroit schools')
-
-# School collections
-SchoolCollection.create!(school:@alameda_high_school, collection:bay_area_schools)
-SchoolCollection.create!(school:@lowell_high_school, collection:bay_area_schools)
-
-SchoolCollection.create!(school:@page_private_school, collection:private_schools)
-SchoolCollection.create!(school:@sheridan_school, collection:private_schools)
-SchoolCollection.create!(school:@maret_school, collection:private_schools)
-SchoolCollection.create!(school:@maret_school, collection:dc_schools)
-
 
 # Categories
 school_basics = Category.create!(name: 'School basics', source:'esp_response')
@@ -206,18 +191,18 @@ CategoryPlacement.create!(category: student_subgroups, page: details, layout: 'c
 
 
 # Category data
-CategoryData.create!(category: sports,response_key:'girls_sports', collection:private_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports', collection:private_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:private_schools)
-CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:private_schools)
-CategoryData.create!(category: sports,response_key:'girls_sports', collection:dc_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports', collection:dc_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:dc_schools)
-CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:dc_schools)
-CategoryData.create!(category: sports, response_key:'girls_sports', collection:bay_area_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports', collection:bay_area_schools)
-CategoryData.create!(category: sports, response_key:'boys_sports_other', collection:bay_area_schools)
-CategoryData.create!(category: sports, response_key:'girls_sports_other', collection:bay_area_schools)
+CategoryData.create!(category: sports,response_key:'girls_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports_other')
+CategoryData.create!(category: sports, response_key:'girls_sports_other')
+CategoryData.create!(category: sports,response_key:'girls_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports_other')
+CategoryData.create!(category: sports, response_key:'girls_sports_other')
+CategoryData.create!(category: sports, response_key:'girls_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports')
+CategoryData.create!(category: sports, response_key:'boys_sports_other')
+CategoryData.create!(category: sports, response_key:'girls_sports_other')
 CategoryData.create!(category: school_basics, response_key:'administrator_name')
 CategoryData.create!(category: school_basics, response_key:'school_fax')
 CategoryData.create!(category: school_basics, response_key:'start_time')
