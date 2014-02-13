@@ -27,7 +27,7 @@ CREATE TABLE `categories` (
   `source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_categories_on_parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `category_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE `category_data` (
   KEY `index_category_data_on_category_id` (`category_id`),
   KEY `index_category_data_on_response_key` (`response_key`),
   KEY `index_category_data_on_source` (`source`)
-) ENGINE=MyISAM AUTO_INCREMENT=175 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `category_placements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,11 +59,11 @@ CREATE TABLE `category_placements` (
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ancestry` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_category_placements_on_ancestry` (`ancestry`),
   KEY `index_category_placements_on_category_id` (`category_id`),
   KEY `index_category_placements_on_collection_id` (`collection_id`),
-  KEY `index_category_placements_on_page_id` (`page_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `index_category_placements_on_page_id` (`page_id`),
+  KEY `index_category_placements_on_ancestry` (`ancestry`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `census_breakdowns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -91,7 +91,7 @@ CREATE TABLE `pages` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_pages_on_parent_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `rails_admin_histories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -117,32 +117,13 @@ CREATE TABLE `response_values` (
   `category_id` int(11) DEFAULT NULL,
   `response_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_response_values_on_collection_id` (`collection_id`),
-  KEY `index_response_values_on_response_value` (`response_value`)
-) ENGINE=MyISAM AUTO_INCREMENT=339 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `index_response_values_on_response_value` (`response_value`),
+  KEY `index_response_values_on_collection_id` (`collection_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reset_password_sent_at` datetime DEFAULT NULL,
-  `remember_created_at` datetime DEFAULT NULL,
-  `sign_in_count` int(11) DEFAULT '0',
-  `current_sign_in_at` datetime DEFAULT NULL,
-  `last_sign_in_at` datetime DEFAULT NULL,
-  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_users_on_email` (`email`),
-  UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `versions` (
@@ -164,8 +145,6 @@ INSERT INTO schema_migrations (version) VALUES ('20130820172108');
 INSERT INTO schema_migrations (version) VALUES ('20130820173218');
 
 INSERT INTO schema_migrations (version) VALUES ('20130820182454');
-
-INSERT INTO schema_migrations (version) VALUES ('20130820233639');
 
 INSERT INTO schema_migrations (version) VALUES ('20130820233707');
 
