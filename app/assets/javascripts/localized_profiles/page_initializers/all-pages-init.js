@@ -8,4 +8,8 @@ $(function() {
    $('.js-save-this-school-button').on('click', function() {
       $('#js-save-this-school-form').submit();
    });
+
+    $('.js-button-link').on('click', function() {
+        window.location.href = $(this).data("link-value");
+    });
 });
