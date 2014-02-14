@@ -6,9 +6,11 @@ class CensusDataType < ActiveRecord::Base
 
   def self.reverse_lookup(names)
     names = Array(names)
-    data_types = Rails.cache.fetch("CensusDataType/#{names.join}", expires_in: 1.hour) do
-      where(description: Array(names)).all
+    data_types = Rails.cache.fetch("CensusDataType/all", expires_in: 5.minutes) do
+      all
     end
+
+    data_types.select! { |data_type| names.include?(data_type.description) }
 
     # Sort in the same order the names were passed in
     data_types.sort_by { |data_type| names.index(data_type[:description]) }
