@@ -1,6 +1,5 @@
 class Collection
-  attr_accessor :id, :name, :description
-
+  attr_accessor :id, :name
 
   # Note that this is ok since this class is not an ActiveRecord class
   # If you ever make this class extend from ActiveRecord, you'll have to remove this initialize method
@@ -10,13 +9,20 @@ class Collection
     end
   end
 
+  def config
+    @config ||= CollectionConfig.key_value_map self.id
+  end
+
+  def nickname
+    config['collection_nickname'] || name
+  end
+
   def self.from_hub_city_mapping(hub_city_mapping)
     return nil if hub_city_mapping.nil?
 
     Collection.new(
       id: hub_city_mapping.collection_id,
-      name: hub_city_mapping.city,
-      description: hub_city_mapping.city
+      name: hub_city_mapping.city
     )
   end
 

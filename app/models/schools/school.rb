@@ -25,6 +25,28 @@ class School < ActiveRecord::Base
     school_collections.map(&:collection).uniq
   end
 
+  # Returns first collection or nil if none
+  def collection
+    collections.first
+  end
+
+  # Returns first collection name if school belongs to one, otherwise nil
+  def collection_name
+    collection = self.collection
+    if collection
+      collection.name
+    end
+  end
+
+  def hub_city
+    collection = self.collection
+    if collection
+      collection.nickname
+    else
+      city
+    end
+  end
+
   # get the schools metadata
   def school_metadata
     schoolMetadata = Hashie::Mash.new()

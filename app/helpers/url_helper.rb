@@ -96,7 +96,7 @@ module UrlHelper
 		if @school.present?
 			{
 				state: gs_legacy_url_encode(@school.state_name),
-				city: gs_legacy_url_encode(@school.city)
+				city: gs_legacy_url_encode(@school.hub_city)
 			}
 		elsif cookies[:ishubUser] == 'y' && cookies[:hubState].present? && cookies[:hubCity].present?
 			{

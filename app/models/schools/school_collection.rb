@@ -17,8 +17,11 @@ class SchoolCollection
     # Important: The School.on_db block is required here, as opposed to a School.on_db chained call.
     # This is because db_charmer doesn't correctly handle chaining with a pluck() method call, as far as I can tell
     school_ids = []
-    School.on_db(shard) do
-      school_ids = School.where(city: hub_city_mapping.city).pluck(:id)
+    SchoolMetadata.on_db(shard) do
+      school_ids = SchoolMetadata.collections_ids_to_school_ids.select do |pair|
+        # first element in pair is collection ID, second element is school ID
+        pair[0] == collection.id
+      end.map(&:last)
     end
 
     school_collections = school_ids.map do |school_id|
@@ -28,6 +31,8 @@ class SchoolCollection
         collection: collection
       )
     end
+
+    school_collections
   end
 
   # Return an array of all SchoolCollections based on what's in hub_city_mapping

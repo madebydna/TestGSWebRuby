@@ -3,7 +3,7 @@ module LocalizationConcerns
 
   def set_hub_cookies
     write_cookie_value :hubState, @school.state.upcase unless @school.nil?
-    write_cookie_value :hubCity, @school.city unless @school.nil?
+    write_cookie_value :hubCity, @school.hub_city unless @school.nil?
     write_cookie_value :ishubUser, 'y' # typo in camel casing needs to be like this to match GSWeb java code
   end
 
