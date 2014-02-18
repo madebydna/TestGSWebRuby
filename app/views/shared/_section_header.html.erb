@@ -8,11 +8,8 @@
             <div class="fl">
                 <h2 class="mvn"><%= category_placement.title %></h2>
             </div>
-            <% if (defined? link_text) && (defined? link_to) %>
-                <div class="fr prm pt8">
-                    <a href="<%= link_to %>"><%= link_text %></a>
-                </div>
-            <% end %>
+            <% link_text = link_text.present? ? link_text : nil %>
+            <%= raw display_section_head_link category_placement, link_text %>
         </div>
      <% elsif category_placement.depth == 1 %>
         <div class="plm clearfix mbl mtm">
