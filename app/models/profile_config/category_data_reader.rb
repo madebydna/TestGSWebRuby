@@ -201,7 +201,7 @@ class CategoryDataReader
       rows = results.map do |census_data_set|
         if census_data_set.state_value || census_data_set.school_value
           {
-              breakdown: census_data_set.census_breakdown,
+              breakdown: census_data_set.config_entry_breakdown_label || census_data_set.census_breakdown,
               school_value: census_data_set.school_value,
               district_value: census_data_set.district_value,
               state_value: census_data_set.state_value
@@ -210,10 +210,12 @@ class CategoryDataReader
       end.compact
 
       # Default the sort order of rows within a data type to school_value descending
-      rows.sort_by! { |row| row[:school_value] }.reverse!
+      # School value might be nil, so sort using zero in that case
+      rows.sort_by! { |row| row[:school_value] ? row[:school_value] : 0 }.reverse!
 
       # Use the data type key to look up the label to use. If no label found, default to using the key itself
-      label = key_label_map.fetch key, key
+      label = key_label_map.fetch(key, key)
+      label = key if label.blank?
       data[label] = rows
     end
 

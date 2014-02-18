@@ -44,6 +44,20 @@ class CensusDataSet < ActiveRecord::Base
     census_data_state_values[0] if census_data_state_values.any?
   end
 
+  def census_data_config_entry
+    if @shard
+      @config_entry ||= Array(CensusDataConfigEntry.for_data_set(@shard, self)).first
+    end
+  end
+
+  def has_config_entry?
+    census_data_config_entry != nil
+  end
+
+  def config_entry_breakdown_label
+    census_data_config_entry.label if has_config_entry?
+  end
+
   scope :with_data_types, lambda { |data_type_ids|
     where(data_type_id: Array(data_type_ids))
   }
@@ -56,26 +70,40 @@ class CensusDataSet < ActiveRecord::Base
     where(year: years)
   }
 
-  scope :include_school_district_state, lambda { |school_id, district_id|
-    if district_id && district_id > 0
-      includes(:census_data_school_values).where('census_data_school_value.school_id = ?', school_id)
-      .includes(:census_data_state_values)
-      .includes(:census_data_district_values).where('census_data_district_value.district_id IS NULL OR census_data_district_value.district_id= ?', district_id)
-    else
-      includes(:census_data_school_values).where('census_data_school_value.school_id = ?', school_id)
-      .includes(:census_data_state_values)
-    end
-  }
-
   scope :active, where(active: true)
+
+  def self.census_data_for_school_and_data_type_ids(school, data_type_ids = [])
+    school_conditions = reflect_on_association(:census_data_school_values).options[:conditions]
+    district_conditions = reflect_on_association(:census_data_district_values).options[:conditions]
+
+    reflect_on_association(:census_data_school_values).options[:conditions] = "school_id = #{school.id}"
+    reflect_on_association(:census_data_district_values).options[:conditions] = "district_id = #{school.district_id}"
+
+    census_data_sets =
+      on_db(school.shard)
+      .active
+      .with_data_types(data_type_ids)
+      .eager_load(:census_data_school_values)
+      .eager_load(:census_data_district_values)
+      .eager_load(:census_data_state_values)
+      .all
+
+    # Put back the association conditions the way they were
+    # The records must have already been retrieved from the db
+    reflect_on_association(:census_data_school_values).options[:conditions] = school_conditions
+    reflect_on_association(:census_data_district_values).options[:conditions] = district_conditions
+
+    # TODO: find better way to make the model instances know which shard they came from
+    census_data_sets.each { |data_set| data_set.instance_variable_set :@shard, school.shard }
+
+    census_data_sets
+  end
 
   def self.max_year_per_data_type(state)
     Rails.cache.fetch("census_data_set/max_year_per_data_type/#{state}", expires_in: 5.minutes) do
       on_db(state.downcase.to_sym).having_school_values.group(:data_type_id).maximum(:year)
     end
   end
-
-  scope :having_school_values, joins(:census_data_school_values)
 
   def to_hash
     Hashie::Mash.new(
