@@ -5,21 +5,37 @@ module UrlHelper
   # e.g.  terms_of_use_path  and  terms_of_use_url
   # The user of those methods can set query params as necessary
   LEGACY_URL_MAP = {
+    home: '/index.page',
+    our_mission: '/about/aboutUs.page',
+    our_people: '/about/senior-management.page',
+    jobs: '/jobs/',
+    contact_us: '/about/feedback.page',
+    advertise: '/about/advertiserOpportunities.page',
+    partners: '/about/partnerOpportunities.page',
+    media_room: '/about/pressRoom.page',
+    widgets_and_tools: '/about/linkToUs.page',
+    how_we_rate_schools: '/find-a-school/defining-your-ideal/2423-ratings.gs',
     terms_of_use: '/terms/',
     school_review_guidelines: '/about/guidelines.page',
+    privacy: '/privacy/',
+    forgot_password: '/community/forgotPassword.page',
+    worksheets_and_activities: '/worksheets-activities.topic?content=4313',
+    parenting_dilemmas: '/parenting-dilemmas.topic?content=4321',
+    learning_difficulties: '/special-education.topic?content=1541',
+    health_and_behavior: '/parenting.topic?content=1539',
+    find_schools: '/find-schools/',
+    the_scoop: '/school/parentReview.page',
+
     state: '/{state}/',
     city: '/{state}/{city}/',
     choosing_schools: '/{state}/{city}/choosing-schools/',
     education_community: '/{state}/{city}/education-community/',
     enrollment: '/{state}/{city}/enrollment/',
     events: '/{state}/{city}/events/',
-    find_schools: '/find-schools/',
-    home: '/index.page',
-    the_scoop: '/school/parentReview.page',
+
+    # TODO: these two below should not be specifying the city and stateId inline.
     osp_register: '/official-school-profile/register.page?city={city}&schoolId={school_id}&state={state}',
-    osp_form: '/school/QandA/form.page?schoolId={school_id}&state={state}',
-    forgot_password: '/community/forgotPassword.page',
-    privacy: '/privacy/'
+    osp_form: '/school/QandA/form.page?schoolId={school_id}&state={state}'
   }
 
   LEGACY_URL_MAP.each do |name, pattern|
