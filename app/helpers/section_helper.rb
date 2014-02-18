@@ -6,7 +6,7 @@ module SectionHelper
 
     if title.present? && (page_title.include? title)
       return_str << '<div class="fr prm pt8">'
-      return_str << '<a href="'+ title
+      return_str << '<a href="'+ title.downcase
       return_str << '">'
       return_str << (link_text.nil? ? 'See all '+title.capitalize  : link_text)
       return_str << '</a>'
