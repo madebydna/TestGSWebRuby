@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-            <% if review[:comments].strip.present? && review[:status] != 'a' %>
+            <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
                 <% if include_rich_snippets %>
                     <span itemprop="description">
                         <%= review[:comments] %>
