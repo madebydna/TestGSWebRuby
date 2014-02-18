@@ -64,6 +64,11 @@ class CategoryDataReader
   end
 
   def self.details(school, category)
+    #Bugathon - PreK details icons are not ready yet, hence hide the details section temporarily.
+    if school.preschool?
+      return {}
+    end
+
     data_details = esp_data_points(school, category);
 
     details_response_keys = {
