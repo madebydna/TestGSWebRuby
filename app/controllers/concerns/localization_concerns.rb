@@ -14,9 +14,7 @@ module LocalizationConcerns
   end
 
   def is_school_for_localized_profiles
-    collection_id = @school.school_metadata.collection_id
-    hub_city_mapping = HubCityMapping.where(collection_id: collection_id).first
-    !hub_city_mapping.nil? && hub_city_mapping.city.downcase == 'detroit' && hub_city_mapping.state.downcase == 'mi'
+    'detroit'.match /#{@school.collection.name}/i
   end
 
 end

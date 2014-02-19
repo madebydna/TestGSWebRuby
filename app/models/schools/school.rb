@@ -17,12 +17,8 @@ class School < ActiveRecord::Base
     CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
-  def school_collections
-    @collections ||= SchoolCollection.for_school(self)
-  end
-
   def collections
-    school_collections.map(&:collection).uniq
+    @collections ||= SchoolCollection.for_school(self)
   end
 
   # Returns first collection or nil if none
