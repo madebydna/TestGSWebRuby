@@ -25,9 +25,14 @@ class SigninController < ApplicationController
 
   def new_join
     set_meta_tags :title => 'Join GreatSchools'
+    set_meta_tags :robots => 'noindex'
 
-    # TODO: Add correct omniture page / hier1
     @active_tab = 'join'
+    gon.pagename = 'signin/new' # If this is changed, make sure JS is handled, i.e. signin_new-init.js
+
+    gon.omniture_pagename = 'GS:Admin:CreateAccount'
+    gon.omniture_hier1 = 'Account,SignUp'
+    set_omniture_data_for_user_request
     render :template => 'signin/new'
   end
 
