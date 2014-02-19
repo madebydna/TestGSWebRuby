@@ -18,7 +18,7 @@ class School < ActiveRecord::Base
   end
 
   def school_collections
-    SchoolCollection.for_school(self)
+    @collections ||= SchoolCollection.for_school(self)
   end
 
   def collections
