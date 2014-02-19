@@ -155,6 +155,10 @@ group :assets do
   gem "yui-compressor", "~> 0.12.0"
 end
 
+group :profile do
+  gem 'ruby-prof'
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
