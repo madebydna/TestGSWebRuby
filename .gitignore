@@ -16,8 +16,11 @@ atlassian-ide-plugin.xml
 *.swp
 .*un~
 
+profiling-results/
+profiling-results-*
 tmp
 
 # simplecov code coverage
 coverage/
+
 
