@@ -38,9 +38,20 @@ var GS = GS || {};
     var schoolIdFromUrlPath = function() {
         var schoolId;
         var schoolPathRegex = /(\d+)-.+/;
+        var schoolPathRegexPreK = /(\d+)/;
+        var preschool = false;
 
         schoolId = _(GS.uri.Uri.getPath().split('/')).map(function(pathComponent) {
-            var match = schoolPathRegex.exec(pathComponent);
+            if (pathComponent === 'preschools') {
+                preschool = true;
+            }
+            var match = null;
+            if (preschool) {
+                match = schoolPathRegexPreK.exec(pathComponent);
+            } else {
+                match = schoolPathRegex.exec(pathComponent);
+            }
+
             return (match === null) ? null : match[1];
         }).compact().first();
 
