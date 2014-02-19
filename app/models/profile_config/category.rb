@@ -16,7 +16,7 @@ class Category < ActiveRecord::Base
   end
 
   def has_data?(school)
-    data_for_school(school).present?
+    school.data_for_category(self).present?
   end
 
   def keys(collections = nil)
@@ -35,12 +35,7 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
-    @data ||= {}
-    return @data[school] if @data.has_key? school
-    if self.source.present? && CategoryDataReader.respond_to?(self.source)
-      result = CategoryDataReader.send(source, school, self)
-      @data[school] = result
-    end
+    school.data_for_category(self)
   end
 
   def possible_sources
