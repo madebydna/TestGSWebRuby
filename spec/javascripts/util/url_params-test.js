@@ -52,4 +52,20 @@ describe('uri_params', function() {
             expect(GS.stateAbbreviationFromUrl()).to.eq('ca');
         });
     });
+
+    describe('school id from URL', function() {
+        it('should be undefined when no school id in URL', function() {
+            expect(GS.schoolIdFromUrl()).to.eq(undefined);
+        });
+
+        it('should get the school id from the path', function() {
+            sinon.stub(GS.uri.Uri, 'getPath').returns('/california/alameda/1-school');
+            expect(GS.schoolIdFromUrl()).to.eq(1);
+        });
+
+        it('should get the school id from the path for preK', function() {
+            sinon.stub(GS.uri.Uri, 'getPath').returns('/michigan/detroit/preschools/YMCA-Child-Care-Center-Upa/6907/reviews/');
+            expect(GS.schoolIdFromUrl()).to.eq(6907);
+        });
+    });
 });
