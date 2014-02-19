@@ -35,8 +35,11 @@ class Category < ActiveRecord::Base
   end
 
   def data_for_school(school)
+    @data ||= {}
+    return @data[school] if @data.has_key? school
     if self.source.present? && CategoryDataReader.respond_to?(self.source)
-      CategoryDataReader.send(source, school, self)
+      result = CategoryDataReader.send(source, school, self)
+      @data[school] = result
     end
   end
 
