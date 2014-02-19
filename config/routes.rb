@@ -6,9 +6,8 @@ LocalizedProfiles::Application.routes.draw do
   require 'preschool_subdomain'
 
 
-  get '/admin/gsr/school-profiles/help', :to => 'admin#help'
-  get '/admin/gsr/info', :to => 'admin#info'
-  get '/admin/gsr/omniture-test', to: 'admin#omniture_test', as: :omniture_test
+  get '/gsr/admin/help', :to => 'admin#help'
+  get '/gsr/admin/info', :to => 'admin#info'
 
   constraints(RegularSubdomain) do
 
@@ -70,17 +69,20 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'localized_profile#overview'
     end
 
+
+    get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
+
     # Route to handle ajax "email available" validation
     get '/gsr/validations/email_available', :to => 'user#email_available'
 
     resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
     resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
 
-    scope '/admin/gsr/school-profiles' do
+    scope '/gsr' do
       devise_for :admins
     end
 
-    mount RailsAdmin::Engine => '/admin/gsr/school-profiles', :as => 'rails_admin'
+    mount RailsAdmin::Engine => '/gsr/admin', :as => 'rails_admin'
 
     # error handlers
     match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
