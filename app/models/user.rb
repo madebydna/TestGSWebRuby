@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
+  has_many :esp_memberships, foreign_key: 'member_id', :conditions => ['active = 1']
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -182,6 +183,12 @@ class User < ActiveRecord::Base
     favorite_schools.any? { |favorite| favorite.school_id == school.id && favorite.state == school.state }
   end
   alias_method :favored_school?, :favorited_school?
+
+  def provisional_or_approved_osp_user?(school = nil)
+    memberships = self.esp_memberships
+    memberships = memberships.for_school(school) if school
+    memberships.any? { |membership| membership.approved? || membership.provisional? }
+  end
 
   private
 

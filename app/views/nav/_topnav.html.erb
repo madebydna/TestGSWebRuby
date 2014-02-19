@@ -85,6 +85,11 @@
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu_top_nav">
+                            <% if current_user.provisional_or_approved_osp_user? %>
+                                <li>
+                                    <%= link_to 'Edit school profile', osp_dashboard_url %>
+                                </li>
+                            <% end %>
                             <li>
                                 <a rel="nofollow" href="/mySchoolList.page">My School List (0)</a>
                             </li>
