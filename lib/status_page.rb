@@ -9,11 +9,10 @@ class StatusPage
     unless env['PATH_INFO'] == '/gsr/admin/status'
       @app.call(env)
     else
-      redis_status_local = redis_status
       db_status_local = db_status
-      [ (redis_status_local && db_status_local ? 200 : 500),
+      [ ( db_status_local ? 200 : 500),
         {'Content-Type' => 'text/plain'},
-        ["DB: #{db_status_local ? 'OK' : 'FAILED'}\nRedis: #{redis_status_local ? 'OK' : 'FAILED'}\n\n#{version_string}"]
+        ["DB: #{db_status_local ? 'OK' : 'FAILED'}\n\n#{version_string}"]
       ]
     end
   end
