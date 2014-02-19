@@ -52,6 +52,8 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
+  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
+
   constraints(RegularSubdomain) do
 
     # Routes for school profile pages
@@ -69,8 +71,6 @@ LocalizedProfiles::Application.routes.draw do
 
 
     get '/gsr/admin/omniture-test', to: 'admin#omniture_test', as: :omniture_test
-
-    get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
     # Route to handle ajax "email available" validation
     get '/gsr/validations/email_available', :to => 'user#email_available'
