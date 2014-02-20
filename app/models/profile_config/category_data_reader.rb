@@ -30,16 +30,16 @@ class CategoryDataReader
       # first, the values won't transform correctly
 
       # First, get hash of response value string to ResponseValue
-      lookup_table = ResponseValue.lookup_table(school.collections)
+      lookup_table = ResponseValue.lookup_table
 
       # Transform the values
       responses_per_key.each do |key, values|
         values.map! do |value|
-          lookup_value = lookup_table[value]
-          if lookup_value.nil? || (lookup_value[:response_key].present? && lookup_value[:response_key] != key)
+          lookup_value = lookup_table[[key, value]]
+          if lookup_value.nil?
             value
           else
-            lookup_value[:response_label]
+            lookup_value
           end
         end
       end

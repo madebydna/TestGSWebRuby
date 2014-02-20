@@ -7,34 +7,20 @@ class ResponseValue < ActiveRecord::Base
 
   belongs_to :category
 
-  def self.lookup_table(collections = [], categories = [])
-    hash = {}
 
+  # TODO: add collection support to this method
+  def self.lookup_table
     cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
-      all_values
-    end
-
-    default_values = cached_all_values[:default_values]
-    collection_values = cached_all_values[:collection_values]
-    category_values = cached_all_values[:category_values]
-    hash.merge! default_values
-
-    Array(collections).each do |collection|
-      if collection && collection_values[collection]
-        hash.merge! collection_values[collection]
+      hash = {}
+      ResponseValue.all.each do |row|
+        key = [row['response_key'], row['response_value']]
+        hash[key] = row['response_label']
       end
+      hash
     end
 
-
-    Array(categories).each do |category|
-      if category && category_values[category]
-        hash.merge! category_values[category]
-      end
-    end
-
-    hash
+    return cached_all_values
   end
-
 
   def self.all_values
     default_values = {}
