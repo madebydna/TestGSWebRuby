@@ -1,4 +1,4 @@
-media_server: "http://www.gscdn.org/"
+media_server: ""
 app_host: "localhost"
 app_port: "3000"
 gsweb_host: "localhost"

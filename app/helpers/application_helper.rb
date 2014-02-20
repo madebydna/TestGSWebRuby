@@ -60,7 +60,7 @@ module ApplicationHelper
 
   def generate_img_path ( img_size, media_hash )
     comm_media_prefix = "library/"
-    ENV_GLOBAL['media_server'] + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
+    ENV_GLOBAL['media_server'] + '/' + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-"+img_size +".jpg"
   end
 
   def youtube_parse_id (video_str, youtube_match_string)
