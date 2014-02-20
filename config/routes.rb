@@ -56,6 +56,14 @@ LocalizedProfiles::Application.routes.draw do
 
   constraints(RegularSubdomain) do
 
+    # Routes for city page
+    scope '/:state/:city', as: :city, constraints: {
+        state: States.any_state_name_regex,
+    } do
+
+      get '', to: 'cities#show'
+    end
+
     # Routes for school profile pages
     scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
         state: States.any_state_name_regex,

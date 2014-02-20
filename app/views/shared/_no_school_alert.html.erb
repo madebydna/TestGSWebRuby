@@ -1,0 +1,9 @@
+<% if params[:noSchoolAlert] %>
+  <div class="noSchoolAlert" style="background: #f9eccd; padding: 1px;text-align: center">
+      <br/>
+      <p>
+          <%= image_tag('exclaim.gif', alt: 'Exclamation mark', style: 'position: relative; bottom: 1px;') %>
+          Oops! The school you were looking for may no longer exist. Find more schools below.
+      </p>
+  </div>
+<% end %>

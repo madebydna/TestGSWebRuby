@@ -39,4 +39,6 @@ LocalizedProfiles::Application.configure do
 
   # Don't cache when running tests
   config.cache_store = :null_store
+
+  config.action_controller.default_url_options = { host: 'http://localhost:3000' }
 end
