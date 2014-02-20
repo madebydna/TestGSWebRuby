@@ -100,7 +100,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false
-  gem 'capybara'
 
   # Use haml for template engine. Also specified in application.rb
   gem 'haml-rails'
@@ -112,6 +111,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'mechanize'
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
 
@@ -139,6 +139,7 @@ group :development, :test do
   gem 'quiet_assets'
 
   gem 'database_cleaner'
+  gem 'debugger'
 end
 
 # Gems used only for assets and not required
@@ -177,7 +178,3 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
-

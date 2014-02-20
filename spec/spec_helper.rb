@@ -1,4 +1,3 @@
-
 require 'spork'
 require 'rubygems'
 
@@ -12,6 +11,12 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'database_cleaner'
   require 'spec_for_model_with_custom_connection'
+  require 'capybara/rspec'
+
+  # use capybara-webkit
+  Capybara.javascript_driver = :webkit
+
+  Capybara.default_host = 'localhost:3000'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
