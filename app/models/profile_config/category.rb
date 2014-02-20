@@ -42,4 +42,21 @@ class Category < ActiveRecord::Base
     CategoryDataReader.sources
   end
 
+  # This method will return all of the various data keys that are configured to display for a certain *source*
+  # This works by aggregating all of the CategoryData keys for Categories which use this source
+  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
+  # this method would return all the keys configured for both Ethnicity and Details
+  def self.all_configured_keys(source)
+
+    Rails.cache.fetch("all_configured_keys/#{source}", expires_in: 1.hour) do
+      categories_using_source = Category.where(source: source).all
+
+      all_keys = []
+      categories_using_source.each{ |category| all_keys += category.keys }
+
+      # Add in keys where source is specified in CategoryData
+      all_keys += CategoryData.where(source: source).pluck(:response_key)
+    end
+  end
+
 end

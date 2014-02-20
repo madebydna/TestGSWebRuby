@@ -5,14 +5,14 @@ class CategoryDataReader
   include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
-    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).active
+    esp_responses = school.esp_responses
 
     # Find out which keys the Category is interested in
     keys_to_use = category.keys(school.collections)
     keys_and_labels = category.key_label_map
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    data = esp_responses.select! { |response| keys_to_use.include? response.response_key}
+    data = esp_responses.select { |response| keys_to_use.include? response.response_key}
 
     unless data.nil?
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
@@ -159,28 +159,10 @@ class CategoryDataReader
     end
   end
 
-  # This method will return all of the various data keys that are configured to display for a certain *source*
-  # This works by aggregating all of the CategoryData keys for Categories which use this source
-  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
-  # this method would return all the keys configured for both Ethnicity and Details
-  def self.all_configured_keys(source = caller[0][/`.*'/][1..-2])
-
-    Rails.cache.fetch("all_configured_keys/#{source}", expires_in: 1.hour) do
-      categories_using_source = Category.where(source: source).all
-
-      all_keys = []
-      categories_using_source.each{ |category| all_keys += category.keys }
-
-      # Add in keys where source is specified in CategoryData
-      all_keys += CategoryData.where(source: source).pluck(:response_key)
-    end
-  end
 
   def self.census_data(school, category)
-    all_configured_data_types = all_configured_keys
-
     # Get data for all data types
-    results = CensusDataForSchoolQuery.new(school).latest_data_for_school all_configured_data_types
+    results = school.all_census_data
 
     key_label_map = CategoryData.belonging_to_collections(category, school.collections).inject({}) do |hash, category_data|
       hash[category_data.response_key] = category_data.label
@@ -314,7 +296,7 @@ class CategoryDataReader
   end
 
   def self.sources
-    methods(false) - [:key, :cache_methods, :all_configured_keys, :sources]
+    methods(false) - [:key, :cache_methods, :sources]
   end
 
   def self.rating_data (school, _)
