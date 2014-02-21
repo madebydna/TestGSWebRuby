@@ -62,6 +62,7 @@ LocalizedProfiles::Application.routes.draw do
     } do
 
       get '', to: 'cities#show'
+      get 'events', to: 'cities#events'
     end
 
     # Routes for school profile pages

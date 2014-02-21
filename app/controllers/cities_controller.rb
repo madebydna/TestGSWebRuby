@@ -1,6 +1,13 @@
 class CitiesController < ApplicationController
   def show
+    collection_mapping = CollectionMapping.where(city: params[:city]).first
+    collection_configs = CollectionConfig.where(collection_id: collection_mapping.collection_id)
+    @state = States::STATE_HASH.select { |k, v| v == collection_mapping.state.downcase }.keys[0]
+
     # Stub data
+    @collection = {
+      nickname: 'Detroit'
+    }
     @breakdown_results = [
       { contents: 'Preschools', count: 10, hrefXML: 'http://google.com' },
       { contents: 'Elementary Schools', count: 20, hrefXML: 'http://google.com' },
@@ -8,7 +15,20 @@ class CitiesController < ApplicationController
       { contents: 'High Schools', count: 10, hrefXML: 'http://google.com' },
       { contents: 'Public Schools', count: 50, hrefXML: 'http://google.com' },
       { contents: 'Private Schools', count: 50, hrefXML: 'http://google.com' },
-      { contents: 'Charter Schools', count: 40, hrefXML: 'http://google.com' },
+      { contents: 'Charter Schools', count: 40, hrefXML: 'http://google.com' }
     ]
+    @choose_school = {
+      heading: 'Find a Great School in ' + @collection[:nickname],
+      content: "We're here to help you explore your options and find the right school for your child. To get started with the school research process, check out the resources below to learn more about how to choose a school and how enrollment works in #{@collection[:nickname]}",
+      links: [
+        { new_window: true, path: 'http://google.com', name: 'check out some coolness on google' },
+        { new_window: false, path: 'http://facebook.com', name: 'check out some coolness on facebook' },
+        { new_window: false, path: 'http://twitter.com', name: 'check out some coolness on twitter' },
+      ]
+    }
+    @important_event = {
+      config_key_prefix_list_with_index: [{}, {}],
+      max_important_event_to_display: 2
+    }
   end
 end
