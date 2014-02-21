@@ -34,6 +34,7 @@ module LocalizedProfiles
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
 
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -80,6 +81,7 @@ module LocalizedProfiles
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }

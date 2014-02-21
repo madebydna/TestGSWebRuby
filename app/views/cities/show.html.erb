@@ -2,6 +2,65 @@
 
 <%= render 'shared/no_school_alert' %>
 
+<div class="imageBgScale moduleHeight-500">
+  <div class="img-container">
+    <!-- Put image here -->
+  </div>
+  <div class="content-centered moduleTop-50">
+    <div class="city-hubs-bg tal">
+      <form action="/search/search.page" method='get' id='jq-findByNameForm' name='searchBySchoolNameForm'>
+        <input type="hidden" name='search_type' value='1'>
+        <div class="clearfix">
+          <div class="pull-left">
+            <h3 class='SourceSansPro-Semibold-h3' style='color: #ffb725; padding-bottom: 5px; margin-bottom: 0; margin-top: 0;'>Find a School in</h3>
+            <h1 class='SourceSansPro-Semibold-h1-large' style='color: #fff; margin-bottom: 20px; margin-top: 0;'>Collection Nickname</h1>
+          </div>
+          <div class="pull-right">
+            <div class="small" style='margin-bottom: 0; padding-bottom: 0; color: #fff; text-align: center;'>In partnership with</div>
+            <a href="education-community/partner">
+              <img src="http://www.greatschools.org/res/img/cityHubs/1_sponsor.png" alt="sponsor logo">
+            </a>
+          </div>
+        </div>
+
+        <div id='city-hub-search-bar-container'>
+          <input  type="text" id='js-findByNameBox' class='text1'
+                  name='q' placeholder="School name (e.g. Niles Elementary School)"
+                  onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
+                  onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                  value="School name (e.g. Niles Elementary School)"
+                  style='padding: 6px 5px; width: 602px;'/>
+          <input type="hidden" name="collectionId" id="jq-collectionId" value="#{@collection.id}"/>
+          <input type="hidden" name="state" id="jq-state" value="#{@state.abbreviation}"/>
+          <div id='search-icon'>
+              <span class="iconx48 i-48-search-city-hubs addMousePointer" id="js-submit"><!-- do not collapse --></span>
+          </div>
+          <a  href="/"
+              class="vam small ptm phm fr make-926100 pull-right"
+              onclick="GS.hubs.clearLocalUserCookies();">
+              Not in #{@collection.nickname}?
+          </a>
+        </div>
+
+        <div class="school-breakdown">
+          <h4 class='SourceSansPro-Semibold-h4'>What kind of school are you looking for?</h4>
+          <% @breakdown_results.each do |result| %>
+            <button class="but-4 clearfix" type="button" onclick="location.href='<%= result[:hrefXml] %>'">
+              <div class="pull-left"><%= result[:contents] %></div>
+              <div class="pull-right" style='position: relative;'>
+                <%= image_tag('icons/oval.png', alt: 'Grey oval', style: 'vertical-align: middle') %>
+                <div style="top:1px; right: 0px; color: #FFFFFF;width: 36px; text-align: center; position: absolute;">
+                    <span style='text-align: center;'><%= result[:count] %></span>
+                </div>
+              </div>
+            </button>
+          <% end %>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <%= render 'shared/sign_up_for_updates' %>
 
 <div class="row" id="footer">
