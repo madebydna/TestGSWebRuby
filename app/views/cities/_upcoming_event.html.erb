@@ -1,0 +1,26 @@
+<% has_important_event_to_display = !@important_event[:config_key_prefix_list_with_index].empty? and @important_event[:max_important_event_to_display] > 0 %>
+<% city_page_event = controller.action_name == 'show' and controller.controller_name == 'cities' %>
+
+<% if has_important_event_to_display and city_page_event %>
+  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+    <hr class='keyline1'>
+    <div style='padding-top: 20px; overflow: hidden;'>
+      <div class="pull-left" style='width: 30%'>
+        <h3 class='SourceSansPro-Semibold-h3 bottom'>Upcoming Events</h3>
+        <%= link_to('See all', city_events_path(@state, @collection[:nickname].downcase), class: 'small') %>
+      </div>
+      <% @important_event[:max_important_event_to_display].times do |i| %>
+        <% @important_event[:config_key_prefix_list_with_index][i - 1] %>
+      <% end %>
+    </div>
+  </div>
+<% elsif has_important_event_to_display and !hide_announcement_module and !hide_announcement_city_page %>
+  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+  </div>
+<% elsif has_important_event_to_display and hide_announcement_module and hide_announcement_city_page %>
+  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+  </div>
+<% else %>
+  <div></div>
+<% end %>
+

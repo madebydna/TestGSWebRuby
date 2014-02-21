@@ -4,9 +4,15 @@ h4, .h4 { font-family: $headings-font-family-bold; font-weight: $headings-font-w
 h5, .h5 { font-family: $headings-font-family-bold; font-weight: $headings-font-weight-bold; }
 h6, .h6 { font-family: $headings-font-family-bold; font-weight: $headings-font-weight-bold; text-transform: uppercase; }
 
+.bottom {margin-bottom:0;padding-bottom:0;}
+
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
 .font-size-small {font-size: $font-size-small}
+
+.SourceSansPro-Semibold-h1 {
+  font: normal 36px/110% 'SourceSansPro-Semibold', Arial, Helvetica, sans-serif;
+}
 
 .SourceSansPro-Semibold-h1-large {
   font: normal 60px/110% 'SourceSansPro-Semibold',Arial,Helvetica,sans-serif;
@@ -32,4 +38,12 @@ h6, .h6 { font-family: $headings-font-family-bold; font-weight: $headings-font-w
   padding-left: 8px;
   border: 1px solid #b8b8b8;
   border-radius: 3px;
+}
+
+h2 {
+  font: normal 21px/25px Arial,Helvetica,sans-serif;
+}
+
+p {
+  font: normal 14px/20px Arial,Helvetica,sans-serif;
 }
