@@ -1,5 +1,6 @@
 <div>
   <p>GreatSchools, Inc. 1999 Harrison Street, Suite 1100, Oakland, CA 94612</p>
   <p>©1998-<%= Time.now.year %> GreatSchools Inc. All Rights Reserved. GreatSchools is a 501(c)(3) not-for-profit organization
-       | <a href="/privacy/#advertiserNotice">Ad Choices <span class="iconx16 i-16-adChoice vam smaller bottom"></span></a></p>
+       | <%= link_to advertiser_notice_url do %>Ad Choices <span
+            class="iconx16 i-16-adChoice vam smaller bottom"></span><% end %>
 </div>
