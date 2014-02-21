@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require great_schools
 //= require jquery_ujs
 //= require lodash
 //= require util/util.js
