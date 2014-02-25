@@ -1,3 +1,19 @@
+.row-970 {
+  width: 970px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.grey-row {
+  @extend .col-xs-12;
+  @extend .clearfix;
+  padding-bottom: 20px;
+  border: 1px solid #e6e6e6;
+  background-color: #eee;
+}
+
 .image-container {
   height: 500px;
   width: 100%;
@@ -231,3 +247,37 @@
   border: 1px solid #e6e6e6;
   border-radius: 4px;
 }
+
+.featured-articles {
+  @extend .col-xs-7;
+}
+
+
+@media only screen and (max-width: 970px) {
+  .recent-review {
+    clear: left;
+    margin-bottom: 5px;
+  }
+
+  .row-970 {
+    width: 100%;
+  }
+
+}
+
+@media only screen and (max-width: 650px) {
+  #choose-a-school div:first-child img {
+    display: none;
+  }
+  .recent-review, .featured-articles {
+    width: 100%;
+  }
+
+  #js-zillow {
+    & {
+      clear: left;
+    }
+  }
+}
+
+

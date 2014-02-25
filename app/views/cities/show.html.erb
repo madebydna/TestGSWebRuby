@@ -63,10 +63,14 @@
   </div>
 </div>
 
-<div class="col-xs-12 clearfix" style="padding-top: 20px; padding-bottom: 20px; margin: 20px 25%;">
-  <div class="col-xs-3" style="padding-right: 80px;">
+<div class='clearfix row-970' id='choose-a-school'>
+  <div class='pull-right'>
+    <%= image_tag('choose_a_school.png', alt: 'Choose a School', style: 'margin-top: 20px; padding-top: 10px;') %>
+  </div>
+
+  <div class='pull-left' style="padding-right: 80px; width: 470px">
     <% if @choose_school and @choose_school[:links].length > 0 and not @choose_school[:heading].empty? %>
-      <h2><%= @choose_school[:heading] %></h2>
+      <h2 class='SourceSansPro-Semibold-h2' style='margin-bottom: 10px;'><%= @choose_school[:heading] %></h2>
       <p style='margin-bottom: 20px;'><%= @choose_school[:content] %></p>
       <% @choose_school[:links].each_with_index do |link, i| %>
         <% if link[:new_window] == true %>
@@ -79,10 +83,6 @@
         <% end %>
       <% end %>
     <% end %>
-  </div>
-
-  <div class="col-xs-3">
-    <%= image_tag('choose_a_school.png', alt: 'Choose a School', style: 'margin-top: 20px; padding-top: 10px;') %>
   </div>
 </div>
 
@@ -98,8 +98,8 @@
 
 
 <% if @reviews and !@reviews.empty? %>
-  <div class='col-xs-12 clearfix' style='margin-bottom: 20px; padding-bottom: 20px; border: 1px solid #e6e6e6; background-color: #eee' id='js-hubsRecentReviews'>
-    <div class="clearfix" style="padding-top: 20px; margin: 20px 25%; 5px 25%;">
+  <div id='js-hubsRecentReviews' class='grey-row clearfix' style='margin-bottom: 20px;'>
+    <div class="clearfix row-970" style="padding-bottom: 0; margin-top: 20px; margin-bottom: 5px;">
       <div class="clearfix" style='padding-top: 10px;'>
         <h2 class='SourceSansPro-Semibold-h2 pull-left' style='margin-top: 0;'>Recent Reviews</h2>
         <button class='but but-1 but-rg pull-right' onclick='window.location="/school/parentReview.page"'>Review Your School</button>
@@ -126,7 +126,7 @@
 <% end %>
 
 <% unless current_user %>
-  <div class="col-xs-6 clearfix" style='padding-bottom: 20px; padding-top: 20px; margin-left: 25%; margin-right: 25%;'>
+  <div class="row-970 clearfix">
     <div style='text-align: center; padding: 20px; border: 1px solid #e6e6e6; border-radius: 4px; background-color: #eee;'>
       <h3 class="SourceSansPro-Semibold-h3 bottom">Join our community</h3>
       <p style='padding-top: 10px;'>
@@ -138,8 +138,8 @@
   </div>
 <% end %>
 
-<div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%; padding-bottom: 20px; padding-top: 20px;'>
-  <div class="col-xs-7">
+<div class="row-970 clearfix">
+  <div class="featured-articles">
     <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'>Featured Articles</h2>
     <% unless @articles.empty? %>
       <% @articles.each do |article| %>
@@ -172,8 +172,8 @@
 </div>
 
 <% if @partner_carousel and !@partner_carousel[:logos].empty? %>
-  <div class='col-xs-12' id="js-hubsPartnerCarousel" style='border: 1px solid #e6e6e6; background-color: #eee; padding-bottom: 20px; margin-top: 20px;'>
-    <div class="clearfix col-xs-6" style='margin-left: 25%; margin-right: 25%; margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px; padding-top: 20px;'>
+  <div id="js-hubsPartnerCarousel" class='grey-row' style='margin-top: 20px;'>
+    <div class="clearfix row-970" style='margin-bottom: 20px; margin-top: 20px;'>
       <div class="clearfix">
         <div class="pull-left">
           <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'><%= @partner_carousel[:heading] %></h2>
@@ -198,7 +198,7 @@
                data-cycle-pause-on-hover="true"
                data-cycle-timeout="1000"
                data-cycle-easing="linear"
-               data-cycle-carousel-visible="6"
+               data-cycle-carousel-visible='6'
                data-cycle-slideshow="true"
                data-cycle-next="#next"
                data-cycle-prev="#prev">

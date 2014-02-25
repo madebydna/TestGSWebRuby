@@ -2,7 +2,7 @@
 <% city_page_event = controller.action_name == 'show' and controller.controller_name == 'cities' %>
 
 <% if has_important_event_to_display and city_page_event %>
-  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
     <hr class='keyline1'>
     <div style='padding-top: 20px; overflow: hidden;'>
       <div class="pull-left" style='width: 30%'>
@@ -15,10 +15,10 @@
     </div>
   </div>
 <% elsif has_important_event_to_display and !hide_announcement_module and !hide_announcement_city_page %>
-  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
   </div>
 <% elsif has_important_event_to_display and hide_announcement_module and hide_announcement_city_page %>
-  <div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%;'>
+  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
   </div>
 <% else %>
   <div></div>
