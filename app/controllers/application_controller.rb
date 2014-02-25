@@ -134,4 +134,9 @@ class ApplicationController < ActionController::Base
     gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
   end
 
+  # get Page name in PageConfig, based on current controller action
+  def configured_page_name
+    # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
+    action_name.gsub(' ', '_').capitalize
+  end
 end

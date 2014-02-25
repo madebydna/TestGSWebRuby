@@ -73,11 +73,7 @@ class LocalizedProfileController < ApplicationController
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
   end
 
-  # get Page name in PageConfig, based on current controller action
-  def configured_page_name
-    # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
-    action_name.gsub(' ', '_').capitalize
-  end
+
 
   # requires that @school has already been obtained from db
   def redirect_to_canonical_url

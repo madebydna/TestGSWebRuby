@@ -1,5 +1,9 @@
-<%= render 'nav/topnav' %>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "resources/jquery.cycle2.min.js" %>
+  <%= javascript_include_tag "resources/jquery.cycle2.carousel.min.js" %>
+<% end %>
 
+<%= render 'nav/topnav' %>
 <%= render 'shared/no_school_alert' %>
 
 <div class="imageBgScale moduleHeight-500">
@@ -92,6 +96,129 @@
   <% end %>
 <% end %>
 
+
+<% if @reviews and !@reviews.empty? %>
+  <div class='col-xs-12 clearfix' style='margin-bottom: 20px; padding-bottom: 20px; border: 1px solid #e6e6e6; background-color: #eee' id='js-hubsRecentReviews'>
+    <div class="clearfix" style="padding-top: 20px; margin: 20px 25%; 5px 25%;">
+      <div class="clearfix" style='padding-top: 10px;'>
+        <h2 class='SourceSansPro-Semibold-h2 pull-left' style='margin-top: 0;'>Recent Reviews</h2>
+        <button class='but but-1 but-rg pull-right' onclick='window.location="/school/parentReview.page"'>Review Your School</button>
+      </div>
+      <div class="clearfix" style='padding-top: 20px; padding-bottom: 20px;'>
+        <% @reviews.each_with_index do |review, i| %>
+          <div class='recent-review'>
+            <div class="js-hubs-reviews white-well">
+              <div class="bd">
+                <div style='margin-bottom: 10px;'>
+                  <%= render 'shared/stars', locals: { rating: review[:stars] } %>
+                  <span class="small" style='margin-left: 10px; color: #999; vertical-align: top;'>Posted <%= review[:date] %></span>
+                </div>
+                <p class="bottom"><%= abbreviate_at_whitespace(review[:comments], 140) %></p>
+              </div>
+            </div>
+            <div class="bottom medium-bold" style='margin-top: 20px;'><%= review[:school_name] %></div>
+            <a href="#" class='small'>Read all 20 reviews</a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% unless current_user %>
+  <div class="col-xs-6 clearfix" style='padding-bottom: 20px; padding-top: 20px; margin-left: 25%; margin-right: 25%;'>
+    <div style='text-align: center; padding: 20px; border: 1px solid #e6e6e6; border-radius: 4px; background-color: #eee;'>
+      <h3 class="SourceSansPro-Semibold-h3 bottom">Join our community</h3>
+      <p style='padding-top: 10px;'>
+          Sign up for weekly tips on how to support your child’s education and get updates on your child’s school.
+          Coming soon - we’ll send you email alerts when there are education events in your area and important enrollment deadlines.
+      </p>
+      <button class="but but-lg but-1" onclick="$(function(){GSType.hover.joinHover.showJoinGlobalHeader();}); return false;">Join</button>
+    </div>
+  </div>
+<% end %>
+
+<div class="col-xs-6 clearfix" style='margin-left: 25%; margin-right: 25%; padding-bottom: 20px; padding-top: 20px;'>
+  <div class="col-xs-7">
+    <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'>Featured Articles</h2>
+    <% unless @articles.empty? %>
+      <% @articles.each do |article| %>
+        <div class="clearfix" style='margin-top: 20px; margin-bottom: 20px;'>
+          <div class='pull-left' style='margin-left: 0; margin-right: 5px; width: 110px;'>
+            <%= image_tag(article[:image], alt: "City of #{@city}", width: '100px', height: '70px') %>
+          </div>
+          <div class='pull-left' style='width: 390px; padding-right: 40px; margin-right: 0;'>
+            <div class="medium-bold bottom">
+              <h4 class="SourceSansPro-Semibold-h4 bottom js-hubsFeaturedArticles" style='margin-top: 0;'>
+                <% if article[:new_window] %>
+                  <%= link_to article[:title], article[:path], target: '_blank' %>
+                <% else %>
+                  <%= link_to article[:title], article[:path] %>
+                <% end %>
+              </h4>
+              <p><%= article[:content] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <h3 class="SourceSansPro-Semibold-h3" style='margin-bottom: 10px; margin-top: 10px;'>No Data Found - Key cities_cityArticle</h3>
+    <% end %>
+  </div>
+  <div class="col-xs-4">
+    <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0; margin-left: 10px;'>Nearby Homes for Sale</h2>
+    <%= render 'data_layouts/zillow', data: @zillow_data, category_placement: @category_placement, hide_header: true %>
+  </div>
+</div>
+
+<% if @partner_carousel and !@partner_carousel[:logos].empty? %>
+  <div class='col-xs-12' id="js-hubsPartnerCarousel" style='border: 1px solid #e6e6e6; background-color: #eee; padding-bottom: 20px; margin-top: 20px;'>
+    <div class="clearfix col-xs-6" style='margin-left: 25%; margin-right: 25%; margin-bottom: 20px; margin-top: 20px; padding-bottom: 20px; padding-top: 20px;'>
+      <div class="clearfix">
+        <div class="pull-left">
+          <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'><%= @partner_carousel[:heading] %></h2>
+        </div>
+        <div class="pull-right">
+          <a href="education-community" style='font-size: 14px;'>See the entire education community &amp;#187;</a>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="pull-left" style='margin-top: 65px; margin-right: 20px;'>
+          <a href="#" id="prev">
+            <span class="iconx32g" style='background-position: -608px 0;'></span>
+          </a>
+        </div>
+
+        <div class="pull-left">
+          <div class="cycle-slideshow cycle-autoinit"
+               data-cycle-fx="carousel"
+               data-cycle-slides="> div"
+               data-cycle-loader="wait"
+               data-cycle-speed="1000"
+               data-cycle-pause-on-hover="true"
+               data-cycle-timeout="1000"
+               data-cycle-easing="linear"
+               data-cycle-carousel-visible="6"
+               data-cycle-slideshow="true"
+               data-cycle-next="#next"
+               data-cycle-prev="#prev">
+            <% @partner_carousel[:logos].each do |logo| %>
+              <div>
+                <%= link_to(image_tag(logo[:image_path], class: 'partner-carousel-image', alt: logo[:partner_name]), logo[:link]) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="pull-right" style='margin-left: 25px; margin-top: 65px;'>
+          <a href="#" id="next">
+            <span class="iconx32g i-32-carouselRight" style='background-position: -640px 0; verticle-align: middle;'></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 
 <%= render 'shared/sign_up_for_updates' %>
