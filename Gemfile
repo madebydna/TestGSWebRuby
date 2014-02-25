@@ -137,6 +137,8 @@ group :development, :test do
 
   # Turn off assets logging in development
   gem 'quiet_assets'
+
+  gem 'database_cleaner'
 end
 
 # Gems used only for assets and not required
