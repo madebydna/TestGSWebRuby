@@ -14,9 +14,10 @@
 //= require jquery_ujs
 //= require lodash
 //= require util/util.js
-//= require omniture.js
-//= require tracking.js
+//= require resources/omniture.js
+//= require util/tracking.js
 //= require_tree .
+
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;
