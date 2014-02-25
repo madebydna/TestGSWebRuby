@@ -163,7 +163,6 @@ class CategoryDataReader
   def self.census_data(school, category)
     # Get data for all data types
     results = school.all_census_data
-
     key_label_map = CategoryData.belonging_to_collections(category, school.collections).inject({}) do |hash, category_data|
       hash[category_data.response_key] = category_data.label
       hash
@@ -173,13 +172,16 @@ class CategoryDataReader
     data_types = category.keys(school.collections)
 
     # Filter data: return only data for this category's chosen data types
-    results.for_data_types! data_types
+    results = results.for_data_types data_types
 
     data_type_to_results_map = results.group_by(&:data_type)
 
     # Sort the data types the same way the keys are sorted in the config
     data_type_to_results_map = Hash[data_type_to_results_map.sort_by {
-        |data_type_desc, value| data_types.index(data_type_desc.downcase)
+        |data_type_desc, value|
+        data_type_sort_num = data_types.index(data_type_desc.downcase)
+        data_type_sort_num = 1 if data_type_sort_num.nil?
+        data_type_sort_num
     }]
 
     data = {}

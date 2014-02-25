@@ -49,14 +49,14 @@ class CensusDataResults
     end
   end
 
-  def for_data_types!(data_types)
+  def for_data_types(data_types)
     data_types = Array(data_types).clone
 
     data_types.each do |data_type|
       data_type.downcase! if data_type.is_a? String
     end
 
-    select! do |census_data_set|
+    select do |census_data_set|
       data_types.include?(census_data_set.data_type.downcase) || data_types.include?(census_data_set.census_data_type.id)
     end
   end
