@@ -1,6 +1,9 @@
 <div id="js-zillow">
-    <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
-    <%= render "shared/section_header", category_placement:category_placement%>
+    <%= render layout: 'localized_profile/col', locals:{ css_class:'', category_placement: category_placement} do %>
+    <% unless defined?(hide_header) %>
+      <%= render "shared/section_header", category_placement: category_placement %>
+    <% end %>
+
 
     <% if data['region_id'].present? && data['zillow_formatted_location'].present? %>
 
