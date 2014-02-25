@@ -105,6 +105,48 @@ GS.util.isDeveloperWorkstation = function() {
     hostname.indexOf("macbook") > -1;
 };
 
+GS.hubs.setupResponsiveCarousel = function() {
+  var options = {
+    fx: "carousel",
+    slides: "> div",
+    loader: "wait",
+    speed: "1000",
+    pauseOnHover: "true",
+    timeout: "1000",
+    easing: "linear",
+    carouselVisible: '6',
+    slideshow: "true",
+    next: "#next",
+    prev: "#prev"
+  };
+
+  function initCycle() {
+    var width = $(document).width();
+    $('.cycle-slideshow').cycle('destroy');
+    if (width < 400) {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 1 }));
+    } else if (width > 400 && width < 540) {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 2 }));
+    } else if (width > 540 && width < 690) {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 3 }));
+    } else if ( width > 690 && width < 800 ) {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 4 }));
+    } else if ( width > 800 && width < 980 ) {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 5 }));
+    } else {
+      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 6 }));
+    }
+  }
+  initCycle();
+
+  var reinitTimer;
+  $(window).resize(function() {
+      clearTimeout(reinitTimer);
+      reinitTimer = setTimeout(initCycle, 100);
+  });
+};
+
+
 GS.hubs.clearLocalUserCookies = function() {
   // http://www.quirksmode.org/js/cookies.html
   var date = new Date();
@@ -122,4 +164,5 @@ GS.hubs.clearLocalUserCookies = function() {
 
 jQuery(function() {
   GS.searchBySchoolNameForm.init();
+  GS.hubs.setupResponsiveCarousel();
 });
