@@ -1,6 +1,7 @@
 class CitiesController < ApplicationController
   def show
     collection_mapping = CollectionMapping.where(city: params[:city], state: States::STATE_HASH[params[:state]], active: 1).first
+    collection_mapping = CollectionMapping.where(city: 'detroit', state: 'mi', active: 1).first
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -41,10 +42,9 @@ class CitiesController < ApplicationController
         max_important_event_to_display: 2
       }
 
-      @reviews = [
-       {stars: 3, date: '2 days ago', comments: 'a ' * 150, school_name: 'King High School'},
-       {stars: 5, date: '3 days ago', comments: 'b ' * 120, school_name: 'MS 118'}
-      ]
+      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id, 2)
+      @review_count = SchoolRating.recent_reviews_in_hub_count(@state[:short], collection_mapping.collection_id)
+
       @articles = [
         { image: 'http://www.gscdn.org/res/img/cityHubs/1_Article_1.png', title: 'Random Access Title', content: 'foo bar baz'*5, new_window: true },
         { image: 'http://www.gscdn.org/res/img/cityHubs/1_Article_2.png', title: 'Random Access Title', content: 'foo bar baz'*5, new_window: false },

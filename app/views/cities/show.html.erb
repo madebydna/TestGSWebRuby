@@ -17,7 +17,7 @@
         <div class="clearfix">
           <div class="pull-left">
             <h3 class='SourceSansPro-Semibold-h3' style='color: #ffb725; padding-bottom: 5px; margin-bottom: 0; margin-top: 0;'>Find a School in</h3>
-            <h1 class='SourceSansPro-Semibold-h1-large' style='color: #fff; margin-bottom: 20px; margin-top: 0;'>Collection Nickname</h1>
+            <h1 class='SourceSansPro-Semibold-h1-large' style='color: #fff; margin-bottom: 20px; margin-top: 0;'><%= @city %></h1>
           </div>
           <div class="pull-right">
             <div class="small" style='margin-bottom: 0; padding-bottom: 0; color: #fff; text-align: center;'>In partnership with</div>
@@ -110,14 +110,14 @@
             <div class="js-hubs-reviews white-well">
               <div class="bd">
                 <div style='margin-bottom: 10px;'>
-                  <%= render 'shared/stars', locals: { rating: review[:stars] } %>
-                  <span class="small" style='margin-left: 10px; color: #999; vertical-align: top;'>Posted <%= review[:date] %></span>
+                  <%= render 'shared/stars', locals: { rating: review.quality.to_i } %>
+                  <span class="small" style='margin-left: 10px; color: #999; vertical-align: top;'>Posted <%= review.posted %></span>
                 </div>
-                <p class="bottom"><%= abbreviate_at_whitespace(review[:comments], 140) %></p>
+                <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
               </div>
             </div>
-            <div class="bottom medium-bold" style='margin-top: 20px;'><%= review[:school_name] %></div>
-            <a href="#" class='small'>Read all 20 reviews</a>
+            <div class="bottom medium-bold" style='margin-top: 20px;'><%= review.school.name %></div>
+            <%= link_to "Read all #{@review_count} reviews", school_reviews_url(review.school), class: 'small' %>
           </div>
         <% end %>
       </div>

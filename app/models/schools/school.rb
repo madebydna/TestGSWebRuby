@@ -1,4 +1,5 @@
 class School < ActiveRecord::Base
+  METADATA_COLLECTION_ID_KEY = "collection_id"
   include ActionView::Helpers
   self.table_name='school'
   include StateSharding
