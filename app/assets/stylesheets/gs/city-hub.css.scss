@@ -24,12 +24,9 @@
   text-align: left;
 }
 
-.moduleHeight-500 {
-  height: 500px;
-}
-
-.imageBgScale {
+.image-bg-scale {
   width: 100%;
+  height: 500px;
   position: relative;
   overflow: hidden;
 }
@@ -46,10 +43,6 @@
   width: 100%;
   text-align: center;
   margin: auto;
-}
-
-.moduleTop-50 {
-  top: 50px;
 }
 
 .city-hubs-bg {
@@ -71,22 +64,6 @@
   margin-bottom: 20px;
   padding: 5px;
   border-radius: 4px;
-
-  // Search Icon
-  div#search-icon {
-    top: 5px;
-    right: 201px;
-    position: absolute;
-
-    span {
-      display: inline-block;
-      background-image: url('icons/search_icon.png');
-      width: 48px;
-      height: 48px;
-      background-position: -672px 0;
-      cursor: pointer;
-    }
-  }
 
   // Not in collection link
   a {
@@ -191,34 +168,6 @@
   }
 }
 
-
-// Stars
-.iconx16-stars {
-  display: inline-block;
-  background-image: url('icons/131120-16x16_stars.png');
-  width: 16px;
-  height: 16px;
-}
-.i-16-orange-star {
-    background-position: 0 0;
-}
-.i-16-grey-star {
-    background-position: -144px -16px;
-}
-/* This is for the stars grey or orange */
-.i-16-star-0{width:0px}
-.i-16-star-1{width:16px}
-.i-16-star-2{width:32px; background-repeat: repeat-x;}
-.i-16-star-3{width:48px; background-repeat: repeat-x;}
-.i-16-star-4{width:64px; background-repeat: repeat-x;}
-.i-16-star-5{width:80px; background-repeat: repeat-x;}
-.i-16-star-6{width:96px; background-repeat: repeat-x;}
-.i-16-star-7{width:112px; background-repeat: repeat-x;}
-.i-16-star-8{width:128px; background-repeat: repeat-x;}
-.i-16-star-9{width:144px; background-repeat: repeat-x;}
-.i-16-star-10{width:160px; background-repeat: repeat-x;}
-
-
 .but-rg {
   font: bold .875em/2.285em SourceSansPro-Semibold,Arial,Helvetica,sans-serif;
   padding: 0 20px;
@@ -233,13 +182,6 @@
 
 .recent-review:nth-of-type(odd) {
   margin-right: 18px;
-}
-
-.iconx32g {
-  display: inline-block;
-  background-image: url('icons/arrows-32x32.png');
-  width: 32px;
-  height: 32px;
 }
 
 .partner-carousel-image {

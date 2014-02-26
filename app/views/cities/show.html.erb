@@ -6,21 +6,21 @@
 <%= render 'nav/topnav' %>
 <%= render 'shared/no_school_alert' %>
 
-<div class="imageBgScale moduleHeight-500">
+<div class="image-bg-scale">
   <div class="img-container">
     <!-- Put image here -->
   </div>
-  <div class="content-centered moduleTop-50">
+  <div class="content-centered" style='top: 50px;'>
     <div class="city-hubs-bg tal">
       <form action="/search/search.page" method='get' id='jq-findByNameForm' name='searchBySchoolNameForm'>
         <input type="hidden" name='search_type' value='1'>
         <div class="clearfix">
           <div class="pull-left">
-            <h3 class='SourceSansPro-Semibold-h3' style='color: #ffb725; padding-bottom: 5px; margin-bottom: 0; margin-top: 0;'>Find a School in</h3>
-            <h1 class='SourceSansPro-Semibold-h1-large' style='color: #fff; margin-bottom: 20px; margin-top: 0;'><%= @city %></h1>
+            <h3 class='SourceSansPro-Semibold-h3 mvn' style='color: #ffb725; padding-bottom: 5px;'>Find a School in</h3>
+            <h1 class='SourceSansPro-Semibold-h1-large mtn' style='color: #fff; margin-bottom: 20px;'><%= @city %></h1>
           </div>
           <div class="pull-right">
-            <div class="small" style='margin-bottom: 0; padding-bottom: 0; color: #fff; text-align: center;'>In partnership with</div>
+            <div class="small mbn" style='padding-bottom: 0; color: #fff; text-align: center;'>In partnership with</div>
             <a href="education-community/partner">
               <img src="http://www.greatschools.org/res/img/cityHubs/1_sponsor.png" alt="sponsor logo">
             </a>
@@ -101,7 +101,7 @@
   <div id='js-hubsRecentReviews' class='grey-row clearfix' style='margin-bottom: 20px;'>
     <div class="clearfix row-970" style="padding-bottom: 0; margin-top: 20px; margin-bottom: 5px;">
       <div class="clearfix" style='padding-top: 10px;'>
-        <h2 class='SourceSansPro-Semibold-h2 pull-left' style='margin-top: 0;'>Recent Reviews</h2>
+        <h2 class='SourceSansPro-Semibold-h2 pull-left mtn'>Recent Reviews</h2>
         <button class='but but-1 but-rg pull-right' onclick='window.location="/school/parentReview.page"'>Review Your School</button>
       </div>
       <div class="clearfix" style='padding-top: 20px; padding-bottom: 20px;'>
@@ -140,7 +140,7 @@
 
 <div class="row-970 clearfix">
   <div class="featured-articles">
-    <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'>Featured Articles</h2>
+    <h2 class="SourceSansPro-Semibold-h2 mtn">Featured Articles</h2>
     <% unless @articles.empty? %>
       <% @articles.each do |article| %>
         <div class="clearfix" style='margin-top: 20px; margin-bottom: 20px;'>
@@ -149,7 +149,7 @@
           </div>
           <div class='pull-left' style='width: 390px; padding-right: 40px; margin-right: 0;'>
             <div class="medium-bold bottom">
-              <h4 class="SourceSansPro-Semibold-h4 bottom js-hubsFeaturedArticles" style='margin-top: 0;'>
+              <h4 class="SourceSansPro-Semibold-h4 bottom js-hubsFeaturedArticles mtn">
                 <% if article[:new_window] %>
                   <%= link_to article[:title], article[:path], target: '_blank' %>
                 <% else %>
@@ -166,7 +166,7 @@
     <% end %>
   </div>
   <div class="col-xs-12 col-sm-4">
-    <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0; margin-left: 10px;'>Nearby Homes for Sale</h2>
+    <h2 class="SourceSansPro-Semibold-h2 mtn" style='margin-left: 10px;'>Nearby Homes for Sale</h2>
     <%= render 'data_layouts/zillow_content', data: @zillow_data %>
   </div>
 </div>
@@ -176,7 +176,7 @@
     <div class="clearfix row-970" style='margin-bottom: 20px; margin-top: 20px;'>
       <div class="clearfix">
         <div class="pull-left">
-          <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0;'><%= @partner_carousel[:heading] %></h2>
+          <h2 class="SourceSansPro-Semibold-h2 mtn"><%= @partner_carousel[:heading] %></h2>
         </div>
         <div class="pull-right">
           <a href="education-community" style='font-size: 14px;'>See the entire education community &amp;#187;</a>
