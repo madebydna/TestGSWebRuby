@@ -34,13 +34,13 @@
                   onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
                   value="School name (e.g. Niles Elementary School)"
                   style='padding: 6px 5px; width: 602px;'/>
-          <input type="hidden" name="collectionId" id="jq-collectionId" value="#{@collection.id}"/>
-          <input type="hidden" name="state" id="jq-state" value="#{@state.abbreviation}"/>
+          <input type="hidden" name="collectionId" id="jq-collectionId" value="<%= @collection_configs.last.collection_id %>"/>
+          <input type="hidden" name="state" id="jq-state" value="<%= @state[:short] %>"/>
           <div id='search-icon'>
               <span class="iconx48 i-48-search-city-hubs addMousePointer" id="js-submit"><!-- do not collapse --></span>
           </div>
           <a  href="/" class="pull-right" onclick="GS.hubs.clearLocalUserCookies();">
-              Not in <%= @collection[:nickname] %>?
+              Not in <%= @city %>?
           </a>
         </div>
 
@@ -165,7 +165,7 @@
       <h3 class="SourceSansPro-Semibold-h3" style='margin-bottom: 10px; margin-top: 10px;'>No Data Found - Key cities_cityArticle</h3>
     <% end %>
   </div>
-  <div class="col-xs-4">
+  <div class="col-xs-12 col-sm-4">
     <h2 class="SourceSansPro-Semibold-h2" style='margin-top: 0; margin-left: 10px;'>Nearby Homes for Sale</h2>
     <%= render 'data_layouts/zillow', data: @zillow_data, category_placement: @category_placement, hide_header: true %>
   </div>

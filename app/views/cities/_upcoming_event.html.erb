@@ -7,7 +7,7 @@
     <div style='padding-top: 20px; overflow: hidden;'>
       <div class="pull-left" style='width: 30%'>
         <h3 class='SourceSansPro-Semibold-h3 bottom'>Upcoming Events</h3>
-        <%= link_to('See all', city_events_path(@state, @collection[:nickname].downcase), class: 'small') %>
+        <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
       </div>
       <% @important_event[:max_important_event_to_display].times do |i| %>
         <% @important_event[:config_key_prefix_list_with_index][i - 1] %>
