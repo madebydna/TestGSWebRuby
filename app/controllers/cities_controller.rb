@@ -1,6 +1,6 @@
 class CitiesController < ApplicationController
   def show
-    collection_mapping = CollectionMapping.where(city: params[:city], state: params[:state], active: 1).first
+    collection_mapping = CollectionMapping.where(city: params[:city], state: States::STATE_HASH[params[:state]], active: 1).first
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -15,7 +15,7 @@ class CitiesController < ApplicationController
         'zillow_formatted_location' => @city.downcase.gsub(/ /, '-') + '-'+ @state[:short],
         'region_id' => ZillowRegionId.by_city_state(@city, @state[:long])
       }
-      @category_placement = CategoryPlacement.find(31)
+      gon.pagename = "city home"
 
       # Stub data
       @breakdown_results = [

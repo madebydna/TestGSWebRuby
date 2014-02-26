@@ -12,7 +12,6 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :quality_decline, where("quality != 'decline'")
   scope :belonging_to, lambda { |user| where(member_id: user.id) }
-  default_scope { order('created_at DESC') }
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
