@@ -29,10 +29,9 @@ class CitiesController < ApplicationController
       ]
 
       @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
-      @important_event = {
-        config_key_prefix_list_with_index: [{}, {}],
-        max_important_event_to_display: 2
-      }
+
+      # TODO: Integrate into the frontend
+      @announcement = CollectionConfig.city_hub_announcement(@collection_configs)
 
       @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
 
@@ -41,6 +40,9 @@ class CitiesController < ApplicationController
 
       @articles = CollectionConfig.featured_articles(@collection_configs)
       @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
+
+      @important_events = CollectionConfig.city_hub_important_events(@collection_configs, 2)
+
     end
   end
 

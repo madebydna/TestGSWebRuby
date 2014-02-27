@@ -63,7 +63,7 @@
   </div>
 </div>
 
-<div class='clearfix row-970' id='choose-a-school'>
+<div class='row-970' id='choose-a-school'>
   <div class='pull-right'>
     <%= image_tag('choose_a_school.png', alt: 'Choose a School', class: 'mtl ptm') %>
   </div>
@@ -86,20 +86,11 @@
   </div>
 </div>
 
-<% if @show_announcement == true %>
-  <% if not @important_event[:config_key_prefix_list_with_index].empty? and @important_event[:max_important_event_to_display] > 0 %>
-    <%= render 'upcoming_event', locals: { hide_announcement_module: true, hide_announcement_city_page: true } %>
-  <% end %>
-<% else %>
-  <% if not @important_event[:config_key_prefix_list_with_index].empty? and @important_event[:max_important_event_to_display] > 0 %>
-    <%= render 'upcoming_event' %>
-  <% end %>
-<% end %>
-
+<%= render 'upcoming_event', announcement: @announcement %>
 
 <% if @reviews and !@reviews.empty? %>
   <div id='js-hubsRecentReviews' class='grey-row clearfix mbl'>
-    <div class="clearfix row-970 mtl mbs pbn">
+    <div class="row-970 mtl mbs pbn">
       <div class="clearfix ptm">
         <h2 class='SourceSansPro-Semibold-h2 pull-left mtn'>Recent Reviews</h2>
         <button class='but but-1 but-rg pull-right' onclick='window.location="/school/parentReview.page"'>Review Your School</button>
@@ -126,7 +117,7 @@
 <% end %>
 
 <% unless current_user %>
-  <div class="row-970 clearfix">
+  <div class="row-970">
     <div class='pal tac' style='border: 1px solid #e6e6e6; border-radius: 4px; background-color: #eee;'>
       <h3 class="SourceSansPro-Semibold-h3 bottom">Join our community</h3>
       <p class='pbm'>
@@ -138,7 +129,7 @@
   </div>
 <% end %>
 
-<div class="row-970 clearfix">
+<div class="row-970">
   <div class="featured-articles">
     <h2 class="SourceSansPro-Semibold-h2 mtn">Featured Articles</h2>
     <% unless @articles.empty? %>
@@ -173,13 +164,13 @@
 
 <% if @partner_carousel and !@partner_carousel[:partnerLogos].empty? %>
   <div id="js-hubsPartnerCarousel" class='grey-row mtl'>
-    <div class="clearfix row-970 mtl mbl">
+    <div class="row-970 mtl mbl">
       <div class="clearfix">
         <div class="pull-left">
           <h2 class="SourceSansPro-Semibold-h2 mtn"><%= @partner_carousel[:heading] %></h2>
         </div>
         <div class="pull-right">
-          <a href="education-community" style='font-size: 14px;'><%= "See the entire education community &#187".html_safe %></a>
+          <a href="education-community" style='font-size:  px;'><%= "See the entire education community &#187".html_safe %></a>
         </div>
       </div>
       <div class="clearfix">

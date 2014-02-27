@@ -1,26 +1,31 @@
-<% has_important_event_to_display = !@important_event[:config_key_prefix_list_with_index].empty? and @important_event[:max_important_event_to_display] > 0 %>
-<% city_page_event = controller.action_name == 'show' and controller.controller_name == 'cities' %>
-
-<% if has_important_event_to_display and city_page_event %>
-  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
-    <hr class='keyline1'>
-    <div style='padding-top: 20px; overflow: hidden;'>
-      <div class="pull-left" style='width: 30%'>
-        <h3 class='SourceSansPro-Semibold-h3 bottom'>Upcoming Events</h3>
-        <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
-      </div>
-      <% @important_event[:max_important_event_to_display].times do |i| %>
-        <% @important_event[:config_key_prefix_list_with_index][i - 1] %>
-      <% end %>
+<div class="row-970 ptn pbn">
+  <hr class='keyline1'>
+  <div style='padding-top: 20px; overflow: hidden;'>
+    <div class="pull-left" style='width: 30%'>
+      <h3 class='SourceSansPro-Semibold-h3 bottom mtn'>Upcoming Events</h3>
+      <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
     </div>
+    <% @important_events[:max_important_event_to_display].times do |i| %>
+      <% event = @important_events[:events][i - 1] %>
+      <div class="upcoming-event">
+        <div class="pull-left" style='width: 60px;'>
+          <span class="iconx48 i-48-calender-month-<%= event[:date].month %>">
+            <div class="tac mtl">
+              <h3 class="SourceSansPro-Semibold-h3"><%= event[:date].day %></h3>
+            </div>
+          </span>
+        </div>
+        <div class="pull-left" style='width: 260px;'>
+          <span class="small-bold">
+            <%= abbreviate_at_whitespace(event[:description], 140) %>
+          </span>
+          <br/>
+          <%= link_to('Find out more', event[:url], class: 'small', target: '_blank') %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% elsif has_important_event_to_display and !hide_announcement_module and !hide_announcement_city_page %>
-  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
-  </div>
-<% elsif has_important_event_to_display and hide_announcement_module and hide_announcement_city_page %>
-  <div class="row-970 clearfix" style='padding-top: 0; padding-bottom: 0;'>
-  </div>
-<% else %>
-  <div></div>
+</div>
+<% if @announcement[:visible] == true %>
+  <%= render 'event_announcements', announcement: @announcement  %>
 <% end %>
-
