@@ -16,11 +16,11 @@
         <input type="hidden" name='search_type' value='1'>
         <div class="clearfix">
           <div class="pull-left">
-            <h3 class='SourceSansPro-Semibold-h3 mvn' style='color: #ffb725; padding-bottom: 5px;'>Find a School in</h3>
-            <h1 class='SourceSansPro-Semibold-h1-large mtn' style='color: #fff; margin-bottom: 20px;'><%= @city %></h1>
+            <h3 class='SourceSansPro-Semibold-h3 mvn pbs' style='color: #ffb725;'>Find a School in</h3>
+            <h1 class='SourceSansPro-Semibold-h1-large mtn mbl' style='color: #fff;'><%= @city %></h1>
           </div>
           <div class="pull-right">
-            <div class="small mbn" style='padding-bottom: 0; color: #fff; text-align: center;'><%= @sponsor[:text] %></div>
+            <div class="small mbn pbn tac" style='color: #fff;'><%= @sponsor[:text] %></div>
             <a href="education-community/partner">
               <%= image_tag(@sponsor[:path], alt: 'sponsor logo') %>
             </a>
@@ -49,10 +49,10 @@
           <% @breakdown_results.each do |result| %>
             <button class="but-4 clearfix" type="button" onclick="location.href='<%= result[:hrefXml] %>'">
               <div class="pull-left"><%= result[:contents] %></div>
-              <div class="pull-right" style='position: relative;'>
-                <%= image_tag('icons/oval.png', alt: 'Grey oval', style: 'vertical-align: middle') %>
-                <div style="top:1px; right: 0px; color: #FFFFFF;width: 36px; text-align: center; position: absolute;">
-                    <span style='text-align: center;'><%= result[:count] %></span>
+              <div class="pull-right pr">
+                <%= image_tag('icons/oval.png', alt: 'Grey oval', class: 'vam') %>
+                <div class='pa tac' style="top:1px; right: 0px; color: #FFFFFF; width: 36px;">
+                    <span><%= result[:count] %></span>
                 </div>
               </div>
             </button>
@@ -65,13 +65,13 @@
 
 <div class='clearfix row-970' id='choose-a-school'>
   <div class='pull-right'>
-    <%= image_tag('choose_a_school.png', alt: 'Choose a School', style: 'margin-top: 20px; padding-top: 10px;') %>
+    <%= image_tag('choose_a_school.png', alt: 'Choose a School', class: 'mtl ptm') %>
   </div>
 
   <div class='pull-left' style="padding-right: 80px; width: 470px">
     <% if @choose_school and @choose_school[:link].length > 0 and not @choose_school[:heading].empty? %>
-      <h2 class='SourceSansPro-Semibold-h2' style='margin-bottom: 10px;'><%= @choose_school[:heading] %></h2>
-      <p style='margin-bottom: 20px;'><%= @choose_school[:content] %></p>
+      <h2 class='SourceSansPro-Semibold-h2 mbm'><%= @choose_school[:heading] %></h2>
+      <p class='mbl'><%= @choose_school[:content].html_safe %></p>
       <% @choose_school[:link].each_with_index do |link, i| %>
         <% if link[:newWindow] == 'true' %>
           <%= link_to(link[:name].html_safe, link[:path], target: '_blank') %>
@@ -98,25 +98,25 @@
 
 
 <% if @reviews and !@reviews.empty? %>
-  <div id='js-hubsRecentReviews' class='grey-row clearfix' style='margin-bottom: 20px;'>
-    <div class="clearfix row-970" style="padding-bottom: 0; margin-top: 20px; margin-bottom: 5px;">
-      <div class="clearfix" style='padding-top: 10px;'>
+  <div id='js-hubsRecentReviews' class='grey-row clearfix mbl'>
+    <div class="clearfix row-970 mtl mbs pbn">
+      <div class="clearfix ptm">
         <h2 class='SourceSansPro-Semibold-h2 pull-left mtn'>Recent Reviews</h2>
         <button class='but but-1 but-rg pull-right' onclick='window.location="/school/parentReview.page"'>Review Your School</button>
       </div>
-      <div class="clearfix" style='padding-top: 20px; padding-bottom: 20px;'>
+      <div class="clearfix ptl pbl">
         <% @reviews.each_with_index do |review, i| %>
           <div class='recent-review'>
             <div class="js-hubs-reviews white-well">
               <div class="bd">
-                <div style='margin-bottom: 10px;'>
+                <div class='mbm'>
                   <%= render 'shared/stars', locals: { rating: review.quality.to_i } %>
-                  <span class="small" style='margin-left: 10px; color: #999; vertical-align: top;'>Posted <%= review.posted %></span>
+                  <span class="small mlm vat" style='color: #999;'>Posted <%= review.posted %></span>
                 </div>
                 <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
               </div>
             </div>
-            <div class="bottom medium-bold" style='margin-top: 20px;'><%= review.school.name %></div>
+            <div class="bottom medium-bold mtl"><%= review.school.name %></div>
             <%= link_to "Read all #{@review_count} reviews", school_reviews_url(review.school), class: 'small' %>
           </div>
         <% end %>
@@ -127,9 +127,9 @@
 
 <% unless current_user %>
   <div class="row-970 clearfix">
-    <div style='text-align: center; padding: 20px; border: 1px solid #e6e6e6; border-radius: 4px; background-color: #eee;'>
+    <div class='pal tac' style='border: 1px solid #e6e6e6; border-radius: 4px; background-color: #eee;'>
       <h3 class="SourceSansPro-Semibold-h3 bottom">Join our community</h3>
-      <p style='padding-top: 10px;'>
+      <p class='pbm'>
           Sign up for weekly tips on how to support your child’s education and get updates on your child’s school.
           Coming soon - we’ll send you email alerts when there are education events in your area and important enrollment deadlines.
       </p>
@@ -143,11 +143,11 @@
     <h2 class="SourceSansPro-Semibold-h2 mtn">Featured Articles</h2>
     <% unless @articles.empty? %>
       <% @articles.each do |article| %>
-        <div class="clearfix" style='margin-top: 20px; margin-bottom: 20px;'>
-          <div class='pull-left' style='margin-left: 0; margin-right: 5px; width: 110px;'>
+        <div class="clearfix mtl mbl">
+          <div class='pull-left mln mrm' style='width: 110px;'>
             <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px') %>
           </div>
-          <div class='pull-left' style='width: 390px; padding-right: 40px; margin-right: 0;'>
+          <div class='pull-left mrn' style='width: 390px; padding-right: 40px;'>
             <div class="medium-bold bottom">
               <h4 class="SourceSansPro-Semibold-h4 bottom js-hubsFeaturedArticles mtn">
                 <% if article[:newwindow] %>
@@ -162,18 +162,18 @@
         </div>
       <% end %>
     <% else %>
-      <h3 class="SourceSansPro-Semibold-h3" style='margin-bottom: 10px; margin-top: 10px;'>No Data Found - Key cities_cityArticle</h3>
+      <h3 class="SourceSansPro-Semibold-h3 mbm mtm">No Data Found - Key cities_cityArticle</h3>
     <% end %>
   </div>
   <div class="col-xs-12 col-sm-4">
-    <h2 class="SourceSansPro-Semibold-h2 mtn" style='margin-left: 10px;'>Nearby Homes for Sale</h2>
+    <h2 class="SourceSansPro-Semibold-h2 mtn mlm">Nearby Homes for Sale</h2>
     <%= render 'data_layouts/zillow_content', data: @zillow_data %>
   </div>
 </div>
 
 <% if @partner_carousel and !@partner_carousel[:partnerLogos].empty? %>
-  <div id="js-hubsPartnerCarousel" class='grey-row' style='margin-top: 20px;'>
-    <div class="clearfix row-970" style='margin-bottom: 20px; margin-top: 20px;'>
+  <div id="js-hubsPartnerCarousel" class='grey-row mtl'>
+    <div class="clearfix row-970 mtl mbl">
       <div class="clearfix">
         <div class="pull-left">
           <h2 class="SourceSansPro-Semibold-h2 mtn"><%= @partner_carousel[:heading] %></h2>
@@ -183,7 +183,7 @@
         </div>
       </div>
       <div class="clearfix">
-        <div class="pull-left" style='margin-top: 65px; margin-right: 20px;'>
+        <div class="pull-left mrl" style='margin-top: 65px;'>
           <a href="#" id="prev">
             <span class="iconx32g" style='background-position: -608px 0;'></span>
           </a>
@@ -212,7 +212,7 @@
 
         <div class="pull-right" style='margin-left: 25px; margin-top: 65px;'>
           <a href="#" id="next">
-            <span class="iconx32g i-32-carouselRight" style='background-position: -640px 0; verticle-align: middle;'></span>
+            <span class="iconx32g i-32-carouselRight vam" style='background-position: -640px 0;'></span>
           </a>
         </div>
       </div>
@@ -224,7 +224,7 @@
 <%= render 'shared/sign_up_for_updates' %>
 
 <div class="row" id="footer">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac" style="padding:10px;">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
     <div class="limit_width_1200 open-sans">
 
       <%= render 'shared/about_gs_footer' %>
