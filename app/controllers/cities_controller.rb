@@ -27,15 +27,8 @@ class CitiesController < ApplicationController
         { contents: 'Private Schools', count: 50, hrefXML: 'http://google.com' },
         { contents: 'Charter Schools', count: 40, hrefXML: 'http://google.com' }
       ]
-      @choose_school = {
-        heading: 'Finding a Great School in ' + @city,
-        content: "We're here to help you explore your options and find the right school for your child. To get started with the school research process, check out the resources below to learn more about how to choose a school and how enrollment works in #{@city}",
-        links: [
-          { new_window: true, path: 'http://google.com', name: 'check out some coolness on google' },
-          { new_window: false, path: 'http://facebook.com', name: 'check out some coolness on facebook' },
-          { new_window: false, path: 'http://twitter.com', name: 'check out some coolness on twitter' },
-        ]
-      }
+
+      @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
       @important_event = {
         config_key_prefix_list_with_index: [{}, {}],
         max_important_event_to_display: 2

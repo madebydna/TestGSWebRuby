@@ -60,4 +60,16 @@ class CollectionConfig < ActiveRecord::Base
       sponsor
     end
   end
+
+  def self.city_hub_choose_school(collection_configs)
+    unless collection_configs.empty?
+      raw_choose_school_str = collection_configs.where(quay: 'hubHome_chooseSchool').first.value
+      begin
+        choose_school = eval(raw_choose_school_str)
+      rescue => e
+        Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e)
+      end
+      choose_school
+    end
+  end
 end
