@@ -28,12 +28,13 @@
 
                                                 <div class="form-group">
 
-                                                    <%= link_to facebook_connect_url do %>
+
                                                         <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
-                                                        <button type="button" class="btn btn-facebook">
-                                                            Connect with Facebook
-                                                        </button>
-                                                    <% end %>
+
+                                                    <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link">
+                                                        Connect with Facebook
+                                                    </button>
+
 
                                                 </div>
                                                 <br/>
