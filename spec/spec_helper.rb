@@ -17,6 +17,8 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  Dir[Rails.root.join("spec/controllers/concerns/**/*.rb")].each {|f| require f}
+
   RSpec.configure do |config|
 
     config.include Rails.application.routes.url_helpers

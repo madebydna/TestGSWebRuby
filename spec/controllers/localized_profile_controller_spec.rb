@@ -1,6 +1,6 @@
 require 'spec_helper'
-
 describe LocalizedProfileController do
+  it_behaves_like 'localization'
 
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }

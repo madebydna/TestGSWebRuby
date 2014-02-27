@@ -4,6 +4,8 @@ class School < ActiveRecord::Base
   include StateSharding
 
   attr_accessible :name, :state, :school_collections, :district_id
+  attr_writer :collections
+
   has_many :school_metadatas
   belongs_to :district
 
