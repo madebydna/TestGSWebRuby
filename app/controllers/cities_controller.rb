@@ -1,7 +1,6 @@
 class CitiesController < ApplicationController
   def show
     collection_mapping = CollectionMapping.where(city: params[:city], state: States::STATE_HASH[params[:state]], active: 1).first
-    collection_mapping = CollectionMapping.where(city: 'detroit', state: 'mi', active: 1).first
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -45,28 +44,8 @@ class CitiesController < ApplicationController
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id, 2)
       @review_count = SchoolRating.recent_reviews_in_hub_count(@state[:short], collection_mapping.collection_id)
 
-      @articles = [
-        { image: 'http://www.gscdn.org/res/img/cityHubs/1_Article_1.png', title: 'Random Access Title', content: 'foo bar baz'*5, new_window: true },
-        { image: 'http://www.gscdn.org/res/img/cityHubs/1_Article_2.png', title: 'Random Access Title', content: 'foo bar baz'*5, new_window: false },
-        { image: 'http://www.gscdn.org/res/img/cityHubs/1_Article_3.png', title: 'Random Access Title', content: 'foo bar baz'*5, new_window: false }
-      ]
-      @partner_carousel = {
-        heading: "#{@city} Education Community",
-        logos: [
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_1.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_2.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_3.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_4.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_8.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_5.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_8.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_6.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_8.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_7.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_8.png', partner_name: 'Google' },
-          { link: 'http://google.com', image_path: 'http://www.gscdn.org/res/img/cityHubs/1_Partner_9.png', partner_name: 'Google' },
-        ]
-      }
+      @articles = CollectionConfig.featured_articles(@collection_configs)
+      @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
     end
   end
 

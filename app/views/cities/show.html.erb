@@ -145,15 +145,15 @@
       <% @articles.each do |article| %>
         <div class="clearfix" style='margin-top: 20px; margin-bottom: 20px;'>
           <div class='pull-left' style='margin-left: 0; margin-right: 5px; width: 110px;'>
-            <%= image_tag(article[:image], alt: "City of #{@city}", width: '100px', height: '70px') %>
+            <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px') %>
           </div>
           <div class='pull-left' style='width: 390px; padding-right: 40px; margin-right: 0;'>
             <div class="medium-bold bottom">
               <h4 class="SourceSansPro-Semibold-h4 bottom js-hubsFeaturedArticles mtn">
-                <% if article[:new_window] %>
-                  <%= link_to article[:title], article[:path], target: '_blank' %>
+                <% if article[:newwindow] %>
+                  <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
                 <% else %>
-                  <%= link_to article[:title], article[:path] %>
+                    <%= link_to article[:heading], article[:articlepath] %>
                 <% end %>
               </h4>
               <p><%= article[:content] %></p>
@@ -171,7 +171,7 @@
   </div>
 </div>
 
-<% if @partner_carousel and !@partner_carousel[:logos].empty? %>
+<% if @partner_carousel and !@partner_carousel[:partnerLogos].empty? %>
   <div id="js-hubsPartnerCarousel" class='grey-row' style='margin-top: 20px;'>
     <div class="clearfix row-970" style='margin-bottom: 20px; margin-top: 20px;'>
       <div class="clearfix">
@@ -202,9 +202,9 @@
                data-cycle-slideshow="true"
                data-cycle-next="#next"
                data-cycle-prev="#prev">
-            <% @partner_carousel[:logos].each do |logo| %>
+            <% @partner_carousel[:partnerLogos].each do |logo| %>
               <div>
-                <%= link_to(image_tag(logo[:image_path], class: 'partner-carousel-image', alt: logo[:partner_name]), logo[:link]) %>
+                <%= link_to(image_tag(logo[:logoPath], class: 'partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
               </div>
             <% end %>
           </div>

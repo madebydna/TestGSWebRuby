@@ -16,4 +16,34 @@ class CollectionConfig < ActiveRecord::Base
       configs
     end
   end
+
+  def self.featured_articles(collection_configs)
+    unless collection_configs.empty?
+      raw_article_str = collection_configs.where(quay: 'hubHome_cityArticle').first.value.gsub(/articles\s\:/, '"articles" =>').gsub(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
+      begin
+        articles = eval(raw_article_str)['articles'] # sins
+      rescue => e
+        Rails.logger.error('Parsing articles on the city hub page failed:' + e)
+      end
+      articles.each do |article|
+        article[:articleImagePath] = 'http://www.gscdn.org' + article[:articleImagePath]
+      end
+    end
+  end
+
+  def self.city_hub_partners(collection_configs)
+    unless collection_configs.empty?
+      raw_partners_str = collection_configs.where(quay: 'hubHome_partnerCarousel').first.value
+      begin
+        partners = eval(raw_partners_str)
+      rescue => e
+        Rails.logger.error('Something went wrong while reading city_hub_partners' + e)
+      end
+      partners[:partnerLogos].each do |partner|
+        partner[:logoPath] = 'http://www.gscdn.org' + partner[:logoPath]
+        partner[:anchoredLink] = 'education-community' + partner[:anchoredLink]
+      end
+      partners
+    end
+  end
 end
