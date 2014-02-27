@@ -20,9 +20,9 @@
             <h1 class='SourceSansPro-Semibold-h1-large mtn' style='color: #fff; margin-bottom: 20px;'><%= @city %></h1>
           </div>
           <div class="pull-right">
-            <div class="small mbn" style='padding-bottom: 0; color: #fff; text-align: center;'>In partnership with</div>
+            <div class="small mbn" style='padding-bottom: 0; color: #fff; text-align: center;'><%= @sponsor[:text] %></div>
             <a href="education-community/partner">
-              <img src="http://www.greatschools.org/res/img/cityHubs/1_sponsor.png" alt="sponsor logo">
+              <%= image_tag(@sponsor[:path], alt: 'sponsor logo') %>
             </a>
           </div>
         </div>

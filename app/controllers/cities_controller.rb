@@ -41,6 +41,8 @@ class CitiesController < ApplicationController
         max_important_event_to_display: 2
       }
 
+      @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
+
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id, 2)
       @review_count = SchoolRating.recent_reviews_in_hub_count(@state[:short], collection_mapping.collection_id)
 
