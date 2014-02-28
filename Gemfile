@@ -114,6 +114,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
+  gem 'timecop'
 
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'

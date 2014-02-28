@@ -1,4 +1,10 @@
 class CollectionConfig < ActiveRecord::Base
+  FEATURED_ARTICLES_KEY = 'hubHome_cityArticle'
+  CITY_HUB_PARTNERS_KEY = 'hubHome_partnerCarousel'
+  CITY_HUB_SPONSOR_KEY = 'hubHome_sponsor'
+  CITY_HUB_IMPORTANT_EVENTS_KEY = 'hubHome_importantEvents'
+  CITY_HUB_ANNOUNCEMENT_KEY = 'hubHome_announcement'
+  CITY_HUB_CHOOSE_A_SCHOOL_KEY = 'hubHome_chooseSchool'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -20,7 +26,7 @@ class CollectionConfig < ActiveRecord::Base
   def self.featured_articles(collection_configs)
     unless collection_configs.empty?
       begin
-        raw_article_str = collection_configs.where(quay: 'hubHome_cityArticle').first.value
+        raw_article_str = collection_configs.where(quay: FEATURED_ARTICLES_KEY).first.value
         raw_article_str.gsub!(/articles\s\:/, '"articles" =>').gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
         articles = eval(raw_article_str)['articles'] # sins
         articles.each do |article|
@@ -37,7 +43,7 @@ class CollectionConfig < ActiveRecord::Base
   def self.city_hub_partners(collection_configs)
     unless collection_configs.empty?
       begin
-        raw_partners_str = collection_configs.where(quay: 'hubHome_partnerCarousel').first.value
+        raw_partners_str = collection_configs.where(quay: CITY_HUB_PARTNERS_KEY).first.value
         partners = eval(raw_partners_str) # sins
         partners[:partnerLogos].each do |partner|
           partner[:logoPath] = 'http://www.gscdn.org' + partner[:logoPath]
@@ -54,13 +60,13 @@ class CollectionConfig < ActiveRecord::Base
   def self.city_hub_sponsor(collection_configs)
     unless collection_configs.empty?
       begin
-        raw_sponsor_str = collection_configs.where(quay: 'hubHome_sponsor').first.value
+        raw_sponsor_str = collection_configs.where(quay: CITY_HUB_SPONSOR_KEY).first.value
         sponsor = eval(raw_sponsor_str)[:sponsor] # sins
+        sponsor[:path] = 'http://www.gscdn.org' + sponsor[:path]
       rescue => e
         sponsor = nil
         Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
       end
-      sponsor[:path] = 'http://www.gscdn.org' + sponsor[:path]
       sponsor
     end
   end
@@ -68,7 +74,7 @@ class CollectionConfig < ActiveRecord::Base
   def self.city_hub_choose_school(collection_configs)
     unless collection_configs.empty?
       begin
-        raw_choose_school_str = collection_configs.where(quay: 'hubHome_chooseSchool').first.value
+        raw_choose_school_str = collection_configs.where(quay: CITY_HUB_CHOOSE_A_SCHOOL_KEY).first.value
         choose_school = eval(raw_choose_school_str) # sins
       rescue => e
         choose_school = nil
@@ -81,9 +87,9 @@ class CollectionConfig < ActiveRecord::Base
   def self.city_hub_announcement(collection_configs)
     unless collection_configs.empty?
       begin
-        raw_annoucement_str = collection_configs.where(quay: 'hubHome_announcement').first.value
+        raw_annoucement_str = collection_configs.where(quay: CITY_HUB_ANNOUNCEMENT_KEY).first.value
         announcement = eval(raw_annoucement_str) # sins
-        announcement[:visible] = collection_configs.where(quay: 'hubHome_showannouncement').first.value == 'true'
+        announcement[:visible] = collection_configs.where(quay: CITY_HUB_ANNOUNCEMENT_KEY).first.value == 'true'
       rescue => e
         announcement = nil
         Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.name.to_s)
@@ -95,7 +101,7 @@ class CollectionConfig < ActiveRecord::Base
   def self.city_hub_important_events(collection_configs, max_events = 2)
     unless collection_configs.empty?
       begin
-        raw_important_events_str = collection_configs.where(quay: 'hubHome_importantEvents').first.value
+        raw_important_events_str = collection_configs.where(quay: CITY_HUB_IMPORTANT_EVENTS_KEY).first.value
         important_events = eval(raw_important_events_str) # sins
         important_events[:events].delete_if { |event| Date.strptime(event[:date], '%m-%d-%Y') < Date.today }
         important_events[:events].sort_by! { |e| e[:date] }
