@@ -34,6 +34,19 @@ describe 'City Hub Page', js: true do
     end
   end
 
+  describe 'upcoming events section' do
+    it 'shows 2 upcoming events' do
+      visit city_page_url
+      expect(all('.upcoming-event').length).to eq(2)
+    end
+    it 'shows announcements' do
+      visit city_page_url
+      expect(page).to have_css('.success-block')
+      expect(all('span', text: 'ANNOUNCEMENT').length).to eq(1)
+      expect(page).to have_link 'Learn More'
+    end
+  end
+
   describe 'recent reviews section' do
     it 'show two most recent reviews for a city hub' do
       visit city_page_url
@@ -42,11 +55,19 @@ describe 'City Hub Page', js: true do
     end
   end
 
+  describe 'join our community' do
+    it 'renders the join well' do
+      visit city_page_url
+      expect(page).to have_content('Join our community')
+      click_button 'Join'
+      expect(current_path).to eq('/gsr/login/')
+    end
+  end
+
   describe 'featured articles section' do
     it 'display featured articles' do
-      featured_article_css = '.featured-articles>div'
       visit city_page_url
-      expect(all(featured_article_css).length).to eq(3)
+      expect(all('.featured-articles>div').length).to eq(3)
     end
     it 'shows nearby homes with zillow' do
       visit city_page_url

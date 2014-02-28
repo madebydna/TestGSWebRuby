@@ -28,21 +28,15 @@ class CitiesController < ApplicationController
         { contents: 'Charter Schools', count: 40, hrefXML: 'http://google.com' }
       ]
 
-      @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
-
-      # TODO: Integrate into the frontend
-      @announcement = CollectionConfig.city_hub_announcement(@collection_configs)
-
       @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
+      @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
+      @announcement = CollectionConfig.city_hub_announcement(@collection_configs)
+      @articles = CollectionConfig.featured_articles(@collection_configs)
+      @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(@collection_configs, 2)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id, 2)
       @review_count = SchoolRating.recent_reviews_in_hub_count(@state[:short], collection_mapping.collection_id)
-
-      @articles = CollectionConfig.featured_articles(@collection_configs)
-      @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
-
-      @important_events = CollectionConfig.city_hub_important_events(@collection_configs, 2)
-
     end
   end
 

@@ -32,9 +32,8 @@ mysql: &mysql
 
 mysql_localhost: &mysql_localhost
   <<: *mysql
-  host: dev.greatschools.org
-  username: service
-  password: service
+  host: localhost
+  password:
 mysql_localhost_rw: &mysql_localhost_rw
   <<: *mysql_localhost
 mysql_localhost_ro: &mysql_localhost_ro

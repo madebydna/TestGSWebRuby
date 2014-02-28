@@ -19,30 +19,33 @@ class CollectionConfig < ActiveRecord::Base
 
   def self.featured_articles(collection_configs)
     unless collection_configs.empty?
-      raw_article_str = collection_configs.where(quay: 'hubHome_cityArticle').first.value
-      raw_article_str.gsub!(/articles\s\:/, '"articles" =>').gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
       begin
+        raw_article_str = collection_configs.where(quay: 'hubHome_cityArticle').first.value
+        raw_article_str.gsub!(/articles\s\:/, '"articles" =>').gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
         articles = eval(raw_article_str)['articles'] # sins
+        articles.each do |article|
+          article[:articleImagePath] = 'http://www.gscdn.org' + article[:articleImagePath]
+        end
       rescue => e
-        Rails.logger.error('Parsing articles on the city hub page failed:' + e)
+        articles = nil
+        Rails.logger.error('Parsing articles on the city hub page failed:' + e.name.to_s)
       end
-      articles.each do |article|
-        article[:articleImagePath] = 'http://www.gscdn.org' + article[:articleImagePath]
-      end
+      articles
     end
   end
 
   def self.city_hub_partners(collection_configs)
     unless collection_configs.empty?
-      raw_partners_str = collection_configs.where(quay: 'hubHome_partnerCarousel').first.value
       begin
+        raw_partners_str = collection_configs.where(quay: 'hubHome_partnerCarousel').first.value
         partners = eval(raw_partners_str)
+        partners[:partnerLogos].each do |partner|
+          partner[:logoPath] = 'http://www.gscdn.org' + partner[:logoPath]
+          partner[:anchoredLink] = 'education-community' + partner[:anchoredLink]
+        end
       rescue => e
-        Rails.logger.error('Something went wrong while parsing city_hub_partners' + e)
-      end
-      partners[:partnerLogos].each do |partner|
-        partner[:logoPath] = 'http://www.gscdn.org' + partner[:logoPath]
-        partner[:anchoredLink] = 'education-community' + partner[:anchoredLink]
+        partners = nil
+        Rails.logger.error('Something went wrong while parsing city_hub_partners' + e.name.to_s)
       end
       partners
     end
@@ -50,11 +53,12 @@ class CollectionConfig < ActiveRecord::Base
 
   def self.city_hub_sponsor(collection_configs)
     unless collection_configs.empty?
-      raw_sponsor_str = collection_configs.where(quay: 'hubHome_sponsor').first.value
       begin
+        raw_sponsor_str = collection_configs.where(quay: 'hubHome_sponsor').first.value
         sponsor = eval(raw_sponsor_str)[:sponsor]
       rescue => e
-        Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e)
+        sponsor = nil
+        Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
       end
       sponsor[:path] = 'http://www.gscdn.org' + sponsor[:path]
       sponsor
@@ -63,11 +67,12 @@ class CollectionConfig < ActiveRecord::Base
 
   def self.city_hub_choose_school(collection_configs)
     unless collection_configs.empty?
-      raw_choose_school_str = collection_configs.where(quay: 'hubHome_chooseSchool').first.value
       begin
+        raw_choose_school_str = collection_configs.where(quay: 'hubHome_chooseSchool').first.value
         choose_school = eval(raw_choose_school_str)
       rescue => e
-        Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e)
+        choose_school = nil
+        Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e.name.to_s)
       end
       choose_school
     end
@@ -75,35 +80,37 @@ class CollectionConfig < ActiveRecord::Base
 
   def self.city_hub_announcement(collection_configs)
     unless collection_configs.empty?
-      raw_annoucement_str = collection_configs.where(quay: 'hubHome_announcement').first.value
       begin
+        raw_annoucement_str = collection_configs.where(quay: 'hubHome_announcement').first.value
         announcement = eval(raw_annoucement_str)
+        announcement[:visible] = collection_configs.where(quay: 'hubHome_showannouncement').first.value == 'true'
       rescue => e
-        Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e)
+        announcement = nil
+        Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.name.to_s)
       end
-      announcement[:visible] = collection_configs.where(quay: 'hubHome_showannouncement').first.value == 'true'
       announcement
     end
   end
 
   def self.city_hub_important_events(collection_configs, max_events = 2)
     unless collection_configs.empty?
-      raw_important_events_str = collection_configs.where(quay: 'hubHome_importantEvents').first.value
       begin
+        raw_important_events_str = collection_configs.where(quay: 'hubHome_importantEvents').first.value
         important_events = eval(raw_important_events_str)
+        important_events[:events].delete_if { |event| Date.strptime(event[:date], '%m-%d-%Y') < Date.today }
+        important_events[:events].sort_by! { |e| e[:date] }
+        important_events[:max_important_event_to_display] = max_events
+
+        while important_events[:events].length > max_events
+          important_events[:events].pop
+        end
+
+        important_events[:events].each do |event|
+          event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
+        end
       rescue => e
-        Rails.logger.error('Something went wrong while parsing city_hub_important_events' + e)
-      end
-      important_events[:events].delete_if { |event| Date.strptime(event[:date], '%m-%d-%Y') < Date.today }
-      important_events[:events].sort_by! { |e| e[:date] }
-      important_events[:max_important_event_to_display] = max_events
-
-      while important_events[:events].length > max_events
-        important_events[:events].pop
-      end
-
-      important_events[:events].each do |event|
-        event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
+        important_events = nil
+        Rails.logger.error('Something went wrong while parsing city_hub_important_events' + e.name.to_s)
       end
 
       important_events

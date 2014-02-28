@@ -19,12 +19,14 @@
             <h3 class='SourceSansPro-Semibold-h3 mvn pbs' style='color: #ffb725;'>Find a School in</h3>
             <h1 class='SourceSansPro-Semibold-h1-large mtn mbl' style='color: #fff;'><%= @city %></h1>
           </div>
-          <div class="pull-right">
-            <div class="small mbn pbn tac" style='color: #fff;'><%= @sponsor[:text] %></div>
-            <a href="education-community/partner">
-              <%= image_tag(@sponsor[:path], alt: 'sponsor logo') %>
-            </a>
-          </div>
+          <% unless @sponsor.nil? %>
+            <div class="pull-right">
+              <div class="small mbn pbn tac" style='color: #fff;'><%= @sponsor[:text] %></div>
+              <a href="education-community/partner">
+                <%= image_tag(@sponsor[:path], alt: 'sponsor logo') %>
+              </a>
+            </div>
+          <% end %>
         </div>
 
         <div id='city-hub-search-bar-container'>
@@ -86,7 +88,9 @@
   </div>
 </div>
 
-<%= render 'upcoming_event', announcement: @announcement %>
+<% unless @important_events.nil? %>
+  <%= render 'upcoming_event', announcement: @announcement %>
+<% end %>
 
 <% if @reviews and !@reviews.empty? %>
   <div id='js-hubsRecentReviews' class='grey-row clearfix mbl'>
@@ -124,7 +128,7 @@
           Sign up for weekly tips on how to support your child’s education and get updates on your child’s school.
           Coming soon - we’ll send you email alerts when there are education events in your area and important enrollment deadlines.
       </p>
-      <button class="but but-lg but-1" onclick="$(function(){GSType.hover.joinHover.showJoinGlobalHeader();}); return false;">Join</button>
+      <button class="but but-lg but-1" onclick="window.location='/gsr/login/?tab=join'">Join</button>
     </div>
   </div>
 <% end %>
@@ -132,7 +136,7 @@
 <div class="row-970">
   <div class="featured-articles">
     <h2 class="SourceSansPro-Semibold-h2 mtn">Featured Articles</h2>
-    <% unless @articles.empty? %>
+    <% unless @articles.nil? %>
       <% @articles.each do |article| %>
         <div class="clearfix mtl mbl">
           <div class='pull-left mln mrm' style='width: 110px;'>
