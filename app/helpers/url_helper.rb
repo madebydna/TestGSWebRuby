@@ -1,87 +1,6 @@
 module UrlHelper
   require 'addressable/uri'
 
-  # The key for each URL will be turned into two helper methods that can be used in views
-  # e.g.  terms_of_use_path  and  terms_of_use_url
-  # The user of those methods can set query params as necessary
-  LEGACY_URL_MAP = {
-    home: '/index.page',
-    our_mission: '/about/aboutUs.page',
-    our_people: '/about/senior-management.page',
-    jobs: '/jobs/',
-    contact_us: '/about/feedback.page',
-    advertise: '/about/advertiserOpportunities.page',
-    partners: '/about/partnerOpportunities.page',
-    media_room: '/about/pressRoom.page',
-    widgets_and_tools: '/about/linkToUs.page',
-    how_we_rate_schools: '/find-a-school/defining-your-ideal/2423-ratings.gs',
-    terms_of_use: '/terms/',
-    school_review_guidelines: '/about/guidelines.page',
-    privacy: '/privacy/',
-    advertiser_notice: '/privacy/#advertiserNotice',
-    forgot_password: '/community/forgotPassword.page',
-    worksheets_and_activities: '/worksheets-activities.topic?content=4313',
-    parenting_dilemmas: '/parenting-dilemmas.topic?content=4321',
-    learning_difficulties: '/special-education.topic?content=1541',
-    health_and_behavior: '/parenting.topic?content=1539',
-    find_schools: '/find-schools/',
-    the_scoop: '/school/parentReview.page',
-    my_account: '/account/',
-    my_school_list: '/mySchoolList.page',
-    verify_email: '/community/registrationConfirm.page',
-
-    state: '/{state}/',
-    city: '/{state}/{city}/',
-    choosing_schools: '/{state}/{city}/choosing-schools/',
-    education_community: '/{state}/{city}/education-community/',
-    enrollment: '/{state}/{city}/enrollment/',
-    events: '/{state}/{city}/events/',
-
-    # TODO: these two below should not be specifying the city and stateId inline.
-    osp_register: '/official-school-profile/register.page?city={city}&schoolId={school_id}&state={state}',
-    osp_form: '/school/QandA/form.page?schoolId={school_id}&state={state}',
-    osp_dashboard: '/official-school-profile/dashboard/'
-  }
-
-  LEGACY_URL_MAP.each do |name, pattern|
-    define_method "#{name.to_s}_url" do |params = {}, options = {}|
-      path = self.send "#{name.to_s}_path", params, options
-
-      options = options.reverse_merge(controller.default_url_options)
-
-			# Remain true to whats written in the LEGACY_URL_MAP
-      options[:trailing_slash] = false
-      ActionDispatch::Http::URL.url_for(options.merge({ path: path }))
-    end
-
-    define_method "#{name.to_s}_path" do |params = {}, options = {}|
-			path = pattern.clone
-
-      options = options.reverse_merge(controller.default_url_options)
-
-			# Perform replacements on the path pattern
-      params.each do |key, value|
-        if path.match /{#{key}}/
-          path = path.gsub /{#{key}}/, value
-          params.delete key
-        end
-			end
-
-			Rails.logger.error "Error in url_helper: configured path: #{path} did not have all variables replaced by params: " \
-				+ "#{params.to_json}" if path.include? ':'
-
-      # Remain true to whats written in the LEGACY_URL_MAP
-      options[:trailing_slash] = false
-
-      options[:path] = path
-      options[:only_path] = true
-
-			# Send any params that were left over
-      options[:params] = params
-
-      ActionDispatch::Http::URL.url_for(options)
-    end
-  end
 
   def gs_legacy_url_encode(param)
     param.downcase.gsub('-', '_').gsub(' ', '-')
@@ -105,12 +24,12 @@ module UrlHelper
   end
 
   def school_params(school)
-    {
-      state: gs_legacy_url_encode(school.state_name),
-      city: gs_legacy_url_encode(school.city),
-      schoolId: school.id,
-      school_name: encode_school_name(school.name)
-    }
+    hash = {}
+    hash[:state] = gs_legacy_url_encode(school.state_name) if school.state_name.present?
+    hash[:city] = gs_legacy_url_encode(school.city) if school.city.present?
+    hash[:schoolId] = school.id if school.id
+    hash[:school_name] = encode_school_name(school.name) if school.name.present?
+    return hash
 	end
 
 	def hub_params

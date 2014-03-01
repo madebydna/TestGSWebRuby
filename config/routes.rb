@@ -5,6 +5,44 @@ LocalizedProfiles::Application.routes.draw do
   require 'regular_subdomain'
   require 'preschool_subdomain'
 
+  # Routes within this scope are pages not handled by Rails.
+  # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
+  # We need to assign the route a controller action, so just point to page_not_found
+  scope '', to: 'error#page_not_found' do
+    get '/index.page', as: :home
+    get '/about/aboutUs.page', as: :our_mission
+    get '/about/senior-management.page', as: :our_people
+    get '/jobs/', as: :jobs
+    get '/about/feedback.page', as: :contact_us
+    get '/about/advertiserOpportunities.page', as: :advertise
+    get '/about/partnerOpportunities.page', as: :partners
+    get '/about/pressRoom.page', as: :media_room
+    get '/about/linkToUs.page', as: :widgets_and_tools
+    get '/find-a-school/defining-your-ideal/2423-ratings.gs', as: :how_we_rate_schools
+    get '/terms/', as: :terms_of_use
+    get '/about/guidelines.page', as: :school_review_guidelines
+    get '/privacy/', as: :privacy
+    get '/privacy/#advertiserNotice', as: :advertiser_notice
+    get '/community/forgotPassword.page', as: :forgot_password
+    get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
+    get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
+    get '/special-education.topic?content=1541', as: :learning_difficulties
+    get '/parenting.topic?content=1539', as: :health_and_behavior
+    get '/find-schools/', as: :find_schools
+    get '/school/parentReview.page', as: :the_scoop
+    get '/account/', as: :my_account
+    get '/mySchoolList.page', as: :my_school_list
+    get '/community/registrationConfirm.page', as: :verify_email
+    get '/:state/', as: :state
+    get '/:state/:city/', as: :city
+    get '/:state/:city/choosing-schools/', as: :choosing_schools
+    get '/:state/:city/education-community/', as: :education_community
+    get '/:state/:city/enrollment/', as: :enrollment
+    get '/:state/:city/events/', as: :events
+    get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
+    get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
+    get '/official-school-profile/dashboard/', as: :osp_dashboard
+  end
 
   get '/admin/gsr/school-profiles/help', :to => 'admin#help'
   get '/admin/gsr/info', :to => 'admin#info'
