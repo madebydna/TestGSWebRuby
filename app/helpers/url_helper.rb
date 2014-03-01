@@ -28,6 +28,7 @@ module UrlHelper
     the_scoop: '/school/parentReview.page',
     my_account: '/account/',
     my_school_list: '/mySchoolList.page',
+    verify_email: '/community/registrationConfirm.page',
 
     state: '/{state}/',
     city: '/{state}/{city}/',

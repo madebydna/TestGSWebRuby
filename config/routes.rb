@@ -75,11 +75,6 @@ LocalizedProfiles::Application.routes.draw do
     match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
     match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
     match '/error/internal_error' => 'error#internal_error', :as => :internal_error
-
-    # this route only affects local development environments right now, since tomcat will handle this URL,
-    # and execute existing java code
-    get '/community/registrationConfirm.page' => redirect('/community/registrationConfirm.page', port: 8080), as: :verify_email
-
   end
 
   # Handle preschool URLs
@@ -106,6 +101,9 @@ LocalizedProfiles::Application.routes.draw do
 
   # route not found catch-all
   match '*path' => 'error#page_not_found'
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
