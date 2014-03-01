@@ -41,19 +41,6 @@ LocalizedProfiles::Application.routes.draw do
     school_name: /.+/
   }
 
-  # Handle preschool URLs
-  scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/,
-  } do
-
-    get 'quality', to: 'localized_profile#quality', as: :quality
-    get 'details', to: 'localized_profile#details', as: :details
-    get 'reviews', to: 'localized_profile#reviews', as: :reviews
-    get 'reviews/write', to: 'reviews#new', as: :review_form
-    get '', to: 'localized_profile#overview'
-  end
 
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
 
@@ -94,6 +81,21 @@ LocalizedProfiles::Application.routes.draw do
     get '/community/registrationConfirm.page' => redirect('/community/registrationConfirm.page', port: 8080), as: :verify_email
 
   end
+
+  # Handle preschool URLs
+  scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
+    state: States.any_state_name_regex,
+    schoolId: /\d+/,
+    school_name: /.+/,
+  } do
+
+    get 'quality', to: 'localized_profile#quality', as: :quality
+    get 'details', to: 'localized_profile#details', as: :details
+    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get 'reviews/write', to: 'reviews#new', as: :review_form
+    get '', to: 'localized_profile#overview'
+  end
+
 
   constraints(PreschoolSubdomain) do
 

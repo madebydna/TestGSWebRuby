@@ -87,7 +87,12 @@ class LocalizedProfileController < ApplicationController
 
     canonical_path = self.send helper_name.to_sym, @school
 
-    redirect_to canonical_path if canonical_path != request.path + '/'
+    # Add a tailing slash to the request path, only if one doesn't already exist.
+    # Requests made by rspec sometimes contain a trailing slash
+    request_path = request.path.clone
+    request_path << '/' if request_path[-1] != '/'
+
+    redirect_to canonical_path if canonical_path != request_path
   end
 
   def set_seo_meta_tags
