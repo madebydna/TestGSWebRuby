@@ -18,6 +18,19 @@ describe 'school profile routing' do
     @school = FactoryGirl.build(:school, state: 'ca', city: 'alameda', id: 1, name: 'alameda high school')
   end
 
+
+  it 'should route to 404 page if state is invalid' do
+    expect( get '/sldkfj/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'sldkfj/alameda/1-Alameda-High-School')
+  end
+
+  it 'should route to 404 page if state is numeric' do
+    expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
+  end
+
+  it 'should route to 404 page if there is no school ID' do
+    expect( get '/california/alameda/Alameda-High-School/' ).to route_to('error#page_not_found', path:'california/alameda/Alameda-High-School')
+  end
+
   describe 'non-pk school scope' do
 
     it 'has a route for overview' do

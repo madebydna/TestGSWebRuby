@@ -38,25 +38,6 @@ describe LocalizedProfileController do
       expect(assigns[:state]).to eq('ca')
     end
 
-    it 'should 404 with non-existent state' do
-      get action, state: 'garbage', schoolId: 1, school_name: 'anything', city: 'anything'
-      expect(response.code).to eq('404')
-    end
-
-    it 'should 404 with garbage state' do
-      get action, state: 0, schoolId: 1, school_name: 'anything', city: 'anything'
-      expect(response.code).to eq('404')
-    end
-
-    it 'should 404 with no state' do
-      get action, schoolId: 1, school_name: 'anything', city: 'anything'
-      expect(response.code).to eq('404')
-    end
-
-    it 'should 404 with garbage school' do
-      get action, state: 'ca', schoolId: 'garbage', school_name: 'anything', city: 'anything'
-      expect(response.code).to eq('404')
-    end
   end
 
   describe 'GET overview' do
