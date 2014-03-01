@@ -9,42 +9,33 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/school-profiles/help', :to => 'admin#help'
   get '/admin/gsr/info', :to => 'admin#info'
   get '/admin/gsr/omniture-test', to: 'admin#omniture_test', as: :omniture_test
+  mount RailsAdmin::Engine => '/admin/gsr/school-profiles', :as => 'rails_admin'
+  scope '/admin/gsr/school-profiles' do
+    devise_for :admins
+  end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
+  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
+  # Route to handle ajax "email available" validation
+  get '/gsr/validations/email_available', :to => 'user#email_available'
+  resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
+  resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
 
-  constraints(RegularSubdomain) do
+  post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
+  match '/logout', :to => 'signin#destroy', :as => :logout
+  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
+  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
+  match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
 
-    get '/join', :to => 'signin#new_join', :as => :join
-    get '/gsr/login', :to => 'signin#new', :as => :signin
-    match '/logout', :to => 'signin#destroy', :as => :logout
-
-
-    post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
-    match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
-    match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
-    match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
-
-    # TODO: Update this route to handle PK, like other school profile routes
-    # Redirect /district-of-columbia school profile pages to /washington-dc
-    get '/district-of-columbia/:city/:schoolId-:school_name/(/*other)', constraints: {
+  post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/
-    }, to: redirect{|params, request| "/washington-dc/#{params[:city]}/#{params[:schoolId]}-#{params[:school_name]}/#{params[:other]}"}
-
-  end
-
-  # TODO: Do we need to update these two routes to handle PK, like other school profile routes
-  post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
-    state: States.any_state_name_regex,
-    schoolId: /\d+/,
-    school_name: /.+/
   }
 
-
-  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
-
   constraints(RegularSubdomain) do
+    get '/join', :to => 'signin#new_join', :as => :join
+    get '/gsr/login', :to => 'signin#new', :as => :signin
 
     # Routes for school profile pages
     scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
@@ -58,23 +49,6 @@ LocalizedProfiles::Application.routes.draw do
       get 'reviews/write', to: 'reviews#new', as: :review_form
       get '', to: 'localized_profile#overview'
     end
-
-    # Route to handle ajax "email available" validation
-    get '/gsr/validations/email_available', :to => 'user#email_available'
-
-    resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
-    resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
-
-    scope '/admin/gsr/school-profiles' do
-      devise_for :admins
-    end
-
-    mount RailsAdmin::Engine => '/admin/gsr/school-profiles', :as => 'rails_admin'
-
-    # error handlers
-    match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
-    match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
-    match '/error/internal_error' => 'error#internal_error', :as => :internal_error
   end
 
   # Handle preschool URLs
@@ -91,13 +65,16 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
-
   constraints(PreschoolSubdomain) do
-
     # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
     match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
-
   end
+
+
+  # error handlers
+  match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
+  match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
+  match '/error/internal_error' => 'error#internal_error', :as => :internal_error
 
   # route not found catch-all
   match '*path' => 'error#page_not_found'
