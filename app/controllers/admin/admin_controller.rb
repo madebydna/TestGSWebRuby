@@ -1,4 +1,4 @@
-class AdminController < ApplicationController
+class Admin::AdminController < ApplicationController
   protect_from_forgery
 
   before_filter :init_page

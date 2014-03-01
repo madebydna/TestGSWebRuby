@@ -1,0 +1,142 @@
+<%= render 'nav/topnav' %>
+
+<%= javascript_tag do %>
+    $(function() {
+        $('input:checkbox').on('click', function() {
+            var $this = $(this);
+            var value = $this.prop('checked');
+            var name = $this.attr('name');
+
+            new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+
+            if (_.indexOf(new_location, '?') == -1) {
+                new_location += '?';
+            } else {
+                new_location += '&';
+            }
+            location.href = new_location + name + "=" + value;
+        });
+    });
+<% end %>
+
+<div class="row limit_width_1200">
+
+  <h3><%= @school.name %></h3>
+
+  <div>
+    <% if @held_school %>
+        School on hold since <%= @held_school.created %>
+        <br/>
+        <button type="submit" class="btn btn-sm btn-primary mvm">Remove hold (will delete notes)</button>
+    <% else %>
+        School not on hold
+    <% end %>
+    <br/>
+    <form>
+      <%= text_area_tag(:note, @held_school? @held_school.notes : '', size: '97x4') %>
+      <div class="form-actions">
+        <% if @held_school %>
+            <button type="submit" class="btn btn-sm btn-primary mtm">Save notes</button>
+        <% else %>
+            <button type="submit" class="btn btn-sm btn-primary mtm">Put school on hold</button>
+        <% end %>
+      </div>
+    </form>
+    <br/>
+  </div>
+  <br/>
+
+  <div>
+    Filter reviews (filters are restrictive)  <br/>
+    <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished reviews &nbsp;&nbsp;
+    <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional reviews &nbsp;&nbsp;
+    <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled reviews &nbsp;&nbsp;
+    <%= check_box_tag :reported, true, params[:reported] == 'true' %> Reported reviews &nbsp;&nbsp;
+    <%= check_box_tag :held, true, params[:held] == 'true' %> Held reviews &nbsp;&nbsp;
+  </div>
+  <div>
+    <strong><%= pluralize @reviews.count, 'review' %></strong> displayed
+    <% if current_scopes.any? %>
+        <br/>
+        Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
+    <% end %>
+  </div>
+    <% @reviews.each do |review| %>
+        <hr/>
+        <div class="row">
+          <div class="leftcolumn col-lg-4 prm">
+            <h5>Details</h5>
+
+            <%= pluralize(review.overall, 'star') %>
+            <br/>
+            Affiliation: <%= review.affiliation || 'n/a' %>
+            <br/>
+            IP Address: <%= review.ip || 'n/a' %>
+            <br/>
+            <% if review.user %>
+                Email: <%= review.user.email %>
+            <% else %>
+                Email: n/a
+            <% end %>
+            <br/>
+            Status: <%= review.status %>
+            <br/>
+            <%= button_tag 'Publish', type:'button',
+              class: 'btn btn-sm mtm ' + ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'), disable_with: 'Publishing...' %>
+            <br/>
+            <%= button_tag 'Unpublish', type:'button',
+              class: 'btn btn-sm mtm ' + (review.unpublished? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Unpublishing...' %>
+            <br/>
+            <%= button_tag 'Disable', type:'button',
+              class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Disabling...' %>
+            <br/>
+            <%= button_tag 'Put on hold', type:'button',
+              class: 'btn btn-sm mtm ' + (review.held? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Marking held...' %>
+            <br/>
+          </div>
+
+          <div class="rightcolumn col-lg-8">
+            <h5>Review</h5>
+            <%= review.comments %>
+            <br/>
+            <br/>
+
+            <% review.reported_entities.each do |reported_entity| %>
+                <hr/>
+                <h5>Reported:</h5>
+                <%= reported_entity.reason %>
+                <br/>
+                Reported on: <%= reported_entity.created %>
+                <% if reported_entity.updated != reported_entity.created %>
+                    &nbsp; Updated: <%= reported_entity.updated %>
+                <% end %>
+                <br/>
+                <% if  reported_entity.reporter_id == -1 %>
+                    User: Automated pre-moderation filter
+                <% else %>
+                    User <%= reported_entity.reporter_id %>
+                <% end %>
+                <br/>
+                <% if reported_entity.user %>
+                    Email: <%= reported_entity.user.email %>
+                <% end %>
+            <% end %>
+
+            <hr/>
+
+            <br/>
+            Notes:
+            <br/>
+            <form>
+              <%= text_area_tag(:note, review.note, size: '97x4') %>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary pull-right mtm">Save notes</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+    <% end %>
+
+
+</div>

@@ -45,13 +45,23 @@ LocalizedProfiles::Application.routes.draw do
     get '/official-school-profile/dashboard/', as: :osp_dashboard
   end
 
-  scope '/admin/gsr', controller: 'admin', as: :admin do
+  namespace :admin, controller: 'admin', path: '/admin/gsr' do
     get '/omniture-test', to: :omniture_test, as: :omniture_test
     get '/info', to: :info
 
     scope '/school-profiles', as: :school_profiles do
+      get '/help', to: 'admin#help'
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
-      get '/help', to: :help
+    end
+
+    scope ':state', constraints: { state: States.any_state_name_regex } do
+      resources :schools do
+        get 'moderate'
+      end
+    end
+
+    resources :reviews do
+      get 'moderation_list', on: :collection
     end
   end
 

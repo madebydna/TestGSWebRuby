@@ -1,0 +1,87 @@
+<%= render 'nav/topnav' %>
+
+
+<%= javascript_tag do %>
+    $(function() {
+    $('input:checkbox').on('click', function() {
+    var $this = $(this);
+    var value = $this.prop('checked');
+    var name = $this.attr('name');
+
+    new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+
+    if (_.indexOf(new_location, '?') == -1) {
+    new_location += '?';
+    } else {
+    new_location += '&';
+    }
+    location.href = new_location + name + "=" + value;
+    });
+    });
+<% end %>
+
+<div class="row limit_width_1200">
+    <h3>Moderation list</h3>
+
+    <div>
+      Filter reviews (filters are restrictive)  <br/>
+      <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished reviews &nbsp;&nbsp;
+      <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional reviews &nbsp;&nbsp;
+      <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled reviews &nbsp;&nbsp;
+      <!--<%= check_box_tag :reported, true, params[:reported] == 'true' %> Reported reviews &nbsp;&nbsp;-->
+      <%= check_box_tag :held, true, params[:held] == 'true' %> Held reviews &nbsp;&nbsp;
+    </div>
+  <div>
+    <strong><%= pluralize @data.count, 'reviews' %></strong> displayed
+    <% if current_scopes.any? %>
+        <br/>
+        Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
+    <% end %>
+  </div>
+
+  <%= will_paginate @reported_reviews %>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Status</td>
+          <td>School</td>
+          <td>Reason</td>
+          <td>Created</td>
+          <td>Updated</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @data.each do |row| %>
+            <tr>
+              <td>
+                <% if row[:review] %>
+                    <%= row[:review].status %>
+                <% else %>
+                    Review not found
+                <% end %>
+              </td>
+              <td>
+                <% if row[:school] %>
+                    <%= link_to row[:school].name, admin_school_moderate_path(state: school_params(row[:school])[:state], school_id: row[:school].id) %>
+                <% else %>
+                    School not found
+                <% end %>
+              </td>
+              <td>
+                <%= row[:reported_entity].reason %>
+              </td>
+              <td>
+                <%= row[:reported_entity].created %>
+              </td>
+              <td>
+                <%= row[:reported_entity].updated %>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+
+  <%= will_paginate @reported_reviews %>
+</div>

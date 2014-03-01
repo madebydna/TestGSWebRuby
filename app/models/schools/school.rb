@@ -9,6 +9,8 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
+  scope :held, joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state")
+
   self.inheritance_column = nil
 
   def census_data_for_data_types(data_types = [])
@@ -239,6 +241,14 @@ class School < ActiveRecord::Base
 
   def esp_responses
     @esp_responses ||= EspResponse.on_db(shard).where(school_id: id).active
+  end
+
+  def held_school
+    HeldSchool.where(state: state, school_id: id).first
+  end
+
+  def held_school?
+    HeldSchool.exists?(state: state, school_id: id)
   end
 
 end

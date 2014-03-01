@@ -2,6 +2,11 @@ class ReportedEntity < ActiveRecord::Base
   db_magic :connection => :community
   self.table_name = 'reported_entity'
 
+  scope :active, where(active: 1)
+
+  attr_accessor :review
+
+  belongs_to :user, foreign_key: :reporter_id
 
   def self.from_review(review, reason)
     now = Time.now

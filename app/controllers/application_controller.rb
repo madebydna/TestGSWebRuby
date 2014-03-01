@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
 
   # Finds school given request param schoolId
   def find_school
-    school_id = params[:schoolId].to_i
+    school_id = (params[:schoolId] || params[:school_id]).to_i
     state = params[:state]
 
     if school_id > 0
@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_school
-    @school = find_school if params[:schoolId].to_i > 0
+    @school = find_school if params[:schoolId].to_i > 0 || params[:school_id].to_i > 0
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end
