@@ -4,13 +4,15 @@ class ApplicationController < ActionController::Base
   include CookieConcerns
   include AuthenticationConcerns
   include SessionConcerns
-
-  helper :all
-
-  rescue_from Exception, :with => :exception_handler
+  include UrlHelper
 
   before_filter :login_from_cookie, :init_omniture
 
+  protected
+
+  rescue_from Exception, :with => :exception_handler
+
+  helper :all
   helper_method :logged_in?, :current_user
 
   # methods for getting request URL / path info

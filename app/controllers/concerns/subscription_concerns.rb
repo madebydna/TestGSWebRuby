@@ -1,6 +1,8 @@
 module SubscriptionConcerns
   extend ActiveSupport::Concern
 
+  protected
+
   def create_subscription(params)
     begin
       list = params[:list]

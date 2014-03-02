@@ -3,6 +3,8 @@ module ReviewControllerConcerns
   include OmnitureConcerns
   include ApplicationHelper
 
+  protected
+
   def save_review(current_user, review_params)
     error = nil
 

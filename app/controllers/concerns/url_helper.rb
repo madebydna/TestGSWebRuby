@@ -1,6 +1,14 @@
 module UrlHelper
   require 'addressable/uri'
+  extend ActiveSupport::Concern
 
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
 
   def gs_legacy_url_encode(param)
     param.downcase.gsub('-', '_').gsub(' ', '-')

@@ -5,6 +5,7 @@ class SigninController < ApplicationController
   protect_from_forgery
 
   layout 'application'
+  public
 
   # store this join / login url only if another location isn't stored
   # If the user was looking at a profile page, we want to go back there instead

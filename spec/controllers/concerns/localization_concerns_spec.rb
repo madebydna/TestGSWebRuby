@@ -30,7 +30,7 @@ shared_examples_for 'localization' do
     end
 
     after(:each) do
-      controller.set_hub_cookies
+      controller.view_context.set_hub_cookies
     end
 
     context 'no school' do

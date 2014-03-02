@@ -1,6 +1,13 @@
 module SessionConcerns
   extend ActiveSupport::Concern
-  include UrlHelper
+
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
 
   STORED_LOCATION_EXPIRATION = 15.minutes
 
@@ -21,15 +28,15 @@ module SessionConcerns
   end
   def reviews_page_for_last_school
     params = last_school_visited_params
-    school_reviews_url(last_school_visited) if params.present?
+    view_context.school_reviews_url(last_school_visited) if params.present?
   end
   def overview_page_for_last_school
     params = last_school_visited_params
-    school_url(last_school_visited) if params.present?
+    view_context.school_url(last_school_visited) if params.present?
   end
   def review_form_for_last_school
     params = last_school_visited_params
-    school_review_form_path(last_school_visited) if params.present?
+    view_context.school_review_form_path(last_school_visited) if params.present?
   end
 
   def user_profile_or_home

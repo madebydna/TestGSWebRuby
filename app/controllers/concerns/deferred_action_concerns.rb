@@ -1,10 +1,11 @@
 module DeferredActionConcerns
   extend ActiveSupport::Concern
-
   include LocalizationConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
+
+  protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(
     create_subscription_deferred
@@ -71,6 +72,11 @@ module DeferredActionConcerns
     add_favorite_school params
 
     true
+  end
+
+  def self.included obj
+    return unless obj < ActionController::Base
+    obj.helper :all
   end
 
 end

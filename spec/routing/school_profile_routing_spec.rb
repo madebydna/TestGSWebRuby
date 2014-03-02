@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../app/helpers/url_helper'
+require_relative '../../app/controllers/concerns/url_helper'
 
 describe 'school profile routing' do
   include UrlHelper

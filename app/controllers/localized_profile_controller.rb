@@ -48,7 +48,7 @@ class LocalizedProfileController < ApplicationController
     @review_limit = 10
   end
 
-  #protected
+  protected
 
   def set_omniture_data(page_name)
     set_omniture_hier_for_new_profiles

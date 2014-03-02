@@ -1,6 +1,8 @@
 module LocalizationConcerns
   extend ActiveSupport::Concern
 
+  protected
+
   def set_hub_cookies
     return if @school.nil?
 

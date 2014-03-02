@@ -6,6 +6,11 @@ describe LocalizedProfileController do
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
 
+  it 'should have only four actions' do
+    expect(controller.action_methods.size).to eq(4)
+    expect(controller.action_methods - ['overview', 'reviews', 'quality', 'details']).to eq(Set.new)
+  end
+
   shared_examples_for 'a configurable profile page' do |action|
     before do
       controller.stub(:find_school).and_return(school)
@@ -13,28 +18,28 @@ describe LocalizedProfileController do
     end
 
     it 'should set a PageConfig object' do
-      get action, controller.school_params(school)
+      get action, controller.view_context.school_params(school)
       expect(assigns[:page_config]).to be_present
     end
 
     it 'should look up the correct school' do
-      get action, controller.school_params(school)
+      get action, controller.view_context.school_params(school)
       expect(assigns[:school]).to eq(school)
     end
 
     it 'should set data needed for header' do
-      get action, controller.school_params(school)
+      get action, controller.view_context.school_params(school)
       expect(assigns[:school_reviews_global]).to be_present
     end
 
     it 'should 404 with non-existent school' do
       controller.stub(:find_school).and_return(nil)
-      get action, controller.school_params(school)
+      get action, controller.view_context.school_params(school)
       expect(response.code).to eq('404')
     end
 
     it 'should convert a full state name to a state abbreviation' do
-      get action, controller.school_params(school)
+      get action, controller.view_context.school_params(school)
       expect(assigns[:state]).to eq('ca')
     end
 
@@ -61,17 +66,17 @@ describe LocalizedProfileController do
     it 'should set the list of reviews' do
       reviews = [ mock_model(SchoolRating) ]
       expect(school).to receive(:reviews_filter).and_return(reviews)
-      get 'reviews', controller.school_params(school)
+      get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews]).to eq(reviews)
     end
 
     it 'should look up the correct school' do
-      get 'reviews', controller.school_params(school)
+      get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school]).to eq(school)
     end
 
     it 'should set data needed for header' do
-      get 'reviews', controller.school_params(school)
+      get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews_global]).to be_present
     end
   end

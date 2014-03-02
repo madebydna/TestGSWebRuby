@@ -1,7 +1,6 @@
 require 'addressable/uri'
 class UserMailer < ActionMailer::Base
   helper ApplicationHelper
-  helper UrlHelper
 
   default from: 'GreatSchools <gs-batch@greatschools.org>'
   default subject: 'Please verify your email for GreatSchools'
