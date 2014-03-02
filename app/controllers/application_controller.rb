@@ -13,9 +13,17 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :exception_handler
 
   helper :all
-  helper_method :logged_in?, :current_user
+  helper_method :logged_in?, :current_user, :url_for
 
   # methods for getting request URL / path info
+
+  def url_for(*args, &block)
+    url = super(*args, &block)
+    url.sub! /\.gs\/(\?|$)/, '.gs\1'
+    url.sub! /\.topic\/(\?|$)/, '.topic\1'
+    url.sub! /\.page\/(\?|$)/, '.page\1'
+    url
+  end
 
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?

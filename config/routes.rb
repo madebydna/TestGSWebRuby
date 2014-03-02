@@ -1,9 +1,10 @@
 LocalizedProfiles::Application.routes.draw do
-  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
-
   require 'states'
   require 'regular_subdomain'
   require 'preschool_subdomain'
+
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
+  devise_for :admins, path: '/admin/gsr/school-profiles'
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -44,12 +45,14 @@ LocalizedProfiles::Application.routes.draw do
     get '/official-school-profile/dashboard/', as: :osp_dashboard
   end
 
-  get '/admin/gsr/school-profiles/help', :to => 'admin#help'
-  get '/admin/gsr/info', :to => 'admin#info'
-  get '/admin/gsr/omniture-test', to: 'admin#omniture_test', as: :omniture_test
-  mount RailsAdmin::Engine => '/admin/gsr/school-profiles', :as => 'rails_admin'
-  scope '/admin/gsr/school-profiles' do
-    devise_for :admins
+  scope '/admin/gsr', controller: 'admin', as: :admin do
+    get '/omniture-test', to: :omniture_test, as: :omniture_test
+    get '/info', to: :info
+
+    scope '/school-profiles', as: :school_profiles do
+      mount RailsAdmin::Engine => '', :as => 'rails_admin'
+      get '/help', to: :help
+    end
   end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
