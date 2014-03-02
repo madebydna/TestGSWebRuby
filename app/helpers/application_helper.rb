@@ -9,21 +9,19 @@ module ApplicationHelper
     category_placement.title || category_placement.category.name
   end
 
+  def draw_stars(size, on_star_count)
+    off_star_count = 5 - on_star_count
+    class_on  = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{on_star_count}"
+    class_off = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{off_star_count}"
+    content_tag(:span, '', :class => class_on) + content_tag(:span, '', :class => class_off)
+  end
 
   def draw_stars_16(on_star_count)
-    off_star_count = 5 - on_star_count
-    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ''
-    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ''
-    content_tag(:span, '', :class => class_on)  +
-        content_tag(:span, '', :class => class_off)
+    draw_stars 16, on_star_count
   end
 
   def draw_stars_24(on_star_count)
-    off_star_count = 5 - on_star_count
-    class_on = 'iconx24-stars i-24-orange-star  i-24-star-' + on_star_count.to_s + ''
-    class_off = 'iconx24-stars i-24-grey-star  i-24-star-' + off_star_count.to_s + ''
-    content_tag(:span, '', :class => class_on)  +
-        content_tag(:span, '', :class => class_off)
+    draw_stars 24, on_star_count
   end
 
   def write_review_count text_s

@@ -8,6 +8,7 @@ FactoryGirl.define do
       n
     end
 
-    page name: 'Test page'
+    category
+    page
   end
 end
