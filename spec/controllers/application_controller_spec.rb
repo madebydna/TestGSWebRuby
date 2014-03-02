@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe ApplicationController do
 
+
   it 'should have methods for manipulating cookies' do
     expect(controller).to respond_to(:write_cookie_value)
     expect(controller).to respond_to(:read_cookie_value)
@@ -8,6 +9,10 @@ describe ApplicationController do
   end
 
   describe '#write_cookie_value' do
+    after do
+      subject.class::COOKIE_CONFIG.delete :test_cookie
+    end
+
     it 'should set a simple value' do
       subject.send :write_cookie_value, :test_cookie, 'value'
       expect(cookies['test_cookie']).to eq('value')
@@ -102,6 +107,10 @@ describe ApplicationController do
     before do
       @cookie_jar = HashWithIndifferentAccess.new
       controller.stub(:cookies).and_return @cookie_jar
+    end
+
+    after do
+      subject.class::COOKIE_CONFIG.delete :test_cookie
     end
 
     it 'should read a simple value' do
