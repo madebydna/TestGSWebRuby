@@ -26,6 +26,8 @@
     <% end %>
   </div>
 </div>
-<% if @announcement[:visible] == true %>
+
+<% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
   <%= render 'event_announcements', announcement: @announcement  %>
 <% end %>
+
