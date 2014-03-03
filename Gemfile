@@ -76,7 +76,7 @@ gem 'simple_form'
 gem 'has_scope'
 
 # Pagination library for Rails 3, Sinatra, Merb, DataMapper, and more http://github.com/mislav/will_paginate/wikis
-gem 'will_paginate', '~> 3.0'
+# gem 'will_paginate', '~> 3.0'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
