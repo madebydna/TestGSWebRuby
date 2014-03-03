@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
                 <li>
-                    <%- if hub_params.present? %>
+                    <%- if @school.collection && hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
                         <%="#{hub_params[:city]}, #{States.abbreviation(hub_params[:state]).upcase}" %>  <b class="caret"></b>
                     </a>
