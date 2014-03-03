@@ -12,11 +12,11 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav ">
                 <li>
                     <%- if hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_params[:city]}, #{cookies[:hubState].upcase}" %>  <b class="caret"></b>
+                        <%="#{hub_params[:city]}, #{States.abbreviation(hub_params[:state]).upcase}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
