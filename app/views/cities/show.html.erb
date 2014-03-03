@@ -48,13 +48,13 @@
 
         <div class="school-breakdown">
           <h4 class='SourceSansPro-Semibold-h4'>What kind of school are you looking for?</h4>
-          <% @breakdown_results.each do |result| %>
-            <button class="but-4 clearfix" type="button" onclick="location.href='<%= result[:hrefXml] %>'">
-              <div class="pull-left"><%= result[:contents] %></div>
+          <% @breakdown_results.each do |text, data| %>
+            <button class="but-4 clearfix" type="button" onclick="location.href='<%= data[:path] %>'">
+              <div class="pull-left"><%= text %></div>
               <div class="pull-right pr">
                 <%= image_tag('icons/oval.png', alt: 'Grey oval', class: 'vam') %>
                 <div class='pa tac' style="top:1px; right: 0px; color: #FFFFFF; width: 36px;">
-                    <span><%= result[:count] %></span>
+                    <span><%= data[:count] %></span>
                 </div>
               </div>
             </button>

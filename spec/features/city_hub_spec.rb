@@ -22,7 +22,17 @@ describe 'City Hub Page', js: true do
 
   describe 'search' do
     it 'searches and redirects to java results' do
-      pending("haven't gotten there yet")
+      pending("haven't implemented ruby side of results yet")
+    end
+  end
+
+  describe 'school breakdown section' do
+    it 'shows the counts for each school type' do
+      visit city_page_url
+
+      expect(all('.school-breakdown button').length).to eq(7)
+      expect(find('.school-breakdown button:nth-of-type(1) div:nth-of-type(2)').text).to eq('196')
+      expect(find('.school-breakdown button:nth-of-type(7) div:nth-of-type(2)').text).to eq('118')
     end
   end
 

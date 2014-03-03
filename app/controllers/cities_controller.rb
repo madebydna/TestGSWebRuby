@@ -28,6 +28,17 @@ class CitiesController < ApplicationController
         { contents: 'Charter Schools', count: 40, hrefXML: 'http://google.com' }
       ]
 
+      solr = Solr.new(@state[:short], collection_mapping.collection_id)
+      @breakdown_results = {
+        'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
+        'Elementary Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
+        'Middle Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
+        'High Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:high]),
+        'Public Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:public]),
+        'Private Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:private]),
+        'Charter Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:charter]),
+      }
+
       @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
       @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(@collection_configs)

@@ -1,4 +1,14 @@
 class School < ActiveRecord::Base
+  LEVEL_CODES = {
+    primary: 'p',
+    elementary: 'e',
+    middle: 'm',
+    high: 'h',
+    public: 'public OR charter',
+    private: 'private',
+    charter: 'charter'
+  }
+
   METADATA_COLLECTION_ID_KEY = "collection_id"
   include ActionView::Helpers
   self.table_name='school'
@@ -239,5 +249,4 @@ class School < ActiveRecord::Base
   def esp_responses
     @esp_responses ||= EspResponse.on_db(shard).where(school_id: id).active
   end
-
 end
