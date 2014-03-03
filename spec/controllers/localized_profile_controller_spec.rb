@@ -17,6 +17,11 @@ describe LocalizedProfileController do
       PageConfig.stub(:new).and_return(page_config)
     end
 
+    it 'should set the correct cannonical url' do
+      get action, controller.view_context.school_params(school)
+      expect(assigns[:canonical_url]).to eq("http://test.host/california/alameda/#{school.id}-Alameda-High-School/")
+    end
+
     it 'should set a PageConfig object' do
       get action, controller.view_context.school_params(school)
       expect(assigns[:page_config]).to be_present

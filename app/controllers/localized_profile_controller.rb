@@ -27,20 +27,20 @@ class LocalizedProfileController < ApplicationController
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
     set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_quality_url(@school)
+    @canonical_url = school_url(@school)
   end
 
   def details
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Details'
     set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_details_url(@school)
+    @canonical_url = school_url(@school)
   end
 
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
-    @canonical_url = school_reviews_url(@school)
+    @canonical_url = school_url(@school)
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
