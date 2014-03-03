@@ -19,7 +19,7 @@
     });
 <% end %>
 
-<div class="row limit_width_1200">
+<div class="row limit_width_1200 pam">
 
   <h3><%= @school.name %></h3>
 
@@ -33,7 +33,7 @@
     <% end %>
     <br/>
     <form>
-      <%= text_area_tag(:note, @held_school? @held_school.notes : '', size: '97x4') %>
+      <%= text_area_tag(:note, @held_school? @held_school.notes : '', rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
       <div class="form-actions">
         <% if @held_school %>
             <button type="submit" class="btn btn-sm btn-primary mtm">Save notes</button>
@@ -65,7 +65,7 @@
         <hr/>
         <div class="row">
           <div class="leftcolumn col-lg-4 prm">
-            <h5>Details</h5>
+            <h5>Review details</h5>
 
             <%= pluralize(review.overall, 'star') %>
             <br/>
@@ -83,13 +83,10 @@
             <br/>
             <%= button_tag 'Publish', type:'button',
               class: 'btn btn-sm mtm ' + ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'), disable_with: 'Publishing...' %>
-            <br/>
             <%= button_tag 'Unpublish', type:'button',
               class: 'btn btn-sm mtm ' + (review.unpublished? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Unpublishing...' %>
-            <br/>
             <%= button_tag 'Disable', type:'button',
               class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Disabling...' %>
-            <br/>
             <%= button_tag 'Put on hold', type:'button',
               class: 'btn btn-sm mtm ' + (review.held? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Marking held...' %>
             <br/>
@@ -128,7 +125,7 @@
             Notes:
             <br/>
             <form>
-              <%= text_area_tag(:note, review.note, size: '97x4') %>
+              <%= text_area_tag(:note, review.note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary pull-right mtm">Save notes</button>
               </div>
