@@ -75,4 +75,13 @@ describe 'City Hub Page', js: true do
       expect(page).to have_css('iframe')
     end
   end
+
+  describe 'education community carousel' do
+    it 'shows the carousel' do
+      visit city_page_url
+      cycle_function = page.evaluate_script("$('.cycle-slideshow').cycle")
+      expect(cycle_function).to_not be_nil
+      expect(all('.cycle-slide').length).to eq(33)
+    end
+  end
 end
