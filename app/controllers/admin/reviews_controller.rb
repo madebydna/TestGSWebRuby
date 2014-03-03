@@ -6,7 +6,7 @@ class Admin::ReviewsController < ApplicationController
   #has_scope :reported, :type => :boolean
   has_scope :held, :type => :boolean
 
-  def moderation_list
+  def moderation
 =begin
     @reported_entities = ReportedEntity.active.
       where(reported_entity_type: %w[schoolReview topicalSchoolReview]).

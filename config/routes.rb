@@ -61,7 +61,7 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     resources :reviews do
-      get 'moderation_list', on: :collection
+      get 'moderation', on: :collection
     end
   end
 
