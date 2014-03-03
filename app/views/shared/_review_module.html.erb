@@ -10,10 +10,10 @@
             <% overall_review_rating = review[:p_overall] %>
         <% end %>
         <% if include_rich_snippets %>
-            <span itemprop="itemreviewed" style="display:none;"><%= @school.name %></span>
-            <span itemprop="reviewer" style="display:none;"><%= review[:member_id] %></span>
-            <time itemprop="dtreviewed" style="display:none;" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
-            <span itemprop="rating" style="display:none;"><%= overall_review_rating.to_i %></span>
+            <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
+            <span itemprop="reviewer" class="dn"><%= review[:member_id] %></span>
+            <time itemprop="dtreviewed" class="dn" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
+            <span itemprop="rating" class="dn"><%= overall_review_rating.to_i %></span>
         <% end %>
 
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 pbm">
