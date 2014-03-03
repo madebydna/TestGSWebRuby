@@ -25,5 +25,5 @@ coverage/
 
 # custom database-local.yml for developers
 config/database-local.yml
-
+.env
 
