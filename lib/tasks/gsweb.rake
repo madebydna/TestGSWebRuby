@@ -5,7 +5,7 @@ namespace :gsweb do
       sh 'bundle install'
       Rake::Task['db:create'].invoke
       Rake::Task['db:migrate'].invoke
-      sh 'touch config/database-local.yml'
+      sh 'touch config/database_local.yml'
     end
   end
 

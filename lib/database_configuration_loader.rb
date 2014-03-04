@@ -7,7 +7,7 @@ class DatabaseConfigurationLoader
   DEFAULT_FILE = Rails.root.join('config', 'database.yml')
   OVERRIDES = [
       File.join('', 'usr', 'local', 'etc', 'GSWebRuby-database.yml'),
-      Rails.root.join('config', 'database-local.yml'),
+      Rails.root.join('config', 'database_local.yml'),
   ]
 
   def self.joined_files
