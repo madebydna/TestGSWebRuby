@@ -20,6 +20,8 @@ end
 ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
 file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
 ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
+file = File.join(Dir.pwd, 'config', 'env_global_local.yml')
+ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
 
 module LocalizedProfiles
   class Application < Rails::Application
