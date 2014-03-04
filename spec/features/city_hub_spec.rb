@@ -60,7 +60,7 @@ describe 'City Hub Page', js: true do
   describe 'recent reviews section' do
     it 'show two most recent reviews for a city hub' do
       visit city_page_url
-      expect(page).to have_css('#js-hubsRecentReviews button')
+      expect(page).to have_css('button.js-button-link', text: 'Review Your School')
       expect(all('.recent-review').length).to eq(2)
     end
   end
@@ -77,7 +77,7 @@ describe 'City Hub Page', js: true do
   describe 'featured articles section' do
     it 'display featured articles' do
       visit city_page_url
-      expect(all('.featured-articles>div').length).to eq(3)
+      expect(all('.featured-article').length).to eq(3)
     end
     it 'shows nearby homes with zillow' do
       visit city_page_url
@@ -92,7 +92,6 @@ describe 'City Hub Page', js: true do
       cycle_function = page.evaluate_script("$('.cycle-slideshow').cycle")
       expect(cycle_function).to_not be_nil
       expect(all('.cycle-slide').length).to eq(33)
->>>>>>> gswebruby
     end
   end
 end

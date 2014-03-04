@@ -193,7 +193,9 @@ class SchoolRating < ActiveRecord::Base
     response = ActiveRecord::Base.connection.raw_connection.query(sql)
     result = []
     response.each do |row|
-      result << SchoolRating.find(row[0])
+      review = SchoolRating.find(row[0])
+      review.quality = review.quality.to_i
+      result << review
     end
     result
   end
