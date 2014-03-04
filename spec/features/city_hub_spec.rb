@@ -30,9 +30,20 @@ describe 'City Hub Page', js: true do
     it 'shows the counts for each school type' do
       visit city_page_url
 
-      expect(all('.school-breakdown button').length).to eq(7)
+      expect(page).to have_css('.school-breakdown button', count: 7)
       expect(find('.school-breakdown button:nth-of-type(1) div:nth-of-type(2)').text).to eq('196')
       expect(find('.school-breakdown button:nth-of-type(7) div:nth-of-type(2)').text).to eq('118')
+    end
+
+    context 'no valid data' do
+      it 'displays an error message' do
+        allow_any_instance_of(Solr).to receive(:city_hub_breakdown_results).and_return(nil)
+        debugger
+        # visit city_page_url
+        debugger
+        expect(page).to_not have_css '.school-breakdown button'
+        expect(page).to have_content 'No data found for school breakdown'
+      end
     end
   end
 
@@ -52,7 +63,7 @@ describe 'City Hub Page', js: true do
     it 'shows announcements' do
       visit city_page_url
       expect(page).to have_css('.success-block')
-      expect(all('span', text: 'ANNOUNCEMENT').length).to eq(1)
+      expect(page).to have_css('span', text: 'ANNOUNCEMENT', count: 1)
       expect(page).to have_link 'Learn More'
     end
   end

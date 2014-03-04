@@ -102,7 +102,6 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 
   # testing frameworks
-  gem 'rspec'
   gem 'rspec-rails'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false

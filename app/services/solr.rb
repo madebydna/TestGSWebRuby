@@ -8,9 +8,15 @@ class Solr
   def city_hub_breakdown_results(options)
     cache_key = "city_hub_breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
     Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      result = @solr.get "/main/select/", params: parse_params(options)
+      begin
+        response = @solr.get "/main/select/", params: parse_params(options)
+        breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }
+      rescue => e
+        breakdown_results = nil
+        Rails.logger.error('Reaching the solr server failed:' + e.to_s)
+      end
 
-      { count: result['response']['numFound'], path: parse_url(options) }
+      breakdown_results
     end
   end
 

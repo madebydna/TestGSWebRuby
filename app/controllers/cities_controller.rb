@@ -21,6 +21,7 @@ class CitiesController < ApplicationController
 
       gon.pagename = "city home"
 
+      debugger
       solr = Solr.new(@state[:short], collection_mapping.collection_id)
       @breakdown_results = {
         'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),

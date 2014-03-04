@@ -39,9 +39,9 @@
         </div>
 
         <div class="school-breakdown">
-          <% unless @breakdown_results.nil? %>
-            <h3 class='pbs mbn' style='color: #fff;'>What kind of school are you looking for?</h3>
-            <% @breakdown_results.each do |text, data| %>
+          <h3 class='pbs mbn' style='color: #fff;'>What kind of school are you looking for?</h3>
+          <% @breakdown_results.each do |text, data| %>
+            <% unless data.nil? %>
               <button class="but-4 js-button-link" data-link-value="<%= data[:path] %>" type="button">
                 <div class="pull-left"><%= text %></div>
                 <div class="pull-right pr">
@@ -51,9 +51,9 @@
                   </div>
                 </div>
               </button>
+            <% else %>
+              <h3 class='pbs mbn' style='color: #fff;'>No data found for school breakdown</h3>
             <% end %>
-          <% else %>
-            <h3 class='pbs mbn' style='color: #fff;'>No data found for school breakdown</h3>
           <% end %>
         </div>
       </form>
