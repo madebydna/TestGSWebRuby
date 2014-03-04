@@ -1,20 +1,24 @@
 class CitiesController < ApplicationController
   def show
-    collection_mapping = CollectionMapping.where(city: params[:city], state: States::STATE_HASH[params[:state]], active: 1).first
+    state_short = States::STATE_HASH[params[:state]]
+    collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
+    collection_mapping = Rails.cache.fetch(collection_mapping_key) do
+      CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
+    end
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_configs = CollectionConfig.where(collection_id: collection_mapping.collection_id)
+      configs_cache_key = "collection_configs-id:#{collection_mapping.collection_id}"
+      @collection_configs = Rails.cache.fetch(configs_cache_key) do
+        CollectionConfig.where(collection_id: collection_mapping.collection_id).to_a
+      end
       @state = {
         long: params[:state],
-        short: States::STATE_HASH[params[:state]]
+        short: state_short
       }
       @city = collection_mapping.city
+      @zillow_data = ZillowRegionId.data_for(@city, @state)
 
-      @zillow_data = {
-        'zillow_formatted_location' => @city.downcase.gsub(/ /, '-') + '-'+ @state[:short],
-        'region_id' => ZillowRegionId.by_city_state(@city, @state[:long])
-      }
       gon.pagename = "city home"
 
       solr = Solr.new(@state[:short], collection_mapping.collection_id)
@@ -33,9 +37,9 @@ class CitiesController < ApplicationController
       @announcement = CollectionConfig.city_hub_announcement(@collection_configs)
       @articles = CollectionConfig.featured_articles(@collection_configs)
       @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(@collection_configs, 2)
+      @important_events = CollectionConfig.city_hub_important_events(@collection_configs)
 
-      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id, 2)
+      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
       @review_count = SchoolRating.recent_reviews_in_hub_count(@state[:short], collection_mapping.collection_id)
     end
   end

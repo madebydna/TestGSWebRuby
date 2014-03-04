@@ -182,39 +182,43 @@ class SchoolRating < ActiveRecord::Base
     end
   end
 
-  def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews)
-    sql = "select sr.id from surveys.school_rating as sr " +
-          "join _" + state_abbr + ".school s on s.id=sr.school_id " +
-          "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
-          "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
-          " and m.meta_value=" + collection_id.to_s + " and status='p'" +
-          " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'" +
-          " order by posted desc limit " + max_reviews.to_s
-    response = ActiveRecord::Base.connection.raw_connection.query(sql)
-    result = []
-    response.each do |row|
-      review = SchoolRating.find(row[0])
-      review.quality = review.quality.to_i
-      result << review
+  def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
+    cache_key = "recent_reviews-state:#{state_abbr}-collection_id:#{collection_id}-max_reviews:#{max_reviews}"
+    Rails.cache.fetch(cache_key) do
+      sql = "select sr.id from surveys.school_rating as sr " +
+            "join _" + state_abbr + ".school s on s.id=sr.school_id " +
+            "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
+            "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
+            " and m.meta_value=" + collection_id.to_s + " and status='p'" +
+            " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'" +
+            " order by posted desc limit " + max_reviews.to_s
+      response = ActiveRecord::Base.connection.raw_connection.query(sql)
+      result = []
+      response.each do |row|
+        review = SchoolRating.find(row[0])
+        review.quality = review.quality.to_i
+        result << review
+      end
+      result
     end
-    result
   end
 
   def self.recent_reviews_in_hub_count(state_abbr, collection_id)
-    sql = "select sr.id from surveys.school_rating as sr " +
-          "join _" + state_abbr + ".school s on s.id=sr.school_id " +
-          "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
-          "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
-          " and m.meta_value=" + collection_id.to_s + " and status='p'" +
-          " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'"
-    response = ActiveRecord::Base.connection.raw_connection.query(sql)
-    response.to_a.length
+    cache_key = "recent_reviews_count-state:#{state_abbr}-collection_id#{collection_id}"
+    Rails.cache.fetch(cache_key) do
+      sql = "select sr.id from surveys.school_rating as sr " +
+            "join _" + state_abbr + ".school s on s.id=sr.school_id " +
+            "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
+            "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
+            " and m.meta_value=" + collection_id.to_s + " and status='p'" +
+            " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'"
+      response = ActiveRecord::Base.connection.raw_connection.query(sql)
+      response.to_a.length
+    end
   end
 
   private
-
-  def comments_word_count
-    errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.split.size < 15
-  end
-
+    def comments_word_count
+      errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.split.size < 15
+    end
 end

@@ -39,17 +39,21 @@
         </div>
 
         <div class="school-breakdown">
-          <h3 class='pbs mbn' style='color: #fff;'>What kind of school are you looking for?</h3>
-          <% @breakdown_results.each do |text, data| %>
-            <button class="but-4 js-button-link" data-link-value="<%= data[:path] %>" type="button">
-              <div class="pull-left"><%= text %></div>
-              <div class="pull-right pr">
-                <%= image_tag('icons/oval.png', alt: 'Grey oval', class: 'vam') %>
-                <div class='pa tac' style="top:1px; right: 0px; color: #FFFFFF; width: 36px;">
-                    <span><%= data[:count] %></span>
+          <% unless @breakdown_results.nil? %>
+            <h3 class='pbs mbn' style='color: #fff;'>What kind of school are you looking for?</h3>
+            <% @breakdown_results.each do |text, data| %>
+              <button class="but-4 js-button-link" data-link-value="<%= data[:path] %>" type="button">
+                <div class="pull-left"><%= text %></div>
+                <div class="pull-right pr">
+                  <%= image_tag('icons/oval.png', alt: 'Grey oval', class: 'vam') %>
+                  <div class='pa tac' style="top:1px; right: 0px; color: #FFFFFF; width: 36px;">
+                      <span><%= data[:count] %></span>
+                  </div>
                 </div>
-              </div>
-            </button>
+              </button>
+            <% end %>
+          <% else %>
+            <h3 class='pbs mbn' style='color: #fff;'>No data found for school breakdown</h3>
           <% end %>
         </div>
       </form>
