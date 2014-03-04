@@ -5,7 +5,7 @@ class Solr
   end
 
   def city_hub_breakdown_results(options)
-    solr = RSolr.connect(url: ENV['SOLR_URL'])
+    solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
     result = solr.get "/main/select/", params: parse_params(options)
 
     { count: result['response']['numFound'], path: parse_url(options) }

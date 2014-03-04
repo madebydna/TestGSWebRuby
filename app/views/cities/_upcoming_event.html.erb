@@ -1,33 +1,28 @@
-<div class="row-970 ptn pbn">
-  <hr class='keyline1'>
-  <div style='padding-top: 20px; overflow: hidden;'>
-    <div class="pull-left" style='width: 30%'>
+<div class="row">
+  <hr>
+  <div class='ptl' style='overflow: hidden;'>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
       <h3 class='SourceSansPro-Semibold-h3 bottom mtn'>Upcoming Events</h3>
       <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
     </div>
     <% @important_events[:max_important_event_to_display].times do |i| %>
       <% event = @important_events[:events][i - 1] %>
-      <div class="upcoming-event">
-        <div class="pull-left" style='width: 60px;'>
-          <span class="iconx48 i-48-calender-month-<%= event[:date].month %>">
-            <div class="tac mtl">
-              <h3 class="SourceSansPro-Semibold-h3"><%= event[:date].day %></h3>
-            </div>
-          </span>
-        </div>
-        <div class="pull-left" style='width: 260px;'>
-          <span class="small-bold">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
+        <span class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
+          <div class="tac">
+            <h3 class='mtl'><%= event[:date].day %></h3>
+          </div>
+        </span>
+        <div class="pull-left plm">
             <%= abbreviate_at_whitespace(event[:description], 140) %>
-          </span>
           <br/>
           <%= link_to('Find out more', event[:url], class: 'small', target: '_blank') %>
         </div>
       </div>
     <% end %>
   </div>
+
+  <% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
+    <%= render 'event_announcements', announcement: @announcement  %>
+  <% end %>
 </div>
-
-<% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
-  <%= render 'event_announcements', announcement: @announcement  %>
-<% end %>
-
