@@ -44,8 +44,9 @@
                             <%= link_to 'Events', events_url(hub_params) %>
                         </li>
                         <li>
-                            <a href="/"
-                               onclick="javascript:GS.hubs.clearLocalUserCookies();">Not in <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?</a>
+                            <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
+                                <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
+                            <% end %>
                         </li>
 
                     </ul>
@@ -91,10 +92,10 @@
                                 </li>
                             <% end %>
                             <li>
-                                <a rel="nofollow" href="/mySchoolList.page">My School List (0)</a>
+                                <%= link_to 'My School List', my_school_list_url, rel:'nofollow' %>
                             </li>
                             <li>
-                                <a href="/account/">Account Settings</a>
+                                <%= link_to 'Account Settings', my_account_url %>
                             </li>
                             <li>
                                 <%= link_to('Sign Out', logout_url, :method => :delete) %>

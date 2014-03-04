@@ -10,6 +10,7 @@ class SchoolCollection
     end
   end
 
+  # No longer being used
   def self.from_hub_city_mapping(hub_city_mapping)
     collection = Collection.from_hub_city_mapping hub_city_mapping
     shard = hub_city_mapping.state.downcase.to_sym
@@ -40,6 +41,9 @@ class SchoolCollection
   # get all collections, and one to get the school IDs associated with the collection)
   #
   # Results should be cached so these queries execute rarely
+  #
+  #
+  # No longer being used. Turned out to be unnecessary / too much non-needed logic
   def self.all(state = nil)
     hub_city_mappings = HubCityMapping.all
 
@@ -54,10 +58,17 @@ class SchoolCollection
     results
   end
 
+  # Returns an array of Collection instances for a given school
   def self.for_school(school)
-    all(school.state).select do |school_collection|
-      school_collection.school_id == school.id && school_collection.school_state.match(/^#{school.state}$/i)
+    collection_id = school.school_metadata['collection_id']
+    if collection_id
+      hub_city_mapping = HubCityMapping.for_collection_id(collection_id).first
+      if hub_city_mapping
+        return [ Collection.from_hub_city_mapping(hub_city_mapping) ]
+      end
     end
+
+    return []
   end
 
   def self.for_collection(collection)

@@ -18,6 +18,7 @@ module UrlHelper
     terms_of_use: '/terms/',
     school_review_guidelines: '/about/guidelines.page',
     privacy: '/privacy/',
+    advertiser_notice: '/privacy/#advertiserNotice',
     forgot_password: '/community/forgotPassword.page',
     worksheets_and_activities: '/worksheets-activities.topic?content=4313',
     parenting_dilemmas: '/parenting-dilemmas.topic?content=4321',
@@ -25,6 +26,8 @@ module UrlHelper
     health_and_behavior: '/parenting.topic?content=1539',
     find_schools: '/find-schools/',
     the_scoop: '/school/parentReview.page',
+    my_account: '/account/',
+    my_school_list: '/mySchoolList.page',
 
     state: '/{state}/',
     city: '/{state}/{city}/',

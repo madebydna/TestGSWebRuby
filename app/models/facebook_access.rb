@@ -1,26 +1,18 @@
 class FacebookAccess
 
-
   SCOPES = 'email'
-
-  # TODO: move these to yaml file
-  APP_ID = '116754971824004'
-  APP_SECRET = 'b1fb4ea0917201c92726d7a052751e57'
-
-  FB_APP_ID_TEST = '178930405559082'
-  FB_APP_SECRET_TEST = 'db1795c48c3b404b7c480e48df3985c2'
 
   def self.facebook_connect_url(callback_url)
     access_scopes = SCOPES
-    app_id = FB_APP_ID_TEST
+    app_id = ENV_GLOBAL['facebook_app_id']
     MiniFB.oauth_url(app_id, callback_url, :scope => access_scopes)
   end
 
   def self.facebook_code_to_access_token(code, callback_url)
     return nil unless code.present?
 
-    app_secret = FB_APP_SECRET_TEST
-    app_id = FB_APP_ID_TEST
+    app_secret = ENV_GLOBAL['facebook_app_secret']
+    app_id = ENV_GLOBAL['facebook_app_id']
     access_token_hash = nil
 
     # get access token

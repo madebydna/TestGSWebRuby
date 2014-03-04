@@ -70,6 +70,12 @@ gem 'mocha_rails'
 
 gem 'meta-tags', :require => 'meta_tags'
 
+# Searching using solr
+gem 'rsolr'
+
+# Translating
+gem 'dotenv-rails'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
@@ -114,6 +120,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
+  gem 'timecop'
 
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'

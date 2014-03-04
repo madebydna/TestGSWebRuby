@@ -1,45 +1,5 @@
 <%= render 'nav/topnav' %>
 
-
-<% content_for :head do %>
-    <% app_id = '178930405559082' # TODO: will not work in production: set correct id from var %>
-
-    <div id="fb-root"><!--Do not collapse--></div>
-    <script type="text/javascript">
-        // Additional JS functions here
-        window.fbAsyncInit = function() {
-            FB.init({
-                        appId      : <%= app_id %>,
-                        channelUrl : 'http://omega.greatschools.org/res/channel.html', // Channel File
-                        status     : true, // check login status
-                        cookie     : true, // enable cookies to allow the server to access the session
-                        xfbml      : true  // parse XFBML
-                    });
-
-            // Additional init code here
-            GS.facebook.init();
-
-        };
-
-        // Load the SDK Asynchronously
-        (function(d){
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document));
-    </script>
-
-    <script type="text/javascript">
-        $(function() {
-            $('.js-facebook-login').on('click', function() {
-                GS.facebook.login();
-            });
-        });
-    </script>
-<% end %>
-
 <% @active_tab ||= 'login' %>
 
 <div class="row limit_width_1200">
@@ -68,12 +28,9 @@
 
                                                 <div class="form-group">
 
-                                                    <%= link_to facebook_connect_url do %>
-                                                        <!-- threw this in here, feel free to remove. uses social-buttons.css from http://noizwaves.github.io/ -->
-                                                        <button type="button" class="btn btn-facebook">
-                                                            Connect with Facebook
-                                                        </button>
-                                                    <% end %>
+                                                    <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link">
+                                                        Connect with Facebook
+                                                    </button>
 
                                                 </div>
                                                 <br/>

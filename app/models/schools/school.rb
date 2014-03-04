@@ -1,4 +1,15 @@
 class School < ActiveRecord::Base
+  LEVEL_CODES = {
+    primary: 'p',
+    elementary: 'e',
+    middle: 'm',
+    high: 'h',
+    public: 'public OR charter',
+    private: 'private',
+    charter: 'charter'
+  }
+
+  METADATA_COLLECTION_ID_KEY = "collection_id"
   include ActionView::Helpers
   self.table_name='school'
   include StateSharding
@@ -17,12 +28,8 @@ class School < ActiveRecord::Base
     CensusDataSchoolValue.on_db(state.downcase.to_sym).where(school_id: id)
   end
 
-  def school_collections
-    @collections ||= SchoolCollection.for_school(self)
-  end
-
   def collections
-    school_collections.map(&:collection).uniq
+    @collections ||= SchoolCollection.for_school(self)
   end
 
   # Returns first collection or nil if none
@@ -195,20 +202,51 @@ class School < ActiveRecord::Base
     return false
   end
 
+  def rating_data
+    @data ||= {}
+    return @data['rating_data'] if @data.has_key? 'rating_data'
+    rating_data ||= data_for_category_and_source(nil, 'rating_data')
+    @data['rating_data'] = rating_data
+  end
 
   def gs_rating
-    rating_data = CategoryDataReader.rating_data self, nil
     rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
   end
 
   def local_rating
-    rating_data = CategoryDataReader.rating_data self, nil
     rating_data.fetch('city_rating',{}).fetch('overall_rating',nil)
   end
 
   def state_rating
-    rating_data = CategoryDataReader.rating_data self, nil
     rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
   end
 
+  def data_for_category(category)
+    data_for_category_and_source category, category.source
+  end
+
+  def data_for_category_and_source(category, source)
+    @data ||= {}
+    data_key = category.nil? ? source : "#{category.id}#{source}"
+    return @data[data_key] if @data.has_key? data_key
+
+    if source.present? && CategoryDataReader.respond_to?(source)
+      result = CategoryDataReader.send(source, self, category)
+      @data[data_key] = result
+    end
+  end
+
+  def all_census_data
+    @all_census_data ||= nil
+    return @all_census_data if @all_census_data
+
+    all_configured_data_types = Category.all_configured_keys 'census_data'
+
+    # Get data for all data types
+    @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types
+  end
+
+  def esp_responses
+    @esp_responses ||= EspResponse.on_db(shard).where(school_id: id).active
+  end
 end

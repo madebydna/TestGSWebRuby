@@ -5,14 +5,14 @@ class CategoryDataReader
   include SchoolCategoryDataCacher
 
   def self.esp_response(school, category)
-    esp_responses = EspResponse.on_db(school.shard).where(school_id: school.id).active
+    esp_responses = school.esp_responses
 
     # Find out which keys the Category is interested in
     keys_to_use = category.keys(school.collections)
     keys_and_labels = category.key_label_map
 
     # We grabbed all the school's data, so we need to filter out rows that dont have the keys that we need
-    data = esp_responses.select! { |response| keys_to_use.include? response.response_key}
+    data = esp_responses.select { |response| keys_to_use.include? response.response_key}
 
     unless data.nil?
       # since esp_response has multiple rows with the same key, roll up all values for a key into an array
@@ -30,16 +30,16 @@ class CategoryDataReader
       # first, the values won't transform correctly
 
       # First, get hash of response value string to ResponseValue
-      lookup_table = ResponseValue.lookup_table(school.collections)
+      lookup_table = ResponseValue.lookup_table
 
       # Transform the values
       responses_per_key.each do |key, values|
         values.map! do |value|
-          lookup_value = lookup_table[value]
-          if lookup_value.nil? || (lookup_value[:response_key].present? && lookup_value[:response_key] != key)
+          lookup_value = lookup_table[[key, value]]
+          if lookup_value.nil?
             value
           else
-            lookup_value[:response_label]
+            lookup_value
           end
         end
       end
@@ -159,29 +159,10 @@ class CategoryDataReader
     end
   end
 
-  # This method will return all of the various data keys that are configured to display for a certain *source*
-  # This works by aggregating all of the CategoryData keys for Categories which use this source
-  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
-  # this method would return all the keys configured for both Ethnicity and Details
-  def self.all_configured_keys(source = caller[0][/`.*'/][1..-2])
-
-    Rails.cache.fetch("all_configured_keys/#{source}", expires_in: 1.hour) do
-      categories_using_source = Category.where(source: source).all
-
-      all_keys = []
-      categories_using_source.each{ |category| all_keys += category.keys }
-
-      # Add in keys where source is specified in CategoryData
-      all_keys += CategoryData.where(source: source).pluck(:response_key)
-    end
-  end
 
   def self.census_data(school, category)
-    all_configured_data_types = all_configured_keys
-
     # Get data for all data types
-    results = CensusDataForSchoolQuery.new(school).latest_data_for_school all_configured_data_types
-
+    results = school.all_census_data
     key_label_map = CategoryData.belonging_to_collections(category, school.collections).inject({}) do |hash, category_data|
       hash[category_data.response_key] = category_data.label
       hash
@@ -191,13 +172,16 @@ class CategoryDataReader
     data_types = category.keys(school.collections)
 
     # Filter data: return only data for this category's chosen data types
-    results.for_data_types! data_types
+    results = results.for_data_types data_types
 
     data_type_to_results_map = results.group_by(&:data_type)
 
     # Sort the data types the same way the keys are sorted in the config
     data_type_to_results_map = Hash[data_type_to_results_map.sort_by {
-        |data_type_desc, value| data_types.index(data_type_desc.downcase)
+        |data_type_desc, value|
+        data_type_sort_num = data_types.index(data_type_desc.downcase)
+        data_type_sort_num = 1 if data_type_sort_num.nil?
+        data_type_sort_num
     }]
 
     data = {}
@@ -314,7 +298,7 @@ class CategoryDataReader
   end
 
   def self.sources
-    methods(false) - [:key, :cache_methods, :all_configured_keys, :sources]
+    methods(false) - [:key, :cache_methods, :sources]
   end
 
   def self.rating_data (school, _)
