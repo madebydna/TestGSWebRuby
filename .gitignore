@@ -28,4 +28,7 @@ coverage/
 config/database-local.yml
 config/database_local.yml
 
+# custom env_global for developers
+config/env_global_local.yml
+
 
