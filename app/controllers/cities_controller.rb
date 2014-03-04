@@ -2,14 +2,14 @@ class CitiesController < ApplicationController
   def show
     state_short = States::STATE_HASH[params[:state]]
     collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
-    collection_mapping = Rails.cache.fetch(collection_mapping_key) do
+    collection_mapping = Rails.cache.fetch(collection_mapping_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
       CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
     end
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
       configs_cache_key = "collection_configs-id:#{collection_mapping.collection_id}"
-      @collection_configs = Rails.cache.fetch(configs_cache_key) do
+      @collection_configs = Rails.cache.fetch(configs_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
         CollectionConfig.where(collection_id: collection_mapping.collection_id).to_a
       end
       @state = {

@@ -184,7 +184,7 @@ class SchoolRating < ActiveRecord::Base
 
   def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
     cache_key = "recent_reviews-state:#{state_abbr}-collection_id:#{collection_id}-max_reviews:#{max_reviews}"
-    Rails.cache.fetch(cache_key) do
+    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
       sql = "select sr.id from surveys.school_rating as sr " +
             "join _" + state_abbr + ".school s on s.id=sr.school_id " +
             "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
@@ -205,7 +205,7 @@ class SchoolRating < ActiveRecord::Base
 
   def self.recent_reviews_in_hub_count(state_abbr, collection_id)
     cache_key = "recent_reviews_count-state:#{state_abbr}-collection_id#{collection_id}"
-    Rails.cache.fetch(cache_key) do
+    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
       sql = "select sr.id from surveys.school_rating as sr " +
             "join _" + state_abbr + ".school s on s.id=sr.school_id " +
             "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +

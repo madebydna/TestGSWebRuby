@@ -13,7 +13,8 @@ class ZillowRegionId < ActiveRecord::Base
   end
 
   def self.data_for(city, state)
-    Rails.cache.fetch("zillow_data-city:#{city}-state:#{state}") do
+    cache_key = "zillow_data-city:#{city}-state:#{state}"
+    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
       {
         'zillow_formatted_location' => city.downcase.gsub(/ /, '-') + '-'+ state[:short],
         'region_id' => ZillowRegionId.by_city_state(city, state[:long])
