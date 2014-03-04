@@ -1,0 +1,24 @@
+<div class='row'>
+  <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+    <% if choose_school and choose_school[:link].length > 0 and not choose_school[:heading].empty? %>
+      <h2 class='SourceSansPro-Semibold-h2 mbm'><%= choose_school[:heading] %></h2>
+      <p class='mbl'><%= choose_school[:content].html_safe %></p>
+      <% choose_school[:link].each_with_index do |link, i| %>
+        <% if link[:newWindow] == 'true' %>
+          <%= link_to(link[:name].html_safe, link[:path], target: '_blank') %>
+        <% else %>
+          <%= link_to(link[:name].html_safe, link[:path]) %>
+        <% end %>
+        <% unless choose_school[:link].length == i + 1 %>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar'>
+    <div>
+      <%= image_tag('choose_a_school.png', alt: 'Choose a School', class: 'mtl ptm scale-image') %>
+    </div>
+  </div>
+</div>

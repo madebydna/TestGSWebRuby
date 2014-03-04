@@ -1,0 +1,58 @@
+<div class="image-bg-scale">
+  <div class="img-container">
+    <!-- Put image here -->
+  </div>
+  <div class="content-centered" style='top: 50px;'>
+    <div class="city-hubs-bg tal">
+      <form action="/search/search.page" method='get' id='jq-findByNameForm' name='searchBySchoolNameForm'>
+        <input type="hidden" name='search_type' value='1'>
+        <div style='overflow: auto;'>
+          <div class="pull-left">
+            <h3 class='mvn pbs' style='color: #ffb725;'>Find a School in</h3>
+            <h1 class='mtn mbl' style='color: #fff;'><%= city %></h1>
+          </div>
+          <% unless sponsor.nil? %>
+            <div class="pull-right">
+              <div class="small mbn pbn tac" style='color: #fff;'><%= sponsor[:text] %></div>
+              <a href="education-community/partner">
+                <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
+              </a>
+            </div>
+          <% end %>
+        </div>
+
+        <div id='city-hub-search-bar-container'>
+          <input  type="text" id='js-findByNameBox' class='text1'
+                  name='q' placeholder="School name (e.g. Niles Elementary School)"
+                  onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
+                  onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                  value="School name (e.g. Niles Elementary School)"
+                  style='padding: 6px 5px; width: 602px;'/>
+          <input type="hidden" name="collectionId" id="jq-collectionId" value="<%= collection_configs.last.collection_id %>"/>
+          <input type="hidden" name="state" id="jq-state" value="<%= @state[:short] %>"/>
+          <div id='search-icon'>
+            <span class="iconx48 i-48-search-city-hubs" id="js-submit" style='cursor: pointer;'><!-- do not collapse --></span>
+          </div>
+          <a  href="/" class="pull-right" onclick="GS.hubs.clearLocalUserCookies();">
+              Not in <%= @city %>?
+          </a>
+        </div>
+
+        <div class="school-breakdown">
+          <h4 class='SourceSansPro-Semibold-h4'>What kind of school are you looking for?</h4>
+          <% @breakdown_results.each do |text, data| %>
+            <button class="but-4 js-button-link" data-link-value="<%= data[:path] %>" type="button">
+              <div class="pull-left"><%= text %></div>
+              <div class="pull-right pr">
+                <%= image_tag('icons/oval.png', alt: 'Grey oval', class: 'vam') %>
+                <div class='pa tac' style="top:1px; right: 0px; color: #FFFFFF; width: 36px;">
+                    <span><%= data[:count] %></span>
+                </div>
+              </div>
+            </button>
+          <% end %>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

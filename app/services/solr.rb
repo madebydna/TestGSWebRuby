@@ -5,10 +5,13 @@ class Solr
   end
 
   def city_hub_breakdown_results(options)
-    solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
-    result = solr.get "/main/select/", params: parse_params(options)
+    cache_key = "city_hub_breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
+    Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
+      solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
+      result = solr.get "/main/select/", params: parse_params(options)
 
-    { count: result['response']['numFound'], path: parse_url(options) }
+      { count: result['response']['numFound'], path: parse_url(options) }
+    end
   end
 
   private

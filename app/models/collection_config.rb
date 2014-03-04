@@ -4,6 +4,7 @@ class CollectionConfig < ActiveRecord::Base
   CITY_HUB_SPONSOR_KEY = 'hubHome_sponsor'
   CITY_HUB_IMPORTANT_EVENTS_KEY = 'hubHome_importantEvents'
   CITY_HUB_ANNOUNCEMENT_KEY = 'hubHome_announcement'
+  CITY_HUB_SHOW_ANNOUNCEMENT_KEY = 'hubHome_showannouncement'
   CITY_HUB_CHOOSE_A_SCHOOL_KEY = 'hubHome_chooseSchool'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
@@ -89,7 +90,7 @@ class CollectionConfig < ActiveRecord::Base
       begin
         raw_annoucement_str = collection_configs.where(quay: CITY_HUB_ANNOUNCEMENT_KEY).first.value
         announcement = eval(raw_annoucement_str) # sins
-        announcement[:visible] = collection_configs.where(quay: CITY_HUB_ANNOUNCEMENT_KEY).first.value == 'true'
+        announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
       rescue => e
         announcement = nil
         Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.name.to_s)

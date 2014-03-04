@@ -1,0 +1,23 @@
+<% if reviews and !reviews.empty? %>
+  <div class="row">
+    <div class="clearfix phm">
+      <h2 class='pull-left mtn prl'>Recent Reviews</h2>
+      <button class='btn btn-primary lg-pull-right js-button-link' data-link-value="/school/parentReview.page">Review Your School</button>
+    </div>
+    <% reviews.each_with_index do |review, i| %>
+      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 pam mbl'>
+        <div class="well">
+          <div class="bd">
+            <div class='mbm'>
+              <%= render 'shared/stars', locals: { rating: review.quality.to_i } %>
+              <span class="small mlm vat" style='color: #999;'>Posted <%= review.posted %></span>
+            </div>
+            <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
+          </div>
+        </div>
+        <div class="bottom medium-bold mtl"><%= review.school.name %></div>
+        <%= link_to "Read all #{@review_count} reviews", school_reviews_url(review.school), class: 'small' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

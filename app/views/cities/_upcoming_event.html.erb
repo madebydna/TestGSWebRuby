@@ -1,28 +1,29 @@
-<div class="row">
-  <hr>
-  <div class='ptl' style='overflow: hidden;'>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
-      <h3 class='SourceSansPro-Semibold-h3 bottom mtn'>Upcoming Events</h3>
-      <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
-    </div>
-    <% @important_events[:max_important_event_to_display].times do |i| %>
-      <% event = @important_events[:events][i - 1] %>
+<% unless @important_events.nil? %>
+  <div class="row">
+    <hr>
+    <div class='ptl' style='overflow: hidden;'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
-        <span class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
-          <div class="tac">
-            <h3 class='mtl'><%= event[:date].day %></h3>
-          </div>
-        </span>
-        <div class="pull-left plm">
-            <%= abbreviate_at_whitespace(event[:description], 140) %>
-          <br/>
-          <%= link_to('Find out more', event[:url], class: 'small', target: '_blank') %>
-        </div>
+        <h3 class='SourceSansPro-Semibold-h3 bottom mtn'>Upcoming Events</h3>
+        <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
       </div>
-    <% end %>
+      <% @important_events[:max_important_event_to_display].times do |i| %>
+        <% event = @important_events[:events][i - 1] %>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
+          <div class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
+            <div class="tac">
+              <h4 class='mtl'><%= event[:date].day %></h4>
+            </div>
+          </div>
+          <div class="pull-left plm">
+            <%= abbreviate_at_whitespace(event[:description], 140) %>
+            <br/>
+            <%= link_to('Find out more', event[:url], class: 'small', target: '_blank') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
-
   <% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
     <%= render 'event_announcements', announcement: @announcement  %>
   <% end %>
-</div>
+<% end %>

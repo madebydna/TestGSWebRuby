@@ -1,0 +1,48 @@
+<% if @partner_carousel and !@partner_carousel[:partnerLogos].empty? %>
+  <div class="limit_width_1200">
+    <div class='row mtl'>
+      <div class="clearfix">
+        <div class="pull-left">
+          <h2 class="mtn"><%= @partner_carousel[:heading] %></h2>
+        </div>
+        <div class="pull-right">
+          <a href="education-community" style='font-size: 14px;'><%= "See the entire education community &#187".html_safe %></a>
+        </div>
+      </div>
+      <div class="">
+        <div class="pull-left mrl" style='margin-top: 65px;'>
+          <a href="#" id="prev">
+            <span class="iconx32g" style='background-position: -608px 0;'></span>
+          </a>
+        </div>
+
+        <div class="pull-left">
+          <div class="cycle-slideshow cycle-autoinit"
+               data-cycle-fx="carousel"
+               data-cycle-slides="> div"
+               data-cycle-loader="wait"
+               data-cycle-speed="1000"
+               data-cycle-pause-on-hover="true"
+               data-cycle-timeout="1000"
+               data-cycle-easing="linear"
+               data-cycle-carousel-visible='6'
+               data-cycle-slideshow="true"
+               data-cycle-next="#next"
+               data-cycle-prev="#prev">
+            <% @partner_carousel[:partnerLogos].each do |logo| %>
+              <div>
+                <%= link_to(image_tag(logo[:logoPath], class: 'partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="pull-right" style='margin-left: 25px; margin-top: 65px;'>
+          <a href="#" id="next">
+            <span class="iconx32g i-32-carouselRight vam" style='background-position: -640px 0;'></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

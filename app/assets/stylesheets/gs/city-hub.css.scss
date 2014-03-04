@@ -76,21 +76,6 @@
   }
 }
 
-.but {
-  width: auto;
-  overflow: visible;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  position: relative;
-  cursor: pointer;
-  outline: 0;
-  white-space: nowrap;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-}
-
 /*****************button-4 Cityhubs***********************/
 .but-4 {
     width: 180px; // originally => width: 172px;
@@ -116,49 +101,9 @@
     background-color: #EEEEEE;
 }
 
-.but-1 {
-  background: #0083b2;
-  color: #fff;
-  border: 0;
-  box-shadow: none;
-}
-
-.but-rg {
-  padding: 0 20px;
-  font: bold .875em/2.285em SourceSansPro-Semibold,Arial,Helvetica,sans-serif;
-}
-
-.but-lg {
-  font: bold 1em/2.75em SourceSansPro-Semibold,Arial,Helvetica,sans-serif;
-  padding: 0 24px;
-}
-
 .bd {
   zoom: 1;
   min-height: 0;
-}
-
-.white-well {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  .bd {
-    padding: 20px 15px;
-    height: 125px;
-    border-radius: 4px;
-  }
-}
-
-.but-rg {
-  font: bold .875em/2.285em SourceSansPro-Semibold,Arial,Helvetica,sans-serif;
-  padding: 0 20px;
-}
-
-.recent-review {
-  margin-left: 0;
-  margin-right: 0;
-  float: left;
-  width: 470px;
 }
 
 .recent-review:nth-of-type(odd) {
@@ -171,26 +116,26 @@
   border-radius: 4px;
 }
 
-.featured-articles {
-  @extend .col-xs-7;
-}
-
-
 @media only screen and (max-width: 970px) {
   .recent-review {
     clear: left;
     margin-bottom: 5px;
   }
+}
 
+@media only screen and (max-width: 990px) {
   .scale-image {
     width: 100%;
   }
 }
 
-@media only screen and (max-width: 650px) {
-  #choose-a-school div:first-child img {
-    display: none;
+@media only screen and (min-width: 768px) {
+  .lar {
+    text-align: right;
   }
+}
+
+@media only screen and (max-width: 650px) {
   .recent-review, .featured-articles {
     width: 100%;
   }
@@ -207,11 +152,6 @@
   }
 }
 
-.upcoming-event {
-  width: 320px;
-  overflow: visible;
-  float: left;
-}
 
 @media only screen and (min-width: 480px) {
   .lg-pull-right {
@@ -229,3 +169,5 @@
   border-color: #D6E9C5;
   color: #468846;
 }
+
+

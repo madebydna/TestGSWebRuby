@@ -1,0 +1,33 @@
+<div class="row">
+  <% unless @articles.nil? %>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mtl mbl pull-left" style='margin-right: 30px;'>
+      <h2 class="mtn">Featured Articles</h2>
+      <% @articles.each do |article| %>
+        <div class="featured-article" style='clear: left;'>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
+          <div class='mrn'>
+            <div class="medium-bold">
+              <h4 class="js-hubsFeaturedArticles mtn mbn">
+                <% if article[:newwindow] %>
+                  <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+                <% else %>
+                    <%= link_to article[:heading], article[:articlepath] %>
+                <% end %>
+              </h4>
+              <p><%= article[:content] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <% else %>
+      <h3 class="mbm mtm">No Data Found - Key cities_cityArticle</h3>
+    <% end %>
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mtl pull-right">
+    <h2 class="mtn">Nearby Homes for Sale</h2>
+    <%= render 'data_layouts/zillow_content', data: @zillow_data %>
+    <style>
+    .ma { margin-right: 0; margin-left: 0; }
+    </style>
+  </div>
+</div>
