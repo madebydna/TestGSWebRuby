@@ -129,6 +129,7 @@ group :development, :test do
   # Test coverage tool
   gem 'simplecov', '~> 0.8.2'
   gem 'simplecov-html', '~> 0.8.0'
+  gem 'simplecov-rcov'
 
 
   # Guard and Spork for faster rspec testing

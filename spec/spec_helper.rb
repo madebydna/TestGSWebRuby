@@ -4,6 +4,15 @@ require 'rubygems'
 
 Spork.prefork do
   require 'simplecov'
+
+  if ENV['JENKINS_URL'] # on ci server
+    require 'simplecov-rcov'
+    SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  else
+    require 'simplecov-html'
+    SimpleCov::Formatter::HTMLFormatter
+  end
+
   SimpleCov.start do
     add_filter '/spec/'
     add_filter 'config/initializers/rails_admin.rb'
