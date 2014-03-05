@@ -32,8 +32,8 @@ en:
       pending_moderation: 'Please note that it can take up to 48 hours for your review to be posted to our site.'
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
     report_review:
-      login_required: 'You need to log in or register your email in order to report a review.'
-      reported: 'Thanks, we''ve received your comments and will review the review you flagged.'
+      login_required: 'Please sign in or register to report a review.'
+      reported: 'Thank you for flagging this review. Our moderators have been notified and will investigate.'
     account:
       pending_email_verification: 'Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.'
       email_verified: 'Your email address has been verified. Welcome to GreatSchools!'
