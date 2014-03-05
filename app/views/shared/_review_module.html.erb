@@ -39,13 +39,15 @@
             <% end %>
         </div>
 
-        <% if review[:comments].strip.present? %>
-            <div class="pull-right small js-report-review-link-<%= review.id %>">
-              <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
-            </div>
-            <div class="dn pull-right small js-report-review-close-link-<%= review.id %>">
-                <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
-            </div>
+        <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
+            <% if review[:comments].strip.present? %>
+                <div class="pull-right small js-report-review-link-<%= review.id %>">
+                  <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
+                </div>
+                <div class="dn pull-right small js-report-review-close-link-<%= review.id %>">
+                    <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
+                </div>
+            <% end %>
         <% end %>
     </div>
 
