@@ -92,6 +92,26 @@ GS.reviews = GS.reviews || function($) {
         };
     };
 
+    var reportReviewLink = function(reviewId) {
+        return $(".js-report-review-link-" + reviewId);
+    };
+
+    var reportReviewCloseLink = function(reviewId) {
+        return $(".js-report-review-close-link-" + reviewId);
+    };
+
+    var reportReviewLinkClicked = function(reviewId, containerDomSelector) {
+        reportReviewLink(reviewId).hide();
+        reportReviewCloseLink(reviewId).show();
+        showReportReviewForm(reviewId, containerDomSelector);
+    };
+
+    var reportReviewCloseLinkClicked = function(reviewId, containerDomSelector) {
+        reportReviewLink(reviewId).show();
+        reportReviewCloseLink(reviewId).hide();
+        closeReportReviewForm(reviewId);
+    };
+
     var showReportReviewForm = function(reviewId, containerDomSelector) {
         var reportFormSelector = '.js-report-review-form-template';
 
@@ -118,16 +138,9 @@ GS.reviews = GS.reviews || function($) {
             }
         } );
 
-        new_form.bind('ajax:success', function(data, status, xhr) {
-            $('.js-report-review-link-' + reviewId).html('You\'ve reported this review');
-            closeReportReviewForm(reviewId);
-        });
-        new_form.bind('ajax:error', function(data, status, xhr) {
-            $('.js-report-review-link-' + reviewId).html('Error occurred');
-            closeReportReviewForm(reviewId);
-        });
-
         new_form.find('.js-report-review-form-cancel').on('click', function() {
+            reportReviewLink(reviewId).show();
+            reportReviewCloseLink(reviewId).hide();
             closeReportReviewForm(reviewId);
         });
 
@@ -145,6 +158,8 @@ GS.reviews = GS.reviews || function($) {
     return {
         initializeReviewHandlers: initializeReviewHandlers,
         showReportReviewForm: showReportReviewForm,
-        closeReportReviewForm: closeReportReviewForm
+        closeReportReviewForm: closeReportReviewForm,
+        reportReviewLinkClicked: reportReviewLinkClicked,
+        reportReviewCloseLinkClicked: reportReviewCloseLinkClicked
     }
 }(jQuery);

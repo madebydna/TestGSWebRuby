@@ -23,12 +23,17 @@ en:
         invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
       facebook: 'Sorry, there was an error logging in with Facebook.'
   actions:
+    generic_error: 'Were sorry, something went wrong processing your request.'
     session:
       signed_out: 'Signed out successfully.'
     review:
+      login_required: 'You need to log in or register your email in order to post a review.'
       pending_email_verification: 'Thanks for your school review! We''ll post it once your email address has been verified.'
       pending_moderation: 'Please note that it can take up to 48 hours for your review to be posted to our site.'
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
+    report_review:
+      login_required: 'You need to log in or register your email in order to report a review.'
+      reported: 'Thanks, we''ve received your comments and will review the review you flagged.'
     account:
       pending_email_verification: 'Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.'
       email_verified: 'Your email address has been verified. Welcome to GreatSchools!'

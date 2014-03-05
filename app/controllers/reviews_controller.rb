@@ -22,29 +22,27 @@ class ReviewsController < ApplicationController
       save_review_and_redirect review_params
     else
       save_deferred_action :save_review_deferred, review_params
-      flash_error 'You need to log in or register your email in order to post a review.'
+      flash_error t('actions.review.login_required')
       redirect_to signin_url
     end
   end
 
   def report
-    begin
-      review_id = params[:reported_entity_id]
-      reported_entity = params[:reported_entity]
-      reason = params[:reported_entity][:reason] if reported_entity
-      review = SchoolRating.find review_id rescue nil
-      # if review && logged_in?
-        reported_entity = ReportedEntity.from_review review, reason
-        reported_entity.reporter_id = current_user.id if logged_in?
-        reported_entity.save!
-      # end
-      respond_to do |format|
-        format.json  { render :json => { success: true, reason: reason } }
-      end
-    rescue
-      respond_to do |format|
-        format.json  { render :json => { success: false }, status: 422 }
-      end
+    review_id = params[:reported_entity_id]
+    reason = params.fetch(:reported_entity, {})[:reason]
+
+    if review_id.blank? || reason.blank?
+      flash_error t('actions.generic_error')
+      redirect_back
+      return
+    end
+
+    if logged_in?
+      report_review_and_redirect reported_entity_id: review_id, reason: reason
+    else
+      save_deferred_action :report_review_deferred, reported_entity_id: review_id, reason: reason
+      flash_error 'You need to log in or register your email in order to report a review.'
+      redirect_to signin_url
     end
   end
 

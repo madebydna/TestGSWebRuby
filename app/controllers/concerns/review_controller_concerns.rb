@@ -77,4 +77,28 @@ module ReviewControllerConcerns
     end
   end
 
+  def report_review_and_redirect(params)
+
+    if logged_in?
+      begin
+        review_id = params[:reported_entity_id]
+        reason = params[:reason]
+
+        review = SchoolRating.find review_id rescue nil
+        if review
+          reported_entity = ReportedEntity.from_review review, reason
+          reported_entity.reporter_id = current_user.id
+          reported_entity.save!
+          flash_notice t('actions.report_review.reported')
+        else
+          flash_error t('actions.generic_error')
+        end
+      rescue
+        flash_error t('actions.generic_error')
+      end
+    end
+
+    redirect_to reviews_page_for_last_school
+  end
+
 end

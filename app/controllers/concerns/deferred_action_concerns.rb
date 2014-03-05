@@ -11,6 +11,7 @@ module DeferredActionConcerns
     create_subscription_deferred
     save_review_deferred
     add_favorite_school_deferred
+    report_review_deferred
   )
 
   def save_deferred_action(action, params)
@@ -70,6 +71,14 @@ module DeferredActionConcerns
     return false if !logged_in? || current_user.provisional?
 
     add_favorite_school params
+
+    true
+  end
+
+  def report_review_deferred(params)
+    return false if !logged_in? || current_user.provisional?
+
+    report_review_and_redirect params
 
     true
   end
