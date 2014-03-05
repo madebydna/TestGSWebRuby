@@ -57,7 +57,7 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   def self.placements_for_page(page)
-    Rails.cache.fetch("CategoryPlacement/page_#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
+    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_PLACEMENTS_PER_PAGE_PREFIX}#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
       order('position asc').order('priority').order('collection_id desc').where(page_id:page.id).all
     end
   end

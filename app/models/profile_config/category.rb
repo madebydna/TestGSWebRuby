@@ -48,7 +48,7 @@ class Category < ActiveRecord::Base
   # this method would return all the keys configured for both Ethnicity and Details
   def self.all_configured_keys(source)
 
-    Rails.cache.fetch("all_configured_keys/#{source}", expires_in: 1.hour) do
+    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_DATA_KEYS_PER_SOURCE_PREFIX}/#{source}", expires_in: 1.hour) do
       categories_using_source = Category.where(source: source).all
 
       all_keys = []
