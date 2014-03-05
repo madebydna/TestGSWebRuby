@@ -16,7 +16,7 @@ Spork.prefork do
   # use capybara-webkit
   Capybara.javascript_driver = :webkit
 
-  Capybara.default_host = 'localhost:3000'
+  Capybara.default_host = 'http://localhost:3000'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -37,7 +37,7 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of

@@ -21,27 +21,8 @@ describe 'City Hub Page', js: true do
   end
 
   describe 'search' do
-    context 'by default' do
-      it 'searches and redirects to java results' do
-        pending("haven't implemented ruby side of results yet")
-      end
-
-      it 'displays sponsor information' do
-        visit city_page_url
-
-        expect(page).to have_link(href: 'education-community/partner')
-        expect(page).to have_xpath("//img[@alt='sponsor logo']")
-      end
-    end
-
-    context 'no sponsor' do
-      it 'does not display the sponsor information' do
-        # CollectionConfig.where(quay: CollectionConfig::CITY_HUB_SPONSOR_KEY).first.destroy
-        visit city_page_url
-
-        expect(page).to_not have_link(href: 'education-community/partner')
-        expect(page).to_not have_xpath("//img[@alt='sponsor logo']")
-      end
+    it 'searches and redirects to java results' do
+      pending("haven't implemented ruby side of results yet")
     end
   end
 
@@ -56,8 +37,10 @@ describe 'City Hub Page', js: true do
 
     context 'no valid data' do
       it 'displays an error message' do
-        ENV['solr_url'] = 'foobar'
-        visit city_page_url
+        allow_any_instance_of(Solr).to receive(:city_hub_breakdown_results).and_return(nil)
+        debugger
+        # visit city_page_url
+        debugger
         expect(page).to_not have_css '.school-breakdown button'
         expect(page).to have_content 'No data found for school breakdown'
       end

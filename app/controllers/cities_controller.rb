@@ -21,16 +21,14 @@ class CitiesController < ApplicationController
 
       gon.pagename = "city home"
 
-      debugger
-      solr = Solr.new(@state[:short], collection_mapping.collection_id)
       @breakdown_results = {
-        'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
-        'Elementary Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
-        'Middle Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
-        'High Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:high]),
-        'Public Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:public]),
-        'Private Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:private]),
-        'Charter Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:charter]),
+        'Preschools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:primary]),
+        'Elementary Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:elementary]),
+        'Middle Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:middle]),
+        'High Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:high]),
+        'Public Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:public]),
+        'Private Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:private]),
+        'Charter Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:charter]),
       }
 
       @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
