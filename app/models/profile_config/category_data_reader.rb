@@ -176,6 +176,12 @@ class CategoryDataReader
 
     data_type_to_results_map = results.group_by(&:data_type)
 
+    data_type_to_results_map.each_pair do |data_type, results|
+      if results.any? { |result| result.breakdown_id.nil? }
+        results.select! { |result| result.breakdown_id.nil? }
+      end
+    end
+
     # Sort the data types the same way the keys are sorted in the config
     data_type_to_results_map = Hash[data_type_to_results_map.sort_by {
         |data_type_desc, value|
@@ -200,7 +206,7 @@ class CategoryDataReader
 
       # Default the sort order of rows within a data type to school_value descending
       # School value might be nil, so sort using zero in that case
-      rows.sort_by! { |row| row[:school_value] ? row[:school_value] : 0 }.reverse!
+      rows.sort_by! { |row| row[:school_value] ? row[:school_value].to_f : 0.0 }.reverse!
 
       # Use the data type key to look up the label to use. If no label found, default to using the key itself
       label = key_label_map.fetch(key, key)
