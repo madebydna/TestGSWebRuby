@@ -79,6 +79,7 @@ gem 'has_scope'
 # gem 'will_paginate', '~> 3.0'
 
 # supports decorator for models
+gem 'request_store', '~> 1.0.3'
 gem 'draper', '~> 1.3'
 
 group :development do

@@ -309,6 +309,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.2.1)
+    request_store (1.0.5)
     require_all (1.3.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -402,7 +403,7 @@ GEM
       rack (>= 1.0)
     webrobots (0.1.1)
     websocket (1.0.7)
-    will_paginate (3.0.5)
+    win32console (1.3.2)
     win32console (1.3.2-x86-mingw32)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -460,6 +461,7 @@ DEPENDENCIES
   rails_admin
   rails_admin_nestable
   rails_best_practices
+  request_store (~> 1.0.3)
   rspec
   rspec-rails
   ruby-hmac (~> 0.4.0)
