@@ -28,6 +28,13 @@ class RatingsConfiguration
                      })
   end
 
+  def self.preK_rating_configuration
+    #Pre-k rating configuration is by state
+    {"mi" => Hashie::Mash.new({
+                                  star_rating: {data_type_id: 217, description_key: "mi_prek_star_rating_summary", label: "Great Start to Quality preschool rating"}
+                              })}
+  end
+
 
   def self.fetch_city_rating_configuration school
     city_rating_config_exists?(school) ? city_rating_configuration[school.shard.to_s][school.city] : nil
@@ -39,6 +46,10 @@ class RatingsConfiguration
 
   def self.fetch_state_rating_configuration school
     state_rating_config_exists?(school) ? state_rating_configuration[school.shard.to_s] : nil
+  end
+
+  def self.fetch_preK_rating_configuration(school)
+    preK_rating_config_exists?(school) ? preK_rating_configuration[school.shard.to_s] : nil
   end
 
   def self.fetch_state_rating_data_type_ids school
@@ -56,6 +67,11 @@ class RatingsConfiguration
     city_rating_configuration.nil? ? [] : city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
   end
 
+  def self.fetch_preK_rating_data_type_ids school
+    preK_rating_configuration = fetch_preK_rating_configuration school
+    preK_rating_configuration.nil? ? [] : Array(preK_rating_configuration.star_rating.data_type_id)
+  end
+
   def self.city_rating_config_exists? school
     !city_rating_configuration[school.shard.to_s].nil? && !city_rating_configuration[school.shard.to_s][school.city].nil?
   end
@@ -66,6 +82,10 @@ class RatingsConfiguration
 
   def self.gs_rating_config_exists?
     !gs_rating_configuration.nil?
+  end
+
+  def self.preK_rating_config_exists? school
+    !preK_rating_configuration[school.shard.to_s].nil?
   end
 
 end

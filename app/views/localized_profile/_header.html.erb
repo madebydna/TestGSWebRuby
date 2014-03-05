@@ -50,6 +50,12 @@
                                 <span class="open-sans_sb"><%= @school.state_rating %></span>
                             </div>
                         <% end %>
+                        <% if @school.preK_star_rating  %>
+                            <div class="fl prl open-sans pt2 h24">
+                                <span class="mrm">Preschool rating:</span>
+                                <span class="open-sans_sb"><%= @school.preK_star_rating %></span>
+                            </div>
+                        <% end %>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [

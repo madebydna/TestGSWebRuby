@@ -214,6 +214,10 @@ class School < ActiveRecord::Base
     rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
   end
 
+  def preK_star_rating
+    rating_data.fetch('preK_ratings',{}).fetch('star_rating',nil)
+  end
+
   def data_for_category(category)
     data_for_category_and_source category, category.source
   end

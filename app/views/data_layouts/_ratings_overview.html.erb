@@ -10,6 +10,9 @@
         <% if @school.state_rating  %>
             <%  ratings_array << (render "shared/rating/draw_rect_72x58_rating", rating:@school.state_rating, supporting_text:'Michigan rating') %>
         <% end %>
+        <% if @school.preK_star_rating  %>
+            <%  ratings_array << (render "shared/rating/draw_rect_72x58_rating", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+        <% end %>
     <!-- End detroit hub layout -->
 
     <% if !ratings_array.empty? %>

@@ -315,6 +315,7 @@ class CategoryDataReader
     gs_rating_value = RatingsHelper.construct_GS_ratings results, school
     city_rating_value =  RatingsHelper.construct_city_ratings results, school
     state_rating_value = RatingsHelper.construct_state_ratings results, school
+    preK_ratings = RatingsHelper.construct_preK_ratings results, school
 
     return_var = {}
     if gs_rating_value.present?
@@ -326,6 +327,10 @@ class CategoryDataReader
     if state_rating_value.present?
       return_var["state_rating"] = state_rating_value
     end
+    if preK_ratings.present?
+      return_var["preK_ratings"] = preK_ratings
+    end
+
     return_var
   end
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot

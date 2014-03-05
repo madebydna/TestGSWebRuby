@@ -1,0 +1,13 @@
+<% if !data["preK_ratings"].nil? && !data["preK_ratings"]["star_rating"].nil? %>
+    <div class="row mbl pam">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <span ><%= data["preK_ratings"]["star_rating"] %></span>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <h5><%= data["preK_ratings"]["preK_rating_label"] %></h5>
+            <br/><%= data["preK_ratings"]["description"] %>
+        </div>
+    </div>
+<% end %>
+
+
