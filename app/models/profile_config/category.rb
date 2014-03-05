@@ -16,6 +16,7 @@ class Category < ActiveRecord::Base
   end
 
   def has_data?(school)
+    return true if source.blank?
     school.data_for_category(self).present?
   end
 
