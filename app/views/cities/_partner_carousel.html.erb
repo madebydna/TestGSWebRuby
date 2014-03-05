@@ -1,9 +1,9 @@
-<% if @partner_carousel and !@partner_carousel[:partnerLogos].empty? %>
+<% if partner_carousel and !partner_carousel[:partnerLogos].empty? %>
   <div class="limit_width_1200">
     <div class='row mtl'>
       <div class="clearfix">
         <div class="pull-left">
-          <h2 class="mtn"><%= @partner_carousel[:heading] %></h2>
+          <h2 class="mtn"><%= partner_carousel[:heading] %></h2>
         </div>
         <div class="pull-right">
           <a href="education-community" style='font-size: 14px;'><%= "See the entire education community &#187".html_safe %></a>
@@ -29,7 +29,7 @@
                data-cycle-slideshow="true"
                data-cycle-next="#next"
                data-cycle-prev="#prev">
-            <% @partner_carousel[:partnerLogos].each do |logo| %>
+            <% partner_carousel[:partnerLogos].each do |logo| %>
               <div>
                 <%= link_to(image_tag(logo[:logoPath], class: 'partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
               </div>

@@ -98,4 +98,13 @@ describe 'cities/_featured_articles' do
   end
 end
 
+describe 'cities/_partner_carousel.html.erb' do
+  context 'without partner data' do
+    it 'does not render the carousel' do
+      view.stub(:partner_carousel) { nil }
+      render
 
+      expect(rendered).to_not have_selector('.cycle-slideshow')
+    end
+  end
+end
