@@ -10,6 +10,9 @@
             </div>
             <% link_text = link_text.present? ? link_text : nil %>
             <%= raw display_section_head_link category_placement, link_text %>
+            <% if category_placement.category.present?  && category_placement.category.description.present? %>
+                <div class="clearfix tal ptm"><p class="mvn"><%= category_placement.category.description %></p></div>
+            <% end %>
         </div>
      <% elsif category_placement.depth == 1 %>
         <div class="plm clearfix mbl mtm">

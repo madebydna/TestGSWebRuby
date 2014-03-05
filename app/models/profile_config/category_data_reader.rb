@@ -84,7 +84,7 @@ class CategoryDataReader
         art:   {count: 'n/a', content: 'Arts & music'},
         sport: {count: 'n/a', content: 'Sports'},
         club:  {count: 'n/a', content: 'Clubs'},
-        lang:  {count: 'n/a', content: 'Foreign languages'},
+        lang:  {count: 'n/a', content: 'World languages'},
         sched: {count: 'Half day', content: 'Preschool schedule'},
         commu: {count: 'Community center', content: 'Care setting'}
     }
