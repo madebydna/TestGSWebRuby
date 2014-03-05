@@ -78,6 +78,9 @@ gem 'has_scope'
 # Pagination library for Rails 3, Sinatra, Merb, DataMapper, and more http://github.com/mislav/will_paginate/wikis
 # gem 'will_paginate', '~> 3.0'
 
+# supports decorator for models
+gem 'draper', '~> 1.3'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
