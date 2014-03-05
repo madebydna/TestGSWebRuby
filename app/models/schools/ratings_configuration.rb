@@ -31,7 +31,7 @@ class RatingsConfiguration
   def self.preK_rating_configuration
     #Pre-k rating configuration is by state
     {"mi" => Hashie::Mash.new({
-                                  star_rating: {data_type_id: 217, description_key: "mi_prek_star_rating_summary", label: "Great Start to Quality preschool rating"}
+                                  star_rating: {data_type_id: 217, description_key: "mi_prek_star_rating_summary"}
                               })}
   end
 
