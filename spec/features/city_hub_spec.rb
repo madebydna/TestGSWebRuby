@@ -3,45 +3,17 @@ require 'spec_helper'
 describe 'City Hub Page', js: true do
   let(:city_page_url) { 'http://localhost:3000/michigan/detroit' }
 
-  describe 'entering a falty url' do
-    it 'renders the error page' do
-      visit 'http://localhost:3000/michigan/foobar'
-      expect(page).to have_content 'Page Not Found'
-    end
-  end
-
-  describe 'noSchoolAlert param' do
-    it 'shows an error partial' do
-      error_message = "Oops! The school you were looking for may no longer exist."
-      visit city_page_url + '/?noSchoolAlert=1'
-      expect(page).to have_content error_message
-      visit city_page_url
-      expect(page).to_not have_content error_message
-    end
-  end
-
   describe 'search' do
-    context 'by default' do
-      it 'searches and redirects to java results' do
-        pending("haven't implemented ruby side of results yet")
-      end
-
-      it 'displays sponsor information' do
-        visit city_page_url
-
-        expect(page).to have_link(href: 'education-community/partner')
-        expect(page).to have_xpath("//img[@alt='sponsor logo']")
-      end
+    it 'searches and redirects to java results' do
+      pending("haven't implemented ruby side of results yet")
     end
 
-    context 'no sponsor' do
-      it 'does not display the sponsor information' do
-        # CollectionConfig.where(quay: CollectionConfig::CITY_HUB_SPONSOR_KEY).first.destroy
-        visit city_page_url
+    it 'displays sponsor information' do
+      visit city_page_url
 
-        expect(page).to_not have_link(href: 'education-community/partner')
-        expect(page).to_not have_xpath("//img[@alt='sponsor logo']")
-      end
+      debugger
+      expect(page).to have_link(href: 'education-community/partner')
+      expect(page).to have_xpath("//img[@alt='sponsor logo']")
     end
   end
 
@@ -52,15 +24,6 @@ describe 'City Hub Page', js: true do
       expect(page).to have_css('.school-breakdown button', count: 7)
       expect(find('.school-breakdown button:nth-of-type(1) div:nth-of-type(2)').text).to eq('196')
       expect(find('.school-breakdown button:nth-of-type(7) div:nth-of-type(2)').text).to eq('118')
-    end
-
-    context 'no valid data' do
-      it 'displays an error message' do
-        ENV['solr_url'] = 'foobar'
-        visit city_page_url
-        expect(page).to_not have_css '.school-breakdown button'
-        expect(page).to have_content 'No data found for school breakdown'
-      end
     end
   end
 

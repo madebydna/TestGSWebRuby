@@ -1,4 +1,4 @@
-<% unless @important_events.nil? %>
+<% unless important_events.nil? %>
   <div class="row">
     <hr>
     <div class='ptl' style='overflow: hidden;'>
@@ -6,8 +6,8 @@
         <h3 class='SourceSansPro-Semibold-h3 bottom mtn'>Upcoming Events</h3>
         <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>
       </div>
-      <% @important_events[:max_important_event_to_display].times do |i| %>
-        <% event = @important_events[:events][i - 1] %>
+      <% important_events[:max_important_event_to_display].times do |i| %>
+        <% event = important_events[:events][i - 1] %>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam upcoming-event">
           <div class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
             <div class="tac">
@@ -26,4 +26,6 @@
   <% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
     <%= render 'event_announcements', announcement: @announcement  %>
   <% end %>
+<% else %>
+  <h3 class="small">No Upcoming Important Dates</h3>
 <% end %>

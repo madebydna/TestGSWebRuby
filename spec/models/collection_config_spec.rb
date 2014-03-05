@@ -162,7 +162,8 @@ describe CollectionConfig do
     context 'valid json string' do
       it 'parses the announcement string and returns a hash' do
         CollectionConfig.create(collection_id: 1, quay: CollectionConfig::CITY_HUB_ANNOUNCEMENT_KEY, value: announcement_value)
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_ANNOUNCEMENT_KEY)
+        CollectionConfig.create(collection_id: 1, quay: CollectionConfig::CITY_HUB_SHOW_ANNOUNCEMENT_KEY, value: 'true')
+        collection_configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.city_hub_announcement(collection_configs)
 
         expect(result).to be_an_instance_of(Hash)

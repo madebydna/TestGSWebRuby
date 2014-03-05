@@ -3,13 +3,9 @@ class Solr
     cache_key = "city_hub_breakdown_results-state:#{state_short}-collection_id:#{collection_id}-options:#{options.to_s}"
     Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
       begin
-        if ENV['solr_url']
-          breakdown_results =  nil
-        else
-          solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
-          response = solr.get "/main/select/", params: self.parse_params(state_short, collection_id, options)
-          breakdown_results = { count: response['response']['numFound'], path: self.parse_url(options) }
-        end
+        solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
+        response = solr.get "/main/select/", params: self.parse_params(state_short, collection_id, options)
+        breakdown_results = { count: response['response']['numFound'], path: self.parse_url(options) }
       rescue => e
         breakdown_results = nil
         Rails.logger.error('Reaching the solr server failed:' + e.to_s)

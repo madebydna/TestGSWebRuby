@@ -1,8 +1,8 @@
 <div class="row">
-  <% unless @articles.nil? %>
+  <% unless articles.nil? %>
     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mtl mbl pull-left" style='margin-right: 30px;'>
       <h2 class="mtn">Featured Articles</h2>
-      <% @articles.each do |article| %>
+      <% articles.each do |article| %>
         <div class="featured-article" style='clear: left;'>
           <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
           <div class='mrn'>
@@ -21,7 +21,7 @@
       <% end %>
     </div>
     <% else %>
-      <h3 class="mbm mtm">No Data Found - Key cities_cityArticle</h3>
+      <h3 class="mbm mtm">No Data Found - cities/_featured_articles.html.erb</h3>
     <% end %>
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mtl pull-right">
     <h2 class="mtn">Nearby Homes for Sale</h2>
