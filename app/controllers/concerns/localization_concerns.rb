@@ -22,7 +22,7 @@ module LocalizationConcerns
   end
 
   def is_school_for_localized_profiles
-    'detroit'.match /#{@school.collection.name}/i
+    @school.collection.nil? ? false : ('detroit'.match /#{@school.collection.name}/i)
   end
 
 end
