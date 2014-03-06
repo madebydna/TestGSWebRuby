@@ -120,21 +120,27 @@ GS.hubs.setupResponsiveCarousel = function() {
     prev: "#prev"
   };
 
+  function cycle(visibleCount) {
+    var $slideshow = $('.cycle-slideshow');
+    $slideshow.cycle($.extend(options, { carouselVisible: visibleCount }));
+    $slideshow.css('margin-left', 'auto').css('margin-right', 'auto');
+  }
+
   function initCycle() {
-    var width = $(document).width();
+    var width = $(window).width();
     $('.cycle-slideshow').cycle('destroy');
-    if (width < 400) {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 1 }));
-    } else if (width > 400 && width < 540) {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 2 }));
-    } else if (width > 540 && width < 690) {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 3 }));
-    } else if ( width > 690 && width < 800 ) {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 4 }));
-    } else if ( width > 800 && width < 980 ) {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 5 }));
+    if (width <= 400) {
+      cycle(1);
+    } else if (width > 400 && width <= 540) {
+      cycle(2);
+    } else if (width > 540 && width <= 690) {
+      cycle(3);
+    } else if ( width > 690 && width <= 800 ) {
+      cycle(4);
+    } else if ( width > 800 && width <= 980 ) {
+      cycle(5);
     } else {
-      $('.cycle-slideshow').cycle($.extend(options, { carouselVisible: 6 }));
+      cycle(6);
     }
   }
   initCycle();
