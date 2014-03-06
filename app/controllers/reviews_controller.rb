@@ -41,7 +41,7 @@ class ReviewsController < ApplicationController
       report_review_and_redirect reported_entity_id: review_id, reason: reason
     else
       save_deferred_action :report_review_deferred, reported_entity_id: review_id, reason: reason
-      flash_error 'You need to log in or register your email in order to report a review.'
+      flash_error t('actions.report_review.login_required')
       redirect_to signin_url
     end
   end

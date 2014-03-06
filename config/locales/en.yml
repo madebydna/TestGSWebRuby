@@ -23,7 +23,7 @@ en:
         invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
       facebook: 'Sorry, there was an error logging in with Facebook.'
   actions:
-    generic_error: 'Were sorry, something went wrong processing your request.'
+    generic_error: 'We''re sorry, something went wrong processing your request.'
     session:
       signed_out: 'Signed out successfully.'
     review:
