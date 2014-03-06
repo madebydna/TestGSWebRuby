@@ -1,8 +1,8 @@
-<% link_value = '/school-choice/school-choice/7055-choose-elementary-school-video.gs' %>
-<% link_value = '/school-choice/school-choice/7066-choose-high-school-video.gs' if @school.level_code_array.include? 'h' %>
-<% link_value = '/school-choice/school-choice/7056-choose-middle-school-video.gs' if @school.level_code_array.include? 'm' %>
-<% link_value = '/school-choice/school-choice/7055-choose-elementary-school-video.gs' if @school.level_code_array.include? 'e' %>
-<% link_value = '/school-choice/school-choice/7055-choose-elementary-school-video.gs' if @school.level_code_array.include? 'p' %>
+<% link_value = :help_me_e_video %>
+<% link_value = :help_me_h_video if @school.level_code_array.include? 'h' %>
+<% link_value = :help_me_m_video if @school.level_code_array.include? 'm' %>
+<% link_value = :help_me_e_video if @school.level_code_array.include? 'e' %>
+<% link_value = :help_me_e_video if @school.level_code_array.include? 'p' %>
 
 <div class="tac pal"><span class="open-sans_sb">Need help choosing a school?</span>
     <%= link_to "We can help &raquo;".html_safe, link_value %>

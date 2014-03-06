@@ -43,6 +43,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
     get '/official-school-profile/dashboard/', as: :osp_dashboard
+    get '/school-choice/school-choice/7055-choose-elementary-school-video.gs', as: :help_me_e_video
+    get '/school-choice/school-choice/7056-choose-middle-school-video.gs', as: :help_me_m_video
+    get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
