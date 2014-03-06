@@ -17,7 +17,7 @@ module SubscriptionConcerns
 
       raise 'Subscription could not be added since a list was not provided.' if list.nil?
 
-      unless current_user.has_subscription? list
+      unless current_user.has_subscription?(list,school)
         current_user.add_subscription!(list, school)
         set_omniture_events_in_session(['review_updates_mss_event'])
         set_omniture_sprops_in_session({'custom_completion_sprop' => 'SignUpForUpdates'})

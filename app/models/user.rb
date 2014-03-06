@@ -173,9 +173,9 @@ class User < ActiveRecord::Base
     favorite_school.save!
   end
 
-  def has_subscription?(list)
+  def has_subscription?(list, school)
     subscriptions.any? do |subscription|
-      subscription.list == list && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+      subscription.list == list && subscription.school_id == school.id && subscription.state == school.state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
     end
   end
 

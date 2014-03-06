@@ -68,6 +68,45 @@ describe User do
       end
     end
 
+    describe 'check if user has subscription' do
+      it 'has the subscription already' do
+        subscriptions = []
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+        user.stub(:subscriptions).and_return(subscriptions)
+
+        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
+
+        expect(user.has_subscription?('mystat', school)).to be_true
+      end
+
+      it "does not have the subscription already, because the school's state is different" do
+        subscriptions = []
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+        user.stub(:subscriptions).and_return(subscriptions)
+
+        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'tx')
+
+        expect(user.has_subscription?('mystat', school)).to be_false
+      end
+
+      it 'does not have the subscription already, because the subscription has expired' do
+        subscriptions = []
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: Time.now - 10.days)
+        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
+
+        user.stub(:subscriptions).and_return(subscriptions)
+
+        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
+
+        expect(user.has_subscription?('mystat', school)).to be_false
+      end
+    end
+
     describe '#password_is?' do
 
       it 'checks for valid passwords' do
