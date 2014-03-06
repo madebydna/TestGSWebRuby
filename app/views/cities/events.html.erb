@@ -1,0 +1,29 @@
+<%= render 'nav/topnav' %>
+<%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id %>
+
+<div class="limit_width_1200" style='margin-bottom: 40px;'>
+  <div class="row">
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  </div>
+
+  <div class="row">
+    <h1 style='margin-left: auto; margin-right: auto; width: 170px;'>All events</h1>
+    <% @events.each do |event| %>
+      <div class="col-xs-12 mvm">
+        <hr>
+        <div class="pull-left mhm iconx48 i-48-calender-month-<%= event[:date].month %>">
+          <div class="tac">
+            <h4 class='mtl'><%= event[:date].day %></h4>
+          </div>
+        </div>
+        <div>
+          <span><%= event[:description] %></span>
+          <br>
+          <%= link_to 'Find out more', event[:url], class: 'small' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'footer' %>

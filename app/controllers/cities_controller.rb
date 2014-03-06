@@ -1,10 +1,6 @@
 class CitiesController < ApplicationController
   def show
-    state_short = States::STATE_HASH[params[:state]]
-    collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
-    collection_mapping = Rails.cache.fetch(collection_mapping_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
-    end
+    collection_mapping = mapping
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -44,5 +40,30 @@ class CitiesController < ApplicationController
   end
 
   def events
+    @state = {
+      long: params[:state],
+      short: state_short
+    }
+    @city = params[:city]
+    @collection_id = mapping.collection_id
+    @breadcrumbs = {
+      'Home' => '/',
+      @state[:long].titleize => "/#{@state[:long]}",
+      @city.titleize => "/#{@state[:long]}/#{@city}"
+    }
+    @events = CollectionConfig.important_events(@collection_id)
   end
+
+  private
+
+    def state_short
+      States::STATE_HASH[params[:state]]
+    end
+
+    def mapping
+      collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
+      Rails.cache.fetch(collection_mapping_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+        CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
+      end
+    end
 end
