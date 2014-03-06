@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require lodash
 //= require util/util.js
+//= require util/uri
 //= require resources/omniture.js
 //= require util/tracking.js
 //= require_tree .

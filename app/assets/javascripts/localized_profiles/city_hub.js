@@ -4,53 +4,9 @@ GS.textSwitch = function(el, target, replace) {
   }
 };
 
-GS.uri = {};
-GS.hubs = {};
-GS.util = {};
-
-GS.uri.getQueryData = function(queryString) {
-  var data = {};
-  if(queryString !== undefined) {
-    queryString = queryString.substring(1);
-  }
-  else {
-    var index = window.location.href.indexOf('?');
-    if(index === -1) {
-      queryString = "";
-    }
-    else {
-      queryString = window.location.href.slice(index + 1);
-    }
-  }
-
-  var hashes = queryString.split('&');
-  if (queryString.length > 0 && hashes.length > 0) {
-    for (var i = 0; i < hashes.length; i++) {
-      var hash = hashes[i].split('=');
-      var key = hash[0];
-      var value = hash[1];
-
-      // if the querystring key is already in the data hash, then the querystring had multiple key=value pairs
-      // with the same key. Make the key point to an array with all the values
-      if (data.hasOwnProperty(key)) {
-        // if the value in the data hash is _already_ an array, just push on the value
-        if (data[key] instanceof Array) {
-            data[key].push(value);
-
-            // otherwise we need to copy the existing value that's on the data hash into a new array
-        } else {
-            var anArray = [];
-            anArray.push(data[key]);
-            anArray.push(hash[1]);
-            data[hash[0]] = anArray;
-        }
-      } else {
-        data[hash[0]] = hash[1];
-      }
-    }
-  }
-  return data;
-};
+GS.uri = GS.uri || {};
+GS.hubs = GS.hubs || {};
+GS.util = GS.util || {};
 
 GS.searchBySchoolNameForm = (function() {
   var SEARCH_PAGE_PATH = '/search/search.page';
@@ -73,7 +29,7 @@ GS.searchBySchoolNameForm = (function() {
     var collectionId = $form.find('#jq-collectionId').val();
     var state = $form.find('#jq-state').val();
 
-    var queryStringData = GS.uri.Uri.getQueryData();
+    var queryStringData = GS.uri.getQueryData();
 
     queryStringData.q = encodeURIComponent(searchString);
     queryStringData.collectionId = encodeURIComponent(collectionId);
