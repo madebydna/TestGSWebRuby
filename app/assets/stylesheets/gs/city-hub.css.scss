@@ -145,6 +145,7 @@
   }
 
   .search-bar {
+    width: 69%;
     input {
       width: 100%;
     }
@@ -160,7 +161,6 @@
 
 @media only screen and (max-width: 480px) {
   .search-bar {
-    width: 100%;
     left: -10px;
   }
 }
