@@ -196,4 +196,30 @@ module ApplicationHelper
 
   end
 
+  def column_sizing_classes(xs, sm, md, lg)
+    " col-xs-#{xs} col-sm-#{sm} col-md-#{md} col-lg-#{lg}"
+  end
+
+  def content_tag_with_sizing(name, *args, &block)
+    # The inner content of the tag depends on whether or not a block is given.
+    # If content of the tag is the first item, the options will be second
+    args.unshift nil if args.first && args.first.is_a?(Hash)
+    options = args.second || {}
+
+    if options[:sizes]
+      default_sizing = { xs: 12, sm: 12, md: 12, lg: 12 }
+      sizing = (options[:sizes] || {}).reverse_merge! default_sizing
+      options.delete :sizes
+      sizing_class = self.column_sizing_classes(sizing[:xs], sizing[:sm], sizing[:md], sizing[:lg])
+      options[:class] ||= ''
+      options[:class] << sizing_class
+    end
+
+    content_tag name, *args, &block
+  end
+
+  def div_tag(*args, &block)
+    content_tag_with_sizing :div, *args, &block
+  end
+
 end
