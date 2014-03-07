@@ -70,6 +70,18 @@ gem 'mocha_rails'
 
 gem 'meta-tags', :require => 'meta_tags'
 
+gem 'simple_form'
+
+# Maps controller filters to your model scopes
+gem 'has_scope'
+
+# Pagination library for Rails 3, Sinatra, Merb, DataMapper, and more http://github.com/mislav/will_paginate/wikis
+# gem 'will_paginate', '~> 3.0'
+
+# supports decorator for models
+gem 'request_store', '~> 1.0.3'
+gem 'draper', '~> 1.3'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
@@ -111,7 +123,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'mechanize'
-  gem 'capybara'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
 
@@ -121,6 +132,7 @@ group :development, :test do
   # Test coverage tool
   gem 'simplecov', '~> 0.8.2'
   gem 'simplecov-html', '~> 0.8.0'
+  gem 'simplecov-rcov'
 
 
   # Guard and Spork for faster rspec testing

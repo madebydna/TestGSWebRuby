@@ -38,7 +38,7 @@
                         <% end %>
                         <% if @school.local_rating  %>
                             <div class="fl prl open-sans pt2 h24">
-                                <span class="mrm">Local rating:</span>
+                                <span class="mrm">Excellent Schools Detroit rating:</span>
                                 <span class="open-sans_sb">
                                     <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
                                 </span>
@@ -48,6 +48,20 @@
                             <div class="fl prl open-sans pt2 h24">
                                 <span class="mrm">State rating:</span>
                                 <span class="open-sans_sb"><%= @school.state_rating %></span>
+                            </div>
+                        <% end %>
+                        <% prek_star_rating = @school.preK_star_rating %>
+                        <% if prek_star_rating  %>
+                            <% prek_star_rating_text = 'star' %>
+                            <% if prek_star_rating == 0 %>
+                                <% prek_star_rating_text = 'licensed' %>
+                                <% prek_star_rating = '' %>
+                            <% elsif prek_star_rating > 1 %>
+                                <% prek_star_rating_text = 'stars' %>
+                            <% end %>
+                            <div class="fl prl open-sans pt2 h24">
+                                <span class="mrm">Preschool rating:</span>
+                                <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
                             </div>
                         <% end %>
                     </div>

@@ -1,42 +1,65 @@
 <% include_rich_snippets ||= false %>
-<% school_reviews_pagination.each do |review| %>
-    <hr />
-    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
-        <!--use quality or p_overall(for prek) for star counts and overall score.OM-209-->
-        <% overall_review_rating = 'decline' %>
-        <% if review[:quality] != 'decline' %>
-            <% overall_review_rating = review[:quality] %>
-        <% elsif review[:p_overall] != 'decline' %>
-            <% overall_review_rating = review[:p_overall] %>
-        <% end %>
-        <% if include_rich_snippets %>
-            <span itemprop="itemreviewed" style="display:none;"><%= @school.name %></span>
-            <span itemprop="reviewer" style="display:none;"><%= review[:member_id] %></span>
-            <time itemprop="dtreviewed" style="display:none;" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
-            <span itemprop="rating" style="display:none;"><%= overall_review_rating.to_i %></span>
-        <% end %>
+<hr />
+<div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
+    <!--use quality or p_overall(for prek) for star counts and overall score.OM-209-->
+    <% overall_review_rating = 'decline' %>
+    <% if review[:quality] != 'decline' %>
+        <% overall_review_rating = review[:quality] %>
+    <% elsif review[:p_overall] != 'decline' %>
+        <% overall_review_rating = review[:p_overall] %>
+    <% end %>
+    <% if include_rich_snippets %>
+        <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
+        <span itemprop="reviewer" class="dn"><%= review[:member_id] %></span>
+        <time itemprop="dtreviewed" class="dn" datetime="<%= review[:posted].strftime "%Y-%m-%d" %>"></time>
+        <span itemprop="rating" class="dn"><%= overall_review_rating.to_i %></span>
+    <% end %>
 
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 pbm">
-            <div>
-                <%= draw_stars_16 overall_review_rating.to_i %>
-            </div>
-            <br />
-            Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
-            - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
+    <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
+        <div>
+            <%= draw_stars_16 overall_review_rating.to_i %>
         </div>
+        <br />Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
+        - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
+    <% end %>
 
-        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
-            <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
-                <% if include_rich_snippets %>
-                    <span itemprop="description">
-                        <%= review[:comments] %>
-                    </span>
-                <% else %>
+    <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 } do %>
+        <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
+            <% if include_rich_snippets %>
+                <span itemprop="description">
                     <%= review[:comments] %>
-                <% end %>
+                </span>
             <% else %>
-                <div class="well mbn">This review submitted without content.</div>
+                <%= review[:comments] %>
             <% end %>
-        </div>
+        <% else %>
+            <div class="well mbn">This review submitted without content.</div>
+        <% end %>
+    <% end %>
+
+    <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
+        <% if logged_in? && current_user.reported_review?(review) %>
+            <div class="pull-right small ptm">You've reported this review</div>
+        <% else %>
+            <% if review[:comments].strip.present? %>
+                <div class="pull-right small ptm js-report-review-link-<%= review.id %>">
+                    <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
+                </div>
+                <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
+                    <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>
+
+<div class="row pam" style="display:none;">
+  <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 } %>
+  <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 }, class: "js-report-review-container-#{review.id}" %>
+</div>
+
+<% unique_content_for :global_hidden_content do %>
+    <div class="js-report-review-form-template">
+      <%= render 'shared/report_review_form' %>
     </div>
 <% end %>

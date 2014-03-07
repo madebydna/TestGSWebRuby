@@ -106,6 +106,11 @@ GEM
     docile (1.1.1)
     domain_name (0.5.15)
       unf (>= 0.0.5, < 1.0.0)
+    draper (1.3.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -157,6 +162,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    has_scope (0.5.1)
     hashie (2.0.5)
     hike (1.2.3)
     http-cookie (1.0.2)
@@ -303,6 +309,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     remotipart (1.2.1)
+    request_store (1.0.5)
     require_all (1.3.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -343,11 +350,16 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
     sexp_processor (4.4.0)
+    simple_form (2.1.1)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    simplecov-rcov (0.2.3)
+      simplecov (>= 0.4.1)
     sinon-rails (1.7.3)
       railties (>= 3.1)
     site_prism (2.5)
@@ -391,6 +403,7 @@ GEM
       rack (>= 1.0)
     webrobots (0.1.1)
     websocket (1.0.7)
+    win32console (1.3.2)
     win32console (1.3.2-x86-mingw32)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -420,6 +433,7 @@ DEPENDENCIES
   database_cleaner
   db-charmer (= 1.8.4)
   devise
+  draper (~> 1.3)
   factory_girl_rails (~> 4.2.1)
   gon
   guard
@@ -429,6 +443,7 @@ DEPENDENCIES
   guard-spork
   haml (= 4.0.3)
   haml-rails
+  has_scope
   hashie
   jbuilder (~> 1.2)
   jquery-rails
@@ -446,6 +461,7 @@ DEPENDENCIES
   rails_admin
   rails_admin_nestable
   rails_best_practices
+  request_store (~> 1.0.3)
   rspec
   rspec-rails
   ruby-hmac (~> 0.4.0)
@@ -455,8 +471,10 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sdoc
   selenium-webdriver
+  simple_form
   simplecov (~> 0.8.2)
   simplecov-html (~> 0.8.0)
+  simplecov-rcov
   sinon-rails
   site_prism
   spork-rails (~> 4.0.0)

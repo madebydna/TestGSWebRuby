@@ -2,7 +2,7 @@ class RatingsHelper
 
   def self.fetch_ratings_for_school school
     #Build an array of all the data type ids so that we can query the database only once.
-    all_data_type_ids = RatingsConfiguration.fetch_city_rating_data_type_ids(school) + RatingsConfiguration.fetch_state_rating_data_type_ids(school) + RatingsConfiguration.fetch_gs_rating_data_type_ids
+    all_data_type_ids = RatingsConfiguration.fetch_city_rating_data_type_ids(school) + RatingsConfiguration.fetch_state_rating_data_type_ids(school) + RatingsConfiguration.fetch_gs_rating_data_type_ids + RatingsConfiguration.fetch_preK_rating_data_type_ids(school)
 
     #Get the ratings from the database.
     TestDataSet.by_data_type_ids(school, all_data_type_ids)
@@ -116,5 +116,31 @@ class RatingsHelper
     end
 
     gs_ratings_results
+  end
+
+  def self.construct_preK_ratings results, school
+    preK_rating_configuration = RatingsConfiguration.fetch_preK_rating_configuration(school)
+    preK_rating_data_type_ids = RatingsConfiguration.fetch_preK_rating_data_type_ids(school)
+
+    #Hash to hold the preK ratings results
+    preK_ratings_results = {}
+
+    #Build a hash of the data_keys to the rating descriptions.
+    description_hash = DataDescription.lookup_table
+
+    #If configuration exists then loop over the results
+    if !preK_rating_configuration.nil? && !preK_rating_data_type_ids.empty?
+      results.each do |test_data_set|
+        if (preK_rating_data_type_ids.include? test_data_set.data_type_id)
+
+          if preK_rating_configuration.star_rating && test_data_set.data_type_id == preK_rating_configuration.star_rating.data_type_id
+            preK_ratings_results["star_rating"] = test_data_set.school_value_float.round
+            preK_ratings_results["description"] = description_hash[preK_rating_configuration.star_rating.description_key]
+            preK_ratings_results["preK_rating_label"] = test_data_set.display_name
+          end
+        end
+      end
+    end
+    preK_ratings_results
   end
 end

@@ -1,0 +1,19 @@
+<% if !data["preK_ratings"].nil? && !data["preK_ratings"]["star_rating"].nil? %>
+    <div class="row mbl pam">
+        <% rating_type = '' %>
+        <% rating_star = data["preK_ratings"]["star_rating"] %>
+        <% if rating_star == 0 %>
+            <% rating_type = '-outline' %>
+            <% rating_star = '1' %>
+        <% end %>
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+            <h5><%= data["preK_ratings"]["preK_rating_label"] %></h5>
+            <br/><%= data["preK_ratings"]["description"] %>
+        </div>
+    </div>
+<% end %>
+
+

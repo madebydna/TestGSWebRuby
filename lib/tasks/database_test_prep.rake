@@ -2,34 +2,31 @@ namespace :db do
   namespace :test do
     desc 'Create the legacy test databases'
     task :prepare => "db:load_config" do
+      require_relative '../database_configuration_helper'
+      legacy_database_names = DatabaseConfigurationHelper.legacy_database_names 'test'
+      source_mysql_config = DatabaseConfigurationHelper.server_config_for 'dev'
+      destination_mysql_config = DatabaseConfigurationHelper.server_config_for 'localhost'
 
-      # The symbols in this array need to match the keys in database.yml.
-      # In other words, they might not match the actual database name you want to copy
-      make_test_versions_of_dbs = [
-        :gs_schooldb, :community, :ca
-      ]
+      legacy_database_names.each do |db_name|
 
-      database_configs = ActiveRecord::Base.configurations.values_at(Rails.env).first
-
-      make_test_versions_of_dbs.each do |db_config_key|
-        db_config_key = db_config_key.to_s
-        config = database_configs[db_config_key]
-        if config.present?
-          username = config['username']
-          password = config['password']
-          db = config['database']
-          if password.present?
-            command = "mysqldump -u#{username} -p#{password} -d #{db} | mysql -u#{username} -p#{password} -D#{db}_test"
-          else
-            command = "mysqldump -u#{username} -d #{db} | mysql -u#{username} -D#{db}_test"
-          end
-          puts "db:test:prepare copying #{db} to #{db}_test with command: #{command}"
-          system command
-        else
-          puts "Could not find database.yml configuration block for db:  #{db}"
+        mysql_destination_string = "mysql -h#{destination_mysql_config.host} -u#{destination_mysql_config.username}"
+        if destination_mysql_config.password.present?
+          mysql_destination_string << " -p#{destination_mysql_config.password}"
         end
-      end
 
+        create_db_command = "echo 'create database #{db_name}_test' | " + mysql_destination_string
+
+        dump_db_command = "mysqldump -d -h#{source_mysql_config.host} -u#{source_mysql_config.username} -p#{source_mysql_config.password} #{db_name} "
+        dump_db_command << " | #{mysql_destination_string}"
+        dump_db_command << " -D#{db_name}_test"
+
+        puts "Creating database: #{db_name}_test"
+        unless system(create_db_command)
+          puts 'Skipping create database (it might already exist.) Continuing on.'
+        end
+        puts "Dumping schema only from #{db_name} to #{db_name}_test with command: #{dump_db_command}"
+        system dump_db_command
+      end
     end
   end
 end

@@ -56,7 +56,8 @@
             </div>
 
             <div class="js_reviewsList">
-                <%= render '/shared/review_module', school_reviews_pagination: @school_reviews, include_rich_snippets: true %>
+                <%= render partial: '/shared/review_module',
+                           collection: @school_reviews, as: :review, locals: { include_rich_snippets: true } %>
             </div>
             <% if @school_reviews_global.review_filter_totals.all <= 10 %>
                 <% @review_button_hide ="dn" %>

@@ -12,6 +12,12 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :quality_decline, where("quality != 'decline'")
   scope :belonging_to, lambda { |user| where(member_id: user.id) }
+  scope :disabled, where(status: %w[d pd])
+  scope :unpublished, where(status: %w[u pu])
+  scope :held, where(status: %w[h ph])
+  scope :reported, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
+
+  attr_accessor :reported_entities
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
@@ -28,7 +34,7 @@ class SchoolRating < ActiveRecord::Base
   validate :comments_word_count
   validates_presence_of :ip
 
-  before_save :calculate_and_set_status, :ensure_all_reviews_moderated, :set_processed_date_if_published
+  before_save :calculate_and_set_status, :set_processed_date_if_published
   after_save :auto_report_bad_language
 
   def school=(school)
@@ -43,11 +49,7 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def school
-    begin
-      @school ||= School.on_db(self.state.downcase.to_sym).find self.school_id
-    rescue
-      @school ||= nil
-    end
+    @school ||= School.on_db(self.state.downcase.to_sym).find self.school_id rescue nil
   end
 
   def uniqueness_attributes
@@ -141,16 +143,6 @@ class SchoolRating < ActiveRecord::Base
     self.status = status
   end
 
-  # if the review would otherwise be published (or provisional published), make it unpublished instead, so that it is
-  # forced to go through moderation.
-  def ensure_all_reviews_moderated
-    if status == 'pp'
-      self.status = 'pu'
-    elsif self.status == 'p'
-      self.status = 'u'
-    end
-  end
-
   def auto_report_bad_language
     alert_word_results = AlertWord.search(review_text)
 
@@ -180,6 +172,10 @@ class SchoolRating < ActiveRecord::Base
     if published?
       self.process_date = Time.now.to_s
     end
+  end
+
+  def reported?
+    Array(reported_entities).any?
   end
 
   private

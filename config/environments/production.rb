@@ -89,5 +89,5 @@ LocalizedProfiles::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.session_store :cookie_store, key: '_LocalizedProfiles_session', :domain => :all, :tld_length => 2, :httponly => false
+  config.session_store :cookie_store, key: '_gsweb_session', :domain => :all, :tld_length => 2, :httponly => false
 end

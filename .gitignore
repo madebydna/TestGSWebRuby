@@ -11,6 +11,7 @@
 .#*.*[0-9]
 atlassian-ide-plugin.xml
 .idea
+.generators
 
 # Vim
 *.swp
@@ -22,5 +23,12 @@ tmp
 
 # simplecov code coverage
 coverage/
+
+# custom database-local.yml for developers
+config/database-local.yml
+config/database_local.yml
+
+# custom env_global for developers
+config/env_global_local.yml
 
 

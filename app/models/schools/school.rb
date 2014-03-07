@@ -3,9 +3,12 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessible :name, :state, :school_collections, :district_id
+  attr_accessible :name, :state, :school_collections, :district_id, :city
+  attr_writer :collections
   has_many :school_metadatas
   belongs_to :district
+
+  scope :held, joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state")
 
   self.inheritance_column = nil
 
@@ -187,8 +190,10 @@ class School < ActiveRecord::Base
 
   # returns true if school is on held school list (associated with school reviews)
   def held?
-    # TODO: implementation
-    return false
+    if !defined?(@held)
+      @held = HeldSchool.has_school?(self)
+    end
+    @held
   end
 
   def rating_data
@@ -208,6 +213,10 @@ class School < ActiveRecord::Base
 
   def state_rating
     rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
+  end
+
+  def preK_star_rating
+    rating_data.fetch('preK_ratings',{}).fetch('star_rating',nil)
   end
 
   def data_for_category(category)
@@ -237,6 +246,14 @@ class School < ActiveRecord::Base
 
   def esp_responses
     @esp_responses ||= EspResponse.on_db(shard).where(school_id: id).active
+  end
+
+  def held_school
+    HeldSchool.where(state: state, school_id: id).first
+  end
+
+  def held_school?
+    HeldSchool.exists?(state: state, school_id: id)
   end
 
 end

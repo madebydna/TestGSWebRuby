@@ -1,0 +1,13 @@
+namespace :gsweb do
+
+  task :install do
+    if Rails.env == 'development'
+      sh 'bundle install'
+      Rake::Task['db:create'].invoke
+      Rake::Task['db:migrate'].invoke
+      sh 'touch config/database_local.yml'
+      sh 'touch config/env_global_local.yml'
+    end
+  end
+
+end

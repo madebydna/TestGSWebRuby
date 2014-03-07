@@ -21,6 +21,13 @@ ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
 file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
 ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
 
+file = File.join(Dir.pwd, 'config', 'env_global_local.yml')
+if File.exist?(file)
+  yaml = YAML.load_file file
+  ENV_GLOBAL.merge!(yaml) if yaml.present?
+end
+
+
 module LocalizedProfiles
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -30,7 +37,7 @@ module LocalizedProfiles
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += Dir[Rails.root.join('config', 'initializers', 'extensions', '**/')]
-    config.autoload_paths += Dir[Rails.root.join('app', 'lib', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('lib', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
 
@@ -87,6 +94,10 @@ module LocalizedProfiles
     require File.join(config.root, 'lib', 'database_configuration_loader')
     def config.database_configuration
       config = DatabaseConfigurationLoader.config
+    end
+
+    config.after_initialize do
+      Version.send :db_magic, :connection => :profile_config
     end
 
     # Add in StatusPage as rack middleware

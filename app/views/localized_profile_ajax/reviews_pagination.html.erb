@@ -1,3 +1,4 @@
-    <%= render '/shared/review_module', school_reviews_pagination: @school_reviews_pagination %>
+<%= render partial: '/shared/review_module',
+           collection: @school_reviews_pagination, as: :review, locals: {} %>
 
 

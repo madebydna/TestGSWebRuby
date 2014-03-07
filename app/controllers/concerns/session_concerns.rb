@@ -1,6 +1,13 @@
 module SessionConcerns
   extend ActiveSupport::Concern
-  include UrlHelper
+
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
 
   STORED_LOCATION_EXPIRATION = 15.minutes
 
@@ -82,8 +89,12 @@ module SessionConcerns
     end
   end
 
-  def redirect_back
-    redirect_to(request.referer)
+  def redirect_back(default = home_url)
+    if request.env['HTTP_REFERER'].present? and request.env['HTTP_REFERER'] != request.env['REQUEST_URI']
+      redirect_to :back
+    else
+      redirect_to default
+    end
   end
 
 end

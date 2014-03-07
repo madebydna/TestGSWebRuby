@@ -4,22 +4,32 @@ class ApplicationController < ActionController::Base
   include CookieConcerns
   include AuthenticationConcerns
   include SessionConcerns
-
-  helper :all
-
-  rescue_from Exception, :with => :exception_handler
+  include UrlHelper
 
   before_filter :login_from_cookie, :init_omniture
 
-  helper_method :logged_in?, :current_user
+  protected
+
+  rescue_from Exception, :with => :exception_handler
+
+  helper :all
+  helper_method :logged_in?, :current_user, :url_for
 
   # methods for getting request URL / path info
+
+  def url_for(*args, &block)
+    url = super(*args, &block)
+    url.sub! /\.gs\/(\?|$)/, '.gs\1'
+    url.sub! /\.topic\/(\?|$)/, '.topic\1'
+    url.sub! /\.page\/(\?|$)/, '.page\1'
+    url
+  end
 
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
 
     host = (ENV_GLOBAL['app_host'].presence || request.host).dup
-    port = (ENV_GLOBAL['app_port'].presence || request.port).dup
+    port = (ENV_GLOBAL['app_port'].presence || request.port)
     host << ':' + port.to_s if port && port.to_i != 80
     host
   end
@@ -47,7 +57,7 @@ class ApplicationController < ActionController::Base
 
   # Finds school given request param schoolId
   def find_school
-    school_id = params[:schoolId].to_i
+    school_id = (params[:schoolId] || params[:school_id]).to_i
     state = params[:state]
 
     if school_id > 0
@@ -58,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_school
-    @school = find_school if params[:schoolId].to_i > 0
+    @school = find_school if params[:schoolId].to_i > 0 || params[:school_id].to_i > 0
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end

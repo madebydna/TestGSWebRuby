@@ -84,7 +84,7 @@ class CategoryDataReader
         art:   {count: 'n/a', content: 'Arts & music'},
         sport: {count: 'n/a', content: 'Sports'},
         club:  {count: 'n/a', content: 'Clubs'},
-        lang:  {count: 'n/a', content: 'Foreign languages'},
+        lang:  {count: 'n/a', content: 'World languages'},
         sched: {count: 'Half day', content: 'Preschool schedule'},
         commu: {count: 'Community center', content: 'Care setting'}
     }
@@ -163,7 +163,6 @@ class CategoryDataReader
   def self.census_data(school, category)
     # Get data for all data types
     results = school.all_census_data
-
     key_label_map = CategoryData.belonging_to_collections(category, school.collections).inject({}) do |hash, category_data|
       hash[category_data.response_key] = category_data.label
       hash
@@ -173,13 +172,22 @@ class CategoryDataReader
     data_types = category.keys(school.collections)
 
     # Filter data: return only data for this category's chosen data types
-    results.for_data_types! data_types
+    results = results.for_data_types data_types
 
     data_type_to_results_map = results.group_by(&:data_type)
 
+    data_type_to_results_map.each_pair do |data_type, results|
+      if results.any? { |result| result.breakdown_id.nil? }
+        results.select! { |result| result.breakdown_id.nil? }
+      end
+    end
+
     # Sort the data types the same way the keys are sorted in the config
     data_type_to_results_map = Hash[data_type_to_results_map.sort_by {
-        |data_type_desc, value| data_types.index(data_type_desc.downcase)
+        |data_type_desc, value|
+        data_type_sort_num = data_types.index(data_type_desc.downcase)
+        data_type_sort_num = 1 if data_type_sort_num.nil?
+        data_type_sort_num
     }]
 
     data = {}
@@ -198,7 +206,7 @@ class CategoryDataReader
 
       # Default the sort order of rows within a data type to school_value descending
       # School value might be nil, so sort using zero in that case
-      rows.sort_by! { |row| row[:school_value] ? row[:school_value] : 0 }.reverse!
+      rows.sort_by! { |row| row[:school_value] ? row[:school_value].to_f : 0.0 }.reverse!
 
       # Use the data type key to look up the label to use. If no label found, default to using the key itself
       label = key_label_map.fetch(key, key)
@@ -307,6 +315,7 @@ class CategoryDataReader
     gs_rating_value = RatingsHelper.construct_GS_ratings results, school
     city_rating_value =  RatingsHelper.construct_city_ratings results, school
     state_rating_value = RatingsHelper.construct_state_ratings results, school
+    preK_ratings = RatingsHelper.construct_preK_ratings results, school
 
     return_var = {}
     if gs_rating_value.present?
@@ -318,7 +327,15 @@ class CategoryDataReader
     if state_rating_value.present?
       return_var["state_rating"] = state_rating_value
     end
+    if preK_ratings.present?
+      return_var["preK_ratings"] = preK_ratings
+    end
+
     return_var
+  end
+
+  def self.cta_prek_only (school, _)
+     school.preschool? ? nil : "Show Module"
   end
   #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
 end

@@ -5,6 +5,7 @@ class SigninController < ApplicationController
   protect_from_forgery
 
   layout 'application'
+  public
 
   # store this join / login url only if another location isn't stored
   # If the user was looking at a profile page, we want to go back there instead
@@ -65,7 +66,7 @@ class SigninController < ApplicationController
   def destroy
     log_user_out
     flash_notice t('actions.session.signed_out')
-    redirect_back
+    redirect_back(signin_url)
   end
 
   def post_registration_confirmation

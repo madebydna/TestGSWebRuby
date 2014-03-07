@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
-  has_many :esp_memberships, foreign_key: 'member_id', :conditions => ['active = 1']
+  has_many :esp_memberships, foreign_key: 'member_id', conditions: ['active = 1']
+  has_many :reported_reviews, class_name: 'ReportedEntity', foreign_key: 'reporter_id',
+           conditions: 'reported_entity_type = "schoolReview" and active = 1'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -173,9 +175,9 @@ class User < ActiveRecord::Base
     favorite_school.save!
   end
 
-  def has_subscription?(list)
+  def has_subscription?(list, school)
     subscriptions.any? do |subscription|
-      subscription.list == list && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+      subscription.list == list && subscription.school_id == school.id && subscription.state == school.state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
     end
   end
 
@@ -188,6 +190,10 @@ class User < ActiveRecord::Base
     memberships = self.esp_memberships
     memberships = memberships.for_school(school) if school
     memberships.any? { |membership| membership.approved? || membership.provisional? }
+  end
+
+  def reported_review?(review)
+    self.reported_reviews.map(&:reported_entity_id).include? review.id
   end
 
   private
@@ -231,7 +237,6 @@ class User < ActiveRecord::Base
   def set_defaults
     self.time_added = Time.now
   end
-
 
 
 end

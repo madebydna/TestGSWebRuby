@@ -11,6 +11,9 @@
             <% link_text = link_text.present? ? link_text : nil %>
             <%= raw display_section_head_link category_placement, link_text %>
         </div>
+        <% if category_placement.category.present?  && category_placement.category.description.present? %>
+            <div class="clearfix tal phm pbm"><p class="mvn"><%= category_placement.category.description %></p></div>
+        <% end %>
      <% elsif category_placement.depth == 1 %>
         <div class="plm clearfix mbl mtm">
             <div class="fl">
@@ -18,5 +21,8 @@
             </div>
 
         </div>
+        <% if category_placement.category.present?  && category_placement.category.description.present? %>
+            <div class="clearfix tal pam"><p class="mvn"><%= category_placement.category.description %></p></div>
+        <% end %>
      <% end %>
 <% end %>
