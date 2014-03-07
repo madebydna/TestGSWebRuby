@@ -15,4 +15,8 @@ class HeldSchool < ActiveRecord::Base
     self.school_id = school.id
   end
 
+  def self.has_school?(school)
+    HeldSchool.exists?(school_id: school.id, state: school.state)
+  end
+
 end

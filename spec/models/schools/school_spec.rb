@@ -59,4 +59,19 @@ describe School do
       expect(school.process_level).to eq 'PK-12'
     end
   end
+
+  describe 'checking te school held status' do
+    it 'should return true because the school is held' do
+      school = FactoryGirl.build(:school)
+      HeldSchool.stub(:exists?).and_return(true)
+      expect(school.held?).to be_true
+    end
+
+    it 'should return false because the school is not held' do
+      school = FactoryGirl.build(:school)
+      HeldSchool.stub(:exists?).and_return(false)
+      expect(school.held?).to be_false
+    end
+  end
+
 end

@@ -190,8 +190,10 @@ class School < ActiveRecord::Base
 
   # returns true if school is on held school list (associated with school reviews)
   def held?
-    # TODO: implementation
-    return false
+    if !defined?(@held)
+      @held = HeldSchool.has_school?(self)
+    end
+    @held
   end
 
   def rating_data
