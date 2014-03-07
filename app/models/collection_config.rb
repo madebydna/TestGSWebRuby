@@ -151,7 +151,9 @@ class CollectionConfig < ActiveRecord::Base
     def ed_community_subheading(collection_configs)
       unless collection_configs.empty?
         raw_subheading_str = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first.value
-        raw_subheading_str.gsub(/\{\scontent\:'/, '').gsub(/'\s\}/, '')
+        raw_subheading_str.gsub(/\{\scontent\:'/, '')
+                          .gsub(/'\s\}/, '')
+                          .gsub(/\\/, '')
       end
     end
 
@@ -159,7 +161,10 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_PARTNERS_KEY }).first.value
-          parsed_partners_str = raw_partners_str.gsub(/\r/, '').gsub(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }.gsub(/(\w+):'/) { |match| ":#{match[0..-3]}=> '" }.gsub(/(\w+)\s\s:/) { |match| ":#{match[0..-3]}=> " }
+          parsed_partners_str = raw_partners_str.gsub(/\r/, '')
+                                                .gsub(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
+                                                .gsub(/(\w+):'/) { |match| ":#{match[0..-3]}=> '" }
+                                                .gsub(/(\w+)\s\s:/) { |match| ":#{match[0..-3]}=> " }
           partners = eval(parsed_partners_str)[:partners]
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|

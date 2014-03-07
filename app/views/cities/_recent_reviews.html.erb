@@ -17,7 +17,7 @@
         <% unless review.school.gs_rating.nil? %>
             <p class="bottom">GreatSchools rating: <%= review.school.gs_rating %></p>
         <% end %>
-        <%= link_to "Read all #{review[:count]} reviews", school_reviews_url(review.school), class: 'small' %>
+        <%= link_to "Read all #{review.count} reviews", school_reviews_url(review.school), class: 'small' %>
       </div>
     <% end %>
   </div>

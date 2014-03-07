@@ -13,7 +13,43 @@
   </div>
 
   <div class="row">
+    <div class="col-xs-10 col-sm-10 col-md-6 col-lg-7 col-lg-offset-3 col-md-offset-2 col-sm-offset-1">
+      <h1 class='mha'><%= @city.capitalize %> Education Community</h1>
+    </div>
+    <div class="col-xs-10 col-sm-10 col-md-7 col-lg-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-1">
+      <p><%= @sub_heading %></p>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="col-xs-10 col-sm-10 col-md-7 col-lg-6 col-lg-offset-3 col-md-offset-2 col-sm-offset-1 mtl" style='margin-left: 28%;'>
+      <ul class='education-community-tabs'>
+        <li class='active'><a href="#">Community</a></li>
+        <li><a href="education">Education</a></li>
+        <li><a href="funders">Funders</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <% @partners['Community'].each do |partner| %>
+    <div class="row">
+      <div class="community-partner-row">
+        <hr>
+        <%= image_tag(partner[:logo], alt: 'Partner logo') %>
+        <div>
+          <h2 class='mtn'><%= partner[:heading] %></h2>
+          <p><%= partner[:description] %></p>
+          <% partner[:links].each do |link| %>
+            <% if link[:newwindow] == 'true' %>
+              <%= link_to(link[:heading], link[:url], class: 'small', target: 'blank') %>
+            <% else %>
+              <%= link_to(link[:heading], link[:url], class: 'small',) %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <%= render 'footer' %>

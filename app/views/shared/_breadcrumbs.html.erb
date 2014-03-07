@@ -1,13 +1,17 @@
 <!-- for school ---- home / state / city / district (if appropriate)-->
 <div class="row mtm pls gs_set-z-1">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 font-size-small">
-        <% breadcrumbs.each_with_index do |(text, url), index| %>
-            <%= '/' if index > 0 %>
-            <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <%= link_to url, itemprop:'url' do %>
-                    <span itemprop="title"><%= text %></span>
-                <% end %>
-            </span>
+  <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 font-size-small">
+    <% breadcrumbs.each_with_index do |(text, url), index| %>
+      <%= '/' if index > 0 %>
+      <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+        <% if url.nil? %>
+          <span itemprop="title"><%= text %></span>
+        <% else %>
+          <%= link_to url, itemprop:'url' do %>
+              <span itemprop="title"><%= text %></span>
+          <% end %>
         <% end %>
-    </div>
+      </span>
+    <% end %>
+  </div>
 </div>

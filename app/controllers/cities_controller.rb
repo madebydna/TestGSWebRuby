@@ -1,6 +1,5 @@
 class CitiesController < ApplicationController
   before_filter :set_city_state
-  before_filter :set_breadcrumbs, except: [:show]
 
   def show
     collection_mapping = mapping
@@ -35,19 +34,31 @@ class CitiesController < ApplicationController
   def events
     @collection_id = mapping.collection_id
     @events = CollectionConfig.important_events(@collection_id)
-  end
-
-  def community
-    @collection_id = mapping.collection_id
-    @events = CollectionConfig.city_hub_important_events(configs)
-  end
-
-  def set_breadcrumbs
     @breadcrumbs = {
       'Home' => '/',
       @state[:long].titleize => "/#{@state[:long]}",
       @city.titleize => "/#{@state[:long]}/#{@city}"
     }
+  end
+
+  def community
+    collection_mapping = mapping
+    if collection_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = collection_mapping.collection_id
+      collection_configs = configs
+      @events = CollectionConfig.city_hub_important_events(collection_configs, 2)
+      @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
+      @partners = CollectionConfig.ed_community_partners(collection_configs)
+      @breadcrumbs = {
+        @city.titleize => "#{@state[:long]}/#{@city}",
+        'Education Community' => nil
+      }
+    end
+  end
+
+  def set_breadcrumbs
   end
 
   private

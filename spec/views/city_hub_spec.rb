@@ -41,7 +41,7 @@ describe 'cities/_choose_a_school.html.erb' do
   end
 end
 
-describe 'cities/_upcoming_event.html.erb' do
+describe 'cities/_upcoming_events.html.erb' do
   context 'without upcoming events' do
     it 'renders an error message' do
       view.stub(:important_events) { nil }
