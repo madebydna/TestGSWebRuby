@@ -91,7 +91,75 @@ GS.reviews = GS.reviews || function($) {
             }
         };
     };
+
+    var reportReviewLink = function(reviewId) {
+        return $(".js-report-review-link-" + reviewId);
+    };
+
+    var reportReviewCloseLink = function(reviewId) {
+        return $(".js-report-review-close-link-" + reviewId);
+    };
+
+    var reportReviewLinkClicked = function(reviewId, containerDomSelector) {
+        reportReviewLink(reviewId).hide();
+        reportReviewCloseLink(reviewId).show();
+        showReportReviewForm(reviewId, containerDomSelector);
+    };
+
+    var reportReviewCloseLinkClicked = function(reviewId, containerDomSelector) {
+        reportReviewLink(reviewId).show();
+        reportReviewCloseLink(reviewId).hide();
+        closeReportReviewForm(reviewId);
+    };
+
+    var showReportReviewForm = function(reviewId, containerDomSelector) {
+        var reportFormSelector = '.js-report-review-form-template';
+
+        var form = $(reportFormSelector).clone(true);
+
+        $(containerDomSelector).append(form.html());
+
+        var new_form = $(containerDomSelector + ' form');
+
+        new_form.attr('id', 'js-report-review-form-' + reviewId);
+
+        var old_action = new_form.attr('action');
+
+        var action = old_action.replace(new RegExp('0/$'), reviewId + '/');
+
+        new_form.attr('action', action);
+
+        new_form.parsley( 'addListener', {
+            onFieldError: function ( elem ) {
+                elem.closest('.form-group').addClass('has-error');
+            },
+            onFieldSuccess: function ( elem ) {
+                elem.closest('.form-group').removeClass('has-error');
+            }
+        } );
+
+        new_form.find('.js-report-review-form-cancel').on('click', function() {
+            reportReviewLink(reviewId).show();
+            reportReviewCloseLink(reviewId).hide();
+            closeReportReviewForm(reviewId);
+        });
+
+        new_form.parent().parent().show();
+    };
+
+    var closeReportReviewForm = function(reviewId) {
+        var form = $('#js-report-review-form-' + reviewId);
+        if (form !== null) {
+            form.parent().parent().hide();
+            form.remove();
+        }
+    };
+
     return {
-        initializeReviewHandlers: initializeReviewHandlers
+        initializeReviewHandlers: initializeReviewHandlers,
+        showReportReviewForm: showReportReviewForm,
+        closeReportReviewForm: closeReportReviewForm,
+        reportReviewLinkClicked: reportReviewLinkClicked,
+        reportReviewCloseLinkClicked: reportReviewCloseLinkClicked
     }
 }(jQuery);

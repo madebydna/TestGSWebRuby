@@ -16,7 +16,7 @@
                 <li>
                     <%- if hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_params[:city]}, #{States.abbreviation(hub_params[:state]).upcase}" %>  <b class="caret"></b>
+                        <%="#{hub_params[:city]}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
@@ -28,7 +28,6 @@
                                 }
                             %>
                         </li>
-                        <% end %>
                         <li>
                             <%= link_to 'Choosing a School',
                                 choosing_schools_url(hub_params),
@@ -48,6 +47,7 @@
                                 <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
                             <% end %>
                         </li>
+                        <% end %>
 
                     </ul>
                 </li>

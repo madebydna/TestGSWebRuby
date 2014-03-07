@@ -1,15 +1,17 @@
 module DeferredActionConcerns
   extend ActiveSupport::Concern
-
   include LocalizationConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
 
+  protected
+
   ALLOWED_DEFERRED_ACTIONS = %w(
     create_subscription_deferred
     save_review_deferred
     add_favorite_school_deferred
+    report_review_deferred
   )
 
   def save_deferred_action(action, params)
@@ -71,6 +73,19 @@ module DeferredActionConcerns
     add_favorite_school params
 
     true
+  end
+
+  def report_review_deferred(params)
+    return false if !logged_in? || current_user.provisional?
+
+    report_review_and_redirect params
+
+    true
+  end
+
+  def self.included obj
+    return unless obj < ActionController::Base
+    obj.helper :all
   end
 
 end

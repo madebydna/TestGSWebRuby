@@ -3,7 +3,20 @@ require 'rubygems'
 
 Spork.prefork do
   require 'simplecov'
-  SimpleCov.start
+
+  if ENV['JENKINS_URL'] # on ci server
+    require 'simplecov-rcov'
+    SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  else
+    require 'simplecov-html'
+    SimpleCov::Formatter::HTMLFormatter
+  end
+
+  SimpleCov.start do
+    add_filter '/spec/'
+    add_filter 'config/initializers/rails_admin.rb'
+    add_filter 'lib/test_connection_management.rb'
+  end
   # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
@@ -21,6 +34,8 @@ Spork.prefork do
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+  Dir[Rails.root.join("spec/controllers/concerns/**/*.rb")].each {|f| require f}
 
   RSpec.configure do |config|
 

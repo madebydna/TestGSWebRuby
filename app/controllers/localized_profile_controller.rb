@@ -21,26 +21,29 @@ class LocalizedProfileController < ApplicationController
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
+    @school_reviews_all = @school.reviews
   end
 
   def quality
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
     set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_quality_url(@school)
+    @canonical_url = school_url(@school)
   end
 
   def details
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Details'
     set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_details_url(@school)
+    @canonical_url = school_url(@school)
   end
 
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
+    set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_reviews_url(@school)
+    @canonical_url = school_url(@school)
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
@@ -48,7 +51,7 @@ class LocalizedProfileController < ApplicationController
     @review_limit = 10
   end
 
-  #protected
+  protected
 
   def set_omniture_data(page_name)
     set_omniture_hier_for_new_profiles
@@ -83,7 +86,12 @@ class LocalizedProfileController < ApplicationController
 
     canonical_path = self.send helper_name.to_sym, @school
 
-    redirect_to canonical_path if canonical_path != request.path + '/'
+    # Add a tailing slash to the request path, only if one doesn't already exist.
+    # Requests made by rspec sometimes contain a trailing slash
+    request_path = request.path.clone
+    request_path << '/' if request_path[-1] != '/'
+
+    redirect_to canonical_path if canonical_path != request_path
   end
 
   def set_seo_meta_tags

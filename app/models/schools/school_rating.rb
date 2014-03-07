@@ -12,6 +12,12 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :quality_decline, where("quality != 'decline'")
   scope :belonging_to, lambda { |user| where(member_id: user.id) }
+  scope :disabled, where(status: %w[d pd])
+  scope :unpublished, where(status: %w[u pu])
+  scope :held, where(status: %w[h ph])
+  scope :reported, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
+
+  attr_accessor :reported_entities
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
@@ -43,11 +49,7 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def school
-    begin
-      @school ||= School.on_db(self.state.downcase.to_sym).find self.school_id
-    rescue
-      @school ||= nil
-    end
+    @school ||= School.on_db(self.state.downcase.to_sym).find self.school_id rescue nil
   end
 
   def uniqueness_attributes
@@ -202,6 +204,11 @@ class SchoolRating < ActiveRecord::Base
       result
     end
   end
+
+  def reported?
+    Array(reported_entities).any?
+  end
+
 
   def self.recent_reviews_in_hub_count(state_abbr, collection_id)
     cache_key = "recent_reviews_count-state:#{state_abbr}-collection_id#{collection_id}"

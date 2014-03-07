@@ -1,6 +1,13 @@
 module OmnitureConcerns
-
   include LocalizationConcerns
+
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
 
   def set_omniture_data_for_school(page_name)
     school_locale = @school.city.nil? ? @school.county : @school.city

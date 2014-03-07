@@ -17,7 +17,7 @@ class CategoryData < ActiveRecord::Base
   end
 
   def self.all_data_for_category(category)
-    Rails.cache.fetch("CategoryData/category_#{category.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
+    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_DATA_PER_CATEGORY_PREFIX}#{category.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
       order('category_id asc').order('collection_id desc').where(category_id:category.id).all
     end
   end

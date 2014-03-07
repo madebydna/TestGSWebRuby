@@ -15,7 +15,7 @@
             <%= render "shared/section_header", category_placement:category_placement, link_text: review_total_count, link_to:'reviews' %>
             <%= render "shared/review_top_sections" %>
             <div class="js_reviewsList">
-                <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews %>
+                <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews_all %>
             </div>
         </div>
     </div>

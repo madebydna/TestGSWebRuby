@@ -1,6 +1,8 @@
 module FavoriteSchoolsConcerns
   extend ActiveSupport::Concern
 
+  protected
+
   def add_favorite_school(params)
     begin
       school_id = params[:school_id]
@@ -29,6 +31,11 @@ module FavoriteSchoolsConcerns
       flash_error e.message
       raise e
     end
+  end
+
+  def self.included obj
+    return unless obj < ActionController::Base
+    obj.helper :all
   end
 
 end

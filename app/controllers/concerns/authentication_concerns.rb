@@ -1,6 +1,14 @@
 module AuthenticationConcerns
   extend ActiveSupport::Concern
 
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
+
   # authentication stuff, cookie setting / reading, etc
 
   COMMUNITY_COOKIE_MAX_AGE = 2.years

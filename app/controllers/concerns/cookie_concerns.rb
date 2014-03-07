@@ -1,6 +1,14 @@
 module CookieConcerns
   extend ActiveSupport::Concern
 
+  protected
+
+  # Make this modules methods into helper methods view can access
+  def self.included obj
+    return unless obj < ActionController::Base
+    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  end
+
   COOKIE_CONFIG = {
     _default: {
       hash: false,
@@ -9,19 +17,15 @@ module CookieConcerns
     },
     history: {
       hash: true,
-      duration: 1.day
     },
     last_school: {
-      hash: true,
-      duration: 1.day,
+      hash: true
     },
     return_to: {
-      hash: false,
-      duration: 1.day,
+      hash: false
     },
     deferred_action: {
-      hash: true,
-      duration: 1.day,
+      hash: true
     }
   }
 
@@ -36,8 +40,8 @@ module CookieConcerns
   end
 
   # Returns the cookie for a given name. If it's a cookie hash, parse the JSON back into a hash and return that
-  def cookie(cookie_name)
-    config = cookie_config cookie_name
+  def cookie(cookie_name, options = {})
+    config = cookie_config cookie_name, options
 
     if config[:hash]
       begin
@@ -77,7 +81,7 @@ module CookieConcerns
 
     if config[:hash]
       if key.present?
-        cookie = self.cookie cookie_name
+        cookie = self.cookie cookie_name, options
         cookie[key.to_sym] = value
         new_cookie = cookie.to_json
       else
@@ -87,14 +91,14 @@ module CookieConcerns
       new_cookie = value
     end
 
-    write_cookie cookie_name, new_cookie
+    write_cookie cookie_name, new_cookie, options
   end
 
   # If the cookie is a cookie hash (hash), and key is provided, return the specific value in the hash
   # If it's a normal key=value cookie, return the value
   def read_cookie_value(cookie_name, key = nil, options = {})
     config = self.cookie_config cookie_name, options
-    cookie = self.cookie cookie_name
+    cookie = self.cookie cookie_name, options
 
     if config[:hash] && key.present?
       cookie[key.to_sym]
@@ -105,18 +109,15 @@ module CookieConcerns
 
   private
 
-  def write_cookie(cookie_name, value)
-    config = self.cookie_config cookie_name
+  def write_cookie(cookie_name, value, options = {})
+    config = self.cookie_config cookie_name, options
 
     cookie_hash = {}
     cookie_hash[:value] = value
     cookie_hash[:domain] = config[:domain].presence || :all
-    cookie_hash[:expires] = config[:duration].from_now if config[:duration].present?
+    cookie_hash[:expires] = config[:duration].from_now if config[:duration]
 
-    cookies[cookie_name] = {
-      value: value,
-      domain: config[:domain]
-    }
+    cookies[cookie_name] = cookie_hash
   end
 
 end

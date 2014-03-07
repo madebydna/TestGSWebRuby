@@ -9,21 +9,19 @@ module ApplicationHelper
     category_placement.title || category_placement.category.name
   end
 
+  def draw_stars(size, on_star_count)
+    off_star_count = 5 - on_star_count
+    class_on  = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{on_star_count}"
+    class_off = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{off_star_count}"
+    content_tag(:span, '', :class => class_on) + content_tag(:span, '', :class => class_off)
+  end
 
   def draw_stars_16(on_star_count)
-    off_star_count = 5 - on_star_count
-    class_on = 'iconx16-stars i-16-orange-star  i-16-star-' + on_star_count.to_s + ''
-    class_off = 'iconx16-stars i-16-grey-star  i-16-star-' + off_star_count.to_s + ''
-    content_tag(:span, '', :class => class_on)  +
-        content_tag(:span, '', :class => class_off)
+    draw_stars 16, on_star_count
   end
 
   def draw_stars_24(on_star_count)
-    off_star_count = 5 - on_star_count
-    class_on = 'iconx24-stars i-24-orange-star  i-24-star-' + on_star_count.to_s + ''
-    class_off = 'iconx24-stars i-24-grey-star  i-24-star-' + off_star_count.to_s + ''
-    content_tag(:span, '', :class => class_on)  +
-        content_tag(:span, '', :class => class_off)
+    draw_stars 24, on_star_count
   end
 
   def write_review_count text_s
@@ -196,6 +194,32 @@ module ApplicationHelper
             'details' => 'localdetails'
         }
 
+  end
+
+  def column_sizing_classes(xs, sm, md, lg)
+    " col-xs-#{xs} col-sm-#{sm} col-md-#{md} col-lg-#{lg}"
+  end
+
+  def content_tag_with_sizing(name, *args, &block)
+    # The inner content of the tag depends on whether or not a block is given.
+    # If content of the tag is the first item, the options will be second
+    args.unshift nil if args.first && args.first.is_a?(Hash)
+    options = args.second || {}
+
+    if options[:sizes]
+      default_sizing = { xs: 12, sm: 12, md: 12, lg: 12 }
+      sizing = (options[:sizes] || {}).reverse_merge! default_sizing
+      options.delete :sizes
+      sizing_class = self.column_sizing_classes(sizing[:xs], sizing[:sm], sizing[:md], sizing[:lg])
+      options[:class] ||= ''
+      options[:class] << sizing_class
+    end
+
+    content_tag name, *args, &block
+  end
+
+  def div_tag(*args, &block)
+    content_tag_with_sizing :div, *args, &block
   end
 
 end

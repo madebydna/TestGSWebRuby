@@ -3,7 +3,7 @@ class Collection
 
   # Note that this is ok since this class is not an ActiveRecord class
   # If you ever make this class extend from ActiveRecord, you'll have to remove this initialize method
-  def initialize(params)
+  def initialize(params = {})
     params.each do |key, value|
       self.instance_variable_set("@#{key}".to_sym, value)
     end
