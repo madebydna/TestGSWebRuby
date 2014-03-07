@@ -34,7 +34,7 @@ class SchoolRating < ActiveRecord::Base
   validate :comments_word_count
   validates_presence_of :ip
 
-  before_save :calculate_and_set_status, :ensure_all_reviews_moderated, :set_processed_date_if_published
+  before_save :calculate_and_set_status, :set_processed_date_if_published
   after_save :auto_report_bad_language
 
   def school=(school)
@@ -141,16 +141,6 @@ class SchoolRating < ActiveRecord::Base
     end
 
     self.status = status
-  end
-
-  # if the review would otherwise be published (or provisional published), make it unpublished instead, so that it is
-  # forced to go through moderation.
-  def ensure_all_reviews_moderated
-    if status == 'pp'
-      self.status = 'pu'
-    elsif self.status == 'p'
-      self.status = 'u'
-    end
   end
 
   def auto_report_bad_language
