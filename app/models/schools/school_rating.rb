@@ -199,6 +199,7 @@ class SchoolRating < ActiveRecord::Base
       response.each do |row|
         review = SchoolRating.find(row[0])
         review.quality = review.quality.to_i
+        review[:count] = recent_reviews_in_hub_count(state_abbr, review.school.id)
         result << review
       end
       result
@@ -210,17 +211,10 @@ class SchoolRating < ActiveRecord::Base
   end
 
 
-  def self.recent_reviews_in_hub_count(state_abbr, collection_id)
-    cache_key = "recent_reviews_count-state:#{state_abbr}-collection_id#{collection_id}"
+  def self.recent_reviews_in_hub_count(state_abbr, school_id)
+    cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
     Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      sql = "select sr.id from surveys.school_rating as sr " +
-            "join _" + state_abbr + ".school s on s.id=sr.school_id " +
-            "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
-            "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
-            " and m.meta_value=" + collection_id.to_s + " and status='p'" +
-            " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'"
-      response = ActiveRecord::Base.connection.raw_connection.query(sql)
-      response.to_a.length
+      SchoolRating.where(school_id: school_id, state: state_abbr).published.count
     end
   end
 

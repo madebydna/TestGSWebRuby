@@ -14,7 +14,7 @@
           <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
         </div>
         <div class="bottom medium-bold mtl"><%= review.school.name %></div>
-        <%= link_to "Read all #{@review_count} reviews", school_reviews_url(review.school), class: 'small' %>
+        <%= link_to "Read all #{review[:count]} reviews", school_reviews_url(review.school), class: 'small' %>
       </div>
     <% end %>
   </div>
