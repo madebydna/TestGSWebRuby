@@ -15,11 +15,14 @@
         <% if !data["city_rating"]["rating_breakdowns"].nil? %>
             <a href="javascript:void(0)" onclick='$( "#js_CityRatingLearnMore" ).slideToggle( "fast")'><br/>Learn More &raquo;</a><br /><br />
             <div class="dn well bg-white" id="js_CityRatingLearnMore">
+                <h5>Rating Breakdown</h5>
                 <table class="table table-striped">
                     <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
                         <tr><td><%= key %></td><td><%= value %></td></tr>
                     <% end %>
                 </table>
+                <h5>Methodology</h5>
+                <a href="http://www.excellentschoolsdetroit.org/en/how-do-schools-stack" target="_blank">View more details on ESD site</a>
             </div>
         <% end %>
         </div>

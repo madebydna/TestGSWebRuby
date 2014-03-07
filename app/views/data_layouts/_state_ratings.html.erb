@@ -8,6 +8,14 @@
             </div>
        </div>
         <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h5>State Rating</h5>
-            <%= data["state_rating"]["description"] %></div>
+            <%= data["state_rating"]["description"] %>
+            <a href="javascript:void(0)" onclick='$( "#js_StateRatingLearnMore" ).slideToggle( "fast")'><br/>Learn More &raquo;</a><br /><br />
+            <div class="dn well bg-white" id="js_StateRatingLearnMore">
+                <h5>Rating Breakdown</h5>
+                <p>Whoops, we currently don't have more detail for this rating.</p>
+                <h5>Methodology</h5>
+                <a href="http://www.michigan.gov/mde/0,4615,7-140--310978--,00.html" target="_blank">View more details on state site</a>
+            </div>
+        </div>
     </div>
 <% end %>

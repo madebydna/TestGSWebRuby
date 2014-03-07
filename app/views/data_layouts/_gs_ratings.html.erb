@@ -8,6 +8,7 @@
         <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
             <a href="javascript:void(0)" onclick='$( "#js_GSRatingLearnMore" ).slideToggle( "fast")'><br/>Learn More &raquo;</a><br /><br />
             <div class="dn well bg-white" id="js_GSRatingLearnMore">
+                <h5>Rating Breakdown</h5>
                 <table class="table table-striped">
                     <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
                         <tr><td><%= key %></td><td><%= value %></td></tr>
