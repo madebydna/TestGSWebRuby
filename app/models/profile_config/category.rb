@@ -48,8 +48,8 @@ class Category < ActiveRecord::Base
   # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
   # this method would return all the keys configured for both Ethnicity and Details
   def self.all_configured_keys(source)
-
-    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_DATA_KEYS_PER_SOURCE_PREFIX}/#{source}", expires_in: 1.hour) do
+    cache_key = "all_configured_keys-source:#{source}"
+    Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       categories_using_source = Category.where(source: source).all
 
       all_keys = []
