@@ -26,7 +26,7 @@ class CitiesController < ApplicationController
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.featured_articles(collection_configs)
       @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs, 2)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
     end
@@ -76,5 +76,4 @@ class CitiesController < ApplicationController
       }
       @city = params[:city]
     end
-
 end
