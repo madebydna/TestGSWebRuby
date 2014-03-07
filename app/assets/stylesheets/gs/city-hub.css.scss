@@ -216,7 +216,14 @@
 
   .community-partner-row {
     div {
-      clear: right;
+      clear: left;
+    }
+  }
+
+  .education-community-tabs {
+    list-style-type: none;
+    li {
+      display: list-item;
     }
   }
 }

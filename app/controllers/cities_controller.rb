@@ -46,6 +46,7 @@ class CitiesController < ApplicationController
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
+      set_community_tab
       @collection_id = collection_mapping.collection_id
       collection_configs = configs
       @events = CollectionConfig.city_hub_important_events(collection_configs, 2)
@@ -62,6 +63,17 @@ class CitiesController < ApplicationController
   end
 
   private
+    def set_community_tab
+      case request.path
+      when /(education-community\/education)/
+        @tab = 'Education'
+      when /(education-community\/funders)/
+        @tab = 'Funders'
+      when /(education-community$)/
+        @tab = 'Community'
+      end
+    end
+
     def state_short
       States::STATE_HASH[params[:state]]
     end
