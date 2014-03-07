@@ -9,13 +9,13 @@
 <div class="limit_width_1200">
   <%= render 'search_hero', city: @city,
                             sponsor: @sponsor,
-                            collection_id: @collection_configs.last.collection_id,
+                            collection_id: @collection_id,
                             state: @state,
                             breakdown_results: @breakdown_results %>
 
   <%= render 'choose_a_school', choose_school: @choose_school %>
 
-  <%= render 'upcoming_event', important_events: @important_events, announcement: @announcement %>
+  <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
 
   <%= render 'recent_reviews', reviews: @reviews %>
 

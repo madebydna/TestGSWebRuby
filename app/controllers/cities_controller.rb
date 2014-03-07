@@ -1,20 +1,13 @@
 class CitiesController < ApplicationController
+  before_filter :set_city_state
+  before_filter :set_breadcrumbs, except: [:show]
+
   def show
     collection_mapping = mapping
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      configs_cache_key = "collection_configs-id:#{collection_mapping.collection_id}"
-      @collection_configs = Rails.cache.fetch(configs_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-        CollectionConfig.where(collection_id: collection_mapping.collection_id).to_a
-      end
-      @state = {
-        long: params[:state],
-        short: state_short
-      }
-      @city = collection_mapping.city
       @zillow_data = ZillowRegionId.data_for(@city, @state)
-
       gon.pagename = "city home"
 
       @breakdown_results = {
@@ -27,34 +20,37 @@ class CitiesController < ApplicationController
         'Charter Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:charter]),
       }
 
-      @sponsor = CollectionConfig.city_hub_sponsor(@collection_configs)
-      @choose_school = CollectionConfig.city_hub_choose_school(@collection_configs)
-      @announcement = CollectionConfig.city_hub_announcement(@collection_configs)
-      @articles = CollectionConfig.featured_articles(@collection_configs)
-      @partner_carousel = CollectionConfig.city_hub_partners(@collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(@collection_configs)
+      collection_configs = configs
+      @sponsor = CollectionConfig.city_hub_sponsor(collection_configs)
+      @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
+      @announcement = CollectionConfig.city_hub_announcement(collection_configs)
+      @articles = CollectionConfig.featured_articles(collection_configs)
+      @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
     end
   end
 
   def events
-    @state = {
-      long: params[:state],
-      short: state_short
-    }
-    @city = params[:city]
     @collection_id = mapping.collection_id
+    @events = CollectionConfig.important_events(@collection_id)
+  end
+
+  def community
+    @collection_id = mapping.collection_id
+    @events = CollectionConfig.city_hub_important_events(configs)
+  end
+
+  def set_breadcrumbs
     @breadcrumbs = {
       'Home' => '/',
       @state[:long].titleize => "/#{@state[:long]}",
       @city.titleize => "/#{@state[:long]}/#{@city}"
     }
-    @events = CollectionConfig.important_events(@collection_id)
   end
 
   private
-
     def state_short
       States::STATE_HASH[params[:state]]
     end
@@ -65,4 +61,20 @@ class CitiesController < ApplicationController
         CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
       end
     end
+
+    def configs
+      configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
+      Rails.cache.fetch(configs_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+        CollectionConfig.where(collection_id: mapping.collection_id).to_a
+     end
+    end
+
+    def set_city_state
+      @state = {
+        long: params[:state],
+        short: state_short
+      }
+      @city = params[:city]
+    end
+
 end

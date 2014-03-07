@@ -1,0 +1,19 @@
+<%= render 'nav/topnav' %>
+<%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id %>
+
+<div class="fixed-top pvm" style='background-color: #f5f5f5'>
+  <div class="limit_width_1200">
+    <%= render 'upcoming_events', important_events: @events, community_page: true %>
+  </div>
+</div>
+
+<div class="limit_width_1200" style='margin-bottom: 40px;'>
+  <div class="row">
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  </div>
+
+  <div class="row">
+  </div>
+</div>
+
+<%= render 'footer' %>

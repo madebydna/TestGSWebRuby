@@ -36,7 +36,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/community/registrationConfirm.page', as: :verify_email
     get '/:state/', constraints: { state: States.any_state_name_regex }, as: :state
     get '/:state/:city/choosing-schools/', constraints: { state: States.any_state_name_regex }, as: :choosing_schools
-    get '/:state/:city/education-community/', constraints: { state: States.any_state_name_regex }, as: :education_community
+
     get '/:state/:city/enrollment/', constraints: { state: States.any_state_name_regex }, as: :enrollment
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
@@ -96,6 +96,12 @@ LocalizedProfiles::Application.routes.draw do
 
       get '', to: 'cities#show'
       get 'events', to: 'cities#events', as: :events
+      scope '/education-community', as: :education_community do
+        get '', to: 'cities#community'
+        get '/education', to: 'cities#community_education'
+        get '/funders', to: 'ciites#community_funders'
+        get '/partner', to: 'cities#community_partner'
+      end
     end
 
     # Routes for school profile pages
