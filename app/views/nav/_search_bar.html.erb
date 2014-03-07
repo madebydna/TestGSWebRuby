@@ -1,0 +1,25 @@
+<div class="fixed-top search-bar-container pvm">
+  <div class="limit_width_1200">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style='overflow: hidden; margin-left: auto; margin-right: auto; float: none;'>
+        <form method='get' id='jq-findByNameForm' action="/search/search.page">
+          <input value="1" name="search_type" type="hidden">
+          <input value="<%= state[:short] %>" id="jq-state" name="state" type="hidden">
+          <input value="<%= collection_id %>" id="jq-collectionId" name="collectionId" type="hidden">
+          <h5 class='pull-left mtm mbn pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h5>
+          <div class='search-bar'>
+            <input  type="text"
+                    name="q"
+                    value="School name (e.g. Niles Elementary School)"
+                    class="text1 text-bigger mlm"
+                    id="js-findByNameBox" onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');" onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');" placeholder="School name (e.g. Niles Elementary School)">
+            <div class="pa">
+              <span id="js-submit" class='iconx24 i-24-search-lens' style='cursor: pointer'></span>
+            </div>
+            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mlm" style='color: #fff; position: absolute; top: 22%; left: 315px;;' href="/">Not in <%= city.titleize %>?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
