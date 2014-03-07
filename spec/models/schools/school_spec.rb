@@ -60,15 +60,14 @@ describe School do
     end
   end
 
-  describe 'checking te school held status' do
+  describe '#held?' do
+    let(:school) { FactoryGirl.build(:school) }
     it 'should return true because the school is held' do
-      school = FactoryGirl.build(:school)
       HeldSchool.stub(:exists?).and_return(true)
       expect(school.held?).to be_true
     end
 
     it 'should return false because the school is not held' do
-      school = FactoryGirl.build(:school)
       HeldSchool.stub(:exists?).and_return(false)
       expect(school.held?).to be_false
     end
