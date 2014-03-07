@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
 
     host = (ENV_GLOBAL['gsweb_host'].presence || request.host).dup
-    port = (ENV_GLOBAL['gsweb_port'].presence || request.port).dup
+    port = (ENV_GLOBAL['gsweb_port'].presence || request.port)
     host << ':' + port if port && port.to_i != 80
     host
   end
