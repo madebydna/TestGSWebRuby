@@ -337,5 +337,4 @@ class CategoryDataReader
   def self.cta_prek_only (school, _)
      school.preschool? ? nil : "Show Module"
   end
-  #cache_methods :student_ethnicity, :test_scores, :enrollment, :esp_response, :census_data_points, :esp_data_points, :snapshot
 end

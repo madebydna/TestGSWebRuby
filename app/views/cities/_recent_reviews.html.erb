@@ -14,7 +14,10 @@
           <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
         </div>
         <div class="bottom medium-bold mtl"><%= review.school.name %></div>
-        <%= link_to "Read all #{@review_count} reviews", school_reviews_url(review.school), class: 'small' %>
+        <% unless review.school.gs_rating.nil? %>
+            <p class="bottom">GreatSchools rating: <%= review.school.gs_rating %></p>
+        <% end %>
+        <%= link_to "Read all #{review[:count]} reviews", school_reviews_url(review.school), class: 'small' %>
       </div>
     <% end %>
   </div>
