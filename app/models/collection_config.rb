@@ -168,7 +168,12 @@ class CollectionConfig < ActiveRecord::Base
           partners = eval(parsed_partners_str)[:partners]
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|
-            partners[key].each { |partner| partner[:logo] = CDN_HOST + partner[:logo] }
+            partners[key].each do |partner|
+              partner[:logo] = CDN_HOST + partner[:logo]
+              partner[:links].each do |link|
+                link[:url] = 'http://' + link[:url] unless /^http/.match(link[:url])
+              end
+            end
           end
         rescue => e
           partners = nil
