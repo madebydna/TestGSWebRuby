@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 shared_examples "it rejects empty configs" do
   it 'returns nil' do
     result = described_class.send(method, [])
@@ -308,6 +307,20 @@ describe CollectionConfig do
 
         expect(result['Education'][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
       end
+    end
+  end
+
+  describe '.ed_community_show_tabs' do
+    before(:each) { FactoryGirl.create(:community_tabs_collection_config) }
+
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :ed_community_show_tabs }
+    end
+
+    it 'returns a boolean value for tabs' do
+      configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY)
+      result = CollectionConfig.ed_community_show_tabs(configs)
+      expect(result).to be_an_instance_of(TrueClass)
     end
   end
 end

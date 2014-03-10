@@ -8,6 +8,7 @@ class CollectionConfig < ActiveRecord::Base
   CITY_HUB_CHOOSE_A_SCHOOL_KEY = 'hubHome_chooseSchool'
   EDUCATION_COMMUNITY_SUBHEADING_KEY = 'eduCommPage_subHeading'
   EDUCATION_COMMUNITY_PARTNERS_KEY = 'eduCommPage_partnerData'
+  EDUCATION_COMMUNITY_TABS_KEY = 'eduCommPage_showTabs'
   CDN_HOST = 'http://www.gscdn.org'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
@@ -182,6 +183,16 @@ class CollectionConfig < ActiveRecord::Base
 
         partners
       end
+    end
+
+    def ed_community_show_tabs(collection_configs)
+      unless collection_configs.empty?
+        collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first.value == 'true'
+      end
+    end
+
+    def ed_community_sponsor
+      EDUCATION_COMMUNITY_TABS_KEY
     end
   end
 end

@@ -46,9 +46,9 @@ class CitiesController < ApplicationController
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      set_community_tab
       @collection_id = collection_mapping.collection_id
       collection_configs = configs
+      set_community_tab(collection_configs)
       @events = CollectionConfig.city_hub_important_events(collection_configs, 2)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
@@ -59,18 +59,20 @@ class CitiesController < ApplicationController
     end
   end
 
-  def set_breadcrumbs
-  end
-
   private
-    def set_community_tab
+    def set_community_tab(collection_configs)
       case request.path
       when /(education-community\/education)/
         @tab = 'Education'
       when /(education-community\/funders)/
         @tab = 'Funders'
       when /(education-community$)/
-        @tab = 'Community'
+        @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
+        if @show_tabs == false
+          @tab = ''
+        else
+          @tab = 'Community'
+        end
       end
     end
 

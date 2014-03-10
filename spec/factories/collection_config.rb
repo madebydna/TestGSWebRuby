@@ -119,4 +119,10 @@ FactoryGirl.define do
     quay ''
     value 'foo bar'
   end
+
+  factory :community_tabs_collection_config, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY
+    value 'true'
+  end
 end
