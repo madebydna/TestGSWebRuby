@@ -31,24 +31,11 @@ Spork.prefork do
 
   Capybara.default_host = 'http://localhost:3000'
 
-  # Requires supporting ruby files with custom matchers and macros, etc,
-  # in spec/support/ and its subdirectories.
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-
   Dir[Rails.root.join("spec/controllers/concerns/**/*.rb")].each {|f| require f}
 
   RSpec.configure do |config|
 
     config.include Rails.application.routes.url_helpers
-
-    # ## Mock Framework
-    #
-    # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-    #
-    # config.mock_with :mocha
-    # config.mock_with :flexmock
-    # config.mock_with :rr
-
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
@@ -79,6 +66,8 @@ Spork.prefork do
       c.syntax = :expect
     end
 
+    config.mock_with :rspec
+
     DatabaseCleaner.strategy = :truncation
 
     config.before(:suite) do
@@ -100,24 +89,12 @@ Spork.prefork do
   end
 end
 
+# This code will be run each time you run your specs.
 Spork.each_run do
   puts 'RELOADING'
   load "#{Rails.root}/config/routes.rb"
   Dir["#{Rails.root}/app/**/*.rb"].each {|f| load f}
   Dir["#{Rails.root}/lib/**/*.rb"].each {|f| load f}
 
-  # This code will be run each time you run your specs.
-  RSpec.configure do |config|
-    config.mock_with :rspec
-
-    config.use_transactional_fixtures = true
-  end
-
-=begin
-  # found this suggestion on a blog, for how to make FactoryGirl clear data between examples, but it didnt work
-  FactoryGirl.sequences.clear
-  FactoryGirl.factories.clear
-  Dir["#{Rails.root}/spec/support/*.rb"].each {|f| load f}
-=end
   FactoryGirl.reload
 end
