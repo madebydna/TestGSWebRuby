@@ -9,7 +9,7 @@ bar = 123 if defined? bar # => 123
 # Another example:
 
 # Baz is currently undefined:
-!!defined? baz # => false
+!!defined?(baz) # => false
 
 # Therefore, you might expect baz to still be undefined after the following statement:
 baz = 123 if false
