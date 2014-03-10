@@ -13,6 +13,10 @@ class Admin::AdminController < ApplicationController
 
   end
 
+  def examples_and_gotchas
+
+  end
+
   def omniture_test
     gon.pagename = 'omniture_test'
     gon.omniture_pagename = 'omniture_test'
