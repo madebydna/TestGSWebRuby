@@ -1,3 +1,6 @@
+<% data # A +Hash+ that contains test score data for this layout %>
+<%= debug data if params[:debug] %>
+
 <% if data && data.count != 0 %>
     <%= render "shared/section_header", category_placement:category_placement %>
 <% end %>

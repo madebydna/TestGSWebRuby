@@ -1,3 +1,5 @@
+<% school # The +School+ to save to the user's My School List %>
+
 <% unique_content_for :global_hidden_content do %>
   <%= form_for FavoriteSchool.new, url: favorite_schools_url, html: { id: 'js-save-this-school-form' } do |f| %>
     <%= f.hidden_field :school_id, :value => school.id %>

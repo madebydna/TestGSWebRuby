@@ -1,6 +1,14 @@
-<% config=category_placement.layout_config_json %>
+<% # An +Array+ of +Hash+es that contains data for this layout %>
+<% # Example: [ %>
+<% # { "enrollment": { "school_value": 130.0, "label": "Students enrolled" } } %>
+<% # { "head official name": { "school_value": "LINDA BROOKS", "label": "School leader" } } %>
+<% # ] %>
+<% data %>
+<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
-<% debug data %>
+<% config = category_placement.layout_config_json %>
+
+<%= debug data if params[:debug] %>
 
 <% total_array_size = data.size %>
 <% left_table_size = total_array_size / 2 + total_array_size % 2 %>

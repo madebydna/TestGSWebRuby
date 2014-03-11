@@ -1,3 +1,7 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
 <% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
 <% data = TableData.new data %>
