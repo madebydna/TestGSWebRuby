@@ -9,6 +9,8 @@ end
 
 shared_examples "it fails with an error" do
   context 'invalid json string' do
+    before(:each) { CollectionMapping.destroy_all; CollectionConfig.destroy_all }
+
     it 'returns nil' do
       FactoryGirl.create(:bogus_collection_config, quay: key)
       collection_configs = described_class.where(collection_id: 1, quay: key)
@@ -28,9 +30,8 @@ shared_examples "it fails with an error" do
 end
 
 describe CollectionConfig do
-  after(:each) do
-    CollectionConfig.destroy_all
-  end
+  after(:each) { CollectionMapping.destroy_all; CollectionConfig.destroy_all }
+
   describe '.featured_articles' do
     it_behaves_like 'it rejects empty configs' do
       let(:method) { :featured_articles }
@@ -321,6 +322,44 @@ describe CollectionConfig do
       configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY)
       result = CollectionConfig.ed_community_show_tabs(configs)
       expect(result).to be_an_instance_of(TrueClass)
+    end
+  end
+
+  describe '.ed_community_partner' do
+    before(:each) do
+      FactoryGirl.create(:community_sponsor_collection_config_name)
+      FactoryGirl.create(:community_sponsor_collection_config_page_name)
+      FactoryGirl.create(:community_sponsor_collection_config_data)
+    end
+
+    let(:result) do
+      collection_configs = CollectionConfig.where(collection_id: 1)
+      CollectionConfig.ed_community_partner(collection_configs)
+    end
+
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :ed_community_partner }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:key) { CollectionConfig::SPONSOR_ACRO_NAME_KEY }
+      let(:method) { :ed_community_partner }
+    end
+
+    it 'returns the acro name and page name' do
+      expect(result[:acro_name]).to_not be_nil
+      expect(result[:page_name]).to_not be_nil
+    end
+
+    it 'sets sponsor data' do
+      expect(result[:data]).to_not be_nil
+      expect(result[:data]).to be_an_instance_of(Array)
+      expect(result[:data]).to have(1).partner
+    end
+
+    it 'adds the cdn host to each image' do
+      expect(result[:data][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
+      expect(result[:data][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
     end
   end
 end

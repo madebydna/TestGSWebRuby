@@ -11,8 +11,6 @@ describe 'cities/_tabs.html.erb' do
     view.stub(:tab) { 'Education' }
     render
 
-    debugger
-
     expect(rendered).to have_css('li.active', text: 'Education')
   end
 

@@ -9,6 +9,9 @@ class CollectionConfig < ActiveRecord::Base
   EDUCATION_COMMUNITY_SUBHEADING_KEY = 'eduCommPage_subHeading'
   EDUCATION_COMMUNITY_PARTNERS_KEY = 'eduCommPage_partnerData'
   EDUCATION_COMMUNITY_TABS_KEY = 'eduCommPage_showTabs'
+  SPONSOR_ACRO_NAME_KEY = 'sponsorPage_acroName'
+  SPONSOR_PAGE_NAME_KEY = 'sponsorPage_seoPageName'
+  SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
   CDN_HOST = 'http://www.gscdn.org'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
@@ -36,7 +39,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_article_str.gsub!(/articles\s\:/, '"articles" =>').gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           articles = eval(raw_article_str)['articles'] # sins
           articles.each do |article|
-            article[:articleImagePath] = CDN_HOST + article[:articleImagePath]
+            article[:articleImagePath].prepend(CDN_HOST)
           end
         rescue => e
           articles = nil
@@ -52,8 +55,8 @@ class CollectionConfig < ActiveRecord::Base
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
           partners = eval(raw_partners_str) # sins
           partners[:partnerLogos].each do |partner|
-            partner[:logoPath] = CDN_HOST + partner[:logoPath]
-            partner[:anchoredLink] = 'education-community' + partner[:anchoredLink]
+            partner[:logoPath].prepend(CDN_HOST)
+            partner[:anchoredLink].prepend('education-community')
           end
         rescue => e
           partners = nil
@@ -68,7 +71,7 @@ class CollectionConfig < ActiveRecord::Base
         begin
           raw_sponsor_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SPONSOR_KEY }).first.value
           sponsor = eval(raw_sponsor_str)[:sponsor] # sins
-          sponsor[:path] = CDN_HOST + sponsor[:path]
+          sponsor[:path].prepend(CDN_HOST)
         rescue => e
           sponsor = nil
           Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
@@ -170,9 +173,9 @@ class CollectionConfig < ActiveRecord::Base
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|
             partners[key].each do |partner|
-              partner[:logo] = CDN_HOST + partner[:logo]
+              partner[:logo].prepend(CDN_HOST)
               partner[:links].each do |link|
-                link[:url] = 'http://' + link[:url] unless /^http/.match(link[:url])
+                link[:url].prepend('http://') unless /^http/.match(link[:url])
               end
             end
           end
@@ -187,12 +190,33 @@ class CollectionConfig < ActiveRecord::Base
 
     def ed_community_show_tabs(collection_configs)
       unless collection_configs.empty?
-        collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first.value == 'true'
+        begin
+          collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first.value == 'true'
+        rescue => e
+          Rails.logger.error('Something went wrong while parsing ed_community_show_tabs' + e.to_s)
+          nil
+        end
       end
     end
 
-    def ed_community_sponsor
-      EDUCATION_COMMUNITY_TABS_KEY
+    def ed_community_partner(collection_configs)
+      unless collection_configs.empty?
+        result = {}
+        begin
+          result[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
+          result[:page_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_PAGE_NAME_KEY }).first.value
+          raw_data_str = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_DATA_KEY }).first.value
+          raw_data_str.gsub!(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
+          result[:data] = eval(raw_data_str)[:sponsors]
+          result[:data].each do |partner_data|
+            partner_data[:logo].prepend(CDN_HOST)
+          end
+        rescue => e
+          Rails.logger.error('Something went wrong while parsing ed_community_partner' + e.to_s)
+          result = nil
+        end
+        result
+      end
     end
   end
 end

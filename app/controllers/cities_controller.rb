@@ -9,14 +9,15 @@ class CitiesController < ApplicationController
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
+      solr = Solr.new(@state[:short], collection_mapping.collection_id)
       @breakdown_results = {
-        'Preschools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:primary]),
-        'Elementary Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:elementary]),
-        'Middle Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:middle]),
-        'High Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, grade_level: School::LEVEL_CODES[:high]),
-        'Public Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:public]),
-        'Private Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:private]),
-        'Charter Schools' => Solr.city_hub_breakdown_results(@state[:short], collection_mapping.collection_id, type: School::LEVEL_CODES[:charter]),
+        'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
+        'Elementary Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
+        'Middle Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
+        'High Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:high]),
+        'Public Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:public]),
+        'Private Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:private]),
+        'Charter Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:charter]),
       }
 
       collection_configs = configs
@@ -25,7 +26,7 @@ class CitiesController < ApplicationController
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.featured_articles(collection_configs)
       @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(collection_configs, 2)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
     end
@@ -49,7 +50,7 @@ class CitiesController < ApplicationController
       @collection_id = collection_mapping.collection_id
       collection_configs = configs
       set_community_tab(collection_configs)
-      @events = CollectionConfig.city_hub_important_events(collection_configs, 2)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
@@ -59,15 +60,30 @@ class CitiesController < ApplicationController
     end
   end
 
+  def partner
+    collection_mapping = mapping
+    if collection_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = collection_mapping.collection_id
+      @partner = CollectionConfig.ed_community_partner(configs)
+      @events = CollectionConfig.city_hub_important_events(configs)
+      @breadcrumbs = {
+        @city.titleize => city_path(@state[:long], @city),
+        'Partner' => nil
+      }
+    end
+  end
+
   private
     def set_community_tab(collection_configs)
+      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
       case request.path
       when /(education-community\/education)/
         @tab = 'Education'
       when /(education-community\/funders)/
         @tab = 'Funders'
       when /(education-community$)/
-        @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
         if @show_tabs == false
           @tab = ''
         else

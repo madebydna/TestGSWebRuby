@@ -99,7 +99,7 @@ LocalizedProfiles::Application.routes.draw do
         get '', to: 'cities#community'
         get '/education', to: 'cities#community'
         get '/funders', to: 'cities#community'
-        get '/partner', to: 'cities#city_hub_sponsor'
+        get '/partner', to: 'cities#partner'
       end
     end
 

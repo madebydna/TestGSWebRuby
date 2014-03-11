@@ -58,6 +58,9 @@ education_community_partners_value = "{ partners : [
 
 
   ] }"
+sponsor_data_value = "{sponsors :[ {logo :'/res/img/cityHubs/1_sponsor_image.png',               heading:'Excellent Schools Detroit - ESD',               description:'Excellent Schools Detroit, founded by a broad and diverse cross section of Detroit’s education, government, community, parent, and philanthropic leaders, creates the conditions to ensure that all Detroit children are in a great school by 2020.<br/><br/>Excellent Schools Detroit launched in March 2010 with an education plan that recommended bold steps so that Detroit becomes the first major U.S. city where 90 percent of students graduate from high school, 90 percent of those graduates enroll in college or a quality postsecondary training program, and 90 percent of enrollees are prepared to succeed without remediation.<br/><br/>This citywide plan reflected months of discussions and deliberations by coalition members, as well as a series of six community meetings in November and December 2009, youth focus groups, small group discussions with multiple stakeholders, and other outreach efforts. Many Detroiters offered thoughtful recommendations about the need to prepare all students for college, careers, and life in the 21st century.<br/><br/>Fast forward to 2014 and the activities Excellent Schools Detroit engages in focus on four main activities across an early childhood through college continuum: 1) encouraging parents to make high quality educational choices, 2) incentivizing good schools to become excellent (as according to the 90/90/90 standard), 3) moving schools from weak or failing to good, and 4) seeing more weak or failing schools who don’t wish to succeed, close.<br/><br/><strong>Actionable Information</strong><br/>Each year Excellent Schools Detroit works with students, caregivers, school leaders and community members to produce a K-12 and Early Learning Scorecard that measures school quality. The Scorecard now includes grades to help parents and students make sense of Detroit’s more than 220 schools and find the best fit.<br/><br/>Excellent Schools Detroit recommends parents and students select schools graded C+ or better because these schools will generally prepare students for success in college, career and community.<br/><br/><strong>Voice</strong><br/>Excellent Schools Detroit is dedicated to championing for a quality education for every child in Detroit. In 2013, to ensure that parents, caregivers and community members have information that helps them find the best quality educational options in the city, ESD partnered with GreatSchools to develop GreatSchoolsDetroit.org. Information from ESD’s annual school scorecard will be used to supplement information collected by GreatSchools. As a strong advocate for encouraging parents and community members to have a voice and say in what’s important to them related to education, the staff of ESD liked the fact that anyone can review a school as they wish. It’s the shared goal of ESD and GreatSchools to create an information portal guided by needs and developments of students and families that will always reflect the ever changing educational landscape in Detroit.',               links : [ {url:'http://www.excellentschoolsdetroit.org/en', heading :'Find out more about Excellent Schools Detroit',newwindow:'true' }, {url:'http://scorecard.excellentschoolsdetroit.org/', heading :'ESD Scorecard',newwindow:'true' }, {url:'http://issuu.com/esdetroit/docs/esdplan?e=0/1954712', heading :'Find out more about ESDs education Plan',newwindow:'true' }]                }                          ] }"
+sponsor_acro_name_value = 'ESD'
+sponsor_page_name_value = 'Excellent Schools Detroit'
 
 FactoryGirl.define do
   factory :feature_articles_collection_config, class: CollectionConfig do
@@ -124,5 +127,35 @@ FactoryGirl.define do
     collection_id 1
     quay CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY
     value 'true'
+  end
+
+  factory :community_sponsor_collection_config_name, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::SPONSOR_ACRO_NAME_KEY
+    value 'ESD'
+  end
+
+  factory :community_sponsor_collection_config_page_name, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::SPONSOR_PAGE_NAME_KEY
+    value 'Excellent Schools Detroit'
+  end
+
+  factory :community_sponsor_collection_config_data, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::SPONSOR_DATA_KEY
+    value sponsor_data_value
+  end
+
+  factory :sponsor_page_acro_name_configs, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::SPONSOR_ACRO_NAME_KEY
+    value sponsor_acro_name_value
+  end
+
+  factory :sponsor_page_page_name_configs, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::SPONSOR_PAGE_NAME_KEY
+    value sponsor_page_name_value
   end
 end
