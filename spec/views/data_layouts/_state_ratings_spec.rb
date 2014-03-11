@@ -21,11 +21,11 @@ describe 'state ratings partial' do
       'state_data' => nil
     }
     render :partial => 'data_layouts/state_ratings', :locals => { data: rating_data }
-    expect(rendered).to eq ''
+    expect(rendered.strip).to eq ''
 
     rating_data = {}
     render :partial => 'data_layouts/state_ratings', :locals => { data: rating_data }
-    expect(rendered).to eq ''
+    expect(rendered.strip).to eq ''
   end
 
 end
