@@ -93,7 +93,8 @@ module ReviewControllerConcerns
         else
           flash_error t('actions.generic_error')
         end
-      rescue
+      rescue => e
+        Rails.logger.debug e
         flash_error t('actions.generic_error')
       end
     end
