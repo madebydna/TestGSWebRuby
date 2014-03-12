@@ -1,5 +1,6 @@
 class CitiesController < ApplicationController
   before_filter :set_city_state
+  before_filter :set_hub_params
 
   def show
     collection_mapping = mapping
@@ -116,5 +117,9 @@ class CitiesController < ApplicationController
         short: state_short
       }
       @city = params[:city]
+    end
+
+    def set_hub_params
+      @hub_params = { state: @state[:long], city: @city }
     end
 end
