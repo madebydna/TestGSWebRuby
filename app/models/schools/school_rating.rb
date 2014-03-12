@@ -199,7 +199,6 @@ class SchoolRating < ActiveRecord::Base
       result = []
       response.each do |row|
         review = SchoolRating.find(row[0])
-        review.quality = review.quality.to_i
         review.count = recent_reviews_in_hub_count(state_abbr, review.school.id)
         result << review
       end
