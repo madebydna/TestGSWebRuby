@@ -19,6 +19,15 @@ describe ApplicationHelper do
 
   describe '#draw_stars' do
     describe 'should return html with correct on and off class values' do
+      it 'should draw both color stars' do
+        html = helper.draw_stars(16, 1)
+        spans = html.split('</span>')
+        expect(spans.first).to match /orange/
+        expect(spans.first).to_not match /grey/
+        expect(spans.last).to match /grey/
+        expect(spans.last).to_not match /orange/
+      end
+
       it 'for 1 star on' do
         html = helper.draw_stars(16, 1)
         spans = html.split('</span>')
