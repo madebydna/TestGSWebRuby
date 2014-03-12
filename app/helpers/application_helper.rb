@@ -12,7 +12,7 @@ module ApplicationHelper
   def draw_stars(size, on_star_count)
     off_star_count = 5 - on_star_count
     class_on  = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{on_star_count}"
-    class_off = "iconx#{size}-stars i-#{size}-orange-star i-#{size}-star-#{off_star_count}"
+    class_off = "iconx#{size}-stars i-#{size}-grey-star i-#{size}-star-#{off_star_count}"
     content_tag(:span, '', :class => class_on) + content_tag(:span, '', :class => class_off)
   end
 
