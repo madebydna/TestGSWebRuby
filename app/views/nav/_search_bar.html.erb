@@ -7,8 +7,8 @@
       <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha" style='overflow: hidden; float: none;'>
         <form method='get' id='js-findByNameForm' action="/search/search.page">
           <input value="1" name="search_type" type="hidden">
-          <input value="<%= state[:short] %>" id="jq-state" name="state" type="hidden">
-          <input value="<%= collection_id %>" id="jq-collectionId" name="collectionId" type="hidden">
+          <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
+          <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
           <h5 class='pull-left mtm mbn pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h5>
           <div class='search-bar'>
             <input  type="text"

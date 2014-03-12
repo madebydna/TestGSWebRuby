@@ -26,8 +26,8 @@ GS.util = GS.util || {};
 
 //   var submitForm = function($form) {
 //     var searchString = $form.find(SEARCH_FIELD_SELECTOR).val();
-//     var collectionId = $form.find('#jq-collectionId').val();
-//     var state = $form.find('#jq-state').val();
+//     var collectionId = $form.find('#js-collectionId').val();
+//     var state = $form.find('#js-state').val();
 
 //     var queryStringData = GS.uri.getQueryData();
 
