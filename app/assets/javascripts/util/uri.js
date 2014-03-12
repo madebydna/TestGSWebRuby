@@ -179,7 +179,12 @@ GS.uri.Uri.getQueryStringFromObject = function(obj) {
     for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
             var value = obj[key];
-            if (value instanceof Array) {
+            if (typeof value === 'undefined') {
+                if (queryString.length > 0) {
+                    queryString = queryString + '&';
+                }
+                queryString = queryString + key + '=';
+            } else if (value instanceof Array) {
                 for (var i = 0; i < value.length; i++) {
                     if (queryString.length > 0) {
                         queryString = queryString + '&';
@@ -190,7 +195,7 @@ GS.uri.Uri.getQueryStringFromObject = function(obj) {
                 if (queryString.length > 0) {
                     queryString = queryString + '&';
                 }
-                queryString = queryString + GS.uri.Uri.getQueryStringFromObject(value); // recursion
+                queryString = queryString + GS.uri.Uri.getQueryStringFromObject(value);
             } else {
                 if (queryString.length > 0) {
                     queryString = queryString + '&';

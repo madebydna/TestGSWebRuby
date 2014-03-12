@@ -6,10 +6,6 @@ describe('uri_params', function() {
         }
     }
 
-    beforeEach(function() {
-        console.log('before test');
-    });
-
     afterEach(function() {
         unstub(GS.uri.Uri.getPath);
         unstub(GS.uri.Uri.getFromQueryString);
