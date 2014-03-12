@@ -18,6 +18,7 @@ class SchoolRating < ActiveRecord::Base
   scope :reported, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
 
   attr_accessor :reported_entities
+  attr_accessor :count
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
@@ -198,8 +199,7 @@ class SchoolRating < ActiveRecord::Base
       result = []
       response.each do |row|
         review = SchoolRating.find(row[0])
-        review.quality = review.quality.to_i
-        review[:count] = recent_reviews_in_hub_count(state_abbr, review.school.id)
+        review.count = recent_reviews_in_hub_count(state_abbr, review.school.id)
         result << review
       end
       result
@@ -214,7 +214,7 @@ class SchoolRating < ActiveRecord::Base
   def self.recent_reviews_in_hub_count(state_abbr, school_id)
     cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
     Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      SchoolRating.where(school_id: school_id, state: state_abbr).published.count
+      SchoolRating.where(state: state_abbr, school_id: school_id).published.count
     end
   end
 
