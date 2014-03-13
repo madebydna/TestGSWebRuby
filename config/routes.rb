@@ -3,7 +3,6 @@ LocalizedProfiles::Application.routes.draw do
   require 'regular_subdomain'
   require 'preschool_subdomain'
 
-  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
   # Routes within this scope are pages not handled by Rails.

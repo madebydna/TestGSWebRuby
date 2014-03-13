@@ -1,3 +1,5 @@
+//= require util/uri
+
 describe('GS.uri.Uri', function() {
   describe('.getQueryStringFromObject', function() {
     it('returns an empty string for empty inputs', function() {

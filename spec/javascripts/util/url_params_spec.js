@@ -1,3 +1,6 @@
+//= require lodash
+//= require util/uri_params
+
 describe('uri_params', function() {
 
     function unstub(obj) {
