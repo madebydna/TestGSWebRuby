@@ -1,3 +1,6 @@
+//= require lodash
+//= require util/uri_params
+
 describe('uri_params', function() {
 
     function unstub(obj) {
@@ -5,10 +8,6 @@ describe('uri_params', function() {
             obj.restore();
         }
     }
-
-    beforeEach(function() {
-        console.log('before test');
-    });
 
     afterEach(function() {
         unstub(GS.uri.Uri.getPath);

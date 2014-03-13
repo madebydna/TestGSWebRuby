@@ -1,3 +1,6 @@
+//= require lodash
+//= require util/states
+
 describe('states', function() {
 
     describe('state abbreviation', function() {
