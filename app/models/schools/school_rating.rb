@@ -186,30 +186,19 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
-    cache_key = "recent_reviews-state:#{state_abbr}-collection_id:#{collection_id}-max_reviews:#{max_reviews}"
-    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      sql = "select sr.id from surveys.school_rating as sr " +
-            "join _" + state_abbr + ".school s on s.id=sr.school_id " +
-            "join _" + state_abbr +  ".school_metadata m on m.school_id=s.id " +
-            "where s.active=1 and m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'" +
-            " and m.meta_value=" + collection_id.to_s + " and status='p'" +
-            " and DATE_SUB(CURDATE(),INTERVAL " + 90.to_s + " DAY) <= posted and sr.state='#{state_abbr.upcase}'" +
-            " order by posted desc limit " + max_reviews.to_s
-      response = ActiveRecord::Base.connection.raw_connection.query(sql)
-      result = []
-      response.each do |row|
-        review = SchoolRating.find(row[0])
-        review.count = recent_reviews_in_hub_count(state_abbr, review.school.id)
-        result << review
-      end
-      result
-    end
+    SchoolRating.joins("JOIN _#{state_abbr}.school s ON s.id=school_rating.school_id")
+                .joins("JOIN _#{state_abbr}.school_metadata m ON m.school_id=s.id")
+                .where("s.active=1 AND m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'")
+                .where("m.meta_value=? AND status='p'", collection_id)
+                .where("DATE_SUB(CURDATE(),INTERVAL 90 DAY) <= posted AND school_rating.state=?", state_abbr.upcase)
+                .order('posted desc')
+                .limit(max_reviews)
+                .to_a
   end
 
   def reported?
     Array(reported_entities).any?
   end
-
 
   def self.recent_reviews_in_hub_count(state_abbr, school_id)
     cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
