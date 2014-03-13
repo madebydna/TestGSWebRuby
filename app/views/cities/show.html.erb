@@ -1,6 +1,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "resources/jquery.cycle2.min.js" %>
   <%= javascript_include_tag "resources/jquery.cycle2.carousel.min.js" %>
+  <%= javascript_include_tag "localized_profiles/search.js" %>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
 <% end %>
 
@@ -8,6 +9,7 @@
 <%= render 'shared/no_school_alert' %>
 
 <div class="limit_width_1200">
+  <% require 'debugger'; debugger %>
   <%= render 'search_hero', city: @city,
                             sponsor: @sponsor,
                             collection_id: @collection_id,

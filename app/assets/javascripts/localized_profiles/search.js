@@ -12,13 +12,23 @@ var GS = GS || {};
 GS.search = GS.search || {};
 GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
+    var findByNameSelector = 'input#js-findByNameBox';
+    var findByLocationSelector = 'input#js-findByLocationSearch';
 
-    var init = function() {
+    var init = function(state) {
         $('#js-findByLocationForm').submit(function() {
             try {
-                return submitByLocationSearch();
+                return submitByLocationSearch.apply(this);
             } catch(e) {
-                console.log(e)
+                console.log(e.message);
+                return false;
+            }
+        });
+
+        $('#js-findByNameForm').submit(function() {
+            try {
+                return submitByNameSearch.apply(this);
+            } catch(e) {
                 console.log(e.message);
                 return false;
             }
@@ -47,15 +57,15 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
+
+
     var submitByLocationSearch = function() {
-        var byLocationForm = $('#js-findByLocationForm');
-        var findByNameSelector = 'input#js-findByNameBox';
-        var searchQuery = byLocationForm.find(findByNameSelector).val();
+        var searchQuery = $(this).find(findByLocationSelector).val();
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
         if (searchQuery != '' &&
                 searchQuery != 'Search by city AND state or address ...' && !isTermState(searchQuery)) {
-            byLocationForm.find(findByNameSelector).val(searchQuery);
+            $(this).find(findByLocationSelector).val(searchQuery);
 
             //GS-12100 Since its a by location search, strip the words 'schools' from google geocode searches.
             var searchQueryWithFilteredStopWords = searchQuery;
@@ -81,11 +91,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
                     data['sortBy'] = 'DISTANCE';
 
-                    window.setTimeout(function() {
-                        alert(window.location.protocol + '//' + window.location.host +
+                    window.location.href = window.location.protocol + '//' + window.location.host +
                             SEARCH_PAGE_PATH +
-                            GS.uri.Uri.getQueryStringFromObject(data));
-                    }, 1);
+                            GS.uri.Uri.getQueryStringFromObject(data);
                 } else {
                     alert("Location not found. Please enter a valid address, city, or ZIP.");
                 }
@@ -162,9 +170,26 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
+    var submitByNameSearch = function() {
+        var searchString = $(this).find(findByNameSelector).val();
+        var state = $(this).find('input#js-state').val();
+        var collectionId = $(this).find('input#js-collectionId').val();
+        var queryString = GS.uri.Uri.getQueryData();
+
+        queryString.q = encodeURIComponent(searchString);
+        queryString.collection_id = encodeURIComponent(collectionId);
+        queryString.state = encodeURIComponent(state);
+
+        window.location = window.location.protocol + '//' + window.location.host +
+                SEARCH_PAGE_PATH +
+                GS.uri.Uri.getQueryStringFromObject(queryString);
+        return false;
+    };
+
     return {
         init:init,
-        submitByLocationSearch:submitByLocationSearch,
+        submitByLocationSearch: submitByLocationSearch,
+        submitByNameSearch: submitByNameSearch,
         gsGeocode: gsGeocode
     };
 })();

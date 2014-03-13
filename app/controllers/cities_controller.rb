@@ -7,6 +7,7 @@ class CitiesController < ApplicationController
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
+      @collection_id = mapping.collection_id
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
