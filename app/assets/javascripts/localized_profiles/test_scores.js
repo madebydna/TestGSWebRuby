@@ -24,6 +24,16 @@ GS.testScores = GS.testScores || function($) {
             $(classToHide).addClass("dn");
             $(idToShow).removeClass("dn");
         });
+
+        $('.js_test_scores_about_toggle').on('click', function(){
+            if($(this).siblings('div').hasClass('dn')){
+                $(this).siblings('div').removeClass('dn');
+                $(this).text('Hide');
+            }else{
+                $(this).siblings('div').addClass('dn');
+                $(this).text('Expand');
+            }
+        });
     };
 
     return {

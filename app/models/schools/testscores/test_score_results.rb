@@ -4,8 +4,8 @@ class TestScoreResults
     data_sets_and_values = fetch_test_data_sets_and_values school
 
     if !data_sets_and_values.blank?
-      test_scores = build_test_scores_hash data_sets_and_values
-      sort_test_scores test_scores
+      test_scores = build_test_scores_hash(data_sets_and_values,school)
+      sort_test_scores(test_scores)
     end
   end
 
@@ -33,13 +33,17 @@ class TestScoreResults
     data_sets_and_values
   end
 
-  def build_test_scores_hash(data_sets_and_values)
-    test_meta_data = Hash.new
+  def build_test_scores_hash(data_sets_and_values, school)
+    #Hash to hold the results
     test_scores = Hash.new
 
     if !data_sets_and_values.blank?
+      all_test_data_type_ids = data_sets_and_values.map { |result_hash| result_hash[:test_data_type_id] }.uniq
+      test_data_types = TestDataType.by_ids(all_test_data_type_ids)
+      test_descriptions = TestDescription.by_data_type_ids(all_test_data_type_ids,school.state)
+
       data_sets_and_values.each do |result_hash|
-        #Todo get the subject
+        #TODO get the subject
         #TODO grade all
 
         test_data_type_id = result_hash[:test_data_type_id]
@@ -48,25 +52,29 @@ class TestScoreResults
         level_code = result_hash[:level_code]
         subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
         year = result_hash[:year]
-        test_score = result_hash[:school_value_text].nil? ? result_hash[:school_value_float] : result_hash[:school_value_text]
+        test_score = result_hash[:school_value_text].nil? ? (result_hash[:school_value_float]) : result_hash[:school_value_text]
+        test_score = test_score.round unless test_score.nil? && test_score.is_a?(Float)
         state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
         breakdown_id = result_hash[:breakdown_id]
         number_tested = result_hash[:number_tested]
+        next if !test_data_types || test_data_types[test_data_type_id].nil? # skip this if there is no corresponding test data type
+        label = test_data_types[test_data_type_id].first.display_name
+
+        if test_descriptions && !test_descriptions[test_data_type_id].nil?
+          description = test_descriptions[test_data_type_id].first.description
+          source = test_descriptions[test_data_type_id].first.source
+        end
 
         next if subject.nil? # skip this test data if subject is nil
-
-        if test_meta_data[test_data_type_id].nil?
-          test_meta_data[test_data_type_id] = TestDataType.by_id(test_data_type_id)
-          next if test_meta_data[test_data_type_id].nil? # skip this test data if data type not found
-        end
 
         #Check if the test is already in the map.
         if test_scores[test_data_type_id].nil?
 
           #Test not present
           test_scores[test_data_type_id] = {
-              test_label: test_meta_data[test_data_type_id].display_name,
-              test_description: test_meta_data[test_data_type_id].description,
+              test_label: label,
+              test_description: description,
+              test_source: source,
               lowest_grade: grade.value,
               grades: {
                   grade =>
@@ -174,7 +182,7 @@ class TestScoreResults
   end
 
 
-  def sort_test_scores test_scores
+  def sort_test_scores(test_scores)
     test_scores.each do |test_id, grades_hash|
       test_scores[test_id][:grades].each do |grade, level_codes_hash|
         level_codes_hash.each do |level_code, subjects_hash|
