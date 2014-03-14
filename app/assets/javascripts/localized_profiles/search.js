@@ -13,7 +13,7 @@ GS.search = GS.search || {};
 GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
-    var findByLocationSelector = 'input#js-findByLocationSearch';
+    var findByLocationSelector = 'input#js-findByLocationBox';
 
     var init = function(state) {
         $('#js-findByLocationForm').submit(function() {
@@ -84,11 +84,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
                     data['totalResults'] = geocodeResult['totalResults'];
                     data['locationSearchString'] = searchQuery;
-
-                    if(geocodeResult['city'] !== undefined) {
-                        data['city'] = geocodeResult['city'];
-                    }
-
+                    data['distance'] = 5;
+                    data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
 
                     window.location.href = window.location.protocol + '//' + window.location.host +
@@ -118,7 +115,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var gsGeocode = function(searchInput, callbackFunction) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
-            geocoder.geocode( { 'address': searchInput + ' US'}, function(results, status) {
+            geocoder.geocode( { 'address': searchInput, 'componentRestrictions': { 'country': 'US' }}, function(results, status) {
                 var GS_geocodeResults = new Array();
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {
@@ -150,8 +147,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         if (!('lat' in geocodeResult && 'lon' in geocodeResult &&
                                 'state' in geocodeResult &&
                                 'normalizedAddress' in geocodeResult &&
-                                'country' in geocodeResult) ||
-                                geocodeResult['country'] != 'US') {
+                                'country' in geocodeResult)) {
                             geocodeResult = null;
                         }
                         if (geocodeResult != null) {

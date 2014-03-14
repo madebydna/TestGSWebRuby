@@ -1,0 +1,8 @@
+<div class='tac pvm sponsor-bar'>
+  <% unless sponsor.nil? %>
+    <div class="small mbn pbn prm" style='display: inline; color: grey;'><%= sponsor[:text] %></div>
+    <a href="education-community/partner">
+      <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
+    </a>
+  <% end %>
+</div>

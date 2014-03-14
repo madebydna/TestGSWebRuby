@@ -7,14 +7,14 @@
 
 <%= render 'nav/topnav' %>
 <%= render 'shared/no_school_alert' %>
+<%= render 'sponsor_bar', sponsor: @sponsor %>
 
-<div class="limit_width_1200">
   <%= render 'search_hero', city: @city,
-                            sponsor: @sponsor,
                             collection_id: @collection_id,
                             state: @state,
                             breakdown_results: @breakdown_results %>
 
+<div class="limit_width_1200">
   <%= render 'choose_a_school', choose_school: @choose_school %>
 
   <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
