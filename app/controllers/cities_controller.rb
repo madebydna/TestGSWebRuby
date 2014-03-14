@@ -31,6 +31,7 @@ class CitiesController < ApplicationController
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
+      @hero_image = "http://www.gscdn.org/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
     end
   end
 
