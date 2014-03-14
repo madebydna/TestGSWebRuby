@@ -218,6 +218,26 @@ describe TestScoreResults do
       expect(test_scores_hash.values[1][:grades].values[0].values[0].values[0].values[0]["score"]).to eq (81)
     end
 
+    it 'should not try to round test scores if its nil or a string value.' do
+      test_data_sets_and_values = [{:test_data_type_id => 18, :test_data_set_id => 84122, :grade => "9", :level_code => "e,m,h", :subject_id => 7, :year => 2010, :school_value_text => nil, :school_value_float => nil, :state_value_text => nil, :state_value_float => nil, :breakdown_id => 1, :number_tested => 269697},
+                                   {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "8", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => "smthing", :state_value_text => nil, :state_value_float => nil, :breakdown_id => 1, :number_tested => 134540},
+                                   {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => nil, :state_value_text => nil, :state_value_float => nil, :breakdown_id => 1, :number_tested => 24737},
+                                   {:test_data_type_id => 19, :test_data_set_id => 84488, :grade => "5", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => nil, :state_value_text => "smthing", :state_value_float => nil, :breakdown_id => 1, :number_tested => 24737}]
+
+      test_data_types = {}
+      #all the data_type_ids in the test_data_sets_and_values have rows in TestDataType table.
+      [18,19].each do |data_type_id|
+        test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
+      end
+      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
+      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+
+      test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
+
+      expect(test_scores_hash.values[0][:grades].values[0].values[0].values[0].values[0]["score"]).to be_blank
+      expect(test_scores_hash.values[0][:grades].values[0].values[0].values[0].values[0]["state_avg"]).to be_blank
+    end
+
   end
 
   describe 'sort_test_scores' do
