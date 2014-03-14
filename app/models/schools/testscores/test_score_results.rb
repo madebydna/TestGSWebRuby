@@ -55,6 +55,7 @@ class TestScoreResults
         test_score = result_hash[:school_value_text].nil? ? (result_hash[:school_value_float]) : result_hash[:school_value_text]
         test_score = test_score.round unless test_score.nil? && test_score.is_a?(Float)
         state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
+        state_avg = state_avg.round unless state_avg.nil? && state_avg.is_a?(Float)
         breakdown_id = result_hash[:breakdown_id]
         number_tested = result_hash[:number_tested]
         next if !test_data_types || test_data_types[test_data_type_id].nil? # skip this if there is no corresponding test data type
