@@ -51,7 +51,7 @@ $body-bg:               #fff !default;
 $text-color:            $gray-dark !default;
 
 //////////////MS
-$text-color:            $gray-darker;
+$text-color:            $gray-darkest;
 
 // Links
 // -------------------------
@@ -75,13 +75,13 @@ $font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetic
 
 $font-size-base:          16px !default;
 $font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-small:         ceil($font-size-base * 0.75) !default; // ~12px
+$font-size-small:         ceil($font-size-base * 0.875) !default; // ~14px
 
-$font-size-h1:            floor($font-size-base * 2.4375) !default; // ~40px
-$font-size-h2:            floor($font-size-base * 1.875) !default; // ~30px
-$font-size-h3:            ceil($font-size-base * 1.375) !default; // ~24px
+$font-size-h1:            floor($font-size-base * 2.25) !default; // ~36px
+$font-size-h2:            floor($font-size-base * 1.75) !default; // ~28px
+$font-size-h3:            ceil($font-size-base * 1.25) !default; // ~21px
 $font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-h5:            $font-size-base !default;
+$font-size-h5:            $font-size-small !default;
 $font-size-h6:            $font-size-base !default; // ~12px
 
 $line-height-base:        1.5 !default; // 24/16
