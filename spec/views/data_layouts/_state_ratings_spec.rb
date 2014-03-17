@@ -11,7 +11,7 @@ describe 'state ratings partial' do
 
     render :partial => 'data_layouts/state_ratings', :locals => { data: rating_data }
 
-    expect(rendered).to match '<h5>State Rating</h5>'
+    expect(rendered).to match 'State Rating'
     expect(rendered).to match 'rspec overall rating'
     expect(rendered).to match 'rspec description'
   end
