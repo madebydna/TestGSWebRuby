@@ -16,8 +16,8 @@
 
               <script>
                 $(document).ready(function() {
-                  var locationSelector = '.search-type-toggle div:first-child span'
-                  var nameSelector = '.search-type-toggle div:last-child span'
+                  var locationSelector = '.search-type-toggle div:first-child'
+                  var nameSelector = '.search-type-toggle div:last-child'
                   $(locationSelector).click(function() {
                     $(this).addClass('selected')
                     $('.location-search').show()
@@ -71,7 +71,7 @@
                   <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
                   <button class="state-hub-search-button">Search</button>
                 </form>
-                <a  href="/" class="pull-left mvl" onclick="GS.hubs.clearLocalUserCookies();">
+                <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
                     Not in <%= city.titleize %>?
                 </a>
               </div>

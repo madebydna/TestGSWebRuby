@@ -4,16 +4,16 @@
   display: inline-block;
   background-image: url("icons/search-hero-sprites.png");
   background-repeat: no-repeat;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
 .search-hero-sprite.location-icon {
-  background-position: 0 -14px;
+  background-position: 0 -16px;
 }
 
 .search-hero-sprite.location-icon:hover {
-  background-position: -16px -14px;
+  background-position: -16px -16px;
 }
 
 .search-hero-sprite.home-icon {
