@@ -101,14 +101,14 @@ class CitiesController < ApplicationController
 
     def mapping
       collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
-      Rails.cache.fetch(collection_mapping_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+      Rails.cache.fetch(collection_mapping_key, expires_in: 1.day) do
         CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
       end
     end
 
     def configs
       configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-      Rails.cache.fetch(configs_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+      Rails.cache.fetch(configs_cache_key, expires_in: 1.day) do
         CollectionConfig.where(collection_id: mapping.collection_id).to_a
      end
     end

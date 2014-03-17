@@ -5,7 +5,7 @@ class Solr
 
   def city_hub_breakdown_results(options)
     cache_key = "city_hub_breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
-    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+    Rails.cache.fetch(cache_key, expires_in: 1.day) do
       begin
         solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
         response = solr.get "/main/select/", params: parse_params(options)
