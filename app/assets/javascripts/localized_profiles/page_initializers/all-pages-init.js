@@ -12,4 +12,8 @@ $(function() {
     $('.js-button-link').on('click', function() {
         window.location.href = $(this).data("link-value");
     });
+
+    $('.js_toggle_parent_sib').on('click', function(){
+        $(this).parent().siblings('div').slideToggle('fast');
+    });
 });

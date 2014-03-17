@@ -2,14 +2,14 @@
 
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
 
-    <div class="row mbl pam">
+    <div class="row mbm pam">
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h5>GreatSchools Rating</h5>
-        <br/><%= data["gs_rating"]["description"] %>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4>GreatSchools Rating</h4>
+        <p><%= data["gs_rating"]["description"] %></p>
 
         <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
-            <a href="javascript:void(0)" onclick='$( "#js_GSRatingLearnMore" ).slideToggle( "fast")'><br/>Learn More &raquo;</a><br /><br />
-            <div class="dn well bg-white" id="js_GSRatingLearnMore">
+            <p><a  href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+            <div class="dn well bg-white">
                 <h5>Rating Breakdown</h5>
                 <table class="table table-striped">
                     <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>

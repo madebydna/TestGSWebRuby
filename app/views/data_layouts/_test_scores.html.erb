@@ -37,14 +37,14 @@
         <% end %>
         <% if value[:test_description] %>
             <div>
-                <span class="open-sans_sb">About the test</span>
-                <a  href="javascript:void(0)" class="js_test_scores_about_toggle">Expand</a>
-                <div class="dn"> <%= raw value[:test_description]%> </div>
+                <p class="mbm"><span class="open-sans_sb">About the test.</span>
+                <a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a></p>
+                <div class="dn"><%= raw value[:test_description]%></span></div>
             </div>
         <% end %>
         <% if value[:test_source] %>
             <div>
-                <p>Source: <%= value[:test_source] %></p>
+                <p class="font-size-small ptm">Source: <%= value[:test_source] %></p>
             </div>
         <% end %>
     <% end %>
