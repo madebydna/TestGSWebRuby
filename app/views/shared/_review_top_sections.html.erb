@@ -1,8 +1,10 @@
-<div class="row ptl">
+<% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
+<% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
+
+<% if average_score > 0 %>
+  <div class="row ptl">
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
         <div class="tac">
-            <% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
-            <% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
             <%= draw_stars_24 average_score %>
             <h3 class="mbn mtm"><%= "#{ pluralize average_score, 'star' }" %></h3>
             <span>Based on <%= pluralize ratings_count, 'rating' %></span>
@@ -63,3 +65,6 @@
         </div>
     </div>
 </div>
+<% else %>
+    <%= render "shared/review_no_ratings" %>
+<% end %>

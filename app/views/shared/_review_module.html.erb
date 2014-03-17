@@ -17,7 +17,11 @@
 
     <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
         <div>
-            <%= draw_stars_16 overall_review_rating.to_i %>
+            <% if overall_review_rating == 'decline' %>
+                <span class="open-sans_i">no rating</span>
+            <% else %>
+                <%= draw_stars_16 overall_review_rating.to_i %>
+            <% end %>
         </div>
         <br />Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
         - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>

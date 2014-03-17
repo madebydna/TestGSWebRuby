@@ -28,7 +28,7 @@
                                 <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
                             </div>
                         <% end %>
-                        <% if @school_reviews_global.review_filter_totals.all > 0 %>
+                        <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
                             <div class="fl prl open-sans pt2 h24">
                                 <span class="mrs">Community rating:</span>
                                 <span class="mt2 vam">
