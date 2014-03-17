@@ -15,5 +15,11 @@ $(function() {
 
     $('.js_toggle_parent_sib').on('click', function(){
         $(this).parent().siblings('div').slideToggle('fast');
+        if($(this).html() == 'Close'){
+            $(this).html('Learn More &raquo;')
+        }
+        else{
+            $(this).html('Close')
+        }
     });
 });
