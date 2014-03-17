@@ -41,32 +41,73 @@
   margin-top: 100px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 3px;
-  width: 875px;
+  width: 940px;
   margin: auto;
   padding: 30px;
   overflow: auto;
+}
+
+.search-hero-heading {
+  float: left;
+  h4 {
+    color: #ffb725;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 62px;
+  }
 }
 
 .lg-search-bar {
   width: 350px;
 }
 
+.clear-cookies-link {
+  color: #ddd;
+  clear: left;
+}
+
+.clear-cookies-link:hover {
+  color: #fff;
+}
+
 .school-breakdown {
   @extend .col-lg-4;
   @extend .col-md-4;
   @extend .col-sm-4;
+  @extend .col-xs-12;
 }
 
 .search-type-toggle {
-  @extend .mvl;
-  span {
-    color: lightGray;
-    cursor: pointer;
+  div:hover {
+    span {
+      color: white;
+    }
   }
 
-  span:hover, span.selected {
-    color: white;
-    font-weight: bold;
+  div:first-child:hover, div:first-child.selected {
+    div.location-icon {
+      background-position: -16px -14px;
+    }
+  }
+
+  div:last-child:hover, div:last-child.selected {
+    div.home-icon {
+      background-position: -16px 0;
+    }
+  }
+
+  div.selected {
+    span {
+      color: white;
+      font-weight: bold;
+    }
+  }
+
+  span {
+    color: #DDD;
+    cursor: pointer;
   }
 }
 
@@ -228,16 +269,34 @@
   .city-hubs-bg {
     width: 100%;
     border-radius: none;
-
+    > div:first-child {
+      top: 50px;
+      margin-bottom: 30px;
+    }
   }
+  .search-hero-heading {
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+  }
+
+  .search-type-toggle {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
   .school-breakdown {
-    clear: both;
     background: white;
     width: 100vw;
     overflow: auto;
     left: -30px;
-    padding: 20px;
-    margin-bottom: -30px;
+    padding: 20px 20px 0 20px;
+    top: 30px;
     h4 {
       color: black;
     }
