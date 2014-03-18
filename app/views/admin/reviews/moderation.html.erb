@@ -21,67 +21,112 @@
 <% end %>
 
 <div class="row limit_width_1200">
-    <h3>Moderation list</h3>
+    <div class="row pbl">
+        <%= div_tag sizes: { md: 6, lg: 6 } do %>
+            <h3>Moderation list</h3>
+            <!--<div>
+          Filter reviews (filters are restrictive)  <br/>
+          <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
+        </div>-->
 
-    <div>
-      Filter reviews (filters are restrictive)  <br/>
-      <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished reviews &nbsp;&nbsp;
-      <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional reviews &nbsp;&nbsp;
-      <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled reviews &nbsp;&nbsp;
-      <!--<%= check_box_tag :reported, true, params[:reported] == 'true' %> Reported reviews &nbsp;&nbsp;-->
-      <%= check_box_tag :held, true, params[:held] == 'true' %> Held reviews &nbsp;&nbsp;
+            <div>
+                <% if @school %>
+                    <br/>
+                    Showing reviews for <%= @school.name %>. <%= link_to 'View all', moderation_admin_reviews_path %>
+                <% end %>
+            </div>
+        <% end %>
+
+        <%= div_tag sizes: { md: 6, lg: 6 } do %>
+            <br/>
+            <%= form_tag moderation_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
+                <form role="form" class="form-inline" id="contactForm">
+                    <legend>Find a school by state & ID</legend>
+                    <div class="form-group">
+                        <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase), class: 'form-control' %>
+                    </div>
+                    <div class="form-group">
+                        <%= number_field_tag 'school_id', nil, class: 'form-control', placeholder: 'School ID' %>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submit" style="margin-left: 40px">Search</button>
+            <% end %>
+        <% end %>
     </div>
-  <div>
-    <strong><%= pluralize @data.count, 'reviews' %></strong> displayed
-    <% if current_scopes.any? %>
-        <br/>
-        Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
-    <% end %>
-  </div>
 
-  <%= paginate @reported_reviews %>
+    <h3>Flagged reviews</h3>
 
     <table class="table table-striped">
-      <thead>
+        <thead>
         <tr>
-          <td>Status</td>
-          <td>School</td>
-          <td>Reason</td>
-          <td>Created</td>
-          <td>Updated</td>
+            <td>Status</td>
+            <td>School</td>
+            <td>Reason</td>
+            <td>Case opened on</td>
         </tr>
-      </thead>
-      <tbody>
-        <% @data.each do |row| %>
+        </thead>
+        <tbody>
+        <% @reported_reviews.each do |review| %>
             <tr>
-              <td>
-                <% if row[:review] %>
-                    <%= row[:review].status %>
-                <% else %>
-                    Review not found
-                <% end %>
-              </td>
-              <td>
-                <% if row[:school] %>
-                    <%= link_to row[:school].name, admin_school_moderate_path(state: school_params(row[:school])[:state], school_id: row[:school].id) %>
-                <% else %>
-                    School not found
-                <% end %>
-              </td>
-              <td>
-                <%= row[:reported_entity].reason %>
-              </td>
-              <td>
-                <%= row[:reported_entity].created %>
-              </td>
-              <td>
-                <%= row[:reported_entity].updated %>
-              </td>
+                <td>
+                    <%= review.status %>
+                </td>
+                <td>
+                    <% if review.school %>
+                        <% school = review.school %>
+                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+                    <% else %>
+                        School not found
+                    <% end %>
+                </td>
+                <td>
+                    <%= review.reported_entities.first.reason if review.reported_entities.any? %>
+                </td>
+                <td>
+                    <%= review.reported_entities.first.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
+                </td>
             </tr>
         <% end %>
-      </tbody>
+        </tbody>
 
     </table>
 
-  <%= paginate @reported_reviews %>
+    Flagged reviews: <%= paginate @reported_reviews, param_name: :flagged_reviews_page %>
+
+    <br/><br/>
+
+
+    <h3>Unprocessed reviews</h3>
+    <table class="table table-striped" style="margin-bottom: 0px">
+        <thead>
+        <tr>
+            <td>Status</td>
+            <td>School</td>
+            <td>Reason</td>
+            <td>Case opened on</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% @reviews_to_process.each do |review| %>
+            <tr>
+                <td>
+                    <%= review.status %>
+                </td>
+                <td>
+                    <% if review.school %>
+                        <% school = review.school %>
+                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+                    <% else %>
+                        School not found
+                    <% end %>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <%= review.posted.strftime '%B %d, %Y' %>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+    Unprocessed reviews: <%= paginate @reviews_to_process, param_name: :unprocessed_reviews_page %>
 </div>

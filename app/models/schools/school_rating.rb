@@ -10,14 +10,17 @@ class SchoolRating < ActiveRecord::Base
   scope :offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.nil? }
   scope :published, where(:status => ['a', 'p'])
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
+  scope :not_provisional, where('length(status) = 1')
   scope :quality_decline, where("quality != 'decline'")
   scope :belonging_to, lambda { |user| where(member_id: user.id) }
   scope :disabled, where(status: %w[d pd])
   scope :unpublished, where(status: %w[u pu])
   scope :held, where(status: %w[h ph])
-  scope :reported, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
+  scope :flagged, joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)")
+  scope :ever_flagged, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
 
   attr_accessor :reported_entities
+  attr_writer :moderated
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
@@ -32,10 +35,11 @@ class SchoolRating < ActiveRecord::Base
   validates_presence_of :overall
   validates :comments, length: { minimum: 0, maximum: 1200 }
   validate :comments_word_count
-  validates_presence_of :ip
+  validates_presence_of :ip, on: :create
 
-  before_save :calculate_and_set_status, :set_processed_date_if_published
-  after_save :auto_report_bad_language
+  before_save :calculate_and_set_status unless '@moderated == true'
+  before_save :set_processed_date_if_published
+  after_save :auto_report_bad_language unless '@moderated == true'
 
   def school=(school)
     @school = school
@@ -116,7 +120,19 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def publish!
-    self.status = 'p'
+    if provisional?
+      self.status = 'pp'
+    else
+      self.status = 'p'
+    end
+  end
+
+  def disable!
+    if provisional?
+      self.status = 'pd'
+    else
+      self.status = 'd'
+    end
   end
 
   def has_any_bad_language?

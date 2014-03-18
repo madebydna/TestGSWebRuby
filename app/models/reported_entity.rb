@@ -21,4 +21,11 @@ class ReportedEntity < ActiveRecord::Base
     )
   end
 
+  def self.find_by_reviews(reviews)
+    ReportedEntity.where(
+      reported_entity_type: %w[schoolReview],
+      reported_entity_id: reviews.map(&:id)
+    )
+  end
+
 end
