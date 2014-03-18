@@ -31,7 +31,7 @@
                                     <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                                         <%= (value[:school_value].is_a? Numeric) ? value[:school_value].round : value[:school_value] %>
 
-                                    <% elsif value[:school_value] != 'n/a' %>
+                                    <% elsif value[:school_value] != 'no info' %>
                                         <%= capitalize_if_string value[:school_value] %>
                                     <% else %>
                                         <%= value[:school_value] %>
