@@ -5,7 +5,7 @@
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
 <% end %>
 
-<%= render 'nav/topnav' %>
+<%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render 'shared/no_school_alert' %>
 <%= render 'sponsor_bar', sponsor: @sponsor %>
 

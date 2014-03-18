@@ -1,95 +1,95 @@
-<div style='top: 58px;'>
-  <div class="image-bg-scale">
-    <div class="img-container">
-      <%= image_tag(@hero_image) %>
-    </div>
-    <div class="limit_width_1200">
-      <div class="content-centered">
-        <div class="city-hubs-bg tal">
-            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-              <div style='overflow: auto;'>
-                <div class="search-hero-heading">
-                  <h4 class='mtn pbs'>Find a School in</h4>
-                  <h1 class='mtn mbl'><%= city.titleize %></h1>
-                </div>
-              </div>
-
-              <script>
-                $(document).ready(function() {
-                  var locationSelector = '.search-type-toggle div:first-child span'
-                  var nameSelector = '.search-type-toggle div:last-child span'
-                  $(locationSelector).click(function() {
-                    $(this).addClass('selected')
-                    $('.location-search').show()
-                    $(nameSelector).removeClass('selected')
-                    $('.name-search').hide()
-                  })
-                  $(nameSelector).click(function() {
-                    $(this).addClass('selected')
-                    $('.name-search').show()
-                    $(locationSelector).removeClass('selected')
-                    $('.location-search').hide()
-                  })
-                });
-              </script>
-
-              <div class="search-type-toggle mvm clearfix">
-                <div class='pull-left selected' style='margin-right: 30px;'>
-                  <div class='search-hero-sprite location-icon'></div>
-                  <span>By Location</span>
-                </div>
-                <div class='pull-left'>
-                  <div class='search-hero-sprite home-icon'></div>
-                  <span>By Name</span>
-                </div>
-              </div>
-
-              <div class="location-search">
-                <form name="findByLocationForm" id="js-findByLocationForm"
-                      action="/search/search.page" method="get">
-                  <input type="text" name="locationSearchString"
-                         id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
-                         onfocus="GS.textSwitch(this, '', '   Search by city AND state or address ...');"
-                         onblur="GS.textSwitch(this, '   Search by city AND state or address ...', '');"
-                         value="Search by city AND state or address ..."/>
-                  <button class="state-hub-search-button">Search</button>
-                </form>
-                <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
-                    Not in <%= city.titleize %>?
-                </a>
-              </div>
-
-              <div class="name-search" style='display: none;'>
-                <form name='searchBySchoolNameForm' id='js-findByNameForm' action="/search/search.page" method='get'>
-                  <input type="hidden" name='search_type' value='1'>
-                  <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'
-                          name='q' placeholder="School name (e.g. Niles Elementary School)"
-                          onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
-                          onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
-                          value="School name (e.g. Niles Elementary School)"/>
-                  <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
-                  <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
-                  <button class="state-hub-search-button">Search</button>
-                </form>
-                <a  href="/" class="pull-left mvl" onclick="GS.hubs.clearLocalUserCookies();">
-                    Not in <%= city.titleize %>?
-                </a>
+<div class="image-bg-scale">
+  <div class="img-container">
+    <%= image_tag(@hero_image) %>
+  </div>
+  <div class="limit_width_1200">
+    <div class="content-centered">
+      <div class="city-hubs-bg tal">
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+            <div style='overflow: auto;'>
+              <div class="search-hero-heading">
+                <h4 class='mtn pbs'>Find a School in</h4>
+                <h1 class='mtn mbl'><%= city.titleize %></h1>
               </div>
             </div>
 
-            <div class="school-breakdown">
-              <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
-              <% breakdown_results.each do |text, data| %>
-                <% unless data.nil? %>
-                  <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
-                    <div><%= text %></div>
-                    <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
-                  </button>
-                <% else %>
-                  <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
-                <% end %>
+            <script>
+              $(document).ready(function() {
+                var locationSelector = '.search-type-toggle div:first-child'
+                var nameSelector = '.search-type-toggle div:last-child'
+                $(locationSelector).click(function() {
+                  $(this).addClass('selected')
+                  $('.location-search').show()
+                  $(nameSelector).removeClass('selected')
+                  $('.name-search').hide()
+                })
+                $(nameSelector).click(function() {
+                  $(this).addClass('selected')
+                  $('.name-search').show()
+                  $(locationSelector).removeClass('selected')
+                  $('.location-search').hide()
+                })
+              });
+            </script>
+
+            <div class="search-type-toggle mvm clearfix">
+              <div class='pull-left selected' style='margin-right: 30px;'>
+                <div class='search-hero-sprite location-icon'></div>
+                <span>By Location</span>
+              </div>
+              <div class='pull-left'>
+                <div class='search-hero-sprite home-icon'></div>
+                <span>By Name</span>
+              </div>
+            </div>
+
+            <div class="location-search">
+              <form name="findByLocationForm" id="js-findByLocationForm"
+                    action="/search/search.page" method="get">
+                <input type="text" name="locationSearchString"
+                       id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
+                       onfocus="GS.textSwitch(this, '', 'Search by city AND state or address ...');"
+                       onblur="GS.textSwitch(this, 'Search by city AND state or address ...', '');"
+                       placeholder="Search by city AND state or address ..."
+                       value="Search by city AND state or address ..."/>
+                <button class="state-hub-search-button">Search</button>
+              </form>
+              <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
+                  Not in <%= city.titleize %>?
+              </a>
+            </div>
+
+            <div class="name-search" style='display: none;'>
+              <form name='searchBySchoolNameForm' id='js-findByNameForm' action="/search/search.page" method='get'>
+                <input type="hidden" name='search_type' value='1'>
+                <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'
+                        name='q' placeholder="School name (e.g. Niles Elementary School)"
+                        onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
+                        onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                        placeholder='School name (e.g. Niles Elementary School)'
+                        value="School name (e.g. Niles Elementary School)"/>
+                <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
+                <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
+                <button class="state-hub-search-button">Search</button>
+              </form>
+              <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
+                  Not in <%= city.titleize %>?
+              </a>
+            </div>
+          </div>
+
+          <div class="school-breakdown">
+            <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
+            <% breakdown_results.each do |text, data| %>
+              <% unless data.nil? %>
+                <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
+                  <div><%= text %></div>
+                  <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
+                </button>
+              <% else %>
+                <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
               <% end %>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>

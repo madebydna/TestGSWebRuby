@@ -1,9 +1,8 @@
 .sponsor-bar {
-  position: fixed;
   top: 58px;
   right: 0;
   left: 0;
-  z-index: $zindex-navbar-fixed;
+  z-index: 1;
   background-color: #F9F9F9;
 }
 
@@ -17,7 +16,6 @@
 
 .img-container {
   position: absolute;
-  top: 58px;
   left: -50%;
   width: 200%;
 
@@ -33,7 +31,7 @@
 
 .content-centered {
   position: relative;
-  top: 108px;
+  top: 58px;
   width: 100%;
 }
 
@@ -81,6 +79,8 @@
 
 .search-type-toggle {
   div:hover {
+    cursor: pointer;
+
     span {
       color: white;
     }
@@ -88,7 +88,7 @@
 
   div:first-child:hover, div:first-child.selected {
     div.location-icon {
-      background-position: -16px -14px;
+      background-position: -16px -16px;
     }
   }
 
@@ -174,17 +174,16 @@
 
 // Centered Nav Bar Search
 .search-bar {
-  width: 410px;
   position: absolute;
   left: 175px;
 
   div {
-    right: 104px;
+    right: 5px;
     top: 8px;
   }
 
   input {
-    padding: 6px 5px;
+    padding: 0 5px;
     width: 300px;
   }
 }
@@ -251,15 +250,6 @@
   .scale-image {
     width: 100%;
   }
-}
-
-@media only screen and (min-width: 768px) {
-  .lar {
-    text-align: right;
-  }
-}
-
-@media only screen and (max-width: 768px) {
   .image-bg-scale {
     height: auto;
   }
@@ -269,10 +259,6 @@
   .city-hubs-bg {
     width: 100%;
     border-radius: none;
-    > div:first-child {
-      top: 50px;
-      margin-bottom: 30px;
-    }
   }
   .search-hero-heading {
     h4 {
@@ -306,7 +292,7 @@
   }
 
   .lg-search-bar {
-    width: 75%;
+    width: 70%;
     height: 40px;
   }
 
@@ -314,7 +300,21 @@
     width: 22%;
     height: 41px;
   }
+}
 
+@media only screen and (min-width: 768px) {
+  .lar {
+    text-align: right;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .lg-search-bar {
+    height: 38px;
+  }
+  .state-hub-search-button {
+    height: 39px;
+  }
   .lg-pr-sm-pl {
     float: left;
     clear: left;

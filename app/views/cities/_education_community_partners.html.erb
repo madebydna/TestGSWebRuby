@@ -1,0 +1,45 @@
+<% unless @partners.nil? %>
+  <% if show_tabs %>
+    <% @partners[@tab].each do |partner| %>
+      <div class="row">
+        <div class="community-partner-row">
+          <hr>
+          <%= image_tag(partner[:logo], alt: 'Partner logo') %>
+          <div>
+            <h2 class='mtn'><%= partner[:heading] %></h2>
+            <p><%= partner[:description] %></p>
+            <% partner[:links].each do |link| %>
+              <% if link[:newwindow] == 'true' %>
+                <%= link_to(link[:heading], link[:url], class: 'small', target: 'blank') %>
+              <% else %>
+                <%= link_to(link[:heading], link[:url], class: 'small') %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <% @partners.values.flatten do |partner| %>
+      <div class="row">
+        <div class="community-partner-row">
+          <hr>
+          <%= image_tag(partner[:logo], alt: 'Partner logo') %>
+          <div>
+            <h2 class='mtn'><%= partner[:heading] %></h2>
+            <p><%= partner[:description] %></p>
+            <% partner[:links].each do |link| %>
+              <% if link[:newwindow] == 'true' %>
+                <%= link_to(link[:heading], link[:url], class: 'small', target: 'blank') %>
+              <% else %>
+                <%= link_to(link[:heading], link[:url], class: 'small') %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <h3>No Data Found - Key eduCommPage_partnerData</h3>
+<% end %>

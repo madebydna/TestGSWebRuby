@@ -22,26 +22,6 @@
   </div>
 
   <%= render 'tabs', tab: @tab, city: @city, state: @state[:long], show_tabs: @show_tabs %>
-
-  <% @partners[@tab].each do |partner| %>
-    <div class="row">
-      <div class="community-partner-row">
-        <hr>
-        <%= image_tag(partner[:logo], alt: 'Partner logo') %>
-        <div>
-          <h2 class='mtn'><%= partner[:heading] %></h2>
-          <p><%= partner[:description] %></p>
-          <% partner[:links].each do |link| %>
-            <% if link[:newwindow] == 'true' %>
-              <%= link_to(link[:heading], link[:url], class: 'small', target: 'blank') %>
-            <% else %>
-              <%= link_to(link[:heading], link[:url], class: 'small') %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render 'education_community_partners', partners: @partners, tab: @tab, show_tabs: @show_tabs %>
 </div>
-
 <%= render 'footer' %>
