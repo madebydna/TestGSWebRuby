@@ -463,7 +463,7 @@
       @return $color;
   }
   @else{
-    @return darken($color, 8%)
+    @return darken($color, 15%)
   }
 }
 
@@ -487,9 +487,7 @@
   border-color: $border;
 
   &:hover,
-  &:focus,
-  &:active,
-  &.active {
+  &:focus {
     color: $active_color;
     background-color: color-button-background($background, $background_active);
         border-color: color-button-darken($border);

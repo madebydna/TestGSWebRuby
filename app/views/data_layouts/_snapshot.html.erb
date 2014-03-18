@@ -22,7 +22,7 @@
         <%  all_columns.each_with_index do |col_arr, index_all| %>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="mhm">
-                <table class="table table-striped">
+                <table class="table table-striped mbm">
                     <% col_arr.each_with_index do |value_hash, index| %>
                         <tr>
                             <% value_hash.each do |key, value| %>
@@ -44,5 +44,8 @@
                 </div>
             </div>
         <% end %>
+        <div class="fr prl">
+            <%= link_to "We can help &raquo;".html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+            <a href=""><span class="vam iconx16 i-16-pencil mrs"></span>Edit</a></div>
     </div>
 </div>

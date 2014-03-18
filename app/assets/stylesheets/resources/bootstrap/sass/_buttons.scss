@@ -36,10 +36,10 @@
   &:active,
   &.active {
     outline: 0;
-    background-color: #999999;
+    background-color: #666666;
     color:#FFFFFF;
-//    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
-    border-color: #999999;
+    @include box-shadow(inset 0 2px 0px rgba(0,0,0,.125));
+    border-color: #666666;
   }
 
   &.disabled,
