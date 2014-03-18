@@ -45,7 +45,7 @@
             </div>
         <% end %>
         <div class="fr prl">
-            <%= link_to "We can help &raquo;".html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
-            <a href=""><span class="vam iconx16 i-16-pencil mrs"></span>Edit</a></div>
+            <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+        </div>
     </div>
 </div>
