@@ -22,7 +22,7 @@ class Admin::AdminController < ApplicationController
     gon.omniture_pagename = 'omniture_test'
     gon.omniture_hier1 = 'omniture_test,test_page'
     gon.omniture_sprops = {'userLoginStatus' => 'Logged In', 'schoolRating' => 7}
-    gon.omniture_evars = {'testEvar1' => 'testEvar1', 'testEvar2' => 'testEvar2'}
+    gon.omniture_evars = {'review_updates_mss_btn_source' => 'testing'}
   end
 
   private

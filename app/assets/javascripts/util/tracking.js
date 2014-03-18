@@ -113,17 +113,16 @@ GS.track.propLookup = {
     'queryString':60,
     'localPageName':57,
     'navBarVariant':58,
-    'custom_completion_sprop':61
+    'custom_completion_sprop':61 //This sprop is set to track both the start and end of conversion funnel.ANA-43 and OM-263.
 };
 
 GS.track.eventLookup = {
-    'review_updates_mss_event' : 'event84'
+    'review_updates_mss_end_event' : 'event84', //Event to track the end of conversion funnel.ANA-43
+    'review_updates_mss_start_event' : 'event85' //Event to track the start of conversion funnel.OM-263
 };
 
-//TODO replace these with actual evars when the requirements come in.
 GS.track.evarsLookup = {
-    'testEvar1':1,
-    'testEvar2':2
+    'review_updates_mss_btn_source' :25
 };
 
 GS.track.setOmnitureData = function () {
@@ -137,6 +136,9 @@ GS.track.setOmnitureData = function () {
     }
     if(typeof gon.omniture_events != undefined && gon.omniture_events != null){
         GS.track.setEvents(gon.omniture_events);
+    }
+    if(typeof gon.omniture_evars != undefined  && gon.omniture_evars != null){
+        GS.track.setEVars(gon.omniture_evars);
     }
 };
 

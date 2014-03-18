@@ -10,7 +10,7 @@ if (gon.pagename == 'omniture_test') {
     $(function () {
         //Test omniture event on click of a button.
         $('#omniture_events_test').on('click', function () {
-            var omniture_events = 'review_updates_mss_event,review_updates_mss_event';
+            var omniture_events = 'review_updates_mss_end_event,review_updates_mss_start_event';
             GS.track.trackEvent(omniture_events);
         })
 

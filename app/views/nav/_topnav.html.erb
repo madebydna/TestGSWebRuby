@@ -54,7 +54,7 @@
                 <li><%= link_to 'Find a School', find_schools_url %></li>
                 <li>
                     <%= link_to 'Review Your School',
-                        (defined?(@school) ? school_review_form_path(@school) : the_scoop_path) %>
+                        (defined?(@school) ? school_review_form_path(@school, btn_source: 'GlobalNav') : the_scoop_path) %>
                 </li>
                 <li><a class="dropdown-toggle"
                        data-toggle="dropdown"

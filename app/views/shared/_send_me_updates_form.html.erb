@@ -3,6 +3,7 @@
     <%= f.hidden_field :list, :value => school.private_school? ? 'mystat_private' : 'mystat' %>
     <%= f.hidden_field :school_id, :value => school.id %>
     <%= f.hidden_field :state, :value => school.state %>
+    <%= f.hidden_field :btn_source, :value => btn_source %>
     <%= f.hidden_field :message, :value => "You've signed up to receive updates on #{school.name}" %>
   <% end %>
 <% end %>

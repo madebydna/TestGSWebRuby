@@ -46,37 +46,75 @@ module OmnitureConcerns
     end
   end
 
-  def set_omniture_events_in_session(events_array=[])
-    props_events_hash = session[:omniture_tracking] || {}
-    props_events_hash['events'] ||= []
-    props_events_hash['events'] += events_array
-    props_events_hash['events'].uniq!
-
-    session[:omniture_tracking] = props_events_hash
+  def set_omniture_events(events_array=[])
+    gon.omniture_events ||= []
+    if events_array && events_array.any?
+      gon.omniture_events += events_array
+    end
   end
 
-  def set_omniture_sprops_in_session(sprops_hash={})
-    props_events_hash = session[:omniture_tracking] || {}
-    props_events_hash['sprops'] ||= {}
-    props_events_hash['sprops'].merge!(sprops_hash)
+  def set_omniture_sprops(sprops_hash={})
+    gon.omniture_sprops ||= {}
+    if sprops_hash && sprops_hash.any?
+      gon.omniture_sprops.merge!(sprops_hash)
+    end
+  end
 
-    session[:omniture_tracking] = props_events_hash
+  def set_omniture_evars(evars_hash={})
+    gon.omniture_evars ||= {}
+    if evars_hash && evars_hash.any?
+      gon.omniture_evars.merge!(evars_hash)
+    end
+  end
+
+  #Use cookie based session to store the omniture events when there are redirects involved.
+  def set_omniture_events_in_session(events_array=[])
+    props_events_evars_hash = session[:omniture_tracking] || {}
+    props_events_evars_hash['events'] ||= []
+    props_events_evars_hash['events'] += events_array
+    props_events_evars_hash['events'].uniq!
+
+    session[:omniture_tracking] = props_events_evars_hash
+  end
+
+  #Use cookie based session to store the omniture sprops when there are redirects involved.
+  def set_omniture_sprops_in_session(sprops_hash={})
+    props_events_evars_hash = session[:omniture_tracking] || {}
+    props_events_evars_hash['sprops'] ||= {}
+    props_events_evars_hash['sprops'].merge!(sprops_hash)
+
+    session[:omniture_tracking] = props_events_evars_hash
+  end
+
+  #Use cookie based session to store the omniture evars when there are redirects involved.
+  def set_omniture_evars_in_session(evars_hash={})
+    props_events_evars_hash = session[:omniture_tracking] || {}
+    props_events_evars_hash['evars'] ||= {}
+    props_events_evars_hash['evars'].merge!(evars_hash)
+
+    session[:omniture_tracking] = props_events_evars_hash
   end
 
   def read_omniture_data_from_session
     session_value = session[:omniture_tracking]
     gon.omniture_sprops ||= {}
     gon.omniture_events ||= []
+    gon.omniture_evars ||= {}
 
     if !session_value.nil?
-      props_events_hash = session_value
-      if props_events_hash
-        sprops_hash = props_events_hash['sprops']
+      props_events_evars_hash = session_value
+      if props_events_evars_hash
+        sprops_hash = props_events_evars_hash['sprops']
         if sprops_hash && sprops_hash.any?
           gon.omniture_sprops.merge!(sprops_hash)
         end
 
-        events_array = props_events_hash['events']
+        evars_hash = props_events_evars_hash['evars']
+        if evars_hash && evars_hash.any?
+          gon.omniture_evars.merge!(evars_hash)
+        end
+
+        events_array = props_events_evars_hash['events']
         if events_array && events_array.any?
           gon.omniture_events += events_array
         end
