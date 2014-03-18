@@ -173,7 +173,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var queryString = GS.uri.Uri.getQueryData();
 
         queryString.q = encodeURIComponent(searchString);
-        queryString.collection_id = encodeURIComponent(collectionId);
+        queryString.collectionId = encodeURIComponent(collectionId);
         queryString.state = encodeURIComponent(state);
 
         window.location = window.location.protocol + '//' + window.location.host +
