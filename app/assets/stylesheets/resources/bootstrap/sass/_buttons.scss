@@ -29,6 +29,8 @@
   &:focus {
     color: $btn-default-color;
     text-decoration: none;
+    -webkit-transition: border .20s linear, color .20s linear, background-color .20s linear;
+    transition: border .20s linear, color .20s linear, background-color .20s linear;
   }
 
   &:active,
