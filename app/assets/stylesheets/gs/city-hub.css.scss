@@ -174,17 +174,16 @@
 
 // Centered Nav Bar Search
 .search-bar {
-  width: 410px;
   position: absolute;
   left: 175px;
 
   div {
-    right: 104px;
+    right: 5px;
     top: 8px;
   }
 
   input {
-    padding: 6px 5px;
+    padding: 0 5px;
     width: 300px;
   }
 }

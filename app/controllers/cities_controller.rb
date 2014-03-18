@@ -50,6 +50,7 @@ class CitiesController < ApplicationController
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
+      set_meta_tags title: "The #{@city} Education Community"
       @collection_id = collection_mapping.collection_id
       collection_configs = configs
       set_community_tab(collection_configs)

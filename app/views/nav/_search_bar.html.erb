@@ -5,11 +5,11 @@
   <div class="limit_width_1200">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha" style='overflow: hidden; float: none;'>
+        <h5 class='pull-left mtm mbn pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h5>
         <form method='get' id='js-findByNameForm' action="/search/search.page">
           <input value="1" name="search_type" type="hidden">
           <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
           <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
-          <h5 class='pull-left mtm mbn pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h5>
           <div class='search-bar'>
             <input  type="text"
                     name="q"
@@ -17,11 +17,13 @@
                     class="search-text text-bigger mlm"
                     id="js-findByNameBox"
                     onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
-                    onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');" placeholder="School name (e.g. Niles Elementary School)">
+                    onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                    placeholder="School name (e.g. Niles Elementary School)"
+                    style='height: 39px;'>
             <div class="pa">
               <span id="js-submit" class='iconx24 i-24-search-lens' style='cursor: pointer'></span>
             </div>
-            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mlm pa" style='color: #fff; top: 22%; left: 315px;' href="/">Not in <%= city.titleize %>?</a>
+            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mlm pa" style='color: #fff; top: 9%; left: 315px;' href="/">Not in <%= city.titleize %>?</a>
           </div>
         </form>
       </div>
