@@ -53,6 +53,9 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
+          raw_partners_str.gsub!(/\n/, '')
+                          .gsub!(/\r/, '')
+                          .gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           partners = eval(raw_partners_str) # sins
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(CDN_HOST)

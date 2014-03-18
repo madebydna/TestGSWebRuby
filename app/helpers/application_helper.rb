@@ -88,8 +88,6 @@ module ApplicationHelper
   def include_lightbox_media (media_hash)
     r_str = ''
     if media_hash
-      #debugger
-
       media_hash.each { | x  |
         if media_hash
           r_str <<  '<a href="' + generate_img_path("500", x["hash"])  + '">' + "\n"
@@ -223,23 +221,29 @@ module ApplicationHelper
   end
 
   def topnav_formatted_title(hub_params, school, cookies)
+    city = hub_params[:city].capitalize
     if school
       state_short = States.abbreviation(school.state).upcase
       collection = school.collection
       write_cookie_value :hubState, @school.state.upcase
     elsif cookies[:hubState]
-      state_short = cookies[:hubState]
+      state_short = States.abbreviation(params[:state]).upcase
+      if params[:state] && params[:state] != state_short
+        write_cookie_value :hubState, state_short
+      else
+        state_short = cookies[:hubState]
+      end
     else
       state_short = States.abbreviation(params[:state]).upcase
       write_cookie_value :hubState, state_short
     end
 
-    write_cookie_value :hubCity, hub_params[:city]
+    write_cookie_value :hubCity, city
     write_cookie_value :ishubUser, 'y'
 
 
     unless collection
-      id = CollectionMapping.where(city: hub_params[:city], state: state_short).first.id
+      id = CollectionMapping.where(city: city, state: state_short, active: 1).first.collection_id
       hub_city_mapping = HubCityMapping.for_collection_id(id).first
       collection = Collection.from_hub_city_mapping(hub_city_mapping)
     end
@@ -252,6 +256,6 @@ module ApplicationHelper
       write_cookie_value :partnerPage, collection.has_partner_page?
     end
 
-    "#{hub_params[:city]}, #{state_short}"
+    "#{city}, #{state_short}"
   end
 end
