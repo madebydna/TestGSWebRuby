@@ -36,7 +36,8 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_article_str = collection_configs.select(&lambda { |cc| cc.quay == FEATURED_ARTICLES_KEY }).first.value
-          raw_article_str.gsub!(/articles\s\:/, '"articles" =>').gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
+          raw_article_str.gsub!(/articles\s\:/, '"articles" =>')
+          raw_article_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           articles = eval(raw_article_str)['articles'] # sins
           articles.each do |article|
             article[:articleImagePath].prepend(CDN_HOST)
@@ -54,8 +55,8 @@ class CollectionConfig < ActiveRecord::Base
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
           raw_partners_str.gsub!(/\n/, '')
-                          .gsub!(/\r/, '')
-                          .gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
+          raw_partners_str.gsub!(/\r/, '')
+          raw_partners_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           partners = eval(raw_partners_str) # sins
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(CDN_HOST)
