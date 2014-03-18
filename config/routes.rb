@@ -46,6 +46,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-choice/school-choice/7055-choose-elementary-school-video.gs', as: :help_me_e_video
     get '/school-choice/school-choice/7056-choose-middle-school-video.gs', as: :help_me_m_video
     get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
+    get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do

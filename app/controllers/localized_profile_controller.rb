@@ -65,6 +65,7 @@ class LocalizedProfileController < ApplicationController
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
+    @sweepstakes_enabled = PropertyConfig.sweepstakes?
   end
 
   def read_config_for_page
@@ -162,5 +163,6 @@ class LocalizedProfileController < ApplicationController
     # date of latest non-principal review
     @last_modified_date = @school.modified
   end
+
 
 end

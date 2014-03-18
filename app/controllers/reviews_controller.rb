@@ -69,6 +69,7 @@ class ReviewsController < ApplicationController
 
   def init_page
     gon.pagename = 'reviews/new'
+    @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @google_signed_image = GoogleSignedImages.new @school, gon
     @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.set_reviews_objects @school
