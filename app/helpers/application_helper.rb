@@ -222,4 +222,36 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
+  def topnav_formatted_title(hub_params, school, cookies)
+    if school
+      state_short = States.abbreviation(school.state).upcase
+      collection = school.collection
+      write_cookie_value :hubState, @school.state.upcase
+    elsif cookies[:hubState]
+      state_short = cookies[:hubState]
+    else
+      state_short = States.abbreviation(params[:state]).upcase
+      write_cookie_value :hubState, state_short
+    end
+
+    write_cookie_value :hubCity, hub_params[:city]
+    write_cookie_value :ishubUser, 'y'
+
+
+    unless collection
+      id = CollectionMapping.where(city: hub_params[:city], state: state_short).first.id
+      hub_city_mapping = HubCityMapping.for_collection_id(id).first
+      collection = Collection.from_hub_city_mapping(hub_city_mapping)
+    end
+
+    if collection
+      write_cookie_value :eduPage, collection.has_edu_page?
+      write_cookie_value :choosePage, collection.has_choose_page?
+      write_cookie_value :eventsPage, collection.has_events_page?
+      write_cookie_value :enrollPage, collection.has_enroll_page?
+      write_cookie_value :partnerPage, collection.has_partner_page?
+    end
+
+    "#{hub_params[:city]}, #{state_short}"
+  end
 end

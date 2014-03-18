@@ -48,8 +48,9 @@
                     action="/search/search.page" method="get">
                 <input type="text" name="locationSearchString"
                        id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
-                       onfocus="GS.textSwitch(this, '', '   Search by city AND state or address ...');"
-                       onblur="GS.textSwitch(this, '   Search by city AND state or address ...', '');"
+                       onfocus="GS.textSwitch(this, '', 'Search by city AND state or address ...');"
+                       onblur="GS.textSwitch(this, 'Search by city AND state or address ...', '');"
+                       placeholder="Search by city AND state or address ..."
                        value="Search by city AND state or address ..."/>
                 <button class="state-hub-search-button">Search</button>
               </form>
@@ -65,6 +66,7 @@
                         name='q' placeholder="School name (e.g. Niles Elementary School)"
                         onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
                         onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                        placeholder='School name (e.g. Niles Elementary School)'
                         value="School name (e.g. Niles Elementary School)"/>
                 <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
                 <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>

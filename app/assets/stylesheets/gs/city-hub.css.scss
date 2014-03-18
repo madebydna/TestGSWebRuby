@@ -79,6 +79,8 @@
 
 .search-type-toggle {
   div:hover {
+    cursor: pointer;
+
     span {
       color: white;
     }
@@ -249,9 +251,11 @@
   .scale-image {
     width: 100%;
   }
-
   .image-bg-scale {
     height: auto;
+  }
+  .content-centered {
+    top: 0;
   }
   .city-hubs-bg {
     width: 100%;
@@ -306,9 +310,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .content-centered {
-    top: 0;
-  }
   .lg-search-bar {
     height: 38px;
   }
