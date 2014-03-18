@@ -22,7 +22,7 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def collection_id_to_key_value_map
-      Rails.cache.fetch('collection_id_to_key_value_map', ENV_GLOBAL['global_expires_in'].minutes) do
+      Rails.cache.fetch('collection_id_to_key_value_map', expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
         configs = {}
         order(:collection_id).each do |row|
           configs[row['collection_id'].to_i] ||= {}
