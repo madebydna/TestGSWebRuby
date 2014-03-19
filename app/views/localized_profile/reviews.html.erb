@@ -7,7 +7,7 @@
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <div class="well tac">
-                <button type="button" data-link-value="<%= school_review_form_path(@school,btn_source: 'Reviews') %>" class="btn btn-primary js-button-link" >
+                <button type="button" data-link-value="<%= school_review_form_path(@school,driver: 'Reviews') %>" class="btn btn-primary js-button-link" >
                     Be the first to leave a review!
                 </button>
                 <p class="ptl">Help others find their great school - rate and review this school now</p>
@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                    <%= render "shared/review_top_sections",btn_source: 'Reviews' %>
+                    <%= render "shared/review_top_sections",driver: 'Reviews' %>
 
                 </div>
             </div>
