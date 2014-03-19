@@ -37,9 +37,9 @@ class SchoolRating < ActiveRecord::Base
   validate :comments_word_count
   validates_presence_of :ip, on: :create
 
-  before_save :calculate_and_set_status unless '@moderated == true'
+  before_save :calculate_and_set_status, unless: '@moderated == true'
   before_save :set_processed_date_if_published
-  after_save :auto_report_bad_language unless '@moderated == true'
+  after_save :auto_report_bad_language, unless: '@moderated == true'
 
   def school=(school)
     @school = school
