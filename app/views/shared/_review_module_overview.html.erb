@@ -22,7 +22,11 @@
                     <%= draw_stars_16 overall_review_rating.to_i %>
                     <span class="mlm vat"><%= review[:posted].strftime "%B %d, %Y" %></span>
                 </div>
-                <%= raw review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' ? review[:comments] : '<div class="well mbn">This review submitted without content.</div>' %>
+                <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
+                    <%= review[:comments] %>
+                <% else %>
+                    <div class="well mbn">This review submitted without content.</div>
+                <% end %>
                 <br />
                 - submitted by a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
             </div>
