@@ -88,9 +88,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
 
-                    window.location.href = window.location.protocol + '//' + window.location.host +
+                    setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
                             SEARCH_PAGE_PATH +
-                            GS.uri.Uri.getQueryStringFromObject(data);
+                            GS.uri.Uri.getQueryStringFromObject(data); }, 1);
                 } else {
                     alert("Location not found. Please enter a valid address, city, or ZIP.");
                 }
@@ -176,10 +176,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         queryString.collectionId = encodeURIComponent(collectionId);
         queryString.state = encodeURIComponent(state);
 
-        window.location = window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { window.location = window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
-                GS.uri.Uri.getQueryStringFromObject(queryString);
-        return false;
+                GS.uri.Uri.getQueryStringFromObject(queryString); }, 1);
     };
 
     return {
