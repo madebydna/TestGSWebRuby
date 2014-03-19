@@ -100,17 +100,22 @@
                         <% end %>
 
                       </div>
+                        <div class="row ptl">
+                            <% if @sweepstakes_enabled %>
+                                <%= render "shared/sweepstakes_content" %>
+                            <% end %>
+                        </div>
                     </div>
+
                   </div>
                 </div>
+
                 <div>
+
             </div>
+
         </div>
-        <div class="row phl">
-            <% if @sweepstakes_enabled %>
-                <%= render "shared/sweepstakes_content" %>
-            <% end %>
-        </div>
+
     </div>
     <div class="col-xs-0 col-sm-2 col-md-3 col-lg-3">
 
