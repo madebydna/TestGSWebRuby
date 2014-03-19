@@ -9,7 +9,7 @@
         <div class="well">
           <div class='mbm'>
             <%= render 'shared/stars', locals: { rating: review.quality } %>
-            <span class="small mlm vat" style='color: #999;'>Posted <%= review.posted %></span>
+            <span class="small mlm vat" style='color: #999;'>Posted <%= time_ago_in_words(review.posted) %></span>
           </div>
           <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
         </div>
