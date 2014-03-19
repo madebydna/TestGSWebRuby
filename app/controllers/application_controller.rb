@@ -80,6 +80,8 @@ class ApplicationController < ActionController::Base
   def require_school
     @school = find_school if params[:schoolId].to_i > 0 || params[:school_id].to_i > 0
 
+    @school.extend SchoolProfileDataDecorator
+
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end
 

@@ -35,12 +35,8 @@ class Category < ActiveRecord::Base
     name.gsub /\W+/, '_'
   end
 
-  def data_for_school(school)
-    school.data_for_category(self)
-  end
-
   def possible_sources
-    CategoryDataReader.sources
+    SchoolProfileDataReader.data_readers
   end
 
   # This method will return all of the various data keys that are configured to display for a certain *source*

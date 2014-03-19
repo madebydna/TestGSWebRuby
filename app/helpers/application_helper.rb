@@ -120,7 +120,8 @@ module ApplicationHelper
   def category_placement_data(category_placement)
     @data_cache ||= {}
     if category_placement.category
-      @data_cache[category_placement] ||= category_placement.category.data_for_school(@school)
+      @school.data_for_category category_placement.category
+      @data_cache[category_placement] ||= @school.data_for_category category_placement.category
     end
   end
 

@@ -8,8 +8,6 @@ class CategoryPlacement < ActiveRecord::Base
   belongs_to :category
   belongs_to :page
 
-  delegate :data_for_school, to: :category
-
   after_initialize :set_defaults
   before_validation :parse_layout_json
 
