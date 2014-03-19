@@ -3,6 +3,7 @@ class PropertyConfig < ActiveRecord::Base
   self.table_name = 'property'
 
   def self.sweepstakes?
-    PropertyConfig.where(quay: 'sweepstakes').first.value == 'true'
+    pc_sweepstakes = PropertyConfig.where(quay: 'sweepstakes')
+    pc_sweepstakes.present? ? pc_sweepstakes.first.value == 'true' : false
   end
 end
