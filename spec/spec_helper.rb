@@ -14,7 +14,7 @@ Spork.prefork do
 
   SimpleCov.start do
     add_filter '/spec/'
-    add_filter 'config/initializers/rails_admin.rb'
+    add_filter '/config/'
     add_filter 'lib/test_connection_management.rb'
   end
   # This file is copied to spec/ when you run 'rails generate rspec:install'

@@ -1,14 +1,14 @@
 class Solr
   def initialize(state_short, collection_id)
     @state_short, @collection_id = state_short, collection_id
+    @connection = RSolr.connect(url: ENV_GLOBAL['solr_url'])
   end
 
   def city_hub_breakdown_results(options)
     cache_key = "city_hub_breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
     Rails.cache.fetch(cache_key, expires_in: 1.day) do
       begin
-        solr = RSolr.connect(url: ENV_GLOBAL['solr_url'])
-        response = solr.get "/main/select/", params: parse_params(options)
+        response = @connection.get "/main/select/", params: parse_params(options)
         breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }
       rescue => e
         breakdown_results = nil

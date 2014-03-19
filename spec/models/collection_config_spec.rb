@@ -312,16 +312,34 @@ describe CollectionConfig do
   end
 
   describe '.ed_community_show_tabs' do
-    before(:each) { FactoryGirl.create(:community_tabs_collection_config) }
-
     it_behaves_like 'it rejects empty configs' do
       let(:method) { :ed_community_show_tabs }
     end
 
-    it 'returns a boolean value for tabs' do
-      configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY)
-      result = CollectionConfig.ed_community_show_tabs(configs)
-      expect(result).to be_an_instance_of(TrueClass)
+    context 'by default' do
+      before(:each) { FactoryGirl.create(:community_tabs_collection_config) }
+
+      it 'returns a boolean value for tabs' do
+        configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY)
+        result = CollectionConfig.ed_community_show_tabs(configs)
+        expect(result).to be_an_instance_of(TrueClass)
+      end
+    end
+
+    context 'with malformed or missing data' do
+      it 'returns nil' do
+        result = CollectionConfig.ed_community_show_tabs([])
+        expect(result).to be_nil
+      end
+
+      it 'logs an error' do
+        FactoryGirl.create(:community_sponsor_collection_config_name)
+        Rails.logger.should_receive(:error)
+        wrong_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::SPONSOR_ACRO_NAME_KEY)
+        result = CollectionConfig.ed_community_show_tabs(wrong_configs)
+
+        expect(result).to be_nil
+      end
     end
   end
 
