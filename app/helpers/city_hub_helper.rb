@@ -22,7 +22,7 @@ module CityHubHelper
       end
       return string
     else
-      raise ArgumentError.new('max_length my be > 2; now: ' + max_length)
+      raise ArgumentError.new("max_length my be > 2; now: #{max_length}")
     end
   end
 end
