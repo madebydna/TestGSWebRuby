@@ -22,16 +22,39 @@ describe 'cities/_tabs.html.erb' do
 
       expect(rendered).to_not have_css('ul.education-community-tabs')
     end
-
-    it 'renders all the partners'
   end
 
 
 end
 
 describe 'cities/_education_community_partners.html.erb' do
+  before(:each) do
+    collection_configs = [FactoryGirl.build(:community_partners_collection_config)]
+    @partners = CollectionConfig.ed_community_partners(collection_configs)
+  end
+
+  context 'by default' do
+    it 'renders partners' do
+      view.stub(:show_tabs)  { true }
+      @tab = 'Funders'
+      render
+
+      expect(rendered).to have_css('.community-partner-row')
+    end
+  end
+
+  context 'with show_tabs set to false' do
+    it 'renders all the partners' do
+      view.stub(:show_tabs)  { false }
+      render
+
+      expect(rendered).to have_css('.community-partner-row')
+    end
+  end
+
   context 'with malformed or missing partner data' do
-    it 'rrenders an error message' do
+    it 'renders an error message' do
+      @partners = nil
       view.stub(:show_tabs) { true }
       view.stub(:tab) { 'Funders' }
       render

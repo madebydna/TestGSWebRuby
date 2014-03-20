@@ -4,9 +4,14 @@ describe 'Events Page' do
   let(:events_page_url) { 'http://localhost:3000/michigan/detroit/events' }
   before(:each) { CollectionMapping.destroy_all; CollectionConfig.destroy_all }
   before(:each) do
+    Timecop.travel(Date.new(2013, 1, 2))
     FactoryGirl.create(:collection_mapping)
     FactoryGirl.create(:important_events_collection_config)
     visit events_page_url
+  end
+
+  after(:each) do
+    Timecop.return
   end
 
   it 'shows basic layout and breadcrumbs' do
@@ -23,7 +28,7 @@ describe 'Events Page' do
   end
 
   it 'shows all upcoming events' do
-    expect(page).to have_css('.iconx48', count: 2)
-    expect(page).to have_link('Find out more', count: 2)
+    expect(page).to have_css('.iconx48', count: 3)
+    expect(page).to have_link('Find out more', count: 3)
   end
 end
