@@ -20,7 +20,7 @@
       </div>
     <% end %>
   <% else %>
-    <% @partners.values.flatten do |partner| %>
+    <% @partners.values.flatten.each do |partner| %>
       <div class="row">
         <div class="community-partner-row">
           <hr>
