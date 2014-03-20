@@ -41,7 +41,7 @@ class CitiesController < ApplicationController
     @breadcrumbs = {
       'Home' => '/',
       @state[:long].titleize => "/#{@state[:long]}",
-      @city.titleize => "/#{@state[:long]}/#{@city}"
+      @city.titleize => city_path(@state[:long], @city)
     }
   end
 
@@ -58,7 +58,7 @@ class CitiesController < ApplicationController
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
-        @city.titleize => "#{@state[:long]}/#{@city}",
+        @city.titleize => city_path(@state[:long], @city),
         'Education Community' => nil
       }
     end
