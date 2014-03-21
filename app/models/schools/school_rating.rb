@@ -194,6 +194,7 @@ class SchoolRating < ActiveRecord::Base
                 .order('posted desc')
                 .limit(max_reviews)
                 .to_a
+                .map { |rating| rating.count = recent_reviews_in_hub_count(rating.state, rating.school.id); rating  }
   end
 
   def reported?

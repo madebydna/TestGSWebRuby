@@ -79,6 +79,24 @@ class CitiesController < ApplicationController
     end
   end
 
+
+  def choosing_schools
+    collection_mapping = mapping
+    if collection_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = collection_mapping.collection_id
+      set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
+      events_configs = CollectionConfig.where(collection_id: @collection_id, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
+      @events = CollectionConfig.city_hub_important_events(events_configs)
+      @step3_links = CollectionConfig.choosing_page_links(@collection_id)
+      @breadcrumbs = {
+        @city.titleize => city_path(@state[:long], @city),
+        'Choosing a School' => nil
+      }
+    end
+  end
+
   private
     def set_community_tab(collection_configs)
       @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)

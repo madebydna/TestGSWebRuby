@@ -115,7 +115,7 @@
   height: 47px;
   background: #0D6A99;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   border: none;
   border-radius: 4px;
   padding: 0px 20px;
@@ -242,6 +242,10 @@
   div {
     overflow: auto;
   }
+}
+
+.expandable {
+  display: none;
 }
 
 

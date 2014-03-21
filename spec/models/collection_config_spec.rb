@@ -380,4 +380,26 @@ describe CollectionConfig do
       expect(result[:data][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
     end
   end
+
+  describe '.choosing_page_links' do
+    context 'by default' do
+      before(:each) { FactoryGirl.create(:choosing_page_links_configs) }
+      it 'returns links' do
+        result = CollectionConfig.choosing_page_links(1)
+        expect(result).to be_an_instance_of(Array)
+        expect(result).to have(4).links
+      end
+    end
+
+    context 'with malformed or missing data' do
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        result = CollectionConfig.choosing_page_links(1)
+      end
+      it 'returns nil' do
+        result = CollectionConfig.choosing_page_links(1)
+        expect(result).to be_nil
+      end
+    end
+  end
 end

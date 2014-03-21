@@ -12,6 +12,7 @@ class CollectionConfig < ActiveRecord::Base
   SPONSOR_ACRO_NAME_KEY = 'sponsorPage_acroName'
   SPONSOR_PAGE_NAME_KEY = 'sponsorPage_seoPageName'
   SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
+  CHOOSING_STEP3_LINKS_KEY = 'choosePage_step3_localLinks'
   CDN_HOST = 'http://www.gscdn.org'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
@@ -221,6 +222,20 @@ class CollectionConfig < ActiveRecord::Base
         end
         result
       end
+    end
+
+    def choosing_page_links(collection_id)
+      begin
+        links = Rails.cache.fetch('choosing_page_links/step3') do
+          raw_links_str = CollectionConfig.where(collection_id: collection_id, quay: CHOOSING_STEP3_LINKS_KEY).first.value
+          eval(raw_links_str)[:link]
+        end
+      rescue => e
+        Rails.logger.error('Something went wrong whiel parsing choosing_page_links' + e.to_s)
+        links = nil
+      end
+
+      links
     end
   end
 end
