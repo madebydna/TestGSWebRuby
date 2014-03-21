@@ -163,7 +163,7 @@ class LocalizedProfileController < ApplicationController
 
   def set_last_modified_date
     review_date = @school_reviews_all.present? ? @school_reviews_all.first.posted : nil
-    school_date = @school.modified.to_date
+    school_date = @school.modified.present? ? @school.modified.to_date : nil
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
     end
 end
