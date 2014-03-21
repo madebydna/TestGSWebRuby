@@ -72,7 +72,7 @@ class ReviewsController < ApplicationController
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @google_signed_image = GoogleSignedImages.new @school, gon
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.set_reviews_objects @school
+    @school_reviews_global = SchoolReviews.calc_review_data(@school.reviews)
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
 
     set_omniture_data
