@@ -16,10 +16,14 @@
             <% overall_review_rating = review[:p_overall] %>
         <% end %>
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pal mbl">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">
             <div class="well">
                 <div class="mbl">
-                    <%= draw_stars_16 overall_review_rating.to_i %>
+                    <% if overall_review_rating == 'decline' %>
+                        <span class="open-sans_i">no rating</span>
+                    <% else %>
+                        <%= draw_stars_16 overall_review_rating.to_i %>
+                    <% end %>
                     <span class="mlm vat"><%= review[:posted].strftime "%B %d, %Y" %></span>
                 </div>
                 <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>

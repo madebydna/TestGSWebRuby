@@ -1,3 +1,5 @@
+<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
+
 <% media_hash = @school.school_media %>
 <% if media_hash != [] || @header_metadata.school_video1 %>
     <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>

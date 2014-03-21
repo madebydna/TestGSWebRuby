@@ -20,17 +20,17 @@
 
             <div class="fl header_title_width" >
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn ptm"><%= @school.name %></h1></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn pts"><%= @school.name %></h1></div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                         <% if @school.gs_rating  %>
                             <div class="fl prl open-sans h24">
-                                <span class="mrm">GreatSchools rating:</span>
+                                <span class="mrs">GreatSchools rating:</span>
                                 <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
                             </div>
                         <% end %>
-                        <% if @school_reviews_global.review_filter_totals.all > 0 %>
+                        <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
                             <div class="fl prl open-sans pt2 h24">
-                                <span class="mrm">Community rating:</span>
+                                <span class="mrs">Community rating:</span>
                                 <span class="mt2 vam">
                                     <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
                                 </span>
@@ -38,7 +38,7 @@
                         <% end %>
                         <% if @school.local_rating  %>
                             <div class="fl prl open-sans pt2 h24">
-                                <span class="mrm">Excellent Schools Detroit rating:</span>
+                                <span class="mrs">Excellent Schools Detroit rating:</span>
                                 <span class="open-sans_sb">
                                     <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
                                 </span>
@@ -46,7 +46,7 @@
                         <% end %>
                         <% if @school.state_rating  %>
                             <div class="fl prl open-sans pt2 h24">
-                                <span class="mrm">State rating:</span>
+                                <span class="mrs">State rating:</span>
                                 <span class="open-sans_sb"><%= @school.state_rating %></span>
                             </div>
                         <% end %>
@@ -60,7 +60,7 @@
                                 <% prek_star_rating_text = 'stars' %>
                             <% end %>
                             <div class="fl prl open-sans pt2 h24">
-                                <span class="mrm">Preschool rating:</span>
+                                <span class="mrs">Preschool rating:</span>
                                 <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
                             </div>
                         <% end %>
@@ -73,7 +73,7 @@
                         ].compact  %>
 
                         <% if include_contact_info_link %>
-                            <% subheader_content << raw('<a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span>Contact info</a>') %>
+                            <% subheader_content << raw('<a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span></a>') %>
                         <% end %>
 
                         <% subheader_content.each_with_index do | value, index | %>
@@ -95,19 +95,19 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                                <button data-link-value="<%= school_review_form_path(school) %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;">
-                                    <span class="vam iconx16 i-16-pencil mrm"></span>Rate &amp; Review
+                                <button data-link-value="<%= school_review_form_path(school,driver: 'Header') %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;">
+                                    <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
                                 </button>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                              <%= render 'shared/add_to_my_school_list_form', school: @school %>
+                              <%= render 'shared/add_to_my_school_list_form', school: @school, driver: 'Header' %>
                               <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
                                 <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
                               </button>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                              <%= render 'shared/send_me_updates_form', school: @school %>
-                              <button class="btn btn-default tal js-send-me-updates-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                              <%= render 'shared/send_me_updates_form', school: @school, driver: 'Header',form_id: 'js-send-me-updates-form-header' %>
+                              <button class="btn btn-default tal js-send-me-updates-button-header" style="width:100%; padding-left: 8px; font-size: 14px;">
                                 <span class="vam iconx16 i-16-envelop mrm"></span>Send me updates
                               </button>
                             </div>

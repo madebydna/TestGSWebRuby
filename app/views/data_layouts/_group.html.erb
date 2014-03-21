@@ -1,3 +1,5 @@
+<% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
+
 <% begin %>
 <% children = category_placement.children.sort_by(&:position).select{ |category_placement| category_placement.has_data?(@school)} %>
     <% if children.any? && category_placement.title.present? %>

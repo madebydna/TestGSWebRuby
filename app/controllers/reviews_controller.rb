@@ -18,6 +18,7 @@ class ReviewsController < ApplicationController
   def create
     review_params = params[:school_rating]
 
+
     if logged_in?
       save_review_and_redirect review_params
     else
@@ -56,13 +57,22 @@ class ReviewsController < ApplicationController
     set_omniture_hier_for_new_profiles
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
+
+    #Track the start of "review a school".OM-263
+    if params[:driver].present?
+      set_omniture_evars({'review_updates_mss_traffic_driver' => params[:driver]})
+      set_omniture_events(['review_updates_mss_start_event'])
+      set_omniture_sprops({'custom_completion_sprop' => 'PublishReview'})
+    end
+
   end
 
   def init_page
     gon.pagename = 'reviews/new'
+    @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @google_signed_image = GoogleSignedImages.new @school, gon
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.set_reviews_objects @school
+    @school_reviews_global = SchoolReviews.calc_review_data(@school.reviews)
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
 
     set_omniture_data

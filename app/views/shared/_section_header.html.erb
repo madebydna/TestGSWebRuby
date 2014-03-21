@@ -5,6 +5,9 @@
             <% if category_placement != @page_config.root_placements_with_data.first %>
                 <hr />
             <% end %>
+            <a name="<%= category_placement_anchor category_placement %>">
+                <p class="link_down_compensate"></p>
+            </a>
             <div class="fl">
                 <h2 class="mvn"><%= category_placement.title %></h2>
             </div>

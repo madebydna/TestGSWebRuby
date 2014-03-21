@@ -1,8 +1,8 @@
 class SchoolReviews
-    def self.set_reviews_objects(school)
+    def self.calc_review_data(school_reviews_all)
 
       # fetches all reviews
-      school_reviews_all = school.reviews
+      #school_reviews_all = school.reviews
       #store star counts for overall
       star_counts = [ 0, 0, 0, 0, 0, 0 ]
       #store resulting average and components for calculating them

@@ -20,42 +20,50 @@
 <% end %>
 
 <div class="row limit_width_1200 pam">
+  <br/>
+  <%= link_to 'Back to moderation', moderation_admin_reviews_path %>
 
-  <h3><%= @school.name %></h3>
+  <h3><%= link_to @school.name, school_url(@school) %></h3>
 
   <div>
     <% if @held_school %>
         School on hold since <%= @held_school.created %>
         <br/>
-        <button type="submit" class="btn btn-sm btn-primary mvm">Remove hold (will delete notes)</button>
+          <%= form_for(@held_school, method: :delete, url: admin_held_school_path(@held_school)) do |f| %>
+              <%= f.submit :value => 'Remove hold (will delete notes)', class: 'btn btn-sm btn-primary mvm',
+                           disable_with: 'Removing hold...' %>
+          <% end %>
     <% else %>
         School not on hold
     <% end %>
     <br/>
-    <form>
-      <%= text_area_tag(:note, @held_school? @held_school.notes : '', rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-      <div class="form-actions">
-        <% if @held_school %>
-            <button type="submit" class="btn btn-sm btn-primary mtm">Save notes</button>
-        <% else %>
-            <button type="submit" class="btn btn-sm btn-primary mtm">Put school on hold</button>
-        <% end %>
-      </div>
-    </form>
+
+    <% @held_school ||= HeldSchool.new %>
+
+    <%= form_for(@held_school,
+        url: @held_school.new_record? ? admin_held_school_index_path : admin_held_school_path(@held_school) ) do |f| %>
+      <%= f.hidden_field :school_id, value: @school.id %>
+      <%= f.hidden_field :state, value: @school.state %>
+      <%= f.text_area(:notes, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+      <%= f.submit (@held_school.new_record? ? 'Put school on hold' : 'Save notes'),
+                   class: 'btn btn-sm btn-primary mtm', disable_with: 'Saving...' %>
+    <% end %>
+
     <br/>
   </div>
   <br/>
 
   <div>
-    Filter reviews (filters are restrictive)  <br/>
-    <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished reviews &nbsp;&nbsp;
-    <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional reviews &nbsp;&nbsp;
-    <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled reviews &nbsp;&nbsp;
-    <%= check_box_tag :reported, true, params[:reported] == 'true' %> Reported reviews &nbsp;&nbsp;
-    <%= check_box_tag :held, true, params[:held] == 'true' %> Held reviews &nbsp;&nbsp;
+    <h5>Filters</h5>
+    <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional (p_) &nbsp;&nbsp;
+    <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished (u) &nbsp;&nbsp;
+    <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled (d) &nbsp;&nbsp;
+    <%= check_box_tag :held, true, params[:held] == 'true' %> Held (h) &nbsp;&nbsp;
+    <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Flagged &nbsp;&nbsp;
   </div>
   <div>
     <strong><%= pluralize @reviews.count, 'review' %></strong> displayed
+      <%= link_to('Show all', review_id: nil) if params[:review_id] %>
     <% if current_scopes.any? %>
         <br/>
         Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
@@ -81,15 +89,18 @@
             <br/>
             Status: <%= review.status %>
             <br/>
-            <%= button_tag 'Publish', type:'button',
-              class: 'btn btn-sm mtm ' + ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'), disable_with: 'Publishing...' %>
-            <%= button_tag 'Unpublish', type:'button',
-              class: 'btn btn-sm mtm ' + (review.unpublished? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Unpublishing...' %>
-            <%= button_tag 'Disable', type:'button',
-              class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Disabling...' %>
-            <%= button_tag 'Put on hold', type:'button',
-              class: 'btn btn-sm mtm ' + (review.held? ? 'btn-disabled' : 'btn-primary'), disable_with: 'Marking held...' %>
-            <br/>
+
+            <%= form_for review, url: publish_admin_review_path(review) do |f| %>
+                  <%= f.submit 'Publish',
+                               class: 'btn btn-sm mtm ' + ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'),
+                               disable_with: 'Publishing...' %>
+            <% end %>
+
+            <%= form_for review, url: disable_admin_review_path(review) do |f| %>
+                  <%= f.submit 'Disable',
+                               class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'),
+                               disable_with: 'Disabling...' %>
+            <% end %>
           </div>
 
           <div class="rightcolumn col-lg-8">
@@ -124,12 +135,11 @@
             <br/>
             Notes:
             <br/>
-            <form>
-              <%= text_area_tag(:note, review.note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-              <div class="form-actions">
-                <button type="submit" class="btn btn-primary pull-right mtm">Save notes</button>
-              </div>
-            </form>
+
+            <%= form_for(review, url: admin_review_path(review) ) do |f| %>
+              <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+              <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+            <% end %>
 
           </div>
         </div>
