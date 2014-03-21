@@ -2,7 +2,7 @@
   <% if show_tabs %>
     <% @partners[@tab].each do |partner| %>
       <div class="row">
-        <div class="community-partner-row">
+        <div class="community-partner-row phm">
           <hr>
           <%= image_tag(partner[:logo], alt: 'Partner logo') %>
           <div>
@@ -22,7 +22,7 @@
   <% else %>
     <% @partners.values.flatten.each do |partner| %>
       <div class="row">
-        <div class="community-partner-row">
+        <div class="community-partner-row phm">
           <hr>
           <%= image_tag(partner[:logo], alt: 'Partner logo') %>
           <div>

@@ -15,23 +15,17 @@
             <ul class="nav navbar-nav ">
                 <li>
                     <%- if hub_params.present? %>
-                    <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
+                    <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
                         <%= topnav_formatted_title(@hub_params || hub_params, @school, cookies) %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <%- if hub_params.present? %>
                         <li>
-                            <%= link_to "#{hub_params[:city]} Home",
-                                city_url(hub_params), {
-                                    class: 'source_sans', style: 'text-transform:capitalize;'
-                                }
-                            %>
+                            <%= link_to "#{hub_params[:city]} Home", city_url(hub_params), style: 'text-transform:capitalize;' %>
                         </li>
                         <li>
-                            <%= link_to 'Choosing a School',
-                                city_choosing_schools_url(hub_params),
-                                class: 'source_sans' %>
+                            <%= link_to 'Choosing a School', city_choosing_schools_url(hub_params) %>
                         </li>
                         <li>
                             <%= link_to 'Education Community', city_education_community_url(hub_params) %>

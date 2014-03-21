@@ -85,6 +85,7 @@ GS.hubs.clearLocalUserCookies = function() {
   }
 };
 
+
 jQuery(function() {
   GS.hubs.setupResponsiveCarousel();
 });
