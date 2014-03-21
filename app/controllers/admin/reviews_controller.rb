@@ -1,55 +1,102 @@
 class Admin::ReviewsController < ApplicationController
 
-  has_scope :unpublished, :type => :boolean
-  has_scope :provisional, :type => :boolean
-  has_scope :disabled, :type => :boolean
-  #has_scope :reported, :type => :boolean
-  has_scope :held, :type => :boolean
-
   def moderation
-=begin
-    @reported_entities = ReportedEntity.active.
-      where(reported_entity_type: %w[schoolReview topicalSchoolReview]).
-      order('created desc').
-      page(params[:page])
+    if params[:state].present? && params[:school_id].present?
+      @school = School.find_by_state_and_id(params[:state], params[:school_id])
+    end
 
-    review_ids = @reported_entities.select { |entity| entity.reported_entity_type == 'schoolReview' }
-                  .map(&:reported_entity_id)
-=end
+    @reported_reviews = self.flagged_reviews
+    @reviews_to_process = self.unprocessed_reviews
+    @reported_entities = Admin::ReviewsController.reported_entities_for_reviews @reported_reviews
 
+    Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
+  end
 
-    #@reported_entities = @reported_entities[0..10]
+  def update
+    review = SchoolRating.find(params[:id]) rescue nil
 
-    reviews = (apply_scopes SchoolRating.reported.order("reported_entity.created DESC")).page(params[:page])
-
-    @reported_entities = ReportedEntity.
-        where(reported_entity_id: reviews.map(&:id)).
-        where(reported_entity_type: %w[schoolReview]).
-        order('created desc')
-
-
-    @data = []
-
-    @reported_reviews = reviews #.sort_by { |review| review_ids.index(review.id) }
-
-    @reported_reviews.each do |review|
-      #review = @reported_reviews.select { |review| review.id == entity.reported_entity_id }.first
-      school = review.school
-      reported_entitys = @reported_entities.select do
-        |entity| entity.reported_entity_id == review.id && entity.reported_entity_type == 'schoolReview'
+    if review
+      if review.update_attributes(params[:school_rating])
+        flash_notice 'Review updated.'
+      else
+        flash_error 'Sorry, something went wrong updating the review.'
       end
-      review.reported_entities = reported_entitys
+    end
 
-      #if review && school
-        @data << {
-            reported_entity: reported_entitys.first,
-            review: review,
-            school: school
-        }
-      #end
+    redirect_back
+  end
+
+  def publish
+    review = SchoolRating.find(params[:id]) rescue nil
+
+    if review
+      # Setting the moderated attribute true here allows us to save the review while bypassing some validations
+      # moderated is not a db field and is not persisted
+      review.moderated = true
+      review.publish!
+      if review.save
+        flash_notice 'Review published.'
+      else
+        flash_error 'Sorry, something went wrong publishing the review.'
+      end
+    end
+
+    redirect_back
+  end
+
+  def disable
+    review = SchoolRating.find(params[:id]) rescue nil
+
+    if review
+      # Setting the moderated attribute true here allows us to save the review while bypassing some validations
+      # moderated is not a db field as is not persisted
+      review.moderated = true
+      review.disable!
+      if review.save
+        flash_notice 'Review disabled.'
+      else
+        flash_error 'Sorry, something went wrong while disabling the review.'
+      end
+    end
+
+    redirect_back
+  end
+
+  protected
+
+  def unprocessed_reviews
+    if @school
+      reviews = @school.school_ratings
+    else
+      reviews = SchoolRating.where(status: %w[u h])
+    end
+
+    reviews.order('posted desc').page(params[:unprocessed_reviews_page]).per(5)
+  end
+
+  def flagged_reviews
+    if @school
+      reviews = @school.school_ratings.ever_flagged
+    else
+      reviews = SchoolRating.where(status: %w[p d r a]).flagged
+    end
+
+    reviews.order('posted desc').page(params[:flagged_reviews_page]).per(5)
+  end
+
+  def self.load_reported_entities_onto_reviews(reviews, reported_entities)
+    if reviews.present? && reported_entities.present?
+      reviews.each do |review|
+        entities = reported_entities.select do
+          |entity| entity.reported_entity_id == review.id && entity.reported_entity_type == 'schoolReview'
+        end
+        review.reported_entities = entities
+      end
     end
   end
 
-
+  def self.reported_entities_for_reviews(reviews)
+    ReportedEntity.find_by_reviews(reviews).order('created desc')
+  end
 
 end

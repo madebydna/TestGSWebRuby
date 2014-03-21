@@ -22,6 +22,7 @@ class SigninController < ApplicationController
     gon.omniture_pagename = 'GS:Admin:Login'
     gon.omniture_hier1 = 'Account,LogIn'
     set_omniture_data_for_user_request
+    read_omniture_data_from_session
   end
 
   def new_join
@@ -34,6 +35,7 @@ class SigninController < ApplicationController
     gon.omniture_pagename = 'GS:Admin:CreateAccount'
     gon.omniture_hier1 = 'Account,SignUp'
     set_omniture_data_for_user_request
+    read_omniture_data_from_session
     render :template => 'signin/new'
   end
 

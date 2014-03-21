@@ -17,7 +17,7 @@ $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
 ////////////MS
 $gray-base-color:        #000;
-$gray-darkest:           lighten($gray-base-color, 20%); // #333
+$gray-darkest:           lighten($gray-base-color, 24%); // #333
 $gray-darker:            lighten($gray-base-color, 40%); // #666
 $gray-dark:              lighten($gray-base-color, 60%); // #999
 $gray:                   lighten($gray-base-color, 80%); // #ccc
@@ -51,7 +51,7 @@ $body-bg:               #fff !default;
 $text-color:            $gray-dark !default;
 
 //////////////MS
-$text-color:            $gray-darker;
+$text-color:            $gray-darkest;
 
 // Links
 // -------------------------
@@ -67,21 +67,24 @@ $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
+
 ///////////////MS
 $font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
 $font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
 
 
 $font-size-base:          16px !default;
 $font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-small:         ceil($font-size-base * 0.75) !default; // ~12px
+$font-size-small:         ceil($font-size-base * 0.875) !default; // ~14px
+$font-size-block:         ceil($font-size-base * 1.5) !default; // ~24px
 
-$font-size-h1:            floor($font-size-base * 2.4375) !default; // ~40px
-$font-size-h2:            floor($font-size-base * 1.875) !default; // ~30px
-$font-size-h3:            ceil($font-size-base * 1.375) !default; // ~24px
+$font-size-h1:            floor($font-size-base * 2.25) !default; // ~36px
+$font-size-h2:            floor($font-size-base * 1.75) !default; // ~28px
+$font-size-h3:            ceil($font-size-base * 1.25) !default; // ~21px
 $font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-h5:            $font-size-base !default;
+$font-size-h5:            $font-size-small !default;
 $font-size-h6:            $font-size-base !default; // ~12px
 
 $line-height-base:        1.5 !default; // 24/16
@@ -109,7 +112,7 @@ $icon-font-name:          "glyphicons-halflings-regular" !default;
 // -------------------------
 // Based on 14px font-size and 1.428 line-height (~20px to start)
 
-$padding-base-vertical:          6px !default;
+$padding-base-vertical:          8px !default;
 $padding-base-horizontal:        12px !default;
 $padding-base-button-horizontal:        20px; //GS
 
@@ -147,22 +150,22 @@ $table-bg-active:                    $table-bg-hover !default;
 
 $table-border-color:                 #ddd !default; // table and cell border
 
-$table-border-color:                 #ccc; // table and cell border  ////////////GS
+//$table-border-color:                 #ddd; // table and cell border  ////////////GS
 $table-cell-padding:                 10px;   ////////////GS
-$table-border-color-th:              #ddd; // table and cell border  ////////////GS
+//$table-border-color-th:              #ddd; // table and cell border  ////////////GS
 
 // Buttons
 // -------------------------
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #333 !default;
-$btn-default-bg:                 #F8F8F8 !default;
+$btn-default-color:              #666 !default;
+$btn-default-bg:                 #FFFFFF !default;
 $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             darken($btn-primary-bg, 5%) !default;
+$btn-primary-border:             #0083b2 !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;

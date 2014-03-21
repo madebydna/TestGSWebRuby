@@ -1,0 +1,53 @@
+<% files = Dir.glob(File.join(Rails.root, 'doc', 'examples_and_gotchas', '*.rb')) %>
+
+
+<div class="row limit_width_1200 pam">
+
+    <div class="row">
+        <div class="leftcolumn col-lg-3 prm">
+            <div class="toc"></div>
+        </div>
+        <div class="rightcolumn col-lg-9">
+            <% files.each do |file| %>
+                <%= content_tag :h3, File.basename(file, '.rb').gsub('_', ' ').capitalize %>
+                <%= raw CodeRay.scan_file(file).div %>
+            <% end %>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        var ToC =
+            "<nav role='navigation' class='table-of-contents'>" +
+                "<h3>Table of contents:</h3>" +
+                "<ul>";
+
+        var newLine, el, title, link;
+
+        $("h3").each(function(index) {
+
+            el = $(this);
+            title = el.text();
+            if (el.attr("id") == undefined) {
+                el.attr("id","item" + index);
+            }
+            link = "#" + el.attr("id");
+
+            newLine =
+                "<li>" +
+                    "<a href='" + link + "'>" +
+                    title +
+                    "</a>" +
+                    "</li>";
+
+            ToC += newLine;
+        });
+
+        ToC += "</ul>" + "</nav>";
+
+        $(".toc").prepend(ToC);
+    });
+</script>

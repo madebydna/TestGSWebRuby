@@ -23,6 +23,10 @@ class School < ActiveRecord::Base
 
   self.inheritance_column = nil
 
+  def self.find_by_state_and_id(state, id)
+    School.on_db(state.downcase.to_sym).find id rescue nil
+  end
+
   def census_data_for_data_types(data_types = [])
     CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
   end
@@ -157,6 +161,11 @@ class School < ActiveRecord::Base
     return_str
   end
 
+  # Return all reviews for this school
+  def school_ratings
+    SchoolRating.where(state: state, school_id: id)
+  end
+
   # returns all reviews for
   def reviews
     SchoolRating.fetch_reviews self
@@ -201,8 +210,10 @@ class School < ActiveRecord::Base
 
   # returns true if school is on held school list (associated with school reviews)
   def held?
-    # TODO: implementation
-    return false
+    if !defined?(@held)
+      @held = HeldSchool.has_school?(self)
+    end
+    @held
   end
 
   def rating_data

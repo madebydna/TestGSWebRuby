@@ -10,8 +10,14 @@ class Admin::SchoolsController < ApplicationController
 
   def moderate
     @held_school = @school.held_school
-    @reviews = SchoolRating.where(state: @school.state, school_id: @school.id).order(created: :desc)
-    @reviews = apply_scopes(@reviews)
+    review_id = params[:review_id]
+
+    if review_id
+      @reviews = SchoolRating.where(id: review_id)
+    else
+      @reviews = SchoolRating.where(state: @school.state, school_id: @school.id).order(created: :desc)
+      @reviews = apply_scopes(@reviews)
+    end
 
     reported_entities = @reported_entities = ReportedEntity.
         where(reported_entity_id: @reviews.map(&:id) ).

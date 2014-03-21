@@ -11,13 +11,14 @@
   display: inline-block;
   margin-bottom: 0; // For input.btn
   font-weight: $btn-font-weight;
+  font-family: $font-family-base-semi;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
   border: 1px solid #CCCCCC;
   white-space: nowrap;
-  @include button-size($padding-base-vertical, $padding-base-button-horizontal, $font-size-base, $line-height-base, $border-radius-base);
+  @include button-size($padding-base-vertical, $padding-base-button-horizontal, $font-size-small, $line-height-base, $border-radius-base);
   @include user-select(none);
 
   &:focus {
@@ -28,15 +29,17 @@
   &:focus {
     color: $btn-default-color;
     text-decoration: none;
+    -webkit-transition: border .20s linear, color .20s linear, background-color .20s linear;
+    transition: border .20s linear, color .20s linear, background-color .20s linear;
   }
 
   &:active,
   &.active {
     outline: 0;
-    background-color: #999999;
+    background-color: #666666;
     color:#FFFFFF;
-//    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
-    border-color: #999999;
+    @include box-shadow(inset 0 2px 0px rgba(0,0,0,.125));
+    border-color: #666666;
   }
 
   &.disabled,

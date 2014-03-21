@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe SchoolRating do
+  include SpecForModelWithCustomConnection
+
   let(:review) { FactoryGirl.build(:valid_school_rating) }
   let(:school) { FactoryGirl.build(:school) }
   let(:user) { FactoryGirl.build(:user) }
@@ -128,6 +130,18 @@ describe SchoolRating do
       AlertWord.stub(:search).and_return(no_bad_language)
     end
 
+    # There was a time when all reviews were automatically flagged for moderation
+    # by adding another before_save filter that was called after #calculate_and_set_status
+    # This tests that the auto moderation was removed correctly
+    it 'should be unchanged after object called' do
+      registered_user = FactoryGirl.build(:verified_user)
+      subject.who = 'parent'
+      subject.user = new_user
+      subject.calculate_and_set_status
+      subject.stub(:valid?).and_return(true)
+      expect{ subject.save }.to_not change{ subject.status }
+    end
+
     it 'should check for banned IP' do
       subject.who = 'parent'
       subject.user = user
@@ -240,31 +254,6 @@ describe SchoolRating do
           expect(subject).to be_held
         end
       end
-    end
-  end
-
-  describe '#ensure_all_reviews_moderated' do
-    it 'should change pp status to pu' do
-      subject.status = 'pp'
-      subject.ensure_all_reviews_moderated
-      expect(subject).to be_unpublished
-      expect(subject).to be_provisional
-    end
-    it 'should change p status to u' do
-      subject.status = 'p'
-      subject.ensure_all_reviews_moderated
-      expect(subject).to be_unpublished
-      expect(subject).to_not be_provisional
-    end
-    it 'should not change other held or disabled statuses' do
-      subject.status = 'ph'
-      subject.ensure_all_reviews_moderated
-      expect(subject).to be_held
-      expect(subject).to be_provisional
-
-      subject.status = 'd'
-      subject.ensure_all_reviews_moderated
-      expect(subject).to be_disabled
     end
   end
 

@@ -1,3 +1,5 @@
+<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
+
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
     <% ratings_array = [] %>
     <% if @school.gs_rating  %>

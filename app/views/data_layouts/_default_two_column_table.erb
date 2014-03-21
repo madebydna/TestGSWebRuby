@@ -1,3 +1,7 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
 <%= debug data if params[:debug] %>
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
     <% data = TableData.new data if !data.is_a? TableData %>
@@ -18,9 +22,9 @@
                     <% if last_key && last_key == label %>
                     &nbsp;
                     <% else %>
-                        <strong>
+
                             <%= label unless label.nil? %>
-                        </strong>
+
                     <% end %>
                 </td>
                 <td>

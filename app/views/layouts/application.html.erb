@@ -18,25 +18,7 @@
 </head>
 <body class="open-sans">
 
-<div class="js-header-message" style="display:none; margin-top: 8px;">
-    <% flash.each do |key, value| %>
-        <% value = Array(value) %>
-        <% value.each do |msg| %>
-            <% if key =~ /error/ %>
-                <%= content_tag(:div, :class => "flash_#{key} alert alert-danger alert-dismissable") do -%>
-                    <%= msg %> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <% end -%>
-            <% else %>
-                <%= content_tag(:div, :class => "flash_#{key} alert alert-warning alert-dismissable") do -%>
-                    <%= msg %><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <% end -%>
-            <% end %>
-        <% end %>
-    <% end %>
-</div>
-<script type="text/javascript">
-    $(".js-header-message").slideDown("slow");
-</script>
+<%= render :partial => 'shared/top_notification_bar' %>
 
 <div class="dn">
   <%= unique_content_for(:global_hidden_content) %>

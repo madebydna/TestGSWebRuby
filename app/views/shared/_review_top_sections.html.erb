@@ -1,10 +1,13 @@
-<div class="row ptl">
+<% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
+<% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
+
+<% if average_score > 0 %>
+  <div class="row ptl">
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
         <div class="tac">
-            <% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
-            <% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
-            <%= draw_stars_24 average_score %>
-            <h3 class="mbn mtm"><%= "#{ pluralize average_score, 'star' }" %></h3>
+            <%= draw_stars_24 average_score %><br />
+
+            <span class="mbn mtm stat_block_number"><%= "#{ pluralize average_score, 'star' }" %></span><br />
             <span>Based on <%= pluralize ratings_count, 'rating' %></span>
         </div>
     </div>
@@ -55,11 +58,20 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4  pbl">
             <div class=" tac">
-                <p class="bold">Let others know what you<br />think about this school</p>
-                <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary mtm js-button-link">
-                    Write a review
+                <p class="open-sans_b">
+                    <% if @sweepstakes_enabled %>
+                        Help this school win $5,000<br />by posting a review
+                    <% else %>
+                        Let others know what you<br />think about this school
+                    <% end %>
+                </p>
+                <button type="button" data-link-value="<%= school_review_form_path(@school,driver: driver) %>" class="btn btn-primary mtm js-button-link">
+                Write a review
                 </button>
             </div>
         </div>
     </div>
 </div>
+<% else %>
+    <%= render "shared/review_no_ratings" %>
+<% end %>

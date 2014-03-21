@@ -64,16 +64,19 @@ module UrlHelper
   end
 
   %w(school school_details school_quality school_reviews school_review_form).each do |helper_name|
-    define_method "#{helper_name}_path" do |school|
+    define_method "#{helper_name}_path" do |school, params_hash = {}|
       params = school_params school
+      params.merge! params_hash
+
       if school.preschool?
         send "pre#{helper_name}_path", params
       else
         super params
       end
     end
-    define_method "#{helper_name}_url" do |school|
+    define_method "#{helper_name}_url" do |school, params_hash = {}|
       params = school_params school
+      params.merge! params_hash
       if school.preschool?
         # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
         # and although the user will get to the right page when they click the link,

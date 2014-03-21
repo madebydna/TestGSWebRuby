@@ -1,6 +1,14 @@
-<% config=category_placement.layout_config_json %>
+<% # An +Array+ of +Hash+es that contains data for this layout %>
+<% # Example: [ %>
+<% # { "enrollment": { "school_value": 130.0, "label": "Students enrolled" } } %>
+<% # { "head official name": { "school_value": "LINDA BROOKS", "label": "School leader" } } %>
+<% # ] %>
+<% data %>
+<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
-<% debug data %>
+<% config = category_placement.layout_config_json %>
+
+<%= debug data if params[:debug] %>
 
 <% total_array_size = data.size %>
 <% left_table_size = total_array_size / 2 + total_array_size % 2 %>
@@ -14,7 +22,7 @@
         <%  all_columns.each_with_index do |col_arr, index_all| %>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="mhm">
-                <table class="table table-striped">
+                <table class="table table-striped mbm">
                     <% col_arr.each_with_index do |value_hash, index| %>
                         <tr>
                             <% value_hash.each do |key, value| %>
@@ -23,7 +31,7 @@
                                     <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
                                         <%= (value[:school_value].is_a? Numeric) ? value[:school_value].round : value[:school_value] %>
 
-                                    <% elsif value[:school_value] != 'n/a' %>
+                                    <% elsif value[:school_value] != 'no info' %>
                                         <%= capitalize_if_string value[:school_value] %>
                                     <% else %>
                                         <%= value[:school_value] %>
@@ -34,6 +42,11 @@
                     <% end %>
                 </table>
                 </div>
+            </div>
+        <% end %>
+        <% if !@school.preschool? %>
+            <div class="fr prl">
+                <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
             </div>
         <% end %>
     </div>

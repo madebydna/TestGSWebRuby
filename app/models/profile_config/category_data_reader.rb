@@ -81,10 +81,10 @@ class CategoryDataReader
      #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
 
-        art:   {count: 'n/a', content: 'Arts & music'},
-        sport: {count: 'n/a', content: 'Sports'},
-        club:  {count: 'n/a', content: 'Clubs'},
-        lang:  {count: 'n/a', content: 'World languages'},
+        art:   {count: 'no info', content: 'Arts & music'},
+        sport: {count: 'no info', content: 'Sports'},
+        club:  {count: 'no info', content: 'Clubs'},
+        lang:  {count: 'no info', content: 'World languages'},
         sched: {count: 'Half day', content: 'Preschool schedule'},
         commu: {count: 'Community center', content: 'Care setting'}
     }
@@ -101,7 +101,7 @@ class CategoryDataReader
           none_count = details_response_keys[osp_key].sum do | key |
             (Array(data_details[key]).count{|item| item.downcase == "none"})
           end
-          return_counts_details[osp_key][:count] = none_count == 0 ?  "n/a" : 0
+          return_counts_details[osp_key][:count] = none_count == 0 ?  "no info" : 0
        end
     end
     return_counts_details
@@ -270,7 +270,7 @@ class CategoryDataReader
     all_category_data.each do  |category_data|
       key = category_data.response_key
       #default value
-      value = 'n/a'
+      value = 'no info'
       #Get the labels for the response keys from the category_data table.
       label = category_data.label.nil? ? key : category_data.label
 

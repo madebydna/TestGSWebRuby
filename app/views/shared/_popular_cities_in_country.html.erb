@@ -1,100 +1,106 @@
-<div class="row text-left">
-  <h5>Popular cities</h5>
+<div class="row tal">
+  <h4>Popular cities</h4>
 
   <div class="col-xs-12 col-md-4 col-lg-4">
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'Albuquerque, NM', city_url(city_params('NM', 'Albuquerque')) %></li>
-        <li><%= link_to 'Anchorage, AK', city_url(city_params('AK', 'Anchorage')) %></li>
-        <li><%= link_to 'Atlanta, GA', city_url(city_params('GA', 'Atlanta')) %></li>
-        <li><%= link_to 'Austin, TX', city_url(city_params('TX', 'Austin')) %></li>
-        <li><%= link_to 'Baltimore, MD', city_url(city_params('MD', 'Baltimore')) %></li>
-        <li><%= link_to 'Billings, MT', city_url(city_params('MT', 'Billings')) %></li>
-        <li><%= link_to 'Birmingham, AL', city_url(city_params('AL', 'Birmingham')) %></li>
-        <li><%= link_to 'Boise, ID', city_url(city_params('ID', 'Boise')) %></li>
-        <li><%= link_to 'Boston, MA', city_url(city_params('MA', 'Boston')) %></li>
-        <li><%= link_to 'Bridgeport, CT', city_url(city_params('CT', 'Bridgeport')) %></li>
-        <li><%= link_to 'Burlington, VT', city_url(city_params('VT', 'Burlington')) %></li>
-      </ul>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'Albuquerque, NM', city_url(city_params('NM', 'Albuquerque')) %></li>
+            <li><%= link_to 'Anchorage, AK', city_url(city_params('AK', 'Anchorage')) %></li>
+            <li><%= link_to 'Atlanta, GA', city_url(city_params('GA', 'Atlanta')) %></li>
+            <li><%= link_to 'Austin, TX', city_url(city_params('TX', 'Austin')) %></li>
+            <li><%= link_to 'Baltimore, MD', city_url(city_params('MD', 'Baltimore')) %></li>
+            <li><%= link_to 'Billings, MT', city_url(city_params('MT', 'Billings')) %></li>
+            <li><%= link_to 'Birmingham, AL', city_url(city_params('AL', 'Birmingham')) %></li>
+            <li><%= link_to 'Boise, ID', city_url(city_params('ID', 'Boise')) %></li>
+            <li><%= link_to 'Boston, MA', city_url(city_params('MA', 'Boston')) %></li>
+            <li><%= link_to 'Bridgeport, CT', city_url(city_params('CT', 'Bridgeport')) %></li>
+            <li><%= link_to 'Burlington, VT', city_url(city_params('VT', 'Burlington')) %></li>
+          </ul>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'Charleston, WV', city_url(city_params('WV', 'Charleston')) %></li>
+            <li><%= link_to 'Charlotte, NC', city_url(city_params('NC', 'Charlotte')) %></li>
+            <li><%= link_to 'Cheyenne, WY', city_url(city_params('WY', 'Cheyenne')) %></li>
+            <li><%= link_to 'Chicago, IL', city_url(city_params('IL', 'Chicago')) %></li>
+            <li><%= link_to 'Columbia, SC', city_url(city_params('SC', 'Columbia')) %></li>
+            <li><%= link_to 'Columbus, OH', city_url(city_params('OH', 'Columbus')) %></li>
+            <li><%= link_to 'Dallas, TX', city_url(city_params('TX', 'Dallas')) %></li>
+            <li><%= link_to 'Denver, CO', city_url(city_params('CO', 'Denver')) %></li>
+            <li><%= link_to 'Des Moines, IA', city_url(city_params('IA', 'Des Moines')) %></li>
+            <li><%= link_to 'Detroit, MI', city_url(city_params('MI', 'Detroit')) %></li>
+            <li><%= link_to 'El Paso, TX', city_url(city_params('TX', 'El Paso')) %></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'Charleston, WV', city_url(city_params('WV', 'Charleston')) %></li>
-        <li><%= link_to 'Charlotte, NC', city_url(city_params('NC', 'Charlotte')) %></li>
-        <li><%= link_to 'Cheyenne, WY', city_url(city_params('WY', 'Cheyenne')) %></li>
-        <li><%= link_to 'Chicago, IL', city_url(city_params('IL', 'Chicago')) %></li>
-        <li><%= link_to 'Columbia, SC', city_url(city_params('SC', 'Columbia')) %></li>
-        <li><%= link_to 'Columbus, OH', city_url(city_params('OH', 'Columbus')) %></li>
-        <li><%= link_to 'Dallas, TX', city_url(city_params('TX', 'Dallas')) %></li>
-        <li><%= link_to 'Denver, CO', city_url(city_params('CO', 'Denver')) %></li>
-        <li><%= link_to 'Des Moines, IA', city_url(city_params('IA', 'Des Moines')) %></li>
-        <li><%= link_to 'Detroit, MI', city_url(city_params('MI', 'Detroit')) %></li>
-        <li><%= link_to 'El Paso, TX', city_url(city_params('TX', 'El Paso')) %></li>
-      </ul>
-    </div>
+
+
+  <div class="col-xs-12 col-md-4 col-lg-4">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'Fargo, ND', city_url(city_params('ND', 'Fargo')) %></li>
+            <li><%= link_to 'Honolulu, HI', city_url(city_params('HI', 'Honolulu')) %></li>
+            <li><%= link_to 'Houston, TX', city_url(city_params('TX', 'Houston')) %></li>
+            <li><%= link_to 'Indianapolis, IN', city_url(city_params('IN', 'Indianapolis')) %></li>
+            <li><%= link_to 'Jackson, MS', city_url(city_params('MS', 'Jackson')) %></li>
+            <li><%= link_to 'Jacksonville, FL', city_url(city_params('FL', 'Jacksonville')) %></li>
+            <li><%= link_to 'Kansas City, MO', city_url(city_params('MO', 'Kansas City')) %></li>
+            <li><%= link_to 'Las Vegas, NV', city_url(city_params('NV', 'Las Vegas')) %></li>
+            <li><%= link_to 'Little Rock, AR', city_url(city_params('AR', 'Little Rock')) %></li>
+            <li><%= link_to 'Los Angeles, CA', city_url(city_params('CA', 'Los Angeles')) %></li>
+            <li><%= link_to 'Louisville, KY', city_url(city_params('KY', 'Louisville')) %></li>
+          </ul>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'Manchester, NH', city_url(city_params('NH', 'Manchester')) %></li>
+            <li><%= link_to 'Memphis, TN', city_url(city_params('TN', 'Memphis')) %></li>
+            <li><%= link_to 'Miami, FL', city_url(city_params('FL', 'Miami')) %></li>
+            <li><%= link_to 'Milwaukee, WI', city_url(city_params('WI', 'Milwaukee')) %></li>
+            <li><%= link_to 'Minneapolis, MN', city_url(city_params('MN', 'Minneapolis')) %></li>
+            <li><%= link_to 'Nashville, TN', city_url(city_params('TN', 'Nashville')) %></li>
+            <li><%= link_to 'New Orleans, LA', city_url(city_params('LA', 'New Orleans')) %></li>
+            <li><%= link_to 'New York City, NY', city_url(city_params('NY', 'New York City')) %></li>
+            <li><%= link_to 'Newark, NJ', city_url(city_params('NJ', 'Newark')) %></li>
+            <li><%= link_to 'Oakland, CA', city_url(city_params('CA', 'Oakland')) %></li>
+          </ul>
+        </div>
+      </div>
   </div>
 
-
   <div class="col-xs-12 col-md-4 col-lg-4">
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'Fargo, ND', city_url(city_params('ND', 'Fargo')) %></li>
-        <li><%= link_to 'Honolulu, HI', city_url(city_params('HI', 'Honolulu')) %></li>
-        <li><%= link_to 'Houston, TX', city_url(city_params('TX', 'Houston')) %></li>
-        <li><%= link_to 'Indianapolis, IN', city_url(city_params('IN', 'Indianapolis')) %></li>
-        <li><%= link_to 'Jackson, MS', city_url(city_params('MS', 'Jackson')) %></li>
-        <li><%= link_to 'Jacksonville, FL', city_url(city_params('FL', 'Jacksonville')) %></li>
-        <li><%= link_to 'Kansas City, MO', city_url(city_params('MO', 'Kansas City')) %></li>
-        <li><%= link_to 'Las Vegas, NV', city_url(city_params('NV', 'Las Vegas')) %></li>
-        <li><%= link_to 'Little Rock, AR', city_url(city_params('AR', 'Little Rock')) %></li>
-        <li><%= link_to 'Los Angeles, CA', city_url(city_params('CA', 'Los Angeles')) %></li>
-        <li><%= link_to 'Louisville, KY', city_url(city_params('KY', 'Louisville')) %></li>
-      </ul>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'Manchester, NH', city_url(city_params('NH', 'Manchester')) %></li>
-        <li><%= link_to 'Memphis, TN', city_url(city_params('TN', 'Memphis')) %></li>
-        <li><%= link_to 'Miami, FL', city_url(city_params('FL', 'Miami')) %></li>
-        <li><%= link_to 'Milwaukee, WI', city_url(city_params('WI', 'Milwaukee')) %></li>
-        <li><%= link_to 'Minneapolis, MN', city_url(city_params('MN', 'Minneapolis')) %></li>
-        <li><%= link_to 'Nashville, TN', city_url(city_params('TN', 'Nashville')) %></li>
-        <li><%= link_to 'New Orleans, LA', city_url(city_params('LA', 'New Orleans')) %></li>
-        <li><%= link_to 'New York City, NY', city_url(city_params('NY', 'New York City')) %></li>
-        <li><%= link_to 'Newark, NJ', city_url(city_params('NJ', 'Newark')) %></li>
-        <li><%= link_to 'Oakland, CA', city_url(city_params('CA', 'Oakland')) %></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="col-xs-12 col-md-4 col-lg-4">
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'Oklahoma City, OK', city_url(city_params('OK', 'Oklahoma City')) %></li>
-        <li><%= link_to 'Omaha, NE', city_url(city_params('NE', 'Omaha')) %></li>
-        <li><%= link_to 'Philadelphia, PA', city_url(city_params('PA', 'Philadelphia')) %></li>
-        <li><%= link_to 'Phoenix, AZ', city_url(city_params('AZ', 'Phoenix')) %></li>
-        <li><%= link_to 'Portland, ME', city_url(city_params('ME', 'Portland')) %></li>
-        <li><%= link_to 'Portland, OR', city_url(city_params('OR', 'Portland')) %></li>
-        <li><%= link_to 'Providence, RI', city_url(city_params('RI', 'Providence')) %></li>
-        <li><%= link_to 'Sacramento, CA', city_url(city_params('CA', 'Sacramento')) %></li>
-        <li><%= link_to 'Salt Lake City, UT', city_url(city_params('UT', 'Salt Lake City')) %></li>
-        <li><%= link_to 'San Antonio, TX', city_url(city_params('TX', 'San Antonio')) %></li>
-      </ul>
-    </div>
-    <div class="col-xs-6 col-sm-6 col-lg-6">
-      <ul>
-        <li><%= link_to 'San Diego, CA', city_url(city_params('CA', 'San Diego')) %></li>
-        <li><%= link_to 'San Francisco, CA', city_url(city_params('CA', 'San Francisco')) %></li>
-        <li><%= link_to 'San Jose, CA', city_url(city_params('CA', 'San Jose')) %></li>
-        <li><%= link_to 'Seattle, WA', city_url(city_params('WA', 'Seattle')) %></li>
-        <li><%= link_to 'Sioux Falls, SD', city_url(city_params('SD', 'Sioux Falls')) %></li>
-        <li><%= link_to 'Tucson, AZ', city_url(city_params('AZ', 'Tucson')) %></li>
-        <li><%= link_to 'Virginia Beach, VA', city_url(city_params('VA', 'Virginia Beach')) %></li>
-        <li><%= link_to 'Washington, DC', city_url(city_params('DC', 'Washington')) %></li>
-        <li><%= link_to 'Wichita, KS', city_url(city_params('KS', 'Wichita')) %></li>
-        <li><%= link_to 'Wilmington, DE', city_url(city_params('DE', 'Wilmington')) %></li>
-      </ul>
-    </div>
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'Oklahoma City, OK', city_url(city_params('OK', 'Oklahoma City')) %></li>
+            <li><%= link_to 'Omaha, NE', city_url(city_params('NE', 'Omaha')) %></li>
+            <li><%= link_to 'Philadelphia, PA', city_url(city_params('PA', 'Philadelphia')) %></li>
+            <li><%= link_to 'Phoenix, AZ', city_url(city_params('AZ', 'Phoenix')) %></li>
+            <li><%= link_to 'Portland, ME', city_url(city_params('ME', 'Portland')) %></li>
+            <li><%= link_to 'Portland, OR', city_url(city_params('OR', 'Portland')) %></li>
+            <li><%= link_to 'Providence, RI', city_url(city_params('RI', 'Providence')) %></li>
+            <li><%= link_to 'Sacramento, CA', city_url(city_params('CA', 'Sacramento')) %></li>
+            <li><%= link_to 'Salt Lake City, UT', city_url(city_params('UT', 'Salt Lake City')) %></li>
+            <li><%= link_to 'San Antonio, TX', city_url(city_params('TX', 'San Antonio')) %></li>
+          </ul>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6">
+          <ul>
+            <li><%= link_to 'San Diego, CA', city_url(city_params('CA', 'San Diego')) %></li>
+            <li><%= link_to 'San Francisco, CA', city_url(city_params('CA', 'San Francisco')) %></li>
+            <li><%= link_to 'San Jose, CA', city_url(city_params('CA', 'San Jose')) %></li>
+            <li><%= link_to 'Seattle, WA', city_url(city_params('WA', 'Seattle')) %></li>
+            <li><%= link_to 'Sioux Falls, SD', city_url(city_params('SD', 'Sioux Falls')) %></li>
+            <li><%= link_to 'Tucson, AZ', city_url(city_params('AZ', 'Tucson')) %></li>
+            <li><%= link_to 'Virginia Beach, VA', city_url(city_params('VA', 'Virginia Beach')) %></li>
+            <li><%= link_to 'Washington, DC', city_url(city_params('DC', 'Washington')) %></li>
+            <li><%= link_to 'Wichita, KS', city_url(city_params('KS', 'Wichita')) %></li>
+            <li><%= link_to 'Wilmington, DE', city_url(city_params('DE', 'Wilmington')) %></li>
+          </ul>
+        </div>
+      </div>
   </div>
 </div>

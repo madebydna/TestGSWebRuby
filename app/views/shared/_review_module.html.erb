@@ -17,7 +17,11 @@
 
     <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
         <div>
-            <%= draw_stars_16 overall_review_rating.to_i %>
+            <% if overall_review_rating == 'decline' %>
+                <span class="open-sans_i">no rating</span>
+            <% else %>
+                <%= draw_stars_16 overall_review_rating.to_i %>
+            <% end %>
         </div>
         <br />Posted <%= review[:posted].strftime "%B %d, %Y" %><br />
         - a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
@@ -38,13 +42,17 @@
     <% end %>
 
     <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
-        <% if review[:comments].strip.present? %>
-            <div class="pull-right small js-report-review-link-<%= review.id %>">
-              <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
-            </div>
-            <div class="dn pull-right small js-report-review-close-link-<%= review.id %>">
-                <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
-            </div>
+        <% if logged_in? && current_user.reported_review?(review) %>
+            <div class="pull-right small ptm">You've reported this review</div>
+        <% else %>
+            <% if review[:comments].strip.present? %>
+                <div class="pull-right small ptm js-report-review-link-<%= review.id %>">
+                    <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
+                </div>
+                <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
+                    <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
+                </div>
+            <% end %>
         <% end %>
     <% end %>
 </div>
