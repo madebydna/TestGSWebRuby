@@ -12,7 +12,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
-  before_filter :set_last_modified_date
+  # after_filter :set_last_modified_date
 
   layout 'application'
 
@@ -21,7 +21,8 @@ class LocalizedProfileController < ApplicationController
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
-    @school_reviews_all = @school.reviews
+
+
   end
 
   def quality
@@ -62,10 +63,12 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
+    @school_reviews_all = @school.reviews
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
+    set_last_modified_date
   end
 
   def read_config_for_page
@@ -74,7 +77,7 @@ class LocalizedProfileController < ApplicationController
 
   def set_header_data
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.set_reviews_objects @school
+    @school_reviews_global = SchoolReviews.calc_review_data @school_reviews_all
   end
 
   # get Page name in PageConfig, based on current controller action
@@ -159,10 +162,8 @@ class LocalizedProfileController < ApplicationController
   end
 
   def set_last_modified_date
-    # TODO: smarter way of calculating profile's last modified date. Java code takes greater of school modified and
-    # date of latest non-principal review
-    @last_modified_date = @school.modified
-  end
-
-
+    review_date = @school_reviews_all.present? ? @school_reviews_all.first.posted : nil
+    school_date = @school.modified.to_date
+    @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
+    end
 end
