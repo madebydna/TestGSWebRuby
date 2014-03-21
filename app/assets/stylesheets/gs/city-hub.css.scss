@@ -174,11 +174,11 @@
 
 // Centered Nav Bar Search
 .search-bar {
-  position: absolute;
-  left: 237px;
+  position: relative;
+  float: left;
 
   div {
-    right: 5px;
+    right: 108px;
     top: 8px;
   }
 
@@ -324,7 +324,6 @@
     clear: left;
   }
 }
-
 
 @media only screen and (max-width: 650px) {
   #js-zillow {

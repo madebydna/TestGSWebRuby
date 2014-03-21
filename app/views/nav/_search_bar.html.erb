@@ -4,13 +4,12 @@
 <div class="fixed-top pvm" style='background-color: #005878;'>
   <div class="limit_width_1200">
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha" style='overflow: hidden; float: none;'>
-        <h4 class='pull-left mtm mbn pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h4>
-        <form method='get' id='js-findByNameForm' action="/search/search.page">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha" style='float: none;'>
+        <h4 class='pull-left mtm mbn mrl pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h4>
+        <form method='get' class='search-bar' id='js-findByNameForm' action="/search/search.page">
           <input value="1" name="search_type" type="hidden">
           <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
           <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
-          <div class='search-bar'>
             <input  type="text"
                     name="q"
                     value="School name (e.g. Niles Elementary School)"
@@ -23,8 +22,7 @@
             <div class="pa">
               <span class='iconx24 i-24-search-lens' style='cursor: pointer'></span>
             </div>
-            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mll pa" style='color: #fff; top: 30%; left: 333px; white-space: nowrap' href="/">Not in <%= city.titleize %>?</a>
-          </div>
+            <a onclick="GS.hubs.clearLocalUserCookies();" class="small mll" style='color: #fff; white-space: nowrap' href="/">Not in <%= city.titleize %>?</a>
         </form>
       </div>
     </div>
