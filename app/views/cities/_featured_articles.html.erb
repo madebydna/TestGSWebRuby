@@ -6,7 +6,7 @@
         <div class="featured-article" style='clear: left;'>
           <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
           <div style='margin-left: 120px;'>
-            <div class="medium-bold mrm">
+            <div class="medium-bold mrl">
               <h4 class="js-hubsFeaturedArticles mtn mbn">
                 <% if article[:newwindow] %>
                   <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
