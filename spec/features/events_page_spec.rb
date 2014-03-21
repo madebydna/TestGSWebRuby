@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'Events Page' do
   let(:events_page_url) { 'http://localhost:3000/michigan/detroit/events' }
-  before(:each) { CollectionMapping.destroy_all; CollectionConfig.destroy_all }
+  before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
   before(:each) do
     Timecop.travel(Date.new(2013, 1, 2))
-    FactoryGirl.create(:collection_mapping)
+    FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:important_events_collection_config)
     visit events_page_url
   end

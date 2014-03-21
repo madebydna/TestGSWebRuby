@@ -8,8 +8,8 @@ end
 FactoryGirl.define do
   factory :hub_city_mapping, class: HubCityMapping do
     collection_id 1
-    city 'alameda'
-    state 'ca'
+    city 'detroit'
+    state 'mi'
     active 1
   end
 end

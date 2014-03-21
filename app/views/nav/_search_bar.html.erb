@@ -14,16 +14,16 @@
             <input  type="text"
                     name="q"
                     value="School name (e.g. Niles Elementary School)"
-                    class="search-text text-bigger mlm"
+                    class="search-text mlm"
                     id="js-findByNameBox"
                     onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
                     onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
                     placeholder="School name (e.g. Niles Elementary School)"
                     style='height: 39px;'>
             <div class="pa">
-              <span id="js-submit" class='iconx24 i-24-search-lens' style='cursor: pointer'></span>
+              <span class='iconx24 i-24-search-lens' style='cursor: pointer'></span>
             </div>
-            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mlm pa" style='color: #fff; top: 30%; left: 333px; white-space: nowrap' href="/">Not in <%= city.titleize %>?</a>
+            <a onclick="GS.hubs.clearLocalUserCookies();" class="pull-right small mll pa" style='color: #fff; top: 30%; left: 333px; white-space: nowrap' href="/">Not in <%= city.titleize %>?</a>
           </div>
         </form>
       </div>

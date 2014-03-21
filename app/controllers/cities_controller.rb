@@ -3,15 +3,15 @@ class CitiesController < ApplicationController
   before_filter :set_hub_params
 
   def show
-    collection_mapping = mapping
-    if collection_mapping.nil?
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = mapping.collection_id
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
-      solr = Solr.new(@state[:short], collection_mapping.collection_id)
+      solr = Solr.new(@state[:short], hub_city_mapping.collection_id)
       @breakdown_results = {
         'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
         'Elementary Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
@@ -30,28 +30,33 @@ class CitiesController < ApplicationController
       @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
-      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], collection_mapping.collection_id)
+      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], hub_city_mapping.collection_id)
       @hero_image = "http://www.gscdn.org/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
     end
   end
 
   def events
-    @collection_id = mapping.collection_id
-    @events = CollectionConfig.important_events(@collection_id)
-    @breadcrumbs = {
-      'Home' => '/',
-      @state[:long].titleize => "/#{@state[:long]}",
-      @city.titleize => city_path(@state[:long], @city)
-    }
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      @events = CollectionConfig.important_events(@collection_id)
+      @breadcrumbs = {
+        'Home' => '/',
+        @state[:long].titleize => "/#{@state[:long]}",
+        @city.titleize => city_path(@state[:long], @city)
+      }
+    end
   end
 
   def community
-    collection_mapping = mapping
-    if collection_mapping.nil?
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
       set_meta_tags title: "The #{@city} Education Community"
-      @collection_id = collection_mapping.collection_id
+      @collection_id = hub_city_mapping.collection_id
       collection_configs = configs
       set_community_tab(collection_configs)
       @events = CollectionConfig.city_hub_important_events(collection_configs)
@@ -65,11 +70,11 @@ class CitiesController < ApplicationController
   end
 
   def partner
-    collection_mapping = mapping
-    if collection_mapping.nil?
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = collection_mapping.collection_id
+      @collection_id = hub_city_mapping.collection_id
       @partner = CollectionConfig.ed_community_partner(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @breadcrumbs = {
@@ -81,11 +86,11 @@ class CitiesController < ApplicationController
 
 
   def choosing_schools
-    collection_mapping = mapping
-    if collection_mapping.nil?
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = collection_mapping.collection_id
+      @collection_id = hub_city_mapping.collection_id
       set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
       events_configs = CollectionConfig.where(collection_id: @collection_id, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
       @events = CollectionConfig.city_hub_important_events(events_configs)
@@ -119,9 +124,9 @@ class CitiesController < ApplicationController
     end
 
     def mapping
-      collection_mapping_key = "collection_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
-      Rails.cache.fetch(collection_mapping_key, expires_in: 1.day) do
-        CollectionMapping.where(city: params[:city], state: state_short, active: 1).first
+      hub_city_mapping_key = "hub_city_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
+      Rails.cache.fetch(hub_city_mapping_key, expires_in: 1.day) do
+        HubCityMapping.where(city: params[:city], state: state_short, active: 1).first
       end
     end
 

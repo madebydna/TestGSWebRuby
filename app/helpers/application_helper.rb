@@ -243,8 +243,7 @@ module ApplicationHelper
 
 
     unless collection
-      id = CollectionMapping.where(city: city, state: state_short, active: 1).first.collection_id
-      hub_city_mapping = HubCityMapping.for_collection_id(id).first
+      hub_city_mapping =  HubCityMapping.where(city: city, state: state_short, active: 1).first
       collection = Collection.from_hub_city_mapping(hub_city_mapping)
     end
 
