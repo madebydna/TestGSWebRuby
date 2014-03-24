@@ -1,4 +1,5 @@
 class CollectionConfig < ActiveRecord::Base
+  NICKNAME_KEY = 'collection_nickname'
   FEATURED_ARTICLES_KEY = 'hubHome_cityArticle'
   CITY_HUB_PARTNERS_KEY = 'hubHome_partnerCarousel'
   CITY_HUB_SPONSOR_KEY = 'hubHome_sponsor'
@@ -30,6 +31,16 @@ class CollectionConfig < ActiveRecord::Base
           configs[row['collection_id']][row['quay']] = row['value']
         end
         configs
+      end
+    end
+
+    def collection_nickname(collection_id)
+      Rails.cache.fetch("collection_nickname:#{collection_id}") do
+        begin
+          CollectionConfig.where(collection_id: collection_id, quay: NICKNAME_KEY).first.value
+        rescue Exception => e
+          nil
+        end
       end
     end
 

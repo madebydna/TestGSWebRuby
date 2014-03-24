@@ -1,5 +1,5 @@
 <%= render 'nav/topnav' %>
-<%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id %>
+<%= render 'nav/search_bar', state: @state, collection_id: @collection_id %>
 
 <div class="fixed-top pvm" style='background-color: #f5f5f5'>
   <div class="limit_width_1200">
@@ -13,7 +13,7 @@
   </div>
 
   <div class="row tac col-lg-6" style='float: none; margin: auto;'>
-    <h1 class='mha phm'><%= @city.capitalize %> Education Community</h1>
+    <h1 class='mha phm'><%= @collection_nickname %> Education Community</h1>
     <p class='phm'><%= @sub_heading.html_safe %></p>
   </div>
 

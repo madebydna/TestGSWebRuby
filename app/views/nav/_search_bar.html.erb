@@ -5,7 +5,7 @@
   <div class="limit_width_1200">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha" style='float: none;'>
-        <h4 class='pull-left mtm mbn mrl pbm' style='color: #fff;'>Find a school in <%= city.titleize %></h4>
+        <h4 class='pull-left mtm mbn mrl pbm' style='color: #fff;'>Find a school in <%= @collection_nickname %></h4>
         <form method='get' class='search-bar' id='js-findByNameForm' action="/search/search.page">
           <input value="1" name="search_type" type="hidden">
           <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
@@ -22,7 +22,7 @@
             <div class="pa">
               <span class='js-submit iconx24 i-24-search-lens' style='cursor: pointer'></span>
             </div>
-            <a onclick="GS.hubs.clearLocalUserCookies();" class="small mll" style='color: #fff; white-space: nowrap' href="/">Not in <%= city.titleize %>?</a>
+            <a onclick="GS.hubs.clearLocalUserCookies();" class="small mll" style='color: #fff; white-space: nowrap' href="/">Not in <%= @collection_nickname %>?</a>
         </form>
       </div>
     </div>

@@ -9,7 +9,8 @@
             <div style='overflow: auto;'>
               <div class="search-hero-heading">
                 <h4 class='mtn pbs'>Find a School in</h4>
-                <h1 class='mtn mbl'><%= city.titleize %></h1>
+                <h1 class='mtn mbl'><%= collection_nickname %></h1>
+
               </div>
             </div>
 
@@ -55,7 +56,7 @@
                 <button class="state-hub-search-button">Search</button>
               </form>
               <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
-                  Not in <%= city.titleize %>?
+                  Not in <%= collection_nickname %>?
               </a>
             </div>
 
@@ -73,7 +74,7 @@
                 <button class="state-hub-search-button">Search</button>
               </form>
               <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
-                  Not in <%= city.titleize %>?
+                  Not in <%= collection_nickname %>?
               </a>
             </div>
           </div>

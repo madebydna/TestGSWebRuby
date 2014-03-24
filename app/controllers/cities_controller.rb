@@ -8,6 +8,7 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
@@ -41,6 +42,7 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
         'Home' => '/',
@@ -57,6 +59,7 @@ class CitiesController < ApplicationController
     else
       set_meta_tags title: "The #{@city} Education Community"
       @collection_id = hub_city_mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       collection_configs = configs
       set_community_tab(collection_configs)
       @events = CollectionConfig.city_hub_important_events(collection_configs)
@@ -75,6 +78,7 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       @partner = CollectionConfig.ed_community_partner(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @breadcrumbs = {
