@@ -49,6 +49,16 @@ class ApplicationController < ActionController::Base
     state_abbreviation
   end
 
+  def redirect_tab_urls
+    if params[:tab] == 'reviews'
+      redirect_to request.original_url.split('?')[0] + 'reviews/'
+    elsif ['test-scores', 'ratings', 'college-readiness', 'climate'].include? params[:tab]
+      redirect_to request.original_url.split('?')[0] + 'quality/'
+    elsif ['demographics', 'teachers', 'programs-culture', 'programs-resources', 'extracurriculars', 'culture', 'enrollment'].include? params[:tab]
+      redirect_to request.original_url.split('?')[0] + 'details/'
+    end
+  end
+
   def require_state
     @state = state_param
 
