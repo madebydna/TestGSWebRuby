@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe 'City Hub Page', js: true do
   let(:city_page_url) { 'http://localhost:3000/michigan/detroit' }
-  before(:each) { visit city_page_url }
+  before(:each) do
+    CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
+    visit city_page_url
+  end
 
   describe 'search' do
     it 'searches and redirects to java results' do

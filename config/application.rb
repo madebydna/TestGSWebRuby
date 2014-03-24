@@ -15,7 +15,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# Create an ENV_GLOBAL constant with config options that we can use throughout the app
+# Create an ` constant with config options that we can use throughout the app
 # Look for /usr/local/etc/GSWebRuby-config.yml which can be a machine-specific config to overwrite the defaults
 ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
 file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')

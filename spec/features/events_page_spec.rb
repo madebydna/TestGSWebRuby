@@ -7,6 +7,7 @@ describe 'Events Page' do
     Timecop.travel(Date.new(2013, 1, 2))
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:important_events_collection_config)
+    CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
     visit events_page_url
   end
 

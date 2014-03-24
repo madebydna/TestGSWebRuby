@@ -8,6 +8,7 @@ describe 'Education Comunity Page' do
     FactoryGirl.create(:community_partners_subheading_collection_config)
     FactoryGirl.create(:community_partners_collection_config)
     FactoryGirl.create(:important_events_collection_config)
+    CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
     visit '/michigan/detroit/education-community'
   end
 

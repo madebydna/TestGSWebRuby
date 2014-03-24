@@ -55,7 +55,7 @@ class CollectionConfig < ActiveRecord::Base
           end
         rescue Exception => e
           articles = nil
-          Rails.logger.error('Parsing articles on the city hub page failed:' + e.name.to_s)
+          Rails.logger.error('Parsing articles on the city hub page failed:' + e.to_s)
         end
         articles
       end
@@ -75,7 +75,7 @@ class CollectionConfig < ActiveRecord::Base
           end
         rescue Exception => e
           partners = nil
-          Rails.logger.error('Something went wrong while parsing city_hub_partners' + e.name.to_s)
+          Rails.logger.error('Something went wrong while parsing city_hub_partners' + e.to_s)
         end
         partners
       end
@@ -89,7 +89,7 @@ class CollectionConfig < ActiveRecord::Base
           sponsor[:path].prepend(ENV_GLOBAL['cdn_host'])
         rescue Exception => e
           sponsor = nil
-          Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
+          Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.to_s)
         end
         sponsor
       end
@@ -102,7 +102,7 @@ class CollectionConfig < ActiveRecord::Base
           choose_school = eval(raw_choose_school_str) # sins
         rescue Exception => e
           choose_school = nil
-          Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e.name.to_s)
+          Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e.to_s)
         end
         choose_school
       end
@@ -116,7 +116,7 @@ class CollectionConfig < ActiveRecord::Base
           announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
         rescue Exception => e
           announcement = nil
-          Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.name.to_s)
+          Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.to_s)
         end
         announcement
       end
@@ -140,7 +140,7 @@ class CollectionConfig < ActiveRecord::Base
 
         rescue Exception => e
           important_events = nil
-          Rails.logger.error('Something went wrong while parsing city_hub_important_events' + e.name.to_s)
+          Rails.logger.error('Something went wrong while parsing city_hub_important_events' + e.to_s)
         end
 
         important_events

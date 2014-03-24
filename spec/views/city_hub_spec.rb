@@ -5,7 +5,7 @@ describe 'cities/_search_hero.html.erb' do
 
   context 'without a sponsor' do
     it 'does not render sponsor information' do
-      view.stub(:city) { 'detoit' }
+      view.stub(:collection_nickname) { 'detoit' }
       view.stub(:collection_id) { 1 }
       view.stub(:state) { { short: 'mi', long: 'michigan' } }
       view.stub(:breakdown_results) { [] }
@@ -18,7 +18,7 @@ describe 'cities/_search_hero.html.erb' do
 
   context 'without breakdown results' do
     it 'renders an error message' do
-      view.stub(:city) { 'detoit' }
+      view.stub(:collection_nickname) { 'detoit' }
       view.stub(:collection_id) { 1 }
       view.stub(:state) { { short: 'mi', long: 'michigan' } }
       view.stub(:sponsor) { { text: 'foo bar baz', path: 'http://google.com' } }
