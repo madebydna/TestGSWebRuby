@@ -189,17 +189,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 })();
 
-GS.search.formHandlersInit = GS.search.formHandlersInit || function() {
-  $('.js-submit').each(function() {
-    $(this).click(function() {
-        console.log('clicked js-submit')
-        $(this).closest('form').submit();
-    });
-  });
-};
-
-
 $(document).ready(function() {
   GS.search.schoolSearchForm.init();
-  GS.search.formHandlersInit();
 });
