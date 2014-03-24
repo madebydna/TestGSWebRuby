@@ -43,7 +43,7 @@ class CollectionConfig < ActiveRecord::Base
           articles.each do |article|
             article[:articleImagePath].prepend(CDN_HOST)
           end
-        rescue => e
+        rescue Exception => e
           articles = nil
           Rails.logger.error('Parsing articles on the city hub page failed:' + e.name.to_s)
         end
@@ -63,7 +63,7 @@ class CollectionConfig < ActiveRecord::Base
             partner[:logoPath].prepend(CDN_HOST)
             partner[:anchoredLink].prepend('education-community')
           end
-        rescue => e
+        rescue Exception => e
           partners = nil
           Rails.logger.error('Something went wrong while parsing city_hub_partners' + e.name.to_s)
         end
@@ -77,7 +77,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_sponsor_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SPONSOR_KEY }).first.value
           sponsor = eval(raw_sponsor_str)[:sponsor] # sins
           sponsor[:path].prepend(CDN_HOST)
-        rescue => e
+        rescue Exception => e
           sponsor = nil
           Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
         end
@@ -90,7 +90,7 @@ class CollectionConfig < ActiveRecord::Base
         begin
           raw_choose_school_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_CHOOSE_A_SCHOOL_KEY }).first.value
           choose_school = eval(raw_choose_school_str) # sins
-        rescue => e
+        rescue Exception => e
           choose_school = nil
           Rails.logger.error('Something went wrong while parsing city_hub_choose_school' + e.name.to_s)
         end
@@ -104,7 +104,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_annoucement_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_ANNOUNCEMENT_KEY }).first.value
           announcement = eval(raw_annoucement_str) # sins
           announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
-        rescue => e
+        rescue Exception => e
           announcement = nil
           Rails.logger.error('Something went wrong while parsing city_hub_announcement' + e.name.to_s)
         end
@@ -128,7 +128,7 @@ class CollectionConfig < ActiveRecord::Base
             important_events[:events].pop
           end
 
-        rescue => e
+        rescue Exception => e
           important_events = nil
           Rails.logger.error('Something went wrong while parsing city_hub_important_events' + e.name.to_s)
         end
@@ -150,7 +150,7 @@ class CollectionConfig < ActiveRecord::Base
           important_events.delete_if { |event| event[:date] < Date.today }
           important_events
         end
-      rescue => e
+      rescue Exception => e
         Rails.logger.error('Something went wrong while parsing important events' + e.to_s)
         important_events = nil
       end
@@ -184,7 +184,7 @@ class CollectionConfig < ActiveRecord::Base
               end
             end
           end
-        rescue => e
+        rescue Exception => e
           partners = nil
           Rails.logger.error('Something went wrong while parsing ed_community_partners' + e.to_s)
         end
@@ -197,7 +197,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first.value == 'true'
-        rescue => e
+        rescue Exception => e
           Rails.logger.error('Something went wrong while parsing ed_community_show_tabs' + e.to_s)
           nil
         end
@@ -216,7 +216,7 @@ class CollectionConfig < ActiveRecord::Base
           result[:data].each do |partner_data|
             partner_data[:logo].prepend(CDN_HOST)
           end
-        rescue => e
+        rescue Exception => e
           Rails.logger.error('Something went wrong while parsing ed_community_partner' + e.to_s)
           result = nil
         end
@@ -230,7 +230,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_links_str = CollectionConfig.where(collection_id: collection_id, quay: CHOOSING_STEP3_LINKS_KEY).first.value
           eval(raw_links_str)[:link]
         end
-      rescue => e
+      rescue Exception => e
         Rails.logger.error('Something went wrong whiel parsing choosing_page_links' + e.to_s)
         links = nil
       end
