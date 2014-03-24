@@ -1,5 +1,5 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
-<%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id %>
+<%= render 'nav/search_bar', state: @state, collection_id: @collection_id %>
 
 <div class="pvm" style='background-color: #f5f5f5'>
   <div class="limit_width_1200">
@@ -11,13 +11,14 @@
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   <div class="row tac" style='margin-top: 80px; margin-bottom: 80px;'>
     <h1 class='mvn' style='color: #ffb725'>5 simple steps to</h1>
-    <h1 class='mvs' style='color: #0083b2'>choosing a school in <%= @city.titleize %></h1>
+    <h1 class='mvs' style='color: #0083b2'>choosing a school in <%= @collection_nickname %></h1>
   </div>
 
-  <div class="row mvl">
-    <%= image_tag('city-hub/choosing_step1.png', class: 'pull-right col-xs-12 col-sm-4 col-md-8 col-lg-6', style: 'max-width: 460px; float: right;') %>
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5 phm">
+  <div class="row mvl choosing-schools-step">
+    <%= image_tag('city-hub/choosing_step1.png', class: 'pull-right') %>
+
+    <div>
       <h5 class='mtn' style="margin-bottom: 1em;">Step 1</h5>
       <h2 style="margin-top: 0;">Think about your needs</h2>
       <p>
@@ -25,105 +26,107 @@
       </p>
       <h4>Featured resources</h4>
       <ul>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/32-imagining-your-ideal-school-set-your-priorities.gs">Imagining your ideal school</a></li>
-        <li><a href="http://www.greatschools.org/pdf/choosing_imagine.pdf">Download our worksheet</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/32-imagining-your-ideal-school-set-your-priorities.gs">Imagining your ideal school</a></li>
+        <li><a href="/pdf/choosing_imagine.pdf">Download our worksheet</a></li>
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
       <ul class="expandable">
-        <li><a href="http://www.greatschools.org/students/academic-skills/4165-redshirting-kindergarten.gs">When should kids start kindergarten?</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/making-the-right-choice/4904-switch-or-stay-schools-early-in-year.gs">Switch schools or stay?</a></li>
-        <li><a href="http://www.greatschools.org/students/4151-Skipping-a-grade-pros-and-cons.gs">The pros and cons of skipping a grade</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1111-preschool-philosophies.gs">Preschool philosophies: what are they?</a></li>
-        <li><a href="http://www.greatschools.org/school-choice/language-oriented-schools/7067-second-language-education-video.gs">A guide to second-language education </a></li>
-        <li><a href="http://www.greatschools.org/school-choice/special-education/7006-quick-guide-special-education-video.gs">Quick guide to special education </a></li>
-        <li><a href="http://www.greatschools.org/school-choice/special-education/6997-special-education-special-needs-learning-disabilities.gs">Special needs programs and schools: a primer</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/moving/173-help-your-child-with-the-transition.gs?page=all">Moving? Tips to help your child with the transition</a></li>
-        <li><a href="http://www.greatschools.org/parenting/learning-development/7088-gifted-and-talented-education-and-program.gs">Your child is gifted...now what?</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1690-sizing-up-school-safety.gs">Searching for security</a></li>
+        <li><a href="/students/academic-skills/4165-redshirting-kindergarten.gs">When should kids start kindergarten?</a></li>
+        <li><a href="/find-a-school/making-the-right-choice/4904-switch-or-stay-schools-early-in-year.gs">Switch schools or stay?</a></li>
+        <li><a href="/students/4151-Skipping-a-grade-pros-and-cons.gs">The pros and cons of skipping a grade</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1111-preschool-philosophies.gs">Preschool philosophies: what are they?</a></li>
+        <li><a href="/school-choice/language-oriented-schools/7067-second-language-education-video.gs">A guide to second-language education </a></li>
+        <li><a href="/school-choice/special-education/7006-quick-guide-special-education-video.gs">Quick guide to special education </a></li>
+        <li><a href="/school-choice/special-education/6997-special-education-special-needs-learning-disabilities.gs">Special needs programs and schools: a primer</a></li>
+        <li><a href="/find-a-school/moving/173-help-your-child-with-the-transition.gs?page=all">Moving? Tips to help your child with the transition</a></li>
+        <li><a href="/parenting/learning-development/7088-gifted-and-talented-education-and-program.gs">Your child is gifted...now what?</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1690-sizing-up-school-safety.gs">Searching for security</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="row mvl">
-    <%= image_tag('city-hub/choosing_step2.png', class: 'col-xs-12 col-sm-4 col-md-8 col-lg-6', style: 'max-width: 460px;') %>
+  <div class="row mvl choosing-schools-step">
+    <%= image_tag('city-hub/choosing_step2.png') %>
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5 phm pull-right">
+    <div class="pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 2</h5>
       <h2 style="margin-top: 0;">Understand your options</h2>
       <p>
-        In <%= @city.titleize %>, there are a variety of schools to choose from - public, public charter, and private. When deciding between schools, learn what makes each type of school different, and how that fits with your overall needs and goals.
+        In <%= @collection_nickname %>, there are a variety of schools to choose from - public, public charter, and private. When deciding between schools, learn what makes each type of school different, and how that fits with your overall needs and goals.
       </p>
       <h4>Featured resources</h4>
       <ul>
-        <li><a href="http://www.greatschools.org/school-choice/6987-public-private-charter-schools.gs">Public vs. private vs. charter schools</a></li>
-        <li><a href="enrollment"><%= @city.titleize %> enrollment information</a></li>
+        <li><a href="/school-choice/6987-public-private-charter-schools.gs">Public vs. private vs. charter schools</a></li>
+        <li><%= link_to "#{@collection_nickname} enrollment information" %></li>
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
       <ul class="expandable">
         <h4 style='margin-left: -40px;'>Overview Of options</h4>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1163-school-choice-your-options.gs">School choice: what are your options?</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/59-private-vs-public-schools.gs">Private vs. public</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/2424-school-terminology.gs">School choice terminology</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1163-school-choice-your-options.gs">School choice: what are your options?</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/59-private-vs-public-schools.gs">Private vs. public</a></li>
+        <li><a href="/find-a-school/2424-school-terminology.gs">School choice terminology</a></li>
 
         <h4 style='margin-left: -40px;'>Public & public charter schools</h4>
-        <li><a href="http://www.greatschools.org/school-choice/public-schools/6979-public-school.gs">Public schools: fact and fiction</a></li>
-        <li><a href="http://www.greatschools.org/school-choice/charter-schools/6974-what-is-charter-school-video.gs">What's a charter school anyway?</a></li>
-        <li><a href="http://www.greatschools.org/school-choice/charter-schools/6986-charter-schools.gs">The truth about charter schools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/192-seven-facts-about-charter-schools.gs">7 essentials about charter schools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/3706-charter-schools-better-than-traditional.gs">Are charter schools better?</a></li>
+        <li><a href="/school-choice/public-schools/6979-public-school.gs">Public schools: fact and fiction</a></li>
+        <li><a href="/school-choice/charter-schools/6974-what-is-charter-school-video.gs">What's a charter school anyway?</a></li>
+        <li><a href="/school-choice/charter-schools/6986-charter-schools.gs">The truth about charter schools</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/192-seven-facts-about-charter-schools.gs">7 essentials about charter schools</a></li>
+        <li><a href="/find-a-school/3706-charter-schools-better-than-traditional.gs">Are charter schools better?</a></li>
 
         <h4 style='margin-left: -40px;'>Private schools</h4>
-        <li><a href="http://www.greatschools.org/school-choice/private-schools/7068-private-schools-video.gs">A guide to private schools</a></li>
-        <li><a href="http://www.greatschools.org/school-choice/private-schools/6995-private-schools-parochial-schools.gs">Should I send my child to a private school?</a></li>
+        <li><a href="/school-choice/private-schools/7068-private-schools-video.gs">A guide to private schools</a></li>
+        <li><a href="/school-choice/private-schools/6995-private-schools-parochial-schools.gs">Should I send my child to a private school?</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="row mvl">
-    <%= image_tag('city-hub/choosing_step3.png', class: 'pull-right col-xs-12 col-sm-4 col-md-8 col-lg-6', style: 'max-width: 460px; float: right;') %>
+  <div class="row mvl choosing-schools-step">
+    <%= image_tag('city-hub/choosing_step3.png', class: 'pull-right') %>
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5 phm">
+    <div>
       <h5 class='mtn' style="margin-bottom: 1em;">Step 3</h5>
       <h2 style="margin-top: 0;">Find schools that fit</h2>
       <p>
         As you search for schools that fit your family, look for information in three key areas - academic performance, extracurricular programs, and school culture and community.
       </p>
       <h4>Featured resources</h4>
-      <a href="schools">Try our advanced school search</a>
+      <%= link_to 'Try our advanced school search', enrollment_path(@state[:long], @city) %>
       <br>
       <p>
         GreatSchools provides independent ratings based on a mixture of factors. You should consider GreatSchools ratings along with local and state ratings.
       </p>
       <ul>
-        <% @step3_links.each do |link| %>
-          <% if link[:newwindow] == 'true' %>
-            <li><%= link_to(link[:name], link[:path], target: '_blank') %></li>
-          <% else %>
-            <li><%= link_to(link[:name], link[:path]) %></li>
+        <% unless @step3_links.nil? %>
+          <% @step3_links.each do |link| %>
+            <% if link[:newwindow] == 'true' %>
+              <li><%= link_to(link[:name], link[:path], target: '_blank') %></li>
+            <% else %>
+              <li><%= link_to(link[:name], link[:path]) %></li>
+            <% end %>
           <% end %>
         <% end %>
       </ul>
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
       <ul class="expandable">
-        <li><a href="http://www.greatschools.org/school-choice/standardized-testing/7262-school-test-scores-video.gs">Facts (and fiction) about school test scores</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs">How important is cultural diversity at your school?</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/174-class-size.gs">How important is class size?</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/528-school-size.gs">How important is school size?</a></li>
-        <li><a href="http://www.greatschools.org/preschool/slideshows/7268-why-preschool.gs">The ABCs of picking a preschool</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/3643-mistakes-choosing-preschool.gs">Pitfalls of picking a preschool</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/3644-mistakes-choosing-elementary.gs">Pitfalls of picking an elementary school</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/3646-mistakes-choosing-middle-school.gs">Pitfalls of picking a middle school</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/3647-mistake-choosing-highschool.gs">Pitfalls of picking a high school</a></li>
+        <li><a href="/school-choice/standardized-testing/7262-school-test-scores-video.gs">Facts (and fiction) about school test scores</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs">How important is cultural diversity at your school?</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/174-class-size.gs">How important is class size?</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/528-school-size.gs">How important is school size?</a></li>
+        <li><a href="/preschool/slideshows/7268-why-preschool.gs">The ABCs of picking a preschool</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/3643-mistakes-choosing-preschool.gs">Pitfalls of picking a preschool</a></li>
+        <li><a href="/find-a-school/3644-mistakes-choosing-elementary.gs">Pitfalls of picking an elementary school</a></li>
+        <li><a href="/find-a-school/3646-mistakes-choosing-middle-school.gs">Pitfalls of picking a middle school</a></li>
+        <li><a href="/find-a-school/3647-mistake-choosing-highschool.gs">Pitfalls of picking a high school</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="row mvl">
-    <%= image_tag('city-hub/choosing_step4.png', class: "col-xs-12 col-sm-4 col-md-8 col-lg-6", style: 'max-width: 460px;') %>
+  <div class="row mvl choosing-schools-step">
+    <%= image_tag('city-hub/choosing_step4.png') %>
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5 phm pull-right">
+    <div class="pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 4</h5>
       <h2 style="margin-top: 0;">Visit schools you like</h2>
       <p>
@@ -132,42 +135,42 @@
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
       <ul class='expandable'>
-        <li><a href="http://www.greatschools.org/find-a-school/school-visit/24-the-school-visit-what-to-look-for-what-to-ask.gs">The school visit: what to look for, what to ask</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>
+        <li><a href="/find-a-school/school-visit/24-the-school-visit-what-to-look-for-what-to-ask.gs">The school visit: what to look for, what to ask</a></li>
+        <li><a href="/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>
 
         <h4 style='margin-left: -40px;'>Preschool Resources</h4>
 
-        <li><a href="http://www.greatschools.org/find-a-school/slideshows/3457-choosing-a-preschool.gs">10 key questions for preschools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1627-insider-tricks-for-assessing-preschools.gs">Insider tricks for assessing preschools</a></li>
+        <li><a href="/find-a-school/slideshows/3457-choosing-a-preschool.gs">10 key questions for preschools</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1627-insider-tricks-for-assessing-preschools.gs">Insider tricks for assessing preschools</a></li>
 
         <h4 style='margin-left: -40px;'>Elementary School Resources</h4>
 
-        <li><a href="http://www.greatschools.org/find-a-school/making-the-right-choice/7055-choose-elementary-school-video.gs">Finding the right elementary school</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/slideshows/3469-choosing-an-elementary-school.gs">10 key questions for elementary schools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1628-insider-tricks-for-assessing-elementary-schools.gs">Insider tricks for assessing elementary schools</a></li>
-        <li><a href="http://www.greatschools.org/catalog/pdf/schq_visit_elem.pdf">Elementary school visit checklist</a></li>
+        <li><a href="/find-a-school/making-the-right-choice/7055-choose-elementary-school-video.gs">Finding the right elementary school</a></li>
+        <li><a href="/find-a-school/slideshows/3469-choosing-an-elementary-school.gs">10 key questions for elementary schools</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1628-insider-tricks-for-assessing-elementary-schools.gs">Insider tricks for assessing elementary schools</a></li>
+        <li><a href="/catalog/pdf/schq_visit_elem.pdf">Elementary school visit checklist</a></li>
 
         <h4 style='margin-left: -40px;'>Middle School Resources</h4>
 
-        <li><a href="http://www.greatschools.org/find-a-school/school-visit/7056-choose-middle-school-video.gs">How to find the right middle school</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/slideshows/3436-choosing-a-middle-school.gs">10 key questions for middle schools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1629-insider-tricks-for-assessing-middle-schools.gs">Insider tricks for assessing middle schools</a></li>
-        <li><a href="http://www.greatschools.org/catalog/pdf/schq_visit_middle.pdf">Middle school visit checklist</a></li>
+        <li><a href="/find-a-school/school-visit/7056-choose-middle-school-video.gs">How to find the right middle school</a></li>
+        <li><a href="/find-a-school/slideshows/3436-choosing-a-middle-school.gs">10 key questions for middle schools</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1629-insider-tricks-for-assessing-middle-schools.gs">Insider tricks for assessing middle schools</a></li>
+        <li><a href="/catalog/pdf/schq_visit_middle.pdf">Middle school visit checklist</a></li>
 
         <h4 style='margin-left: -40px;'>High School Resources</h4>
 
-        <li><a href="http://www.greatschools.org/find-a-school/making-the-right-choice/7066-choose-high-school-video.gs">How to choose the right high school</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/slideshows/3446-choosing-a-high-school.gs">10 key questions for high schools</a></li>
-        <li><a href="http://www.greatschools.org/find-a-school/defining-your-ideal/1630-insider-tricks-for-assessing-high-schools.gs">Insider tricks for assessing high schools</a></li>
-        <li><a href="http://www.greatschools.org/catalog/pdf/schq_visit_high.pdf">High school visit checklist</a></li>
+        <li><a href="/find-a-school/making-the-right-choice/7066-choose-high-school-video.gs">How to choose the right high school</a></li>
+        <li><a href="/find-a-school/slideshows/3446-choosing-a-high-school.gs">10 key questions for high schools</a></li>
+        <li><a href="/find-a-school/defining-your-ideal/1630-insider-tricks-for-assessing-high-schools.gs">Insider tricks for assessing high schools</a></li>
+        <li><a href="/catalog/pdf/schq_visit_high.pdf">High school visit checklist</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="row mvl">
-    <%= image_tag('city-hub/choosing_step5.png', class: 'pull-right col-xs-12 col-sm-4 col-md-8 col-lg-6', style: 'max-width: 460px; float: right;') %>
+  <div class="row mvl choosing-schools-step">
+    <%= image_tag('city-hub/choosing_step5.png', class: 'pull-right') %>
 
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-5 phm">
+    <div>
       <h5 class='mtn' style="margin-bottom: 1em;">Step 5</h5>
       <h2 style="margin-top: 0;">Apply and enroll</h2>
       <p>
@@ -175,7 +178,7 @@
       </p>
       <h4>Featured resources</h4>
       <ul>
-        <li><a href="enrollment"><%= @city.titleize %> enrollment information</a></li>
+        <li><%= link_to "#{@collection_nickname} enrollment information", enrollment_path(@state[:long]) %></li>
       </ul>
     </div>
   </div>

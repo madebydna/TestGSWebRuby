@@ -21,8 +21,6 @@ class LocalizedProfileController < ApplicationController
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
-
-
   end
 
   def quality

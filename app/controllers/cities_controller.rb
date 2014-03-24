@@ -32,7 +32,7 @@ class CitiesController < ApplicationController
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], hub_city_mapping.collection_id)
-      @hero_image = "http://www.gscdn.org/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
+      @hero_image = "#{ENV_GLOBAL['cdn_host']}/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
     end
   end
 
@@ -96,6 +96,7 @@ class CitiesController < ApplicationController
     else
       @collection_id = hub_city_mapping.collection_id
       set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       events_configs = CollectionConfig.where(collection_id: @collection_id, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
       @events = CollectionConfig.city_hub_important_events(events_configs)
       @step3_links = CollectionConfig.choosing_page_links(@collection_id)

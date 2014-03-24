@@ -1,22 +1,20 @@
 GS = GS || {};
 
 GS.choosingDropdownInit = GS.choosingDropdownInit || function() {
-  var expandClick = function() {
-    $(this).text('Close »');
-    $(this).parent().find('.expandable').slideToggle();
-    $(this).unbind('click');
-    $(this).click(collapseClick);
-  };
+  var expandToggle = function() {
+    var closeRegex = new RegExp("Close.+");
 
-  var collapseClick = function() {
-    $(this).text('Additional resources »');
+    if(closeRegex.test($(this).text())) {
+      $(this).html('Additional resources &raquo;');
+    } else {
+      $(this).html('Close &raquo;');
+    }
+
     $(this).parent().find('.expandable').slideToggle();
-    $(this).unbind('click');
-    $(this).click(expandClick);
   };
 
   $('.js-expand-collapse').each(function() {
-    $(this).click(expandClick);
+    $(this).click(expandToggle);
   });
 };
 

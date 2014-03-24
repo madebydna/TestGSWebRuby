@@ -34,6 +34,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/mySchoolList.page', as: :my_school_list
     get '/community/registrationConfirm.page', as: :verify_email
     get '/:state/', constraints: { state: States.any_state_name_regex }, as: :state
+    get '/:state/:city/schools/', constraints: { state: States.any_state_name_regex }, as: :school_search
     get '/:state/:city/enrollment/', constraints: { state: States.any_state_name_regex }, as: :enrollment
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form

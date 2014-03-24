@@ -30,7 +30,7 @@ shared_examples "it fails with an error" do
 end
 
 describe CollectionConfig do
-  after(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
+  before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
 
   describe '.featured_articles' do
     it_behaves_like 'it rejects empty configs' do
@@ -213,8 +213,6 @@ describe CollectionConfig do
       end
     end
   end
-
-
 
   describe '.important_events' do
     before do
