@@ -14,7 +14,6 @@ class CollectionConfig < ActiveRecord::Base
   SPONSOR_PAGE_NAME_KEY = 'sponsorPage_seoPageName'
   SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
   CHOOSING_STEP3_LINKS_KEY = 'choosePage_step3_localLinks'
-  CDN_HOST = 'http://www.gscdn.org'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -52,7 +51,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_article_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           articles = eval(raw_article_str)['articles'] # sins
           articles.each do |article|
-            article[:articleImagePath].prepend(CDN_HOST)
+            article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
           end
         rescue Exception => e
           articles = nil
@@ -71,7 +70,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_partners_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           partners = eval(raw_partners_str) # sins
           partners[:partnerLogos].each do |partner|
-            partner[:logoPath].prepend(CDN_HOST)
+            partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
             partner[:anchoredLink].prepend('education-community')
           end
         rescue Exception => e
@@ -87,7 +86,7 @@ class CollectionConfig < ActiveRecord::Base
         begin
           raw_sponsor_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SPONSOR_KEY }).first.value
           sponsor = eval(raw_sponsor_str)[:sponsor] # sins
-          sponsor[:path].prepend(CDN_HOST)
+          sponsor[:path].prepend(ENV_GLOBAL['cdn_host'])
         rescue Exception => e
           sponsor = nil
           Rails.logger.error('Something went wrong while parsing city_hub_sponsors' + e.name.to_s)
@@ -189,7 +188,7 @@ class CollectionConfig < ActiveRecord::Base
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|
             partners[key].each do |partner|
-              partner[:logo].prepend(CDN_HOST)
+              partner[:logo].prepend(ENV_GLOBAL['cdn_host'])
               partner[:links].each do |link|
                 link[:url].prepend('http://') unless /^http/.match(link[:url])
               end
@@ -225,7 +224,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_data_str.gsub!(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
           result[:data] = eval(raw_data_str)[:sponsors]
           result[:data].each do |partner_data|
-            partner_data[:logo].prepend(CDN_HOST)
+            partner_data[:logo].prepend(ENV_GLOBAL['cdn_host'])
           end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing ed_community_partner' + e.to_s)

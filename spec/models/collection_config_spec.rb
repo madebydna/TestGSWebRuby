@@ -55,7 +55,7 @@ describe CollectionConfig do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::FEATURED_ARTICLES_KEY)
         result = CollectionConfig.featured_articles(collection_configs)
 
-        expect(result.first[:articleImagePath]).to start_with(CollectionConfig::CDN_HOST)
+        expect(result.first[:articleImagePath]).to start_with(ENV_GLOBAL['cdn_host'])
       end
     end
   end
@@ -85,7 +85,7 @@ describe CollectionConfig do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_PARTNERS_KEY)
         result = CollectionConfig.city_hub_partners(collection_configs)
 
-        expect(result[:partnerLogos].first[:logoPath]).to start_with(CollectionConfig::CDN_HOST)
+        expect(result[:partnerLogos].first[:logoPath]).to start_with(ENV_GLOBAL['cdn_host'])
         expect(result[:partnerLogos].first[:anchoredLink]).to start_with('education-community')
       end
     end
@@ -306,7 +306,7 @@ describe CollectionConfig do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_PARTNERS_KEY)
         result = CollectionConfig.ed_community_partners(collection_configs)
 
-        expect(result['Education'][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
+        expect(result['Education'][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
       end
     end
   end
@@ -376,8 +376,8 @@ describe CollectionConfig do
     end
 
     it 'adds the cdn host to each image' do
-      expect(result[:data][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
-      expect(result[:data][0][:logo]).to start_with(CollectionConfig::CDN_HOST)
+      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
+      expect(result[:data][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
     end
   end
 

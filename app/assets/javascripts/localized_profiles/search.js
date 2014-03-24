@@ -16,7 +16,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var findByLocationSelector = 'input#js-findByLocationBox';
 
     var init = function(state) {
-        $('#js-findByLocationForm').submit(function() {
+        $('.js-findByLocationForm').submit(function() {
             try {
                 return submitByLocationSearch.apply(this);
             } catch(e) {
@@ -25,7 +25,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             }
         });
 
-        $('#js-findByNameForm').submit(function() {
+        $('.js-findByNameForm').submit(function() {
             try {
                 return submitByNameSearch.apply(this);
             } catch(e) {
@@ -192,7 +192,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 GS.search.formHandlersInit = GS.search.formHandlersInit || function() {
   $('.js-submit').each(function() {
     $(this).click(function() {
-      $(this).closest('form').submit();
+        console.log('clicked js-submit')
+        $(this).closest('form').submit();
     });
   });
 };
