@@ -36,6 +36,8 @@ class Admin::HeldSchoolController < ApplicationController
       else
         flash_error 'Sorry, there was a problem removing school from the held list'
       end
+    else
+      flash_error 'The school you chose is not currently held.'
     end
 
     redirect_back
