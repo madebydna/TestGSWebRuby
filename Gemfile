@@ -83,6 +83,7 @@ gem 'has_scope'
 gem 'request_store', '~> 1.0.3'
 gem 'draper', '~> 1.3'
 
+gem 'addressable'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
