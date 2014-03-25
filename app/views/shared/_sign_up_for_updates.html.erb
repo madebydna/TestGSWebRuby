@@ -4,7 +4,7 @@
       <div class="col-sm-7 col-md-8 col-lg-8">
 
         <% if @school %>
-          <%= render 'shared/send_me_updates_form', school: @school %>
+          <%= render 'shared/send_me_updates_form', school: @school,driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
         <% end %>
         <form class="form-inline" role="form" onsubmit="javascript:return false;">
           <fieldset>

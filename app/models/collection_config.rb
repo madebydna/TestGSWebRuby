@@ -169,10 +169,15 @@ class CollectionConfig < ActiveRecord::Base
 
     def ed_community_subheading(collection_configs)
       unless collection_configs.empty?
-        raw_subheading_str = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first.value
-        raw_subheading_str.gsub(/\{\scontent\:'/, '')
-                          .gsub(/'\s\}/, '')
-                          .gsub(/\\/, '')
+        begin
+          raw_subheading_str = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first.value
+          raw_subheading_str.gsub(/\{\scontent\:'/, '')
+                            .gsub(/'\s\}/, '')
+                            .gsub(/\\/, '')
+        rescue Exception => e
+          Rails.logger.error('Something went wrong while parsing ed_community_subheading' + e.to_s)
+          nil
+        end
       end
     end
 

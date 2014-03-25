@@ -33,6 +33,7 @@ class CitiesController < ApplicationController
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], hub_city_mapping.collection_id)
       @hero_image = "#{ENV_GLOBAL['cdn_host']}/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
+      @canonical_url = city_url(@state[:long], @city)
     end
   end
 
@@ -49,6 +50,7 @@ class CitiesController < ApplicationController
         @state[:long].titleize => "/#{@state[:long]}",
         @city.titleize => city_path(@state[:long], @city)
       }
+      @canonical_url = city_events_url(@state[:long], @city)
     end
   end
 
@@ -69,6 +71,7 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(@state[:long], @city),
         'Education Community' => nil
       }
+      @canonical_url = city_education_community_url(@state[:long], @city)
     end
   end
 
@@ -85,6 +88,7 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(@state[:long], @city),
         'Partner' => nil
       }
+      @canonical_url = city_education_community_partner_url(@state[:long], @city)
     end
   end
 
@@ -104,6 +108,7 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(@state[:long], @city),
         'Choosing a School' => nil
       }
+      @canonical_url = city_choosing_schools_url(@state[:long], @city)
     end
   end
 
