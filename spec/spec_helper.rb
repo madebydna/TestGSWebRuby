@@ -71,9 +71,6 @@ Spork.prefork do
     # Use color not only in STDOUT but also in pagers and files
     config.tty = true
 
-    # Use the specified formatter
-    config.formatter = :documentation # :progress, :html, :textmate
-
     # remove support for "should" syntax, since it is deprecated. Use expect syntax instead
     config.expect_with :rspec do |c|
       c.syntax = :expect
