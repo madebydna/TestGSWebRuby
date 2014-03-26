@@ -18,7 +18,10 @@
 //= require util/uri
 //= require resources/omniture.js
 //= require util/tracking.js
-//= require_tree .
+//= require_tree ./util
+//= require_tree ./resources
+//= require_tree ./auth
+//= require_tree ./localized_profiles
 
 
 Function.prototype.gs_bind = function(obj) {

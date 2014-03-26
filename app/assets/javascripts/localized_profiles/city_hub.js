@@ -22,54 +22,6 @@ GS.util.isDeveloperWorkstation = function() {
     hostname.indexOf("macbook") > -1;
 };
 
-GS.hubs.setupResponsiveCarousel = function() {
-  var options = {
-    fx: "carousel",
-    slides: "> div",
-    loader: "wait",
-    speed: "1000",
-    pauseOnHover: "true",
-    timeout: "1000",
-    easing: "linear",
-    carouselVisible: '6',
-    slideshow: "true",
-    next: "#next",
-    prev: "#prev"
-  };
-
-  function cycle(visibleCount) {
-    var $slideshow = $('.cycle-slideshow');
-    $slideshow.cycle($.extend(options, { carouselVisible: visibleCount }));
-    $slideshow.css('margin-left', 'auto').css('margin-right', 'auto');
-  }
-
-  function initCycle() {
-    var width = $(window).width();
-    $('.cycle-slideshow').cycle('destroy');
-    if (width <= 400) {
-      cycle(1);
-    } else if (width > 400 && width <= 540) {
-      cycle(2);
-    } else if (width > 540 && width <= 690) {
-      cycle(3);
-    } else if ( width > 690 && width <= 800 ) {
-      cycle(4);
-    } else if ( width > 800 && width <= 980 ) {
-      cycle(5);
-    } else {
-      cycle(6);
-    }
-  }
-  initCycle();
-
-  var reinitTimer;
-  $(window).resize(function() {
-      clearTimeout(reinitTimer);
-      reinitTimer = setTimeout(initCycle, 100);
-  });
-};
-
-
 GS.hubs.clearLocalUserCookies = function() {
   // http://www.quirksmode.org/js/cookies.html
   var date = new Date();
@@ -84,8 +36,3 @@ GS.hubs.clearLocalUserCookies = function() {
     document.cookie = localUserCookie;
   }
 };
-
-
-jQuery(function() {
-  GS.hubs.setupResponsiveCarousel();
-});
