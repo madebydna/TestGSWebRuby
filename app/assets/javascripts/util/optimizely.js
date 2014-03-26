@@ -1,5 +1,5 @@
 if(window.gon !== undefined){
-    if(window.gon.optimizely_key !== undefined){
+    if(gon.optimizely_key !== null && gon.optimizely_key !== undefined){
         $.getScript("http://cdn.optimizely.com/js/"+ gon.optimizely_key +".js");
     }
 }
