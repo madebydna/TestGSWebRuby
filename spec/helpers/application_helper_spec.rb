@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
-  describe '#page_title' do
-  end
-
   describe '#category_placement_anchor' do
     let(:category_placement) { FactoryGirl.build(:category_placement, id: 1, title: 'A title') }
 
@@ -58,5 +55,89 @@ describe ApplicationHelper do
     end
   end
 
+  describe '#topnav_formatted_title' do
+    before(:each) { School.on_db('ca').destroy_all; HubCityMapping.destroy_all }
+    let(:hub_params) { { city: 'detroit', state: 'michigan' } }
+    let(:school) do
+      FactoryGirl.create(:hub_city_mapping, city: 'a name', state: 'CA')
+      school = FactoryGirl.create(:school, school_metadatas: [])
+      school
+    end
+    let(:cookies) { {} }
 
+    it 'sets ishubUser all the time' do
+      helper.topnav_formatted_title(school, hub_params, cookies)
+
+      expect(cookies[:ishubUser]).to eq('y')
+    end
+
+    context 'with a school' do
+      it 'sets the nav city and state based on the school' do
+        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(result).to eq("a name, CA")
+      end
+
+      it 'sets cookies based on school properties' do
+        helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(cookies[:hubState]).to eq('CA')
+        expect(cookies[:hubCity]).to eq('a name')
+      end
+
+      it 'sets page configuration options from the school' do
+        helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(cookies[:eduPage]).to be_true
+        expect(cookies[:choosePage]).to be_true
+        expect(cookies[:eventsPage]).to be_true
+        expect(cookies[:enrollPage]).to be_true
+        expect(cookies[:partnerPage]).to be_true
+      end
+    end
+
+    context 'with city pages' do
+      before(:each) { FactoryGirl.create(:hub_city_mapping, city: 'detroit', state: 'MI') }
+      let(:school) { nil }
+
+      it 'displays city and state based on hub params' do
+        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(result).to eq('Detroit, MI')
+      end
+      it 'sets cookies for city and state based off hub params' do
+        helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(cookies[:hubCity]).to eq('Detroit')
+        expect(cookies[:hubState]).to eq('MI')
+      end
+      it 'sets page configuration cookies from hub params' do
+        helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(cookies[:eduPage]).to be_true
+        expect(cookies[:choosePage]).to be_true
+        expect(cookies[:eventsPage]).to be_true
+        expect(cookies[:enrollPage]).to be_true
+        expect(cookies[:partnerPage]).to be_true
+      end
+    end
+
+    context 'with non profile pages' do
+      let(:hub_params) { nil }
+      let(:school) { nil }
+
+      context 'with cookies' do
+        it 'reads from the cookies' do
+          keys = [:eduPage, :choosePage, :eventsPage, :enrollPage, :partnerPage]
+          keys.each { |k| cookies[k] = true }
+          helper.topnav_formatted_title(school, hub_params, cookies)
+
+          keys.each do |key|
+            expect(cookies[key]).to be_true
+          end
+        end
+      end
+
+      context 'without cookies' do
+        it 'returns nil' do
+          result = helper.topnav_formatted_title(school, hub_params, cookies)
+          expect(result).to be_nil
+        end
+      end
+    end
+  end
 end

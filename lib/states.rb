@@ -64,6 +64,7 @@ module States
   end
 
   def self.abbreviation(name_or_abbreviation)
+    return if name_or_abbreviation.nil?
     str = name_or_abbreviation.downcase
     if str.size == 2 && abbreviation_hash.include?(str)
       return str

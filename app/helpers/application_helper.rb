@@ -220,41 +220,40 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav_formatted_title(hub_params, school, cookies)
-    city = hub_params[:city].capitalize
+  def topnav_formatted_title(school, hub_params, cookies)
+    cookies[:ishubUser] = 'y'
+    city = nil
+    state_short = nil
+
+    if hub_params
+      city = hub_params[:city].titleize
+      state_short = States.abbreviation(hub_params[:state]).upcase
+    end
+
     if school
+      city = school.hub_city
       state_short = States.abbreviation(school.state).upcase
-      collection = school.collection
-      write_cookie_value :hubState, @school.state.upcase
-    elsif cookies[:hubState]
-      state_short = States.abbreviation(params[:state]).upcase
-      if params[:state] && params[:state] != state_short
-        write_cookie_value :hubState, state_short
-      else
-        state_short = cookies[:hubState]
-      end
-    else
-      state_short = States.abbreviation(params[:state]).upcase
-      write_cookie_value :hubState, state_short
     end
 
-    write_cookie_value :hubCity, city
-    write_cookie_value :ishubUser, 'y'
-
-
-    unless collection
-      hub_city_mapping =  HubCityMapping.where(city: city, state: state_short, active: 1).first
-      collection = Collection.from_hub_city_mapping(hub_city_mapping)
-    end
+    hub_city_mapping =  HubCityMapping.where(city: city, state: state_short, active: 1).first
+    collection = Collection.from_hub_city_mapping(hub_city_mapping)
 
     if collection
-      write_cookie_value :eduPage, collection.has_edu_page?
-      write_cookie_value :choosePage, collection.has_choose_page?
-      write_cookie_value :eventsPage, collection.has_events_page?
-      write_cookie_value :enrollPage, collection.has_enroll_page?
-      write_cookie_value :partnerPage, collection.has_partner_page?
+      cookies[:eduPage] = collection.has_edu_page?
+      cookies[:choosePage] = collection.has_choose_page?
+      cookies[:eventsPage] = collection.has_events_page?
+      cookies[:enrollPage] = collection.has_enroll_page?
+      cookies[:partnerPage] = collection.has_partner_page?
     end
 
-    "#{city}, #{state_short}"
+
+    cookies[:hubState] = state_short
+    cookies[:hubCity] = city
+
+    if city.nil? || state_short.nil?
+      nil
+    else
+      "#{city}, #{state_short}"
+    end
   end
 end
