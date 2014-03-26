@@ -412,6 +412,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   ancestry
   awesome_print
   better_errors (~> 0.9.0)
