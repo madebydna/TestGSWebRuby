@@ -12,9 +12,6 @@ gem 'rails_admin'
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'
 
-# REVIEW: are we still using this? remove if not
-gem 'ckeditor'
-
 # Authentication, used for rails-admin
 gem 'devise'
 
@@ -31,9 +28,6 @@ gem 'haml', '4.0.3'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-
-# DSL or building JSON objects. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
 
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
