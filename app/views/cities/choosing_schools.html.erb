@@ -178,7 +178,7 @@
       </p>
       <h4>Featured resources</h4>
       <ul>
-        <li><%= link_to "#{@collection_nickname} enrollment information", enrollment_path(@state[:long]) %></li>
+        <li><%= link_to "#{@collection_nickname} enrollment information", city_enrollment_path(@state[:long], @city) %></li>
       </ul>
     </div>
   </div>
