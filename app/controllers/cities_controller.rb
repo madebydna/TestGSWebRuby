@@ -36,7 +36,8 @@ class CitiesController < ApplicationController
       @reviews.each do |review|
         review.school.extend SchoolProfileDataDecorator
       end
-      @hero_image = "#{ENV_GLOBAL['cdn_host']}/res/img/cityHubs/#{@collection_id}-#{@state[:short].upcase}_hero.png"
+      @hero_image = "/assets/city-hub/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
+      @hero_image_mobile = "/assets/city-hub/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
     end
   end

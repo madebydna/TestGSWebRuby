@@ -18,7 +18,7 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   overflow: hidden;
 }
 
-.img-container {
+.img-container, .img-container-mobile {
   position: absolute;
   left: -50%;
   width: 200%;
@@ -386,6 +386,23 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
       display: list-item;
     }
   }
+  .img-container {
+    display: none;
+  }
+
+  .img-container-mobile {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .img-container-mobile {
+    display: none;
+  }
+
+  .img-container {
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 480px) {
@@ -397,7 +414,6 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
     width: 100%;
   }
 }
-
 
 @media only screen and (min-width: 480px) {
   .lg-pull-right {
