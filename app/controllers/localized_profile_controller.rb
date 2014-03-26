@@ -13,6 +13,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
+  before_filter :set_optimizely_gon_env_value
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -166,5 +167,9 @@ class LocalizedProfileController < ApplicationController
     review_date = @school_reviews_all.present? ? @school_reviews_all.first.posted : nil
     school_date = @school.modified.present? ? @school.modified.to_date : nil
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
-    end
+  end
+
+  def set_optimizely_gon_env_value
+    gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
 end
