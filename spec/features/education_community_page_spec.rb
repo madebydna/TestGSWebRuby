@@ -59,15 +59,12 @@ describe 'Education Community Partner Page' do
   end
 
   it 'sets meta tags based on the page and acro names' do
-    description_tag = '<meta name="description" content="GreatSchools has partnered with '\
-                      'Excellent Schools Detroit to help you explore your options and find '\
-                      'the right school for your child."/>'
-    keywords_tag =  '<meta name="keywords" content="Excellent Schools Detroit, Excellent '\
-                    'Schools Detroit partnership, ESD partnership, Excellent Schools Detroit '\
-                    'GreatSchools partnership, ESD GreatSchools partnership"/>'
+    meta_tags = page.all('meta', visible: false)
+    description_tag = meta_tags.select { |tag| tag[:name] == 'description' }
+    keywords_tag = meta_tags.select { |tag| tag[:name] == 'keywords' }
 
-    expect(page.html).to include(description_tag)
-    expect(page.html).to include(keywords_tag)
+    expect(description_tag).to_not be_nil
+    expect(keywords_tag).to_not be_nil
   end
 
   it 'displays partner information' do
