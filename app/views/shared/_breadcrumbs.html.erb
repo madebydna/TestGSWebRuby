@@ -9,7 +9,7 @@
         <% if url.nil? %>
           <span itemprop="title"><%= text %></span>
         <% else %>
-          <%= link_to url, itemprop:'url' do %>
+          <%= link_to url, itemprop:'url', style: 'font-size: 14px;' do %>
               <span itemprop="title"><%= text %></span>
           <% end %>
         <% end %>

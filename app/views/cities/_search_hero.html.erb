@@ -8,8 +8,8 @@
           <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <div style='overflow: auto;'>
               <div class="search-hero-heading">
-                <h4 class='mtn pbs'>Find a School in</h4>
-                <h1 class='mtn mbl'><%= collection_nickname %></h1>
+                <h4 class='mvn pbs'>Find a School in</h4>
+                <h1 class='mbn mbl' style='margin-top: -11px;'><%= collection_nickname %></h1>
 
               </div>
             </div>
@@ -33,7 +33,7 @@
               });
             </script>
 
-            <div class="search-type-toggle mvm clearfix">
+            <div class="search-type-toggle mtm clearfix" style='margin-bottom: 23px;'>
               <div class='pull-left selected' style='margin-right: 30px;'>
                 <div class='search-hero-sprite location-icon'></div>
                 <span>By location</span>
@@ -55,7 +55,7 @@
                        value="Search by city AND state or address ..."/>
                 <button class="state-hub-search-button">Search</button>
               </form>
-              <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
+              <a  href="/" class="pull-left mbl clear-cookies-link" style='margin-top: 36px;' onclick="GS.hubs.clearLocalUserCookies();">
                   Not in <%= collection_nickname %>?
               </a>
             </div>
@@ -73,7 +73,7 @@
                 <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
                 <button class="state-hub-search-button">Search</button>
               </form>
-              <a  href="/" class="pull-left mvl clear-cookies-link" onclick="GS.hubs.clearLocalUserCookies();">
+              <a  href="/" class="pull-left mbl clear-cookies-link" style='margin-top: 36px;' onclick="GS.hubs.clearLocalUserCookies();">
                   Not in <%= collection_nickname %>?
               </a>
             </div>
@@ -84,7 +84,7 @@
             <% breakdown_results.each do |text, data| %>
               <% unless data.nil? %>
                 <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
-                  <div><%= text %></div>
+                  <div class='mrs'><%= text %></div>
                   <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
                 </button>
               <% else %>

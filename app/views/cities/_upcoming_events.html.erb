@@ -4,7 +4,7 @@
       <div style='overflow: hidden;'>
     <% else %>
       <hr>
-      <div class='ptl' style='overflow: hidden;'>
+      <divstyle='overflow: hidden;'>
     <% end %>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
         <h4 class='bottom mtn'>Upcoming Events</h4>
@@ -26,7 +26,6 @@
         </div>
       <% end %>
     </div>
-  </div>
   <% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
     <%= render 'event_announcements', announcement: @announcement  %>
   <% end %>
