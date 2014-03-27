@@ -29,10 +29,12 @@ class RatingsHelper
     state_ratings_results
   end
 
-  def construct_city_ratings
+  def construct_city_ratings(school)
 
     city_rating_configuration = ratings_config.city_rating_configuration
     city_rating_data_type_ids = ratings_config.city_rating_data_type_ids
+
+    return {} if city_rating_configuration.nil? || city_rating_data_type_ids.empty?
 
     #Hash to hold the city ratings results
     city_ratings_results = {}
@@ -42,27 +44,31 @@ class RatingsHelper
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
 
-    #If configuration exists then loop over the results
-    if !city_rating_configuration.nil? && !city_rating_data_type_ids.empty?
-      results.each do |test_data_set|
-        if (city_rating_data_type_ids.include? test_data_set.data_type_id)
+    #Loop over the results
+    results.each do |test_data_set|
+      if (city_rating_data_type_ids.include? test_data_set.data_type_id)
 
-          if test_data_set.data_type_id == city_rating_configuration['overall']['data_type_id']
-            city_ratings_results['overall_rating'] = test_data_set.school_value_text
-            city_ratings_results['description'] = description_hash[city_rating_configuration['overall']['description_key']]
-            city_ratings_results['city_rating_label'] = test_data_set.display_name
-          else
+        if test_data_set.data_type_id == city_rating_configuration['overall']['data_type_id']
+          city_ratings_results['overall_rating'] = test_data_set.school_value_text
+          city_ratings_results['description'] = description_hash[city_rating_configuration['overall']['description_key']]
+          city_ratings_results['city_rating_label'] = test_data_set.display_name
+        else
 
-            #Loop over the configuration to put the ratings breakdowns in the results.
-            city_rating_configuration['rating_breakdowns'].each do |key, config|
-              if (test_data_set.data_type_id == config['data_type_id'] && (!test_data_set.school_value_text.nil?))
-                city_sub_rating_hash[config['label']] = test_data_set.school_value_text
-              end
+          #Loop over the configuration to put the ratings breakdowns in the results.
+          city_rating_configuration['rating_breakdowns'].each do |key, config|
+            if (test_data_set.data_type_id == config['data_type_id'] && (!test_data_set.school_value_text.nil?))
+              city_sub_rating_hash[config['label']] = test_data_set.school_value_text
             end
           end
-
         end
+
       end
+    end
+
+    methodology_url = get_methodology_url(city_rating_configuration,school)
+    #Only put the url if there is an overall rating.
+    if city_ratings_results['overall_rating'] && methodology_url.present?
+      city_ratings_results['methodology_url'] = methodology_url
     end
 
     #Only put the sub-ratings if there is an overall rating.
@@ -142,7 +148,20 @@ class RatingsHelper
     preK_ratings_results
   end
 
+  def get_methodology_url(city_rating_configuration, school)
+    methodology_url = ""
+    return methodology_url if !city_rating_configuration || !city_rating_configuration['overall']
 
-
+    if city_rating_configuration['overall']['methodology_url_key'].present?
+      key = city_rating_configuration['overall']['methodology_url_key']
+      if school.school_metadata[key.to_sym].present?
+        methodology_url = school.school_metadata[key.to_sym]
+      end
+    end
+    if methodology_url.blank? && city_rating_configuration['overall']['default_methodology_url'].present?
+      methodology_url = city_rating_configuration['overall']['default_methodology_url']
+    end
+    methodology_url
+  end
 
 end

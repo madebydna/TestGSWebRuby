@@ -14,7 +14,7 @@ class RatingDataReader < SchoolProfileDataReader
 
     #Build a hash to hold the ratings results.
     gs_rating_value = ratings_helper.construct_GS_ratings(school)
-    city_rating_value =  ratings_helper.construct_city_ratings
+    city_rating_value =  ratings_helper.construct_city_ratings(school)
     state_rating_value = ratings_helper.construct_state_ratings
     preK_ratings = ratings_helper.construct_preK_ratings
 
