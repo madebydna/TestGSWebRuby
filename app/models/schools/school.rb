@@ -171,14 +171,6 @@ class School < ActiveRecord::Base
     SchoolRating.fetch_reviews self, group_to_fetch: options[:group_type], order_results_by: options[:order_results_by], offset_start: options[:offset_start], quantity_to_return: options[:quantity_to_return]
   end
 
-  def enrollment
-    census_data = SnapshotDataReader.census_data_points self, nil
-    enrollment = census_data['enrollment']
-    if enrollment
-      number_with_delimiter(enrollment.round, :delimiter => ',')
-    end
-  end
-
   def state_name
     States.state_name(state)
   end
