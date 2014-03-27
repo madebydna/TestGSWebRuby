@@ -1,7 +1,7 @@
 class SchoolProfileConfiguration < ActiveRecord::Base
   attr_accessible :configuration_key, :state, :value
 
-  self.table_name = 'school_profile_configuration'
+  self.table_name = 'school_profile_configurations'
   db_magic :connection => :profile_config
   attr_accessible :state, :quay, :value
 
