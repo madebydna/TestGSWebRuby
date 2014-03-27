@@ -182,12 +182,8 @@ class School < ActiveRecord::Base
     SchoolRating.fetch_reviews self, group_to_fetch: options[:group_type], order_results_by: options[:order_results_by], offset_start: options[:offset_start], quantity_to_return: options[:quantity_to_return]
   end
 
-  def test_scores
-    TestScoreResults.new.fetch_test_scores self
-  end
-
   def enrollment
-    census_data = CategoryDataReader.census_data_points(self, nil)
+    census_data = SnapshotDataReader.census_data_points self, nil
     enrollment = census_data['enrollment']
     if enrollment
       number_with_delimiter(enrollment.round, :delimiter => ',')
@@ -214,44 +210,6 @@ class School < ActiveRecord::Base
       @held = HeldSchool.has_school?(self)
     end
     @held
-  end
-
-  def rating_data
-    @data ||= {}
-    return @data['rating_data'] if @data.has_key? 'rating_data'
-    rating_data ||= data_for_category_and_source(nil, 'rating_data')
-    @data['rating_data'] = rating_data
-  end
-
-  def gs_rating
-    rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
-  end
-
-  def local_rating
-    rating_data.fetch('city_rating',{}).fetch('overall_rating',nil)
-  end
-
-  def state_rating
-    rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
-  end
-
-  def preK_star_rating
-    rating_data.fetch('preK_ratings',{}).fetch('star_rating',nil)
-  end
-
-  def data_for_category(category)
-    data_for_category_and_source category, category.source
-  end
-
-  def data_for_category_and_source(category, source)
-    @data ||= {}
-    data_key = category.nil? ? source : "#{category.id}#{source}"
-    return @data[data_key] if @data.has_key? data_key
-
-    if source.present? && CategoryDataReader.respond_to?(source)
-      result = CategoryDataReader.send(source, self, category)
-      @data[data_key] = result
-    end
   end
 
   def all_census_data

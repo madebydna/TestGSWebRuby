@@ -215,7 +215,8 @@ class SchoolRating < ActiveRecord::Base
   end
 
   private
-    def comments_word_count
-      errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.split.size < 15
-    end
+
+  def comments_word_count
+    errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.blank? || comments.split.size < 15
+  end
 end

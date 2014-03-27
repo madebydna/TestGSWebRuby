@@ -49,6 +49,24 @@ class ApplicationController < ActionController::Base
     state_abbreviation
   end
 
+  def redirect_tab_urls
+    if params[:tab] == 'reviews'
+      redirect_to path_w_query_string 'tab', 'reviews'
+    elsif ['test-scores', 'ratings', 'college-readiness', 'climate'].include? params[:tab]
+      redirect_to path_w_query_string 'tab', 'quality'
+    elsif ['demographics', 'teachers', 'programs-culture', 'programs-resources', 'extracurriculars', 'culture', 'enrollment'].include? params[:tab]
+      redirect_to path_w_query_string 'tab', 'details'
+    end
+  end
+
+  def path_w_query_string (do_not_append, page_name)
+    url = Addressable::URI.parse(request.original_url)
+    url.path = url.path + page_name + '/'
+    url.query_values = url.query_values.except(do_not_append)
+    url.query_values = nil unless url.query_values.present?
+    url.to_s
+  end
+
   def require_state
     @state = state_param
 
@@ -69,6 +87,8 @@ class ApplicationController < ActionController::Base
 
   def require_school
     @school = find_school if params[:schoolId].to_i > 0 || params[:school_id].to_i > 0
+
+    @school.extend SchoolProfileDataDecorator
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end

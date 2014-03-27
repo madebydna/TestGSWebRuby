@@ -4,12 +4,17 @@ FactoryGirl.define do
     sequence(:value_float)
   end
 
-  factory :census_data_district_value, class: CensusDataSchoolValue do
+  factory :census_data_district_value, class: CensusDataDistrictValue do
     sequence(:value_float)
   end
 
-  factory :census_data_state_value, class: CensusDataSchoolValue do
+  factory :census_data_state_value, class: CensusDataStateValue do
     sequence(:value_float)
+  end
+
+  factory :census_data_type, class: CensusDataType do
+    id 9
+    description 'ethnicity'
   end
 
   factory :census_data_set, class: CensusDataSet do

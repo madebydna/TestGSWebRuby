@@ -24,7 +24,7 @@ class CategoryData < ActiveRecord::Base
   end
 
   def possible_sources
-    CategoryDataReader.sources
+    SchoolProfileDataReader.data_readers
   end
 
 end

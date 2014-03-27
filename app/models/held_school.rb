@@ -6,6 +6,8 @@ class HeldSchool < ActiveRecord::Base
 
   attr_accessible :school_id, :state, :notes
 
+  validates_presence_of :school_id
+
   def school
     School.on_db(state.downcase.to_sym).find school_id rescue nil
   end
