@@ -56,7 +56,8 @@ class CensusDataReader < SchoolProfileDataReader
 
   # Returns hash of data type descriptions to school values
   #
-  #    reader.census_data_points        #=> { "ethnicity" => 0.0,
+  #    reader.data_type_descriptions_to_school_values_map
+  #                                     #=> { "ethnicity" => 0.0,
   #                                           "enrollment" => 130.0,
   #                                           "head official name" => "LINDA BROOKS" }
   def data_type_descriptions_to_school_values_map

@@ -45,7 +45,7 @@ describe CensusDataReader do
       category.stub(:keys).and_return %w[a b c]
     end
 
-    it 'should based on config data' do
+    it 'should sort based on config data' do
       hash =  {
         'b' => nil,
         'a' => nil,
@@ -112,7 +112,7 @@ describe CensusDataReader do
       expect(hash).to eq(expected)
     end
 
-    it 'should not remove any data sets if every all have non-null breakdown' do
+    it 'should not remove any data sets if they all have non-null breakdown' do
       hash = {
         'a' => [
           non_null_breakdown_data_set,
@@ -290,7 +290,7 @@ describe CensusDataReader do
 
   describe '#data_type_descriptions_to_school_values_map' do
 
-    it 'sljdf' do
+    it 'should build a hash with correct keys and values' do
       data_set_with_school_and_state_values = FactoryGirl.build(:census_data_set,
         census_data_school_values: FactoryGirl.build_list(:census_data_school_value, 1, value_float: 10),
         census_data_state_values: FactoryGirl.build_list(:census_data_state_value, 1, value_float: 10),
