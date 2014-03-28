@@ -76,7 +76,7 @@ describe 'City Hub Page', js: true do
     it 'shows the carousel' do
       cycle_function = page.evaluate_script("$('.cycle-slideshow').cycle")
       expect(cycle_function).to_not be_nil
-      expect(page).to have_css('.cycle-slide', count: 33)
+      expect(page).to have_css('.cycle-slide')
     end
   end
 end

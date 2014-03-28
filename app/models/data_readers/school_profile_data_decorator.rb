@@ -1,3 +1,5 @@
+require_relative './census_data_reader.rb'
+
 module SchoolProfileDataDecorator
 
   def self.extended(base)

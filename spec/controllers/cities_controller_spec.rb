@@ -3,6 +3,7 @@ require 'spec_helper'
 describe CitiesController do
   before(:each) do
     HubCityMapping.destroy_all
+    CollectionConfig.destroy_all
     FactoryGirl.create(:hub_city_mapping)
   end
 
@@ -29,6 +30,12 @@ describe CitiesController do
   end
 
   describe 'GET partner' do
+    before(:each) do
+      FactoryGirl.create(:community_sponsor_collection_config_page_name)
+      FactoryGirl.create(:community_sponsor_collection_config_data)
+      FactoryGirl.create(:sponsor_page_acro_name_configs)
+    end
+
     it_behaves_like 'a default cities controller action', :partner
   end
 
