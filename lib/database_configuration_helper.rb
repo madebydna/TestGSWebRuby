@@ -9,6 +9,14 @@ class DatabaseConfigurationHelper
     legacy_database_config_hashes.map{ |hash| hash['database'] }.uniq
   end
 
+  def self.database_config_for(database, rails_environment)
+    database_config_hashes = ActiveRecord::Base.configurations[rails_environment].values
+    database_config = database_config_hashes.select do |config|
+      config.is_a?(Hash) && config['database'] == database
+    end.first
+    database_config
+  end
+
   def self.legacy_database_names(rails_environment)
     legacy_database_names_with_suffix = self.legacy_database_names_with_suffix(rails_environment)
     legacy_database_names_with_suffix.map { |name| name.sub "_#{rails_environment}", '' }

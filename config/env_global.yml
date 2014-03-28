@@ -15,4 +15,4 @@ facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr_url: 'http://dev.greatschools.org:8580'
 global_expires_in: 10
 cdn_host: 'http://www.gscdn.org'
-optimizely_key: "394711409"
+optimizely_key: "384121511"

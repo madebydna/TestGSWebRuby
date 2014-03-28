@@ -100,7 +100,7 @@ describe RatingsHelper do
     #There is no description
     DataDescription.stub(:lookup_table).and_return({})
 
-    expect(ratings_helper.construct_city_ratings).to be_empty
+    expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
 
   #There are rating results but there is no configuration. Hence expect empty city rating.
@@ -113,7 +113,7 @@ describe RatingsHelper do
     #There is no description
     DataDescription.stub(:lookup_table).and_return({})
 
-    expect(ratings_helper.construct_city_ratings).to be_empty
+    expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
 
   #There is configuration but there are no rating results. Hence expect empty city rating.
@@ -126,7 +126,7 @@ describe RatingsHelper do
     #There is no description
     DataDescription.stub(:lookup_table).and_return({})
 
-    expect(ratings_helper.construct_city_ratings).to be_empty
+    expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
 
   #There is configuration and rating results.
@@ -144,13 +144,13 @@ describe RatingsHelper do
     #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
     TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 201))
 
-    expect(ratings_helper.construct_city_ratings).to eq({"overall_rating"=>"1",
+    expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1",
                                                                                 "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
   end
 
   #There is configuration and rating results.But there is no result for overall rating. Hence expect empty city rating.
   it 'should return empty city rating' do
-    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary"}}')
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary","default_methodology_url": "some_url"}}')
     ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
     rating_results = build_rating_results_for_city_no_overall  #The rating results do not have an overall rating
 
@@ -159,7 +159,26 @@ describe RatingsHelper do
     #There is a description
     DataDescription.stub(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
 
-    expect(ratings_helper.construct_city_ratings).to eq({})
+    expect(ratings_helper.construct_city_ratings(school)).to eq({})
+  end
+
+  #There is configuration and rating results.But there is no result for overall rating. Hence expect empty city rating.
+  it 'should return methodology' do
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary","default_methodology_url": "some_url"}}')
+    ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
+    rating_results = build_rating_results_for_city  #The rating results do not have an overall rating
+
+    ratings_helper = RatingsHelper.new(rating_results,ratings_config)
+
+    #There is a description
+    DataDescription.stub(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
+
+    #Do this to get the display_name.
+    #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
+    TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 201))
+
+    expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1","methodology_url" => "some_url",
+                                                                 "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
   end
 
   def build_rating_results_for_city
@@ -248,6 +267,38 @@ describe RatingsHelper do
     end
 
     rating_results
+  end
+
+  it 'should return empty methodology url' do
+    #There is no methodology_url config
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary"}}')
+    ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
+
+    ratings_helper = RatingsHelper.new({},ratings_config)
+
+    expect(ratings_helper.get_methodology_url(city_rating_config, school)).to be_empty
+  end
+
+  it 'should return default methodology url' do
+    #There is a default and school specific methodology config. But the school does not have data.Hence default should be used.
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary","default_methodology_url": "default_url","methodology_url_key": "some_key"}}')
+    ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
+
+    ratings_helper = RatingsHelper.new({},ratings_config)
+
+    expect(ratings_helper.get_methodology_url(city_rating_config, school)).to eq("default_url")
+  end
+
+  let(:school_metadata) { Hashie::Mash.new(some_key: "specific_url")}
+
+  it 'should return school specific methodology url' do
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary","default_methodology_url": "default_url","methodology_url_key": "some_key"}}')
+    ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
+
+    ratings_helper = RatingsHelper.new({},ratings_config)
+    school.stub(:school_metadata).and_return(school_metadata)
+
+    expect(ratings_helper.get_methodology_url(city_rating_config, school)).to eq("specific_url")
   end
 
 end
