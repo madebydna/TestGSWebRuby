@@ -1,0 +1,52 @@
+[
+  {
+    "name": "sample_data_helper_test",
+    "db": "_ca",
+    "table": "school",
+    "data": [
+      {
+        "id": 1,
+        "district_id": 1,
+        "state_id": "01611190130229",
+        "city": "Alameda",
+        "county": "Alameda",
+        "FIPScounty": 6001,
+        "fax": "(510) 521-4740",
+        "home_page_url": "http://ahs.alameda.k12.ca.us/",
+        "lat": 37.764233,
+        "level": "9,10,11,12",
+        "level_code": "h",
+        "lon": -122.247757,
+        "name": "Alameda High School",
+        "nces_code": "060177000041",
+        "phone": "(510) 337-7022",
+        "state": "CA",
+        "street": "2201 Encinal Avenue",
+        "type": "public",
+        "subtype": "secondary",
+        "preschool_subtype": "",
+        "zipcode": "94501",
+        "zipcentroid": 0,
+        "active": 1,
+        "mail_street": "2201 Encinal Avenue",
+        "mail_city": "Alameda",
+        "mail_zipcode": "94501",
+        "accreditation": null,
+        "association": null,
+        "affiliation": null,
+        "created": "2005-01-01 00:00:00 -0800",
+        "modified": "2013-05-22 16:44:04 -0700",
+        "modifiedBy": "Load Addresses,Lookup Lat/Lons where needed using external service;enewton,NCES_Load_2011",
+        "authorizer_id": null,
+        "operator_id": null,
+        "vendor_id": null,
+        "street_line_2": "",
+        "manual_edit_by": "enewton",
+        "manual_edit_date": "2009-03-20 00:00:00 -0700",
+        "notes": "",
+        "overview_title": null,
+        "new_profile_school": 2
+      }
+    ]
+  }
+]

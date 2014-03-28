@@ -1,0 +1,146 @@
+[
+  {
+    "name": "census/an_example_sample_data",
+    "db": "_ca",
+    "table": "census_data_set",
+    "data": [
+      {
+        "id": 2,
+        "year": 2005,
+        "grade": null,
+        "data_type_id": 17,
+        "breakdown_id": null,
+        "active": 0,
+        "level_code": "p",
+        "subject_id": null
+      },
+      {
+        "id": 6,
+        "year": 2006,
+        "grade": null,
+        "data_type_id": 18,
+        "breakdown_id": null,
+        "active": 0,
+        "level_code": "",
+        "subject_id": null
+      },
+      {
+        "id": 8,
+        "year": 2004,
+        "grade": null,
+        "data_type_id": 45,
+        "breakdown_id": null,
+        "active": 0,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 9,
+        "year": 2004,
+        "grade": null,
+        "data_type_id": 46,
+        "breakdown_id": null,
+        "active": 0,
+        "level_code": "e,m,h",
+        "subject_id": null
+      }
+    ]
+  },
+  {
+    "name": "census/an_example_sample_data",
+    "db": "_ca",
+    "table": "census_data_school_value",
+    "data": [
+      {
+        "id": 1,
+        "school_id": 5848,
+        "data_set_id": 2,
+        "value_float": 464.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 2,
+        "school_id": 611,
+        "data_set_id": 2,
+        "value_float": 401.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 3,
+        "school_id": 6359,
+        "data_set_id": 2,
+        "value_float": 262.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 4,
+        "school_id": 10967,
+        "data_set_id": 2,
+        "value_float": 612.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 5,
+        "school_id": 87,
+        "data_set_id": 2,
+        "value_float": 559.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 6,
+        "school_id": 13627,
+        "data_set_id": 2,
+        "value_float": 78.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 7,
+        "school_id": 7228,
+        "data_set_id": 2,
+        "value_float": 695.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 8,
+        "school_id": 4102,
+        "data_set_id": 2,
+        "value_float": 355.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 9,
+        "school_id": 12283,
+        "data_set_id": 2,
+        "value_float": 184.0,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      }
+    ]
+  }
+]
