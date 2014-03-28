@@ -1,6 +1,10 @@
 <div class="image-bg-scale">
+  <div class="img-container-mobile">
+    <div style="background-image: url('<%= @hero_image_mobile %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
+  </div>
+
   <div class="img-container">
-    <%= image_tag(@hero_image) %>
+    <div style="background-image: url('<%= @hero_image %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
   </div>
   <div class="limit_width_1200">
     <div class="content-centered">
