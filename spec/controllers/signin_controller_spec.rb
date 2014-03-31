@@ -123,5 +123,123 @@ describe SigninController do
     end
   end
 
+  describe '#facebook_connect' do
+    it 'redirects to a facebook uri' do
+      get :facebook_connect
+      redirect_uri = 'https://graph.facebook.com/oauth/authorize' +
+                     '?client_id=178930405559082&' +
+                     'redirect_uri=http%3A%2F%2Ftest.host%2Fgsr%2Fsession%2Ffacebook_callback%2F&scope=email'
+      expect(response).to redirect_to(redirect_uri)
+    end
+  end
 
+  describe '#facebook_callback' do
+    def stub_fb_login_fail
+      controller.stub(:facebook_login) { [nil, double('error')] }
+    end
+
+    def stub_fb_login_success
+      controller.stub(:current_user) { double('user', id: 1, auth_token: 'foo') }
+      controller.stub(:facebook_login) { [double('user', id: 1, auth_token: 'foo'), nil] }
+    end
+
+    context 'without an access code' do
+      before(:each) do
+        FacebookAccess.stub(:facebook_code_to_access_token) { nil } # make it so the method returns the code or nil
+      end
+
+      it 'logs and flashes an error' do
+        error_message = 'Could not log in with Facebook.'
+        Rails.logger.should_receive(:debug).at_least(1).times
+        get :facebook_callback
+        expect(flash[:error][0]).to eq(error_message)
+      end
+
+      it 'redirects to the signin url' do
+        get :facebook_callback
+        expect(response).to redirect_to(signin_path + '/')
+      end
+    end
+
+    context 'with an access code' do
+      before(:each) do
+        FacebookAccess.stub(:facebook_code_to_access_token) { 'foobar' }
+      end
+
+      it 'executes deferred actions' do
+        stub_fb_login_fail
+        controller.should_receive(:executed_deferred_action).and_return(nil)
+        get :facebook_callback, code: 'fb-code'
+      end
+
+      context 'logging user into facebook' do
+        it 'logs in the user' do
+          controller.stub(:facebook_login) { [double('user'), nil] }
+          controller.should_receive(:log_user_in)
+          get :facebook_callback, code: 'fb-code'
+        end
+      end
+
+      context 'error from loggin into facebook' do
+        it 'does not log in the user' do
+          stub_fb_login_fail
+          controller.should_not_receive(:log_user_in)
+          get :facebook_callback, code: 'fb-code'
+        end
+      end
+
+      describe 'redirecting' do
+        context 'when deferred actions redirect' do
+          it 'delegates the redirect to the deferred action' do
+            stub_fb_login_fail
+            allow(controller).to receive(:executed_deferred_action) do
+              controller.redirect_to city_path('michigan', 'detroit')
+            end
+
+            get :facebook_callback, code: 'fb-code'
+            expect(response).to redirect_to(city_path('michigan', 'detroit'))
+          end
+        end
+
+        context 'without deferred action redirects' do
+          context 'after visiting a school reviews page' do
+            it 'redirects to the overview path for that school' do
+              stub_fb_login_fail
+              controller.stub(:overview_page_for_last_school) { '/overview-url-double' }
+              get :facebook_callback, code: 'fb-code'
+              expect(response).to redirect_to('/overview-url-double')
+            end
+          end
+
+          context 'with a redirect_uri cookie set' do
+            it 'redirects to the redirect_uri' do
+              stub_fb_login_fail
+              cookies[:redirect_uri] = '/cookie-redirect-path'
+              controller.stub(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
+              get :facebook_callback, code: 'fb-code'
+              expect(response).to redirect_to('/cookie-redirect-path')
+            end
+          end
+
+          context 'logged in' do
+            it 'redirects to the account page' do
+              stub_fb_login_success
+              controller.stub(:overview_page_for_last_school) { nil }
+              get :facebook_callback, code: 'fb-code'
+              expect(response).to redirect_to('/account/')
+            end
+          end
+
+          context 'not logged in' do
+            it 'redirects to the home page' do
+              stub_fb_login_fail
+              controller.stub(:overview_page_for_last_school) { nil }
+              get :facebook_callback, code: 'fb-code'
+              expect(response).to redirect_to('/index.page')
+            end
+          end
+        end
+      end
+    end
+  end
 end

@@ -76,7 +76,7 @@ class SigninController < ApplicationController
 
     if logged_in? && redirect_url.present?
       executed_deferred_action
-      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !already_redirecting?
+      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
     else
       redirect_to user_profile_or_home
     end
@@ -94,7 +94,7 @@ class SigninController < ApplicationController
     unless access_token
       Rails.logger.debug('Could not log in with Facebook.')
       flash_error 'Could not log in with Facebook.'
-      redirect_to signin_url
+      redirect_to signin_path
       return nil
     end
 
@@ -104,7 +104,13 @@ class SigninController < ApplicationController
     log_user_in user if error.nil?
 
     executed_deferred_action
-    redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
+    unless already_redirecting?
+      if cookies[:redirect_uri]
+        city_hub_page = URI.decode(cookies[:redirect_uri])
+        delete_cookie :redirect_uri
+      end
+      redirect_to (city_hub_page || overview_page_for_last_school || user_profile_or_home)
+    end
   end
 
   protected
