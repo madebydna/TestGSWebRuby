@@ -2,6 +2,7 @@ class CitiesController < ApplicationController
   include SeoHelper
   before_filter :set_city_state
   before_filter :set_hub_params
+  before_filter :set_login_redirect
 
   def show
     hub_city_mapping = mapping
@@ -166,4 +167,9 @@ class CitiesController < ApplicationController
     def set_hub_params
       @hub_params = { state: @state[:long], city: @city }
     end
+
+    def set_login_redirect
+      cookies[:redirect_uri] = { value: request.path, expires: 10.minutes.from_now }
+    end
 end
+
