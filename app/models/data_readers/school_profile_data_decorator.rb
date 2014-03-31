@@ -31,7 +31,7 @@ module SchoolProfileDataDecorator
   end
 
   # Methods exposed as "data readers" to rails admin UI
-  def data_readers
+  def self.data_readers
     %w[
       census_data
       cta_prek_only
