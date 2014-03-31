@@ -271,10 +271,9 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   }
 }
 
-
 // Media Queries //
 @media only screen and (max-width: 990px) {
-  .scale-image {
+  .scale-image div {
     width: 100%;
   }
   .image-bg-scale {
@@ -406,6 +405,10 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
 }
 
 @media only screen and (max-width: 480px) {
+  .scale-image {
+    display: none;
+  }
+
   .sponsor-bar img {
     width: 20%;
   }
