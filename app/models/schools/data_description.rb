@@ -9,7 +9,7 @@ class DataDescription < ActiveRecord::Base
 
   def self.lookup_table
     Rails.cache.fetch('data_description/all_key_values', expires_in: 1.hour) do
-      all.each_with_object({}) { |description, hash| hash[description["data_key"]] = description["value"] }
+      all.each_with_object({}) { |description, hash| hash[[description["state"],description["data_key"]]] = description["value"] }
     end
   end
 

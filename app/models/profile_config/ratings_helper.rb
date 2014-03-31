@@ -7,7 +7,7 @@ class RatingsHelper
     @results = results
   end
 
-  def construct_state_ratings
+  def construct_state_ratings(school)
     state_rating_configuration = ratings_config.state_rating_configuration
     state_rating_data_type_ids = ratings_config.state_rating_data_type_ids
 
@@ -22,7 +22,7 @@ class RatingsHelper
       if (state_rating_data_type_ids.include? test_data_set.data_type_id)
         #Build a hash of the data_keys to the rating descriptions.
         state_ratings_results = {'overall_rating' => test_data_set.school_value_text,
-                                 'description' => description_hash[state_rating_configuration['overall']['description_key']]}
+                                 'description' => description_hash[[school.state.upcase,state_rating_configuration['overall']['description_key']]]}
         break
       end
     end
@@ -50,7 +50,7 @@ class RatingsHelper
 
         if test_data_set.data_type_id == city_rating_configuration['overall']['data_type_id']
           city_ratings_results['overall_rating'] = test_data_set.school_value_text
-          city_ratings_results['description'] = description_hash[city_rating_configuration['overall']['description_key']]
+          city_ratings_results['description'] = description_hash[[school.state.upcase,city_rating_configuration['overall']['description_key']]]
           city_ratings_results['city_rating_label'] = test_data_set.display_name
         else
 
@@ -83,32 +83,36 @@ class RatingsHelper
   def construct_GS_ratings(school)
     school_rating_value = school.school_metadata.overallRating
     return {} if school_rating_value.nil?
-
     gs_rating_configuration = ratings_config.gs_rating_configuration
     gs_rating_data_type_ids = ratings_config.gs_rating_data_type_ids
 
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
 
-    #Hash to hold the city ratings results
+    #Hash to hold the gs ratings results
     gs_ratings_results ={}
     #Nested hash to hold the rating breakdowns.
     gs_sub_rating_hash ={}
-
     #Put that overall GS rating and description in the hash, since the overall GS rating is read from the metadata table.
     if school_rating_value.present? && gs_rating_configuration
-      gs_ratings_results = {'overall_rating' => school_rating_value, 'description' => description_hash[gs_rating_configuration['overall']['description_key']]}
+      gs_ratings_results = {'overall_rating' => school_rating_value, 'description' => description_hash[[nil,gs_rating_configuration['overall']['description_key']]]}
     end
 
     #If configuration exists then loop over the results
     if !gs_rating_data_type_ids.empty?
       results.each do |test_data_set|
         if (gs_rating_data_type_ids.include? test_data_set.data_type_id)
-
           #Loop over the configuration to put the ratings breakdowns in the results.
           gs_rating_configuration['rating_breakdowns'].each do |key, config|
             if (test_data_set.data_type_id == config['data_type_id'] && (!test_data_set.school_value_float.nil?))
-              gs_sub_rating_hash[config['label']] = test_data_set.school_value_float.round
+
+              res_hash = {'rating' => test_data_set.school_value_float.round}
+
+              #get the sub-rating descriptions
+              sub_rating_description = get_sub_rating_descriptions(config, school, description_hash)
+              res_hash['description'] = sub_rating_description if sub_rating_description.present?
+
+              gs_sub_rating_hash[config['label']] = res_hash
             end
           end
         end
@@ -123,7 +127,7 @@ class RatingsHelper
     gs_ratings_results
   end
 
-  def construct_preK_ratings
+  def construct_preK_ratings(school)
     preK_rating_configuration = ratings_config.prek_rating_configuration
     preK_rating_data_type_ids = ratings_config.prek_rating_data_type_ids
 
@@ -139,7 +143,7 @@ class RatingsHelper
         if (preK_rating_data_type_ids.include? test_data_set.data_type_id)
           if preK_rating_configuration['star_rating'] && test_data_set.data_type_id == preK_rating_configuration['star_rating']['data_type_id']
             preK_ratings_results['star_rating'] = test_data_set.school_value_float.round
-            preK_ratings_results['description'] = description_hash[preK_rating_configuration['star_rating']['description_key']]
+            preK_ratings_results['description'] = description_hash[[school.state.upcase,preK_rating_configuration['star_rating']['description_key']]]
             preK_ratings_results['preK_rating_label'] = test_data_set.display_name
           end
         end
@@ -162,6 +166,16 @@ class RatingsHelper
       methodology_url = city_rating_configuration['overall']['default_methodology_url']
     end
     methodology_url
+  end
+
+  def get_sub_rating_descriptions(gs_rating_configuration, school, description_hash)
+    if gs_rating_configuration && !gs_rating_configuration['description_key'].blank?
+        description ||= description_hash[[nil,gs_rating_configuration['description_key']]]
+    end
+    if gs_rating_configuration && !gs_rating_configuration['footnote_key'].blank?
+       description += description_hash[[school.state.upcase,gs_rating_configuration['footnote_key']]]
+    end
+    description
   end
 
 end
