@@ -33,7 +33,7 @@ module SchoolProfileDataDecorator
   end
 
   # Methods exposed as "data readers" to rails admin UI
-  def data_readers
+  def self.data_readers
     %w[
       census_data
       cta_prek_only
@@ -57,7 +57,7 @@ module SchoolProfileDataDecorator
     data_key = category.nil? ? source : "#{category.id}#{source}"
     return @data[data_key] if @data.has_key? data_key
 
-    if source.present? && data_readers.include?(source)
+    if source.present? && SchoolProfileDataDecorator.data_readers.include?(source)
       result = self.send source, category
       @data[data_key] = result
     end

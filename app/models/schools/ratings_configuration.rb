@@ -13,6 +13,7 @@ class RatingsConfiguration
     city_rating_configuration, state_rating_configuration, gs_rating_configuration, prek_rating_configuration = nil
     rating_configuration = SchoolProfileConfiguration.for_state(state)
 
+
     rating_configuration.each do |config|
       if config.configuration_key == 'city_rating'
         city_rating_configuration = JSON.parse(config.value)
