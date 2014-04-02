@@ -33,7 +33,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
     get '/community/registrationConfirm.page', as: :verify_email
-    get '/:state/', constraints: { state: States.any_state_name_regex }, as: :state
     get '/:state/:city/schools/', constraints: { state: States.any_state_name_regex }, as: :school_search
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
@@ -93,7 +92,13 @@ LocalizedProfiles::Application.routes.draw do
     get '/join', :to => 'signin#new_join', :as => :join
     get '/gsr/login', :to => 'signin#new', :as => :signin
 
-    # Routes for city page
+    # State page
+    scope '/:state', as: :state, constraints: {
+        state: States.any_state_name_regex,
+    } do
+      get '', to: 'states#show'
+    end
+
     scope '/:state/:city', as: :city, constraints: {
         state: States.any_state_name_regex,
     } do
@@ -110,6 +115,8 @@ LocalizedProfiles::Application.routes.draw do
         get '/partner', to: 'cities#partner', as: :partner
       end
     end
+
+    # Routes for city page
 
     # Routes for school profile pages
     scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {

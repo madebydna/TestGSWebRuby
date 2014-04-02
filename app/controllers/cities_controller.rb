@@ -29,7 +29,7 @@ class CitiesController < ApplicationController
       @sponsor = CollectionConfig.city_hub_sponsor(collection_configs)
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
-      @articles = CollectionConfig.featured_articles(collection_configs)
+      @articles = CollectionConfig.city_featured_articles(collection_configs)
       @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
@@ -166,10 +166,6 @@ class CitiesController < ApplicationController
 
     def set_hub_params
       @hub_params = { state: @state[:long], city: @city }
-    end
-
-    def set_login_redirect
-      cookies[:redirect_uri] = { value: request.path, expires: 10.minutes.from_now }
     end
 end
 

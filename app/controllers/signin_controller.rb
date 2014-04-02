@@ -60,7 +60,14 @@ class SigninController < ApplicationController
       end
 
       executed_deferred_action
-      redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
+
+      unless already_redirecting?
+        if cookies[:redirect_uri]
+          city_hub_page = URI.decode(cookies[:redirect_uri])
+          delete_cookie :redirect_uri
+        end
+        redirect_to (city_hub_page || overview_page_for_last_school || user_profile_or_home)
+      end
     end
   end
 

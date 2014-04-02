@@ -1,14 +1,14 @@
 <div class="image-bg-scale">
   <div class="img-container-mobile">
-    <div style="background-image: url('<%= @hero_image_mobile %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
+    <div style="background-image: url('<%= hero_image_mobile %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
   </div>
 
   <div class="img-container">
-    <div style="background-image: url('<%= @hero_image %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
+    <div style="background-image: url('<%= hero_image %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
   </div>
   <div class="limit_width_1200">
     <div class="content-centered">
-      <div class="city-hubs-bg tal">
+      <div class="hub-hero-bg tal">
           <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <div style='overflow: auto;'>
               <div class="search-hero-heading">
@@ -84,15 +84,17 @@
           </div>
 
           <div class="school-breakdown">
-            <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
-            <% breakdown_results.each do |text, data| %>
-              <% unless data.nil? %>
-                <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
-                  <div class='mrs'><%= text %></div>
-                  <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
-                </button>
-              <% else %>
-                <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
+            <% unless defined?(state_page) %>
+              <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
+              <% breakdown_results.each do |text, data| %>
+                <% unless data.nil? %>
+                  <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
+                    <div class='mrs'><%= text %></div>
+                    <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
+                  </button>
+                <% else %>
+                    <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
+                <% end %>
               <% end %>
             <% end %>
           </div>

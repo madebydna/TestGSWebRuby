@@ -93,6 +93,22 @@ describe ApplicationHelper do
       end
     end
 
+    context 'with a state page' do
+      before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
+      let(:hub_params) { { state: 'indiana' } }
+      let(:school) { nil }
+
+      it 'displays state based on the hub params' do
+        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(result).to eq('Indiana')
+      end
+
+      it 'sets cookies for the state based off of hub params' do
+        helper.topnav_formatted_title(school, hub_params, cookies)
+        expect(cookies[:hubState]).to eq('IN')
+      end
+    end
+
     context 'with city pages' do
       before(:each) { FactoryGirl.create(:hub_city_mapping, city: 'detroit', state: 'MI') }
       let(:school) { nil }

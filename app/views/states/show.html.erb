@@ -1,0 +1,17 @@
+<%= render 'nav/topnav', hub_params: @hub_params %>
+
+<%= render 'shared/search_hero', collection_nickname: @collection_nickname,
+                          collection_id: @collection_id,
+                          state: @state,
+                          hero_image: @hero_image,
+                          hero_image_mobile: @hero_image_mobile,
+                          state_page: true %>
+
+<%= render 'content_module', content_modules: @content_modules %>
+
+<div class="limit_width_1200">
+  <%= render 'featured_articles', articles: @articles, state: @state %>
+  <%= render 'partners', partners: @partners %>
+</div>
+
+<%= render 'footer' %>

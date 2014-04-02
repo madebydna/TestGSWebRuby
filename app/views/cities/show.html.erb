@@ -10,10 +10,12 @@
 <%= render 'shared/no_school_alert' %>
 <%= render 'sponsor_bar', sponsor: @sponsor %>
 
-  <%= render 'search_hero', collection_nickname: @collection_nickname,
+<%= render 'shared/search_hero', collection_nickname: @collection_nickname,
                             collection_id: @collection_id,
                             state: @state,
-                            breakdown_results: @breakdown_results %>
+                            breakdown_results: @breakdown_results,
+                            hero_image: @hero_image,
+                            hero_image_mobile: @hero_image_mobile %>
 
 <div class="limit_width_1200">
   <%= render 'choose_a_school', choose_school: @choose_school %>

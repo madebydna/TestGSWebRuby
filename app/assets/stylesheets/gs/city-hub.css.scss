@@ -39,14 +39,14 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   width: 100%;
 }
 
-.city-hubs-bg {
+.hub-hero-bg {
   margin-top: 100px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 3px;
   width: 940px;
   margin: auto;
   padding: 30px;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .search-hero-heading {
@@ -271,6 +271,21 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   }
 }
 
+.js-content-modules {
+  background-color: #ddd;
+}
+
+.js-module-expand {
+  overflow: hidden;
+  height: 71px;
+}
+
+p.view-more {
+  cursor: pointer;
+  margin-top: 41px;
+  margin-bottom: 34px;
+}
+
 // Media Queries //
 @media only screen and (max-width: 990px) {
   .scale-image div {
@@ -282,7 +297,7 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   .content-centered {
     top: 0;
   }
-  .city-hubs-bg {
+  .hub-hero-bg {
     width: 100%;
     border-radius: none;
   }
@@ -415,6 +430,11 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   .search-bar {
     left: -10px;
     width: 100%;
+  }
+
+  .js-content-modules > div {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 

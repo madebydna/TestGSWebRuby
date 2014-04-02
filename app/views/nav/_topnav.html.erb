@@ -21,26 +21,38 @@
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <%- if hub_params.present? %>
-                        <li>
-                            <%= link_to "#{hub_params[:city]} Home", city_url(hub_params), style: 'text-transform:capitalize;' %>
-                        </li>
-                        <li>
-                            <%= link_to 'Choosing a School', city_choosing_schools_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to 'Education Community', city_education_community_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to 'Enrollment Information', city_enrollment_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to 'Events', city_events_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
-                                <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
+                            <% if hub_params[:city] %>
+                                <li>
+                                    <%= link_to "#{hub_params[:city]} Home", city_url(hub_params), style: 'text-transform:capitalize;' %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Choosing a School', city_choosing_schools_url(hub_params) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Education Community', city_education_community_url(hub_params) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Enrollment Information', city_enrollment_url(hub_params) %>
+                                </li>
+                                <li>
+                                    <%= link_to 'Events', city_events_url(hub_params) %>
+                                </li>
+                                <li>
+                                    <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
+                                        <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
+                                    <% end %>
+                                </li>
+                            <% else %>
+                                <li>
+                                    <%= link_to "#{hub_params[:state]} Home", state_url(hub_params), style: 'text-transform:capitalize;' %>
+                                </li>
+                                <li>
+                                    <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
+                                        <span style="text-transform:capitalize;"><%= hub_params[:state].titleize %></span>?
+                                    <% end %>
+                                </li>
                             <% end %>
-                        </li>
+
                         <% end %>
 
                     </ul>
