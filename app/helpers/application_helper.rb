@@ -227,8 +227,12 @@ module ApplicationHelper
     state_short = nil
 
     if hub_params
-      city = hub_params[:city].titleize
-      state_short = States.abbreviation(hub_params[:state]).upcase
+      if hub_params[:city]
+        city = hub_params[:city].titleize
+        state_short = States.abbreviation(hub_params[:state]).upcase
+      else
+        state_short = hub_params[:state].titleize
+      end
     end
 
     if school
@@ -248,13 +252,15 @@ module ApplicationHelper
     end
 
 
-    cookies[:hubState] = state_short
-    cookies[:hubCity] = city
+    cookies[:hubState] = States.abbreviation(state_short).upcase if state_short
+    cookies[:hubCity] = city if city
 
-    if city.nil? || state_short.nil?
-      nil
-    else
+    if !city.nil? && !state_short.nil?
       "#{city}, #{state_short}"
+    elsif !state_short.nil?
+      state_short
+    else
+      nil
     end
   end
 end

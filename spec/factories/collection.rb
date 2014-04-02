@@ -12,4 +12,11 @@ FactoryGirl.define do
     state 'mi'
     active 1
   end
+
+  factory :state_hub_mapping, class: HubCityMapping do
+    collection_id 6
+    city nil
+    state 'indiana'
+    active 1
+  end
 end

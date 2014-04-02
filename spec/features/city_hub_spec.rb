@@ -1,11 +1,20 @@
 require 'spec_helper'
 
 describe 'City Hub Page', js: true do
-  let(:city_page_url) { 'http://localhost:3000/michigan/detroit' }
-  before(:each) do
-    CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
-    visit city_page_url
+  let(:city_page_url) { '/michigan/detroit' }
+  before(:all) do
+    CollectionConfig.destroy_all
+    FactoryGirl.create(:important_events_collection_config)
+    FactoryGirl.create(:city_hub_sponsor_collection_config)
+    FactoryGirl.create(:feature_articles_collection_config)
+    FactoryGirl.create(:city_hub_partners_collection_config)
+    FactoryGirl.create(:announcement_collection_config)
+    FactoryGirl.create(:show_announcement_collection_config)
+    FactoryGirl.create(:choose_a_school_collection_configs)
+    FactoryGirl.create(:collection_nickname)
   end
+
+  before(:each) { visit city_page_url }
 
   describe 'search' do
     it 'searches and redirects to java results' do
@@ -44,13 +53,6 @@ describe 'City Hub Page', js: true do
       expect(page).to have_css('.success-block')
       expect(page).to have_css('span', text: 'ANNOUNCEMENT', count: 1)
       expect(page).to have_link 'Learn More'
-    end
-  end
-
-  describe 'recent reviews section' do
-    it 'show two most recent reviews for a city hub' do
-      expect(page).to have_css('button.js-button-link', text: 'Review Your School')
-      expect(page).to have_css('.recent-review', count: 2)
     end
   end
 

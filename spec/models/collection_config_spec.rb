@@ -32,14 +32,14 @@ end
 describe CollectionConfig do
   before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
 
-  describe '.featured_articles' do
+  describe '.city_featured_articles' do
     it_behaves_like 'it rejects empty configs' do
-      let(:method) { :featured_articles }
+      let(:method) { :city_featured_articles }
     end
 
     it_behaves_like 'it fails with an error' do
       let(:key) { CollectionConfig::FEATURED_ARTICLES_KEY }
-      let(:method) { :featured_articles }
+      let(:method) { :city_featured_articles }
     end
 
     context 'valid json string' do
@@ -47,13 +47,13 @@ describe CollectionConfig do
 
       it 'parses the articles and returns an array' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::FEATURED_ARTICLES_KEY)
-        result = CollectionConfig.featured_articles(collection_configs)
+        result = CollectionConfig.city_featured_articles(collection_configs)
 
         expect(result).to be_an_instance_of(Array)
       end
       it 'adds the cdn host to each articleImagePath' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::FEATURED_ARTICLES_KEY)
-        result = CollectionConfig.featured_articles(collection_configs)
+        result = CollectionConfig.city_featured_articles(collection_configs)
 
         expect(result.first[:articleImagePath]).to start_with(ENV_GLOBAL['cdn_host'])
       end
@@ -124,7 +124,7 @@ describe CollectionConfig do
 
     context 'valid json string' do
       it 'parses the choose school string and returns a hash' do
-        FactoryGirl.create(:school_collection_config)
+        FactoryGirl.create(:choose_a_school_collection_configs)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_CHOOSE_A_SCHOOL_KEY)
         result = CollectionConfig.city_hub_choose_school(collection_configs)
 
@@ -396,6 +396,111 @@ describe CollectionConfig do
       end
       it 'returns nil' do
         result = CollectionConfig.choosing_page_links(1)
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe '.content_modules' do
+    context 'by default' do
+      before(:each) { FactoryGirl.create(:state_hub_content_module) }
+      let(:configs) { CollectionConfig.all }
+
+      it 'returns parsed content modules' do
+        result = CollectionConfig.content_modules(configs)
+        expect(result).to be_an_instance_of(Array)
+      end
+    end
+
+    context 'with missing data' do
+      it 'returns nil' do
+        result = CollectionConfig.content_modules([])
+        expect(result).to be_nil
+      end
+    end
+
+    context 'with malformed data' do
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        configs = FactoryGirl.create(:state_hub_content_module, value: 'foobarbaz')
+        result = CollectionConfig.content_modules([configs])
+      end
+      it 'returns nil' do
+        configs = FactoryGirl.create(:state_hub_content_module, value: 'foobarbaz')
+        results = CollectionConfig.content_modules([configs])
+        expect(results).to be_nil
+      end
+    end
+  end
+
+  describe '.state_featured_articles' do
+    context 'by default' do
+      it 'parses featured articles' do
+        configs = FactoryGirl.create(:state_hub_featured_articles)
+        results = CollectionConfig.state_featured_articles([configs])
+        expect(results).to be_an_instance_of(Array)
+      end
+
+      it 'prepends the cdn to images' do
+        configs = FactoryGirl.create(:state_hub_featured_articles)
+        results = CollectionConfig.state_featured_articles([configs])
+        results.each do |article|
+          expect(article[:articleImagePath]).to start_with ENV_GLOBAL['cdn_host']
+        end
+      end
+    end
+
+    context 'with missing data' do
+      it 'returns nil' do
+        configs = FactoryGirl.create(:community_sponsor_collection_config_data)
+        result1 = CollectionConfig.state_featured_articles([])
+        result2 = CollectionConfig.state_featured_articles([configs])
+        expect(result1).to be_nil
+        expect(result2).to be_nil
+      end
+    end
+
+    context 'with malformed data' do
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        configs = FactoryGirl.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
+        CollectionConfig.state_featured_articles([configs])
+      end
+
+      it 'returns nil' do
+        configs = FactoryGirl.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
+        result = CollectionConfig.state_featured_articles([configs])
+        expect(result).to be_nil
+      end
+    end
+  end
+
+  describe '.state_partners' do
+    context 'by default' do
+      it 'parses state partners' do
+        configs = FactoryGirl.create(:state_partners_configs)
+        results = CollectionConfig.state_partners([configs])
+        expect(results).to be_an_instance_of(Hash)
+      end
+    end
+
+    context 'with missing data' do
+      it 'returns nil' do
+        result1 = CollectionConfig.state_partners([])
+        result2 = CollectionConfig.state_partners([FactoryGirl.create(:state_hub_featured_articles)])
+        expect(result1).to be_nil
+        expect(result2).to be_nil
+      end
+    end
+
+    context 'with malformed data' do
+      let(:configs) { FactoryGirl.create(:state_partners_configs, value: 'foobar{? baz do') }
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        CollectionConfig.state_partners([configs])
+      end
+      it 'returns nil' do
+        result = CollectionConfig.state_partners([configs])
         expect(result).to be_nil
       end
     end

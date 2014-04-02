@@ -169,4 +169,8 @@ class ApplicationController < ActionController::Base
     # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
     action_name.gsub(' ', '_').capitalize
   end
+
+  def set_login_redirect
+    cookies[:redirect_uri] = { value: request.path, expires: 10.minutes.from_now }
+  end
 end
