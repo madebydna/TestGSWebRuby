@@ -198,19 +198,25 @@ describe CensusDataReader do
             breakdown: nil,
             school_value: 10.0,
             district_value: nil,
-            state_value: nil
+            state_value: nil,
+            source: nil,
+            year: 2011
           },
           {
             breakdown: nil,
             school_value: 10.0,
             district_value: nil,
-            state_value: 10.0
+            state_value: 10.0,
+            source: nil,
+            year: 2011
           },
           {
             breakdown: nil,
             school_value: nil,
             district_value: nil,
-            state_value: 10.0
+            state_value: 10.0,
+            source: nil,
+            year: 2011
           }
         ],
         'b' => []
@@ -237,13 +243,17 @@ describe CensusDataReader do
             breakdown: nil,
             school_value: 2.0,
             district_value: nil,
-            state_value: nil
+            state_value: nil,
+            source: nil,
+            year: 2011
           },
           {
             breakdown: nil,
             school_value: 1.0,
             district_value: nil,
-            state_value: nil
+            state_value: nil,
+            source: nil,
+            year: 2011
           }
         ]
       }
@@ -272,13 +282,17 @@ describe CensusDataReader do
             breakdown: 'a label',
             school_value: 2.0,
             district_value: nil,
-            state_value: nil
+            state_value: nil,
+            source: nil,
+            year: 2011
           },
           {
             breakdown: 'a different label',
             school_value: 1.0,
             district_value: nil,
-            state_value: nil
+            state_value: nil,
+            source: nil,
+            year: 2011
           }
         ]
       }

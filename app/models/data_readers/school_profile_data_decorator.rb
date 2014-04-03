@@ -30,6 +30,21 @@ module SchoolProfileDataDecorator
     end
   end
 
+  def data_reader_config
+    {
+      census_data: @census_data_reader,
+      census_data_points: @census_data_reader,
+      cta_prek_only: @cta_prek_only_data_reader,
+      details: @details_data_reader,
+      esp_data_points: @esp_data_points_data_reader,
+      esp_response: @esp_data_reader,
+      rating_data: @rating_data,
+      snapshot: @snapshot_data_reader,
+      test_scores: @test_scores_data_reader,
+      zillow: @zillow_data_reader
+    }
+  end
+
   # Methods exposed as "data readers" to rails admin UI
   def self.data_readers
     %w[
@@ -43,21 +58,42 @@ module SchoolProfileDataDecorator
       test_scores
       zillow
       census_data_points
+      footnotes
     ]
   end
 
-  def data_for_category(category)
-    data_for_category_and_source category, category.source
+  def data_for_category(options = {})
+    category = options[:category]
+    raise(ArgumentError, ':category must be provided') if category.nil?
+
+    options[:source] = category.source
+    data_for_category_and_source options
   end
 
-  def data_for_category_and_source(category, source)
+  def data_for_category_and_source(options)
+    category = options[:category]
+    source = options[:source]
+    raise(ArgumentError, ':category and :source must both be provided') if category.nil? || source.nil?
+
+
     @data ||= {}
     data_key = category.nil? ? source : "#{category.id}#{source}"
     return @data[data_key] if @data.has_key? data_key
 
     if source.present? && SchoolProfileDataDecorator.data_readers.include?(source)
-      result = self.send source, category
+      result = self.send source, options
       @data[data_key] = result
+    end
+  end
+
+  def footnotes_for_category(options)
+    category = options[:category]
+    raise(ArgumentError, ':category must be provided') if category.nil?
+
+    source = category.source
+    if source
+      reader = data_reader_config[source.to_sym]
+      return reader.send :footnotes_for_category, category if reader.respond_to? :footnotes_for_category
     end
   end
 
@@ -87,46 +123,80 @@ module SchoolProfileDataDecorator
   ##############################################################################
   # Methods exposed as "data readers" to rails admin UI start here
 
-  def census_data(category)
+  def census_data(options = {})
+    category = options[:category]
     @census_data_reader.labels_to_hashes_map category
   end
 
-  def census_data_points(category = nil)
+  def census_data_points(options = {})
     @census_data_reader.data_type_descriptions_to_school_values_map
   end
 
-  def cta_prek_only(category)
+  def cta_prek_only(options = {})
+    category = options[:category]
     @cta_prek_only_data_reader.data_for_category category
   end
 
-  def details(category)
+  def details(options = {})
+    category = options[:category]
     @details_data_reader.data_for_category category
   end
 
-  def esp_data_points(category)
+  def esp_data_points(options = {})
+    category = options[:category]
     @esp_data_points_data_reader.data_for_category category
   end
 
-  def esp_response(category)
+  def esp_response(options = {})
+    category = options[:category]
     @esp_data_reader.data_for_category category
   end
 
-  def rating_data(category = nil)
+  def rating_data(options = {})
     @rating_data_reader.data
   end
 
-  def snapshot(category)
+  def snapshot(options = {})
+    category = options[:category]
     @snapshot_data_reader.data_for_category category
   end
 
-  def test_scores(category)
+  def test_scores(options = {})
+    category = options[:category]
     @test_scores_data_reader.data_for_category category
   end
 
-  def zillow(category)
+  def zillow(options = {})
+    category = options[:category]
     @zillow_data_reader.data_for_category category
   end
 
+  def footnotes(options = {})
+    category = options[:category]
+    page_config = options[:page_config]
+    raise(ArgumentError, ':page_config and :category must be provided') if page_config.nil? || category.nil?
 
+    root_placements = page_config.root_placements
+
+    root_placements.each_with_object([]) do |root, footnotes_array|
+      leaves = root.has_children? ? root.leaves : [ root ]
+      leaves.each do |leaf|
+        # Skip if category is for footnotes, otherwise infinite recursion
+        next if leaf.category.id == category.id
+        footnotes = footnotes_for_category category: leaf.category
+
+        if footnotes.present?
+          footnotes.each do |footnote|
+            year = footnote[:year]
+            label = (leaf.root? || leaf.parent.root?) ? leaf.title : leaf.parent.title
+            footnotes_array << {
+              label: label,
+              value: "#{footnote[:source]}, #{year.to_i - 1}-#{year}"
+            }
+          end
+        end
+      end
+    end.uniq
+  end
 
 end

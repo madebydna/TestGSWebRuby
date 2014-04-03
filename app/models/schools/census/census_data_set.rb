@@ -6,6 +6,8 @@ class CensusDataSet < ActiveRecord::Base
   include StateSharding
   include LookupDataPreloading
 
+  attr_accessor :census_description
+
   has_many :census_data_school_values, class_name: 'CensusDataSchoolValue', foreign_key: 'data_set_id'
   has_many :census_data_district_values, class_name: 'CensusDataDistrictValue', foreign_key: 'data_set_id'
   has_many :census_data_state_values, class_name: 'CensusDataStateValue', foreign_key: 'data_set_id'
@@ -21,6 +23,7 @@ class CensusDataSet < ActiveRecord::Base
   delegate :value_int,
            to: :census_data_school_value, prefix: 'school', allow_nil: true
 
+  delegate :source, to: :census_description, allow_nil: true
 
   # If we only want one field from a lookup table, we can do this
   # Which would give us a new method on this object called data_type, which would read from the description column
@@ -95,6 +98,12 @@ class CensusDataSet < ActiveRecord::Base
 
     # TODO: find better way to make the model instances know which shard they came from
     census_data_sets.each { |data_set| data_set.instance_variable_set :@shard, school.shard }
+
+    descriptions = CensusDescription.for_data_sets_and_school(census_data_sets, school)
+
+    descriptions.each do |description|
+      census_data_sets.select { |cds| cds.id == description.census_data_set_id }.first.census_description = description
+    end
 
     census_data_sets
   end
