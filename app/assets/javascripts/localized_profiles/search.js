@@ -170,10 +170,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var searchString = $(this).find(findByNameSelector).val();
         var state = $(this).find('input#js-state').val();
         var collectionId = $(this).find('input#js-collectionId').val();
+        var searchType = $(this).find('input[name="search_type"]').val();
         var queryString = GS.uri.Uri.getQueryData();
 
         queryString.q = encodeURIComponent(searchString);
-        queryString.collectionId = encodeURIComponent(collectionId);
+        queryString.search_type = encodeURIComponent(searchType);
+        if (typeof collectionId !== 'undefined') {
+            queryString.collectionId = encodeURIComponent(collectionId);
+        }
         queryString.state = encodeURIComponent(state);
 
         setTimeout(function() { window.location = window.location.protocol + '//' + window.location.host +
