@@ -1,16 +1,18 @@
 <% unless articles.nil? %>
   <h3>Related articles</h3>
   <% articles.each do |article| %>
-    <div class="col-lg-6">
-      <%= image_tag(article[:articleImagePath], class: 'pull-left mrm mts', width: '100px') %>
-      <% if article[:newwindow] %>
-        <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-      <% else %>
-        <%= link_to article[:heading], article[:articlepath] %>
-      <% end %>
-      <p><%= article[:content] %></p>
+    <div class="col-xs-12 col-sm-6 col-lg-6">
+      <%= image_tag(article[:articleImagePath], class: 'pull-left mhm mts', width: '100px') %>
+      <div style='margin-left: 120px'>
+        <% if article[:newwindow] %>
+          <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+        <% else %>
+          <%= link_to article[:heading], article[:articlepath] %>
+        <% end %>
+        <p><%= article[:content] %></p>
+      </div>
     </div>
   <% end %>
-  <%= link_to "More about #{state[:long]} »", '#', class: 'pull-right' %>
+  <%= link_to "More about #{state[:long]} »", '#', class: 'pull-right mrm' %>
   <div class="clearfix"></div>
 <% end %>

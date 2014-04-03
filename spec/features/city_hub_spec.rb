@@ -67,7 +67,7 @@ describe 'City Hub Page', js: true do
 
   describe 'featured articles section' do
     it 'display featured articles' do
-      expect(page).to have_css('.featured-article', count: 3)
+      expect(page).to have_css('.js-featured-article', count: 3)
     end
     it 'shows nearby homes with zillow' do
       expect(page).to have_content 'Nearby Homes for Sale'
