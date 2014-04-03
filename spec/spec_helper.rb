@@ -117,3 +117,11 @@ Spork.each_run do
 
   FactoryGirl.reload
 end
+
+# Takes as arguments as list of db names as symbols
+def clean_dbs(*args)
+  args.each do |db|
+    DatabaseCleaner[:active_record, connection: db].strategy = :truncation
+    DatabaseCleaner[:active_record, connection: db].clean
+  end
+end

@@ -16,12 +16,16 @@ class CategoryPlacement < ActiveRecord::Base
     "page#{page.id}_category#{category.id}_layout#{layout}"
   end
 
-  def has_data?(school)
-    if has_children?
-      children.map { |child| child.has_data?(school) }.any?
-    else
-      category.nil? || category.has_data?(school)
-    end
+  def children_with_data(*args)
+    children.sort_by(&:position).select{ |category_placement| category_placement.has_data?(*args) }
+  end
+
+  def has_data?(*args)
+    children_with_data(*args).any? || category.nil? || category.has_data?(*args)
+  end
+
+  def leaves
+    @leaves ||= descendants.select(&:is_childless?)
   end
 
   # layout name => partial name

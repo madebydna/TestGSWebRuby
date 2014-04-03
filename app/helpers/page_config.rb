@@ -22,7 +22,7 @@ class PageConfig
   end
 
   def root_placements_with_data
-    root_placements.select{ |placement| placement.has_data?(school) }
+    root_placements.select{ |placement| placement.has_data?(school, page_config: self) }
   end
 
 end

@@ -5,7 +5,7 @@
     <% begin %>
         <%= render category_placement.partial,
           category_placement: category_placement,
-          data: category_placement_data(category_placement),
+          data: category_placement_data(@page_config, category_placement),
           category: category_placement.category
         %>
     <% rescue => e %>

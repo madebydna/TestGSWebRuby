@@ -13,7 +13,9 @@ class CensusDataReader < SchoolProfileDataReader
   #                                             :breakdown => nil,
   #                                             :school_value => 83.0,
   #                                             :district_value => nil,
-  #                                             :state_value => nil
+  #                                             :state_value => nil,
+  #                                             :source => 'CA Dept. of Education',
+  #                                             :year => 2011
   #                                           }
   #                                         ],
   #                                       }
@@ -24,34 +26,40 @@ class CensusDataReader < SchoolProfileDataReader
   #                                             :breakdown => "White",
   #                                             :school_value => 42.1053,
   #                                             :district_value => nil,
-  #                                             :state_value => 71.4284
+  #                                             :state_value => 71.4284,
+  #                                             :source => 'CA Dept. of Education',
+  #                                             :year => 2011
   #                                           },
   #                                           {
   #                                             :breakdown => "African-American",
   #                                             :school_value => 42.1053,
   #                                             :district_value => nil,
-  #                                             :state_value => 71.4284
+  #                                             :state_value => 71.4284,
+  #                                             :source => "CA Dept. of Education",
+  #                                             :year => 2011
   #                                           }
   #                                         ],
   #                                       }
   def labels_to_hashes_map(category)
+    @labels_to_hashes_map ||= {}
+    @labels_to_hashes_map[category.id] ||= (
+      # Get data for all data types
+      all_data = raw_data_for_category category
 
-    # Get data for all data types
-    all_data = raw_data_for_category category
+      data_type_to_results_hash = all_data.group_by(&:data_type)
 
-    data_type_to_results_hash = all_data.group_by(&:data_type)
+      # If there's a data set with a null breakdown within a data type group, remove the rows with non-null breakdowns
+      data_type_to_results_hash = keep_null_breakdowns!(data_type_to_results_hash)
 
-    # If there's a data set with a null breakdown within a data type group, remove the rows with non-null breakdowns
-    data_type_to_results_hash = keep_null_breakdowns!(data_type_to_results_hash)
+      # Sort the data types the same way the keys are sorted in the config
+      data_type_to_results_hash = sort_based_on_config data_type_to_results_hash, category
 
-    # Sort the data types the same way the keys are sorted in the config
-    data_type_to_results_hash = sort_based_on_config data_type_to_results_hash, category
+      # Build a Hash that the view will consume
+      data = build_data_type_descriptions_to_hashes_map data_type_to_results_hash
 
-    # Build a Hash that the view will consume
-    data = build_data_type_descriptions_to_hashes_map data_type_to_results_hash
-
-    # Replace strings within our Hash with human-readable versions
-    data = prettify_hash data, category.key_label_map(school.collections)
+      # Replace strings within our Hash with human-readable versions
+      data = prettify_hash data, category.key_label_map(school.collections)
+    )
   end
 
   # Returns hash of data type descriptions to school values
@@ -70,6 +78,18 @@ class CensusDataReader < SchoolProfileDataReader
     end
   end
 
+  def footnotes_for_category(category)
+    data = labels_to_hashes_map category
+    sources = data.map do |key, values|
+      if values && values.any?
+        {
+          source: values.first[:source],
+          year: values.first[:year]
+        }
+      end
+    end
+    sources.compact.uniq
+  end
 
   ##############################################################################
   # Methods for actually building Hashes that view will consume
@@ -89,7 +109,8 @@ class CensusDataReader < SchoolProfileDataReader
   #        :breakdown_id => nil,
   #        :active => 1,
   #        :level_code => "e,m,h",
-  #        :subject_id => nil
+  #        :subject_id => nil,
+  #        :source => "CA Dept. of Education"
   #      }
   #  ]
   # })                                #=> "Climate: Effective Leaders - Overall" => [
@@ -97,7 +118,9 @@ class CensusDataReader < SchoolProfileDataReader
   #                                             :breakdown => nil,
   #                                             :school_value => 83.0,
   #                                             :district_value => nil,
-  #                                             :state_value => nil
+  #                                             :state_value => nil,
+  #                                             :source => "CA Dept. of Education",
+  #                                             :year => 2011
   #                                           }
   #                                         ],
   #                                       }
@@ -112,7 +135,9 @@ class CensusDataReader < SchoolProfileDataReader
             breakdown: census_data_set.config_entry_breakdown_label || census_data_set.census_breakdown,
             school_value: census_data_set.school_value,
             district_value: census_data_set.district_value,
-            state_value: census_data_set.state_value
+            state_value: census_data_set.state_value,
+            source: census_data_set.source,
+            year: census_data_set.year
           }
         end
       end.compact
