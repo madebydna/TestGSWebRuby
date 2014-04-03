@@ -1,3 +1,8 @@
+<% content_for :javascript_includes do %>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
+  <%= javascript_include_tag "localized_profiles/search.js" %>
+<% end %>
+
 <div class="image-bg-scale">
   <div class="img-container-mobile">
     <div style="background-image: url('<%= hero_image_mobile %>'); height: 500px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
@@ -73,7 +78,10 @@
                         onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
                         placeholder='School name (e.g. Niles Elementary School)'
                         value="School name (e.g. Niles Elementary School)"/>
-                <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
+
+                <% unless defined?(state_page) %>
+                  <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
+                <% end %>
                 <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
                 <button class="state-hub-search-button">Search</button>
               </form>
