@@ -169,7 +169,7 @@ class CitiesController < ApplicationController
     end
 
     def parse_partners(partners)
-      partners[:partnerLogos].map { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
+      partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
       partners
     end
 end
