@@ -30,7 +30,7 @@ class CitiesController < ApplicationController
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.city_featured_articles(collection_configs)
-      @partner_carousel = CollectionConfig.city_hub_partners(collection_configs)
+      @partner_carousel = parse_partners CollectionConfig.city_hub_partners(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
 
       @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], hub_city_mapping.collection_id)
@@ -166,6 +166,11 @@ class CitiesController < ApplicationController
 
     def set_hub_params
       @hub_params = { state: @state[:long], city: @city }
+    end
+
+    def parse_partners(partners)
+      partners[:partnerLogos].map { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
+      partners
     end
 end
 
