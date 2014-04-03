@@ -8,17 +8,17 @@ class StatesController < ApplicationController
     if collection_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = collection_mapping.collection_id
-      configs = CollectionConfig.where(collection_id: @collection_id)
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
+      collection_id = collection_mapping.collection_id
+      configs = CollectionConfig.where(collection_id: collection_id)
+      @collection_nickname = CollectionConfig.collection_nickname(collection_id)
       @content_modules = CollectionConfig.content_modules(configs)
       @articles = CollectionConfig.state_featured_articles(configs)
 
       @partners = CollectionConfig.state_partners(configs)
 
       # Hold off for now TODO: fix.
-      @hero_image # = "/assets/city-hub/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile#  = "/assets/city-hub/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      @hero_image # = "/assets/city-hub/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+      @hero_image_mobile#  = "/assets/city-hub/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
     end
   end
 

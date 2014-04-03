@@ -78,7 +78,10 @@
                         onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
                         placeholder='School name (e.g. Niles Elementary School)'
                         value="School name (e.g. Niles Elementary School)"/>
-                <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
+
+                <% unless defined?(state_page) %>
+                  <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
+                <% end %>
                 <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
                 <button class="state-hub-search-button">Search</button>
               </form>
