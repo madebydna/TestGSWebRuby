@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'State Page' do
   describe 'layout' do
     before(:all) do
-      CollectionConfig.destroy_all
+      clean_dbs :gs_schooldb
       FactoryGirl.create(:feature_articles_collection_config, collection_id: 6)
       FactoryGirl.create(:collection_nickname, collection_id: 6)
       FactoryGirl.create(:state_hub_mapping)

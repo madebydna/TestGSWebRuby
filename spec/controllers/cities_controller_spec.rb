@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe CitiesController do
   before(:each) do
-    HubCityMapping.destroy_all
-    CollectionConfig.destroy_all
+    clean_dbs :gs_schooldb
     FactoryGirl.create(:hub_city_mapping)
   end
 

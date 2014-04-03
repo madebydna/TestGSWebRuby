@@ -8,7 +8,7 @@ describe 'sample_data_helper.rb' do
   end
 
   describe 'load_sample_data' do
-    before(:each) { School.on_db(:ca).destroy_all } # sins
+    before(:each) { clean_dbs :ca }
 
     it 'should load a single school' do
       load_sample_data 'sample_data_helper_test'

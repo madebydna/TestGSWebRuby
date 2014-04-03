@@ -58,7 +58,7 @@ describe ApplicationHelper do
   end
 
   describe '#topnav_formatted_title' do
-    before(:each) { School.on_db('ca').destroy_all; HubCityMapping.destroy_all }
+    before(:each) { clean_dbs :gs_schooldb, :ca }
     let(:hub_params) { { city: 'detroit', state: 'michigan' } }
     let(:school) do
       FactoryGirl.create(:hub_city_mapping, city: 'a name', state: 'CA')

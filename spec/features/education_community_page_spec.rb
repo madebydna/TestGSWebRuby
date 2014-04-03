@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Education Comunity Page' do
-  before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
+  before(:each) { clean_dbs :gs_schooldb }
   before(:each) do
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:community_tabs_collection_config)
@@ -48,7 +48,7 @@ end
 
 
 describe 'Education Community Partner Page' do
-  before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
+  before(:each) { clean_dbs :gs_schooldb }
   before(:each) do
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:community_sponsor_collection_config_data)

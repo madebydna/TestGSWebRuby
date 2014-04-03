@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'City Hub Page', js: true do
   let(:city_page_url) { '/michigan/detroit' }
   before(:all) do
-    CollectionConfig.destroy_all
+    clean_dbs :gs_schooldb
+    FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:important_events_collection_config)
     FactoryGirl.create(:city_hub_sponsor_collection_config)
     FactoryGirl.create(:feature_articles_collection_config)

@@ -15,7 +15,7 @@ FactoryGirl.define do
 
   factory :state_hub_mapping, class: HubCityMapping do
     collection_id 6
-    city nil
+    city ''
     state 'indiana'
     active 1
   end

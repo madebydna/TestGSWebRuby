@@ -9,7 +9,7 @@ end
 
 shared_examples "it fails with an error" do
   context 'invalid json string' do
-    before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
+    before(:each) { clean_dbs :gs_schooldb }
 
     it 'returns nil' do
       FactoryGirl.create(:bogus_collection_config, quay: key)
@@ -30,7 +30,7 @@ shared_examples "it fails with an error" do
 end
 
 describe CollectionConfig do
-  before(:each) { HubCityMapping.destroy_all; CollectionConfig.destroy_all }
+  before(:each) { clean_dbs :gs_schooldb }
 
   describe '.city_featured_articles' do
     it_behaves_like 'it rejects empty configs' do
