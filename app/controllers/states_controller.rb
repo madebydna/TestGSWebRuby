@@ -2,6 +2,7 @@ class StatesController < ApplicationController
   before_filter :set_hub_params
   before_filter :set_state
   before_filter :set_login_redirect
+  before_filter :set_footer_cities
 
   def show
     collection_mapping = mapping

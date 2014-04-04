@@ -92,6 +92,14 @@ development: &development
     <<: *mysql_localhost_ro
     database: community
     legacy: true
+  us_geo:
+    <<: *mysql_localhost
+    database: us_geo
+    legacy: true
+  us_geo_ro:
+    <<: *mysql_localhost_ro
+    database: us_geo
+    legacy: true
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -139,6 +147,14 @@ test: &test
   community_ro:
     <<: *mysql_localhost_ro
     database: community_test
+    legacy: true
+  us_geo:
+    <<: *mysql_localhost
+    database: us_geo_test
+    legacy: true
+  us_geo_ro:
+    <<: *mysql_localhost_ro
+    database: us_geo_test
     legacy: true
 
 cucumber:

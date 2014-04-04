@@ -173,4 +173,8 @@ class ApplicationController < ActionController::Base
   def set_login_redirect
     cookies[:redirect_uri] = { value: request.path, expires: 10.minutes.from_now }
   end
+
+  def set_footer_cities
+    @cities = City.popular_cities(@state[:short], limit: 29).to_a
+  end
 end
