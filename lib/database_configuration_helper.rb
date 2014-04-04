@@ -26,7 +26,7 @@ class DatabaseConfigurationHelper
   end
 
   def self.all_rw_connections_for(rails_environment)
-    all_connections_for(rails_environment).select { |connection| connection[-3..-1] != '_ro' }
+    all_connections_for(rails_environment).select { |connection| connection[-3..-1] == '_rw' }
   end
 
   def self.legacy_database_names(rails_environment)

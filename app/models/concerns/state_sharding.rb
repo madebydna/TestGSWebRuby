@@ -32,14 +32,17 @@ Example of sharding. This seems to work, but just using on_db to switch dbs seem
     # Given a connection like gs_schooldb or ca, return the rw version
     def self.master_version_of_connection(connection_name)
       connection_name = connection_name.to_s
+
+      return connection_name if connection_name[-3..-1] == '_rw'
+
       if connection_name.index('_ro')
         connection_name.sub! '_ro', '_rw'
       else
         connection_name << '_rw'
       end
 
-      # TODO: rename xx connections to xx_rw, and rename xx_ro connections to xx in database.yml, then remove this line of code
-      connection_name.sub! '_rw', ''
+      # DONE: TODO: rename xx connections to xx_rw, and rename xx_ro connections to xx in database.yml, then remove this line of code
+      # connection_name.sub! '_rw', ''
 
       connection_name.to_sym
     end
