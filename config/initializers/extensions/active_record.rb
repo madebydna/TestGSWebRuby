@@ -1,0 +1,1 @@
+require 'writeable_model_concerns'
