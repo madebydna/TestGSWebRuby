@@ -8,29 +8,31 @@ describe CategoryPlacement do
     context 'when parent specifies the sizes' do
 
       before do
-        parent_placement = FactoryGirl.create(:category_placement, page: page, layout_config: {
+        @section_placement = FactoryGirl.create(:section_category_placement, page: page, layout_config: {
           "child_sizes" => [{'sm' => 6, 'md' => 4}]
         }.to_json)
 
-        subject.layout_config = {
+        @group_placement = @section_placement.children.first
+
+        @group_placement.layout_config = {
           "sizes" => {'xs' => 6, 'sm' => 2, 'md' => 2}
         }.to_json
+      end
 
-        subject.parent = parent_placement
+      after do
+        clean_dbs :localized_profiles
       end
 
       it 'should return configured sizes merged onto default sizes' do
-        expect(subject.my_sizes).to eq({'xs' => 6, 'sm' => 2, 'md' => 2, 'lg' => 12})
+        expect(@group_placement.my_sizes).to eq({'xs' => 6, 'sm' => 2, 'md' => 2, 'lg' => 12})
       end
 
       it 'should echo the parent enforced sizes specific in test setup' do
-        expect(subject).to receive(:siblings).and_return([subject])
-        expect(subject.parent_enforced_sizes).to eq({'sm' => 6, 'md' => 4})
+        expect(@group_placement.parent_enforced_sizes).to eq({'sm' => 6, 'md' => 4})
       end
 
       it 'should return merge sizes onto parent enforced sizes' do
-        expect(subject).to receive(:siblings).and_return([subject])
-        expect(subject.sizes).to eq({'xs' => 6, 'sm' => 6, 'md' => 4, 'lg' => 12})
+        expect(@group_placement.sizes).to eq({'xs' => 6, 'sm' => 6, 'md' => 4, 'lg' => 12})
       end
 
     end
