@@ -21,7 +21,11 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   def has_data?(*args)
-    children_with_data(*args).any? || category.nil? || category.has_data?(*args)
+    if has_children?
+      children_with_data(*args).any?
+    else
+      category.nil? || category.has_data?(*args)
+    end
   end
 
   def leaves
