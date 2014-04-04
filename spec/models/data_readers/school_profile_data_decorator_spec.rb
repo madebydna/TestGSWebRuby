@@ -26,6 +26,10 @@ describe SchoolProfileDataDecorator do
       group.title = 'Student ethnicity'
       group.save!
 
+      @page_config.stub(:category_placement_has_children?).and_return true
+      @page_config.stub(:category_placement_leaves).and_return [ group.children.first ]
+      @page_config.stub(:category_placement_parent).and_return group
+
       subject.stub(:footnotes_for_category).and_return(
         [
           source: 'NCES',

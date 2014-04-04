@@ -79,6 +79,8 @@ gem 'draper', '~> 1.3'
 
 gem 'addressable'
 
+gem 'rack-mini-profiler', require: false
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests

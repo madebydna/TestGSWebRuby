@@ -389,7 +389,7 @@ describe RatingsHelper do
 
     subject(:ratings_helper) { RatingsHelper.new nil, nil }
     it 'should handle use the footnote even if the description key is blank' do
-      description_hash = {
+      footnote_hash = {
         ['MI', 'blah'] => 'my description'
       }
       ratings_configuration = {
@@ -397,7 +397,7 @@ describe RatingsHelper do
         'footnote_key' => 'blah'
       }
 
-      expect(ratings_helper.get_sub_rating_descriptions ratings_configuration, @school, description_hash).to eq 'my description'
+      expect(ratings_helper.get_sub_rating_descriptions ratings_configuration, @school, footnote_hash).to eq 'my description'
     end
 
     it 'should return the description key description if footnote is nil' do
@@ -410,6 +410,19 @@ describe RatingsHelper do
       }
 
       expect(ratings_helper.get_sub_rating_descriptions ratings_configuration, @school, description_hash).to eq 'my description'
+    end
+
+    it 'should put a space between description and footnote' do
+      description_hash = {
+        [nil, 'description'] => 'A description.',
+        ['MI', 'footnote'] => 'A footnote.'
+      }
+      ratings_configuration = {
+        'description_key' => 'description',
+        'footnote_key' => 'footnote'
+      }
+
+      expect(ratings_helper.get_sub_rating_descriptions ratings_configuration, @school, description_hash).to eq 'A description. A footnote.'
     end
   end
 

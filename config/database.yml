@@ -8,21 +8,6 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
-<% require 'states' %>
-
-<%
-def define_db(name, db, legacy, includes)
-  <<-EOF
-  #{name}:
-    <<: *#{includes}
-    database: #{db}
-    legacy: #{legacy}
-  #{name}_ro:
-    <<: *#{includes}_ro
-    database: #{db}
-  EOF
-end
-%>
 
 mysql: &mysql
   adapter: mysql2
@@ -52,43 +37,43 @@ mysql_dev_ro: &mysql_dev_ro
 development: &development
   <<: *mysql_localhost
   database: LocalizedProfiles_development
-  profile_config:
+  profile_config_rw:
     <<: *mysql_localhost
     database: LocalizedProfiles_development
     legacy: false
-  profile_config_ro:
+  profile_config:
     <<: *mysql_localhost_ro
     database: LocalizedProfiles_development
     legacy: false
-  _STATE_:
+  _STATE__rw:
     <<: *mysql_localhost
     database: __STATE_
     legacy: true
-  _STATE__ro:
+  _STATE_:
     <<: *mysql_localhost_ro
     database: __STATE_
+    legacy: true
+  gs_schooldb_rw:
+    <<: *mysql_localhost
+    database: gs_schooldb
     legacy: true
   gs_schooldb:
-    <<: *mysql_localhost
-    database: gs_schooldb
-    legacy: true
-  gs_schooldb_ro:
     <<: *mysql_localhost_ro
     database: gs_schooldb
+    legacy: true
+  surveys_rw:
+    <<: *mysql_localhost
+    database: surveys
     legacy: true
   surveys:
-    <<: *mysql_localhost
-    database: surveys
-    legacy: true
-  surveys_ro:
     <<: *mysql_localhost_ro
     database: surveys
     legacy: true
-  community:
+  community_rw:
     <<: *mysql_localhost
     database: community
     legacy: true
-  community_ro:
+  community:
     <<: *mysql_localhost_ro
     database: community
     legacy: true
@@ -96,8 +81,8 @@ development: &development
     <<: *mysql_localhost
     database: us_geo
     legacy: true
-  us_geo_ro:
-    <<: *mysql_localhost_ro
+  us_geo_rw:
+    <<: *mysql_localhost
     database: us_geo
     legacy: true
 
@@ -108,54 +93,55 @@ development: &development
 test: &test
   <<: *mysql_localhost
   database: LocalizedProfiles_test
-  profile_config:
+  profile_config_rw:
     <<: *mysql_localhost
     database: LocalizedProfiles_test
     legacy: false
-  profile_config_ro:
+  profile_config:
     <<: *mysql_localhost_ro
     database: LocalizedProfiles_test
     legacy: false
-  _STATE_:
+  _STATE__rw:
     <<: *mysql_localhost
     database: __STATE__test
     legacy: true
-  _STATE__ro:
+  _STATE_:
     <<: *mysql_localhost_ro
     database: __STATE__test
+    legacy: true
+  gs_schooldb_rw:
+    <<: *mysql_localhost
+    database: gs_schooldb_test
     legacy: true
   gs_schooldb:
-    <<: *mysql_localhost
-    database: gs_schooldb_test
-    legacy: true
-  gs_schooldb_ro:
     <<: *mysql_localhost_ro
     database: gs_schooldb_test
+    legacy: true
+  surveys_rw:
+    <<: *mysql_localhost
+    database: surveys_test
     legacy: true
   surveys:
-    <<: *mysql_localhost
-    database: surveys_test
-    legacy: true
-  surveys_ro:
     <<: *mysql_localhost_ro
     database: surveys_test
     legacy: true
-  community:
+  community_rw:
     <<: *mysql_localhost
     database: community_test
     legacy: true
-  community_ro:
+  community:
     <<: *mysql_localhost_ro
     database: community_test
     legacy: true
   us_geo:
-    <<: *mysql_localhost
-    database: us_geo_test
-    legacy: true
-  us_geo_ro:
     <<: *mysql_localhost_ro
     database: us_geo_test
     legacy: true
+  us_geo_rw:
+    <<: *mysql_localhost
+    database: us_geo_test
+    legacy: true
+  us_geo:
 
 cucumber:
   <<: *test

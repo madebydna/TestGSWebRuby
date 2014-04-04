@@ -181,16 +181,17 @@ module SchoolProfileDataDecorator
     root_placements = page_config.root_placements
 
     root_placements.each_with_object([]) do |root, footnotes_array|
-      leaves = root.has_children? ? root.leaves : [ root ]
+      leaves = page_config.category_placement_has_children?(root) ? page_config.category_placement_leaves(root) : [ root ]
       leaves.each do |leaf|
         # Skip if category is for footnotes, otherwise infinite recursion
         next if leaf.category.id == category.id
         footnotes = footnotes_for_category category: leaf.category
+        parent = page_config.category_placement_parent leaf
 
         if footnotes.present?
           footnotes.each do |footnote|
             year = footnote[:year]
-            label = (leaf.root? || leaf.parent.root?) ? leaf.title : leaf.parent.title
+            label = (leaf.root? || parent.root?) ? leaf.title : parent.title
             footnotes_array << {
               label: label,
               value: "#{footnote[:source]}, #{year.to_i - 1}-#{year}"
