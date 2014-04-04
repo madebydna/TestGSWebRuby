@@ -24,7 +24,7 @@ class PageConfig
         parent = @category_placements_id_hash[cp.parent_id]
         cp.memoized_parent = parent
         children = (parent.memoized_children || []) << cp
-        parent.memoized_children = children
+        parent.memoized_children = children.sort_by(&:position)
       end
     end
   end
@@ -42,7 +42,7 @@ class PageConfig
   end
 
   def category_placement_children(parent)
-    category_placements.select { |cp| cp.parent_id == parent.id }
+    category_placements.select { |cp| cp.parent_id == parent.id }.sort_by(&:position)
   end
 
   def category_placement_has_children?(cp)
@@ -54,7 +54,7 @@ class PageConfig
   end
 
   def category_placement_leaves(cp)
-    category_placement_descendants(cp).reject { |descendant_cp| category_placement_has_children? descendant_cp }
+    category_placement_descendants(cp).reject { |descendant_cp| category_placement_has_children? descendant_cp }.sort_by(&:position)
   end
 
   def category_placement_parent(child)
