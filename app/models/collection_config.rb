@@ -55,7 +55,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_article_str = collection_configs.select(&lambda { |cc| cc.quay == FEATURED_ARTICLES_KEY }).first.value
           raw_article_str.gsub!(/articles\s\:/, '"articles" =>')
           raw_article_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
-          articles = eval(raw_article_str)['articles'] # sins
+          articles = eval(raw_article_str)['articles']
           articles.each do |article|
             article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
           end
@@ -76,7 +76,7 @@ class CollectionConfig < ActiveRecord::Base
             raw_articles_str = config.value
             raw_articles_str.gsub!(/articles\s\:/, '"articles" =>')
             raw_articles_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
-            articles = eval(raw_articles_str)['articles'] # sins
+            articles = eval(raw_articles_str)['articles']
             articles.each do |article|
              article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
             end
@@ -119,10 +119,11 @@ class CollectionConfig < ActiveRecord::Base
           raw_partners_str.gsub!(/\n/, '')
           raw_partners_str.gsub!(/\r/, '')
           raw_partners_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
-          partners = eval(raw_partners_str) # sins
+          partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
-            partner[:anchoredLink].prepend('education-community')
+            partner[:anchoredLink].gsub!(/\?tab=(.+)/, "#{$1.downcase}")
+            partner[:anchoredLink].prepend('education-community/')
           end
         rescue Exception => e
           partners = nil
@@ -136,7 +137,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_sponsor_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SPONSOR_KEY }).first.value
-          sponsor = eval(raw_sponsor_str)[:sponsor] # sins
+          sponsor = eval(raw_sponsor_str)[:sponsor]
           sponsor[:path].prepend(ENV_GLOBAL['cdn_host'])
         rescue Exception => e
           sponsor = nil
@@ -150,7 +151,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_choose_school_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_CHOOSE_A_SCHOOL_KEY }).first.value
-          choose_school = eval(raw_choose_school_str) # sins
+          choose_school = eval(raw_choose_school_str)
         rescue Exception => e
           choose_school = nil
           Rails.logger.error('Something went wrong while parsing city_hub_choose_school ' + e.to_s)
@@ -163,7 +164,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_annoucement_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_ANNOUNCEMENT_KEY }).first.value
-          announcement = eval(raw_annoucement_str) # sins
+          announcement = eval(raw_annoucement_str)
           announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
         rescue Exception => e
           announcement = nil
@@ -177,7 +178,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_important_events_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_IMPORTANT_EVENTS_KEY }).first.value
-          important_events = eval(raw_important_events_str) # sins
+          important_events = eval(raw_important_events_str)
           important_events[:events].each do |event|
             event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
           end

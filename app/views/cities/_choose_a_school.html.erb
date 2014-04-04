@@ -1,7 +1,7 @@
-<div class='row mtxl'>
+<div class='row'>
   <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm' id='choose-a-school'>
     <% if choose_school and choose_school[:link].length > 0 and not choose_school[:heading].empty? %>
-      <h2 class='mbm'><%= choose_school[:heading] %></h2>
+      <h2 class='mbm mtn'><%= choose_school[:heading] %></h2>
       <p class='mbl'><%= choose_school[:content].html_safe %></p>
       <% choose_school[:link].each_with_index do |link, i| %>
         <% if link[:newWindow] == 'true' %>
@@ -19,7 +19,7 @@
   </div>
 
   <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar'>
-    <div class='scale-image mtl ptm'>
+    <div class='scale-image'>
       <div style="background-image: url('/assets/choose_a_school.png'); background-repeat: no-repeat; height: 306px;"></div>
     </div>
   </div>
