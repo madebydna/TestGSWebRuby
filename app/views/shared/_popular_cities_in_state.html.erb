@@ -1,0 +1,59 @@
+<div class="js-city-list row tal">
+  <h4 style='color: #999999;'>Find the great schools in <%= state[:long].titleize %></h4>
+  <div class="col-xs-12 col-md-4 col-lg-4">
+      <div class="row">
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[0..4].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[5..9].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4 col-lg-4">
+      <div class="row">
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[10..14].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[15..19].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-xs-12 col-md-4 col-lg-4">
+      <div class="row">
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[20..24].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-lg-6">
+            <ul>
+              <% cities[25..29].try(:each) do |city| %>
+                <li><%= link_to(city.formatted_name, city_path(city_params(city.state_long, city.name))) %></li>
+              <% end %>
+            </ul>
+          </div>
+      </div>
+  </div>
+</div>
