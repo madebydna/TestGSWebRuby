@@ -5,7 +5,7 @@ module WriteableModelConcerns
 
   %w[create create! save save! update update! destroy delete destroy_all delete_all].each do |method|
     define_method method do |*args|
-      writable_connection = master_version_of_connection(connection.current_database)
+      writable_connection = master_version_of_connection(self.class.connection_config[:connection_name])
       self.class.on_db(writable_connection) do
         super(*args)
       end
@@ -13,14 +13,14 @@ module WriteableModelConcerns
   end
 
   def master_version_of_connection(connection_name)
-    connection_name = connection_name.to_s
+    connection_name = connection_name.to_s.dup
 
     return connection_name if connection_name[-3..-1] == '_rw'
 
     if connection_name.index('_ro')
-      connection_name.sub! '_ro', '_rw'
+      connection_name = connection_name.sub '_ro', '_rw'
     else
-      connection_name << '_rw'
+      connection_name = connection_name + '_rw'
     end
 
     connection_name.to_sym

@@ -31,7 +31,7 @@ Example of sharding. This seems to work, but just using on_db to switch dbs seem
 
     # Given a connection like gs_schooldb or ca, return the rw version
     def self.master_version_of_connection(connection_name)
-      connection_name = connection_name.to_s
+      connection_name = connection_name.to_s.dup
 
       return connection_name if connection_name[-3..-1] == '_rw'
 
