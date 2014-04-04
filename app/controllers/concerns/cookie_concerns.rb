@@ -60,12 +60,13 @@ module CookieConcerns
   # For cookie dictionaries, delete only portion of cookie described by key
   def delete_cookie(cookie_name, key = nil)
     config = self.cookie_config cookie_name
+    domain = config[:domain].presence || :all
 
     if config[:hash] && key.present?
       cookie = self.cookie cookie_name
-      cookie.delete key.to_sym
+      cookie.delete key.to_sym, domain: domain
     else
-      cookies.delete cookie_name
+      cookies.delete cookie_name, domain: domain
     end
   end
 
