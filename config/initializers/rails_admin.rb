@@ -30,7 +30,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Category', 'CategoryData', 'CategoryPlacement', 'Page', 'ResponseValue']
+  config.included_models = ['Category', 'CategoryData', 'CategoryPlacement', 'Page', 'ResponseValue','SchoolProfileConfiguration']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -247,6 +247,28 @@ RailsAdmin.config do |config|
         enum do
           Collection.all.map { |collection| [collection.name, collection.id] }
         end
+      end
+    end
+  end
+
+  ###  SchoolProfileConfiguration  ###
+
+  config.model 'SchoolProfileConfiguration' do
+
+    list do
+      field :state
+      field :configuration_key
+      field :value
+    end
+    edit do
+      field :state
+      field :configuration_key
+      field :value, :text do
+        def value
+          data = super
+          JSON.pretty_unparse(JSON.parse(data)) if data.present?
+        end
+        codemirror true
       end
     end
   end

@@ -2,6 +2,20 @@
 require 'spork'
 require 'rubygems'
 
+def monkey_patch_database_cleaner
+  DatabaseCleaner::ActiveRecord::Base.module_eval do
+    # For some reason, by default database_cleaner will re-load the database.yml file, but we modify
+    # Rails' db configuration after database.yml is loaded by the Rails environment.
+    #
+    # Instead of letting database_cleaner reload database.yml, just tell it to use the config that is already loaded
+    def load_config
+      if self.db != :default && self.db.is_a?(Symbol)
+        @connection_hash   = ::ActiveRecord::Base.configurations['test'][self.db.to_s]
+      end
+    end
+  end
+end
+
 Spork.prefork do
   require 'simplecov'
 
@@ -78,21 +92,16 @@ Spork.prefork do
     end
 
     DatabaseCleaner.strategy = :truncation
+    # This needs to be done after we've loaded an ActiveRecord strategy above
+    monkey_patch_database_cleaner
 
     config.before(:suite) do
-      DatabaseCleaner.clean_with(:truncation)
-    end
-
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
-
-    config.after :each do
-      DatabaseCleaner.clean
-    end
-
-    config.after(:suite) do
-      DatabaseCleaner.clean_with(:truncation)
+      # Before we run our specs, truncate every test db
+      DatabaseConfigurationHelper.all_rw_connections_for('test').each do |connection|
+        puts "Cleaning #{connection} db"
+        DatabaseCleaner[:active_record, connection: connection.to_sym].strategy = :truncation
+        DatabaseCleaner[:active_record, connection: connection.to_sym].clean
+      end
     end
 
   end
@@ -111,11 +120,13 @@ Spork.each_run do
     config.use_transactional_fixtures = true
   end
 
-=begin
-  # found this suggestion on a blog, for how to make FactoryGirl clear data between examples, but it didnt work
-  FactoryGirl.sequences.clear
-  FactoryGirl.factories.clear
-  Dir["#{Rails.root}/spec/support/*.rb"].each {|f| load f}
-=end
   FactoryGirl.reload
+end
+
+# Takes as arguments as list of db names as symbols
+def clean_dbs(*args)
+  args.each do |db|
+    DatabaseCleaner[:active_record, connection: db].strategy = :truncation
+    DatabaseCleaner[:active_record, connection: db].clean
+  end
 end

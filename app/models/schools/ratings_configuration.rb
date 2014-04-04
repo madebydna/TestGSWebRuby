@@ -1,91 +1,47 @@
 class RatingsConfiguration
-  # TODO move into the database
-  def self.city_rating_configuration
-    {"mi" => { "Detroit" => Hashie::Mash.new({
-                                  rating_breakdowns: {
-                                      climate: {data_type_id: 200, label: "School Climate"},
-                                      status: {data_type_id: 198, label: "Academic Status"},
-                                      progress: {data_type_id: 199, label: "Academic Progress"}
-                                  },
-                                  overall: {data_type_id: 201, label: "overall", description_key: "mi_esd_summary"}
-                              })}}
+
+  attr_accessor :city_rating_configuration, :state_rating_configuration, :gs_rating_configuration, :prek_rating_configuration, :city
+
+  def initialize(city_rating_configuration,state_rating_configuration,gs_rating_configuration,prek_rating_configuration)
+    @city_rating_configuration = city_rating_configuration
+    @state_rating_configuration = state_rating_configuration
+    @gs_rating_configuration = gs_rating_configuration
+    @prek_rating_configuration = prek_rating_configuration
   end
 
-  def self.state_rating_configuration
-    {"mi" => Hashie::Mash.new({
-                                  overall: {data_type_id: 197, description_key: "mi_state_accountability_summary"}
-                              })}
+  def self.configuration_for_school(state)
+    city_rating_configuration, state_rating_configuration, gs_rating_configuration, prek_rating_configuration = nil
+    rating_configuration = SchoolProfileConfiguration.for_state(state)
+
+
+    rating_configuration.each do |config|
+      if config.configuration_key == 'city_rating'
+        city_rating_configuration = JSON.parse(config.value)
+      elsif config.configuration_key == 'state_rating'
+        state_rating_configuration = JSON.parse(config.value)
+      elsif config.configuration_key == 'gs_rating'
+        gs_rating_configuration = JSON.parse(config.value)
+      elsif config.configuration_key == 'preK_rating'
+        prek_rating_configuration = JSON.parse(config.value)
+      end
+    end
+    RatingsConfiguration.new(city_rating_configuration, state_rating_configuration, gs_rating_configuration, prek_rating_configuration)
   end
 
-  def self.gs_rating_configuration
-    Hashie::Mash.new({
-                         rating_breakdowns: {
-                             test_scores: {data_type_id: 164, label: "Test score rating"},
-                             progress: {data_type_id: 165, label: "Student growth rating"},
-                             college_readiness: {data_type_id: 166, label: "College readiness rating"}
-                         },
-                         overall: {description_key: "what_is_gs_rating_summary"}
-                     })
+  def gs_rating_data_type_ids
+    @gs_rating_configuration.blank? ? [] : @gs_rating_configuration["rating_breakdowns"].values.map{|r| r["data_type_id"]}
   end
 
-  def self.preK_rating_configuration
-    #Pre-k rating configuration is by state
-    {"mi" => Hashie::Mash.new({
-                                  star_rating: {data_type_id: 217, description_key: "mi_prek_star_rating_summary"}
-                              })}
+  def state_rating_data_type_ids
+    @state_rating_configuration.blank? ? [] : Array(@state_rating_configuration["overall"]["data_type_id"])
   end
 
-
-  def self.fetch_city_rating_configuration school
-    city_rating_config_exists?(school) ? city_rating_configuration[school.shard.to_s][school.city] : nil
+  def city_rating_data_type_ids
+    @city_rating_configuration.blank? ? [] : @city_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]} + Array(@city_rating_configuration["overall"]["data_type_id"])
   end
 
-  def self.fetch_gs_rating_configuration
-    gs_rating_configuration
-  end
-
-  def self.fetch_state_rating_configuration school
-    state_rating_config_exists?(school) ? state_rating_configuration[school.shard.to_s] : nil
-  end
-
-  def self.fetch_preK_rating_configuration(school)
-    preK_rating_config_exists?(school) ? preK_rating_configuration[school.shard.to_s] : nil
-  end
-
-  def self.fetch_state_rating_data_type_ids school
-    state_rating_configuration = fetch_state_rating_configuration school
-    state_rating_configuration.nil? ? [] : Array(state_rating_configuration.overall.data_type_id)
-  end
-
-  def self.fetch_gs_rating_data_type_ids
-    gs_rating_configuration = fetch_gs_rating_configuration
-    gs_rating_configuration.nil? ? [] : gs_rating_configuration.rating_breakdowns.values.map(&:data_type_id)
-  end
-
-  def self.fetch_city_rating_data_type_ids school
-    city_rating_configuration = fetch_city_rating_configuration school
-    city_rating_configuration.nil? ? [] : city_rating_configuration.rating_breakdowns.values.map(&:data_type_id) + Array(city_rating_configuration.overall.data_type_id)
-  end
-
-  def self.fetch_preK_rating_data_type_ids school
-    preK_rating_configuration = fetch_preK_rating_configuration school
-    preK_rating_configuration.nil? ? [] : Array(preK_rating_configuration.star_rating.data_type_id)
-  end
-
-  def self.city_rating_config_exists? school
-    !city_rating_configuration[school.shard.to_s].nil? && !city_rating_configuration[school.shard.to_s][school.city].nil?
-  end
-
-  def self.state_rating_config_exists? school
-    !city_rating_configuration[school.shard.to_s].nil?
-  end
-
-  def self.gs_rating_config_exists?
-    !gs_rating_configuration.nil?
-  end
-
-  def self.preK_rating_config_exists? school
-    !preK_rating_configuration[school.shard.to_s].nil?
+  def prek_rating_data_type_ids
+    @prek_rating_configuration.blank? ? [] : Array(@prek_rating_configuration["star_rating"]["data_type_id"])
   end
 
 end

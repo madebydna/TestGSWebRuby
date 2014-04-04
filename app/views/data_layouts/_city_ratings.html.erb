@@ -23,8 +23,10 @@
                         <tr><td><%= key %></td><td><%= value %></td></tr>
                     <% end %>
                 </table>
-                <h5>Methodology</h5>
-                <a href="http://www.excellentschoolsdetroit.org/en/how-do-schools-stack" target="_blank">View more details on ESD site</a>
+                <% if data["city_rating"]["methodology_url"]%>
+                    <h5>Methodology</h5>
+                    <a href="<%= data["city_rating"]["methodology_url"] %>" target="_blank">View more details on ESD site</a>
+                <% end %>
             </div>
         <% end %>
         </div>

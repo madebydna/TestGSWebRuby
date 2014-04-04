@@ -117,10 +117,10 @@ module ApplicationHelper
     end
   end
 
-  def category_placement_data(category_placement)
+  def category_placement_data(page_config, category_placement)
     @data_cache ||= {}
     if category_placement.category
-      @data_cache[category_placement] ||= category_placement.category.data_for_school(@school)
+      @data_cache[category_placement] ||= @school.data_for_category category: category_placement.category
     end
   end
 

@@ -15,21 +15,24 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# Create an ENV_GLOBAL constant with config options that we can use throughout the app
-# Look for /usr/local/etc/GSWebRuby-config.yml which can be a machine-specific config to overwrite the defaults
-ENV_GLOBAL = YAML.load_file("#{Dir.pwd}/config/env_global.yml")
-file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
-ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
 
-file = File.join(Dir.pwd, 'config', 'env_global_local.yml')
-if File.exist?(file)
-  yaml = YAML.load_file file
-  ENV_GLOBAL.merge!(yaml) if yaml.present?
-end
 
 
 module LocalizedProfiles
   class Application < Rails::Application
+    # Create an ENV_GLOBAL constant with config options that we can use throughout the app
+    # Look for /usr/local/etc/GSWebRuby-config.yml which can be a machine-specific config to overwrite the defaults
+    ::ENV_GLOBAL = YAML.load_file(Rails.root.join('config','env_global.yml'))
+    file = File.join('', 'usr', 'local', 'etc', 'GSWebRuby-config.yml')
+    ::ENV_GLOBAL.merge!(YAML.load_file(file)) if File.exist?(file)
+
+    file = Rails.root.join('config', 'env_global_local.yml')
+    if File.exist?(file)
+      yaml = YAML.load_file file
+      ::ENV_GLOBAL.merge!(yaml) if yaml.present?
+    end
+
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

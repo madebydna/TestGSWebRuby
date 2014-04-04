@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'slop'
+
+opts = Slop.parse do
+  on :f, :file=, 'sample data file to run'
+  on :h, :host=, 'mysql host'
+  on :u, :username=, 'mysql username'
+  on :p, :password=, 'mysql password'
+end
+
+hash = opts.to_hash
+
+ENV['mysql_host'] = opts['host']
+ENV['mysql_username'] = opts['username']
+ENV['mysql_password'] = opts['password']
+
+$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+file = File.join(File.dirname(__FILE__), '..', 'db', 'sample_data', 'queries', "#{opts['file']}.rb")
+
+require_relative File.join('..', file)
+

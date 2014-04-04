@@ -4,11 +4,11 @@ class CategoryPlacement < ActiveRecord::Base
   has_ancestry
   db_magic :connection => :profile_config
 
+  attr_writer :memoized_parent, :memoized_children
+
   include BelongsToCollectionConcerns
   belongs_to :category
   belongs_to :page
-
-  delegate :data_for_school, to: :category
 
   after_initialize :set_defaults
   before_validation :parse_layout_json
@@ -16,14 +16,6 @@ class CategoryPlacement < ActiveRecord::Base
   # creates a key that identifies this placement's category on a specific page, with a specific format
   def page_category_layout_key
     "page#{page.id}_category#{category.id}_layout#{layout}"
-  end
-
-  def has_data?(school)
-    if has_children?
-      children.map { |child| child.has_data?(school) }.any?
-    else
-      category.nil? || category.has_data?(school)
-    end
   end
 
   # layout name => partial name
@@ -102,8 +94,8 @@ class CategoryPlacement < ActiveRecord::Base
 
   def parent_enforced_sizes
     sizes = {}
-    position_among_siblings = siblings.index(self)
-    parent_json = parent.layout_config_json
+    position_among_siblings = memoized_siblings.map(&:id).index(self.id)
+    parent_json = memoized_parent.layout_config_json
     if parent_json['child_sizes'].present? && parent_json['child_sizes'].length > position_among_siblings
       sizes = parent_json['child_sizes'][position_among_siblings]
     end
@@ -138,6 +130,22 @@ class CategoryPlacement < ActiveRecord::Base
 
   def partial
     "data_layouts/#{layout}"
+  end
+
+  def memoized_parent
+    @memoized_parent ||= parent
+  end
+
+  def memoized_children
+    @memoized_children ||= children
+  end
+
+  def has_children?
+    memoized_children.any?
+  end
+
+  def memoized_siblings
+    memoized_parent.memoized_children.sort_by(&:position)
   end
 
 end

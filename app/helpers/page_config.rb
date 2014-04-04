@@ -1,5 +1,5 @@
 class PageConfig
-  attr_reader :configured_placements_per_position, :position_datas, :school
+  attr_reader :page, :school
 
   def initialize(page_name, school)
     @school = school
@@ -10,19 +10,70 @@ class PageConfig
     end
 
     @page = page
-    @position_datas = page.category_placements
+    initialize_category_placements
   end
 
-  def placements
-    @position_datas
+  def initialize_category_placements
+    @category_placements = page.category_placements.eager_load(:category)
+    @category_placements_id_hash = @category_placements.each_with_object({}) do |cp, hash|
+      hash[cp.id] = cp
+      cp.memoized_children = []
+    end
+    @category_placements.each do |cp|
+      if cp.ancestry.present?
+        parent = @category_placements_id_hash[cp.parent_id]
+        cp.memoized_parent = parent
+        children = (parent.memoized_children || []) << cp
+        parent.memoized_children = children
+      end
+    end
+  end
+
+  def category_placements
+    @category_placements ||= page.category_placements
   end
 
   def root_placements
-    @position_datas.select(&:root?).sort_by(&:position)
+    category_placements.select { |cp| cp.ancestry.nil? }.sort_by(&:position)
   end
 
   def root_placements_with_data
-    root_placements.select{ |placement| placement.has_data?(school) }
+    root_placements.select { |cp| category_placement_has_data? cp }
+  end
+
+  def category_placement_children(parent)
+    category_placements.select { |cp| cp.parent_id == parent.id }
+  end
+
+  def category_placement_has_children?(cp)
+    category_placement_children(cp).any?
+  end
+
+  def category_placement_descendants(parent)
+    category_placements.select { |cp| Array(cp.ancestor_ids).include?(parent.id) }
+  end
+
+  def category_placement_leaves(cp)
+    category_placement_descendants(cp).reject { |descendant_cp| category_placement_has_children? descendant_cp }
+  end
+
+  def category_placement_parent(child)
+    category_placements.detect { |cp| child.parent_id == cp.id }
+  end
+
+  def category_placement_children_with_data(parent)
+    category_placement_children(parent).select { |cp| category_placement_has_data? cp }
+  end
+
+  def category_placement_has_data?(cp)
+    @category_placement_has_data ||= {}
+    @category_placement_has_data[cp.cache_key] ||= (
+      if category_placement_has_children? cp
+        category_placement_children_with_data(cp).any?
+      else
+        cp.category.nil? || cp.category.has_data?(school, page_config: self)
+      end
+    )
   end
 
 end

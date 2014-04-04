@@ -13,7 +13,8 @@
                 <h5>Rating Breakdown</h5>
                 <table class="table table-striped">
                     <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
-                        <tr><td><%= key %></td><td><%= value %></td></tr>
+                        <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
+                        <tr><td colspan="2"><%= value['description'] %></td></tr>
                     <% end %>
                 </table>
             </div>

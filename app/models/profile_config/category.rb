@@ -15,9 +15,13 @@ class Category < ActiveRecord::Base
       CategoryData.on_db(:profile_config).order('sort_order asc').belonging_to_collections(self, collections)
   end
 
-  def has_data?(school)
+  def has_data?(school, options = {})
+    options[:category] = self
     return true if source.blank?
-    school.data_for_category(self).present?
+    if school.respond_to?(:data_for_category)
+      return school.data_for_category(options).present?
+    end
+    return false
   end
 
   def keys(collections = nil)
@@ -35,12 +39,8 @@ class Category < ActiveRecord::Base
     name.gsub /\W+/, '_'
   end
 
-  def data_for_school(school)
-    school.data_for_category(self)
-  end
-
   def possible_sources
-    CategoryDataReader.sources
+    SchoolProfileDataDecorator.data_readers
   end
 
   # This method will return all of the various data keys that are configured to display for a certain *source*
