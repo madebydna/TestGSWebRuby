@@ -27,8 +27,8 @@
       <% end %>
     </div>
   </div>
-  <% if controller.controller_name + '-' + controller.action_name == 'cities-show' %>
-    <%= render 'event_announcements', announcement: @announcement  %>
+  <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement[:visible] %>
+    <%= render 'event_announcements', announcement: announcement  %>
   <% end %>
 <% else %>
   <h4 class="small">No Upcoming Important Dates</h4>

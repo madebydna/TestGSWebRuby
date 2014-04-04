@@ -100,7 +100,7 @@ module SchoolProfileDataDecorator
   end
 
   def gs_rating
-    rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
+    rating = rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
   end
 
   def local_rating

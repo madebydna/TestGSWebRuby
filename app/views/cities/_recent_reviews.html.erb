@@ -15,7 +15,9 @@
         </div>
         <div class="bottom medium-bold mtl"><%= review.school.name %></div>
         <% unless review.school.gs_rating.nil? %>
-            <p class="bottom">GreatSchools rating: <%= review.school.gs_rating %></p>
+          <p class="bottom">GreatSchools rating: <%= review.school.gs_rating %></p>
+        <% else %>
+          <p class="bottom">GreatSchools rating: <span class="ratingx24 ratingx24-nr"></span></p>
         <% end %>
         <%= link_to "Read all #{review.count} reviews", school_reviews_url(review.school), class: 'small' %>
       </div>
