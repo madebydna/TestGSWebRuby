@@ -91,7 +91,7 @@ development: &development
 # Do not set this db to the same as development or production.
 
 test: &test
-  <<: *mysql_localhost
+  <<: *mysql_localhost_rw
   database: LocalizedProfiles_test
   profile_config_rw:
     <<: *mysql_localhost
