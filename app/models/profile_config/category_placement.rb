@@ -140,7 +140,7 @@ class CategoryPlacement < ActiveRecord::Base
     @memoized_children ||= children
   end
 
-  def has_children?
+  def memoized_has_children?
     memoized_children.any?
   end
 

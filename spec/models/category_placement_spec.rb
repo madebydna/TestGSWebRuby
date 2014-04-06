@@ -20,7 +20,7 @@ describe CategoryPlacement do
       end
 
       after do
-        clean_dbs :localized_profiles
+        clean_dbs :profile_config
       end
 
       it 'should return configured sizes merged onto default sizes' do
