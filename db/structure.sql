@@ -65,15 +65,6 @@ CREATE TABLE `category_placements` (
   KEY `index_category_placements_on_ancestry` (`ancestry`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `census_breakdowns` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datatype_id` int(11) DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 CREATE TABLE `collections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -126,6 +117,16 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `unique_schema_migrations` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `school_profile_configurations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `configuration_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE `versions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -168,17 +169,11 @@ INSERT INTO schema_migrations (version) VALUES ('20130910163926');
 
 INSERT INTO schema_migrations (version) VALUES ('20130911003057');
 
-INSERT INTO schema_migrations (version) VALUES ('20130911193454');
-
 INSERT INTO schema_migrations (version) VALUES ('20130916205012');
-
-INSERT INTO schema_migrations (version) VALUES ('20130917180916');
 
 INSERT INTO schema_migrations (version) VALUES ('20130917181944');
 
 INSERT INTO schema_migrations (version) VALUES ('20130917224159');
-
-INSERT INTO schema_migrations (version) VALUES ('20130918042153');
 
 INSERT INTO schema_migrations (version) VALUES ('20131114184219');
 
@@ -197,3 +192,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131224043314');
 INSERT INTO schema_migrations (version) VALUES ('20140114185644');
 
 INSERT INTO schema_migrations (version) VALUES ('20140114224135');
+
+INSERT INTO schema_migrations (version) VALUES ('20140324164349');
