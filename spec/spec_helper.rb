@@ -94,14 +94,6 @@ Spork.prefork do
     # This needs to be done after we've loaded an ActiveRecord strategy above
     monkey_patch_database_cleaner
 
-    config.before(:suite) do
-      # Before we run our specs, truncate every test db
-      DatabaseConfigurationHelper.all_rw_connections_for('test').each do |connection|
-        puts "Cleaning #{connection} db"
-        DatabaseCleaner[:active_record, connection: connection.to_sym].strategy = :truncation
-        DatabaseCleaner[:active_record, connection: connection.to_sym].clean
-      end
-    end
 
   end
 end
