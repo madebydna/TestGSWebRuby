@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'controllers/concerns/localization_concerns_spec'
 describe LocalizedProfileController do
   it_behaves_like 'localization'
 
