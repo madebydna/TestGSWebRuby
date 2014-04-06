@@ -95,6 +95,15 @@ group :development do
   # Use the Thin server in development for speed and other improvements
   gem 'thin'
 
+  # Guard automatically watches files for changes and re-runs bundler, rspec, etc
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
+
+  # Zeus keeps a rails environment running so that rspec(and other commands)
+  # can be ran much more quickly
+  gem 'zeus'
 end
 
 group :development, :test do
@@ -138,14 +147,6 @@ group :development, :test do
   gem 'simplecov-html', '~> 0.8.0'
   gem 'simplecov-rcov'
 
-
-  # Guard and Spork for faster rspec testing
-  gem 'spork-rails', '~> 4.0.0'
-  gem 'guard'
-  gem 'guard-bundler'
-  gem 'guard-rspec'
-  gem 'guard-spork'
-  gem 'guard-livereload'
   gem 'childprocess'
 
   # Allows Ruby to communicate with growl, for system messaging. e.g. you can pop up an alert when your tests fail
