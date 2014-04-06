@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe BannedIp do
-  include SpecForModelWithCustomConnection
+  after do
+    clean_dbs :community
+  end
 
   let(:banned_ip) { FactoryGirl.create(:banned_ip, ip: '1.1.1.1') }
   let(:expired_banned_ip) { FactoryGirl.create(:expired_banned_ip, ip: '2.2.2.2') }

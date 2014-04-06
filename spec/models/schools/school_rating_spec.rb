@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe SchoolRating do
-  include SpecForModelWithCustomConnection
+  after do
+    clean_dbs :surveys
+  end
 
   let(:review) { FactoryGirl.build(:valid_school_rating) }
   let(:school) { FactoryGirl.build(:school) }

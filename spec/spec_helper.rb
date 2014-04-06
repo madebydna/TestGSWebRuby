@@ -38,7 +38,6 @@ Spork.prefork do
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'database_cleaner'
-  require 'spec_for_model_with_custom_connection'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
