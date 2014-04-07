@@ -3,7 +3,7 @@ class City < ActiveRecord::Base
 
   db_magic :connection => :us_geo
 
-  attr_accessible :population, :bp_census_id
+  attr_accessible :population, :bp_census_id, :name, :state
 
   scope :active, where(active: true)
 
@@ -15,9 +15,5 @@ class City < ActiveRecord::Base
 
   def state_long
     States.abbreviation_hash[state.downcase]
-  end
-
-  def formatted_name
-    "#{name}, #{state}"
   end
 end
