@@ -26,4 +26,15 @@ $(function() {
             $(this).html('Close')
         }
     });
+
+    $('.js-connect-with-us-buttons').on('mouseover', 'span', function () {
+        var cssClass = $(this).attr('class');
+        $(this).attr('class', cssClass + '-c');
+    });
+
+    $('.js-connect-with-us-buttons').on('mouseout', 'span', function () {
+        var cssClass = $(this).attr('class');
+        cssClass = cssClass.replace(new RegExp('-c$'), '');
+        $(this).attr('class', cssClass);
+    });
 });
