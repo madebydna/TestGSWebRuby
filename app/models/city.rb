@@ -10,7 +10,7 @@ class City < ActiveRecord::Base
   def self.popular_cities(state, options = {})
     result = where(state: state, active: 1).order('population desc')
     result = result.limit(options[:limit]) if options[:limit]
-    result
+    result.reorder('name asc')
   end
 
   def state_long
