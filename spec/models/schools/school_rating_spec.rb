@@ -50,15 +50,14 @@ describe SchoolRating do
   it 'should require a state' do
     review.state = nil
     expect(review).to_not be_valid
-    review.state = 'ca'
+    review.state = 'CA'
     expect(review).to be_valid
   end
 
   it 'should validate the state\'s format' do
-    pending
     review.state = 'blah'
     expect(review).to_not be_valid
-    review.state = 'ca'
+    review.state = 'CA'
     expect(review).to be_valid
   end
 

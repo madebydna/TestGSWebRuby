@@ -89,9 +89,4 @@ module States
   def self.abbreviations
     abbreviation_hash.keys.sort
   end
-
-  # lowercased array of state abbreviations as symbols
-  def self.abbreviations_as_symbols
-    abbreviations.map{ |state| state.downcase.to_sym }
-  end
 end

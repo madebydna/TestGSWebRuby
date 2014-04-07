@@ -12,7 +12,7 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :not_provisional, where('length(status) = 1')
   scope :quality_decline, where("quality != 'decline'")
-  scope :belonging_to, lambda { |user| where(member_id: user.id) }
+  scope :belonging_to, lambda { |user| where(member_id: user.id).order('posted desc') }
   scope :disabled, where(status: %w[d pd])
   scope :unpublished, where(status: %w[u pu])
   scope :held, where(status: %w[h ph])
@@ -27,8 +27,7 @@ class SchoolRating < ActiveRecord::Base
   alias_attribute :overall, :quality
   alias_attribute :affiliation, :who
 
-  validates_presence_of :state
-  #validates_format_of :state, with: /#{States.state_hash.values.join '|'}/
+  validates :state, presence: true, inclusion: { in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state" }
   validates_presence_of :school
   validates_presence_of :user
   validates :who, inclusion: { in: %w(parent teacher other student) }, if: 'school && school.includes_highschool?'

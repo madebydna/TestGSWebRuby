@@ -141,7 +141,6 @@ test: &test
     <<: *mysql_localhost
     database: us_geo_test
     legacy: true
-  us_geo:
 
 cucumber:
   <<: *test

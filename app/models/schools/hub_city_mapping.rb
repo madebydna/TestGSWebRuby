@@ -10,13 +10,9 @@ class HubCityMapping < ActiveRecord::Base
   alias_attribute :has_enroll_page?, :hasEnrollPage
   alias_attribute :has_partner_page?, :hasPartnerPage
 
-  # - Active should be one
-  # - should just use a where clause
   def self.for_collection_id(collection_id)
-    all_mappings = Rails.cache.fetch('hub_city_mapping/all', expires_in: 5.minutes) do
-      self.all
+    Rails.cache.fetch('hub_city_mapping/all', expires_in: 5.minutes) do
+      where(collection_id: collection_id, active: true).first
     end
-    all_mappings.select { |hub_city_mapping| hub_city_mapping.collection_id.to_i == collection_id.to_i }
   end
-
 end

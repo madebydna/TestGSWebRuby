@@ -13,8 +13,8 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
-    set_meta_tags :title => 'Log in to GreatSchools'
-    set_meta_tags :robots => 'noindex'
+    set_meta_tags title: 'Log in to GreatSchools',
+                  robots: 'noindex'
 
     @active_tab = params[:tab] || 'login'
     gon.pagename = 'signin/new'
@@ -26,8 +26,8 @@ class SigninController < ApplicationController
   end
 
   def new_join
-    set_meta_tags :title => 'Join GreatSchools'
-    set_meta_tags :robots => 'noindex'
+    set_meta_tags title: 'Join GreatSchools',
+                  robots: 'noindex'
 
     @active_tab = 'join'
     gon.pagename = 'signin/new' # If this is changed, make sure JS is handled, i.e. signin_new-init.js
@@ -150,7 +150,6 @@ class SigninController < ApplicationController
   end
 
   def register
-
     user, error = register_user(false, {
       email: params[:email]
     })

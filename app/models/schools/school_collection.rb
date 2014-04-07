@@ -62,7 +62,7 @@ class SchoolCollection
   def self.for_school(school)
     collection_id = school.school_metadata['collection_id']
     if collection_id
-      hub_city_mapping = HubCityMapping.for_collection_id(collection_id).first
+      hub_city_mapping = HubCityMapping.for_collection_id(collection_id)
       if hub_city_mapping
         return [ Collection.from_hub_city_mapping(hub_city_mapping) ]
       end

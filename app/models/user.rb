@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def school_reviews
-    SchoolRating.belonging_to(self).order('posted desc')
+    SchoolRating.belonging_to(self)
   end
 
   def published_reviews

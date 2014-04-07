@@ -12,6 +12,13 @@ describe SigninController do
     end
   end
 
+  describe '#new_join' do
+    it 'sets meta tags' do
+      controller.should_receive(:set_meta_tags).twice
+      get :new
+    end
+  end
+
   describe '#create' do
 
     describe 'authenticate' do
@@ -51,8 +58,9 @@ describe SigninController do
 
     describe 'register' do
       it 'should register new user if no password provided' do
-        pending 'fix'
-        get :create, email: 'blah@example.com'
+        expect {
+          get :create, email: 'blah@example.com'
+        }.to change(User, :count).by(1)
       end
 
       context 'registration error' do

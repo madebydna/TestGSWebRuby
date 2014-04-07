@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'City Hub Page', js: true do
+describe 'City Hub Page' do
   let(:city_page_url) { '/michigan/detroit' }
   before(:all) do
     clean_dbs :gs_schooldb
@@ -18,10 +18,6 @@ describe 'City Hub Page', js: true do
   before(:each) { visit city_page_url }
 
   describe 'search' do
-    it 'searches and redirects to java results' do
-      pending
-    end
-
     it 'displays sponsor information' do
       expect(page).to have_css("a[href='education-community/partner']")
       expect(page).to have_xpath("//img[@alt='sponsor logo']")
@@ -58,7 +54,7 @@ describe 'City Hub Page', js: true do
   end
 
   describe 'join our community' do
-    it 'renders the join well' do
+    it 'renders the join well', js: true do
       expect(page).to have_content('Join our community')
       click_button 'Join'
       expect(current_path).to eq('/gsr/login/')
@@ -76,7 +72,7 @@ describe 'City Hub Page', js: true do
   end
 
   describe 'education community carousel' do
-    it 'shows the carousel' do
+    it 'shows the carousel', js: true do
       cycle_function = page.evaluate_script("$('.cycle-slideshow').cycle")
       expect(cycle_function).to_not be_nil
       expect(page).to have_css('.cycle-slide')
