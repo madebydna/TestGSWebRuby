@@ -1,6 +1,5 @@
 <% content_for :javascript_includes do %>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
-  <%= javascript_include_tag "localized_profiles/search.js" %>
 <% end %>
 
 <div class="image-bg-scale">
@@ -22,25 +21,6 @@
 
               </div>
             </div>
-
-            <script>
-              $(document).ready(function() {
-                var locationSelector = '.search-type-toggle div:first-child'
-                var nameSelector = '.search-type-toggle div:last-child'
-                $(locationSelector).click(function() {
-                  $(this).addClass('selected')
-                  $('.location-search').show()
-                  $(nameSelector).removeClass('selected')
-                  $('.name-search').hide()
-                })
-                $(nameSelector).click(function() {
-                  $(this).addClass('selected')
-                  $('.name-search').show()
-                  $(locationSelector).removeClass('selected')
-                  $('.location-search').hide()
-                })
-              });
-            </script>
 
             <div class="search-type-toggle mtm clearfix" style='margin-bottom: 23px;'>
               <div class='pull-left selected' style='margin-right: 30px;'>
