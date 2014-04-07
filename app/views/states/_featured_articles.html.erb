@@ -1,7 +1,7 @@
 <% unless articles.nil? %>
   <h3>Related articles</h3>
   <% articles.each do |article| %>
-    <div class="col-xs-12 col-sm-6 col-lg-6">
+    <div class="col-xs-12 col-sm-6 col-lg-6 prm">
       <%= image_tag(article[:articleImagePath], class: 'pull-left mhm mts', width: '100px') %>
       <div style='margin-left: 120px'>
         <% if article[:newwindow] %>

@@ -17,21 +17,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var init = function(state) {
         $('.js-findByLocationForm').submit(function() {
-            try {
-                return submitByLocationSearch.apply(this);
-            } catch(e) {
-                console.log(e.message);
-                return false;
-            }
+            return submitByLocationSearch.apply(this);
         });
 
         $('.js-findByNameForm').submit(function() {
-            try {
-                return submitByNameSearch.apply(this);
-            } catch(e) {
-                console.log(e.message);
-                return false;
-            }
+            return submitByNameSearch.apply(this);
         });
     };
 
