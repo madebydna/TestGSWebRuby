@@ -204,7 +204,7 @@ class CollectionConfig < ActiveRecord::Base
       begin
         important_events = Rails.cache.fetch(important_events_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
           raw_important_events_str = CollectionConfig.where(collection_id: collection_id, quay: CITY_HUB_IMPORTANT_EVENTS_KEY).first.value
-          important_events = eval(raw_important_events_str)
+          important_events = eval(raw_important_events_str)[:events]
           important_events.each do |event|
             event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
           end
