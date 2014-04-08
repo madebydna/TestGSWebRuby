@@ -2,6 +2,20 @@
 
 ### Getting Started
 
+#### Prerequisites
+
+  To set up this project, you'll need:
+
+  - A git binary on your path (`which git`)
+  - The ability to check out code from Git (you have to send your git .ssh
+    keys to the system admins)
+  - A running mysql server on your machine (`mysql -uroot`)
+  - A ruby binary on your path (`which ruby`)
+  - A gem binary on your path (`which gem`)
+  - A bundler binary on your path (`which bundle`)
+    - If you have everything else but are missing bundler, you can install it
+      with `gem install bundler`
+
 #### Getting the code
 
 1. do a git clone (probably already done unless you're viewing this elsewhere):
@@ -65,6 +79,7 @@ necessary
 and you should see a school profile page
 
 #### Getting more data
+
   If you'd like to load more pages or see more data on your local machine
   you'll want to do either of the following steps:
 
@@ -73,3 +88,18 @@ and you should see a school profile page
       __OR__
 
 - Run rake task to point your machine to the dev database (WIP)
+
+### Coding conventions
+  
+  Currently, the team has agreed to generally follow the ruby style 
+  conventions at the [community Ruby Style Guide on Github]
+  (https://github.com/bbatsov/ruby-style-guide). If you're not familiar with
+  it, please give it a read. Also, suggestions are welcome, so
+  feel free to discuss with the team about specific ruby style conventions.
+
+  Rubocop is a code analyze that's based on the ruby style guide, and is
+  currently being looked at. The Cane gem has also been suggested.
+
+### Troubleshooting
+
+  WIP
