@@ -18,7 +18,7 @@ GS.viewMoreCollapseInit = function() {
     var fullHeight = $p.data('height');
     $p.animate({
       height: fullHeight
-    }, function() {
+    }, 'linear', function() {
       $(this).css('height', 'auto');
     });
     $(this).unbind('click');
@@ -28,14 +28,14 @@ GS.viewMoreCollapseInit = function() {
   function collapseClick() {
     $(this).text('View More »')
     var $p = $(this).parent().find(textSelector);
-    $p.animate({ height: foldHeight + 'px' })
+    $p.animate({ height: foldHeight + 'px' }, 'linear')
     $(this).unbind('click');
     $(this).click(expandClick);
   }
 
   function initExpandCollapse() {
     $('p.view-more').each(function() {
-      var $this = $(this)
+      var $this = $(this);
       var $p = $this.parent().find(textSelector);
       var tagText = $this.text();
       if (tagText == 'View Less') {
@@ -61,4 +61,4 @@ GS.viewMoreCollapseInit = function() {
 
 $(document).ready(function() {
   GS.viewMoreCollapseInit();
-})
+});
