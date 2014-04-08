@@ -7,7 +7,6 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   right: 0;
   left: 0;
   z-index: 1;
-  background-color: #F9F9F9;
 }
 
 // City Hub Search Hero //
@@ -45,7 +44,7 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   border-radius: 3px;
   width: 940px;
   margin: auto;
-  padding: 30px;
+  padding: 35px;
   overflow: hidden;
 }
 
@@ -426,9 +425,13 @@ p.view-more {
     display: none;
   }
 
-  .sponsor-bar img {
-    width: 20%;
+  .sponsor-bar {
+    padding-top: 0;
+    img {
+      width: 25%;
+    }
   }
+
   .search-bar {
     left: -10px;
     width: 100%;
