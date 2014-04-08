@@ -3,26 +3,7 @@
 
 <div class="limit_width_1200" style='margin-bottom: 40px;'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-
-  <div class="row">
-    <h1 class='mha' style='width: 170px;'>All events</h1>
-    <% @events.each do |event| %>
-      <div class="col-xs-12 col-sm-12 col-md-10 col-xs-10 mvm mha fn">
-        <hr>
-        <div class="pull-left mhm iconx48 i-48-calender-month-<%= event[:date].month %>">
-          <div class="tac" style='margin-top: 18px;'>
-            <h4 style='margin-bottom: -14px; font-size: 15px;'><%= event[:date].day %></h4>
-            <small style='font-size: 10px;'><%= event[:date].year %></small>
-          </div>
-        </div>
-        <div>
-          <span><%= event[:description] %></span>
-          <br>
-          <%= link_to 'Find out more', event[:url], class: 'small' %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <%= render 'events_list', events: @events %>
 </div>
 
-<%= render 'footer' %>
+<%= render 'shared/state_footer' %>
