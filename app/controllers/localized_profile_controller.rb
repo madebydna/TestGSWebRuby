@@ -65,7 +65,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
-    @school_reviews_all = @school.reviews
+    @school_reviews_all = @school.reviews.all
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
