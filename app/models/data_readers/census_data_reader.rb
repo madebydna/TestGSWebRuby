@@ -82,7 +82,7 @@ class CensusDataReader < SchoolProfileDataReader
     results = raw_data || []
 
     results.each_with_object({}) do |census_data_set, hash|
-      if census_data_set.school_value
+      if census_data_set.school_value && census_data_set.data_type
         hash[census_data_set.data_type.downcase] = census_data_set.school_value
       end
     end

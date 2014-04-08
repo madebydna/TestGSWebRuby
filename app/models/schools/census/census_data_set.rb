@@ -33,8 +33,12 @@ class CensusDataSet < ActiveRecord::Base
 
   # In this case we want the whole object, since there are two fields we need
   preload_all :census_data_type, :as => :census_data_type, :foreign_key => :data_type_id
-  def data_type; census_data_type.description; end
-  def data_format; census_data_type.type; end
+  def data_type
+    census_data_type.description if census_data_type
+  end
+  def data_format
+    census_data_type.type if census_data_type
+  end
 
 
   def census_data_school_value
