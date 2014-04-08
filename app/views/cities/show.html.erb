@@ -6,12 +6,12 @@
 
 <%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render 'shared/no_school_alert' %>
-<%= render 'sponsor_bar', sponsor: @sponsor %>
 
 <%= render 'shared/search_hero', collection_nickname: @collection_nickname,
                             collection_id: @collection_id,
                             state: @state,
                             breakdown_results: @breakdown_results,
+                            sponsor: @sponsor,
                             hero_image: @hero_image,
                             hero_image_mobile: @hero_image_mobile %>
 
