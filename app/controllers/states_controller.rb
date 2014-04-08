@@ -13,9 +13,11 @@ class StatesController < ApplicationController
       configs = CollectionConfig.where(collection_id: collection_id)
       @collection_nickname = CollectionConfig.collection_nickname(collection_id)
       @content_modules = CollectionConfig.content_modules(configs)
-      @articles = CollectionConfig.state_featured_articles(configs)
 
       @partners = CollectionConfig.state_partners(configs)
+
+      # Todo: reintegrate articles
+      # @articles = CollectionConfig.state_featured_articles(configs)
 
       # Hold off for now TODO: fix.
       @hero_image # = "/assets/city-hub/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"

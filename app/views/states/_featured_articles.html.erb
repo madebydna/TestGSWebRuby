@@ -1,18 +1,35 @@
-<% unless articles.nil? %>
-  <h3>Related articles</h3>
-  <% articles.each do |article| %>
-    <div class="col-xs-12 col-sm-6 col-lg-6 prm">
-      <%= image_tag(article[:articleImagePath], class: 'pull-left mhm mts', width: '100px') %>
-      <div style='margin-left: 120px'>
-        <% if article[:newwindow] %>
-          <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-        <% else %>
-          <%= link_to article[:heading], article[:articlepath] %>
-        <% end %>
-        <p><%= article[:content] %></p>
-      </div>
-    </div>
-  <% end %>
-  <%= link_to "More about #{state[:long]} »", '#', class: 'pull-right mrm' %>
-  <div class="clearfix"></div>
-<% end %>
+<h3 class='plm'>Related articles</h3>
+<div class="col-xs-12 col-sm-6 col-lg-6 prm">
+  <%= image_tag('http://alpha-demo.greatschools.org/res/img/cityHubs/1_Article_1.png', class: 'pull-left mhm mts', width: '100px') %>
+  <div style='margin-left: 120px'>
+    <%= link_to 'Google', 'http://google.com', target: '_blank' %>
+    <p><%= 'foo bar baz ' * 20 %></p>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-6 col-lg-6 prm">
+  <%= image_tag('http://alpha-demo.greatschools.org/res/img/cityHubs/1_Article_1.png', class: 'pull-left mhm mts', width: '100px') %>
+  <div style='margin-left: 120px'>
+    <%= link_to 'Google', 'http://google.com', target: '_blank' %>
+    <p><%= 'foo bar baz ' * 20 %></p>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-6 col-lg-6 prm">
+  <%= image_tag('http://alpha-demo.greatschools.org/res/img/cityHubs/1_Article_1.png', class: 'pull-left mhm mts', width: '100px') %>
+  <div style='margin-left: 120px'>
+    <%= link_to 'Google', 'http://google.com', target: '_blank' %>
+    <p><%= 'foo bar baz ' * 20 %></p>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-6 col-lg-6 prm">
+  <%= image_tag('http://alpha-demo.greatschools.org/res/img/cityHubs/1_Article_1.png', class: 'pull-left mhm mts', width: '100px') %>
+  <div style='margin-left: 120px'>
+    <%= link_to 'Google', 'http://google.com', target: '_blank' %>
+    <p><%= 'foo bar baz ' * 20 %></p>
+  </div>
+</div>
+
+<%= link_to "More about #{state[:long]} »", '#', class: 'pull-right mrm' %>
+<div class="clearfix"></div>
