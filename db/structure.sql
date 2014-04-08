@@ -65,6 +65,15 @@ CREATE TABLE `category_placements` (
   KEY `index_category_placements_on_ancestry` (`ancestry`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE `census_breakdowns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datatype_id` int(11) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE `collections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -174,6 +183,8 @@ INSERT INTO schema_migrations (version) VALUES ('20130916205012');
 INSERT INTO schema_migrations (version) VALUES ('20130917181944');
 
 INSERT INTO schema_migrations (version) VALUES ('20130917224159');
+
+INSERT INTO schema_migrations (version) VALUES ('20130918042153');
 
 INSERT INTO schema_migrations (version) VALUES ('20131114184219');
 
