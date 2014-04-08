@@ -8,7 +8,7 @@
 
     `git clone git@githost.greatschools.org:gswebruby`
 
-#### Setting up databases and dependencies
+#### Installing ruby gem dependencies and creating databases
 
 2. Navigate into the newly-created gswebruby directory and run:
   
@@ -17,8 +17,11 @@
     This should automatically do things such as:
 
       - Perform a 'bundle install'
-      - Create a '_development' version of the database
-      - Create a few files that aren't checked into the git repo, used for overwriting functionality on your machine
+      - Create LocalizedProfiles_development
+      - Create other needed databases, and dump schemas (but not data) from dev
+      - Insert data needed for a minimal school profile page to load in Rails
+      - Create a few files that aren't checked into the git repo, used for 
+        overwriting specific functionality on your machine
 
 
 
@@ -46,8 +49,8 @@ necessary
 
     `rspec` 
 
-    and cross your fingers! If everything has gone well so far, all tests should 
-  pass.
+    and cross your fingers! If everything has gone well so far, all tests 
+    should pass.
 
 #### Starting up Rails
 
@@ -55,8 +58,18 @@ necessary
 
     `rails s`
 
-    The 'thin' rails server should start up and start serving pages on port 3000
+    The 'thin' rails server should start up and start serving pages on port 
+    3000
 
 8. Navigate to [http://localhost:3000/california/alameda/1-Alameda-High-School/](http://localhost:3000/california/alameda/1-Alameda-High-School/)
 and you should see a school profile page
 
+#### Getting more data
+  If you'd like to load more pages or see more data on your local machine
+  you'll want to do either of the following steps:
+
+- Use mysqldump to selectively copy data from dev (instructions WIP)
+
+      __OR__
+
+- Run rake task to point your machine to the dev database (WIP)
