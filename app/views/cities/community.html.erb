@@ -20,4 +20,4 @@
   <%= render 'tabs', tab: @tab, city: @city, state: @state[:long], show_tabs: @show_tabs %>
   <%= render 'education_community_partners', partners: @partners, tab: @tab, show_tabs: @show_tabs %>
 </div>
-<%= render 'shared/state_footer' %>
+<%= render 'shared/state_footer', state: @state, cities: @cities %>
