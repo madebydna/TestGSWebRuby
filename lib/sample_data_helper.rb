@@ -34,6 +34,14 @@ end
 def load_sample_data(name, env = 'test')
   files = Dir.glob(Rails.root.join('db', 'sample_data', 'data', '**/', "#{name}.json"))
 
+  database_connection_config = DatabaseConfigurationHelper.database_config_for '_ca_test', env
+  
+  host = database_connection_config['host']
+  username = database_connection_config['username']
+  password = database_connection_config['password']
+
+  mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password)
+
   files.each do |file|
     array = JSON.parse(File.read file)
     array.each do |hash|
@@ -42,14 +50,6 @@ def load_sample_data(name, env = 'test')
       data = hash['data']
 
       db = db + '_test' if env == 'test'
-
-      database_connection_config = DatabaseConfigurationHelper.database_config_for db, env
-      
-      host = database_connection_config['host']
-      username = database_connection_config['username']
-      password = database_connection_config['password']
-
-      mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password, database: db)
 
       column_names = hash['data'][0].keys
       column_names_string = column_names.join ','
@@ -78,6 +78,7 @@ def load_sample_data(name, env = 'test')
         sql = "insert into #{table}(#{column_names_string}) values(#{values_string})"
         begin
           # puts 'using sql: ' + sql
+          mysql_client.select_db db
           mysql_client.query sql
         rescue => e
           puts "Statement: #{sql} \ngenerated error: #{e.message}. Skipping."
