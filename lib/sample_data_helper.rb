@@ -56,8 +56,21 @@ def load_sample_data(name, env = 'test')
 
       data.each do |row|
         values = row.values
-        values = values.map { |value| value.is_a?(String) ? '"' + value + '"' : value }
-        values = values.map { |value| value.nil? ? 'NULL' : value }
+        values = values.map do |value| 
+          v = if value.is_a?(String)
+                if value.include? '"'
+                  value.to_json
+                else
+                  '"' + value + '"'
+                end
+              elsif value.is_a?(Hash)
+                JSON.pretty_unparse(value)
+              elsif value.nil?
+                'NULL'
+              else
+                value
+              end
+        end
         values_string = values.join(",")
         values_string.gsub! "'NULL'", 'NULL'
 
