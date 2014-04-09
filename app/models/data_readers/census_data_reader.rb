@@ -213,7 +213,7 @@ class CensusDataReader < SchoolProfileDataReader
   # Sort the data types the same way the keys are sorted in the config
   #
   def sort_based_on_config(data_type_to_results_hash, category)
-    category_data_types = category.keys(school.collections)
+    category_data_types = category.keys(school.collections).map(&:downcase)
     # Sort the data types the same way the keys are sorted in the config
     Hash[
       data_type_to_results_hash.sort_by do |data_type_desc, _|

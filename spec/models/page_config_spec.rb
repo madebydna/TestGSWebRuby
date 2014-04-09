@@ -20,6 +20,10 @@ describe PageConfig do
       @page_config = PageConfig.new page.name, all_placements.shuffle
     end
 
+    after do
+      clean_dbs :profile_config
+    end
+
     describe '#root_placements' do
       it 'should return the right number of items' do
         pending 'investigate intermittent failure'
