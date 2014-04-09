@@ -87,7 +87,14 @@ and you should see a school profile page
 
       __OR__
 
-- Run rake task to point your machine to the dev database (WIP)
+- Run this rake task edit your `database_local.yml` file so that your Rails 
+  will use the mysql server on dev instead of localhost:
+
+  `rake gsweb:use_dev_db`
+
+  To switch back to using mysql on localhost:
+
+  `rake gsweb:use_localhost_db`
 
 ### Coding conventions
   

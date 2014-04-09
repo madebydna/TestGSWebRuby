@@ -1,0 +1,65 @@
+# start: database_local.point_at_dev.yml
+# don't change above comment since it's used by script
+mysql_dev: &mysql_dev
+  <<: *mysql
+  host: dev.greatschools.org
+  username: service
+  password: service
+mysql_dev_rw: &mysql_dev_rw
+  <<: *mysql_dev
+mysql_dev_ro: &mysql_dev_ro
+  <<: *mysql_dev
+
+development: &development
+  <<: *mysql_dev_rw
+  database: localized_profiles
+  profile_config_rw:
+    <<: *mysql_dev_rw
+    database: localized_profiles
+    legacy: false
+  profile_config:
+    <<: *mysql_dev_ro
+    database: localized_profiles
+    legacy: false
+  _STATE__rw:
+    <<: *mysql_dev_rw
+    database: __STATE_
+    legacy: true
+  _STATE_:
+    <<: *mysql_dev_ro
+    database: __STATE_
+    legacy: true
+  gs_schooldb_rw:
+    <<: *mysql_dev_rw
+    database: gs_schooldb
+    legacy: true
+  gs_schooldb:
+    <<: *mysql_dev_ro
+    database: gs_schooldb
+    legacy: true
+  surveys_rw:
+    <<: *mysql_dev_rw
+    database: surveys
+    legacy: true
+  surveys:
+    <<: *mysql_dev_ro
+    database: surveys
+    legacy: true
+  community_rw:
+    <<: *mysql_dev_rw
+    database: community
+    legacy: true
+  community:
+    <<: *mysql_dev_ro
+    database: community
+    legacy: true
+  us_geo_rw:
+    <<: *mysql_dev_rw
+    database: us_geo
+    legacy: true
+  us_geo:
+    <<: *mysql_dev_ro
+    database: us_geo
+    legacy: true
+# don't change below comment since it's used by script
+# end: database_local.point_at_dev.yml
