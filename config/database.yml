@@ -77,12 +77,12 @@ development: &development
     <<: *mysql_localhost_ro
     database: community
     legacy: true
-  us_geo:
+  us_geo_rw:
     <<: *mysql_localhost
     database: us_geo
     legacy: true
-  us_geo_rw:
-    <<: *mysql_localhost
+  us_geo:
+    <<: *mysql_localhost_ro
     database: us_geo
     legacy: true
 
@@ -91,54 +91,54 @@ development: &development
 # Do not set this db to the same as development or production.
 
 test: &test
-  <<: *mysql_localhost
+  <<: *mysql_localhost_rw
   database: LocalizedProfiles_test
   profile_config_rw:
-    <<: *mysql_localhost
+    <<: *mysql_localhost_rw
     database: LocalizedProfiles_test
     legacy: false
   profile_config:
-    <<: *mysql_localhost_ro
+    <<: *mysql_localhost_rw
     database: LocalizedProfiles_test
     legacy: false
   _STATE__rw:
-    <<: *mysql_localhost
+    <<: *mysql_localhost_rw
     database: __STATE__test
     legacy: true
   _STATE_:
-    <<: *mysql_localhost_ro
+    <<: *mysql_localhost_rw
     database: __STATE__test
     legacy: true
   gs_schooldb_rw:
-    <<: *mysql_localhost
+    <<: *mysql_localhost_rw
     database: gs_schooldb_test
     legacy: true
   gs_schooldb:
-    <<: *mysql_localhost_ro
+    <<: *mysql_localhost_rw
     database: gs_schooldb_test
     legacy: true
   surveys_rw:
-    <<: *mysql_localhost
+    <<: *mysql_localhost_rw
     database: surveys_test
     legacy: true
   surveys:
-    <<: *mysql_localhost_ro
+    <<: *mysql_localhost_rw
     database: surveys_test
     legacy: true
   community_rw:
-    <<: *mysql_localhost
+    <<: *mysql_localhost_rw
     database: community_test
     legacy: true
   community:
-    <<: *mysql_localhost_ro
+    <<: *mysql_localhost_rw
     database: community_test
     legacy: true
-  us_geo:
-    <<: *mysql_localhost_ro
+  us_geo_rw:
+    <<: *mysql_localhost_rw
     database: us_geo_test
     legacy: true
-  us_geo_rw:
-    <<: *mysql_localhost
+  us_geo:
+    <<: *mysql_localhost_rw
     database: us_geo_test
     legacy: true
 

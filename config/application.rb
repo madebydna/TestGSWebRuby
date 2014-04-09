@@ -93,7 +93,7 @@ module LocalizedProfiles
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }
 
-    require File.join(config.root, 'lib', 'database_configuration_loader')
+    require 'database_configuration_loader'
     def config.database_configuration
       config = DatabaseConfigurationLoader.config
     end

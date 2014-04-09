@@ -8,6 +8,7 @@ class City < ActiveRecord::Base
   scope :active, where(active: true)
 
   def self.popular_cities(state, options = {})
+    # Fix the thing
     result = where(state: state, active: 1).order('population desc')
     result = result.limit(options[:limit]) if options[:limit]
     result.reorder('name asc')

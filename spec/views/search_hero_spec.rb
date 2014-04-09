@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe 'shared/_search_hero.html.erb' do
   let(:city_page_url) { 'http://localhost:3000/michigan/detroit' }
+  before(:each) do
+    view.stub(:sponsor) { { text: "I'm a sponsor", path: '/image/path/woot' } }
+    view.stub(:hero_image) { nil }
+    view.stub(:hero_image_mobile) { nil }
+    view.stub(:collection_nickname) { 'Fiji' }
+  end
 
   context 'on a city page' do
     before(:each) do
-      view.stub(:collection_nickname) { 'detoit' }
       view.stub(:collection_id) { 1 }
       view.stub(:state) { { short: 'mi', long: 'michigan' } }
       view.stub(:breakdown_results) { { foo: nil, bar: nil } }
-      view.stub(:hero_image) { nil }
-      view.stub(:hero_image_mobile) { nil }
       render
     end
 
@@ -27,10 +30,7 @@ describe 'shared/_search_hero.html.erb' do
 
   context 'on a state page' do
     before(:each) do
-      view.stub(:collection_nickname) { 'Indiana' }
       view.stub(:state) { { short: 'IN', long: 'indiana' } }
-      view.stub(:hero_image) { nil }
-      view.stub(:hero_image_mobile) { nil }
       view.stub(:state_page) { true }
 
       render

@@ -57,7 +57,10 @@ class CensusDataResults
     end
 
     select do |census_data_set|
-      data_types.include?(census_data_set.data_type.downcase) || data_types.include?(census_data_set.census_data_type.id)
+      census_data_set.census_data_type && (
+        data_types.include?(census_data_set.data_type.downcase) || 
+        data_types.include?(census_data_set.census_data_type.id)
+      )
     end
   end
 

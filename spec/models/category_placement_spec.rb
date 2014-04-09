@@ -8,6 +8,7 @@ describe CategoryPlacement do
     context 'when parent specifies the sizes' do
 
       before do
+        clean_dbs :profile_config
         @section_placement = FactoryGirl.create(:section_category_placement, page: page, layout_config: {
           "child_sizes" => [{'sm' => 6, 'md' => 4}]
         }.to_json)
@@ -20,7 +21,7 @@ describe CategoryPlacement do
       end
 
       after do
-        clean_dbs :localized_profiles
+        clean_dbs :profile_config
       end
 
       it 'should return configured sizes merged onto default sizes' do

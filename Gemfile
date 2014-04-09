@@ -4,7 +4,6 @@ gem 'rails', '3.2.11'
 
 gem 'mysql2', '0.3.13'
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
 
 gem 'rails_admin'
@@ -46,7 +45,6 @@ gem 'lodash-rails'
 
 # for passing vars from ruby rails to javascript
 gem 'gon'
-gem 'rabl-rails'
 
 gem 'mini_fb'
 
@@ -61,7 +59,6 @@ gem 'coderay'
 
 gem 'meta-tags', :require => 'meta_tags'
 
-
 # Searching using solr
 gem 'rsolr'
 
@@ -69,9 +66,6 @@ gem 'simple_form'
 
 # Maps controller filters to your model scopes
 gem 'has_scope'
-
-# Pagination library for Rails 3, Sinatra, Merb, DataMapper, and more http://github.com/mislav/will_paginate/wikis
-# gem 'will_paginate', '~> 3.0'
 
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
@@ -90,6 +84,15 @@ group :development do
   # Use the Thin server in development for speed and other improvements
   gem 'thin'
 
+  # Guard automatically watches files for changes and re-runs bundler, rspec, etc
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
+
+  # Zeus keeps a rails environment running so that rspec(and other commands)
+  # can be ran much more quickly
+  gem 'zeus'
 end
 
 group :development, :test do
@@ -132,18 +135,10 @@ group :development, :test do
   gem 'sinon-rails'
 
   # Test coverage tool
-  gem 'simplecov', '~> 0.8.2'
-  gem 'simplecov-html', '~> 0.8.0'
+  gem 'simplecov', '~> 0.7.1'
+  gem 'simplecov-html', '~> 0.7.1'
   gem 'simplecov-rcov'
 
-
-  # Guard and Spork for faster rspec testing
-  gem 'spork-rails', '~> 4.0.0'
-  gem 'guard'
-  gem 'guard-bundler'
-  gem 'guard-rspec'
-  gem 'guard-spork'
-  gem 'guard-livereload'
   gem 'childprocess'
 
   # Allows Ruby to communicate with growl, for system messaging. e.g. you can pop up an alert when your tests fail
@@ -152,6 +147,8 @@ group :development, :test do
   # Turn off assets logging in development
   gem 'quiet_assets'
   gem 'debugger'
+
+  gem 'yard'
 end
 
 # Gems used only for assets and not required
@@ -173,20 +170,3 @@ end
 group :profile do
   gem 'ruby-prof'
 end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'

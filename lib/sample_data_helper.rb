@@ -31,7 +31,7 @@ def write_sample_data(name, db, table = nil, &blk)
 end
 
 # This function expects to be ran in the context of a rails environment
-def load_sample_data(name)
+def load_sample_data(name, env = 'test')
   files = Dir.glob(Rails.root.join('db', 'sample_data', 'data', '**/', "#{name}.json"))
 
   files.each do |file|
@@ -41,13 +41,15 @@ def load_sample_data(name)
       table = hash['table']
       data = hash['data']
 
-      database_connection_config = DatabaseConfigurationHelper.database_config_for db + '_test', 'test'
+      db = db + '_test' if env == 'test'
 
+      database_connection_config = DatabaseConfigurationHelper.database_config_for db, env
+      
       host = database_connection_config['host']
       username = database_connection_config['username']
       password = database_connection_config['password']
 
-      mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password, database: db + '_test')
+      mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password, database: db)
 
       column_names = hash['data'][0].keys
       column_names_string = column_names.join ','
@@ -59,12 +61,13 @@ def load_sample_data(name)
         values_string = values.join(",")
         values_string.gsub! "'NULL'", 'NULL'
 
+        puts "Inserting sample data for #{name}"
         sql = "insert into #{table}(#{column_names_string}) values(#{values_string})"
         begin
           # puts 'using sql: ' + sql
           mysql_client.query sql
         rescue => e
-          puts "Statement: #{sql} generated error: #{e.message}. Skipping."
+          puts "Statement: #{sql} \ngenerated error: #{e.message}. Skipping."
         end
       end
     end

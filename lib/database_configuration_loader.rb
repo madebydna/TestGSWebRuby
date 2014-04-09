@@ -1,13 +1,15 @@
 require 'states'
-require Rails.root.join('config', 'initializers', 'extensions', 'hash.rb')
+require File.expand_path('../../config/initializers/extensions/hash.rb', __FILE__)
+
 class DatabaseConfigurationLoader
+  config_folder = File.join(File.dirname(__FILE__), '..', 'config')
 
   STATE_TEMPLATE_STRING = '_STATE_'
 
-  DEFAULT_FILE = Rails.root.join('config', 'database.yml')
+  DEFAULT_FILE = File.join(config_folder, 'database.yml')
   OVERRIDES = [
       File.join('', 'usr', 'local', 'etc', 'GSWebRuby-database.yml'),
-      Rails.root.join('config', 'database_local.yml'),
+      File.join(config_folder, 'database_local.yml'),
   ]
 
   def self.joined_files
@@ -24,7 +26,7 @@ class DatabaseConfigurationLoader
     config = expand_state_template_in_config config
 
     # Hack until Greg and I decide on something better. Allow admin to write to config only on these servers
-    if ENV_GLOBAL['app_host'].match /(omega\.|dev\.|qa.)/
+    if defined?(ENV_GLOBAL) && ENV_GLOBAL['app_host'].match(/(omega\.|dev\.|qa.)/)
       rw_config = config["mysql_#{Rails.env}_rw"]
       if rw_config && config[Rails.env]['profile_config']
         config[Rails.env]['profile_config'].merge! rw_config

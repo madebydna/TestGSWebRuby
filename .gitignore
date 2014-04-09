@@ -30,5 +30,6 @@ config/database_local.yml
 # custom env_global for developers
 config/env_global_local.yml
 
-
-
+.rakeTasks
+.zeus.sock
+.gemtags
