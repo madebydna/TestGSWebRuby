@@ -22,18 +22,7 @@ namespace :gsweb do
     require 'sample_data_helper'
     load_sample_data 'alameda_high_school_profile', Rails.env
   end
-
-  task :use_dev_database do
-    database_local = Rails.root.join('config', 'database_local.yml')
-    database_local_point_at_dev = 
-    Rails.root.join('config', 'database_local.point_at_dev.yml')
-
-    File.open(database_local, 'w+') do |f|
-      f << "\n" 
-      f << File.read(database_local_point_at_dev)
-    end
-  end
-
+  
   task :use_dev_db do
     database_local = Rails.root.join('config', 'database_local.yml')
     database_local_point_at_dev = 
