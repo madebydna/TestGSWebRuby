@@ -171,8 +171,8 @@ module ApplicationHelper
   def breadcrumb_hash
     {
         'Home' => home_url,
-        hub_params[:state].gs_capitalize_first => state_url(state: hub_params[:state]),
-        hub_params[:city].gs_capitalize_first => city_url(hub_params)
+        hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+        hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
     }
   end
 

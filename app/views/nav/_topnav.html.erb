@@ -16,7 +16,7 @@
                 <li>
                     <%- if hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_params[:city]}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
+                        <%="#{hub_params[:city].gsub(/-/, ' ')}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
