@@ -9,7 +9,7 @@ describe 'LocalizedProfile', :type => :feature do
     end
 
     after :all do
-      #clean_dbs :gs_schooldb, :_mi, :profile_config
+      clean_dbs :gs_schooldb, :_mi, :profile_config
     end
 
     it 'signs me in' do
