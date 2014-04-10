@@ -59,6 +59,7 @@ module SchoolProfileDataDecorator
       zillow
       census_data_points
       footnotes
+      facebook_url
     ]
   end
 
@@ -91,7 +92,7 @@ module SchoolProfileDataDecorator
     raise(ArgumentError, ':category must be provided') if category.nil?
 
     source = category.source
-    if source
+    if source && source != 'facebook_url'
       reader = data_reader_config[source.to_sym]
       return reader.send :footnotes_for_category, category if reader.respond_to? :footnotes_for_category
     end
@@ -169,6 +170,11 @@ module SchoolProfileDataDecorator
   def zillow(options = {})
     category = options[:category]
     @zillow_data_reader.data_for_category category
+  end
+
+  def facebook_url(options = {})
+    schoolMetadata = self.school_metadata
+    schoolMetadata['facebook_url'].present? ? schoolMetadata['facebook_url'] : nil
   end
 
   def footnotes(options = {})
