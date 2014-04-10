@@ -175,6 +175,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_footer_cities
-    @cities = City.popular_cities(@state[:short], limit: 28).to_a
+    @cities = City.popular_cities(@state[:short], limit: 28)
   end
 end
