@@ -71,8 +71,8 @@ describe TestScoreResults do
     end
   end
 
-  describe 'build_test_scores_hash, since there are no test data sets.' do
-    it 'should return empty test scores hash' do
+  describe 'build_test_scores_hash' do
+    it 'should return empty test scores hash, since there are no test data sets.' do
       test_scores_hash = subject.build_test_scores_hash([],school)
 
       expect(test_scores_hash).to be_empty
@@ -198,6 +198,41 @@ describe TestScoreResults do
       expect(test_scores_hash[18][:test_label]).to eq("Awesome Test")
     end
 
+
+    it 'should get the right grades from the level code, since grade=all' do
+      school.level_code = "e,m"
+      test_data_sets_and_values = [{:test_data_type_id => 18, :test_data_set_id => 84122, :grade => "All", :level_code => LevelCode.new("e"), :subject_id => 7, :year => 2010, :school_value_text => nil, :school_value_float => 20.0, :state_value_text => nil, :state_value_float => 22.0, :breakdown_id => 1, :number_tested => 269697},
+                                   {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "All", :level_code => LevelCode.new("m,h"), :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
+                                   {:test_data_type_id => 19, :test_data_set_id => 84488, :grade => "All", :level_code => LevelCode.new("e,m,h"), :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
+
+      test_data_types = {}
+      #all the data_type_ids in the test_data_sets_and_values have rows in TestDataType table.
+      [18,19].each do |data_type_id|
+        test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
+      end
+      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
+
+      #No description and source
+      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+
+      test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
+
+      expect(test_scores_hash.size).to eq(2)
+
+      expect(test_scores_hash[18][:lowest_grade]).to eq(15)
+      expect(test_scores_hash[18][:grades].size).to eq(2)
+      expect(test_scores_hash[18][:grades].keys[0].value).to eq(15)
+      expect(test_scores_hash[18][:grades].keys[1].value).to eq(16)
+      expect(test_scores_hash[18][:grades].values[0][:label]).to eq('Elementary school')
+      expect(test_scores_hash[18][:grades].values[1][:label]).to eq('Middle school')
+
+      expect(test_scores_hash[19][:lowest_grade]).to eq(16)
+      expect(test_scores_hash[19][:grades].size).to eq(1)
+      expect(test_scores_hash[19][:grades].keys[0].value).to eq(16)
+      expect(test_scores_hash[19][:grades].values[0][:label]).to eq('Elementary and Middle school')
+    end
+
+
     it 'should return rounded test scores.' do
       test_data_sets_and_values = [{:test_data_type_id => 18, :test_data_set_id => 84122, :grade => "9", :level_code => "e,m,h", :subject_id => 7, :year => 2010, :school_value_text => nil, :school_value_float => 20.415, :state_value_text => nil, :state_value_float => 22.0, :breakdown_id => 1, :number_tested => 269697},
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "8", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
@@ -214,8 +249,8 @@ describe TestScoreResults do
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
-      expect(test_scores_hash.values[0][:grades].values[0].values[0].values[0].values[0]["score"]).to eq (20)
-      expect(test_scores_hash.values[1][:grades].values[0].values[0].values[0].values[0]["score"]).to eq (81)
+      expect(test_scores_hash.values[0][:grades].values[0][:level_code].values[0].values[0].values[0]["score"]).to eq (20)
+      expect(test_scores_hash.values[1][:grades].values[0][:level_code].values[0].values[0].values[0]["score"]).to eq (81)
     end
 
     it 'should not try to round test scores if its nil or a string value.' do
@@ -234,8 +269,8 @@ describe TestScoreResults do
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
-      expect(test_scores_hash.values[0][:grades].values[0].values[0].values[0].values[0]["score"]).to be_blank
-      expect(test_scores_hash.values[0][:grades].values[0].values[0].values[0].values[0]["state_avg"]).to be_blank
+      expect(test_scores_hash.values[0][:grades].values[0][:level_code].values[0].values[0].values[0]["score"]).to be_blank
+      expect(test_scores_hash.values[0][:grades].values[0][:level_code].values[0].values[0].values[0]["state_avg"]).to be_blank
     end
 
   end
@@ -251,6 +286,7 @@ describe TestScoreResults do
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "10", :level_code => "e,m,h", :subject_id => 19, :year => 2009, :school_value_text => nil, :school_value_float => 38.0, :state_value_text => nil, :state_value_float => 56.0, :breakdown_id => 1, :number_tested => 134540},
                                    {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2009, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737},
                                    {:test_data_type_id => 19, :test_data_set_id => 84488, :grade => "7", :level_code => "e,m,h", :subject_id => 11, :year => 2009, :school_value_text => nil, :school_value_float => 70.0, :state_value_text => nil, :state_value_float => 68.0, :breakdown_id => 1, :number_tested => 24737},
+
       ]
 
       test_data_types = {}
@@ -278,13 +314,13 @@ describe TestScoreResults do
       expect(sorted_test_scores.values[1][:grades].keys[2].value).to eq (10)
 
       #subjects should be sorted in alphabetical order.
-      expect(sorted_test_scores.values[1][:grades].values[1].values[0].keys[0]).to eq ("algebra 1")
-      expect(sorted_test_scores.values[1][:grades].values[1].values[0].keys[1]).to eq ("algebra 2")
-      expect(sorted_test_scores.values[1][:grades].values[1].values[0].keys[2]).to eq ("english")
+      expect(sorted_test_scores.values[1][:grades].values[1][:level_code].values[0].keys[0]).to eq ("algebra 1")
+      expect(sorted_test_scores.values[1][:grades].values[1][:level_code].values[0].keys[1]).to eq ("algebra 2")
+      expect(sorted_test_scores.values[1][:grades].values[1][:level_code].values[0].keys[2]).to eq ("english")
 
       #years are sorted in descending order.
-      expect(sorted_test_scores.values[1][:grades].values[1].values[0].values[0].keys[0]).to eq (2010)
-      expect(sorted_test_scores.values[1][:grades].values[1].values[0].values[0].keys[1]).to eq (2009)
+      expect(sorted_test_scores.values[1][:grades].values[1][:level_code].values[0].values[0].keys[0]).to eq (2010)
+      expect(sorted_test_scores.values[1][:grades].values[1][:level_code].values[0].values[0].keys[1]).to eq (2009)
 
     end
   end

@@ -4,19 +4,20 @@
 <% if data && data.count != 0 %>
     <%= render "shared/section_header", category_placement:category_placement %>
 <% end %>
+
 <% data.each_with_index do |(test,value),index| %>
     <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
         <h3><%= value[:test_label] %></h3><br/>
         <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
-            <% value[:grades].each_with_index do | (grade, value), index_grade| %>
-                <button id="js_<%= test %>_<%= grade.value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>">Grade <%= grade.value %></button>
+            <% value[:grades].each_with_index do | (grade, grade_hash), index_grade| %>
+                <button id="js_<%= test %>_<%= grade.value %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>"> <%= grade_hash[:label] %></button>
             <% end %>
         </div>
 
-        <% value[:grades].each_with_index do |(grade,value), index_grade| %>
+        <% value[:grades].each_with_index do |(grade,grade_hash), index_grade| %>
             <div id="js_<%= test %>_<%= grade.value %>_scores" class="js_<%= test %>_grades">
 
-                <% value.each do |levelcode,value| %>
+                <% grade_hash[:level_code].each do |levelcode,value| %>
                     <% value.each_with_index do |(subject,value),  index_subject| %>
 
                         <h4 <%= ((index_subject == 0) ? "class=ptl" : '') %>><%= subject.gs_capitalize_first %></h4>
@@ -35,10 +36,11 @@
                 <% end %>
             </div>
         <% end %>
+
         <% if value[:test_description] %>
             <div>
                 <p class="mbm"><span class="open-sans_sb">About the test.</span>
-                <a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a></p>
+                    <a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a></p>
                 <div class="dn"><%= raw value[:test_description]%></span></div>
             </div>
         <% end %>
@@ -47,5 +49,6 @@
                 <p class="font-size-small ptm">Source: <%= value[:test_source] %></p>
             </div>
         <% end %>
-    <% end %>
+
+<% end %>
 <% end %>
