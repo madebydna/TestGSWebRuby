@@ -87,8 +87,8 @@
               </div>
             </div>
 
-            <div class="school-breakdown">
-              <% unless defined?(state_page) %>
+            <% unless defined?(state_page) %>
+              <div class="school-breakdown">
                 <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
                 <% breakdown_results.each do |text, data| %>
                   <% unless data.nil? %>
@@ -100,8 +100,8 @@
                       <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
                   <% end %>
                 <% end %>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
