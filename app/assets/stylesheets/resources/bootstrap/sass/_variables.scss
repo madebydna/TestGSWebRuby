@@ -82,7 +82,7 @@ $font-size-block:         ceil($font-size-base * 1.5) !default; // ~24px
 
 $font-size-h1:            floor($font-size-base * 2.25) !default; // ~36px
 $font-size-h2:            floor($font-size-base * 1.75) !default; // ~28px
-$font-size-h3:            ceil($font-size-base * 1.25) !default; // ~21px
+$font-size-h3:            ceil($font-size-base * 1.32) !default; // ~21px
 $font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
 $font-size-h5:            $font-size-small !default;
 $font-size-h6:            $font-size-base !default; // ~12px
@@ -96,7 +96,7 @@ $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
 
 /////////////////MS
-$headings-font-family:    "opensans-regular", Helvetica, Arial, sans-serif;
+$headings-font-family:    $font-family-base-semi;
 $headings-font-weight:    400;
 $headings-line-height:    1.2;
 $headings-color:          $gray-darkest;
