@@ -56,6 +56,7 @@ class SigninController < ApplicationController
       if should_attempt_login
         log_user_in(user)
       else
+        self.current_user = user
         flash_notice t('actions.account.pending_email_verification')
       end
 

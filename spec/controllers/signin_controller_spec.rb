@@ -50,6 +50,11 @@ describe SigninController do
     end
 
     describe 'register' do
+
+      after(:all) do
+        clean_dbs :gs_schooldb
+      end
+
       it 'should register new user if no password provided' do
         pending 'fix'
         get :create, email: 'blah@example.com'
@@ -81,6 +86,10 @@ describe SigninController do
           get :create, email: 'blah@example.com'
         end
 
+        it 'should set the current user to the newly created user' do
+          get :create, email: 'blah@example.com'
+          expect(controller.send :current_user).to eq(user)
+        end
       end
     end
 
