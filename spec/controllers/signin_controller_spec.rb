@@ -1,8 +1,11 @@
 require 'spec_helper'
+require 'spec/concerns/authentication_concerns_spec'
 
 describe SigninController do
 
   it { should respond_to :new }
+
+  it_behaves_like 'controller with authentication'
 
   describe '#store_location' do
     it 'should store_location when #new method called on controller' do
@@ -87,7 +90,7 @@ describe SigninController do
         end
 
         it 'should set the current user to the newly created user' do
-          get :create, email: 'blah@example.com'
+          post :create, email: 'blah@example.com'
           expect(controller.send :current_user).to eq(user)
         end
       end
