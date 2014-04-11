@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'concerns/authentication_concerns_spec'
+require 'controllers/concerns/authentication_concerns_spec'
 
 describe SigninController do
 
