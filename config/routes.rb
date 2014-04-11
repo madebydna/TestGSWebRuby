@@ -42,6 +42,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
+    get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
