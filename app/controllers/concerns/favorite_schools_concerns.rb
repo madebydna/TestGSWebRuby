@@ -10,11 +10,7 @@ module FavoriteSchoolsConcerns
       school = nil
 
       if school_id.present? && state.present?
-        begin
-          school = School.on_db(state.downcase.to_sym).find school_id
-        rescue
-          Rails.logger.debug($!)
-        end
+        school = School.find_by_state_and_id state, school_id
       end
 
       if school.nil?
