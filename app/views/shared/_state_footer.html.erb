@@ -13,7 +13,7 @@
       <% end %>
 
 
-      <span style='color: #999999;'>All cities in <%= state[:long] %>:</span>
+      <span style='color: #999999;'>All cities in <%= state[:long].titleize %>:</span>
 
       <ul style='list-style: none; display: inline;'>
         <% ('A'..'Z').to_a.each do |letter| %>
