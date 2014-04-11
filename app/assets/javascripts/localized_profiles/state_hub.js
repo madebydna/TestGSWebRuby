@@ -21,38 +21,37 @@ GS.viewMoreCollapseInit = function() {
     var fullHeight = $p.data('height');
     $p.stop().animate({
       height: fullHeight
-    }, 'linear', function() {
-      $this.css('height', 'auto');
-    });
+    }, 'linear');
     $this.unbind('click');
-    $this.click(collapseClick)
+    $this.click(collapseClick);
   }
 
   function collapseClick() {
-    var $this = $(this)
-    $this.text('View More »')
+    var $this = $(this);
+    $this.text('View More »');
     var $p = $this.parent().find(textSelector);
-    $p.stop().animate({ height: foldHeight + 'px' }, 'linear')
+    $p.stop().animate({ height: foldHeight + 'px' }, 'linear');
     $this.unbind('click');
     $this.click(expandClick);
   }
 
   function initExpandCollapse() {
-    $(toggleSelector).each(function() {
+    $(toggleSelector).last().each(function() {
       var $this = $(this);
       var $p = $this.parent().find(textSelector);
-      var tagText = $this.text();
-      if (tagText == 'View Less') {
-        var heightDiff = heightSwitch($p);
+      var heightDiff = heightSwitch($p);
+
+      if ($this.text() == 'View Less') {
         if (heightDiff > lineHeight) {
-          $p.css('height', 'auto')
-          $this.unbind('click')
+          $p.css('height', 'auto');
+          $this.show()
+               .unbind('click')
                .click(collapseClick);
         } else {
+          $p.css('height', $p.data('height'));
           $this.hide();
         }
       } else {
-        var heightDiff = heightSwitch($p);
         if (heightDiff > lineHeight) {
           $this.show()
                .click(expandClick);
