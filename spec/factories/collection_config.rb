@@ -74,6 +74,7 @@ description:'Career-Tech schools can be a great option, especially for students 
 EOS
 state_hub_featured_articles_value = articles_value.clone
 state_partners_value = partners_value.clone
+enrollment_subheading_value = "{ content:'Detroit offers a variety of education choices. Start the search process early, if you can, so you’ll know all your options – and exactly what’s required for enrollment.' }"
 
 FactoryGirl.define do
   factory :state_hub_content_module, class: CollectionConfig do
@@ -202,5 +203,11 @@ FactoryGirl.define do
     collection_id 6
     quay CollectionConfig::STATE_PARTNERS_KEY
     value state_partners_value
+  end
+
+  factory :enrollment_subheading_configs, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::ENROLLMENT_SUBHEADING_KEY
+    value enrollment_subheading_value
   end
 end

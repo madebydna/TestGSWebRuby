@@ -505,4 +505,38 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.enrollment_subheading' do
+    let(:key) { CollectionConfig::ENROLLMENT_SUBHEADING_KEY }
+
+    context 'with missing data' do
+      it 'returns an empty object' do
+        FactoryGirl.create(:bogus_collection_config, quay: 'foobar_key')
+        bogus_configs = CollectionConfig.where(collection_id: 1)
+        result = CollectionConfig.enrollment_subheading(bogus_configs)
+        expect(result).to eq({})
+      end
+    end
+
+    context 'with malformed data' do
+      it 'logs an error and returns it' do
+        Rails.logger.should_receive(:error)
+        broken_configs = [FactoryGirl.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")]
+        result = CollectionConfig.enrollment_subheading(broken_configs)
+        expect(result).to be_an_instance_of(Hash)
+
+        expect(result[:error].class).to eq(SyntaxError)
+      end
+    end
+
+    context 'by default' do
+      it 'returns the enrollment page subheading' do
+        FactoryGirl.create(:enrollment_subheading_configs)
+        configs = CollectionConfig.where(collection_id: 1)
+        result = CollectionConfig.enrollment_subheading(configs)
+        expect(result).to be_an_instance_of(Hash)
+        expect(result[:content]).to be_an_instance_of(String)
+      end
+    end
+  end
 end

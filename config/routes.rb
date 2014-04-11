@@ -108,6 +108,11 @@ LocalizedProfiles::Application.routes.draw do
       get 'events', to: 'cities#events', as: :events
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
       get 'enrollment', to: 'cities#enrollment', as: :enrollment
+
+      scope '/enrollment', as: :enrollment do
+        get '/:tab', to: 'cities#enrollment'
+      end
+
       scope '/education-community', as: :education_community do
         get '', to: 'cities#community'
         get '/education', to: 'cities#community'
