@@ -1,0 +1,396 @@
+[
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "_mi",
+    "table": "school",
+    "data": [
+      {
+        "id": 1078,
+        "district_id": 346,
+        "state_id": "00689",
+        "city": "Detroit",
+        "county": "Wayne",
+        "FIPScounty": 26163,
+        "fax": "(313) 494-8367",
+        "home_page_url": "http://detroitk12.org/schools/school/062/",
+        "lat": 42.337357,
+        "level": "KG,1,2,3,4,5",
+        "level_code": "e",
+        "lon": -83.034348,
+        "name": "Chrysler Elementary School",
+        "nces_code": "261200004675",
+        "phone": "(313) 494-8440",
+        "state": "MI",
+        "street": "1445 East Lafayette St",
+        "type": "public",
+        "subtype": "",
+        "preschool_subtype": "",
+        "zipcode": "48207",
+        "zipcentroid": 0,
+        "active": 1,
+        "mail_street": "1445 East Lafayette St",
+        "mail_city": "Detroit",
+        "mail_zipcode": "48207",
+        "accreditation": null,
+        "association": null,
+        "affiliation": null,
+        "created": "2005-01-01 00:00:00 -0800",
+        "modified": "2014-03-28 15:13:47 -0700",
+        "modifiedBy": "NCES_Load_2011",
+        "authorizer_id": null,
+        "operator_id": null,
+        "vendor_id": null,
+        "street_line_2": "",
+        "manual_edit_by": "kstewart-funai",
+        "manual_edit_date": "2012-06-12 00:00:00 -0700",
+        "notes": null,
+        "overview_title": null,
+        "new_profile_school": 4
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "gs_schooldb",
+    "table": "census_data_type",
+    "data": [
+      {
+        "id": 238,
+        "description": "Climate: Collaborative Teachers - Overall",
+        "type": "num"
+      },
+      {
+        "id": 244,
+        "description": "Climate: Collaborative Teachers - Collective Responsibility",
+        "type": "num"
+      },
+      {
+        "id": 254,
+        "description": "Climate: Collaborative Teachers - Quality Professional Development",
+        "type": "num"
+      },
+      {
+        "id": 256,
+        "description": "Climate: Collaborative Teachers - School Commitment",
+        "type": "num"
+      },
+      {
+        "id": 260,
+        "description": "Climate: Collaborative Teachers - Teacher-Teacher Trust",
+        "type": "num"
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "_mi",
+    "table": "census_data_set",
+    "data": [
+      {
+        "id": 9,
+        "year": 2004,
+        "grade": null,
+        "data_type_id": 9,
+        "breakdown_id": 7,
+        "active": 0,
+        "level_code": "p,e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 66,
+        "year": 2006,
+        "grade": null,
+        "data_type_id": 66,
+        "breakdown_id": null,
+        "active": 0,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 137,
+        "year": 2011,
+        "grade": null,
+        "data_type_id": 137,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "p,e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 177,
+        "year": 2013,
+        "grade": null,
+        "data_type_id": 238,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 183,
+        "year": 2013,
+        "grade": null,
+        "data_type_id": 244,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 193,
+        "year": 2013,
+        "grade": null,
+        "data_type_id": 254,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 195,
+        "year": 2013,
+        "grade": null,
+        "data_type_id": 256,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "e,m,h",
+        "subject_id": null
+      },
+      {
+        "id": 199,
+        "year": 2013,
+        "grade": null,
+        "data_type_id": 260,
+        "breakdown_id": null,
+        "active": 1,
+        "level_code": "e,m,h",
+        "subject_id": null
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "_mi",
+    "table": "census_data_school_value",
+    "data": [
+      {
+        "id": 40357,
+        "school_id": 1078,
+        "data_set_id": 9,
+        "value_float": 1.18343,
+        "value_text": null,
+        "active": 1,
+        "modified": null,
+        "modifiedBy": null
+      },
+      {
+        "id": 346428,
+        "school_id": 1078,
+        "data_set_id": 137,
+        "value_float": 8.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2013-05-22 16:48:34 -0700",
+        "modifiedBy": "NCES_Load_2011"
+      },
+      {
+        "id": 414408,
+        "school_id": 1078,
+        "data_set_id": 193,
+        "value_float": 47.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2014-01-17 14:24:26 -0800",
+        "modifiedBy": "DXT-55 Detroit 5E climate data into DB"
+      },
+      {
+        "id": 414420,
+        "school_id": 1078,
+        "data_set_id": 183,
+        "value_float": 90.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2014-01-17 14:24:26 -0800",
+        "modifiedBy": "DXT-55 Detroit 5E climate data into DB"
+      },
+      {
+        "id": 414421,
+        "school_id": 1078,
+        "data_set_id": 199,
+        "value_float": 35.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2014-01-17 14:24:26 -0800",
+        "modifiedBy": "DXT-55 Detroit 5E climate data into DB"
+      },
+      {
+        "id": 414427,
+        "school_id": 1078,
+        "data_set_id": 177,
+        "value_float": 59.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2014-01-17 14:24:26 -0800",
+        "modifiedBy": "DXT-55 Detroit 5E climate data into DB"
+      },
+      {
+        "id": 414431,
+        "school_id": 1078,
+        "data_set_id": 195,
+        "value_float": 65.0,
+        "value_text": null,
+        "active": 1,
+        "modified": "2014-01-17 14:24:26 -0800",
+        "modifiedBy": "DXT-55 Detroit 5E climate data into DB"
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "localized_profiles",
+    "table": "pages",
+    "data": [
+      {
+        "id": 1,
+        "name": "Overview",
+        "parent_id": null,
+        "created_at": "2014-01-09 15:57:17 -0800",
+        "updated_at": "2014-01-09 15:57:17 -0800"
+      },
+      {
+        "id": 2,
+        "name": "Quality",
+        "parent_id": null,
+        "created_at": "2014-01-09 15:57:17 -0800",
+        "updated_at": "2014-01-09 15:57:17 -0800"
+      },
+      {
+        "id": 3,
+        "name": "Details",
+        "parent_id": null,
+        "created_at": "2014-01-09 15:57:17 -0800",
+        "updated_at": "2014-01-09 15:57:17 -0800"
+      },
+      {
+        "id": 4,
+        "name": "Reviews",
+        "parent_id": null,
+        "created_at": "2014-01-09 15:57:17 -0800",
+        "updated_at": "2014-01-09 15:57:17 -0800"
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "localized_profiles",
+    "table": "categories",
+    "data": [
+      {
+        "id": 28,
+        "parent_id": null,
+        "name": "5Essentials - Collaborative teachers",
+        "description": "",
+        "created_at": "2014-02-06 18:33:27 -0800",
+        "updated_at": "2014-02-06 18:33:27 -0800",
+        "source": "census_data"
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "localized_profiles",
+    "table": "category_data",
+    "data": [
+      {
+        "id": 3,
+        "category_id": 3,
+        "response_key": "boys_sports_other",
+        "collection_id": 2,
+        "created_at": "2014-01-09 15:57:17 -0800",
+        "updated_at": "2014-01-09 15:57:17 -0800",
+        "sort_order": null,
+        "source": null,
+        "label": "Boys sports (misc.)"
+      },
+      {
+        "id": 163,
+        "category_id": 28,
+        "response_key": "Climate: Collaborative Teachers - Collective Responsibility",
+        "collection_id": null,
+        "created_at": "2014-02-06 19:21:36 -0800",
+        "updated_at": "2014-02-06 19:21:36 -0800",
+        "sort_order": 1,
+        "source": "",
+        "label": "Collective Responsibility"
+      },
+      {
+        "id": 164,
+        "category_id": 28,
+        "response_key": "Climate: Collaborative Teachers - School Commitment",
+        "collection_id": null,
+        "created_at": "2014-02-06 19:21:57 -0800",
+        "updated_at": "2014-02-06 19:21:57 -0800",
+        "sort_order": 2,
+        "source": "",
+        "label": "School Commitment"
+      },
+      {
+        "id": 165,
+        "category_id": 28,
+        "response_key": "Climate: Collaborative Teachers - Quality Professional Development",
+        "collection_id": null,
+        "created_at": "2014-02-06 19:22:19 -0800",
+        "updated_at": "2014-02-06 19:22:19 -0800",
+        "sort_order": 3,
+        "source": "",
+        "label": "Quality Professional Development"
+      },
+      {
+        "id": 166,
+        "category_id": 28,
+        "response_key": "Climate: Collaborative Teachers - Teacher-Teacher Trust",
+        "collection_id": null,
+        "created_at": "2014-02-06 19:22:45 -0800",
+        "updated_at": "2014-02-06 19:22:45 -0800",
+        "sort_order": 4,
+        "source": "",
+        "label": "Teacher-Teacher Trust"
+      }
+    ]
+  },
+  {
+    "name": "school_profile/category_data_sorting",
+    "db": "localized_profiles",
+    "table": "category_placements",
+    "data": [
+      {
+        "id": 33,
+        "category_id": 25,
+        "collection_id": null,
+        "page_id": 2,
+        "position": 4,
+        "created_at": "2014-02-06 18:01:57 -0800",
+        "updated_at": "2014-04-04 17:59:23 -0700",
+        "layout": "section",
+        "priority": null,
+        "layout_config": "",
+        "title": "Climate",
+        "ancestry": null
+      },
+      {
+        "id": 36,
+        "category_id": 28,
+        "collection_id": null,
+        "page_id": 2,
+        "position": 5,
+        "created_at": "2014-02-06 19:14:07 -0800",
+        "updated_at": "2014-02-06 19:37:03 -0800",
+        "layout": "configured_table",
+        "priority": null,
+        "layout_config": "{\"hide_header\":false,\"columns\":[{\"label\":\"Sub-category\",\"key\":\"key\"},{\"label\":\"Score out of 100\",\"key\":\"school_value\",\"precision\":0}]}",
+        "title": "Collaborative Teachers",
+        "ancestry": "33"
+      }
+    ]
+  }
+]

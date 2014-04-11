@@ -59,6 +59,21 @@ describe CensusDataReader do
       expect((subject.send :sort_based_on_config, hash, category).to_s).to eq(expected.to_s)
     end
 
+    it 'should sort and be case insensitive' do
+      category.stub(:keys).and_return %w[A B C]
+      hash =  {
+        'b' => nil,
+        'a' => nil,
+        'c' => nil
+      }
+      expected = {
+        'a' => nil,
+        'b' => nil,
+        'c' => nil
+      }
+      expect((subject.send :sort_based_on_config, hash, category).to_s).to eq(expected.to_s)
+    end
+
     it 'should maintain sort order if no info in config' do
       category.stub(:keys).and_return []
       hash =  {

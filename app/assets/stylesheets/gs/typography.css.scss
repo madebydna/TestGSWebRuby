@@ -1,8 +1,7 @@
 ///////////////MS
 //////////// used for h4 h5 h6
-h3, .h3 { font-family: $headings-font-family-semibold; font-weight: $headings-font-weight-bold; }
-h4, .h4 { font-family: $headings-font-family-semibold; font-weight: $headings-font-weight-bold; }
-h5, .h5 { font-family: $headings-font-family-semibold; font-weight: $headings-font-weight-bold; text-transform: uppercase; letter-spacing: 1px;}
+
+h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font-weight-bold; }
 
 .bottom {margin-bottom:0;padding-bottom:0;}
@@ -52,7 +51,7 @@ p, a {
 }
 
 .stat_block_number {
-  font-family: $font-family-base-semi;
+  font-family: $font-family-base;
   font-size: $font-size-block;
 }
 

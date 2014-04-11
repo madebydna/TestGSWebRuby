@@ -101,6 +101,7 @@ module AuthenticationConcerns
     rescue
       log_user_out
     end
+    @current_user
   end
 
   def current_user=(user)

@@ -56,6 +56,9 @@ class SigninController < ApplicationController
       if should_attempt_login
         log_user_in(user)
       else
+        # Set the current user since it will be used later on this request
+        # But dont save the user in session or set auth cookie
+        @current_user = user
         flash_notice t('actions.account.pending_email_verification')
       end
 

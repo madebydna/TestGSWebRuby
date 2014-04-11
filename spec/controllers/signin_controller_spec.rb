@@ -1,8 +1,11 @@
 require 'spec_helper'
+require 'controllers/concerns/authentication_concerns_spec'
 
 describe SigninController do
 
   it { should respond_to :new }
+
+  it_behaves_like 'controller with authentication'
 
   describe '#store_location' do
     it 'should store_location when #new method called on controller' do
@@ -57,6 +60,11 @@ describe SigninController do
     end
 
     describe 'register' do
+
+      after(:all) do
+        clean_dbs :gs_schooldb
+      end
+
       it 'should register new user if no password provided' do
         expect {
           get :create, email: 'blah@example.com'
@@ -89,6 +97,10 @@ describe SigninController do
           get :create, email: 'blah@example.com'
         end
 
+        it 'should set the current user to the newly created user' do
+          post :create, email: 'blah@example.com'
+          expect(controller.send :current_user).to eq(user)
+        end
       end
     end
 

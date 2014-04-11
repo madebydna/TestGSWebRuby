@@ -23,8 +23,10 @@ class PageConfig
       if cp.ancestry.present?
         parent = @category_placements_id_hash[cp.parent_id]
         cp.memoized_parent = parent
-        children = (parent.memoized_children || []) << cp
-        parent.memoized_children = children.sort_by(&:position)
+        if parent
+          children = (parent.memoized_children || []) << cp
+          parent.memoized_children = children.sort_by(&:position)
+        end
       end
     end
   end

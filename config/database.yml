@@ -92,14 +92,14 @@ development: &development
 
 test: &test
   <<: *mysql_localhost_rw
-  database: LocalizedProfiles_test
+  database: localized_profiles_test
   profile_config_rw:
     <<: *mysql_localhost_rw
-    database: LocalizedProfiles_test
+    database: localized_profiles_test
     legacy: false
   profile_config:
     <<: *mysql_localhost_rw
-    database: LocalizedProfiles_test
+    database: localized_profiles_test
     legacy: false
   _STATE__rw:
     <<: *mysql_localhost_rw

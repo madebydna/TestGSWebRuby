@@ -1,6 +1,7 @@
 class Grade
 
   @@grade_hash = {}
+  @@by_level_code_lookup = {}
   attr_accessor :value, :name, :alternative_names
 
   def initialize(value, name = nil, alternate_names = [])
@@ -26,6 +27,10 @@ class Grade
 
   def self.from_string(value_or_name)
     @@grade_hash[value_or_name]
+  end
+
+  def self.from_level_code(level_code)
+    @@by_level_code_lookup[level_code]
   end
 
   def self.initialize_all_grades
@@ -55,6 +60,19 @@ class Grade
     Grade.new(17, "Allmh")
     Grade.new(18, "Allh")
   end
+
+  def self.initialize_level_code_lookup
+    @@by_level_code_lookup = {
+        LevelCode.new('e,m,h') => @@grade_hash['All'],
+        LevelCode.new('e') => @@grade_hash['Alle'],
+        LevelCode.new('e,m') => @@grade_hash['Allem'],
+        LevelCode.new('m') => @@grade_hash['Allm'],
+        LevelCode.new('m,h') => @@grade_hash['Allmh'],
+        LevelCode.new('h') => @@grade_hash['Allh']
+    }
+  end
+
 end
 
 Grade.initialize_all_grades
+Grade.initialize_level_code_lookup

@@ -9,6 +9,22 @@ namespace :db do
     environments << 'test' if Rails.env.development?
   end
 
+  namespace :test do
+    desc "Truncates all the tables in all test databases"
+    task :clean => [:load_config, :rails_env] do
+      require Rails.root.join('spec', 'spec_helper.rb')
+      DatabaseConfigurationHelper.
+      all_rw_connections_for('test').each do |connection|
+        puts "Cleaning #{connection}_test db"
+        DatabaseCleaner[
+          :active_record,
+          connection: connection.to_sym
+        ].strategy = :truncation
+        DatabaseCleaner[:active_record, connection: connection.to_sym].clean
+      end
+    end
+  end
+
   task :reset, [:specific_dbs] => [:drop, :create, :migrate, :seed]
 
   desc 'Legacy databases and tables are those that already existed. Rake tasks for legacy databases and tables.

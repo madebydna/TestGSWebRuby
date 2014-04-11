@@ -73,4 +73,12 @@ describe School do
     end
   end
 
+  describe '#school_metadata' do
+    let(:school) { FactoryGirl.build(:school) }
+    it 'should return a Hashie::Mash object' do
+      schoolMetadata = school.school_metadata
+      expect(schoolMetadata).to be_a Hashie::Mash
+    end
+  end
+
 end

@@ -18,7 +18,7 @@
 
 #navigation2 nav{
 
-  border-top: #e5a421 3px solid;
+//  border-top: #e5a421 3px solid;
   background-color: #ffb725;
   text-align: center;
   padding-top: 8px;
@@ -35,7 +35,7 @@
     font: 20px 'opensans-regular',Arial,Helvetica,sans-serif;
     color: #ffe2a8;
     text-decoration: none;
-    padding: 10px;
+    padding: 9px 10px 10px 10px;
     &:hover {
       background-color: #efae29;
       color: #FFFFFF;
@@ -105,7 +105,7 @@
       list-style-type: none;
       display: inline;
       margin-left: 20px;
-      font-size:1.25em;
+      font-size:1.125em;
     }
   }
 }

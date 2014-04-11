@@ -15,9 +15,9 @@ class DatabaseConfigurationHelper
 
   def self.database_config_for(database, rails_environment)
     database_config_hashes = database_config[rails_environment].values
-    database_config = database_config_hashes.select do |config|
+    database_config = database_config_hashes.find do |config|
       config.is_a?(Hash) && config['database'] == database
-    end.first
+    end
     database_config
   end
 

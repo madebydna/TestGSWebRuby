@@ -34,6 +34,14 @@ end
 def load_sample_data(name, env = 'test')
   files = Dir.glob(Rails.root.join('db', 'sample_data', 'data', '**/', "#{name}.json"))
 
+  database_connection_config = DatabaseConfigurationHelper.database_config_for '_ca_test', env
+  
+  host = database_connection_config['host']
+  username = database_connection_config['username']
+  password = database_connection_config['password']
+
+  mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password)
+
   files.each do |file|
     array = JSON.parse(File.read file)
     array.each do |hash|
@@ -43,21 +51,26 @@ def load_sample_data(name, env = 'test')
 
       db = db + '_test' if env == 'test'
 
-      database_connection_config = DatabaseConfigurationHelper.database_config_for db, env
-      
-      host = database_connection_config['host']
-      username = database_connection_config['username']
-      password = database_connection_config['password']
-
-      mysql_client = Mysql2::Client.new(:host => host, :username => username, password: password, database: db)
-
       column_names = hash['data'][0].keys
       column_names_string = column_names.join ','
 
       data.each do |row|
         values = row.values
-        values = values.map { |value| value.is_a?(String) ? '"' + value + '"' : value }
-        values = values.map { |value| value.nil? ? 'NULL' : value }
+        values = values.map do |value| 
+          v = if value.is_a?(String)
+                if value.include? '"'
+                  value.to_json
+                else
+                  '"' + value + '"'
+                end
+              elsif value.is_a?(Hash)
+                JSON.pretty_unparse(value)
+              elsif value.nil?
+                'NULL'
+              else
+                value
+              end
+        end
         values_string = values.join(",")
         values_string.gsub! "'NULL'", 'NULL'
 
@@ -65,6 +78,7 @@ def load_sample_data(name, env = 'test')
         sql = "insert into #{table}(#{column_names_string}) values(#{values_string})"
         begin
           # puts 'using sql: ' + sql
+          mysql_client.select_db db
           mysql_client.query sql
         rescue => e
           puts "Statement: #{sql} \ngenerated error: #{e.message}. Skipping."

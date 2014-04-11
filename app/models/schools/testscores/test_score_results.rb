@@ -44,13 +44,21 @@ class TestScoreResults
 
       data_sets_and_values.each do |result_hash|
         #TODO get the subject
-        #TODO grade all
 
         test_data_type_id = result_hash[:test_data_type_id]
         test_data_set_id = result_hash[:test_data_set_id]
-        grade = Grade.from_string(result_hash[:grade])
         level_code = result_hash[:level_code]
         subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
+        grade = Grade.from_string(result_hash[:grade])
+
+        #If the grade = all then get the grade from the level_code. Do not show the level if the school does not have it.
+        if !grade.name.nil? && grade.name == 'All'
+          level_code.levels = level_code.levels.select {|level| school.includes_level_code?(level.abbreviation) }
+          level_code.level_codes = level_code.level_codes.select {|level| school.includes_level_code?(level) }
+          grade = Grade.from_level_code(level_code) if !level_code.level_codes.empty?
+        end
+
+        grade_label = get_grade_label(grade,level_code)
         year = result_hash[:year]
         test_score = result_hash[:school_value_text].nil? ? (result_hash[:school_value_float]) : result_hash[:school_value_text]
         test_score = test_score.round if(!test_score.nil? && test_score.is_a?(Float))
@@ -79,16 +87,19 @@ class TestScoreResults
               lowest_grade: grade.value,
               grades: {
                   grade =>
-                      {level_code =>
-                           {subject =>
-                                {year =>
-                                     {
-                                         "score" => test_score,
-                                         "number_tested" => number_tested,
-                                         "state_avg" => state_avg
-                                     }
-                                }
-                           }
+                      {label: grade_label,
+                       level_code: {
+                           level_code =>
+                               {subject =>
+                                    {year =>
+                                         {
+                                             "score" => test_score,
+                                             "number_tested" => number_tested,
+                                             "state_avg" => state_avg
+                                         }
+                                    }
+                               }
+                       }
                       }
               }
           }
@@ -106,16 +117,18 @@ class TestScoreResults
 
 
             grade_map =
-                {level_code =>
-                     {subject =>
-                          {year =>
-                               {
-                                   "score" => test_score,
-                                   "number_tested" => number_tested,
-                                   "state_avg" => state_avg
-                               }
-                          }
-                     }
+                {label: grade_label,
+                 level_code: {level_code =>
+                                  {subject =>
+                                       {year =>
+                                            {
+                                                "score" => test_score,
+                                                "number_tested" => number_tested,
+                                                "state_avg" => state_avg
+                                            }
+                                       }
+                                  }
+                 }
                 }
 
             if test_scores[test_data_type_id][:grades].nil?
@@ -128,10 +141,10 @@ class TestScoreResults
             #Grade already present
 
             #Check if level code is already in the map
-            if test_scores[test_data_type_id][:grades][grade][level_code].nil?
+            if test_scores[test_data_type_id][:grades][grade][:level_code][level_code].nil?
 
               #Level code not present
-              test_scores[test_data_type_id][:grades][grade][level_code] =
+              test_scores[test_data_type_id][:grades][grade][:level_code][level_code] =
                   {subject =>
                        {year =>
                             {
@@ -146,10 +159,10 @@ class TestScoreResults
               #Level code already present.
 
               #Check if subject is already in the map
-              if test_scores[test_data_type_id][:grades][grade][level_code][subject].nil?
+              if test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject].nil?
 
                 #Subject not present.
-                test_scores[test_data_type_id][:grades][grade][level_code][subject] =
+                test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject] =
                     {year =>
                          {
                              "score" => test_score,
@@ -162,10 +175,10 @@ class TestScoreResults
                 #Subject already present.
 
                 #Check if year is already in the map
-                if test_scores[test_data_type_id][:grades][grade][level_code][subject][year].nil?
+                if test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject][year].nil?
 
                   #year is not present.
-                  test_scores[test_data_type_id][:grades][grade][level_code][subject][year] =
+                  test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject][year] =
                       {
                           "score" => test_score,
                           "number_tested" => number_tested,
@@ -182,19 +195,18 @@ class TestScoreResults
     test_scores
   end
 
-
   def sort_test_scores(test_scores)
     test_scores.each do |test_id, grades_hash|
       test_scores[test_id][:grades].each do |grade, level_codes_hash|
-        level_codes_hash.each do |level_code, subjects_hash|
+        level_codes_hash[:level_code].each do |level_code, subjects_hash|
           subjects_hash.each do |subject, years_hash|
             years_hash.each do
               #Sort years
-              test_scores[test_id][:grades][grade][level_code][subject] = Hash[years_hash.sort_by { |k, v| k.to_i }.reverse!]
+              test_scores[test_id][:grades][grade][:level_code][level_code][subject] = Hash[years_hash.sort_by { |k, v| k.to_i }.reverse!]
             end
           end
           #Sort subjects
-          test_scores[test_id][:grades][grade][level_code] = Hash[subjects_hash.sort_by { |k, v| k }]
+          test_scores[test_id][:grades][grade][:level_code][level_code] = Hash[subjects_hash.sort_by { |k, v| k }]
         end
       end
       #sort grades
@@ -205,5 +217,16 @@ class TestScoreResults
     Hash[test_scores.sort_by { |k, v| v[:lowest_grade] }]
   end
 
+  def get_grade_label(grade, level_code)
+    grade_label = "GRADE " + grade.value.to_s
+    if !grade.name.nil? && grade.name.start_with?('All')
+      if level_code.levels.size >= 3
+        grade_label = "All grades"
+      else
+        grade_label = level_code.levels.collect(&:long_name).join(" and ") + " school"
+      end
+    end
+    grade_label
+  end
 
 end
