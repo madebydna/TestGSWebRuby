@@ -20,6 +20,7 @@ class CollectionConfig < ActiveRecord::Base
   CONTENT_MODULE_KEY = 'statehubHome_contentModule'
   STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArtciles'
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
+  ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -324,6 +325,104 @@ class CollectionConfig < ActiveRecord::Base
       end
 
       content_modules
+    end
+
+    def enrollment_page_data(configs, tab)
+      # NOT TESTED
+      results = {}
+      [
+        "enrollmentPage_public_#{tab}_description",
+        "enrollmentPage_public_#{tab}_moreInfo",
+        "enrollmentPage_public_#{tab}_tips",
+        "enrollmentPage_private_#{tab}_description",
+        "enrollmentPage_private_#{tab}_moreInfo",
+        "enrollmentPage_private_#{tab}_tips"
+      ].each do |key|
+        begin
+          config = configs.select { |cc| cc.quay == key }.first
+          if config
+            raw_str = config.value
+            results[key] = eval(raw_str)
+          end
+        rescue Exception => e
+          Rails.logger.error('Something went wrong while parsing enrollment_page_data ' + e.to_s)
+        end
+      end
+
+      ["enrollmentPage_private_#{tab}_tips", "enrollmentPage_public_#{tab}_tips"].each do |tips_key|
+        if results[tips_key].try(:[], :content).try(:is_a?, String)
+          results[tips_key][:content] = [results[tips_key][:content]]
+        end
+      end
+
+      results
+    end
+
+    def key_dates(configs, tab_key)
+      # NOT TESTED
+      public_dates = []
+      private_dates = []
+
+      public_key_base = "keyEnrollmentDates_public_#{tab_key}"
+      private_key_base = "keyEnrollmentDates_private_#{tab_key}"
+
+      public_results = configs.where("quay like ?",  "#{public_key_base}%").to_a
+      private_results = configs.where("quay like ?",  "#{private_key_base}%").to_a
+
+      (1..(public_results.length / 2)).to_a.each do |i|
+        date = configs.where(quay: "#{public_key_base}_#{i}_date").first.try(:value)
+        description = configs.where(quay: "#{public_key_base}_#{i}_description").first.try(:value)
+        public_dates << { date: date, description: description } unless date.nil? || description.nil?
+      end
+
+      (1..(private_results.length / 2)).to_a.each do |i|
+        date = configs.where(quay: "#{private_key_base}_#{i}_date").first.try(:value)
+        description = configs.where(quay: "#{private_key_base}_#{i}_description").first.try(:value)
+        private_dates << { date: date, description: description } unless date.nil? || description.nil?
+      end
+
+      { public: public_dates, private: private_dates }
+    end
+
+    def enrollment_subheading(configs)
+      # NOT TESTED
+      subheading = {}
+      unless configs.empty?
+        config = configs.select(&lambda { |cc| cc.quay == ENROLLMENT_SUBHEADING_KEY }).first
+        if config
+          begin
+            raw_subheading_str = config.value
+            subheading = eval(raw_subheading_str)
+          rescue Exception => e
+            Rails.logger.error('Something went wrong while parsing enrollment_subheading ' + e.to_s)
+            subheading = { error: e }
+          end
+        end
+      end
+
+      subheading
+    end
+
+    def enrollment_tabs(state_short, collection_id, tab)
+      # Todo: drop this spike and test-drive
+      solr = Solr.new(state_short, collection_id)
+      tab = 'preschool' if tab.nil?
+
+      display_names = {
+        preschool: 'Preschools',
+        elementary: 'Elementary schools',
+        middle: 'Middle schools',
+        high: 'High schools'
+      }
+
+      {
+        key: tab.to_s,
+        display_name: display_names[tab.try(:to_sym)],
+        results: {
+          public: solr.breakdown_results(grade_level: School::LEVEL_CODES[tab.to_sym], type: School::LEVEL_CODES[:public]),
+          private: solr.breakdown_results(grade_level: School::LEVEL_CODES[tab.to_sym], type: School::LEVEL_CODES[:private])
+        }
+      }
     end
   end
 end

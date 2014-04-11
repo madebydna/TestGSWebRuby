@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-
-
 describe CityHubHelper do
   describe '.abbreviate_at_whitespace' do
     let(:input) { "This is a student for this school This is a student for this school " * 10 }

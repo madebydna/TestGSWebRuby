@@ -1,11 +1,9 @@
 <% unless important_events.nil? %>
   <div class="row">
-    <% if defined?(community_page) %>
-      <div style='overflow: hidden;'>
-    <% else %>
+    <% unless defined?(community_page) %>
       <hr>
-      <div style='overflow: hidden;'>
     <% end %>
+    <div style='overflow: hidden;'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
         <h4 class='bottom mtn'>Upcoming Events</h4>
         <%= link_to('See all', city_events_path(@state[:long], @city.downcase), class: 'small') %>

@@ -143,6 +143,7 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
 }
 
 .breakdown-result-count {
+  color: white;
   top: 1px;
   right: 0px;
   width: 36px;
@@ -286,6 +287,40 @@ p.view-more {
   margin-top: 41px;
   margin-bottom: 34px;
 }
+
+// Enrollment Page //
+.enrollment-tabs {
+  list-style: none;
+  text-align: center;
+  margin-top: 20px;
+
+  li {
+    a {
+      color: #666;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    display: inline;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+  }
+
+  li:hover {
+    background: #eee;
+  }
+
+  li.active {
+    background: #666;
+    a {
+      color: white;
+    }
+  }
+}
+
 
 // Media Queries //
 @media only screen and (max-width: 990px) {

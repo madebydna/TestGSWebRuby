@@ -6,6 +6,8 @@ describe CitiesController do
     FactoryGirl.create(:hub_city_mapping)
   end
 
+  after(:all) { clean_dbs :gs_schooldb }
+
   shared_examples_for 'a default cities controller action' do |action|
     context 'without a hub city mapping' do
       it 'renders an error page' do
@@ -44,5 +46,9 @@ describe CitiesController do
 
   describe 'GET choosing_schools' do
     it_behaves_like 'a default cities controller action', :choosing_schools
+  end
+
+  describe 'GET enrollment' do
+    it_behaves_like 'a default cities controller action', :enrollment
   end
 end

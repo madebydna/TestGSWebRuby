@@ -14,6 +14,7 @@ describe 'City Hub Page' do
     FactoryGirl.create(:choose_a_school_collection_configs)
     FactoryGirl.create(:collection_nickname)
   end
+  after(:all) { clean_dbs :gs_schooldb }
 
   before(:each) { visit city_page_url }
 

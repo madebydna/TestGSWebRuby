@@ -17,13 +17,13 @@ class CitiesController < ApplicationController
 
       solr = Solr.new(@state[:short], hub_city_mapping.collection_id)
       @breakdown_results = {
-        'Preschools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
-        'Elementary Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
-        'Middle Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
-        'High Schools' => solr.city_hub_breakdown_results(grade_level: School::LEVEL_CODES[:high]),
-        'Public Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:public]),
-        'Private Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:private]),
-        'Charter Schools' => solr.city_hub_breakdown_results(type: School::LEVEL_CODES[:charter]),
+        'Preschools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
+        'Elementary Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
+        'Middle Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
+        'High Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:high]),
+        'Public Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:public]),
+        'Private Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:private]),
+        'Charter Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:charter]),
       }
 
       collection_configs = configs
@@ -119,6 +119,33 @@ class CitiesController < ApplicationController
         'Choosing a School' => nil
       }
       @canonical_url = city_choosing_schools_url(@state[:long], @city)
+    end
+  end
+
+  def enrollment
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
+      configs = CollectionConfig.where(collection_id: @collection_id)
+      @events = CollectionConfig.city_hub_important_events(configs)
+
+      @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
+      @subheading = CollectionConfig.enrollment_subheading(configs)
+
+      @data = CollectionConfig.enrollment_page_data(configs, @tab[:key])
+
+      @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
+
+      set_meta_tags title: "#{@city.titleize} Schools Enrollment Information"
+      @breadcrumbs = {
+        @city.titleize => city_path(@state[:long], @city),
+        'Enrollment Information' => nil
+      }
+
+      @canonical_url = city_enrollment_url(@state[:long], @city)
     end
   end
 
