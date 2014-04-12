@@ -8,13 +8,7 @@
             <div class=" row<%= hide_reviews_overview %>">
         <% end %>
 
-        <!--use quality or p_overall(for prek) for star counts and overall score.OM-209-->
-        <% overall_review_rating = 'decline' %>
-        <% if review[:quality] != 'decline' %>
-            <% overall_review_rating = review[:quality] %>
-        <% elsif review[:p_overall] != 'decline' %>
-            <% overall_review_rating = review[:p_overall] %>
-        <% end %>
+        <% overall_review_rating = review.overall %>
 
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">
             <div class="well">

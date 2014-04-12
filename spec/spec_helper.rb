@@ -37,7 +37,7 @@ if ENV['JENKINS_URL'] # on ci server
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
 elsif ENV['coverage']
   require 'simplecov-html'
-  SimpleCov::Formatter::HTMLFormatter
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 end
 
 if ENV['JENKINS_URL'] || ENV['coverage']
