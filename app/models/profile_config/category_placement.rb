@@ -4,11 +4,9 @@ class CategoryPlacement < ActiveRecord::Base
   has_ancestry
   db_magic :connection => :profile_config
 
-  attr_writer :memoized_parent, :memoized_children
-
   include BelongsToCollectionConcerns
   belongs_to :category
-  belongs_to :page
+  belongs_to :page, inverse_of: :category_placements
 
   after_initialize :set_defaults
   before_validation :parse_layout_json
@@ -94,8 +92,8 @@ class CategoryPlacement < ActiveRecord::Base
 
   def parent_enforced_sizes
     sizes = {}
-    position_among_siblings = memoized_siblings.map(&:id).index(self.id)
-    parent_json = memoized_parent.layout_config_json
+    position_among_siblings = siblings.map(&:id).index(self.id)
+    parent_json = parent.layout_config_json
     if parent_json['child_sizes'].present? && parent_json['child_sizes'].length > position_among_siblings
       sizes = parent_json['child_sizes'][position_among_siblings]
     end
@@ -132,20 +130,35 @@ class CategoryPlacement < ActiveRecord::Base
     "data_layouts/#{layout}"
   end
 
-  def memoized_parent
-    @memoized_parent ||= parent
+  def parent
+    page.category_placements.find { |cp| self.parent_id == cp.id }
   end
 
-  def memoized_children
-    @memoized_children ||= children
+  def siblings
+    parent.children.sort_by(&:position)
   end
 
-  def memoized_has_children?
-    memoized_children.any?
+  def children
+    page.category_placements.select do |cp| 
+      cp.parent_id == id
+    end.sort_by(&:position)
   end
 
-  def memoized_siblings
-    memoized_parent.memoized_children.sort_by(&:position)
+  def has_children?
+    children.any?
+  end
+
+  def descendants
+    page.category_placements.select do |cp| 
+      Array(cp.ancestor_ids).include?(id)
+    end
+  end
+
+  def leaves
+    # Descendant is any descendant below this node at any level
+    descendants.reject do |descendant| 
+      descendant.has_children?
+    end.sort_by(&:position)
   end
 
 end

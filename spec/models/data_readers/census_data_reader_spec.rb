@@ -1,20 +1,25 @@
 require 'spec_helper'
 
 describe CensusDataReader do
+  let(:page) { double('page') }
   let(:school) { FactoryGirl.build(:school) }
   subject(:reader) { CensusDataReader.new(school) }
+
+  before(:each) do
+    school.stub(:page).and_return page
+  end
 
 
   describe '#raw_data' do
     it 'should find out all possible configured census data types' do
       CensusDataForSchoolQuery.stub(:new).and_return double('query').as_null_object
-      expect(Category).to receive(:all_configured_keys).with('census_data')
+      expect(page).to receive(:all_configured_keys).with('census_data')
       subject.send :raw_data
     end
 
     it 'should query using all census data types' do
       query_object = double('query_object')
-      Category.stub(:all_configured_keys).and_return(%w[a b c])
+      page.stub(:all_configured_keys).and_return(%w[a b c])
       CensusDataForSchoolQuery.stub(:new).and_return query_object
       expect(query_object).to receive(:latest_data_for_school).with(%w[a b c])
       subject.send :raw_data

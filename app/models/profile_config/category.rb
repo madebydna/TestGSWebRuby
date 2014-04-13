@@ -12,7 +12,11 @@ class Category < ActiveRecord::Base
 
 
   def category_data(collections = nil)
-      CategoryData.on_db(:profile_config).order('sort_order asc').belonging_to_collections(self, collections)
+    category_datas.select do |category_data| 
+      category_data.collection.nil? ||
+      collections.blank? ||
+      collections.include?(category_data.collection)
+    end
   end
 
   def has_data?(school, options = {})
@@ -30,7 +34,7 @@ class Category < ActiveRecord::Base
 
   def key_label_map(collections = nil)
     category_data(collections).inject({}) do |map, category_data_row|
-      map[category_data_row.response_key] ||= category_data_row.label
+      map[category_data_row.response_key.downcase] ||= category_data_row.label
       map
     end
   end
@@ -41,23 +45,6 @@ class Category < ActiveRecord::Base
 
   def possible_sources
     SchoolProfileDataDecorator.data_readers
-  end
-
-  # This method will return all of the various data keys that are configured to display for a certain *source*
-  # This works by aggregating all of the CategoryData keys for Categories which use this source
-  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
-  # this method would return all the keys configured for both Ethnicity and Details
-  def self.all_configured_keys(source)
-
-    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_DATA_KEYS_PER_SOURCE_PREFIX}/#{source}", expires_in: 1.hour) do
-      categories_using_source = Category.where(source: source).all
-
-      all_keys = []
-      categories_using_source.each{ |category| all_keys += category.keys }
-
-      # Add in keys where source is specified in CategoryData
-      all_keys += CategoryData.where(source: source).pluck(:response_key)
-    end
   end
 
 end

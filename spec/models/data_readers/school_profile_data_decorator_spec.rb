@@ -2,12 +2,13 @@ require 'spec_helper'
 
 describe SchoolProfileDataDecorator do
   describe '#footnotes' do
+    let(:page) { FactoryGirl.build(:page) }
     subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
     let(:footnotes_category) { FactoryGirl.build(:category) }
 
     before do
       @page_config = double('page_config')
-      @section = FactoryGirl.create(:section_category_placement)
+      @section = FactoryGirl.create(:section_category_placement, page: page)
       @page_config.stub(:root_placements).and_return [ @section ]
       @census_category = double('census_category')
     end

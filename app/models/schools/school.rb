@@ -197,7 +197,7 @@ class School < ActiveRecord::Base
     @all_census_data ||= nil
     return @all_census_data if @all_census_data
 
-    all_configured_data_types = Category.all_configured_keys 'census_data'
+    all_configured_data_types = page.all_configured_keys 'census_data'
 
     # Get data for all data types
     @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types

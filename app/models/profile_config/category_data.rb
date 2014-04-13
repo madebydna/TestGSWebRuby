@@ -22,8 +22,24 @@ class CategoryData < ActiveRecord::Base
     end
   end
 
+  def self.all_category_datas
+
+  end
+
   def possible_sources
     SchoolProfileDataDecorator.data_readers
+  end
+
+  def self.sort_order_proc
+    Proc.new do |cd1, cd2| 
+      if cd1.sort_order == cd2.sort_order
+        cd1.id <=> cd2.id
+      elsif cd1.sort_order && cd2.sort_order
+        cd1.sort_order <=> cd2.sort_order
+      else 
+        cd1.sort_order ? -1 : 1 
+      end
+    end
   end
 
 end
