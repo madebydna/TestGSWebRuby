@@ -139,6 +139,14 @@ class ApplicationController < ActionController::Base
     response_body
   end
 
+  def with_trailing_slash(string)
+    if string[-1] == '/'
+      string
+    else
+      string + '/'
+    end
+  end
+
   def exception_handler(e)
     logger.error e
 
