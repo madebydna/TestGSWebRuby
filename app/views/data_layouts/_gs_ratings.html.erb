@@ -1,16 +1,13 @@
 <% data # A +Hash+ that contains a gs_rating +Hash+ if available %>
 
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
-    <% if data["gs_rating"]["disclaimer_private"].present? %>
-        <div class="row pam">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="alert alert-warning"><%= data["gs_rating"]["disclaimer_private"] %></div>
-            </div>
-        </div>
-    <% end %>
+
     <div class="row mbm pam">
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
         <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4>GreatSchools Rating</h4>
+            <% if data["gs_rating"]["disclaimer_private"].present? && @school.private_school? %>
+                <div class="alert alert-warning man mbm"><%= data["gs_rating"]["disclaimer_private"] %></div>
+            <% end %>
         <p><%= data["gs_rating"]["description"] %></p>
 
         <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
