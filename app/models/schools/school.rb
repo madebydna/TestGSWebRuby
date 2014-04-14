@@ -203,10 +203,6 @@ class School < ActiveRecord::Base
     @all_census_data = CensusDataForSchoolQuery.new(self).latest_data_for_school all_configured_data_types
   end
 
-  def esp_responses
-    @esp_responses ||= EspResponse.on_db(shard).where(school_id: id).active
-  end
-
   def held_school
     HeldSchool.where(state: state, school_id: id).first
   end
