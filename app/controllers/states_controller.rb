@@ -35,13 +35,14 @@ class StatesController < ApplicationController
     end
 
     def set_state
+      state_long = params[:state].downcase.gsub(/\-/, ' ')
       @state = {
-        long: params[:state],
-        short: States::STATE_HASH[params[:state]]
+        long: state_long,
+        short: States::STATE_HASH[state_long]
       }
     end
 
     def set_hub_params
-      @hub_params = { state: params[:state] }
+      @hub_params = { state: params[:state], city: nil }
     end
 end

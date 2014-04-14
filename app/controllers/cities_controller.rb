@@ -167,13 +167,13 @@ class CitiesController < ApplicationController
     end
 
     def state_short
-      States::STATE_HASH[params[:state]]
+      States::STATE_HASH[params[:state].downcase.gsub(/\-/, ' ')]
     end
 
     def mapping
-      hub_city_mapping_key = "hub_city_mapping-city:#{params[:city]}-state:#{state_short}-active:1"
+      hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
       Rails.cache.fetch(hub_city_mapping_key, expires_in: 1.day) do
-        HubCityMapping.where(city: params[:city], state: state_short, active: 1).first
+        HubCityMapping.where(city: @city, state: @state[:short], active: 1).first
       end
     end
 
@@ -186,10 +186,10 @@ class CitiesController < ApplicationController
 
     def set_city_state
       @state = {
-        long: params[:state],
+        long: params[:state].downcase.gsub(/\-/, ' '),
         short: state_short
       }
-      @city = params[:city]
+      @city = params[:city].gsub(/\-/, ' ')
     end
 
     def set_hub_params
