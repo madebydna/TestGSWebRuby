@@ -10,9 +10,9 @@ class Page < ActiveRecord::Base
            :order => 'collection_id desc'
 
   def self.by_name(name)
-    page = where(name: name).first
-    page.preload_config_data
-    page
+    page = where(name: name).preload(
+      category_placements: { category: :category_datas}
+    ).first
   end
 
   # This method will return all of the various data keys that are configured to display for a certain *source*
@@ -38,7 +38,8 @@ class Page < ActiveRecord::Base
   end
 
   def category_datas
-    @category_datas ||= categories.map(&:category_datas)
+    @category_datas ||=
+      categories.map(&:category_datas).sort(&CategoryData.sort_order_proc)
   end
 
   def root_placements
@@ -47,32 +48,6 @@ class Page < ActiveRecord::Base
 
   def categories_using_source(source)
     categories.select { |category| category.source == source }
-  end
-
-  def preload_config_data
-    category_placements = self.category_placements.eager_load(:category)
-    
-    # Manually eager load category placements
-    association = association(:category_placements)
-    association.loaded!
-    association.target.concat(category_placements)
-    category_placements.each { |cp| association.set_inverse_instance(cp) }
-
-    # Manually eager load CategoryData objects
-    category_ids = category_placements.map(&:category).compact.map(&:id).uniq
-    category_datas = CategoryData.
-                      where(category_id: category_ids).
-                      group_by(&:category_id)
-
-    category_placements.map(&:category).compact.each do |category|
-      records = category_datas[category.id]
-      association = category.association(:category_datas)
-      association.loaded!
-      if records.present?
-        association.target.concat(records.sort &CategoryData.sort_order_proc)
-        records.each { |record| association.set_inverse_instance(record) }
-      end
-    end
   end
 
 end
