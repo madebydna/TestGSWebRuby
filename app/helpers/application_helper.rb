@@ -64,13 +64,27 @@ module ApplicationHelper
   def youtube_parse_id (video_str, youtube_match_string)
     youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
   end
+
+  def youtube_parse_id_from_str (video_str)
+    # match string one
+    youtube_id = nil
+
+    if video_str.present?
+      youtube_match_string_1 = "youtube.com/watch?v="
+      youtube_match_string_2 = "youtu.be/"
+      (youtube_id = video_str.split(youtube_match_string_1)[1].split('&')[0]) if video_str.include?(youtube_match_string_1)
+      (youtube_id = video_str.split(youtube_match_string_2)[1].split('&')[0]) if video_str.include?(youtube_match_string_2)
+
+    end
+
+    youtube_id
+  end
+
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
   def include_lightbox_youtube_video (video_str)
-    youtube_match_string = "youtube.com/watch?v="
-    r_str = ''
-    if video_str && video_str != ''
-      if video_str.include? youtube_match_string
-        youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
+    r_str= ''
+    youtube_id = youtube_parse_id_from_str(video_str)
+    if youtube_id.present?
         r_str <<  '<a href="https://www.youtube.com/watch?v=' + youtube_id + '">'  + "\n"
         r_str <<  '<img ' + "\n"
         r_str <<  'src="https://img.youtube.com/vi/' + youtube_id + '/0.jpg"'
@@ -79,9 +93,8 @@ module ApplicationHelper
         r_str <<  'data-description=""'
         r_str <<  '>'
         r_str <<  '</a>'
-      end
-      return r_str.html_safe
     end
+    return r_str.html_safe
   end
 
   # This is used to include all the media assets for a school to the lightbox.
