@@ -122,8 +122,8 @@ class RatingsHelper
     #Only put the sub-ratings if there is an overall rating.
     if school_rating_value.present? && gs_sub_rating_hash.any?
       gs_ratings_results['rating_breakdowns'] = gs_sub_rating_hash
+      gs_ratings_results.merge!('disclaimer_private' => description_hash[[school.state.upcase,'disclaimer_private']]) unless description_hash[[school.state.upcase,'disclaimer_private']].blank?
     end
-
     gs_ratings_results
   end
 
