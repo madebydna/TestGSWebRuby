@@ -26,6 +26,12 @@ class RatingsHelper
         break
       end
     end
+    methodology_url = get_methodology_url(state_rating_configuration,school)
+    #Only put the url if there is an overall rating.
+    if state_ratings_results['overall_rating'] && methodology_url.present?
+      state_ratings_results['methodology_url'] = methodology_url
+    end
+
     state_ratings_results
   end
 
@@ -152,18 +158,18 @@ class RatingsHelper
     preK_ratings_results
   end
 
-  def get_methodology_url(city_rating_configuration, school)
+  def get_methodology_url(rating_configuration, school)
     methodology_url = ""
-    return methodology_url if !city_rating_configuration || !city_rating_configuration['overall']
+    return methodology_url if !rating_configuration || !rating_configuration['overall']
 
-    if city_rating_configuration['overall']['methodology_url_key'].present?
-      key = city_rating_configuration['overall']['methodology_url_key']
+    if rating_configuration['overall']['methodology_url_key'].present?
+      key = rating_configuration['overall']['methodology_url_key']
       if school.school_metadata[key.to_sym].present?
         methodology_url = school.school_metadata[key.to_sym]
       end
     end
-    if methodology_url.blank? && city_rating_configuration['overall']['default_methodology_url'].present?
-      methodology_url = city_rating_configuration['overall']['default_methodology_url']
+    if methodology_url.blank? && rating_configuration['overall']['default_methodology_url'].present?
+      methodology_url = rating_configuration['overall']['default_methodology_url']
     end
     methodology_url
   end
