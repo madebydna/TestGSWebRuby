@@ -16,13 +16,13 @@
                 <li>
                     <%- if hub_params.present? %>
                     <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_params[:city].gsub(/-/, ' ')}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
+                        <%="#{hub_params[:city].gsub(/-/, ' ').gs_capitalize_words}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
                         <%- if hub_params.present? %>
                         <li>
-                            <%= link_to "#{hub_params[:city]} Home",
+                            <%= link_to "#{hub_params[:city].gsub(/-/, ' ').gs_capitalize_words} Home",
                                 city_url(hub_params), {
                                     class: 'source_sans', style: 'text-transform:capitalize;'
                                 }
@@ -44,7 +44,7 @@
                         </li>
                         <li>
                             <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
-                                <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
+                                <span><%= hub_params[:city].gsub(/-/, ' ').gs_capitalize_words %></span>?
                             <% end %>
                         </li>
                         <% end %>
