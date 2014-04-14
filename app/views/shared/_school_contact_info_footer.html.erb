@@ -1,6 +1,6 @@
 <% if @school %>
   <div class="row mtl invert-colors">
-    <div id="school-contact-info-footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
+    <div id="school-contact-info-footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam mtl">
       <div class="limit_width_1200 row text-left pbl">
         <a name="ContactInfo"><p class="link_down_compensate"></p></a>
 
@@ -8,12 +8,12 @@
 
         <div class="row">
 
-          <p class="col-sm-4 col-md-4 col-lg-5 fc-fff">
+          <p class="col-sm-4 col-md-4 col-lg-5 contact_content">
             <span><%= @school.street %></span><br/>
             <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
             <br/>
             <% if @school.home_page_url.present? %>
-                  <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam fc-fff" href='<%= @school.home_page_url %>' target="_blank"><%= @school.home_page_url %></a><br/>
+                  <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact_content" href='<%= @school.home_page_url %>' target="_blank"><%= @school.home_page_url %></a><br/>
             <% end %>
             <% if @school.phone.present? %>
                   <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
@@ -26,7 +26,7 @@
           <div class="col-sm-8 col-md-8 col-lg-7 pbl ">
             <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm') %>
               <br /><span class="iconx16 i-16-home vam"></span><a
-                                                            class="mlm vam fc-fff"
+                                                            class="mlm vam contact_content"
                                                             href="<%= zillow_url ( @school ) %>"
                                                             onclick="if (s.tl) {s.tl(this,'o', 'Zillow_'+gon.omniture_pagename);} return true;"
                                                             target="_blank">Nearby homes for sale</a>
