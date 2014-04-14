@@ -148,7 +148,8 @@ class CensusDataReader < SchoolProfileDataReader
             district_value: census_data_set.district_value,
             state_value: census_data_set.state_value,
             source: census_data_set.source,
-            year: census_data_set.year
+            year: census_data_set.year == 0 ?
+              census_data_set.school_modified.year : census_data_set.year
           }
         end
       end.compact

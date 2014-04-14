@@ -181,9 +181,6 @@ describe CensusDataReader do
   end
 
   describe '#build_data_type_descriptions_to_hashes_map' do
-    before do
-
-    end
 
     it 'should only include items that have school value or state value' do
       data_set_with_school_and_state_values = FactoryGirl.build(:census_data_set,
@@ -319,6 +316,36 @@ describe CensusDataReader do
 
       expect(subject.send :build_data_type_descriptions_to_hashes_map, hash).to eq(expected)
 
+    end
+
+    it 'should set the year to the manual override (school modified) year' do
+      data_set_a = FactoryGirl.build(:census_data_set,
+        year: 0,
+        census_data_school_values: FactoryGirl.build_list(
+          :census_data_school_value,
+          1,
+          value_float: 1,
+          modified: Time.zone.parse('2000-01-01')
+        )
+      )
+
+      hash = {
+        'a' => [ data_set_a ]
+      }
+      expected = {
+        'a' => [
+          {
+            breakdown: nil,
+            school_value: 1.0,
+            district_value: nil,
+            state_value: nil,
+            source: nil,
+            year: 2000
+          },
+        ]
+      }
+
+      expect(subject.send :build_data_type_descriptions_to_hashes_map, hash).to eq(expected)
     end
   end
 
