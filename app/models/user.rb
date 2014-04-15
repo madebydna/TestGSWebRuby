@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     SchoolRating.belonging_to(self).order('posted desc')
   end
 
-  def reviews_of_school(args)
+  def reviews_for_school(args)
     if args[:school]
       school_id = args[:school].id
       state = args[:school].state

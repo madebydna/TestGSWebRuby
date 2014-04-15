@@ -176,7 +176,7 @@ describe User do
       end
     end
 
-    describe '#reviews_of_school' do
+    describe '#reviews_for_school' do
       let(:state) { 'ca' }
       let(:school_id) { 10 }
       let(:school) { FactoryGirl.build(:school, id: school_id, state: state) }
@@ -187,7 +187,7 @@ describe User do
           state: state,
           school_id: school_id
         )
-        subject.reviews_of_school(school: school)
+        subject.reviews_for_school(school: school)
       end
 
       it 'should support state + school_id parameters' do
@@ -196,12 +196,12 @@ describe User do
           state: state,
           school_id: school_id
         )
-        subject.reviews_of_school(state: state, school_id: school_id)
+        subject.reviews_for_school(state: state, school_id: school_id)
       end
 
       it 'should raise error for invalid arguments' do
         expect(SchoolRating).to_not receive(:where)
-        expect{ subject.reviews_of_school(nil) }.to raise_error
+        expect{ subject.reviews_for_school(nil) }.to raise_error
       end
     end
   end
