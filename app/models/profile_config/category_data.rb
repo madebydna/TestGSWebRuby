@@ -22,10 +22,6 @@ class CategoryData < ActiveRecord::Base
     end
   end
 
-  def self.all_category_datas
-
-  end
-
   def possible_sources
     SchoolProfileDataDecorator.data_readers
   end

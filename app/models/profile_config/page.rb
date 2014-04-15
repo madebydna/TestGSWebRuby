@@ -15,22 +15,21 @@ class Page < ActiveRecord::Base
     ).first
   end
 
-  # This method will return all of the various data keys that are configured to display for a certain *source*
-  # This works by aggregating all of the CategoryData keys for Categories which use this source
-  # For example, if both the "Ethnicity" category and "Details" category use a source called "census_data", then
-  # this method would return all the keys configured for both Ethnicity and Details
+  #
+  # Returns all CategoryData keys configured on this page, for the given
+  # source. For example, if both the "Ethnicity" category and "Details" 
+  # category use a source called "census_data", then this method would return
+  # all the keys configured for both Ethnicity and Details
+  #
+  # @param  source [String] The 'source' a.k.a. data reader
+  #
+  # @return [Array] Array of keys as strings
   def all_configured_keys(source)
-    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_DATA_KEYS_PER_SOURCE_PREFIX}/#{source}", expires_in: 1.hour) do
-      all_keys = categories_using_source(source).map(&:keys).inject([], &:+)
-    end
+      categories_using_source(source).map(&:keys).inject([], &:+)
   end
 
   def code_friendly_name
     name.gsub('&',' ').gsub(/\s+/, '_').classify
-  end
-
-  def category_placements
-    @category_placements ||= super
   end
 
   def categories

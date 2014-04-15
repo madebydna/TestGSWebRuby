@@ -36,22 +36,6 @@ class CategoryPlacement < ActiveRecord::Base
     end
   end
 
-  # return CategoryPlacements with collection_id in the provided
-  # collections. If a single object is passed in, the Array(...) call will convert it to an array
-  # Will return CategoryPlacements with nil collection_id
-  def self.belonging_to_collections(page, collections = nil)
-    placements_for_page(page).select do |category_placement|
-      array_of_ids_with_nil = (Array(collections).map(&:id))<<nil
-      array_of_ids_with_nil.include? category_placement.collection_id
-    end
-  end
-
-  def self.placements_for_page(page)
-    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_PLACEMENTS_PER_PAGE_PREFIX}#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id).all
-    end
-  end
-
   def set_defaults
     self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
   end
