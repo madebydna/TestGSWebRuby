@@ -121,3 +121,7 @@ body {padding-top: 50px}
 .h24 { height:24px }
 
 .rating_divider {color:#FFFFFF; background-color:#FFFFFF; border-bottom: #cccccc thin dotted}
+
+@media (min-width:480px){
+  .rating_header_h24 { height:24px;}
+}

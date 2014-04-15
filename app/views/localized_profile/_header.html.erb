@@ -23,13 +23,13 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn pts"><%= @school.name %></h1></div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                         <% if @school.gs_rating  %>
-                            <div class="fl prl open-sans h24">
+                            <div class="fl prl open-sans rating_header_h24">
                                 <span class="mrs">GreatSchools rating:</span>
                                 <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
                             </div>
                         <% end %>
                         <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
-                            <div class="fl prl open-sans pt2 h24">
+                            <div class="fl prl open-sans pt2 rating_header_h24">
                                 <span class="mrs">Community rating:</span>
                                 <span class="mt2 vam">
                                     <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
@@ -37,7 +37,7 @@
                             </div>
                         <% end %>
                         <% if @school.local_rating  %>
-                            <div class="fl prl open-sans pt2 h24">
+                            <div class="fl prl open-sans pt2 rating_header_h24">
                                 <span class="mrs">Excellent Schools Detroit rating:</span>
                                 <span class="open-sans_sb">
                                     <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
@@ -45,7 +45,7 @@
                             </div>
                         <% end %>
                         <% if @school.state_rating  %>
-                            <div class="fl prl open-sans pt2 h24">
+                            <div class="fl prl open-sans pt2 rating_header_h24">
                                 <span class="mrs">State rating:</span>
                                 <span class="open-sans_sb"><%= @school.state_rating %></span>
                             </div>
