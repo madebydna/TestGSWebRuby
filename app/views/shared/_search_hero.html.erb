@@ -20,13 +20,15 @@
       <div class="content-centered">
         <div class="hub-hero-bg tal">
             <% unless defined?(state_page) %>
-              <div class='tac pvm sponsor-bar'>
-                <div class="small mbn pbn prm" style='display: inline; color: #fff;'><%= sponsor[:text] %></div>
-                <a href="education-community/partner">
-                  <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
-                  <hr style='color: #ddd;'>
-                </a>
-              </div>
+              <% unless sponsor.nil? %>
+                <div class='tac pvm sponsor-bar'>
+                  <div class="small mbn pbn prm" style='display: inline; color: #fff;'><%= sponsor[:text] %></div>
+                  <a href="education-community/partner">
+                    <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
+                    <hr style='color: #ddd;'>
+                  </a>
+                </div>
+              <% end %>
             <% end %>
 
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">

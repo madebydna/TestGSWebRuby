@@ -14,17 +14,26 @@ describe 'shared/_search_hero.html.erb' do
       view.stub(:collection_id) { 1 }
       view.stub(:state) { { short: 'mi', long: 'michigan' } }
       view.stub(:breakdown_results) { { foo: nil, bar: nil } }
-      render
     end
 
     context 'without breakdown results' do
       it 'renders an error message' do
+        render
         expect(rendered).to have_content('No data found for school breakdown')
       end
     end
 
     it 'adds the collection_id to a name search' do
+      render
       expect(rendered).to have_selector('input#js-collectionId', visible: false)
+    end
+
+    context 'without sponsors' do
+      it 'renders without a sponsor bar' do
+        view.stub(:sponsor) { nil }
+        expect { render }.to_not raise_error
+        expect(rendered).to_not have_selector('.sponsor-bar')
+      end
     end
   end
 
