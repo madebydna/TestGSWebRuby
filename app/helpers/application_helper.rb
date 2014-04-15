@@ -225,39 +225,51 @@ module ApplicationHelper
     city = nil
     state_short = nil
 
-    if hub_params
+    unless hub_params.nil?
       if hub_params[:city]
         city = hub_params[:city].titleize
         state_short = States.abbreviation(hub_params[:state]).upcase
       else
         state_short = hub_params[:state].titleize
+        cookies.delete(:hubCity)
       end
+    else
+      state_short = cookies[:hubState]
     end
+
 
     if school
       city = school.hub_city
       state_short = States.abbreviation(school.state).upcase
     end
 
-    hub_city_mapping =  HubCityMapping.where(city: city, state: state_short, active: 1).first
-    collection = Collection.from_hub_city_mapping(hub_city_mapping)
+    mapping = HubCityMapping.where(city: city, state: state_short, active: 1).first
 
-    if collection
-      cookies[:eduPage] = collection.has_edu_page?
-      cookies[:choosePage] = collection.has_choose_page?
-      cookies[:eventsPage] = collection.has_events_page?
-      cookies[:enrollPage] = collection.has_enroll_page?
-      cookies[:partnerPage] = collection.has_partner_page?
+    if mapping
+      cookies[:eduPage] = mapping.has_edu_page?
+      cookies[:choosePage] = mapping.has_choose_page?
+      cookies[:eventsPage] = mapping.has_events_page?
+      cookies[:enrollPage] = mapping.has_enroll_page?
+      cookies[:partnerPage] = mapping.has_partner_page?
     end
 
 
-    cookies[:hubState] = States.abbreviation(state_short).upcase if state_short
-    cookies[:hubCity] = city if city
+    if state_short
+      cookies[:hubState] = States.abbreviation(state_short).upcase
+    else
+      state_short = cookies[:hubState]
+    end
+
+    if city
+      cookies[:hubCity] = city
+    else
+      city = cookies[:hubCity]
+    end
 
     if !city.nil? && !state_short.nil?
-      "#{city}, #{state_short}"
+      "#{city.titleize}, #{state_short.titleize}"
     elsif !state_short.nil?
-      state_short
+      States.state_name(state_short).titleize
     else
       nil
     end
