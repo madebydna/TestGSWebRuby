@@ -289,33 +289,29 @@ p.view-more {
 }
 
 // Enrollment Page //
-.enrollment-tabs {
-  list-style: none;
+.js-enrollment-tabs {
+  list-style-type: none;
   text-align: center;
   margin-top: 20px;
+  padding-left: 0;
 
   li {
+    display: inline;
+
     a {
       color: #666;
+      border-radius: 5px;
+      padding: 10px 20px;
+      text-align: center;
     }
 
     a:hover {
       text-decoration: none;
+      background: #eee;
     }
 
-    display: inline;
-    border-radius: 5px;
-    padding: 10px 20px;
-    text-align: center;
-  }
-
-  li:hover {
-    background: #eee;
-  }
-
-  li.active {
-    background: #666;
-    a {
+    &.active a {
+      background: #666;
       color: white;
     }
   }
@@ -442,6 +438,12 @@ p.view-more {
 
   .img-container-mobile {
     display: block;
+  }
+
+  .js-enrollment-tabs {
+    li {
+      display: block;
+    }
   }
 }
 
