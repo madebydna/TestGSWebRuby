@@ -1,5 +1,9 @@
-<div class="alert alert-success"><p><span class="open-sans_b prm">Announcement</span>Explore your education options in Detroit. GreatSchools and Excellent Schools Detroit explain the landscape.
-    <% if hub_params.present? %>
-        <%= link_to 'Learn more', city_url(hub_params) %>
-    <% end %>
-</p></div>
+<% if @school.collection.profile_banner.present? %>
+    <% content = @school.collection.profile_banner %>
+    <div class="alert alert-success"><p><span class="open-sans_b prm"><%= content["title"] %></span><%= content["content"] %>
+        <% if hub_params.present? %>
+            <%= link_to content["link_name"].html_safe, content["link_to"] %>
+        <% end %>
+    </p></div>
+<% end %>
+
