@@ -1,12 +1,36 @@
 ENV["RAILS_ENV"] = 'test'
 
 require 'rubygems'
+
 require 'simplecov'
+if ENV['JENKINS_URL'] # on ci server
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+elsif ENV['coverage']
+  require 'simplecov-html'
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+end
+
+if ENV['JENKINS_URL'] || ENV['coverage']
+  SimpleCov.start 'rails' do
+
+    add_group 'Changed' do |source_file|
+      `git ls-files --exclude-standard --others \
+        && git diff --name-only \
+        && git diff --name-only --cached`.split("\n").detect do |filename|
+        source_file.filename.ends_with?(filename)
+      end
+    end
+    add_filter '/spec/'
+    add_filter '/config/'
+    add_filter 'lib/test_connection_management.rb'
+  end
+end
+
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
 require 'capybara/rspec'
-
 
 
 def monkey_patch_database_cleaner
@@ -31,21 +55,6 @@ def clean_dbs(*args)
   end
 end
 
-if ENV['JENKINS_URL'] # on ci server
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-elsif ENV['coverage']
-  require 'simplecov-html'
-  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-end
-
-if ENV['JENKINS_URL'] || ENV['coverage']
-  SimpleCov.start do
-    add_filter '/spec/'
-    add_filter '/config/'
-    add_filter 'lib/test_connection_management.rb'
-  end
-end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
