@@ -19,9 +19,8 @@ class StatesController < ApplicationController
       # Todo: reintegrate articles
       # @articles = CollectionConfig.state_featured_articles(configs)
 
-      # Hold off for now TODO: fix.
-      @hero_image # = "/assets/city-hub/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile#  = "/assets/city-hub/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+      @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
     end
   end
 
