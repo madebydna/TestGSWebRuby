@@ -14,41 +14,42 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <ul class="nav navbar-nav ">
                 <li>
-                    <%- if hub_params.present? %>
+                    <%- if @hub_params.present? || cookies[:hubState] %>
                     <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%= topnav_formatted_title(@school, hub_params, cookies) %>  <b class="caret"></b>
+                        <%= topnav_formatted_title(@school, @hub_params, cookies) %>  <b class="caret"></b>
                     </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
-                        <%- if hub_params.present? %>
-                            <% if hub_params[:city] %>
+                        <%- if @hub_params.present? || cookies[:hubState] %>
+                            <% if @hub_params.try(:[], :city) %>
                                 <li>
-                                    <%= link_to "#{hub_params[:city]} Home", city_url(hub_params), style: 'text-transform:capitalize;' %>
+                                    <%= link_to "#{@hub_params[:city]} Home", city_url(@hub_params), style: 'text-transform:capitalize;' %>
                                 </li>
                                 <li>
-                                    <%= link_to 'Choosing a School', city_choosing_schools_url(hub_params) %>
+                                    <%= link_to 'Choosing a School', city_choosing_schools_url(@hub_params) %>
                                 </li>
                                 <li>
-                                    <%= link_to 'Education Community', city_education_community_url(hub_params) %>
+                                    <%= link_to 'Education Community', city_education_community_url(@hub_params) %>
                                 </li>
                                 <li>
-                                    <%= link_to 'Enrollment Information', city_enrollment_url(hub_params) %>
+                                    <%= link_to 'Enrollment Information', city_enrollment_url(@hub_params) %>
                                 </li>
                                 <li>
-                                    <%= link_to 'Events', city_events_url(hub_params) %>
+                                    <%= link_to 'Events', city_events_url(@hub_params) %>
                                 </li>
                                 <li>
                                     <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= hub_params[:city] %></span>?
+                                        <span style="text-transform:capitalize;"><%= @hub_params[:city] %></span>?
                                     <% end %>
                                 </li>
                             <% else %>
+                                <% state_display_name = @hub_params.try(:[], :state).try(:titleize) || States.state_name(cookies[:hubState]) %>
                                 <li>
-                                    <%= link_to "#{hub_params[:state]} Home", state_url(hub_params), style: 'text-transform:capitalize;' %>
+                                    <%= link_to "#{state_display_name} Home", state_url(@hub_params || { state: States.state_name(cookies[:hubState]) }), style: 'text-transform:capitalize;' %>
                                 </li>
                                 <li>
                                     <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= hub_params[:state].titleize %></span>?
+                                        <span style="text-transform:capitalize;"><%= state_display_name %></span>?
                                     <% end %>
                                 </li>
                             <% end %>
