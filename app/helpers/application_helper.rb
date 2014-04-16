@@ -228,7 +228,7 @@ module ApplicationHelper
     unless hub_params.nil?
       if hub_params[:city]
         city = hub_params[:city].titleize
-        state_short = States.abbreviation(hub_params[:state]).upcase
+        state_short = States.abbreviation(hub_params[:state])
       else
         state_short = hub_params[:state].titleize
         cookies.delete(:hubCity)
@@ -239,11 +239,24 @@ module ApplicationHelper
 
 
     if school
-      city = school.hub_city
-      state_short = States.abbreviation(school.state).upcase
+      city = school.hub_city.titleize
+      state_short = States.abbreviation(school.state)
     end
 
-    mapping = HubCityMapping.where(city: city, state: state_short, active: 1).first
+
+    if state_short
+      cookies[:hubState] = States.abbreviation(state_short).upcase
+    elsif cookies[:hubState]
+      state_short = cookies[:hubState]
+    end
+
+    if city
+      cookies[:hubCity] = city
+    elsif cookies[:hubCity]
+      city = cookies[:hubCity]
+    end
+
+    mapping = HubCityMapping.where(city: city, state: state_short.try(:upcase), active: 1).first
 
     if mapping
       cookies[:eduPage] = mapping.has_edu_page?
@@ -253,23 +266,10 @@ module ApplicationHelper
       cookies[:partnerPage] = mapping.has_partner_page?
     end
 
-
-    if state_short
-      cookies[:hubState] = States.abbreviation(state_short).upcase
-    else
-      state_short = cookies[:hubState]
-    end
-
-    if city
-      cookies[:hubCity] = city
-    else
-      city = cookies[:hubCity]
-    end
-
     if !city.nil? && !state_short.nil?
-      "#{city.titleize}, #{state_short.titleize}"
+      "#{city.gs_capitalize_words}, #{state_short.upcase}"
     elsif !state_short.nil?
-      States.state_name(state_short).titleize
+      States.state_name(state_short).gs_capitalize_words
     else
       nil
     end

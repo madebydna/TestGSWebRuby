@@ -76,13 +76,13 @@ describe ApplicationHelper do
     context 'with a school' do
       it 'sets the nav city and state based on the school' do
         result = helper.topnav_formatted_title(school, hub_params, cookies)
-        expect(result).to eq("a name, CA")
+        expect(result).to eq("A Name, CA")
       end
 
       it 'sets cookies based on school properties' do
         helper.topnav_formatted_title(school, hub_params, cookies)
         expect(cookies[:hubState]).to eq('CA')
-        expect(cookies[:hubCity]).to eq('a name')
+        expect(cookies[:hubCity]).to eq('A Name')
       end
 
       it 'sets page configuration options from the school' do
