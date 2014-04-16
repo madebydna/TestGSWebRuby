@@ -14,6 +14,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
+  before_filter :set_footer_cities
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -176,5 +177,9 @@ class LocalizedProfileController < ApplicationController
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
+  def set_footer_cities
+    @cities = City.popular_cities(@state, limit: 28)
   end
 end

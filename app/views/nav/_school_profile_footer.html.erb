@@ -10,7 +10,8 @@
       <%= render 'shared/about_gs_footer' %>
 
       <% unless cities.nil? %>
-        <%= render 'shared/popular_cities_in_state', state: state, cities: cities %>
+        <%= render 'shared/popular_cities_in_state', state: 
+        { short: state, long: States.state_name(state) }, cities: cities %>
       <% else %>
         <%= render 'shared/popular_cities_in_country' %>
       <% end %>
