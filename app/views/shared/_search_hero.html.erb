@@ -18,7 +18,7 @@
     </div>
     <div class="limit_width_1200">
       <div class="content-centered">
-        <div class="hub-hero-bg tal">
+        <div class="hub-hero-bg tal clearfix">
             <% unless defined?(state_page) %>
               <% unless sponsor.nil? %>
                 <div class='tac pvm sponsor-bar'>
@@ -90,18 +90,24 @@
             </div>
 
             <% unless defined?(state_page) %>
-              <div class="school-breakdown">
+              <div class="school-breakdown col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
-                <% breakdown_results.each do |text, data| %>
-                  <% unless data.nil? %>
-                    <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
-                      <div class='mrs'><%= text %></div>
-                      <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
-                    </button>
-                  <% else %>
-                      <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
+                <ul>
+                  <% breakdown_results.each do |text, data| %>
+                    <% unless data.nil? %>
+                      <li>
+                        <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
+                          <span class='mrs'><%= text %></span>
+                          <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
+                        </button>
+                      </li>
+                    <% else %>
+                      <li>
+                        <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
+                      </li>
+                    <% end %>
                   <% end %>
-                <% end %>
+                </ul>
               </div>
             <% end %>
           </div>

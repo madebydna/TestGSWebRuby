@@ -12,7 +12,7 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
 // City Hub Search Hero //
 .image-bg-scale {
   width: 100%;
-  height: 550px;
+  height: 500px;
   position: relative;
   overflow: hidden;
 }
@@ -65,10 +65,10 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
 }
 
 .school-breakdown {
-  @extend .col-lg-4;
-  @extend .col-md-4;
-  @extend .col-sm-4;
-  @extend .col-xs-12;
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
 }
 
 .search-type-toggle {
@@ -117,20 +117,10 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
 .browse-school-link {
   background: transparent;
   text-decoration: none;
-  display: inline-block;
-  position: relative;
   cursor: pointer;
-  outline: 0; /* Background Gradients */
-  white-space: nowrap;
   border: none;
   color: white;
-  float: left;
-  clear: left;
   padding-left: 0;
-
-  div {
-    display: inline;
-  }
 }
 
 .breakdown-result-count {
@@ -326,6 +316,7 @@ hr.brand-bar {
   }
   .hub-hero-bg {
     width: 100%;
+    height: auto;
     border-radius: none;
   }
   .search-hero-heading {
@@ -346,15 +337,12 @@ hr.brand-bar {
 
   .school-breakdown {
     background: white;
-    width: 100vw;
-    overflow: auto;
-    left: -30px;
     padding: 20px 20px 0 20px;
-    top: 30px;
     h4 {
       color: black;
     }
-    div {
+
+    button {
       color: #0D6A99;
     }
   }
