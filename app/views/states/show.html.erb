@@ -1,7 +1,9 @@
 <% content_for :javascript_includes do %>
-  $(document).ready(function() {
-    GS.viewMoreCollapseInit();
-  });
+  <script>
+    $(document).ready(function() {
+      GS.viewMoreCollapseInit();
+    });
+  </script>
 <% end %>
 
 <%= render 'nav/topnav', hub_params: @hub_params %>
