@@ -1,4 +1,6 @@
 GS.viewMoreCollapseInit = function(options) {
+  if (typeof options === 'undefined')
+    var options = {};
   var textSelector = '.js-module-expand';
   var toggleSelector = 'p.view-more';
   var foldHeight = options['foldHeight'] || 71;
