@@ -523,7 +523,7 @@ describe CollectionConfig do
         FactoryGirl.create(:enrollment_subheading_configs, value: "")
         empty_configs = CollectionConfig.where(collection_id: 1)
         result = CollectionConfig.enrollment_subheading(empty_configs)
-        expect(result).to eq({})
+        expect(result).to eq({ error: "The enrollment subheading is empty" })
       end
     end
 

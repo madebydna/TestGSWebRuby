@@ -21,15 +21,6 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   position: absolute;
   left: -50%;
   width: 200%;
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    min-width: 50%;
-  }
 }
 
 .content-centered {
@@ -315,6 +306,11 @@ p.view-more {
       color: white;
     }
   }
+}
+
+hr.brand-bar {
+  height: 2px;
+  background: $brand-secondary;
 }
 
 
