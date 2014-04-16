@@ -37,7 +37,13 @@ class Solr
           url += "/?st=public&st=charter"
         end
       else
-        url += "/?st=#{options[:type]}" if options[:type]
+        if options[:type]
+          if options[:grade_level]
+            url += "&st=#{options[:type]}"
+          else
+            url += "/?st=#{options[:type]}"
+          end
+        end
       end
       url
     end

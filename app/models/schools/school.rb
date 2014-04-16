@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
   LEVEL_CODES = {
     primary: 'p',
+    preschool: 'p',
     elementary: 'e',
     middle: 'm',
     high: 'h',
