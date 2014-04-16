@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-sm-8 col-lg-8">
+    <% unless data["enrollmentPage_#{type}_#{tab[:key]}_description"].nil? %>
+      <h3 class='mtn'><%= data["enrollmentPage_#{type}_#{tab[:key]}_description"][:header] %></h3>
+      <%= data["enrollmentPage_#{type}_#{tab[:key]}_description"][:content].html_safe %>
+    <% else %>
+      <h1>No data found: <%= "enrollmentPage_#{type}_#{tab[:key]}_description" %></h1>
+    <% end %>
+
+    <% unless data["enrollmentPage_#{type}_#{tab[:key]}_moreInfo"].try(:[], :moreInfo).try(:[], :link).nil? %>
+      <h3>For More Information:</h3>
+      <ul>
+        <% data["enrollmentPage_#{type}_#{tab[:key]}_moreInfo"][:moreInfo][:link].each do |link| %>
+          <li>
+            <% if link[:newwindow] == 'true' %>
+              <%= link_to(link[:name], link[:path], target: '_blank') %>
+            <% else %>
+              <%= link_to(link[:name], link[:path]) %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="col-sm-3 col-sm-offset-1 col-lg-3 col-lg-offset-1">
+    <% unless tab[:results][type][:count] == 0 %>
+      <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
+        <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
+        <span class='breakdown-result-count'><%= tab[:results][type][:count] %></span>
+      </a>
+    <% end %>
+
+    <hr class='brand-bar'>
+
+    <% unless data["enrollmentPage_#{type}_#{tab[:key]}_tips"].try(:[], :content).nil? %>
+      <h4>Did You know?</h4>
+      <% data["enrollmentPage_#{type}_#{tab[:key]}_tips"][:content].each do |tip| %>
+        <p><%= tip %></p>
+      <% end %>
+    <% end %>
+
+    <hr class='brand-bar'>
+
+    <% unless key_dates[type].empty? %>
+      <% key_dates[type].each do |date| %>
+        <%= date[:date] %>
+        <br>
+        <%= date[:description] %>
+        <br>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <hr style='clear: both; margin-top: 50px; margin-bottom: 50px;'>
+</div>

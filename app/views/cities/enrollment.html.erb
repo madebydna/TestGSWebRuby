@@ -29,7 +29,7 @@
       <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
     <% end %>
 
-    <ul class='enrollment-tabs' style='margin-bottom: 80px'>
+    <ul class='js-enrollment-tabs' style='margin-bottom: 80px'>
       <li class="mhm <%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(@state[:long], @city)) %></li>
       <li class="mhm <%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(@state[:long], @city) + 'elementary') %></li>
       <li class="mhm <%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(@state[:long], @city) + 'middle') %></li>
@@ -37,114 +37,9 @@
     </ul>
   </div>
 
-  <div class="row">
-    <div class="col-lg-8">
-      <% unless @data["enrollmentPage_public_#{@tab[:key]}_description"].nil? %>
-        <h3 class='mtn'><%= @data["enrollmentPage_public_#{@tab[:key]}_description"][:header] %></h3>
-        <%= @data["enrollmentPage_public_#{@tab[:key]}_description"][:content].html_safe %>
-      <% else %>
-        <h1>No data found: <%= "enrollmentPage_public_#{@tab[:key]}_description" %></h1>
-      <% end %>
+  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, data: @data, type: :public, key_dates: @key_dates %>
+  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, data: @data, type: :private, key_dates: @key_dates %>
 
-      <% unless @data["enrollmentPage_public_#{@tab[:key]}_moreInfo"].try(:[], :moreInfo).try(:[], :link).nil? %>
-        <h3>For More Information:</h3>
-        <ul>
-          <% @data["enrollmentPage_public_#{@tab[:key]}_moreInfo"][:moreInfo][:link].each do |link| %>
-            <li>
-              <% if link[:newwindow] == 'true' %>
-                <%= link_to(link[:name], link[:path], target: '_blank') %>
-              <% else %>
-                <%= link_to(link[:name], link[:path]) %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-
-    <div class="col-lg-4">
-      <% unless @tab[:results][:public][:count] == 0 %>
-        <a href="<%= city_path(@state[:long], @city) + @tab[:results][:public][:path] %>" style='text-decoration: none;'>
-          <%= "Browse #{@collection_nickname} public #{@tab[:display_name].downcase}" %>
-          <span class='breakdown-result-count'><%= @tab[:results][:public][:count] %></span>
-        </a>
-      <% end %>
-
-      <% unless @data["enrollmentPage_public_#{@tab[:key]}_tips"].try(:[], :content).nil? %>
-      <h4>Did You know?</h4>
-        <ul>
-          <% @data["enrollmentPage_public_#{@tab[:key]}_tips"][:content].each do |tip| %>
-            <li>tip: <%= tip %></li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <% unless @key_dates[:public].empty? %>
-        <% @key_dates[:public].each do |date| %>
-          <%= date[:date] %>
-          <br>
-          <%= date[:description] %>
-          <br>
-        <% end %>
-      <% end %>
-    </div>
-
-    <hr style='clear: both; margin-top: 50px; margin-bottom: 50px;'>
-  </div>
-
-
-  <div class="row">
-    <div class="col-lg-8">
-      <% unless @data["enrollmentPage_private_#{@tab[:key]}_description"].nil? %>
-        <h3 class='mtn'><%= @data["enrollmentPage_private_#{@tab[:key]}_description"][:header] %></h3>
-        <%= @data["enrollmentPage_private_#{@tab[:key]}_description"][:content].html_safe %>
-      <% else %>
-        <h3>No data found: <%= "enrollmentPage_private_#{@tab[:key]}_description" %></h3>
-      <% end %>
-
-
-      <% unless @data["enrollmentPage_private_#{@tab[:key]}_moreInfo"].try(:[], :moreInfo).try(:[], :link).nil? %>
-        <h3>For More Information:</h3>
-        <ul>
-          <% @data["enrollmentPage_private_#{@tab[:key]}_moreInfo"][:moreInfo][:link].each do |link| %>
-            <li>
-              <% if link[:newwindow] == 'true' %>
-                <%= link_to(link[:name], link[:path], target: '_blank') %>
-              <% else %>
-                <%= link_to(link[:name], link[:path]) %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-
-    <div class="col-lg-4">
-      <% unless @tab[:results][:private][:count] == 0 %>
-        <a href="<%= city_path(@state[:long], @city) + @tab[:results][:private][:path] %>" style='text-decoration: none;'>
-          <%= "Browse #{@collection_nickname} private #{@tab[:display_name].downcase}" %>
-          <span class='breakdown-result-count'><%= @tab[:results][:private][:count] %></span>
-        </a>
-      <% end %>
-
-      <% unless @data["enrollmentPage_private_#{@tab[:key]}_tips"].try(:[], :content).nil? %>
-      <h4>Did You know?</h4>
-        <ul>
-          <% @data["enrollmentPage_private_#{@tab[:key]}_tips"][:content].each do |tip| %>
-            <li>tip: <%= tip %></li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <% unless @key_dates[:private].empty? %>
-        <% @key_dates[:private].each do |date| %>
-          <%= date[:date] %>
-          <br>
-          <%= date[:description] %>
-          <br>
-        <% end %>
-      <% end %>
-    </div>
   </div>
 </div>
 
