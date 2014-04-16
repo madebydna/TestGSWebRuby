@@ -3,7 +3,7 @@ require 'spec_helper'
 require './app/controllers/concerns/url_helper'
 
 describe 'shared/_state_footer.html.erb' do
-  before(:each) { clean_dbs :us_geo }
+  after(:each) { clean_dbs :us_geo }
   before(:each) do
     view.stub(:state) { { long: 'Indiana', short: 'IN' } }
     view.stub(:city_params).and_return({ state: 'indiana', city: 'indianapolis' })
