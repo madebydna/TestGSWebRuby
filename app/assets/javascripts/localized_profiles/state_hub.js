@@ -36,7 +36,7 @@ GS.viewMoreCollapseInit = function() {
   }
 
   function initExpandCollapse() {
-    $(toggleSelector).last().each(function() {
+    $(toggleSelector).each(function() {
       var $this = $(this);
       var $p = $this.parent().find(textSelector);
       var heightDiff = heightSwitch($p);
