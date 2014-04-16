@@ -41,7 +41,7 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def collection_nickname(collection_id)
-      Rails.cache.fetch("collection_nickname:#{collection_id}") do
+      Rails.cache.fetch("collection_nickname:#{collection_id}", expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
         begin
           CollectionConfig.where(collection_id: collection_id, quay: NICKNAME_KEY).first.value
         rescue Exception => e
@@ -385,14 +385,13 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def enrollment_subheading(configs)
-      # NOT TESTED
       subheading = {}
       unless configs.empty?
         config = configs.select(&lambda { |cc| cc.quay == ENROLLMENT_SUBHEADING_KEY }).first
         if config
           begin
-            raw_subheading_str = config.value
-            subheading = eval(raw_subheading_str)
+            result = eval(config.value)
+            subheading = result ? result : {}
           rescue Exception => e
             Rails.logger.error('Something went wrong while parsing enrollment_subheading ' + e.to_s)
             subheading = { error: e }

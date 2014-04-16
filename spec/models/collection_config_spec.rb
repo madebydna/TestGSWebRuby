@@ -518,14 +518,24 @@ describe CollectionConfig do
       end
     end
 
-    context 'with malformed data' do
-      it 'logs an error and returns it' do
-        Rails.logger.should_receive(:error)
-        broken_configs = [FactoryGirl.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")]
-        result = CollectionConfig.enrollment_subheading(broken_configs)
-        expect(result).to be_an_instance_of(Hash)
+    context 'with empty data' do
+      it 'returns an empty object' do
+        FactoryGirl.create(:enrollment_subheading_configs, value: "")
+        empty_configs = CollectionConfig.where(collection_id: 1)
+        result = CollectionConfig.enrollment_subheading(empty_configs)
+        expect(result).to eq({})
+      end
+    end
 
-        expect(result[:error].class).to eq(SyntaxError)
+    context 'with malformed data' do
+      let(:broken_configs) { [FactoryGirl.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")] }
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        CollectionConfig.enrollment_subheading(broken_configs)
+      end
+
+      it 'returns an error in the object' do
+        result = CollectionConfig.enrollment_subheading(broken_configs)
       end
     end
 
