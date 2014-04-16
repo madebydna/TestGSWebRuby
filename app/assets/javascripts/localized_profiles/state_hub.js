@@ -1,7 +1,7 @@
-GS.viewMoreCollapseInit = function() {
+GS.viewMoreCollapseInit = function(options) {
   var textSelector = '.js-module-expand';
   var toggleSelector = 'p.view-more';
-  var foldHeight = 71;
+  var foldHeight = options['foldHeight'] || 71;
   var lineHeight = 20;
 
   function heightSwitch($p) {
@@ -69,7 +69,3 @@ GS.viewMoreCollapseInit = function() {
   });
   initExpandCollapse();
 }
-
-$(document).ready(function() {
-  GS.viewMoreCollapseInit();
-});
