@@ -4,12 +4,16 @@
 <%= render 'shared/sign_up_for_updates' %>
 
 <div class="row invert-colors">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac" style="padding:10px;">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
     <div class="limit_width_1200 open-sans">
 
       <%= render 'shared/about_gs_footer' %>
 
-      <%= render 'shared/popular_cities_in_country' %>
+      <% unless cities.nil? %>
+        <%= render 'shared/popular_cities_in_state', state: state, cities: cities %>
+      <% else %>
+        <%= render 'shared/popular_cities_in_country' %>
+      <% end %>
 
       <hr/>
 
