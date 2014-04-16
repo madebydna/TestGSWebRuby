@@ -391,7 +391,7 @@ class CollectionConfig < ActiveRecord::Base
         if config
           begin
             result = eval(config.value)
-            subheading = result ? result : {}
+            subheading = result ? result : { error: 'The enrollment subheading is empty' }
           rescue Exception => e
             Rails.logger.error('Something went wrong while parsing enrollment_subheading ' + e.to_s)
             subheading = { error: e }

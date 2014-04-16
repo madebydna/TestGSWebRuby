@@ -23,10 +23,10 @@
 
 
     <h1 class='tac'>Enrollment Information</h1>
-    <% if @subheading.try(:[], :error) %>
+    <% if @subheading[:error] %>
       <h3 class='tac'>Error: <%= @subheading[:error] %></h3>
     <% else %>
-      <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn'><%= @subheading[:content] %></p>
+      <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
     <% end %>
 
     <ul class='enrollment-tabs' style='margin-bottom: 80px'>
