@@ -10,7 +10,7 @@
             <%  ratings_array << (render "shared/rating/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating, supporting_text:'ESD rating') %>
         <% end %>
         <% if @school.state_rating  %>
-            <%  ratings_array << (render "shared/rating/draw_rect_72x58_rating", rating:@school.state_rating, supporting_text:'Michigan rating') %>
+            <%  ratings_array << (render "shared/rating/draw_rect_72x58_rating", rating:@school.state_rating, supporting_text:'State rating') %>
         <% end %>
         <% if @school.preK_star_rating  %>
             <%  ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>

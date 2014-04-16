@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'controllers/concerns/review_controller_concerns_spec'
 
 describe ReviewsController do
+
+  it_should_behave_like 'a controller that can save a review'
 
   describe '#report' do
 

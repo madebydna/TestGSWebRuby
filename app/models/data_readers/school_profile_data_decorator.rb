@@ -32,6 +32,14 @@ module SchoolProfileDataDecorator
     end
   end
 
+  def page=(page)
+    @page = page
+  end
+
+  def page
+    @page
+  end
+
   def data_reader_config
     {
       census_data: @census_data_reader,
@@ -156,7 +164,7 @@ module SchoolProfileDataDecorator
   end
 
   def rating_data(options = {})
-    @rating_data_reader.data
+    @rating_data ||= @rating_data_reader.data
   end
 
   def snapshot(options = {})
@@ -166,7 +174,7 @@ module SchoolProfileDataDecorator
 
   def test_scores(options = {})
     category = options[:category]
-    @test_scores_data_reader.data_for_category category
+    @test_scores_data_reader.data
   end
 
   def zillow(options = {})
@@ -187,13 +195,12 @@ module SchoolProfileDataDecorator
     root_placements = page_config.root_placements
 
     root_placements.each_with_object([]) do |root, footnotes_array|
-      leaves = page_config.category_placement_has_children?(root) ? page_config.category_placement_leaves(root) : [ root ]
+      leaves = root.has_children? ? root.leaves : [ root ]
       leaves.each do |leaf|
         # Skip if category is for footnotes, otherwise infinite recursion
         next if leaf.category.id == category.id
         footnotes = footnotes_for_category category: leaf.category
-        parent = page_config.category_placement_parent leaf
-
+        parent = leaf.parent
         if footnotes.present?
           footnotes.each do |footnote|
             year = footnote[:year]

@@ -50,10 +50,8 @@ class CensusDataResults
   end
 
   def for_data_types(data_types)
-    data_types = Array(data_types).clone
-
-    data_types.each do |data_type|
-      data_type.downcase! if data_type.is_a? String
+    data_types = data_types.map do |data_type|
+      data_type.is_a?(String) ? data_type.downcase : data_type
     end
 
     select do |census_data_set|
@@ -63,7 +61,5 @@ class CensusDataResults
       )
     end
   end
-
-
 
 end

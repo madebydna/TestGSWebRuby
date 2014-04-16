@@ -1,5 +1,6 @@
 FactoryGirl.define do
-  factory :valid_school_rating, class: SchoolRating do
+
+  factory :school_rating, class: SchoolRating do
     sequence(:id) { |n| n }
     association :school, factory: :school, strategy: :build
     association :user, factory: :user, strategy: :build
@@ -9,6 +10,9 @@ FactoryGirl.define do
     who 'parent'
     quality '5'
     ip '123.123.123.123'
+    
+    factory :valid_school_rating, class: SchoolRating do
+    end
   end
 
   factory :unpublished_review, class: SchoolRating, parent: :valid_school_rating do

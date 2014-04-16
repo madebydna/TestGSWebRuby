@@ -1,6 +1,8 @@
 class RatingDataReader < SchoolProfileDataReader
 
   def data
+    return @data if defined?(@data)
+
     #Get the ratings configuration from the database.
     ratings_config = RatingsConfiguration.configuration_for_school(school.state)
 
@@ -32,7 +34,7 @@ class RatingDataReader < SchoolProfileDataReader
       return_var["preK_ratings"] = preK_ratings
     end
 
-    return_var
+    @data = return_var
   end
 
 end

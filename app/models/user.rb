@@ -34,6 +34,24 @@ class User < ActiveRecord::Base
     SchoolRating.belonging_to(self)
   end
 
+  def reviews_for_school(args)
+    if args[:school]
+      school_id = args[:school].id
+      state = args[:school].state
+    elsif args[:state] && args[:school_id]
+      school_id = args[:school_id]
+      state = args[:state]
+    else
+      raise(ArgumentError, "Must provide :school or :state and :school_id")
+    end
+
+    SchoolRating.where(
+      member_id: self.id,
+      state: state,
+      school_id: school_id
+    )
+  end
+
   def published_reviews
     school_reviews.published
   end

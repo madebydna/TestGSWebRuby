@@ -148,7 +148,8 @@ class CensusDataReader < SchoolProfileDataReader
             district_value: census_data_set.district_value,
             state_value: census_data_set.state_value,
             source: census_data_set.source,
-            year: census_data_set.year
+            year: census_data_set.year == 0 ?
+              census_data_set.school_modified.year : census_data_set.year
           }
         end
       end.compact
@@ -191,7 +192,7 @@ class CensusDataReader < SchoolProfileDataReader
   def prettify_hash(data_type_to_results_hash, key_label_map)
     data = {}
     data_type_to_results_hash.each do |key, results|
-      label = key_label_map.fetch(key, key)
+      label = key_label_map.fetch(key.downcase, key)
       label = key if label.blank?
       data[label] = results
     end
@@ -232,7 +233,7 @@ class CensusDataReader < SchoolProfileDataReader
     @all_census_data ||= nil
     return @all_census_data if @all_census_data
 
-    configured_data_types = Category.all_configured_keys 'census_data'
+    configured_data_types = page.all_configured_keys 'census_data'
 
     # Get data for all data types
     @all_census_data = CensusDataForSchoolQuery.new(school)
