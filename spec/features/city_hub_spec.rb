@@ -27,12 +27,11 @@ describe 'City Hub Page' do
 
   describe 'school breakdown section' do
     it 'shows the counts for each school type' do
-      button1 = ".school-breakdown button:nth-of-type(#{rand(7) + 1}) span"
-      button2 = ".school-breakdown button:nth-of-type(#{rand(7) + 1}) span"
+      buttons = page.all ".school-breakdown button"
 
       expect(page).to have_css('.school-breakdown button', count: 7)
-      expect(find(button1).text).to match(/[0-9]/)
-      expect(find(button2).text).to match(/[0-9]/)
+      expect(buttons[0].text).to match(/[0-9]/)
+      expect(buttons[2].text).to match(/[0-9]/)
     end
   end
 

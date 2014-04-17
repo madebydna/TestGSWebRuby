@@ -13,7 +13,7 @@
             <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
             <br/>
             <% if @school.home_page_url.present? %>
-                  <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact_content" href='<%= @school.home_page_url %>' target="_blank">School website</a><br/>
+                  <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact_content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank">School website</a><br/>
             <% end %>
             <% if @school.phone.present? %>
                   <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>

@@ -6,7 +6,7 @@
         <% if @school %>
           <%= render 'shared/send_me_updates_form', school: @school,driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
         <% end %>
-        <form class="form-inline" role="form" onsubmit="javascript:return false;">
+        <form class="form-inline clearfix" role="form" onsubmit="return false;">
           <fieldset>
             <div class="form-group fl">
               <h4 class="prl fc-fff">Sign up for email updates</h4>
