@@ -1,5 +1,5 @@
 module ApplicationHelper
-
+  include CookieConcerns
 
   def category_placement_anchor(category_placement)
     "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
@@ -234,7 +234,7 @@ module ApplicationHelper
   end
 
   def topnav_formatted_title(school, hub_params, cookies)
-    cookies[:ishubUser] = 'y'
+    write_cookie :ishubUser, 'y'
     city = nil
     state_short = nil
 
@@ -258,13 +258,13 @@ module ApplicationHelper
 
 
     if state_short
-      cookies[:hubState] = States.abbreviation(state_short).upcase
+      write_cookie :hubState, States.abbreviation(state_short).upcase
     elsif cookies[:hubState]
       state_short = cookies[:hubState]
     end
 
     if city
-      cookies[:hubCity] = city
+      write_cookie :hubCity, city
     elsif cookies[:hubCity]
       city = cookies[:hubCity]
     end
@@ -272,11 +272,11 @@ module ApplicationHelper
     mapping = HubCityMapping.where(city: city, state: state_short.try(:upcase), active: 1).first
 
     if mapping
-      cookies[:eduPage] = mapping.has_edu_page?
-      cookies[:choosePage] = mapping.has_choose_page?
-      cookies[:eventsPage] = mapping.has_events_page?
-      cookies[:enrollPage] = mapping.has_enroll_page?
-      cookies[:partnerPage] = mapping.has_partner_page?
+      write_cookie :eduPage, mapping.has_edu_page?
+      write_cookie :choosePage, mapping.has_choose_page?
+      write_cookie :eventsPage, mapping.has_events_page?
+      write_cookie :enrollPage, mapping.has_enroll_page?
+      write_cookie :partnerPage, mapping.has_partner_page?
     end
 
     if !city.nil? && !state_short.nil?

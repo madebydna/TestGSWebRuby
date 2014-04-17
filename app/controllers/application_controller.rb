@@ -179,7 +179,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_login_redirect
-    cookies[:redirect_uri] = { value: request.path, expires: 10.minutes.from_now }
+    write_cookie :redirect_uri, request.path, { expires: 10.minutes.from_now }
   end
 
   def set_footer_cities
