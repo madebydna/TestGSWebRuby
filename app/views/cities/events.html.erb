@@ -3,7 +3,9 @@
 
 <div class="limit_width_1200" style='margin-bottom: 40px;'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-  <%= render 'events_list', events: @events %>
+  <% unless @events.nil? %>
+    <%= render 'events_list', events: @events %>
+  <% end %>
 </div>
 
 <%= render 'shared/state_footer', state: @state, cities: @cities %>
