@@ -1,6 +1,12 @@
-<div class="tac pal">
-    <div class="ma" style="margin-bottom:7px; margin-top: 7px; min-width: 72px; height: 58px; background-color: #CCCCCC">
-        <div style="padding-top: 20px; color:#000000"><%= rating %></div>
+<% if page == 'overview' %>
+    <div class="tac pal">
+        <div class="ma" style="width: 72px; height: 72px; border: #CCCCCC solid thin; border-radius: 36px;">
+            <div style="padding-top: 10px; color:#000000; font-size: 32px"><%= rating %></div>
+        </div>
+        <div class="ptl"><%= supporting_text %></div>
     </div>
-    <div class="ptm"><%= supporting_text %></div>
-</div>
+<% else %>
+    <div class="tac" style="width: 72px; height: 72px; border: #CCCCCC solid thin; border-radius: 36px;">
+        <div style="padding-top: 10px; color:#000000; font-size: 32px"><%= rating %></div>
+    </div>
+<% end %>
