@@ -19,6 +19,9 @@ class Collection
     config['collection_nickname'] || name
   end
 
+  def show_ads
+    config['showAds'].present? ? config['showAds'] : "false"
+  end
 
   def profile_banner
     hash = nil
