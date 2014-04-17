@@ -38,7 +38,7 @@
                                     <%= link_to 'Events', city_events_url(@hub_params) %>
                                 </li>
                                 <li>
-                                    <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
+                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
                                         <span style="text-transform:capitalize;"><%= @hub_params[:city] %></span>?
                                     <% end %>
                                 </li>
@@ -48,7 +48,7 @@
                                     <%= link_to "#{state_display_name} Home", state_url(@hub_params || { state: States.state_name(cookies[:hubState]) }), style: 'text-transform:capitalize;' %>
                                 </li>
                                 <li>
-                                    <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
+                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
                                         <span style="text-transform:capitalize;"><%= state_display_name %></span>?
                                     <% end %>
                                 </li>
