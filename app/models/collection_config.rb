@@ -21,6 +21,7 @@ class CollectionConfig < ActiveRecord::Base
   STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArtciles'
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
   ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
+  ENROLLMENT_DATES_PREFIX = 'keyEnrollmentDates'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -359,29 +360,17 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def key_dates(configs, tab_key)
-      # NOT TESTED
-      public_dates = []
-      private_dates = []
+      result = {}
+      unless configs.empty?
+        public_key = "#{ENROLLMENT_DATES_PREFIX}_public_#{tab_key}"
+        private_key = "#{ENROLLMENT_DATES_PREFIX}_private_#{tab_key}"
 
-      public_key_base = "keyEnrollmentDates_public_#{tab_key}"
-      private_key_base = "keyEnrollmentDates_private_#{tab_key}"
-
-      public_results = configs.where("quay like ?",  "#{public_key_base}%").to_a
-      private_results = configs.where("quay like ?",  "#{private_key_base}%").to_a
-
-      (1..(public_results.length / 2)).to_a.each do |i|
-        date = configs.where(quay: "#{public_key_base}_#{i}_date").first.try(:value)
-        description = configs.where(quay: "#{public_key_base}_#{i}_description").first.try(:value)
-        public_dates << { date: date, description: description } unless date.nil? || description.nil?
+        result.merge!({
+          public: configs.select(&lambda{ |cc| cc.quay == public_key }).first.try(:value),
+          private: configs.select(&lambda{ |cc| cc.quay == private_key }).first.try(:value)
+        })
       end
-
-      (1..(private_results.length / 2)).to_a.each do |i|
-        date = configs.where(quay: "#{private_key_base}_#{i}_date").first.try(:value)
-        description = configs.where(quay: "#{private_key_base}_#{i}_description").first.try(:value)
-        private_dates << { date: date, description: description } unless date.nil? || description.nil?
-      end
-
-      { public: public_dates, private: private_dates }
+      result
     end
 
     def enrollment_subheading(configs)

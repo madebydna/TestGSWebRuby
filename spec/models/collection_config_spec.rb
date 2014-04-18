@@ -549,4 +549,34 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.key_dates' do
+    context 'without data' do
+      it 'returns nil values in the results hash' do
+        result = CollectionConfig.key_dates([], '')
+        expect(result).to be_an_instance_of(Hash)
+        expect(result[:public]).to be_nil
+        expect(result[:private]).to be_nil
+      end
+    end
+
+    context 'by default' do
+      let(:tab_key) { 'preschool' }
+      before(:each) do
+        [
+          { collection_id: 1, quay: 'keyEnrollmentDates_public_preschool', value: 'some_value' },
+          { collection_id: 1, quay: 'keyEnrollmentDates_private_preschool', value: '<br>woot<hr>' }
+        ].each { |attrs| CollectionConfig.create(attrs) }
+      end
+      after(:each) { clean_dbs :gs_schooldb }
+
+      it 'returns a blob of key dates' do
+        configs = CollectionConfig.all
+        result = CollectionConfig.key_dates(configs, tab_key)
+        expect(result).to be_an_instance_of(Hash)
+        expect(result).to have_key(:public)
+        expect(result).to have_key(:private)
+      end
+    end
+  end
 end
