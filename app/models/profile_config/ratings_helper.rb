@@ -19,7 +19,8 @@ class RatingsHelper
 
     #If configuration exists then loop over the results
     results.each do |test_data_set|
-      if (state_rating_data_type_ids.include? test_data_set.data_type_id)
+      # == 'NULL' is a temporary hack to deal with bad data.
+      if ((state_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_text.nil?) && !(test_data_set.school_value_text == 'NULL'))
         #Build a hash of the data_keys to the rating descriptions.
         state_ratings_results = {'overall_rating' => test_data_set.school_value_text,
                                  'description' => description_hash[[school.state.upcase,state_rating_configuration['overall']['description_key']]]}
@@ -146,7 +147,7 @@ class RatingsHelper
     #If configuration exists then loop over the results
     if !preK_rating_configuration.nil? && !preK_rating_data_type_ids.empty?
       results.each do |test_data_set|
-        if (preK_rating_data_type_ids.include? test_data_set.data_type_id)
+        if ((preK_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_float.nil?))
           if preK_rating_configuration['star_rating'] && test_data_set.data_type_id == preK_rating_configuration['star_rating']['data_type_id']
             preK_ratings_results['star_rating'] = test_data_set.school_value_float.round
             preK_ratings_results['description'] = description_hash[[school.state.upcase,preK_rating_configuration['star_rating']['description_key']]]
