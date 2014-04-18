@@ -42,13 +42,8 @@
 
     <hr class='brand-bar'>
 
-    <% unless key_dates[type].empty? %>
-      <% key_dates[type].each do |date| %>
-        <%= date[:date] %>
-        <br>
-        <%= date[:description] %>
-        <br>
-      <% end %>
+    <% unless key_dates[type].nil? %>
+      <%= key_dates[type].html_safe %>
     <% end %>
 
   </div>
