@@ -186,6 +186,8 @@ GEM
       colorize
       railties (>= 3.1, < 5)
       sprockets
+    launchy (2.4.2)
+      addressable (~> 2.3)
     listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
@@ -434,6 +436,7 @@ DEPENDENCIES
   hashie
   jquery-rails
   konacha
+  launchy
   lodash-rails
   machinist (>= 2.0.0.beta2)
   mechanize

@@ -4,11 +4,24 @@ class HubCityMapping < ActiveRecord::Base
 
   attr_accessible :collection_id, :city, :state, :active
 
-  alias_attribute :has_edu_page?, :hasEduPage
-  alias_attribute :has_choose_page?, :hasChoosePage
   alias_attribute :has_events_page?, :hasEventsPage
-  alias_attribute :has_enroll_page?, :hasEnrollPage
-  alias_attribute :has_partner_page?, :hasPartnerPage
+
+
+  def has_edu_page?
+    self.hasEduPage || self.hasStateEduPage
+  end
+
+  def has_choose_page?
+    self.hasChoosePage || self.hasStateChoosePage
+  end
+
+  def has_enroll_page?
+    self.hasEnrollPage || self.hasStateEnrollPage
+  end
+
+  def has_partner_page?
+    self.hasPartnerPage || hasStatePartnerPage
+  end
 
   def self.for_collection_id(collection_id)
     Rails.cache.fetch('hub_city_mapping/all', expires_in: 5.minutes) do
