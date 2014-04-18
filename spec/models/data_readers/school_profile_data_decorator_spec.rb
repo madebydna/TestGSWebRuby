@@ -2,12 +2,13 @@ require 'spec_helper'
 
 describe SchoolProfileDataDecorator do
   describe '#footnotes' do
+    let(:page) { FactoryGirl.build(:page) }
     subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
     let(:footnotes_category) { FactoryGirl.build(:category) }
 
     before do
       @page_config = double('page_config')
-      @section = FactoryGirl.create(:section_category_placement)
+      @section = FactoryGirl.create(:section_category_placement, page: page)
       @page_config.stub(:root_placements).and_return [ @section ]
       @census_category = double('census_category')
     end
@@ -44,6 +45,23 @@ describe SchoolProfileDataDecorator do
 
       expect(subject.footnotes(category: footnotes_category, page_config: @page_config)).to eq expected
     end
+  end
+  
+  describe '#facebook_url' do
+    subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
+    it 'should return a url if the school has a facebook url' do
+      schoolMetadata = Hashie::Mash.new(:facebook_url => 'http://facebook.com/pages/myschool/12345')
+      school.stub(:school_metadata).and_return(schoolMetadata)
+      expect(school.facebook_url).to eq 'http://facebook.com/pages/myschool/12345'
+    end
+    it 'should return nil if the school does not have a facebook url' do
+      schoolMetadata = Hashie::Mash.new(:facebook_url => '')
+      school.stub(:school_metadata).and_return(schoolMetadata)
+      expect(school.facebook_url).to eq nil
 
+      schoolMetadata = Hashie::Mash.new
+      school.stub(:school_metadata).and_return(schoolMetadata)
+      expect(school.facebook_url).to eq nil
+    end
   end
 end

@@ -1,6 +1,6 @@
 <% if !@school.reviews.nil? %>
     <% hide_reviews_overview = "" %>
-    <%  @school.reviews.to_enum.with_index(0).each do |review, i| %>
+    <%  @school.reviews.each_with_index do |review, i| %>
         <% if i > 1 %>
             <% hide_reviews_overview = " dn" %>
         <% end %>
@@ -8,13 +8,7 @@
             <div class=" row<%= hide_reviews_overview %>">
         <% end %>
 
-        <!--use quality or p_overall(for prek) for star counts and overall score.OM-209-->
-        <% overall_review_rating = 'decline' %>
-        <% if review[:quality] != 'decline' %>
-            <% overall_review_rating = review[:quality] %>
-        <% elsif review[:p_overall] != 'decline' %>
-            <% overall_review_rating = review[:p_overall] %>
-        <% end %>
+        <% overall_review_rating = review.overall %>
 
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">
             <div class="well">
@@ -24,15 +18,16 @@
                     <% else %>
                         <%= draw_stars_16 overall_review_rating.to_i %>
                     <% end %>
-                    <span class="mlm vat"><%= review[:posted].strftime "%B %d, %Y" %></span>
+                    <span class="mlm vat"><%= review.posted.strftime "%B %d, %Y" %></span>
                 </div>
-                <% if review[:comments].present? && review[:comments].strip.present? && review[:status] != 'a' %>
-                    <%= review[:comments] %>
+                <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
+                    <%= review.comments %>
                 <% else %>
                     <div class="well mbn">This review submitted without content.</div>
                 <% end %>
-                <br />
-                - submitted by a <span class="cuc_posted-by"><%= review[:who] == "other" ? "community member":review[:who] %></span>
+                <br /><br />
+                - submitted by a <span class="cuc_posted-by">
+                <%= review.who == "other" ? "community member" : review.who %></span>
             </div>
         </div>
 

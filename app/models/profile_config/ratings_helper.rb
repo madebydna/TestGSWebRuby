@@ -19,13 +19,20 @@ class RatingsHelper
 
     #If configuration exists then loop over the results
     results.each do |test_data_set|
-      if (state_rating_data_type_ids.include? test_data_set.data_type_id)
+      # == 'NULL' is a temporary hack to deal with bad data.
+      if ((state_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_text.nil?) && !(test_data_set.school_value_text == 'NULL'))
         #Build a hash of the data_keys to the rating descriptions.
         state_ratings_results = {'overall_rating' => test_data_set.school_value_text,
                                  'description' => description_hash[[school.state.upcase,state_rating_configuration['overall']['description_key']]]}
         break
       end
     end
+    methodology_url = get_methodology_url(state_rating_configuration,school)
+    #Only put the url if there is an overall rating.
+    if state_ratings_results['overall_rating'] && methodology_url.present?
+      state_ratings_results['methodology_url'] = methodology_url
+    end
+
     state_ratings_results
   end
 
@@ -122,8 +129,8 @@ class RatingsHelper
     #Only put the sub-ratings if there is an overall rating.
     if school_rating_value.present? && gs_sub_rating_hash.any?
       gs_ratings_results['rating_breakdowns'] = gs_sub_rating_hash
+      gs_ratings_results.merge!('disclaimer_private' => description_hash[[school.state.upcase,'disclaimer_private']]) unless description_hash[[school.state.upcase,'disclaimer_private']].blank?
     end
-
     gs_ratings_results
   end
 
@@ -140,7 +147,7 @@ class RatingsHelper
     #If configuration exists then loop over the results
     if !preK_rating_configuration.nil? && !preK_rating_data_type_ids.empty?
       results.each do |test_data_set|
-        if (preK_rating_data_type_ids.include? test_data_set.data_type_id)
+        if ((preK_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_float.nil?))
           if preK_rating_configuration['star_rating'] && test_data_set.data_type_id == preK_rating_configuration['star_rating']['data_type_id']
             preK_ratings_results['star_rating'] = test_data_set.school_value_float.round
             preK_ratings_results['description'] = description_hash[[school.state.upcase,preK_rating_configuration['star_rating']['description_key']]]
@@ -152,18 +159,18 @@ class RatingsHelper
     preK_ratings_results
   end
 
-  def get_methodology_url(city_rating_configuration, school)
+  def get_methodology_url(rating_configuration, school)
     methodology_url = ""
-    return methodology_url if !city_rating_configuration || !city_rating_configuration['overall']
+    return methodology_url if !rating_configuration || !rating_configuration['overall']
 
-    if city_rating_configuration['overall']['methodology_url_key'].present?
-      key = city_rating_configuration['overall']['methodology_url_key']
+    if rating_configuration['overall']['methodology_url_key'].present?
+      key = rating_configuration['overall']['methodology_url_key']
       if school.school_metadata[key.to_sym].present?
         methodology_url = school.school_metadata[key.to_sym]
       end
     end
-    if methodology_url.blank? && city_rating_configuration['overall']['default_methodology_url'].present?
-      methodology_url = city_rating_configuration['overall']['default_methodology_url']
+    if methodology_url.blank? && rating_configuration['overall']['default_methodology_url'].present?
+      methodology_url = rating_configuration['overall']['default_methodology_url']
     end
     methodology_url
   end

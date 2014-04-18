@@ -1,9 +1,14 @@
 require 'spec_helper'
 
 describe 'state ratings partial' do
+  let(:school) { FactoryGirl.build(:school, state: "MI")}
+  before do
+    view.instance_variable_set(:@school, school)
+  end
   it 'displays the state rating' do
     rating_data = {
       'state_rating' => {
+        'page' => 'overview',
         'description' => 'rspec description',
         'overall_rating' => 'rspec overall rating'
       }

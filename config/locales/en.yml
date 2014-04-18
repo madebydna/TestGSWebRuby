@@ -2,6 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  errors:
+    format: "%{message}"
   activerecord:
     errors:
       models:
@@ -11,6 +13,16 @@ en:
               blank: 'Please enter an email address.'
               taken: 'Sorry, but the email you chose has already been taken.'
               format: 'Please enter a valid email address.'
+        school_rating:
+          blank: "%{attribute} can't be blank."
+          attributes:
+            overall:
+              blank: "Overall rating can't be blank"
+            who:
+              inclusion: "Affiliation has invalid value."
+            comments:
+              too_short: 'Please use at least %{count} words in your comment.'
+              too_long: 'Your comment can only be up to %{count} characters long.'
   forms:
     errors:
       email:

@@ -417,7 +417,9 @@
 // -------------------------
 @mixin alert-variant($background, $border, $text-color) {
   background-color: $background;
-  border-color: $border;
+//  border-color: $border;
+  margin-left: 10px;
+  margin-right: 10px;
   color: $text-color;
 
   hr {

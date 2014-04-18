@@ -16,8 +16,12 @@ describe PageConfig do
       end
       all_placements += @roots
 
-      Page.stub(:from_name).with('Test').and_return(page)
+      Page.stub(:by_name).with('Test').and_return(page)
       @page_config = PageConfig.new page.name, all_placements.shuffle
+    end
+
+    after do
+      clean_dbs :profile_config
     end
 
     describe '#root_placements' do

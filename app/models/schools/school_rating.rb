@@ -33,8 +33,13 @@ class SchoolRating < ActiveRecord::Base
   validates :who, inclusion: { in: %w(parent teacher other student) }, if: 'school && school.includes_highschool?'
   validates :who, inclusion: { in: %w(parent teacher other) }, unless: 'school && school.includes_highschool?'
   validates_presence_of :overall
-  validates :comments, length: { minimum: 0, maximum: 1200 }
-  validate :comments_word_count
+  validates :comments, length: {
+    maximum: 1200,
+  }
+  validates :comments, length: {
+    minimum: 15,
+    tokenizer: lambda { |str| str.split },
+  }
   validates_presence_of :ip, on: :create
 
   before_save :calculate_and_set_status, unless: '@moderated == true'
@@ -49,6 +54,16 @@ class SchoolRating < ActiveRecord::Base
     else
       self.school_id = school.id
       self.state = school.state
+    end
+  end
+
+  def overall
+    # use quality or p_overall(for prek) for star counts and overall 
+    # score.OM-209
+    if quality.present? && quality != 'decline'
+      quality
+    else
+      p_overall
     end
   end
 
@@ -192,12 +207,6 @@ class SchoolRating < ActiveRecord::Base
 
   def reported?
     Array(reported_entities).any?
-  end
-
-  private
-
-  def comments_word_count
-    errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.blank? || comments.split.size < 15
   end
 
 end

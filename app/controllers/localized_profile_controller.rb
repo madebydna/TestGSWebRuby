@@ -14,6 +14,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
+  before_filter :set_footer_cities
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -65,7 +66,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
-    @school_reviews_all = @school.reviews
+    @school_reviews_all = @school.reviews.all
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
@@ -75,6 +76,7 @@ class LocalizedProfileController < ApplicationController
 
   def read_config_for_page
     @page_config = PageConfig.new configured_page_name, @school
+    @school.page = @page_config
   end
 
   def set_header_data
@@ -95,13 +97,17 @@ class LocalizedProfileController < ApplicationController
     helper_name << 'path'
 
     canonical_path = self.send helper_name.to_sym, @school
+    
 
     # Add a tailing slash to the request path, only if one doesn't already exist.
     # Requests made by rspec sometimes contain a trailing slash
-    request_path = request.path.clone
-    request_path << '/' if request_path[-1] != '/'
-
-    redirect_to canonical_path if canonical_path != request_path
+    unless canonical_path == with_trailing_slash(request.path)
+      redirect_to add_query_params_to_url(
+        canonical_path, 
+        true, 
+        request.query_parameters
+      )
+    end
   end
 
   def set_seo_meta_tags
@@ -171,5 +177,9 @@ class LocalizedProfileController < ApplicationController
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
+  def set_footer_cities
+    @cities = City.popular_cities(@state, limit: 28)
   end
 end

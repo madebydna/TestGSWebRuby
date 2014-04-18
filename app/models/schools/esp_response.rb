@@ -6,4 +6,12 @@ class EspResponse < ActiveRecord::Base
 
   scope :active, where("active = 1")
 
+  def school=(school)
+    school_id = school.id
+  end
+
+  def user=(user)
+    member_id = user.id
+  end
+
 end

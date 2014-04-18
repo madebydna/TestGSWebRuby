@@ -4,9 +4,14 @@ if(gon.pagename == "Quality"){
 
     $(function () {
         GS.testScores.initializeHandlers();
+
+        //Show the first grade in every test
         var func = function () {
-            $(".js_grades_div").children().first().trigger( "click" );
+            $('.js_grades_div').each(function () {
+                $(this).children().first().trigger("click");
+            });
         }
+
         if (GS.visualchart.loader) {
             GS.visualchart.loader.push(func);
         } else {

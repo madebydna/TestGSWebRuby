@@ -64,13 +64,27 @@ module ApplicationHelper
   def youtube_parse_id (video_str, youtube_match_string)
     youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
   end
+
+  def youtube_parse_id_from_str (video_str)
+    # match string one
+    youtube_id = nil
+
+    if video_str.present?
+      youtube_match_string_1 = "youtube.com/watch?v="
+      youtube_match_string_2 = "youtu.be/"
+      (youtube_id = video_str.split(youtube_match_string_1)[1].split('&')[0]) if video_str.include?(youtube_match_string_1)
+      (youtube_id = video_str.split(youtube_match_string_2)[1].split('&')[0]) if video_str.include?(youtube_match_string_2)
+
+    end
+
+    youtube_id
+  end
+
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
   def include_lightbox_youtube_video (video_str)
-    youtube_match_string = "youtube.com/watch?v="
-    r_str = ''
-    if video_str && video_str != ''
-      if video_str.include? youtube_match_string
-        youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
+    r_str= ''
+    youtube_id = youtube_parse_id_from_str(video_str)
+    if youtube_id.present?
         r_str <<  '<a href="https://www.youtube.com/watch?v=' + youtube_id + '">'  + "\n"
         r_str <<  '<img ' + "\n"
         r_str <<  'src="https://img.youtube.com/vi/' + youtube_id + '/0.jpg"'
@@ -79,9 +93,8 @@ module ApplicationHelper
         r_str <<  'data-description=""'
         r_str <<  '>'
         r_str <<  '</a>'
-      end
-      return r_str.html_safe
     end
+    return r_str.html_safe
   end
 
   # This is used to include all the media assets for a school to the lightbox.
@@ -106,6 +119,23 @@ module ApplicationHelper
     end
   end
 
+  def state_partial ( state )
+    case state
+    when "MI"
+      return_partial = "shared/rating/draw_rect_72x58_rating"
+    else
+      return_partial = "shared/rating/default_rating"
+    end
+    return_partial
+  end
+
+  def prepend_http ( url )
+    return_url = url
+    unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
+      return_url = "http://#{url}"
+    end
+    return_url
+  end
 
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
   # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string
@@ -171,8 +201,8 @@ module ApplicationHelper
   def breadcrumb_hash
     {
         'Home' => home_url,
-        hub_params[:state].gs_capitalize_first => state_url(state: hub_params[:state]),
-        hub_params[:city].gs_capitalize_first => city_url(hub_params)
+        hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+        hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
     }
   end
 

@@ -30,6 +30,14 @@ module SchoolProfileDataDecorator
     end
   end
 
+  def page=(page)
+    @page = page
+  end
+
+  def page
+    @page
+  end
+
   def data_reader_config
     {
       census_data: @census_data_reader,
@@ -59,6 +67,7 @@ module SchoolProfileDataDecorator
       zillow
       census_data_points
       footnotes
+      facebook_url
     ]
   end
 
@@ -91,7 +100,7 @@ module SchoolProfileDataDecorator
     raise(ArgumentError, ':category must be provided') if category.nil?
 
     source = category.source
-    if source
+    if source && source != 'facebook_url'
       reader = data_reader_config[source.to_sym]
       return reader.send :footnotes_for_category, category if reader.respond_to? :footnotes_for_category
     end
@@ -153,7 +162,7 @@ module SchoolProfileDataDecorator
   end
 
   def rating_data(options = {})
-    @rating_data_reader.data
+    @rating_data ||= @rating_data_reader.data
   end
 
   def snapshot(options = {})
@@ -163,12 +172,17 @@ module SchoolProfileDataDecorator
 
   def test_scores(options = {})
     category = options[:category]
-    @test_scores_data_reader.data_for_category category
+    @test_scores_data_reader.data
   end
 
   def zillow(options = {})
     category = options[:category]
     @zillow_data_reader.data_for_category category
+  end
+
+  def facebook_url(options = {})
+    schoolMetadata = self.school_metadata
+    schoolMetadata['facebook_url'].present? ? schoolMetadata['facebook_url'] : nil
   end
 
   def footnotes(options = {})
@@ -179,13 +193,12 @@ module SchoolProfileDataDecorator
     root_placements = page_config.root_placements
 
     root_placements.each_with_object([]) do |root, footnotes_array|
-      leaves = page_config.category_placement_has_children?(root) ? page_config.category_placement_leaves(root) : [ root ]
+      leaves = root.has_children? ? root.leaves : [ root ]
       leaves.each do |leaf|
         # Skip if category is for footnotes, otherwise infinite recursion
         next if leaf.category.id == category.id
         footnotes = footnotes_for_category category: leaf.category
-        parent = page_config.category_placement_parent leaf
-
+        parent = leaf.parent
         if footnotes.present?
           footnotes.each do |footnote|
             year = footnote[:year]

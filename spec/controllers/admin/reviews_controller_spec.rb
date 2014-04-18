@@ -48,7 +48,7 @@ describe Admin::ReviewsController do
     it 'should disable a review if one is found' do
       review = FactoryGirl.build(:unpublished_review)
       SchoolRating.stub(:find).and_return(review)
-      review.stub(:save).and_return
+      review.stub(:save).and_return true
       post :disable, id: 1
       expect(review).to be_disabled
     end
@@ -208,6 +208,15 @@ describe Admin::ReviewsController do
       controller.class.send :load_reported_entities_onto_reviews, [], nil
       controller.class.send :load_reported_entities_onto_reviews, nil, []
       controller.class.send :load_reported_entities_onto_reviews, nil, nil
+    end
+  end
+
+  describe '#reported_entities_for_reviews' do
+    it 'should ask for reported entities' do
+      reviews = double('reviews')
+      expect(ReportedEntity).to receive(:find_by_reviews).and_return reviews
+      expect(reviews).to receive(:order).and_return reviews
+      controller.class.send :reported_entities_for_reviews, reviews
     end
   end
 

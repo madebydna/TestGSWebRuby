@@ -4,11 +4,9 @@ class CategoryPlacement < ActiveRecord::Base
   has_ancestry
   db_magic :connection => :profile_config
 
-  attr_writer :memoized_parent, :memoized_children
-
   include BelongsToCollectionConcerns
   belongs_to :category
-  belongs_to :page
+  belongs_to :page, inverse_of: :category_placements
 
   after_initialize :set_defaults
   before_validation :parse_layout_json
@@ -35,22 +33,6 @@ class CategoryPlacement < ActiveRecord::Base
       # [1..-1] to remove the underscore in front of the filename
       hash[pretty_name] = file_name[1..-1]
       hash
-    end
-  end
-
-  # return CategoryPlacements with collection_id in the provided
-  # collections. If a single object is passed in, the Array(...) call will convert it to an array
-  # Will return CategoryPlacements with nil collection_id
-  def self.belonging_to_collections(page, collections = nil)
-    placements_for_page(page).select do |category_placement|
-      array_of_ids_with_nil = (Array(collections).map(&:id))<<nil
-      array_of_ids_with_nil.include? category_placement.collection_id
-    end
-  end
-
-  def self.placements_for_page(page)
-    Rails.cache.fetch("#{SchoolProfileConfigCaching::CATEGORY_PLACEMENTS_PER_PAGE_PREFIX}#{page.name.gsub(/\s+/,'_')}", expires_in: 5.minutes) do
-      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id).all
     end
   end
 
@@ -94,8 +76,8 @@ class CategoryPlacement < ActiveRecord::Base
 
   def parent_enforced_sizes
     sizes = {}
-    position_among_siblings = memoized_siblings.map(&:id).index(self.id)
-    parent_json = memoized_parent.layout_config_json
+    position_among_siblings = siblings.map(&:id).index(self.id)
+    parent_json = parent.layout_config_json
     if parent_json['child_sizes'].present? && parent_json['child_sizes'].length > position_among_siblings
       sizes = parent_json['child_sizes'][position_among_siblings]
     end
@@ -132,20 +114,35 @@ class CategoryPlacement < ActiveRecord::Base
     "data_layouts/#{layout}"
   end
 
-  def memoized_parent
-    @memoized_parent ||= parent
+  def parent
+    page.category_placements.find { |cp| self.parent_id == cp.id }
   end
 
-  def memoized_children
-    @memoized_children ||= children
+  def siblings
+    parent.children.sort_by(&:position)
+  end
+
+  def children
+    page.category_placements.select do |cp| 
+      cp.parent_id == id
+    end.sort_by(&:position)
   end
 
   def has_children?
-    memoized_children.any?
+    children.any?
   end
 
-  def memoized_siblings
-    memoized_parent.memoized_children.sort_by(&:position)
+  def descendants
+    page.category_placements.select do |cp| 
+      Array(cp.ancestor_ids).include?(id)
+    end
+  end
+
+  def leaves
+    # Descendant is any descendant below this node at any level
+    descendants.reject do |descendant| 
+      descendant.has_children?
+    end.sort_by(&:position)
   end
 
 end

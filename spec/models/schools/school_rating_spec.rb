@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe SchoolRating do
-  include SpecForModelWithCustomConnection
+  after do
+    clean_dbs :surveys
+  end
 
   let(:review) { FactoryGirl.build(:valid_school_rating) }
   let(:school) { FactoryGirl.build(:school) }
@@ -361,5 +363,26 @@ describe SchoolRating do
     end
   end
 
+  describe '#overall' do
+    let(:school_rating) { FactoryGirl.build(:school_rating) }
+    before(:each) do
+      school_rating.quality = 'decline'
+      school_rating.p_overall = 'decline'
+    end
+
+    it 'should return the overall rating for non-preschools' do
+      school_rating.quality = '5'
+      expect(school_rating.overall).to eq '5'
+      school_rating.quality = 'decline'
+      expect(school_rating.overall).to eq 'decline'
+    end
+
+    it 'should return the overall rating for preschools' do
+      school_rating.p_overall = '5'
+      expect(school_rating.overall).to eq '5'
+      school_rating.p_overall = 'decline'
+      expect(school_rating.overall).to eq 'decline'
+    end
+  end
 
 end

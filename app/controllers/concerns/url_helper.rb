@@ -4,10 +4,15 @@ module UrlHelper
 
   protected
 
-  # Make this modules methods into helper methods view can access
-  def self.included obj
-    return unless obj < ActionController::Base
-    (instance_methods - ancestors).each { |m| obj.helper_method m }
+  included do |base|
+    # class methods go in this included{} block
+
+    # Make this modules methods into helper methods view can access
+    if base < ActionController::Base
+      (UrlHelper.instance_methods - UrlHelper.ancestors).each do |m| 
+        base.helper_method m
+      end
+    end
   end
 
   def gs_legacy_url_encode(param)
@@ -95,6 +100,75 @@ module UrlHelper
       host = host.sub request.subdomain, PreschoolSubdomain.default_subdomain(request)
     end
     "#{request.scheme}://#{host}"
+  end
+
+  #
+  # Adds a hash of query params to a given path or URL.
+  # @param  s [String] a full URL or URL path
+  # @param  overwrite [Boolean] if true, overwrites existing params
+  #                             otherwise, merges params into an array
+  # @param  new_params [Hash] Params to insert
+  #
+  # @return [String] A new string that includes the given query params
+  def add_query_params_to_url(s, overwrite, new_params = {})
+    new_params.stringify_keys!
+    uri = Addressable::URI.parse(s)
+
+    if new_params.present?
+      # Rack::Utils knows how to correctly parse URLs with multiple params
+      # with same name
+      existing_params = Rack::Utils.parse_nested_query(uri.query)
+      new_params.each_pair do |name, param|
+
+        # If asked to overwrite, just overwrite the existing_params key
+        # otherwise, create a new Array (if value is not already an array)
+        # and append the new param
+        if existing_params .has_key?(name) && ! overwrite
+          existing_params [name] = Array(existing_params [name]) << param
+        else
+          existing_params [name] = param.to_s
+        end
+      end
+      string = Rack::Utils.build_nested_query(existing_params )
+      uri.query = string
+    end
+
+    uri.to_s
+  end
+
+  #
+  # Removes the given query parameters from a path or URL
+  # @param  s [String] a full URL or URL path
+  # @param  new_params [Array] Params to remove
+  # @param  value = nil [String] If given, must match query param value for
+  #                               query param to be removed
+  #
+  # @return [String] A new path or URL with params removed
+  def remove_query_params_from_url(s, new_params, value = nil)
+    uri = Addressable::URI.parse(s)
+
+    if new_params.present?
+      # Rack::Utils knows how to correctly parse URLs with multiple params
+      # with same name
+      existing_params = Rack::Utils.parse_nested_query(uri.query)
+      new_params.each do |name|
+        name = name.to_s
+        if value.present?
+          existing_value = existing_params[name]
+          if existing_value.is_a? Array
+            existing_value.delete value
+          else
+            existing_params.delete name if existing_value == value
+          end
+        else
+          existing_params.delete name
+        end
+      end
+      string = Rack::Utils.build_nested_query(existing_params)
+      uri.query = string.presence
+    end
+
+    uri.to_s
   end
 
 end

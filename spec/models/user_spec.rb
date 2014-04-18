@@ -176,6 +176,34 @@ describe User do
       end
     end
 
+    describe '#reviews_for_school' do
+      let(:state) { 'ca' }
+      let(:school_id) { 10 }
+      let(:school) { FactoryGirl.build(:school, id: school_id, state: state) }
+
+      it 'should support a school hash parameter' do
+        expect(SchoolRating).to receive(:where).with(
+          member_id: subject.id,
+          state: state,
+          school_id: school_id
+        )
+        subject.reviews_for_school(school: school)
+      end
+
+      it 'should support state + school_id parameters' do
+        expect(SchoolRating).to receive(:where).with(
+          member_id: subject.id,
+          state: state,
+          school_id: school_id
+        )
+        subject.reviews_for_school(state: state, school_id: school_id)
+      end
+
+      it 'should raise error for invalid arguments' do
+        expect(SchoolRating).to_not receive(:where)
+        expect{ subject.reviews_for_school(nil) }.to raise_error
+      end
+    end
   end
 
 

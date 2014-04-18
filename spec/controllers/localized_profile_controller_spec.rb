@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'controllers/concerns/localization_concerns_spec'
 describe LocalizedProfileController do
   it_behaves_like 'localization'
 
@@ -190,6 +191,36 @@ describe LocalizedProfileController do
         expect(controller.send(:seo_meta_tags_keywords)).to eq('Amazing Life Games Pre-School, Amazing Life Games Preschool')
       end
 
+    end
+
+    describe '#redirect_to_canonical_url' do
+      let(:school) { 
+        FactoryGirl.build(:school, 
+                          id: 1,
+                          state: 'mi',
+                          city: 'detroit',
+                          name: 'a school'
+                          )
+      }
+
+      before(:each) do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name) { 'overview' }
+      end
+
+      it 'should redirect to the right path' do
+        expect(controller).to receive(:redirect_to).
+          with('/michigan/detroit/1-A-School/')
+        controller.send :redirect_to_canonical_url
+      end
+
+
+      it 'should preserve url parameters when redirecting' do
+        request.query_parameters[:preserve_me] = 'yay'
+        expect(controller).to receive(:redirect_to).
+          with('/michigan/detroit/1-A-School/?preserve_me=yay')
+        controller.send :redirect_to_canonical_url
+      end
     end
 
 

@@ -3,7 +3,9 @@
     <div class="limit_width_1200 row tal ptl pbm clearfix">
       <div class="col-sm-6 col-md-6 col-lg-6">
 
-        <%= render 'shared/send_me_updates_form', school: @school,driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
+        <% if @school %>
+          <%= render 'shared/send_me_updates_form', school: @school,driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
+        <% end %>
         <form class="form-inline clearfix" role="form" onsubmit="return false;">
           <fieldset>
             <div class="form-group fl">

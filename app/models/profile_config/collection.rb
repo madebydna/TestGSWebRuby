@@ -19,6 +19,18 @@ class Collection
     config['collection_nickname'] || name
   end
 
+  def show_ads
+    config['showAds'].present? ? config['showAds'] : "false"
+  end
+
+  def profile_banner
+    hash = nil
+    if config['profilePage_overview_banner'].present?
+      hash = JSON.parse(config['profilePage_overview_banner'])
+    end
+    hash
+  end
+
   def self.from_hub_city_mapping(hub_city_mapping)
     return nil if hub_city_mapping.nil?
 

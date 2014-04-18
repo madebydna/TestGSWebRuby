@@ -31,6 +31,8 @@ class SampleDataBuilder
         table: table,
         data: results.to_a
     }
+
+    results
   end
 
   def data_directory

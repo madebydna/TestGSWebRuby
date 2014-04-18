@@ -1,4 +1,5 @@
-require 'legacy_database_tasks'
+require 'database_tasks_helper'
+require 'database_configuration_helper'
 
 namespace :db do
   $mysql_dev = Rails.application.config.database_configuration['mysql_dev']
@@ -6,6 +7,22 @@ namespace :db do
   def environments
     environments = [Rails.env]
     environments << 'test' if Rails.env.development?
+  end
+
+  namespace :test do
+    desc "Truncates all the tables in all test databases"
+    task :clean => [:load_config, :rails_env] do
+      require Rails.root.join('spec', 'spec_helper.rb')
+      DatabaseConfigurationHelper.
+      all_rw_connections_for('test').each do |connection|
+        puts "Cleaning #{connection}_test db"
+        DatabaseCleaner[
+          :active_record,
+          connection: connection.to_sym
+        ].strategy = :truncation
+        DatabaseCleaner[:active_record, connection: connection.to_sym].clean
+      end
+    end
   end
 
   task :reset, [:specific_dbs] => [:drop, :create, :migrate, :seed]
@@ -27,90 +44,70 @@ namespace :db do
       #Check if a specific database was passed in the argument list
       $specific_dbs = String(args[:specific_dbs]).split ','
 
-        LegacyDatabaseTasks.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
+        DatabaseTasksHelper.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
           if $specific_dbs.empty? || $specific_dbs.include?(db)
-            LegacyDatabaseTasks.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
+            DatabaseTasksHelper.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
 
               #copy_table_schema_from_server mysql_dev, db, table
-              LegacyDatabaseTasks.copy_data_from_server $mysql_dev, db, table
+              DatabaseTasksHelper.copy_data_from_server $mysql_dev, db, table
             end
           end
         end
     end
 
-    desc 'Creates the schema for the tables in development and test databases.It does a mysql dump from dev to obtain the schema. '
-    task :schema, [:specific_dbs] do |task, args|
+    desc 'Copies db schemas from dev to localhost (empty without tables) in \
+database.yml. First parameter is [overwrite]. If true, will drop databases \
+and recreate them. Second parameter is a list of databases to use, comma \
+separated. e.g. rake db:legacy:schema[true,_ak,_az,_me]'
+    task :schema, [:overwrite] do |task, args|
+      $specific_dbs = args.extras
+      # Needed to gracefully handle ruby invoking via ruby or via command line
+      $overwrite = "#{args[:overwrite]}" == 'true'
 
-      #Check if a specific database was passed in the argument list
-      $specific_dbs = String(args[:specific_dbs]).split ','
+      unless $specific_dbs.present?
+        $specific_dbs = 
+        DatabaseConfigurationHelper.legacy_database_names(Rails.env)
+      end
 
-      #creates the tables inside the databases for both development and test environment.
-      environments.each do |env|
-        LegacyDatabaseTasks.databases_receiving_mysql_dump.each_pair do |db, tables_hash_key|
-          if $specific_dbs.empty? || $specific_dbs.include?(db)
+      DatabaseTasksHelper.copy_database_schemas_from_server :mysql_dev, 
+                                                            :mysql_localhost, 
+                                                            $specific_dbs, 
+                                                            $overwrite
+    end
 
-            #If its the _test environment then get the database name appended with "_test"
-            database_name = env.eql?("test") ? db + "_test" : db
+    desc 'Creates legacy databases on localhost (empty without tables) in \
+database.yml. First parameter is [overwrite]. If true, will drop databases \
+and recreate them. Second parameter is a list of databases to use, comma \
+separated. e.g. rake db:legacy:create[true,_ak,_az,_me]'
+    task :create, [:overwrite] => [:load_config, :rails_env ] do |task, args|
+      $specific_dbs = args.extras
+      $overwrite = args[:overwrite] == 'true'
 
-            LegacyDatabaseTasks.tables_receiving_mysql_dump[tables_hash_key.to_s].each do |table|
-              LegacyDatabaseTasks.copy_table_schema_from_server $mysql_dev, db, table, database_name
-            end
-          end
-        end
+      unless $specific_dbs.present?
+        $specific_dbs = 
+        DatabaseConfigurationHelper.legacy_database_names(Rails.env)
+      end
+
+      $specific_dbs.each do |db|
+        DatabaseTasksHelper.create_database :mysql_localhost, db, $overwrite
       end
     end
 
+    desc 'Drops the legacy databases and the tables inside them. Fist \
+parameter is a list of databases to use, comma separated. e.g. \
+rake db:legacy:drop[_ak,_az,_me]'
+    task :drop => [:load_config, :rails_env] do |task, args|
+      $specific_dbs = args.extras
 
-    desc 'Drops and then creates the legacy development and test databases.'
-    task :create, [:specific_dbs] => [:load_config, :rails_env ] do |task, args|
+      unless $specific_dbs.present?
+        $specific_dbs = 
+        DatabaseConfigurationHelper.legacy_database_names(Rails.env)
+      end
 
-      $specific_dbs = String(args[:specific_dbs]).split ','
-
-      #parse the database configurations in the database.yml file.
-      environments.each do |env|
-        configs = ActiveRecord::Base.configurations.values_at(env).first.values.select { |value|
-          value.is_a?(Hash) && value['legacy'] && !value['database'].blank?
-        }
-
-        #Check if a specific database was passed in the argument list
-        unless $specific_dbs.nil? || $specific_dbs.empty?
-          configs.select! { |config| $specific_dbs.detect { |db| config['database'].match(db) } }
-        end
-
-        configs.each do |config|
-          database_name = config['database']
-          puts "Creating #{env} database #{database_name} on #{config['host']}"
-          create_database config
-        end
+      $specific_dbs.each do |db|
+        DatabaseTasksHelper.drop_database :mysql_localhost, db
       end
     end
-
-
-    desc 'Drops the legacy development and test databases and the tables inside them.'
-    task :drop, [:specific_dbs] => [:load_config, :rails_env] do |task, args|
-
-      $specific_dbs = String(args[:specific_dbs]).split ','
-
-      #parse the database configurations in the database.yml file.
-      environments.each do |env|
-        configs = ActiveRecord::Base.configurations.values_at(env).first.values.select { |value|
-          value.is_a?(Hash) && value['legacy'] && !value['database'].blank?
-        }
-
-        #Check if a specific database was passed in the argument list
-        unless $specific_dbs.nil? || $specific_dbs.empty?
-          configs.select! { |config| $specific_dbs.include?(config['database']) }
-        end
-
-        configs.each do |config|
-          database_name = config['database']
-          puts "Dropping #{env} database #{database_name} on #{config['host']}"
-          drop_database_and_rescue config
-        end
-      end
-    end
-
-
   end
 end
 

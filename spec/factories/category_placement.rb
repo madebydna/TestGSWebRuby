@@ -15,7 +15,12 @@ FactoryGirl.define do
       layout 'section'
 
       after(:create) do |section_placement, evaluator|
-        FactoryGirl.create(:group_category_placement_no_parent, title: 'has parent, group, has children', layout: 'group', parent: section_placement)
+        FactoryGirl.create(:group_category_placement_no_parent,
+          title: 'has parent, group, has children', 
+          layout: 'group',
+          parent: section_placement,
+          page: section_placement.page
+        )
       end
     end
 
@@ -23,7 +28,10 @@ FactoryGirl.define do
       factory :group_category_placement, class: CategoryPlacement do
         title 'has parent, group, has children'
         before(:create) do |group_placement, evaluator|
-          group_placement.parent = FactoryGirl.create :category_placement, title: 'root, section, has_children', layout: 'section'
+          group_placement.parent = FactoryGirl.create :category_placement, 
+            title: 'root, section, has_children',
+            layout: 'section',
+            page: group_placement.page
         end
       end
 
@@ -31,7 +39,12 @@ FactoryGirl.define do
       layout 'group'
 
       after(:create) do |group_placement, evaluator|
-        FactoryGirl.create(:leaf_category_placement_no_parent, title: 'has parent, leaf', layout: 'default_two_column_table', parent: group_placement)
+        FactoryGirl.create(:leaf_category_placement_no_parent,
+          title: 'has parent, leaf',
+          layout: 'default_two_column_table',
+          parent: group_placement,
+          page: group_placement.page
+        )
       end
     end
 
@@ -39,7 +52,10 @@ FactoryGirl.define do
       factory :leaf_category_placement, class: CategoryPlacement do
         title 'has parent, leaf'
         before(:create) do |group_placement, evaluator|
-          group_placement.parent = FactoryGirl.create :category_placement, title: 'root, section, has_children', layout: 'section'
+          group_placement.parent = FactoryGirl.create :category_placement,
+            title: 'root, section, has_children',
+            layout: 'section',
+            page: group_placement.page
         end
       end
 
