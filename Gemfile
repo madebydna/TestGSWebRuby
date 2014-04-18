@@ -149,6 +149,8 @@ group :development, :test do
   gem 'debugger'
 
   gem 'yard'
+
+  gem 'launchy'
 end
 
 # Gems used only for assets and not required

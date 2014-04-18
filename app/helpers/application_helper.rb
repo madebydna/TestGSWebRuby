@@ -276,7 +276,8 @@ module ApplicationHelper
       city = cookies[:hubCity]
     end
 
-    mapping = HubCityMapping.where(city: city, state: state_short.try(:upcase), active: 1).first
+
+    mapping = HubCityMapping.where(city: city, state: States.abbreviation(state_short).try(:upcase), active: 1).first
 
     if mapping
       write_cookie :eduPage, mapping.has_edu_page?
