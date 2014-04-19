@@ -101,8 +101,8 @@ class TestDataSet < ActiveRecord::Base
 
   scope :active, where(active: 1)
 
-  def self.by_data_type_ids school, data_type_ids
-    TestDataSet.on_db(school.shard).active.where(data_type_id: data_type_ids)
+  def self.ratings_for_school school
+    TestDataSet.on_db(school.shard).active
     .includes(:test_data_school_values)
     .active
     .where('TestDataSchoolValue.school_id = ?', school.id)

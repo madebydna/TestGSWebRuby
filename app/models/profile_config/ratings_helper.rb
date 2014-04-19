@@ -16,13 +16,12 @@ class RatingsHelper
 
     #Build a hash of the data_keys to the rating descriptions.
     description_hash = DataDescription.lookup_table
-
     #If configuration exists then loop over the results
     results.each do |test_data_set|
       # == 'NULL' is a temporary hack to deal with bad data.
-      if ((state_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_text.nil?) && !(test_data_set.school_value_text == 'NULL'))
+      if ((state_rating_data_type_ids.include? test_data_set['data_type_id']) && !(test_data_set['school_value_text'].nil?) && !(test_data_set['school_value_text'] == 'NULL'))
         #Build a hash of the data_keys to the rating descriptions.
-        state_ratings_results = {'overall_rating' => test_data_set.school_value_text,
+        state_ratings_results = {'overall_rating' => test_data_set['school_value_text'],
                                  'description' => description_hash[[school.state.upcase,state_rating_configuration['overall']['description_key']]]}
         break
       end
@@ -53,18 +52,18 @@ class RatingsHelper
 
     #Loop over the results
     results.each do |test_data_set|
-      if (city_rating_data_type_ids.include? test_data_set.data_type_id)
+      if (city_rating_data_type_ids.include? test_data_set['data_type_id'])
 
-        if test_data_set.data_type_id == city_rating_configuration['overall']['data_type_id']
-          city_ratings_results['overall_rating'] = test_data_set.school_value_text
+        if test_data_set['data_type_id'] == city_rating_configuration['overall']['data_type_id']
+          city_ratings_results['overall_rating'] = test_data_set['school_value_text']
           city_ratings_results['description'] = description_hash[[school.state.upcase,city_rating_configuration['overall']['description_key']]]
-          city_ratings_results['city_rating_label'] = test_data_set.display_name
+          city_ratings_results['city_rating_label'] = city_rating_configuration['overall']['label']
         else
 
           #Loop over the configuration to put the ratings breakdowns in the results.
           city_rating_configuration['rating_breakdowns'].each do |key, config|
-            if (test_data_set.data_type_id == config['data_type_id'] && (!test_data_set.school_value_text.nil?))
-              city_sub_rating_hash[config['label']] = test_data_set.school_value_text
+            if (test_data_set['data_type_id'] == config['data_type_id'] && (!test_data_set['school_value_text'].nil?))
+              city_sub_rating_hash[config['label']] = test_data_set['school_value_text']
             end
           end
         end
@@ -108,12 +107,12 @@ class RatingsHelper
     #If configuration exists then loop over the results
     if !gs_rating_data_type_ids.empty?
       results.each do |test_data_set|
-        if (gs_rating_data_type_ids.include? test_data_set.data_type_id)
+        if (gs_rating_data_type_ids.include? test_data_set['data_type_id'])
           #Loop over the configuration to put the ratings breakdowns in the results.
           gs_rating_configuration['rating_breakdowns'].each do |key, config|
-            if (test_data_set.data_type_id == config['data_type_id'] && (!test_data_set.school_value_float.nil?))
+            if (test_data_set['data_type_id'] == config['data_type_id'] && (!test_data_set['school_value_float'].nil?))
 
-              res_hash = {'rating' => test_data_set.school_value_float.round}
+              res_hash = {'rating' => test_data_set['school_value_float'].round}
 
               #get the sub-rating descriptions
               sub_rating_description = get_sub_rating_descriptions(config, school, description_hash)
@@ -147,11 +146,11 @@ class RatingsHelper
     #If configuration exists then loop over the results
     if !preK_rating_configuration.nil? && !preK_rating_data_type_ids.empty?
       results.each do |test_data_set|
-        if ((preK_rating_data_type_ids.include? test_data_set.data_type_id) && !(test_data_set.school_value_float.nil?))
-          if preK_rating_configuration['star_rating'] && test_data_set.data_type_id == preK_rating_configuration['star_rating']['data_type_id']
-            preK_ratings_results['star_rating'] = test_data_set.school_value_float.round
+        if ((preK_rating_data_type_ids.include? test_data_set['data_type_id']) && !(test_data_set['school_value_float'].nil?))
+          if preK_rating_configuration['star_rating'] && test_data_set['data_type_id'] == preK_rating_configuration['star_rating']['data_type_id']
+            preK_ratings_results['star_rating'] = test_data_set['school_value_float'].round
             preK_ratings_results['description'] = description_hash[[school.state.upcase,preK_rating_configuration['star_rating']['description_key']]]
-            preK_ratings_results['preK_rating_label'] = test_data_set.display_name
+            preK_ratings_results['preK_rating_label'] = preK_rating_configuration['star_rating']['label']
           end
         end
       end
@@ -160,7 +159,7 @@ class RatingsHelper
   end
 
   def get_methodology_url(rating_configuration, school)
-    methodology_url = ""
+    methodology_url = ''
     return methodology_url if !rating_configuration || !rating_configuration['overall']
 
     if rating_configuration['overall']['methodology_url_key'].present?
