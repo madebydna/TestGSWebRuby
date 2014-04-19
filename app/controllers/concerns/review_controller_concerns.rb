@@ -110,8 +110,11 @@ module ReviewControllerConcerns
         if review
           reported_entity = ReportedEntity.from_review review, reason
           reported_entity.reporter_id = current_user.id
-          reported_entity.save!
-          flash_notice t('actions.report_review.reported')
+          if reported_entity.save
+            flash_notice t('actions.report_review.reported')
+          else
+            flash_error t('actions.generic_error')
+          end
         else
           flash_error t('actions.generic_error')
         end

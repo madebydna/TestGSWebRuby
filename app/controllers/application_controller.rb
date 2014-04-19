@@ -93,29 +93,6 @@ class ApplicationController < ActionController::Base
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
   end
 
-
-
-  # authorization
-
-  def login_required
-    logged_in? && authorized? ? true : access_denied
-  end
-
-  def access_denied
-    respond_to do |accepts|
-      accepts.html do
-        if request.xhr?
-          store_location(request.referrer)
-          render :js => "window.location='#{signin_path}';", :content_type => 'text/javascript'
-        else
-          store_location
-          redirect_to signin_path
-        end
-      end
-    end
-    false
-  end
-
   def flash_message(type, message)
     Rails.logger.debug("Setting flash #{type} message: #{message}")
     flash[type] = Array(flash[type])

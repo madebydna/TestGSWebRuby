@@ -181,4 +181,56 @@ describe ApplicationController do
 
   end
 
+  describe '#flash_message' do
+    it 'should set a flash message' do
+      subject.send :flash_message, :notice, 'message'
+      expect(subject.flash[:notice]).to eq ['message']
+    end
+
+    it 'should append to existing messages' do
+      subject.send :flash_message, :notice, 'first message'
+      expect(subject.flash[:notice]).to eq ['first message']
+
+      subject.send :flash_message, :notice, 'second message'
+      expect(subject.flash[:notice]).to eq ['first message', 'second message']
+    end
+
+    it 'should set an array of messages' do
+      subject.send :flash_message, :notice, ['first message', 'second message']
+      expect(subject.flash[:notice]).to eq ['first message', 'second message']
+    end
+  end
+
+  describe '#exception_handler' do
+    controller do
+      def routing_error
+        raise ActionController::RoutingError.new 'should trigger 404'
+      end
+      def runtime_error
+        raise RuntimeError.new 'should trigger 500'
+      end
+    end
+
+    before { Rails.application.config.consider_all_requests_local = false }
+    after { Rails.application.config.consider_all_requests_local = true }
+
+    it 'should render Page Not Found' do
+      routes.draw { get 'routing_error' => 'anonymous#routing_error' }
+      get :routing_error
+      expect(response).to render_template 'error/page_not_found'
+    end
+
+    it 'should render Internal Error page' do
+      routes.draw { get 'runtime_error' => 'anonymous#runtime_error' }
+      get :runtime_error
+      expect(response).to render_template 'error/internal_error'
+    end
+
+    it 'should pass through error by default' do
+      routes.draw { get 'routing_error' => 'anonymous#routing_error' }
+      Rails.application.config.consider_all_requests_local = true
+      expect{ get :routing_error }
+        .to raise_error(ActionController::RoutingError)
+    end
+  end
 end
