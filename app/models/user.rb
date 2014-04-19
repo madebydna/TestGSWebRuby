@@ -149,7 +149,6 @@ class User < ActiveRecord::Base
     reviews_to_upgrade = provisional_reviews
     # make provisional reviews 'not provisional', i.e. deleted, published, or held
     reviews_to_upgrade.each do |review|
-      upgraded_review ||= review
       review.remove_provisional_status!
       review.save!
     end

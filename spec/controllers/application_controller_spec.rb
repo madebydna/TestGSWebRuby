@@ -8,9 +8,8 @@ describe ApplicationController do
   end
 
   describe '#write_cookie_value' do
-    after do
-      subject.class::COOKIE_CONFIG.delete :test_cookie
-    end
+    before { subject.class::COOKIE_CONFIG[:test_cookie] = {} }
+    after { subject.class::COOKIE_CONFIG.delete :test_cookie }
 
     it 'should set a simple value' do
       subject.send :write_cookie_value, :test_cookie, 'value'
@@ -129,6 +128,7 @@ describe ApplicationController do
   describe '#read_cookie_value' do
     before do
       @cookie_jar = HashWithIndifferentAccess.new
+      subject.class::COOKIE_CONFIG[:test_cookie] = {}
       controller.stub(:cookies).and_return @cookie_jar
     end
 
@@ -179,6 +179,53 @@ describe ApplicationController do
       end
     end
 
+  end
+
+  describe '#delete_cookie' do
+    class CookieJar < HashWithIndifferentAccess
+      def delete(key, *args)
+        super key
+      end
+    end
+
+    before do
+      @cookie_jar = CookieJar.new
+      controller.stub(:cookies).and_return @cookie_jar
+    end
+
+    it 'should read a simple value' do
+      @cookie_jar[:test_cookie] = 'value'
+      subject.send :delete_cookie, :test_cookie
+      expect(@cookie_jar[:test_cookie]).to be_nil
+    end
+
+    context 'when hash option is configured to true' do
+      before do
+        @cookie_jar[:test_cookie] = { test_key: 'test_value' }.to_json
+        subject.class::COOKIE_CONFIG[:test_cookie] = {
+          hash: true
+        }
+      end
+      it 'should delete cookie when no key provided' do
+        subject.send :delete_cookie, :test_cookie
+        expect(@cookie_jar[:test_cookie]).to be_nil
+      end
+
+      it 'should delete a value from the hash if given a key' do
+        @cookie_jar[:test_cookie] = 
+          { test_key: 'foo', another_key: 'bar' }.to_json
+        subject.send :delete_cookie, :test_cookie, :test_key
+        expect(@cookie_jar[:test_cookie])
+          .to eq(
+            { 
+              'value' => {
+                'another_key' => 'bar'
+              }.to_json, 
+              'domain' => :all
+            }
+          )
+      end
+    end
   end
 
   describe '#flash_message' do

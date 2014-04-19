@@ -33,7 +33,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/school/parentReview.page', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
-    get '/community/registrationConfirm.page', as: :verify_email
     get '/:state/', constraints: { state: States.any_state_name_regex }, as: :state
     get '/:state/:city/', constraints: { state: States.any_state_name_regex }, as: :city
     get '/:state/:city/choosing-schools/', constraints: { state: States.any_state_name_regex }, as: :choosing_schools
@@ -87,6 +86,7 @@ LocalizedProfiles::Application.routes.draw do
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
+  get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
   post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
       state: States.any_state_name_regex,

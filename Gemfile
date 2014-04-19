@@ -101,9 +101,8 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
 
-  # Zeus keeps a rails environment running so that rspec(and other commands)
-  # can be ran much more quickly
   gem 'zeus'
+  gem 'pry-debugger'
 end
 
 group :development, :test do

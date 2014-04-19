@@ -31,6 +31,20 @@ def clean_dbs(*args)
   end
 end
 
+def clean_models(db, *models)
+  unless db.is_a? Symbol
+    models = [ db ] + models
+    db = nil
+  end
+
+  models.each do |model|
+    if db 
+      model.on_db(db).destroy_all
+    else
+      model.destroy_all
+    end
+  end
+end
 
 if ENV['JENKINS_URL'] # on ci server
   require 'simplecov-rcov'
@@ -48,12 +62,16 @@ if ENV['JENKINS_URL'] || ENV['coverage']
   end
 end
 
+# If you change this you'll also need to change the value in test.rb
+Rails.application.routes.default_url_options[:host] = 'test.host'      
+Rails.application.routes.default_url_options[:trailing_slash] = true
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.include Capybara::DSL
 
   config.include Rails.application.routes.url_helpers
 
