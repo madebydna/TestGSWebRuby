@@ -155,9 +155,9 @@ class LocalizedProfileController < ApplicationController
     return_keywords_str << name
     if @school.preschool?
       if name.downcase.end_with? 'pre-school'
-        return_keywords_str << ', ' + name.downcase.gsub(/\ (pre-school)$/, ' preschool').gs_capitalize_words!
+        return_keywords_str << ', ' + name.gsub(/\ (pre-school)$/i, ' preschool').gs_capitalize_words
       elsif name.downcase.end_with? 'preschool'
-        return_keywords_str << ', ' + name.downcase.gsub(/\ (preschool)$/, ' pre-school').gs_capitalize_words!
+        return_keywords_str << ', ' + name.gsub(/\ (preschool)$/i, ' pre-school').gs_capitalize_words
       end
     else
       return_keywords_str << ', ' + name + ' ' + @school.city
