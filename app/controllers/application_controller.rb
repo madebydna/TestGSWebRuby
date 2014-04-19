@@ -29,13 +29,15 @@ class ApplicationController < ActionController::Base
 
   def disconnect_connection_pools
     return unless @school.present?
-    request.env['rack_after_reply.callbacks'] << lambda do
-      ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool| 
-        if pool.connections.present? && 
-          ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" ) 
-          pool.disconnect!
+    if request.env['rack_after_reply.callbacks']
+      request.env['rack_after_reply.callbacks'] << lambda do
+        ActiveRecord::Base.connection_handler.connection_pools.
+          values.each do |pool| 
+          if pool.connections.present? && 
+            ( pool.connections.first.
+              current_database == "_#{@school.state.downcase}" ) 
+            pool.disconnect!
+          end
         end
       end
     end
