@@ -61,7 +61,7 @@ module ReviewControllerConcerns
         #set omniture events and props after the review has been published.
         set_omniture_events_in_session(['review_updates_mss_end_event'])
         set_omniture_sprops_in_session({'custom_completion_sprop' => 'PublishReview'})
-      elsif review.who = 'student'
+      elsif review.who == 'student'
         flash_notice t('actions.review.pending_moderation')
       else
         flash_notice t('actions.review.pending_email_verification')

@@ -268,6 +268,7 @@ shared_examples_for 'a controller that can save a review' do
         review.status = 'u'
         review.who = 'parent'
         expect(controller).to receive(:flash_notice)
+          .with I18n.t('actions.review.pending_email_verification')
         expect(controller).to receive(:redirect_to).with '/reviewspage'
         controller.send :save_review_and_redirect, review_params
       end
