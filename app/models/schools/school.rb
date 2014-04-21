@@ -165,7 +165,7 @@ class School < ActiveRecord::Base
   
   def levels_description
     levels = process_level
-    if levels.nil? || levels == 'Ungraded'
+    if levels.nil? || levels.include?('Ungraded')
       nil
     else
       levels.length > 2 ? "grades #{levels}" :  "grade #{levels}"

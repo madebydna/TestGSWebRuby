@@ -179,6 +179,11 @@ describe School do
       subject(:levels_description) { school.levels_description }
       it { should be_nil }
     end
+    context 'when a school has graded and ungraded schools' do
+      before { school.stub(:process_level).and_return('K-12 & Ungraded') }
+      subject(:levels_description) { school.levels_description }
+      it { should be_nil }
+    end
     context 'when a school has a single grade level' do
       before { school.stub(:process_level).and_return('K') }
       subject(:levels_description) { school.levels_description }
