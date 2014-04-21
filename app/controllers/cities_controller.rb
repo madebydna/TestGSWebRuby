@@ -135,7 +135,8 @@ class CitiesController < ApplicationController
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
       @subheading = CollectionConfig.enrollment_subheading(configs)
 
-      @data = CollectionConfig.enrollment_page_data(configs, @tab[:key])
+      @enrollment_module = CollectionConfig.enrollment_module(configs, @tab[:key])
+      @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
 
       @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
 

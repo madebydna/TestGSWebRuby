@@ -75,6 +75,7 @@ EOS
 state_hub_featured_articles_value = articles_value.clone
 state_partners_value = partners_value.clone
 enrollment_subheading_value = "{ content:'Detroit offers a variety of education choices. Start the search process early, if you can, so you’ll know all your options – and exactly what’s required for enrollment.' }"
+enrollment_module_value = "{ header: 'word', content: 'many letters #{('a'..'z').to_a * 10}', link: [{ name:'name', path:'http://www.aod.org/schools/', newwindow:'true' }] }"
 
 FactoryGirl.define do
   factory :state_hub_content_module, class: CollectionConfig do
@@ -82,8 +83,6 @@ FactoryGirl.define do
     quay CollectionConfig::CONTENT_MODULE_KEY
     value state_hub_content_module_value
   end
-
-
 
   factory :collection_nickname, class: CollectionConfig do
     collection_id 1
@@ -148,7 +147,7 @@ FactoryGirl.define do
   factory :bogus_collection_config, class: CollectionConfig do
     collection_id 1
     quay ''
-    value 'foo bar'
+    value 'foo b?a{r'
   end
 
   factory :community_tabs_collection_config, class: CollectionConfig do
@@ -209,5 +208,20 @@ FactoryGirl.define do
     collection_id 1
     quay CollectionConfig::ENROLLMENT_SUBHEADING_KEY
     value enrollment_subheading_value
+  end
+
+  factory :enrollment_module_configs, class: CollectionConfig do
+    collection_id 1
+    quay "enrollmentPage_private_elementary_module"
+    value enrollment_module_value
+  end
+
+  factory :single_enrollment_tip_config, class: CollectionConfig do
+    collection_id 1
+    quay "enrollmentPage_private_elementary_tips"
+  end
+
+  factory :enrollment_tips_config, class: CollectionConfig do
+    collection_id 1
   end
 end

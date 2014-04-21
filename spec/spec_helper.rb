@@ -13,7 +13,6 @@ end
 
 if ENV['JENKINS_URL'] || ENV['coverage']
   SimpleCov.start 'rails' do
-
     add_group 'Changed' do |source_file|
       `git ls-files --exclude-standard --others \
         && git diff --name-only \

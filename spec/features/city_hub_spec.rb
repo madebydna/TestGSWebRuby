@@ -124,4 +124,3 @@ feature 'configurable dropdown menu' do
     expect(page).to have_selector(clear_cookies_selector)
   end
 end
-

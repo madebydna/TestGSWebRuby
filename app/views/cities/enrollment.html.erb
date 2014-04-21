@@ -37,8 +37,8 @@
     </ul>
   </div>
 
-  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, data: @data, type: :public, key_dates: @key_dates %>
-  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, data: @data, type: :private, key_dates: @key_dates %>
+  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :public, key_dates: @key_dates %>
+  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :private, key_dates: @key_dates %>
 
   </div>
 </div>

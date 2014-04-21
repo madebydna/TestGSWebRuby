@@ -579,4 +579,79 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.enrollment_module' do
+    context 'with missing or malformed data' do
+      it 'returns nil' do
+        results = [ CollectionConfig.enrollment_module([], 'preschool'),
+        CollectionConfig.enrollment_module([FactoryGirl.create(:bogus_collection_config)], 'preschool') ]
+        results.each do |result|
+          expect(result[:public]).to be_nil
+          expect(result[:private]).to be_nil
+        end
+      end
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        CollectionConfig.enrollment_module([], 'preschool')
+      end
+    end
+
+    context 'by default' do
+      let(:configs) do
+        [
+          FactoryGirl.build(:enrollment_module_configs, quay: 'enrollmentPage_private_elementary_module'),
+          FactoryGirl.build(:enrollment_module_configs, quay: 'enrollmentPage_public_elementary_module')
+        ]
+      end
+
+      it 'returns a description and info links' do
+        result = CollectionConfig.enrollment_module(configs, 'elementary')
+        expect(result).to be_an_instance_of(Hash)
+
+        [:header, :content, :link].each do |key|
+          expect(result[:public]).to have_key(key)
+          expect(result[:private]).to have_key(key)
+        end
+      end
+    end
+  end
+
+  describe '.enrollment_tips' do
+    context 'with missing data' do
+      it 'returns nil' do
+        result = CollectionConfig.enrollment_tips([], 'preschool')
+        expect(result[:public][:content]).to eq([])
+        expect(result[:private][:content]).to eq([])
+      end
+      it 'does not log an error' do
+        Rails.logger.should_not_receive(:error)
+        CollectionConfig.enrollment_tips([], 'preschool')
+      end
+    end
+
+    context 'malformed data' do
+      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config)] }
+
+      it 'returns nil' do
+        result = CollectionConfig.enrollment_tips(bogus_configs, 'preschool')
+        expect(result[:public][:content]).to eq([])
+        expect(result[:private][:content]).to eq([])
+      end
+    end
+
+    context 'a single tip' do
+      before(:each) do
+        FactoryGirl.create(:single_enrollment_tip_config)
+      end
+      it 'returns an array with a single tip' do
+      end
+    end
+
+    context 'by default' do
+      before(:each) do
+        FactoryGirl.create(:enrollment_tips_config)
+      end
+      it 'returns an array of tips'
+    end
+  end
 end
