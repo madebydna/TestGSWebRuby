@@ -117,5 +117,5 @@ and you should see a school profile page
 
   `ssh syncer@alpha`
 
-  Once inside, these 2 commands deploy:
+  Once inside, these 2 commands deploy to alpha:
   `sudo -u syncer gsdeploy-fetch alpha gswebruby && sudo -u syncer deployfarmer gswebruby`
