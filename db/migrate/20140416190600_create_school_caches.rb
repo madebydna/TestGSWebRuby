@@ -4,7 +4,8 @@ class CreateSchoolCaches < ActiveRecord::Migration
       t.integer :school_id
       t.string :name
       t.string :value
-      t.stringupdated :state
+      t.string :state
+      t.date :updated
 
       t.timestamps
     end
