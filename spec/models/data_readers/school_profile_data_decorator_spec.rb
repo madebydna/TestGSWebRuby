@@ -50,18 +50,18 @@ describe SchoolProfileDataDecorator do
   describe '#facebook_url' do
     subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
     it 'should return a url if the school has a facebook url' do
-      schoolMetadata = Hashie::Mash.new(:facebook_url => 'http://facebook.com/pages/myschool/12345')
-      school.stub(:school_metadata).and_return(schoolMetadata)
+      school_metadata = Hashie::Mash.new(:facebook_url => 'http://facebook.com/pages/myschool/12345')
+      school.stub(:school_metadata).and_return(school_metadata)
       expect(school.facebook_url).to eq 'http://facebook.com/pages/myschool/12345'
     end
     it 'should return nil if the school does not have a facebook url' do
-      schoolMetadata = Hashie::Mash.new(:facebook_url => '')
-      school.stub(:school_metadata).and_return(schoolMetadata)
-      expect(school.facebook_url).to eq nil
+      school_metadata = Hashie::Mash.new(:facebook_url => '')
+      school.stub(:school_metadata).and_return(school_metadata)
+      expect(school.facebook_url).to be_nil
 
-      schoolMetadata = Hashie::Mash.new
-      school.stub(:school_metadata).and_return(schoolMetadata)
-      expect(school.facebook_url).to eq nil
+      school_metadata = Hashie::Mash.new
+      school.stub(:school_metadata).and_return(school_metadata)
+      expect(school.facebook_url).to be_nil
     end
   end
 end
