@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'controllers/concerns/localization_concerns_spec'
+require 'controllers/concerns/localization_concerns_shared'
 describe LocalizedProfileController do
   it_behaves_like 'localization'
 
@@ -194,8 +194,8 @@ describe LocalizedProfileController do
     end
 
     describe '#redirect_to_canonical_url' do
-      let(:school) { 
-        FactoryGirl.build(:school, 
+      let(:school) {
+        FactoryGirl.build(:school,
                           id: 1,
                           state: 'mi',
                           city: 'detroit',
