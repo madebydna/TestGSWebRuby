@@ -277,6 +277,8 @@ p.view-more {
 
   li {
     display: inline;
+    margin-top: 15px;
+    margin-bottom: 20px;
 
     a {
       color: #666;
@@ -375,6 +377,11 @@ hr.brand-bar {
     float: left;
     clear: left;
   }
+  .js-enrollment-tabs {
+    li, li a {
+      display: block;
+    }
+  }
 }
 
 @media only screen and (max-width: 650px) {
@@ -421,12 +428,6 @@ hr.brand-bar {
 
   .img-container-mobile {
     display: block;
-  }
-
-  .js-enrollment-tabs {
-    li {
-      display: block;
-    }
   }
 }
 
