@@ -61,6 +61,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             return false;
         }
 
+        if (/^\s+$/.test(field['value'])) {
+            return false;
+        }
+
         return true;
     }
 
