@@ -1,12 +1,8 @@
 require 'spec_helper'
 
 describe CitiesController do
-  before(:each) do
-    clean_dbs :gs_schooldb
-    FactoryGirl.create(:hub_city_mapping)
-  end
-
-  after(:all) { clean_dbs :gs_schooldb }
+  before(:each) { FactoryGirl.create(:hub_city_mapping) }
+  after(:each) { clean_dbs :gs_schooldb }
 
   shared_examples_for 'a default cities controller action' do |action|
     context 'without a hub city mapping' do

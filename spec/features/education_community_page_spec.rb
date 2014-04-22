@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Education Comunity Page' do
-  before(:each) { clean_dbs :gs_schooldb }
+  after(:each) { clean_dbs :gs_schooldb }
   before(:each) do
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:community_tabs_collection_config)

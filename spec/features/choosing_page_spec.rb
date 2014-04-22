@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe 'Choosing Page' do
   before(:each) do
-    clean_dbs :gs_schooldb
     FactoryGirl.create(:choosing_page_links_configs)
     FactoryGirl.create(:important_events_collection_config)
     FactoryGirl.create(:hub_city_mapping)
   end
+
+  after(:each) { clean_dbs :gs_schooldb }
 
   it 'displays basic static and dynamic content' do
     visit '/michigan/detroit/choosing-schools/'

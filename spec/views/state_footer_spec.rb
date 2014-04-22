@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'shared/_state_footer.html.erb' do
+  before(:each) { clean_dbs :us_geo }
   after(:each) { clean_dbs :us_geo }
   before(:each) do
     view.stub(:state) { { long: 'Indiana', short: 'IN' } }
@@ -18,7 +19,7 @@ describe 'shared/_state_footer.html.erb' do
 
 
   context 'with cities' do
-    let(:cities) do
+    let!(:cities) do
       (1..31).to_a.map do |i|
         FactoryGirl.create(:city, name: "Test City#{i}", population: "#{i}000".to_i)
       end
@@ -28,7 +29,7 @@ describe 'shared/_state_footer.html.erb' do
   end
 
   context 'with only a few cities' do
-    let(:cities) do
+    let!(:cities) do
       (1..20).to_a.map do |i|
         FactoryGirl.create(:city, name: "Test City#{i}", population: "#{i}000".to_i)
       end

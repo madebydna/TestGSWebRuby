@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'City Hub Page' do
   let(:city_page_url) { '/michigan/detroit' }
   before(:all) do
-    clean_dbs :gs_schooldb
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:important_events_collection_config)
     FactoryGirl.create(:city_hub_sponsor_collection_config)
@@ -27,7 +26,7 @@ describe 'City Hub Page' do
 
   describe 'school breakdown section' do
     it 'shows the counts for each school type' do
-      browse_link_selector = ".school-breakdown button:nth-of-type(#{rand(7) + 1}) span"
+      browse_link_selector = ".school-breakdown button span:last-child"
 
       expect(page).to have_css('.school-breakdown button', count: 7)
       page.all(browse_link_selector).each do |link|
