@@ -1,4 +1,6 @@
 GS.viewMoreCollapseInit = function(options) {
+  // You need to define a height inline on the element with
+  // the '.js-module-expand' class
   var textSelector = '.js-module-expand';
   var toggleSelector = 'p.view-more';
   var foldHeight = options['foldHeight'] || 71;

@@ -316,7 +316,7 @@ class CollectionConfig < ActiveRecord::Base
         result[type] = eval(config.try(:value) || '')
         content = result[type].try(:[], :content)
 
-        unless result[type].is_a? Array
+        unless content.is_a? Array
           result[type] = content.nil? ? { content: [] } : { content: [content] }
         end
       end
