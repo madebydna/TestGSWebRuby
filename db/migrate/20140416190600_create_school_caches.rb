@@ -1,6 +1,6 @@
 class CreateSchoolCaches < ActiveRecord::Migration
   def change
-    create_table :school_caches do |t|
+    create_table :school_cache do |t|
       t.integer :school_id
       t.string :name
       t.string :value
