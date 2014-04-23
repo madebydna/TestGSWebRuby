@@ -102,7 +102,7 @@ group :development do
   gem 'guard-livereload'
 
   gem 'zeus'
-  gem 'pry-debugger'
+  #gem 'pry-debugger'
 end
 
 group :development, :test do
