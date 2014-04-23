@@ -123,6 +123,41 @@ class SigninController < ApplicationController
     end
   end
 
+  def verify_email
+    # TODO: check if already verified?
+    # TODO: send an email after verifying or after user no longer provisional?
+    token = params[:id]
+    time = params[:date]
+    success_redirect = params[:redirect] || my_account_url
+
+    begin
+      token = EmailVerificationToken.parse token, time
+
+      if token.expired?
+        flash_error 'Email verification link had errors, redirecting.'
+        redirect_to join_url
+      elsif token.user.nil?
+        flash_error 'Email verification link had errors, redirecting.'
+        redirect_to join_url
+      else
+        user = token.user
+        user.verify!
+        if user.save
+          user.publish_reviews!
+          log_user_in user
+          redirect_to success_redirect
+        else
+          flash_error 'Email verification link had errors, redirecting.'
+          redirect_to join_url
+        end
+      end
+    rescue => e
+      Rails.logger.debug "Failed to parse token: #{e}"
+      flash_error 'Email verification link had errors, redirecting.'
+      redirect_to join_url
+    end
+  end
+
   protected
 
   # rather than invoke different controller actions for login / join, determine intent by presence of certain params

@@ -191,6 +191,17 @@ describe LocalizedProfileController do
         expect(controller.send(:seo_meta_tags_keywords)).to eq('Amazing Life Games Pre-School, Amazing Life Games Preschool')
       end
 
+      it 'should include "pre-school" when school name ends with preschool' do
+        controller.instance_variable_set(:@school, school)
+        controller.stub(:action_name).and_return 'Overview'
+        school.level_code = 'p'
+        school.name = 'ABC Preschool'
+        school.state = 'DC'
+        school.city = 'Washington'
+        expect(controller.send(:seo_meta_tags_keywords))
+          .to eq 'ABC Preschool, ABC Pre-School'
+      end
+
     end
 
     describe '#redirect_to_canonical_url' do

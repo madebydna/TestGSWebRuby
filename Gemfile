@@ -90,14 +90,13 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
 
-  # Zeus keeps a rails environment running so that rspec(and other commands)
-  # can be ran much more quickly
   gem 'zeus'
+  gem 'pry-debugger'
 end
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
-  gem 'awesome_print', :require => 'ap'
+  #gem 'awesome_print', :require => 'ap'
 
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'

@@ -82,6 +82,7 @@ describe RatingsHelper do
     expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary"})
   end
 
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_state
     rating_results = []
 
@@ -89,7 +90,8 @@ describe RatingsHelper do
     state_rating_data_type_ids.each do |data_type_id|
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
-    rating_results
+
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 
   #There is a no configuration and no rating results. Hence expect empty city rating.
@@ -132,7 +134,7 @@ describe RatingsHelper do
 
   #There is configuration and rating results.
   it 'should return overall city rating, description and label' do
-    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary"}}')
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "Awesome Test","description_key": "mi_esd_summary"}}')
     ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
     rating_results = build_rating_results_for_city
 
@@ -140,10 +142,6 @@ describe RatingsHelper do
 
     #There is a description
     DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
-
-    #Do this to get the display_name.
-    #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
-    TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 201))
 
     expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1",
                                                                                 "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
@@ -165,7 +163,7 @@ describe RatingsHelper do
 
   #There is configuration and rating results.But there is no result for overall rating. Hence expect empty city rating.
   it 'should return methodology' do
-    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "overall","description_key": "mi_esd_summary","default_methodology_url": "some_url"}}')
+    city_rating_config = JSON.parse('{"rating_breakdowns":{"climate":{"data_type_id": 200,"label": "School Climate"},"status":{"data_type_id":198,"label": "Academic Status"},"progress":{"data_type_id":199,"label":"Academic Progress"}},"overall":{"data_type_id":201,"label": "Awesome Test","description_key": "mi_esd_summary","default_methodology_url": "some_url"}}')
     ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
     rating_results = build_rating_results_for_city  #The rating results do not have an overall rating
 
@@ -174,14 +172,11 @@ describe RatingsHelper do
     #There is a description
     DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
 
-    #Do this to get the display_name.
-    #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
-    TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 201))
-
     expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1","methodology_url" => "some_url",
                                                                  "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
   end
 
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_city
     rating_results = []
 
@@ -190,9 +185,10 @@ describe RatingsHelper do
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
 
-    rating_results
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_city_no_overall
     rating_results = []
 
@@ -200,7 +196,7 @@ describe RatingsHelper do
     city_rating_data_type_ids.each do |data_type_id|
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
-    rating_results
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 
   #There is a no configuration and no rating results. Hence expect empty preK rating.
@@ -243,15 +239,11 @@ describe RatingsHelper do
 
   #There is configuration and rating results.
   it 'should return star preK rating, description and label' do
-    prek_rating_config = JSON.parse('{"star_rating":{"data_type_id":217,"description_key":"mi_prek_star_rating_summary"}}')
+    prek_rating_config = JSON.parse('{"star_rating":{"data_type_id":217,"description_key":"mi_prek_star_rating_summary","label":"Awesome Test"}}')
     ratings_config = RatingsConfiguration.new(nil, nil, nil, prek_rating_config)
     rating_results = build_rating_results_for_preK
 
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
-
-    #Do this to get the display_name.
-    #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
-    TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 217))
 
     #There is a description
     DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_prek_star_rating_summary"] => "some summary"})
@@ -259,6 +251,7 @@ describe RatingsHelper do
     expect(ratings_helper.construct_preK_ratings(school)).to eq({"star_rating"=>1, "description"=>"some summary", "preK_rating_label"=>"Awesome Test"})
   end
 
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_preK
     rating_results = []
 
@@ -267,7 +260,7 @@ describe RatingsHelper do
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
 
-    rating_results
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 
   it 'should return empty methodology url' do
@@ -300,6 +293,7 @@ describe RatingsHelper do
     expect(ratings_helper.get_methodology_url(city_rating_config, school)).to eq("specific_url")
   end
 
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_gs
     rating_results = []
 
@@ -308,7 +302,7 @@ describe RatingsHelper do
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
 
-    rating_results
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 
   #There is a no configuration and no rating results. Hence expect empty gs rating.
@@ -359,10 +353,6 @@ describe RatingsHelper do
 
     #There is a description
     DataDescription.stub(:lookup_table).and_return({[nil,"what_is_gs_rating_summary"] => "some summary"})
-
-    #Do this to get the display_name.
-    #TODO: I could not get factory girl to build this association while constructing the testdatasets due to db sharding.How to solve this?
-    TestDataSet.any_instance.stub(:test_data_type).and_return(FactoryGirl.build(:test_data_type, id: 201))
 
     school.stub(:school_metadata).and_return(school_metadata)
     expect(ratings_helper.construct_GS_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary", "rating_breakdowns"=>{"Test score rating"=>{"rating"=>1}, "Student growth rating"=>{"rating"=>1}, "College readiness rating"=>{"rating"=>1}}})

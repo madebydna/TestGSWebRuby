@@ -238,6 +238,9 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
+      pry (~> 0.9.10)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.4.5)
@@ -404,7 +407,6 @@ PLATFORMS
 DEPENDENCIES
   addressable
   ancestry
-  awesome_print
   better_errors (~> 0.9.0)
   binding_of_caller (~> 0.7.2)
   bootstrap-wysihtml5-rails
@@ -444,6 +446,7 @@ DEPENDENCIES
   mini_fb
   mysql2 (= 0.3.13)
   paper_trail
+  pry-debugger
   quiet_assets
   rack-mini-profiler
   rails (= 3.2.11)

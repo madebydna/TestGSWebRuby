@@ -49,7 +49,7 @@ feature 'configurable dropdown menu' do
     expect(page).to have_selector('.dropdown-toggle', text: 'Indiana')
     expect(page).to have_selector(dropdown_item_selector, text: 'Indiana Home')
 
-    click_link 'Sign In'
+    visit '/gsr/login'
     expect(page).to have_selector('.dropdown-toggle', text: 'Indiana')
     expect(page).to have_selector(dropdown_item_selector, text: 'Indiana Home')
   end

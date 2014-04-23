@@ -41,7 +41,7 @@ describe SigninController do
         end
 
         it 'should redirect if an error occurs' do
-          expect(get :create, password: 'abc').to redirect_to(signin_url(only_path: true) + '/')
+          expect(get :create, password: 'abc').to redirect_to(signin_url(only_path: true))
         end
       end
 
@@ -82,7 +82,7 @@ describe SigninController do
         end
 
         it 'should redirect if an error occurs' do
-          expect(get :create, email: 'blah@example.com').to redirect_to(signin_url(only_path: true) + '/')
+          expect(get :create, email: 'blah@example.com').to redirect_to(signin_url(only_path: true))
         end
       end
 
@@ -177,7 +177,7 @@ describe SigninController do
 
       it 'redirects to the signin url' do
         get :facebook_callback
-        expect(response).to redirect_to(signin_path + '/')
+        expect(response).to redirect_to(signin_path)
       end
     end
 
@@ -261,5 +261,108 @@ describe SigninController do
         end
       end
     end
+  end
+
+  describe '#verify_email' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:token) { EmailVerificationToken.new(user: user) }
+    let(:expired_token) {
+      EmailVerificationToken.new(user: user, time: 1000.years.ago)
+    }
+    let(:valid_params) {
+      {
+        id: token.generate,
+        time: token.time_as_string
+      }
+    }
+
+    shared_examples_for 'something went wrong' do
+      it 'should flash an error message' do
+        expect(controller).to receive(:flash_error)
+        subject
+      end
+
+      it 'should redirect to join page' do
+        expect(subject).to redirect_to join_url
+      end
+    end
+
+    before(:each) do
+      EmailVerificationToken.stub(:parse).and_return token
+      user.stub(:save) { true }
+    end
+
+    it 'should be defined' do
+      expect(subject).to respond_to :verify_email
+    end
+
+    context 'when token is valid' do
+      subject(:response) { get :verify_email, valid_params }
+
+      it 'should redirect to account page if no redirect specified in link' do
+        expect(subject).to redirect_to my_account_url
+      end
+
+      it 'should redirect to url existing on verification link' do
+        valid_params.merge!(redirect: 'google.com')
+        expect(subject).to redirect_to 'google.com'
+      end
+
+      it 'should save the user' do
+        expect(user).to receive(:save)
+        subject
+      end
+
+      context 'and the user can\'t be saved' do
+        before { user.stub(:save).and_return false }
+        it_should_behave_like 'something went wrong'
+      end
+
+      it 'should publish the user\'s reviews' do
+        expect(user).to receive(:publish_reviews!)
+        subject
+      end
+
+      it 'should verify the user\'s email' do
+        expect{ subject }.to change{ user.email_verified? }
+          .from(false).to(true)
+      end
+
+      it 'should verify the user account (no longer provisional)' do
+        expect{ subject }.to change{ user.provisional? }.from(true).to(false)
+      end
+
+      it 'should sign the user in' do
+        expect(controller).to receive(:log_user_in).with user
+        subject
+      end
+    end
+
+    context 'with invalid token' do
+      before { EmailVerificationToken.stub(:parse).and_raise 'parse error' }
+      subject(:response) { get :verify_email, id: nil, time: nil }
+
+      it_should_behave_like 'something went wrong'
+    end
+
+    context 'with expired token' do
+      before(:each) do
+        EmailVerificationToken.stub(:parse).and_return expired_token
+      end
+      subject(:response) { get :verify_email, id: nil, time: nil }
+
+      it_should_behave_like 'something went wrong'
+    end
+
+    context 'when token\'s encoded user doesn\'t actually exist' do
+      before(:each) do
+        EmailVerificationToken.stub(:parse).and_return token
+        token.stub(:user).and_return nil
+      end
+      subject(:response) { get :verify_email, id: nil, time: nil }
+
+      it_should_behave_like 'something went wrong'
+    end
+
   end
 end

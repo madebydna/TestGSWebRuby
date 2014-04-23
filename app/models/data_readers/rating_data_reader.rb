@@ -9,8 +9,10 @@ class RatingDataReader < SchoolProfileDataReader
     #Build an array of all the data type ids so that we can query the database only once.
     all_data_type_ids = ratings_config.city_rating_data_type_ids + ratings_config.state_rating_data_type_ids + ratings_config.gs_rating_data_type_ids + ratings_config.prek_rating_data_type_ids
 
+    cached_ratings = SchoolCache.for_school('ratings_profile',school.id, school.state)
+
     #Get the ratings from the database.
-    results = TestDataSet.by_data_type_ids(school, all_data_type_ids)
+    results = cached_ratings.nil? ? [] : JSON.parse(cached_ratings.value)
 
     ratings_helper = RatingsHelper.new(results,ratings_config)
 

@@ -119,12 +119,14 @@ module ApplicationHelper
     end
   end
 
-  def prepend_http ( url )
-    return_url = url
-    unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
-      return_url = "http://#{url}"
+  def state_partial ( state )
+    case state
+    when "MI"
+      return_partial = "shared/rating/draw_rect_72x58_rating"
+    else
+      return_partial = "shared/rating/default_rating"
     end
-    return_url
+    return_partial
   end
 
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.

@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'controllers/concerns/review_controller_concerns_shared'
 
 describe ReviewsController do
+  let(:current_user) { FactoryGirl.build(:user) }
 
   it_should_behave_like 'a controller that can save a review'
 
@@ -32,6 +33,7 @@ describe ReviewsController do
   describe '#report_review_and_redirect' do
 
     before do
+      controller.stub(:current_user).and_return current_user
       controller.stub(:logged_in?).and_return(true)
       @review_id = 1
       @reason = 'any reason'
@@ -46,7 +48,7 @@ describe ReviewsController do
       controller.send :report_review_and_redirect, review_id: @review_id, reason: @reason
     end
 
-    it 'should set flash error if exception occurs' do
+    it 'should set flash error if finding review throws error' do
       SchoolRating.stub(:find).and_raise('error')
       expect(controller).to receive :flash_error
       controller.send :report_review_and_redirect, review_id: @review_id, reason: @reason
@@ -61,8 +63,40 @@ describe ReviewsController do
     it 'should save reported entity if review exists' do
       school_rating = SchoolRating.new
       SchoolRating.stub(:find).and_return school_rating
-      expect(ReportedEntity).to receive(:from_review).with school_rating, @reason
-      controller.send :report_review_and_redirect, review_id: @review_id, reason: @reason
+      expect(ReportedEntity).to receive(:from_review)
+        .with(school_rating, @reason).and_return(
+          double(save: true, :'reporter_id=' => true)
+        )
+      expect(controller).to receive(:flash_notice)
+        .with I18n.t('actions.report_review.reported')
+      controller.send :report_review_and_redirect,
+                      review_id: @review_id,
+                      reason: @reason
+    end
+
+    it 'should flash error message if review can\'t be saved' do
+      school_rating = SchoolRating.new
+      SchoolRating.stub(:find).and_return school_rating
+      expect(ReportedEntity).to receive(:from_review)
+        .with(school_rating, @reason).and_return(
+          double(save: false, :'reporter_id=' => true)
+        )
+      expect(controller).to receive(:flash_error)
+        .with I18n.t('actions.generic_error')
+      controller.send :report_review_and_redirect,
+                      review_id: @review_id,
+                      reason: @reason
+    end
+
+    it 'should flash error message if an exception occurs' do
+      school_rating = SchoolRating.new
+      SchoolRating.stub(:find).and_return school_rating
+      expect(ReportedEntity).to receive(:from_review).and_raise 'error'
+      expect(controller).to receive(:flash_error)
+        .with I18n.t('actions.generic_error')
+      controller.send :report_review_and_redirect,
+                      review_id: @review_id,
+                      reason: @reason
     end
   end
 

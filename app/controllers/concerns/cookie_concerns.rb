@@ -58,13 +58,15 @@ module CookieConcerns
 
   # For normal cookies, delete the cookie
   # For cookie dictionaries, delete only portion of cookie described by key
-  def delete_cookie(cookie_name, key = nil)
+  def delete_cookie(cookie_name, key = nil, options = {})
     config = self.cookie_config cookie_name
     domain = config[:domain].presence || :all
 
     if config[:hash] && key.present?
       cookie = self.cookie cookie_name
-      cookie.delete key.to_sym, domain: domain
+      cookie.delete key.to_sym
+      new_cookie = cookie.to_json
+      write_cookie cookie_name, new_cookie, options
     else
       cookies.delete cookie_name, domain: domain
     end

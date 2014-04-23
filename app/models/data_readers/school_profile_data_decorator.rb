@@ -183,8 +183,8 @@ module SchoolProfileDataDecorator
   end
 
   def facebook_url(options = {})
-    schoolMetadata = self.school_metadata
-    schoolMetadata['facebook_url'].present? ? schoolMetadata['facebook_url'] : nil
+    school_metadata = self.school_metadata
+    school_metadata['facebook_url'].presence
   end
 
   def footnotes(options = {})
