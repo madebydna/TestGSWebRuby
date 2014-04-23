@@ -18,11 +18,11 @@ class CollectionConfig < ActiveRecord::Base
   SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
   CHOOSING_STEP3_LINKS_KEY = 'choosePage_step3_localLinks'
   CONTENT_MODULE_KEY = 'statehubHome_contentModule'
-  STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArtciles'
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
   ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
   ENROLLMENT_DATES_PREFIX = 'keyEnrollmentDates'
-  STATE_CHOOSE_A_SCHOOL_KEY = 'stateHubHome_chooseSchool'
+  STATE_CHOOSE_A_SCHOOL_KEY = 'statehubHome_chooseSchool'
+  STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArticles'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 

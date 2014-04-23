@@ -20,8 +20,7 @@ class StatesController < ApplicationController
       @partners = CollectionConfig.state_partners(configs)
       @choose_school = CollectionConfig.state_choose_school(configs)
 
-      # Todo: reintegrate articles
-      # @articles = CollectionConfig.state_featured_articles(configs)
+      @articles = CollectionConfig.state_featured_articles(configs)
 
       @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
