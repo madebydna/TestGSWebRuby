@@ -648,10 +648,46 @@ describe CollectionConfig do
     end
 
     context 'by default' do
+      let(:configs) { CollectionConfig.all }
       before(:each) do
         FactoryGirl.create(:enrollment_tips_config)
       end
-      it 'returns an array of tips'
+
+      it 'returns a hash of tips' do
+        result = CollectionConfig.enrollment_tips(configs, 'elementary')
+        expect(result).to be_an_instance_of(Hash)
+        [:public, :private].each { |k| expect(result).to have_key(k) }
+      end
+    end
+  end
+
+  describe '.state_choose_school' do
+    context 'with missing or malformed data' do
+      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config)] }
+
+      it 'returns nil' do
+        expect(CollectionConfig.state_choose_school([])).to be_nil
+        expect(CollectionConfig.state_choose_school(bogus_configs)).to be_nil
+      end
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        result = CollectionConfig.state_choose_school([])
+      end
+    end
+
+    context 'by default' do
+      before(:each) do
+        FactoryGirl.create(:state_choose_school_config)
+      end
+      let(:configs) { CollectionConfig.all }
+
+      it 'parses and returns the state choosing schools module' do
+        result = CollectionConfig.state_choose_school(configs)
+        expect(result).to be_an_instance_of(Hash)
+        [:link, :heading, :content].each do |key|
+          expect(result).to have_key(key)
+        end
+      end
     end
   end
 end

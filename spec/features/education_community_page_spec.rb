@@ -48,7 +48,7 @@ end
 
 
 describe 'Education Community Partner Page' do
-  before(:each) { clean_dbs :gs_schooldb }
+  after(:each) { clean_dbs :gs_schooldb }
   before(:each) do
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:community_sponsor_collection_config_data)

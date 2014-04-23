@@ -1,16 +1,5 @@
 require 'spec_helper'
 
-describe 'cities/_choose_a_school.html.erb' do
-  context 'without a choose_a_school' do
-    it 'renders an error message' do
-      view.stub(:choose_school) { nil }
-      render
-
-      expect(rendered).to have_content('No Data Found - _choose_a_school.html.erb')
-    end
-  end
-end
-
 describe 'cities/_upcoming_events.html.erb' do
   context 'without upcoming events' do
     it 'renders an error message' do

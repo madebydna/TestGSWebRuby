@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'City Hub Page' do
   let(:city_page_url) { '/michigan/detroit' }
-  before(:all) do
+  before(:each) do
     FactoryGirl.create(:hub_city_mapping)
     FactoryGirl.create(:important_events_collection_config)
     FactoryGirl.create(:city_hub_sponsor_collection_config)
@@ -13,7 +13,7 @@ describe 'City Hub Page' do
     FactoryGirl.create(:choose_a_school_collection_configs)
     FactoryGirl.create(:collection_nickname)
   end
-  after(:all) { clean_dbs :gs_schooldb }
+  after(:each) { clean_dbs :gs_schooldb }
 
   before(:each) { visit city_page_url }
 
