@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UrlHelper do
-  
+
   describe '.add_query_params_to_url' do
     let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'http://test.com/'}
@@ -41,7 +41,7 @@ describe UrlHelper do
       url = 'http://test.com/?filters[]=one&filters[]=two'
       params[:filters] = 'three'
       result = url_helper.send :add_query_params_to_url, url, false, params
-      expect(result).to eq url = 
+      expect(result).to eq url =
         'http://test.com/?filters[]=one&filters[]=two&filters[]=three'
     end
 
@@ -59,7 +59,7 @@ describe UrlHelper do
     let(:url) { 'http://test.com/'}
     let(:value) { nil }
     let(:param_names) { [] }
-    let(:result) { url_helper.send :remove_query_params_from_url, 
+    let(:result) { url_helper.send :remove_query_params_from_url,
                                     url,
                                     param_names,
                                     nil
@@ -91,7 +91,7 @@ describe UrlHelper do
       url.replace 'http://test.com/?filters[]=one&filters[]=two'
       value = 'two'
       param_names << :filters
-      result = url_helper.send :remove_query_params_from_url, 
+      result = url_helper.send :remove_query_params_from_url,
                                 url,
                                 param_names,
                                 value
@@ -102,7 +102,7 @@ describe UrlHelper do
       url.replace 'http://test.com/?state=ca'
       value = 'ca'
       param_names << :state
-      result = url_helper.send :remove_query_params_from_url, 
+      result = url_helper.send :remove_query_params_from_url,
                                 url,
                                 param_names,
                                 value
@@ -113,7 +113,7 @@ describe UrlHelper do
       url.replace 'http://test.com/?filters[]=one&filters[]=two'
       value = 'blah'
       param_names << :filters
-      result = url_helper.send :remove_query_params_from_url, 
+      result = url_helper.send :remove_query_params_from_url,
                                 url,
                                 param_names,
                                 value

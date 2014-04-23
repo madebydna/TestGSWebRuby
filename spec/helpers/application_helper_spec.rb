@@ -68,28 +68,36 @@ describe ApplicationHelper do
       school = FactoryGirl.create(:school, school_metadatas: [])
       school
     end
-    let(:cookies) { {} }
+    let(:cookies) do
+      local_cookies = {}
+
+      allow(local_cookies).to receive(:delete) do |*args|
+        local_cookies[args[0]] = nil
+      end
+
+      local_cookies
+    end
 
     it 'sets ishubUser all the time' do
-      helper.topnav_formatted_title(school, hub_params, cookies)
+      helper.topnav_formatted_title(school, hub_params)
 
       expect(helper.cookies[:ishubUser][:value]).to eq('y')
     end
 
     context 'with a school' do
       it 'sets the nav city and state based on the school' do
-        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        result = helper.topnav_formatted_title(school, hub_params)
         expect(result).to eq("A Name, CA")
       end
 
       it 'sets cookies based on school properties' do
-        helper.topnav_formatted_title(school, hub_params, cookies)
+        helper.topnav_formatted_title(school, hub_params)
         expect(helper.cookies[:hubState][:value]).to eq('CA')
         expect(helper.cookies[:hubCity][:value]).to eq('A Name')
       end
 
       it 'sets page configuration options from the school' do
-        helper.topnav_formatted_title(school, hub_params, cookies)
+        helper.topnav_formatted_title(school, hub_params)
         expect(helper.cookies[:eduPage][:value]).to be_true
         expect(helper.cookies[:choosePage][:value]).to be_true
         expect(helper.cookies[:eventsPage][:value]).to be_true
@@ -104,12 +112,12 @@ describe ApplicationHelper do
       let(:school) { nil }
 
       it 'displays state based on the hub params' do
-        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        result = helper.topnav_formatted_title(school, hub_params)
         expect(result).to eq('Indiana')
       end
 
       it 'sets cookies for the state based off of hub params' do
-        helper.topnav_formatted_title(school, hub_params, cookies)
+        helper.topnav_formatted_title(school, hub_params)
         expect(helper.cookies[:hubState][:value]).to eq('IN')
       end
     end
@@ -119,16 +127,16 @@ describe ApplicationHelper do
       let(:school) { nil }
 
       it 'displays city and state based on hub params' do
-        result = helper.topnav_formatted_title(school, hub_params, cookies)
+        result = helper.topnav_formatted_title(school, hub_params)
         expect(result).to eq('Detroit, MI')
       end
       it 'sets cookies for city and state based off hub params' do
-        helper.topnav_formatted_title(school, hub_params, cookies)
+        helper.topnav_formatted_title(school, hub_params)
         expect(helper.cookies[:hubCity][:value]).to eq('Detroit')
         expect(helper.cookies[:hubState][:value]).to eq('MI')
       end
       it 'sets page configuration cookies from hub params' do
-        helper.topnav_formatted_title(school, hub_params, cookies)
+        helper.topnav_formatted_title(school, hub_params)
         expect(helper.cookies[:eduPage][:value]).to be_true
         expect(helper.cookies[:choosePage][:value]).to be_true
         expect(helper.cookies[:eventsPage][:value]).to be_true
@@ -145,17 +153,21 @@ describe ApplicationHelper do
         it 'reads from the cookies' do
           keys = [:eduPage, :choosePage, :eventsPage, :enrollPage, :partnerPage]
           keys.each { |k| helper.cookies[k] = true }
-          helper.topnav_formatted_title(school, hub_params, cookies)
+          helper.cookies[:hubCity] = 'Detroit'
+          helper.cookies[:hubState] = 'MI'
+          result = helper.topnav_formatted_title(school, hub_params)
 
           keys.each do |key|
             expect(helper.cookies[key]).to be_true
           end
+
+          expect(result).to eq('Detroit, MI')
         end
       end
 
       context 'without cookies' do
         it 'returns nil' do
-          result = helper.topnav_formatted_title(school, hub_params, cookies)
+          result = helper.topnav_formatted_title(school, hub_params)
           expect(result).to be_nil
         end
       end
