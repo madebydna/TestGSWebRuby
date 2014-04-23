@@ -4,6 +4,9 @@ class StatesController < ApplicationController
   before_filter :set_login_redirect
   before_filter :set_footer_cities
 
+  def foobar
+  end
+
   def show
     collection_mapping = mapping
     if collection_mapping.nil?

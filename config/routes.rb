@@ -98,6 +98,7 @@ LocalizedProfiles::Application.routes.draw do
         state: States.any_state_name_regex,
     } do
       get '', to: 'states#show'
+      get 'enrollment' => 'states#foobar'
     end
 
     scope '/:state/:city', as: :city, constraints: {

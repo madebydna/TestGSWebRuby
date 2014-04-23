@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CitiesController do
   before(:each) { FactoryGirl.create(:hub_city_mapping) }
-  after(:each) { clean_dbs :gs_schooldb }
+  after(:each) { clean_dbs :gs_schooldb, :surveys }
 
   shared_examples_for 'a default cities controller action' do |action|
     context 'without a hub city mapping' do
@@ -20,6 +20,15 @@ describe CitiesController do
 
   describe 'GET show' do
     it_behaves_like 'a default cities controller action', :show
+
+    it 'decorates school reviews' do
+      FactoryGirl.create(:school_rating, state: 'mi')
+
+      get :show, state: 'michigan', city: 'detroit'
+
+      expect(assigns[:reviews][0].school).to respond_to(:data_readers)
+      expect(assigns[:reviews][1].school).to respond_to(:gs_rating)
+    end
   end
 
   describe 'GET events' do
