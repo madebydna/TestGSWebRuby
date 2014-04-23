@@ -18,6 +18,7 @@ class StatesController < ApplicationController
       @content_modules = CollectionConfig.content_modules(configs)
 
       @partners = CollectionConfig.state_partners(configs)
+      @choose_school = CollectionConfig.state_choose_school(configs)
 
       # Todo: reintegrate articles
       # @articles = CollectionConfig.state_featured_articles(configs)
