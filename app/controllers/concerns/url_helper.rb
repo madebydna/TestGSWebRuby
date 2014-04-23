@@ -114,10 +114,10 @@ module UrlHelper
         # If asked to overwrite, just overwrite the existing_params key
         # otherwise, create a new Array (if value is not already an array)
         # and append the new param
-        if existing_params .has_key?(name) && ! overwrite
-          existing_params [name] = Array(existing_params [name]) << param
+        if existing_params.has_key?(name) && ! overwrite
+          existing_params[name] = Array(existing_params [name]) << param
         else
-          existing_params [name] = param.to_s
+          existing_params[name] = param.to_s
         end
       end
       string = Rack::Utils.build_nested_query(existing_params )
@@ -160,6 +160,15 @@ module UrlHelper
     end
 
     uri.to_s
+  end
+
+  # checks for http or https if they don't exist prepend http://
+  def prepend_http ( url )
+    return_url = url
+    unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
+      return_url = "http://#{url}"
+    end
+    return_url
   end
 
 end

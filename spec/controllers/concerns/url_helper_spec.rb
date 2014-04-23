@@ -120,4 +120,23 @@ describe UrlHelper do
       expect(result).to eq 'http://test.com/?filters[]=one&filters[]=two'
     end
   end
+
+  describe 'prepend http:// to urls' do
+    let(:url_helper) { Object.new.extend UrlHelper }
+    let(:url) { 'www.test.com'}
+    it 'should add http:// to the url when http and/or https do not already exist' do
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'http://www.test.com'
+    end
+    it 'should should not add it to the url when https exists' do
+      url.replace  'https://www.test.com'
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'https://www.test.com'
+    end
+    it 'should should not add it to the url when http exists' do
+      url.replace 'http://www.test.com'
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'http://www.test.com'
+    end
+  end
 end

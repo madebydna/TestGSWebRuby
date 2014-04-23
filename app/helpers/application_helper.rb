@@ -129,14 +129,6 @@ module ApplicationHelper
     return_partial
   end
 
-  def prepend_http ( url )
-    return_url = url
-    unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
-      return_url = "http://#{url}"
-    end
-    return_url
-  end
-
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
   # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string
   def capitalize_if_string(object)
