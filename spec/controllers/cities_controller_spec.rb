@@ -20,15 +20,6 @@ describe CitiesController do
 
   describe 'GET show' do
     it_behaves_like 'a default cities controller action', :show
-
-    it 'decorates school reviews' do
-      FactoryGirl.create(:school_rating, state: 'mi')
-
-      get :show, state: 'michigan', city: 'detroit'
-
-      expect(assigns[:reviews][0].school).to respond_to(:data_readers)
-      expect(assigns[:reviews][1].school).to respond_to(:gs_rating)
-    end
   end
 
   describe 'GET events' do
