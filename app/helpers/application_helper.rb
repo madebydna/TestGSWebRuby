@@ -1,3 +1,5 @@
+require_relative '../models/presenters/topnav'
+
 module ApplicationHelper
   include CookieConcerns
 
@@ -240,59 +242,7 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav_formatted_title(school, hub_params, cookies)
-    write_cookie :ishubUser, 'y'
-    city = nil
-    state_short = nil
-
-    unless hub_params.nil?
-      if hub_params[:city]
-        city = hub_params[:city].titleize
-        state_short = States.abbreviation(hub_params[:state])
-      else
-        state_short = hub_params[:state].titleize
-        cookies.delete(:hubCity)
-      end
-    else
-      state_short = cookies[:hubState]
-    end
-
-
-    if school
-      city = school.hub_city.titleize
-      state_short = States.abbreviation(school.state)
-    end
-
-
-    if state_short
-      write_cookie :hubState, States.abbreviation(state_short).upcase
-    elsif cookies[:hubState]
-      state_short = cookies[:hubState]
-    end
-
-    if city
-      write_cookie :hubCity, city
-    elsif cookies[:hubCity]
-      city = cookies[:hubCity]
-    end
-
-
-    mapping = HubCityMapping.where(city: city, state: States.abbreviation(state_short).try(:upcase), active: 1).first
-
-    if mapping
-      write_cookie :eduPage, mapping.has_edu_page?
-      write_cookie :choosePage, mapping.has_choose_page?
-      write_cookie :eventsPage, mapping.has_events_page?
-      write_cookie :enrollPage, mapping.has_enroll_page?
-      write_cookie :partnerPage, mapping.has_partner_page?
-    end
-
-    if !city.nil? && !state_short.nil?
-      "#{city.gs_capitalize_words}, #{state_short.upcase}"
-    elsif !state_short.nil?
-      States.state_name(state_short).gs_capitalize_words
-    else
-      nil
-    end
+  def topnav_formatted_title(school, hub_params)
+    TopNav.new(school, hub_params, cookies).formatted_title
   end
 end

@@ -361,7 +361,7 @@ class CollectionConfig < ActiveRecord::Base
           subheading = result ? result : { error: 'The enrollment subheading is empty' }
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing enrollment_subheading ' + e.to_s)
-          subheading = { error: e }
+          subheading = { error: 'The enrollment subheading is malformed' }
         end
       end
 
