@@ -203,6 +203,11 @@ describe SigninController do
       it 'should verify the user account (no longer provisional)' do
         expect{ subject }.to change{ user.provisional? }.from(true).to(false)
       end
+
+      it 'should sign the user in' do
+        expect(controller).to receive(:log_user_in).with user
+        subject
+      end
     end
 
     context 'with invalid token' do 
