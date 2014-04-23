@@ -22,6 +22,7 @@ class CollectionConfig < ActiveRecord::Base
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
   ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
   ENROLLMENT_DATES_PREFIX = 'keyEnrollmentDates'
+  STATE_CHOOSE_A_SCHOOL_KEY = 'stateHubHome_chooseSchool'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -390,11 +391,27 @@ class CollectionConfig < ActiveRecord::Base
       }
     end
 
+    def state_choose_school(configs)
+      result = nil
+      begin
+        config = configs.select(&lambda { |cc| cc.quay == STATE_CHOOSE_A_SCHOOL_KEY }).first
+        if config
+          result = eval(config.value)
+        else
+          Rails.logger.error('missing state choose school data')
+        end
+      rescue Exception => e
+        Rails.logger.error('something went wrong while parsing state_choose_school ' + e.to_s)
+      end
+
+      result
+    end
+
     [
       :city_hub_sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
       :ed_community_subheading, :ed_community_show_tabs, :ed_community_partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
-      :city_featured_articles
+      :city_featured_articles, :state_choose_school
     ].each do |method_name|
       new_method = "#{method_name}_with_nil_check".to_sym
       define_method new_method do |*args|
