@@ -1,4 +1,4 @@
-require_relative '../models/presenters/topnav'
+require './app/models/presenters/topnav'
 
 module ApplicationHelper
   include CookieConcerns
