@@ -171,10 +171,10 @@ class School < ActiveRecord::Base
     snippet.presence
   end
 
-  def great_schools_rating 
+  def great_schools_rating
     school_metadata[:overallRating].presence
   end
-  
+
   def levels_description
     levels = process_level
     if levels.nil? || levels.include?('Ungraded')

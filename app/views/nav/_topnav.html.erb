@@ -20,8 +20,8 @@
                         </a>
                     <% end %>
                     <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
-                        <% city = @hub_params.try(:[], :city) || cookies[:hubCity] %>
-                        <% state = @hub_params.try(:[], :state) || cookies[:hubState] %>
+                        <% city = cookies[:hubCity] %>
+                        <% state = cookies[:hubState] %>
 
                         <%- if @hub_params.present? || cookies[:hubState] %>
                             <% url_params = { state: States.state_name(state), city: city } %>
