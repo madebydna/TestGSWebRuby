@@ -11,7 +11,6 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
@@ -27,6 +26,7 @@ class CitiesController < ApplicationController
       }
 
       collection_configs = configs
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sponsor = CollectionConfig.city_hub_sponsor(collection_configs)
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
@@ -50,7 +50,8 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
+      collection_configs = configs
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
         'Home' => '/',
@@ -68,9 +69,9 @@ class CitiesController < ApplicationController
     else
       set_meta_tags title: "The #{@city} Education Community"
       @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       collection_configs = configs
       set_community_tab(collection_configs)
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.city_hub_important_events(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
@@ -88,7 +89,7 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
       @partner = CollectionConfig.ed_community_partner(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @breadcrumbs = {
@@ -110,9 +111,8 @@ class CitiesController < ApplicationController
     else
       @collection_id = hub_city_mapping.collection_id
       set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
-      events_configs = CollectionConfig.where(collection_id: @collection_id, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
-      @events = CollectionConfig.city_hub_important_events(events_configs)
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
+      @events = CollectionConfig.city_hub_important_events(configs)
       @step3_links = CollectionConfig.choosing_page_links(@collection_id)
       @breadcrumbs = {
         @city.titleize => city_path(@state[:long], @city),
@@ -128,8 +128,8 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(@collection_id)
       configs = CollectionConfig.where(collection_id: @collection_id)
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
 
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])

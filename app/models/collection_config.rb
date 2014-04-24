@@ -42,13 +42,12 @@ class CollectionConfig < ActiveRecord::Base
       end
     end
 
-    def collection_nickname(collection_id)
-      Rails.cache.fetch("collection_nickname:#{collection_id}", expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-        begin
-          CollectionConfig.where(collection_id: collection_id, quay: NICKNAME_KEY).first.value
-        rescue Exception => e
-          nil
-        end
+    def collection_nickname(configs)
+      begin
+        configs.select(&lambda { |cc| cc.quay == NICKNAME_KEY }).first.value
+      rescue Exception => e
+        Rails.logger.error('something went wrong while parsing collection_nickname ' + e.to_s)
+        nil
       end
     end
 

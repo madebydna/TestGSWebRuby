@@ -14,7 +14,7 @@ class StatesController < ApplicationController
     else
       collection_id = collection_mapping.collection_id
       configs = CollectionConfig.where(collection_id: collection_id)
-      @collection_nickname = CollectionConfig.collection_nickname(collection_id)
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
 
       @partners = CollectionConfig.state_partners(configs)
