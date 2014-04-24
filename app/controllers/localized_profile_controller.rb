@@ -1,7 +1,6 @@
 class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
-  include LocalizationConcerns
   include OmnitureConcerns
 
   before_filter :redirect_tab_urls, only: [:overview]
@@ -11,7 +10,6 @@ class LocalizedProfileController < ApplicationController
   before_filter :init_page, :set_header_data
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
-  before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
   before_filter :set_footer_cities
@@ -91,14 +89,14 @@ class LocalizedProfileController < ApplicationController
     helper_name << 'path'
 
     canonical_path = self.send helper_name.to_sym, @school
-    
+
 
     # Add a tailing slash to the request path, only if one doesn't already exist.
     # Requests made by rspec sometimes contain a trailing slash
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(
-        canonical_path, 
-        true, 
+        canonical_path,
+        true,
         request.query_parameters
       )
     end

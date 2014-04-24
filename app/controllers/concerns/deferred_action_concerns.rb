@@ -1,6 +1,5 @@
 module DeferredActionConcerns
   extend ActiveSupport::Concern
-  include LocalizationConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns

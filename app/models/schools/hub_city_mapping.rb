@@ -4,23 +4,24 @@ class HubCityMapping < ActiveRecord::Base
 
   attr_accessible :collection_id, :city, :state, :active
 
-  alias_attribute :has_events_page?, :hasEventsPage
-
+  def has_events_page?
+    self.hasEventsPage ? 'y' : nil
+  end
 
   def has_edu_page?
-    self.hasEduPage || self.hasStateEduPage
+    (self.hasEduPage || self.hasStateEduPage) ? 'y' : nil
   end
 
   def has_choose_page?
-    self.hasChoosePage || self.hasStateChoosePage
+    (self.hasChoosePage || self.hasStateChoosePage) ? 'y' : nil
   end
 
   def has_enroll_page?
-    self.hasEnrollPage || self.hasStateEnrollPage
+    (self.hasEnrollPage || self.hasStateEnrollPage) ? 'y' : nil
   end
 
   def has_partner_page?
-    self.hasPartnerPage || hasStatePartnerPage
+    (self.hasPartnerPage || hasStatePartnerPage) ? 'y' : nil
   end
 
   def self.for_collection_id(collection_id)

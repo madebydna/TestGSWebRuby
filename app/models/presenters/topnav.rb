@@ -25,21 +25,17 @@ class TopNav
   def title
     city = nil
     state_short = nil
+    collection_id = nil
 
-    if is_city_hub?
+    if is_city_home?
       city = @hub_params[:city].gs_capitalize_words
       state_short = States.abbreviation(@hub_params[:state])
-    elsif is_state_hub?
+    elsif is_state_home?
       delete_cookie(:hubCity)
       state_short = @hub_params[:state].gs_capitalize_words
     else
       state_short = read_cookie_value(:hubState)
       city = read_cookie_value(:hubCity)
-    end
-
-    if @school
-      city = @school.hub_city.gs_capitalize_words
-      state_short = States.abbreviation(@school.state)
     end
 
     write_hub_cookies(city, state_short)
@@ -48,26 +44,32 @@ class TopNav
   end
 
   def write_hub_cookies(city, state_short)
-    write_cookie :hubCity, city if city
-    write_cookie :hubState, States.abbreviation(state_short).upcase if state_short
     write_cookie :ishubUser, 'y'
 
-    mapping = HubCityMapping.where(city: city, state: States.abbreviation(state_short).try(:upcase), active: 1).first
+    if @school
+      mapping = HubCityMapping.where(collection_id: @school.collection.id, active: 1).first
+    else
+      mapping = HubCityMapping.where(city: city, state: States.abbreviation(state_short).try(:upcase), active: 1).first
+    end
 
     if mapping
-      write_cookie :eduPage, mapping.has_edu_page?
-      write_cookie :choosePage, mapping.has_choose_page?
-      write_cookie :eventsPage, mapping.has_events_page?
-      write_cookie :enrollPage, mapping.has_enroll_page?
-      write_cookie :partnerPage, mapping.has_partner_page?
+      [
+        [:eduPage, mapping.has_edu_page?],
+        [:choosePage, mapping.has_choose_page?],
+        [:eventsPage, mapping.has_events_page?],
+        [:enrollPage, mapping.has_enroll_page?],
+        [:partnerPage, mapping.has_partner_page?],
+        [:hubCity, mapping.city],
+        [:hubState, mapping.state]
+      ].each { |tuple| write_cookie tuple[0], tuple[1] if tuple[1] }
     end
   end
 
-  def is_city_hub?
+  def is_city_home?
     @hub_params.present? && @hub_params[:city]
   end
 
-  def is_state_hub?
+  def is_state_home?
     @hub_params.present? && !@hub_params[:city] && @hub_params[:state]
   end
 end

@@ -1,5 +1,4 @@
 module OmnitureConcerns
-  include LocalizationConcerns
 
   protected
 
