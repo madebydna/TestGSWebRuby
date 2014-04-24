@@ -1,7 +1,7 @@
 require 'spec_helper'
 describe "Join" do
 
-  describe "GET /join" do
+  describe "/join page" do
 
     describe 'email verification' do
       before(:each) {
@@ -18,21 +18,25 @@ describe "Join" do
         clean_models :ca, School, SchoolMetadata
       end
 
-      it 'creates a user' do
+      it 'creates a new user' do
         expect(User.with_email 'ssprouse+testing@greatschools.org')
           .to_not be_nil
       end
 
-      it 'sends an email' do
+      it 'sends an email verification email' do
         expect(@email).to be_present
+        expect(@email.subject)
+          .to eq 'Please verify your email for GreatSchools' 
       end
 
-      it "Sends an email to the right person" do
+      it 'Sends the email to the right person' do
         expect(@email.to).to include 'ssprouse+testing@greatschools.org'
       end
 
-      it 'contains an email verification link' do
-        expect(@email.body).to match verify_email_path
+      describe 'email verification email' do
+        it 'contains an email verification link' do
+          expect(@email.body).to match verify_email_path
+        end
       end
 
       describe 'visiting the verification link' do
@@ -57,7 +61,7 @@ describe "Join" do
             .from(true).to(false)
         end
 
-        it 'publishes a review' do
+        it 'remove the provisional status from the user\'s reviews' do
           expect{ subject }.to change{ review.reload; review.status }
             .from('pp').to('p')
         end
