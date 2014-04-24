@@ -27,7 +27,7 @@ feature "/join page" do
         .to eq 'Please verify your email for GreatSchools'
     end
 
-    it 'Sends the email to the right person' do
+    it 'sends the email to the right person' do
       expect(@email.to).to include 'ssprouse+testing@greatschools.org'
     end
 
@@ -58,12 +58,12 @@ feature "/join page" do
             .from(true).to(false)
         end
 
-        it 'remove the provisional status from the user\'s reviews' do
+        it 'removes the provisional status from the user\'s reviews' do
           expect{ subject }.to change{ review.reload; review.status }
             .from('pp').to('p')
         end
       end
     end
-    
+
   end
 end
