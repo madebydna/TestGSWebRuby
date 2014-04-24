@@ -2,10 +2,18 @@
   <h3 class='plm'>Related articles</h3>
     <% articles.each do |article| %>
       <div class="col-xs-12 col-sm-6 col-lg-6 prm">
-        <%= image_tag('http://alpha-demo.greatschools.org/res/img/cityHubs/1_Article_1.png', class: 'pull-left mhm mts', width: '100px') %>
-        <div style='margin-left: 120px'>
-          <%= link_to 'Google', 'http://google.com', target: '_blank' %>
-          <p><%= 'foo bar baz ' * 20 %></p>
+        <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
+        <div style='margin-left: 120px;'>
+          <div class="medium-bold mrl">
+            <h4 class="js-hubsFeaturedArticles mtn mbn">
+              <% if article[:newwindow] %>
+                <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+              <% else %>
+                  <%= link_to article[:heading], article[:articlepath] %>
+              <% end %>
+            </h4>
+            <p><%= article[:content] %></p>
+          </div>
         </div>
       </div>
     <% end %>
@@ -13,3 +21,5 @@
   <%= link_to "More about #{state[:long]} »", '#', class: 'pull-right mrm' %>
   <div class="clearfix"></div>
 <% end %>
+
+

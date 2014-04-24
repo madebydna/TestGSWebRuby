@@ -61,6 +61,11 @@ class CollectionConfig < ActiveRecord::Base
         articles.each do |article|
           article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
         end
+        articles.each do |article|
+          [:heading, :content].each do |key|
+            article[key].gsub(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
+          end
+        end
       rescue Exception => e
         articles = nil
         Rails.logger.error('Parsing articles on the city hub page failed: ' + e.to_s)
@@ -79,6 +84,11 @@ class CollectionConfig < ActiveRecord::Base
           articles = eval(raw_articles_str)['articles']
           articles.each do |article|
            article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
+          end
+          articles.each do |article|
+            [:heading, :content].each do |key|
+              article[key].gsub!(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
+            end
           end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing state_featured_articles' + e.to_s)
