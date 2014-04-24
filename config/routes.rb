@@ -2,6 +2,7 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   require 'regular_subdomain'
   require 'preschool_subdomain'
+  require 'path_with_period'
 
   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   devise_for :admins, path: '/admin/gsr/school-profiles'
@@ -131,6 +132,9 @@ LocalizedProfiles::Application.routes.draw do
     match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
   end
 
+  constraints(PathWithPeriod) do
+    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path))
+  end
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found

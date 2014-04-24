@@ -139,4 +139,26 @@ describe UrlHelper do
       expect(result).to eq 'http://www.test.com'
     end
   end
+
+  describe '#gs_legacy_url_encode' do
+    it 'should replace hyphens with underscores' do
+      expect(url_helper.send :gs_legacy_url_encode, '-schoolname').to eq '_schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, '-schoolname-').to eq '_schoolname_'
+    end
+
+    it 'should replace spaces with hyphens' do
+      expect(url_helper.send :gs_legacy_url_encode, ' schoolname').to eq '-schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, ' school name ').to eq '-school-name-'
+    end
+
+    it 'should replace periods' do
+      expect(url_helper.send :gs_legacy_url_encode, '.schoolname').to eq 'schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, '.school.name').to eq 'schoolname'
+    end
+
+    it 'should return nil if provided nil' do
+      expect(url_helper.send :gs_legacy_url_encode, nil).to be_nil
+    end
+  end
+
 end
