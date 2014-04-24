@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe UrlHelper do
-  
+
+  let(:url_helper) { Object.new.extend UrlHelper }
+
   describe '.add_query_params_to_url' do
-    let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'http://test.com/'}
     let(:params) { {} }
     let(:result) { url_helper.send :add_query_params_to_url, url, true, params }
@@ -55,7 +56,6 @@ describe UrlHelper do
   end
 
   describe '.remove_query_params_from_url' do
-    let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'http://test.com/'}
     let(:value) { nil }
     let(:param_names) { [] }
@@ -122,7 +122,6 @@ describe UrlHelper do
   end
 
   describe 'prepend http:// to urls' do
-    let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'www.test.com'}
     it 'should add http:// to the url when http and/or https do not already exist' do
       result = url_helper.send :prepend_http, url
