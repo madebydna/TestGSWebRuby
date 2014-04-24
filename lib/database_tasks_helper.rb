@@ -1,7 +1,7 @@
 require 'states'
 require 'mysql2'
 
-class DatabaseTasksHelper 
+class DatabaseTasksHelper
 
   # Rails by default assumes that all the tables exist in one database.We are a using db_charmer to manage the legacy sharded
   # databases. The usual norm is to maintain the legacy schema in schema.rb file which is obtained by running 'rake db:schema:dump'
@@ -87,26 +87,26 @@ class DatabaseTasksHelper
 
   end
 
-  # 
+  #
   # Dumps the database schema from source server for all given DBs
   # @param  source_mysql_server[Symbol] The host configuration in database.yml
   #         to use, .e.g. :mysql_dev
-  # @param  destination_mysql_server[Symbol] The host configuration in 
+  # @param  destination_mysql_server[Symbol] The host configuration in
   #         database.yml to use, .e.g. :mysql_localhost
   # @param  *databases [Array] array of database names
   # @param  overwrite = false [Boolean] If true will drop database and recreate
   # @param  &transform_db_name_block [Proc] A block to convert source db names
   #         to destination db names if needed
-  # 
+  #
   # @return [nil]
   def self.copy_database_schemas_from_server(
-    source_mysql_server, 
-    destination_mysql_server, 
-    databases, 
+    source_mysql_server,
+    destination_mysql_server,
+    databases,
     overwrite = false,
     &transform_db_name_block
     )
-    
+
     if transform_db_name_block
       destination_databases = databases.map &transform_db_name_block
     else
@@ -115,25 +115,25 @@ class DatabaseTasksHelper
 
     databases.each_with_index do |source_database, index|
       self.copy_database_schema_from_server(
-        source_mysql_server, 
-        destination_mysql_server, 
-        source_database, 
+        source_mysql_server,
+        destination_mysql_server,
+        source_database,
         destination_databases[index],
         overwrite
       )
     end
   end
 
-  # 
+  #
   # Creates table schemas for entire DB by doing a mysql dump
   # @param  source_mysql_server[Symbol] The host configuration in database.yml
   #         to use, .e.g. :mysql_dev
-  # @param  destination_mysql_server[Symbol] The host configuration in 
+  # @param  destination_mysql_server[Symbol] The host configuration in
   #         database.yml to use, .e.g. :mysql_localhost
   # @param  source_database [String] Source DB name
   # @param  destination_database = source_database [String] DB to create
   # @param  overwrite = false [Boolean] If true will drop database and recreate
-  # 
+  #
   # @return [nil]
   def self.copy_database_schema_from_server(
     source_mysql_server,
@@ -143,28 +143,28 @@ class DatabaseTasksHelper
     overwrite = false
     )
 
-    source_mysql_config = 
-    DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
-      source_mysql_server,
-      false
-    )
-    destination_mysql_config = 
-    DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
-      destination_mysql_server,
-      false
-    )
+    source_mysql_config =
+      DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
+        source_mysql_server,
+        false
+      )
+    destination_mysql_config =
+      DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
+        destination_mysql_server,
+        false
+      )
 
     mysql_client = Mysql2::Client.new(
-      host: destination_mysql_config.host, 
-      username: destination_mysql_config.username, 
+      host: destination_mysql_config.host,
+      username: destination_mysql_config.username,
       password: destination_mysql_config.password
     )
 
-    database_exists = 
+    database_exists =
     mysql_client.query("show databases like '#{destination_database}'").any?
 
-    database_has_tables = 
-    database_exists && 
+    database_has_tables =
+    database_exists &&
     (
       mysql_client.query("show tables in #{destination_database}")
       .any? rescue false
@@ -206,31 +206,31 @@ class DatabaseTasksHelper
     end
   end
 
-  # 
+  #
   # Creates an empty database. Fails gracefully if it already exists
-  # @param  destination_mysql_server [Symbol] The host configuration in 
+  # @param  destination_mysql_server [Symbol] The host configuration in
   #         database.yml to use, .e.g. :mysql_dev
   # @param  destination_database[String] The destination database name
   # @param  overwrite = false [Boolean] If true will drop database and recreate
   # @return [nil]
   def self.create_database(
-    destination_mysql_server, 
-    destination_database, 
+    destination_mysql_server,
+    destination_database,
     overwrite = false
     )
-    destination_mysql_config = 
-    DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
-      destination_mysql_server,
-      false
-    )
+    destination_mysql_config =
+      DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
+        destination_mysql_server,
+        false
+      )
 
     mysql_client = Mysql2::Client.new(
-      host: destination_mysql_config.host, 
-      username: destination_mysql_config.username, 
+      host: destination_mysql_config.host,
+      username: destination_mysql_config.username,
       password: destination_mysql_config.password
     )
 
-    database_exists = 
+    database_exists =
     mysql_client.query("show databases like '#{destination_database}'").any?
 
     if database_exists == false || overwrite
@@ -245,7 +245,7 @@ class DatabaseTasksHelper
         mysql_destination_string << " -p#{destination_mysql_config.password}"
       end
 
-      create_db_command = "echo 'create database #{destination_database}' | " + 
+      create_db_command = "echo 'create database #{destination_database}' | " +
       mysql_destination_string
 
       puts "Creating database: #{destination_database}"
@@ -257,30 +257,79 @@ class DatabaseTasksHelper
     end
   end
 
-  # 
+  #
   # Drops a database. Fails gracefully if database doesn't exist.
-  # @param  destination_mysql_server [Symbol] The host configuration in 
+  # @param  destination_mysql_server [Symbol] The host configuration in
   #         database.yml to use, .e.g. :mysql_dev
   # @param  destination_database[String] The destination database name
   # @return [nil]
   def self.drop_database(
-    destination_mysql_server, 
-    destination_database 
+    destination_mysql_server,
+    destination_database
     )
-    destination_mysql_config = 
+    destination_mysql_config =
     DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
       destination_mysql_server,
       false
     )
 
     mysql_client = Mysql2::Client.new(
-      host: destination_mysql_config.host, 
-      username: destination_mysql_config.username, 
+      host: destination_mysql_config.host,
+      username: destination_mysql_config.username,
       password: destination_mysql_config.password
     )
 
     puts "Dropping database #{destination_database}"
     dropped = mysql_client.query("drop database #{destination_database}")
+  end
+
+  #
+  # Uses mysqldump to copy a whole database from one location to another.
+  #
+  # @param  destination_mysql_server [Symbol] The host configuration in
+  #         database.yml to use, .e.g. :mysql_dev
+  # @param  destination_database[String] The destination database name
+  # @return [nil]
+  def self.dump_database(
+    source_mysql_server,
+    source_database,
+    destination_mysql_server,
+    destination_database
+    )
+    source_mysql_config =
+      DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
+        source_mysql_server,
+        false
+      )
+    destination_mysql_config =
+      DatabaseConfigurationHelper.hashie_of_mysql_connection_info(
+        destination_mysql_server,
+        false
+      )
+
+    mysql_source_string = ''
+    mysql_source_string << " -h#{source_mysql_config.host}"
+    mysql_source_string << " -u#{source_mysql_config.username}"
+    if source_mysql_config.password.present?
+      mysql_source_string << " -p#{source_mysql_config.password}"
+    end
+    mysql_source_string << " #{source_database}"
+
+    mysql_destination_string =  "mysql"
+    mysql_destination_string << " -h#{destination_mysql_config.host}"
+    mysql_destination_string << " -u#{destination_mysql_config.username}"
+    if destination_mysql_config.password.present?
+      mysql_destination_string << " -p#{destination_mysql_config.password}"
+    end
+    mysql_destination_string << " -A #{destination_database}"
+
+    command = 'mysqldump'
+    command << " #{mysql_source_string} | #{mysql_destination_string}"
+
+    puts "Dumping data from #{source_mysql_server}: #{source_database}"
+    unless system(command)
+      puts 'Couldn\'t dump database. Continuing on.'
+    end
   end
 
   #Creates the seed data by doing a mysql dump.
@@ -295,8 +344,6 @@ class DatabaseTasksHelper
     system(sql_command)
     puts $?.success? ? "Seeding #{source_table} completed." : "Seeding #{source_table} failed."
   end
-
-
 
   def self.databases_receiving_mysql_dump
   @@databases_receiving_mysql_dump

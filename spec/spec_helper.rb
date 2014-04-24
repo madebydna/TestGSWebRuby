@@ -61,6 +61,7 @@ if ENV['JENKINS_URL'] || ENV['coverage']
     add_filter '/spec/'
     add_filter 'config/initializers/rails_admin.rb'
     add_filter 'lib/test_connection_management.rb'
+    add_filter 'lib/database_tasks_helper.rb'
   end
 end
 

@@ -34,8 +34,11 @@ end
 def load_sample_data(name, env = 'test')
   files = Dir.glob(Rails.root.join('db', 'sample_data', 'data', '**/', "#{name}.json"))
 
-  database_connection_config = DatabaseConfigurationHelper.database_config_for '_ca_test', env
-  
+  db_suffix = (env == 'test')? "_#{env}" : ''
+
+  database_connection_config =
+    DatabaseConfigurationHelper.database_config_for "_ca#{db_suffix}", env
+
   host = database_connection_config['host']
   username = database_connection_config['username']
   password = database_connection_config['password']
@@ -56,7 +59,7 @@ def load_sample_data(name, env = 'test')
 
       data.each do |row|
         values = row.values
-        values = values.map do |value| 
+        values = values.map do |value|
           v = if value.is_a?(String)
                 if value.include? '"'
                   value.to_json
