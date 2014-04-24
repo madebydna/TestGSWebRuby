@@ -7,12 +7,21 @@ namespace :gsweb do
 
       sh 'bundle install'
       Rake::Task['db:create'].invoke
-      Rake::Task['db:migrate'].invoke
 
       # Note this only creates one state db - CA
-      dbs_to_create = 'gs_schooldb', '_ca', 'community', 'surveys', 'us_geo'
+      development_dbs_to_create =
+        'gs_schooldb',
+        '_ca',
+        'community',
+        'surveys',
+        'us_geo'
 
-      Rake::Task['db:legacy:schema'].invoke(false, *dbs_to_create)
+      Rake::Task['db:legacy:schema'].invoke(false, *development_dbs_to_create)
+
+      DatabaseTasksHelper.dump_database(
+        'mysql_dev', 'localized_profiles',
+        'mysql_localhost', 'LocalizedProfiles_development'
+      )
 
       Rake::Task['gsweb:load_alameda_high_school_profile_data'].invoke
     end
