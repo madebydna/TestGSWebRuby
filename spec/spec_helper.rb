@@ -46,12 +46,14 @@ def clean_models(db, *models)
   end
 end
 
-if ENV['JENKINS_URL'] # on ci server
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-elsif ENV['coverage']
-  require 'simplecov-html'
-  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+if ENV['coverage']
+  if ENV['JENKINS_URL'] # on ci server
+    require 'simplecov-rcov'
+    SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  else
+    require 'simplecov-html'
+    SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+  end
 end
 
 if ENV['JENKINS_URL'] || ENV['coverage']
