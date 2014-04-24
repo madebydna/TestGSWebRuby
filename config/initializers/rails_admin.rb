@@ -60,7 +60,7 @@ RailsAdmin.config do |config|
   ###  CategoryData  ###
 
   config.model 'CategoryData' do
-    label 'Table'
+    label 'Module data points'
     list do
       filters [:category]
       field :category do
