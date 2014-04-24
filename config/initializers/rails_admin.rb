@@ -30,7 +30,13 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['Category', 'CategoryPlacement', 'Collection', 'Page', 'School', 'EspResponse', 'SchoolCollection', 'User']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Category', 'CategoryData', 'CategoryPlacement', 'Page', 'ResponseValue','SchoolProfileConfiguration']
+  config.included_models = [
+    'Category',
+    'CategoryData',
+    'CategoryPlacement',
+    'ResponseValue',
+    'SchoolProfileConfiguration'
+  ]
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -54,10 +60,15 @@ RailsAdmin.config do |config|
   ###  CategoryData  ###
 
   config.model 'CategoryData' do
+    label 'Table'
     list do
       filters [:category]
-      field :category
-      field :response_key
+      field :category do
+        label 'Module'
+      end
+      field :response_key do
+        label 'Data point'
+      end
       field :label
       field :collection do
         def value
@@ -66,7 +77,6 @@ RailsAdmin.config do |config|
         end
       end
       field :sort_order
-      field :source
       field :updated_at
     end
 
@@ -91,6 +101,7 @@ RailsAdmin.config do |config|
   ###  Category  ###
 
   config.model 'Category' do
+    label 'Module'
 
   #   # You can copy this to a 'rails_admin do ... end' block inside your category.rb model definition
 
@@ -106,7 +117,7 @@ RailsAdmin.config do |config|
   #     configure :parent_id, :integer         # Hidden
   #     configure :name, :string
   #     configure :description, :string
-  #     configure :created_at, :datetime 
+  #     configure :created_at, :datetime
   #     configure :updated_at, :datetime
 
   #   # Cross-section configuration:
@@ -151,81 +162,81 @@ RailsAdmin.config do |config|
 
 ###  CategoryPlacement  ###
 
- config.model 'CategoryPlacement' do
-   nestable_tree({
-     position_field: :position,
-     max_depth: 3,
-     scope: :page,
-
-   })
-
-   list do
-     filters [:page]
-     field :page
-     field :title
-     field :collection do
-       def value
-         v = super
-         v.name unless v.nil?
-       end
-
-     end
-     field :category
-     field :layout
-   end
-
-   edit do
-     field :title
-     field :category
-     field :page
-     field :collection_id, :enum do
-       enum do
-         Collection.all.map { |collection| [collection.name, collection.id] }
-       end
-     end
-     field :layout, :enum do
-       enum_method do
-         :possible_layouts
-       end
-     end
-     field :layout_config, :text do
-       def value
-         data = super
-         JSON.pretty_unparse(JSON.parse(data)) if data.present?
-       end
-       codemirror true
-     end
-     field :ancestry, :enum do
-       enum do
-         except = bindings[:object].id
-         CategoryPlacement.where("id != ?", except).map { |c| [ c.title, c.id ] }
-       end
-     end
-   end
- end
-
-
-
-  ###  Page  ###
-
-  config.model 'Page' do
+  config.model 'CategoryPlacement' do
+    label 'Page module'
+    nestable_tree({
+      position_field: :position,
+      max_depth: 3,
+      scope: :page,
+    })
 
     list do
-      field :name
-      field :parent
-      field :updated_at
+      items_per_page 1000
+      filters [:page]
+      field :page
+      field :title
+      field :collection do
+        def value
+          v = super
+          v.name unless v.nil?
+        end
+      end
+      field :category do
+        label 'Module'
+      end
+      field :layout do
+        label 'Template'
+      end
     end
-    edit do
-      field :name
-      field :parent
-      field :updated_at
-    end
-  end
 
+    edit do
+      field :title
+      field :category
+      field :page
+      field :collection_id, :enum do
+        enum do
+          Collection.all.map { |collection| [collection.name, collection.id] }
+        end
+      end
+      field :layout, :enum do
+        enum_method do
+          :possible_layouts
+        end
+      end
+      field :layout_config, :text do
+        def value
+          data = super
+          JSON.pretty_unparse(JSON.parse(data)) if data.present?
+        end
+        codemirror true
+      end
+      field :ancestry, :enum do
+        enum do
+          except = bindings[:object].id
+          CategoryPlacement.where("id != ?", except).map { |c| [ c.title, c.id ] }
+        end
+      end
+    end
+ end
+
+  ###  Page  ###
+  # config.model 'Page' do
+  #   list do
+  #     field :name
+  #     field :parent
+  #     field :updated_at
+  #   end
+  #   edit do
+  #     field :name
+  #     field :parent
+  #     field :updated_at
+  #   end
+  # end
 
   ###  CategoryData  ###
 
   config.model 'ResponseValue' do
+    label 'Response labels'
     list do
       field :response_key
       field :response_value
