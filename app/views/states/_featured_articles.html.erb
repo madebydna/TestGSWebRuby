@@ -1,7 +1,7 @@
 <% unless articles.nil? %>
   <h3 class='plm'>Featured Articles</h3>
     <% articles.each do |article| %>
-      <div class="col-xs-12 col-sm-6 col-lg-6 prm">
+      <div class="col-xs-12 col-sm-6 col-lg-6 phm">
         <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
         <div style='margin-left: 120px;'>
           <div class="medium-bold mrl">
