@@ -158,5 +158,4 @@ describe UrlHelper do
       expect(url_helper.send :gs_legacy_url_encode, nil).to be_nil
     end
   end
-
 end
