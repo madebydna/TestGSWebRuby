@@ -1,5 +1,3 @@
-require_relative './census_data_reader.rb'
-
 module SchoolProfileDataDecorator
 
   def self.extended(base)
@@ -109,7 +107,7 @@ module SchoolProfileDataDecorator
   end
 
   def gs_rating
-    rating = rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
+    rating_data.fetch('gs_rating',{}).fetch('overall_rating',nil)
   end
 
   def local_rating
