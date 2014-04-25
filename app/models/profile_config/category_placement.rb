@@ -36,23 +36,6 @@ class CategoryPlacement < ActiveRecord::Base
     end
   end
 
-  # return CategoryPlacements with collection_id in the provided
-  # collections. If a single object is passed in, the Array(...) call will convert it to an array
-  # Will return CategoryPlacements with nil collection_id
-  def self.belonging_to_collections(page, collections = nil)
-    placements_for_page(page).select do |category_placement|
-      array_of_ids_with_nil = (Array(collections).map(&:id))<<nil
-      array_of_ids_with_nil.include? category_placement.collection_id
-    end
-  end
-
-  def self.placements_for_page(page)
-    cache_key = "placements_for_page-page_id:#{page.id}"
-    Rails.cache.fetch(cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
-      order('position asc').order('priority').order('collection_id desc').where(page_id:page.id).all
-    end
-  end
-
   def set_defaults
     self.layout ||= 'default_two_column_table' if self.has_attribute? :layout
   end
@@ -140,7 +123,7 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   def children
-    page.category_placements.select do |cp|
+    page.category_placements.select do |cp| 
       cp.parent_id == id
     end.sort_by(&:position)
   end
@@ -150,14 +133,14 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   def descendants
-    page.category_placements.select do |cp|
+    page.category_placements.select do |cp| 
       Array(cp.ancestor_ids).include?(id)
     end
   end
 
   def leaves
     # Descendant is any descendant below this node at any level
-    descendants.reject do |descendant|
+    descendants.reject do |descendant| 
       descendant.has_children?
     end.sort_by(&:position)
   end
