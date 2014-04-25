@@ -7,6 +7,11 @@ class ResponseValue < ActiveRecord::Base
 
   belongs_to :category
 
+  def self.all_keys
+    Rails.cache.fetch('response_value/all_keys', expires_in: 5.minutes) do
+      ResponseValue.all.map(&:response_key).uniq
+    end
+  end
 
   # TODO: add collection support to this method
   def self.lookup_table

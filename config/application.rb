@@ -100,7 +100,7 @@ module LocalizedProfiles
     end
 
     config.after_initialize do
-      # Version.send :db_magic, :connection => :profile_config
+      PaperTrail::Version.send :db_magic, :connection => :profile_config
     end
 
     # Add in StatusPage as rack middleware

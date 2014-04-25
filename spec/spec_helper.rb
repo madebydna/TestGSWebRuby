@@ -7,6 +7,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # require 'rspec/autorun'
 require 'database_cleaner'
+require 'factory_girl'
 
 
 def monkey_patch_database_cleaner
@@ -78,6 +79,8 @@ RSpec.configure do |config|
 
   config.include Rails.application.routes.url_helpers
 
+  config.include FactoryGirl::Syntax::Methods
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -122,5 +125,6 @@ RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above
   monkey_patch_database_cleaner
+
 
 end

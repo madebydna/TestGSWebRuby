@@ -22,4 +22,8 @@ class String
     replace gs_capitalize_words
   end
 
+  def numeric?
+    true if Float(self) rescue false
+  end
+
 end

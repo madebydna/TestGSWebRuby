@@ -6,7 +6,7 @@ class CensusDataSet < ActiveRecord::Base
   include StateSharding
   include LookupDataPreloading
 
-  attr_accessor :census_description
+  attr_accessor :census_description, :census_data_config_entry
 
   has_many :census_data_school_values, class_name: 'CensusDataSchoolValue', foreign_key: 'data_set_id'
   has_many :census_data_district_values, class_name: 'CensusDataDistrictValue', foreign_key: 'data_set_id'
@@ -51,12 +51,6 @@ class CensusDataSet < ActiveRecord::Base
     census_data_state_values[0] if census_data_state_values.any?
   end
 
-  def census_data_config_entry
-    if @shard
-      @config_entry ||= Array(CensusDataConfigEntry.for_data_set(@shard, self)).first
-    end
-  end
-
   def has_config_entry?
     census_data_config_entry != nil
   end
@@ -65,7 +59,8 @@ class CensusDataSet < ActiveRecord::Base
     census_data_config_entry.label if has_config_entry?
   end
 
-  scope :with_data_types, lambda { |data_type_ids|
+  scope :with_data_types, lambda { |data_type_names_or_ids|
+    data_type_ids = CensusDataType.data_type_ids(data_type_names_or_ids)
     where(data_type_id: Array(data_type_ids))
   }
 
@@ -134,6 +129,7 @@ class CensusDataSet < ActiveRecord::Base
   end
 
   def census_breakdown
+    return nil
     census_data_breakdown.breakdown if census_data_breakdown
   end
 

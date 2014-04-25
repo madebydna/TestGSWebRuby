@@ -10,6 +10,16 @@ class Hash
     end
   end
 
+  def gs_rename_keys_using_lookup(hash)
+    gs_rename_keys do |key|
+      hash[key].presence || key
+    end
+  end
+
+  def gs_rename_keys_using_lookup!(hash)
+    replace gs_rename_keys_using_lookup(hash)
+  end
+
   def gs_recursive_call(*args, &block)
     each_with_object({}) do |pair, hash|
       pair = pair.gs_recursive_call_on_pair(*args) do |obj|
