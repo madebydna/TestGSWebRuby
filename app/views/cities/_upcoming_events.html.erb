@@ -1,4 +1,4 @@
-<% unless important_events.nil? %>
+<% unless important_events.nil? ||  important_events[:events].empty? %>
   <div class="row">
     <% unless defined?(community_page) %>
       <hr>

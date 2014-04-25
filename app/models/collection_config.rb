@@ -191,6 +191,7 @@ class CollectionConfig < ActiveRecord::Base
           important_events[:events].pop
         end
 
+        important_events = nil if important_events[:events].empty?
       rescue Exception => e
         important_events = nil
         Rails.logger.error('Something went wrong while parsing city_hub_important_events ' + e.to_s)
