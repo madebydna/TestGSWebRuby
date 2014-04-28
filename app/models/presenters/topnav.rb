@@ -6,10 +6,30 @@ class TopNav
     @school = school
     @hub_params = { state: sanitize(hub_params.try(:[], :state)), city: sanitize(hub_params.try(:[], :city)) }
     @cookies = cookies
+    @city = nil
+    @state_short = nil
   end
 
-  def formatted_title
-    format title
+  def topnav_title
+    if is_city_home?
+      @city = @hub_params[:city]
+      @state_short = States.abbreviation(@hub_params[:state])
+    elsif is_state_home?
+      @state_short = @hub_params[:state]
+    else
+      @state_short = read_cookie_value(:hubState)
+      @city = read_cookie_value(:hubCity)
+    end
+
+    reset_hub_cookies(@city, @state_short)
+
+    if @city
+      "#{@city.gs_capitalize_words}, #{@state_short.upcase}"
+    elsif @state_short
+      States.state_name(@state_short).gs_capitalize_words
+    else
+      nil
+    end
   end
 
   private
@@ -18,43 +38,15 @@ class TopNav
     (str || '').downcase.gsub(/\-/, ' ')
   end
 
-  def format(raw_title)
-    if raw_title[:city].present? && raw_title[:state_short].present?
-      "#{raw_title[:city].gs_capitalize_words}, #{raw_title[:state_short].upcase}"
-    elsif raw_title[:state_short].present?
-      States.state_name(raw_title[:state_short]).gs_capitalize_words
-    else
-      nil
-    end
-  end
-
-  def title
-    city = nil
-    state_short = nil
-    collection_id = nil
-
-    if is_city_home?
-      city = @hub_params[:city]
-      state_short = States.abbreviation(@hub_params[:state])
-    elsif is_state_home?
-      state_short = @hub_params[:state]
-    else
-      state_short = read_cookie_value(:hubState)
-      city = read_cookie_value(:hubCity)
-    end
-
-    reset_hub_cookies(city, state_short)
-
-    { city: city, state_short: state_short }
-  end
-
   def reset_hub_cookies(city, state_short)
     write_cookie :ishubUser, 'y'
 
     if @school
       mapping = HubCityMapping.where(collection_id: @school.collection.id, active: 1).first
+      @city = mapping.city
+      @state_short = mapping.state
     else
-      mapping = HubCityMapping.where(city: city, state: States.abbreviation(state_short).try(:upcase), active: 1).first
+      mapping = HubCityMapping.where(city: @city, state: States.abbreviation(@state_short).try(:upcase), active: 1).first
     end
 
     if mapping

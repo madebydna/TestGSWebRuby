@@ -16,10 +16,10 @@
                 <li>
                     <%- if @hub_params.present? || cookies[:hubState] || @school %>
                         <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                            <%= topnav_formatted_title(@school, @hub_params) %>  <b class="caret"></b>
+                            <%= topnav_title(@school, @hub_params) %>  <b class="caret"></b>
                         </a>
                     <% end %>
-                    <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
+                    <ul class="dropdown-menu">
                         <% city = cookies[:hubCity] || @school.try(:hub_city) %>
                         <% state = cookies[:hubState] || @school.try(:state) %>
 

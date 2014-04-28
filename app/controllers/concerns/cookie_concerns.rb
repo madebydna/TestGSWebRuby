@@ -122,5 +122,4 @@ module CookieConcerns
 
     cookies[cookie_name] = cookie_hash
   end
-
 end

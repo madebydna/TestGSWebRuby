@@ -244,7 +244,7 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav_formatted_title(school, hub_params)
-    TopNav.new(school, hub_params, cookies).formatted_title
+  def topnav_title(school, hub_params)
+    TopNav.new(school, hub_params, cookies).topnav_title
   end
 end
