@@ -17,7 +17,10 @@ end
 def self.ratings_cache_for_school(school)
   results = TestDataSet.ratings_for_school(school)
   unless (results.nil?)
-    SchoolCache.create(school_id: school.id, name: "ratings", state: school.state, value: results.to_json(:except => [:proficiency_band_id, :school_decile_tops], :methods => [:school_value_text, :school_value_float]))
+    cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops], :methods => [:school_value_text, :school_value_float])
+    #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
+    school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'ratings')
+    school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
   end
 end
 
