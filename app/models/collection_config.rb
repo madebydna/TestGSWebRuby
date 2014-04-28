@@ -228,7 +228,7 @@ class CollectionConfig < ActiveRecord::Base
                           .gsub(/\\/, '')
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing ed_community_subheading ' + e.to_s)
-        nil
+        "Error: something went wrong while parsing education community subheading"
       end
     end
 

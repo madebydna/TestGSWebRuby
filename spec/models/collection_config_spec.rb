@@ -263,8 +263,11 @@ describe CollectionConfig do
   end
 
   describe '.ed_community_subheading' do
-    it_behaves_like 'it rejects empty configs' do
-      let(:method) { :ed_community_subheading }
+    context 'with missing data' do
+      it 'returns an error message' do
+        result = CollectionConfig.ed_community_subheading([])
+        expect(result).to start_with('Error:')
+      end
     end
 
     context 'valid json string' do
