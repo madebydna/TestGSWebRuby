@@ -1,6 +1,6 @@
 states = ['mi', 'in', 'wi', 'de']
-state_arg=ARGV[0]
-school_id_arg=ARGV[1]
+states_arg=ARGV[0]
+school_ids_arg=ARGV[1]
 cache_key_arg= ARGV[2]
 all_cache_keys=['ratings']
 
@@ -31,16 +31,20 @@ if !cache_key_arg.nil?
 end
 
 keys.each do |cache_key|
-  if !state_arg.nil? && !school_id_arg.nil?
-    school = School.on_db(state_arg.downcase.to_sym).find(school_id_arg)
-    unless (school.nil?)
-      Array(school).each do |school|
-        create_cache(school, cache_key)
+  if !states_arg.nil? && !school_ids_arg.nil?
+    school_ids_arg.to_s.split(',').each do | school_id_arg |
+      school = School.on_db(states_arg.downcase.to_sym).find(school_id_arg)
+      unless (school.nil?)
+        Array(school).each do |school|
+          create_cache(school, cache_key)
+        end
       end
     end
-  elsif !state_arg.nil? && school_id_arg.nil?
-    School.on_db(state_arg.downcase.to_sym).all.each do |school|
-      create_cache(school, cache_key)
+  elsif !states_arg.nil? && school_ids_arg.nil?
+    states_arg.to_s.split(',').each do | state_arg |
+      School.on_db(state_arg.downcase.to_sym).all.each do |school|
+        create_cache(school, cache_key)
+      end
     end
   else
     states.each do |state|
