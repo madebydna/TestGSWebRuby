@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
     category_datas.select do |category_data| 
       category_data.collection.nil? ||
       collections.blank? ||
-      collections.include?(category_data.collection)
+      collections.map(&:id).include?(self.category_datas.first.collection.id)
     end
   end
 
