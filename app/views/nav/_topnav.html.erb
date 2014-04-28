@@ -24,7 +24,7 @@
                         <% state = cookies[:hubState] || @school.try(:state) %>
 
                         <%- if @hub_params.present? || cookies[:hubState] %>
-                            <% url_params = { state: States.state_name(state), city: city.downcase } %>
+                            <% url_params = { state: States.state_name(state), city: city.try(:downcase)} %>
                             <% if city %>
                                 <%= render 'nav/dropdown_link', text: "#{city.gs_capitalize_words} Home", url: city_url(url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: 'Choosing a School', url: city_choosing_schools_url(url_params) %>
