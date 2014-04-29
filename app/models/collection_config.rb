@@ -59,11 +59,10 @@ class CollectionConfig < ActiveRecord::Base
         articles = eval(raw_article_str)['articles']
         articles.each do |article|
           article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
-        end
-        articles.each do |article|
           [:heading, :content].each do |key|
             article[key].gsub(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
           end
+          article[:newwindow] = article[:newwindow] == 'true'
         end
       rescue Exception => e
         articles = nil
@@ -82,12 +81,11 @@ class CollectionConfig < ActiveRecord::Base
           raw_articles_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           articles = eval(raw_articles_str)['articles']
           articles.each do |article|
-           article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
-          end
-          articles.each do |article|
+            article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
             [:heading, :content].each do |key|
               article[key].gsub!(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
             end
+            article[:newwindow] = article[:newwindow] == 'true'
           end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing state_featured_articles' + e.to_s)
