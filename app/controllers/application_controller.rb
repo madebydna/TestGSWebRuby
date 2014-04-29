@@ -1,4 +1,3 @@
-
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -69,9 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_state
-    @state = state_param
-
-    render 'error/school_not_found', layout: 'error', status: 404 if @state.blank?
+    render 'error/school_not_found', layout: 'error', status: 404 if state_param.blank?
   end
 
   # Finds school given request param schoolId
@@ -162,5 +159,19 @@ class ApplicationController < ActionController::Base
 
   def set_footer_cities
     @cities = City.popular_cities(@state[:short], limit: 28)
+  end
+
+  def set_city_state
+    @state = {
+      long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+      short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+    } if params[:state]
+    @city = params[:city].gsub(/\-/, ' ') if params[:city]
+  end
+
+  def set_hub_params
+    @hub_params = {}
+    @hub_params[:state] = @state[:long] if @state[:long]
+    @hub_params[:city] = @city if @city
   end
 end

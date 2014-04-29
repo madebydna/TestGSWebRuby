@@ -2,15 +2,36 @@ class TopNav
   include CookieConcerns
   attr_reader :cookies
 
+  def state
+    @state_short
+  end
+
+  def city
+    @city
+  end
+
   def initialize(school, hub_params, cookies)
     @school = school
     @hub_params = { state: sanitize(hub_params.try(:[], :state)), city: sanitize(hub_params.try(:[], :city)) }
     @cookies = cookies
     @city = nil
     @state_short = nil
+    setup_title
   end
 
   def topnav_title
+    if @city
+      "#{@city.gs_capitalize_words}, #{@state_short.upcase}"
+    elsif @state_short
+      States.state_name(@state_short).gs_capitalize_words
+    else
+      nil
+    end
+  end
+
+  private
+
+  def setup_title
     if is_city_home?
       @city = @hub_params[:city]
       @state_short = States.abbreviation(@hub_params[:state])
@@ -22,17 +43,7 @@ class TopNav
     end
 
     reset_hub_cookies(@city, @state_short)
-
-    if @city
-      "#{@city.gs_capitalize_words}, #{@state_short.upcase}"
-    elsif @state_short
-      States.state_name(@state_short).gs_capitalize_words
-    else
-      nil
-    end
   end
-
-  private
 
   def sanitize(str)
     (str || '').downcase.gsub(/\-/, ' ')

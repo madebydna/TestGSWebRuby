@@ -1,6 +1,6 @@
 class StatesController < ApplicationController
+  before_filter :set_city_state
   before_filter :set_hub_params
-  before_filter :set_state
   before_filter :set_login_redirect
   before_filter :set_footer_cities
 
@@ -34,17 +34,5 @@ class StatesController < ApplicationController
       Rails.cache.fetch(hub_city_mapping_key, expires_in: 1.day) do
         HubCityMapping.where(active: 1, city: nil, state: @state[:short]).first
       end
-    end
-
-    def set_state
-      state_long = params[:state].downcase.gsub(/\-/, ' ')
-      @state = {
-        long: state_long,
-        short: States::STATE_HASH[state_long]
-      }
-    end
-
-    def set_hub_params
-      @hub_params = { state: params[:state], city: nil }
     end
 end

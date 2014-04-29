@@ -191,11 +191,18 @@ module ApplicationHelper
   end
 
   def breadcrumb_hash
-    {
-        'Home' => home_url,
-        hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-        hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
-    }
+    if hub_params[:city]
+      {
+          'Home' => home_url,
+          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+          hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
+      }
+    else
+      {
+          'Home' => home_url,
+          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+      }
+    end
   end
 
   def zillow_url(school)
@@ -244,7 +251,7 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav_title(school, hub_params)
-    TopNav.new(school, hub_params, cookies).topnav_title
+  def topnav(school, hub_params)
+    TopNav.new(school, hub_params, cookies)
   end
 end

@@ -13,6 +13,8 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
   before_filter :set_footer_cities
+  before_filter :set_city_state
+  before_filter :set_hub_params
   # after_filter :set_last_modified_date
 
   layout 'application'

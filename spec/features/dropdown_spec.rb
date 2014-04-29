@@ -1,11 +1,12 @@
 require 'spec_helper'
+require 'sample_data_helper'
 
 feature 'configurable dropdown menu' do
   let(:dropdown_item_selector) { 'li:first-child .dropdown-menu li a' }
   let(:clear_cookies_selector) { '.dropdown-menu .js-clear-local-cookies-link' }
 
   before(:each) do
-    clean_dbs :gs_schooldb
+    clean_dbs :gs_schooldb, :mi, :de
     [
       { collection_id: 1, city: 'detroit', state: 'MI', active: 1, hasEduPage: 1, hasChoosePage: 1, hasEventsPage: 1, hasEnrollPage: 1, hasPartnerPage: 1 },
       { collection_id: 2, city: 'Oakland', state: 'CA', active: 1, hasEduPage: 0, hasChoosePage: 0, hasEventsPage: 0, hasEnrollPage: 0, hasPartnerPage: 0 },
@@ -14,8 +15,21 @@ feature 'configurable dropdown menu' do
       { collection_id: 8, city: nil, state: 'NC', active: 1, hasEduPage: 1, hasChoosePage: 0 },
       { collection_id: 9, city: nil, state: 'DE', active: 1, hasEduPage: 1, hasChoosePage: 0 }
     ].each { |attributes| HubCityMapping.new(attributes, without_protection: true).save }
+
+    fixtures = [
+      { file: 'bates_academy_profile', state: :mi, collection_id: 1 },
+      { file: 'campus_community_profile', state: :de, collection_id: 9 }
+    ]
+
+    fixtures.each do |fixture|
+      load_sample_data fixture[:file], Rails.env
+      school = School.on_db(fixture[:state]).first
+      SchoolMetadata.on_db(fixture[:state]).create(school_id: school.id, meta_key: 'collection_id', meta_value: fixture[:collection_id].to_s)
+    end
+
+    FactoryGirl.create(:page)
   end
-  after(:each) { clean_dbs :gs_schooldb }
+  after(:each) { clean_dbs :gs_schooldb, :mi, :de }
 
   scenario 'on a city page with all pages' do
     visit '/michigan/detroit'
@@ -66,5 +80,15 @@ feature 'configurable dropdown menu' do
     expect(page).to have_selector('.dropdown-toggle', text: 'Ohio')
     expect(page).to have_link('Ohio Home')
     ohio_links.each { |link| expect(page).to_not have_link(link) }
+  end
+
+  scenario 'hub profile to hub profile' do
+    visit '/indiana'
+    visit '/michigan/detroit/1-bates-academy'
+    visit '/michigan/detroit'
+    visit '/delaware/dover/100-campus-community-school'
+
+    expect(page).to have_selector('.dropdown-toggle', text: 'Delaware')
+    expect(page).to_not have_selector('.dropdown-toggle', text: 'Detroit, MI')
   end
 end
