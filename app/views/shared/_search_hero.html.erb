@@ -52,14 +52,15 @@
               </div>
 
               <div class="location-search">
+                <% location_placeholder = defined?(state_page) ? 'Zip code, city, or address' : 'Zip code or address' %>
                 <form name="findByLocationForm" class="js-findByLocationForm"
-                      action="/search/search.page" method="get">
+                  action="/search/search.page" method="get">
                   <input type="text" name="locationSearchString"
-                         id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
-                         onfocus="GS.textSwitch(this, '', 'Zip code or address');"
-                         onblur="GS.textSwitch(this, 'Zip code or address', '');"
-                         placeholder="Zip code or address"
-                         value="Zip code or address"/>
+                    id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
+                    onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
+                    onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
+                    placeholder="<%= location_placeholder %>"
+                    value="<%= location_placeholder %>"/>
                   <button class="state-hub-search-button">Search</button>
                 </form>
                 <a  href="/" class="pull-left mbl clear-cookies-link js-clear-local-cookies-link" style='margin-top: 36px;'>
@@ -68,15 +69,15 @@
               </div>
 
               <div class="name-search" style='display: none;'>
+                <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name (e.g. Niles Elementary School)' %>
                 <form name='searchBySchoolNameForm' class='js-findByNameForm' action="/search/search.page" method='get'>
                   <input type="hidden" name='search_type' value='1'>
                   <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'
-                          name='q' placeholder="School name (e.g. Niles Elementary School)"
-                          onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
-                          onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
-                          placeholder='School name (e.g. Niles Elementary School)'
-                          value="School name (e.g. Niles Elementary School)"/>
-
+                          name='q' placeholder="<%= name_placeholder %>"
+                          onfocus="GS.textSwitch(this, '', '<%= name_placeholder %>');"
+                          onblur="GS.textSwitch(this, '<%= name_placeholder %>', '');"
+                          placeholder='<%= name_placeholder %>'
+                          value="<%= name_placeholder %>"/>
                   <% unless defined?(state_page) %>
                     <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
                   <% end %>
