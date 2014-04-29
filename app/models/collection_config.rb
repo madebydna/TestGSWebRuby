@@ -108,7 +108,6 @@ class CollectionConfig < ActiveRecord::Base
           partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
-            partner[:anchoredLink].prepend('education-community')
           end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing state_partners' + e.message)
