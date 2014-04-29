@@ -4,8 +4,8 @@
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <div class='js-module-expand' style='height: 292px;'>
         <%= enrollment_module[type][:content].html_safe %>
-        <% unless enrollment_module[type][:link].nil? %>
-          <h4>For More Information:</h4>
+        <% unless enrollment_module[type][:link].nil? || enrollment_module[type][:subheading].nil? %>
+          <h4><%= enrollment_module[type][:subheading] %></h4>
           <ul>
               <% enrollment_module[type][:link].each do |link| %>
                 <li>
