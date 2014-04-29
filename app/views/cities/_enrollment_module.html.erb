@@ -4,18 +4,20 @@
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <div class='js-module-expand' style='height: 292px;'>
         <%= enrollment_module[type][:content].html_safe %>
-        <h4>For More Information:</h4>
-        <ul>
-          <% enrollment_module[type][:link].each do |link| %>
-            <li>
-              <% if link[:newWindow] == 'true' %>
-                <%= link_to(link[:name], link[:path], target: '_blank') %>
-              <% else %>
-                <%= link_to(link[:name], link[:path]) %>
+        <% unless enrollment_module[type][:link].nil? %>
+          <h4>For More Information:</h4>
+          <ul>
+              <% enrollment_module[type][:link].each do |link| %>
+                <li>
+                  <% if link[:newWindow] == 'true' %>
+                    <%= link_to(link[:name], link[:path], target: '_blank') %>
+                  <% else %>
+                    <%= link_to(link[:name], link[:path]) %>
+                  <% end %>
+                </li>
               <% end %>
-            </li>
-          <% end %>
-        </ul>
+          </ul>
+        <% end %>
       </div>
       <p class="view-more">View More »</p>
     <% else %>
