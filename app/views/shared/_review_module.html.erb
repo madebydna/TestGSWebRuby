@@ -5,7 +5,6 @@
     
     <% if include_rich_snippets %>
         <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
-        <span itemprop="reviewer" class="dn"><%= review.member_id %></span>
         <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted.strftime "%Y-%m-%d" %>"></time>
         <span itemprop="rating" class="dn"><%= overall_review_rating.to_i %></span>
     <% end %>
