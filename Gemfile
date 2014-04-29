@@ -74,6 +74,8 @@ gem 'draper', '~> 1.3'
 gem 'addressable'
 
 gem 'rack-mini-profiler', require: false
+gem 'rubocop', '= 0.20.1', require: false
+gem 'rubocop-checkstyle_formatter', require: false
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
