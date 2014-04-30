@@ -103,11 +103,11 @@ class CategoryData < ActiveRecord::Base
   def esp_response_dropdown_values
     key_type_string = KEY_TYPES[:esp_response]
     keys = []
-    States.abbreviations_as_symbols.each do |state|
-      keys +=
-        (EspResponse.on_db(state.to_sym).all.map(&:response_key) rescue [])
-    end
-    keys.uniq!
+    # States.abbreviations_as_symbols.each do |state|
+    #   keys +=
+    #     (EspResponse.on_db(state.to_sym).all.map(&:response_key) rescue [])
+    # end
+    # keys.uniq!
     esp_response_key_hash = {}
     keys.each do |key|
       esp_response_key_hash["#{key_type_string}: #{key}"] =
