@@ -2,7 +2,8 @@ LocalizedProfiles::Application.configure do
   require 'socket'
   hostname = "#{Socket.gethostname}"
 
-  # Settings specified here will take precedence over those in config/application.rb
+  # Settings specified here will take precedence over
+  # those in config/application.rb
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -25,8 +26,8 @@ LocalizedProfiles::Application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    :address => 'mail.greatschools.org',
-    :domain => 'greatschools.org',
+    address: 'mail.greatschools.org',
+    domain: 'greatschools.org'
   }
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -48,7 +49,8 @@ LocalizedProfiles::Application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Force all access to the app over SSL, use Strict-Transport-Security,
+  # and use secure cookies.
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
@@ -68,8 +70,15 @@ LocalizedProfiles::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
 
-  # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+  # Precompile additional assets (application.js, application.css, and all
+  # non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
+  config.assets.precompile += [
+    'codemirror.js',
+    'codemirror.css',
+    'codemirror/modes/css.js',
+    'codemirror/themes/night.css'
+  ]
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile += %w[ *.png *.jpeg *.jpg *.gif ]
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
