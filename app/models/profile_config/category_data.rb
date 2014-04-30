@@ -8,9 +8,9 @@ class CategoryData < ActiveRecord::Base
                   :sort_order,
                   :label,
                   :json_config,
-                  :rails_admin_category_data_key
+                  :rails_admin_category_data_key,
+                  :rails_admin_category_data_key_freeform
 
-  has_paper_trail
   db_magic :connection => :profile_config
 
   include BelongsToCollectionConcerns
@@ -137,6 +137,16 @@ class CategoryData < ActiveRecord::Base
     key_type, id = composite_key.split(':::')
     self.key_type = key_type
     self.response_key = id
+  end
+
+  def rails_admin_category_data_key_freeform
+    nil
+  end
+  def rails_admin_category_data_key_freeform=(text)
+    if text.present?
+      self.key_type = 'esp_response'
+      self.response_key = text
+    end
   end
 
 end

@@ -1,6 +1,5 @@
 class ResponseValue < ActiveRecord::Base
   attr_accessible :response_label, :response_key, :response_value, :category_id, :category
-  has_paper_trail
   db_magic :connection => :profile_config
 
   include BelongsToCollectionConcerns

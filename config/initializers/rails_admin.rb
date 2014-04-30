@@ -19,8 +19,8 @@ RailsAdmin.config do |config|
 
   # Or with a PaperTrail: (you need to install it first)
   # config.audit_with :paper_trail, 'Admin' # removing since it's causing error
-  require 'paper_trail'
-  config.audit_with :paper_trail, 'Admin'
+  # require 'paper_trail'
+  # config.audit_with :paper_trail, 'Admin'
 
   # Display empty fields in show views:
   # config.compact_show_view = false
@@ -93,6 +93,7 @@ RailsAdmin.config do |config|
           :rails_admin_response_keys
         end
       end
+      field :rails_admin_category_data_key_freeform
       field :label
       field :sort_order
       field :source, :enum do

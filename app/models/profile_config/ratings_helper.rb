@@ -177,7 +177,7 @@ class RatingsHelper
   def get_sub_rating_descriptions(gs_rating_configuration, school, description_hash)
     description = ''
     if gs_rating_configuration && gs_rating_configuration['description_key'].present?
-      description << description_hash[[nil, gs_rating_configuration['description_key']]]
+      description << (description_hash[[nil, gs_rating_configuration['description_key']]] || '')
     end
     if gs_rating_configuration && gs_rating_configuration['footnote_key'].present?
       description << ' ' if description.present?

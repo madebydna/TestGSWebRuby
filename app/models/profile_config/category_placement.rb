@@ -1,6 +1,5 @@
 class CategoryPlacement < ActiveRecord::Base
   attr_accessible :category, :page, :position, :category_id, :page_id, :layout, :layout_config, :priority, :title
-  has_paper_trail
   has_ancestry
   db_magic :connection => :profile_config
 

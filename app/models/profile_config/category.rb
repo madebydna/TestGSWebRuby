@@ -1,6 +1,5 @@
 class Category < ActiveRecord::Base
   attr_accessible :description, :name, :parent, :source, :layout
-  has_paper_trail
   db_magic :connection => :profile_config
 
   has_many :category_placements, :order => 'collection_id desc'

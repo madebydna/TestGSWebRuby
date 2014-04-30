@@ -53,7 +53,11 @@ class CensusDataReader < SchoolProfileDataReader
 
       results_array = []
 
-      category_datas = category.category_data.sort_by(&:sort_order)
+      category_datas = category.category_data.sort_by do |cd|
+        position = cd.sort_order
+        position = 1 if position.nil?
+        position
+      end
       category_datas.each do |cd|
         matching_data_sets = all_data.select do |ds|
           data_set_matches_category_data_criteria(cd, ds)
@@ -102,6 +106,22 @@ class CensusDataReader < SchoolProfileDataReader
       end
     end
     sources.compact.uniq
+  end
+
+  # Returns hash of data type descriptions to school values
+  #
+  #    reader.data_type_descriptions_to_school_values_map
+  #                              #=> { "ethnicity" => 0.0,
+  #                                    "enrollment" => 130.0,
+  #                                    "head official name" => "LINDA BROOKS" }
+  def data_type_descriptions_to_school_values_map
+    results = raw_data || []
+
+    results.each_with_object({}) do |census_data_set, hash|
+      if census_data_set.school_value && census_data_set.data_type
+        hash[census_data_set.data_type.downcase] = census_data_set.school_value
+      end
+    end
   end
 
   #############################################################################
