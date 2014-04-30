@@ -13,22 +13,21 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
             <% nav = topnav(@school, @hub_params) %>
-            <ul class="nav navbar-nav ">
+            <ul class="nav navbar-nav">
                 <li>
-                    <%- if @hub_params.present? || cookies[:hubState] || @school %>
+                    <%- if nav.has_topnav? %>
                         <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
                             <%= nav.topnav_title %>  <b class="caret"></b>
                         </a>
                     <% end %>
                     <ul class="dropdown-menu">
-                        <%- if @hub_params.present? || cookies[:hubState] %>
-                            <% url_params = { state: States.state_name(nav.state), city: nav.city } %>
+                        <%- if nav.has_topnav? %>
                             <% if nav.city %>
-                                <%= render 'nav/dropdown_link', text: "#{nav.city.gs_capitalize_words} Home", url: city_url(url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: 'Choosing a School', url: city_choosing_schools_url(url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: 'Education Community', url: city_education_community_url(url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: 'Enrollment Information', url: city_enrollment_url(url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: 'Events', url: city_events_url(url_params) %>
+                                <%= render 'nav/dropdown_link', text: "#{nav.city.gs_capitalize_words} Home", url: city_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: 'Choosing a School', url: city_choosing_schools_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: 'Education Community', url: city_education_community_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: 'Enrollment Information', url: city_enrollment_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: 'Events', url: city_events_url(nav.url_params) %>
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
@@ -36,8 +35,7 @@
                                     <% end %>
                                 </li>
                             <% else %>
-                                <% url_params = { state: States.state_name(nav.state) } %>
-                                <%= render 'nav/dropdown_link', text: "#{States.state_name(nav.state).gs_capitalize_words} Home", url: state_url(url_params) %>
+                                <%= render 'nav/dropdown_link', text: "#{States.state_name(nav.state).gs_capitalize_words} Home", url: state_url(nav.url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: "Choosing a School", url: '#' %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: '#' %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: "Enrollment Information", url: '#' %>

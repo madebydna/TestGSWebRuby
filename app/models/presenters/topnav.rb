@@ -1,5 +1,6 @@
 class TopNav
   include CookieConcerns
+  include UrlHelper
   attr_reader :cookies
 
   def state
@@ -27,6 +28,17 @@ class TopNav
     else
       nil
     end
+  end
+
+  def has_topnav?
+    @hub_params.present? || read_cookie_value(:hubState) || @school
+  end
+
+  def url_params
+    result = {}
+    result[:state] = gs_legacy_url_encode(States.state_name @state_short) if @state_short
+    result[:city] = gs_legacy_url_encode(@city) if @city
+    result
   end
 
   private
