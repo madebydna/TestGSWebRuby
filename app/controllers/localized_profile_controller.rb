@@ -192,7 +192,7 @@ class LocalizedProfileController < ApplicationController
     set_targeting['City'] = @school.city
     set_targeting['compfilter'] = 1 + rand(4) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     set_targeting['county'] = @school.county # county name?
-    set_targeting['env'] = ENV_GLOBAL['environment'] # alpha, dev, product, omega?
+    set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['gs_rating'] = @school.gs_rating
     set_targeting['level'] = @school.level_code # p,e,m,h
     set_targeting['school_id'] = @school.id
