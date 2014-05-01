@@ -14,6 +14,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
+  before_filter :ad_setTargeting_through_gon
   before_filter :set_footer_cities
   # after_filter :set_last_modified_date
 
@@ -69,6 +70,7 @@ class LocalizedProfileController < ApplicationController
     @school_reviews_all = @school.reviews.all
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
+    gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     set_last_modified_date
@@ -181,5 +183,25 @@ class LocalizedProfileController < ApplicationController
 
   def set_footer_cities
     @cities = City.popular_cities(@state, limit: 28)
+  end
+
+  def ad_setTargeting_through_gon
+
+    set_targeting = {}
+    # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
+    set_targeting['City'] = @school.city
+    set_targeting['compfilter'] = 1 + rand(4) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    set_targeting['county'] = @school.county # county name?
+    set_targeting['env'] = ENV_GLOBAL['environment'] # alpha, dev, product, omega?
+    set_targeting['gs_rating'] = @school.gs_rating
+    set_targeting['level'] = @school.level_code # p,e,m,h
+    set_targeting['school_id'] = @school.id
+    set_targeting['State'] = @school.state # abbreviation
+    set_targeting['type'] = @school.type  # private, public, charter
+    set_targeting['zipcode'] = @school.zipcode
+    set_targeting['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+    set_targeting['template'] = "ros" # use this for page name - configured_page_name
+
+    gon.ad_set_targeting = set_targeting
   end
 end

@@ -233,4 +233,11 @@ class School < ActiveRecord::Base
     HeldSchool.exists?(state: state, school_id: id)
   end
 
+  def show_ads
+    if collection.present?
+      return collection.show_ads
+    end
+    return true
+  end
+
 end

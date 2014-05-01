@@ -12,7 +12,11 @@ class Collection
   delegate :has_edu_page?, :has_choose_page?, :has_events_page?, :has_enroll_page?, :has_partner_page?, to: :hub_city_mapping
 
   def config
+    require 'pry-debugger'
+
     @config ||= CollectionConfig.key_value_map self.id
+    # binding.pry
+    @config
   end
 
   def nickname
@@ -20,7 +24,7 @@ class Collection
   end
 
   def show_ads
-    config['showAds'].present? ? config['showAds'] : "false"
+    (config['showAds'] != "false") #.present? ? config['showAds'] : "false"
   end
 
   def profile_banner
