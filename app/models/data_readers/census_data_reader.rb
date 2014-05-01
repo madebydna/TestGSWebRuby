@@ -84,6 +84,11 @@ class CensusDataReader < SchoolProfileDataReader
   end
 
   def data_set_matches_category_data_criteria(category_data, data_set)
+    # Hack: Enforce that a census_data_config_entry exist for only census
+    if category_data.response_key == 9 && !data_set.has_config_entry?
+      return false
+    end
+
     category_data.response_key == data_set.data_type_id &&
     category_data.subject_id == data_set.subject_id
   end
