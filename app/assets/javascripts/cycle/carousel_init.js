@@ -36,6 +36,8 @@ GS.hubs.setupResponsiveCarousel = function() {
     }
   }
 
+  initCycle();
+
   var reinitTimer;
   $(window).resize(function() {
       clearTimeout(reinitTimer);
