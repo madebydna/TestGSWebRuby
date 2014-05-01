@@ -52,7 +52,7 @@
               </div>
 
               <div class="location-search">
-                <% location_placeholder = defined?(state_page) ? 'Zip code, city, or address' : 'Zip code or address' %>
+                <% location_placeholder = defined?(state_page) ? 'Zip code, city or address' : 'Zip code or address' %>
                 <form name="findByLocationForm" class="js-findByLocationForm"
                   action="/search/search.page" method="get">
                   <input type="text" name="locationSearchString"
