@@ -130,35 +130,15 @@ describe CensusDataReader do
       data_set_with_school_and_state_values =
         FactoryGirl.build(
           :census_data_set,
-          census_data_school_values: FactoryGirl.build_list(
-            :census_data_school_value,
-            1,
-            value_float: 10
-          ),
-          census_data_state_values: FactoryGirl.build_list(
-            :census_data_state_value,
-            1,
-            value_float: 10
-          )
+          :with_school_value,
+          :with_state_value
         )
 
-      data_set_without_school_value = FactoryGirl.build(
-        :census_data_set,
-        census_data_state_values: FactoryGirl.build_list(
-          :census_data_state_value,
-          1,
-          value_float: 10
-        )
-      )
+      data_set_without_school_value =
+        FactoryGirl.build(:census_data_set, :with_state_value)
 
-      data_set_without_state_value =  FactoryGirl.build(
-        :census_data_set,
-        census_data_school_values: FactoryGirl.build_list(
-          :census_data_school_value,
-          1,
-          value_float: 10
-        )
-      )
+      data_set_without_state_value =
+        FactoryGirl.build(:census_data_set, :with_school_value)
 
       data_set_without_state_value_or_school_value =
         FactoryGirl.build(:census_data_set)
@@ -181,22 +161,13 @@ describe CensusDataReader do
     end
 
     it 'chooses the breakdown description if config entry breakdown not set' do
-      data_set_with_config_entry_label = FactoryGirl.build(
-        :census_data_set,
-        census_data_school_values: FactoryGirl.build_list(
-          :census_data_school_value,
-          1,
-          value_float: 2
-        )
-      )
-      data_set_without_config_entry_label = FactoryGirl.build(
-        :census_data_set,
-        census_data_school_values: FactoryGirl.build_list(
-          :census_data_school_value,
-          1,
-          value_float: 1
-        )
-      )
+      data_set_with_config_entry_label =
+        FactoryGirl.build(:census_data_set, :with_school_value)
+
+      data_set_without_config_entry_label =
+        FactoryGirl.build(:census_data_set, :with_school_value)
+
+
       data_set_with_config_entry_label
         .stub(:config_entry_breakdown_label)
         .and_return 'a label'
@@ -208,68 +179,31 @@ describe CensusDataReader do
         .and_return 'a different label'
 
       hash = {
-        'a' => [
+        'foo' => [
           data_set_with_config_entry_label,
           data_set_without_config_entry_label
         ]
       }
 
-      expected = {
-        'a' => [
-          {
-            breakdown: 'a label',
-            school_value: 2.0,
-            district_value: nil,
-            state_value: nil,
-            source: nil,
-            year: 2011
-          },
-          {
-            breakdown: 'a different label',
-            school_value: 1.0,
-            district_value: nil,
-            state_value: nil,
-            source: nil,
-            year: 2011
-          }
-        ]
-      }
-
-      expect(subject.send :build_data_type_descriptions_to_hashes_map, hash)
-        .to eq(expected)
-
+      result = subject.send :build_data_type_descriptions_to_hashes_map, hash
+      expect(result['foo']).to be_present
+      expect(result['foo'].first[:breakdown]).to eq 'a label'
+      expect(result['foo'].last[:breakdown]).to eq 'a different label'
     end
 
     it 'should set the year to the manual override (school modified) year' do
       data_set_a = FactoryGirl.build(
-        :census_data_set,
-        year: 0,
-        census_data_school_values: FactoryGirl.build_list(
-          :census_data_school_value,
-          1,
-          value_float: 1,
-          modified: Time.zone.parse('2000-01-01')
-        )
+        :manual_override_data_set,
+        :with_school_value,
+        school_value_modified: '2000-01-01'
       )
 
       hash = {
-        'a' => [data_set_a]
-      }
-      expected = {
-        'a' => [
-          {
-            breakdown: nil,
-            school_value: 1.0,
-            district_value: nil,
-            state_value: nil,
-            source: nil,
-            year: 2000
-          }
-        ]
+        'foo' => [data_set_a]
       }
 
-      expect(subject.send :build_data_type_descriptions_to_hashes_map, hash)
-        .to eq(expected)
+      result = subject.send :build_data_type_descriptions_to_hashes_map, hash
+      expect(result['foo'].first[:year]).to eq 2000
     end
   end
 
