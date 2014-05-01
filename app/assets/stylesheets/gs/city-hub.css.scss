@@ -153,6 +153,11 @@
   float: right;
 }
 
+.js-content-modules > div {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 
 // Centered Nav Bar Search
 .search-bar {
@@ -453,11 +458,6 @@ hr.brand-bar {
   .search-bar {
     left: -10px;
     width: 100%;
-  }
-
-  .js-content-modules > div {
-    padding-left: 10px;
-    padding-right: 10px;
   }
 }
 

@@ -2,7 +2,7 @@
   <div class='js-content-modules'>
     <% content_modules.each do |content_module| %>
     <div class="limit_width_1200">
-      <div class="mhm col-xs-12" style='float: none;'>
+      <div class="col-xs-12" style='float: none;'>
         <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
         <div class='js-module-expand' style='height: 71px;'><p><%= content_module[:description].html_safe %></p></div>
         <p class="view-more">View More »</p>
