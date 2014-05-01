@@ -3,7 +3,19 @@ require 'forwardable'
 class CensusDataResults
   include Enumerable
   extend Forwardable
-  def_delegators :@results, :each, :<<, :select!, :empty?, :[]
+  def_delegators :@results,
+                 :each,
+                 :<<,
+                 :select!,
+                 :reject!,
+                 :empty?,
+                 :[],
+                 :-,
+                 :replace,
+                 :delete,
+                 :size
+
+  attr_reader :results
 
   def initialize(results)
     @results = results
@@ -54,12 +66,46 @@ class CensusDataResults
       data_type.is_a?(String) ? data_type.downcase : data_type
     end
 
-    select do |census_data_set|
+    filtered_results = select do |census_data_set|
       census_data_set.census_data_type && (
-        data_types.include?(census_data_set.data_type.downcase) || 
-        data_types.include?(census_data_set.census_data_type.id)
+        data_types.include?(census_data_set.data_type.downcase) ||
+        data_types.include?(census_data_set.census_data_type.id) ||
+        data_types.include?(census_data_set.census_data_type.id.to_s)
       )
     end
+
+    CensusDataResults.new filtered_results
+  end
+
+  # If there's a data set with a null breakdown within a data type group,
+  # remove the rows with non-null breakdowns
+  #
+  def keep_null_breakdowns!
+    data_type_to_results = group_by(&:data_type_id)
+    data_type_to_results.each_pair do |data_type, values|
+      if values.any? { |cds| cds.breakdown_id.nil? }
+        values.reject { |cds| cds.breakdown_id.nil? }.each { |v| delete v }
+      end
+    end
+
+    self
+  end
+
+  def sort_school_value_desc_by_date_type!
+    data_type_to_results = group_by(&:data_type_id)
+
+  # Default the sort order of rows within a data type to school_value
+    # descending School value might be nil, so sort using zero in that case
+    data_type_to_results.each do |k, values|
+      values.sort_by! do |row|
+        row.school_value ? row.school_value.to_f : 0.0
+      end
+      values.reverse!
+    end
+
+    @results = data_type_to_results.values.inject([], &:+)
+
+    self
   end
 
 end

@@ -30,6 +30,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
 require 'capybara/rspec'
+require 'factory_girl'
 
 
 def monkey_patch_database_cleaner
@@ -82,6 +83,11 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.include Rails.application.routes.url_helpers
+  config.include FactoryGirl::Syntax::Methods
+
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

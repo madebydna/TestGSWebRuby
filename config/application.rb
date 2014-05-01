@@ -98,9 +98,9 @@ module LocalizedProfiles
       config = DatabaseConfigurationLoader.config
     end
 
-    config.after_initialize do
-      # Version.send :db_magic, :connection => :profile_config
-    end
+    # config.after_initialize do
+    #   PaperTrail::Version.send :db_magic, :connection => :profile_config
+    # end
 
     # Add in StatusPage as rack middleware
     require File.join(config.root, 'lib', 'status_page')

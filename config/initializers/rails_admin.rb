@@ -66,8 +66,11 @@ RailsAdmin.config do |config|
       field :category do
         label 'Module'
       end
-      field :response_key do
+      field :rails_admin_category_data_key, :enum do
         label 'Data point'
+        enum_method do
+          :rails_admin_response_keys
+        end
       end
       field :label
       field :collection do
@@ -82,7 +85,13 @@ RailsAdmin.config do |config|
 
     edit do
       field :category
-      field :response_key
+      field :rails_admin_category_data_key, :enum do
+        label 'Data point'
+        enum_method do
+          :rails_admin_response_keys
+        end
+      end
+      field :rails_admin_category_data_key_freeform
       field :label
       field :sort_order
       field :source, :enum do
@@ -94,6 +103,13 @@ RailsAdmin.config do |config|
         enum do
           Collection.all.map { |collection| [collection.name, collection.id] }
         end
+      end
+      field :json_config, :text do
+        def value
+          data = super
+          JSON.pretty_unparse(JSON.parse(data)) if data.present?
+        end
+        codemirror true
       end
     end
   end
@@ -171,7 +187,7 @@ RailsAdmin.config do |config|
     })
 
     list do
-      items_per_page 1000
+      items_per_page 500
       filters [:page]
       field :page
       field :title
@@ -191,7 +207,9 @@ RailsAdmin.config do |config|
 
     edit do
       field :title
-      field :category
+      field :category do
+        label 'Module'
+      end
       field :page
       field :collection_id, :enum do
         enum do

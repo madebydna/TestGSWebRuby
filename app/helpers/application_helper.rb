@@ -35,15 +35,25 @@ module ApplicationHelper
   end
 
   def to_bar_chart_array(data_hash)
-    @bar_chart_data = [['year', 'This school', 'State average']] + data_hash.collect.with_index { |(key, value), index|
+    @bar_chart_data = [['year', 'This school','School tool tip', 'State average','State tool tip']] + data_hash.collect.with_index { |(key, value), index|
+      #The google bar chart requires values to be numerical.
+      #Hence set default to 0(This also catches the case when there is no data for state
+      #average or school test score ie. value['state_avg']= nil).
+      #The 3rd and the 5th columns are used for tool tips. Hence they are strings.
+
+      state_score_int = 0
+      state_score_tool_tip = 'State average: ' + value['state_avg'].to_s + '%'
       #Display the state average only for the latest year.
-      #The google bar chart requires it be a numerical value.
-      #Hence set default to 0(This also catches the case when there is no data for state average ie. value['state_avg']= nil).
-      state_value = 0
-      if index == 0 && !value["state_avg"].nil?
-        state_value = value["state_avg"]
+      if index == 0 && !value['state_avg'].nil?
+        state_score_int = value['state_avg'].to_i
       end
-      [key.to_s, value["score"], state_value]
+      school_score_int = value['score'].nil? ? 0 : value['score']
+      school_score_tool_tip = 'This school: ' + value['score'].to_s + '%'
+      if !value['score'].nil? && value['score'].to_s.match(/<|=|>|\./)
+        school_score_int = value['score'].gsub(/<|=|>|\./,'').to_i
+      end
+
+      [key.to_s, school_score_int, school_score_tool_tip, state_score_int, state_score_tool_tip]
     }
   end
 
