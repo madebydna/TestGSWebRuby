@@ -100,6 +100,7 @@ LocalizedProfiles::Application.routes.draw do
     } do
       get '', to: 'states#show'
       get 'enrollment' => 'states#foobar'
+      get 'choosing-schools' => 'states#foobar'
     end
 
     scope '/:state/:city', as: :city, constraints: {
