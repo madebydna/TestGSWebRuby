@@ -5,6 +5,7 @@ describe 'cities/events.html.erb' do
     view.stub(:logged_in?) { false }
     assign(:state, { long: 'Michigan', short: 'MI' })
     view.stub(:city_params).and_return({ state: 'michigan', city: 'detroit' })
+    assign(:hub_params, { state: 'michigan', city: 'detroit' })
   end
   context 'by default' do
     before(:each) do

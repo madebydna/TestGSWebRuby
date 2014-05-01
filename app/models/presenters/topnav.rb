@@ -31,7 +31,7 @@ class TopNav
   end
 
   def has_topnav?
-    @hub_params.present? || read_cookie_value(:hubState) || @school
+    !@hub_params[:state].blank? || read_cookie_value(:hubState) || @school
   end
 
   def url_params
