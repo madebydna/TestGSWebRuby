@@ -63,31 +63,19 @@ sets with null breakdowns' do
       data = [
         FactoryGirl.build(
           :census_data_set,
-          census_data_school_values:
-            FactoryGirl.build_list(
-              :census_data_school_value,
-              1,
-              value_float: 3
-            )
+          :with_school_value,
+          school_value_float: 3
         ),
         FactoryGirl.build(
           :census_data_set,
-          census_data_school_values:
-            FactoryGirl.build_list(
-              :census_data_school_value,
-              1,
-              value_float: 1
-            )
+          :with_school_value,
+          school_value_float: 1
         ),
         FactoryGirl.build(
           :census_data_set,
-          census_data_school_values:
-            FactoryGirl.build_list(
-              :census_data_school_value,
-              1,
-              value_float: 2
-            )
-        )
+          :with_school_value,
+          school_value_float: 2
+        ),
       ]
 
       results = CensusDataResults.new(data.shuffle)
@@ -139,6 +127,7 @@ sets with null breakdowns' do
     let(:data_sets) do
       (1..3).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
+          :with_school_value,
           id: id,
           data_type_id: 1,
           year: 2000 - id
@@ -146,6 +135,7 @@ sets with null breakdowns' do
       end +
       (4..5).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
+          :with_school_value,
           id: id,
           data_type_id: 2,
           year: 2010 - id
@@ -164,6 +154,7 @@ sets with null breakdowns' do
     let(:data_sets) do
       (1..3).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
+          :with_school_value,
           id: id,
           data_type_id: 1,
           year: 2000 - id
@@ -171,6 +162,7 @@ sets with null breakdowns' do
       end +
       (4..5).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
+          :with_school_value,
           id: id,
           data_type_id: 2,
           year: 2010 - id

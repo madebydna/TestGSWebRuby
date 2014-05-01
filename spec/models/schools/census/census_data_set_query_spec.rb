@@ -111,11 +111,9 @@ ON clause contains school_id constraint' do
   end
 
   describe '#load_district_values' do
-    let(:data_set_without_district_values) {
-      FactoryGirl.build(:census_data_set, 
-        census_data_district_values: []
-      )
-    }
+    let(:data_set_without_district_values) do
+      FactoryGirl.build(:census_data_set)
+    end
     it 'should load a district value onto a data set' do
       subject.stub(:district_values).and_return FactoryGirl.build_list(
         :census_data_district_value, 1,

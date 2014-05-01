@@ -4,13 +4,10 @@ describe CensusDataSetJsonView do
     let(:hash) { CensusDataSetJsonView.new(census_data_set).to_hash }
 
     let(:census_data_set) {
-      FactoryGirl.build(:census_data_set,
-        census_data_school_values: FactoryGirl.build_list(
-          :census_data_school_value, 1
-        ),
-        census_data_state_values: FactoryGirl.build_list(
-          :census_data_state_value, 1
-        )
+      FactoryGirl.build(
+        :census_data_set,
+        :with_school_value,
+        :with_state_value
       )
     }
 
@@ -34,12 +31,10 @@ describe CensusDataSetJsonView do
 
     context 'when data set has year 0' do
       let(:census_data_set) {
-        FactoryGirl.build(:manual_override_data_set,
-          census_data_school_values: FactoryGirl.build_list(
-            :census_data_school_value,
-            1,
-            modified: '2010-11-01'
-          )
+        FactoryGirl.build(
+          :manual_override_data_set,
+          :with_school_value,
+          school_value_modified: '2010-11-01'
         )
       }
 
