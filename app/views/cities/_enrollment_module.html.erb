@@ -31,11 +31,30 @@
     <% unless @tips[type][:content].empty? %>
       <hr class='brand-bar'>
       <h4>Did You know?</h4>
-      <% @tips[type][:content].each do |tip| %>
-        <p><%= tip.html_safe %></p>
+      <% if @tips[type][:content].length == 1 %>
+        <p><%= @tips[type][:content][0].html_safe %></p>
+      <% else %>
+        <div class="js-carousel">
+          <a href="#!" class="js-prev fl" style='margin-top: 18%; width: 10%'>
+            <span class="iconx32g i-32-carousel-left"></span>
+          </a>
+          <div class='fl phl' style='width: 80%;'>
+            <div class="cycle-slideshow"
+                 data-cycle-slides="> div"
+                 data-cycle-timeout="10"
+                 data-index="<%= type == :public ? 0 : 1 %>">
+              <% @tips[type][:content].each do |tip| %>
+                <div><%= tip.html_safe %></div>
+              <% end %>
+            </div>
+          </div>
+          <a href="#!" class="js-next fl" style='margin-top: 18%; width: 10%'>
+            <span class="iconx32g i-32-carousel-right"></span>
+          </a>
+        </div>
       <% end %>
     <% end %>
   </div>
 
-  <hr style='clear: both; margin-top: 50px; margin-bottom: 50px;'>
+
 </div>
