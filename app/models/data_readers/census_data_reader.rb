@@ -68,7 +68,7 @@ class CensusDataReader < SchoolProfileDataReader
           next if data_set_hash.nil?
 
           # Add human-readable labels
-          data_set_hash[:label] = cd.computed_label
+          data_set_hash[:label] = cd.computed_label.gs_capitalize_first
           data_set_hash[:data_type_id] = matching_data_set.data_type_id
           results_array << data_set_hash
         end
@@ -89,7 +89,8 @@ class CensusDataReader < SchoolProfileDataReader
       return false
     end
 
-    category_data.response_key == data_set.data_type_id &&
+    (category_data.response_key == data_set.data_type_id ||
+      category_data.response_key.to_s.match(/#{data_set.data_type}/i)) &&
     category_data.subject_id == data_set.subject_id
   end
 
