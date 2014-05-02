@@ -12,10 +12,7 @@ class Collection
   delegate :has_edu_page?, :has_choose_page?, :has_events_page?, :has_enroll_page?, :has_partner_page?, to: :hub_city_mapping
 
   def config
-    require 'pry-debugger'
-
     @config ||= CollectionConfig.key_value_map self.id
-    # binding.pry
     @config
   end
 
