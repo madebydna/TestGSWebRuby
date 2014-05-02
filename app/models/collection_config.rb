@@ -112,7 +112,6 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
-          debugger
           partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
