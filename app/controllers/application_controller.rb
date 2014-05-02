@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def disconnect_connection_pools
-    return unless @school.present?
+    return unless @school.present? && request.env['rack_after_reply.callbacks']
     request.env['rack_after_reply.callbacks'] << lambda do
       ActiveRecord::Base.connection_handler.connection_pools.
         values.each do |pool| 
