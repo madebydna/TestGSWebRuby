@@ -2,10 +2,13 @@
   <div class="col-sm-8 col-lg-8 mbm">
     <% unless enrollment_module[type].nil? %>
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
-      <div class='js-module-expand' style='height: 292px;'>
-        <%= enrollment_module[type][:content].html_safe %>
-      </div>
-      <p class="view-more">View More »</p>
+      <%= enrollment_module[type][:content].html_safe %>
+      <% unless enrollment_module[type][:view_more].nil? %>
+        <div class='js-module-expand'>
+          <%= enrollment_module[type][:view_more].html_safe %>
+        </div>
+        <p class="view-more">View More »</p>
+      <% end %>
     <% else %>
       <h3>Something went wrong while parsing enrollment module tab:<%= @tab[:key] %></h3>
     <% end %>
