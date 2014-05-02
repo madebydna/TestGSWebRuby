@@ -17,7 +17,7 @@ class StatesController < ApplicationController
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
-      @sponsor[:sponsor_page_visible] = mapping.has_partner_page?
+      @sponsor[:sponsor_page_visible] = mapping.has_partner_page? if @sponsor
 
       @partners = CollectionConfig.state_partners(configs)
       @choose_school = CollectionConfig.state_choose_school(configs)
