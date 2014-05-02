@@ -93,21 +93,21 @@ describe CollectionConfig do
     end
   end
 
-  describe '.city_hub_sponsor' do
+  describe '.sponsor' do
     it_behaves_like 'it rejects empty configs' do
-      let(:method) { :city_hub_sponsor }
+      let(:method) { :sponsor }
     end
 
     it_behaves_like 'it fails with an error' do
       let(:key) { CollectionConfig::CITY_HUB_SPONSOR_KEY }
-      let(:method) { :city_hub_sponsor }
+      let(:method) { :sponsor }
     end
 
     context 'valid json string' do
       it 'parses the sponsors string and returns an array' do
         FactoryGirl.create(:city_hub_sponsor_collection_config)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_SPONSOR_KEY)
-        result = CollectionConfig.city_hub_sponsor(collection_configs)
+        result = CollectionConfig.sponsor(collection_configs)
 
         expect(result).to be_an_instance_of(Hash)
       end

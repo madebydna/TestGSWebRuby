@@ -1,8 +1,11 @@
 <% content_for :javascript_includes do %>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
 <% end %>
-
-<% bg_height = defined?(state_page) ? '500px' : '650px' %>
+<%
+  has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
+  sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: params[:state] }) : city_education_community_partner_path({ state: params[:state], city: params[:city] })
+  bg_height = has_sponsor ? '650px' : '500px'
+%>
 
 <% if bg_height != '500px' %>
   <div class="image-bg-scale" style="height: <%= bg_height %>">
@@ -19,16 +22,19 @@
     <div class="limit_width_1200">
       <div class="content-centered">
         <div class="hub-hero-bg tal clearfix">
-            <% unless defined?(state_page) %>
-              <% unless sponsor.nil? %>
-                <div class='tac pvm sponsor-bar'>
-                  <div class="small mbn pbn prm" style='display: inline; color: #fff;'><%= sponsor[:text] %></div>
-                  <a href="education-community/partner">
+            <% if has_sponsor %>
+              <div class='tac pvm sponsor-bar'>
+                <div class="small mbn pbn prm" style='display: inline; color: #fff;'><%= sponsor[:text] %></div>
+                <% if sponsor[:sponsor_page_visible] %>
+                  <a href="<%= sponsor_path %>">
+                    <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
+                  </a>
+                  <hr style='color: #ddd;'>
+                <% else %>
                     <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
                     <hr style='color: #ddd;'>
-                  </a>
-                </div>
-              <% end %>
+                <% end %>
+              </div>
             <% end %>
 
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -36,7 +42,6 @@
                 <div class="search-hero-heading">
                   <h4 class='mvn pbs'>Find a School in</h4>
                   <h1 class='mbn mbl' style='margin-top: -11px;'><%= collection_nickname %></h1>
-
                 </div>
               </div>
 

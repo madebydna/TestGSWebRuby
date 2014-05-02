@@ -23,6 +23,7 @@ class CollectionConfig < ActiveRecord::Base
   ENROLLMENT_DATES_PREFIX = 'keyEnrollmentDates'
   STATE_CHOOSE_A_SCHOOL_KEY = 'statehubHome_chooseSchool'
   STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArticles'
+  STATE_SPONSOR_KEY = 'statehubHome_sponsor'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -126,16 +127,18 @@ class CollectionConfig < ActiveRecord::Base
       end
     end
 
-    def city_hub_sponsor(collection_configs)
+    def sponsor(collection_configs, city_or_state = :city)
+      result = nil
       begin
-        raw_sponsor_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SPONSOR_KEY }).first.value
-        sponsor = eval(raw_sponsor_str)[:sponsor]
-        sponsor[:path].prepend(ENV_GLOBAL['cdn_host'])
+        quay = city_or_state == :city ? CITY_HUB_SPONSOR_KEY : STATE_SPONSOR_KEY
+        config = collection_configs.select(&lambda { |cc| cc.quay == quay }).first
+        raw_sponsor_str = config.value
+        result = eval(raw_sponsor_str)[:sponsor]
+        result[:path].prepend('/assets')
       rescue Exception => e
-        sponsor = nil
-        Rails.logger.error('Something went wrong while parsing city_hub_sponsors ' + e.to_s)
+        Rails.logger.error("Something went wrong while parsing  #{city_or_state} sponsor" + e.to_s)
       end
-      sponsor
+      result
     end
 
     def city_hub_choose_school(collection_configs)
@@ -405,7 +408,7 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     [
-      :city_hub_sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
+      :sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
       :ed_community_subheading, :ed_community_show_tabs, :ed_community_partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
       :city_featured_articles, :state_choose_school
