@@ -54,14 +54,9 @@ class CollectionConfig < ActiveRecord::Base
     def city_featured_articles(collection_configs)
       begin
         raw_article_str = collection_configs.select(&lambda { |cc| cc.quay == FEATURED_ARTICLES_KEY }).first.value
-        raw_article_str.gsub!(/articles\s\:/, '"articles" =>')
-        raw_article_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
-        articles = eval(raw_article_str)['articles']
+        articles = eval(raw_article_str)[:articles]
         articles.each do |article|
-          article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
-          [:heading, :content].each do |key|
-            article[key].gsub(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
-          end
+          article[:articleImagePath].prepend('/assets')
           article[:newwindow] = article[:newwindow] == 'true'
         end
       rescue Exception => e
@@ -77,14 +72,9 @@ class CollectionConfig < ActiveRecord::Base
       if config
         begin
           raw_articles_str = config.value
-          raw_articles_str.gsub!(/articles\s\:/, '"articles" =>')
-          raw_articles_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
-          articles = eval(raw_articles_str)['articles']
+          articles = eval(raw_articles_str)[:articles]
           articles.each do |article|
-            article[:articleImagePath].prepend(ENV_GLOBAL['cdn_host'])
-            [:heading, :content].each do |key|
-              article[key].gsub!(/:(\w+) =>/) { |str| " #{str[1..-4]}:" }
-            end
+            article[:articleImagePath].prepend('/assets')
             article[:newwindow] = article[:newwindow] == 'true'
           end
         rescue Exception => e
@@ -121,9 +111,7 @@ class CollectionConfig < ActiveRecord::Base
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
-          raw_partners_str.gsub!(/\n/, '')
-          raw_partners_str.gsub!(/\r/, '')
-          raw_partners_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
+          debugger
           partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
             partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
@@ -301,13 +289,7 @@ class CollectionConfig < ActiveRecord::Base
       if config
         begin
           raw_content_str = config.value
-          raw_content_str.gsub!(/contents.:/, 'contents:')
-          raw_content_str.gsub!(/’/, " ")
-          raw_content_str.gsub!(/'s/, " s ")
           content_modules = eval(raw_content_str)[:contents]
-          content_modules.each do |content_module|
-            content_module[:description] = content_module[:description].gsub(/\\\ss/, "'s")
-          end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing content_module ' + e.to_s)
         end
