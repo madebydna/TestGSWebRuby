@@ -15,7 +15,7 @@ class Admin::SchoolsController < ApplicationController
     if review_id
       @reviews = SchoolRating.where(id: review_id)
     else
-      @reviews = SchoolRating.where(state: @school.state, school_id: @school.id).order(created: :desc)
+      @reviews = school_reviews
       @reviews = apply_scopes(@reviews)
     end
 
@@ -27,6 +27,13 @@ class Admin::SchoolsController < ApplicationController
     @reviews.each do |review|
       review.reported_entities = reported_entities.select { |entity| entity.reported_entity_id == review.id } || []
     end
+  end
+
+  def school_reviews
+    SchoolRating.where(
+      state: @school.state,
+      school_id: @school.id
+    ).order('posted desc')
   end
 
 end

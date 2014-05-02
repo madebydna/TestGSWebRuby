@@ -1,3 +1,6 @@
+<% @held_school %>
+<% @reviews %>
+
 <%= render 'nav/topnav' %>
 
 <%= javascript_tag do %>
@@ -26,29 +29,9 @@
   <h3><%= link_to @school.name, school_url(@school) %></h3>
 
   <div>
-    <% if @held_school %>
-        School on hold since <%= @held_school.created %>
-        <br/>
-          <%= form_for(@held_school, method: :delete, url: admin_held_school_path(@held_school)) do |f| %>
-              <%= f.submit :value => 'Remove hold (will delete notes)', class: 'btn btn-sm btn-primary mvm',
-                           disable_with: 'Removing hold...' %>
-          <% end %>
-    <% else %>
-        School not on hold
-    <% end %>
-    <br/>
-
-    <% @held_school ||= HeldSchool.new %>
-
-    <%= form_for(@held_school,
-        url: @held_school.new_record? ? admin_held_school_index_path : admin_held_school_path(@held_school) ) do |f| %>
-      <%= f.hidden_field :school_id, value: @school.id %>
-      <%= f.hidden_field :state, value: @school.state %>
-      <%= f.text_area(:notes, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-      <%= f.submit (@held_school.new_record? ? 'Put school on hold' : 'Save notes'),
-                   class: 'btn btn-sm btn-primary mtm', disable_with: 'Saving...' %>
-    <% end %>
-
+    <%= render 'held_school_form', 
+      school: @school, 
+      held_school: @held_school %>
     <br/>
   </div>
   <br/>
@@ -69,81 +52,6 @@
         Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
     <% end %>
   </div>
-    <% @reviews.each do |review| %>
-        <hr/>
-        <div class="row">
-          <div class="leftcolumn col-lg-4 prm">
-            <h5>Review details</h5>
-
-            <%= pluralize(review.overall, 'star') %>
-            <br/>
-            Affiliation: <%= review.affiliation || 'n/a' %>
-            <br/>
-            IP Address: <%= review.ip || 'n/a' %>
-            <br/>
-            <% if review.user %>
-                Email: <%= review.user.email %>
-            <% else %>
-                Email: n/a
-            <% end %>
-            <br/>
-            Status: <%= review.status %>
-            <br/>
-
-            <%= form_for review, url: publish_admin_review_path(review) do |f| %>
-                  <%= f.submit 'Publish',
-                               class: 'btn btn-sm mtm ' + ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'),
-                               disable_with: 'Publishing...' %>
-            <% end %>
-
-            <%= form_for review, url: disable_admin_review_path(review) do |f| %>
-                  <%= f.submit 'Disable',
-                               class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'),
-                               disable_with: 'Disabling...' %>
-            <% end %>
-          </div>
-
-          <div class="rightcolumn col-lg-8">
-            <h5>Review</h5>
-            <%= review.comments %>
-            <br/>
-            <br/>
-
-            <% review.reported_entities.each do |reported_entity| %>
-                <hr/>
-                <h5>Reported:</h5>
-                <%= reported_entity.reason %>
-                <br/>
-                Reported on: <%= reported_entity.created %>
-                <% if reported_entity.updated != reported_entity.created %>
-                    &nbsp; Updated: <%= reported_entity.updated %>
-                <% end %>
-                <br/>
-                <% if  reported_entity.reporter_id == -1 %>
-                    User: Automated pre-moderation filter
-                <% else %>
-                    User <%= reported_entity.reporter_id %>
-                <% end %>
-                <br/>
-                <% if reported_entity.user %>
-                    Email: <%= reported_entity.user.email %>
-                <% end %>
-            <% end %>
-
-            <hr/>
-
-            <br/>
-            Notes:
-            <br/>
-
-            <%= form_for(review, url: admin_review_path(review) ) do |f| %>
-              <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-              <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
-            <% end %>
-
-          </div>
-        </div>
-    <% end %>
-
-
+    
+  <%= render partial: 'review', collection: @reviews, as: :review %>
 </div>
