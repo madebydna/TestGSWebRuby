@@ -7,6 +7,8 @@ describe 'shared/_search_hero.html.erb' do
     view.stub(:hero_image) { nil }
     view.stub(:hero_image_mobile) { nil }
     view.stub(:collection_nickname) { 'Fiji' }
+    view.stub(:sponsor) { nil }
+    view.stub(:params) { { state: 'michigan', city: 'detroit' } }
   end
 
   context 'on a city page' do
