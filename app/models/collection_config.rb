@@ -354,7 +354,15 @@ class CollectionConfig < ActiveRecord::Base
       result = {}
       [:public, :private].each do |type|
         key = "#{ENROLLMENT_DATES_PREFIX}_#{type}_#{tab_key}"
-        result[type] = configs.select(&lambda{ |cc| cc.quay == key }).first.try(:value)
+        config = configs.select(&lambda{ |cc| cc.quay == key }).first
+        result[type] = nil
+        if config
+          begin
+            result[type] = eval(config.try(:value) || '').try(:[], :content)
+          rescue Exception => e
+            Rails.logger.error("Something went wrong while parsing #{tab_key}  #{type} key dates")
+          end
+        end
       end
 
       result

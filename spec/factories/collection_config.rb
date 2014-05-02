@@ -79,6 +79,7 @@ enrollment_module_value = "{ header: 'word', content: 'many letters #{('a'..'z')
 enrollment_tips_value = "{ content:[ 'If you’ve missed an application deadline, call the school and ask if you can still apply, or if there is a waiting list. Schools often have open seats, so you could get lucky!', 'Most charter schools host open houses and school tours in the months of March through May. Check out each school’s website to find out more. ', 'You can check a charter school’s track record by visiting the homepage of the school’s authorizer (charter school authorizers oversee school performance). If the school is part of a larger charter organization, make sure their mission aligns with your goals for your child.', 'Detroit Public Schools does not provide transportation for students who select a school outside the boundary of their assigned school.' ] }"
 enrollment_tip_value = "{ content: 'If you’ve missed an application deadline, call the school and ask if you can still apply, or if there is a waiting list. Schools often have open seats, so you could get lucky!' }"
 state_choose_school_value = "{    heading:'Finding a Great School in Detroit',    content:'We&#39;re here to help you explore your options and find the right school for your child. To get started with the school research process, check out the resources below to learn more about how...', link: [{ newWindow: 'true', name: 'Detroit partner', path: 'http://google.com' }] }"
+key_dates_value = "{ content: '02-01-2014<br>Individual schools hold open houses now through April<br>02-01-2014<br>Individual schools hold open houses now through April' }"
 
 FactoryGirl.define do
   factory :state_hub_content_module, class: CollectionConfig do
@@ -235,5 +236,13 @@ FactoryGirl.define do
     collection_id 6
     quay CollectionConfig::STATE_CHOOSE_A_SCHOOL_KEY
     value state_choose_school_value
+  end
+
+  factory :key_dates_config, class: CollectionConfig do
+    collection_id 1
+    quay "keyEnrollmentDates_private_preschool"
+    value key_dates_value
+
+    after(:create) { CollectionConfig.create(collection_id: 1, quay: 'keyEnrollmentDates_public_preschool', value: key_dates_value) }
   end
 end

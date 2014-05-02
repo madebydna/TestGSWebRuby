@@ -10,6 +10,7 @@ end
 shared_examples "it fails with an error" do
   context 'invalid json string' do
     before(:each) { clean_dbs :gs_schooldb }
+    after(:each) { clean_dbs :gs_schooldb }
 
     it 'returns nil' do
       FactoryGirl.create(:bogus_collection_config, quay: key)
@@ -30,6 +31,7 @@ shared_examples "it fails with an error" do
 end
 
 describe CollectionConfig do
+  after(:each) { clean_dbs :gs_schooldb }
   before(:each) { clean_dbs :gs_schooldb }
 
   describe '.city_featured_articles' do
@@ -620,6 +622,8 @@ describe CollectionConfig do
   end
 
   describe '.enrollment_tips' do
+    let(:configs) { CollectionConfig.all }
+
     context 'with missing data' do
       it 'returns nil' do
         result = CollectionConfig.enrollment_tips([], 'preschool')
@@ -642,16 +646,18 @@ describe CollectionConfig do
       end
     end
 
-    context 'a single tip' do
+    context 'a single tip in db' do
       before(:each) do
         FactoryGirl.create(:single_enrollment_tip_config)
       end
+
       it 'returns an array with a single tip' do
+        result = CollectionConfig.enrollment_tips(configs, 'elementary')
+        [:public, :private].each { |k| expect(result).to have_key(k) }
       end
     end
 
     context 'by default' do
-      let(:configs) { CollectionConfig.all }
       before(:each) do
         FactoryGirl.create(:enrollment_tips_config)
       end
@@ -689,6 +695,47 @@ describe CollectionConfig do
         expect(result).to be_an_instance_of(Hash)
         [:link, :heading, :content].each do |key|
           expect(result).to have_key(key)
+        end
+      end
+    end
+  end
+
+  describe '.key_dates' do
+    let(:configs) { CollectionConfig.all }
+    let(:nil_result) { { public: nil, private: nil } }
+
+    context 'with missing data' do
+      it 'returns nil' do
+        result = CollectionConfig.key_dates([], 'preschool')
+        expect(result).to eq(nil_result)
+      end
+      it 'does not log an error' do
+        Rails.logger.should_not_receive(:error)
+        result = CollectionConfig.key_dates([], 'preschool')
+      end
+    end
+
+    context 'with malformed data' do
+      before(:each) { FactoryGirl.create(:bogus_collection_config, quay: 'keyEnrollmentDates_private_preschool') }
+
+      it 'returns nil' do
+        result = CollectionConfig.key_dates(configs, 'preschool')
+        expect(result).to eq(nil_result)
+      end
+      it 'logs an error' do
+        Rails.logger.should_receive(:error)
+        result = CollectionConfig.key_dates(configs, 'preschool')
+      end
+    end
+
+    context 'by default' do
+      before(:each) { FactoryGirl.create(:key_dates_config) }
+
+      it 'returns parsed key dates' do
+        result = CollectionConfig.key_dates(configs, 'preschool')
+        expect(result).to be_an_instance_of(Hash)
+        [:public, :private].each do |type|
+          expect(result[type]).to be_an_instance_of(String)
         end
       end
     end

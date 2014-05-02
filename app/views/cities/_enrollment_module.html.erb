@@ -4,20 +4,6 @@
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <div class='js-module-expand' style='height: 292px;'>
         <%= enrollment_module[type][:content].html_safe %>
-        <% unless enrollment_module[type][:link].nil? || enrollment_module[type][:subheading].nil? %>
-          <h4><%= enrollment_module[type][:subheading] %></h4>
-          <ul>
-              <% enrollment_module[type][:link].each do |link| %>
-                <li>
-                  <% if link[:newWindow] == 'true' %>
-                    <%= link_to(link[:name], link[:path], target: '_blank') %>
-                  <% else %>
-                    <%= link_to(link[:name], link[:path]) %>
-                  <% end %>
-                </li>
-              <% end %>
-          </ul>
-        <% end %>
       </div>
       <p class="view-more">View More »</p>
     <% else %>
@@ -33,21 +19,19 @@
       </a>
     <% end %>
 
-    <hr class='brand-bar'>
+    <% unless key_dates[type].nil? %>
+      <hr class='brand-bar'>
+      <h4>Key Dates</h4>
+      <%= key_dates[type].html_safe %>
+    <% end %>
 
     <% unless @tips[type][:content].empty? %>
+      <hr class='brand-bar'>
       <h4>Did You know?</h4>
       <% @tips[type][:content].each do |tip| %>
         <p><%= tip.html_safe %></p>
       <% end %>
     <% end %>
-
-    <hr class='brand-bar'>
-
-    <% unless key_dates[type].nil? %>
-      <%= key_dates[type].html_safe %>
-    <% end %>
-
   </div>
 
   <hr style='clear: both; margin-top: 50px; margin-bottom: 50px;'>
