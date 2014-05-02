@@ -5,6 +5,8 @@
 
         <% if @school %>
           <%= render 'shared/send_me_updates_form', school: @school,driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
+        <% else %>
+          <%= render 'shared/send_me_updates_form', school: nil, driver: 'Footer',form_id: 'js-send-me-updates-form-footer' %>
         <% end %>
         <form class="form-inline clearfix" role="form" onsubmit="return false;">
           <fieldset>
