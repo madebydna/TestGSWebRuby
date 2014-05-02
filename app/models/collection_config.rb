@@ -131,9 +131,11 @@ class CollectionConfig < ActiveRecord::Base
       begin
         quay = city_or_state == :city ? CITY_HUB_SPONSOR_KEY : STATE_SPONSOR_KEY
         config = collection_configs.select(&lambda { |cc| cc.quay == quay }).first
-        raw_sponsor_str = config.value
-        result = eval(raw_sponsor_str)[:sponsor]
-        result[:path].prepend('/assets')
+        raw_sponsor_str = config.try(:value)
+        if raw_sponsor_str
+          result = eval(raw_sponsor_str)[:sponsor]
+          result[:path].prepend('/assets')
+        end
       rescue Exception => e
         Rails.logger.error("Something went wrong while parsing  #{city_or_state} sponsor" + e.to_s)
       end
