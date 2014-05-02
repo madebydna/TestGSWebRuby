@@ -27,7 +27,8 @@ class CitiesController < ApplicationController
 
       collection_configs = configs
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @sponsor = CollectionConfig.city_hub_sponsor(collection_configs)
+      @sponsor = CollectionConfig.sponsor(collection_configs)
+      @sponsor[:sponsor_page_visible] = mapping.has_partner_page?
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.city_featured_articles(collection_configs)

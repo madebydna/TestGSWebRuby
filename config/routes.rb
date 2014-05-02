@@ -101,6 +101,10 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'states#show'
       get 'enrollment' => 'states#foobar'
       get 'choosing-schools' => 'states#foobar'
+      scope '/education-community', as: :education_community do
+        get '', to: 'states#foobar'
+        get '/patner', to: 'states#foobar', as: :partner
+      end
     end
 
     scope '/:state/:city', as: :city, constraints: {
