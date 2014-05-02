@@ -18,11 +18,7 @@ class FavoriteSchool < ActiveRecord::Base
   end
 
   def school
-    begin
-      School.on_db(state.downcase.to_sym).find school_id
-    rescue
-
-    end
+    School.find_by_state_and_id(state, school_id)
   end
 
 end

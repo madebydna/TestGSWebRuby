@@ -7,6 +7,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # require 'rspec/autorun'
 require 'database_cleaner'
+require 'factory_girl'
 
 
 def monkey_patch_database_cleaner
@@ -31,13 +32,29 @@ def clean_dbs(*args)
   end
 end
 
+def clean_models(db, *models)
+  unless db.is_a? Symbol
+    models = [ db ] + models
+    db = nil
+  end
 
-if ENV['JENKINS_URL'] # on ci server
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-elsif ENV['coverage']
-  require 'simplecov-html'
-  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+  models.each do |model|
+    if db 
+      model.on_db(db).destroy_all
+    else
+      model.destroy_all
+    end
+  end
+end
+
+if ENV['coverage']
+  if ENV['JENKINS_URL'] # on ci server
+    require 'simplecov-rcov'
+    SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  else
+    require 'simplecov-html'
+    SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+  end
 end
 
 if ENV['JENKINS_URL'] || ENV['coverage']
@@ -45,17 +62,24 @@ if ENV['JENKINS_URL'] || ENV['coverage']
     add_filter '/spec/'
     add_filter 'config/initializers/rails_admin.rb'
     add_filter 'lib/test_connection_management.rb'
+    add_filter 'lib/database_tasks_helper.rb'
   end
 end
 
+# If you change this you'll also need to change the value in test.rb
+Rails.application.routes.default_url_options[:host] = 'test.host'      
+Rails.application.routes.default_url_options[:trailing_slash] = true
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.include Capybara::DSL
 
   config.include Rails.application.routes.url_helpers
+
+  config.include FactoryGirl::Syntax::Methods
 
   # ## Mock Framework
   #
@@ -101,5 +125,6 @@ RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above
   monkey_patch_database_cleaner
+
 
 end

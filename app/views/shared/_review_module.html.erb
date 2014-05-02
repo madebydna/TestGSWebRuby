@@ -1,11 +1,20 @@
 <% include_rich_snippets ||= false %>
+<% if @school.show_ads %>
+    <% ad_placement_array = [2, 5, 8] %>
+    <% if ad_placement_array.include? review_counter %>
+        <hr />
+        <div width="100%">
+            <div class="js_insertAdvertisingReview ma"></div>
+        </div>
+        <%= render partial: '/shared/advertising_word' %>
+    <% end %>
+<% end %>
 <hr />
 <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <% overall_review_rating = review.overall %>
     
     <% if include_rich_snippets %>
         <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
-        <span itemprop="reviewer" class="dn"><%= review.member_id %></span>
         <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted.strftime "%Y-%m-%d" %>"></time>
         <span itemprop="rating" class="dn"><%= overall_review_rating.to_i %></span>
     <% end %>

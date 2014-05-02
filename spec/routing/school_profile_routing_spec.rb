@@ -16,8 +16,16 @@ describe 'school profile routing' do
     default_url_options[:host] = 'greatschools.org'
 
     @school = FactoryGirl.build(:school, state: 'ca', city: 'alameda', id: 1, name: 'alameda high school')
+
+    @trailing_slash = 
+      Rails.application.routes.default_url_options[:trailing_slash]
+    Rails.application.routes.default_url_options[:trailing_slash] = false
   end
 
+  after(:each) do
+    Rails.application.routes.
+      default_url_options[:trailing_slash] = @trailing_slash
+  end
 
   it 'should route to 404 page if state is invalid' do
     expect( get '/sldkfj/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'sldkfj/alameda/1-Alameda-High-School')
@@ -32,6 +40,7 @@ describe 'school profile routing' do
   end
 
   describe 'non-pk school scope' do
+
 
     it 'has a route for overview' do
       expect( get '/california/alameda/1-Alameda-High-School/' ).

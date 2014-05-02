@@ -149,7 +149,6 @@ class User < ActiveRecord::Base
     reviews_to_upgrade = provisional_reviews
     # make provisional reviews 'not provisional', i.e. deleted, published, or held
     reviews_to_upgrade.each do |review|
-      upgraded_review ||= review
       review.remove_provisional_status!
       review.save!
     end
@@ -194,8 +193,14 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?(list, school)
-    subscriptions.any? do |subscription|
-      subscription.list == list && subscription.school_id == school.id && subscription.state == school.state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+    if list == 'greatnews'
+      subscriptions.any? do |subscription|
+        subscription.list == list
+      end
+    else
+      subscriptions.any? do |subscription|
+        subscription.list == list && subscription.school_id == school.id && subscription.state == school.state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+      end
     end
   end
 

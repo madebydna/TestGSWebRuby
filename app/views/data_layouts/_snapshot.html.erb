@@ -17,10 +17,16 @@
 <% column_2_contents = data[left_table_size..total_array_size] %>
 <% all_columns = [column_1_contents, column_2_contents]  %>
 
+<% showAds = @school.show_ads %>
 <div class="row limit_width_1200">
     <div class="mtl pvl clearfix">
+        <%= showAds ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
+
         <%  all_columns.each_with_index do |col_arr, index_all| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+            <% layout_grid = (showAds ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
+            <div class="<%= layout_grid %>">
+
                 <div class="mhm">
                 <table class="table table-striped mbm">
                     <% col_arr.each_with_index do |value_hash, index| %>
@@ -43,11 +49,23 @@
                 </table>
                 </div>
             </div>
-        <% end %>
-        <% if !@school.preschool? %>
-            <div class="fr prl">
-                <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+            <% end %>
+            <% if !@school.preschool? %>
+                <div class="fr prl">
+                    <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+                </div>
+            <% end %>
+        <%= showAds ?  '</div>'.html_safe : '' %>
+        <% if showAds %>
+            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+                <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="div-gpt-ad-1397603538853-0" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Snapshot_300x250"></div>
             </div>
         <% end %>
     </div>
+
+    <% if showAds %>
+        <div class="plm">
+            <div class="gs_ad_slot visible-xs ma" id="div-gpt-ad-1397602726713-0" data-ad-size="[300,250]" style="width: 300px" data-dfp="School_Overview_Mobile_Snapshot_300x250"></div>
+        </div>
+    <% end %>
 </div>

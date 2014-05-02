@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe UrlHelper do
-  
+
+  let(:url_helper) { Object.new.extend UrlHelper }
+
   describe '.add_query_params_to_url' do
-    let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'http://test.com/'}
     let(:params) { {} }
     let(:result) { url_helper.send :add_query_params_to_url, url, true, params }
@@ -55,7 +56,6 @@ describe UrlHelper do
   end
 
   describe '.remove_query_params_from_url' do
-    let(:url_helper) { Object.new.extend UrlHelper }
     let(:url) { 'http://test.com/'}
     let(:value) { nil }
     let(:param_names) { [] }
@@ -120,4 +120,44 @@ describe UrlHelper do
       expect(result).to eq 'http://test.com/?filters[]=one&filters[]=two'
     end
   end
+
+  describe 'prepend http:// to urls' do
+    let(:url) { 'www.test.com'}
+    it 'should add http:// to the url when http and/or https do not already exist' do
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'http://www.test.com'
+    end
+    it 'should should not add it to the url when https exists' do
+      url.replace  'https://www.test.com'
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'https://www.test.com'
+    end
+    it 'should should not add it to the url when http exists' do
+      url.replace 'http://www.test.com'
+      result = url_helper.send :prepend_http, url
+      expect(result).to eq 'http://www.test.com'
+    end
+  end
+
+  describe '#gs_legacy_url_encode' do
+    it 'should replace hyphens with underscores' do
+      expect(url_helper.send :gs_legacy_url_encode, '-schoolname').to eq '_schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, '-schoolname-').to eq '_schoolname_'
+    end
+
+    it 'should replace spaces with hyphens' do
+      expect(url_helper.send :gs_legacy_url_encode, ' schoolname').to eq '-schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, ' school name ').to eq '-school-name-'
+    end
+
+    it 'should replace periods' do
+      expect(url_helper.send :gs_legacy_url_encode, '.schoolname').to eq 'schoolname'
+      expect(url_helper.send :gs_legacy_url_encode, '.school.name').to eq 'schoolname'
+    end
+
+    it 'should return nil if provided nil' do
+      expect(url_helper.send :gs_legacy_url_encode, nil).to be_nil
+    end
+  end
+
 end

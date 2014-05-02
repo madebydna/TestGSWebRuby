@@ -1,6 +1,5 @@
 class Page < ActiveRecord::Base
   attr_accessible :name
-  has_paper_trail
   db_magic :connection => :profile_config
 
   include BelongsToCollectionConcerns

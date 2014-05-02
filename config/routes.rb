@@ -2,6 +2,7 @@ LocalizedProfiles::Application.routes.draw do
   require 'states'
   require 'regular_subdomain'
   require 'preschool_subdomain'
+  require 'path_with_period'
 
   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   devise_for :admins, path: '/admin/gsr/school-profiles'
@@ -19,7 +20,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/partnerOpportunities.page', as: :partners
     get '/about/pressRoom.page', as: :media_room
     get '/about/linkToUs.page', as: :widgets_and_tools
-    get '/find-a-school/defining-your-ideal/2423-ratings.gs', as: :how_we_rate_schools
+    get '/about/ratings.page', as: :how_we_rate_schools
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
@@ -33,7 +34,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/school/parentReview.page', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
-    get '/community/registrationConfirm.page', as: :verify_email
     get '/:state/', constraints: { state: States.any_state_name_regex }, as: :state
     get '/:state/:city/', constraints: { state: States.any_state_name_regex }, as: :city
     get '/:state/:city/choosing-schools/', constraints: { state: States.any_state_name_regex }, as: :choosing_schools
@@ -87,6 +87,7 @@ LocalizedProfiles::Application.routes.draw do
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
+  get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
   post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
       state: States.any_state_name_regex,
@@ -126,11 +127,14 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
+  constraints(PathWithPeriod) do
+    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path))
+  end
+
   constraints(PreschoolSubdomain) do
     # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
     match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
   end
-
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found

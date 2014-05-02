@@ -28,16 +28,14 @@ class ApplicationController < ActionController::Base
   end
 
   def disconnect_connection_pools
-    return unless @school.present?
-    if request.env['rack_after_reply.callbacks']
-      request.env['rack_after_reply.callbacks'] << lambda do
-        ActiveRecord::Base.connection_handler.connection_pools.
-          values.each do |pool| 
-          if pool.connections.present? && 
-            ( pool.connections.first.
-              current_database == "_#{@school.state.downcase}" ) 
-            pool.disconnect!
-          end
+    return unless @school.present? && request.env['rack_after_reply.callbacks']
+    request.env['rack_after_reply.callbacks'] << lambda do
+      ActiveRecord::Base.connection_handler.connection_pools.
+        values.each do |pool| 
+        if pool.connections.present? && 
+          ( pool.connections.first.
+            current_database == "_#{@school.state.downcase}" ) 
+          pool.disconnect!
         end
       end
     end
@@ -109,29 +107,6 @@ class ApplicationController < ActionController::Base
     @school.extend SchoolProfileDataDecorator
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
-  end
-
-
-
-  # authorization
-
-  def login_required
-    logged_in? && authorized? ? true : access_denied
-  end
-
-  def access_denied
-    respond_to do |accepts|
-      accepts.html do
-        if request.xhr?
-          store_location(request.referrer)
-          render :js => "window.location='#{signin_path}';", :content_type => 'text/javascript'
-        else
-          store_location
-          redirect_to signin_path
-        end
-      end
-    end
-    false
   end
 
   def flash_message(type, message)

@@ -120,7 +120,7 @@ class School < ActiveRecord::Base
         level_array[index] = 'K'
       elsif (value == 'UG' )
         ungraded = true
-        end
+      end
     end
 
     return_str = ''
@@ -148,6 +148,28 @@ class School < ActiveRecord::Base
       return_str += " & Ungraded"
     end
     return_str
+  end
+
+  def description
+    snippet ||= %Q{#{name} is a #{type} school} unless name.empty? || type.empty?
+    if snippet
+      snippet << %Q{ that serves #{levels_description}} unless levels_description.nil?
+      snippet << %Q{. It has received a GreatSchools rating of #{great_schools_rating} out of 10 based on academic quality.} unless great_schools_rating.nil?
+    end
+    snippet.presence
+  end
+
+  def great_schools_rating 
+    school_metadata[:overallRating].presence
+  end
+  
+  def levels_description
+    levels = process_level
+    if levels.nil? || levels.include?('Ungraded')
+      nil
+    else
+      levels.length > 2 ? "grades #{levels}" :  "grade #{levels}"
+    end
   end
 
   # Return all reviews for this school
@@ -209,6 +231,13 @@ class School < ActiveRecord::Base
 
   def held_school?
     HeldSchool.exists?(state: state, school_id: id)
+  end
+
+  def show_ads
+    if collection.present?
+      return collection.show_ads
+    end
+    return true
   end
 
 end

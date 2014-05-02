@@ -85,6 +85,10 @@ gem 'draper', '~> 1.3'
 gem 'addressable'
 
 gem 'rack-mini-profiler', require: false
+gem 'rubocop', '= 0.20.1', require: false
+gem 'rubocop-checkstyle_formatter', require: false
+
+gem 'rack_after_reply'
 
 gem 'rack_after_reply'
 
@@ -103,14 +107,13 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
 
-  # Zeus keeps a rails environment running so that rspec(and other commands)
-  # can be ran much more quickly
   gem 'zeus'
+  gem 'pry-debugger'
 end
 
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
-  gem 'awesome_print', :require => 'ap'
+  #gem 'awesome_print', :require => 'ap'
 
   # Supporting Gem for Rails Panel for Chrome
   # gem 'meta_request'

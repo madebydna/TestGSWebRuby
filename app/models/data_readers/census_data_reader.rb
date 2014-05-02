@@ -1,7 +1,10 @@
-# 
+# encoding: utf-8
+
+#
 # Retrieves CensusData and builds hashes in various formats
-# 
+#
 class CensusDataReader < SchoolProfileDataReader
+
   #############################################################################
   # Methods exposed to SchoolProfileData and meant to be consumable by the view
 
@@ -48,28 +51,67 @@ class CensusDataReader < SchoolProfileDataReader
       # Get data for all data types
       all_data = raw_data_for_category category
 
-      data_type_to_results_hash = all_data.group_by(&:data_type)
+      results_array = []
 
-      # If there's a data set with a null breakdown within a data type group,
-      # remove the rows with non-null breakdowns
-      data_type_to_results_hash = keep_null_breakdowns!(
-        data_type_to_results_hash
-      )
+      category_datas = category.category_data.sort_by do |cd|
+        position = cd.sort_order
+        position = 1 if position.nil?
+        position
+      end
+      category_datas.each do |cd|
+        matching_data_sets = all_data.select do |ds|
+          data_set_matches_category_data_criteria(cd, ds)
+        end
 
-      # Sort the data types the same way the keys are sorted in the config
-      data_type_to_results_hash = sort_based_on_config(
-                                    data_type_to_results_hash,
-                                    category
-                                  )
+        matching_data_sets.each do |matching_data_set|
+          data_set_hash = CensusDataSetJsonView.new(matching_data_set).to_hash
+          next if data_set_hash.nil?
 
-      # Build a Hash that the view will consume
-      data = build_data_type_descriptions_to_hashes_map(
-        data_type_to_results_hash
-      )
+          # Add human-readable labels
+          data_set_hash[:label] = cd.computed_label.gs_capitalize_first
+          data_set_hash[:data_type_id] = matching_data_set.data_type_id
+          results_array << data_set_hash
+        end
 
-      # Replace strings within our Hash with human-readable versions
-      prettify_hash data, category.key_label_map(school.collections)
+      end
+
+      results_array.compact!
+      # TODO: Remove this and return an array instead.
+      # Requires reconfiguring some data in the profile's admin tool,
+      # So adding this temporarily
+      results_array.group_by { |hash| hash[:label] }
     )
+  end
+
+  def data_set_matches_category_data_criteria(category_data, data_set)
+    # Hack: Enforce that a census_data_config_entry exist for only census
+    if category_data.response_key == 9 && !data_set.has_config_entry?
+      return false
+    end
+
+    (category_data.response_key == data_set.data_type_id ||
+      category_data.response_key.to_s.match(/#{data_set.data_type}/i)) &&
+    category_data.subject_id == data_set.subject_id
+  end
+
+  def label_lookup_table(category)
+    CensusDataType.lookup_table
+      .merge(
+        category.key_label_map(school.collections)
+      )
+  end
+
+  def footnotes_for_category(category)
+    data = labels_to_hashes_map category
+    sources = data.map do |key, values|
+      if values && values.any?
+        {
+          source: values.first[:source],
+          year: values.first[:year]
+        }
+      end
+    end
+    sources.compact.uniq
   end
 
   # Returns hash of data type descriptions to school values
@@ -86,19 +128,6 @@ class CensusDataReader < SchoolProfileDataReader
         hash[census_data_set.data_type.downcase] = census_data_set.school_value
       end
     end
-  end
-
-  def footnotes_for_category(category)
-    data = labels_to_hashes_map category
-    sources = data.map do |key, values|
-      if values && values.any?
-        {
-          source: values.first[:source],
-          year: values.first[:year]
-        }
-      end
-    end
-    sources.compact.uniq
   end
 
   #############################################################################
@@ -139,27 +168,9 @@ class CensusDataReader < SchoolProfileDataReader
     data = {}
 
     data_type_to_results_hash.each do |key, results|
-      rows = results.map do |census_data_set|
-        if census_data_set.state_value || census_data_set.school_value
-          {
-            breakdown: census_data_set.config_entry_breakdown_label ||
-                       census_data_set.census_breakdown,
-            school_value: census_data_set.school_value,
-            district_value: census_data_set.district_value,
-            state_value: census_data_set.state_value,
-            source: census_data_set.source,
-            year: census_data_set.year == 0 ?
-              census_data_set.school_modified.year : census_data_set.year
-          }
-        end
-      end.compact
-
-      # Default the sort order of rows within a data type to school_value
-      # descending School value might be nil, so sort using zero in that case
-      rows.sort_by! do |row|
-        row[:school_value] ? row[:school_value].to_f : 0.0
-      end
-      rows.reverse!
+      rows =
+        results.map { |data_set| CensusDataSetJsonView.new(data_set).to_hash }
+        .compact
 
       data[key] = rows
     end
@@ -167,77 +178,33 @@ class CensusDataReader < SchoolProfileDataReader
     data
   end
 
-  # Creates a new human-readable +Hash+ from an existing hash by overwriting
-  # strings with the correct labels
-  #
-  # reader.prettify_hash({
-  #   "Climate: Effective Leaders - Overall" => [
-  #      {
-  #       :breakdown => nil,
-  #       :school_value => 83.0,
-  #       :district_value => nil,
-  #       :state_value => nil
-  #     }
-  #   ]
-  # })                                #=> "Effective Leaders - Overall" => [
-  #                                           {
-  #                                             :breakdown => nil,
-  #                                             :school_value => 83.0,
-  #                                             :district_value => nil,
-  #                                             :state_value => nil
-  #                                           }
-  #                                         ],
-  #                                       }
-  #
-  def prettify_hash(data_type_to_results_hash, key_label_map)
-    data = {}
-    data_type_to_results_hash.each do |key, results|
-      label = key_label_map.fetch(key.downcase, key)
-      label = key if label.blank?
-      data[label] = results
-    end
-
-    data
-  end
-
-  # If there's a data set with a null breakdown within a data type group,
-  # remove the rows with non-null breakdowns
-  #
-  def keep_null_breakdowns!(data_type_to_results_hash)
-    data_type_to_results_hash.each_pair do |data_type, results|
-      if results.any? { |result| result.breakdown_id.nil? }
-        results.select! { |result| result.breakdown_id.nil? }
-      end
-    end
-  end
-
-  # Sort the data types the same way the keys are sorted in the config
-  #
-  def sort_based_on_config(data_type_to_results_hash, category)
-    category_data_types = category.keys(school.collections).map(&:downcase)
-    # Sort the data types the same way the keys are sorted in the config
-    Hash[
-      data_type_to_results_hash.sort_by do |data_type_desc, _|
-        data_type_sort_num = category_data_types.index(data_type_desc.downcase)
-        data_type_sort_num = 1 if data_type_sort_num.nil?
-        data_type_sort_num
-      end
-    ]
-  end
-
   ############################################################################
   # Methods for actually retrieving raw data. The "data reader" portion of this
   # class
+
+  def census_data_by_data_type_query
+    configured_data_types = page.all_configured_keys 'census_data'
+
+    CensusDataSetQuery.new(school.state)
+      .with_data_types(configured_data_types)
+      .with_school_values(school.id)
+      .with_district_values(school.district_id)
+      .with_state_values
+      .with_census_descriptions(school.type)
+  end
 
   def raw_data
     @all_census_data ||= nil
     return @all_census_data if @all_census_data
 
-    configured_data_types = page.all_configured_keys 'census_data'
-
     # Get data for all data types
-    @all_census_data = CensusDataForSchoolQuery.new(school)
-                        .latest_data_for_school configured_data_types
+    results = census_data_by_data_type_query.to_a
+
+    @all_census_data =
+      CensusDataResults.new(results)
+        .filter_to_max_year_per_data_type!
+        .keep_null_breakdowns!
+        .sort_school_value_desc_by_date_type!
   end
 
   def raw_data_for_category(category)
