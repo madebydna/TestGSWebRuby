@@ -1,5 +1,5 @@
 <div class="row mhm">
-  <div class="col-sm-8 col-lg-8 mbm">
+  <div class="col-sm-8 col-lg-8 mbm" style='padding-right: 8%;'>
     <% unless enrollment_module[type].nil? %>
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <%= enrollment_module[type][:content].html_safe %>
@@ -14,7 +14,7 @@
     <% end %>
   </div>
 
-  <div class="col-sm-3 col-sm-offset-1 col-lg-3 col-lg-offset-1 mbm">
+  <div class="col-sm-4 col-lg-4 mbm">
     <% unless tab[:results][type][:count] == 0 %>
       <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
         <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
@@ -37,7 +37,7 @@
       <% else %>
         <div class="js-carousel">
           <a href="#!" class="js-prev fl" style='margin-top: 18%; width: 10%'>
-            <span class="iconx32g i-32-carousel-left"></span>
+            <span class="i-arrow-24 i-arrow-24-left"></span>
           </a>
           <div class='fl phl' style='width: 80%;'>
             <div class="cycle-slideshow"
@@ -50,7 +50,7 @@
             </div>
           </div>
           <a href="#!" class="js-next fl" style='margin-top: 18%; width: 10%'>
-            <span class="iconx32g i-32-carousel-right"></span>
+            <span class="i-arrow-24 i-arrow-24-right"></span>
           </a>
         </div>
       <% end %>
