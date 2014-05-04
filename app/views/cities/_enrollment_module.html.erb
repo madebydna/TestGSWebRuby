@@ -30,6 +30,7 @@
 
     <% unless @tips[type][:content].empty? %>
       <hr class='brand-bar'>
+      <div class="pull-left iconx16 i-16-did-you-know" style="margin-top: 3px; margin-right: 5px;"></div>
       <h4>Did You know?</h4>
       <% if @tips[type][:content].length == 1 %>
         <p><%= @tips[type][:content][0].html_safe %></p>
