@@ -4,9 +4,7 @@
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <%= enrollment_module[type][:content].html_safe %>
       <% unless enrollment_module[type][:view_more].nil? %>
-        <div class='js-module-expand'>
-          <%= enrollment_module[type][:view_more].html_safe %>
-        </div>
+        <div class='js-module-expand'><%= enrollment_module[type][:view_more].html_safe %></div>
         <p class="view-more">View More »</p>
       <% end %>
     <% else %>

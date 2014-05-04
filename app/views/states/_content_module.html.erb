@@ -4,8 +4,11 @@
     <div class="limit_width_1200">
       <div class="col-xs-12" style='float: none;'>
         <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
-        <div class='js-module-expand' style='height: 71px;'><p><%= content_module[:description].html_safe %></p></div>
-        <p class="view-more">View More »</p>
+        <p><%= content_module[:description].html_safe %></p>
+        <% unless content_module[:view_more].nil? %>
+          <div class='js-module-expand'><%= content_module[:view_more].html_safe %></div>
+          <p class="view-more">View More »</p>
+        <% end %>
         <hr style='background: #fff; border: none; height: 1px; width: 100%; margin-top: 20px'>
       </div>
     </div>

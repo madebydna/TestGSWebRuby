@@ -17,7 +17,7 @@ class CollectionConfig < ActiveRecord::Base
   SPONSOR_PAGE_NAME_KEY = 'sponsorPage_seoPageName'
   SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
   CHOOSING_STEP3_LINKS_KEY = 'choosePage_step3_localLinks'
-  CONTENT_MODULE_KEY = 'statehubHome_contentModule'
+  CONTENT_MODULE_KEY = 'statehubHome_content'
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
   ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
   ENROLLMENT_DATES_PREFIX = 'keyEnrollmentDates'
