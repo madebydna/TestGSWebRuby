@@ -19,7 +19,7 @@ feature 'School moderation' do
     let!(:review) do
       FactoryGirl.create(
         :school_rating,
-        state: 'ca',
+        state: 'CA',
         school_id: school.id,
         posted: '2000-01-01'
       )

@@ -31,7 +31,7 @@ class TopNav
   end
 
   def has_topnav?
-    !@hub_params[:state].blank? || read_cookie_value(:hubState) || @school
+    !@hub_params[:state].blank? || !read_cookie_value(:hubState).nil? || !@school.try(:collection).nil?
   end
 
   def url_params
@@ -64,7 +64,7 @@ class TopNav
   def reset_hub_cookies(city, state_short)
     write_cookie :ishubUser, 'y'
 
-    if @school
+    if @school.collection
       mapping = HubCityMapping.where(collection_id: @school.collection.id, active: 1).first
       @city = mapping.city
       @state_short = mapping.state
