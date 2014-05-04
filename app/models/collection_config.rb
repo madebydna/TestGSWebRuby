@@ -114,8 +114,8 @@ class CollectionConfig < ActiveRecord::Base
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
           partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
-            partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
-            partner[:anchoredLink].gsub!(/\?tab=(.+)/, "#{$1.downcase}")
+            partner[:logoPath].prepend('/assets')
+            partner[:anchoredLink].gsub!(/\?tab=(.+)/, "#{$1.try(:downcase)}")
             partner[:anchoredLink].prepend('education-community/')
           end
         rescue Exception => e

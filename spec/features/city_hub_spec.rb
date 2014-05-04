@@ -19,7 +19,7 @@ describe 'City Hub Page' do
 
   describe 'search' do
     it 'displays sponsor information' do
-      expect(page).to have_css("a[href='education-community/partner']")
+      expect(page).to have_css("a[href='/michigan/detroit/education-community/partner/']")
       expect(page).to have_xpath("//img[@alt='sponsor logo']")
     end
   end

@@ -9,7 +9,6 @@ end
 
 shared_examples "it fails with an error" do
   context 'invalid json string' do
-    before(:each) { clean_dbs :gs_schooldb }
     after(:each) { clean_dbs :gs_schooldb }
 
     it 'returns nil' do
@@ -32,7 +31,6 @@ end
 
 describe CollectionConfig do
   after(:each) { clean_dbs :gs_schooldb }
-  before(:each) { clean_dbs :gs_schooldb }
 
   describe '.city_featured_articles' do
     it_behaves_like 'it rejects empty configs' do
@@ -53,11 +51,11 @@ describe CollectionConfig do
 
         expect(result).to be_an_instance_of(Array)
       end
-      it 'adds the cdn host to each articleImagePath' do
+      it 'adds the asset path to each articleImagePath' do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::FEATURED_ARTICLES_KEY)
         result = CollectionConfig.city_featured_articles(collection_configs)
 
-        expect(result.first[:articleImagePath]).to start_with(ENV_GLOBAL['cdn_host'])
+        expect(result.first[:articleImagePath]).to start_with('/assets')
       end
     end
   end
@@ -87,7 +85,7 @@ describe CollectionConfig do
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_PARTNERS_KEY)
         result = CollectionConfig.city_hub_partners(collection_configs)
 
-        expect(result[:partnerLogos].first[:logoPath]).to start_with(ENV_GLOBAL['cdn_host'])
+        expect(result[:partnerLogos].first[:logoPath]).to start_with('/assets')
         expect(result[:partnerLogos].first[:anchoredLink]).to start_with('education-community')
       end
     end
@@ -359,10 +357,12 @@ describe CollectionConfig do
     end
 
     it_behaves_like 'it rejects empty configs' do
+      before(:each) { clean_dbs :gs_schooldb }
       let(:method) { :ed_community_partner }
     end
 
     it_behaves_like 'it fails with an error' do
+      before(:each) { clean_dbs :gs_schooldb }
       let(:key) { CollectionConfig::SPONSOR_ACRO_NAME_KEY }
       let(:method) { :ed_community_partner }
     end
@@ -446,11 +446,11 @@ describe CollectionConfig do
         expect(results).to be_an_instance_of(Array)
       end
 
-      it 'prepends the cdn to images' do
+      it 'prepends the assets path to images' do
         configs = FactoryGirl.create(:state_hub_featured_articles)
         results = CollectionConfig.state_featured_articles([configs])
         results.each do |article|
-          expect(article[:articleImagePath]).to start_with ENV_GLOBAL['cdn_host']
+          expect(article[:articleImagePath]).to start_with '/assets'
         end
       end
     end
