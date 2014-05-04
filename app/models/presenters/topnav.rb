@@ -64,7 +64,7 @@ class TopNav
   def reset_hub_cookies(city, state_short)
     write_cookie :ishubUser, 'y'
 
-    if @school.collection
+    if @school.try(:collection)
       mapping = HubCityMapping.where(collection_id: @school.collection.id, active: 1).first
       @city = mapping.city
       @state_short = mapping.state

@@ -387,20 +387,23 @@ describe CollectionConfig do
   describe '.choosing_page_links' do
     context 'by default' do
       before(:each) { FactoryGirl.create(:choosing_page_links_configs) }
+      let(:configs) { CollectionConfig.all }
       it 'returns links' do
-        result = CollectionConfig.choosing_page_links(1)
+        result = CollectionConfig.choosing_page_links(configs)
         expect(result).to be_an_instance_of(Array)
         expect(result).to have(4).links
       end
     end
 
     context 'with malformed or missing data' do
+      let(:configs) { CollectionConfig.all }
+
       it 'logs an error' do
         Rails.logger.should_receive(:error)
-        result = CollectionConfig.choosing_page_links(1)
+        result = CollectionConfig.choosing_page_links(configs)
       end
       it 'returns nil' do
-        result = CollectionConfig.choosing_page_links(1)
+        result = CollectionConfig.choosing_page_links(configs)
         expect(result).to be_nil
       end
     end

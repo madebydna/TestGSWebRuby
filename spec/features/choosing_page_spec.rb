@@ -8,6 +8,7 @@ describe 'Choosing Page' do
   end
 
   after(:each) { clean_dbs :gs_schooldb }
+  let(:configs) { CollectionConfig.all }
 
   it 'displays basic static and dynamic content' do
     visit '/michigan/detroit/choosing-schools/'
@@ -16,7 +17,7 @@ describe 'Choosing Page' do
     expect(page).to have_selector('h1', text: '5 simple steps to')
     expect(page).to have_selector('.expandable', count: 4)
 
-    step3_links = CollectionConfig.choosing_page_links(1)
+    step3_links = CollectionConfig.choosing_page_links(configs)
     step3_links.each do |link|
       expect(page).to have_link(link[:name], href: link[:path])
     end

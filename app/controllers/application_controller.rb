@@ -31,10 +31,10 @@ class ApplicationController < ActionController::Base
     return unless @school.present? && request.env['rack_after_reply.callbacks']
     request.env['rack_after_reply.callbacks'] << lambda do
       ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool| 
-        if pool.connections.present? && 
+        values.each do |pool|
+        if pool.connections.present? &&
           ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" ) 
+            current_database == "_#{@school.state.downcase}" )
           pool.disconnect!
         end
       end
@@ -189,5 +189,12 @@ class ApplicationController < ActionController::Base
     @hub_params = {}
     @hub_params[:state] = @state[:long] if @state[:long]
     @hub_params[:city] = @city if @city
+  end
+
+  def configs
+    configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
+    Rails.cache.fetch(configs_cache_key, expires_in: 1.day) do
+      CollectionConfig.where(collection_id: mapping.collection_id).to_a
+    end
   end
 end
