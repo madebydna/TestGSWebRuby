@@ -42,10 +42,10 @@
     <% end %>
 
     <ul class='js-enrollment-tabs' style='margin-bottom: 80px'>
-      <li class="mhm <%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
-      <li class="mhm <%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
-      <li class="mhm <%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle') %></li>
-      <li class="mhm <%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high') %></li>
+      <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
+      <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
+      <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle') %></li>
+      <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high') %></li>
     </ul>
   </div>
 
