@@ -56,8 +56,8 @@ class CitiesController < ApplicationController
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
         'Home' => '/',
-        @state[:long].titleize => "/#{@state[:long]}",
-        @city.titleize => city_path(@state[:long], @city)
+        params[:state].titleize => "/#{params[:state]}",
+        @city.titleize => city_path(params[:state], params[:city])
       }
       @canonical_url = city_events_url(@state[:long], @city)
     end
@@ -80,7 +80,7 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(@state[:long], @city),
         'Education Community' => nil
       }
-      @canonical_url = city_education_community_url(@state[:long], @city)
+      @canonical_url = city_education_community_url(params[:state], params[:city])
     end
   end
 
@@ -94,10 +94,10 @@ class CitiesController < ApplicationController
       @partner = CollectionConfig.ed_community_partner(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @breadcrumbs = {
-        @city.titleize => city_path(@state[:long], @city),
+        @city.titleize => city_path(params[:state], params[:city]),
         'Partner' => nil
       }
-      @canonical_url = city_education_community_partner_url(@state[:long], @city)
+      @canonical_url = city_education_community_partner_url(params[:state], params[:city])
       set_meta_tags kewords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
@@ -114,12 +114,13 @@ class CitiesController < ApplicationController
       set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
-      @step3_links = CollectionConfig.choosing_page_links(@collection_id)
+      @step3_links = CollectionConfig.choosing_page_links(configs)
       @breadcrumbs = {
-        @city.titleize => city_path(@state[:long], @city),
+        @city.titleize => city_path(params[:state], params[:city]),
         'Choosing a School' => nil
       }
-      @canonical_url = city_choosing_schools_url(@state[:long], @city)
+      @canonical_url = city_choosing_schools_url(params[:state], params[:city])
+      render 'shared/choosing_schools'
     end
   end
 
@@ -143,11 +144,11 @@ class CitiesController < ApplicationController
 
       set_meta_tags title: "#{@city.titleize} Schools Enrollment Information"
       @breadcrumbs = {
-        @city.titleize => city_path(@state[:long], @city),
+        @city.titleize => city_path(params[:state], params[:city]),
         'Enrollment Information' => nil
       }
 
-      @canonical_url = city_enrollment_url(@state[:long], @city)
+      @canonical_url = city_enrollment_url(params[:state], params[:city])
     end
   end
 

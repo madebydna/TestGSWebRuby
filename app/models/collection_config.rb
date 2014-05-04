@@ -273,15 +273,13 @@ class CollectionConfig < ActiveRecord::Base
       result
     end
 
-    def choosing_page_links(collection_id)
+    def choosing_page_links(collection_configs)
+      links = nil
       begin
-        links = Rails.cache.fetch('choosing_page_links/step3') do
-          raw_links_str = CollectionConfig.where(collection_id: collection_id, quay: CHOOSING_STEP3_LINKS_KEY).first.value
-          eval(raw_links_str)[:link]
-        end
+        raw_links_str = collection_configs.select(&lambda { |cc| cc.quay == CHOOSING_STEP3_LINKS_KEY }).first.value
+        links = eval(raw_links_str)[:link]
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing choosing_page_links ' + e.to_s)
-        links = nil
       end
 
       links
@@ -412,7 +410,7 @@ class CollectionConfig < ActiveRecord::Base
       :sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
       :ed_community_subheading, :ed_community_show_tabs, :ed_community_partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
-      :city_featured_articles, :state_choose_school
+      :city_featured_articles, :state_choose_school, :choosing_page_links
     ].each do |method_name|
       new_method = "#{method_name}_with_nil_check".to_sym
       define_method new_method do |*args|

@@ -4,6 +4,7 @@ describe 'cities/_upcoming_events.html.erb' do
   context 'without events' do
     it 'hides the section' do
       view.stub(:important_events) { nil }
+      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
       render
       expect(rendered).to_not have_selector('.row')
     end
@@ -12,8 +13,7 @@ describe 'cities/_upcoming_events.html.erb' do
   context 'by default' do
     before(:each) do
       FactoryGirl.create(:important_events_collection_config)
-      assign(:state, { long: 'Michigan', short: 'MI' })
-      assign(:city, 'detroit')
+      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
       view.stub(:important_events) { important_events }
     end
     after(:each) { clean_dbs :gs_schooldb }
@@ -34,8 +34,7 @@ describe 'cities/_upcoming_events.html.erb' do
   context 'on a community page' do
     before(:each) do
       FactoryGirl.create(:important_events_collection_config)
-      assign(:state, { long: 'Michigan', short: 'MI' })
-      assign(:city, 'detroit')
+      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
       view.stub(:important_events) { important_events }
     end
     after(:each) { clean_dbs :gs_schooldb }

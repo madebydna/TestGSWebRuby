@@ -8,12 +8,11 @@ class StatesController < ApplicationController
   end
 
   def show
-    collection_mapping = mapping
-    if collection_mapping.nil?
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      collection_id = collection_mapping.collection_id
-      configs = CollectionConfig.where(collection_id: collection_id)
+      collection_id = hub_city_mapping.collection_id
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
@@ -29,6 +28,25 @@ class StatesController < ApplicationController
     end
   end
 
+  def choosing_schools
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      set_meta_tags title: "Choosing a school in #{@state[:long].upcase}"
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
+      @events = CollectionConfig.city_hub_important_events(configs)
+      @step3_links = CollectionConfig.choosing_page_links(configs)
+      @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
+        'Choosing a School' => nil
+      }
+      @canonical_url = state_choosing_schools_url(params[:state])
+      render 'shared/choosing_schools'
+    end
+  end
+
 
   private
     def mapping
@@ -37,4 +55,6 @@ class StatesController < ApplicationController
         HubCityMapping.where(active: 1, city: nil, state: @state[:short]).first
       end
     end
+
+
 end
