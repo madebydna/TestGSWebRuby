@@ -27,7 +27,7 @@
       <h4>Featured resources</h4>
       <ul>
         <li><a href="/find-a-school/defining-your-ideal/32-imagining-your-ideal-school-set-your-priorities.gs">Imagining your ideal school</a></li>
-        <li><a href="/pdf/choosing_imagine.pdf">Download our worksheet</a></li>
+        <li><a href="/catalog/pdf/choosing_imagine.pdf">Download our worksheet</a></li>
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
@@ -58,7 +58,7 @@
       <h4>Featured resources</h4>
       <ul>
         <li><a href="/school-choice/6987-public-private-charter-schools.gs">Public vs. private vs. charter schools</a></li>
-        <li><%= link_to "#{@collection_nickname} enrollment information", city_enrollment_path(@state[:long], @city) %></li>
+        <li><%= link_to "#{@collection_nickname} enrollment information", city_enrollment_path(params[:state], params[:city]) %></li>
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
@@ -92,7 +92,7 @@
         As you search for schools that fit your family, look for information in three key areas - academic performance, extracurricular programs, and school culture and community.
       </p>
       <h4>Featured resources</h4>
-      <%= link_to 'Try our advanced school search', city_enrollment_path(@state[:long], @city) %>
+      <%= link_to 'Try our advanced school search', city_browse_path(params[:state], params[:city]) %>
       <br>
       <p>
         GreatSchools provides independent ratings based on a mixture of factors. You should consider GreatSchools ratings along with local and state ratings.
@@ -133,10 +133,12 @@
         Take time to visit the schools at the top of your list. Visiting is the best way to tell whether you and your child feel welcomed and comfortable at each school. You also have a chance to observe teachers in action, and see whether students are actively engaged in learning.
       </p>
 
-      <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class='expandable'>
+      <ul>
         <li><a href="/find-a-school/school-visit/24-the-school-visit-what-to-look-for-what-to-ask.gs">The school visit: what to look for, what to ask</a></li>
         <li><a href="/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>
+      </ul>
+      <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
+      <ul class='expandable'>
 
         <h4 style='margin-left: -40px;'>Preschool Resources</h4>
 
@@ -178,7 +180,7 @@
       </p>
       <h4>Featured resources</h4>
       <ul>
-        <li><%= link_to "#{@collection_nickname} enrollment information", city_enrollment_path(@state[:long], @city) %></li>
+        <li><%= link_to "#{@collection_nickname} enrollment information", city_enrollment_path(params[:state], params[:city]) %></li>
       </ul>
     </div>
   </div>
