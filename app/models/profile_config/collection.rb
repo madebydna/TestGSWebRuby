@@ -13,6 +13,7 @@ class Collection
 
   def config
     @config ||= CollectionConfig.key_value_map self.id
+    @config
   end
 
   def nickname
@@ -20,7 +21,7 @@ class Collection
   end
 
   def show_ads
-    config['showAds'].present? ? config['showAds'] : "false"
+    (config['showAds'] != "false") #.present? ? config['showAds'] : "false"
   end
 
   def profile_banner

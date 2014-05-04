@@ -16,3 +16,4 @@ solr_url: 'http://alpha.greatschools.org:8580'
 global_expires_in: 10
 cdn_host: 'http://www.gscdn.org'
 optimizely_key: "384121511"
+advertising_env: "dev"

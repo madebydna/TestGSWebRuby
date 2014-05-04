@@ -36,7 +36,7 @@ GS.reviews = GS.reviews || function($) {
         nextTenButton.on("click", function(){
             $(this).addClass("dn");
             var results = getFieldValues();
-            callReviewsAjax(results);
+            callReviewsAjax(results, true);
         });
 
         // group is the button group selection -  parent, all or student
@@ -49,7 +49,7 @@ GS.reviews = GS.reviews || function($) {
                 filterByGroup.data( "group-selected", groupSelected);
                 var results = getFieldValues();
                 results['offset'] = 0;
-                callReviewsAjax(results);
+                callReviewsAjax(results, false);
             }
         });
 
@@ -62,11 +62,11 @@ GS.reviews = GS.reviews || function($) {
                 reviewContentLayer.html('');
                 var results = getFieldValues();
                 results['offset'] = 0;
-                callReviewsAjax(results);
+                callReviewsAjax(results, false);
             }
         });
 
-        var callReviewsAjax = function(results){
+        var callReviewsAjax = function(results, nextTen){
             jQuery.ajax({
                 type:'GET',
                 url:"/gsr/ajax/reviews_pagination",
@@ -81,8 +81,9 @@ GS.reviews = GS.reviews || function($) {
                 dataType:'text',
                 async:true
             }).done(function (html) {
-                    reviewContentLayer.append(html);
-                }.gs_bind(this));
+                reviewContentLayer.append(html);
+                GS.ad.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
+            }.gs_bind(this));
 
             var new_offset = results['offset'] + results['limit'];
             nextTenButton.data( "offset", new_offset );
@@ -90,7 +91,17 @@ GS.reviews = GS.reviews || function($) {
                 nextTenButton.removeClass("dn");
             }
         };
+
+        var adStartInt = function(offset, limit, nextTen){
+            var retInt = 0;
+            if(nextTen){
+                retInt = offset / limit * GS.ad.reviewCount;
+            }
+            return retInt;
+        }
     };
+
+
 
     var reportReviewLink = function(reviewId) {
         return $(".js-report-review-link-" + reviewId);

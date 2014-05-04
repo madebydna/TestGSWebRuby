@@ -11,12 +11,12 @@ class CensusDataType < ActiveRecord::Base
   end
 
   def self.reverse_lookup(names)
-    names = Array(names)
+    names = Array(names).map(&:downcase)
 
     data_types = all_data_types.clone
     if names.present?
       data_types = all_data_types.select do |data_type|
-        names.include?(data_type.description)
+        names.include?(data_type.description.downcase)
       end
     end
 
@@ -49,13 +49,14 @@ class CensusDataType < ActiveRecord::Base
 
   def self.data_type_ids(data_type_names_or_ids)
     data_type_names_or_ids = Array.wrap(data_type_names_or_ids)
-    if data_type_names_or_ids.first.to_i == 0
-      data_type_ids = reverse_lookup(data_type_names_or_ids).map(&:id)
-      data_type_ids.uniq!
-    else
-      data_type_ids = data_type_names_or_ids
+
+    data_type_names_or_ids.map do |name_or_id|
+      if name_or_id.to_s.match /\d+/
+        name_or_id
+      else
+        reverse_lookup(name_or_id).map(&:id).first || name_or_id
+      end
     end
-    data_type_ids
   end
 
 end

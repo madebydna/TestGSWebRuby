@@ -10,6 +10,7 @@ class Subscription < ActiveRecord::Base
   SUBSCRIPTIONS = {
     mystat: SubscriptionProduct.new('mystat', 'My School Stats', nil, true),
     mystat_private: SubscriptionProduct.new('mystat_private', 'My School Stats for private schools', nil, true),
+    greatnews: SubscriptionProduct.new('greatnews', 'Great News', nil, true)
   }
 
   def self.subscription_product(list)

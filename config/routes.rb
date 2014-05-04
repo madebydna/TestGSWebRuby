@@ -159,13 +159,13 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'localized_profile#overview'
   end
 
+  constraints(PathWithPeriod) do
+    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path))
+  end
+
   constraints(PreschoolSubdomain) do
     # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
     match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
-  end
-
-  constraints(PathWithPeriod) do
-    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path))
   end
 
   # error handlers

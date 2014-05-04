@@ -14,7 +14,10 @@ module SubscriptionConcerns
       else
         school = nil
       end
-      raise 'Subscription could not be added since a list was not provided.' if list.nil?
+      #raise 'Subscription could not be added since a list was not provided.' if list.nil?
+      unless current_user.has_subscription?('greatnews', nil)
+        current_user.add_subscription!('greatnews', school)
+      end
       unless current_user.has_subscription?(list,school)
         current_user.add_subscription!(list, school)
         set_omniture_events_in_session(['review_updates_mss_end_event'])

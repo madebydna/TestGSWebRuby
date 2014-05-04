@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :login_from_cookie, :init_omniture
 
+  after_filter :disconnect_connection_pools
+
   protected
 
   rescue_from Exception, :with => :exception_handler
@@ -23,6 +25,20 @@ class ApplicationController < ActionController::Base
     url.sub! /\.topic\/(\?|$)/, '.topic\1'
     url.sub! /\.page\/(\?|$)/, '.page\1'
     url
+  end
+
+  def disconnect_connection_pools
+    return unless @school.present? && request.env['rack_after_reply.callbacks']
+    request.env['rack_after_reply.callbacks'] << lambda do
+      ActiveRecord::Base.connection_handler.connection_pools.
+        values.each do |pool| 
+        if pool.connections.present? && 
+          ( pool.connections.first.
+            current_database == "_#{@school.state.downcase}" ) 
+          pool.disconnect!
+        end
+      end
+    end
   end
 
   def host
