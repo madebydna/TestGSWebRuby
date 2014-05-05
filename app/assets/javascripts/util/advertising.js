@@ -3,7 +3,7 @@ GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
 
-//adobe
+//adobe audience manager code - copied and pasted
 GS.ad.AamGpt = {
   strictEncode: function(str){
     return encodeURIComponent(str).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
@@ -39,15 +39,15 @@ GS.ad.AamGpt = {
       if(typeof cList[1] != "undefined" && cList[1].match(/\w+/)){
         var vList=cList[1].split("%2C");
         if(typeof vList[0] != "undefined"){
-            return vList;
+          return vList;
         } else {
-            return null;
+          return null;
         }
       } else {
         return null;
       }
     } else {
-        return null;
+      return null;
     }
   }
 };
@@ -127,7 +127,9 @@ GS.ad.showAd = function(divId){
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// REVIEW ADS
+//
+// REVIEW ADS - for page injection when needed
+//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var REVIEW_AD_SLOT_NAME = "adReviewPagination";
@@ -196,13 +198,13 @@ GS.ad.writeDivAndFillReviews = function(startId){
 }
 
 GS.ad.reviewDiv = function(id, visible_sizes_str, width) {
-    return '<div class="adslot ma '+visible_sizes_str+'" id="'+ id +'" style="width:'+width+'"></div>';
+    return '<div class="gs_ad_slot_reviews ma '+visible_sizes_str+'" id="'+ id +'" style="width:'+width+'"></div>';
 }
 
 
-
+///// examples
 // desktop
-//<div class="adslot visible-lg visible-md" id="div-gpt-ad-1397603538853-0" data-ad-size="[[300,600],[300,250]]" style="width: 300px; height: 250px;" data-dfp="School_Overview_Snapshot_300x250"></div>
+//<div class="gs_ad_slot visible-lg visible-md" id="div-gpt-ad-1397603538853-0" data-ad-size="[[300,600],[300,250]]" style="width: 300px;" data-dfp="School_Overview_Snapshot_300x250"></div>
 
 // mobile
-//<div class="adslot visible-sm visible-xs" id="div-gpt-ad-1397602726713-0" data-ad-size="[300,250]" style="width: 300px; height: 250px;" data-dfp="School_Overview_Mobile_Snapshot_300x250"></div>
+//<div class="gs_ad_slot visible-sm visible-xs" id="div-gpt-ad-1397602726713-0" data-ad-size="[300,250]" style="width: 300px;" data-dfp="School_Overview_Mobile_Snapshot_300x250"></div>
