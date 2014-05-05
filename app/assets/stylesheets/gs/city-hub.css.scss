@@ -5,10 +5,9 @@
   z-index: 1;
 }
 
-// City Hub Search Hero //
+// Hub Search Hero //
 .image-bg-scale {
   width: 100%;
-  height: 500px;
   position: relative;
   overflow: hidden;
 }
@@ -340,6 +339,10 @@ hr.brand-bar {
   .school-breakdown {
     background: white;
     padding: 20px 20px 0 20px;
+    margin-left: -35px;
+    margin-bottom: -35px;
+    overflow: hidden;
+    width: 150%;
     h4 {
       color: black;
     }

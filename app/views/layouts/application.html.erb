@@ -3,6 +3,7 @@
 <head>
   <%= display_meta_tags %>
   <%= include_gon %>
+  <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= yield :javascript_includes %>
