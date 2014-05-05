@@ -14,13 +14,13 @@ GS.hubs.setupResponsiveCarousel = function() {
   };
 
   function cycle($slideshow, visibleCount) {
+    $slideshow.cycle('destroy');
     $slideshow.cycle($.extend(options, { carouselVisible: visibleCount }));
   }
 
   function initCycle() {
     var width = $(window).width();
-    var $slideshow = $('.cycle-slideshow');
-    $slideshow.cycle('destroy');
+    var $slideshow = $('.js-partner-carousel');
     if (width <= 400) {
       cycle($slideshow, 1);
     } else if (width > 400 && width <= 540) {
