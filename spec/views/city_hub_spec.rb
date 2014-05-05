@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe 'cities/_upcoming_events.html.erb' do
   context 'without upcoming events' do
-    it 'renders an error message' do
+    it 'does not render an error message' do
       view.stub(:important_events) { nil }
       render
 
-      expect(rendered).to have_content('No Upcoming Important Dates')
+      expect(rendered).to_not have_content('No Upcoming Important Dates')
     end
   end
 end
