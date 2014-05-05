@@ -206,8 +206,12 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
-    SchoolRating.joins("JOIN _#{state_abbr}.school s ON s.id=school_rating.school_id")
-                .joins("JOIN _#{state_abbr}.school_metadata m ON m.school_id=s.id")
+    # Because our build fails with native sql otherwise
+    # https://jenkins.greatschools.org/job/GSWebRubyAlpha%20-%20All%20Specs/2/console
+    table = Rails.env.test? ?  "#{state_abbr}_test" : state_abbr
+
+    SchoolRating.joins("JOIN _#{table}.school s ON s.id=school_rating.school_id")
+                .joins("JOIN _#{table}.school_metadata m ON m.school_id=s.id")
                 .where("s.active=1 AND m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'")
                 .where("m.meta_value=? AND status='p'", collection_id)
                 .where("DATE_SUB(CURDATE(),INTERVAL 90 DAY) <= posted AND school_rating.state=?", state_abbr.upcase)
