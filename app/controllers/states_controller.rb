@@ -34,7 +34,7 @@ class StatesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      set_meta_tags title: "Choosing a school in #{@state[:long].upcase}"
+      set_meta_tags title: "Choosing a school in #{@state[:long].titleize}"
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @step3_links = CollectionConfig.choosing_page_links(configs)
@@ -47,6 +47,38 @@ class StatesController < ApplicationController
     end
   end
 
+  def enrollment
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      configs = CollectionConfig.where(collection_id: @collection_id)
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
+      @events = nil # stub
+
+      # TODO: if you don't show browse links, don't make this call, #hack
+      @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
+      @tab[:results][:public][:count] = 0
+      @tab[:results][:private][:count] = 0
+
+      @subheading = CollectionConfig.enrollment_subheading(configs)
+
+      @enrollment_module = CollectionConfig.enrollment_module(configs, @tab[:key])
+      @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
+
+      @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
+
+      set_meta_tags title: "#{@state[:long].titleize} Schools Enrollment Information"
+      @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
+        'Enrollment Information' => nil
+      }
+
+      @canonical_url = state_enrollment_url(params[:state])
+      render 'shared/enrollment'
+    end
+  end
 
   private
     def mapping

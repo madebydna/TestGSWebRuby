@@ -149,6 +149,7 @@ class CitiesController < ApplicationController
       }
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
+      render 'shared/enrollment'
     end
   end
 

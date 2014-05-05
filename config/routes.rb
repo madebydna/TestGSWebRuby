@@ -99,9 +99,13 @@ LocalizedProfiles::Application.routes.draw do
         state: States.any_state_name_regex,
     } do
       get '', to: 'states#show'
-      get 'enrollment', to: 'states#foobar'
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
+      get 'enrollment', to: 'states#enrollment', as: :enrollment
+      scope '/enrollment', as: :enrollment do
+        get '/:tab', to: 'states#enrollment'
+      end
+
       scope '/education-community', as: :education_community do
         get '', to: 'states#foobar'
         get '/patner', to: 'states#foobar', as: :partner

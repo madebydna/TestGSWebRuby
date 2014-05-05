@@ -15,7 +15,7 @@
 
 <div class="fixed-top pvm" style='background-color: #f5f5f5'>
   <div class="limit_width_1200">
-    <%= render 'upcoming_events', important_events: @events, community_page: true %>
+    <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
   </div>
 </div>
 
@@ -42,17 +42,24 @@
     <% end %>
 
     <ul class='js-enrollment-tabs' style='margin-bottom: 80px'>
-      <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
-      <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
-      <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle') %></li>
-      <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high') %></li>
+      <% if params[:city] %>
+        <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
+        <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
+        <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle') %></li>
+        <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high') %></li>
+      <% else %>
+        <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', state_enrollment_path(params[:state])) %></li>
+        <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', state_enrollment_path(params[:state]) + 'elementary') %></li>
+        <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', state_enrollment_path(params[:state]) + 'middle') %></li>
+        <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', state_enrollment_path(params[:state]) + 'high') %></li>
+      <% end %>
     </ul>
   </div>
 
-  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :public, key_dates: @key_dates %>
+  <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :public, key_dates: @key_dates %>
   <hr style='display: inline-block;'>
   <hr style='clear: both; margin-top: 70px; margin-bottom: 70px;'>
-  <%= render 'enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :private, key_dates: @key_dates %>
+  <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :private, key_dates: @key_dates %>
 
   </div>
 </div>
