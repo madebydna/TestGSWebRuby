@@ -170,6 +170,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_login_redirect
+    delete_cookie(:last_school)
     write_cookie :redirect_uri, request.path, { expires: 10.minutes.from_now }
   end
 
