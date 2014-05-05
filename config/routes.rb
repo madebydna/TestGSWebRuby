@@ -78,6 +78,8 @@ LocalizedProfiles::Application.routes.draw do
     resources :reported_entity do
       put 'deactivate', on: :member
     end
+
+    resources :data_load_schedules, path: '/data-planning'
   end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
