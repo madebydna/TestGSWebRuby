@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 def setup(collection_id, nickname)
-
   FactoryGirl.create(:important_events_collection_config, collection_id: collection_id)
   FactoryGirl.create(:collection_nickname, value: nickname, collection_id: collection_id)
   FactoryGirl.create(:enrollment_module_configs, quay: 'enrollmentPage_private_preschool_module', collection_id: collection_id)

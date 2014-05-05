@@ -232,12 +232,12 @@ describe SigninController do
           end
 
           context 'with a redirect_uri cookie set' do
-            it 'redirects to the redirect_uri' do
+            it 'prefers school overview' do
               stub_fb_login_fail
               cookies[:redirect_uri] = '/cookie-redirect-path'
               controller.stub(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
               get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/cookie-redirect-path')
+              expect(response).to redirect_to('/overview-url-double')
             end
           end
 

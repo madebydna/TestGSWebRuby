@@ -119,7 +119,6 @@ class SigninController < ApplicationController
         redirect_uri = URI.decode(cookies[:redirect_uri])
         delete_cookie :redirect_uri
       end
-      debugger
       redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
     end
   end
