@@ -55,6 +55,8 @@ class CollectionConfig < ActiveRecord::Base
     def city_featured_articles(collection_configs)
       begin
         raw_article_str = collection_configs.select(&lambda { |cc| cc.quay == FEATURED_ARTICLES_KEY }).first.value
+        raw_article_str.gsub!(/articles\s\:/, '"articles" =>')
+        raw_article_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
         articles = eval(raw_article_str)[:articles]
         articles.each do |article|
           article[:articleImagePath].prepend('/assets')
