@@ -1,7 +1,7 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<div class="fixed-top pvm" style='background-color: #f5f5f5'>
+<div class="upcoming-events fixed-top pvm">
   <div class="limit_width_1200">
     <%= render 'upcoming_events', important_events: @events, community_page: true %>
   </div>
