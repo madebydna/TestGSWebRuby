@@ -78,7 +78,6 @@ class TopNav
         [:choosePage, mapping.has_choose_page?],
         [:eventsPage, mapping.has_events_page?],
         [:enrollPage, mapping.has_enroll_page?],
-        [:partnerPage, mapping.has_partner_page?],
         [:hubCity, mapping.city],
         [:hubState, mapping.state]
       ].each do |tuple|
