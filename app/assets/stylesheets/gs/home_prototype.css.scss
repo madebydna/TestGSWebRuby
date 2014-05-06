@@ -1,0 +1,197 @@
+p, a, div, span, h1, h2, h3, h4, h5, h6, li {
+  line-height: 1.5em;
+}
+
+.sponsor-bar {
+  top: 58px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+// City Hub Search Hero //
+.image-bg-scale {
+  width: 100%;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-container, .img-container-mobile {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+}
+
+.content-centered {
+  position: relative;
+  top: 58px;
+  width: 100%;
+}
+
+.hub-hero-bg {
+  margin-top: 100px;
+  background: rgba(0, 0, 0, 0.62);
+  border-radius: 3px;
+  width: 940px;
+  margin: auto;
+  padding: 35px;
+  overflow: hidden;
+}
+
+//.search-hero-heading {
+//  float: left;
+//  h4 {
+//    color: #ffb725;
+//  }
+//
+//  h1 {
+//    color: #fff;
+//    font-size: 62px;
+//  }
+//
+//  h3 {
+//    color: #fff;
+//    font-size: 45px;
+//  }
+//
+//}
+
+.lg-search-bar {
+  width: 350px;
+}
+
+.clear-cookies-link {
+  color: #ddd;
+  clear: left;
+}
+
+.clear-cookies-link:hover {
+  color: #fff;
+}
+
+.school-breakdown {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+.search-type-toggle {
+  div:hover {
+    cursor: pointer;
+
+    span {
+      color: white;
+    }
+  }
+
+  div:first-child:hover, div:first-child.selected {
+    div.location-icon {
+      background-position: -16px -16px;
+    }
+  }
+
+  div:last-child:hover, div:last-child.selected {
+    div.home-icon {
+      background-position: -16px 0;
+    }
+  }
+
+  div.selected {
+    span {
+      color: white;
+    }
+  }
+
+  span {
+    color: #DDD;
+    cursor: pointer;
+  }
+}
+
+.state-hub-search-button {
+  height: 47px;
+  background: #0D6A99;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  padding: 0px 20px;
+}
+
+.browse-school-link {
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  color: white;
+  padding-left: 0;
+}
+
+.breakdown-result-count {
+  color: white;
+  top: 1px;
+  right: 0px;
+  width: 36px;
+  font-size: 13px;
+  border-radius: 10px;
+  background-color: #0D6A99;
+  padding: 2px 10px;
+}
+
+//Home page prototype
+.hero-bg {
+  margin-top: 100px;
+  //border-radius: 3px;
+  //width: 940px;
+  margin: auto;
+  padding: 35px;
+  overflow: hidden;
+}
+
+.shaded-bg {
+  margin-top: 100px;
+  background: rgba(0, 0, 0, 0.10);
+  border-radius: 3px;
+  //width: 1200px;
+  margin: auto;
+  padding-top: 35px;
+  padding-bottom: 50px;
+  overflow: hidden;
+}
+.orange-bg {
+  margin-top: 100px;
+  background: #ffb725;
+  border-radius: 3px;
+  //width: 1200px;
+  margin: auto;
+  padding: 35px;
+  overflow: hidden;
+}
+@media (max-width:1200px){
+  .pal-1200-35 {padding: 35px}
+  .mobile_img {width: 300px; height: 171px;}
+}
+
+@media (max-width:990px){
+
+}
+
+@media (max-width:767px){
+//.city_location_break{@include clearfix();}
+
+}
+
+@media (max-width:480px){
+  .tac-480 {text-align: center;}
+  .mobile_img {width: 300px; height: 150px;}
+  .btn-block-480 {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .img_tal_480 {text-align: left; padding: 0}
+
+}
