@@ -1,0 +1,32 @@
+<%= render 'nav/topnav' %>
+<div class="row limit_width_1200">
+  <div class="row pbl">
+    <div class="container" style="padding:10px;">
+      <h2>Data loads</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>State</td>
+            <td>Description</td>
+            <td>Type</td>
+            <td>Year to load</td>
+            <td>Live by</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @loads.each do |load|%>
+            <tr>
+              <td><%= load.state %></td>
+              <td><%= load.description %></td>
+              <td><%= load.load_type.titleize %></td>
+              <td><%= load.year_to_load %></td>
+              <td><%= load.live_by %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to 'Add one', new_admin_data_load_schedule_path %>
+    </div>
+  </div>
+</div>
