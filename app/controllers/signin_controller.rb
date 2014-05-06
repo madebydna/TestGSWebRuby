@@ -65,6 +65,7 @@ class SigninController < ApplicationController
       executed_deferred_action
 
       unless already_redirecting?
+        city_hub_page = nil
         if cookies[:redirect_uri]
           city_hub_page = URI.decode(cookies[:redirect_uri])
           delete_cookie :redirect_uri
@@ -115,6 +116,7 @@ class SigninController < ApplicationController
 
     executed_deferred_action
     unless already_redirecting?
+      redirect_uri =nil
       if cookies[:redirect_uri]
         redirect_uri = URI.decode(cookies[:redirect_uri])
         delete_cookie :redirect_uri
