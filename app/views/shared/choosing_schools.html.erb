@@ -1,13 +1,13 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<div class="pvm" style='background-color: #f5f5f5'>
-  <div class="limit_width_1200">
-    <% if params[:city] %>
-      <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-    <% end %>
+<% if params[:city] %>
+  <div class="upcoming-events pvm">
+    <div class="limit_width_1200">
+        <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="limit_width_1200" style='margin-bottom: 40px;'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
@@ -110,7 +110,7 @@
       <ul>
         <% unless @step3_links.nil? %>
           <% @step3_links.each do |link| %>
-            <% if link[:newwindow] == 'true' %>
+            <% if link[:newWindow] == 'true' %>
               <li><%= link_to(link[:name], link[:path], target: '_blank') %></li>
             <% else %>
               <li><%= link_to(link[:name], link[:path]) %></li>
@@ -143,6 +143,7 @@
         Take time to visit the schools at the top of your list. Visiting is the best way to tell whether you and your child feel welcomed and comfortable at each school. You also have a chance to observe teachers in action, and see whether students are actively engaged in learning.
       </p>
 
+      <h4>Featured resources</h4>
       <ul>
         <li><a href="/find-a-school/school-visit/24-the-school-visit-what-to-look-for-what-to-ask.gs">The school visit: what to look for, what to ask</a></li>
         <li><a href="/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>

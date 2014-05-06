@@ -91,4 +91,5 @@ feature 'configurable dropdown menu' do
     expect(page).to have_selector('.dropdown-toggle', text: 'Delaware')
     expect(page).to_not have_selector('.dropdown-toggle', text: 'Detroit, MI')
   end
+
 end

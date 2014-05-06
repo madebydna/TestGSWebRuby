@@ -42,6 +42,7 @@ class CitiesController < ApplicationController
       @hero_image = "/assets/hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "/assets/hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
+      write_cookie_value :last_school, { state: 'mi', id: 253  }
     end
   end
 
