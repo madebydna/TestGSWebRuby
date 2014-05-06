@@ -23,6 +23,9 @@
 
 <div class="limit_width_1200">
   <%= render 'featured_articles', articles: @articles, state: @state %>
+  <% if @partners.nil? %>
+    <div class="clearfix" style='margin-bottom: 60px;'></div>
+  <% end %>
   <%= render 'partners', partners: @partners %>
 </div>
 
