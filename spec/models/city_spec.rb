@@ -2,23 +2,19 @@ require 'spec_helper'
 
 describe City do
   describe '.popular_cities' do
-    after(:each) { clean_dbs :us_geo }
     before(:each) do
-      c1 = FactoryGirl.create(:city)
-      FactoryGirl.create(:city, name: 'Test City', population: c1.population + 1000)
-      FactoryGirl.create(:city, name: 'Test City2', population: c1.population + 2000)
+      clean_dbs :us_geo
+      (1..10).to_a.map do |i|
+        FactoryGirl.create(:city, name: "Test City#{i}", population: "#{i}000".to_i)
+      end
     end
 
-    it 'orders cities by population' do
-      cities = City.popular_cities('IN').to_a
-      expect(cities.first.population).to be > cities.last.population
-    end
     it 'optionally limits results' do
-      cities1 = City.popular_cities('IN', limit: 1).to_a
-      cities2 = City.popular_cities('IN', limit: 2).to_a
+      cities1 = City.popular_cities('IN', limit: 3).to_a
+      cities2 = City.popular_cities('IN', limit: 5).to_a
 
-      expect(cities1).to have(1).items
-      expect(cities2).to have(2).item
+      expect(cities1).to have(3).items
+      expect(cities2).to have(5).item
     end
   end
 end

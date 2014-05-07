@@ -10,16 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-/*
- *= require_self
- *= require jquery
- *= require jquery_ujs
- *= require lodash
- *= require_tree ./resources
- *= require_tree ./util
- *= require_tree ./auth
- *= require_tree ./localized_profiles
- */
+//= require_self
+//= require jquery
+//= require great_schools
+//= require jquery_ujs
+//= require lodash
+//= require util/util.js
+//= require util/uri
+//= require resources/omniture.js
+//= require util/tracking.js
+//= require_tree ./util
+//= require_tree ./resources
+//= require_tree ./auth
+//= require_tree ./localized_profiles
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;

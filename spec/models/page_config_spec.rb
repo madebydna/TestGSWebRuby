@@ -6,6 +6,7 @@ describe PageConfig do
     let(:page) { FactoryGirl.build(:page, name: 'Test') }
 
     before do
+      clean_dbs :profile_config
       all_placements = []
       @roots = FactoryGirl.create_list(:category_placement, 3, page: page)
       @roots[0].position = 99

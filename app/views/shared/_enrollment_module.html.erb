@@ -1,0 +1,59 @@
+<div class="row mhm">
+  <div class="col-sm-8 col-lg-8 mbm" style='padding-right: 8%;'>
+    <% unless enrollment_module[type].nil? %>
+      <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
+      <%= enrollment_module[type][:content].html_safe %>
+      <% unless enrollment_module[type][:view_more].nil? %>
+        <div class='js-module-expand'><%= enrollment_module[type][:view_more].html_safe %></div>
+        <span class="view-more">View More »</span>
+      <% end %>
+    <% else %>
+      <h3>Something went wrong while parsing enrollment module tab:<%= @tab[:key] %></h3>
+    <% end %>
+  </div>
+
+  <div class="col-sm-4 col-lg-4 mbm">
+    <% unless tab[:results][type][:count] == 0 %>
+      <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
+        <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
+        <span class='breakdown-result-count'><%= tab[:results][type][:count] %></span>
+      </a>
+    <% end %>
+
+    <% unless key_dates[type].nil? %>
+      <hr class='brand-bar'>
+      <h4>Key Dates</h4>
+      <%= key_dates[type].html_safe %>
+    <% end %>
+
+    <% unless @tips[type][:content].empty? %>
+      <hr class='brand-bar'>
+      <div class="pull-left iconx16 i-16-did-you-know" style="margin-top: 3px; margin-right: 5px;"></div>
+      <h4>Did You know?</h4>
+      <% if @tips[type][:content].length == 1 %>
+        <p><%= @tips[type][:content][0].html_safe %></p>
+      <% else %>
+        <div class="js-carousel">
+          <a href="#!" class="js-prev fl" style='margin-top: 18%; width: 10%'>
+            <span class="i-arrow-24 i-arrow-24-left"></span>
+          </a>
+          <div class='fl phl' style='width: 80%;'>
+            <div class="cycle-slideshow"
+                 data-cycle-slides="> div"
+                 data-cycle-timeout="10"
+                 data-index="<%= type == :public ? 0 : 1 %>">
+              <% @tips[type][:content].each do |tip| %>
+                <div><%= tip.html_safe %></div>
+              <% end %>
+            </div>
+          </div>
+          <a href="#!" class="js-next fl" style='margin-top: 18%; width: 10%'>
+            <span class="i-arrow-24 i-arrow-24-right"></span>
+          </a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+
+</div>

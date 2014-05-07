@@ -4,7 +4,7 @@ describe User do
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
-
+    before(:each) { clean_dbs :gs_schooldb }
     before(:each) { user.encrypt_plain_text_password }
 
     it 'should be able to have subscriptions' do
@@ -13,9 +13,7 @@ describe User do
     end
 
     it 'should be provisional after being saved' do
-      pending 'pending review and fix this test'
       user.save!
-      user.password = 'password'
       expect(user).to be_provisional
     end
 
@@ -117,10 +115,10 @@ describe User do
       end
 
       it 'does not allow nil or blank passwords' do
-        pending 'fix'
-        expect(user.password_is? '').to be_false
-        expect(user.password_is? nil).to be_false
-        expect{user.save!}.to raise_error(ActiveRecord::RecordInvalid)
+        user.password = nil
+        expect(user).to_not be_valid
+        user.password = ''
+        expect(user).to_not be_valid
       end
 
       # required use of string#rindex in code

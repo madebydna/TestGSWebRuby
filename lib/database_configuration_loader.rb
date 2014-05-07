@@ -40,7 +40,7 @@ class DatabaseConfigurationLoader
 
     config.gs_recursive_each_with_clone do |hash, key, val|
       if key.match STATE_TEMPLATE_STRING
-        States.abbreviations.each do |state|
+        States.abbreviations.map(&:downcase).each do |state|
           new_key = key.sub STATE_TEMPLATE_STRING, state
           hash[new_key] = val.nil? ? nil : val.clone
 

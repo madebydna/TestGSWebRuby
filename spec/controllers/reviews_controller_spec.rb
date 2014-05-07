@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'controllers/concerns/review_controller_concerns_spec'
+require 'controllers/concerns/review_controller_concerns_shared'
 
 describe ReviewsController do
   let(:current_user) { FactoryGirl.build(:user) }

@@ -18,31 +18,13 @@
   font-weight: 400;
   font-style: italic;
 }
+
 @font-face {
   font-family: 'SourceSansPro-Semibold';
-  src:  url('SourceSansPro-Semibold-webfont.eot?');
-  src:  local('?'),
-        url('SourceSansPro-Semibold-webfont.woff') format('woff'),
-        url('SourceSansPro-Semibold-webfont.ttf')  format('truetype'),
-        url('SourceSansPro-Semibold-webfont.svg#SourceSansPro-Semibold') format('svg');
+  src: url(font-path('SourceSansPro-Semibold-webfont.eot') + "?#iefix") format('embedded-opentype'),
+       url(font-path('SourceSansPro-Semibold-webfont.woff')) format('woff'),
+       url(font-path('SourceSansPro-Semibold-webfont.ttf'))  format('truetype'),
+       url(font-path('SourceSansPro-Semibold-webfont.svg') + "#SourceSansPro-Semibold") format('svg');
   font-weight: 700;
   font-style: normal;
-}
-
-.source_sans {
-   font-family: 'SourceSansPro-Regular';
-   font-weight: 400;
-   font-style: normal;
-}
-
-.source_sans_i {
-   font-family: 'SourceSansPro-It';
-   font-weight: 400;
-   font-style: italic;
-}
-
-.source_sans_sb {
-   font-family: 'SourceSansPro-Semibold';
-   font-weight: 700;
-   font-style: normal;
 }

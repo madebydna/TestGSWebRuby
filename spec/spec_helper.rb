@@ -1,12 +1,35 @@
-
 ENV["RAILS_ENV"] = 'test'
 
 require 'rubygems'
+
 require 'simplecov'
+if ENV['JENKINS_URL'] # on ci server
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+elsif ENV['coverage']
+  require 'simplecov-html'
+  SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
+end
+
+if ENV['JENKINS_URL'] || ENV['coverage']
+  SimpleCov.start 'rails' do
+    add_group 'Changed' do |source_file|
+      `git ls-files --exclude-standard --others \
+        && git diff --name-only \
+        && git diff --name-only --cached`.split("\n").detect do |filename|
+        source_file.filename.ends_with?(filename)
+      end
+    end
+    add_filter '/spec/'
+    add_filter '/config/'
+    add_filter 'lib/test_connection_management.rb'
+  end
+end
+
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-# require 'rspec/autorun'
 require 'database_cleaner'
+require 'capybara/rspec'
 require 'factory_girl'
 
 
@@ -18,7 +41,7 @@ def monkey_patch_database_cleaner
     # Instead of letting database_cleaner reload database.yml, just tell it to use the config that is already loaded
     def load_config
       if self.db != :default && self.db.is_a?(Symbol)
-        @connection_hash   = ::ActiveRecord::Base.configurations['test'][self.db.to_s]
+        @connection_hash = ::ActiveRecord::Base.configurations['test'][self.db.to_s]
       end
     end
   end
@@ -39,7 +62,7 @@ def clean_models(db, *models)
   end
 
   models.each do |model|
-    if db 
+    if db
       model.on_db(db).destroy_all
     else
       model.destroy_all
@@ -47,47 +70,20 @@ def clean_models(db, *models)
   end
 end
 
-if ENV['coverage']
-  if ENV['JENKINS_URL'] # on ci server
-    require 'simplecov-rcov'
-    SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  else
-    require 'simplecov-html'
-    SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-  end
-end
-
-if ENV['JENKINS_URL'] || ENV['coverage']
-  SimpleCov.start do
-    add_filter '/spec/'
-    add_filter 'config/initializers/rails_admin.rb'
-    add_filter 'lib/test_connection_management.rb'
-    add_filter 'lib/database_tasks_helper.rb'
-  end
-end
-
 # If you change this you'll also need to change the value in test.rb
-Rails.application.routes.default_url_options[:host] = 'test.host'      
+Rails.application.routes.default_url_options[:host] = 'test.host'
 Rails.application.routes.default_url_options[:trailing_slash] = true
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/controllers/concerns/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.include Rails.application.routes.url_helpers
-
   config.include FactoryGirl::Syntax::Methods
-
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -102,6 +98,7 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
+
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
@@ -114,17 +111,19 @@ RSpec.configure do |config|
   # Use color not only in STDOUT but also in pagers and files
   config.tty = true
 
-  # Use the specified formatter
-  config.formatter = :documentation # :progress, :html, :textmate
-
   # remove support for "should" syntax, since it is deprecated. Use expect syntax instead
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
 
+  config.mock_with :rspec
+
+    # use capybara-webkit
+  Capybara.javascript_driver = :webkit
+
+  Capybara.default_host = 'http://localhost:3000'
+
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above
   monkey_patch_database_cleaner
-
-
 end

@@ -7,8 +7,8 @@ namespace :db do
       legacy_database_names = DatabaseConfigurationHelper.legacy_database_names 'test'
 
       DatabaseTasksHelper.copy_database_schemas_from_server(
-        :mysql_dev, 
-        :mysql_localhost, 
+        :mysql_dev,
+        :mysql_localhost,
         legacy_database_names
       ) { |db_name| "#{db_name}_test" }
 

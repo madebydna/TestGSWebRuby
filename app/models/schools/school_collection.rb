@@ -10,7 +10,23 @@ class SchoolCollection
     end
   end
 
-  # No longer being used
+  # Returns an array of Collection instances for a given school
+  def self.for_school(school)
+    collection_id = school.school_metadata['collection_id']
+    if collection_id
+      hub_city_mapping = HubCityMapping.for_collection_id(collection_id)
+      if hub_city_mapping
+        return [ Collection.from_hub_city_mapping(hub_city_mapping) ]
+      end
+    end
+
+    return []
+  end
+
+  def self.for_collection(collection)
+    all.select { |school_collection| school_collection.collection_id == collection.id }
+  end
+
   def self.from_hub_city_mapping(hub_city_mapping)
     collection = Collection.from_hub_city_mapping hub_city_mapping
     shard = hub_city_mapping.state.downcase.to_sym
@@ -26,12 +42,12 @@ class SchoolCollection
     end
 
     school_collections = school_ids.map do |school_id|
-      SchoolCollection.new(
-        school_id: school_id,
-        school_state: hub_city_mapping.state.downcase,
-        collection: collection
-      )
-    end
+     SchoolCollection.new(
+       school_id: school_id,
+       school_state: hub_city_mapping.state.downcase,
+       collection: collection
+     )
+  end
 
     school_collections
   end
@@ -41,9 +57,6 @@ class SchoolCollection
   # get all collections, and one to get the school IDs associated with the collection)
   #
   # Results should be cached so these queries execute rarely
-  #
-  #
-  # No longer being used. Turned out to be unnecessary / too much non-needed logic
   def self.all(state = nil)
     hub_city_mappings = HubCityMapping.all
 
@@ -57,24 +70,6 @@ class SchoolCollection
     end
     results
   end
-
-  # Returns an array of Collection instances for a given school
-  def self.for_school(school)
-    collection_id = school.school_metadata['collection_id']
-    if collection_id
-      hub_city_mapping = HubCityMapping.for_collection_id(collection_id).first
-      if hub_city_mapping
-        return [ Collection.from_hub_city_mapping(hub_city_mapping) ]
-      end
-    end
-
-    return []
-  end
-
-  def self.for_collection(collection)
-    all.select { |school_collection| school_collection.collection_id == collection.id }
-  end
-
 
   # Immediately returns @school if present, otherwise runs query to find school by school_id
   def school

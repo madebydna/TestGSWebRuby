@@ -1,5 +1,7 @@
-module ApplicationHelper
+require './app/models/presenters/topnav'
 
+module ApplicationHelper
+  include CookieConcerns
 
   def category_placement_anchor(category_placement)
     "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
@@ -111,8 +113,6 @@ module ApplicationHelper
   def include_lightbox_media (media_hash)
     r_str = ''
     if media_hash
-      #debugger
-
       media_hash.each { | x  |
         if media_hash
           r_str <<  '<a href="' + generate_img_path("500", x["hash"])  + '">' + "\n"
@@ -201,11 +201,18 @@ module ApplicationHelper
   end
 
   def breadcrumb_hash
-    {
-        'Home' => home_url,
-        hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-        hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
-    }
+    if hub_params[:city]
+      {
+          'Home' => home_url,
+          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+          hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
+      }
+    else
+      {
+          'Home' => home_url,
+          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
+      }
+    end
   end
 
   def zillow_url(school)
@@ -254,4 +261,7 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
+  def topnav(school, hub_params)
+    TopNav.new(school, hub_params, cookies)
+  end
 end

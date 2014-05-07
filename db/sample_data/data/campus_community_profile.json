@@ -1,0 +1,52 @@
+[
+  {
+    "name": "campus_community_profile",
+    "db": "_de",
+    "table": "school",
+    "data": [
+      {
+        "id": 100,
+        "district_id": 1,
+        "state_id": "01611190130229",
+        "city": "Dover",
+        "county": "Dover",
+        "FIPScounty": 6001,
+        "fax": "(510) 521-4740",
+        "home_page_url": "http://aus.alamedausd.ca.schoolloop.com/",
+        "lat": 37.764233,
+        "level": "9,10,11,12",
+        "level_code": "h",
+        "lon": -122.247757,
+        "name": "Campus Community School",
+        "nces_code": "060177000041",
+        "phone": "(510) 337-7022",
+        "state": "DE",
+        "street": "2201 Encinal Avenue",
+        "type": "public",
+        "subtype": "secondary",
+        "preschool_subtype": "",
+        "zipcode": "94501",
+        "zipcentroid": 0,
+        "active": 1,
+        "mail_street": "2201 Encinal Avenue",
+        "mail_city": "Alameda",
+        "mail_zipcode": "94501",
+        "accreditation": null,
+        "association": null,
+        "affiliation": null,
+        "created": "2005-01-01 00:00:00 -0800",
+        "modified": "2013-12-20 11:47:25 -0800",
+        "modifiedBy": "kmchugh",
+        "authorizer_id": null,
+        "operator_id": null,
+        "vendor_id": null,
+        "street_line_2": "",
+        "manual_edit_by": "kmchugh",
+        "manual_edit_date": "2013-12-20 00:00:00 -0800",
+        "notes": "",
+        "overview_title": null,
+        "new_profile_school": 2
+      }
+    ]
+  }
+]

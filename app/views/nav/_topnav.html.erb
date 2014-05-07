@@ -12,43 +12,41 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
-            <ul class="nav navbar-nav ">
+            <% nav = topnav(@school, @hub_params) %>
+            <ul class="nav navbar-nav">
                 <li>
-                    <%- if hub_params.present? %>
-                    <a class="dropdown-toggle source_sans" data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
-                        <%="#{hub_params[:city].gsub(/-/, ' ').gs_capitalize_words}, #{States.abbreviation(@school.present? ? @school.state : cookies[:hubState]).upcase}" %>  <b class="caret"></b>
-                    </a>
+                    <%- if nav.has_topnav? %>
+                        <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
+                            <%= nav.topnav_title %>  <b class="caret"></b>
+                        </a>
                     <% end %>
-                    <ul class="dropdown-menu"> <!-- bullet type: disc/square/circle-->
-                        <%- if hub_params.present? %>
-                        <li>
-                            <%= link_to "#{hub_params[:city].gsub(/-/, ' ').gs_capitalize_words} Home",
-                                city_url(hub_params), {
-                                    class: 'source_sans', style: 'text-transform:capitalize;'
-                                }
-                            %>
-                        </li>
-                        <li>
-                            <%= link_to 'Choosing a School',
-                                choosing_schools_url(hub_params),
-                                class: 'source_sans' %>
-                        </li>
-                        <li>
-                            <%= link_to 'Education Community', education_community_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to 'Enrollment Information', enrollment_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to 'Events', events_url(hub_params) %>
-                        </li>
-                        <li>
-                            <%= link_to home_url, onclick:'javascript:GS.hubs.clearLocalUserCookies();' do %>Not in
-                                <span><%= hub_params[:city].gsub(/-/, ' ').gs_capitalize_words %></span>?
-                            <% end %>
-                        </li>
-                        <% end %>
+                    <ul class="dropdown-menu">
+                        <%- if nav.has_topnav? %>
+                            <% if nav.city %>
+                                <%= render 'nav/dropdown_link', text: "#{nav.city.gs_capitalize_words} Home", url: city_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: 'Choosing a School', url: city_choosing_schools_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: 'Education Community', url: city_education_community_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: 'Enrollment Information', url: city_enrollment_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: 'Events', url: city_events_url(nav.url_params) %>
 
+                                <li>
+                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
+                                        <span style="text-transform:capitalize;"><%= nav.city.gs_capitalize_words %></span>?
+                                    <% end %>
+                                </li>
+                            <% else %>
+                                <%= render 'nav/dropdown_link', text: "#{States.state_name(nav.state).gs_capitalize_words} Home", url: state_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: "Choosing a School", url: state_choosing_schools_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: '#' %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: "Enrollment Information", url: state_enrollment_url(nav.url_params) %>
+
+                                <li>
+                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
+                                        <span style="text-transform:capitalize;"><%= nav.state.gs_capitalize_words %></span>?
+                                    <% end %>
+                                </li>
+                            <% end %>
+                        <% end %>
                     </ul>
                 </li>
                 <li><%= link_to 'Find a School', find_schools_url %></li>

@@ -1,8 +1,5 @@
 require 'spec_helper'
-require 'controllers/concerns/localization_concerns_spec'
 describe LocalizedProfileController do
-  it_behaves_like 'localization'
-
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
@@ -46,7 +43,7 @@ describe LocalizedProfileController do
 
     it 'should convert a full state name to a state abbreviation' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:state]).to eq('ca')
+      expect(assigns[:state]).to eq({ 'long' => 'california', 'short' => 'ca' })
     end
 
   end
@@ -205,8 +202,8 @@ describe LocalizedProfileController do
     end
 
     describe '#redirect_to_canonical_url' do
-      let(:school) { 
-        FactoryGirl.build(:school, 
+      let(:school) {
+        FactoryGirl.build(:school,
                           id: 1,
                           state: 'mi',
                           city: 'detroit',

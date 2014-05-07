@@ -1,0 +1,23 @@
+<% unless announcement.nil? %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pvm">
+      <div class="success-block">
+        <span class="mrm" style='font-weight: bold;'>ANNOUNCEMENT</span>
+        <span><%= announcement[:content] %></span>
+        <% if announcement[:newWindow] == 'true' %>
+          <%= link_to(announcement[:link][:name], announcement[:link][:path],  target: '_blank', class: 'mls') %>
+        <% else %>
+          <%= link_to(announcement[:link][:name], announcement[:link][:path], class: 'mls') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pvm">
+      <div class="success-block">
+        <h3 class="mbm mtl">No Data Found - _event_announcements.html.erb</h3>
+      </div>
+    </div>
+  </div>
+<% end %>

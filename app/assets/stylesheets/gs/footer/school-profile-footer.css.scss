@@ -1,0 +1,21 @@
+#footer {
+  background-color: #333;
+  color: #FFF;
+
+  h5 {
+    color: #666;
+  }
+  p, a {
+    @extend .small;
+    color: #CCC;
+  }
+  hr {
+    border-color: #444;
+  }
+  ul {
+    @extend .list-unstyled;
+  }
+}
+
+@import "sign-up-for-updates";
+@import "school-contact-info-footer";
