@@ -95,7 +95,7 @@ GS.reviews = GS.reviews || function($) {
         var adStartInt = function(offset, limit, nextTen){
             var retInt = 0;
             if(nextTen){
-                retInt = offset / limit * GS.ad.reviewCount;
+                retInt = offset / limit * GS.ad.reviewSlotCount;
             }
             return retInt;
         }

@@ -10,14 +10,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
-//= require jquery_ujs
-//= require lodash
-//= require util/util.js
-//= require resources/omniture.js
-//= require util/tracking.js
-//= require_tree .
-
+/*
+ *= require jquery
+ *= require jquery_ujs
+ *= require lodash
+ *= require_tree ./util
+ *= require_tree ./resources
+ *= require_tree ./auth
+ *= require_tree ./localized_profiles
+ */
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;
@@ -25,4 +26,6 @@ Function.prototype.gs_bind = function(obj) {
         return method.apply(obj, arguments);
     };
 };
+
+window.gon = window.gon || {}
 
