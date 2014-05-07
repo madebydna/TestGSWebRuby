@@ -82,7 +82,7 @@ GS.reviews = GS.reviews || function($) {
                 async:true
             }).done(function (html) {
                 reviewContentLayer.append(html);
-                GS.ad.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
+                GS.reviewsAd.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
             }.gs_bind(this));
 
             var new_offset = results['offset'] + results['limit'];

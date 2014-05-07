@@ -11,11 +11,12 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 /*
+ *= require_self
  *= require jquery
  *= require jquery_ujs
  *= require lodash
- *= require_tree ./util
  *= require_tree ./resources
+ *= require_tree ./util
  *= require_tree ./auth
  *= require_tree ./localized_profiles
  */

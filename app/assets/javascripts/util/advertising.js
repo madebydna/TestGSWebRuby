@@ -2,6 +2,8 @@ var GS = GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
+GS.ad.functionSlotDefinitionArray = [];
+GS.ad.functionAdShowArray = [];
 
 //adobe audience manager code - copied and pasted
 GS.ad.AamGpt = {
@@ -81,20 +83,20 @@ $(function(){
       $(dfp_slots).each(function(){
           GS.ad.slot[GS.ad.getDivId($(this))] = googletag.defineSlot( GS.ad.getSlotName($(this)), GS.ad.getDimensions($(this)), GS.ad.getDivId($(this)) ).addService(googletag.pubads());
       });
-      if(gon.pagename == "Reviews"){
 
-          GS.ad.reviewContent();
+      while (GS.ad.functionSlotDefinitionArray.length > 0) {
+        (GS.ad.functionSlotDefinitionArray.shift())();
       }
+
       GS.ad.setPageLevelTargeting();
       googletag.enableServices();
-
 
       $(dfp_slots).each(function(){
           GS.ad.showAd(GS.ad.getDivId($(this)));
       });
 
-      if(gon.pagename == "Reviews") {
-        GS.ad.writeDivAndFillReviews(0);
+      while (GS.ad.functionAdShowArray.length > 0) {
+        (GS.ad.functionAdShowArray.shift())();
       }
     });
   }
@@ -140,6 +142,15 @@ GS.ad.showAd = function(divId){
   }
 }
 
+GS.ad.addToAdSlotDefinitionArray = function(fn, context, params) {
+  GS.ad.functionSlotDefinitionArray.push(GS.util.wrapFunction(fn, context, params));
+}
+
+GS.ad.addToAdShowArray = function(fn, context, params) {
+  GS.ad.functionAdShowArray.push(GS.util.wrapFunction(fn, context, params));
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -147,37 +158,39 @@ GS.ad.showAd = function(divId){
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-GS.ad.reviewSlotsArr = [
+GS.reviewsAd = GS.reviewsAd || {}
+
+GS.reviewsAd.reviewSlotsArr = [
   ['School_Reviews_Review1_728x90', [728, 90]],
   ['School_Reviews_Review2_300x250', [300, 250]],
   ['School_Reviews_Review3_728x90', [728, 90]]
 ];
-GS.ad.reviewSlotsMobileArr = [
+GS.reviewsAd.reviewSlotsMobileArr = [
   ['School_Reviews_Mobile_Review1_320x50', [320, 50]],
   ['School_Reviews_Mobile_Review2_300x250', [300, 250]],
   ['School_Reviews_Mobile_Review3_320x50', [320, 50]]
 ];
 
-GS.ad.reviewSlotCount = GS.ad.reviewSlotsArr.length;
+GS.reviewsAd.reviewSlotCount = GS.reviewsAd.reviewSlotsArr.length;
 
 // This is creating ad slots for the reviews page.  This way they can be injected on next ten click.
 //  This occurs before the setTargeting calls.
-GS.ad.reviewContent = function() {
+GS.reviewsAd.reviewContent = function() {
   if (gon.review_count > 0) {
-    var ad_count = GS.ad.getReviewAdCount(gon.review_count);
+    var ad_count = GS.reviewsAd.getReviewAdCount(gon.review_count);
     for (i = 0; i < ad_count; i++) {
-      desktop_ad = GS.ad.getReviewDefinedAdSlotArray(i);
-      mobile_ad = GS.ad.getReviewDefinedAdSlotArrayMobile(i);
-      GS.ad.slot[GS.ad.reviewAdSlotName(i)] = googletag.defineSlot(
-              '/1002894/' + desktop_ad[0],
-              desktop_ad[1],
-              GS.ad.reviewAdSlotName(i)
+      desktop_ad = GS.reviewsAd.getReviewDefinedAdSlotArray(i);
+      mobile_ad = GS.reviewsAd.getReviewDefinedAdSlotArrayMobile(i);
+      GS.ad.slot[GS.reviewsAd.reviewAdSlotName(i)] = googletag.defineSlot(
+          '/1002894/' + desktop_ad[0],
+        desktop_ad[1],
+        GS.reviewsAd.reviewAdSlotName(i)
       ).addService(googletag.pubads());
 
-      GS.ad.slot[GS.ad.reviewAdSlotNameMobile(i)] = googletag.defineSlot(
-              '/1002894/' + mobile_ad[0],
-              mobile_ad[1],
-              GS.ad.reviewAdSlotNameMobile(i)
+      GS.ad.slot[GS.reviewsAd.reviewAdSlotNameMobile(i)] = googletag.defineSlot(
+          '/1002894/' + mobile_ad[0],
+        mobile_ad[1],
+        GS.reviewsAd.reviewAdSlotNameMobile(i)
       ).addService(googletag.pubads());
     }
   }
@@ -185,16 +198,16 @@ GS.ad.reviewContent = function() {
 
 
 // called by google advertising init above and also by the ajax call back in reviews.js
-GS.ad.writeDivAndFillReviews = function(startId){
+GS.reviewsAd.writeDivAndFillReviews = function(startId){
   var review_id = startId;
   $(".js_insertAdvertisingReview").each(function( index ) {
     // need to add div with width size
-    var reviewIdName = GS.ad.reviewAdSlotName(review_id);
-    var reviewIdNameMobile = GS.ad.reviewAdSlotNameMobile(review_id);
+    var reviewIdName = GS.reviewsAd.reviewAdSlotName(review_id);
+    var reviewIdNameMobile = GS.reviewsAd.reviewAdSlotNameMobile(review_id);
     $(this).append(
-          (GS.ad.reviewDiv(reviewIdName, 'visible-lg visible-md visible-sm', GS.ad.getAdSlotWidthStr(index)))
-          + " \n "
-          + (GS.ad.reviewDiv(reviewIdNameMobile, 'visible-xs', GS.ad.getAdSlotWidthStrMobile(index)))
+        (GS.reviewsAd.reviewDiv(reviewIdName, 'visible-lg visible-md visible-sm', GS.reviewsAd.getAdSlotWidthStr(index)))
+        + " \n "
+        + (GS.reviewsAd.reviewDiv(reviewIdNameMobile, 'visible-xs', GS.reviewsAd.getAdSlotWidthStrMobile(index)))
     );
 
     $(this).removeClass('js_insertAdvertisingReview');
@@ -209,37 +222,39 @@ GS.ad.writeDivAndFillReviews = function(startId){
   });
 }
 
-GS.ad.getReviewDefinedAdSlotArray = function(num){
-  return GS.ad.reviewSlotsArr[num%GS.ad.reviewSlotCount];
+GS.reviewsAd.getReviewDefinedAdSlotArray = function(num){
+  return GS.reviewsAd.reviewSlotsArr[num%GS.reviewsAd.reviewSlotCount];
 }
 
-GS.ad.getReviewDefinedAdSlotArrayMobile = function(num){
-  return GS.ad.reviewSlotsMobileArr[num%GS.ad.reviewSlotCount];
+GS.reviewsAd.getReviewDefinedAdSlotArrayMobile = function(num){
+  return GS.reviewsAd.reviewSlotsMobileArr[num%GS.reviewsAd.reviewSlotCount];
 }
 
-GS.ad.getReviewAdCount = function(reviewCount){
-  return Math.round(reviewCount/GS.ad.reviewSlotCount)+1;
+GS.reviewsAd.getReviewAdCount = function(reviewCount){
+  return Math.round(reviewCount/GS.reviewsAd.reviewSlotCount)+1;
 }
 
-GS.ad.getAdSlotWidthStr = function(index){
-  return GS.ad.reviewSlotsArr[index][1][0]+'px';
+GS.reviewsAd.getAdSlotWidthStr = function(index){
+  return GS.reviewsAd.reviewSlotsArr[index][1][0]+'px';
 }
 
-GS.ad.getAdSlotWidthStrMobile = function(index){
-  return GS.ad.reviewSlotsArr[index][1][0]+'px';
+GS.reviewsAd.getAdSlotWidthStrMobile = function(index){
+  return GS.reviewsAd.reviewSlotsArr[index][1][0]+'px';
 }
 
-GS.ad.reviewDiv = function(id, visible_sizes_str, width) {
+GS.reviewsAd.reviewDiv = function(id, visible_sizes_str, width) {
   return '<div class="gs_ad_slot_reviews ma '+visible_sizes_str+'" id="'+ id +'" style="width:'+width+'"></div>';
 }
 
-GS.ad.reviewAdSlotName = function(num){
- return "adReviewPagination_"+num;
+GS.reviewsAd.reviewAdSlotName = function(num){
+  return "adReviewPagination_"+num;
 }
 
-GS.ad.reviewAdSlotNameMobile = function(num){
+GS.reviewsAd.reviewAdSlotNameMobile = function(num){
   return "adReviewPaginationMobile_"+num;
 }
+
+
 
 ///// examples
 // desktop
@@ -247,3 +262,6 @@ GS.ad.reviewAdSlotNameMobile = function(num){
 
 // mobile
 //<div class="gs_ad_slot visible-sm visible-xs" id="div-gpt-ad-1397602726713-0" data-ad-size="[300,250]" style="width: 300px;" data-dfp="School_Overview_Mobile_Snapshot_300x250"></div>
+
+
+
