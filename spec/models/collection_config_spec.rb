@@ -675,15 +675,18 @@ describe CollectionConfig do
 
   describe '.state_choose_school' do
     context 'with missing or malformed data' do
-      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config)] }
+      let(:bogus_configs) { [FactoryGirl.create(:bogus_collection_config, quay: 'statehubHome_chooseSchool')] }
 
       it 'returns nil' do
-        expect(CollectionConfig.state_choose_school([])).to be_nil
-        expect(CollectionConfig.state_choose_school(bogus_configs)).to be_nil
+        [
+          CollectionConfig.state_choose_school([]),
+          CollectionConfig.state_choose_school(bogus_configs)
+        ].each { |result| expect(result).to be_nil }
       end
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
-        result = CollectionConfig.state_choose_school([])
+        Rails.logger.should_receive(:error).twice
+        CollectionConfig.state_choose_school([])
+        CollectionConfig.state_choose_school(bogus_configs)
       end
     end
 
