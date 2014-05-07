@@ -70,7 +70,7 @@ class SigninController < ApplicationController
           city_hub_page = URI.decode(cookies[:redirect_uri])
           delete_cookie :redirect_uri
         end
-        redirect_to (city_hub_page || overview_page_for_last_school || user_profile_or_home)
+        redirect_to (overview_page_for_last_school || city_hub_page || user_profile_or_home)
       end
     end
   end
@@ -121,7 +121,7 @@ class SigninController < ApplicationController
         redirect_uri = URI.decode(cookies[:redirect_uri])
         delete_cookie :redirect_uri
       end
-      redirect_to (redirect_uri || overview_page_for_last_school || user_profile_or_home)
+      redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
     end
   end
 
