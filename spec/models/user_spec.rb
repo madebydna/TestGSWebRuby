@@ -7,10 +7,6 @@ describe User do
 
     before(:each) { user.encrypt_plain_text_password }
 
-    it 'should fail' do
-      expect(true).to_be false
-    end
-
     it 'should be able to have subscriptions' do
       association = User.reflect_on_association(:subscriptions)
       expect(association.macro).to eq(:has_many)
