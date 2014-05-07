@@ -108,7 +108,7 @@ LocalizedProfiles::Application.routes.draw do
 
       scope '/education-community', as: :education_community do
         get '', to: 'states#foobar'
-        get '/patner', to: 'states#foobar', as: :partner
+        get '/partner', to: 'states#foobar', as: :partner
       end
     end
 
