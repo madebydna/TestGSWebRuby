@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.omniture = GS.omniture || function() {
 
     //Track the start of "review a school".OM-263
@@ -39,21 +38,21 @@ $(function() {
     $('.js_toggle_parent_sib').on('click', function(){
         $(this).parent().siblings('div').slideToggle('fast');
         if($(this).html() == 'Close'){
-            $(this).html('Learn More &raquo;')
+            $(this).html('Learn More &raquo;');
         }
         else{
-            $(this).html('Close')
+            $(this).html('Close');
         }
     });
-
-    $('.js-connect-with-us-buttons').on('mouseover', 'span', function () {
+    $('.js-connect-with-us-buttons').on({
+      mouseenter: function() {
         var cssClass = $(this).attr('class');
         $(this).attr('class', cssClass + '-c');
-    });
-
-    $('.js-connect-with-us-buttons').on('mouseout', 'span', function () {
+      },
+      mouseleave: function() {
         var cssClass = $(this).attr('class');
         cssClass = cssClass.replace(new RegExp('-c$'), '');
         $(this).attr('class', cssClass);
-    });
+      }
+    }, 'span');
 });
