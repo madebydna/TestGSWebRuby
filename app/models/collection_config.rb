@@ -61,7 +61,7 @@ class CollectionConfig < ActiveRecord::Base
         articles.each do |article|
           article[:articleImagePath].prepend('/assets')
           article[:newwindow] = article[:newwindow] == 'true'
-        end
+        end if articles
       rescue Exception => e
         articles = nil
         Rails.logger.error('Parsing articles on the city hub page failed: ' + e.to_s)
