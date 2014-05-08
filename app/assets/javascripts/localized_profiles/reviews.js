@@ -97,7 +97,7 @@ GS.reviews = GS.reviews || function($) {
                 retInt = offset / limit * GS.reviewsAd.reviewSlotCount;
             }
             return retInt;
-        }
+        };
     };
 
 

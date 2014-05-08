@@ -29,5 +29,5 @@ Function.prototype.gs_bind = function(obj) {
 
 window.gon = window.gon || {};
 
-this.GS = {};
+window.GS = {};
 

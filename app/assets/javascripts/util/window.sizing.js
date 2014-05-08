@@ -3,52 +3,52 @@ GS.window.sizing = GS.window.sizing || {};
 
 GS.window.sizing.width = function(){
     return $(window).width();
-}
+};
 
 GS.window.sizing.pieChartWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".pieChartWidth");
-}
+};
 
 GS.window.sizing.pieChartHeight = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".pieChartHeight");
-}
+};
 
 GS.window.sizing.pieChartLegend = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".pieChartLegend");
-}
+};
 
 GS.window.sizing.barChartWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".barChartWidth");
-}
+};
 
 GS.window.sizing.barChartHeight = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".barChartHeight");
-}
+};
 
 GS.window.sizing.barChartLegend = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".barChartLegend");
-}
+};
 GS.window.sizing.barChartAreaWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".barChartAreaWidth");
-}
+};
 
 
 GS.window.sizing.globalMapWidth = function(){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return obj.global.googleMapWidth;
-}
+};
 
 GS.window.sizing.globalContactMap = function(id){
     var obj =  GS.window.sizing.sizeBasedObjHash();
     $("."+id).attr("src", obj.global.map);
-}
+};
 
 GS.window.sizing.sizeBasedObjHash = function() {
     var sizeHash ={}
