@@ -27,6 +27,8 @@ h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font
   font-size: $font-size-block;
 }
 
+.text_fff { color: #ffffff}
+
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
   h2{font-size:22px; font-family: $headings-font-family-bold}

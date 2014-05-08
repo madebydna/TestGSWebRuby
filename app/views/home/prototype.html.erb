@@ -1,20 +1,19 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
-<%= render 'shared/search_hero_prototype', hero_image: @hero_image %>
+<%= render 'shared/search_hero_prototype', hero_image: @hero_image,
+                                           hero_bg_mobile: @hero_bg_mobile %>
 
-<%= render 'shared/resources_prototype', kitten_1: @kitten_1,
-                                         byline: @byline
-
+<%= render 'shared/resources_prototype', article_1: @article_1,
+                                         byline: @byline,
+                                         ad_slot_300_250: @ad_slot_300_250
                                          %>
 
 <%=render 'shared/offer_prototype'%>
 
 <%=render 'shared/quote_prototype', parent_img: @parent_img%>
 
-<%= render 'shared/who_we_are_prototype', kitten_1: @kitten_1%>
+<%= render 'shared/who_we_are_prototype', who_we_are: @who_we_are%>
 
-<%=render 'shared/quote_prototype', parent_img: @parent_img%>
-
-<%= render 'shared/join_prototype'%>
+<%= render 'shared/share_prototype'%>
 
 <%= render 'shared/state_footer', state: @state, cities: @cities %>
