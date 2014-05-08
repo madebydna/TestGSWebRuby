@@ -8,6 +8,16 @@ describe StatesController do
         expect(response).to render_template('error/page_not_found')
       end
     end
+
+    context 'by default' do
+      before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
+      after(:each) { clean_dbs :gs_schooldb }
+
+      it 'sets meta tags' do
+        controller.should_receive(:set_meta_tags).twice
+        get :show, state: 'indiana'
+      end
+    end
   end
 
   describe 'GET enrollment' do
