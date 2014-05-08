@@ -3,8 +3,8 @@ GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
 GS.track.cookie_name = 'OmnitureTracking';
 
-GS.track.setSProps = function (sProps) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.setSProps = function(sProps) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingProps = [];
         for (var p in sProps) {
             if (sProps.hasOwnProperty(p)) {
@@ -21,8 +21,8 @@ GS.track.setSProps = function (sProps) {
     });
 };
 
-GS.track.setEVars = function (eVars) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.setEVars = function(eVars) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingEvars = [];
         for (var p in eVars) {
             if (eVars.hasOwnProperty(p)) {
@@ -39,7 +39,7 @@ GS.track.setEVars = function (eVars) {
     });
 };
 
-GS.track.setEvents = function (eventNames) {
+GS.track.setEvents = function(eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var mappedEvents = [];
         var missingEvents = [];
@@ -107,8 +107,8 @@ GS.track.setEventsInCookies = function(event){
 
 //TODO The following tracking is for the events and links that do not have page refresh associated with
 // them. Refactor this when omniture requirements come in for these.
-GS.track.trackEvent = function (eventNames) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.trackEvent = function(eventNames) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var myLinkTrackVars = "events";
         var omnitureObject = {};
         var mappedEvents = [];
@@ -135,7 +135,7 @@ GS.track.trackEvent = function (eventNames) {
     });
 };
 
-GS.track.sendCustomLink = function (linkName) {
+GS.track.sendCustomLink = function(linkName) {
     var omnitureObject = {};
     omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
     if (s.tl) {
@@ -144,7 +144,7 @@ GS.track.sendCustomLink = function (linkName) {
     return true;
 };
 
-GS.track.doUnlessTrackingIsDisabled = function (cb) {
+GS.track.doUnlessTrackingIsDisabled = function(cb) {
     if (typeof s !== 'undefined') {
         cb();
     }
@@ -173,7 +173,7 @@ GS.track.evarsLookup = {
     'review_updates_mss_traffic_driver' :25
 };
 
-GS.track.setOmnitureData = function () {
+GS.track.setOmnitureData = function() {
     GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
     GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
     if(gon.omniture_school_state != ''){
