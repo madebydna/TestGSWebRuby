@@ -65,7 +65,7 @@
                         Let others know what you<br />think about this school
                     <% end %>
                 </p>
-                <button type="button" data-link-value="<%= school_review_form_path(@school,driver: driver) %>" class="btn btn-primary mtm js-button-link">
+                <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary mtm js-button-link" onclick="GS.omniture.track_reviews('<%= driver %>');">
                 Write a review
                 </button>
             </div>

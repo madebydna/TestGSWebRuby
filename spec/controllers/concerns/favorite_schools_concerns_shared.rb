@@ -39,8 +39,8 @@ shared_examples_for 'a controller that can save a favorite school' do
       end
 
       it 'should set omniture data' do
-        expect(controller).to receive :set_omniture_events_in_session
-        expect(controller).to receive :set_omniture_sprops_in_session
+        expect(controller).to receive :set_omniture_events_in_cookie
+        expect(controller).to receive :set_omniture_sprops_in_cookie
       end
 
       it 'should flash a notice' do
@@ -51,8 +51,8 @@ shared_examples_for 'a controller that can save a favorite school' do
 
     context 'when something goes wrong' do
       it 'should not set omniture data' do
-        expect(controller).to_not receive :set_omniture_events_in_session
-        expect(controller).to_not receive :set_omniture_sprops_in_session
+        expect(controller).to_not receive :set_omniture_events_in_cookie
+        expect(controller).to_not receive :set_omniture_sprops_in_cookie
         controller.send :add_favorite_school, {} rescue nil
       end
 

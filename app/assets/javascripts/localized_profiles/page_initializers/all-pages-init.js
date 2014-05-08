@@ -1,3 +1,22 @@
+var GS = GS || {};
+GS.omniture = GS.omniture || function() {
+
+    //Track the start of "review a school".OM-263
+    var track_reviews = function(driver){
+        GS.track.setEVarsInCookies('review_updates_mss_traffic_driver',driver);
+        GS.track.setEventsInCookies('review_updates_mss_start_event');
+        GS.track.setSPropsInCookies('custom_completion_sprop','PublishReview');
+    };
+
+    return {
+        track_reviews: track_reviews
+    }
+}();
+
+
+//Reads the omniture variables from gon and cookies and sets them.
+GS.track.setOmnitureData();
+
 $(function() {
     // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
     // since it's easier to test

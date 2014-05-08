@@ -60,8 +60,6 @@ class LocalizedProfileController < ApplicationController
     set_omniture_hier_for_new_profiles
     set_omniture_data_for_school(page_name)
     set_omniture_data_for_user_request
-
-    read_omniture_data_from_session
   end
 
   def init_page

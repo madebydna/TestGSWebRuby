@@ -12,6 +12,7 @@
 //
 //= require_self
 //= require jquery
+//= require jquery.cookie.js
 //= require great_schools
 //= require jquery_ujs
 //= require lodash

@@ -2,6 +2,8 @@ var GS = GS || {};
 GS.track = GS.track || {};
 GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
+GS.track.cookie_name = 'OmnitureTracking';
+
 GS.track.setSProps = function (sProps) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var missingProps = [];
@@ -56,6 +58,53 @@ GS.track.setEvents = function (eventNames) {
         }
     });
 };
+
+GS.track.setSPropsInCookies = function(key,value){
+
+    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
+    sprops = {};
+
+    if(typeof omniture_cookie.sprops != undefined  && omniture_cookie.sprops != null){
+        sprops = omniture_cookie.sprops;
+    }
+
+    sprops[key] = value;
+    omniture_cookie['sprops'] = sprops;
+
+    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
+};
+
+GS.track.setEVarsInCookies = function(key,value){
+
+    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
+    evars = {};
+
+    if(typeof omniture_cookie.evars != undefined  && omniture_cookie.evars != null){
+        evars = omniture_cookie.evars;
+    }
+
+    evars[key] = value;
+    omniture_cookie['evars'] = evars;
+
+    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
+};
+
+GS.track.setEventsInCookies = function(event){
+
+    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
+    events = [];
+
+        if(typeof omniture_cookie.events != undefined  && omniture_cookie.events != null){
+            events = omniture_cookie.events;
+        }
+
+    events.push(event);
+    omniture_cookie['events'] = $.unique(events);
+
+    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
+};
+
+
 
 //TODO The following tracking is for the events and links that do not have page refresh associated with
 // them. Refactor this when omniture requirements come in for these.
@@ -131,15 +180,43 @@ GS.track.setOmnitureData = function () {
     if(gon.omniture_school_state != ''){
         GS.track.baseOmnitureObject.channel = gon.omniture_school_state;
     }
+
+    var events = [];
+    var sprops = {};
+    var evars = {};
+
     if(typeof gon.omniture_sprops != undefined  && gon.omniture_sprops != null){
-        GS.track.setSProps(gon.omniture_sprops);
+        sprops = gon.omniture_sprops;
     }
+
     if(typeof gon.omniture_events != undefined && gon.omniture_events != null){
-        GS.track.setEvents(gon.omniture_events);
+        events = gon.omniture_events;
     }
     if(typeof gon.omniture_evars != undefined  && gon.omniture_evars != null){
-        GS.track.setEVars(gon.omniture_evars);
+        evars=gon.omniture_evars;
     }
+
+    var omniture_cookies = JSON.parse($.cookie(GS.track.cookie_name));
+    if(omniture_cookies != null){
+
+        if(typeof omniture_cookies.sprops != undefined  && omniture_cookies.sprops != null){
+            $.extend(sprops, omniture_cookies.sprops);
+        }
+
+        if(typeof omniture_cookies.events != undefined  && omniture_cookies.events != null){
+            $.merge(events,omniture_cookies.events);
+        }
+        if(typeof omniture_cookies.evars != undefined  && omniture_cookies.evars != null){
+            $.extend(evars, omniture_cookies.evars);
+        }
+    }
+
+    GS.track.setSProps(sprops);
+    $.unique(events);
+    GS.track.setEvents(events);
+    GS.track.setEVars(evars);
+
+    $.removeCookie(GS.track.cookie_name, { path: '/' });
 };
 
 GS.track.getOmnitureObject = function () {

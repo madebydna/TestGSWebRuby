@@ -26,6 +26,9 @@ module CookieConcerns
     },
     deferred_action: {
       hash: true
+    },
+      OmnitureTracking: {
+      hash: true
     }
   }
 

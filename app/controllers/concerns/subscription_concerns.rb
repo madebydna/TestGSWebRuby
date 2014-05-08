@@ -20,8 +20,8 @@ module SubscriptionConcerns
       end
       unless current_user.has_subscription?(list,school)
         current_user.add_subscription!(list, school)
-        set_omniture_events_in_session(['review_updates_mss_end_event'])
-        set_omniture_sprops_in_session({'custom_completion_sprop' => 'SignUpForUpdates'})
+        set_omniture_events_in_cookie(['review_updates_mss_end_event'])
+        set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'SignUpForUpdates'})
       end
       flash_notice message if message
     rescue => e
