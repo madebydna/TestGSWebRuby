@@ -10,11 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require_self
 //= require jquery
 //= require jquery.cookie.js
 //= require jquery_ujs
 //= require lodash
+//= require_self
 //= require_tree ./util
 //= require_tree ./resources
 //= require_tree ./auth
@@ -30,4 +30,3 @@ Function.prototype.gs_bind = function(obj) {
 window.gon = window.gon || {};
 
 window.GS = {};
-
