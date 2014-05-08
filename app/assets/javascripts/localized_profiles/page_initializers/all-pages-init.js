@@ -10,7 +10,7 @@ GS.omniture = GS.omniture || function() {
 
     return {
         track_reviews: track_reviews
-    }
+    };
 }();
 
 
