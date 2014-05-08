@@ -196,8 +196,8 @@ GS.track.setOmnitureData = function () {
         evars=gon.omniture_evars;
     }
 
-    var omniture_cookies = JSON.parse($.cookie(GS.track.cookie_name));
-    if(omniture_cookies != null){
+    if($.cookie(GS.track.cookie_name) != null){
+        var omniture_cookies = JSON.parse($.cookie(GS.track.cookie_name));
 
         if(typeof omniture_cookies.sprops != undefined  && omniture_cookies.sprops != null){
             $.extend(sprops, omniture_cookies.sprops);
