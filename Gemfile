@@ -139,8 +139,8 @@ group :development, :test do
   gem 'sinon-rails'
 
   # Test coverage tool
-  gem 'simplecov', '~> 0.7.1'
-  gem 'simplecov-html', '~> 0.7.1'
+  gem 'simplecov', '~> 0.8.0'
+  gem 'simplecov-html', '~> 0.8.0'
   gem 'simplecov-rcov'
 
   gem 'childprocess'
