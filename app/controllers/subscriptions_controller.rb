@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
       redirect_back_or_default
     else
       save_deferred_action :create_subscription_deferred, subscription_params
-      flash_error 'Please log in or register your email in order to get updates on this school.'
+      flash_error 'Please log in or register your email in order to get follow this school.'
       redirect_to signin_url
     end
   end
