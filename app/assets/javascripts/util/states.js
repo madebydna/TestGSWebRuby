@@ -1,5 +1,3 @@
-var GS = GS || {};
-
 GS.states = (function(_) {
     var statesHash = {
      'alabama': 'al',

@@ -1,5 +1,3 @@
-var GS = GS || {};
-
 // Augments GS to add extra methods for getting school and state from URL
 // Requires: Lo-Dash
 

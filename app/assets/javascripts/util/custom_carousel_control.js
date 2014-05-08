@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.customCarouselControl = GS.customCarouselControl || {};
 
 GS.customCarouselControl.cycle2Carousel = GS.customCarouselControl.cycle2Carousel || (function () {

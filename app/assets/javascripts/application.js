@@ -12,14 +12,9 @@
 //
 //= require_self
 //= require jquery
-//= require resources/jquery.cookie.js
-//= require great_schools
+//= require jquery.cookie.js
 //= require jquery_ujs
 //= require lodash
-//= require util/util.js
-//= require util/uri
-//= require resources/omniture.js
-//= require util/tracking.js
 //= require_tree ./util
 //= require_tree ./resources
 //= require_tree ./auth
@@ -33,4 +28,6 @@ Function.prototype.gs_bind = function(obj) {
 };
 
 window.gon = window.gon || {}
+
+this.GS = {};
 

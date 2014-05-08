@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];

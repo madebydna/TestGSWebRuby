@@ -8,7 +8,6 @@ Array.prototype.contains = function(obj) {
   return false;
 };
 
-var GS = GS || {};
 GS.search = GS.search || {};
 GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';

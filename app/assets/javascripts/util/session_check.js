@@ -1,6 +1,5 @@
-var GS = GS || {};
 GS.session = GS.session || function($) {
-    var COOKIE_LIST_DELIMETER = ',';
+//    var COOKIE_LIST_DELIMETER = ',';
     var INTRA_COOKIE_DELIMETER = ';';
     var userObj = {
         version:0,

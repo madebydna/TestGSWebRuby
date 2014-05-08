@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.track = GS.track || {};
 GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 

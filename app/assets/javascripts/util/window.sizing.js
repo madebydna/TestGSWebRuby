@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.window = GS.window || {};
 GS.window.sizing = GS.window.sizing || {};
 

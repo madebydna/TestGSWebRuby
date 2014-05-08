@@ -9,9 +9,6 @@
  *
  */
 
-
-
-var GS = GS || {};
 GS.visualchart = GS.visualchart || function($) {
 
     var loader = [];

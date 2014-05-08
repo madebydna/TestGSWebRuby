@@ -1,5 +1,3 @@
-GS = GS || {};
-
 GS.choosingDropdownInit = GS.choosingDropdownInit || function() {
   var expandToggle = function() {
     var closeRegex = new RegExp("Close.+");
