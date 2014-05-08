@@ -59,8 +59,10 @@ class StatesController < ApplicationController
 
       # TODO: if you don't show browse links, don't make this call, #hack
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
-      @tab[:results][:public][:count] = 0
-      @tab[:results][:private][:count] = 0
+      [:public, :private].each do |type|
+        @tab[:results][type] = {} if @tab[:results][type].nil?
+        @tab[:results][type][:count] = 0
+      end
 
       @subheading = CollectionConfig.enrollment_subheading(configs)
 
