@@ -3,6 +3,18 @@ GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
 GS.track.cookie_name = 'OmnitureTracking';
 
+GS.track.getOmnitureCookie = function() {
+    var omniture_cookie = {};
+    if (!(_.isEmpty($.cookie(GS.track.cookie_name)))) {
+        try {
+            omniture_cookie = JSON.parse($.cookie(GS.track.cookie_name));
+        } catch (e) {
+            GS.util.log('Error parsing omniture tracking cookie');
+        }
+    }
+    return omniture_cookie;
+};
+
 GS.track.setSProps = function(sProps) {
     GS.track.doUnlessTrackingIsDisabled(function() {
         var missingProps = [];
@@ -60,8 +72,8 @@ GS.track.setEvents = function(eventNames) {
 
 GS.track.setSPropsInCookies = function(key,value){
 
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    sprops = {};
+    var sprops = {};
+    var omniture_cookie = GS.track.getOmnitureCookie();
 
     if(typeof omniture_cookie.sprops != undefined  && omniture_cookie.sprops != null){
         sprops = omniture_cookie.sprops;
@@ -75,8 +87,8 @@ GS.track.setSPropsInCookies = function(key,value){
 
 GS.track.setEVarsInCookies = function(key,value){
 
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    evars = {};
+    var evars = {};
+    var omniture_cookie = GS.track.getOmnitureCookie();
 
     if(typeof omniture_cookie.evars != undefined  && omniture_cookie.evars != null){
         evars = omniture_cookie.evars;
@@ -90,12 +102,12 @@ GS.track.setEVarsInCookies = function(key,value){
 
 GS.track.setEventsInCookies = function(event){
 
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    events = [];
+    var events = [];
+    var omniture_cookie = GS.track.getOmnitureCookie();
 
-        if(typeof omniture_cookie.events != undefined  && omniture_cookie.events != null){
-            events = omniture_cookie.events;
-        }
+    if(typeof omniture_cookie.events != undefined && omniture_cookie.events != null){
+        events = omniture_cookie.events;
+    }
 
     events.push(event);
     omniture_cookie['events'] = $.unique(events);
@@ -196,17 +208,17 @@ GS.track.setOmnitureData = function() {
     }
 
     if($.cookie(GS.track.cookie_name) != null){
-        var omniture_cookies = JSON.parse($.cookie(GS.track.cookie_name));
+        var omniture_cookie = GS.track.getOmnitureCookie();
 
-        if(typeof omniture_cookies.sprops != undefined  && omniture_cookies.sprops != null){
-            $.extend(sprops, omniture_cookies.sprops);
+        if(typeof omniture_cookie.sprops != undefined  && omniture_cookie.sprops != null){
+            $.extend(sprops, omniture_cookie.sprops);
         }
 
-        if(typeof omniture_cookies.events != undefined  && omniture_cookies.events != null){
-            $.merge(events,omniture_cookies.events);
+        if(typeof omniture_cookie.events != undefined  && omniture_cookie.events != null){
+            $.merge(events,omniture_cookie.events);
         }
-        if(typeof omniture_cookies.evars != undefined  && omniture_cookies.evars != null){
-            $.extend(evars, omniture_cookies.evars);
+        if(typeof omniture_cookie.evars != undefined  && omniture_cookie.evars != null){
+            $.extend(evars, omniture_cookie.evars);
         }
     }
 
