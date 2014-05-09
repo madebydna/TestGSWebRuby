@@ -149,7 +149,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var gsGeocode = function(searchInput, callbackFunction) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
-            geocoder.geocode( { 'address': searchInput, 'componentRestrictions': { 'country': 'US' }}, function(results, status) {
+            geocoder.geocode( { 'address': searchInput + ' US'}, function(results, status) {
                 var GS_geocodeResults = new Array();
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {
@@ -191,7 +191,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 }
                 if (GS_geocodeResults.length == 0) {
                     callbackFunction(null);
-                } else {
+                }
+                else if (GS_geocodeResults.length == 1) {
+                    GS_geocodeResults[0]['totalResults'] = 1;
+                    callbackFunction(GS_geocodeResults[0]);
+                }
+                else {
                     // ignore multiple results
                     GS_geocodeResults[0]['totalResults'] = GS_geocodeResults.length;
                     callbackFunction(GS_geocodeResults[0]);
