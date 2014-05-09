@@ -3,6 +3,7 @@ GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
 GS.ad.functionSlotDefinitionArray = [];
 GS.ad.functionAdShowArray = [];
+GS.ad.googleId = '/1002894/';
 
 //adobe audience manager code - copied and pasted
 GS.ad.AamGpt = {
@@ -114,7 +115,7 @@ GS.ad.getDimensions = function(obj){
 };
 
 GS.ad.getSlotName = function(obj){
-  return '/1002894/' + obj.attr('data-dfp');
+  return GS.ad.googleId + obj.attr('data-dfp');
 };
 
 GS.ad.setPageLevelTargeting = function(){
@@ -185,13 +186,13 @@ GS.reviewsAd.reviewContent = function() {
       desktop_ad = GS.reviewsAd.getReviewDefinedAdSlotArray(i);
       mobile_ad = GS.reviewsAd.getReviewDefinedAdSlotArrayMobile(i);
       GS.ad.slot[GS.reviewsAd.reviewAdSlotName(i)] = googletag.defineSlot(
-          '/1002894/' + desktop_ad[0],
+          GS.ad.googleId + desktop_ad[0],
         desktop_ad[1],
         GS.reviewsAd.reviewAdSlotName(i)
       ).addService(googletag.pubads());
 
       GS.ad.slot[GS.reviewsAd.reviewAdSlotNameMobile(i)] = googletag.defineSlot(
-          '/1002894/' + mobile_ad[0],
+          GS.ad.googleId + mobile_ad[0],
         mobile_ad[1],
         GS.reviewsAd.reviewAdSlotNameMobile(i)
       ).addService(googletag.pubads());
