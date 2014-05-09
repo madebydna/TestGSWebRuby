@@ -57,13 +57,6 @@ class ReviewsController < ApplicationController
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
 
-    #Track the start of "review a school".OM-263
-    if params[:driver].present?
-      set_omniture_evars({'review_updates_mss_traffic_driver' => params[:driver]})
-      set_omniture_events(['review_updates_mss_start_event'])
-      set_omniture_sprops({'custom_completion_sprop' => 'PublishReview'})
-    end
-
   end
 
   def init_page

@@ -1,4 +1,5 @@
 class StatesController < ApplicationController
+  include SeoHelper
   before_filter :set_city_state
   before_filter :set_hub_params
   before_filter :set_login_redirect
@@ -25,6 +26,9 @@ class StatesController < ApplicationController
 
       @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      set_meta_tags title: state_page_title,
+                    description: state_page_description,
+                    keywords: state_page_keywords
     end
   end
 
@@ -59,8 +63,10 @@ class StatesController < ApplicationController
 
       # TODO: if you don't show browse links, don't make this call, #hack
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
-      @tab[:results][:public][:count] = 0
-      @tab[:results][:private][:count] = 0
+      [:public, :private].each do |type|
+        @tab[:results][type] = {} if @tab[:results][type].nil?
+        @tab[:results][type][:count] = 0
+      end
 
       @subheading = CollectionConfig.enrollment_subheading(configs)
 

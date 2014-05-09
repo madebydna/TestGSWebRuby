@@ -1,3 +1,21 @@
+GS.omniture = GS.omniture || function() {
+
+    //Track the start of "review a school".OM-263
+    var track_reviews = function(driver){
+        GS.track.setEVarsInCookies('review_updates_mss_traffic_driver',driver);
+        GS.track.setEventsInCookies('review_updates_mss_start_event');
+        GS.track.setSPropsInCookies('custom_completion_sprop','PublishReview');
+    };
+
+    return {
+        track_reviews: track_reviews
+    };
+}();
+
+
+//Reads the omniture variables from gon and cookies and sets them.
+GS.track.setOmnitureData();
+
 $(function() {
     // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
     // since it's easier to test
@@ -20,21 +38,21 @@ $(function() {
     $('.js_toggle_parent_sib').on('click', function(){
         $(this).parent().siblings('div').slideToggle('fast');
         if($(this).html() == 'Close'){
-            $(this).html('Learn More &raquo;')
+            $(this).html('Learn More &raquo;');
         }
         else{
-            $(this).html('Close')
+            $(this).html('Close');
         }
     });
-
-    $('.js-connect-with-us-buttons').on('mouseover', 'span', function () {
+    $('.js-connect-with-us-buttons').on({
+      mouseenter: function() {
         var cssClass = $(this).attr('class');
         $(this).attr('class', cssClass + '-c');
-    });
-
-    $('.js-connect-with-us-buttons').on('mouseout', 'span', function () {
+      },
+      mouseleave: function() {
         var cssClass = $(this).attr('class');
         cssClass = cssClass.replace(new RegExp('-c$'), '');
         $(this).attr('class', cssClass);
-    });
+      }
+    }, 'span');
 });

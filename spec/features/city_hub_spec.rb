@@ -53,14 +53,6 @@ describe 'City Hub Page' do
     end
   end
 
-  describe 'join our community' do
-    it 'renders the join well', js: true do
-      expect(page).to have_content('Join our community')
-      click_button 'Join'
-      expect(current_path).to eq('/gsr/login/')
-    end
-  end
-
   describe 'featured articles section' do
     it 'display featured articles' do
       expect(page).to have_css('.js-featured-article', count: 3)

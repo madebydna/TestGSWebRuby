@@ -121,7 +121,9 @@ RSpec.configure do |config|
     # use capybara-webkit
   Capybara.javascript_driver = :webkit
 
-  Capybara.default_host = 'http://localhost:3000'
+  require 'socket'
+  ip_address = IPSocket.getaddress(Socket.gethostname)
+  Capybara.default_host = "http://#{ip_address}:3000"
 
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above

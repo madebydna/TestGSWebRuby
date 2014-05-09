@@ -13,8 +13,8 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_seo_meta_tags
   before_filter :set_optimizely_gon_env_value
   before_filter :ad_setTargeting_through_gon
-  before_filter :set_footer_cities
   before_filter :set_city_state
+  before_filter :set_footer_cities
   before_filter :set_hub_params
   # after_filter :set_last_modified_date
 
@@ -60,8 +60,6 @@ class LocalizedProfileController < ApplicationController
     set_omniture_hier_for_new_profiles
     set_omniture_data_for_school(page_name)
     set_omniture_data_for_user_request
-
-    read_omniture_data_from_session
   end
 
   def init_page
@@ -176,7 +174,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def set_footer_cities
-    @cities = City.popular_cities(@state, limit: 28)
+    @cities = City.popular_cities(@state[:short], limit: 28)
   end
 
   def ad_setTargeting_through_gon

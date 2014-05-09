@@ -249,8 +249,8 @@ shared_examples_for 'a controller that can save a review' do
 
       it 'should set omniture data if review published' do
         review.status = 'p'
-        expect(controller).to receive :set_omniture_events_in_session
-        expect(controller).to receive :set_omniture_sprops_in_session
+        expect(controller).to receive :set_omniture_events_in_cookie
+        expect(controller).to receive :set_omniture_sprops_in_cookie
         expect(controller).to receive(:redirect_to).with '/reviewspage'
         controller.send :save_review_and_redirect, review_params
       end

@@ -5,6 +5,7 @@ gem 'rails', '3.2.11'
 gem 'mysql2', '0.3.13'
 
 gem 'jquery-rails'
+gem 'jquery-cookie-rails'
 
 gem 'rails_admin'
 
@@ -138,8 +139,8 @@ group :development, :test do
   gem 'sinon-rails'
 
   # Test coverage tool
-  gem 'simplecov', '~> 0.7.1'
-  gem 'simplecov-html', '~> 0.7.1'
+  gem 'simplecov', '~> 0.8.0'
+  gem 'simplecov-html', '~> 0.8.0'
   gem 'simplecov-rcov'
 
   gem 'childprocess'

@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.reviews = GS.reviews || function($) {
     var initializeReviewHandlers = function () {
         // the next ten button
@@ -98,7 +97,7 @@ GS.reviews = GS.reviews || function($) {
                 retInt = offset / limit * GS.reviewsAd.reviewSlotCount;
             }
             return retInt;
-        }
+        };
     };
 
 
