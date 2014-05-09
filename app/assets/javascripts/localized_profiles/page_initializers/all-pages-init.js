@@ -2,9 +2,9 @@ GS.omniture = GS.omniture || function() {
 
     //Track the start of "review a school".OM-263
     var track_reviews = function(driver){
-        GS.track.setEVarsInCookies('review_updates_mss_traffic_driver',driver);
+        GS.track.setSPropsAndEvarsInCookies('review_updates_mss_traffic_driver',driver,'evars');
         GS.track.setEventsInCookies('review_updates_mss_start_event');
-        GS.track.setSPropsInCookies('custom_completion_sprop','PublishReview');
+        GS.track.setSPropsAndEvarsInCookies('custom_completion_sprop','PublishReview','sprops');
     };
 
     return {
