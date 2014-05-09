@@ -28,12 +28,20 @@ class CollectionConfig < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   class << self
+    def hub_mapping_cache_time
+      LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now
+    end
+
+    def hub_config_cache_time
+      LocalizedProfiles::Application.config.hub_config_cache_time.minutes.from_now
+    end
+
     def key_value_map(collection_id)
       collection_id_to_key_value_map[collection_id] || {}
     end
 
     def collection_id_to_key_value_map
-      Rails.cache.fetch('collection_id_to_key_value_map', expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+      Rails.cache.fetch('collection_id_to_key_value_map', expires_in: self.hub_config_cache_time) do
         configs = {}
         order(:collection_id).each do |row|
           configs[row['collection_id'].to_i] ||= {}
@@ -194,7 +202,7 @@ class CollectionConfig < ActiveRecord::Base
     def important_events(collection_id)
       important_events_cache_key = "important_events-collection_id:#{collection_id}-quay:#{CITY_HUB_IMPORTANT_EVENTS_KEY}"
       begin
-        important_events = Rails.cache.fetch(important_events_cache_key, expires_in: ENV_GLOBAL['global_expires_in'].minutes) do
+        important_events = Rails.cache.fetch(important_events_cache_key, expires_in: self.hub_config_cache_time) do
           raw_important_events_str = CollectionConfig.where(collection_id: collection_id, quay: CITY_HUB_IMPORTANT_EVENTS_KEY).first.value
           important_events = eval(raw_important_events_str)[:events]
           important_events.each do |event|

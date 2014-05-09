@@ -65,9 +65,7 @@ describe 'City Hub Page' do
 
   describe 'education community carousel' do
     it 'shows the carousel', js: true do
-      cycle_function = page.evaluate_script("$('.cycle-slideshow').cycle")
-      expect(cycle_function).to_not be_nil
-      expect(page).to have_css('.cycle-slide')
+      expect(page).to have_css('.js-partner-carousel')
     end
   end
 end

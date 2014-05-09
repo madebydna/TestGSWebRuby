@@ -1,13 +1,17 @@
 require 'spec_helper'
 
+shared_examples_for 'a default state controller action' do |action|
+  context 'without a hub city mapping' do
+    it 'renders an error page' do
+      get action, state: 'indiana'
+      expect(response).to render_template('error/page_not_found')
+    end
+  end
+end
+
 describe StatesController do
   describe 'GET show' do
-    context 'without a mapping' do
-      it 'renders an error page' do
-        get :show, state: 'indiana'
-        expect(response).to render_template('error/page_not_found')
-      end
-    end
+    it_behaves_like 'a default state controller action', :show
 
     context 'by default' do
       before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
@@ -21,6 +25,8 @@ describe StatesController do
   end
 
   describe 'GET enrollment' do
+    it_behaves_like 'a default state controller action', :enrollment
+
     context 'without tab solr results' do
       before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
       after(:each) { clean_dbs :gs_schooldb }
@@ -32,5 +38,9 @@ describe StatesController do
         expect(response).to render_template('shared/enrollment')
       end
     end
+  end
+
+  describe 'GET choosing_schools' do
+    it_behaves_like 'a default state controller action', :choosing_schools
   end
 end

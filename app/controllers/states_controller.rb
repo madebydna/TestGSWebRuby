@@ -89,10 +89,8 @@ class StatesController < ApplicationController
   private
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@state[:long]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: 1.day) do
+      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time) do
         HubCityMapping.where(active: 1, city: nil, state: @state[:short]).first
       end
     end
-
-
 end

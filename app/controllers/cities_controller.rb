@@ -133,13 +133,10 @@ class CitiesController < ApplicationController
       configs = CollectionConfig.where(collection_id: @collection_id)
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
-
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
       @subheading = CollectionConfig.enrollment_subheading(configs)
-
       @enrollment_module = CollectionConfig.enrollment_module(configs, @tab[:key])
       @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
-
       @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
 
       set_meta_tags title: "#{@city.titleize} Schools Enrollment Information"
@@ -172,14 +169,14 @@ class CitiesController < ApplicationController
 
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: 1.day) do
+      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time) do
         HubCityMapping.where(city: @city, state: @state[:short], active: 1).first
       end
     end
 
     def configs
       configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-      Rails.cache.fetch(configs_cache_key, expires_in: 1.day) do
+      Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time) do
         CollectionConfig.where(collection_id: mapping.collection_id).to_a
      end
     end
