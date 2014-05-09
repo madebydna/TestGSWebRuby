@@ -63,8 +63,8 @@ LocalizedProfiles::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production
-  config.cache_store = :mem_cache_store
-  #config.cache_store = :memory_store, { size: 128.megabytes }
+  # config.cache_store = :mem_cache_store
+  config.cache_store = :memory_store, { size: 128.megabytes }
   # Shomi Arora -Dont Cache so QA can test quickly
   # config.cache_store = :null_store
 
