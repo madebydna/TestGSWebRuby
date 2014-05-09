@@ -207,7 +207,7 @@ GS.track.setOmnitureData = function() {
         evars=gon.omniture_evars;
     }
 
-    if($.cookie(GS.track.cookie_name) != null){
+    if (!(_.isEmpty($.cookie(GS.track.cookie_name)))){
         var omniture_cookie = GS.track.getOmnitureCookie();
 
         if(typeof omniture_cookie.sprops != undefined  && omniture_cookie.sprops != null){
