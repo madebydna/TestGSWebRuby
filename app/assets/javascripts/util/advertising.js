@@ -106,7 +106,11 @@ GS.ad.getDivId = function(obj){
 };
 
 GS.ad.getDimensions = function(obj){
-  return JSON.parse(obj.attr('data-ad-size'));
+  try {
+    return JSON.parse(obj.attr('data-ad-size'));
+  } catch (e) {
+    GS.util.log('Error parsing ad dimensions for '+obj.attr('id'));
+  }
 };
 
 GS.ad.getSlotName = function(obj){
