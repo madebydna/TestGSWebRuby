@@ -13,7 +13,11 @@ module OmnitureConcerns
 
   def set_omniture_data_for_school(page_name)
     school_locale = @school.city.nil? ? @school.county : @school.city
-    school_level_code = (LevelCode.new(@school.level_code)).levels.map(&:long_name).join('+')
+    school_level_code = ''
+    if (LevelCode.from_string(@school.level_code))
+      school_level_code = (LevelCode.from_string(@school.level_code)).levels.map(&:long_name).join('+')
+    end
+
     gon.omniture_sprops ||= {}
 
     gon.omniture_sprops.merge!({'schoolId' => @school.id, 'schoolType' => @school.type,
@@ -69,29 +73,22 @@ module OmnitureConcerns
     end
   end
 
-  #Use cookies to store the omniture events when there are redirects involved.
+  #Use cookies to store the omniture events when they need to be tracked on the following page.
   def set_omniture_events_in_cookie(events_array=[])
-    events = read_cookie_value(:"#{OMNITURE_COOKIE_NAME}",'events')
-    events ||=[]
+    events = read_cookie_value(:"#{OMNITURE_COOKIE_NAME}",'events') || []
     events += events_array
     events.uniq!
     write_cookie_value(:"#{OMNITURE_COOKIE_NAME}", events,'events')
   end
 
-  #Use cookies to store the omniture sprops when there are redirects involved.
-  def set_omniture_sprops_in_cookie(sprops_hash={})
-    sprops = read_cookie_value(:"#{OMNITURE_COOKIE_NAME}", 'sprops')
-    sprops ||={}
-    sprops.merge!(sprops_hash)
-    write_cookie_value(:"#{OMNITURE_COOKIE_NAME}", sprops,'sprops')
+  #Use cookies to store the omniture sprops and evars when they need to be tracked on the following page.
+  [:sprops, :evars].each do |var_name|
+    define_method "set_omniture_#{var_name}_in_cookie" do |hash={}|
+      omniture_variable = (read_cookie_value(:"#{OMNITURE_COOKIE_NAME}", var_name.to_s)) || {}
+      omniture_variable.merge!(hash)
+      write_cookie_value(:"#{OMNITURE_COOKIE_NAME}", omniture_variable,var_name.to_s)
+    end
   end
 
-  #Use cookies to store the omniture evars when there are redirects involved.
-  def set_omniture_evars_in_cookie(evars_hash={})
-    evars = read_cookie_value(:"#{OMNITURE_COOKIE_NAME}", 'evars')
-    evars ||={}
-    evars.merge!(evars_hash)
-    write_cookie_value(:"#{OMNITURE_COOKIE_NAME}", evars,'evars')
-  end
 end
 

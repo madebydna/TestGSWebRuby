@@ -1,10 +1,32 @@
 GS.track = GS.track || {};
 GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
-GS.track.cookie_name = 'OmnitureTracking';
+GS.track.cookieName = 'OmnitureTracking';
 
-GS.track.setSProps = function (sProps) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.getOmnitureCookie = function() {
+    var omnitureCookie = {};
+    if (!(_.isEmpty($.cookie(GS.track.cookieName)))) {
+        try {
+            omnitureCookie = JSON.parse($.cookie(GS.track.cookieName));
+        } catch (e) {
+            GS.util.log('Error parsing omniture tracking cookie');
+        }
+    }
+    return omnitureCookie;
+};
+
+GS.track.setOmnitureCookie = function(omnitureCookie){
+    if (!(_.isEmpty(omnitureCookie))) {
+        try {
+            $.cookie(GS.track.cookieName,JSON.stringify(omnitureCookie),{path: '/'});
+        } catch (e) {
+            GS.util.log('Error stringifying omniture tracking cookie');
+        }
+    }
+};
+
+GS.track.setSProps = function(sProps) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingProps = [];
         for (var p in sProps) {
             if (sProps.hasOwnProperty(p)) {
@@ -21,8 +43,8 @@ GS.track.setSProps = function (sProps) {
     });
 };
 
-GS.track.setEVars = function (eVars) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.setEVars = function(eVars) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingEvars = [];
         for (var p in eVars) {
             if (eVars.hasOwnProperty(p)) {
@@ -39,7 +61,7 @@ GS.track.setEVars = function (eVars) {
     });
 };
 
-GS.track.setEvents = function (eventNames) {
+GS.track.setEvents = function(eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var mappedEvents = [];
         var missingEvents = [];
@@ -58,57 +80,43 @@ GS.track.setEvents = function (eventNames) {
     });
 };
 
-GS.track.setSPropsInCookies = function(key,value){
+//Use cookies to store the omniture sprops and evars when they need to be tracked on the following page.
+GS.track.setSPropsAndEvarsInCookies = function(key,value,omnitureVariable){
 
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    sprops = {};
+    var spropsAndEvars = {};
+    var omnitureCookie = GS.track.getOmnitureCookie();
 
-    if(typeof omniture_cookie.sprops != undefined  && omniture_cookie.sprops != null){
-        sprops = omniture_cookie.sprops;
+    if(!(_.isEmpty(omnitureCookie[omnitureVariable]))){
+        spropsAndEvars = omnitureCookie[omnitureVariable];
     }
 
-    sprops[key] = value;
-    omniture_cookie['sprops'] = sprops;
+    spropsAndEvars[key] = value;
+    omnitureCookie[omnitureVariable] = spropsAndEvars;
 
-    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
+    GS.track.setOmnitureCookie(omnitureCookie);
 };
 
-GS.track.setEVarsInCookies = function(key,value){
-
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    evars = {};
-
-    if(typeof omniture_cookie.evars != undefined  && omniture_cookie.evars != null){
-        evars = omniture_cookie.evars;
-    }
-
-    evars[key] = value;
-    omniture_cookie['evars'] = evars;
-
-    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
-};
-
+//Use cookies to store the omniture events when they need to be tracked on the following page.
 GS.track.setEventsInCookies = function(event){
 
-    var omniture_cookie = ($.cookie(GS.track.cookie_name) != null) ? JSON.parse($.cookie(GS.track.cookie_name)) : {};
-    events = [];
+    var events = [];
+    var omnitureCookie = GS.track.getOmnitureCookie();
 
-        if(typeof omniture_cookie.events != undefined  && omniture_cookie.events != null){
-            events = omniture_cookie.events;
-        }
+    if(!(_.isEmpty(omnitureCookie.events))){
+        events = omnitureCookie.events;
+    }
 
     events.push(event);
-    omniture_cookie['events'] = $.unique(events);
+    omnitureCookie['events'] = $.unique(events);
 
-    $.cookie(GS.track.cookie_name,JSON.stringify(omniture_cookie),{path: '/'});
+    GS.track.setOmnitureCookie(omnitureCookie);
 };
-
 
 
 //TODO The following tracking is for the events and links that do not have page refresh associated with
 // them. Refactor this when omniture requirements come in for these.
-GS.track.trackEvent = function (eventNames) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.trackEvent = function(eventNames) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var myLinkTrackVars = "events";
         var omnitureObject = {};
         var mappedEvents = [];
@@ -135,7 +143,7 @@ GS.track.trackEvent = function (eventNames) {
     });
 };
 
-GS.track.sendCustomLink = function (linkName) {
+GS.track.sendCustomLink = function(linkName) {
     var omnitureObject = {};
     omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
     if (s.tl) {
@@ -144,7 +152,7 @@ GS.track.sendCustomLink = function (linkName) {
     return true;
 };
 
-GS.track.doUnlessTrackingIsDisabled = function (cb) {
+GS.track.doUnlessTrackingIsDisabled = function(cb) {
     if (typeof s !== 'undefined') {
         cb();
     }
@@ -173,7 +181,7 @@ GS.track.evarsLookup = {
     'review_updates_mss_traffic_driver' :25
 };
 
-GS.track.setOmnitureData = function () {
+GS.track.setOmnitureData = function() {
     GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
     GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
     if(gon.omniture_school_state != ''){
@@ -184,29 +192,27 @@ GS.track.setOmnitureData = function () {
     var sprops = {};
     var evars = {};
 
-    if(typeof gon.omniture_sprops != undefined  && gon.omniture_sprops != null){
+    if(!(_.isEmpty(gon.omniture_sprops))){
         sprops = gon.omniture_sprops;
     }
-
-    if(typeof gon.omniture_events != undefined && gon.omniture_events != null){
+    if(!(_.isEmpty(gon.omniture_events))){
         events = gon.omniture_events;
     }
-    if(typeof gon.omniture_evars != undefined  && gon.omniture_evars != null){
+    if(!(_.isEmpty(gon.omniture_evars))){
         evars=gon.omniture_evars;
     }
 
-    if($.cookie(GS.track.cookie_name) != null){
-        var omniture_cookies = JSON.parse($.cookie(GS.track.cookie_name));
+    var omnitureCookie = GS.track.getOmnitureCookie();
+    if (!(_.isEmpty(omnitureCookie))){
 
-        if(typeof omniture_cookies.sprops != undefined  && omniture_cookies.sprops != null){
-            $.extend(sprops, omniture_cookies.sprops);
+        if(!(_.isEmpty(omnitureCookie.sprops))){
+            $.extend(sprops, omnitureCookie.sprops);
         }
-
-        if(typeof omniture_cookies.events != undefined  && omniture_cookies.events != null){
-            $.merge(events,omniture_cookies.events);
+        if(!(_.isEmpty(omnitureCookie.events))){
+            $.merge(events,omnitureCookie.events);
         }
-        if(typeof omniture_cookies.evars != undefined  && omniture_cookies.evars != null){
-            $.extend(evars, omniture_cookies.evars);
+        if(!(_.isEmpty(omnitureCookie.evars))){
+            $.extend(evars, omnitureCookie.evars);
         }
     }
 
@@ -215,11 +221,11 @@ GS.track.setOmnitureData = function () {
     GS.track.setEvents(events);
     GS.track.setEVars(evars);
 
-    $.removeCookie(GS.track.cookie_name, { path: '/' });
+    $.removeCookie(GS.track.cookieName, { path: '/' });
 };
 
 GS.track.getOmnitureObject = function () {
-    //use lowdash to deep clone the omniture object.
+    //use lodash to deep clone the omniture object.
     var omnitureObject = _.clone(GS.track.baseOmnitureObject, true);
     return omnitureObject;
 };
