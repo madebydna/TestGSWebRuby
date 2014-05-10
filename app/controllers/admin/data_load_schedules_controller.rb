@@ -2,6 +2,7 @@ class Admin::DataLoadSchedulesController < ApplicationController
 
   def index
     sort_by = params[:sort_by] || 'live_by'
+    @list_view = params[:list_view] || nil
     @loads = Admin::DataLoadSchedule.all.sort_by {|load| load[sort_by]}
   end
 

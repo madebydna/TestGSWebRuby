@@ -2,7 +2,11 @@
 <div class="row limit_width_1200">
   <div class="row pbl">
     <div class="container" style="padding:10px;">
-      <h2>Data loads</h2>
+      <h2>Data loading schedule</h2>
+      <h5>Filters</h5>
+      <%= link_to 'Sort by state', admin_data_load_schedules_path(sort_by: 'state') %>&nbsp;&nbsp;
+      <%= link_to 'Sort by live by', admin_data_load_schedules_path(sort_by: 'live_by') %><br>
+      <%= link_to 'list view', admin_data_load_schedules_path(list_view: 'true') %>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -12,7 +16,6 @@
             <td>Year to load</td>
             <td>Released</td>
             <td>Live by</td>
-            <td>Live by month</td>
           </tr>
         </thead>
         <tbody>
@@ -24,22 +27,20 @@
           <td><%= load.year_to_load %></td>
           <td><%= load.released %></td>
           <td><%= load.live_by %></td>
-          <td><%= load.live_by_month %></td>
         </tr>
       <% end %>
         </tbody>
       </table>
-      <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
       <% index = Date::MONTHNAMES.index(Time.now.strftime("%B")) %>
       <% months = Date::MONTHNAMES[(index-2)..(index+2)] %>
       <table class="table table-striped">
         <thead>
           <tr>
-            <td>State</td>
+            <td><h5>State</h5></td>
             <% months.each do |month| %>
               <% next if month.nil? %>
               <% [1, 15].each do |release| %>
-                <td><%= "#{month} #{release}" %></td>
+                <td><h5><%= "#{month} #{release}" %></h5></td>
               <% end %>
           <% end %>
           </tr>
@@ -61,6 +62,7 @@
         <% end %>
         </tr>
       </table>
+      <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
     </div>
   </div>
 </div>
