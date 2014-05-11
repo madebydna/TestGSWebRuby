@@ -111,7 +111,6 @@ describe Admin::ReviewsController do
     context 'provided a state and school ID' do
       before do
         expect(School).to receive(:find_by_state_and_id).with('ca', '1').and_return(school)
-        SchoolRating.stub(:where).and_return
       end
 
       it 'should look for a school if provided a state and school ID' do
