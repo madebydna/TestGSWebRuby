@@ -62,6 +62,20 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
+  def resolve
+    begin
+      ReportedEntity
+        .where(reported_entity_id: params[:id], reported_entity_type: 'schoolReview')
+        .update_all(active: false)
+      flash_error 'Review resolved successfully'
+    rescue => e
+      falsh_error "Review could not be resolved because of \
+unexpected error: #{e}."
+    end
+
+    redirect_back
+  end
+
   protected
 
   def unprocessed_reviews

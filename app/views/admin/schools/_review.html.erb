@@ -27,10 +27,17 @@
         disable_with: 'Publishing...' %>
         <% end %>
         <%= form_for review, url: disable_admin_review_path(review) do |f| %>
-        <%= f.submit 'Disable', 
-            class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'),
-        disable_with: 'Disabling...' %>
+            <%= f.submit 'Disable', 
+                class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'),
+                disable_with: 'Disabling...' %>
         <% end %>
+        <%= form_for review, url: resolve_admin_review_path(review) do |f| %>
+            <%= f.submit 'Resolve flags',
+                id: "js-resolve-review-#{review.id}",
+                class: "btn btn-sm mtm btn-primary",
+                disable_with: 'Resolving...' %>
+        <% end %>
+
     </div>
     <div class="rightcolumn col-lg-8">
         <h5>Review</h5>

@@ -64,8 +64,9 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :reviews do
       get 'moderation', on: :collection
-      match 'publish', on: :member
-      match 'disable', on: :member
+      put 'publish', on: :member
+      put 'disable', on: :member
+      put 'resolve', on: :member
     end
 
     resources :held_school

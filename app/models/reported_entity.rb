@@ -8,6 +8,18 @@ class ReportedEntity < ActiveRecord::Base
 
   belongs_to :user, foreign_key: :reporter_id
 
+  alias_attribute :type, :reported_entity_type
+
+  def active
+    read_attribute(:active) == "\x01" ? true : false
+  end
+  def active?
+    active == true
+  end
+  def inactive?
+    !active?
+  end
+
   def self.from_review(review, reason)
     now = Time.now
     ReportedEntity.new(
@@ -24,7 +36,7 @@ class ReportedEntity < ActiveRecord::Base
   def self.find_by_reviews(reviews)
     ReportedEntity.where(
       reported_entity_type: %w[schoolReview],
-      reported_entity_id: reviews.map(&:id)
+      reported_entity_id: Array.wrap(reviews).map(&:id)
     )
   end
 
