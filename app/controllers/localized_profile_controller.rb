@@ -6,7 +6,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :redirect_tab_urls, only: [:overview]
   before_filter :require_state, :require_school
   before_filter :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
-  before_filter :read_config_for_page, except: :reviews
+  before_filter :read_config_for_page
   before_filter :init_page, :set_header_data
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
