@@ -42,7 +42,7 @@
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= nav.state.gs_capitalize_words %></span>?
+                                        <span style="text-transform:capitalize;"><%= States.state_name(nav.state).gs_capitalize_words %></span>?
                                     <% end %>
                                 </li>
                             <% end %>
