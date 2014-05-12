@@ -1,6 +1,7 @@
 <% if @school %>
+  <% showAds = @school.show_ads %>
   <div class="row mtl invert-colors">
-    <div id="school-contact-info-footer" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam mtl">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam mtl">
       <div class="limit_width_1200 row text-left pbl">
         <a name="ContactInfo"><p class="link_down_compensate"></p></a>
 
@@ -35,5 +36,13 @@
         </div>
       </div>
     </div>
+      <% if showAds %>
+          <% slotNameContact = "School_" + @page_config.name + "_Contact_Info_728x90" %>
+          <% slotNameContactMobile = "School_" + @page_config.name + "_Mobile_Contact_Info_320x50" %>
+          <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="contactInfoBottomAd" data-ad-size="[728,90]" style="width: 728px"  data-dfp="<%= slotNameContact %>"></div>
+          <div class="pln">
+              <div class="gs_ad_slot visible-xs ma" id="contactInfoBottomAdMobile" data-ad-size="[320,50]" style="width: 320px" data-dfp="<%= slotNameContactMobile %>"></div>
+          </div>
+      <% end %>
   </div>
 <% end %>
