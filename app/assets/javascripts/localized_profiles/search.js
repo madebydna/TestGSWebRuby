@@ -178,9 +178,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         }
                         // http://stackoverflow.com/questions/1098040/checking-if-an-associative-array-key-exists-in-javascript
                         if (!('lat' in geocodeResult && 'lon' in geocodeResult &&
-                                'state' in geocodeResult &&
-                                'normalizedAddress' in geocodeResult &&
-                                'country' in geocodeResult)) {
+                            'state' in geocodeResult &&
+                            'normalizedAddress' in geocodeResult &&
+                            'country' in geocodeResult)||
+                            geocodeResult['country'] != 'US') {
                             geocodeResult = null;
                         }
                         if (geocodeResult != null) {
