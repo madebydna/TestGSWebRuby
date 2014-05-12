@@ -64,7 +64,7 @@ LocalizedProfiles::Application.configure do
   config.quiet_assets = true
 
   # Don't cache in dev environment
-  config.cache_store = :null_store
+  config.cache_store = :memory_store, { size: 1.kilobyte }
 
   def local_ip
     orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
@@ -94,6 +94,6 @@ LocalizedProfiles::Application.configure do
   config.active_record.logger = sql_logger
 
   config.hub_mapping_cache_time = 0
-  config.hub_config_cache_time = 0
-  config.school_rating_cache_time = 10
+  config.hub_config_cache_time = 10
+  config.hub_recent_reviews_cache_time = 10
 end

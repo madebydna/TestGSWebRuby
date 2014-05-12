@@ -47,7 +47,7 @@ class SchoolRating < ActiveRecord::Base
   after_save :auto_report_bad_language, unless: '@moderated == true'
 
   def self.cache_time
-    LocalizedProfiles::Application.config.school_rating_cache_time.minutes.from_now
+    LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
   end
 
   def school=(school)
@@ -231,7 +231,7 @@ class SchoolRating < ActiveRecord::Base
 
   def self.recent_reviews_in_hub_count(state_abbr, school_id)
     cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
-    Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time) do
+    Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time, race_condition_ttl: SchoolRating.cache_time) do
       SchoolRating.where(state: state_abbr, school_id: school_id).published.count
     end
   end

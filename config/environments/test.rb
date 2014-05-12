@@ -53,5 +53,5 @@ LocalizedProfiles::Application.configure do
 
   config.hub_mapping_cache_time = 0
   config.hub_config_cache_time = 0
-  config.school_rating_cache_time = 0
+  config.recent_reviews_cache_time = 0
 end

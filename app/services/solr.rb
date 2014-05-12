@@ -6,7 +6,7 @@ class Solr
 
   def breakdown_results(options)
     cache_key = "breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
-    Rails.cache.fetch(cache_key, expires_in: 1.day) do
+    Rails.cache.fetch(cache_key, expires_in: 1.day, race_condition_ttl: 1.day) do
       begin
         response = @connection.get "/main/select/", params: parse_params(options)
         breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }

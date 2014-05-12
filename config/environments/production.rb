@@ -105,6 +105,6 @@ LocalizedProfiles::Application.configure do
   config.session_store :cookie_store, key: '_gsweb_session', :domain => :all, :tld_length => 2, :httponly => false
 
   config.hub_mapping_cache_time = 0
-  config.hub_config_cache_time = 0
-  config.school_rating_cache_time = 10
+  config.hub_config_cache_time = 10
+  config.hub_recent_reviews_cache_time = 10
 end

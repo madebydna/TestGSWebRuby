@@ -169,14 +169,14 @@ class CitiesController < ApplicationController
 
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time) do
+      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
         HubCityMapping.where(city: @city, state: @state[:short], active: 1).first
       end
     end
 
     def configs
       configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-      Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time) do
+      Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
         CollectionConfig.where(collection_id: mapping.collection_id).to_a
      end
     end
