@@ -208,7 +208,7 @@ describe CollectionConfig do
         result = CollectionConfig.city_hub_important_events(collection_configs)
         dates = []
         result[:events].each do |event|
-          expect(event[:date] >= Date.today).to be_true
+          expect(event[:date] >= Date.today).to be_truthy
         end
       end
     end
@@ -256,7 +256,7 @@ describe CollectionConfig do
         result = CollectionConfig.city_hub_important_events(collection_configs)
         dates = []
         result[:events].each do |event|
-          expect(event[:date] >= Date.today).to be_true
+          expect(event[:date] >= Date.today).to be_truthy
         end
       end
     end

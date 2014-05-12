@@ -90,6 +90,7 @@ feature 'School moderation' do
         scenario 'The review is no longer flagged' do
           reported_entities = ReportedEntity.find_by_reviews flagged_review
           expect(reported_entities.select(&:active?)).to be_empty
+          
         end
       end
     end

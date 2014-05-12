@@ -19,7 +19,7 @@ describe User do
 
     it 'allows valid password to be saved' do
       user.password = 'password'
-      expect{user.save!}.to be_true
+      expect{user.save!}.to be_truthy
     end
 
     it 'throws validation error if password too short' do
@@ -76,7 +76,7 @@ describe User do
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
-        expect(user.has_subscription?('mystat', school)).to be_true
+        expect(user.has_subscription?('mystat', school)).to be_truthy
       end
 
       it "does not have the subscription already, because the school's state is different" do
@@ -88,7 +88,7 @@ describe User do
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'tx')
 
-        expect(user.has_subscription?('mystat', school)).to be_false
+        expect(user.has_subscription?('mystat', school)).to be_falsey
       end
 
       it 'does not have the subscription already, because the subscription has expired' do
@@ -101,7 +101,7 @@ describe User do
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
-        expect(user.has_subscription?('mystat', school)).to be_false
+        expect(user.has_subscription?('mystat', school)).to be_falsey
       end
     end
 
@@ -110,8 +110,8 @@ describe User do
       it 'checks for valid passwords' do
         user.password = 'password'
         user.encrypt_plain_text_password
-        expect(user.password_is? 'password').to be_true
-        expect(user.password_is? 'pass').to be_false
+        expect(user.password_is? 'password').to be_truthy
+        expect(user.password_is? 'pass').to be_falsey
       end
 
       it 'does not allow nil or blank passwords' do
@@ -125,7 +125,7 @@ describe User do
       it 'should match the right password when password is "provisional:" ' do
         user.password = 'provisional:'
         user.encrypt_plain_text_password
-        expect(user.password_is? 'provisional:').to be_true
+        expect(user.password_is? 'provisional:').to be_truthy
       end
     end
 
@@ -135,16 +135,16 @@ describe User do
       end
 
       it 'returns false when given nils and blanks' do
-        expect(User.validate_email_verification_token nil, nil).to be_false
-        expect(User.validate_email_verification_token '', nil).to be_false
-        expect(User.validate_email_verification_token nil, '').to be_false
-        expect(User.validate_email_verification_token '', '').to be_false
+        expect(User.validate_email_verification_token nil, nil).to be_falsey
+        expect(User.validate_email_verification_token '', nil).to be_falsey
+        expect(User.validate_email_verification_token nil, '').to be_falsey
+        expect(User.validate_email_verification_token '', '').to be_falsey
       end
 
       it 'returns false for malformed token' do
-        expect(User.validate_email_verification_token 'not_a_valid_token', @time.to_s).to be_false
+        expect(User.validate_email_verification_token 'not_a_valid_token', @time.to_s).to be_falsey
         longer_token = (1..24).to_a.join
-        expect(User.validate_email_verification_token longer_token, @time.to_s).to be_false
+        expect(User.validate_email_verification_token longer_token, @time.to_s).to be_falsey
       end
 
       describe 'with a valid token' do
@@ -160,16 +160,16 @@ describe User do
 
         it 'returns false if date is expired' do
           expired_date = Time.now - EmailVerificationToken::EMAIL_TOKEN_EXPIRATION
-          expect(User.validate_email_verification_token @token, expired_date).to be_false
+          expect(User.validate_email_verification_token @token, expired_date).to be_falsey
         end
 
         it 'returns false if date is in the future' do
           expired_date = Time.now + 1.day
-          expect(User.validate_email_verification_token @token, expired_date).to be_false
+          expect(User.validate_email_verification_token @token, expired_date).to be_falsey
         end
 
         it 'returns false if date is malformed' do
-          expect(User.validate_email_verification_token @token, 'not_a_valid_date').to be_false
+          expect(User.validate_email_verification_token @token, 'not_a_valid_date').to be_falsey
         end
       end
     end

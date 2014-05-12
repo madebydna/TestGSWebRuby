@@ -1,6 +1,5 @@
 class PreschoolSubdomain
   def self.matches?(request)
-    return true if Rails.env == 'development'
     request.domain.nil? ||
     (request.subdomain.blank? && request.domain[-9..-1] == 'localhost') ||
       (request.subdomain.present? && request.subdomain.match(/^pk(\.|$).*/))

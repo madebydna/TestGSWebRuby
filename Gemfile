@@ -92,10 +92,9 @@ group :development do
   # Guard automatically watches files for changes and re-runs bundler, rspec, etc
   gem 'guard'
   gem 'guard-bundler'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
 
-  gem 'zeus'
   gem 'pry-debugger'
 end
 
@@ -114,7 +113,8 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 
   # testing frameworks
-  gem 'rspec-rails'
+  gem 'rspec', '~> 3.0.0.beta2'
+  gem 'rspec-rails', '~> 3.0.0.beta2'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false
 

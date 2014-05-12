@@ -64,12 +64,12 @@ describe School do
     let(:school) { FactoryGirl.build(:school) }
     it 'should return true because the school is held' do
       HeldSchool.stub(:exists?).and_return(true)
-      expect(school.held?).to be_true
+      expect(school.held?).to be_truthy
     end
 
     it 'should return false because the school is not held' do
       HeldSchool.stub(:exists?).and_return(false)
-      expect(school.held?).to be_false
+      expect(school.held?).to be_falsey
     end
   end
 

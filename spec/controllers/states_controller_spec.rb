@@ -18,7 +18,7 @@ describe StatesController do
       after(:each) { clean_dbs :gs_schooldb }
 
       it 'sets meta tags' do
-        controller.should_receive(:set_meta_tags).twice
+        controller.should_receive(:set_meta_tags)
         get :show, state: 'indiana'
       end
     end

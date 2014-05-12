@@ -15,13 +15,13 @@ describe SnapshotDataReader do
       reader.stub(:key_filters).and_return key_filters
 
       school.type = 'public'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_false
+      expect(reader.send :should_show_data_for_key?, :blah).to be_falsey
 
       school.type = 'charter'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_true
+      expect(reader.send :should_show_data_for_key?, :blah).to be_truthy
 
       school.type = 'private'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_true
+      expect(reader.send :should_show_data_for_key?, :blah).to be_truthy
     end
 
     it 'should correctly match level codes' do
@@ -33,16 +33,16 @@ describe SnapshotDataReader do
       reader.stub(:key_filters).and_return key_filters
 
       school.level_code = 'p'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_true
+      expect(reader.send :should_show_data_for_key?, :blah).to be_truthy
 
       school.level_code = 'e'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_false
+      expect(reader.send :should_show_data_for_key?, :blah).to be_falsey
 
       school.level_code = 'm'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_false
+      expect(reader.send :should_show_data_for_key?, :blah).to be_falsey
 
       school.level_code = 'h'
-      expect(reader.send :should_show_data_for_key?, :blah).to be_true
+      expect(reader.send :should_show_data_for_key?, :blah).to be_truthy
     end
 
     it 'should correctly handle blank school level code' do
@@ -54,10 +54,10 @@ describe SnapshotDataReader do
       reader.stub(:key_filters).and_return key_filters
 
       school.level_code = nil
-      expect(reader.send :should_show_data_for_key?, :blah).to be_false
+      expect(reader.send :should_show_data_for_key?, :blah).to be_falsey
 
       school.level_code = ''
-      expect(reader.send :should_show_data_for_key?, :blah).to be_false
+      expect(reader.send :should_show_data_for_key?, :blah).to be_falsey
     end
   end
 

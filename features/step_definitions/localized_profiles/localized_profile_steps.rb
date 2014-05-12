@@ -43,7 +43,7 @@ Given /I see(?: the)? ([^\"]+)/ do |element_name|
 end
 
 Given /I don\'t see(?: the)? ([^\"]+)/ do |element_name|
-  expect(@page.element_visible? element_name).to be_false
+  expect(@page.element_visible? element_name).to be_falsey
 end
 
 Given /I wait to see(?: the)? ([^\"]+)/ do |element_name|

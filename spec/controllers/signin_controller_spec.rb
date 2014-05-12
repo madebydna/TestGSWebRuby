@@ -17,7 +17,7 @@ describe SigninController do
 
   describe '#new_join' do
     it 'sets meta tags' do
-      controller.should_receive(:set_meta_tags).twice
+      controller.should_receive(:set_meta_tags)
       get :new
     end
   end

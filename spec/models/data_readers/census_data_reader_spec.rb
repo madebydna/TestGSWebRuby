@@ -217,7 +217,7 @@ describe CensusDataReader do
     it 'should not fail' do
       require 'sample_data_helper'
       load_sample_data 'census/name_of_a_test'
-      expect(true).to be_true
+      expect(true).to be_truthy
     end
   end
 
