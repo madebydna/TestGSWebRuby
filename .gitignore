@@ -34,3 +34,6 @@ config/env_global_local.yml
 .rakeTasks
 .zeus.sock
 .gemtags
+
+# custom rspec runner to get rubymine to play nice with zeus
+rspec_runner.rb
