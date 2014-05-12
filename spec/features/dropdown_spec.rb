@@ -4,9 +4,10 @@ require 'sample_data_helper'
 feature 'configurable dropdown menu', caching: true do
   let(:dropdown_item_selector) { 'li:first-child .dropdown-menu li a' }
   let(:clear_cookies_selector) { '.dropdown-menu .js-clear-local-cookies-link' }
+  let(:dbs) { [:gs_schooldb, :mi, :de, :ca] }
 
   before(:each) do
-    clean_dbs :gs_schooldb, :mi, :de
+    clean_dbs *dbs
     [
       { collection_id: 1, city: 'detroit', state: 'MI', active: 1, hasEduPage: 1, hasChoosePage: 1, hasEventsPage: 1, hasEnrollPage: 1, hasPartnerPage: 1 },
       { collection_id: 2, city: 'Oakland', state: 'CA', active: 1, hasEduPage: 0, hasChoosePage: 0, hasEventsPage: 0, hasEnrollPage: 0, hasPartnerPage: 0 },
@@ -18,18 +19,19 @@ feature 'configurable dropdown menu', caching: true do
 
     fixtures = [
       { file: 'bates_academy_profile', state: :mi, collection_id: 1 },
-      { file: 'campus_community_profile', state: :de, collection_id: 9 }
+      { file: 'campus_community_profile', state: :de, collection_id: 9 },
+      { file: 'washington_high_profile', state: :ca, collection_id: nil }
     ]
 
     fixtures.each do |fixture|
       load_sample_data fixture[:file], Rails.env
       school = School.on_db(fixture[:state]).first
-      SchoolMetadata.on_db(fixture[:state]).create(school_id: school.id, meta_key: 'collection_id', meta_value: fixture[:collection_id].to_s)
+      SchoolMetadata.on_db(fixture[:state]).create(school_id: school.id, meta_key: 'collection_id', meta_value: fixture[:collection_id].to_s) if fixture[:collection_id]
     end
 
     FactoryGirl.create(:page)
   end
-  after(:each) { clean_dbs :gs_schooldb, :mi, :de }
+  after(:each) { clean_dbs *dbs }
 
   scenario 'on a city page with all pages' do
     visit '/michigan/detroit'
@@ -92,4 +94,10 @@ feature 'configurable dropdown menu', caching: true do
     expect(page).to_not have_selector('.dropdown-toggle', text: 'Detroit, MI')
   end
 
+  scenario 'hub profile to school without a collection' do
+    visit '/michigan/detroit'
+    visit '/california/fremont/1-Washington-High-School/'
+
+    expect(page).to have_selector('.dropdown-toggle', text: 'Detroit, MI')
+  end
 end
