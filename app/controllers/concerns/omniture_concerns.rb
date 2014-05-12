@@ -83,11 +83,13 @@ module OmnitureConcerns
 
   #Use cookies to store the omniture sprops and evars when they need to be tracked on the following page.
   [:sprops, :evars].each do |var_name|
-    define_method "set_omniture_#{var_name}_in_cookie" do |hash={}|
+    method_name = "set_omniture_#{var_name}_in_cookie".to_sym
+    define_method method_name do |hash={}|
       omniture_variable = (read_cookie_value(:"#{OMNITURE_COOKIE_NAME}", var_name.to_s)) || {}
       omniture_variable.merge!(hash)
       write_cookie_value(:"#{OMNITURE_COOKIE_NAME}", omniture_variable,var_name.to_s)
     end
+    OmnitureConcerns.send :protected, method_name
   end
 
 end
