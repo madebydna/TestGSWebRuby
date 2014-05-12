@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'sample_data_helper'
 
-feature 'configurable dropdown menu' do
+feature 'configurable dropdown menu', caching: true do
   let(:dropdown_item_selector) { 'li:first-child .dropdown-menu li a' }
   let(:clear_cookies_selector) { '.dropdown-menu .js-clear-local-cookies-link' }
 

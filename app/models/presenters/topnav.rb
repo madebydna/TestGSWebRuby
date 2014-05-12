@@ -44,7 +44,10 @@ class TopNav
   private
 
   def setup_title
-    if is_city_home?
+    if is_hub_school?
+      @state_short = @hub_params[:state]
+      @city = @hub_params[:city]
+    elsif is_city_home?
       @city = @hub_params[:city]
       @state_short = States.abbreviation(@hub_params[:state])
     elsif is_state_home?
@@ -54,14 +57,14 @@ class TopNav
       @city = read_cookie_value(:hubCity)
     end
 
-    reset_hub_cookies(@city, @state_short)
+    reset_hub_cookies
   end
 
   def sanitize(str)
     (str || '').downcase.gsub(/\-/, ' ')
   end
 
-  def reset_hub_cookies(city, state_short)
+  def reset_hub_cookies
     write_cookie :ishubUser, 'y'
 
     if @school.try(:collection)
@@ -93,5 +96,9 @@ class TopNav
 
   def is_state_home?
     @hub_params.present? && !@hub_params[:city].present? && @hub_params[:state].present?
+  end
+
+  def is_hub_school?
+    @school && !@school.try(:collection).nil?
   end
 end

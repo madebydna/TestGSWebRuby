@@ -6,7 +6,7 @@ class Solr
 
   def breakdown_results(options)
     cache_key = "breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
-    Rails.cache.fetch(cache_key, expires_in: 1.day, race_condition_ttl: 1.day) do
+    Rails.cache.fetch(cache_key, expires_in: cache_time, race_condition_ttl: cache_time) do
       begin
         response = @connection.get "/main/select/", params: parse_params(options)
         breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }
@@ -19,6 +19,10 @@ class Solr
   end
 
   private
+
+    def cache_time
+      LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now
+    end
 
     def parse_params(options)
       params = { qt: 'school-search', fq: ["+school_database_state:#{@state_short}", "+collection_id:\"#{@collection_id}\""] }

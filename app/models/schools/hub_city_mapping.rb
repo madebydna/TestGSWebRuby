@@ -26,7 +26,7 @@ class HubCityMapping < ActiveRecord::Base
   end
 
   def self.for_collection_id(collection_id)
-    Rails.cache.fetch('hub_city_mapping/all', expires_in: 5.minutes, race_condition_ttl: 5.minutes) do
+    Rails.cache.fetch("hub_city_mapping/for_collection_id-#{collection_id}", expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
       where(collection_id: collection_id, active: true).first
     end
   end

@@ -118,6 +118,14 @@ RSpec.configure do |config|
 
   config.mock_with :rspec
 
+  config.around(:each, :caching) do |example|
+    caching = ActionController::Base.perform_caching
+    ActionController::Base.perform_caching = example.metadata[:caching]
+    example.run
+    Rails.cache.clear
+    ActionController::Base.perform_caching = caching
+  end
+
     # use capybara-webkit
   Capybara.javascript_driver = :webkit
 
