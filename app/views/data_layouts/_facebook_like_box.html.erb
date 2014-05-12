@@ -1,11 +1,17 @@
-<div class="fb-like-box tac col-xs-12 col-sm-12 col-md-12 col-lg-12" data-href="<%=@header_metadata.facebook_url%>" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
-
+<% showAds = @school.show_ads %>
+<% layout_grid = (showAds ?  "col-xs-12 col-sm-7 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12")%>
+<div class="row">
+    <div class="fb-like-box tac <%= layout_grid %>" data-href="<%=@header_metadata.facebook_url%>" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+    <% if showAds %>
+        <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+            <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="overviewFacebookAd" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Facebook_300x250"></div>
+        </div>
+    <% end %>
+</div>
+<% if showAds %>
+    <div class="plm">
+        <div class="gs_ad_slot visible-xs ma" id="overviewFacebookAdMobile" data-ad-size="[300,250]" style="width: 300px" data-dfp="School_Overview_Mobile_Facebook_300x250"></div>
+    </div>
+<% end %>
 
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=178930405559082";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
