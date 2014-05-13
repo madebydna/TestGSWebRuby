@@ -184,8 +184,10 @@ GS.track.evarsLookup = {
 GS.track.setOmnitureData = function() {
     GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
     GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
-    if(gon.omniture_school_state != ''){
+    if(typeof gon.omniture_school_state !== 'undefined'){
         GS.track.baseOmnitureObject.channel = gon.omniture_school_state;
+    } else if (typeof gon.omniture_channel !== 'undefined' ){
+      GS.track.baseOmnitureObject.channel = gon.omniture_channel;
     }
 
     var events = [];
