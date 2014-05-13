@@ -5,22 +5,30 @@ cache_key_arg= ARGV[2]
 all_cache_keys=['ratings']
 
 def self.create_cache(school, cache_key)
-  begin
-    action = "#{cache_key}_cache_for_school"
-    self.send action, school
-  rescue => error
+  if (school.active?)
+    begin
+      action = "#{cache_key}_cache_for_school"
+      self.send action, school
+    rescue => error
+      Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}" +
+                             "Exception message: #{error.message}"
+    end
+  else
     Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}" +
-                           "Exception message: #{error.message}"
+                           "School is inactive"
   end
 end
 
 def self.ratings_cache_for_school(school)
   results = TestDataSet.ratings_for_school(school)
-  unless (results.nil?)
+  school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'ratings')
+
+  if !(results.blank?)
     cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops], :methods => [:school_value_text, :school_value_float])
     #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
-    school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'ratings')
     school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
+  elsif !(school_cache.nil?)
+    SchoolCache.destroy(school_cache.id)
   end
 end
 
@@ -35,9 +43,7 @@ keys.each do |cache_key|
     school_ids_arg.to_s.split(',').each do | school_id_arg |
       school = School.on_db(states_arg.downcase.to_sym).find(school_id_arg)
       unless (school.nil?)
-        Array(school).each do |school|
           create_cache(school, cache_key)
-        end
       end
     end
   elsif !states_arg.nil? && school_ids_arg.nil?
