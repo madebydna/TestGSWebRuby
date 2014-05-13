@@ -14,8 +14,8 @@ describe EspDataReader do
       }
     }
     before(:each) do
-      reader.stub(:responses_for_category).and_return responses_for_category
-      category.stub(:key_label_map).and_return({})
+      allow(reader).to receive(:responses_for_category).and_return responses_for_category
+      allow(category).to receive(:key_label_map).and_return({})
     end
 
     it 'prettifies the response values' do
@@ -47,7 +47,7 @@ describe EspDataReader do
         { key: 'key2', label: 'bar', value: %w[foo bar baz] },
         { key: 'key3', label: 'bar', value: %w[foo bar baz] }
       ]
-      category.stub(:key_label_map).and_return key_label_map
+      allow(category).to receive(:key_label_map).and_return key_label_map
       results = reader.data_for_category category
       expect(results).to eq expected
     end
@@ -70,7 +70,7 @@ describe EspDataReader do
     }
 
     before(:each) do
-      reader.stub(:esp_lookup_table).and_return lookup_table
+      allow(reader).to receive(:esp_lookup_table).and_return lookup_table
     end
 
     it 'should transform the hash values' do
@@ -91,41 +91,41 @@ describe EspDataReader do
         'key3' => %w[foo bar baz]
       }
       lookup_table = {}
-      reader.stub(:esp_lookup_table).and_return lookup_table
+      allow(reader).to receive(:esp_lookup_table).and_return lookup_table
       reader.prettify_response_key_to_responses_hash! hash
       expect(hash).to eq expected
     end
   end
 
   describe '#responses_for_category' do
-    
+
     let(:category) { FactoryGirl.build(:category) }
     before(:each) do
-      reader.stub(:sort_based_on_config) { |hash, category| hash }
+      allow(reader).to receive(:sort_based_on_config) { |hash, category| hash }
     end
 
     it 'should retrieve keys for the school\'s collection' do
-      school.stub(:collections).and_return [3]
+      allow(school).to receive(:collections).and_return [3]
       expect(category).to receive(:keys).with([3]).and_return %w[foo bar]
       reader.responses_for_category category
     end
 
     it 'should filter out keys that we don\'t need for given category' do
-      category.stub(:keys).and_return %w[foo bar]
-      reader.stub(:responses_by_key).and_return({
+      allow(category).to receive(:keys).and_return %w[foo bar]
+      allow(reader).to receive(:responses_by_key).and_return({
         'foo' => FactoryGirl.build_list(  :esp_response,
                                           2,
-                                          response_key: 'foo', 
+                                          response_key: 'foo',
                                           school: school
                                         ),
         'bar' => FactoryGirl.build_list(  :esp_response,
                                           2,
-                                          response_key: 'bar', 
+                                          response_key: 'bar',
                                           school: school
                                         ),
         'baz' => FactoryGirl.build_list(  :esp_response,
                                           2,
-                                          response_key: 'baz', 
+                                          response_key: 'baz',
                                           school: school
                                         ),
       })
@@ -137,11 +137,11 @@ describe EspDataReader do
 
     it 'should sort the keys based on config' do
       responses_by_key = double('responses_by_key').as_null_object
-      category.stub(:keys).and_return %w[foo bar]
-      reader.stub(:responses_by_key).and_return responses_by_key
+      allow(category).to receive(:keys).and_return %w[foo bar]
+      allow(reader).to receive(:responses_by_key).and_return responses_by_key
 
       expect(reader).to receive(:sort_based_on_config).with(
-        responses_by_key, 
+        responses_by_key,
         category
       )
       reader.responses_for_category category
@@ -150,7 +150,7 @@ describe EspDataReader do
 
   describe '#responses_by_key' do
     it 'should group esp responses by key' do
-      reader.stub(:all_responses).and_return(
+      allow(reader).to receive(:all_responses).and_return(
         [
           FactoryGirl.build(:esp_response, response_key: 'a', school: school),
           FactoryGirl.build(:esp_response, response_key: 'b', school: school),
@@ -168,7 +168,7 @@ describe EspDataReader do
     let(:category) { double('category') }
 
     before do
-      category.stub(:keys).and_return %w[a b c]
+      allow(category).to receive(:keys).and_return %w[a b c]
     end
 
     it 'should sort based on config data' do
@@ -187,7 +187,7 @@ describe EspDataReader do
     end
 
     it 'should sort and be case insensitive' do
-      category.stub(:keys).and_return %w[A B C]
+      allow(category).to receive(:keys).and_return %w[A B C]
       hash =  {
         'b' => nil,
         'a' => nil,
@@ -203,7 +203,7 @@ describe EspDataReader do
     end
 
     it 'should maintain sort order if no info in config' do
-      category.stub(:keys).and_return []
+      allow(category).to receive(:keys).and_return []
       hash =  {
         'b' => nil,
         'a' => nil,
@@ -228,5 +228,5 @@ describe EspDataReader do
         to eq(expected.to_s)
     end
   end
-  
+
 end

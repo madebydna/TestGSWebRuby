@@ -17,7 +17,7 @@ describe PageConfig do
       end
       all_placements += @roots
 
-      Page.stub(:by_name).with('Test').and_return(page)
+      allow(Page).to receive(:by_name).with('Test').and_return(page)
       @page_config = PageConfig.new page.name, all_placements.shuffle
     end
 

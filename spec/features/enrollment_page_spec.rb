@@ -31,7 +31,7 @@ describe 'Enrollment Page' do
 
       # Footer
       expect(page).to have_text('Find the great schools in Michigan')
-      expect(page).to have_selector('#footer .js-city-list')
+      expect(page).to have_selector('.js-city-list')
     end
   end
 
@@ -55,7 +55,7 @@ describe 'Enrollment Page' do
 
       # Footer
       expect(page).to have_text('Find the great schools in Indiana')
-      expect(page).to have_selector('#footer .js-city-list')
+      expect(page).to have_selector('.js-city-list')
     end
   end
 end

@@ -7,12 +7,12 @@ shared_examples_for 'a controller that can save a favorite school' do
     let(:school) { FactoryGirl.build(:school, state: 'ca') }
 
     before(:each) do
-      controller.stub(:current_user).and_return user 
-      School.stub(:find_by_state_and_id).and_return school
+      allow(controller).to receive(:current_user).and_return user
+      allow(School).to receive(:find_by_state_and_id).and_return school
     end
 
     it 'should not save the favorite school if it\'s already favorited' do
-      user.stub(:favorited_school?).and_return true
+      allow(user).to receive(:favorited_school?).and_return true
 
       expect(user).to_not receive(:add_favorite_school!)
       controller.send :add_favorite_school,
@@ -29,7 +29,7 @@ shared_examples_for 'a controller that can save a favorite school' do
 
     context 'when school favorited successfully' do
       before(:each) do
-        user.stub(:favorited_school?).and_return false
+        allow(user).to receive(:favorited_school?).and_return false
       end
 
       after(:each) do
@@ -63,5 +63,5 @@ shared_examples_for 'a controller that can save a favorite school' do
       end
     end
 
-  end  
+  end
 end

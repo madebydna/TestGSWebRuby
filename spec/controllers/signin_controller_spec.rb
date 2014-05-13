@@ -17,7 +17,7 @@ describe SigninController do
 
   describe '#new_join' do
     it 'sets meta tags' do
-      controller.should_receive(:set_meta_tags)
+      expect(controller).to receive(:set_meta_tags)
       get :new
     end
   end
@@ -155,22 +155,22 @@ describe SigninController do
 
   describe '#facebook_callback' do
     def stub_fb_login_fail
-      controller.stub(:facebook_login) { [nil, double('error')] }
+      allow(controller).to receive(:facebook_login) { [nil, double('error')] }
     end
 
     def stub_fb_login_success
-      controller.stub(:current_user) { double('user', id: 1, auth_token: 'foo') }
-      controller.stub(:facebook_login) { [double('user', id: 1, auth_token: 'foo'), nil] }
+      allow(controller).to receive(:current_user) { double('user', id: 1, auth_token: 'foo') }
+      allow(controller).to receive(:facebook_login) { [double('user', id: 1, auth_token: 'foo'), nil] }
     end
 
     context 'without an access code' do
       before(:each) do
-        FacebookAccess.stub(:facebook_code_to_access_token) { nil } # make it so the method returns the code or nil
+        allow(FacebookAccess).to receive(:facebook_code_to_access_token) { nil } # make it so the method returns the code or nil
       end
 
       it 'logs and flashes an error' do
         error_message = 'Could not log in with Facebook.'
-        Rails.logger.should_receive(:debug).at_least(1).times
+        expect(Rails.logger).to receive(:debug).at_least(1).times
         get :facebook_callback
         expect(flash[:error][0]).to eq(error_message)
       end
@@ -183,19 +183,19 @@ describe SigninController do
 
     context 'with an access code' do
       before(:each) do
-        FacebookAccess.stub(:facebook_code_to_access_token) { 'foobar' }
+        allow(FacebookAccess).to receive(:facebook_code_to_access_token) { 'foobar' }
       end
 
       it 'executes deferred actions' do
         stub_fb_login_fail
-        controller.should_receive(:executed_deferred_action).and_return(nil)
+        allow(controller).to receive(:executed_deferred_action).and_return(nil)
         get :facebook_callback, code: 'fb-code'
       end
 
       context 'logging user into facebook' do
         it 'logs in the user' do
-          controller.stub(:facebook_login) { [double('user'), nil] }
-          controller.should_receive(:log_user_in)
+          allow(controller).to receive(:facebook_login) { [double('user'), nil] }
+          allow(controller).to receive(:log_user_in)
           get :facebook_callback, code: 'fb-code'
         end
       end
@@ -203,7 +203,7 @@ describe SigninController do
       context 'error from loggin into facebook' do
         it 'does not log in the user' do
           stub_fb_login_fail
-          controller.should_not_receive(:log_user_in)
+          expect(controller).to_not receive(:log_user_in)
           get :facebook_callback, code: 'fb-code'
         end
       end
@@ -225,7 +225,7 @@ describe SigninController do
           context 'after visiting a school reviews page' do
             it 'redirects to the overview path for that school' do
               stub_fb_login_fail
-              controller.stub(:overview_page_for_last_school) { '/overview-url-double' }
+              allow(controller).to receive(:overview_page_for_last_school) { '/overview-url-double' }
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/overview-url-double')
             end
@@ -235,7 +235,7 @@ describe SigninController do
             it 'prefers school overview' do
               stub_fb_login_fail
               cookies[:redirect_uri] = '/cookie-redirect-path'
-              controller.stub(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
+              allow(controller).to receive(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/overview-url-double')
             end
@@ -244,7 +244,7 @@ describe SigninController do
           context 'logged in' do
             it 'redirects to the account page' do
               stub_fb_login_success
-              controller.stub(:overview_page_for_last_school) { nil }
+              allow(controller).to receive(:overview_page_for_last_school) { nil }
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/account/')
             end
@@ -253,7 +253,7 @@ describe SigninController do
           context 'not logged in' do
             it 'redirects to the home page' do
               stub_fb_login_fail
-              controller.stub(:overview_page_for_last_school) { nil }
+              allow(controller).to receive(:overview_page_for_last_school) { nil }
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/index.page')
             end
@@ -288,8 +288,8 @@ describe SigninController do
     end
 
     before(:each) do
-      EmailVerificationToken.stub(:parse).and_return token
-      user.stub(:save) { true }
+      allow(EmailVerificationToken).to receive(:parse).and_return token
+      allow(user).to receive(:save) { true }
     end
 
     it 'should be defined' do
@@ -314,7 +314,7 @@ describe SigninController do
       end
 
       context 'and the user can\'t be saved' do
-        before { user.stub(:save).and_return false }
+        before { allow(user).to receive(:save).and_return false }
         it_should_behave_like 'something went wrong'
       end
 
@@ -339,7 +339,7 @@ describe SigninController do
     end
 
     context 'with invalid token' do
-      before { EmailVerificationToken.stub(:parse).and_raise 'parse error' }
+      before { allow(EmailVerificationToken).to receive(:parse).and_raise 'parse error' }
       subject(:response) { get :verify_email, id: nil, time: nil }
 
       it_should_behave_like 'something went wrong'
@@ -347,7 +347,7 @@ describe SigninController do
 
     context 'with expired token' do
       before(:each) do
-        EmailVerificationToken.stub(:parse).and_return expired_token
+        allow(EmailVerificationToken).to receive(:parse).and_return expired_token
       end
       subject(:response) { get :verify_email, id: nil, time: nil }
 
@@ -356,8 +356,8 @@ describe SigninController do
 
     context 'when token\'s encoded user doesn\'t actually exist' do
       before(:each) do
-        EmailVerificationToken.stub(:parse).and_return token
-        token.stub(:user).and_return nil
+        allow(EmailVerificationToken).to receive(:parse).and_return token
+        allow(token).to receive(:user).and_return nil
       end
       subject(:response) { get :verify_email, id: nil, time: nil }
 

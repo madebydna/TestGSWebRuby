@@ -20,7 +20,7 @@ shared_examples "it fails with an error" do
     end
 
     it 'logs an error' do
-      Rails.logger.should_receive(:error)
+      expect(Rails.logger).to receive(:error)
       collection_configs = described_class.where(collection_id: 1, quay: key)
       FactoryGirl.create(:bogus_collection_config, quay: key)
 
@@ -335,7 +335,7 @@ describe CollectionConfig do
 
       it 'logs an error' do
         FactoryGirl.create(:community_sponsor_collection_config_name)
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         wrong_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::SPONSOR_ACRO_NAME_KEY)
         result = CollectionConfig.ed_community_show_tabs(wrong_configs)
 
@@ -399,7 +399,7 @@ describe CollectionConfig do
       let(:configs) { CollectionConfig.all }
 
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         result = CollectionConfig.choosing_page_links(configs)
       end
       it 'returns nil' do
@@ -429,7 +429,7 @@ describe CollectionConfig do
 
     context 'with malformed data' do
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         configs = FactoryGirl.create(:state_hub_content_module, value: 'foobarbaz')
         result = CollectionConfig.content_modules([configs])
       end
@@ -470,7 +470,7 @@ describe CollectionConfig do
 
     context 'with malformed data' do
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         configs = FactoryGirl.create(:state_hub_featured_articles, value: 'foobarb]a{z ? ? ? ?')
         CollectionConfig.state_featured_articles([configs])
       end
@@ -504,7 +504,7 @@ describe CollectionConfig do
     context 'with malformed data' do
       let(:configs) { FactoryGirl.create(:state_partners_configs, value: 'foobar{? baz do') }
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         CollectionConfig.state_partners([configs])
       end
       it 'returns nil' do
@@ -538,7 +538,7 @@ describe CollectionConfig do
     context 'with malformed data' do
       let(:broken_configs) { [FactoryGirl.create(:bogus_collection_config, quay: key, value: "?? foo bar baz")] }
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         CollectionConfig.enrollment_subheading(broken_configs)
       end
 
@@ -599,7 +599,7 @@ describe CollectionConfig do
         end
       end
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         CollectionConfig.enrollment_module([], 'preschool')
       end
     end
@@ -634,7 +634,7 @@ describe CollectionConfig do
         expect(result[:private][:content]).to eq([])
       end
       it 'does not log an error' do
-        Rails.logger.should_not_receive(:error)
+        expect(Rails.logger).to_not receive(:error)
         CollectionConfig.enrollment_tips([], 'preschool')
       end
     end
@@ -684,7 +684,7 @@ describe CollectionConfig do
         ].each { |result| expect(result).to be_nil }
       end
       it 'logs an error' do
-        Rails.logger.should_receive(:error).twice
+        expect(Rails.logger).to receive(:error).twice
         CollectionConfig.state_choose_school([])
         CollectionConfig.state_choose_school(bogus_configs)
       end
@@ -716,7 +716,7 @@ describe CollectionConfig do
         expect(result).to eq(nil_result)
       end
       it 'does not log an error' do
-        Rails.logger.should_not_receive(:error)
+        expect(Rails.logger).to_not receive(:error)
         result = CollectionConfig.key_dates([], 'preschool')
       end
     end
@@ -729,7 +729,7 @@ describe CollectionConfig do
         expect(result).to eq(nil_result)
       end
       it 'logs an error' do
-        Rails.logger.should_receive(:error)
+        expect(Rails.logger).to receive(:error)
         result = CollectionConfig.key_dates(configs, 'preschool')
       end
     end

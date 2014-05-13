@@ -17,21 +17,21 @@ describe Admin::ReviewsController do
 
     it 'should publish a review if one is found' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
-      review.stub(:save).and_return true
+      allow(SchoolRating).to receive(:find).and_return(review)
+      allow(review).to receive(:save).and_return true
       post :publish, id: 1
       expect(review).to be_published
     end
 
     it 'should handle case where review is not found' do
-      SchoolRating.stub(:find).and_return(nil)
+      allow(SchoolRating).to receive(:find).and_return(nil)
       post :publish, id: 1
     end
 
     it 'should handle failure to save by setting flash message' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
-      review.stub(:save).and_return false
+      allow(SchoolRating).to receive(:find).and_return(review)
+      allow(review).to receive(:save).and_return false
       expect(controller).to receive(:flash_error)
       post :publish, id: 1
     end
@@ -47,21 +47,21 @@ describe Admin::ReviewsController do
 
     it 'should disable a review if one is found' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
-      review.stub(:save).and_return true
+      allow(SchoolRating).to receive(:find).and_return(review)
+      allow(review).to receive(:save).and_return true
       post :disable, id: 1
       expect(review).to be_disabled
     end
 
     it 'should handle case where review is not found' do
-      SchoolRating.stub(:find).and_return(nil)
+      allow(SchoolRating).to receive(:find).and_return(nil)
       post :disable, id: 1
     end
 
     it 'should handle failure to save by setting flash message' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
-      review.stub(:save).and_return false
+      allow(SchoolRating).to receive(:find).and_return(review)
+      allow(review).to receive(:save).and_return false
       expect(controller).to receive(:flash_error)
       post :disable, id: 1
     end
@@ -77,14 +77,14 @@ describe Admin::ReviewsController do
 
     it 'should update the review if one is found' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
+      allow(SchoolRating).to receive(:find).and_return(review)
       expect(review).to receive(:update_attributes).and_return true
       post :update, id: 1
     end
 
     it 'should handle update failure by setting flash message' do
       review = FactoryGirl.build(:unpublished_review)
-      SchoolRating.stub(:find).and_return(review)
+      allow(SchoolRating).to receive(:find).and_return(review)
       expect(review).to receive(:update_attributes).and_return false
       expect(controller).to receive(:flash_error)
       post :update, id: 1
@@ -98,9 +98,9 @@ describe Admin::ReviewsController do
     let(:flagged_reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
 
     before do
-      controller.stub(:unprocessed_reviews).and_return unprocessed_reviews
-      controller.stub(:flagged_reviews).and_return flagged_reviews
-      controller.class.stub(:reported_entities_for_reviews).and_return reported_entities
+      allow(controller).to receive(:unprocessed_reviews).and_return unprocessed_reviews
+      allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
+      allow(controller).to receive(:reported_entities_for_reviews).and_return reported_entities
     end
 
     it 'should not look for a school if not provided a state and school ID' do
@@ -145,7 +145,7 @@ describe Admin::ReviewsController do
       expect(reviews).to receive(:order).and_return reviews
       expect(reviews).to receive(:page).and_return reviews
       expect(reviews).to receive(:per).and_return reviews
-      school.stub(:school_ratings).and_return reviews
+      allow(school).to receive(:school_ratings).and_return reviews
       expect(controller.send :unprocessed_reviews).to eq(reviews)
     end
 
@@ -170,7 +170,7 @@ describe Admin::ReviewsController do
       expect(reviews).to receive(:page).and_return reviews
       expect(reviews).to receive(:per).and_return reviews
       expect(reviews).to receive(:ever_flagged).and_return reviews
-      school.stub(:school_ratings).and_return reviews
+      allow(school).to receive(:school_ratings).and_return reviews
       expect(controller.send :flagged_reviews).to eq(reviews)
     end
 

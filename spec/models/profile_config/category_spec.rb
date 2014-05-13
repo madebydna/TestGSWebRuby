@@ -9,7 +9,7 @@ describe Category do
       another_collection = FactoryGirl.build(:collection, id: 1000)
       category_data = FactoryGirl.build(:category_data)
       category_data.instance_variable_set(:@collection, collection)
-      subject.stub(:category_datas).and_return [category_data]
+      allow(subject).to receive(:category_datas).and_return [category_data]
 
       expect(subject.category_data([another_collection]))
         .to eq([category_data])

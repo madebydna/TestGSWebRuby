@@ -49,7 +49,7 @@ describe Admin::ReportedEntityController do
 
     context 'reported entity cannot be saved' do
       before(:each) do
-        ReportedEntity.any_instance.stub(:save).and_return false
+        allow_any_instance_of(ReportedEntity).to receive(:save).and_return false
       end
 
       subject(:result) { get :deactivate, id: reported_entity.id }

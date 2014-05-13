@@ -30,7 +30,7 @@ describe BannedIp do
 
   describe '#ip_banned?' do
     it 'should return true if ip banned' do
-      BannedIp.stub(:banned_ips).and_return(['1.1.1.1', '2.2.2.2'])
+      allow(BannedIp).to receive(:banned_ips).and_return(['1.1.1.1', '2.2.2.2'])
       expect(BannedIp.ip_banned?('1.1.1.1')).to be_truthy
       expect(BannedIp.ip_banned?('2.2.2.2')).to be_truthy
       expect(BannedIp.ip_banned?('3.3.3.3')).to be_falsey

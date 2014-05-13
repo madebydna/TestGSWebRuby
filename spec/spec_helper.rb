@@ -70,6 +70,12 @@ def clean_models(db, *models)
   end
 end
 
+
+Capybara::RSpecMatchers::HaveText.class_eval do
+  alias_method :failure_message, :failure_message_for_should
+  alias_method :failure_message_when_negated, :failure_message_for_should_not
+end
+
 # If you change this you'll also need to change the value in test.rb
 Rails.application.routes.default_url_options[:host] = 'test.host'
 Rails.application.routes.default_url_options[:trailing_slash] = true
@@ -119,12 +125,17 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   config.around(:each, :caching) do |example|
-    caching = ActionController::Base.perform_caching
-    ActionController::Base.perform_caching = example.metadata[:caching]
+    # caching = ActionController::Base.perform_caching
+    # ActionController::Base.perform_caching = example.metadata[:caching]
     example.run
     Rails.cache.clear
-    ActionController::Base.perform_caching = caching
+    # ActionController::Base.perform_caching = caching
   end
+
+  config.before(:each) { Rails.cache.clear }
+  config.after(:each) { Rails.cache.clear }
+
+  config.raise_errors_for_deprecations!
 
     # use capybara-webkit
   Capybara.javascript_driver = :webkit

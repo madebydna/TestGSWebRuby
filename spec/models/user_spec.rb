@@ -44,7 +44,7 @@ describe User do
 
       it 'defaults expires to nil when no expiration set' do
         subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', nil, true)
-        Subscription.stub(:subscription_product).with(:mystat).and_return(subscription_product)
+        allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
         subscription = user.new_subscription(:mystat)
         expect(subscription.expires).to be_nil
       end
@@ -52,7 +52,7 @@ describe User do
       it 'should perform expiration date math correctly' do
         subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', 1.year, true)
 
-        Subscription.stub(:subscription_product).with(:mystat).and_return(subscription_product)
+        allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
 
         subscription = user.new_subscription(:mystat)
         expires = subscription.expires
@@ -72,7 +72,7 @@ describe User do
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
-        user.stub(:subscriptions).and_return(subscriptions)
+        allow(user).to receive(:subscriptions).and_return(subscriptions)
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
@@ -84,7 +84,7 @@ describe User do
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
-        user.stub(:subscriptions).and_return(subscriptions)
+        allow(user).to receive(:subscriptions).and_return(subscriptions)
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'tx')
 
@@ -97,7 +97,7 @@ describe User do
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: Time.now - 10.days)
         subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
 
-        user.stub(:subscriptions).and_return(subscriptions)
+        allow(user).to receive(:subscriptions).and_return(subscriptions)
 
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
@@ -150,7 +150,7 @@ describe User do
       describe 'with a valid token' do
 
         it 'returns a user when it gets a valid token and date' do
-          User.stub(:find).and_return(user)
+          allow(User).to receive(:find).and_return(user)
 
           verified_user = User.validate_email_verification_token @token, @time
 

@@ -5,7 +5,7 @@ describe 'shared/_no_school_alert.html.erb' do
 
   context 'with a noSchoolAlert params' do
     it 'does not render an error message' do
-      view.stub(:params) { {} }
+      allow(view).to receive(:params) { {} }
       render
 
       expect(rendered).to_not have_content error_mesage
@@ -14,7 +14,7 @@ describe 'shared/_no_school_alert.html.erb' do
 
   context 'without a noSchoolAlert params' do
     it 'renders an error message' do
-      view.stub(:params) { { noSchoolAlert: true } }
+      allow(view).to receive(:params) { { noSchoolAlert: true } }
       render
 
       expect(rendered).to have_content error_mesage

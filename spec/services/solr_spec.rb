@@ -4,7 +4,7 @@ describe 'Solr' do
   describe '#breakdown_results' do
     context 'by default' do
       it 'connects to the solr server' do
-        RSolr.should_receive(:connect)
+        expect(RSolr).to receive(:connect)
 
         solr = Solr.new('mi', 1)
         solr.breakdown_results(grade_level: 'p')
@@ -19,7 +19,7 @@ describe 'Solr' do
 
     context 'an error state' do
       it 'returns nil and logs an error' do
-        RSolr::Client.any_instance.stub(:get).and_raise(Exception)
+        allow_any_instance_of(RSolr::Client).to receive(:get).and_raise(Exception)
 
         expect {
           result = Solr.new('mi', 1).breakdown_results(grade_level: 'p')

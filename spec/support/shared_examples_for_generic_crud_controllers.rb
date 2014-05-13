@@ -9,14 +9,14 @@ shared_examples_for 'controller with generic update method' do |model_class|
 
     it 'should update object if one is found' do
       object = double(model_class)
-      model_class.stub(:find).and_return(object)
+      allow(model_class).to receive(:find).and_return(object)
       expect(object).to receive(:update_attributes).and_return true
       post :update, id: 1
     end
 
     it 'should handle update failure by setting flash message' do
       object = double(model_class).as_null_object
-      model_class.stub(:find).and_return(object)
+      allow(model_class).to receive(:find).and_return(object)
       expect(object).to receive(:update_attributes).and_return false
       expect(controller).to receive(:flash_error)
       post :update, id: 1

@@ -63,12 +63,12 @@ describe School do
   describe '#held?' do
     let(:school) { FactoryGirl.build(:school) }
     it 'should return true because the school is held' do
-      HeldSchool.stub(:exists?).and_return(true)
+      allow(HeldSchool).to receive(:exists?).and_return(true)
       expect(school.held?).to be_truthy
     end
 
     it 'should return false because the school is not held' do
-      HeldSchool.stub(:exists?).and_return(false)
+      allow(HeldSchool).to receive(:exists?).and_return(false)
       expect(school.held?).to be_falsey
     end
   end
@@ -82,10 +82,10 @@ describe School do
   end
 
   describe '#description' do
-    subject(:school) { FactoryGirl.build(:school) } 
+    subject(:school) { FactoryGirl.build(:school) }
     before do
-      school.stub(:great_schools_rating).and_return('10')
-      school.stub(:level).and_return('9,10,11,12')
+      allow(school).to receive(:great_schools_rating).and_return('10')
+      allow(school).to receive(:level).and_return('9,10,11,12')
     end
 
     it 'should return a description string of the school' do
@@ -102,34 +102,34 @@ describe School do
     end
 
     context 'when a school does not have a name' do
-      before { school.stub(:name).and_return('') }
+      before { allow(school).to receive(:name).and_return('') }
       it 'should return nil' do
         expect(school.description).to be_nil
       end
     end
 
     context 'when a school has only ungraded schools' do
-      before { school.stub(:levels_description).and_return(nil) }
+      before { allow(school).to receive(:levels_description).and_return(nil) }
       subject(:description) { school.description }
       it { should_not include 'that serves grade'}
     end
 
     context 'when a school has only one grade level' do
-      before { school.stub(:levels_description).and_return('grade 1') }
+      before { allow(school).to receive(:levels_description).and_return('grade 1') }
       subject(:description) { school.description }
       it { should include 'that serves grade 1'}
       it { should_not include 'that serves grades 1'}
     end
 
     context 'when a school has multiple grade levels' do
-      before { school.stub(:levels_description).and_return('grades 1-6') }
+      before { allow(school).to receive(:levels_description).and_return('grades 1-6') }
       subject(:description) { school.description }
       it { should include 'that serves grades 1-6'}
       it { should_not include 'that serves grade 1-6'}
     end
 
     context 'when a school has non-consecutive grade levels' do
-      before { school.stub(:levels_description).and_return('grades K-5, 9-12') }
+      before { allow(school).to receive(:levels_description).and_return('grades K-5, 9-12') }
       subject(:description) { school.description }
       it { should include 'that serves grades K-5, 9-12'}
     end
@@ -140,7 +140,7 @@ describe School do
       end
     end
     context 'when a school does not have a great schools rating' do
-      before { school.stub(:great_schools_rating).and_return(nil) }
+      before { allow(school).to receive(:great_schools_rating).and_return(nil) }
       it 'should not contain the great schools rating text' do
         expect(school.description).to_not include 'It has received a GreatSchools rating of'
       end
@@ -148,10 +148,10 @@ describe School do
   end
 
   describe '#great_schools_rating' do
-    subject(:school) { FactoryGirl.build(:school) } 
+    subject(:school) { FactoryGirl.build(:school) }
     before do
       school_metadata = Hashie::Mash.new(:overallRating => "10")
-      school.stub(:school_metadata).and_return(school_metadata)
+      allow(school).to receive(:school_metadata).and_return(school_metadata)
     end
 
     context 'when a school has a great schools rating' do
@@ -160,7 +160,7 @@ describe School do
       end
     end
     context 'when a school does not have a great schools rating' do
-      before { school.stub(:school_metadata).and_return(Hashie::Mash.new) }
+      before { allow(school).to receive(:school_metadata).and_return(Hashie::Mash.new) }
       it 'should return nil' do
         expect(school.great_schools_rating).to be_nil
       end
@@ -170,32 +170,32 @@ describe School do
   describe '#levels_description' do
     subject(:school) { FactoryGirl.build(:school) }
     context 'when a school does not have grade levels' do
-      before { school.stub(:process_level).and_return(nil) }
+      before { allow(school).to receive(:process_level).and_return(nil) }
       subject(:levels_description) { school.levels_description }
       it { should be_nil }
     end
     context 'when a school has only ungraded schools' do
-      before { school.stub(:process_level).and_return('Ungraded') }
+      before { allow(school).to receive(:process_level).and_return('Ungraded') }
       subject(:levels_description) { school.levels_description }
       it { should be_nil }
     end
     context 'when a school has graded and ungraded schools' do
-      before { school.stub(:process_level).and_return('K-12 & Ungraded') }
+      before { allow(school).to receive(:process_level).and_return('K-12 & Ungraded') }
       subject(:levels_description) { school.levels_description }
       it { should be_nil }
     end
     context 'when a school has a single grade level' do
-      before { school.stub(:process_level).and_return('K') }
+      before { allow(school).to receive(:process_level).and_return('K') }
       subject(:levels_description) { school.levels_description }
       it { should match /grade K/ }
     end
     context 'when a school has a multiple grade levels' do
-      before { school.stub(:process_level).and_return('K-12') }
+      before { allow(school).to receive(:process_level).and_return('K-12') }
       subject(:levels_description) { school.levels_description }
       it { should match /grades K-12/ }
     end
     context 'when a school has non-consecutive of grade levels' do
-      before { school.stub(:process_level).and_return('K-5, 8-10') }
+      before { allow(school).to receive(:process_level).and_return('K-5, 8-10') }
       subject(:levels_description) { school.levels_description }
       it { should match /grades K-5, 8-10/ }
     end

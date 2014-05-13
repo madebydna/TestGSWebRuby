@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'cities/_upcoming_events.html.erb' do
   context 'without events' do
     it 'hides the section' do
-      view.stub(:important_events) { nil }
-      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
+      allow(view).to receive(:important_events) { nil }
+      allow(view).to receive(:params) { { city: 'detroit', state: 'michigan' } }
       render
       expect(rendered).to_not have_selector('.row')
     end
@@ -13,8 +13,8 @@ describe 'cities/_upcoming_events.html.erb' do
   context 'by default' do
     before(:each) do
       FactoryGirl.create(:important_events_collection_config)
-      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
-      view.stub(:important_events) { important_events }
+      allow(view).to receive(:params) { { city: 'detroit', state: 'michigan' } }
+      allow(view).to receive(:important_events) { important_events }
     end
     after(:each) { clean_dbs :gs_schooldb }
     let(:configs) { CollectionConfig.all }
@@ -34,15 +34,15 @@ describe 'cities/_upcoming_events.html.erb' do
   context 'on a community page' do
     before(:each) do
       FactoryGirl.create(:important_events_collection_config)
-      view.stub(:params) { { city: 'detroit', state: 'michigan' } }
-      view.stub(:important_events) { important_events }
+      allow(view).to receive(:params) { { city: 'detroit', state: 'michigan' } }
+      allow(view).to receive(:important_events) { important_events }
     end
     after(:each) { clean_dbs :gs_schooldb }
     let(:configs) { CollectionConfig.all }
     let(:important_events) { CollectionConfig.city_hub_important_events(configs) }
 
     it 'does not render an hr tag' do
-      view.stub(:community_page) { true }
+      allow(view).to receive(:community_page) { true }
       render
       expect(rendered).to_not have_selector('hr')
     end

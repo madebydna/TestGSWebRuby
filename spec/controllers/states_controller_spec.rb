@@ -18,7 +18,7 @@ describe StatesController do
       after(:each) { clean_dbs :gs_schooldb }
 
       it 'sets meta tags' do
-        controller.should_receive(:set_meta_tags)
+        allow(controller).to receive(:set_meta_tags)
         get :show, state: 'indiana'
       end
     end
@@ -33,7 +33,7 @@ describe StatesController do
       let(:empty_tabs) { { :results => { :public => nil, :private => nil } } }
 
       it 'renders the page' do
-        CollectionConfig.stub(:enrollment_tabs).and_return(empty_tabs)
+        allow(CollectionConfig).to receive(:enrollment_tabs).and_return(empty_tabs)
         get :enrollment, state: 'indiana'
         expect(response).to render_template('shared/enrollment')
       end
