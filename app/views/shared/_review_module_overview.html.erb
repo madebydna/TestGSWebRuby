@@ -5,7 +5,9 @@
     <% if showAds %>
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-                <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="overviewReviewAd" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Reviews_300x250"></div>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :desktop  %>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
     <% end %>
@@ -57,7 +59,7 @@
     </div>
 <% end %>
 <% if showAds %>
-    <div class="plm pbm">
-        <div class="gs_ad_slot visible-xs ma" id="overviewReviewAdMobile" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Mobile_Reviews_300x250"></div>
+    <div class="visible-xs plm pvl mbl">
+        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :mobile  %>
     </div>
 <% end %>
