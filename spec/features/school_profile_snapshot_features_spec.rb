@@ -15,7 +15,8 @@ feature 'school profile snapshot module' do
     FactoryGirl.create(
       :category_data,
       category: snapshot,
-      response_key: 'summer_program'
+      response_key: 'summer_program',
+      label: 'summer_program'
     )
   end
 
