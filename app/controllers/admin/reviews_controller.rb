@@ -64,7 +64,7 @@ class Admin::ReviewsController < ApplicationController
 
   def resolve
     begin
-      ReportedEntity
+      ReportedEntity.on_db(:community_rw)
         .where(reported_entity_id: params[:id], reported_entity_type: 'schoolReview')
         .update_all(active: false)
       flash_error 'Review resolved successfully'
