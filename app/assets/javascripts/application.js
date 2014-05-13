@@ -19,7 +19,6 @@
 //= require_tree ./resources
 //= require_tree ./auth
 //= require_tree ./localized_profiles
-//= require_tree ./hubs
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;
