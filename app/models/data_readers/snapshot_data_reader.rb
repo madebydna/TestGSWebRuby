@@ -124,6 +124,10 @@ class SnapshotDataReader < SchoolProfileDataReader
         level_codes: ['p', 'e', 'm', 'h'],
         school_types: ['private'],
         source: 'esp_data_points'
+      },
+      summer_program: {
+        level_codes: ['e', 'm'],
+        source: 'esp_data_points'
       }
     }
   end

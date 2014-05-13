@@ -89,6 +89,7 @@ RSpec.configure do |config|
   config.include Capybara::DSL
 
   config.include Rails.application.routes.url_helpers
+  config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
