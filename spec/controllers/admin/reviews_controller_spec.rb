@@ -101,6 +101,7 @@ describe Admin::ReviewsController do
       allow(controller).to receive(:unprocessed_reviews).and_return unprocessed_reviews
       allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
       allow(controller).to receive(:reported_entities_for_reviews).and_return reported_entities
+      allow(controller.class).to receive(:reported_entities_for_reviews).and_return reported_entities
     end
 
     it 'should not look for a school if not provided a state and school ID' do
