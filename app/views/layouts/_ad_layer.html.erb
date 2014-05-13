@@ -1,0 +1,17 @@
+<% unless defined? visible_for %>
+     <!--set defaults-->
+    <% visible_for = "visible-lg visible-md visible-sm" %>
+    <% if view == :mobile %>
+        <% visible_for = "visible-xs"  %>
+    <% end %>
+<% end %>
+
+<% width = @ad_definition.get_width(page, slot, view) %>
+<% height = @ad_definition.get_height(page, slot, view) %>
+<% insert_mobile = '' %>
+<% if view == :mobile %>
+    <% insert_mobile = 'Mobile_' %>
+<% end %>
+<% slotdef = "School_#{page}_#{insert_mobile}#{slot}_#{width}x#{height}" %>
+<% iddef = "#{page}#{slot}#{insert_mobile}Ad" %>
+<div class="gs_ad_slot <%= visible_for %> ma" id="<%= iddef %>" data-ad-size="[<%= width %>,<%= height %>]" style="width: <%= width %>px"  data-dfp="<%= slotdef %>"></div>
