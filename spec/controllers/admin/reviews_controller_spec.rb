@@ -216,7 +216,7 @@ describe Admin::ReviewsController do
       reviews = double('reviews')
       expect(ReportedEntity).to receive(:find_by_reviews).and_return reviews
       expect(reviews).to receive(:order).and_return reviews
-      controller.class.send :reported_entities_for_reviews, reviews
+      controller.send :reported_entities_for_reviews, reviews
     end
   end
 

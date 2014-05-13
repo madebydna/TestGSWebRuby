@@ -7,7 +7,7 @@ class Admin::ReviewsController < ApplicationController
 
     @reported_reviews = self.flagged_reviews
     @reviews_to_process = self.unprocessed_reviews
-    @reported_entities = Admin::ReviewsController.reported_entities_for_reviews @reported_reviews
+    @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
@@ -109,7 +109,7 @@ unexpected error: #{e}."
     end
   end
 
-  def self.reported_entities_for_reviews(reviews)
+  def reported_entities_for_reviews(reviews)
     ReportedEntity.find_by_reviews(reviews).order('created desc')
   end
 
