@@ -69,7 +69,7 @@ class Admin::ReviewsController < ApplicationController
         .update_all(active: false)
       flash_error 'Review resolved successfully'
     rescue => e
-      falsh_error "Review could not be resolved because of \
+      flash_error "Review could not be resolved because of \
 unexpected error: #{e}."
     end
 
