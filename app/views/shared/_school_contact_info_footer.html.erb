@@ -37,11 +37,9 @@
       </div>
     </div>
       <% if showAds %>
-          <% slotNameContact = "School_" + @page_config.name + "_Contact_Info_728x90" %>
-          <% slotNameContactMobile = "School_" + @page_config.name + "_Mobile_Contact_Info_300x250" %>
-          <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="contactInfoBottomAd" data-ad-size="[728,90]" style="width: 728px"  data-dfp="<%= slotNameContact %>"></div>
-          <div class="pln">
-              <div class="gs_ad_slot visible-xs ma" id="contactInfoBottomAdMobile" data-ad-size="[300,250]" style="width: 320px" data-dfp="<%= slotNameContactMobile %>"></div>
+          <div class="pbl mbl">
+              <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Contact_Info, view: :desktop  %>
+              <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Contact_Info, view: :mobile  %>
           </div>
       <% end %>
   </div>

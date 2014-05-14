@@ -4,13 +4,13 @@
     <div class="fb-like-box tac <%= layout_grid %>" data-href="<%=@header_metadata.facebook_url%>" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
     <% if showAds %>
         <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-            <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="overviewFacebookAd" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Facebook_300x250"></div>
+            <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Facebook, view: :desktop  %>
         </div>
     <% end %>
 </div>
 <% if showAds %>
-    <div class="plm">
-        <div class="gs_ad_slot visible-xs ma" id="overviewFacebookAdMobile" data-ad-size="[300,250]" style="width: 300px" data-dfp="School_Overview_Mobile_Facebook_300x250"></div>
+    <div class="ptl">
+        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Facebook, view: :mobile  %>
     </div>
 <% end %>
 
