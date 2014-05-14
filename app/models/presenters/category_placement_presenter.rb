@@ -80,4 +80,7 @@ class CategoryPlacementPresenter
     File.join('data_layouts', layout)
   end
 
+  def show_bottom_ads?
+    @category_placement.layout_config_json['show_bottom_ads'] == true
+  end
 end

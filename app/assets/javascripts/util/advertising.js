@@ -130,9 +130,14 @@ GS.ad.setPageLevelTargeting = function(){
 
   // being set in localized_profile_controller - ad_setTargeting_through_gon
   // sets all targeting based on what is set in the controller
-  $.each( gon.ad_set_targeting, function( key, value ){
-    googletag.pubads().setTargeting(key, value);
-  });
+  if($.isEmptyObject(gon.ad_set_targeting)) {
+    console.log("gon setTargeting is empty for advertising");
+  }
+  else{
+    $.each( gon.ad_set_targeting, function( key, value ){
+      googletag.pubads().setTargeting(key, value);
+    });
+  }
 };
 
 

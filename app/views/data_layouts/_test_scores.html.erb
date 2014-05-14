@@ -49,6 +49,8 @@
                 <p class="font-size-small ptm">Source: <%= value[:test_source] %></p>
             </div>
         <% end %>
-
+        <% testslotname = 'Test_Scores'+(index+1).to_s %>
+        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: testslotname.to_sym, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: testslotname.to_sym, view: :mobile  %>
 <% end %>
 <% end %>

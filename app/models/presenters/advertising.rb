@@ -127,8 +127,35 @@ class Advertising
           height:50
         }
       },
-      Test_Scores: {
-        name: "Test_Scores",
+      Test_Scores1: {
+        name: "Test_Scores1",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores2: {
+        name: "Test_Scores2",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores3: {
+        name: "Test_Scores3",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },Test_Scores4: {
+        name: "Test_Scores4",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores5: {
+        name: "Test_Scores5",
         desktop:{
           width:300,
           height:250
