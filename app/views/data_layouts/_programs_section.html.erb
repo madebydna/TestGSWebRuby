@@ -1,0 +1,10 @@
+<%= yield %>
+
+<% if @school.show_ads %>
+  <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+    <%= render_desktop_ad_slot :Programs %>
+  </div>
+  <div class="plm">
+    <%= render_mobile_ad_slot :Programs %>
+  </div>
+<% end %>

@@ -2,12 +2,10 @@
 
 <% if category_placement.present? %>
 
+  <% category_placement = CategoryPlacementPresenter.new(category_placement, @page_config, self) %>
+
     <% begin %>
-        <%= render category_placement.partial,
-          category_placement: category_placement,
-          data: category_placement_data(@page_config, category_placement),
-          category: category_placement.category
-        %>
+        <%= category_placement.render %>
     <% rescue => e %>
         <%= log_view_error "Something went wrong when trying to render category placement #{category_placement.title}", e %>
         <% raise e if params[:debug] %>

@@ -166,7 +166,7 @@ class Advertising
     }
 
     # Details Page Ads
-    @ad_slots[:Quality] = {
+    @ad_slots[:Details] = {
       Content_Top: {
         name: "Content_Top",
         desktop:{
