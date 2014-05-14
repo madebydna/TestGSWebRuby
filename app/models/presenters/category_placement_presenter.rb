@@ -73,7 +73,7 @@ class CategoryPlacementPresenter
   end
 
   def wrapper_layout
-    "#{title.downcase}_#{layout}"
+    "#{title.downcase}_#{layout}" if title.present?
   end
 
   def default_partial
