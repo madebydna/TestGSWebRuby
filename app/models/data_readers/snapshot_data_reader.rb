@@ -17,7 +17,7 @@ class SnapshotDataReader < SchoolProfileDataReader
       label = category_data.label.nil? ? key : category_data.label
 
       #Special case the key to show up only in SF and oakland.Temporary fix till we make snapshot module configurable.
-      next if(key == 'summer_program' && !school.collection.blank? && !([4,5].include?(school.collection.id) ))
+      next if(key == 'summer_program' && ((school.collection.blank?) || (!([4,5].include?(school.collection.id))) ))
 
       #Filter out the keys based on level codes and school type
       if should_show_data_for_key? key
