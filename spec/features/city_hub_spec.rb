@@ -64,7 +64,7 @@ describe 'City Hub Page' do
   end
 
   describe 'education community carousel' do
-    it 'shows the carousel', js: true do
+    it 'shows the carousel' do
       expect(page).to have_css('.js-partner-carousel')
     end
   end
