@@ -2,7 +2,7 @@ states = ['mi', 'in', 'wi', 'de']
 states_arg=ARGV[0]
 school_ids_arg=ARGV[1]
 cache_key_arg= ARGV[2]
-all_cache_keys=['ratings']
+all_cache_keys=['ratings','test_scores']
 
 def self.create_cache(school, cache_key)
   if (school.active?)
@@ -25,6 +25,21 @@ def self.ratings_cache_for_school(school)
 
   if !(results.blank?)
     cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops], :methods => [:school_value_text, :school_value_float])
+    #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
+    school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
+  elsif !(school_cache.nil?)
+    SchoolCache.destroy(school_cache.id)
+  end
+end
+
+
+def self.test_scores_cache_for_school(school)
+  results = TestDataSet.fetch_data_sets_and_values(school, 1, 1)
+  school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'test_scores')
+
+  #TODO refactor since the following lines r almost common for ratings and test scores?
+  if !(results.blank?)
+    cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops, :display_target ])
     #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
     school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
   elsif !(school_cache.nil?)
