@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include UrlHelper
 
   before_filter :login_from_cookie, :init_omniture
+  before_filter :set_optimizely_gon_env_value
 
   after_filter :disconnect_connection_pools
 
@@ -163,6 +164,10 @@ class ApplicationController < ActionController::Base
     gon.omniture_account = ENV_GLOBAL['omniture_account']
     gon.omniture_server = ENV_GLOBAL['omniture_server']
     gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
+  end
+
+  def set_optimizely_gon_env_value
+    gon.optimizely_key = ENV_GLOBAL['optimizely_key']
   end
 
 end
