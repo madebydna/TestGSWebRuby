@@ -13,10 +13,7 @@ module OmnitureConcerns
 
   def set_omniture_data_for_school(page_name)
     school_locale = @school.city.nil? ? @school.county : @school.city
-    school_level_code = ''
-    if (LevelCode.from_string(@school.level_code))
-      school_level_code = (LevelCode.from_string(@school.level_code)).levels.map(&:long_name).join('+')
-    end
+    school_level_code = (LevelCode.new(@school.level_code)).levels.map(&:long_name).join('+')
 
     gon.omniture_sprops ||= {}
 
