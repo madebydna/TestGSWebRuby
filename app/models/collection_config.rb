@@ -190,6 +190,10 @@ class CollectionConfig < ActiveRecord::Base
           important_events[:events].pop
         end
 
+        if important_events[:max_important_event_to_display] > important_events[:events].length
+          important_events[:max_important_event_to_display] = important_events[:events].length
+        end
+
         important_events = nil if important_events[:events].empty?
       rescue Exception => e
         important_events = nil

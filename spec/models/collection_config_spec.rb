@@ -177,15 +177,15 @@ describe CollectionConfig do
 
     context 'valid json string' do
       before(:each) { FactoryGirl.create(:important_events_collection_config) }
+      let(:collection_configs) { CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY) }
+
       it 'parses the important events string and returns a hash' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
 
         expect(result).to be_an_instance_of(Hash)
       end
 
       it 'limits to the max number of events' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs, 1)
         expect(result[:events].length).to eq(1)
 
@@ -194,7 +194,6 @@ describe CollectionConfig do
       end
 
       it 'sorts by date' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
 
         sorted_result = result.clone
@@ -204,7 +203,6 @@ describe CollectionConfig do
       end
 
       it 'removes past events' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
         dates = []
         result[:events].each do |event|
@@ -231,7 +229,6 @@ describe CollectionConfig do
       let(:key) { CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY }
       let(:method) { :important_events }
     end
-
 
     context 'valid json string' do
       before(:each) { FactoryGirl.create(:important_events_collection_config) }
