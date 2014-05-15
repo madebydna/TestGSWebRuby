@@ -4,6 +4,11 @@ FactoryGirl.define do
     end
 
     factory :school do
+      ignore do
+        collection_id 1
+        collection nil
+      end
+
       id
       name 'Alameda High School'
       city 'alameda'
@@ -77,6 +82,37 @@ FactoryGirl.define do
         end
       end
 
+      trait :with_collection do
+        after(:create) do |school, evaluator|
+          FactoryGirl.create(
+            :school_metadata,
+            school_id: school.id,
+            meta_key: 'collection_id',
+            meta_value: evaluator.collection_id
+          )
+        end
+
+        after(:build) do |school, evaluator|
+          collection = evaluator.collection ||  FactoryGirl.build(
+                                                  :collection,
+                                                  city: school.city,
+                                                  state: school.state
+                                                )
+          school.instance_variable_set(
+            :@collections,
+            [collection]
+          )
+        end
+
+        after(:stub) do |school, evaluator|
+          collection = evaluator.collection ||  FactoryGirl.build_stubbed(
+                                                  :collection,
+                                                  city: school.city,
+                                                  state: school.state
+                                                )
+          school.stub(:collections) { [collection] }
+        end
+      end
     end
 
     factory :school_with_params, class: School do
