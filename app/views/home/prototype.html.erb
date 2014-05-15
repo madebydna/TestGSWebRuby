@@ -1,3 +1,14 @@
+<% content_for :javascript_includes do %>
+    <script>
+        $(function() {
+            console.log('before')
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '/assets/homepage_hero.jpg', mobileImage: '/assets/hero_mobile.jpg' });
+            GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '/assets/homepage_picnic.jpg', mobileImage: '' });
+        })
+    </script>
+<% end %>
+
+
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
 <%= render 'shared/search_hero_prototype', hero_image: @hero_image,
