@@ -146,6 +146,36 @@ describe EspDataReader do
       )
       reader.responses_for_category category
     end
+
+    it 'should return unique response values for a response key' do
+
+      allow(category).to receive(:keys).and_return %w[foo bar]
+
+      duplicate_responses = [FactoryGirl.build(  :esp_response,
+                                                    response_key: 'foo',
+                                                    response_value: 'value',
+                                                    school: school
+                                                  ),
+                            FactoryGirl.build(  :esp_response,
+                                                    response_key: 'foo',
+                                                    response_value: 'value',
+                                                    school: school
+                                                  ),
+
+                            FactoryGirl.build(  :esp_response,
+                                                    response_key: 'foo',
+                                                    response_value: 'value',
+                                                    school: school
+                                                  )]
+
+      allow(reader).to receive(:responses_by_key).and_return({
+        'foo' => duplicate_responses
+      })
+      results = reader.responses_for_category category
+      expect(results['foo'].size).to eq 1
+      expect(results['foo'][0]).to eq 'value'
+    end
+
   end
 
   describe '#responses_by_key' do
