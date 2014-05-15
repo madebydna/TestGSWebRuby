@@ -42,8 +42,10 @@ feature 'school profile snapshot module' do
   end
 
   after(:each) do
-    clean_models :ca, School, EspResponse, SchoolMetadata
-    clean_models User, Page, Category, CategoryData, CategoryPlacement,HubCityMapping
+    clean_models :ca, School, EspResponse, SchoolMetadata, CensusDataSet,
+                      CensusDataSchoolValue
+    clean_models  User, Page, Category, CategoryData, CategoryPlacement,
+                  HubCityMapping, CensusDataType
   end
 
   subject do
@@ -127,6 +129,39 @@ feature 'school profile snapshot module' do
 
     scenario 'Summer program should not appear since it has level code h' do
       expect(subject).to_not have_content('Summer_program')
+    end
+  end
+
+  context 'When an enrollment value exists for Alameda High School' do
+    let(:school) { FactoryGirl.create(:alameda_high_school) }
+
+    before do
+      FactoryGirl.create(
+        :enrollment_data_set,
+        :with_school_value,
+        school_id: school.id,
+        school_value_float: 100
+      )
+
+      FactoryGirl.create(
+        :category_data,
+        category: snapshot,
+        response_key: 'enrollment',
+        label: 'Enrollment',
+        source: 'census_data_points'
+      )
+
+      @data_type = FactoryGirl.create(
+        :census_data_type,
+        id: 17,
+        description: 'Enrollment'
+      )
+    end
+
+    scenario 'Enrollment should appear with the right value' do
+      allow_any_instance_of(CensusDataSet)
+        .to receive(:census_data_type).and_return @data_type
+      expect(subject).to have_content('Enrollment 100')
     end
   end
 

@@ -4,7 +4,7 @@ module ReadOnlyRecord
   extend ActiveSupport::Concern
 
   included do
-    before_destroy :before_destroy_read_only
+    before_destroy :before_destroy_read_only unless Rails.env.test?
   end
 
   def create_or_update
