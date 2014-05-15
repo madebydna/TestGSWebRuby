@@ -92,7 +92,7 @@ class CitiesController < ApplicationController
         'Partner' => nil
       }
       @canonical_url = city_education_community_partner_url(params[:state], params[:city])
-      set_meta_tags kewords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
+      set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
     end
