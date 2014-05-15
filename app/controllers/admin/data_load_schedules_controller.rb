@@ -17,9 +17,9 @@ class Admin::DataLoadSchedulesController < ApplicationController
     @load.description = p[:description]
     @load.load_type = p[:load_type]
     @load.year_to_load = p['year_to_load(1i)']
-    @load.released = "#{p['released(1i)']}-0#{p['released(2i)']}-0#{p['released(3i)']}"
-    @load.acquired = "#{p['acquired(1i)']}-0#{p['acquired(2i)']}-0#{p['acquired(3i)']}"
-    @load.live_by = "#{p['live_by(1i)']}-0#{p['live_by(2i)']}-#{p['live_by(3i)']}"
+    @load.released = "#{p['released(1i)']}-#{p['released(2i)'].to_s.rjust(2, '0')}-#{p['released(3i)'].to_s.rjust(2, '0')}"
+    @load.acquired = "#{p['acquired(1i)']}-#{p['acquired(2i)'].to_s.rjust(2, '0')}-#{p['acquired(3i)'].to_s.rjust(2, '0')}"
+    @load.live_by = "#{p['live_by(1i)']}-#{p['live_by(2i)'].to_s.rjust(2, '0')}-#{p['live_by(3i)'].to_s.rjust(2, '0')}"
     @load.updated_by = p['updated_by']
     if @load.save
       redirect_to '/admin/gsr/data-planning'
