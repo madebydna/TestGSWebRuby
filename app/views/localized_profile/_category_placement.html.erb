@@ -6,7 +6,7 @@
 
     <%= category_placement.render %>
 
-    <% if category_placement.show_bottom_ads? %>
+    <% if category_placement.show_bottom_ads? && @school.show_ads  %>
         <div class="pvl">
             <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: category_placement.title.to_sym, view: :desktop  %>
             <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: category_placement.title.to_sym, view: :mobile  %>
