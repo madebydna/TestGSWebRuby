@@ -1,9 +1,11 @@
 class CitiesController < ApplicationController
   include SeoHelper
+  include MetaTagsHelper
   before_filter :set_city_state
   before_filter :set_hub_params
   before_filter :set_login_redirect
   before_filter :set_footer_cities
+  before_filter :write_meta_tags, except: [:partner]
 
   def show
     hub_city_mapping = mapping
@@ -68,7 +70,6 @@ class CitiesController < ApplicationController
     if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      set_meta_tags title: "The #{@city} Education Community"
       @collection_id = hub_city_mapping.collection_id
       collection_configs = configs
       set_community_tab(collection_configs)
@@ -186,4 +187,3 @@ class CitiesController < ApplicationController
       partners
     end
 end
-

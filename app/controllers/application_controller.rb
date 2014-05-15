@@ -198,4 +198,12 @@ class ApplicationController < ActionController::Base
       CollectionConfig.where(collection_id: mapping.collection_id).to_a
     end
   end
+
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
 end

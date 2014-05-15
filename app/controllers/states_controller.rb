@@ -1,11 +1,13 @@
 class StatesController < ApplicationController
   include SeoHelper
   include OmnitureConcerns
+  include MetaTagsHelper
 
   before_filter :set_city_state
   before_filter :set_hub_params
   before_filter :set_login_redirect
   before_filter :set_footer_cities
+  before_filter :write_meta_tags, only: [:show]
 
   def show
     hub_city_mapping = mapping
@@ -26,9 +28,6 @@ class StatesController < ApplicationController
       @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       set_omniutre_data
-      set_meta_tags title: state_page_title,
-                    description: state_page_description,
-                    keywords: state_page_keywords
     end
   end
 
