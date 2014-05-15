@@ -41,21 +41,21 @@ describe CategoryPlacementPresenter do
       allow(view).to receive(:params).and_return({ controller: '' })
     end
 
-    context 'when module specific layout wrapper exists' do
-      let(:category_placement) do
-        FactoryGirl.build(
-          :category_placement,
-          title: 'Programs',
-          layout: 'section'
-        )
-      end
-      it 'two partials should be rendered' do
-        # expect(view).to receive(:render) { yield if block_given }.twice
-        expect(view).to receive(:render)
-          .with(layout: 'data_layouts/programs_section', locals: Hash)
-        subject.render
-      end
-    end
+    # context 'when module specific layout wrapper exists' do
+    #   let(:category_placement) do
+    #     FactoryGirl.build(
+    #       :category_placement,
+    #       title: 'Programs',
+    #       layout: 'section'
+    #     )
+    #   end
+    #   it 'two partials should be rendered' do
+    #     # expect(view).to receive(:render) { yield if block_given }.twice
+    #     expect(view).to receive(:render)
+    #       .with(layout: 'data_layouts/programs_section', locals: Hash)
+    #     subject.render
+    #   end
+    # end
 
     context 'when module specific layout wrapper does not exist' do
       let(:category_placement) do

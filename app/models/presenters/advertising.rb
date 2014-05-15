@@ -1,3 +1,24 @@
+class Hash
+  def seek(*_keys_)
+    last_level    = self
+    sought_value  = nil
+
+    _keys_.each_with_index do |_key_, _idx_|
+      if last_level.is_a?(Hash) && last_level.has_key?(_key_)
+        if _idx_ + 1 == _keys_.length
+          sought_value = last_level[_key_]
+        else
+          last_level = last_level[_key_]
+        end
+      else
+        break
+      end
+    end
+
+    sought_value
+  end
+end
+
 class Advertising
 
   def initialize
@@ -276,12 +297,17 @@ class Advertising
     }
 
     def get_width(page, slot, view)
-
-      @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:width] : @ad_slots[page][slot][view][:width]
+      hash_val = @ad_slots.seek page, slot, :desktop
+      if hash_val.present?
+        @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:width] : @ad_slots[page][slot][view][:width]
+      end
     end
 
     def get_height(page, slot, view)
-      @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:height] : @ad_slots[page][slot][view][:height]
+      hash_val = @ad_slots.seek page, slot, :desktop
+      if hash_val.present?
+        @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:height] : @ad_slots[page][slot][view][:height]
+      end
     end
 
   end
