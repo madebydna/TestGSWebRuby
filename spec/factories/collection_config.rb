@@ -80,6 +80,7 @@ enrollment_tips_value = "{ content:[ 'If you’ve missed an application deadline
 enrollment_tip_value = "{ content: 'If you’ve missed an application deadline, call the school and ask if you can still apply, or if there is a waiting list. Schools often have open seats, so you could get lucky!' }"
 state_choose_school_value = "{    heading:'Finding a Great School in Detroit',    content:'We&#39;re here to help you explore your options and find the right school for your child. To get started with the school research process, check out the resources below to learn more about how...', link: [{ newWindow: 'true', name: 'Detroit partner', path: 'http://google.com' }] }"
 key_dates_value = "{ content: '02-01-2014<br>Individual schools hold open houses now through April<br>02-01-2014<br>Individual schools hold open houses now through April' }"
+browse_links_value = "{   browseLinks: [     { label: 'PreSchools', link: '/schools/?gradeLevels=p'  },     { label: 'Elementary Schools', link: '/schools/?gradeLevels=e'  },     { label: 'Middle Schools', link: '/schools/?gradeLevels=m'  },     { label: 'High Schools', link: '/schools/?gradeLevels=h'  },     { label: 'Public Schools', link: '/schools/?st=public&st=charter'  },     { label: 'Private Schools', link: '/schools/?st=private'  },     { label: 'Charter Schools', link: '/schools/?st=charter'  }   ] }"
 
 FactoryGirl.define do
   factory :state_hub_content_module, class: CollectionConfig do
@@ -244,5 +245,11 @@ FactoryGirl.define do
     value key_dates_value
 
     after(:create) { CollectionConfig.create(collection_id: 1, quay: 'keyEnrollmentDates_public_preschool', value: key_dates_value) }
+  end
+
+  factory :browse_links_config, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::CITY_HUB_BROWSE_LINKS_KEY
+    value browse_links_value
   end
 end

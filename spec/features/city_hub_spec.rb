@@ -24,17 +24,6 @@ describe 'City Hub Page' do
     end
   end
 
-  describe 'school breakdown section' do
-    it 'shows the counts for each school type' do
-      browse_link_selector = ".school-breakdown button span:last-child"
-
-      expect(page).to have_css('.school-breakdown button', count: 7)
-      page.all(browse_link_selector).each do |link|
-        expect(link.text).to match(/[0-9]/)
-      end
-    end
-  end
-
   describe 'choose a school section' do
     it 'renders links for a city hub' do
       expect(page).to have_content 'Finding a Great School in Detroit'

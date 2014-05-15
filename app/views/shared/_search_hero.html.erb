@@ -101,19 +101,12 @@
             <div class="school-breakdown col-lg-4 col-md-4 col-sm-12 col-xs-12">
               <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
               <ul>
-                <% breakdown_results.each do |text, data| %>
-                  <% unless data.nil? %>
+                <% browse_links.each do |link| %>
                     <li>
-                      <button class="browse-school-link pvm js-button-link" data-link-value="<%= data[:path] %>" type="button">
-                        <span class='mrs'><%= text %></span>
-                        <span class='breakdown-result-count tac pvs phm'><%= data[:count] %></span>
+                      <button class="browse-school-link pvm js-button-link" data-link-value="<%= link[:link] %>" type="button">
+                        <span class='mrs'><%= link[:label] %></span>
                       </button>
                     </li>
-                  <% else %>
-                    <li>
-                      <p class='pbs mbn' style='color: #fff;'>No data found for school breakdown</p>
-                    </li>
-                  <% end %>
                 <% end %>
               </ul>
             </div>

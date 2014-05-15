@@ -18,18 +18,8 @@ class CitiesController < ApplicationController
       @zillow_data = ZillowRegionId.data_for(@city, @state)
       gon.pagename = "city home"
 
-      solr = Solr.new(@state[:short], hub_city_mapping.collection_id)
-      @breakdown_results = {
-        'Preschools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:primary]),
-        'Elementary Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:elementary]),
-        'Middle Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:middle]),
-        'High Schools' => solr.breakdown_results(grade_level: School::LEVEL_CODES[:high]),
-        'Public Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:public]),
-        'Private Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:private]),
-        'Charter Schools' => solr.breakdown_results(type: School::LEVEL_CODES[:charter]),
-      }
-
       collection_configs = configs
+      @browse_links = CollectionConfig.browse_links(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sponsor = CollectionConfig.sponsor(collection_configs)
       @sponsor[:sponsor_page_visible] = mapping.has_partner_page? if @sponsor

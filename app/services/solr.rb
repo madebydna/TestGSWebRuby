@@ -9,12 +9,11 @@ class Solr
     Rails.cache.fetch(cache_key, expires_in: cache_time, race_condition_ttl: cache_time) do
       begin
         response = @connection.get "/main/select/", params: parse_params(options)
-        breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }
+        results = { count: response['response']['numFound'], path: parse_url(options) }
       rescue => e
-        breakdown_results = nil
         Rails.logger.error('Reaching the solr server failed:' + e.to_s)
+        results = nil
       end
-      breakdown_results
     end
   end
 

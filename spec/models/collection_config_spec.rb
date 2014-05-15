@@ -743,4 +743,26 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.browse_links' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :browse_links }
+    end
+
+    it_behaves_like "it fails with an error" do
+      let(:key) { CollectionConfig::CITY_HUB_BROWSE_LINKS_KEY }
+      let(:method) { :browse_links }
+    end
+
+    context 'by default' do
+      before { FactoryGirl.create(:browse_links_config) }
+      let(:configs) { CollectionConfig.where(collection_id: 1) }
+      let(:result) { CollectionConfig.browse_links(configs) }
+
+      it 'parses browse links' do
+        expect(result).to be_an_instance_of(Array)
+        expect(result).to have(7).items
+      end
+    end
+  end
 end
