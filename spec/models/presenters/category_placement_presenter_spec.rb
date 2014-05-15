@@ -29,6 +29,8 @@ describe CategoryPlacementPresenter do
     end
 
     it 'should find module wrapper layout data_layouts/_programs_section' do
+      pending 'Pending creation of layout wrapper'
+      fail
       category_placement.title = 'Programs'
       category_placement.layout = 'section'
       expect(subject.module_specific_partial)
