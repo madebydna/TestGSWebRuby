@@ -2,6 +2,11 @@
   <%= javascript_include_tag "cycle/jquery.cycle2.js" %>
   <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
   <%= javascript_include_tag "cycle/carousel_init.js" %>
+  <script>
+    $(document).ready(function() {
+      GS.track.setOmnitureData();
+    });
+  </script>
 <% end %>
 
 <%= render 'nav/topnav', hub_params: @hub_params %>

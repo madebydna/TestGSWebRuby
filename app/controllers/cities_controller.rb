@@ -1,6 +1,8 @@
 class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
+  include OmnitureConcerns
+
   before_filter :set_city_state
   before_filter :set_hub_params
   before_filter :set_login_redirect
@@ -44,6 +46,7 @@ class CitiesController < ApplicationController
       @hero_image = "/assets/hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "/assets/hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
+      set_omniutre_data
     end
   end
 
@@ -185,5 +188,15 @@ class CitiesController < ApplicationController
     def parse_partners(partners)
       partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
       partners
+    end
+
+    def set_omniutre_data
+      set_omniture_data_for_user_request
+      gon.pagename ='GS:City:Home'
+      gon.omniture_pagename ='GS:City:Home'
+      gon.omniture_hier1 = 'Home,CityHome'
+      gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+      gon.omniture_sprops['locale'] = @city.titleize
+      gon.omniture_channel = @state[:short].try(:upcase)
     end
 end
