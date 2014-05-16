@@ -52,6 +52,7 @@ FactoryGirl.define do
     grade '9'
 
     ignore do
+      school_id nil
       school_value_modified '2000-01-01'
       school_value_float { generate(:school_value_float) }
       # We need to set school values even if they will be an empty array
@@ -79,12 +80,19 @@ FactoryGirl.define do
     end
 
     after :build do |data_set, evaluator|
+      school_value_params = {
+        modified: evaluator.school_value_modified,
+        value_float: evaluator.school_value_float
+      }
+      if evaluator.number_of_school_values == 1
+        school_value_params[:school_id] = evaluator.school_id
+      end
+
       data_set.census_data_school_values =
         FactoryGirl.build_list(
           :census_data_school_value,
           evaluator.number_of_school_values,
-          modified: evaluator.school_value_modified,
-          value_float: evaluator.school_value_float
+          school_value_params
         )
 
       data_set.census_data_district_values =
@@ -101,12 +109,19 @@ FactoryGirl.define do
     end
 
     after :create do |data_set, evaluator|
+      school_value_params = {
+        modified: evaluator.school_value_modified,
+        value_float: evaluator.school_value_float
+      }
+      if evaluator.number_of_school_values == 1
+        school_value_params[:school_id] = evaluator.school_id
+      end
+
       allow(data_set).to receive(:census_data_school_values) do
         FactoryGirl.create_list(
           :census_data_school_value,
           evaluator.number_of_school_values,
-          modified: evaluator.school_value_modified,
-          value_float: evaluator.school_value_float
+          school_value_params
         )
       end
 
@@ -126,12 +141,19 @@ FactoryGirl.define do
     end
 
     after :stub do |data_set, evaluator|
+      school_value_params = {
+        modified: evaluator.school_value_modified,
+        value_float: evaluator.school_value_float
+      }
+      if evaluator.number_of_school_values == 1
+        school_value_params[:school_id] = evaluator.school_id
+      end
+      
       allow(data_set).to receive(:census_data_school_values) do
         FactoryGirl.build_stubbed_list(
           :census_data_school_value,
           evaluator.number_of_school_values,
-          modified: evaluator.school_value_modified,
-          value_float: evaluator.school_value_float
+          school_value_params
         )
       end
 

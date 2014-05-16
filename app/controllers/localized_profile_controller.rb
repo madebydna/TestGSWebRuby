@@ -14,7 +14,6 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_optimizely_gon_env_value
   before_filter :ad_setTargeting_through_gon
   before_filter :set_city_state
-  before_filter :set_footer_cities
   before_filter :set_hub_params, if: :is_hub_school?
   # after_filter :set_last_modified_date
 
@@ -172,10 +171,6 @@ class LocalizedProfileController < ApplicationController
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
-  end
-
-  def set_footer_cities
-    @cities = City.popular_cities(@state[:short], limit: 28)
   end
 
   def ad_setTargeting_through_gon
