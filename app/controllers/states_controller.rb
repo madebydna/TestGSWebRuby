@@ -92,6 +92,7 @@ class StatesController < ApplicationController
       gon.omniture_pagename ='GS:State:Home'
       gon.omniture_hier1 = 'Home,StateHome'
       gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+      gon.omniture_sprops['navBarVariant'] = 'N2'
       gon.omniture_channel = @state[:short].try(:upcase)
     end
 

@@ -186,6 +186,8 @@ class CitiesController < ApplicationController
       gon.omniture_pagename ='GS:City:Home'
       gon.omniture_hier1 = 'Home,CityHome'
       gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+      gon.omniture_sprops['navBarVariant'] = 'N2'
+
       gon.omniture_sprops['locale'] = @city.titleize
       gon.omniture_channel = @state[:short].try(:upcase)
     end
