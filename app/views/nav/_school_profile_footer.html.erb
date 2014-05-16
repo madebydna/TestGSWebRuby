@@ -1,4 +1,3 @@
-<% cities ||= [] %>
 <% state ||= nil %>
 
 <%= render 'shared/school_contact_info_footer' %>
@@ -11,8 +10,8 @@
 
       <%= render 'shared/about_gs_footer' %>
 
-      <% unless cities.blank? || state.blank? %>
-        <%= render 'shared/popular_cities_in_state', state: state, cities: cities %>
+      <% unless state.blank? %>
+        <%= render 'shared/popular_cities_in_state', state: state %>
       <% else %>
         <%= render 'shared/popular_cities_in_country' %>
       <% end %>
