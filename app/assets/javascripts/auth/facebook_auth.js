@@ -1,5 +1,3 @@
-var GS = GS || {};
-
 /*
 Changes made after copying from GSWeb:
 

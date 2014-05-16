@@ -1,0 +1,31 @@
+<% unless important_events.nil? ||  important_events[:events].empty? %>
+  <div class="row">
+    <% unless defined?(community_page) %>
+      <hr>
+    <% end %>
+    <div style='overflow: hidden;'>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
+        <h4 class='bottom mtn'>Upcoming Events</h4>
+        <%= link_to('See all', city_events_path(params[:state], params[:city]), class: 'small') %>
+      </div>
+      <% important_events[:max_important_event_to_display].times do |i| %>
+        <% event = important_events[:events][i - 1] %>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam upcoming-event">
+          <div class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
+            <div class="tac">
+              <h4 class='mtl'><%= event[:date].day %></h4>
+            </div>
+          </div>
+          <div class="pull-left plm">
+            <%= abbreviate_at_whitespace(event[:description], 140) %>
+            <br/>
+            <%= link_to('Find out more', event[:url], class: 'small', target: '_blank') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement[:visible] %>
+    <%= render 'event_announcements', announcement: announcement  %>
+  <% end %>
+<% end %>

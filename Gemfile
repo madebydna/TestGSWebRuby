@@ -4,16 +4,13 @@ gem 'rails', '3.2.11'
 
 gem 'mysql2', '0.3.13'
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-cookie-rails'
 
 gem 'rails_admin'
 
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'
-
-# REVIEW: are we still using this? remove if not
-gem 'ckeditor'
 
 # Authentication, used for rails-admin
 gem 'devise'
@@ -32,9 +29,6 @@ gem 'haml', '4.0.3'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
-# DSL or building JSON objects. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
-
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
 
@@ -52,7 +46,6 @@ gem 'lodash-rails'
 
 # for passing vars from ruby rails to javascript
 gem 'gon'
-gem 'rabl-rails'
 
 gem 'mini_fb'
 
@@ -65,18 +58,15 @@ gem 'rails_admin_nestable'
 # Gives syntax highlighting functionality for code displayed on page
 gem 'coderay'
 
-# JS testing framework
-gem 'mocha_rails'
-
 gem 'meta-tags', :require => 'meta_tags'
+
+# Searching using solr
+gem 'rsolr'
 
 gem 'simple_form'
 
 # Maps controller filters to your model scopes
 gem 'has_scope'
-
-# Pagination library for Rails 3, Sinatra, Merb, DataMapper, and more http://github.com/mislav/will_paginate/wikis
-# gem 'will_paginate', '~> 3.0'
 
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
@@ -104,10 +94,9 @@ group :development do
   # Guard automatically watches files for changes and re-runs bundler, rspec, etc
   gem 'guard'
   gem 'guard-bundler'
-  gem 'guard-rspec'
+  gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
 
-  gem 'zeus'
   gem 'pry-debugger'
 end
 
@@ -126,11 +115,10 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 
   # testing frameworks
-  gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec', '~> 3.0.0.beta2'
+  gem 'rspec-rails', '~> 3.0.0.beta2'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false
-  gem 'capybara'
 
   # Use haml for template engine. Also specified in application.rb
   gem 'haml-rails'
@@ -141,14 +129,19 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'mechanize'
+  gem 'capybara'
+  gem 'capybara-webkit'
   gem 'capybara-mechanize'
   gem 'machinist', '>= 2.0.0.beta2'
+  gem 'timecop'
+
+  gem 'konacha'
 
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'
 
   # Test coverage tool
-  gem 'simplecov', '~> 0.8.2'
+  gem 'simplecov', '~> 0.8.0'
   gem 'simplecov-html', '~> 0.8.0'
   gem 'simplecov-rcov'
 
@@ -159,8 +152,11 @@ group :development, :test do
 
   # Turn off assets logging in development
   gem 'quiet_assets'
+  gem 'debugger'
 
   gem 'yard'
+
+  gem 'launchy'
 end
 
 # Gems used only for assets and not required
@@ -182,24 +178,3 @@ end
 group :profile do
   gem 'ruby-prof'
 end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
-

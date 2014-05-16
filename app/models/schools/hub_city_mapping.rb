@@ -4,17 +4,30 @@ class HubCityMapping < ActiveRecord::Base
 
   attr_accessible :collection_id, :city, :state, :active
 
-  alias_attribute :has_edu_page?, :hasEduPage
-  alias_attribute :has_choose_page?, :hasChoosePage
-  alias_attribute :has_events_page?, :hasEventsPage
-  alias_attribute :has_enroll_page?, :hasEnrollPage
-  alias_attribute :has_partner_page?, :hasPartnerPage
-
-  def self.for_collection_id(collection_id)
-    all_mappings = Rails.cache.fetch('hub_city_mapping/all', expires_in: 5.minutes) do
-      self.all
-    end
-    all_mappings.select { |hub_city_mapping| hub_city_mapping.collection_id.to_i == collection_id.to_i }
+  def has_events_page?
+    self.hasEventsPage ? 'y' : nil
   end
 
+  def has_edu_page?
+  #  (self.hasEduPage || self.hasStateEduPage) ? 'y' : nil
+     self.hasEduPage  ? 'y' : nil
+  end
+
+  def has_choose_page?
+    (self.hasChoosePage || self.hasStateChoosePage) ? 'y' : nil
+  end
+
+  def has_enroll_page?
+    (self.hasEnrollPage || self.hasStateEnrollPage) ? 'y' : nil
+  end
+
+  def has_partner_page?
+    (self.hasPartnerPage || hasStatePartnerPage) ? 'y' : nil
+  end
+
+  def self.for_collection_id(collection_id)
+    Rails.cache.fetch("hub_city_mapping/for_collection_id-#{collection_id}", expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
+      where(collection_id: collection_id, active: true).first
+    end
+  end
 end

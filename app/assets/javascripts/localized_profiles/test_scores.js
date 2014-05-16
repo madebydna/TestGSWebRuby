@@ -10,7 +10,6 @@
  */
 
 
-var GS = GS || {};
 GS.testScores = GS.testScores || function($) {
 
     var initializeHandlers = function () {

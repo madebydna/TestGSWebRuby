@@ -7,7 +7,7 @@ class Admin::ReviewsController < ApplicationController
 
     @reported_reviews = self.flagged_reviews
     @reviews_to_process = self.unprocessed_reviews
-    @reported_entities = Admin::ReviewsController.reported_entities_for_reviews @reported_reviews
+    @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
@@ -62,6 +62,20 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
+  def resolve
+    begin
+      ReportedEntity.on_db(:community_rw)
+        .where(reported_entity_id: params[:id], reported_entity_type: 'schoolReview')
+        .update_all(active: false)
+      flash_error 'Review resolved successfully'
+    rescue => e
+      flash_error "Review could not be resolved because of \
+unexpected error: #{e}."
+    end
+
+    redirect_back
+  end
+
   protected
 
   def unprocessed_reviews
@@ -95,7 +109,7 @@ class Admin::ReviewsController < ApplicationController
     end
   end
 
-  def self.reported_entities_for_reviews(reviews)
+  def reported_entities_for_reviews(reviews)
     ReportedEntity.find_by_reviews(reviews).order('created desc')
   end
 

@@ -19,8 +19,8 @@ module FavoriteSchoolsConcerns
 
       unless current_user.favorited_school? school
         current_user.add_favorite_school! school
-        set_omniture_events_in_session(['review_updates_mss_end_event'])
-        set_omniture_sprops_in_session({'custom_completion_sprop' => 'AddToSchoolList'})
+        set_omniture_events_in_cookie(['review_updates_mss_end_event'])
+        set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'AddToSchoolList'})
       end
       flash_notice t('actions.my_school_list.school_added', school_name: school.name)
     rescue => e

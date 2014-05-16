@@ -6,13 +6,13 @@ describe TestScoreResults do
 
   describe 'fetch_test_data_sets_and_values' do
     it 'should not return data, since there are no results from the database.' do
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return([])
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return([])
 
       expect(subject.fetch_test_data_sets_and_values school).to be_empty
     end
 
     it 'should not return data, since there are no results from the database.' do
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return(nil)
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return(nil)
 
       expect(subject.fetch_test_data_sets_and_values school).to be_empty
     end
@@ -22,10 +22,10 @@ describe TestScoreResults do
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "9", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
                                    {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
 
       #none of the test_data_sets_and_values have valid entries in test_data_set_file.
-      TestDataSetFile.stub(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([])
+      allow(TestDataSetFile).to receive(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([])
 
       expect(subject.fetch_test_data_sets_and_values school).to be_empty
     end
@@ -35,10 +35,10 @@ describe TestScoreResults do
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "9", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
                                    {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
 
       #none of the test_data_sets_and_values have valid entries in test_data_set_file.
-      TestDataSetFile.stub(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return(nil)
+      allow(TestDataSetFile).to receive(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return(nil)
 
       expect(subject.fetch_test_data_sets_and_values school).to be_empty
     end
@@ -48,9 +48,9 @@ describe TestScoreResults do
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "9", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
                                    {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
 
-      TestDataSetFile.stub(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([84122, 84302])
+      allow(TestDataSetFile).to receive(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([84122, 84302])
 
       expect(subject.fetch_test_data_sets_and_values school).to_not be_empty
     end
@@ -60,10 +60,10 @@ describe TestScoreResults do
                                    {:test_data_type_id => 18, :test_data_set_id => 84302, :grade => "9", :level_code => "e,m,h", :subject_id => 9, :year => 2010, :school_value_text => nil, :school_value_float => 33.0, :state_value_text => nil, :state_value_float => 45.0, :breakdown_id => 1, :number_tested => 134540},
                                    {:test_data_type_id => 18, :test_data_set_id => 84482, :grade => "9", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
-      TestDataSet.stub(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
+      allow(TestDataSet).to receive(:fetch_test_scores).with(school).and_return(test_data_sets_and_values)
 
       #Only 2 of the test_data_sets_and_values have valid entries in test_data_set_file.
-      TestDataSetFile.stub(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([84122, 84302])
+      allow(TestDataSetFile).to receive(:get_valid_data_set_ids).with([84122, 84302, 84482], school).and_return([84122, 84302])
 
       results = subject.fetch_test_data_sets_and_values school
 
@@ -98,8 +98,8 @@ describe TestScoreResults do
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
         test_descriptions[data_type_id] = Array(FactoryGirl.build(:test_description, data_type_id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -127,8 +127,8 @@ describe TestScoreResults do
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
         test_descriptions[data_type_id] = Array(FactoryGirl.build(:test_description, data_type_id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -147,8 +147,8 @@ describe TestScoreResults do
                                    {:test_data_type_id => 19, :test_data_set_id => 84488, :grade => "5", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
       # None of the data_type_ids in test_data_sets_and_values have rows in TestDataType table.
-      TestDataType.stub(:by_ids).with([18,19]).and_return({})
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return({})
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return({})
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return({})
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -162,8 +162,8 @@ describe TestScoreResults do
                                    {:test_data_type_id => 19, :test_data_set_id => 84488, :grade => "5", :level_code => "e,m,h", :subject_id => 11, :year => 2010, :school_value_text => nil, :school_value_float => 80.0, :state_value_text => nil, :state_value_float => 69.0, :breakdown_id => 1, :number_tested => 24737}]
 
       # None of the data_type_ids in test_data_sets_and_values have rows in TestDataType table.
-      TestDataType.stub(:by_ids).with([18,19]).and_return(nil)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(nil)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(nil)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -181,10 +181,10 @@ describe TestScoreResults do
       [18,19].each do |data_type_id|
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
 
       #No description and source
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(nil)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -210,10 +210,10 @@ describe TestScoreResults do
       [18,19].each do |data_type_id|
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
 
       #No description and source
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(nil)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -244,8 +244,8 @@ describe TestScoreResults do
       [18,19].each do |data_type_id|
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(nil)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -264,8 +264,8 @@ describe TestScoreResults do
       [18,19].each do |data_type_id|
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(nil)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(nil)
 
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
@@ -296,8 +296,8 @@ describe TestScoreResults do
         test_data_types[data_type_id] = Array(FactoryGirl.build(:test_data_type, id: data_type_id))
         test_descriptions[data_type_id] = Array(FactoryGirl.build(:test_description, data_type_id: data_type_id))
       end
-      TestDataType.stub(:by_ids).with([18,19]).and_return(test_data_types)
-      TestDescription.stub(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
+      allow(TestDataType).to receive(:by_ids).with([18,19]).and_return(test_data_types)
+      allow(TestDescription).to receive(:by_data_type_ids).with([18,19],school.state).and_return(test_descriptions)
       test_scores_hash = subject.build_test_scores_hash(test_data_sets_and_values,school)
 
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)

@@ -42,4 +42,17 @@ describe 'states' do
     end
   end
 
+  describe '.abbreviation' do
+    context 'normal input' do
+      it 'returns the abbreviation' do
+        expect(States.abbreviation('michigan')).to eq('mi')
+      end
+    end
+
+    context 'abbreviation input' do
+      it 'returns the input abbreviation' do
+        expect(States.abbreviation('mi')).to eq('mi')
+      end
+    end
+  end
 end

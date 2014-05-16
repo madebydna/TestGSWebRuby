@@ -1,7 +1,5 @@
 if(gon.pagename == "Quality"){
 
-    GS.track.setOmnitureData();
-
     $(function () {
         GS.testScores.initializeHandlers();
 

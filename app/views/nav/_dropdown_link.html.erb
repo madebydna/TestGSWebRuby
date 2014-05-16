@@ -1,0 +1,12 @@
+<% if defined?(flag) %>
+  <% if flag %>
+    <li>
+      <%= link_to text, url %>
+    </li>
+  <% end %>
+<% else %>
+  <li>
+    <%= link_to text, url %>
+  </li>
+<% end %>
+<% %>

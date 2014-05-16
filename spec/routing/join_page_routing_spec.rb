@@ -9,7 +9,7 @@ describe 'join / login page routing' do
   before do
     # By default, the request used for the route will have domain of 'example.org', which will cause
     # RegularSubdomain constraint to not match
-    ActionDispatch::Request.any_instance.stub(:subdomain).and_return('www')
+    allow_any_instance_of(ActionDispatch::Request).to receive(:subdomain).and_return('www')
 
     default_url_options[:host] = 'greatschools.org'
   end

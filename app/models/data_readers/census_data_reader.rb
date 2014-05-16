@@ -183,7 +183,9 @@ class CensusDataReader < SchoolProfileDataReader
   # class
 
   def census_data_by_data_type_query
-    configured_data_types = page.all_configured_keys 'census_data'
+    configured_data_types =
+      Array.wrap(page.all_configured_keys('census_data')) +
+      Array.wrap(page.all_configured_keys('census_data_points'))
 
     CensusDataSetQuery.new(school.state)
       .with_data_types(configured_data_types)

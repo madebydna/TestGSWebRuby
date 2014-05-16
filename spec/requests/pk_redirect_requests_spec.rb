@@ -6,7 +6,7 @@ describe 'School profile pk subdomain behavior' do
 
   it 'sh' do
     school = FactoryGirl.build(:school, state: 'dc', city: 'washington', id: 1, name: 'name')
-    School.stub(:find).and_return(school)
+    allow(School).to receive(:find).and_return(school)
     get 'http://www.greatschools.org/district-of-columbia/washington/1-name/'
     expect(response).to redirect_to('http://www.greatschools.org/washington-dc/washington/1-Name/')
   end
@@ -22,7 +22,7 @@ describe 'School profile pk subdomain behavior' do
   end
 
   it 'should allow pk school profiles to be hosted from www' do
-    School.stub(:find).and_return(school)
+    allow(School).to receive(:find).and_return(school)
     get 'http://www.greatschools.org/california/alameda/preschools/Alameda-High-School/1/'
     expect(response).to_not redirect_to('http://pk.greatschools.org/california/alameda/preschools/Alameda-High-School/1/')
   end

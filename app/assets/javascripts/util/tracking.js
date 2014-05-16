@@ -1,9 +1,32 @@
-var GS = GS || {};
 GS.track = GS.track || {};
 GS.track.baseOmnitureObject = GS.track.baseOmnitureObject || {};
 
-GS.track.setSProps = function (sProps) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.cookieName = 'OmnitureTracking';
+
+GS.track.getOmnitureCookie = function() {
+    var omnitureCookie = {};
+    if (!(_.isEmpty($.cookie(GS.track.cookieName)))) {
+        try {
+            omnitureCookie = JSON.parse($.cookie(GS.track.cookieName));
+        } catch (e) {
+            GS.util.log('Error parsing omniture tracking cookie');
+        }
+    }
+    return omnitureCookie;
+};
+
+GS.track.setOmnitureCookie = function(omnitureCookie){
+    if (!(_.isEmpty(omnitureCookie))) {
+        try {
+            $.cookie(GS.track.cookieName,JSON.stringify(omnitureCookie),{path: '/',domain: ".greatschools.org"});
+        } catch (e) {
+            GS.util.log('Error stringifying omniture tracking cookie');
+        }
+    }
+};
+
+GS.track.setSProps = function(sProps) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingProps = [];
         for (var p in sProps) {
             if (sProps.hasOwnProperty(p)) {
@@ -20,8 +43,8 @@ GS.track.setSProps = function (sProps) {
     });
 };
 
-GS.track.setEVars = function (eVars) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.setEVars = function(eVars) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var missingEvars = [];
         for (var p in eVars) {
             if (eVars.hasOwnProperty(p)) {
@@ -38,7 +61,7 @@ GS.track.setEVars = function (eVars) {
     });
 };
 
-GS.track.setEvents = function (eventNames) {
+GS.track.setEvents = function(eventNames) {
     GS.track.doUnlessTrackingIsDisabled(function () {
         var mappedEvents = [];
         var missingEvents = [];
@@ -57,10 +80,43 @@ GS.track.setEvents = function (eventNames) {
     });
 };
 
+//Use cookies to store the omniture sprops and evars when they need to be tracked on the following page.
+GS.track.setSPropsAndEvarsInCookies = function(key,value,omnitureVariable){
+
+    var spropsAndEvars = {};
+    var omnitureCookie = GS.track.getOmnitureCookie();
+
+    if(!(_.isEmpty(omnitureCookie[omnitureVariable]))){
+        spropsAndEvars = omnitureCookie[omnitureVariable];
+    }
+
+    spropsAndEvars[key] = value;
+    omnitureCookie[omnitureVariable] = spropsAndEvars;
+
+    GS.track.setOmnitureCookie(omnitureCookie);
+};
+
+//Use cookies to store the omniture events when they need to be tracked on the following page.
+GS.track.setEventsInCookies = function(event){
+
+    var events = [];
+    var omnitureCookie = GS.track.getOmnitureCookie();
+
+    if(!(_.isEmpty(omnitureCookie.events))){
+        events = omnitureCookie.events;
+    }
+
+    events.push(event);
+    omnitureCookie['events'] = $.unique(events);
+
+    GS.track.setOmnitureCookie(omnitureCookie);
+};
+
+
 //TODO The following tracking is for the events and links that do not have page refresh associated with
 // them. Refactor this when omniture requirements come in for these.
-GS.track.trackEvent = function (eventNames) {
-    GS.track.doUnlessTrackingIsDisabled(function () {
+GS.track.trackEvent = function(eventNames) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
         var myLinkTrackVars = "events";
         var omnitureObject = {};
         var mappedEvents = [];
@@ -87,7 +143,7 @@ GS.track.trackEvent = function (eventNames) {
     });
 };
 
-GS.track.sendCustomLink = function (linkName) {
+GS.track.sendCustomLink = function(linkName) {
     var omnitureObject = {};
     omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
     if (s.tl) {
@@ -96,7 +152,7 @@ GS.track.sendCustomLink = function (linkName) {
     return true;
 };
 
-GS.track.doUnlessTrackingIsDisabled = function (cb) {
+GS.track.doUnlessTrackingIsDisabled = function(cb) {
     if (typeof s !== 'undefined') {
         cb();
     }
@@ -107,6 +163,7 @@ GS.track.propLookup = {
     'schoolType':2,
     'schoolLevel':3,
     'schoolLocale':4,
+    'locale':4,
     'schoolRating':31,
     'userLoginStatus':5,
     'requestUrl':59,
@@ -125,25 +182,53 @@ GS.track.evarsLookup = {
     'review_updates_mss_traffic_driver' :25
 };
 
-GS.track.setOmnitureData = function () {
+GS.track.setOmnitureData = function() {
     GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
     GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
-    if(gon.omniture_school_state != ''){
+    if(typeof gon.omniture_school_state !== 'undefined'){
         GS.track.baseOmnitureObject.channel = gon.omniture_school_state;
+    } else if (typeof gon.omniture_channel !== 'undefined' ){
+        GS.track.baseOmnitureObject.channel = gon.omniture_channel;
     }
-    if(typeof gon.omniture_sprops != undefined  && gon.omniture_sprops != null){
-        GS.track.setSProps(gon.omniture_sprops);
+
+    var events = [];
+    var sprops = {};
+    var evars = {};
+
+    if(!(_.isEmpty(gon.omniture_sprops))){
+        sprops = gon.omniture_sprops;
     }
-    if(typeof gon.omniture_events != undefined && gon.omniture_events != null){
-        GS.track.setEvents(gon.omniture_events);
+    if(!(_.isEmpty(gon.omniture_events))){
+        events = gon.omniture_events;
     }
-    if(typeof gon.omniture_evars != undefined  && gon.omniture_evars != null){
-        GS.track.setEVars(gon.omniture_evars);
+    if(!(_.isEmpty(gon.omniture_evars))){
+        evars=gon.omniture_evars;
     }
+
+    var omnitureCookie = GS.track.getOmnitureCookie();
+    if (!(_.isEmpty(omnitureCookie))){
+
+        if(!(_.isEmpty(omnitureCookie.sprops))){
+            $.extend(sprops, omnitureCookie.sprops);
+        }
+        if(!(_.isEmpty(omnitureCookie.events))){
+            $.merge(events,omnitureCookie.events);
+        }
+        if(!(_.isEmpty(omnitureCookie.evars))){
+            $.extend(evars, omnitureCookie.evars);
+        }
+    }
+
+    GS.track.setSProps(sprops);
+    $.unique(events);
+    GS.track.setEvents(events);
+    GS.track.setEVars(evars);
+
+    $.removeCookie(GS.track.cookieName, { path: '/' ,domain: ".greatschools.org"});
 };
 
 GS.track.getOmnitureObject = function () {
-    //use lowdash to deep clone the omniture object.
+    //use lodash to deep clone the omniture object.
     var omnitureObject = _.clone(GS.track.baseOmnitureObject, true);
     return omnitureObject;
 };

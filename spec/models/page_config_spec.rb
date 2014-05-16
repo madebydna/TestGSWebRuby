@@ -6,6 +6,7 @@ describe PageConfig do
     let(:page) { FactoryGirl.build(:page, name: 'Test') }
 
     before do
+      clean_dbs :profile_config
       all_placements = []
       @roots = FactoryGirl.create_list(:category_placement, 3, page: page)
       @roots[0].position = 99
@@ -16,7 +17,7 @@ describe PageConfig do
       end
       all_placements += @roots
 
-      Page.stub(:by_name).with('Test').and_return(page)
+      allow(Page).to receive(:by_name).with('Test').and_return(page)
       @page_config = PageConfig.new page.name, all_placements.shuffle
     end
 
@@ -27,6 +28,7 @@ describe PageConfig do
     describe '#root_placements' do
       it 'should return the right number of items' do
         pending 'investigate intermittent failure'
+        fail
         expect(@page_config.root_placements.length).to eq(3)
       end
 

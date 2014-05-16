@@ -12,5 +12,7 @@ omniture_server: "gms.greatschools.org"
 omniture_server_secure: "sgms.greatschools.org"
 facebook_app_id: "178930405559082"
 facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
+solr_url: 'http://alpha.greatschools.org:8580'
+cdn_host: 'http://www.gscdn.org'
 optimizely_key: "384121511"
 advertising_env: "dev"

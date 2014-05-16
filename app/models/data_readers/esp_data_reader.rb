@@ -66,8 +66,12 @@ class EspDataReader < SchoolProfileDataReader
   def response_objects_for_category(category)
     # Find out which keys the Category is interested in
     keys_to_use = category.keys(school.collections)
-
     hash = responses_by_key.select { |k, v| keys_to_use.include? k }
+
+    #For esp data points, a response_key can have the duplicate response_values.We want to display just one.
+    hash.each do |key,values_array|
+      values_array.uniq!{|esp_response| esp_response.response_value}
+    end
 
     # Sort the data the same way the keys are sorted in the config
     sort_based_on_config hash, category

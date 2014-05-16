@@ -8,6 +8,8 @@ describe 'sample_data_helper.rb' do
   end
 
   describe 'load_sample_data' do
+    before(:each) { clean_dbs :ca }
+
     it 'should load a single school' do
       load_sample_data 'sample_data_helper_test'
       schools = School.on_db(:ca).all
@@ -22,5 +24,4 @@ describe 'sample_data_helper.rb' do
       expect(schools.first.name).to eq 'Alameda High School'
     end
   end
-
 end

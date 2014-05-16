@@ -8,5 +8,12 @@ FactoryGirl.define do
     esp_source 'osp'
     active 1
     created Time.zone.now
+
+    before(:create) do |esp_response, evaluator|
+      user = FactoryGirl.create(:user)
+      esp_response.user = user
+    end
   end
+
+
 end

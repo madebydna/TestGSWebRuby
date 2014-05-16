@@ -6,18 +6,19 @@ describe CensusDataReader do
   subject(:reader) { CensusDataReader.new(school) }
 
   before(:each) do
-    school.stub(:page).and_return page
+    allow(school).to receive(:page).and_return page
   end
 
   describe 'census_data_by_data_type_query' do
     it 'should find out all possible configured census data types' do
-      CensusDataSetQuery.stub(:new).and_return double('query').as_null_object
+      allow(CensusDataSetQuery).to receive(:new).and_return double('query').as_null_object
       expect(page).to receive(:all_configured_keys).with('census_data')
+      expect(page).to receive(:all_configured_keys).with('census_data_points')
       subject.send :census_data_by_data_type_query
     end
 
     it 'should return a query' do
-      page.stub(:all_configured_keys).and_return [1]
+      allow(page).to receive(:all_configured_keys).and_return [1]
       result = subject.send :census_data_by_data_type_query
       expect(result).to be_a CensusDataSetQuery
     end
@@ -27,8 +28,8 @@ describe CensusDataReader do
     it 'should query using all census data types' do
       pending
       query_object = double('query_object')
-      page.stub(:all_configured_keys).and_return(%w(a b c))
-      CensusDataForSchoolQuery.stub(:new).and_return query_object
+      allow(page).to receive(:all_configured_keys).and_return(%w(a b c))
+      allow(CensusDataForSchoolQuery).to receive(:new).and_return query_object
       expect(query_object).to receive(:latest_data_for_school).with(%w(a b c))
       subject.send :raw_data
     end
@@ -44,8 +45,8 @@ describe CensusDataReader do
     it 'should filter down to data for only this category' do
       category = double('category')
       data = double('data')
-      category.stub(:keys).and_return(%w(a b c))
-      subject.stub(:raw_data).and_return data
+      allow(category).to receive(:keys).and_return(%w(a b c))
+      allow(subject).to receive(:raw_data).and_return data
       expect(data).to receive(:for_data_types).with(%w(a b c))
       subject.send :raw_data_for_category, category
     end
@@ -55,7 +56,7 @@ describe CensusDataReader do
     let(:category) { double('category') }
 
     before do
-      category.stub(:keys).and_return %w(a b c)
+      allow(category).to receive(:keys).and_return %w(a b c)
     end
 
     it 'should sort based on config data' do
@@ -74,7 +75,7 @@ describe CensusDataReader do
     end
 
     it 'should maintain sort order if no info in config' do
-      category.stub(:keys).and_return []
+      allow(category).to receive(:keys).and_return []
       hash =  {
         'b' => nil,
         'a' => nil,
@@ -168,15 +169,9 @@ describe CensusDataReader do
         FactoryGirl.build(:census_data_set, :with_school_value)
 
 
-      data_set_with_config_entry_label
-        .stub(:config_entry_breakdown_label)
-        .and_return 'a label'
-      data_set_without_config_entry_label
-        .stub(:config_entry_breakdown_label)
-        .and_return nil
-      data_set_without_config_entry_label
-        .stub(:census_breakdown)
-        .and_return 'a different label'
+      allow(data_set_with_config_entry_label).to receive(:config_entry_breakdown_label).and_return 'a label'
+      allow(data_set_without_config_entry_label).to receive(:config_entry_breakdown_label).and_return nil
+      allow(data_set_without_config_entry_label).to receive(:census_breakdown).and_return 'a different label'
 
       hash = {
         'foo' => [
@@ -217,7 +212,7 @@ describe CensusDataReader do
     it 'should not fail' do
       require 'sample_data_helper'
       load_sample_data 'census/name_of_a_test'
-      expect(true).to be_true
+      expect(true).to be_truthy
     end
   end
 
@@ -260,7 +255,7 @@ describe CensusDataReader do
       subject.footnotes_for_category(category)
     end
     before(:each) do
-      subject.stub(:labels_to_hashes_map).and_return data
+      allow(subject).to receive(:labels_to_hashes_map).and_return data
     end
 
     it 'should build footnotes using the data type\'s first source' do

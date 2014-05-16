@@ -1,8 +1,5 @@
 require 'spec_helper'
-require 'controllers/concerns/localization_concerns_spec'
 describe LocalizedProfileController do
-  it_behaves_like 'localization'
-
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
@@ -14,8 +11,8 @@ describe LocalizedProfileController do
 
   shared_examples_for 'a configurable profile page' do |action|
     before do
-      controller.stub(:find_school).and_return(school)
-      PageConfig.stub(:new).and_return(page_config)
+      allow(controller).to receive(:find_school).and_return(school)
+      allow(PageConfig).to receive(:new).and_return(page_config)
     end
 
     it 'should set the correct cannonical url' do
@@ -39,14 +36,14 @@ describe LocalizedProfileController do
     end
 
     it 'should 404 with non-existent school' do
-      controller.stub(:find_school).and_return(nil)
+      allow(controller).to receive(:find_school).and_return(nil)
       get action, controller.view_context.school_params(school)
       expect(response.code).to eq('404')
     end
 
     it 'should convert a full state name to a state abbreviation' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:state]).to eq('ca')
+      expect(assigns[:state]).to eq({ 'long' => 'california', 'short' => 'ca' })
     end
 
   end
@@ -65,8 +62,8 @@ describe LocalizedProfileController do
 
   describe 'GET reviews' do
     before do
-      controller.stub(:find_school).and_return(school)
-      PageConfig.stub(:new).and_return(page_config)
+      allow(controller).to receive(:find_school).and_return(school)
+      allow(PageConfig).to receive(:new).and_return(page_config)
     end
 
     it 'should set the list of reviews' do
@@ -94,7 +91,7 @@ describe LocalizedProfileController do
         #School.stub
         #get 'overview'
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'overview'
+        allow(controller).to receive(:action_name).and_return 'overview'
         school.level_code = 'h'
         school.name = 'Alameda High School'
         school.state = 'CA'
@@ -104,7 +101,7 @@ describe LocalizedProfileController do
 
       it 'should set the title format correctly for the school PreK' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'overview'
+        allow(controller).to receive(:action_name).and_return 'overview'
         school.level_code = 'p'
         school.name = 'Greater St. Stephen Baptist Training'
         school.state = 'MI'
@@ -114,7 +111,7 @@ describe LocalizedProfileController do
 
       it 'should set the title format correctly for the school in DC' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'overview'
+        allow(controller).to receive(:action_name).and_return 'overview'
         school.level_code = 'p'
         school.name = 'Amazing Life Games Pre-School'
         school.state = 'DC'
@@ -128,7 +125,7 @@ describe LocalizedProfileController do
 
       it 'should set the description format for Alameda High School' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'h'
         school.name = 'Alameda High School'
         school.state = 'CA'
@@ -138,7 +135,7 @@ describe LocalizedProfileController do
 
       it 'should set the description format for Greater St. Stephen Baptist Training - PreK' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.name = 'Greater St. Stephen Baptist Training'
         school.level_code = 'p'
         school.state = 'MI'
@@ -148,7 +145,7 @@ describe LocalizedProfileController do
 
       it 'should set the description format for PreK in DC' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'p'
         school.name = 'Amazing Life Games Pre-School'
         school.state = 'DC'
@@ -162,7 +159,7 @@ describe LocalizedProfileController do
 
       it 'should set the keywords format for Alameda High School' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'h'
         school.name = 'Alameda High School'
         school.state = 'CA'
@@ -172,7 +169,7 @@ describe LocalizedProfileController do
 
       it 'should set the keywords format for Greater St. Stephen Baptist Training' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'p'
         school.name = 'Greater St. Stephen Baptist Training'
         school.state = 'MI'
@@ -182,7 +179,7 @@ describe LocalizedProfileController do
 
       it 'should set the keywords format for a school in DC' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'p'
         school.name = 'Amazing Life Games Pre-School'
         school.state = 'DC'
@@ -193,7 +190,7 @@ describe LocalizedProfileController do
 
       it 'should include "pre-school" when school name ends with preschool' do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name).and_return 'Overview'
+        allow(controller).to receive(:action_name).and_return 'Overview'
         school.level_code = 'p'
         school.name = 'ABC Preschool'
         school.state = 'DC'
@@ -205,8 +202,8 @@ describe LocalizedProfileController do
     end
 
     describe '#redirect_to_canonical_url' do
-      let(:school) { 
-        FactoryGirl.build(:school, 
+      let(:school) {
+        FactoryGirl.build(:school,
                           id: 1,
                           state: 'mi',
                           city: 'detroit',
@@ -216,7 +213,7 @@ describe LocalizedProfileController do
 
       before(:each) do
         controller.instance_variable_set(:@school, school)
-        controller.stub(:action_name) { 'overview' }
+        allow(controller).to receive(:action_name) { 'overview' }
       end
 
       it 'should redirect to the right path' do

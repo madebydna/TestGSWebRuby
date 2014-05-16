@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.profile = GS.profile || {};
 
 GS.profile.ui = GS.profile.ui || (function() {

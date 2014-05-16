@@ -11,13 +11,14 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.cookie.js
 //= require jquery_ujs
 //= require lodash
-//= require util/util.js
-//= require resources/omniture.js
-//= require util/tracking.js
-//= require_tree .
-
+//= require_self
+//= require_tree ./util
+//= require_tree ./resources
+//= require_tree ./auth
+//= require_tree ./localized_profiles
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;
@@ -26,3 +27,6 @@ Function.prototype.gs_bind = function(obj) {
     };
 };
 
+window.gon = window.gon || {};
+
+window.GS = {};

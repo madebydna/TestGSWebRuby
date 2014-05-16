@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
-  describe '#page_title' do
-  end
-
   describe '#category_placement_anchor' do
     let(:category_placement) {
       FactoryGirl.build(:category_placement, id: 1, title: 'A title', category: FactoryGirl.build(:category))
@@ -59,6 +56,4 @@ describe ApplicationHelper do
       expect(spans.last).to match /i-16-star-\d+/
     end
   end
-
-
 end
