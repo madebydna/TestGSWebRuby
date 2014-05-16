@@ -38,12 +38,11 @@ module OmnitureConcerns
   def set_omniture_data_for_user_request
     user_login_status = logged_in? ? 'Logged in' : 'Not logged in'
     request_url = request.original_url[0, request.original_url.index('?').nil? ? request.original_url.length : request.original_url.index('?')]
-    nav_bar_variant = read_cookie_value('ishubUser') == 'y' ? 'N2' : 'PN'
 
     gon.omniture_sprops ||= {}
     gon.omniture_sprops.merge!({'userLoginStatus' => user_login_status,
                                 'requestUrl' => request_url,
-                                'navBarVariant' => nav_bar_variant})
+                                'navBarVariant' => 'N2'})
     if !request.query_string.empty?
       gon.omniture_sprops['queryString'] = request.query_string
     end
