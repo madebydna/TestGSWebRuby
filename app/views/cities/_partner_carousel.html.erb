@@ -45,7 +45,7 @@
                data-cycle-prev="#prev">
             <% partner_carousel[:partnerLogos].each do |logo| %>
               <div>
-                <%= link_to(image_tag(logo[:logoPath], class: 'partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
+                <%= link_to(image_tag(logo[:logoPath], class: 'mrm partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
               </div>
             <% end %>
           </div>

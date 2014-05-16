@@ -5,7 +5,7 @@
       <button class='btn btn-primary lg-fr js-button-link' data-link-value="/school/parentReview.page">Review Your School</button>
     </div>
     <% reviews.each_with_index do |review, i| %>
-      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 pam mbl recent-review'>
+      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 pam mbl'>
         <div class="well">
           <div class='mbm'>
             <%= render 'shared/stars', locals: { rating: review.quality } %>

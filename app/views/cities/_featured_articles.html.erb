@@ -4,18 +4,16 @@
       <h2 class="mtn">Featured Articles</h2>
       <% articles.each do |article| %>
         <div class="js-featured-article" style='clear: left;'>
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln', style: 'float: left;') %>
-          <div style='margin-left: 120px;'>
-            <div class="medium-bold mrl">
-              <h4 class="js-hubsFeaturedArticles mtn mbn">
-                <% if article[:newwindow] %>
-                  <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-                <% else %>
-                    <%= link_to article[:heading], article[:articlepath] %>
-                <% end %>
-              </h4>
-              <p><%= article[:content] %></p>
-            </div>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln pull-left') %>
+          <div class="medium-bold mrl" style='margin-left: 120px;'>
+            <h4 class="js-hubsFeaturedArticles mtn mbn">
+              <% if article[:newwindow] %>
+                <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+              <% else %>
+                  <%= link_to article[:heading], article[:articlepath] %>
+              <% end %>
+            </h4>
+            <p><%= article[:content] %></p>
           </div>
         </div>
       <% end %>
