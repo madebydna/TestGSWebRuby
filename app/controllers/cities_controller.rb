@@ -85,7 +85,7 @@ class CitiesController < ApplicationController
     else
       @collection_id = hub_city_mapping.collection_id
       @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @partner = CollectionConfig.ed_community_partner(configs)
+      @partner = CollectionConfig.partner(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),

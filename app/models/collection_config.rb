@@ -270,7 +270,7 @@ class CollectionConfig < ActiveRecord::Base
       end
     end
 
-    def ed_community_partner(collection_configs)
+    def partner(collection_configs)
       result = {}
       begin
         result[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
@@ -282,7 +282,7 @@ class CollectionConfig < ActiveRecord::Base
           partner_data[:logo].prepend(ENV_GLOBAL['cdn_host'])
         end
       rescue Exception => e
-        Rails.logger.error('Something went wrong while parsing ed_community_partner ' + e.to_s)
+        Rails.logger.error('Something went wrong while parsing partner ' + e.to_s)
         result = nil
       end
       result
@@ -435,7 +435,7 @@ class CollectionConfig < ActiveRecord::Base
 
     [
       :sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
-      :ed_community_subheading, :ed_community_show_tabs, :ed_community_partner, :ed_community_partners,
+      :ed_community_subheading, :ed_community_show_tabs, :partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
       :city_featured_articles, :state_choose_school, :choosing_page_links, :browse_links
     ].each do |method_name|

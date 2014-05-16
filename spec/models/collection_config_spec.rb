@@ -341,7 +341,7 @@ describe CollectionConfig do
     end
   end
 
-  describe '.ed_community_partner' do
+  describe '.partner' do
     before(:each) do
       FactoryGirl.create(:community_sponsor_collection_config_name)
       FactoryGirl.create(:community_sponsor_collection_config_page_name)
@@ -350,18 +350,18 @@ describe CollectionConfig do
 
     let(:result) do
       collection_configs = CollectionConfig.where(collection_id: 1)
-      CollectionConfig.ed_community_partner(collection_configs)
+      CollectionConfig.partner(collection_configs)
     end
 
     it_behaves_like 'it rejects empty configs' do
       before(:each) { clean_dbs :gs_schooldb }
-      let(:method) { :ed_community_partner }
+      let(:method) { :partner }
     end
 
     it_behaves_like 'it fails with an error' do
       before(:each) { clean_dbs :gs_schooldb }
       let(:key) { CollectionConfig::SPONSOR_ACRO_NAME_KEY }
-      let(:method) { :ed_community_partner }
+      let(:method) { :partner }
     end
 
     it 'returns the acro name and page name' do
