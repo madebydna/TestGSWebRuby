@@ -1,12 +1,11 @@
 class StatesController < ApplicationController
   include SeoHelper
+  include OmnitureConcerns
+
   before_filter :set_city_state
   before_filter :set_hub_params
   before_filter :set_login_redirect
   before_filter :set_footer_cities
-
-  def foobar
-  end
 
   def show
     hub_city_mapping = mapping
@@ -26,6 +25,7 @@ class StatesController < ApplicationController
 
       @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      set_omniutre_data
       set_meta_tags title: state_page_title,
                     description: state_page_description,
                     keywords: state_page_keywords
@@ -87,6 +87,15 @@ class StatesController < ApplicationController
   end
 
   private
+    def set_omniutre_data
+      set_omniture_data_for_user_request
+      gon.pagename ='GS:State:Home'
+      gon.omniture_pagename ='GS:State:Home'
+      gon.omniture_hier1 = 'Home,StateHome'
+      gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+      gon.omniture_channel = @state[:short].try(:upcase)
+    end
+
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@state[:long]}-active:1"
       Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do

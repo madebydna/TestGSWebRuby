@@ -9,11 +9,15 @@ class SnapshotDataReader < SchoolProfileDataReader
     all_category_data =  category.category_data(school.collections)
 
     all_category_data.each do  |category_data|
+
       key = category_data.response_key
       #default value
       value = 'no info'
       #Get the labels for the response keys from the category_data table.
       label = category_data.label.nil? ? key : category_data.label
+
+      #Special case the key to show up only in SF and oakland.Temporary fix till we make snapshot module configurable.
+      next if(key == 'summer_program' && !school.collection.blank? && !([4,5].include?(school.collection.id) ))
 
       #Filter out the keys based on level codes and school type
       if should_show_data_for_key? key

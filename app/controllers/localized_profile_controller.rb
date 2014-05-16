@@ -69,6 +69,7 @@ class LocalizedProfileController < ApplicationController
     gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
+    @ad_definition = Advertising.new
     set_last_modified_date
   end
 
