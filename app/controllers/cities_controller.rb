@@ -34,11 +34,6 @@ class CitiesController < ApplicationController
       @articles = CollectionConfig.city_featured_articles(collection_configs)
       @partner_carousel = parse_partners CollectionConfig.city_hub_partners(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
-
-      @reviews = SchoolRating.find_recent_reviews_in_hub(@state[:short], hub_city_mapping.collection_id)
-      @reviews.each do |review|
-        review.school.extend SchoolProfileDataDecorator
-      end
       @hero_image = "/assets/hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "/assets/hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
