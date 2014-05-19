@@ -37,7 +37,7 @@ describe 'City Hub Page' do
     end
     it 'shows announcements' do
       expect(page).to have_css('.success-block')
-      expect(page).to have_css('span', text: 'ANNOUNCEMENT', count: 1)
+      expect(page).to have_css('strong', text: 'ANNOUNCEMENT', count: 1)
       expect(page).to have_link 'Learn More'
     end
   end

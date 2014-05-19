@@ -26,7 +26,7 @@
       <div class="hub-hero-bg tal clearfix">
           <% if has_sponsor %>
             <div class='tac pvm sponsor-bar'>
-              <div class="small mbn pbn prm" style='display: inline; color: #fff;'><%= sponsor[:text] %></div>
+              <div class="small mbn pbn prm di" style='color: #fff;'><%= sponsor[:text] %></div>
               <% if sponsor[:sponsor_page_visible] %>
                 <a href="<%= sponsor_path %>">
                   <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
