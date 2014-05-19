@@ -17,7 +17,7 @@ class TestScoreResults
     #construct a list of all the data set ids for the school.
     all_data_set_ids = []
     if !data_sets_and_values.blank?
-      data_sets_and_values.each { |value| all_data_set_ids << value[:test_data_set_id] }
+      data_sets_and_values.each { |value| all_data_set_ids << value['ds_id'] }
     end
 
     #Get the list of valid data set ids for the school based on the  school_type.
@@ -27,7 +27,7 @@ class TestScoreResults
       return []
     elsif !data_sets_and_values.blank?
       #Filter the data sets against the valid ones.
-      data_sets_and_values.select! { |result| valid_data_set_ids.include?(result[:test_data_set_id]) }
+      data_sets_and_values.select! { |result| valid_data_set_ids.include?(result['ds_id']) }
     end
 
     data_sets_and_values
@@ -38,34 +38,39 @@ class TestScoreResults
     test_scores = Hash.new
 
     if !data_sets_and_values.blank?
-      all_test_data_type_ids = data_sets_and_values.map { |result_hash| result_hash[:test_data_type_id] }.uniq
+      all_test_data_type_ids = data_sets_and_values.map { |result_hash| result_hash['data_type_id'] }.uniq
       test_data_types = TestDataType.by_ids(all_test_data_type_ids)
       test_descriptions = TestDescription.by_data_type_ids(all_test_data_type_ids,school.state)
 
       data_sets_and_values.each do |result_hash|
         #TODO get the subject
 
-        test_data_type_id = result_hash[:test_data_type_id]
-        test_data_set_id = result_hash[:test_data_set_id]
-        level_code = result_hash[:level_code]
-        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
-        grade = Grade.from_string(result_hash[:grade])
+        test_data_type_id = result_hash['data_type_id']
+        test_data_set_id = result_hash['ds_id']
+        level_code_hash = result_hash['level_code']
+        #TODO deal with level_code in the json object
+        level_code = LevelCode.new(level_code_hash['level_codes'].join(','))
+        subject = TestDataSet.lookup_subject[result_hash['subject_id']]
+        grade = Grade.from_string(result_hash['grade'])
 
         #If the grade = all then get the grade from the level_code. Do not show the level if the school does not have it.
         if !grade.name.nil? && grade.name == 'All'
-          level_code.levels = level_code.levels.select {|level| school.includes_level_code?(level.abbreviation) }
-          level_code.level_codes = level_code.level_codes.select {|level| school.includes_level_code?(level) }
-          grade = Grade.from_level_code(level_code) if !level_code.level_codes.empty?
+          level_code_hash['levels'] = level_code_hash['levels'].select {|level| school.includes_level_code?(level['abbreviation']) }
+          level_code_hash['level_codes'] = level_code_hash['level_codes'].select {|level| school.includes_level_code?(level) }
+          if !level_code_hash['level_codes'].blank?
+            level_code = LevelCode.new(level_code_hash['level_codes'].join(','))
+            grade = Grade.from_level_code(level_code)
+          end
         end
 
         grade_label = get_grade_label(grade,level_code)
-        year = result_hash[:year]
-        test_score = result_hash[:school_value_text].nil? ? (result_hash[:school_value_float]) : result_hash[:school_value_text]
+        year = result_hash['year']
+        test_score = result_hash['school_val_text'].nil? ? (result_hash['school_val_float']) : result_hash['school_val_text']
         test_score = test_score.round if(!test_score.nil? && test_score.is_a?(Float))
-        state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
+        state_avg = result_hash['state_val_text'].nil? ? result_hash['state_val_float'] : result_hash['state_val_text']
         state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
-        breakdown_id = result_hash[:breakdown_id]
-        number_tested = result_hash[:number_tested]
+        breakdown_id = result_hash['breakdown_id']
+        number_tested = result_hash['number_tested']
         next if !test_data_types || test_data_types[test_data_type_id].nil? # skip this if there is no corresponding test data type
         label = test_data_types[test_data_type_id].first.display_name
 
