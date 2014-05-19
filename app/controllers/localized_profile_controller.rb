@@ -15,6 +15,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :ad_setTargeting_through_gon
   before_filter :set_city_state
   before_filter :set_hub_params, if: :is_hub_school?
+  before_filter :enable_ads
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -196,5 +197,9 @@ class LocalizedProfileController < ApplicationController
 
   def is_hub_school?
     @school && !@school.try(:collection).nil?
+  end
+
+  def enable_ads
+    @show_ads = @school.show_ads
   end
 end

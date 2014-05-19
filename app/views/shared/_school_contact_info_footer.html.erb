@@ -1,5 +1,4 @@
 <% if @school %>
-  <% showAds = @school.show_ads %>
   <div class="row mtl invert-colors">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam mtl">
       <div class="limit_width_1200 row text-left pbl">
@@ -36,7 +35,7 @@
         </div>
       </div>
     </div>
-      <% if showAds %>
+      <% if @show_ads %>
           <div class="pbl mbl">
               <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Contact_Info, view: :desktop  %>
               <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Contact_Info, view: :mobile  %>

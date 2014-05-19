@@ -1,8 +1,7 @@
 <% if !@school.reviews.nil? %>
     <% hide_reviews_overview = "" %>
-    <% showAds = @school.show_ads %>
 
-    <% if showAds %>
+    <% if @show_ads %>
         <div class="row">
             <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
                 <div class="pvl">
@@ -22,7 +21,7 @@
 
         <% overall_review_rating = review.overall %>
 
-        <% layout_grid = (showAds ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
+        <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
         <div class="<%= layout_grid %>  ptl phl">
         <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">-->
             <div class="well">
@@ -49,7 +48,7 @@
             </div>
         <% end %>
     <% end %>
-    <% if showAds %>
+    <% if @show_ads %>
         </div>
     </div>
     <% end %>
@@ -58,7 +57,7 @@
 <% if @school_reviews_global.review_filter_totals.all % 2 == 1 %>
     </div>
 <% end %>
-<% if showAds %>
+<% if @show_ads %>
     <div class="visible-xs plm pvl mbl">
         <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :mobile  %>
     </div>
