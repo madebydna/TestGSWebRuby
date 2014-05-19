@@ -38,12 +38,5 @@ describe 'shared/_state_footer.html.erb' do
     it_behaves_like 'it has a city list', 20
   end
 
-  context 'without cities' do
-    it 'renders popular cities in the country' do
-      allow(view).to receive(:cities) { nil }
-      render
-      expect(rendered).to render_template('_popular_cities_in_country')
-    end
-  end
 end
 

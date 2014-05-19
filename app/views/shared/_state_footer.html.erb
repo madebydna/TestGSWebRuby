@@ -1,3 +1,4 @@
+<% state %>
 <%= render 'shared/sign_up_for_updates' %>
 
 <div class="row invert-colors">
@@ -5,11 +6,7 @@
     <div class="limit_width_1200 open-sans">
       <%= render 'shared/about_gs_footer' %>
 
-      <% unless cities.nil? %>
-        <%= render 'shared/popular_cities_in_state', state: state, cities: cities %>
-      <% else %>
-        <%= render 'shared/popular_cities_in_country' %>
-      <% end %>
+      <%= render 'shared/popular_cities_in_state', state: state %>
 
       <span style='color: #999999;'>All cities in <%= state[:long].titleize %>:</span>
 
