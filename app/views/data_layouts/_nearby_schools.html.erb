@@ -1,0 +1,23 @@
+<%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
+  <% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
+  <% if neighbors.size >= 4 %>
+    <%= render "shared/section_header", category_placement:category_placement %>
+
+    <div class="row">
+      <% neighbors[0..3].each_with_index do |neighbor, index| %>
+        <%= div_tag(class: 'pbm', sizes: { xs: 12, sm: 6, md: 3, lg: 3 }) do %>
+          <%= neighbor.photo(200,150) %>
+          <br/>
+          <span class="open-sans_b pbl">
+            <%= neighbor.name %>
+          </span>
+          <br/>
+          <%= neighbor.city_state %>
+          <br/>
+          <%= neighbor.type %> | <%= neighbor.process_level %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+<% end %>

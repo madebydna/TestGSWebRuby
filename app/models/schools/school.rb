@@ -246,11 +246,22 @@ class School < ActiveRecord::Base
     HeldSchool.exists?(state: state, school_id: id)
   end
 
+  def nearby_schools
+    super.on_db(shard)
+  end
+  def neighbors
+    super.on_db(shard)
+  end
+
   def show_ads
     if collection.present?
       return collection.show_ads
     end
     return true
+  end
+
+  def neighbors
+    School.on_db(shard).joins("inner join _#{shard}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
 end
