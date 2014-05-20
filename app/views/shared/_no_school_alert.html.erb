@@ -1,5 +1,5 @@
 <% if params[:noSchoolAlert] %>
-  <div class="noSchoolAlert" style="background: #f9eccd; padding: 1px;text-align: center">
+  <div class="alert alert-warning tac mbn">
       <br/>
       <p>
           <%= image_tag('exclaim.gif', alt: 'Exclamation mark', style: 'position: relative; bottom: 1px;') %>
@@ -7,6 +7,3 @@
       </p>
   </div>
 <% end %>
-
-
-<!-- Use bootstrap alert instead like .alert-danger-->

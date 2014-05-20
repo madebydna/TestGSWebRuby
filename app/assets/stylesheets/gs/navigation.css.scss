@@ -17,8 +17,6 @@
 }
 
 #navigation2 nav{
-
-//  border-top: #e5a421 3px solid;
   background-color: #ffb725;
   text-align: center;
   padding-top: 8px;
@@ -51,6 +49,10 @@
 #mobile-header {
   display: none;
   float: left;
+}
+
+.secondary-navbar {
+  background-color: $navbar-secondary-bg;
 }
 
 @media only screen and (max-width: 767px) {
@@ -109,13 +111,6 @@
     }
   }
 }
-/* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
-//#gsGlobalNavigation.affix {
-//  position: fixed;
-//  top: 0;
-//  width: 100%;
-//  z-index: 10;
-//}
 
 @media only screen and (min-width: 1200px) {
   .limit_width_1200 {max-width:1200px; margin-left: auto; margin-right: auto;}

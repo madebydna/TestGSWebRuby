@@ -1,8 +1,10 @@
 <% unless important_events.nil? ||  important_events[:events].empty? %>
-  <div class="row mvl">
-    <% unless defined?(community_page) %>
-      <hr>
-    <% end %>
+  <% unless defined?(community_page) %>
+    <div class="row mvl">
+    <hr>
+  <% else %>
+    <div class="row">
+  <% end %>
     <div class='oh'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
         <h2 class='bottom mtn'>Upcoming Events</h2>

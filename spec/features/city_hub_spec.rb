@@ -27,8 +27,7 @@ describe 'City Hub Page' do
   describe 'choose a school section' do
     it 'renders links for a city hub' do
       expect(page).to have_content 'Finding a Great School in Detroit'
-      pending('fix this yonder')
-      # expect(page).to have_css('#choose-a-school a', count: 3)
+      expect(page).to have_selector('.scale-image')
     end
   end
 

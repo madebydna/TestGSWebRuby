@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit_width_1200 mbl">
   <div class="row">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   </div>
@@ -20,4 +20,7 @@
   <%= render 'tabs', tab: @tab, city: @city, state: @state[:long], show_tabs: @show_tabs %>
   <%= render 'education_community_partners', partners: @partners, tab: @tab, show_tabs: @show_tabs %>
 </div>
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>
