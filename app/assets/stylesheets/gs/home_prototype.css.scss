@@ -8,23 +8,23 @@ p, a, div, span, h1, h2, h3, h4, h5, h6, li {
   //height: 500px;
   position: relative;
   overflow: hidden;
-}
 
-.img-container, .img-container-mobile {
-  position: absolute;
-  top: 0;
-  left: -50%;
-  //height: 100%;
-  width: 200%;
-}
+  .img-container {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    //height: 100%;
+    width: 200%;
 
-img.scaling {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  min-width: 50%;
+    img.scaling {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      min-width: 50%;
+    }
+  }
 }
 
 .content-centered {
@@ -128,16 +128,6 @@ img.scaling {
   overflow: hidden;
 }
 
-.shaded-bg-pan {
-  //margin-top: 100px;
-  background: rgba(0, 0, 0, 0.10);
-  //border-radius: 3px;
-  //width: 1200px;
-  margin: auto;
-  //padding-top: 35px;
-  //padding-bottom: 50px;
-  //overflow: hidden;
-}
 .orange-bg {
   margin-top: 100px;
   background: #ffb725;
@@ -177,13 +167,9 @@ hr.keyline-3d3d3d{
   .pal-tablet{padding: 20px}
   .mal-tablet{margin: 20px}
 
-
 }
 
 @media (max-width:767px){
-//.city_location_break{@include clearfix();}
-//  .tac-480 {text-align: center;
-//    padding: none}
 
 }
 
