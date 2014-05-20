@@ -1,7 +1,7 @@
 <% unless content_modules.nil? %>
   <div class='js-content-modules clearfix'>
     <% content_modules.each do |content_module| %>
-    <div class="limit_width_1200">
+    <div class="limit-width-1200">
       <div class="col-xs-12 fn">
         <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
         <p><%= content_module[:description].html_safe %></p>

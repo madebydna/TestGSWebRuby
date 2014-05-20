@@ -3,13 +3,13 @@
 <% include_contact_info_link = true if include_contact_info_link.nil? %>
 <% include_cta_button_group  = true if include_cta_button_group.nil? %>
 
-<div class="header_bg_color ">
-    <div class="row pal limit_width_1200 open-sans">
+<div class="header-bg-color ">
+    <div class="row pal limit-width-1200 open-sans">
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">
                 <% media_hash = @school.school_media_first_hash %>
                 <% if media_hash %>
-                    <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail_border") %>
+                    <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail-border") %>
                 <% else %>
                     <% google_formatted_street_address = @google_signed_image.google_formatted_street_address %>
                     <% if google_formatted_street_address.present? %>
@@ -21,13 +21,13 @@
                 <% end %>
             </div>
 
-            <div class="fl header_title_width" >
+            <div class="fl header-title-width" >
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn pts"><%= @school.name %></h1></div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                         <% if @school.gs_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
-                                <div class="fl prl open-sans rating_header_h24">
+                                <div class="fl prl open-sans rating-header-h24">
                                     <span class="mrs link_darkgray">GreatSchools rating:</span>
                                     <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
 
@@ -36,7 +36,7 @@
                         <% end %>
                         <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
                             <%= link_to school_reviews_url(@school) do %>
-                                <div class="fl prl open-sans pt2 rating_header_h24">
+                                <div class="fl prl open-sans pt2 rating-header-h24">
                                     <span class="mrs link_darkgray">Community rating:</span>
                                     <span class="mt2 vam">
                                         <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
@@ -46,7 +46,7 @@
                         <% end %>
                         <% if @school.local_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
-                                <div class="fl prl open-sans pt2 rating_header_h24">
+                                <div class="fl prl open-sans pt2 rating-header-h24">
                                     <span class="mrs link_darkgray">Excellent Schools Detroit rating:</span>
                                     <span class="open-sans_sb">
                                         <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
@@ -56,7 +56,7 @@
                         <% end %>
                         <% if @school.state_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
-                                <div class="fl prl open-sans pt2 rating_header_h24">
+                                <div class="fl prl open-sans pt2 rating-header-h24">
                                     <span class="mrs link_darkgray">State rating:</span>
                                     <span class="open-sans_sb"><%= @school.state_rating %></span>
                                 </div>

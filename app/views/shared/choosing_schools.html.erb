@@ -3,13 +3,13 @@
 
 <% if params[:city] %>
   <div class="upcoming-events pvm">
-    <div class="limit_width_1200">
+    <div class="limit-width-1200">
         <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
     </div>
   </div>
 <% end %>
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200" style='margin-bottom: 40px;'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   <div class="row tac" style='margin-top: 80px; margin-bottom: 80px;'>
     <h1 class='mvn' style='color: #ffb725'>5 simple steps to</h1>

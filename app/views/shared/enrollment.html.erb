@@ -14,14 +14,14 @@
 
 <% unless @events.nil? ||  @events[:events].empty? %>
   <div class="upcoming-events fixed-top pvm">
-    <div class="limit_width_1200">
+    <div class="limit-width-1200">
       <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
     </div>
   </div>
 <% end %>
 
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200" style='margin-bottom: 40px;'>
   <div class="row">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
