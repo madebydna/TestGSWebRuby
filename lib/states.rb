@@ -64,6 +64,7 @@ module States
   end
 
   def self.abbreviation(name_or_abbreviation)
+    return if name_or_abbreviation.nil?
     str = name_or_abbreviation.downcase
     if str.size == 2 && abbreviation_hash.include?(str)
       return str
@@ -87,10 +88,5 @@ module States
 
   def self.abbreviations
     abbreviation_hash.keys.sort
-  end
-
-  # lowercased array of state abbreviations as symbols
-  def self.abbreviations_as_symbols
-    abbreviations.map{ |state| state.downcase.to_sym }
   end
 end

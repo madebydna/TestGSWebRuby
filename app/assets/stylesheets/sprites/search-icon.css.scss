@@ -1,0 +1,14 @@
+div#search-icon {
+  top: 5px;
+  right: 201px;
+  position: absolute;
+
+  span {
+    display: inline-block;
+    background-image: url('icons/search_icon.png');
+    width: 48px;
+    height: 48px;
+    background-position: -672px 0;
+    cursor: pointer;
+  }
+}

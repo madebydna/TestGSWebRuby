@@ -1,7 +1,5 @@
 if(gon.pagename == 'signin/new'){
 
-    GS.track.setOmnitureData();
-
     $(function () {
         $('#js_login_tab').on('click',function(){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,

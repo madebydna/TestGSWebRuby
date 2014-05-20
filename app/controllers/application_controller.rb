@@ -32,10 +32,10 @@ class ApplicationController < ActionController::Base
     return unless @school.present? && request.env['rack_after_reply.callbacks']
     request.env['rack_after_reply.callbacks'] << lambda do
       ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool| 
-        if pool.connections.present? && 
+        values.each do |pool|
+        if pool.connections.present? &&
           ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" ) 
+            current_database == "_#{@school.state.downcase}" )
           pool.disconnect!
         end
       end
@@ -85,9 +85,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_state
-    @state = state_param
-
-    render 'error/school_not_found', layout: 'error', status: 404 if @state.blank?
+    render 'error/school_not_found', layout: 'error', status: 404 if state_param.blank?
   end
 
   # Finds school given request param schoolId
@@ -168,6 +166,50 @@ class ApplicationController < ActionController::Base
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
+  # get Page name in PageConfig, based on current controller action
+  def configured_page_name
+    # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
+    action_name.gsub(' ', '_').capitalize
+  end
+
+  def set_login_redirect
+    delete_cookie(:last_school)
+    write_cookie :redirect_uri, request.path, { expires: 10.minutes.from_now }
+  end
+
+  def set_footer_cities
+    @cities = City.popular_cities(@state[:short], limit: 28)
+  end
+
+  def set_city_state
+    @state = {
+      long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+      short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+    } if params[:state]
+    @city = params[:city].gsub(/\-/, ' ') if params[:city]
+  end
+
+  def set_hub_params
+    @hub_params = {}
+    @hub_params[:state] = @state[:long] if @state[:long]
+    @hub_params[:city] = @city if @city
+  end
+
+  def configs
+    configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
+    Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
+      CollectionConfig.where(collection_id: mapping.collection_id).to_a
+    end
+  end
+
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
 
 end

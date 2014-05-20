@@ -1,0 +1,43 @@
+.iconx32g {
+  display: inline-block;
+  background-image: url('icons/arrows-32x32.png');
+  width: 32px;
+  height: 32px;
+}
+
+.i-32-carousel-right {
+  background-position: -640px 0;
+}
+
+.i-32-carousel-left {
+  background-position: -608px 0;
+}
+
+
+.i-arrow-24 {
+  display: inline-block;
+  background-image: url('icons/arrows-24x24.png');
+  height: 24px;
+  width: 24px;
+}
+
+.i-arrow-24-left {
+  background-position: 0 0;
+}
+
+.i-arrow-24-left:hover {
+  background-position: 0 24px;
+}
+
+.i-arrow-24-right {
+  background-position: 24px 0;
+}
+
+.i-arrow-24-right:hover {
+  background-position: 24px 24px;
+}
+
+.i-32-arrow-positioned {
+  margin-top: 65px;
+  width: 30px;
+}

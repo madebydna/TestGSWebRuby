@@ -6,7 +6,7 @@ class SchoolProfileConfiguration < ActiveRecord::Base
   attr_accessible :state, :configuration_key, :value
 
   def self.for_state(state = nil)
-    all_mappings = Rails.cache.fetch('school_profile_configuration/all', expires_in: 5.minutes) do
+    all_mappings = Rails.cache.fetch('school_profile_configurations/all', expires_in: 5.minutes) do
       self.all
     end
     configs = all_mappings.select { |school_profile_configuration| (school_profile_configuration.state.blank?) }

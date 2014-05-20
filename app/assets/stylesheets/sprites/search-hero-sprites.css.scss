@@ -1,0 +1,26 @@
+/* **************** SPRITE ***************** */
+
+.search-hero-sprite {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url("icons/search-hero-sprites.png");
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+}
+
+.search-hero-sprite.location-icon {
+  background-position: 0 -16px;
+}
+
+.search-hero-sprite.location-icon:hover {
+  background-position: -16px -16px;
+}
+
+.search-hero-sprite.home-icon {
+  background-position: 0 0;
+}
+
+.search-hero-sprite.home-icon:hover {
+  background-position: -16px 0;
+}

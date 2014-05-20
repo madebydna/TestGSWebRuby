@@ -10,10 +10,10 @@ describe Admin::SchoolsController do
 
     it 'it should sort reviews by posted date in descending order' do
       relation = double('relation')
-      SchoolRating.stub(:where).and_return relation
+      allow(SchoolRating).to receive(:where).and_return relation
       expect(relation).to receive(:order).with('posted desc')
       controller.school_reviews
     end
   end
-  
+
 end

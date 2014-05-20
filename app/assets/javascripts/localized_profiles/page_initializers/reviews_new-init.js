@@ -1,7 +1,5 @@
 if(gon.pagename == 'reviews/new'){
 
-    GS.track.setOmnitureData();
-
     var GS = GS || {};
     GS.form = GS.form || {};
     GS.form.starRating = (function() {

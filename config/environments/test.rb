@@ -38,7 +38,7 @@ LocalizedProfiles::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Don't cache when running tests
-  config.cache_store = :null_store
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   # set host that rails should use when building absolute urls
   config.action_controller.default_url_options = {
@@ -50,4 +50,8 @@ LocalizedProfiles::Application.configure do
   config.action_mailer.default_url_options = {
     host: 'test.host'
   }
+
+  config.hub_mapping_cache_time = 60 * 24
+  config.hub_config_cache_time = 10
+  config.hub_recent_reviews_cache_time = 10
 end

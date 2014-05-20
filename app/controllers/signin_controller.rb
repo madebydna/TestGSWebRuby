@@ -13,21 +13,20 @@ class SigninController < ApplicationController
 
   # gets the join / login form page
   def new
-    set_meta_tags :title => 'Log in to GreatSchools'
-    set_meta_tags :robots => 'noindex'
+    set_meta_tags title: 'Log in to GreatSchools',
+                  robots: 'noindex'
 
-    @active_tab = 'login'
+    @active_tab = params[:tab] || 'login'
     gon.pagename = 'signin/new'
 
     gon.omniture_pagename = 'GS:Admin:Login'
     gon.omniture_hier1 = 'Account,LogIn'
     set_omniture_data_for_user_request
-    read_omniture_data_from_session
   end
 
   def new_join
-    set_meta_tags :title => 'Join GreatSchools'
-    set_meta_tags :robots => 'noindex'
+    set_meta_tags title: 'Join GreatSchools',
+                  robots: 'noindex'
 
     @active_tab = 'join'
     gon.pagename = 'signin/new' # If this is changed, make sure JS is handled, i.e. signin_new-init.js
@@ -35,7 +34,6 @@ class SigninController < ApplicationController
     gon.omniture_pagename = 'GS:Admin:CreateAccount'
     gon.omniture_hier1 = 'Account,SignUp'
     set_omniture_data_for_user_request
-    read_omniture_data_from_session
     render :template => 'signin/new'
   end
 
@@ -63,7 +61,15 @@ class SigninController < ApplicationController
       end
 
       executed_deferred_action
-      redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
+
+      unless already_redirecting?
+        city_hub_page = nil
+        if cookies[:redirect_uri]
+          city_hub_page = URI.decode(cookies[:redirect_uri])
+          delete_cookie :redirect_uri
+        end
+        redirect_to (overview_page_for_last_school || city_hub_page || user_profile_or_home)
+      end
     end
   end
 
@@ -79,7 +85,7 @@ class SigninController < ApplicationController
 
     if logged_in? && redirect_url.present?
       executed_deferred_action
-      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) if !already_redirecting?
+      redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
     else
       redirect_to user_profile_or_home
     end
@@ -107,7 +113,14 @@ class SigninController < ApplicationController
     log_user_in user if error.nil?
 
     executed_deferred_action
-    redirect_to (overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
+    unless already_redirecting?
+      redirect_uri =nil
+      if cookies[:redirect_uri]
+        redirect_uri = URI.decode(cookies[:redirect_uri])
+        delete_cookie :redirect_uri
+      end
+      redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
+    end
   end
 
   def verify_email
@@ -175,7 +188,6 @@ class SigninController < ApplicationController
   end
 
   def register
-
     user, error = register_user(false, {
       email: params[:email]
     })

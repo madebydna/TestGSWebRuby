@@ -1,0 +1,57 @@
+<style>
+  .cycle-slide {
+    visibility: visible !important;
+  }
+</style>
+
+<% if partner_carousel and !partner_carousel[:partnerLogos].empty? %>
+  <div class="limit-width-1200">
+    <div class='row mtl mhm'>
+      <div class="clearfix mtl">
+        <div class="pull-left">
+          <h2 class="mtn"><%= partner_carousel[:heading] %></h2>
+        </div>
+        <div class="lg-pr-sm-pl">
+          <a href="education-community" style='font-size: 14px;'>
+            <%= "See the entire education community &#187".html_safe %>
+          </a>
+        </div>
+      </div>
+      <div class='tac mvl'>
+        <div class="pull-left mrl i-32-arrow-positioned">
+          <a href="#" id="prev">
+            <span class="iconx32g i-32-carousel-left" style=''></span>
+          </a>
+        </div>
+
+        <div class="pull-right i-32-arrow-positioned">
+          <a href="#" id="next">
+            <span class="iconx32g i-32-carousel-right vam"></span>
+          </a>
+        </div>
+        <div class='dib'>
+          <div class="js-partner-carousel"
+               data-cycle-fx="carousel"
+               data-cycle-slides="> div"
+               data-cycle-loader="wait"
+               data-cycle-speed="1000"
+               data-cycle-pause-on-hover="true"
+               data-cycle-timeout="1000"
+               data-cycle-easing="linear"
+               data-cycle-carousel-visible='6'
+               data-cycle-swipe="true"
+               data-cycle-slideshow="true"
+               data-cycle-next="#next"
+               data-cycle-prev="#prev">
+            <% partner_carousel[:partnerLogos].each do |logo| %>
+              <div>
+                <%= link_to(image_tag(logo[:logoPath], class: 'mrm partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

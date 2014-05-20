@@ -1,6 +1,5 @@
 module DeferredActionConcerns
   extend ActiveSupport::Concern
-  include LocalizationConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
@@ -30,11 +29,11 @@ module DeferredActionConcerns
         begin
           Rails.logger.debug("Executing deferred action: #{action}")
           success = self.send action, params
-          delete_cookie :deferred_action if success
+          cookies.delete(:deferred_action, domain: :all) if success
         rescue => error
           Rails.logger.debug "Error when executing deferred action: #{action} on #{self.class}. " +
                                "Deleting cookie to prevent future errors. Exception message: #{error.message}"
-          delete_cookie :deferred_action
+          cookies.delete :deferred_action, domain: :all
         end
       else
         Rails.logger.debug "Action: #{action} not present on #{self.class}."

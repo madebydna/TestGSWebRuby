@@ -52,15 +52,14 @@ describe SchoolRating do
   it 'should require a state' do
     review.state = nil
     expect(review).to_not be_valid
-    review.state = 'ca'
+    review.state = 'CA'
     expect(review).to be_valid
   end
 
   it 'should validate the state\'s format' do
-    pending
     review.state = 'blah'
     expect(review).to_not be_valid
-    review.state = 'ca'
+    review.state = 'CA'
     expect(review).to be_valid
   end
 
@@ -129,7 +128,7 @@ describe SchoolRating do
 
     before do
       subject.school = school
-      AlertWord.stub(:search).and_return(no_bad_language)
+      allow(AlertWord).to receive(:search).and_return(no_bad_language)
     end
 
     # There was a time when all reviews were automatically flagged for moderation
@@ -140,14 +139,14 @@ describe SchoolRating do
       subject.who = 'parent'
       subject.user = new_user
       subject.calculate_and_set_status
-      subject.stub(:valid?).and_return(true)
+      allow(subject).to receive(:valid?).and_return(true)
       expect{ subject.save }.to_not change{ subject.status }
     end
 
     it 'should check for banned IP' do
       subject.who = 'parent'
       subject.user = user
-      BannedIp.stub(:banned_ips).and_return(['123.123.123.123'])
+      allow(BannedIp).to receive(:banned_ips).and_return(['123.123.123.123'])
 
       subject.ip = '123.123.123.123'
       subject.calculate_and_set_status
@@ -170,7 +169,7 @@ describe SchoolRating do
 
       context 'non-held school' do
         before do
-          subject.school.stub(:held?).and_return(false)
+          allow(subject.school).to receive(:held?).and_return(false)
         end
 
         it 'should have a status of pp' do
@@ -185,13 +184,13 @@ describe SchoolRating do
         end
 
         it 'should not be affected by alert words' do
-          AlertWord.stub(:search).and_return(alert_words)
+          allow(AlertWord).to receive(:search).and_return(alert_words)
           subject.calculate_and_set_status
           expect(subject).to be_provisional_published
         end
 
         it 'status should be set to disabled if there are really bad words' do
-          AlertWord.stub(:search).and_return(really_bad_words)
+          allow(AlertWord).to receive(:search).and_return(really_bad_words)
           subject.calculate_and_set_status
           expect(subject).to be_disabled
         end
@@ -199,7 +198,7 @@ describe SchoolRating do
 
       context 'held school' do
         before do
-          subject.school.stub(:held?).and_return(true)
+          allow(subject.school).to receive(:held?).and_return(true)
         end
 
         it 'should have a held status' do
@@ -215,7 +214,7 @@ describe SchoolRating do
       before do
         subject.school = school
         subject.user = registered_user
-        AlertWord.stub(:search).and_return(no_bad_language)
+        allow(AlertWord).to receive(:search).and_return(no_bad_language)
       end
 
       after do
@@ -224,7 +223,7 @@ describe SchoolRating do
 
       context 'non-held school' do
         before do
-          subject.school.stub(:held?).and_return(false)
+          allow(subject.school).to receive(:held?).and_return(false)
         end
 
         it 'should be published when user is a parent' do
@@ -248,7 +247,7 @@ describe SchoolRating do
 
       context 'held school' do
         before do
-          subject.school.stub(:held?).and_return(true)
+          allow(subject.school).to receive(:held?).and_return(true)
         end
 
         it 'should have a held status' do

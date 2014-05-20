@@ -5,16 +5,6 @@ describe RatingsHelper do
   let(:school) { School.new(id: 1, state: 'mi', city: 'Detroit') }
   let(:school_metadata) { Hashie::Mash.new(overallRating: "1")}
 
-  #it 'should call TestDataSet.by_data_type_ids with all the data type ids in the configuration' do
-  #  RatingsConfiguration.stub(:fetch_city_rating_data_type_ids).with(school).and_return([200,198,199,201])
-  #  RatingsConfiguration.stub(:fetch_state_rating_data_type_ids).with(school).and_return([197])
-  #  RatingsConfiguration.stub(:fetch_gs_rating_data_type_ids).and_return([164,165,166])
-  #  #No prek ratings
-  #  RatingsConfiguration.stub(:fetch_preK_rating_data_type_ids).and_return([])
-  #  TestDataSet.stub(:by_data_type_ids).with(school, [200,198,199,201,197,164,165,166]).and_return({})
-  #  expect(RatingsHelper.fetch_ratings_for_school school).to  be_empty
-  #end
-
   #There is no configuration,and no rating results. Hence expect empty state ratings
   it 'should return empty state ratings' do
     ratings_config = RatingsConfiguration.new(nil, nil, nil, nil)
@@ -22,7 +12,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_state_ratings(school)).to be_empty
   end
@@ -35,7 +25,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_state_ratings(school)).to be_empty
   end
@@ -48,7 +38,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_state_ratings(school)).to be_empty
   end
@@ -63,7 +53,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>nil})
   end
@@ -77,7 +67,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_state_accountability_summary"] => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_state_accountability_summary"] => "some summary"})
 
     expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary"})
   end
@@ -101,7 +91,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
@@ -114,7 +104,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
@@ -127,7 +117,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_city_ratings(school)).to be_empty
   end
@@ -141,7 +131,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
 
     expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1",
                                                                                 "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
@@ -156,7 +146,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
 
     expect(ratings_helper.construct_city_ratings(school)).to eq({})
   end
@@ -170,7 +160,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_esd_summary"] => "some summary"})
 
     expect(ratings_helper.construct_city_ratings(school)).to eq({"overall_rating"=>"1","methodology_url" => "some_url",
                                                                  "description"=>"some summary", "city_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"School Climate"=>"1", "Academic Status"=>"1", "Academic Progress"=>"1"}})
@@ -206,7 +196,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_preK_ratings(school)).to be_empty
   end
@@ -219,7 +209,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_preK_ratings(school)).to be_empty
   end
@@ -232,7 +222,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_preK_ratings(school)).to be_empty
   end
@@ -246,7 +236,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({[school.state.upcase,"mi_prek_star_rating_summary"] => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_prek_star_rating_summary"] => "some summary"})
 
     expect(ratings_helper.construct_preK_ratings(school)).to eq({"star_rating"=>1, "description"=>"some summary", "preK_rating_label"=>"Awesome Test"})
   end
@@ -288,7 +278,7 @@ describe RatingsHelper do
     ratings_config = RatingsConfiguration.new(city_rating_config, nil, nil, nil)
 
     ratings_helper = RatingsHelper.new({},ratings_config)
-    school.stub(:school_metadata).and_return(Hashie::Mash.new(some_key: "specific_url"))
+    allow(school).to receive(:school_metadata).and_return(Hashie::Mash.new(some_key: "specific_url"))
 
     expect(ratings_helper.get_methodology_url(city_rating_config, school)).to eq("specific_url")
   end
@@ -312,7 +302,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_GS_ratings(school)).to be_empty
   end
@@ -325,7 +315,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_GS_ratings(school)).to be_empty
   end
@@ -338,7 +328,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new([],ratings_config)
 
     #There is no description
-    DataDescription.stub(:lookup_table).and_return({})
+    allow(DataDescription).to receive(:lookup_table).and_return({})
 
     expect(ratings_helper.construct_GS_ratings(school)).to be_empty
   end
@@ -352,9 +342,9 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({[nil,"what_is_gs_rating_summary"] => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({[nil,"what_is_gs_rating_summary"] => "some summary"})
 
-    school.stub(:school_metadata).and_return(school_metadata)
+    allow(school).to receive(:school_metadata).and_return(school_metadata)
     expect(ratings_helper.construct_GS_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary", "rating_breakdowns"=>{"Test score rating"=>{"rating"=>1}, "Student growth rating"=>{"rating"=>1}, "College readiness rating"=>{"rating"=>1}}})
   end
 
@@ -367,7 +357,7 @@ describe RatingsHelper do
     ratings_helper = RatingsHelper.new(rating_results,ratings_config)
 
     #There is a description
-    DataDescription.stub(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
+    allow(DataDescription).to receive(:lookup_table).and_return({"mi_esd_summary" => "some summary"})
 
     expect(ratings_helper.construct_GS_ratings(school)).to eq({})
   end

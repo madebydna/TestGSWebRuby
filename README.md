@@ -25,8 +25,8 @@
 #### Installing ruby gem dependencies and creating databases
 
 2. Navigate into the newly-created gswebruby directory and run:
-  
-    `rake gsweb:install` 
+
+    `rake gsweb:install`
 
     This should automatically do things such as:
 
@@ -34,13 +34,13 @@
       - Create LocalizedProfiles_development
       - Create other needed databases, and dump schemas (but not data) from dev
       - Insert data needed for a minimal school profile page to load in Rails
-      - Create a few files that aren't checked into the git repo, used for 
+      - Create a few files that aren't checked into the git repo, used for
         overwriting specific functionality on your machine
 
 
 
 3. Next, create your test databases with
-  
+
     `rake db:test:prepare`
 
 #### Running RSpec tests with Zeus and Guard
@@ -51,28 +51,28 @@
 
     `RAILS_ENV=test zeus start`
 
-5. Next, open a new terminal session (you need to keep zeus running), run: 
+5. Next, open a new terminal session (you need to keep zeus running), run:
 
     `guard`
 
     It should connect to your zeus server and give a prompt. Guard
-will watch your file system for changes as you code, and re-run specs as 
+will watch your file system for changes as you code, and re-run specs as
 necessary
 
-6. Within the Guard prompt, run 
+6. Within the Guard prompt, run
 
-    `rspec` 
+    `rspec`
 
-    and cross your fingers! If everything has gone well so far, all tests 
+    and cross your fingers! If everything has gone well so far, all tests
     should pass.
 
 #### Starting up Rails
 
-7. If everything has worked so far, you should be able to start rails: 
+7. If everything has worked so far, you should be able to start rails:
 
     `rails s`
 
-    The 'thin' rails server should start up and start serving pages on port 
+    The 'thin' rails server should start up and start serving pages on port
     3000
 
 8. Navigate to [http://localhost:3000/california/alameda/1-Alameda-High-School/](http://localhost:3000/california/alameda/1-Alameda-High-School/)
@@ -87,7 +87,7 @@ and you should see a school profile page
 
       __OR__
 
-- Run this rake task edit your `database_local.yml` file so that your Rails 
+- Run this rake task edit your `database_local.yml` file so that your Rails
   will use the mysql server on dev instead of localhost:
 
   `rake gsweb:use_dev_db`
@@ -97,8 +97,8 @@ and you should see a school profile page
   `rake gsweb:use_localhost_db`
 
 ### Coding conventions
-  
-  Currently, the team has agreed to generally follow the ruby style 
+
+  Currently, the team has agreed to generally follow the ruby style
   conventions at the [community Ruby Style Guide on Github]
   (https://github.com/bbatsov/ruby-style-guide). If you're not familiar with
   it, please give it a read. Also, suggestions are welcome, so
@@ -110,3 +110,12 @@ and you should see a school profile page
 ### Troubleshooting
 
   WIP
+
+### Deploying
+
+  To deploy, you'll want a unix account (ask sysadmins@greatschools.org). You can also use the syncer account
+
+  `ssh syncer@alpha`
+
+  Once inside, these 2 commands deploy to alpha:
+  `sudo -u syncer gsdeploy-fetch alpha gswebruby && sudo -u syncer deployfarmer gswebruby`

@@ -1,21 +1,21 @@
 class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
-  include LocalizationConcerns
   include OmnitureConcerns
 
   before_filter :redirect_tab_urls, only: [:overview]
   before_filter :require_state, :require_school
   before_filter :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
-  before_filter :read_config_for_page, except: :reviews
+  before_filter :read_config_for_page
   before_filter :init_page, :set_header_data
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
-  before_filter :set_hub_cookies
   before_filter :set_seo_meta_tags
 
   before_filter :ad_setTargeting_through_gon
-  before_filter :set_footer_cities
+  before_filter :set_city_state
+  before_filter :set_hub_params, if: :is_hub_school?
+  before_filter :enable_ads
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -25,8 +25,6 @@ class LocalizedProfileController < ApplicationController
     gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
-
-
   end
 
   def quality
@@ -62,8 +60,6 @@ class LocalizedProfileController < ApplicationController
     set_omniture_hier_for_new_profiles
     set_omniture_data_for_school(page_name)
     set_omniture_data_for_user_request
-
-    read_omniture_data_from_session
   end
 
   def init_page
@@ -73,6 +69,7 @@ class LocalizedProfileController < ApplicationController
     gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
+    @ad_definition = Advertising.new
     set_last_modified_date
   end
 
@@ -86,11 +83,7 @@ class LocalizedProfileController < ApplicationController
     @school_reviews_global = SchoolReviews.calc_review_data @school_reviews_all
   end
 
-  # get Page name in PageConfig, based on current controller action
-  def configured_page_name
-    # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
-    action_name.gsub(' ', '_').capitalize
-  end
+
 
   # requires that @school has already been obtained from db
   def redirect_to_canonical_url
@@ -99,14 +92,14 @@ class LocalizedProfileController < ApplicationController
     helper_name << 'path'
 
     canonical_path = self.send helper_name.to_sym, @school
-    
+
 
     # Add a tailing slash to the request path, only if one doesn't already exist.
     # Requests made by rspec sometimes contain a trailing slash
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(
-        canonical_path, 
-        true, 
+        canonical_path,
+        true,
         request.query_parameters
       )
     end
@@ -200,5 +193,13 @@ class LocalizedProfileController < ApplicationController
 
       gon.ad_set_targeting = set_targeting
     end
+  end
+
+  def is_hub_school?
+    @school && !@school.try(:collection).nil?
+  end
+
+  def enable_ads
+    @show_ads = @school.show_ads
   end
 end

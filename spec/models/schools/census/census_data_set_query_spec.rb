@@ -9,9 +9,15 @@ describe CensusDataSetQuery do
 
   describe '#default_scope' do
     it 'should enforce only active data sets' do
-      CensusDataSet = double(CensusDataSet).as_null_object
+      # TODO: what's the correct way to
+      CensusDataSet = class_double('CensusDataSet').as_stubbed_const
+      allow(CensusDataSet).to receive(:on_db).and_return(CensusDataSet)
+      allow(CensusDataSet).to receive(:active).and_return(CensusDataSet)
+      allow(CensusDataSet).to receive(:scoped).and_return(CensusDataSet)
+      # CensusDataSet = double(CensusDataSet).as_null_object
       expect(CensusDataSet).to receive(:active)
       subject.default_scope
+      # CensusDataSet = CensusDataSetCopy
     end
   end
 
@@ -47,7 +53,7 @@ describe CensusDataSetQuery do
 
     it 'should use a custom string join to make sure that SQL \
 ON clause contains school_id constraint' do
-      relation.stub(:eager_load).and_return relation
+      allow(relation).to receive(:eager_load).and_return relation
       expect(relation).to receive(:joins).with(
         'AND census_data_school_value.school_id = 1'
       )
@@ -115,11 +121,11 @@ ON clause contains school_id constraint' do
       FactoryGirl.build(:census_data_set)
     end
     it 'should load a district value onto a data set' do
-      subject.stub(:district_values).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:district_values).and_return FactoryGirl.build_list(
         :census_data_district_value, 1,
         data_set_id: data_set_without_district_values.id
       )
-      subject.stub(:data_sets).and_return [ data_set_without_district_values ] 
+      allow(subject).to receive(:data_sets).and_return [ data_set_without_district_values ]
 
       subject.load_district_values
 
@@ -127,7 +133,7 @@ ON clause contains school_id constraint' do
     end
 
     it 'should be idempotent' do
-      subject.stub(:data_sets).and_return []
+      allow(subject).to receive(:data_sets).and_return []
       expect(subject.load_district_values).to_not be_nil
       expect(subject.load_district_values).to be_nil
     end
@@ -146,17 +152,17 @@ ON clause contains school_id constraint' do
 
     it 'should query for district values' do
       subject.instance_variable_set(:@district_id, 4)
-      subject.stub(:data_set_ids).and_return [1, 2]
-      CensusDataDistrictValue.stub_chain(:on_db, :where)
+      allow(subject).to receive(:data_set_ids).and_return [1, 2]
+      allow(CensusDataDistrictValue).to receive_message_chain(:on_db, :where)
       expect(CensusDataDistrictValue).to receive(:on_db).with(:ca)
       subject.district_values
     end
 
     it 'should specify the district ID and data set ID' do
       subject.instance_variable_set(:@district_id, 4)
-      subject.stub(:data_set_ids).and_return [1, 2]
-      CensusDataDistrictValue.stub(:on_db).and_return CensusDataDistrictValue
-      CensusDataDistrictValue.stub(:where).and_return CensusDataDistrictValue
+      allow(subject).to receive(:data_set_ids).and_return [1, 2]
+      allow(CensusDataDistrictValue).to receive(:on_db).and_return CensusDataDistrictValue
+      allow(CensusDataDistrictValue).to receive(:where).and_return CensusDataDistrictValue
       expect(CensusDataDistrictValue).to receive(:where)
         .with(
           district_id: 4,
@@ -168,16 +174,16 @@ ON clause contains school_id constraint' do
 
   describe '#load_state_values' do
     let(:data_set_without_state_values) {
-      FactoryGirl.build(:census_data_set, 
+      FactoryGirl.build(:census_data_set,
         census_data_state_values: []
       )
     }
     it 'should load a state value onto a data set' do
-      subject.stub(:state_values).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:state_values).and_return FactoryGirl.build_list(
         :census_data_state_value, 1,
         data_set_id: data_set_without_state_values.id
       )
-      subject.stub(:data_sets).and_return [ data_set_without_state_values ] 
+      allow(subject).to receive(:data_sets).and_return [ data_set_without_state_values ]
 
       subject.load_state_values
 
@@ -185,7 +191,7 @@ ON clause contains school_id constraint' do
     end
 
     it 'should be idempotent' do
-      subject.stub(:data_sets).and_return []
+      allow(subject).to receive(:data_sets).and_return []
       expect(subject.load_state_values).to_not be_nil
       expect(subject.load_state_values).to be_nil
     end
@@ -193,8 +199,8 @@ ON clause contains school_id constraint' do
 
   describe '#state_values' do
     it 'should query for state values' do
-      subject.stub(:data_set_ids).and_return [1, 2]
-      CensusDataStateValue.stub_chain(:on_db, :where)
+      allow(subject).to receive(:data_set_ids).and_return [1, 2]
+      allow(CensusDataStateValue).to receive_message_chain(:on_db, :where)
       expect(CensusDataStateValue).to receive(:on_db).with(:ca)
       subject.state_values
     end
@@ -202,9 +208,9 @@ ON clause contains school_id constraint' do
 
   describe '#census_descriptions' do
     it 'should query for census descriptions' do
-      subject.stub(:data_set_ids).and_return [1, 2]
+      allow(subject).to receive(:data_set_ids).and_return [1, 2]
       subject.instance_variable_set(:@school_type, 'private')
-      CensusDescription.stub_chain(:where)
+      allow(CensusDescription).to receive_message_chain(:where)
       expect(CensusDescription).to receive(:where)
         .with(state: 'ca', school_type: 'private', census_data_set_id: [1, 2])
       subject.census_descriptions
@@ -216,12 +222,12 @@ ON clause contains school_id constraint' do
       FactoryGirl.build(:census_data_set)
     }
     it 'should load a description onto a data set' do
-      subject.stub(:census_descriptions).and_return FactoryGirl.build_list(
+      allow(subject).to receive(:census_descriptions).and_return FactoryGirl.build_list(
         :census_description,
         1,
         census_data_set_id: data_set_without_census_description.id
       )
-      subject.stub(:data_sets) {
+      allow(subject).to receive(:data_sets) {
         [ data_set_without_census_description ]
       }
 
@@ -231,7 +237,7 @@ ON clause contains school_id constraint' do
     end
 
     it 'should be idempotent' do
-      subject.stub(:data_sets).and_return []
+      allow(subject).to receive(:data_sets).and_return []
       expect(subject.load_census_descriptions).to_not be_nil
       expect(subject.load_census_descriptions).to be_nil
     end
@@ -239,7 +245,7 @@ ON clause contains school_id constraint' do
 
   describe '#config_entry_for_data_set' do
     it 'should ask for config entry related to given data set' do
-      CensusDataConfigEntry.stub(:for_data_set).and_return nil
+      allow(CensusDataConfigEntry).to receive(:for_data_set).and_return nil
       expect(CensusDataConfigEntry).to receive(:for_data_set)
         .with(:ca, 10)
       subject.config_entry_for_data_set 10
@@ -251,9 +257,9 @@ ON clause contains school_id constraint' do
       FactoryGirl.build(:census_data_set)
     end
     it 'should load a config entry onto a data set' do
-      subject.stub(:config_entry_for_data_set)
+      allow(subject).to receive(:config_entry_for_data_set)
         .and_return FactoryGirl.build(:census_data_config_entry)
-      subject.stub(:data_sets) do
+      allow(subject).to receive(:data_sets) do
         [data_set_without_config_entry]
       end
 
@@ -263,7 +269,7 @@ ON clause contains school_id constraint' do
     end
 
     it 'should be idempotent' do
-      subject.stub(:data_sets).and_return []
+      allow(subject).to receive(:data_sets).and_return []
       expect(subject.load_config_entries).to_not be_nil
       expect(subject.load_config_entries).to be_nil
     end

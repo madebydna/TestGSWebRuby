@@ -4,9 +4,28 @@
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font-weight-bold; }
 
+.bottom {margin-bottom:0;padding-bottom:0;}
+
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
 .font-size-small {font-size: $font-size-small}
+
+.search-text {
+  height: 46px;
+  font: normal 14px/20px 'opensans-regular',Arial,Helvetica,sans-serif;
+  color: #666;
+  padding-left: 8px;
+  border: 1px solid #b8b8b8;
+  border-radius: 3px;
+}
+
+h2 {
+  font: 28px 'opensans-regular' Arial,Helvetica,sans-serif;
+}
+
+p, a {
+  font: 16px 'opensans-regular',Arial,Helvetica,sans-serif;
+}
 
 .invert-colors{
   background-color: $gray-darkest;
@@ -41,4 +60,30 @@ h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font
   h2{font-size:26px;}
   .best_known_for{font-size: 22px}
 }
+.advertisement_text{
+  width: 100px; color: #999999; font-size: 12px;
+}
 
+.link_darkgray{color:#3d3d3d}
+
+.brand-secondary {
+  color: $brand-secondary;
+}
+
+.gray-light {
+  color: $gray-dark;
+}
+
+.inverted-text {
+  color: white;
+}
+
+.jumbo-header {
+  font-size: 62px;
+}
+
+@media only screen and (min-width: 768px) {
+  .lar {
+    text-align: right;
+  }
+}

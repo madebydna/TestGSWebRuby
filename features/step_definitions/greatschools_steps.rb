@@ -33,8 +33,8 @@ end
 
 When /^I pick:$/ do |table|
   table.rows_hash.each do |field, value|
-    page.select value, :from => field	
-  end 
+    page.select value, :from => field
+  end
 end
 #When /^I sign in$/ do
 #  click_button "signinBtn"
@@ -77,7 +77,7 @@ end
 Then(/^I submit my "(.*?)" and Reset password$/) do |fpemail|
   fill_in 'Email address', :with => fpemail
   click_button 'Reset password'
-  sleep 3 
+  sleep 3
 end
 
 Then "the MSS Email Validation hover is visible" do
@@ -88,7 +88,7 @@ Then "the MSS Email Validation hover is visible" do
 end
 
 Then /^I click on Sign Up button$/ do
-  page.find(:css, "html body.www div.container_24 div#marginGS div.page-shadow div#contentGS.clearfix div.grid_8 div.mod div.inner div.bd div.section1 form.jq-emailSignUpForm div.line div.unit button.button-1").click
+  page.find(:css, "html body.www div.container_24 div#marginGS div.page-shadow div#contentGS.clearfix div.grid_8 div.mod div.inner div.bd div.section1 form.js-emailSignUpForm div.line div.unit button.button-1").click
 end
 
 When "I see the Join Hover" do

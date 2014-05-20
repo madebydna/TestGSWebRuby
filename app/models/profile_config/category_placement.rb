@@ -109,6 +109,24 @@ class CategoryPlacement < ActiveRecord::Base
     siblings.last == self
   end
 
+  def module_specific_partial
+    view_directory = Rails.root.join(
+      'app',
+      'views'
+    )
+    page_specific_layout = "data_layouts/#{page.name}_#{title}_#{layout}"
+    module_specific_layout = "data_layouts/#{title}_#{layout}"
+
+    page_specific_file =
+      Rails.root.join(view_directory, page_specific_layout)
+
+    module_specific_file =
+      Rails.root.join(view_directory, module_specific_layout)
+
+    return page_specific_layout if File.exist?(page_specific_file)
+    return module_specific_layout if File.exist?(module_specific_file)
+  end
+
   def partial
     "data_layouts/#{layout}"
   end

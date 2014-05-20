@@ -12,7 +12,7 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
   scope :not_provisional, where('length(status) = 1')
   scope :quality_decline, where("quality != 'decline'")
-  scope :belonging_to, lambda { |user| where(member_id: user.id) }
+  scope :belonging_to, lambda { |user| where(member_id: user.id).order('posted desc') }
   scope :disabled, where(status: %w[d pd])
   scope :unpublished, where(status: %w[u pu])
   scope :held, where(status: %w[h ph])
@@ -20,14 +20,14 @@ class SchoolRating < ActiveRecord::Base
   scope :ever_flagged, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
 
   attr_accessor :reported_entities
+  attr_accessor :count
   attr_writer :moderated
 
   alias_attribute :review_text, :comments
   alias_attribute :overall, :quality
   alias_attribute :affiliation, :who
 
-  validates_presence_of :state
-  #validates_format_of :state, with: /#{States.state_hash.values.join '|'}/
+  validates :state, presence: true, inclusion: { in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state" }
   validates_presence_of :school
   validates_presence_of :user
   validates :who, inclusion: { in: %w(parent teacher other student) }, if: 'school && school.includes_highschool?'
@@ -46,6 +46,10 @@ class SchoolRating < ActiveRecord::Base
   before_save :set_processed_date_if_published
   after_save :auto_report_bad_language, unless: '@moderated == true'
 
+  def self.cache_time
+    LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
+  end
+
   def school=(school)
     @school = school
     if school.nil?
@@ -58,7 +62,7 @@ class SchoolRating < ActiveRecord::Base
   end
 
   def overall
-    # use quality or p_overall(for prek) for star counts and overall 
+    # use quality or p_overall(for prek) for star counts and overall
     # score.OM-209
     if quality.present? && quality != 'decline'
       quality
@@ -205,8 +209,36 @@ class SchoolRating < ActiveRecord::Base
     end
   end
 
+  def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
+    # Because our build fails with native sql otherwise
+    # https://jenkins.greatschools.org/job/GSWebRubyAlpha%20-%20All%20Specs/2/console
+    table = Rails.env.test? ?  "_#{state_abbr.downcase}_test" : "_#{state_abbr.downcase}"
+
+    SchoolRating.joins("JOIN #{table}.school s ON s.id=school_rating.school_id")
+                .joins("JOIN #{table}.school_metadata m ON m.school_id=s.id")
+                .where("s.active=1 AND m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'")
+                .where("m.meta_value=? AND status='p'", collection_id)
+                .where("DATE_SUB(CURDATE(),INTERVAL 90 DAY) <= posted AND school_rating.state=?", state_abbr.upcase)
+                .order('posted desc')
+                .limit(max_reviews)
+                .to_a
+                .map { |rating| rating.count = recent_reviews_in_hub_count(rating.state, rating.school.id); rating  }
+  end
+
   def reported?
     Array(reported_entities).any?
   end
 
+  def self.recent_reviews_in_hub_count(state_abbr, school_id)
+    cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
+    Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time, race_condition_ttl: SchoolRating.cache_time) do
+      SchoolRating.where(state: state_abbr, school_id: school_id).published.count
+    end
+  end
+
+  private
+
+  def comments_word_count
+    errors[:school_rating] << 'Please use at least 15 words in your comment.' if comments.blank? || comments.split.size < 15
+  end
 end

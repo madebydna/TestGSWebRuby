@@ -17,14 +17,20 @@
 
 @import "resources/normalize";
 @import "gs/fonts-opensans";
+@import "gs/fonts-sourcesans";
+@import "sprites/arrows";
+@import "sprites/search-icon";
 @import "sprites/140305-24x24_stars_detroit";
 @import "sprites/140414-60x60_sprites";
 @import "sprites/130930-16x16_stars";
 @import "sprites/140113-24x24_stars";
+@import "sprites/130919-24x24_search";
 @import "sprites/140106-16x16_icons";
 @import "sprites/140106-24x24_ratings";
 @import "sprites/140106-72x72_ratings";
 @import "sprites/140117-32x32_connect_with_us_buttons";
+@import "sprites/search-hero-sprites";
+@import "sprites/calendar_month";
 @import "resources/bootstrap/sass/sass-bootstrap";
 @import "gs/typography";
 @import "gs/navigation";
@@ -33,6 +39,7 @@
 @import "resources/galleria.classic";
 @import "gs/social-buttons";
 @import "gs/home_prototype";
+@import "gs/city-hub";
 
 /* city specific */
 @import "sprites/140106-72x58_ESD_ratings";

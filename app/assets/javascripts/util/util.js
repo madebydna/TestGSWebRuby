@@ -1,4 +1,3 @@
-var GS = GS || {};
 GS.util = GS.util || {};
 
 GS.util.log = function (msg) {
@@ -15,5 +14,5 @@ GS.util.wrapFunction = function(fn, context, params) {
   return function() {
     fn.apply(context, params);
   };
-}
+};
 

@@ -1,0 +1,42 @@
+<%= render 'nav/topnav' %>
+<%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id, collection_nickname: @collection_nickname %>
+
+<div class="upcoming-events fixed-top pvm">
+  <div class="limit-width-1200">
+    <%= render 'upcoming_events', important_events: @events, community_page: true %>
+  </div>
+</div>
+
+<div class="limit-width-1200" style='margin-bottom: 40px;'>
+  <div class="row">
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  </div>
+
+  <div class="row">
+    <% @partner[:data].each do |partner_data| %>
+      <div class="pull-left">
+        <%= image_tag(partner_data[:logo], alt: 'Partner Logo', class: 'mal') %>
+      </div>
+      <div class="col-xs-12 col-sm-11 col-md-10 col-lg-8 phm">
+        <div class="row">
+          <h2 style='margin-top: 8px;'><%= partner_data[:heading] %></h2>
+        </div>
+        <%= partner_data[:description].html_safe %>
+        <div class="row mtl">
+          <% partner_data[:links].each_with_index do |link, index| %>
+            <% if link[:newwindow] == 'true' %>
+              <%= link_to(link[:heading], link[:url], target: '_blank') %>
+            <% else %>
+              <%= link_to(link[:heading], link[:url]) %>
+            <% end %>
+            <% unless index == partner_data[:links].length - 1 %>
+              <br>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'shared/state_footer', state: @state, cities: @cities %>

@@ -1,0 +1,37 @@
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "cycle/jquery.cycle2.js" %>
+  <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
+  <%= javascript_include_tag "cycle/carousel_init.js" %>
+  <script>
+    $(document).ready(function() {
+      GS.track.setOmnitureData();
+    });
+  </script>
+<% end %>
+
+<%= render 'nav/topnav', hub_params: @hub_params %>
+<%= render 'shared/no_school_alert' %>
+
+<%= render 'shared/search_hero', collection_nickname: @collection_nickname,
+                            collection_id: @collection_id,
+                            state: @state,
+                            browse_links: @browse_links,
+                            sponsor: @sponsor,
+                            hero_image: @hero_image,
+                            hero_image_mobile: @hero_image_mobile %>
+
+<div class="limit-width-1200">
+  <%= render 'shared/choose_a_school', choose_school: @choose_school %>
+
+  <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
+
+  <%= render 'recent_reviews', reviews: @reviews %>
+
+  <%= render 'join_our_community' %>
+
+  <%= render 'featured_articles', articles: @articles %>
+
+  <%= render 'partner_carousel', partner_carousel: @partner_carousel %>
+</div>
+
+<%= render 'shared/state_footer', state: @state, cities: @cities %>

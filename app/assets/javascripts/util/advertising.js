@@ -1,9 +1,9 @@
-var GS = GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
 GS.ad.functionSlotDefinitionArray = [];
 GS.ad.functionAdShowArray = [];
+GS.ad.googleId = '/1002894/';
 
 //adobe audience manager code - copied and pasted
 GS.ad.AamGpt = {
@@ -81,7 +81,8 @@ $(function(){
   if (dfp_slots.length > 0 || gon.pagename == "Reviews") {
     googletag.cmd.push(function() {
       $(dfp_slots).each(function(){
-          GS.ad.slot[GS.ad.getDivId($(this))] = googletag.defineSlot( GS.ad.getSlotName($(this)), GS.ad.getDimensions($(this)), GS.ad.getDivId($(this)) ).addService(googletag.pubads());
+        var layerObj = $(this);
+        GS.ad.slot[GS.ad.getDivId(layerObj)] = googletag.defineSlot( GS.ad.getSlotName(layerObj), GS.ad.getDimensions(layerObj), GS.ad.getDivId(layerObj) ).addService(googletag.pubads());
       });
 
       while (GS.ad.functionSlotDefinitionArray.length > 0) {
@@ -104,15 +105,19 @@ $(function(){
 
 GS.ad.getDivId = function(obj){
   return obj.attr('id');
-}
+};
 
 GS.ad.getDimensions = function(obj){
-  return JSON.parse(obj.attr('data-ad-size'));
-}
+  try {
+    return JSON.parse(obj.attr('data-ad-size'));
+  } catch (e) {
+    GS.util.log('Error parsing ad dimensions for '+obj.attr('id'));
+  }
+};
 
 GS.ad.getSlotName = function(obj){
-  return '/1002894/' + obj.attr('data-dfp');
-}
+  return GS.ad.googleId + obj.attr('data-dfp');
+};
 
 GS.ad.setPageLevelTargeting = function(){
   // add targeting for adobe
@@ -126,10 +131,15 @@ GS.ad.setPageLevelTargeting = function(){
 
   // being set in localized_profile_controller - ad_setTargeting_through_gon
   // sets all targeting based on what is set in the controller
-  $.each( gon.ad_set_targeting, function( key, value ){
-    googletag.pubads().setTargeting(key, value);
-  });
-}
+  if($.isEmptyObject(gon.ad_set_targeting)) {
+    GS.util.log("gon setTargeting is empty for advertising");
+  }
+  else{
+    $.each( gon.ad_set_targeting, function( key, value ){
+      googletag.pubads().setTargeting(key, value);
+    });
+  }
+};
 
 
 GS.ad.showAd = function(divId){
@@ -140,121 +150,15 @@ GS.ad.showAd = function(divId){
   else{
     googletag.pubads().refresh([GS.ad.slot[divId]]);
   }
-}
+};
 
 GS.ad.addToAdSlotDefinitionArray = function(fn, context, params) {
   GS.ad.functionSlotDefinitionArray.push(GS.util.wrapFunction(fn, context, params));
-}
+};
 
 GS.ad.addToAdShowArray = function(fn, context, params) {
   GS.ad.functionAdShowArray.push(GS.util.wrapFunction(fn, context, params));
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// REVIEW ADS - for page injection when needed
-//
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-GS.reviewsAd = GS.reviewsAd || {}
-
-GS.reviewsAd.reviewSlotsArr = [
-  ['School_Reviews_Review1_728x90', [728, 90]],
-  ['School_Reviews_Review2_300x250', [300, 250]],
-  ['School_Reviews_Review3_728x90', [728, 90]]
-];
-GS.reviewsAd.reviewSlotsMobileArr = [
-  ['School_Reviews_Mobile_Review1_320x50', [320, 50]],
-  ['School_Reviews_Mobile_Review2_300x250', [300, 250]],
-  ['School_Reviews_Mobile_Review3_320x50', [320, 50]]
-];
-
-GS.reviewsAd.reviewSlotCount = GS.reviewsAd.reviewSlotsArr.length;
-
-// This is creating ad slots for the reviews page.  This way they can be injected on next ten click.
-//  This occurs before the setTargeting calls.
-GS.reviewsAd.reviewContent = function() {
-  if (gon.review_count > 0) {
-    var ad_count = GS.reviewsAd.getReviewAdCount(gon.review_count);
-    for (i = 0; i < ad_count; i++) {
-      desktop_ad = GS.reviewsAd.getReviewDefinedAdSlotArray(i);
-      mobile_ad = GS.reviewsAd.getReviewDefinedAdSlotArrayMobile(i);
-      GS.ad.slot[GS.reviewsAd.reviewAdSlotName(i)] = googletag.defineSlot(
-          '/1002894/' + desktop_ad[0],
-        desktop_ad[1],
-        GS.reviewsAd.reviewAdSlotName(i)
-      ).addService(googletag.pubads());
-
-      GS.ad.slot[GS.reviewsAd.reviewAdSlotNameMobile(i)] = googletag.defineSlot(
-          '/1002894/' + mobile_ad[0],
-        mobile_ad[1],
-        GS.reviewsAd.reviewAdSlotNameMobile(i)
-      ).addService(googletag.pubads());
-    }
-  }
-}
-
-
-// called by google advertising init above and also by the ajax call back in reviews.js
-GS.reviewsAd.writeDivAndFillReviews = function(startId){
-  var review_id = startId;
-  $(".js_insertAdvertisingReview").each(function( index ) {
-    // need to add div with width size
-    var reviewIdName = GS.reviewsAd.reviewAdSlotName(review_id);
-    var reviewIdNameMobile = GS.reviewsAd.reviewAdSlotNameMobile(review_id);
-    $(this).append(
-        (GS.reviewsAd.reviewDiv(reviewIdName, 'visible-lg visible-md visible-sm', GS.reviewsAd.getAdSlotWidthStr(index)))
-        + " \n "
-        + (GS.reviewsAd.reviewDiv(reviewIdNameMobile, 'visible-xs', GS.reviewsAd.getAdSlotWidthStrMobile(index)))
-    );
-
-    $(this).removeClass('js_insertAdvertisingReview');
-
-    if($("#"+reviewIdName+":visible").length !== 0){
-      GS.ad.showAd(reviewIdName);
-    }
-    if($("#"+reviewIdNameMobile+":visible").length !== 0){
-      GS.ad.showAd(reviewIdNameMobile);
-    }
-    review_id++;
-  });
-}
-
-GS.reviewsAd.getReviewDefinedAdSlotArray = function(num){
-  return GS.reviewsAd.reviewSlotsArr[num%GS.reviewsAd.reviewSlotCount];
-}
-
-GS.reviewsAd.getReviewDefinedAdSlotArrayMobile = function(num){
-  return GS.reviewsAd.reviewSlotsMobileArr[num%GS.reviewsAd.reviewSlotCount];
-}
-
-GS.reviewsAd.getReviewAdCount = function(reviewCount){
-  return Math.round(reviewCount/GS.reviewsAd.reviewSlotCount)+1;
-}
-
-GS.reviewsAd.getAdSlotWidthStr = function(index){
-  return GS.reviewsAd.reviewSlotsArr[index][1][0]+'px';
-}
-
-GS.reviewsAd.getAdSlotWidthStrMobile = function(index){
-  return GS.reviewsAd.reviewSlotsArr[index][1][0]+'px';
-}
-
-GS.reviewsAd.reviewDiv = function(id, visible_sizes_str, width) {
-  return '<div class="gs_ad_slot_reviews ma '+visible_sizes_str+'" id="'+ id +'" style="width:'+width+'"></div>';
-}
-
-GS.reviewsAd.reviewAdSlotName = function(num){
-  return "adReviewPagination_"+num;
-}
-
-GS.reviewsAd.reviewAdSlotNameMobile = function(num){
-  return "adReviewPaginationMobile_"+num;
-}
-
-
+};
 
 ///// examples
 // desktop

@@ -63,9 +63,9 @@ LocalizedProfiles::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production
-  # config.cache_store = :mem_cache_store
   config.cache_store = :memory_store, { size: 128.megabytes }
-
+   # Shomi Arora -Dont Cache so QA can test quickly
+  # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
@@ -80,6 +80,8 @@ LocalizedProfiles::Application.configure do
     'codemirror/themes/night.css'
   ]
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  config.assets.precompile += %w[ *.png *.jpeg *.jpg *.gif ]
+  config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -99,4 +101,8 @@ LocalizedProfiles::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   config.session_store :cookie_store, key: '_gsweb_session', :domain => :all, :tld_length => 2, :httponly => false
+
+  config.hub_mapping_cache_time = 60 * 24
+  config.hub_config_cache_time = 10
+  config.hub_recent_reviews_cache_time = 10
 end

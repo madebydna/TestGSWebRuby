@@ -1,4 +1,3 @@
-<% cities ||= [] %>
 <% state ||= nil %>
 
 <%= render 'shared/school_contact_info_footer' %>
@@ -7,13 +6,12 @@
 
 <div class="row invert-colors">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
-    <div class="limit_width_1200 open-sans">
+    <div class="limit-width-1200 open-sans">
 
       <%= render 'shared/about_gs_footer' %>
 
-      <% unless cities.blank? || state.blank? %>
-        <%= render 'shared/popular_cities_in_state', state: 
-        { short: state, long: States.state_name(state) }, cities: cities %>
+      <% unless state.blank? %>
+        <%= render 'shared/popular_cities_in_state', state: state %>
       <% else %>
         <%= render 'shared/popular_cities_in_country' %>
       <% end %>

@@ -17,8 +17,6 @@
 }
 
 #navigation2 nav{
-
-//  border-top: #e5a421 3px solid;
   background-color: #ffb725;
   text-align: center;
   padding-top: 8px;
@@ -32,6 +30,7 @@
   list-style-type: none;
   display: inline;
   a {
+    font: 18px 'opensans-regular',Arial,Helvetica,sans-serif;
     color: #ffe2a8;
     text-decoration: none;
     padding: 9px 10px 10px 10px;
@@ -50,6 +49,10 @@
 #mobile-header {
   display: none;
   float: left;
+}
+
+.secondary-navbar {
+  background-color: $navbar-secondary-bg;
 }
 
 @media only screen and (max-width: 767px) {
@@ -81,7 +84,7 @@
     padding-top: 10px;
   }
 
-  .hide_for_mobile{
+  .hide-for-mobile{
     display: none;
   }
 
@@ -108,29 +111,23 @@
     }
   }
 }
-/* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
-//#gsGlobalNavigation.affix {
-//  position: fixed;
-//  top: 0;
-//  width: 100%;
-//  z-index: 10;
-//}
 
 @media only screen and (min-width: 1200px) {
-  .limit_width_1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
+  .limit-width-1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
 }
 
 @media only screen and (min-width: 950px) {
-  .topnav_float {
+  .topnav-float {
     float: right;
   }
 }
 @media only screen and (min-width: 650px) {
-  .header_title_width{
+  .header-title-width {
     width: 75%;
   }
 }
-.thumbnail_border{
+
+.thumbnail-border {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -139,13 +136,14 @@
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.4);
   box-shadow: 0 1px 1px rgba(0,0,0,0.4);
 }
+
 #navigation2-blank {
   border-top: #e5a421 3px solid;
   background-color: #ffb725;
   padding-left: 0px;
-
 }
-.header_bg_color {
+
+.header-bg-color {
   background-color: #F4F4F4;
 }
 

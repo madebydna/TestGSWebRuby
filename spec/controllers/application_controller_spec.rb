@@ -64,7 +64,7 @@ describe ApplicationController do
       describe 'duration is set' do
         before do
           @cookie_jar = HashWithIndifferentAccess.new
-          controller.stub(:cookies).and_return @cookie_jar
+          allow(controller).to receive(:cookies).and_return @cookie_jar
         end
 
         it 'should set duration on cookie' do
@@ -113,7 +113,7 @@ describe ApplicationController do
         end
         before do
           @cookie_jar = HashWithIndifferentAccess.new
-          controller.stub(:cookies).and_return @cookie_jar
+          allow(controller).to receive(:cookies).and_return @cookie_jar
         end
 
         it 'should set duration on cookie' do
@@ -129,7 +129,7 @@ describe ApplicationController do
     before do
       @cookie_jar = HashWithIndifferentAccess.new
       subject.class::COOKIE_CONFIG[:test_cookie] = {}
-      controller.stub(:cookies).and_return @cookie_jar
+      allow(controller).to receive(:cookies).and_return @cookie_jar
     end
 
     after do
@@ -190,7 +190,7 @@ describe ApplicationController do
 
     before do
       @cookie_jar = CookieJar.new
-      controller.stub(:cookies).and_return @cookie_jar
+      allow(controller).to receive(:cookies).and_return @cookie_jar
     end
 
     it 'should read a simple value' do
@@ -212,15 +212,15 @@ describe ApplicationController do
       end
 
       it 'should delete a value from the hash if given a key' do
-        @cookie_jar[:test_cookie] = 
+        @cookie_jar[:test_cookie] =
           { test_key: 'foo', another_key: 'bar' }.to_json
         subject.send :delete_cookie, :test_cookie, :test_key
         expect(@cookie_jar[:test_cookie])
           .to eq(
-            { 
+            {
               'value' => {
                 'another_key' => 'bar'
-              }.to_json, 
+              }.to_json,
               'domain' => :all
             }
           )

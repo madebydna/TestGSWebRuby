@@ -1,7 +1,6 @@
 <% if category_placement.title.present? %>
     <% if category_placement.depth == 0 %>
         <div class="pam clearfix mbm">
-            <!--<div class="gold-bar" /></div>-->
             <% if category_placement != @page_config.root_placements_with_data.first %>
                 <hr />
             <% end %>
@@ -18,7 +17,7 @@
             <div class="clearfix tal phm pbm"><p class="mvn"><%= category_placement.category.description %></p></div>
         <% end %>
      <% elsif category_placement.depth == 1 %>
-        <div class="clearfix mbl mtm">
+        <div class="clearfix mbl mtm mlm">
             <div class="fl">
                 <h3 class="mvn"><%= category_placement.title %></h3>
             </div>

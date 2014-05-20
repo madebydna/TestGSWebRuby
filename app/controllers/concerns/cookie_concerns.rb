@@ -26,6 +26,9 @@ module CookieConcerns
     },
     deferred_action: {
       hash: true
+    },
+      OmnitureTracking: {
+      hash: true
     }
   }
 
@@ -117,10 +120,9 @@ module CookieConcerns
 
     cookie_hash = {}
     cookie_hash[:value] = value
-    cookie_hash[:domain] = config[:domain].presence || :all
+    cookie_hash[:domain] = config[:domain].presence ? config[:domain] : :all
     cookie_hash[:expires] = config[:duration].from_now if config[:duration]
 
     cookies[cookie_name] = cookie_hash
   end
-
 end

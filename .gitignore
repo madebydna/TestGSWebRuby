@@ -25,7 +25,6 @@ tmp
 coverage/
 
 # custom database-local.yml for developers
-config/database-local.yml
 config/database_local.yml
 
 # custom env_global for developers
@@ -37,3 +36,6 @@ config/env_global_local.yml
 
 # custom rspec runner to get rubymine to play nice with zeus
 rspec_runner.rb
+
+db/structure.sql
+

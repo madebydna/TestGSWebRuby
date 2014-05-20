@@ -1,5 +1,16 @@
 <% if !@school.reviews.nil? %>
     <% hide_reviews_overview = "" %>
+
+    <% if @show_ads %>
+        <div class="row">
+            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :desktop  %>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
+    <% end %>
+
     <%  @school.reviews.each_with_index do |review, i| %>
         <% if i > 1 %>
             <% hide_reviews_overview = " dn" %>
@@ -10,7 +21,9 @@
 
         <% overall_review_rating = review.overall %>
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">
+        <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
+        <div class="<%= layout_grid %>  ptl phl">
+        <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ptl phl">-->
             <div class="well">
                 <div class="mbl">
                     <% if overall_review_rating == 'decline' %>
@@ -35,9 +48,17 @@
             </div>
         <% end %>
     <% end %>
+    <% if @show_ads %>
+        </div>
+    </div>
+    <% end %>
 <% end %>
 <!-- need final close on div for odd totals -->
 <% if @school_reviews_global.review_filter_totals.all % 2 == 1 %>
     </div>
 <% end %>
-
+<% if @show_ads %>
+    <div class="visible-xs plm pvl mbl">
+        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :mobile  %>
+    </div>
+<% end %>

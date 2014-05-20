@@ -1,10 +1,14 @@
 FactoryGirl.define do
 
-  factory :reported_review, class: ReportedEntity do
+  factory :reported_entity, class: ReportedEntity do
     sequence(:id) { |n| n }
     association :user, factory: :user, strategy: :build
     sequence(:reported_entity_id) { |n| n }
-    reported_entity_type 'schoolReview'
+    active true
+
+    factory :reported_review do
+      reported_entity_type 'schoolReview'
+    end
   end
 
 

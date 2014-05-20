@@ -96,13 +96,13 @@ sets with null breakdowns' do
     subject { CensusDataResults.new(data_sets) }
 
     before(:each) do
-      census_data_set_1.stub(:census_data_type) do
+      allow(census_data_set_1).to receive(:census_data_type) do
         FactoryGirl.build(:census_data_type, description: 'test description')
       end
-      census_data_set_2.stub(:census_data_type) do
+      allow(census_data_set_2).to receive(:census_data_type) do
         FactoryGirl.build(:census_data_type, id: 10)
       end
-      census_data_set_3.stub(:census_data_type) do
+      allow(census_data_set_3).to receive(:census_data_type) do
         FactoryGirl.build(:census_data_type, id: 11)
       end
     end

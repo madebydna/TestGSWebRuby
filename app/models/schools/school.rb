@@ -1,4 +1,16 @@
 class School < ActiveRecord::Base
+  LEVEL_CODES = {
+    primary: 'p',
+    preschool: 'p',
+    elementary: 'e',
+    middle: 'm',
+    high: 'h',
+    public: 'public OR charter',
+    private: 'private',
+    charter: 'charter'
+  }
+
+  METADATA_COLLECTION_ID_KEY = "collection_id"
   include ActionView::Helpers
   self.table_name='school'
   include StateSharding
@@ -159,10 +171,10 @@ class School < ActiveRecord::Base
     snippet.presence
   end
 
-  def great_schools_rating 
+  def great_schools_rating
     school_metadata[:overallRating].presence
   end
-  
+
   def levels_description
     levels = process_level
     if levels.nil? || levels.include?('Ungraded')

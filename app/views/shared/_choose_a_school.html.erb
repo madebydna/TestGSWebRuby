@@ -1,0 +1,25 @@
+<% if choose_school and choose_school[:link].length > 0 and not choose_school[:heading].empty? %>
+  <div class='row mvl'>
+    <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm'>
+      <h2 class='mbm'><%= choose_school[:heading] %></h2>
+      <p class='mbl'><%= choose_school[:content].html_safe %></p>
+      <% choose_school[:link].each_with_index do |link, i| %>
+        <% if link[:newWindow] == 'true' %>
+          <%= link_to(link[:name].html_safe, link[:path], target: '_blank') %>
+        <% else %>
+          <%= link_to(link[:name].html_safe, link[:path]) %>
+        <% end %>
+        <% unless choose_school[:link].length == i + 1 %>
+          <br>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar'>
+      <div class='scale-image'>
+        <div class='mbm lg-pr-sm-pl' style="background-image: url('/assets/choose_a_school.png'); background-repeat: no-repeat; height: 306px; width: 455px;"></div>
+        <!-- load async + standardize async image loading -->
+      </div>
+    </div>
+  </div>
+<% end %>

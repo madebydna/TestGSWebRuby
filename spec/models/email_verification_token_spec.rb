@@ -36,7 +36,7 @@ describe EmailVerificationToken do
 
   describe '.parse' do
     before(:each) do
-      User.stub(:find).and_return FactoryGirl.build(:user)
+      allow(User).to receive(:find).and_return FactoryGirl.build(:user)
     end
 
     context 'with valid token' do
@@ -46,10 +46,10 @@ describe EmailVerificationToken do
       let(:token_with_user_id) { token_string + 'blah' }
 
       it 'should generate a valid token' do
-        User.stub(:find).and_return FactoryGirl.build(:user)
-        EmailVerificationToken.stub(:time_from_string) { 4.days.ago }
+        allow(User).to receive(:find).and_return FactoryGirl.build(:user)
+        allow(EmailVerificationToken).to receive(:time_from_string) { 4.days.ago }
         token = EmailVerificationToken.parse(token_with_user_id, nil)
-        token.stub(:generate).and_return token_with_user_id
+        allow(token).to receive(:generate).and_return token_with_user_id
         expect(token).to be_valid
       end
     end
