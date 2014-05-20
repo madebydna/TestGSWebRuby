@@ -47,18 +47,15 @@ class TestScoreResults
 
         test_data_type_id = result_hash['data_type_id']
         test_data_set_id = result_hash['ds_id']
-        level_code_hash = result_hash['level_code']
-        #TODO deal with level_code in the json object
-        level_code = LevelCode.new(level_code_hash['level_codes'].join(','))
+        level_code = LevelCode.new(result_hash['level_code'])
         subject = TestDataSet.lookup_subject[result_hash['subject_id']]
         grade = Grade.from_string(result_hash['grade'])
 
         #If the grade = all then get the grade from the level_code. Do not show the level if the school does not have it.
         if !grade.name.nil? && grade.name == 'All'
-          level_code_hash['levels'] = level_code_hash['levels'].select {|level| school.includes_level_code?(level['abbreviation']) }
-          level_code_hash['level_codes'] = level_code_hash['level_codes'].select {|level| school.includes_level_code?(level) }
-          if !level_code_hash['level_codes'].blank?
-            level_code = LevelCode.new(level_code_hash['level_codes'].join(','))
+          level_code.levels = level_code.levels.select {|level| school.includes_level_code?(level.abbreviation) }
+          level_code.level_codes = level_code.level_codes.select {|level| school.includes_level_code?(level) }
+          if !level_code.level_codes.blank?
             grade = Grade.from_level_code(level_code)
           end
         end

@@ -3,7 +3,7 @@ class TestDataSet < ActiveRecord::Base
   include StateSharding
   include LookupDataPreloading
 
-  attr_accessible :active, :breakdown_id, :data_type_id, :display_target, :grade, :proficiency_band_id, :school_decile_tops, :subject_id, :year
+  attr_accessible :active, :breakdown_id, :data_type_id, :display_target, :grade, :level_code, :proficiency_band_id, :school_decile_tops, :subject_id, :year
 
   has_many :test_data_school_values, class_name: 'TestDataSchoolValue', foreign_key: 'data_set_id'
   has_many :test_data_state_values, class_name: 'TestDataStateValue', foreign_key: 'data_set_id'
@@ -15,20 +15,13 @@ class TestDataSet < ActiveRecord::Base
            to: :test_data_school_value, prefix: 'school', allow_nil: true
 
   preload_all :test_data_type, :as => :test_data_type, :foreign_key => :data_type_id
+
   def display_name
     test_data_type.display_name
   end
 
   def test_data_school_value
     test_data_school_values[0] if test_data_school_values.any?
-  end
-
-  def level_code_str
-     read_attribute(:level_code)
-  end
-
-  def level_code
-    LevelCode.new(level_code_str)
   end
 
   def self.fetch_data_sets_and_values(school, breakdown_id, active)
