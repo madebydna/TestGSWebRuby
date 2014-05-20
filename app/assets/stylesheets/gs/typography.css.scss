@@ -10,15 +10,6 @@ h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font
 .black {color: $gray-base-color}
 .font-size-small {font-size: $font-size-small}
 
-.small {
-  font: normal 12px/20px Arial,Helvetica,sans-serif;
-  margin-bottom: 20px;
-}
-
-.medium-bold {
-  font: bold 13px/20px Arial,Helvetica,sans-serif;
-}
-
 .search-text {
   height: 46px;
   font: normal 14px/20px 'opensans-regular',Arial,Helvetica,sans-serif;
@@ -72,3 +63,24 @@ p, a {
 
 .link_darkgray{color:#3d3d3d}
 
+.brand-secondary {
+  color: $brand-secondary;
+}
+
+.gray-light {
+  color: $gray-dark;
+}
+
+.inverted-text {
+  color: white;
+}
+
+.jumbo-header {
+  font-size: 62px;
+}
+
+@media only screen and (min-width: 768px) {
+  .lar {
+    text-align: right;
+  }
+}

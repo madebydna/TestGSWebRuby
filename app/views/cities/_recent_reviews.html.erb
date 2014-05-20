@@ -1,5 +1,5 @@
 <% if reviews and !reviews.empty? %>
-  <div class="row mtxl">
+  <div class="row mvl">
     <div class="clearfix phm">
       <h2 class='pull-left mtn prl'>Recent Reviews</h2>
       <button class='btn btn-primary lg-fr js-button-link' data-link-value="/school/parentReview.page">Review Your School</button>
@@ -9,17 +9,17 @@
         <div class="well">
           <div class='mbm'>
             <%= render 'shared/stars', locals: { rating: review.quality } %>
-            <span class="small mlm vat" style='color: #999;'>Posted <%= time_ago_in_words(review.posted) %></span>
+            <span class="mlm vat gray-light">Posted <%= time_ago_in_words(review.posted) %></span>
           </div>
           <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
         </div>
-        <div class="bottom medium-bold mtl"><%= review.school.name %></div>
+        <div class="bottom open-sans_b mtl"><%= review.school.name %></div>
         <% unless review.school.gs_rating.nil? %>
-          <p class="bottom">GreatSchools rating: <%= review.school.gs_rating %></p>
+          <p class="bottom">GreatSchools rating: <span class="vam iconx24-ratings i-24-ratings-<%= review.school.gs_rating %>"></span></p>
         <% else %>
-          <p class="bottom">GreatSchools rating: <span class="ratingx24 ratingx24-nr"></span></p>
+          <p class="bottom">GreatSchools rating: <span class="vam iconx24-ratings i-24-ratings-nr"></span></p>
         <% end %>
-        <%= link_to "Read all #{review.count} reviews", school_reviews_url(review.school), class: 'small' %>
+        <%= link_to "Read all #{review.count} reviews", school_reviews_url(review.school) %>
       </div>
     <% end %>
   </div>

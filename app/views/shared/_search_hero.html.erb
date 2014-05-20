@@ -9,7 +9,7 @@
 
 <% content_for :stylesheet_includes do %>
   <style>
-    .image-bg-scale { height: <%= bg_height %>; }
+    .image-bg-scale { height: <%= bg_height  %>; }
   </style>
 <% end %>
 
@@ -26,28 +26,28 @@
       <div class="hub-hero-bg tal clearfix">
           <% if has_sponsor %>
             <div class='tac pvm sponsor-bar'>
-              <div class="small mbn pbn prm di" style='color: #fff;'><%= sponsor[:text] %></div>
+              <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
               <% if sponsor[:sponsor_page_visible] %>
                 <a href="<%= sponsor_path %>">
                   <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
                 </a>
-                <hr style='color: #ddd;'>
+                <hr>
               <% else %>
                   <%= image_tag(sponsor[:path], alt: 'sponsor logo') %>
-                  <hr style='color: #ddd;'>
+                  <hr>
               <% end %>
             </div>
           <% end %>
 
           <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-            <div style='overflow: auto;'>
-              <div class="search-hero-heading">
-                <h4 class='mvn pbs'>Find a School in</h4>
-                <h1 class='mbn mbl' style='margin-top: -11px;'><%= collection_nickname %></h1>
+            <div class='oa'>
+              <div class="pull-left">
+                <h4 class='mvn pbs brand-secondary'>Find a School in</h4>
+                <h1 class='mbn mbl mtn inverted-text jumbo-header'><%= collection_nickname %></h1>
               </div>
             </div>
 
-            <div class="search-type-toggle mtm clearfix" style='margin-bottom: 23px;'>
+            <div class="search-type-toggle mtm mbl clearfix">
               <div class='pull-left selected' style='margin-right: 30px;'>
                 <div class='search-hero-sprite location-icon'></div>
                 <span>By location</span>
@@ -60,8 +60,7 @@
 
             <div class="location-search">
               <% location_placeholder = defined?(state_page) ? 'Zip code, city or address' : 'Zip code or address' %>
-              <form name="findByLocationForm" class="js-findByLocationForm"
-                action="/search/search.page" method="get">
+              <form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">
                 <input type="text" name="locationSearchString"
                   id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
                   onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
@@ -70,14 +69,14 @@
                   value="<%= location_placeholder %>"/>
                 <button class="state-hub-search-button">Search</button>
               </form>
-              <a  href="/" class="pull-left mbl clear-cookies-link js-clear-local-cookies-link" style='margin-top: 36px;'>
+              <a  href="/" class="pull-left mbl clear-cookies-link js-clear-local-cookies-link mtl">
                   Not in <%= collection_nickname %>?
               </a>
             </div>
 
             <div class="name-search" style='display: none;'>
               <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name (e.g. Niles Elementary School)' %>
-              <form name='searchBySchoolNameForm' class='js-findByNameForm' action="/search/search.page" method='get'>
+              <form name='searchBySchoolNameForm' class='js-findByNameForm mbl' action="/search/search.page" method='get'>
                 <input type="hidden" name='search_type' value='1'>
                 <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'
                         name='q' placeholder="<%= name_placeholder %>"
@@ -91,7 +90,7 @@
                 <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
                 <button class="state-hub-search-button">Search</button>
               </form>
-              <a  href="/" class="pull-left mbl clear-cookies-link" style='margin-top: 36px;'>
+              <a  href="/" class="pull-left mbl clear-cookies-link mtl">
                   Not in <%= collection_nickname %>?
               </a>
             </div>
@@ -99,7 +98,7 @@
 
           <% unless defined?(state_page) || browse_links.nil? %>
             <div class="school-breakdown col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h4 class='pbs mvn' style='color: #ffb725;'>Browse Schools</h4>
+              <h4 class='pbs mvn brand-secondary'>Browse Schools</h4>
               <ul>
                 <% browse_links.each do |link| %>
                     <li>
