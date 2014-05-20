@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
                 <li>
                     <%- if nav.has_topnav? %>
-                        <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#home">
                             <%= nav.topnav_title %>  <b class="caret"></b>
                         </a>
                     <% end %>
@@ -31,7 +31,7 @@
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= nav.city.gs_capitalize_words %></span>?
+                                        <span><%= nav.city.gs_capitalize_words %></span>?
                                     <% end %>
                                 </li>
                             <% else %>
@@ -42,7 +42,7 @@
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= States.state_name(nav.state).gs_capitalize_words %></span>?
+                                        <span><%= States.state_name(nav.state).gs_capitalize_words %></span>?
                                     <% end %>
                                 </li>
                             <% end %>
