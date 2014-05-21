@@ -5,19 +5,19 @@ class SchoolRating < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'member_id'
 
-  scope :selection_filter, lambda { |show_by_group| where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
-  scope :limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.nil? }
-  scope :offset_number, lambda { |offset_start| offset(offset_start)  unless offset_start.nil? }
-  scope :published, where(:status => ['a', 'p'])
-  scope :provisional, where('length(status) > 1 AND status LIKE ?', 'p%')
-  scope :not_provisional, where('length(status) = 1')
-  scope :quality_decline, where("quality != 'decline'")
-  scope :belonging_to, lambda { |user| where(member_id: user.id).order('posted desc') }
-  scope :disabled, where(status: %w[d pd])
-  scope :unpublished, where(status: %w[u pu])
-  scope :held, where(status: %w[h ph])
-  scope :flagged, joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)")
-  scope :ever_flagged, joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id")
+  scope :selection_filter, ->(show_by_group) { where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
+  scope :limit_number, ->(count) { limit(count) unless count.nil? }
+  scope :offset_number, ->(offset_start) { offset(offset_start)  unless offset_start.nil? }
+  scope :published, -> { where(:status => ['a', 'p']) }
+  scope :provisional, -> { where('length(status) > 1 AND status LIKE ?', 'p%') }
+  scope :not_provisional, -> { where('length(status) = 1') }
+  scope :quality_decline, -> { where("quality != 'decline'") }
+  scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
+  scope :disabled, -> { where(status: %w[d pd]) }
+  scope :unpublished, -> { where(status: %w[u pu]) }
+  scope :held, -> { where(status: %w[h ph]) }
+  scope :flagged, -> { joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)") }
+  scope :ever_flagged, -> { joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id") }
 
   attr_accessor :reported_entities
   attr_accessor :count

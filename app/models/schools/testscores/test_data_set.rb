@@ -94,12 +94,12 @@ class TestDataSet < ActiveRecord::Base
   end
 
 
-  scope :with_display_target, lambda { |display_target|
+  scope :with_display_target, ->(display_target) {
     where('display_target like ?',"%#{display_target}%") }
 
-  scope :with_no_subject_breakdowns, where(subject_id: 1)
+  scope :with_no_subject_breakdowns, -> { where(subject_id: 1) }
 
-  scope :active, where(active: 1)
+  scope :active, -> { where(active: 1) }
 
   def self.ratings_for_school school
     TestDataSet.on_db(school.shard).active

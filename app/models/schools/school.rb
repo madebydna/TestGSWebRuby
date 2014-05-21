@@ -20,7 +20,7 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
-  scope :held, joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state")
+  scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   self.inheritance_column = nil
 

@@ -13,7 +13,7 @@ class TestDataSchoolValue < ActiveRecord::Base
     self.modifiedBy = arg
   end
 
-  scope :active, where(active: 1)
+  scope :active, -> { where(active: 1) }
   def self.for_school school, data_set_ids
     TestDataSchoolValue.on_db(school.shard).active.where(data_set_id: data_set_ids, school_id: school.id)
   end
