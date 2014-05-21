@@ -25,6 +25,10 @@ class HomeController < ApplicationController
     set_omniture_hier_for_home_page
   end
 
+  def set_omniture_hier_for_home_page
+    gon.omniture_hier1 = 'Home,Splash'
+  end
+
   def index_page_publications
     publications = Publication.find_by_ids 1, 23, 45
     @publications = format_publications(publications)
