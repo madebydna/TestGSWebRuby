@@ -31,18 +31,15 @@
 @import "sprites/140117-32x32_connect_with_us_buttons";
 @import "sprites/search-hero-sprites";
 @import "sprites/calendar_month";
+@import "sprites/140106-72x58_ESD_ratings"; /* city specific */
 @import "resources/bootstrap/sass/sass-bootstrap";
 @import "gs/typography";
 @import "gs/navigation";
-@import "gs/tables";
 @import "gs/spacing";
+@import "resources/tables";
 @import "resources/galleria.classic";
-@import "gs/social-buttons";
+@import "resources/bootstrap/social-buttons";
 @import "gs/city-hub";
-
-/* city specific */
-@import "sprites/140106-72x58_ESD_ratings";
-
-.bg-white { background-color: #FFFFFF;}
+@import "gs/search-hero";
 
 

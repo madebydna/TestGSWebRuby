@@ -1,24 +1,26 @@
 <div class="pvm secondary-navbar">
   <div class="row limit-width-1200">
-    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mha fn">
-      <h4 class='pull-left mtm mbn mrl inverted-text'>Find a school in <%= collection_nickname %></h4>
-      <form method='get' class='search-bar js-findByNameForm' action="/search/search.page">
-        <input value="1" name="search_type" type="hidden">
-        <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
-        <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
-          <input  type="text"
-                  name="q"
-                  value="School name (e.g. Niles Elementary School)"
-                  class="search-text mlm pa"
-                  id="js-findByNameBox"
-                  onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
-                  onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
-                  placeholder="School name (e.g. Niles Elementary School)">
-          <div class="pa">
-            <button type='submit' class='iconx24 i-24-search-lens' style='cursor: pointer; border: none;'></button>
-          </div>
-          <a class="pull-left small mll js-clear-local-cookies-link" style='color: #fff; white-space: nowrap' href="/">Not in <%= collection_nickname %>?</a>
-      </form>
-    </div>
+    <h4 class='pull-left mtn mbn mrl inverted-text'>Find a school in <%= collection_nickname %></h4>
+
+    <form method='get' class='search-bar pull-left js-findByNameForm' action="/search/search.page">
+      <input value="1" name="search_type" type="hidden">
+      <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
+      <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
+      <div style='width: 325px;'>
+        <input  type="text"
+                name="q"
+                value="School name (e.g. Niles Elementary School)"
+                class="search-text mlm pr phn pvs"
+                id="js-findByNameBox"
+                onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
+                onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
+                placeholder="School name (e.g. Niles Elementary School)"
+                style='height: 39px; width: 100%'>
+        <button type='submit' class='iconx24 i-24-search-lens' style='border: none;'></button>
+      </div>
+    </form>
+
+    <%= link_to "Not in #{collection_nickname}?", home_path, class: 'tdn js-clear-local-cookies-link inverted-text pull-left' %>
   </div>
 </div>
+

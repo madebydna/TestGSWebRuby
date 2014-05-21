@@ -13,7 +13,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% unless @events.nil? ||  @events[:events].empty? %>
-  <div class="upcoming-events fixed-top pvm">
+  <div class="bg-light-gray hide-for-mobile fixed-top pvm">
     <div class="limit-width-1200">
       <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
     </div>
@@ -21,7 +21,7 @@
 <% end %>
 
 
-<div class="limit-width-1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200 mbl">
   <div class="row">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
@@ -43,7 +43,7 @@
       <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
     <% end %>
 
-    <ul class='tac js-enrollment-tabs' style='margin-bottom: 80px'>
+    <ul class='tac enrollment-tabs' style='margin-bottom: 80px'>
       <!-- TODO: should we check hub params city or just the city url?  5/19/14 -->
       <% if params[:city] %>
         <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
@@ -67,4 +67,6 @@
   </div>
 </div>
 
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>

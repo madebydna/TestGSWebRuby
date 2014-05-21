@@ -1,15 +1,15 @@
 <% unless content_modules.nil? %>
-  <div class='js-content-modules clearfix'>
+  <div class='js-content-modules header-bg-color clearfix'>
     <% content_modules.each do |content_module| %>
-    <div class="limit-width-1200">
+    <div class="limit-width-1200 phm">
       <div class="col-xs-12 fn">
         <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
         <p><%= content_module[:description].html_safe %></p>
         <% unless content_module[:view_more].nil? %>
-          <div class='js-module-expand'><%= content_module[:view_more].html_safe %></div>
+          <div class='js-module-expand oh'><%= content_module[:view_more].html_safe %></div>
           <span class="view-more">View More »</span>
         <% end %>
-        <hr style='background: #fff; border: none; height: 1px; width: 100%; margin-top: 20px'>
+        <hr class='bg-white mtl' style='border: none; height: 1px; width: 100%;'>
       </div>
     </div>
     <% end %>

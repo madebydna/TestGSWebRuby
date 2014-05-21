@@ -26,9 +26,11 @@
 <div class="limit-width-1200">
   <%= render 'featured_articles', articles: @articles, state: @state %>
   <% if @partners.nil? %>
-    <div class="clearfix" style='margin-bottom: 60px;'></div>
+    <div class="clearfix" style='margin-bottom: 40px;'></div>
   <% end %>
   <%= render 'partners', partners: @partners %>
 </div>
 
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>
