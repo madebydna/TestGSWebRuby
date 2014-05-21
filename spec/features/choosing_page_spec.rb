@@ -28,7 +28,7 @@ describe 'Choosing Page' do
 
   context 'on a state choosing page' do
     before(:each) do
-      FactoryGirl.create(:hub_city_mapping, collection_id: 6, city: nil, state: 'indiana')
+      FactoryGirl.create(:hub_city_mapping, collection_id: 6, city: nil, state: 'in')
       FactoryGirl.create(:choosing_page_links_configs, collection_id: 6)
       FactoryGirl.create(:important_events_collection_config, collection_id: 6)
     end

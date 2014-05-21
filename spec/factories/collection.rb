@@ -69,7 +69,7 @@ FactoryGirl.define do
     sequence(:id) { |n| n }
     collection_id 6
     city nil
-    state 'indiana'
+    state 'in'
     active 1
   end
 end
