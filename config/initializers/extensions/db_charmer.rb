@@ -3,7 +3,7 @@ module DbCharmer
     module MultiDbProxy
       # Simple proxy class that switches connections and then proxies all the calls
       # This class is used to implement chained on_db calls
-      class OnDbProxy < ActiveSupport::BasicObject
+      class OnDbProxy < DbCharmer::EmptyObject
 
         def initialize(proxy_target, slave)
           @proxy_target = proxy_target
