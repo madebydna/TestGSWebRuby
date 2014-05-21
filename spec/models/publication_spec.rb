@@ -4,7 +4,7 @@ describe Publication do
 
   describe '.find_by_ids' do
     subject(:publication) { FactoryGirl.build(:publication) }
-    before { Publication.stub(:find).and_return(publication) }
+    before { allow(Publication).to receive(:find).and_return(publication) }
     it 'should return a hash' do
       expect(Publication.find_by_ids(1)).to be_an_instance_of Hash
     end

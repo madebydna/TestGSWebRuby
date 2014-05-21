@@ -12,8 +12,8 @@ describe HomeController do
       }
     end
     before do
-      Publication.stub(:find_by_ids).and_return(publications)
-      controller.stub(:format_publications)
+      allow(Publication).to receive(:find_by_ids).and_return(publications)
+      allow(controller).to receive(:format_publications)
     end
     it 'should search for publications by id' do
       expect(Publication).to receive(:find_by_ids).with(1, 23, 45)
@@ -38,7 +38,7 @@ describe HomeController do
     end
 
     before do
-      Publication.any_instance.stub(:create_attributes_for)
+      allow_any_instance_of(Publication).to receive(:create_attributes_for)
     end
     it 'should call create_attributes_for each publication' do
       expect(publication1).to receive(:create_attributes_for).exactly(1).times
