@@ -63,7 +63,8 @@ def clean_models(db, *models)
 
   models.each do |model|
     if db
-      model.on_db(db).destroy_all
+      model.connection.execute("TRUNCATE #{model.table_name}")
+      #model.on_db(db).destroy_all
     else
       model.destroy_all
     end
