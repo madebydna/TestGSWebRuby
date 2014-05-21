@@ -67,7 +67,7 @@ describe LocalizedProfileController do
     end
 
     it 'should set the list of reviews' do
-      reviews = [ mock_model(SchoolRating) ]
+      reviews = [ instance_double(SchoolRating) ]
       expect(school).to receive(:reviews_filter).and_return(reviews)
       get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews]).to eq(reviews)

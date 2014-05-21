@@ -46,7 +46,7 @@ describe SigninController do
       end
 
       context 'successful login' do
-        let(:user) { mock_model(User) }
+        let(:user) { instance_double(User) }
 
         before do
           expect(controller).to receive(:authenticate).and_return([user, nil])
@@ -87,7 +87,7 @@ describe SigninController do
       end
 
       context 'successful registration' do
-        let(:user) { mock_model(User) }
+        let(:user) { instance_double(User) }
         before do
           expect(controller).to receive(:register).and_return([user, nil])
         end
@@ -133,7 +133,7 @@ describe SigninController do
   end
 
   describe '#authenticate' do
-    let(:user) { mock_model(User) }
+    let(:user) { instance_double(User) }
 
     it 'should return an existing user if one exists and it matches given password' do
       expect(User).to receive(:with_email).and_return(user)
