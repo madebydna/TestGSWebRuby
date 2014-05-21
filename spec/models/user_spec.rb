@@ -19,7 +19,7 @@ describe User do
 
     it 'allows valid password to be saved' do
       user.password = 'password'
-      expect{user.save!}.to be_truthy
+      expect(user.save).to be_truthy
     end
 
     it 'throws validation error if password too short' do
