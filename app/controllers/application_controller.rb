@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
     url.sub! /\.page\/(\?|$)/, '.page\1'
     url
   end
+  ApplicationController.send :public, :url_for
 
   def disconnect_connection_pools
     return unless @school.present? && request.env['rack_after_reply.callbacks']
