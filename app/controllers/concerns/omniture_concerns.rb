@@ -35,6 +35,10 @@ module OmnitureConcerns
     gon.omniture_hier1 = 'School,SchoolProfileSuite'
   end
 
+  def set_omniture_hier_for_home_page
+    gon.omniture_hier1 = 'Home,Splash'
+  end
+
   def set_omniture_data_for_user_request
     user_login_status = logged_in? ? 'Logged in' : 'Not logged in'
     request_url = request.original_url[0, request.original_url.index('?').nil? ? request.original_url.length : request.original_url.index('?')]

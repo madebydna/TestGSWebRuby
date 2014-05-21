@@ -10,6 +10,19 @@ class HomeController < ApplicationController
 
     @article_1 = "/assets/article_img.jpg"
     @parent_img = "/assets/article_img.jpg"
+
+    set_omniture_pagename
+
+  end
+
+  def set_omniture_pagename
+    gon.omniture_pagename = 'GS:Home'
+    set_omniture_data(gon.omniture_pagename)
+  end
+
+  def set_omniture_data(page_name)
+    set_omniture_data_for_user_request
+    set_omniture_hier_for_home_page
   end
 
   def index_page_publications
