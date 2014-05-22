@@ -9,6 +9,7 @@
     <% id_counter = "" %>
 <% end %>
 
+<% slot = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
 <% width = @ad_definition.get_width(page, slot, view) %>
 <% height = @ad_definition.get_height(page, slot, view) %>
 <% insert_mobile = '' %>
