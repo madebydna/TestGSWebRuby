@@ -221,5 +221,4 @@ class ApplicationController < ActionController::Base
     gon.omniture_sprops['locale'] = locale
     gon.omniture_channel = @state[:short].try(:upcase)
   end
->>>>>>> master
 end
