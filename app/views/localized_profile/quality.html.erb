@@ -7,6 +7,12 @@
     <% root_placements = @page_config.root_placements_with_data %>
     <% if root_placements.empty? %>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <% if @show_ads %>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
             <div class="mvl well">
                 <h3>Thank you for looking into the quality of this school.</h3>
                 <p>However, we do not have detailed quality information for this school at this time. We strive to acquire additional school data whenever available.</p>
@@ -17,7 +23,7 @@
         <%= render 'category_placement_nav' %>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" role="main">
-        <% if @school.show_ads %>
+        <% if @show_ads %>
             <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
             <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
         <% end %>
