@@ -1,26 +1,30 @@
-<div class="pvm secondary-navbar">
-  <div class="row limit-width-1200">
-    <h4 class='pull-left mtn mbn mrl inverted-text'>Find a school in <%= collection_nickname %></h4>
+<div class="pvm bg-dark-blue">
+  <div class="row ma limit-width-1200">
+    <h4 class='col-sm-4 col-md-4 col-lg-4 mtn mbn inverted-text tar prl hidden-xs'>Find a school in <%= collection_nickname %></h4>
 
-    <form method='get' class='search-bar pull-left js-findByNameForm' action="/search/search.page">
-      <input value="1" name="search_type" type="hidden">
-      <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
-      <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
-      <div style='width: 325px;'>
+    <div class='col-sm-4 col-md-4 col-lg-4 pr'>
+      <form method='get' class='js-findByNameForm' action="/search/search.page">
+        <input value="1" name="search_type" type="hidden">
+        <input value="<%= state[:short] %>" id="js-state" name="state" type="hidden">
+        <input value="<%= collection_id %>" id="js-collectionId" name="collectionId" type="hidden">
+
+        <!-- Todo: make a class -->
         <input  type="text"
                 name="q"
                 value="School name (e.g. Niles Elementary School)"
-                class="search-text mlm pr phn pvs"
+                class="zir-1 pa search-text full-width"
                 id="js-findByNameBox"
                 onfocus="GS.textSwitch(this, '', 'School name (e.g. Niles Elementary School)');"
                 onblur="GS.textSwitch(this, 'School name (e.g. Niles Elementary School)', '');"
                 placeholder="School name (e.g. Niles Elementary School)"
-                style='height: 39px; width: 100%'>
-        <button type='submit' class='iconx24 i-24-search-lens' style='border: none;'></button>
-      </div>
-    </form>
+                style='top: 0; left: 0;'>
 
-    <%= link_to "Not in #{collection_nickname}?", home_path, class: 'tdn js-clear-local-cookies-link inverted-text pull-left' %>
+        <div class='pas pa bg-white' style='z-index: 2; top: 3px; right: 0;'>
+          <button type='submit' class='iconx24 i-24-search-lens' style='border: none;'></button>
+        </div>
+      </form>
+    </div>
+
+    <%= link_to "Not in #{collection_nickname}?", home_path, class: 'tdn js-clear-local-cookies-link inverted-text col-sm-4 col-md-4 col-lg-4 tal pll hidden-xs' %>
   </div>
 </div>
-

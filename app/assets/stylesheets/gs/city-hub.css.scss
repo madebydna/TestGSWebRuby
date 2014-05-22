@@ -25,18 +25,6 @@
   border-radius: 4px;
 }
 
-// Centered Nav Bar Search
-.search-bar {
-  div {
-    right: 108px;
-    top: 8px;
-  }
-
-  input {
-    width: 325px;
-  }
-}
-
 .expandable {
   display: none;
 }
@@ -67,20 +55,6 @@ hr.brand-bar {
     clear: left;
     margin-left: 5px;
     margin-bottom: 10px;
-  }
-
-  .search-bar {
-    width: 51%;
-    input {
-      width: 100%;
-    }
-
-    a {
-      display: none;
-    }
-    div {
-      right: 0;
-    }
   }
 
   .community-partner-row {

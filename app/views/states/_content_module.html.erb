@@ -1,6 +1,6 @@
 <% unless content_modules.nil? %>
   <div class='js-content-modules header-bg-color clearfix'>
-    <% content_modules.each do |content_module| %>
+    <% content_modules.each_with_index do |content_module, i| %>
     <div class="limit-width-1200 phm">
       <div class="col-xs-12 fn">
         <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
@@ -9,7 +9,12 @@
           <div class='js-module-expand oh'><%= content_module[:view_more].html_safe %></div>
           <span class="view-more">View More »</span>
         <% end %>
-        <hr class='bg-white mtl' style='border: none; height: 1px; width: 100%;'>
+
+
+        <% if i == content_modules.length - 1 %>
+        <% else %>
+          <hr class='bg-white mtl' style='border: none; height: 1px; width: 100%;'>
+        <% end %>
       </div>
     </div>
     <% end %>

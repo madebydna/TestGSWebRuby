@@ -5,7 +5,7 @@
       <h2 class="mtn">Featured Articles</h2>
       <% articles.each do |article| %>
         <div class='row'>
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: '') %>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'pull-left') %>
           <h4 class="mtn mbn pull-left">
             <% if article[:newwindow] %>
               <%= link_to article[:heading], article[:articlepath], target: '_blank' %>

@@ -46,21 +46,11 @@
   }
 }
 
-#mobile-header {
-  display: none;
-  float: left;
-}
-
-.secondary-navbar {
-  background-color: $navbar-secondary-bg;
+.bg-dark-blue {
+  background-color: #005878;
 }
 
 @media only screen and (max-width: 767px) {
-
-  #mobile-header {
-    display: block;
-  }
-
   #navigation {
     display: none;
   }
@@ -83,17 +73,8 @@
   .margin-top-mobile {
     padding-top: 10px;
   }
-
-  .hide-for-mobile{
-    display: none;
-  }
-
 }
 @media only screen and (min-width: 767px) {
-
-  #mobile-header {
-    display: none;
-  }
   .sub-navigation { display: none;}
 
   #navigation {
@@ -107,12 +88,10 @@
       list-style-type: none;
       display: inline;
       margin-left: 20px;
-      font-size:1.125em;
+      font-size: 1.125em;
     }
   }
 }
-
-
 
 .thumbnail-border {
   -moz-border-radius: 4px;
