@@ -3,7 +3,7 @@ if(gon.pagename == 'signin/new'){
     $(function () {
         var fragment_id = location.hash.substr(1);
         if (fragment_id == "login" || fragment_id == "join") {
-            if ($('js-' + fragment_id + '-tab').hasClass('active')) {
+            if ($('.js-' + fragment_id + '-tab').hasClass('active')) {
                 return
             } else {
                 $('.js-login-tab').button('toggle');
