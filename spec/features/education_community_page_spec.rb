@@ -16,7 +16,7 @@ describe 'Education Comunity Page' do
     it 'exists' do
       expect(page).to have_content 'Find a school in Detroit'
       expect(page).to have_content 'Not in Detroit?'
-      expect(page).to have_css '.search-bar'
+      expect(page).to have_css '#js-findByNameBox'
     end
   end
 

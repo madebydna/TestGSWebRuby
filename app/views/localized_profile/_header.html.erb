@@ -23,12 +23,16 @@
 
             <div class="fl header-title-width" >
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm"><h1 class="mtn pts"><%= @school.name %></h1></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm">
+                        <%= link_to school_url(@school) do %>
+                            <h1 class="mtn pts"><%= @school.name %></h1>
+                        <% end %>
+                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                         <% if @school.gs_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
                                 <div class="fl prl open-sans rating-header-h24">
-                                    <span class="mrs link_darkgray">GreatSchools rating:</span>
+                                    <span class="mrs link-darkgray">GreatSchools rating:</span>
                                     <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
 
                                 </div>
@@ -37,7 +41,7 @@
                         <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
                             <%= link_to school_reviews_url(@school) do %>
                                 <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link_darkgray">Community rating:</span>
+                                    <span class="mrs link-darkgray">Community rating:</span>
                                     <span class="mt2 vam">
                                         <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
                                     </span>
@@ -47,7 +51,7 @@
                         <% if @school.local_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
                                 <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link_darkgray">Excellent Schools Detroit rating:</span>
+                                    <span class="mrs link-darkgray">Excellent Schools Detroit rating:</span>
                                     <span class="open-sans_sb">
                                         <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
                                     </span>
@@ -57,7 +61,7 @@
                         <% if @school.state_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
                                 <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link_darkgray">State rating:</span>
+                                    <span class="mrs link-darkgray">State rating:</span>
                                     <span class="open-sans_sb"><%= @school.state_rating %></span>
                                 </div>
                             <% end %>
@@ -73,7 +77,7 @@
                             <% end %>
                             <%= link_to school_quality_url(@school, anchor:"Rating_15") do %>
                                 <div class="fl prl open-sans pt2 h24">
-                                    <span class="mrs link_darkgray">Preschool rating:</span>
+                                    <span class="mrs link-darkgray">Preschool rating:</span>
                                     <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
                                 </div>
                             <% end %>

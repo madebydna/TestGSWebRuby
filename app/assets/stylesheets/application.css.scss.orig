@@ -42,7 +42,9 @@
 <<<<<<< HEAD
 @import "gs/social-buttons";
 @import "gs/home_prototype";
+=======
 @import "resources/bootstrap/social-buttons";
+>>>>>>> master
 @import "gs/city-hub";
 @import "gs/search-hero";
 

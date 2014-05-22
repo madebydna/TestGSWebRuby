@@ -4,7 +4,6 @@
       GS.viewMoreCollapseInit();
       GS.track.setOmnitureData();
     });
-
   </script>
 <% end %>
 
@@ -23,12 +22,11 @@
 
 <%= render 'content_module', content_modules: @content_modules %>
 
-<div class="limit-width-1200">
+<div class="limit-width-1200 mvl">
   <%= render 'featured_articles', articles: @articles, state: @state %>
-  <% if @partners.nil? %>
-    <div class="clearfix" style='margin-bottom: 60px;'></div>
-  <% end %>
   <%= render 'partners', partners: @partners %>
 </div>
 
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>

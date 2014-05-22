@@ -3,7 +3,7 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
     <% if data && data["best_known_for"] %>
         <div class="row ptm phm">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac"><span class="best_known_for open-sans_i">"<%= data["best_known_for"].first %>"</span></div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac"><span class="best-known-for open-sans_i">"<%= data["best_known_for"].first %>"</span></div>
         </div>
     <% end %>
 <% end %>

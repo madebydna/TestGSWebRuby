@@ -16,7 +16,6 @@ class CitiesController < ApplicationController
     else
       @collection_id = mapping.collection_id
       @zillow_data = ZillowRegionId.data_for(@city, @state)
-      gon.pagename = "city home"
 
       collection_configs = configs
       @browse_links = CollectionConfig.browse_links(collection_configs)
@@ -36,7 +35,7 @@ class CitiesController < ApplicationController
       @hero_image = "/assets/hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "/assets/hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
-      set_omniutre_data
+      set_omniutre_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     end
   end
 
@@ -105,7 +104,6 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      set_meta_tags title: "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @step3_links = CollectionConfig.choosing_page_links(configs)
@@ -133,7 +131,6 @@ class CitiesController < ApplicationController
       @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
       @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
 
-      set_meta_tags title: "#{@city.titleize} Schools Enrollment Information"
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Enrollment Information' => nil
@@ -178,15 +175,5 @@ class CitiesController < ApplicationController
     def parse_partners(partners)
       partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
       partners
-    end
-
-    def set_omniutre_data
-      set_omniture_data_for_user_request
-      gon.pagename ='GS:City:Home'
-      gon.omniture_pagename ='GS:City:Home'
-      gon.omniture_hier1 = 'Home,CityHome'
-      gon.omniture_sprops['localPageName'] = gon.omniture_pagename
-      gon.omniture_sprops['locale'] = @city.titleize
-      gon.omniture_channel = @state[:short].try(:upcase)
     end
 end

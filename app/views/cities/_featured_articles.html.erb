@@ -1,31 +1,28 @@
+<!-- TODO: fix this guy -->
 <div class="row mvl">
   <% unless articles.nil? %>
-    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mtl mbl pull-left mlm" style='margin-right: 30px;'>
+    <div class="col-xs-12 col-md-7 mtl mbl pam">
       <h2 class="mtn">Featured Articles</h2>
       <% articles.each do |article| %>
-        <div class="js-featured-article" style='clear: left;'>
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln pull-left') %>
-          <div class="medium-bold mrl" style='margin-left: 120px;'>
-            <h4 class="js-hubsFeaturedArticles mtn mbn">
-              <% if article[:newwindow] %>
-                <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-              <% else %>
-                  <%= link_to article[:heading], article[:articlepath] %>
-              <% end %>
-            </h4>
-            <p><%= article[:content] %></p>
-          </div>
+        <div class='row'>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'pull-left') %>
+          <h4 class="mtn mbn pull-left">
+            <% if article[:newwindow] %>
+              <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+            <% else %>
+                <%= link_to article[:heading], article[:articlepath] %>
+            <% end %>
+          </h4>
+          <p class='pull-left mobile-clearfix'><%= article[:content] %></p>
         </div>
       <% end %>
     </div>
-    <% else %>
-      <h3 class="mbm mtm">No Data Found - cities/_featured_articles.html.erb</h3>
-    <% end %>
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mtl pull-right" style='margin-right: -10px;'>
+  <% else %>
+    <h3 class="mbm mtm">No Data Found - cities/_featured_articles.html.erb</h3>
+  <% end %>
+
+  <div class="col-xs-12 col-md-5 mtl pam">
     <h2 class="mtn">Nearby Homes for Sale</h2>
     <%= render 'data_layouts/zillow_content', data: @zillow_data %>
-    <style>
-    .ma { margin-right: 0; margin-left: 0; }
-    </style>
   </div>
 </div>

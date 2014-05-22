@@ -9,18 +9,16 @@
     <div class='row mtl mhm'>
       <div class="clearfix mtl">
         <div class="pull-left">
-          <h2 class="mtn"><%= partner_carousel[:heading] %></h2>
+          <h2 class='mtn'><%= partner_carousel[:heading] %></h2>
         </div>
         <div class="lg-pr-sm-pl">
-          <a href="education-community" style='font-size: 14px;'>
-            <%= "See the entire education community &#187".html_safe %>
-          </a>
+          <%= link_to "See the entire education community &#187".html_safe, 'education-community' %>
         </div>
       </div>
       <div class='tac mvl'>
         <div class="pull-left mrl i-32-arrow-positioned">
           <a href="#" id="prev">
-            <span class="iconx32g i-32-carousel-left" style=''></span>
+            <span class="iconx32g i-32-carousel-left"></span>
           </a>
         </div>
 

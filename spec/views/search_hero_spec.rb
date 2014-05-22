@@ -40,9 +40,6 @@ describe 'shared/_search_hero.html.erb' do
 
       render
     end
-    it 'does not render browse links' do
-      expect(rendered).to_not have_selector('.browse-school-link')
-    end
 
     it 'does not add the collection_id to a name search' do
       expect(rendered).to_not have_selector('input#js-collectionId')

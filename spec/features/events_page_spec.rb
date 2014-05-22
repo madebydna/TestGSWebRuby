@@ -24,12 +24,12 @@ describe 'Events Page' do
     it 'exists' do
       expect(page).to have_content 'Find a school in Detroit'
       expect(page).to have_content 'Not in Detroit?'
-      expect(page).to have_css('.search-bar')
+      expect(page).to have_css '#js-findByNameBox'
     end
   end
 
   it 'shows all upcoming events' do
-    expect(page).to have_css('.iconx48', count: 3)
-    expect(page).to have_link('Find out more', count: 3)
+    expect(page).to have_css '.iconx48', count: 3
+    expect(page).to have_link 'Find out more', count: 3
   end
 end

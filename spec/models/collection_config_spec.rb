@@ -372,7 +372,7 @@ describe CollectionConfig do
     it 'sets sponsor data' do
       expect(result[:data]).to_not be_nil
       expect(result[:data]).to be_an_instance_of(Array)
-      expect(result[:data]).to have(1).partner
+      expect(result[:data].size).to eq(1)
     end
 
     it 'adds the cdn host to each image' do
@@ -388,7 +388,7 @@ describe CollectionConfig do
       it 'returns links' do
         result = CollectionConfig.choosing_page_links(configs)
         expect(result).to be_an_instance_of(Array)
-        expect(result).to have(4).links
+        expect(result.size).to eq(4)
       end
     end
 
@@ -761,7 +761,7 @@ describe CollectionConfig do
 
       it 'parses browse links' do
         expect(result).to be_an_instance_of(Array)
-        expect(result).to have(7).items
+        expect(result.size).to eq(7)
       end
     end
   end

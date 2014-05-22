@@ -2,7 +2,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% if params[:city] %>
-  <div class="upcoming-events pvm">
+  <div class="bg-light-gray hide-for-mobile pvm">
     <div class="limit-width-1200">
         <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
     </div>
@@ -49,7 +49,7 @@
   </div>
 
   <div class="row mvl">
-    <%= image_tag('hubs/choosing_step2.png') %>
+    <%= image_tag('hubs/choosing_step2.png', class: 'col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 2</h5>
@@ -134,7 +134,7 @@
   </div>
 
   <div class="row mvl">
-    <%= image_tag('hubs/choosing_step4.png') %>
+    <%= image_tag('hubs/choosing_step4.png', class: 'col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 4</h5>

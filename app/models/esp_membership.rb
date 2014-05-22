@@ -5,9 +5,9 @@ class EspMembership < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'member_id'
 
-  scope :active, where(active: 1)
+  scope :active, -> { where(active: 1) }
 
-  scope :for_school, lambda { |school| where(school_id: school.id, state: school.state) }
+  scope :for_school, ->(school) { where(school_id: school.id, state: school.state) }
 
   def approved?
     status == 'approved'

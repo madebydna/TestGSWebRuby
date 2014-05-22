@@ -43,6 +43,8 @@ $brand-primary-lighter3:       lighten($brand-primary, 80%); // #CCE6F0
 $brand-primary-lighter4:       lighten($brand-primary, 92%); // #EBF5F9
 $brand-primary-lighter5:       lighten($brand-primary, 95%); // #F5FAFC
 
+$blue-dark:                    #0D6A99;
+
 
 // Scaffolding
 // -------------------------
@@ -317,8 +319,6 @@ $navbar-default-bg:                #f8f8f8 !default;
 ///////////////////GS
 $navbar-default-color:             #CCE5ED;
 $navbar-default-bg:                #007EAA;
-
-$navbar-secondary-bg:              #005878;
 
 $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
@@ -678,7 +678,6 @@ $page-header-border-color:    $gray-lighter !default;
 // -------------------------
 
 // Hr border color
-$hr-border:                   $gray-light !default;
 $hr-border:                   $gray-light !default;
 
 // Horizontal forms & lists

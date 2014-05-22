@@ -20,13 +20,10 @@ General comments:
  * s,m,l,n = small(5px),medium(10px),large(20px),none(0px)
 
 .
-
-[Table Of Contents]
-
 */
 
-body {padding-top: 50px}
-.link_down_compensate { padding-top: 50px; margin-top: -50px;}
+body { padding-top: 50px }
+.link-down-compensate { padding-top: 50px; margin-top: -50px; }
 
 .ptn,.pvn,.pan{padding-top: 0}
 .pts,.pvs,.pas{padding-top:5px}
@@ -71,11 +68,24 @@ body {padding-top: 50px}
 .pt8 {padding-top:8px}
 .pt9 {padding-top:9px}
 
-.mha{margin-right: auto;margin-left: auto;}
+.mha { margin-right: auto; margin-left: auto; }
+
+.bottom { margin-bottom: 0; padding-bottom: 0; }
 
 .fl { float: left; }
 .fr { float: right; }
 .fn { float: none; }
+
+.lg-pr-sm-pl {
+  float: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .lg-pr-sm-pl {
+    float: left;
+    clear: left;
+  }
+}
 
 @media only screen and (min-width: 480px) {
   .lg-fr {
@@ -111,7 +121,7 @@ body {padding-top: 50px}
 .vam { vertical-align: middle; }
 .vab { vertical-align: bottom; }
 
-.wsnw { white-space:nowrap; }
+.wsnw { white-space: nowrap; }
 
 .pa { position: absolute; }
 .pf { position: fixed; }
@@ -119,21 +129,43 @@ body {padding-top: 50px}
 .ps { position: static; }
 
 /* z-index resets */
-.zir-1{position:relative;z-index:1;}
-.zir-2{position:relative;z-index:2;}
-.zir-3{position:relative;z-index:3;}
-.zir-4{position:relative;z-index:4;}
+.zir-1 { position: relative; z-index: 1; }
+.zir-2 { position: relative; z-index: 2; }
+.zir-3 { position: relative; z-index: 3; }
+.zir-4 { position: relative; z-index: 4; }
 
-.ma{margin: auto;}
+.ma { margin: auto; }
 
 .hvs { border-right: 1px #CCCCCC solid; }
 .h24 { height:24px }
 
-@media (min-width:480px){
-  .rating-header-h24 { height:24px;}
-}
-
-
 .oh { overflow: hidden; }
 .oa { overflow: auto; }
 .ov { overflow: visible; }
+
+
+.content-centered {
+  position: relative;
+  margin-top: 58px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media only screen and (max-width: 990px) {
+  .content-centered {
+    margin-top: 0;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .mobile-clearfix {
+    @include clearfix();
+  }
+}
+
+@media only screen and (min-width:480px) {
+  .rating-header-h24 { height:24px; }
+}
