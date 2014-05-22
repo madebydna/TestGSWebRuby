@@ -1,6 +1,24 @@
 if(gon.pagename == 'signin/new'){
 
     $(function () {
+        var fragment_id = location.hash.substr(1);
+        if (fragment_id == "login" || fragment_id == "join") {
+            if ($('js-' + fragment_id + '-tab').hasClass('active')) {
+                return
+            } else {
+                $('.js-login-tab').button('toggle');
+                $('.js-join-tab').button('toggle');
+                $('.tab-pane').button('toggle');
+            }
+        }
+
+        $("a[data-toggle='tab']").on("shown", function (e) {
+            var hash = $(e.target).attr("href");
+            if (hash.substr(0,1) == "#") {
+                location.replace("#!" + hash.substr(1));
+            }
+        });
+
         $('#js_login_tab').on('click',function(){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
@@ -11,7 +29,7 @@ if(gon.pagename == 'signin/new'){
             sendToOmniture(omnitureObject);
         });
 
-        $('#js_signin_tab').on('click',function(){
+        $('#js_join_tab').on('click',function(){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.

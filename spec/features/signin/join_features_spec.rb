@@ -1,8 +1,30 @@
 require 'spec_helper'
 
-feature "/join page" do
+feature "Join Page" do
+  feature 'visiting the /login page' do
+    before(:each) do
+      clean_models User, SchoolRating
+      clean_models :ca, School, SchoolMetadata
+      visit join_path
+    end
+    after(:each) do
+      clean_models User, SchoolRating
+      clean_models :ca, School, SchoolMetadata
+    end
+
+    context 'when entering /gsr/login/#join into the search bar' do
+      before { visit '/gsr/login/#join' }
+      it 'should take the user to the login page' do
+        expect(page.title).to eq('Log in to GreatSchools')
+      end
+      # this feature relies on javascript which for now our capybara tests cannot use
+      # it 'should pre-select the create account tab' do
+      #   expect(page).to have_css('js-join-tab active')
+      # end
+    end
+  end
   feature 'submitting the join form with new email' do
-    before(:each) {
+    before(:each) do
       clean_models User, SchoolRating
       clean_models :ca, School, SchoolMetadata
       visit join_path
@@ -10,7 +32,7 @@ feature "/join page" do
       check 'terms_terms'
       click_button 'Register email'
       @email = ActionMailer::Base.deliveries.last
-    }
+    end
     after(:each) do
       clean_models User, SchoolRating
       clean_models :ca, School, SchoolMetadata

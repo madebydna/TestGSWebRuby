@@ -13,10 +13,10 @@
                     <div class="well">
                         <ul class="nav nav-tabs">
                             <li class="<%= 'active' if @active_tab == 'login' %> js-login-tab"><a href="#login" data-toggle="tab" id="js_login_tab">Login</a></li>
-                            <li class="<%= 'active' if @active_tab == 'join' %> js-join-tab"><a href="#join" data-toggle="tab" id="js_signin_tab">Create account</a></li>
+                            <li class="<%= 'active' if @active_tab == 'join' %> js-join-tab"><a href="#join" data-toggle="tab" id="js_join_tab">Create account</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : 'fade' %> " id="login">
+                            <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
                                 <form class="form-horizontal js-signin-form" action='<%= authenticate_user_path %>' method="post"
                                       data-parsley-namespace="data-parsley-"
                                 >
@@ -81,7 +81,7 @@
                                     </fieldset>
                                 </form>
                             </div>
-                            <div class="<%= @active_tab == 'join' ? 'active in' : 'fade' %> tab-pane" id="join">
+                            <div class="<%= @active_tab == 'join' ? 'active in' : '' %> tab-pane" id="join">
                                 <form class="js-join-form" class="form-horizontal" action='<%= authenticate_user_path %>' method="post"
                                       data-parsley-namespace="data-parsley-"
                                 >
