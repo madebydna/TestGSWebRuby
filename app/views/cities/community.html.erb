@@ -1,11 +1,13 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<div class="bg-light-gray hidden-xs fixed-top pvm">
-  <div class="limit-width-1200">
-    <%= render 'upcoming_events', important_events: @events, community_page: true %>
+<% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>
+  <div class="bg-light-gray hidden-xs fixed-top pvm">
+    <div class="limit-width-1200">
+        <%= render 'upcoming_events', important_events: @events, community_page: true %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="limit-width-1200 mbl">
   <div class="row">
