@@ -15,11 +15,11 @@
 
 <div class="image-bg-scale">
   <div class="img-container-mobile">
-    <div style="background-image: url('<%= hero_image_mobile %>'); height: <%= bg_height %>; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
+    <div class='hub-hero-image' style="background-image: url('<%= hero_image_mobile %>'); height: <%= bg_height %>;"></div>
   </div>
 
   <div class="img-container">
-    <div style="background-image: url('<%= hero_image %>'); height: <%= bg_height %>; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 50% 100%;"></div>
+    <div class='hub-hero-image' style="background-image: url('<%= hero_image %>'); height: <%= bg_height %>;"></div>
   </div>
   <div class="limit-width-1200">
     <div class="content-centered">
@@ -45,11 +45,11 @@
             </div>
 
             <div class="search-type-toggle mtm mbl clearfix">
-              <div class='pull-left selected' style='margin-right: 30px;'>
+              <div class='pull-left selected mrl'>
                 <div class='search-hero-sprite location-icon'></div>
                 <span>By location</span>
               </div>
-              <div class='pull-left'>
+              <div class='pull-left mlm'>
                 <div class='search-hero-sprite home-icon'></div>
                 <span>By name</span>
               </div>
@@ -57,6 +57,7 @@
 
             <div class="location-search">
               <% location_placeholder = defined?(state_page) ? 'Zip code, city or address' : 'Zip code or address' %>
+
               <form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">
                 <input type="text" name="locationSearchString"
                   id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
@@ -71,8 +72,9 @@
               </a>
             </div>
 
-            <div class="name-search" style='display: none;'>
+            <div class="name-search dn">
               <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name (e.g. Niles Elementary School)' %>
+
               <form name='searchBySchoolNameForm' class='js-findByNameForm mbl' action="/search/search.page" method='get'>
                 <input type="hidden" name='search_type' value='1'>
                 <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'

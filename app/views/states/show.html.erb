@@ -22,11 +22,8 @@
 
 <%= render 'content_module', content_modules: @content_modules %>
 
-<div class="limit-width-1200">
+<div class="limit-width-1200 mvl">
   <%= render 'featured_articles', articles: @articles, state: @state %>
-  <% if @partners.nil? %>
-    <div class="clearfix" style='margin-bottom: 40px;'></div>
-  <% end %>
   <%= render 'partners', partners: @partners %>
 </div>
 

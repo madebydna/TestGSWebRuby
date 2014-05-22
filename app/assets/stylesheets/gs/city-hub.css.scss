@@ -40,6 +40,13 @@ hr.brand-bar {
   background: $brand-secondary;
 }
 
+hr.inverted-bar {
+  @extend .bg-white;
+  border: none;
+  height: 1px;
+  width: 100%;
+}
+
 @media only screen and (max-width: 990px) {
   .scale-image div {
     width: 100%;
