@@ -1,4 +1,4 @@
-states = ['mi', 'in', 'wi', 'de','ca']
+states = ['mi', 'in', 'wi', 'de','ca','nc','oh']
 states_arg=ARGV[0]
 school_ids_arg=ARGV[1]
 cache_key_arg= ARGV[2]
