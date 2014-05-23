@@ -1,9 +1,9 @@
 class Admin::DataLoadSchedulesController < ApplicationController
 
+  before_filter :get_params
+
   def index
-    sort_by = params[:sort_by] || 'live_by'
-    @list_view = params[:list_view] || nil
-    @loads = Admin::DataLoadSchedule.all.sort_by {|load| load[sort_by]}
+    @loads = filter_and_sort_data_loads
   end
 
   def new
@@ -16,15 +16,26 @@ class Admin::DataLoadSchedulesController < ApplicationController
 
   def update
     @load = Admin::DataLoadSchedule.find(params[:id])
-    update_or_create_data_load(@load,params)
+    update_or_create_data_load(@load,params[:admin_data_load_schedule])
   end
 
   def create
     @load = Admin::DataLoadSchedule.new
-    update_or_create_data_load(@load,params)
+    update_or_create_data_load(@load,params[:admin_data_load_schedule])
   end
 
-  private
+  protected
+
+  def filter_and_sort_data_loads
+    case @filter
+      when 'complete'
+        @loads = Admin::DataLoadSchedule.completed.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
+      when 'not_complete'
+        @loads = Admin::DataLoadSchedule.incomplete.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
+      else
+        @loads = Admin::DataLoadSchedule.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
+    end
+  end
 
   def update_or_create_data_load(data_load,p)
     data_load.state = p[:state]
@@ -36,8 +47,13 @@ class Admin::DataLoadSchedulesController < ApplicationController
     data_load.live_by = "#{p['live_by(1i)']}-#{p['live_by(2i)'].to_s.rjust(2, '0')}-#{p['live_by(3i)'].to_s.rjust(2, '0')}"
     data_load.updated_by = p['updated_by']
     if data_load.save
-      redirect_to '/admin/gsr/data-planning'
+      redirect_to action: 'index', sort_by: @sort_by, filter_by: @filter
     end
+  end
+
+  def get_params
+    @sort_by = params[:sort_by] || 'live_by'
+    @filter = params[:filter_by] || nil
   end
 
 end

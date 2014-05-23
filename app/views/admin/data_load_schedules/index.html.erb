@@ -3,67 +3,95 @@
   <div class="row pbl">
     <div class="container" style="padding:10px;">
       <h2>Data loading schedule</h2>
+      <p>TODO:</p>
+      <ul>
+        <li>We should still be able to see loads that should have been completed but were skipped in some not annoying way.</li>
+      </ul>
       <h5>Filters</h5>
-      <%= link_to 'Sort by state', admin_data_load_schedules_path(sort_by: 'state') %>&nbsp;&nbsp;
-      <%= link_to 'Sort by live by', admin_data_load_schedules_path(sort_by: 'live_by') %><br>
-      <%= link_to 'list view', admin_data_load_schedules_path(list_view: 'true') %>
+      <%= link_to 'Sort by state', admin_data_load_schedules_path(sort_by: 'state', filter_by: @filter) %>&nbsp;&nbsp;
+      <%= link_to 'Sort by live by', admin_data_load_schedules_path(sort_by: 'live_by', filter_by: @filter) %>&nbsp;&nbsp;
+      <%= link_to 'Complete tickets only', admin_data_load_schedules_path(sort_by: @sort_by, filter_by: 'complete') %>&nbsp;&nbsp;
+      <%= link_to 'Incomplete tickets only', admin_data_load_schedules_path(sort_by: @sort_by, filter_by: 'not_complete') %>&nbsp;&nbsp;
+
+      <% # For viewing ease, only show one month back and two in the future%>
+      <% current_month = Date::MONTHNAMES.index(Time.now.strftime("%B")) %>
+      <% months = Date::MONTHNAMES[(current_month-1)..(current_month+2)] %>
+
       <table class="table table-striped">
         <thead>
-          <tr>
-            <td>State</td>
-            <td>Description</td>
-            <td>Type</td>
-            <td>Year to load</td>
-            <td>Released</td>
-            <td>Live by</td>
-          </tr>
-        </thead>
-        <tbody>
-        <% @loads.each do |load|%>
-          <tr>
-          <td><%= load.state %></td>
-          <td><%= load.description %></td>
-          <td><%= load.load_type.titleize %></td>
-          <td><%= load.year_to_load %></td>
-          <td><%= load.released %></td>
-          <td><%= load.live_by %></td>
-          <td><%= link_to 'edit', edit_admin_data_load_schedule_path(load)%></td>
-        </tr>
-      <% end %>
-        </tbody>
-      </table>
-      <% index = Date::MONTHNAMES.index(Time.now.strftime("%B")) %>
-      <% months = Date::MONTHNAMES[(index-2)..(index+2)] %>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <td><h5>State</h5></td>
-            <% months.each do |month| %>
+        <tr>
+          <td><h5>State</h5></td>
+          <% months.each do |month| %>
               <% next if month.nil? %>
               <% [1, 15].each do |release| %>
-                <td><h5><%= "#{month} #{release}" %></h5></td>
+                  <td><h5><%= "#{month} #{release}" %></h5></td>
               <% end %>
           <% end %>
-          </tr>
+        </tr>
         </thead>
         <% @loads.each do |load| %>
-          <tr>
-          <td><%=load.state%></td>
-          <% # want to show next few releases by default %>
-          <% months.each do |month| %>
-            <% next if month.nil? %>
-            <% [1, 15].each do |release| %>
-              <% if load.live_by_month == "#{month} #{release}" %>
-                <td><%= load.load_type.titleize  %></td>
-              <% else %>
-                <td></td>
+            <% next unless load.live_by and load.live_by.year <= Time.now.year %>
+            <% next unless months.include? load.live_by_month.gsub(/ \w+/,'') %>
+            <tr>
+              <td>
+                <% if load.state =~ /all/i %>
+                    <%= load.state %>
+                <% else %>
+                    <%= load.state %>
+                <% end %>
+              </td>
+              <% months.each do |month| %>
+                  <% next if month.nil? %>
+                  <% [1, 15].each do |release| %>
+                      <% if load.live_by_month == "#{month} #{release}" %>
+                          <td>
+                            <% if load.state =~ /all/i %>
+                                <%= load.description + ' ' + load.load_type %>
+                            <% else %>
+                                <%= load.load_type %>
+                            <% end %>
+                            <% if load.live_by.year != Time.now.year %>
+                                <%= '(' + load.live_by.year.to_s + ')' %>
+                            <% end %>
+                          </td>
+                      <% else %>
+                          <td></td>
+                      <% end %>
+                  <% end %>
               <% end %>
-            <% end %>
-          <% end %>
         <% end %>
         </tr>
       </table>
       <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <td>State</td>
+          <td>Description</td>
+          <td>Type</td>
+          <td>Year on site</td>
+          <td>Year to load</td>
+          <td>Released</td>
+          <td>Live by</td>
+          <td>Complete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% @loads.each do |load|%>
+            <tr>
+              <td><%= load.state %></td>
+              <td><%= load.description %></td>
+              <td><%= load.load_type %></td>
+              <td><%= load.year_on_site %></td>
+              <td><%= load.year_to_load %></td>
+              <td><%= load.released %></td>
+              <td><%= load.live_by %></td>
+              <td><%= load.complete == 1 ? 'Yes' : 'No' %></td>
+              <td><%= link_to 'edit', edit_admin_data_load_schedule_path(load, sort_by: @sort_by, filter_by: @filter)%></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
