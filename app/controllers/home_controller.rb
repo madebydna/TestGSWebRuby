@@ -45,7 +45,8 @@ class HomeController < ApplicationController
   def ad_setTargeting_through_gon
     #if @school.show_ads
     set_targeting = {}
-    # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
+    # City, compfilter, env,State, type, template
+    # set_targeting needs to be a string to work
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['template'] = 'homepage' # use this for page name - configured_page_name
