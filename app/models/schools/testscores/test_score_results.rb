@@ -14,6 +14,8 @@ class TestScoreResults
     if results.present?
       test_scores = build_test_scores_hash(results,school)
       sort_test_scores(test_scores)
+    else
+      []
     end
   end
 
@@ -21,7 +23,7 @@ class TestScoreResults
     #Hash to hold the results
     test_scores = Hash.new
 
-    if !data_sets_and_values.blank?
+    if data_sets_and_values.present?
       data_sets_and_values.each do |result_hash|
         #TODO get the subject from the school cache.
 
