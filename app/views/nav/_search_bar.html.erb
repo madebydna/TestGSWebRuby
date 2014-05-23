@@ -1,6 +1,6 @@
 <div class="pvm bg-dark-blue">
   <div class="row ma limit-width-1200">
-    <h4 class='col-sm-4 col-md-4 col-lg-4 mtn mbn inverted-text tar prl hidden-xs'>Find a school in <%= collection_nickname %></h4>
+    <h4 class='col-sm-4 col-md-4 col-lg-4 mtn mbn inverted-text tar pt-1 prl hidden-xs'>Find a school in <%= collection_nickname %></h4>
 
     <div class='col-sm-4 col-md-4 col-lg-4 pr'>
       <form method='get' class='js-findByNameForm' action="/search/search.page">
@@ -19,12 +19,12 @@
                 placeholder="School name (e.g. Niles Elementary School)"
                 style='top: 0; left: 0;'>
 
-        <div class='pas pa bg-white' style='z-index: 2; top: 3px; right: 0;'>
+        <div class='pas pa bg-white' style='z-index: 2; top: 3px; right: 2px;'>
           <button type='submit' class='iconx24 i-24-search-lens' style='border: none;'></button>
         </div>
       </form>
     </div>
 
-    <%= link_to "Not in #{collection_nickname}?", home_path, class: 'tdn js-clear-local-cookies-link inverted-text col-sm-4 col-md-4 col-lg-4 tal pll hidden-xs' %>
+    <%= link_to "Not in #{collection_nickname}?", home_path, class: 'tdn js-clear-local-cookies-link inverted-text col-sm-4 col-md-4 col-lg-4 tal pll hidden-xs pt-1' %>
   </div>
 </div>
