@@ -71,7 +71,6 @@ $(function(){
         var reinitTimer;
         $(window).resize(function() {
             clearTimeout(reinitTimer);
-            console.log('resize')       ;
             reinitTimer = setTimeout(initImages, 100);
         });
     }
