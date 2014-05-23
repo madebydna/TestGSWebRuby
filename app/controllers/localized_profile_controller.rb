@@ -63,7 +63,8 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
-    @school_reviews_all = @school.reviews.all
+    @school_reviews_all = @school.reviews.load
+
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews_all.count();
