@@ -192,7 +192,7 @@ class User < ActiveRecord::Base
     favorite_school.save!
   end
 
-  def has_subscription?(list, school)
+  def has_subscription?(list, school = nil)
     if list == 'greatnews'
       subscriptions.any? do |subscription|
         subscription.list == list

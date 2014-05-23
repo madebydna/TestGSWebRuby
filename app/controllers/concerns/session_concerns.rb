@@ -40,7 +40,7 @@ module SessionConcerns
   end
 
   def user_profile_or_home
-    logged_in? ? '/account/' : '/index.page'
+    (logged_in? && !current_user.provisional?) ? '/account/' : home_path
   end
 
   def store_location(uri = original_url, overwrite = true)
