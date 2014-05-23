@@ -46,11 +46,10 @@ class HomeController < ApplicationController
     #if @school.show_ads
     set_targeting = {}
     # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
-    set_targeting['compfilter'] = 1 + rand(4) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    set_targeting['template'] = "homepage" # use this for page name - configured_page_name
+    set_targeting['template'] = 'homepage' # use this for page name - configured_page_name
     set_targeting['editorial'] = 'pushdownad'
-    set_targeting['State'] = read_cookie_value(:STATE3) ? read_cookie_value(:STATE3) : 'no_state'
 
     gon.ad_set_targeting = set_targeting
     #end
