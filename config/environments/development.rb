@@ -13,8 +13,6 @@ LocalizedProfiles::Application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
   # Do not eager load code on boot.
   config.eager_load = false
 
