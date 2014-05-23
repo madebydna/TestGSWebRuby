@@ -4,7 +4,7 @@
 <% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>
   <div class="bg-light-gray hidden-xs fixed-top pvm">
     <div class="limit-width-1200">
-        <%= render 'upcoming_events', important_events: @events, community_page: true %>
+        <%= render 'upcoming_events', important_events: @important_events, community_page: true %>
     </div>
   </div>
 <% end %>

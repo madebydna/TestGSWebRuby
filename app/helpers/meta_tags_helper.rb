@@ -4,11 +4,11 @@ module MetaTagsHelper
   end
 
   def cities_show_description
-    "Find top-rated #{@city.titleize} schools, read recent parent reviews, and browse private and public schools by grade level in #{@city.titleize}, #{@state[:long].titleize} (#{@state[:short]})."
+    "Find top-rated #{@city.titleize} schools, read recent parent reviews, and browse private and public schools by grade level in #{@city.titleize}, #{@state[:long].titleize} (#{@state[:short].upcase})."
   end
 
   def cities_show_keywords
-    "#{@city} Schools, #{@city} #{@state[:short]} Schools, #{@city} Public Schools, #{@city} School Ratings, Best #{@city} Schools, #{@city} #{@state[:long]} Schools, #{@city} Private Schools"
+    "#{@city} Schools, #{@city} #{@state[:short].upcase} Schools, #{@city} Public Schools, #{@city} School Ratings, Best #{@city} Schools, #{@city} #{@state[:long]} Schools, #{@city} Private Schools"
   end
 
   def cities_enrollment_title
@@ -36,7 +36,7 @@ module MetaTagsHelper
   end
 
   def cities_events_title
-    "Education Events in #{@city.titleize}, #{@state[:short]}"
+    "Education Events in #{@city.titleize}, #{@state[:short].upcase}"
   end
 
   def cities_events_description
@@ -48,7 +48,7 @@ module MetaTagsHelper
   end
 
   def cities_choosing_schools_title
-    "Choosing a school in #{@city.titleize}, #{@state[:short]}"
+    "Choosing a school in #{@city.titleize}, #{@state[:short].upcase}"
   end
 
   def cities_choosing_schools_description
@@ -73,10 +73,10 @@ module MetaTagsHelper
       "#{@state[:long].gs_capitalize_words} Public Schools",
       "#{@state[:long].gs_capitalize_words} School Ratings",
       "Best #{@state[:long].gs_capitalize_words} Schools",
-      "#{@state[:short]} Schools",
-      "#{@state[:short]} Public Schools",
-      "#{@state[:short]} School Ratings",
-      "Best #{@state[:short]} Schools",
+      "#{@state[:short].upcase} Schools",
+      "#{@state[:short].upcase} Public Schools",
+      "#{@state[:short].upcase} School Ratings",
+      "Best #{@state[:short].upcase} Schools",
       "Private Schools In #{@state[:long].gs_capitalize_words}"
     ]
   end

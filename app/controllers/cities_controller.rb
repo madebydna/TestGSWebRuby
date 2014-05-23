@@ -66,7 +66,7 @@ class CitiesController < ApplicationController
       collection_configs = configs
       set_community_tab(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @events = CollectionConfig.city_hub_important_events(collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
