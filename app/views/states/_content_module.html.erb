@@ -1,20 +1,18 @@
 <% unless content_modules.nil? %>
-  <div class='limit-width-1200 clearfix pvl'>
-    <% content_modules.each_with_index do |content_module, i| %>
-    <div class="phm">
-      <div class="col-xs-12 fn">
-        <h3 class='mtl mbm'><%= content_module[:heading] %></h3>
-        <p><%= content_module[:description].html_safe %></p>
-        <% unless content_module[:view_more].nil? %>
-          <div class='js-module-expand oh'><%= content_module[:view_more].html_safe %></div>
-          <a href='javascript:void(0)' class="dib mtm view-more">View More »</a>
-        <% end %>
+  <% content_modules.each_with_index do |content_module, i| %>
+  <div class="phm">
+    <div class="col-xs-12 fn">
+      <h3 class='mtl mbm'><%= content_module[:heading] %></h3>
+      <p><%= content_module[:description].html_safe %></p>
+      <% unless content_module[:view_more].nil? %>
+        <div class='js-module-expand oh'><%= content_module[:view_more].html_safe %></div>
+        <a href='javascript:void(0)' class="dib mtm view-more">View More »</a>
+      <% end %>
 
-        <% unless i == content_modules.length - 1 %>
-          <hr class='mvl'>
-        <% end %>
-      </div>
+      <% unless i == content_modules.length - 1 %>
+        <hr class='mvl'>
+      <% end %>
     </div>
-    <% end %>
   </div>
+  <% end %>
 <% end %>
