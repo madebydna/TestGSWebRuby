@@ -22,7 +22,7 @@ describe 'State Page' do
     end
 
     it 'has the content module' do
-      expect(page).to have_selector('.js-content-modules')
+      expect(page).to have_content 'State report cards for public schools'
     end
     it 'has the partners module' do
       expect(page).to have_selector('.js-partners')

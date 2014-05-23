@@ -158,7 +158,7 @@
     padding: 0 24px;
     font: bold 1em/2.75em Arial,Helvetica,sans-serif;
     background: #fff;
-    color: #0083b2;
+    color: $brand-primary;
     border: 0;
     box-shadow: none;
     margin: 0 5px;
@@ -169,7 +169,7 @@
   }
 
   li.active {
-    background: #0083b2;
+    background: $brand-primary;
     a { color: #fff; }
   }
 
