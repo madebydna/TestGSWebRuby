@@ -13,11 +13,11 @@ def self.create_cache(school, cache_key)
       action = "#{cache_key}_cache_for_school"
       self.send action, school
     rescue => error
-      Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
+      Rails.logger.error "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
                              "\nException : #{error.message}."
     end
   else
-    Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
+    Rails.logger.error "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
                            "\nSchool is inactive."
   end
 end
@@ -39,7 +39,7 @@ def self.active_record_to_hash(configuration_map, obj)
     elsif obj.respond_to?(key)
       rval_map[val] = obj.send(key)
     else
-      puts "ERROR: Can't find attribute or method named #{key} in #{obj}"
+      Rails.logger.error "ERROR: Can't find attribute or method named #{key} in #{obj}"
     end
   end
   rval_map
