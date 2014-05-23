@@ -24,30 +24,15 @@ class TestDataSet < ActiveRecord::Base
     test_data_school_values[0] if test_data_school_values.any?
   end
 
-  def self.fetch_data_sets_and_values(school, breakdown_id, active)
-    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as ds_id,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
-                          TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text")
+  def self.fetch_test_scores(school, breakdown_id, active)
+    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as data_set_id,TestDataStateValue.value_float as state_value_float, TestDataStateValue.value_text as state_value_text,
+                          TestDataSchoolValue.value_float as school_value_float, TestDataSchoolValue.value_text as school_value_text")
                       .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-                      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,
-                             TestDataSchoolValue: {school_id: school.id, active: active}).where("display_target like '%desktop%' ")
+                      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,active: active,
+                             TestDataSchoolValue: {school_id: school.id, active: active})
+                      .with_display_target('desktop')
                       .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
 
-  end
-
-  def self.fetch_test_scores(school)
-
-    cached_test_scores = SchoolCache.for_school('test_scores',school.id,school.state)
-
-    begin
-      results = cached_test_scores.blank? ? [] : JSON.parse(cached_test_scores.value)
-    rescue JSON::ParserError => e
-      results = []
-      Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +
-                             "Exception message: #{e.message}"
-
-    end
-
-    results
   end
 
   def self.lookup_subject

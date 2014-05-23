@@ -1,8 +1,11 @@
-states = ['mi', 'in', 'wi', 'de']
+states = ['mi', 'in', 'wi', 'de','ca']
 states_arg=ARGV[0]
 school_ids_arg=ARGV[1]
 cache_key_arg= ARGV[2]
 all_cache_keys=['ratings','test_scores']
+
+@@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
+@@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
 
 def self.create_cache(school, cache_key)
   if (school.active?)
@@ -10,41 +13,109 @@ def self.create_cache(school, cache_key)
       action = "#{cache_key}_cache_for_school"
       self.send action, school
     rescue => error
-      Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}" +
-                             "Exception message: #{error.message}"
+      Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
+                             "\nException : #{error.message}."
     end
   else
-    Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}" +
-                           "School is inactive"
+    Rails.logger.debug "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
+                           "\nSchool is inactive."
   end
 end
 
+# Uses configuration_map to map attributes/methods in obj_array to keys in a hash
+def self.map_object_array_to_hash_array(configuration_map, obj_array)
+  rval = []
+  obj_array.each do |obj|
+    rval << active_record_to_hash(configuration_map, obj)
+  end
+  rval
+end
+
+def self.active_record_to_hash(configuration_map, obj)
+  rval_map = {}
+  configuration_map.each do |key, val|
+    if obj.attributes.include?(key.to_s)
+      rval_map[val] = obj[key]
+    elsif obj.respond_to?(key)
+      rval_map[val] = obj.send(key)
+    else
+      puts "ERROR: Can't find attribute or method named #{key} in #{obj}"
+    end
+  end
+  rval_map
+end
+
+def self.test_description_for(data_type_id,state)
+  @@test_descriptions["#{data_type_id}#{state}"]
+end
+
+
 def self.ratings_cache_for_school(school)
-  results = TestDataSet.ratings_for_school(school)
+  results_obj_array = TestDataSet.ratings_for_school(school)
   school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'ratings')
 
-  if !(results.blank?)
-    cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops], :methods => [:school_value_text, :school_value_float])
-    #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
-    school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
-  elsif !(school_cache.nil?)
+  if (results_obj_array.present?)
+    config_map = {
+      :data_type_id => 'data_type_id',
+      :year => 'year',
+      :school_value_text => 'school_value_text',
+      :school_value_float => 'school_value_float'
+    }
+    results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
+    # Prune out empty data sets
+    results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
+    school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
+  elsif school_cache && school_cache.id.present?
     SchoolCache.destroy(school_cache.id)
   end
 end
 
 
 def self.test_scores_cache_for_school(school)
-  results = TestDataSet.fetch_data_sets_and_values(school, 1, 1)
-  school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'test_scores')
+  results_hash_array = []
 
-  #TODO refactor since the following lines r almost common for ratings and test scores?
-  if !(results.blank?)
-    cache_value = results.to_json(:except => [:proficiency_band_id, :school_decile_tops, :display_target ])
-    #Dont like the long initialize_by method name, but we are on rails 3. rails  4 does this more elegantly.
-    school_cache.update_attributes!(:value => cache_value, :updated => Time.now)
-  elsif !(school_cache.nil?)
-    SchoolCache.destroy(school_cache.id)
+  data_sets_and_values = TestDataSet.fetch_test_scores(school, 1, 1)
+
+  if data_sets_and_values.present?
+    config_map = {
+      :data_type_id => 'data_type_id',
+      :data_set_id => 'data_set_id',
+      :level_code => 'level_code',
+      :subject_id => 'subject_id',
+      :grade => 'grade',
+      :year => 'year',
+      :school_value_text => 'school_value_text',
+      :school_value_float => 'school_value_float',
+      :state_value_text => 'state_value_text',
+      :state_value_float => 'state_value_float',
+      :breakdown_id => 'breakdown_id',
+      :number_tested => 'number_tested'
+    }
+
+    data_sets_and_values.each do |data_sets_and_value|
+      data_type_id = data_sets_and_value.data_type_id
+      next if !@@test_data_types || @@test_data_types[data_type_id].nil? # skip this if no corresponding test data type
+
+      result = active_record_to_hash(config_map,data_sets_and_value)
+
+      result['test_label'] = @@test_data_types[data_type_id].display_name
+      test_description = test_description_for(data_type_id,school.state)
+      if !test_description.nil?
+        result['test_description'] = test_description.description
+        result['test_source'] = test_description.source
+      end
+
+      results_hash_array << result
+    end
+    school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'test_scores')
+
+    if results_hash_array.present?
+      school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
+    elsif school_cache && school_cache.id.present?
+      SchoolCache.destroy(school_cache.id)
+    end
   end
+
 end
 
 keys = all_cache_keys
