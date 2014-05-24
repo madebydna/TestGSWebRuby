@@ -178,21 +178,26 @@ class LocalizedProfileController < ApplicationController
     if @school.show_ads
       set_targeting = {}
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
-      set_targeting['City'] = @school.city
+      # @school.city.delete(' ').slice(0,10)
+      set_targeting['City'] = ad_setTargeting_Format(@school.city)
       set_targeting['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      set_targeting['county'] = @school.county # county name?
+      set_targeting['county'] = ad_setTargeting_Format(@school.county) # county name?
       set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
       set_targeting['gs_rating'] = @school.gs_rating
       set_targeting['level'] = @school.level_code # p,e,m,h
       set_targeting['school_id'] = @school.id.to_s
-      set_targeting['State'] = @school.state # abbreviation
-      set_targeting['type'] = @school.type  # private, public, charter
+      set_targeting['State'] = ad_setTargeting_Format(@school.state) # abbreviation
+      set_targeting['type'] = ad_setTargeting_Format(@school.type)  # private, public, charter
       set_targeting['zipcode'] = @school.zipcode
-      set_targeting['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+      set_targeting['district_id'] = ad_setTargeting_Format(@school.district.present? ? @school.district.FIPScounty : "")
       set_targeting['template'] = "ros" # use this for page name - configured_page_name
 
       gon.ad_set_targeting = set_targeting
     end
+  end
+
+  def ad_setTargeting_Format(str)
+    str.delete(' ').slice(0,10)
   end
 
   def is_hub_school?
