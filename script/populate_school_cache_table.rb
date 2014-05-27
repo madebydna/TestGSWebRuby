@@ -52,7 +52,7 @@ end
 
 def self.ratings_cache_for_school(school)
   results_obj_array = TestDataSet.ratings_for_school(school)
-  school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'ratings')
+  school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name: 'ratings')
 
   if (results_obj_array.present?)
     config_map = {
@@ -107,13 +107,14 @@ def self.test_scores_cache_for_school(school)
 
       results_hash_array << result
     end
-    school_cache = SchoolCache.find_or_initialize_by_school_id_and_state_and_name(school.id,school.state,'test_scores')
 
+    school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name:'test_scores')
     if results_hash_array.present?
       school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
     elsif school_cache && school_cache.id.present?
       SchoolCache.destroy(school_cache.id)
     end
+
   end
 
 end
