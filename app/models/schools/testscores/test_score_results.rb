@@ -1,77 +1,62 @@
 class TestScoreResults
 
   def fetch_test_scores(school)
-    data_sets_and_values = fetch_test_data_sets_and_values school
+    cached_test_scores = SchoolCache.for_school('test_scores',school.id,school.state)
 
-    if !data_sets_and_values.blank?
-      test_scores = build_test_scores_hash(data_sets_and_values,school)
+    begin
+      results = cached_test_scores.blank? ? [] : JSON.parse(cached_test_scores.value)
+    rescue JSON::ParserError => e
+      results = []
+      Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +
+                           "Exception message: #{e.message}"
+    end
+
+    if results.present?
+      test_scores = build_test_scores_hash(results,school)
       sort_test_scores(test_scores)
+    else
+      []
     end
   end
 
-  def fetch_test_data_sets_and_values(school)
-
-    #Get all the test data sets and values for the school
-    data_sets_and_values = TestDataSet.fetch_test_scores school
-
-    #construct a list of all the data set ids for the school.
-    all_data_set_ids = []
-    if !data_sets_and_values.blank?
-      data_sets_and_values.each { |value| all_data_set_ids << value[:test_data_set_id] }
-    end
-
-    #Get the list of valid data set ids for the school based on the  school_type.
-    valid_data_set_ids = all_data_set_ids.blank? ? [] : TestDataSetFile.get_valid_data_set_ids(all_data_set_ids, school)
-
-    if valid_data_set_ids.blank?
-      return []
-    elsif !data_sets_and_values.blank?
-      #Filter the data sets against the valid ones.
-      data_sets_and_values.select! { |result| valid_data_set_ids.include?(result[:test_data_set_id]) }
-    end
-
-    data_sets_and_values
-  end
-
-  def build_test_scores_hash(data_sets_and_values, school)
+  def build_test_scores_hash(cached_results, school)
     #Hash to hold the results
     test_scores = Hash.new
 
-    if !data_sets_and_values.blank?
-      all_test_data_type_ids = data_sets_and_values.map { |result_hash| result_hash[:test_data_type_id] }.uniq
-      test_data_types = TestDataType.by_ids(all_test_data_type_ids)
-      test_descriptions = TestDescription.by_data_type_ids(all_test_data_type_ids,school.state)
+    data_sets_and_values = cached_results['data_sets_and_values']
+    data_type_descriptions = cached_results['data_types']
 
+    if data_sets_and_values.present?
       data_sets_and_values.each do |result_hash|
-        #TODO get the subject
+        #TODO get the subject from the school cache.
 
-        test_data_type_id = result_hash[:test_data_type_id]
-        test_data_set_id = result_hash[:test_data_set_id]
-        level_code = result_hash[:level_code]
-        subject = TestDataSet.lookup_subject[result_hash[:subject_id]]
-        grade = Grade.from_string(result_hash[:grade])
+        test_data_type_id = result_hash['data_type_id']
+        test_data_set_id = result_hash['data_set_id']
+        level_code = LevelCode.new(result_hash['level_code'])
+        subject = TestDataSet.lookup_subject[result_hash['subject_id']]
+        grade = Grade.from_string(result_hash['grade'])
 
         #If the grade = all then get the grade from the level_code. Do not show the level if the school does not have it.
         if !grade.name.nil? && grade.name == 'All'
           level_code.levels = level_code.levels.select {|level| school.includes_level_code?(level.abbreviation) }
           level_code.level_codes = level_code.level_codes.select {|level| school.includes_level_code?(level) }
-          grade = Grade.from_level_code(level_code) if !level_code.level_codes.empty?
+          if !level_code.level_codes.blank?
+            grade = Grade.from_level_code(level_code)
+          end
         end
 
         grade_label = get_grade_label(grade,level_code)
-        year = result_hash[:year]
-        test_score = result_hash[:school_value_text].nil? ? (result_hash[:school_value_float]) : result_hash[:school_value_text]
+        year = result_hash['year']
+        test_score = result_hash['school_value_text'].nil? ? (result_hash['school_value_float']) : result_hash['school_value_text']
         test_score = test_score.round if(!test_score.nil? && test_score.is_a?(Float))
-        state_avg = result_hash[:state_value_text].nil? ? result_hash[:state_value_float] : result_hash[:state_value_text]
+        state_avg = result_hash['state_value_text'].nil? ? result_hash['state_value_float'] : result_hash['state_value_text']
         state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
-        breakdown_id = result_hash[:breakdown_id]
-        number_tested = result_hash[:number_tested]
-        next if !test_data_types || test_data_types[test_data_type_id].nil? # skip this if there is no corresponding test data type
-        label = test_data_types[test_data_type_id].first.display_name
-
-        if test_descriptions && !test_descriptions[test_data_type_id].nil?
-          description = test_descriptions[test_data_type_id].first.description
-          source = test_descriptions[test_data_type_id].first.source
+        breakdown_id = result_hash['breakdown_id']
+        number_tested = result_hash['number_tested']
+        if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
+          label = data_type_descriptions[test_data_type_id.to_s]['test_label']
+          description = data_type_descriptions[test_data_type_id.to_s]['test_description'] || ''
+          source = data_type_descriptions[test_data_type_id.to_s]['test_source'] || ''
         end
 
         next if subject.nil? # skip this test data if subject is nil
@@ -110,7 +95,6 @@ class TestScoreResults
           if test_scores[test_data_type_id][:grades].nil? || test_scores[test_data_type_id][:grades][grade].nil?
 
             #Grade not present.
-
             if (test_scores[test_data_type_id][:lowest_grade]).to_i > grade.value
               test_scores[test_data_type_id][:lowest_grade] = grade.value
             end

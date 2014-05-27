@@ -6,6 +6,12 @@
     <%= render 'shared/breadcrumbs', breadcrumbs: breadcrumb_hash %>
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
+            <% if @show_ads %>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
             <div class="well tac">
                 <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary js-button-link" onclick="GS.omniture.track_reviews('Reviews');">
                     Be the first to leave a review!

@@ -104,12 +104,11 @@ RailsAdmin.config do |config|
           Collection.all.map { |collection| [collection.name, collection.id] }
         end
       end
-      field :json_config, :text do
+      field :json_config, :text, :code_mirror do
         def value
           data = super
           JSON.pretty_unparse(JSON.parse(data)) if data.present?
         end
-        codemirror true
       end
     end
   end
@@ -221,12 +220,11 @@ RailsAdmin.config do |config|
           :possible_layouts
         end
       end
-      field :layout_config, :text do
+      field :layout_config, :text, :code_mirror do
         def value
           data = super
           JSON.pretty_unparse(JSON.parse(data)) if data.present?
         end
-        codemirror true
       end
       field :ancestry, :enum do
         enum do
@@ -292,12 +290,11 @@ RailsAdmin.config do |config|
     edit do
       field :state
       field :configuration_key
-      field :value, :text do
+      field :value, :text, :code_mirror do
         def value
           data = super
           JSON.pretty_unparse(JSON.parse(data)) if data.present?
         end
-        codemirror true
       end
     end
   end

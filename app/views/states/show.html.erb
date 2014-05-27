@@ -16,17 +16,11 @@
                           sponsor: @sponsor,
                           state_page: true %>
 
-<div class="limit-width-1200">
-  <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-</div>
-
-<%= render 'content_module', content_modules: @content_modules %>
-
 <div class="limit-width-1200 mvl">
+  <%= render 'shared/choose_a_school', choose_school: @choose_school %>
+  <%= render 'content_module', content_modules: @content_modules %>
   <%= render 'featured_articles', articles: @articles, state: @state %>
-  <%= render 'partners', partners: @partners %>
 </div>
 
-<div class="mtl">
-  <%= render 'shared/state_footer', state: @state, cities: @cities %>
-</div>
+<%= render 'partners', partners: @partners %>
+<%= render 'shared/state_footer', state: @state, cities: @cities %>

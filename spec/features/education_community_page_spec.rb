@@ -22,7 +22,6 @@ describe 'Education Comunity Page' do
 
   describe 'upcoming events module' do
     it 'shows 2 upcoming events' do
-      expect(page).to have_content 'Upcoming Events'
       expect(page).to have_css '.upcoming-event', count: 2
     end
   end

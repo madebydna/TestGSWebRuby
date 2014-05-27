@@ -2,7 +2,7 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
 <% end %>
 
-<div class="image-bg-scale" style="height: 500px; background: #3d3d3d;">
+<div class="proto-image-bg-scale" style="height: 500px; background: #3d3d3d;">
     <div class="img-container is-scaled"><!--not empty--></div>
 
     <div class="limit-width-1200">
@@ -13,18 +13,18 @@
                         <div class="oa">
                             <h1 class='mbn mbl text_fff'>Find a great school for your child</h1>
                         </div>
+                      <% location_placeholder = 'Zip code, city or address' %>
 
                         <div class="location-search">
-                            <form name="findByLocationForm" class="js-findByLocationForm"
-                                  action="/search/search.page" method="get">
-                                <input type="text" name="locationSearchString"
-                                       id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
-                                       onfocus="GS.textSwitch(this, '', 'Zip code or address');"
-                                       onblur="GS.textSwitch(this, 'Zip code or address', '');"
-                                       placeholder="Zip code or address"
-                                       value="Zip code or address"/>
-                                <button class="btn btn-primary btn-lg">Search</button>
-                            </form>
+                          <form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">
+                            <input type="text" name="locationSearchString"
+                                   id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
+                                   onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
+                                   onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
+                                   placeholder="<%= location_placeholder %>"
+                                   value="<%= location_placeholder %>"/>
+                            <button class="btn btn-primary btn-lg">Search</button>
+                          </form>
                         </div>
                     </div>
 

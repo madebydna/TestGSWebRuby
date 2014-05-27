@@ -43,7 +43,7 @@ describe LocalizedProfileController do
 
     it 'should convert a full state name to a state abbreviation' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:state]).to eq({ 'long' => 'california', 'short' => 'ca' })
+      expect(assigns[:state]).to eq({ long: 'california', short: 'ca' })
     end
 
   end

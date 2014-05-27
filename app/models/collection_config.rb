@@ -120,6 +120,8 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def city_hub_partners(collection_configs)
+      partners = nil
+
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
@@ -130,11 +132,11 @@ class CollectionConfig < ActiveRecord::Base
             partner[:anchoredLink].prepend('education-community/')
           end
         rescue Exception => e
-          partners = nil
           Rails.logger.error('Something went wrong while parsing city_hub_partners ' + e.to_s)
         end
-        partners
       end
+
+      partners
     end
 
     def sponsor(collection_configs, city_or_state = :city)
@@ -150,33 +152,40 @@ class CollectionConfig < ActiveRecord::Base
       rescue Exception => e
         Rails.logger.error("Something went wrong while parsing  #{city_or_state} sponsor" + e.to_s)
       end
+
       result
     end
 
     def city_hub_choose_school(collection_configs)
+      choose_school = nil
+
       begin
         raw_choose_school_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_CHOOSE_A_SCHOOL_KEY }).first.value
         choose_school = eval(raw_choose_school_str)
       rescue Exception => e
-        choose_school = nil
         Rails.logger.error('Something went wrong while parsing city_hub_choose_school ' + e.to_s)
       end
+
       choose_school
     end
 
     def city_hub_announcement(collection_configs)
+      announcement = nil
+
       begin
         raw_annoucement_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_ANNOUNCEMENT_KEY }).first.value
         announcement = eval(raw_annoucement_str)
         announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
       rescue Exception => e
-        announcement = nil
         Rails.logger.error('Something went wrong while parsing city_hub_announcement ' + e.to_s)
       end
+
       announcement
     end
 
     def city_hub_important_events(collection_configs, max_events = 2)
+      important_events = nil
+
       begin
         raw_important_events_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_IMPORTANT_EVENTS_KEY }).first.value
         important_events = eval(raw_important_events_str)
@@ -197,7 +206,6 @@ class CollectionConfig < ActiveRecord::Base
 
         important_events = nil if important_events[:events].empty?
       rescue Exception => e
-        important_events = nil
         Rails.logger.error('Something went wrong while parsing city_hub_important_events ' + e.to_s)
       end
 

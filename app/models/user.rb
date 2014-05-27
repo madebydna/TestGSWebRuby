@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   after_initialize :set_defaults
 
   attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how
-  attr_accessor :updating_password
+  attr_accessor :updating_password, :plain_text_password
 
   SECRET = 23088
   PROVISIONAL_PREFIX = 'provisional:'
@@ -91,11 +91,11 @@ class User < ActiveRecord::Base
   def password=(password)
     # TODO: expose this behavior as a different method to users of User class, such as plain_text_password=
     ActiveSupport::Deprecation.silence do
-      self[:plain_text_password] = password
+      self.plain_text_password = password
     end
   end
   def password
-    read_attribute(:plain_text_password)
+    plain_text_password
   end
 
   def encrypt_plain_text_password_after_first_save

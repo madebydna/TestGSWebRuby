@@ -29,22 +29,9 @@
   display: none;
 }
 
-.view-more {
-  cursor: pointer;
-  margin-top: 41px;
-  margin-bottom: 34px;
-}
-
 hr.brand-bar {
   height: 2px;
   background: $brand-secondary;
-}
-
-hr.inverted-bar {
-  @extend .bg-white;
-  border: none;
-  height: 1px;
-  width: 100%;
 }
 
 @media only screen and (max-width: 990px) {

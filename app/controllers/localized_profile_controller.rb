@@ -2,6 +2,7 @@ class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
   include OmnitureConcerns
+  include AdvertisingHelper
 
   before_filter :redirect_tab_urls, only: [:overview]
   before_filter :require_state, :require_school
@@ -63,7 +64,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
-    @school_reviews_all = @school.reviews.all
+    @school_reviews_all = @school.reviews.load
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews_all.count();
@@ -178,18 +179,19 @@ class LocalizedProfileController < ApplicationController
     if @school.show_ads
       set_targeting = {}
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
-      set_targeting['City'] = @school.city
-      set_targeting['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      set_targeting['county'] = @school.county # county name?
-      set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-      set_targeting['gs_rating'] = @school.gs_rating
-      set_targeting['level'] = @school.level_code # p,e,m,h
-      set_targeting['school_id'] = @school.id.to_s
-      set_targeting['State'] = @school.state # abbreviation
-      set_targeting['type'] = @school.type  # private, public, charter
-      set_targeting['zipcode'] = @school.zipcode
-      set_targeting['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
-      set_targeting['template'] = "ros" # use this for page name - configured_page_name
+      # @school.city.delete(' ').slice(0,10)
+      set_targeting['City'] = format_ad_setTargeting(@school.city)
+      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      set_targeting['county'] = format_ad_setTargeting(@school.county) # county name?
+      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
+      set_targeting['gs_rating'] = format_ad_setTargeting(@school.gs_rating)
+      set_targeting['level'] = format_ad_setTargeting(@school.level_code) # p,e,m,h
+      set_targeting['school_id'] = format_ad_setTargeting(@school.id.to_s)
+      set_targeting['State'] = format_ad_setTargeting(@school.state) # abbreviation
+      set_targeting['type'] = format_ad_setTargeting(@school.type)  # private, public, charter
+      set_targeting['zipcode'] = format_ad_setTargeting(@school.zipcode)
+      set_targeting['district_id'] = format_ad_setTargeting(@school.district.present? ? @school.district.FIPScounty : "")
+      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
 
       gon.ad_set_targeting = set_targeting
     end
