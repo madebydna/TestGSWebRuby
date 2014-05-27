@@ -19,9 +19,12 @@ class TestScoreResults
     end
   end
 
-  def build_test_scores_hash(data_sets_and_values, school)
+  def build_test_scores_hash(cached_results, school)
     #Hash to hold the results
     test_scores = Hash.new
+
+    data_sets_and_values = cached_results['data_sets_and_values']
+    data_type_descriptions = cached_results['data_types']
 
     if data_sets_and_values.present?
       data_sets_and_values.each do |result_hash|
@@ -50,9 +53,11 @@ class TestScoreResults
         state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
         breakdown_id = result_hash['breakdown_id']
         number_tested = result_hash['number_tested']
-        label = result_hash['test_label']
-        description = result_hash['test_description'] || ''
-        source = result_hash['test_source'] || ''
+        if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
+          label = data_type_descriptions[test_data_type_id.to_s]['test_label']
+          description = data_type_descriptions[test_data_type_id.to_s]['test_description'] || ''
+          source = data_type_descriptions[test_data_type_id.to_s]['test_source'] || ''
+        end
 
         next if subject.nil? # skip this test data if subject is nil
 

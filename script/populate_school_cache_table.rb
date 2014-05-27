@@ -92,25 +92,29 @@ def self.test_scores_cache_for_school(school)
       :number_tested => 'number_tested'
     }
 
+    data_type_ids = []
     data_sets_and_values.each do |data_sets_and_value|
       data_type_id = data_sets_and_value.data_type_id
       next if !@@test_data_types || @@test_data_types[data_type_id].nil? # skip this if no corresponding test data type
+      data_type_ids << data_type_id
+      results_hash_array << active_record_to_hash(config_map,data_sets_and_value)
+    end
 
-      result = active_record_to_hash(config_map,data_sets_and_value)
-
-      result['test_label'] = @@test_data_types[data_type_id].display_name
+    data_type_descriptions = {}
+    data_type_ids.each do |data_type_id|
+      description_hash = {'test_label' => @@test_data_types[data_type_id].display_name}
       test_description = test_description_for(data_type_id,school.state)
       if !test_description.nil?
-        result['test_description'] = test_description.description
-        result['test_source'] = test_description.source
+        description_hash['test_description'] = test_description.description
+        description_hash['test_source'] = test_description.source
       end
-
-      results_hash_array << result
+      data_type_descriptions[data_type_id] = description_hash
     end
 
     school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name:'test_scores')
     if results_hash_array.present?
-      school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
+      final_hash = {'data_sets_and_values' => results_hash_array, 'data_types' => data_type_descriptions}
+      school_cache.update_attributes!(:value => final_hash.to_json, :updated => Time.now)
     elsif school_cache && school_cache.id.present?
       SchoolCache.destroy(school_cache.id)
     end
