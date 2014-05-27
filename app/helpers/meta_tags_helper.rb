@@ -80,4 +80,13 @@ module MetaTagsHelper
       "Private Schools In #{@state[:long].gs_capitalize_words}"
     ]
   end
+
+  def cities_foobar_title
+  end
+
+  def cities_foobar_description
+  end
+
+  def cities_foobar_keywords
+  end
 end
