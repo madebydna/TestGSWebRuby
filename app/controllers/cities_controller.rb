@@ -54,6 +54,8 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(params[:state], params[:city])
       }
       @canonical_url = city_events_url(@state[:long], @city)
+      set_omniutre_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+
     end
   end
 
@@ -74,6 +76,8 @@ class CitiesController < ApplicationController
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
+      set_omniutre_data('GS:City:EducationCommunity', 'Home,CityHome,EducationCommunity', @city.titleize)
+
     end
   end
 
@@ -94,6 +98,8 @@ class CitiesController < ApplicationController
       set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
+      set_omniutre_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
+
     end
   end
 
@@ -112,6 +118,8 @@ class CitiesController < ApplicationController
         'Choosing a School' => nil
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
+      set_omniutre_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+
       render 'shared/choosing_schools'
     end
   end
