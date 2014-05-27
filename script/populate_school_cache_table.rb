@@ -1,7 +1,7 @@
 states = ['mi', 'in', 'wi', 'de','ca','nc','oh']
-states_arg=ARGV[0]
-school_ids_arg=ARGV[1]
-cache_key_arg= ARGV[2]
+states_arg=ARGV[1]
+school_ids_arg=ARGV[2]
+cache_key_arg= ARGV[0]
 all_cache_keys=['ratings','test_scores']
 
 @@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
@@ -119,10 +119,12 @@ def self.test_scores_cache_for_school(school)
 
 end
 
-keys = all_cache_keys
+keys = []
 
-if !cache_key_arg.nil?
-  keys.select! { |key| cache_key_arg.to_s.split(',').include?(key) }
+if cache_key_arg.present? && cache_key_arg == 'all'
+  keys = all_cache_keys
+elsif cache_key_arg.present? && cache_key_arg != 'all'
+  keys = all_cache_keys.select { |key| cache_key_arg.to_s.split(',').include?(key) }
 end
 
 keys.each do |cache_key|
