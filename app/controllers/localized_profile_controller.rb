@@ -196,8 +196,8 @@ class LocalizedProfileController < ApplicationController
     end
   end
 
-  def ad_setTargeting_Format(str)
-    str.delete(' ').slice(0,10)
+  def ad_setTargeting_Format(value)
+    value.to_s.delete(' ').slice(0,10)
   end
 
   def is_hub_school?
