@@ -168,30 +168,26 @@ group :development, :test do
   gem 'launchy'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  # gem 'sass-rails',   '~> 3.2.3'
-  # Rails 4
-  gem 'sass-rails',   '~> 4.0.1'
+# gem 'sass-rails',   '~> 3.2.3'
+# Rails 4
+gem 'sass-rails',   '~> 4.0.1'
 
-  # gem 'coffee-rails', '~> 3.2.1'
-  # Rails 4
-  gem 'coffee-rails', '~> 4.0.1'
+# gem 'coffee-rails', '~> 3.2.1'
+# Rails 4
+gem 'coffee-rails', '~> 4.0.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platforms => :ruby
 
-  #gem 'compass-rails', '~> 2.0.alpha.0'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-wysihtml5-rails'
+#gem 'compass-rails', '~> 2.0.alpha.0'
+gem 'uglifier', '>= 1.0.3'
+gem 'bootstrap-wysihtml5-rails'
 
-  # gem 'css_splitter', '~> 0.1.1'
-  # Rails 4
-  gem 'css_splitter'
+# gem 'css_splitter', '~> 0.1.1'
+# Rails 4
+gem 'css_splitter'
 
-  gem "yui-compressor", "~> 0.12.0"
-end
+gem "yui-compressor", "~> 0.12.0"
 
 group :profile do
   gem 'ruby-prof'
