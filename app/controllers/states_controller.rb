@@ -25,8 +25,8 @@ class StatesController < ApplicationController
 
       @articles = CollectionConfig.state_featured_articles(configs)
 
-      @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+      @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       set_omniutre_data('GS:State:Home', 'Home,StateHome')
     end
   end
