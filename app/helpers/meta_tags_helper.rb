@@ -80,4 +80,16 @@ module MetaTagsHelper
       "Private Schools In #{@state[:long].gs_capitalize_words}"
     ]
   end
+
+  def cities_programs_title
+    "#{@city.gs_capitalize_words} after school and summer programs"
+  end
+
+  def cities_programs_keywords
+    "#{@city} after school programs, #{@city} summer programs, summer learning, child care"
+  end
+
+  def cities_programs_description
+    "Resources and providers of after school and summer programs in #{@city.gs_capitalize_words}"
+  end
 end

@@ -765,4 +765,19 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.programs_heading' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_heading }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_heading_config)] }
+      let(:heading) { CollectionConfig.programs_heading(configs) }
+
+      it 'returns the programs heading' do
+        expect(heading).to start_with 'What makes a great after'
+      end
+    end
+  end
 end

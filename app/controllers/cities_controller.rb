@@ -125,7 +125,6 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = hub_city_mapping.collection_id
-      configs = CollectionConfig.where(collection_id: @collection_id)
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
@@ -141,6 +140,19 @@ class CitiesController < ApplicationController
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
       render 'shared/enrollment'
+    end
+  end
+
+  def programs
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      @collection_nickname = CollectionConfig.collection_nickname(configs)
+      @important_events = CollectionConfig.city_hub_important_events(configs)
+      @heading = CollectionConfig.programs_heading(configs)
+      @canonical_url = city_programs_url(params[:state], params[:city])
     end
   end
 

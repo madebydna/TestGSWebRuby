@@ -13,11 +13,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% unless @events.nil? ||  @events[:events].empty? %>
-  <div class="bg-light-gray hide-for-mobile fixed-top pvm">
-    <div class="limit-width-1200">
-      <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-    </div>
-  </div>
+  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
 
@@ -26,11 +22,11 @@
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
     <div class="row" style='margin-bottom: 215px;'>
-      <div class="img-container-mobile" style='width: 100%; left: 0;'>
+      <div class="hidden-lg hidden-md hidden-sm" style='width: 100%; left: 0;'>
         <div style="background-image: url('/assets/hubs/small/enrollment_small.png'); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
       </div>
 
-      <div class="img-container" style='width: 100%; left: 0;'>
+      <div class="hidden-xs" style='width: 100%; left: 0;'>
         <div style="background-image: url('/assets/hubs/enrollment.png'); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
       </div>
     </div>

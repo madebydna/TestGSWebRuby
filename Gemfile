@@ -18,7 +18,7 @@ gem 'devise'
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
 
-# No Rails 4: 
+# No Rails 4:
 # gem 'db-charmer', '1.8.4', :require => 'db_charmer'
 gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails4'
 
@@ -28,9 +28,6 @@ gem 'safe_attributes'
 # paper_trail allows implementing versioning to models
 gem 'paper_trail'
 gem 'haml', '4.0.3'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
@@ -42,7 +39,7 @@ gem 'to_regexp'
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
 # Adds composite primary key support to ActiveRecord. Use minimally
-# No Rail 4: 
+# No Rail 4:
 # gem 'composite_primary_keys'
 
 # Adds lodash JS to the project. Version of lodash added depends on environment
@@ -74,7 +71,7 @@ gem 'has_scope'
 
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
-# Rails 4 
+# Rails 4
 gem 'draper', '~> 1.3'
 
 gem 'addressable'
@@ -168,30 +165,26 @@ group :development, :test do
   gem 'launchy'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  # gem 'sass-rails',   '~> 3.2.3'
-  # Rails 4
-  gem 'sass-rails',   '~> 4.0.1'
+# gem 'sass-rails',   '~> 3.2.3'
+# Rails 4
+gem 'sass-rails',   '~> 4.0.1'
 
-  # gem 'coffee-rails', '~> 3.2.1'
-  # Rails 4
-  gem 'coffee-rails', '~> 4.0.1'
+# gem 'coffee-rails', '~> 3.2.1'
+# Rails 4
+gem 'coffee-rails', '~> 4.0.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platforms => :ruby
 
-  #gem 'compass-rails', '~> 2.0.alpha.0'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-wysihtml5-rails'
+#gem 'compass-rails', '~> 2.0.alpha.0'
+gem 'uglifier', '>= 1.0.3'
+gem 'bootstrap-wysihtml5-rails'
 
-  # gem 'css_splitter', '~> 0.1.1'
-  # Rails 4
-  gem 'css_splitter'
+# gem 'css_splitter', '~> 0.1.1'
+# Rails 4
+gem 'css_splitter'
 
-  gem "yui-compressor", "~> 0.12.0"
-end
+gem "yui-compressor", "~> 0.12.0"
 
 group :profile do
   gem 'ruby-prof'

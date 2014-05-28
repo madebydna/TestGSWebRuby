@@ -396,8 +396,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.2)
-      coffee-rails
     tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
@@ -490,7 +488,6 @@ DEPENDENCIES
   thin
   timecop
   to_regexp
-  turbolinks
   uglifier (>= 1.0.3)
   yard
   yui-compressor (~> 0.12.0)
