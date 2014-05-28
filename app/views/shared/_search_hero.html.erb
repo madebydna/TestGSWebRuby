@@ -15,11 +15,11 @@
 
 <div class="image-bg-scale">
   <div class="hidden-lg hidden-md hidden-sm">
-    <div class='hub-hero-image' style="background-image: url('<%= hero_image_mobile %>'); height: <%= bg_height %>;"></div>
+    <div class='hub-hero-image' style="background-image: url('<%= image_path(hero_image_mobile) %>'); height: <%= bg_height %>;"></div>
   </div>
 
   <div class="hidden-xs">
-    <div class='hub-hero-image' style="background-image: url('<%= hero_image %>'); height: <%= bg_height %>;"></div>
+    <div class='hub-hero-image' style="background-image: url('<%= image_path(hero_image) %>'); height: <%= bg_height %>;"></div>
   </div>
   <div class="limit-width-1200">
     <div class="content-centered">
