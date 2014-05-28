@@ -1,19 +1,20 @@
-<!-- TODO: fix this guy -->
 <div class="row mvl">
   <% unless articles.nil? %>
     <div class="col-xs-12 col-md-7 mtl mbl pam">
       <h2 class="mtn">Featured Articles</h2>
       <% articles.each do |article| %>
         <div class='row'>
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'pull-left') %>
-          <h4 class="mtn mbn pull-left">
-            <% if article[:newwindow] %>
-              <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-            <% else %>
-                <%= link_to article[:heading], article[:articlepath] %>
-            <% end %>
-          </h4>
-          <p class='pull-left mobile-clearfix'><%= article[:content] %></p>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", class: 'col-md-2 prl pbm') %>
+          <div class="col-md-10">
+            <h4 class="mvn pvn">
+              <% if article[:newwindow] %>
+                <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+              <% else %>
+                  <%= link_to article[:heading], article[:articlepath] %>
+              <% end %>
+            </h4>
+            <p class='mobile-clearfix'><%= article[:content] %></p>
+          </div>
         </div>
       <% end %>
     </div>

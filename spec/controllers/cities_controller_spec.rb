@@ -47,4 +47,8 @@ describe CitiesController do
   describe 'GET enrollment' do
     it_behaves_like 'a default cities controller action', :enrollment
   end
+
+  describe 'GET programs' do
+    it_behaves_like 'a default cities controller action', :programs
+  end
 end

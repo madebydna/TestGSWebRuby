@@ -2,11 +2,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% if params[:city] %>
-  <div class="bg-light-gray hide-for-mobile pvm">
-    <div class="limit-width-1200">
-        <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-    </div>
-  </div>
+  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
 <div class="limit-width-1200" style='margin-bottom: 40px;'>
@@ -33,7 +29,7 @@
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <li><a href="/students/academic-skills/4165-redshirting-kindergarten.gs">When should kids start kindergarten?</a></li>
         <li><a href="/find-a-school/making-the-right-choice/4904-switch-or-stay-schools-early-in-year.gs">Switch schools or stay?</a></li>
         <li><a href="/students/4151-Skipping-a-grade-pros-and-cons.gs">The pros and cons of skipping a grade</a></li>
@@ -68,7 +64,7 @@
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <h4 style='margin-left: -40px;'>Overview Of options</h4>
         <li><a href="/find-a-school/defining-your-ideal/1163-school-choice-your-options.gs">School choice: what are your options?</a></li>
         <li><a href="/find-a-school/defining-your-ideal/59-private-vs-public-schools.gs">Private vs. public</a></li>
@@ -119,7 +115,7 @@
         <% end %>
       </ul>
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <li><a href="/school-choice/standardized-testing/7262-school-test-scores-video.gs">Facts (and fiction) about school test scores</a></li>
         <li><a href="/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs">How important is cultural diversity at your school?</a></li>
         <li><a href="/find-a-school/defining-your-ideal/174-class-size.gs">How important is class size?</a></li>
@@ -149,7 +145,7 @@
         <li><a href="/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>
       </ul>
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class='expandable'>
+      <ul class='dn js-expandable'>
 
         <h4 style='margin-left: -40px;'>Preschool Resources</h4>
 

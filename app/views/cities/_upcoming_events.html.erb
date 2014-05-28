@@ -1,9 +1,12 @@
 <% unless important_events.nil? ||  important_events[:events].empty? %>
-  <% unless defined?(community_page) %>
+  <% if defined?(community_page) %>
+    <div class="bg-light-gray hidden-xs fixed-top pvm">
+    <div class="limit-width-1200">
+
+    <div class="row">
+  <% else %>
     <div class="row mvl">
     <hr>
-  <% else %>
-    <div class="row">
   <% end %>
     <div class='oh'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
@@ -31,4 +34,8 @@
       <%= render 'event_announcements', announcement: announcement  %>
     <% end %>
   </div>
+  <% if defined?(community_page) %>
+    </div>
+    </div>
+  <% end %>
 <% end %>

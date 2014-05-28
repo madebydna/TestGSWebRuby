@@ -8,7 +8,7 @@ GS.choosingDropdownInit = GS.choosingDropdownInit || function() {
       $(this).html('Close &raquo;');
     }
 
-    $(this).parent().find('.expandable').slideToggle();
+    $(this).siblings('.js-expandable').slideToggle();
   };
 
   $('.js-expand-collapse').each(function() {

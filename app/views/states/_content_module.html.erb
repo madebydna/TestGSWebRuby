@@ -5,8 +5,8 @@
       <h3 class='mtl mbm'><%= content_module[:heading] %></h3>
       <p><%= content_module[:description].html_safe %></p>
       <% unless content_module[:view_more].nil? %>
-        <div class='js-module-expand oh'><%= content_module[:view_more].html_safe %></div>
-        <a href='javascript:void(0)' class="dib mtm view-more">View More »</a>
+        <div class='oh'><%= content_module[:view_more].html_safe %></div>
+        <a href='javascript:void(0)' class="dib mtm js-view-more">View More »</a>
       <% end %>
 
       <% unless i == content_modules.length - 1 %>

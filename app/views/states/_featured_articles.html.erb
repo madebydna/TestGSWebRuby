@@ -3,23 +3,19 @@
     <h2 class='plm'>Featured Articles</h2>
       <% articles.each do |article| %>
         <div class="col-xs-12 col-sm-6 col-lg-6 phm">
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", width: '100px', height: '70px', class: 'mrl mln pull-left') %>
-          <div style='margin-left: 120px;'>
-            <div class="medium-bold mrl">
-              <h4 class="mtn mbn">
-                <% if article[:newwindow] %>
-                  <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
-                <% else %>
-                    <%= link_to article[:heading], article[:articlepath] %>
-                <% end %>
-              </h4>
-              <p><%= article[:content] %></p>
-            </div>
+          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", class: 'col-md-2 prl pbm') %>
+          <div class="col-md-10">
+            <h4 class="mvn">
+              <% if article[:newwindow] %>
+                <%= link_to article[:heading], article[:articlepath], target: '_blank' %>
+              <% else %>
+                  <%= link_to article[:heading], article[:articlepath] %>
+              <% end %>
+            </h4>
+            <p class='mobile-clearfix'><%= article[:content] %></p>
           </div>
         </div>
       <% end %>
     <div class="clearfix"></div>
   </div>
 <% end %>
-
-
