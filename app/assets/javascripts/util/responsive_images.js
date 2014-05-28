@@ -1,7 +1,7 @@
 GS = GS || {};
 GS.util = GS.util || {};
 
-$(function(){
+$(function() {
     GS.util.setupImages = function(options) {
         var mobileImage = options['mobileImage'];
         var desktopImage = options['desktopImage'];

@@ -18,7 +18,7 @@ gem 'devise'
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
 
-# No Rails 4: 
+# No Rails 4:
 # gem 'db-charmer', '1.8.4', :require => 'db_charmer'
 gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails4'
 
@@ -28,9 +28,6 @@ gem 'safe_attributes'
 # paper_trail allows implementing versioning to models
 gem 'paper_trail'
 gem 'haml', '4.0.3'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
@@ -42,7 +39,7 @@ gem 'to_regexp'
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
 # Adds composite primary key support to ActiveRecord. Use minimally
-# No Rail 4: 
+# No Rail 4:
 # gem 'composite_primary_keys'
 
 # Adds lodash JS to the project. Version of lodash added depends on environment
@@ -74,7 +71,7 @@ gem 'has_scope'
 
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
-# Rails 4 
+# Rails 4
 gem 'draper', '~> 1.3'
 
 gem 'addressable'

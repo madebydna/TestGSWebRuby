@@ -8,11 +8,11 @@
 
       <%= render 'shared/popular_cities_in_state', state: state %>
 
-      <span style='color: #999999;'>All cities in <%= state[:long].titleize %>:</span>
+      <span class='gray-dark'>All cities in <%= state[:long].titleize %>:</span>
 
-      <ul style='list-style: none; display: inline;'>
+      <ul class='di'>
         <% ('A'..'Z').to_a.each do |letter| %>
-          <li style='display: inline;'><%= link_to(letter, city_alphabet_path(state[:long].capitalize, state[:short].upcase, letter)) %></li>
+          <li class='di'><%= link_to(letter, city_alphabet_path(state[:long].capitalize, state[:short].upcase, letter)) %></li>
         <% end %>
       </ul>
 
