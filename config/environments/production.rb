@@ -74,6 +74,9 @@ LocalizedProfiles::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
 
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :sass
+
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
