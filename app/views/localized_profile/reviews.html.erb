@@ -82,8 +82,8 @@
                     class="mtm col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-default js_reviewsGetNextTen <%= @review_button_hide %>" style="z-index: 1;">Read more</button>
         </div>
     <% end %>
-
 </div>
+<%= render 'data_layouts/nearby_schools' %>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
 <%= render 'shared/rich_snippets/rich_snippets_school_info', school: @school %>

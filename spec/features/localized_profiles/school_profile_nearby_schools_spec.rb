@@ -1,23 +1,12 @@
 require 'spec_helper'
 
 feature 'Nearby schools' do
-  let!(:nearby_schools_module) do
-    FactoryGirl.create(
-      :category,
-      name: 'Nearby schools',
-      source: "",
-      page: 'Overview',
-      layout: 'nearby_schools'
-    )
-  end
   let(:school) { FactoryGirl.create(:school) }
+  let!(:overview) { FactoryGirl.create(:page, name: 'Overview') }
   after(:each) do
     NearbySchool.delete_all
     clean_models :ca, School
-    clean_models Page
-
-    clean_models  User, Page, Category, CategoryData, CategoryPlacement,
-                  HubCityMapping, CensusDataType
+    clean_models  User, HubCityMapping, CensusDataType
   end
   subject do
     visit school_path(school)
