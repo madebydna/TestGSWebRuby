@@ -1,7 +1,7 @@
 <% unless partners.nil? %>
   <div class="row bg-light-gray pbl">
     <div class="limit-width-1200 tac">
-      <h2 class="">Our Partners</h2>
+      <h2>Our Partners</h2>
       <% partners[:partnerLogos].each do |partner| %>
         <%= link_to image_tag(partner[:logoPath], class: 'partner-carousel-image mam'), partner[:anchoredLink], target: '_blank' %>
       <% end %>

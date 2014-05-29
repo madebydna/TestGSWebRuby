@@ -30,7 +30,7 @@ class CitiesController < ApplicationController
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(@state[:long], @city)
-      set_omniutre_data('GS:City:Home', 'Home,CityHome', @city.titleize)
+      set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     end
   end
 
@@ -49,7 +49,7 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(params[:state], params[:city])
       }
       @canonical_url = city_events_url(@state[:long], @city)
-      set_omniutre_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+      set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
 
     end
   end
@@ -61,7 +61,10 @@ class CitiesController < ApplicationController
     else
       @collection_id = hub_city_mapping.collection_id
       collection_configs = configs
+
       set_community_tab(collection_configs)
+      set_community_omniture_data
+
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
@@ -71,7 +74,7 @@ class CitiesController < ApplicationController
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
-      set_omniutre_data('GS:City:EducationCommunity', 'Home,CityHome,EducationCommunity', @city.titleize)
+
 
     end
   end
@@ -93,8 +96,7 @@ class CitiesController < ApplicationController
       set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
-      set_omniutre_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
-
+      set_omniture_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
     end
   end
 
@@ -113,7 +115,7 @@ class CitiesController < ApplicationController
         'Choosing a School' => nil
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
-      set_omniutre_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+      set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
 
       render 'shared/choosing_schools'
     end
@@ -154,8 +156,7 @@ class CitiesController < ApplicationController
       @heading = CollectionConfig.programs_heading(configs)
       @intro = CollectionConfig.programs_intro(configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
-      set_omniutre_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
-
+      set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
     end
   end
 
@@ -174,6 +175,18 @@ class CitiesController < ApplicationController
           @tab = 'Community'
         end
       end
+    end
+
+    def set_community_omniture_data
+      if @tab == 'Community'
+        page_name = "GS:City:EducationCommunity"
+        page_hier = "Home,CityHome,EducationCommunity"
+      else
+        page_name = "GS:City:EducationCommunity:#{@tab}"
+        page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
+      end
+
+      set_omniture_data(page_name, page_hier, @city.titleize)
     end
 
     def mapping

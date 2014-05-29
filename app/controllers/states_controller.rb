@@ -27,7 +27,7 @@ class StatesController < ApplicationController
 
       @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      set_omniutre_data('GS:State:Home', 'Home,StateHome')
+      set_omniture_data('GS:State:Home', 'Home,StateHome')
     end
   end
 

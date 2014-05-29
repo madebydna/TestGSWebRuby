@@ -281,21 +281,21 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def partner(collection_configs)
-      result = {}
+      partner = {}
       begin
-        result[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
-        result[:page_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_PAGE_NAME_KEY }).first.value
+        partner[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
+        partner[:page_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_PAGE_NAME_KEY }).first.value
         raw_data_str = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_DATA_KEY }).first.value
         raw_data_str.gsub!(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
-        result[:data] = eval(raw_data_str)[:sponsors]
-        result[:data].each do |partner_data|
+        partner[:data] = eval(raw_data_str)[:sponsors]
+        partner[:data].each do |partner_data|
           partner_data[:logo].prepend(ENV_GLOBAL['cdn_host'])
         end
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing partner ' + e.to_s)
-        result = nil
+        partner = nil
       end
-      result
+      partner
     end
 
     def choosing_page_links(collection_configs)

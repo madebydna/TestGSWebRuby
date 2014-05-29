@@ -213,7 +213,7 @@ class ApplicationController < ActionController::Base
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
 
-  def set_omniutre_data(page_name, page_hier, locale = nil)
+  def set_omniture_data(page_name, page_hier, locale = nil)
     set_omniture_data_for_user_request
     gon.pagename = page_name
     gon.omniture_pagename = page_name
