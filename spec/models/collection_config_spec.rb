@@ -780,4 +780,24 @@ describe CollectionConfig do
       end
     end
   end
+
+  describe '.programs_intro' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_heading }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:key) { CollectionConfig::PROGRAMS_INTRO_KEY }
+      let(:method) { :programs_intro }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_intro_config)] }
+      let(:result) { CollectionConfig.programs_intro(configs) }
+
+      it 'returns the intro section html blob' do
+        expect(result[:content]).to start_with 'Quality after-school and summer learning'
+      end
+    end
+  end
 end

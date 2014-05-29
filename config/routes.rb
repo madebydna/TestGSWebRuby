@@ -142,8 +142,6 @@ LocalizedProfiles::Application.routes.draw do
         get '/funders', to: 'cities#community'
         get '/partner', to: 'cities#partner', as: :partner
       end
-
-      get 'programs', to: 'cities#foobar'
     end
 
     # Routes for city page

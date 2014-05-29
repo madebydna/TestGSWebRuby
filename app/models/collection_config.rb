@@ -26,7 +26,7 @@ class CollectionConfig < ActiveRecord::Base
   STATE_SPONSOR_KEY = 'statehubHome_sponsor'
   CITY_HUB_BROWSE_LINKS_KEY = 'hubHome_browseLinks'
   PROGRAMS_HEADING_KEY = 'programsPage_heading'
-  PROGRAMS_INTRO_KEY = 'programsPage_intro'
+  PROGRAMS_INTRO_KEY = 'programsPage_introModule'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -447,12 +447,25 @@ class CollectionConfig < ActiveRecord::Base
       configs.select(&lambda { |cc| cc.quay == PROGRAMS_HEADING_KEY }).first.try(:value)
     end
 
+    def programs_intro(configs)
+      intro = nil
+
+      begin
+        raw_intro_str = configs.select(&lambda { |cc| cc.quay == PROGRAMS_INTRO_KEY }).first.try(:value)
+        intro = eval(raw_intro_str)
+      rescue Exception => e
+        Rails.logger.error('something went wrong while parsing programs_intro')
+      end
+
+      intro
+    end
+
     [
       :sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
       :ed_community_subheading, :ed_community_show_tabs, :partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
       :city_featured_articles, :state_choose_school, :choosing_page_links, :browse_links,
-      :programs_heading
+      :programs_heading, :programs_intro
     ].each do |method_name|
       new_method = "#{method_name}_with_nil_check".to_sym
       define_method new_method do |*args|
