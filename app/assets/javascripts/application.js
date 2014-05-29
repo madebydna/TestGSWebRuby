@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.cookie.js
 //= require jquery_ujs
+//= require twitter/typeahead.min
 //= require lodash
 //= require_self
 //= require_tree ./util

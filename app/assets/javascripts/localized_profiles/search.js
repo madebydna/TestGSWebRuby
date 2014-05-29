@@ -13,6 +13,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
+    var prototypeSearch = 'input#js-prototypeSearch';
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
 
@@ -34,6 +35,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 return false;
             }
         });
+
+        $('.prototypeSearchForm').submit(function() {
+            var valid = validateField($(this).find(prototypeSearch)[0]);
+            if (valid) {
+                return submitPrototypeSearch.apply(this);
+            } else {
+                return false;
+            }
+        });
+
     };
 
     var setupTabs = function() {
@@ -135,6 +146,58 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
+//    var attachAutocomplete = function(queryBoxId) {
+//        var searchBox = $('#' + queryBoxId);
+//        var url = "/gsr/searchPrototype";
+//        var limit = 6;
+//        searchBox.autocomplete2(url, {
+////            extraParams: {
+////                state: function() {
+////                    var rval = searchStateSelect.val();
+////                    if (rval === '') {
+////                        return null;
+////                    }
+////                    return rval;
+////                },
+////                schoolDistrict: true
+////            },
+////            extraParamsRequired: true,
+//            minChars: 3,
+//            selectFirst: false,
+//            cacheLength: 150,
+//            matchSubset: true,
+//            max: limit,
+//            autoFill: false,
+//            dataType: "text"
+//        });
+//
+//        //spit out results
+//
+//        //spit out search query
+//        console.log(limit);
+//    };
+
+    var attachAutocomplete = function(queryBoxId) {
+        var searchBox = $('#' + queryBoxId);
+        var url = "/gsr/searchPrototype";
+        var limit = 6;
+        searchBox.autocomplete2(url, {
+            minChars: 3,
+            selectFirst: false,
+            cacheLength: 150,
+            matchSubset: true,
+            max: limit,
+            autoFill: false,
+            dataType: "text"
+        });
+
+        //spit out results
+
+        //spit out search query
+        console.log(limit);
+    };
+
+
     var formatNormalizedAddress = function(address) {
         var newAddress = address.replace(", USA", "");
         var zipCodePattern = /(\d\d\d\d\d)-\d\d\d\d/;
@@ -229,11 +292,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         setupTabs: setupTabs,
         submitByLocationSearch: submitByLocationSearch,
         submitByNameSearch: submitByNameSearch,
-        gsGeocode: gsGeocode
+        gsGeocode: gsGeocode,
+        attachAutocomplete: attachAutocomplete
     };
 })();
 
 $(document).ready(function() {
   GS.search.schoolSearchForm.init();
   GS.search.schoolSearchForm.setupTabs();
+  GS.search.schoolSearchForm.attachAutocomplete('js-prototypeSearch');
 });

@@ -18,6 +18,17 @@ class HomeController < ApplicationController
 
   end
 
+  def search_prototype
+
+    @article_1 = "/assets/article_img.jpg"
+    @parent_img = "/assets/article_img.jpg"
+
+    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
+                  robots: 'noindex'
+
+    set_omniture_pagename
+
+  end
   def set_omniture_pagename
     gon.omniture_pagename = 'GS:Home'
     set_omniture_data(gon.omniture_pagename)
