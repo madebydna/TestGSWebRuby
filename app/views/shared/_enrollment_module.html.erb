@@ -13,7 +13,7 @@
   </div>
 
   <div class="col-sm-4 col-lg-4 mbm">
-    <% unless tab[:results][type][:count] == 0 %>
+    <% unless tab.seek(:results, type, :count) == 0 or tab.seek(:results, type, :count).nil? %>
       <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
         <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
         <span class='inverted-text breakdown-result-count'><%= tab[:results][type][:count] %></span>
