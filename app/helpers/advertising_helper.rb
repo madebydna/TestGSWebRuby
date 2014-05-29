@@ -1,5 +1,7 @@
 module AdvertisingHelper
 
+  protected
+
   [:desktop, :mobile].each do |view|
     method_name = "render_#{view}_ad_slot"
 
@@ -10,6 +12,7 @@ module AdvertisingHelper
         view: view
       )
     end
+    send :protected, method_name
   end
 
   def format_ad_setTargeting(value)
