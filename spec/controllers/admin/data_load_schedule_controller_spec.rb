@@ -4,6 +4,8 @@ describe Admin::DataLoadSchedulesController do
 
   it 'should have the right methods' do
     expect(controller).to respond_to :update
+    expect(controller).to respond_to :create
+    expect(controller).to respond_to :index
   end
 
   describe '#update' do

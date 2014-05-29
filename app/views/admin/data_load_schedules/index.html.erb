@@ -7,16 +7,63 @@
       <ul>
         <li>We should still be able to see loads that should have been completed but were skipped in some not annoying way.</li>
       </ul>
-      <h5>Filters</h5>
-      <%= link_to 'Sort by state', admin_data_load_schedules_path(sort_by: 'state', filter_by: @filter) %>&nbsp;&nbsp;
-      <%= link_to 'Sort by live by', admin_data_load_schedules_path(sort_by: 'live_by', filter_by: @filter) %>&nbsp;&nbsp;
-      <%= link_to 'Complete tickets only', admin_data_load_schedules_path(sort_by: @sort_by, filter_by: 'complete') %>&nbsp;&nbsp;
-      <%= link_to 'Incomplete tickets only', admin_data_load_schedules_path(sort_by: @sort_by, filter_by: 'not_complete') %>&nbsp;&nbsp;
+      <h5>Filter by</h5>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          Type
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <% @load_types.each do |filter| %>
+              <li>
+                <%= link_to filter.to_s.titleize,
+                            admin_data_load_schedules_path(params.merge({type: filter})) %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          Status
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <% @status_filters.each do |filter| %>
+              <li>
+                <%= link_to filter.to_s.titleize,
+                            admin_data_load_schedules_path(params.merge({filter_by: filter})) %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="pull-right">
+        <div class="btn-group">
+          <%= link_to 'List view',
+                        admin_data_load_schedules_path(params.merge({view_type: :list})),
+                        class: 'btn btn-default' %>
+          <%= link_to 'Calendar view',
+                        admin_data_load_schedules_path(params.merge({view_type: :calendar})),
+                        class: 'btn btn-default' %>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <strong>Sort by:</strong>&nbsp;
+      <% @sorts.each do |sort_param| %>
+      <%= link_to sort_param.to_s.gsub('_',' ').titleize, admin_data_load_schedules_path(params.merge({sort_by: sort_param})) %>&nbsp;&nbsp;
+      <% end %>
+
+
 
       <% # For viewing ease, only show one month back and two in the future%>
       <% current_month = Date::MONTHNAMES.index(Time.now.strftime("%B")) %>
       <% months = Date::MONTHNAMES[(current_month-1)..(current_month+2)] %>
 
+      <% if @view_type == 'calendar' %>
       <table class="table table-striped">
         <thead>
         <tr>
@@ -62,7 +109,8 @@
         <% end %>
         </tr>
       </table>
-      <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
+      <% end %>
+      <% if @view_type == 'list' %>
       <table class="table table-striped">
         <thead>
         <tr>
@@ -86,12 +134,14 @@
               <td><%= load.year_to_load %></td>
               <td><%= load.released %></td>
               <td><%= load.live_by %></td>
-              <td><%= load.complete == 1 ? 'Yes' : 'No' %></td>
-              <td><%= link_to 'edit', edit_admin_data_load_schedule_path(load, sort_by: @sort_by, filter_by: @filter)%></td>
+              <td><%= load.complete ? 'Yes' : 'No' %></td>
+              <td><%= link_to 'edit', edit_admin_data_load_schedule_path(load, params)%></td>
             </tr>
         <% end %>
         </tbody>
       </table>
+      <% end %>
+      <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
     </div>
   </div>
 </div>

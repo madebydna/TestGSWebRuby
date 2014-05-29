@@ -1,8 +1,11 @@
 class Admin::DataLoadSchedulesController < ApplicationController
 
   before_filter :get_params
+  before_filter :get_load_types
 
   def index
+    @status_filters = [:all, :complete, :incomplete]
+    @sorts = [:state,:released,:live_by]
     @loads = filter_and_sort_data_loads
   end
 
@@ -27,14 +30,16 @@ class Admin::DataLoadSchedulesController < ApplicationController
   protected
 
   def filter_and_sort_data_loads
+    where_clause = ''
     case @filter
       when 'complete'
-        @loads = Admin::DataLoadSchedule.completed.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
-      when 'not_complete'
-        @loads = Admin::DataLoadSchedule.incomplete.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
-      else
-        @loads = Admin::DataLoadSchedule.select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
+        where_clause += 'complete = 1 and '
+      when 'incomplete'
+        where_clause += 'complete = 0 and '
     end
+    where_clause += "load_type = '#{@load_type}' and " if @load_type and @load_type != 'All'
+    where_clause = where_clause.gsub(/^and /, '').gsub(/ and $/, '')
+    @loads = Admin::DataLoadSchedule.where(where_clause).select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
   end
 
   def update_or_create_data_load(data_load,p)
@@ -47,13 +52,20 @@ class Admin::DataLoadSchedulesController < ApplicationController
     data_load.live_by = "#{p['live_by(1i)']}-#{p['live_by(2i)'].to_s.rjust(2, '0')}-#{p['live_by(3i)'].to_s.rjust(2, '0')}"
     data_load.updated_by = p['updated_by']
     if data_load.save
-      redirect_to action: 'index', sort_by: @sort_by, filter_by: @filter
+      redirect_to action: 'index'
     end
   end
 
   def get_params
     @sort_by = params[:sort_by] || 'live_by'
     @filter = params[:filter_by] || nil
+    @load_type = params[:type] || nil
+    @view_type = params[:view_type] || 'calendar'
+  end
+
+  def get_load_types
+    @load_types = Admin::DataLoadSchedule.all.inject([]) { |types,h| types << h[:load_type] unless types.include?(h[:load_type]); types}
+    @load_types.unshift 'All'
   end
 
 end
