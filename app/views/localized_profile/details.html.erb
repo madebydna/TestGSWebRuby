@@ -24,19 +24,19 @@
             </div>
         </div>
     <% else %>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 gs_set-z-1">
+        <div class="hidden-xs col-sm-4 col-md-3 col-lg-3 gs_set-z-1">
           <%= render 'category_placement_nav' %>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" role="main">
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9" role="main">
             <% if @show_ads %>
                 <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
                 <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
             <div class="row">
                 <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
-
             </div>
         </div>
     <% end %>
 </div>
+
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
