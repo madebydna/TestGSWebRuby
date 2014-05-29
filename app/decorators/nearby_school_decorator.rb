@@ -6,10 +6,4 @@ class NearbySchoolDecorator < SchoolProfileDecorator
     h.link_to h.school_path(school), *args, &blk
   end
 
-  def photo(width, height)
-    link_to_overview do
-      super
-    end
-  end
-
 end
