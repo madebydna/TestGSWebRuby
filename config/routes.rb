@@ -6,7 +6,7 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
-  get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  # get '/gsr/home', as: :home_prototype, to: 'home#prototype'
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
