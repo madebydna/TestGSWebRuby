@@ -4,9 +4,10 @@ class Admin::DataLoadSchedulesController < ApplicationController
   before_filter :get_load_types
 
   def index
-    @status_filters = [:all, :complete, :incomplete]
-    @sorts = [:state,:released,:live_by]
+    @statuses = [:all, :complete, :incomplete, :acquired, :available].sort
+    @sorts = [:state,:released,:live_by, :priority]
     @loads = filter_and_sort_data_loads
+    @outstanding_loads = get_outstanding_loads if @view_type == 'calendar'
   end
 
   def new
@@ -29,17 +30,25 @@ class Admin::DataLoadSchedulesController < ApplicationController
 
   protected
 
+  def get_outstanding_loads
+
+  end
+
   def filter_and_sort_data_loads
     where_clause = ''
-    case @filter
-      when 'complete'
-        where_clause += 'complete = 1 and '
-      when 'incomplete'
-        where_clause += 'complete = 0 and '
+    if @status == 'incomplete'
+      where_clause += "status != 'complete' and "
+    elsif @status == 'available'
+      where_clause += "released < '#{Time.now.strftime("%Y-%m-%d")}' and status <> 'complete' and "
+    else
+      where_clause += "status = '#{@status}'" if @status and @status != 'all'
     end
     where_clause += "load_type = '#{@load_type}' and " if @load_type and @load_type != 'All'
     where_clause = where_clause.gsub(/^and /, '').gsub(/ and $/, '')
-    @loads = Admin::DataLoadSchedule.where(where_clause).select(&@sort_by.to_sym).sort_by(&@sort_by.to_sym)
+    #TODO For priority, do it by release, not live by exact date
+    sort_by = @sort_by == 'priority' ? 'live_by,local, tier' : @sort_by
+    @loads = Admin::DataLoadSchedule.joins('left outer join state ON state.state = data_load_schedule.state'
+                                          ).where(where_clause).order(sort_by)
   end
 
   def update_or_create_data_load(data_load,p)
@@ -58,7 +67,7 @@ class Admin::DataLoadSchedulesController < ApplicationController
 
   def get_params
     @sort_by = params[:sort_by] || 'live_by'
-    @filter = params[:filter_by] || nil
+    @status = params[:status] || 'complete'
     @load_type = params[:type] || nil
     @view_type = params[:view_type] || 'calendar'
   end
@@ -66,6 +75,7 @@ class Admin::DataLoadSchedulesController < ApplicationController
   def get_load_types
     @load_types = Admin::DataLoadSchedule.all.inject([]) { |types,h| types << h[:load_type] unless types.include?(h[:load_type]); types}
     @load_types.unshift 'All'
+    @load_types.sort!
   end
 
 end

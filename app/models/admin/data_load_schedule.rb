@@ -2,10 +2,12 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'data_load_schedule'
 
-  attr_accessible :state, :description,:load_type,:year_on_site,:year_to_load,:released,:acquired,:live_by,:complete,:updated,:updated_by
+  attr_accessible :state, :description,:load_type,:year_on_site,:year_to_load,:released,:acquired,:live_by,:complete, :status, :updated,:updated_by
 
   scope :complete, where('complete = 1')
   scope :incomplete, where('complete = 0')
+
+  belongs_to :state_attribute, foreign_key: 'state', class_name: 'State'
 
   before_save do
     if self.load_type =~ /osp/i
@@ -16,12 +18,21 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
   end
 
   def live_by_month
-    live_by = self.live_by
-    if live_by
-      if live_by.strftime("%d").to_i < 15
-        return "#{live_by.strftime("%B")} 1"
+    date_field_to_month(self.live_by)
+  end
+
+  def released_month
+    date_field_to_month(self.released)
+  end
+
+  protected
+
+  def date_field_to_month(date)
+    if date
+      if date.strftime("%d").to_i < 15
+        return "#{date.strftime("%B")} 1"
       else
-        return "#{live_by.strftime("%B")} 15"
+        return "#{date.strftime("%B")} 15"
       end
     end
   end
