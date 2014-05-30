@@ -17,7 +17,7 @@ describe LocalizedProfileController do
 
     it 'should set the correct cannonical url' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq("http://test.host/california/alameda/#{school.id}-Alameda-High-School/")
+      expect(assigns[:canonical_url]).to eq("http://localhost/california/alameda/#{school.id}-Alameda-High-School/")
     end
 
     it 'should set a PageConfig object' do

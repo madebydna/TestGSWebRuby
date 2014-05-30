@@ -78,7 +78,8 @@ Capybara::RSpecMatchers::HaveText.class_eval do
 end
 
 # If you change this you'll also need to change the value in test.rb
-Rails.application.routes.default_url_options[:host] = 'test.host'
+# Rails.application.routes.default_url_options[:host] = 'test.host'
+Rails.application.routes.default_url_options[:host] = 'localhost'
 Rails.application.routes.default_url_options[:trailing_slash] = true
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -156,7 +157,10 @@ RSpec.configure do |config|
 
   require 'socket'
   ip_address = IPSocket.getaddress(Socket.gethostname)
-  Capybara.default_host = "http://#{ip_address}:3000"
+  # Capybara.default_host = "http://test.host:3000"
+  # Capybara.app_host = "http://test.host:3000"
+  Capybara.default_host = "http://localhost:3000"
+  Capybara.app_host = "http://localhost:3000"
 
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above

@@ -42,13 +42,15 @@ LocalizedProfiles::Application.configure do
 
   # set host that rails should use when building absolute urls
   config.action_controller.default_url_options = {
-    host: 'test.host',
+    # host: 'test.host',
+    host: 'localhost',
     trailing_slash: true
   }
 
   # For setting up Devise.
   config.action_mailer.default_url_options = {
-    host: 'test.host'
+    # host: 'test.host'
+    host: 'localhost'
   }
 
   config.hub_mapping_cache_time = 60 * 24
