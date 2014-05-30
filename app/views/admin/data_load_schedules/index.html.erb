@@ -90,12 +90,13 @@
                     <%= load.description + ' ' + load.load_type %>
                   <% else %>
                     <%= load.load_type %>
-                    &
+                  &&nbsp;[L]
                     <%= load.load_type %>
                   <% end %>
                 </td>
               <% elsif load.live_by_month == "#{month} #{release}" %>
                 <td>
+                  [L]&nbsp;
                   <% if load.state =~ /all/i %>
                     <%= load.description + ' ' + load.load_type %>
                   <% else %>
