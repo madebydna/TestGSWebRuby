@@ -141,6 +141,7 @@ class CitiesController < ApplicationController
       }
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
+      set_enrollment_omniture_data
       render 'shared/enrollment'
     end
   end
@@ -177,17 +178,31 @@ class CitiesController < ApplicationController
       end
     end
 
-    def set_community_omniture_data
-      if @tab == 'Community'
-        page_name = "GS:City:EducationCommunity"
-        page_hier = "Home,CityHome,EducationCommunity"
+    def set_enrollment_omniture_data
+      if @tab == 'Preschools'
+        page_name = "GS:City:Enrollment"
+        page_hier = "Home,CityHome,Enrollment"
       else
-        page_name = "GS:City:EducationCommunity:#{@tab}"
-        page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
+        page_name = "GS:City:Enrollment:#{@tab[:key]}"
+        page_hier = "Home,CityHome,Enrollment,#{@tab[:key]}"
       end
 
       set_omniture_data(page_name, page_hier, @city.titleize)
     end
+     def set_community_omniture_data
+       if @tab == 'Community'
+         page_name = "GS:City:EducationCommunity"
+         page_hier = "Home,CityHome,EducationCommunity"
+       else
+         page_name = "GS:City:EducationCommunity:#{@tab}"
+         page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
+       end
+
+       set_omniture_data(page_name, page_hier, @city.titleize)
+     end
+
+
+
 
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
