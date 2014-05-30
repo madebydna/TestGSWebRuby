@@ -33,11 +33,25 @@ class RatingsConfiguration
   end
 
   def state_rating_data_type_ids
-    @state_rating_configuration.blank? ? [] : Array(@state_rating_configuration["overall"]["data_type_id"])
+    data_type_ids = []
+    if @state_rating_configuration.present?
+      data_type_ids = Array(@state_rating_configuration["overall"]["data_type_id"])
+      if @state_rating_configuration["rating_breakdowns"].present?
+        data_type_ids += @state_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
+      end
+    end
+    data_type_ids
   end
 
   def city_rating_data_type_ids
-    @city_rating_configuration.blank? ? [] : @city_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]} + Array(@city_rating_configuration["overall"]["data_type_id"])
+    data_type_ids = []
+    if @city_rating_configuration.present?
+      data_type_ids = Array(@city_rating_configuration["overall"]["data_type_id"])
+      if @city_rating_configuration["rating_breakdowns"].present?
+        data_type_ids += @city_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
+      end
+    end
+    data_type_ids
   end
 
   def prek_rating_data_type_ids

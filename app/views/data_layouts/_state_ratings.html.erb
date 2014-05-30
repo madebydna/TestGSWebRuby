@@ -7,16 +7,27 @@
         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
             <%=  render state_partial(@school.state), page:'quality', rating:data["state_rating"]["overall_rating"] %>
        </div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4>State Rating</h4>
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4><%= data["state_rating"]["state_rating_label"] %></h4>
             <p><%= data["state_rating"]["description"] %></p>
             <p><a  href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
-            <% if data["state_rating"]["methodology_url"] %>
-                <div class="dn well bg-white">
+
+          <% if (data["state_rating"]["rating_breakdowns"].present? ||  data["state_rating"]["methodology_url"].present? )%>
+            <div class="dn well bg-white">
+                <% if data["state_rating"]["rating_breakdowns"].present? %>
+                    <h5>Rating Breakdown</h5>
+                    <table class="table table-striped">
+                        <% data["state_rating"]["rating_breakdowns"].each do |key, value| %>
+                            <tr><td><%= key %></td><td><%= value %></td></tr>
+                        <% end %>
+                    </table>
+                <% end %>
+                <% if data["state_rating"]["methodology_url"].present? %>
                     <h5>Methodology</h5>
                     <a href="<%= data["state_rating"]["methodology_url"] %>" target="_blank">View more
-                        details on state site</a>
-                </div>
-            <% end %>
+                            details on state site</a>
+                <% end %>
+            </div>
+          <% end %>
         </div>
     </div>
 <% end %>
