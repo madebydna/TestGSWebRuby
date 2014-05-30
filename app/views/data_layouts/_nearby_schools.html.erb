@@ -1,6 +1,6 @@
   <% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
   <% if neighbors.size >= 4 %>
-    <div class="limit-width-1200 clearfix">
+    <div class="limit-width-1200 clearfix pam">
       <hr/>
       <div class="clearfix mbm">
         <div class="fl">
@@ -13,7 +13,7 @@
             <%= div_tag(class: 'pbm link-darkgray', sizes: { xs: 12, sm: 6, md: 3, lg: 3 }) do %>
               <div class="partner-carousel-image mam">
                 <div class="ma oh hidden-xs" style="width: 100%;">
-                  <%= neighbor.photo(400,150) %>
+                  <%= neighbor.photo(450,150) %>
                 </div>
                 <div class="pam">
                   <div class="clearfix">
@@ -24,11 +24,13 @@
                       <span class="open-sans_b">
                         <%= neighbor.name %>
                       </span>
+                      <br/>
+                      <%= neighbor.city_state %>
+                      <br/>
+                      <%= neighbor.type %> | <%= neighbor.process_level %>
                     </div>
                   </div>
-                  <%= neighbor.city_state %>
-                  <br/>
-                  <%= neighbor.type %> | <%= neighbor.process_level %>
+                  
                 </div>
               </div>
             <% end %>
