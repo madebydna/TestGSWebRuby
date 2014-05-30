@@ -183,8 +183,8 @@ class CitiesController < ApplicationController
         page_name = "GS:City:Enrollment"
         page_hier = "Home,CityHome,Enrollment"
       else
-        page_name = "GS:City:Enrollment:#{@tab[:key]}"
-        page_hier = "Home,CityHome,Enrollment,#{@tab[:key]}"
+        page_name = "GS:City:Enrollment:#{@tab[:key].titleize}"
+        page_hier = "Home,CityHome,Enrollment,#{@tab[:key].titleize}"
       end
 
       set_omniture_data(page_name, page_hier, @city.titleize)
