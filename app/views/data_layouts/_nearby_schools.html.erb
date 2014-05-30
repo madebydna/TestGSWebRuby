@@ -13,12 +13,15 @@
             <%= div_tag(class: 'pbm link-darkgray', sizes: { xs: 12, sm: 6, md: 3, lg: 3 }) do %>
               <div class="partner-carousel-image mam">
                 <div class="ma oh hidden-xs" style="width: 100%;">
-                  <%= neighbor.photo(450,150) %>
+                  <%= neighbor.street_view_photo(450,150) %>
                 </div>
                 <div class="pam">
                   <div class="clearfix">
                     <div class="fl prm">
+                    <% rating = neighbor.great_schools_rating %>
+                    <% if rating.present? && rating.to_i > 0 %>
                       <span class="vam iconx24-ratings i-24-ratings-<%= neighbor.great_schools_rating %>"></span>
+                    <% end %>
                     </div>
                     <div class="fl" style="width: 80%;">
                       <span class="open-sans_b">
