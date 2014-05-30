@@ -41,7 +41,7 @@ class Admin::DataLoadSchedulesController < ApplicationController
     elsif @status == 'available'
       where_clause += "released < '#{Time.now.strftime("%Y-%m-%d")}' and status <> 'complete' and "
     else
-      where_clause += "status = '#{@status}'" if @status and @status != 'all'
+      where_clause += "status = '#{@status}' and " if @status and @status != 'all'
     end
     where_clause += "load_type = '#{@load_type}' and " if @load_type and @load_type != 'All'
     where_clause = where_clause.gsub(/^and /, '').gsub(/ and $/, '')

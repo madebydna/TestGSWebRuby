@@ -18,20 +18,36 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
   end
 
   def live_by_month
-    date_field_to_month(self.live_by)
+    date = self.live_by
+    if date
+      if date.strftime("%d").to_i > 15
+        return "#{date.strftime("%B")} 1"
+      else
+        date -= 1.month
+        return "#{date.strftime("%B")} 15"
+      end
+    end
   end
 
   def released_month
-    date_field_to_month(self.released)
-  end
-
-  protected
-
-  def date_field_to_month(date)
+    date = self.released
     if date
       if date.strftime("%d").to_i < 15
         return "#{date.strftime("%B")} 1"
       else
+        return "#{date.strftime("%B")} 15"
+      end
+    end
+  end
+
+  protected
+
+  def date_field_to_month(date,options={})
+    if date
+      if date.strftime("%d").to_i > 15
+        return "#{date.strftime("%B")} 1"
+      else
+        date -= 1.month
         return "#{date.strftime("%B")} 15"
       end
     end
