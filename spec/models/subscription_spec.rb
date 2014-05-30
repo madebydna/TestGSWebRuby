@@ -17,4 +17,18 @@ describe Subscription do
     end
   end
 
+  describe '.have_available?' do
+    context 'when a subscription exists' do
+      before { stub_const("Subscription::SUBSCRIPTIONS", {greatnews: true}) }
+      it 'should return true' do
+        expect(Subscription.have_available?(:greatnews)).to be_truthy
+      end
+    end
+    context 'when a subscription does not exist' do
+      before { stub_const("Subscription::SUBSCRIPTIONS", {}) }
+      it 'should return false' do
+        expect(Subscription.have_available?(:greatnews)).to be_falsey
+      end
+    end
+  end
 end

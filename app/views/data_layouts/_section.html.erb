@@ -1,13 +1,16 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this section %>
 
 <% begin %>
-    <% children = @page_config.category_placement_children_with_data category_placement %>
-    <% if children.any? && category_placement.title.present? %>
-        <div class="row">
-           <%= render "shared/section_header", category_placement:category_placement %>
-           <%= render partial: 'category_placement', collection: children, as: :category_placement %>
-        </div>
+  <% children = @page_config.category_placement_children_with_data category_placement %>
+  <% if children.any? && category_placement.title.present? %>
+    <% partial_collection_markup = render partial: 'category_placement', collection: children, as: :category_placement %>
+    <% if partial_collection_markup.present? %>
+      <div class="row">
+        <%= render "shared/section_header", category_placement: category_placement %>
+        <%= partial_collection_markup %>
+      </div>
     <% end %>
+  <% end %>
 
 <% rescue => e %>
     <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>

@@ -13,8 +13,8 @@ describe City do
       cities1 = City.popular_cities('IN', limit: 3).to_a
       cities2 = City.popular_cities('IN', limit: 5).to_a
 
-      expect(cities1).to have(3).items
-      expect(cities2).to have(5).item
+      expect(cities1.size).to eq(3)
+      expect(cities2.size).to eq(5)
     end
   end
 end

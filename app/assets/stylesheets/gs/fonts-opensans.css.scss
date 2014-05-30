@@ -2,9 +2,9 @@
   font-family: 'opensans-italic';
   src:  url('opensans-italic-webfont.eot?');
   src:  local('?'),
-  url('opensans-italic-webfont.woff') format('woff'),
-  url('opensans-italic-webfont.ttf')  format('truetype'),
-  url('opensans-italic-webfont.svg#opensans-semibold') format('svg');
+  asset-url('opensans-italic-webfont.woff') format('woff'),
+  asset-url('opensans-italic-webfont.ttf')  format('truetype'),
+  asset-url('opensans-italic-webfont.svg#opensans-semibold') format('svg');
   font-weight: 400;
   font-style: italic;
 }
@@ -13,9 +13,9 @@
   font-family: 'opensans-semibold';
   src:  url('opensans-semibold-webfont.eot?');
   src:  local('?'),
-  url('opensans-semibold-webfont.woff') format('woff'),
-  url('opensans-semibold-webfont.ttf')  format('truetype'),
-  url('opensans-semibold-webfont.svg#opensans-semibold') format('svg');
+  asset-url('opensans-semibold-webfont.woff') format('woff'),
+  asset-url('opensans-semibold-webfont.ttf')  format('truetype'),
+  asset-url('opensans-semibold-webfont.svg#opensans-semibold') format('svg');
   font-weight: 400;
   font-style: normal;
 }
@@ -24,9 +24,9 @@
   font-family: 'opensans-regular';
   src:  url('opensans-regular-webfont.eot?');
   src:  local('?'),
-  url('opensans-regular-webfont.woff') format('woff'),
-  url('opensans-regular-webfont.ttf')  format('truetype'),
-  url('opensans-regular-webfont.svg#opensans-semibold') format('svg');
+  asset-url('opensans-regular-webfont.woff') format('woff'),
+  asset-url('opensans-regular-webfont.ttf')  format('truetype'),
+  asset-url('opensans-regular-webfont.svg#opensans-semibold') format('svg');
   font-weight: 400;
   font-style: normal;
 }
@@ -35,9 +35,9 @@
   font-family: 'opensans-bold';
   src:  url('opensans-bold-webfont.eot?');
   src:  local('?'),
-  url('opensans-bold-webfont.woff') format('woff'),
-  url('opensans-bold-webfont.ttf')  format('truetype'),
-  url('opensans-bold-webfont.svg#opensans-semibold') format('svg');
+  asset-url('opensans-bold-webfont.woff') format('woff'),
+  asset-url('opensans-bold-webfont.ttf')  format('truetype'),
+  asset-url('opensans-bold-webfont.svg#opensans-semibold') format('svg');
   font-weight: 400;
   font-style: normal;
 }

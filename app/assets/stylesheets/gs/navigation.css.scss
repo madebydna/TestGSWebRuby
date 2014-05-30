@@ -17,8 +17,6 @@
 }
 
 #navigation2 nav{
-
-//  border-top: #e5a421 3px solid;
   background-color: #ffb725;
   text-align: center;
   padding-top: 8px;
@@ -48,25 +46,19 @@
   }
 }
 
-#mobile-header {
-  display: none;
-  float: left;
+.bg-dark-blue {
+  background-color: #005878;
 }
 
 @media only screen and (max-width: 767px) {
-
-  #mobile-header {
-    display: block;
-  }
-
   #navigation {
     display: none;
   }
 
   #navigation2 {
     li {
-      font-size:.875em;
       a {
+        font-size:.875em;
         padding: 10px 10px 8px 10px;
       }
     }
@@ -81,17 +73,8 @@
   .margin-top-mobile {
     padding-top: 10px;
   }
-
-  .hide_for_mobile{
-    display: none;
-  }
-
 }
 @media only screen and (min-width: 767px) {
-
-  #mobile-header {
-    display: none;
-  }
   .sub-navigation { display: none;}
 
   #navigation {
@@ -105,33 +88,12 @@
       list-style-type: none;
       display: inline;
       margin-left: 20px;
-      font-size:1.125em;
+      font-size: 1.125em;
     }
   }
 }
-/* line 56, c:/Sites/omega/bootstrapLP/app/assets/stylesheets/resources/navigation.css.scss */
-//#gsGlobalNavigation.affix {
-//  position: fixed;
-//  top: 0;
-//  width: 100%;
-//  z-index: 10;
-//}
 
-@media only screen and (min-width: 1200px) {
-  .limit_width_1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
-}
-
-@media only screen and (min-width: 950px) {
-  .topnav_float {
-    float: right;
-  }
-}
-@media only screen and (min-width: 650px) {
-  .header_title_width{
-    width: 75%;
-  }
-}
-.thumbnail_border{
+.thumbnail-border {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
@@ -140,13 +102,14 @@
   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.4);
   box-shadow: 0 1px 1px rgba(0,0,0,0.4);
 }
+
 #navigation2-blank {
   border-top: #e5a421 3px solid;
   background-color: #ffb725;
   padding-left: 0px;
-
 }
-.header_bg_color {
+
+.header-bg-color {
   background-color: #F4F4F4;
 }
 
@@ -154,5 +117,97 @@
   z-index:1; position:relative;
 }
 
+.enrollment-tabs {
+  list-style-type: none;
+  margin-top: 20px;
+  padding-left: 0;
+
+  li {
+    display: inline;
+    @extend .mhm;
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+    a {
+      color: #666;
+      border-radius: 5px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+      background: #eee;
+    }
+
+    &.active a {
+      background: #666;
+      color: white;
+    }
+  }
+}
+
+.education-community-tabs {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    width: auto;
+    white-space: nowrap;
+    border-radius: 40px;
+    padding: 0 24px;
+    font: bold 1em/2.75em Arial,Helvetica,sans-serif;
+    background: #fff;
+    color: $brand-primary;
+    border: 0;
+    box-shadow: none;
+    margin: 0 5px;
+  }
+
+  li:hover {
+    background-color: $gray-light;
+  }
+
+  li.active {
+    background: $brand-primary;
+    a { color: #fff; }
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
 
 
+@media only screen and (min-width: 1200px) {
+  .limit-width-1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
+}
+
+@media only screen and (min-width: 950px) {
+  .topnav-float {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .enrollment-tabs {
+    li, li a {
+      display: block;
+    }
+  }
+}
+
+@media only screen and (min-width: 650px) {
+  .header-title-width {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .education-community-tabs {
+    list-style-type: none;
+    li {
+      display: list-item;
+    }
+  }
+}

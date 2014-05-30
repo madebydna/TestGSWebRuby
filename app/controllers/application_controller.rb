@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include UrlHelper
 
   before_filter :login_from_cookie, :init_omniture
+  before_filter :set_optimizely_gon_env_value
 
   after_filter :disconnect_connection_pools
 
@@ -26,6 +27,7 @@ class ApplicationController < ActionController::Base
     url.sub! /\.page\/(\?|$)/, '.page\1'
     url
   end
+  ApplicationController.send :public, :url_for
 
   def disconnect_connection_pools
     return unless @school.present? && request.env['rack_after_reply.callbacks']
@@ -163,6 +165,10 @@ class ApplicationController < ActionController::Base
     gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
   end
 
+  def set_optimizely_gon_env_value
+    gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
   # get Page name in PageConfig, based on current controller action
   def configured_page_name
     # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
@@ -205,5 +211,15 @@ class ApplicationController < ActionController::Base
     description_method = "#{method_base}_description".to_sym
     keywords_method = "#{method_base}_keywords".to_sym
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
+
+  def set_omniture_data(page_name, page_hier, locale = nil)
+    set_omniture_data_for_user_request
+    gon.pagename = page_name
+    gon.omniture_pagename = page_name
+    gon.omniture_hier1 = page_hier
+    gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+    gon.omniture_sprops['locale'] = locale
+    gon.omniture_channel = @state[:short].try(:upcase)
   end
 end

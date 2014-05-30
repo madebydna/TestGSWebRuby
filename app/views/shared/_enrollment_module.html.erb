@@ -4,8 +4,8 @@
       <h3 class='mtn'><%= enrollment_module[type][:header] %></h3>
       <%= enrollment_module[type][:content].html_safe %>
       <% unless enrollment_module[type][:view_more].nil? %>
-        <div class='js-module-expand'><%= enrollment_module[type][:view_more].html_safe %></div>
-        <span class="view-more">View More »</span>
+        <div class='oh'><%= enrollment_module[type][:view_more].html_safe %></div>
+        <a href='javascript:void(0)' class="js-view-more">View More »</a>
       <% end %>
     <% else %>
       <h3>Something went wrong while parsing enrollment module tab:<%= @tab[:key] %></h3>
@@ -13,10 +13,10 @@
   </div>
 
   <div class="col-sm-4 col-lg-4 mbm">
-    <% unless tab[:results][type][:count] == 0 %>
+    <% unless tab.seek(:results, type, :count) == 0 or tab.seek(:results, type, :count).nil? %>
       <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
         <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
-        <span class='breakdown-result-count'><%= tab[:results][type][:count] %></span>
+        <span class='inverted-text breakdown-result-count'><%= tab[:results][type][:count] %></span>
       </a>
     <% end %>
 
@@ -28,7 +28,7 @@
 
     <% unless @tips[type][:content].empty? %>
       <hr class='brand-bar'>
-      <span class="pull-left iconx16 i-16-did-you-know" style="verticle-align: middle;"></span>
+      <span class="pull-left iconx16 i-16-did-you-know vam"></span>
       <h4>Did You know?</h4>
       <% if @tips[type][:content].length == 1 %>
         <p><%= @tips[type][:content][0].html_safe %></p>

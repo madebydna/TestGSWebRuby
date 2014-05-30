@@ -372,7 +372,7 @@ describe CollectionConfig do
     it 'sets sponsor data' do
       expect(result[:data]).to_not be_nil
       expect(result[:data]).to be_an_instance_of(Array)
-      expect(result[:data]).to have(1).partner
+      expect(result[:data].size).to eq(1)
     end
 
     it 'adds the cdn host to each image' do
@@ -388,7 +388,7 @@ describe CollectionConfig do
       it 'returns links' do
         result = CollectionConfig.choosing_page_links(configs)
         expect(result).to be_an_instance_of(Array)
-        expect(result).to have(4).links
+        expect(result.size).to eq(4)
       end
     end
 
@@ -761,7 +761,62 @@ describe CollectionConfig do
 
       it 'parses browse links' do
         expect(result).to be_an_instance_of(Array)
-        expect(result).to have(7).items
+        expect(result.size).to eq(7)
+      end
+    end
+  end
+
+  describe '.programs_heading' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_heading }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_heading_config)] }
+      let(:heading) { CollectionConfig.programs_heading(configs) }
+
+      it 'returns the programs heading' do
+        expect(heading).to start_with 'What makes a great after'
+      end
+    end
+  end
+
+  describe '.programs_intro' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_intro }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:key) { CollectionConfig::PROGRAMS_INTRO_KEY }
+      let(:method) { :programs_intro }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_intro_config)] }
+      let(:result) { CollectionConfig.programs_intro(configs) }
+
+      it 'returns the intro section html blob' do
+        expect(result[:content]).to start_with 'Quality after-school and summer learning'
+      end
+    end
+  end
+
+  describe '.programs_sponsor' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_sponsor }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:method) { :programs_sponsor }
+      let(:key) { CollectionConfig::PROGRAMS_SPONSOR_KEY }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_sponsor_config)] }
+      let(:result) { CollectionConfig.programs_sponsor(configs) }
+
+      it 'parses the programs page sponsor' do
+        expect(result[:logo]).to eq('hubs/after_school_programs.png')
       end
     end
   end

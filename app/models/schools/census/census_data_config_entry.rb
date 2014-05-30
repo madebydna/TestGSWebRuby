@@ -5,6 +5,7 @@ class CensusDataConfigEntry < ActiveRecord::Base
 
   def self.for_data_set(shard, census_data_set)
     configs = data_type_to_configs(shard)[census_data_set.data_type_id] || []
+    configs = configs.clone
     configs.select! do |config|
 
       (

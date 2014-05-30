@@ -1,7 +1,6 @@
 class SchoolMetadata < ActiveRecord::Base
   include StateSharding
   self.table_name = 'school_metadata'
-  self.primary_keys = :school_id, :meta_key
 
   belongs_to :school
 

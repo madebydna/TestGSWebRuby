@@ -1,6 +1,13 @@
 if(gon.pagename == 'signin/new'){
 
     $(function () {
+        
+        if (location.hash.substr(1) == "join") {
+            $('.tab-pane').button('toggle');
+            $('.js-login-tab').button('toggle');
+            $('.js-join-tab').button('toggle');
+        }
+
         $('#js_login_tab').on('click',function(){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
@@ -9,9 +16,10 @@ if(gon.pagename == 'signin/new'){
             omnitureObject.pageName = 'GS:Admin:Login';
             omnitureObject.hier1 = 'Account,LogIn';
             sendToOmniture(omnitureObject);
+            location.hash = '';
         });
 
-        $('#js_signin_tab').on('click',function(){
+        $('#js_join_tab').on('click',function(){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.
@@ -19,6 +27,7 @@ if(gon.pagename == 'signin/new'){
             omnitureObject.pageName = 'GS:Admin:CreateAccount';
             omnitureObject.hier1 = 'Account,SignUp';
             sendToOmniture(omnitureObject);
+            location.hash = '#join';
         });
 
         var sendToOmniture = function(omnitureObject){

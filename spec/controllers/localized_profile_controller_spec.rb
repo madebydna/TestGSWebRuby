@@ -17,7 +17,7 @@ describe LocalizedProfileController do
 
     it 'should set the correct cannonical url' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq("http://test.host/california/alameda/#{school.id}-Alameda-High-School/")
+      expect(assigns[:canonical_url]).to eq("http://localhost/california/alameda/#{school.id}-Alameda-High-School/")
     end
 
     it 'should set a PageConfig object' do
@@ -43,7 +43,7 @@ describe LocalizedProfileController do
 
     it 'should convert a full state name to a state abbreviation' do
       get action, controller.view_context.school_params(school)
-      expect(assigns[:state]).to eq({ 'long' => 'california', 'short' => 'ca' })
+      expect(assigns[:state]).to eq({ long: 'california', short: 'ca' })
     end
 
   end
@@ -67,7 +67,7 @@ describe LocalizedProfileController do
     end
 
     it 'should set the list of reviews' do
-      reviews = [ mock_model(SchoolRating) ]
+      reviews = [ instance_double(SchoolRating) ]
       expect(school).to receive(:reviews_filter).and_return(reviews)
       get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews]).to eq(reviews)

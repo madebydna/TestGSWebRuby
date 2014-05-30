@@ -63,7 +63,8 @@ def clean_models(db, *models)
 
   models.each do |model|
     if db
-      model.on_db(db).destroy_all
+      model.connection.execute("TRUNCATE #{model.table_name}")
+      #model.on_db(db).destroy_all
     else
       model.destroy_all
     end
@@ -77,7 +78,8 @@ Capybara::RSpecMatchers::HaveText.class_eval do
 end
 
 # If you change this you'll also need to change the value in test.rb
-Rails.application.routes.default_url_options[:host] = 'test.host'
+# Rails.application.routes.default_url_options[:host] = 'test.host'
+Rails.application.routes.default_url_options[:host] = 'localhost'
 Rails.application.routes.default_url_options[:trailing_slash] = true
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -112,8 +114,20 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  # Use color in STDOUT
-  config.color_enabled = true
+  # RSpec Rails can automatically mix in different behaviours to your tests
+  # based on their file location, for example enabling you to call `get` and
+  # `post` in specs under `spec/controllers`.
+  #
+  # You can disable this behaviour by removing the line below, and instead
+  # explictly tag your specs with their type, e.g.:
+  #
+  #     describe UsersController, :type => :controller do
+  #       # ...
+  #     end
+  #
+  # The different available types are documented in the features, such as in
+  # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
+  config.infer_spec_type_from_file_location!
 
   # Use color not only in STDOUT but also in pagers and files
   config.tty = true
@@ -143,7 +157,10 @@ RSpec.configure do |config|
 
   require 'socket'
   ip_address = IPSocket.getaddress(Socket.gethostname)
-  Capybara.default_host = "http://#{ip_address}:3000"
+  # Capybara.default_host = "http://test.host:3000"
+  # Capybara.app_host = "http://test.host:3000"
+  Capybara.default_host = "http://localhost:3000"
+  Capybara.app_host = "http://localhost:3000"
 
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above

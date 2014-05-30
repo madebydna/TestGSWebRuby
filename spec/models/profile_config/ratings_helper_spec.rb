@@ -45,7 +45,7 @@ describe RatingsHelper do
 
   #There is a configuration and rating results.
   it 'should return overall state rating but no description' do
-    state_rating_config = JSON.parse('{"overall":{"data_type_id":197,"description_key":"mi_state_accountability_summary"}}')
+    state_rating_config = JSON.parse('{"overall":{"data_type_id":197,"description_key":"mi_state_accountability_summary","label":"state rating"}}')
 
     ratings_config = RatingsConfiguration.new(nil, state_rating_config, nil, nil)
     rating_results = build_rating_results_for_state
@@ -55,12 +55,12 @@ describe RatingsHelper do
     #There is no description
     allow(DataDescription).to receive(:lookup_table).and_return({})
 
-    expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>nil})
+    expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>nil,"state_rating_label"=>"state rating"})
   end
 
   #There is a configuration and rating results.
   it 'should return overall state rating and description' do
-    state_rating_config = JSON.parse('{"overall":{"data_type_id":197,"description_key":"mi_state_accountability_summary"}}')
+    state_rating_config = JSON.parse('{"overall":{"data_type_id":197,"description_key":"mi_state_accountability_summary","label":"state rating"}}')
     ratings_config = RatingsConfiguration.new(nil, state_rating_config, nil, nil)
     rating_results = build_rating_results_for_state
 
@@ -69,8 +69,25 @@ describe RatingsHelper do
     #There is a description
     allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_state_accountability_summary"] => "some summary"})
 
-    expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary"})
+    expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1", "description"=>"some summary","state_rating_label"=>"state rating"})
   end
+
+
+  #There is configuration and rating results.
+  it 'should return overall state rating, breakdown ratings, description and label' do
+    state_rating_config = JSON.parse('{"rating_breakdowns":{"standards_met":{"data_type_id": 219,"label": "Standards Met"},"performance index":{"data_type_id":220,"label": "Performance Index"}},"overall":{"data_type_id":201,"label": "Awesome Test","description_key": "mi_state_summary"}}')
+    ratings_config = RatingsConfiguration.new(nil, state_rating_config, nil, nil)
+    rating_results = build_rating_results_for_state_with_breakdowns
+
+    ratings_helper = RatingsHelper.new(rating_results,ratings_config)
+
+    #There is a description
+    allow(DataDescription).to receive(:lookup_table).and_return({[school.state.upcase,"mi_state_summary"] => "some summary"})
+
+    expect(ratings_helper.construct_state_ratings(school)).to eq({"overall_rating"=>"1",
+                                                                 "description"=>"some summary", "state_rating_label"=>"Awesome Test", "rating_breakdowns"=>{"Performance Index"=>"1", "Standards Met"=>"1"}})
+  end
+
 
   #Using factory girl to build the results and then converting into Json to emulate the school cache table.
   def build_rating_results_for_state
@@ -81,6 +98,17 @@ describe RatingsHelper do
       rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
     end
 
+    JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
+  end
+
+  #Using factory girl to build the results and then converting into Json to emulate the school cache table.
+  def build_rating_results_for_state_with_breakdowns
+    rating_results = []
+
+    state_rating_data_type_ids = [201,219,220]
+    state_rating_data_type_ids.each do |data_type_id|
+      rating_results += FactoryGirl.build_list(:ratings_test_data_set, 1, data_type_id: data_type_id)
+    end
     JSON.parse(rating_results.to_json(:methods => [:school_value_text,:school_value_float]))
   end
 

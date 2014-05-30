@@ -1,0 +1,159 @@
+.hub-hero-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: 50% 100%;
+}
+
+.hub-hero-bg {
+  background: rgba(0, 0, 0, 0.62);
+  border-radius: 3px;
+  width: 940px;
+  margin: 50px auto auto auto;
+  padding: 35px;
+}
+
+.sponsor-bar {
+  top: 58px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.lg-search-bar {
+  width: 350px;
+}
+
+.clear-cookies-link {
+  color: #ddd;
+  clear: left;
+}
+
+.clear-cookies-link:hover {
+  color: #fff;
+}
+
+.school-breakdown {
+  ul {
+    list-style-type: none;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.search-type-toggle {
+  div:hover {
+    cursor: pointer;
+
+    span {
+      color: white;
+    }
+  }
+
+  div:first-child:hover, div:first-child.selected {
+    div.location-icon {
+      background-position: -16px -16px;
+    }
+  }
+
+  div:last-child:hover, div:last-child.selected {
+    div.home-icon {
+      background-position: -16px 0;
+    }
+  }
+
+  div.selected {
+    span {
+      color: white;
+    }
+  }
+
+  span {
+    color: #DDD;
+    cursor: pointer;
+  }
+}
+
+.state-hub-search-button {
+  height: 47px;
+  background: $blue-dark;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  padding: 0px 20px;
+}
+
+
+@media only screen and (max-width: 990px) {
+  .hub-hero-bg {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    border-radius: none;
+  }
+  .search-hero-heading {
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+  }
+
+  .search-type-toggle {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .school-breakdown {
+    background: white;
+    padding: 20px 20px 0 20px;
+    margin-left: -35px;
+    margin-bottom: -35px;
+    overflow: hidden;
+    width: 150%;
+    h4 {
+      color: black;
+    }
+
+    button {
+      color: $blue-dark;
+    }
+  }
+
+  .lg-search-bar {
+    width: 70%;
+    height: 40px;
+  }
+
+  .state-hub-search-button {
+    width: 22%;
+    height: 41px;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .lg-search-bar {
+    height: 38px;
+  }
+  .state-hub-search-button {
+    height: 39px;
+  }
+}
+
+
+@media only screen and (max-width: 480px) {
+  .sponsor-bar {
+    padding-top: 0;
+    img {
+      width: 25%;
+    }
+  }
+}

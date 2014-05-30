@@ -1,23 +1,9 @@
-///////////////MS
-//////////// used for h4 h5 h6
-
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font-weight-bold; }
-
-.bottom {margin-bottom:0;padding-bottom:0;}
 
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
 .font-size-small {font-size: $font-size-small}
-
-.small {
-  font: normal 12px/20px Arial,Helvetica,sans-serif;
-  margin-bottom: 20px;
-}
-
-.medium-bold {
-  font: bold 13px/20px Arial,Helvetica,sans-serif;
-}
 
 .search-text {
   height: 46px;
@@ -26,10 +12,6 @@ h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font
   padding-left: 8px;
   border: 1px solid #b8b8b8;
   border-radius: 3px;
-}
-
-h2 {
-  font: 28px 'opensans-regular' Arial,Helvetica,sans-serif;
 }
 
 p, a {
@@ -42,33 +24,81 @@ p, a {
   h1,h2,h3,h4,h5,h6{color:$gray-dark}
   hr {border-color: #444;}
   ul {@extend .list-unstyled;}
-  .contact_content {color: #FFFFFF; font-size: 16px;}
+  .contact-content {color: #FFFFFF; font-size: 16px;}
   &.bg-darker {background-color: #2b2b2b}
 }
 
-.best_known_for {
+.best-known-for {
   font-size: $font-size-block;
 }
 
-.stat_block_number {
+.stat-block-number {
   font-family: $font-family-base;
   font-size: $font-size-block;
 }
+
+.text_fff { color: #ffffff}
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
   h2{font-size:22px; font-family: $headings-font-family-bold}
   .best_known_for{font-size: 20px}
+
 }
 
-@media (min-width:481px) and (max-width:768){
+.advertisement-text {
+  width: 100px;
+  color: $gray-dark;
+  font-size: 12px;
+}
+
+.link-darkgray {
+  color: #3d3d3d;
+}
+
+.brand-secondary {
+  color: $brand-secondary;
+}
+
+.gray-dark {
+  color: $gray-dark;
+}
+
+.gray-light {
+  color: $gray-light;
+}
+
+.inverted-text {
+  color: white;
+}
+
+.inverted-text:hover {
+  color: white;
+}
+
+.jumbo-header {
+  font-size: 62px;
+}
+
+.bg-white { background-color: #FFFFFF; }
+.bg-light-gray { background-color: $well-bg; }
+
+.tdn { text-decoration: none; }
+
+@media (max-width:480px) {
+  h1 { font-size:26px; font-family: $headings-font-family-bold; }
+  h2 { font-size:22px; font-family: $headings-font-family-bold; }
+  .best-known-for { font-size: 20px; }
+}
+
+@media (min-width:481px) and (max-width:768) {
   h1{font-size:32px;}
   h2{font-size:26px;}
-  .best_known_for{font-size: 22px}
-}
-.advertisement_text{
-  width: 100px; color: #999999; font-size: 12px;
+  .best-known-for{font-size: 22px}
 }
 
-.link_darkgray{color:#3d3d3d}
-
+@media only screen and (min-width: 768px) {
+  .lar {
+    text-align: right;
+  }
+}

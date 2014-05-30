@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class='mha' style='width: 170px;'>All events</h1>
+  <h1 class='mha tac'>All events</h1>
   <% if events.nil? %>
     <h3>Something went wrong while parsing important events, collection_id: <%= @collection_id %>, quay: <%= CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY %> </h3>
   <% elsif !events.empty? %>
@@ -8,14 +8,14 @@
         <hr>
         <div class="pull-left mhm iconx48 i-48-calender-month-<%= event[:date].month %>">
           <div class="tac" style='margin-top: 18px;'>
-            <h4 style='margin-bottom: -4px; font-size: 15px;'><%= event[:date].day %></h4>
+            <h4 style='margin-bottom: -10px; font-size: 15px;'><%= event[:date].day %></h4>
             <small style='font-size: 10px;'><%= event[:date].year %></small>
           </div>
         </div>
         <div>
           <span><%= event[:description] %></span>
           <br>
-          <%= link_to 'Find out more', event[:url], class: 'small' %>
+          <%= link_to 'Find out more', event[:url] %>
         </div>
       </div>
     <% end %>

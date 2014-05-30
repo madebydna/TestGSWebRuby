@@ -2,17 +2,17 @@
   <% partners = show_tabs ? @partners[@tab] : @partners.values.flatten %>
   <% partners.each do |partner| %>
     <div class="row">
-      <div class="community-partner-row phm">
+      <div class="community-partner-row phm col-xs-12 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
         <hr>
-        <%= image_tag(partner[:logo], alt: 'Partner logo', class: 'mbm') %>
-        <div>
+        <%= image_tag(partner[:logo], alt: 'Partner logo', class: 'mrl mbm pull-left') %>
+        <div class='oa'>
           <h3 class='mtn'><%= partner[:heading] %></h3>
           <p><%= partner[:description] %></p>
           <% partner[:links].each do |link| %>
             <% if link[:newwindow] == 'true' %>
-              <%= link_to(link[:heading], link[:url], class: 'small', target: 'blank') %>
+              <%= link_to(link[:heading], link[:url], target: 'blank') %>
             <% else %>
-              <%= link_to(link[:heading], link[:url], class: 'small') %>
+              <%= link_to(link[:heading], link[:url]) %>
             <% end %>
           <% end %>
         </div>

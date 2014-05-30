@@ -3,7 +3,7 @@ class TestDataSet < ActiveRecord::Base
   include StateSharding
   include LookupDataPreloading
 
-  attr_accessible :active, :breakdown_id, :data_type_id, :display_target, :grade, :proficiency_band_id, :school_decile_tops, :subject_id, :year
+  attr_accessible :active, :breakdown_id, :data_type_id, :display_target, :grade, :level_code, :proficiency_band_id, :school_decile_tops, :subject_id, :year
 
   has_many :test_data_school_values, class_name: 'TestDataSchoolValue', foreign_key: 'data_set_id'
   has_many :test_data_state_values, class_name: 'TestDataStateValue', foreign_key: 'data_set_id'
@@ -15,6 +15,7 @@ class TestDataSet < ActiveRecord::Base
            to: :test_data_school_value, prefix: 'school', allow_nil: true
 
   preload_all :test_data_type, :as => :test_data_type, :foreign_key => :data_type_id
+
   def display_name
     test_data_type.display_name
   end
@@ -23,44 +24,15 @@ class TestDataSet < ActiveRecord::Base
     test_data_school_values[0] if test_data_school_values.any?
   end
 
-  def level_code_str
-     read_attribute(:level_code)
-  end
-
-  def level_code
-    LevelCode.new(level_code_str)
-  end
-
-  def self.fetch_data_sets_and_values(school, breakdown_id, active)
-    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as ds_id,TestDataStateValue.value_float as state_val_float, TestDataStateValue.value_text as state_val_text,
-                          TestDataSchoolValue.value_float as school_val_float, TestDataSchoolValue.value_text as school_val_text")
+  def self.fetch_test_scores(school, breakdown_id, active)
+    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as data_set_id,TestDataStateValue.value_float as state_value_float, TestDataStateValue.value_text as state_value_text,
+                          TestDataSchoolValue.value_float as school_value_float, TestDataSchoolValue.value_text as school_value_text")
                       .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-                      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,
-                             TestDataSchoolValue: {school_id: school.id, active: active}).where("display_target like '%desktop%' ")
+                      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,active: active,
+                             TestDataSchoolValue: {school_id: school.id, active: active})
+                      .with_display_target('desktop')
                       .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
 
-  end
-
-  def self.fetch_test_scores(school)
-    results = TestDataSet.fetch_data_sets_and_values(school, 1, 1)
-
-    #convert into a custom map to make rspec testing easier
-    results_array = results.map do |result|
-      {test_data_type_id: result.data_type_id,
-       test_data_set_id: result.ds_id,
-       grade: result.grade,
-       level_code: result.level_code,
-       subject_id: result.subject_id,
-       year: result.year,
-       school_value_text: result.school_val_text,
-       school_value_float: result.school_val_float,
-       state_value_text: result.state_val_text,
-       state_value_float: result.state_val_float,
-       breakdown_id: result.breakdown_id,
-       number_tested: result.number_tested
-      }
-    end
-    results_array
   end
 
   def self.lookup_subject
@@ -94,12 +66,12 @@ class TestDataSet < ActiveRecord::Base
   end
 
 
-  scope :with_display_target, lambda { |display_target|
+  scope :with_display_target, ->(display_target) {
     where('display_target like ?',"%#{display_target}%") }
 
-  scope :with_no_subject_breakdowns, where(subject_id: 1)
+  scope :with_no_subject_breakdowns, -> { where(subject_id: 1) }
 
-  scope :active, where(active: 1)
+  scope :active, -> { where(active: 1) }
 
   def self.ratings_for_school school
     TestDataSet.on_db(school.shard).active

@@ -25,9 +25,9 @@ class StatesController < ApplicationController
 
       @articles = CollectionConfig.state_featured_articles(configs)
 
-      @hero_image = "/assets/hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile  = "/assets/hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      set_omniutre_data
+      @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+      @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+      set_omniture_data('GS:State:Home', 'Home,StateHome')
     end
   end
 
@@ -86,15 +86,6 @@ class StatesController < ApplicationController
   end
 
   private
-    def set_omniutre_data
-      set_omniture_data_for_user_request
-      gon.pagename ='GS:State:Home'
-      gon.omniture_pagename ='GS:State:Home'
-      gon.omniture_hier1 = 'Home,StateHome'
-      gon.omniture_sprops['localPageName'] = gon.omniture_pagename
-      gon.omniture_channel = @state[:short].try(:upcase)
-    end
-
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@state[:long]}-active:1"
       Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do

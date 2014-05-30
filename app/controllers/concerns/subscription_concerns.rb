@@ -15,10 +15,10 @@ module SubscriptionConcerns
         school = nil
       end
       #raise 'Subscription could not be added since a list was not provided.' if list.nil?
-      unless current_user.has_subscription?('greatnews', nil)
-        current_user.add_subscription!('greatnews', school)
+      unless current_user.has_subscription?('greatnews')
+        current_user.add_subscription!('greatnews')
       end
-      unless current_user.has_subscription?(list,school)
+      if Subscription.have_available?(list) && !current_user.has_subscription?(list,school)
         current_user.add_subscription!(list, school)
         set_omniture_events_in_cookie(['review_updates_mss_end_event'])
         set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'SignUpForUpdates'})

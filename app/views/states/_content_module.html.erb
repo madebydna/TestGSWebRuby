@@ -1,17 +1,18 @@
 <% unless content_modules.nil? %>
-  <div class='js-content-modules'>
-    <% content_modules.each do |content_module| %>
-    <div class="limit_width_1200">
-      <div class="col-xs-12 fn">
-        <h3 style='margin-bottom: 13px; margin-top: 40px;'><%= content_module[:heading] %></h3>
-        <p><%= content_module[:description].html_safe %></p>
-        <% unless content_module[:view_more].nil? %>
-          <div class='js-module-expand'><%= content_module[:view_more].html_safe %></div>
-          <span class="view-more">View More »</span>
-        <% end %>
-        <hr style='background: #fff; border: none; height: 1px; width: 100%; margin-top: 20px'>
-      </div>
+  <% content_modules.each_with_index do |content_module, i| %>
+  <div class="phm">
+    <div class="col-xs-12 fn">
+      <h3 class='mtl mbm'><%= content_module[:heading] %></h3>
+      <p><%= content_module[:description].html_safe %></p>
+      <% unless content_module[:view_more].nil? %>
+        <div class='oh'><%= content_module[:view_more].html_safe %></div>
+        <a href='javascript:void(0)' class="dib mtm js-view-more">View More »</a>
+      <% end %>
+
+      <% unless i == content_modules.length - 1 %>
+        <hr class='mvl'>
+      <% end %>
     </div>
-    <% end %>
   </div>
+  <% end %>
 <% end %>

@@ -4,7 +4,6 @@
       GS.viewMoreCollapseInit();
       GS.track.setOmnitureData();
     });
-
   </script>
 <% end %>
 
@@ -17,18 +16,11 @@
                           sponsor: @sponsor,
                           state_page: true %>
 
-<div class="limit_width_1200">
+<div class="limit-width-1200 mvl">
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-</div>
-
-<%= render 'content_module', content_modules: @content_modules %>
-
-<div class="limit_width_1200">
+  <%= render 'content_module', content_modules: @content_modules %>
   <%= render 'featured_articles', articles: @articles, state: @state %>
-  <% if @partners.nil? %>
-    <div class="clearfix" style='margin-bottom: 60px;'></div>
-  <% end %>
-  <%= render 'partners', partners: @partners %>
 </div>
 
+<%= render 'partners', partners: @partners %>
 <%= render 'shared/state_footer', state: @state, cities: @cities %>

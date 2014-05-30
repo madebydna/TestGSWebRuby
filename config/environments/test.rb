@@ -13,8 +13,8 @@ LocalizedProfiles::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
-  # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = true
+  # Do not eager load code on boot.
+  config.eager_load = false
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -42,13 +42,15 @@ LocalizedProfiles::Application.configure do
 
   # set host that rails should use when building absolute urls
   config.action_controller.default_url_options = {
-    host: 'test.host',
+    # host: 'test.host',
+    host: 'localhost',
     trailing_slash: true
   }
 
   # For setting up Devise.
   config.action_mailer.default_url_options = {
-    host: 'test.host'
+    # host: 'test.host'
+    host: 'localhost'
   }
 
   config.hub_mapping_cache_time = 60 * 24

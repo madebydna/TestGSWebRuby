@@ -1,10 +1,9 @@
 GS.viewMoreCollapseInit = function(options) {
-  var textSelector = '.js-module-expand';
-  var toggleSelector = 'span.view-more';
+  var toggleSelector = '.js-view-more';
 
   $(toggleSelector).each(function() {
     var $p = $(this);
-    var $content = $(this).siblings(textSelector);
+    var $content = $(this).siblings('div');
     $content.hide();
 
     $p.click(function() {
