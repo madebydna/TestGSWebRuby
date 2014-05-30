@@ -261,7 +261,9 @@ class School < ActiveRecord::Base
   end
 
   def neighbors
-    School.on_db(shard).joins("inner join _#{shard}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
+    prefix = "_#{shard}"
+    prefix << '_test' if Rails.env.test?
+    School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
 end
