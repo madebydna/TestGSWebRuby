@@ -8,7 +8,13 @@ class RatingDataReader < SchoolProfileDataReader
 
     #Get the ratings from the database.
     cached_ratings = SchoolCache.for_school('ratings',school.id, school.state)
-    results = cached_ratings.nil? ? [] : JSON.parse(cached_ratings.value)
+    begin
+      results = cached_ratings.nil? ? [] : JSON.parse(cached_ratings.value)
+    rescue JSON::ParserError => e
+      results = []
+      Rails.logger.debug "ERROR: parsing JSON ratings from school cache for school: #{school.id} in state: #{school.state}" +
+                           "Exception message: #{e.message}"
+    end
 
     ratings_helper = RatingsHelper.new(results,ratings_config)
 
