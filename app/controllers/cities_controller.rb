@@ -190,20 +190,18 @@ class CitiesController < ApplicationController
 
       set_omniture_data(page_name, page_hier, @city.titleize)
     end
-     def set_community_omniture_data
-       if @tab == 'Community'
-         page_name = "GS:City:EducationCommunity"
-         page_hier = "Home,CityHome,EducationCommunity"
-       else
-         page_name = "GS:City:EducationCommunity:#{@tab}"
-         page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
-       end
 
-       set_omniture_data(page_name, page_hier, @city.titleize)
-     end
+    def set_community_omniture_data
+      if @tab == 'Community'
+        page_name = "GS:City:EducationCommunity"
+        page_hier = "Home,CityHome,EducationCommunity"
+      else
+        page_name = "GS:City:EducationCommunity:#{@tab}"
+        page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
+      end
 
-
-
+      set_omniture_data(page_name, page_hier, @city.titleize)
+    end
 
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
@@ -216,7 +214,7 @@ class CitiesController < ApplicationController
       configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
       Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
         CollectionConfig.where(collection_id: mapping.collection_id).to_a
-     end
+      end
     end
 
     def parse_partners(partners)
