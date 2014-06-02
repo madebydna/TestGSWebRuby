@@ -9,6 +9,7 @@
   <h1 class='tac'><%= @heading %></h1>
 
 
+  <!-- Make a genereric (content, image) layout template -->
   <% if @intro %>
     <div class='row mvl'>
       <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm'>
@@ -20,10 +21,13 @@
       </div>
     </div>
   <% end %>
+
+  <%= render 'programs_articles', articles: @articles %>
 </div>
 
 
-<div class="bg-light-gray pvl">
+
+<div class="bg-light-gray pvl mtl">
   <%= render 'programs_sponsor', sponsor: @sponsor %>
 </div>
 

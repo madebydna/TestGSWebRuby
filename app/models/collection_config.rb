@@ -28,6 +28,7 @@ class CollectionConfig < ActiveRecord::Base
   PROGRAMS_HEADING_KEY = 'programsPage_heading'
   PROGRAMS_INTRO_KEY = 'programsPage_introModule'
   PROGRAMS_SPONSOR_KEY = 'programsPage_sponsorModule'
+  PROGRAMS_ARTICLES_KEY = 'programsPage_articlesModule'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -472,6 +473,17 @@ class CollectionConfig < ActiveRecord::Base
       end
 
       sponsor
+    end
+
+    def programs_articles(configs)
+      articles = nil
+      begin
+        articles = eval(configs.select(&lambda { |cc| cc.quay == PROGRAMS_ARTICLES_KEY }).first.try(:value))
+      rescue Exception => e
+        Rails.logger.error('Something went wrong while parsing programs_articles')
+      end
+
+      articles
     end
 
     [

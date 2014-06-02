@@ -157,6 +157,7 @@ class CitiesController < ApplicationController
       @heading = CollectionConfig.programs_heading(configs)
       @intro = CollectionConfig.programs_intro(configs)
       @sponsor = CollectionConfig.programs_sponsor(configs)
+      @articles = CollectionConfig.programs_articles(configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
     end

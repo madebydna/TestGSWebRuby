@@ -7,6 +7,7 @@ describe 'Programs Page' do
     FactoryGirl.create :programs_heading_config
     FactoryGirl.create :programs_intro_config
     FactoryGirl.create :programs_sponsor_config
+    FactoryGirl.create :programs_articles_config
     FactoryGirl.create :important_events_collection_config
     visit '/michigan/detroit/programs'
   end
@@ -30,9 +31,11 @@ describe 'Programs Page' do
     end
   end
 
-  describe 'sponsor section' do
-    it 'renders the sponsor section' do
-      expect(page).to have_content 'description of an excellent sponsor'
-    end
+  it 'renders the sponsor section' do
+    expect(page).to have_content 'description of an excellent sponsor'
+  end
+
+  it 'renders the articles section' do
+    expect(page).to have_selector 'h4', text: 'Facebook Aquires Greatschools'
   end
 end

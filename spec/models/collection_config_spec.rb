@@ -29,6 +29,11 @@ shared_examples "it fails with an error" do
   end
 end
 
+shared_examples 'it rejects empty or malformed configs' do
+  it_behaves_like 'it rejects empty configs'
+  it_behaves_like 'it fails with an error'
+end
+
 describe CollectionConfig do
   after(:each) { clean_dbs :gs_schooldb }
 
@@ -745,11 +750,7 @@ describe CollectionConfig do
   end
 
   describe '.browse_links' do
-    it_behaves_like 'it rejects empty configs' do
-      let(:method) { :browse_links }
-    end
-
-    it_behaves_like "it fails with an error" do
+    it_behaves_like 'it rejects empty or malformed configs' do
       let(:key) { CollectionConfig::CITY_HUB_BROWSE_LINKS_KEY }
       let(:method) { :browse_links }
     end
@@ -782,11 +783,7 @@ describe CollectionConfig do
   end
 
   describe '.programs_intro' do
-    it_behaves_like 'it rejects empty configs' do
-      let(:method) { :programs_intro }
-    end
-
-    it_behaves_like 'it fails with an error' do
+    it_behaves_like 'it rejects empty or malformed configs' do
       let(:key) { CollectionConfig::PROGRAMS_INTRO_KEY }
       let(:method) { :programs_intro }
     end
@@ -802,11 +799,7 @@ describe CollectionConfig do
   end
 
   describe '.programs_sponsor' do
-    it_behaves_like 'it rejects empty configs' do
-      let(:method) { :programs_sponsor }
-    end
-
-    it_behaves_like 'it fails with an error' do
+    it_behaves_like 'it rejects empty or malformed configs' do
       let(:method) { :programs_sponsor }
       let(:key) { CollectionConfig::PROGRAMS_SPONSOR_KEY }
     end
@@ -818,6 +811,13 @@ describe CollectionConfig do
       it 'parses the programs page sponsor' do
         expect(result[:logo]).to eq('hubs/after_school_programs.png')
       end
+    end
+  end
+
+  describe '.programs_articles' do
+    it_behaves_like 'it rejects empty or malformed configs' do
+      let(:method) { :programs_articles }
+      let(:key) { CollectionConfig::PROGRAMS_ARTICLES_KEY }
     end
   end
 end
