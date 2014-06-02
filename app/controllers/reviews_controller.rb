@@ -62,7 +62,7 @@ class ReviewsController < ApplicationController
   def init_page
     gon.pagename = 'reviews/new'
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
-    @google_signed_image = GoogleSignedImages.new @school, gon
+    create_sized_maps(gon)
     @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.calc_review_data(@school.reviews)
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
