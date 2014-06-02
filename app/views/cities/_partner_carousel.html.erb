@@ -5,26 +5,24 @@
 </style>
 
 <% if partner_carousel and !partner_carousel[:partnerLogos].empty? %>
-  <div class="limit_width_1200">
+  <div class="limit-width-1200">
     <div class='row mtl mhm'>
       <div class="clearfix mtl">
         <div class="pull-left">
-          <h2 class="mtn"><%= partner_carousel[:heading] %></h2>
+          <h2 class='mtn'><%= partner_carousel[:heading] %></h2>
         </div>
         <div class="lg-pr-sm-pl">
-          <a href="education-community" style='font-size: 14px;'>
-            <%= "See the entire education community &#187".html_safe %>
-          </a>
+          <%= link_to "See the entire education community &#187".html_safe, 'education-community' %>
         </div>
       </div>
       <div class='tac mvl'>
-        <div class="pull-left mrl" style='margin-top: 65px; width: 30px;'>
+        <div class="pull-left mrl i-32-arrow-positioned">
           <a href="#" id="prev">
-            <span class="iconx32g i-32-carousel-left" style=''></span>
+            <span class="iconx32g i-32-carousel-left"></span>
           </a>
         </div>
 
-        <div class="pull-right" style='margin-top: 65px; width: 30px;'>
+        <div class="pull-right i-32-arrow-positioned">
           <a href="#" id="next">
             <span class="iconx32g i-32-carousel-right vam"></span>
           </a>
@@ -45,7 +43,7 @@
                data-cycle-prev="#prev">
             <% partner_carousel[:partnerLogos].each do |logo| %>
               <div>
-                <%= link_to(image_tag(logo[:logoPath], class: 'partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
+                <%= link_to(image_tag(logo[:logoPath], class: 'mrm partner-carousel-image', alt: logo[:partnerName]), logo[:anchoredLink]) %>
               </div>
             <% end %>
           </div>

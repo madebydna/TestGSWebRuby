@@ -24,21 +24,9 @@ describe 'City Hub Page' do
     end
   end
 
-  describe 'school breakdown section' do
-    it 'shows the counts for each school type' do
-      browse_link_selector = ".school-breakdown button span:last-child"
-
-      expect(page).to have_css('.school-breakdown button', count: 7)
-      page.all(browse_link_selector).each do |link|
-        expect(link.text).to match(/[0-9]/)
-      end
-    end
-  end
-
   describe 'choose a school section' do
     it 'renders links for a city hub' do
       expect(page).to have_content 'Finding a Great School in Detroit'
-      expect(page).to have_css('#choose-a-school a', count: 3)
     end
   end
 
@@ -47,15 +35,16 @@ describe 'City Hub Page' do
       expect(page).to have_css('.upcoming-event', count: 2)
     end
     it 'shows announcements' do
-      expect(page).to have_css('.success-block')
-      expect(page).to have_css('span', text: 'ANNOUNCEMENT', count: 1)
+      expect(page).to have_css('.alert-success')
+      expect(page).to have_css('strong', text: 'ANNOUNCEMENT', count: 1)
       expect(page).to have_link 'Learn More'
     end
   end
 
   describe 'featured articles section' do
     it 'display featured articles' do
-      expect(page).to have_css('.js-featured-article', count: 3)
+      article_title = 'How to spot a world-class education'
+      expect(page).to have_content article_title
     end
     it 'shows nearby homes with zillow' do
       expect(page).to have_content 'Nearby Homes for Sale'
@@ -64,7 +53,7 @@ describe 'City Hub Page' do
   end
 
   describe 'education community carousel' do
-    it 'shows the carousel', js: true do
+    it 'shows the carousel' do
       expect(page).to have_css('.js-partner-carousel')
     end
   end

@@ -1,20 +1,19 @@
 class Solr
   def initialize(state_short, collection_id)
     @state_short, @collection_id = state_short, collection_id
-    @connection = RSolr.connect(url: ENV_GLOBAL['solr_url'])
+    @connection = RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'])
   end
 
   def breakdown_results(options)
     cache_key = "breakdown_results-state:#{@state_short}-collection_id:#{@collection_id}-options:#{options.to_s}"
     Rails.cache.fetch(cache_key, expires_in: cache_time, race_condition_ttl: cache_time) do
       begin
-        response = @connection.get "/main/select/", params: parse_params(options)
-        breakdown_results = { count: response['response']['numFound'], path: parse_url(options) }
+        response = @connection.get "select/", params: parse_params(options)
+        results = { count: response['response']['numFound'], path: parse_url(options) }
       rescue => e
-        breakdown_results = nil
         Rails.logger.error('Reaching the solr server failed:' + e.to_s)
+        results = nil
       end
-      breakdown_results
     end
   end
 

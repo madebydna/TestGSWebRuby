@@ -24,7 +24,8 @@ class Page < ActiveRecord::Base
   #
   # @return [Array] Array of keys as strings
   def all_configured_keys(source)
-      categories_using_source(source).map(&:keys).inject([], &:+)
+      categories_using_source(source).map(&:keys).inject([], &:+) +
+      category_datas_using_source(source).map(&:response_key)
   end
 
   def code_friendly_name
@@ -37,7 +38,10 @@ class Page < ActiveRecord::Base
 
   def category_datas
     @category_datas ||=
-      categories.map(&:category_datas).sort(&CategoryData.sort_order_proc)
+      categories.map(&:category_datas)
+        .inject([], &:+)
+        .compact
+        .sort(&CategoryData.sort_order_proc)
   end
 
   def root_placements
@@ -46,6 +50,10 @@ class Page < ActiveRecord::Base
 
   def categories_using_source(source)
     categories.select { |category| category.source == source }
+  end
+
+  def category_datas_using_source(source)
+    category_datas.select { |cd| cd.source == source }
   end
 
 end

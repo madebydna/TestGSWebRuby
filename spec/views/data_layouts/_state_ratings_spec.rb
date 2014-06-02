@@ -9,6 +9,7 @@ describe 'state ratings partial' do
     rating_data = {
       'state_rating' => {
         'page' => 'overview',
+        'state_rating_label' => 'State Rating',
         'description' => 'rspec description',
         'overall_rating' => 'rspec overall rating'
       }

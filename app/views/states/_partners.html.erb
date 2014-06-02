@@ -1,10 +1,12 @@
 <% unless partners.nil? %>
-  <div class="row" style='margin-bottom: 50px;'>
-    <h3 class="tac">Our Partners</h3>
-      <div class="js-partners tac">
+  <div class="row bg-light-gray pbl">
+    <div class="limit-width-1200 tac">
+      <h2>Our Partners</h2>
       <% partners[:partnerLogos].each do |partner| %>
-        <%= link_to image_tag(partner[:logoPath], class: 'partner-carousel-image mvm mhl'), partner[:anchoredLink], target: '_blank' %>
+        <%= link_to image_tag(partner[:logoPath], class: 'partner-carousel-image mam'), partner[:anchoredLink], target: '_blank' %>
       <% end %>
     </div>
   </div>
+<% else %>
+  <div class="clearfix mvl"></div>
 <% end %>

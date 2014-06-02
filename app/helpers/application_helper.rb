@@ -3,6 +3,13 @@ require './app/models/presenters/topnav'
 module ApplicationHelper
   include CookieConcerns
 
+  # Hack: Remove /assets/ prefix since it is set that way in hub_config
+  # And needs to remain until hubs are off of Java
+  def image_tag(path, *args, &blk)
+    path = path.gsub('/assets/', '') if path.match(/hubs/i)
+    super(path, *args, &blk)
+  end
+
   def category_placement_anchor(category_placement)
     "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
   end

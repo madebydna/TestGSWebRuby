@@ -2,14 +2,10 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% if params[:city] %>
-  <div class="upcoming-events pvm">
-    <div class="limit_width_1200">
-        <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-    </div>
-  </div>
+  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200" style='margin-bottom: 40px;'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   <div class="row tac" style='margin-top: 80px; margin-bottom: 80px;'>
     <h1 class='mvn' style='color: #ffb725'>5 simple steps to</h1>
@@ -17,12 +13,12 @@
   </div>
 
 
-  <div class="row mvl choosing-schools-step">
-    <%= image_tag('hubs/choosing_step1.png', class: 'pull-right') %>
+  <div class="row mvl">
+    <%= image_tag('hubs/choosing_step1.png', class: 'pull-right col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
-    <div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 1</h5>
-      <h2 style="margin-top: 0;">Think about your needs</h2>
+      <h2 class='mtn'>Think about your needs</h2>
       <p>
         As you think about choosing a school, consider what matters most to your family. What do you value the highest when it comes to your child’s education? How does your choice of school impact your family or your finances? We’re here to help you take the first step.
       </p>
@@ -33,7 +29,7 @@
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <li><a href="/students/academic-skills/4165-redshirting-kindergarten.gs">When should kids start kindergarten?</a></li>
         <li><a href="/find-a-school/making-the-right-choice/4904-switch-or-stay-schools-early-in-year.gs">Switch schools or stay?</a></li>
         <li><a href="/students/4151-Skipping-a-grade-pros-and-cons.gs">The pros and cons of skipping a grade</a></li>
@@ -48,12 +44,12 @@
     </div>
   </div>
 
-  <div class="row mvl choosing-schools-step">
-    <%= image_tag('hubs/choosing_step2.png') %>
+  <div class="row mvl">
+    <%= image_tag('hubs/choosing_step2.png', class: 'col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
-    <div class="pull-right">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 2</h5>
-      <h2 style="margin-top: 0;">Understand your options</h2>
+      <h2 class='mtn'>Understand your options</h2>
       <p>
         In <%= @collection_nickname %>, there are a variety of schools to choose from - public, public charter, and private. When deciding between schools, learn what makes each type of school different, and how that fits with your overall needs and goals.
       </p>
@@ -68,7 +64,7 @@
       </ul>
 
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <h4 style='margin-left: -40px;'>Overview Of options</h4>
         <li><a href="/find-a-school/defining-your-ideal/1163-school-choice-your-options.gs">School choice: what are your options?</a></li>
         <li><a href="/find-a-school/defining-your-ideal/59-private-vs-public-schools.gs">Private vs. public</a></li>
@@ -88,12 +84,12 @@
     </div>
   </div>
 
-  <div class="row mvl choosing-schools-step">
-    <%= image_tag('hubs/choosing_step3.png', class: 'pull-right') %>
+  <div class="row mvl">
+    <%= image_tag('hubs/choosing_step3.png', class: 'pull-right col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
-    <div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 3</h5>
-      <h2 style="margin-top: 0;">Find schools that fit</h2>
+      <h2 class='mtn'>Find schools that fit</h2>
       <p>
         As you search for schools that fit your family, look for information in three key areas - academic performance, extracurricular programs, and school culture and community.
       </p>
@@ -119,7 +115,7 @@
         <% end %>
       </ul>
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class="expandable">
+      <ul class="dn js-expandable">
         <li><a href="/school-choice/standardized-testing/7262-school-test-scores-video.gs">Facts (and fiction) about school test scores</a></li>
         <li><a href="/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs">How important is cultural diversity at your school?</a></li>
         <li><a href="/find-a-school/defining-your-ideal/174-class-size.gs">How important is class size?</a></li>
@@ -133,12 +129,12 @@
     </div>
   </div>
 
-  <div class="row mvl choosing-schools-step">
-    <%= image_tag('hubs/choosing_step4.png') %>
+  <div class="row mvl">
+    <%= image_tag('hubs/choosing_step4.png', class: 'col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
-    <div class="pull-right">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm pull-right">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 4</h5>
-      <h2 style="margin-top: 0;">Visit schools you like</h2>
+      <h2 class='mtn'>Visit schools you like</h2>
       <p>
         Take time to visit the schools at the top of your list. Visiting is the best way to tell whether you and your child feel welcomed and comfortable at each school. You also have a chance to observe teachers in action, and see whether students are actively engaged in learning.
       </p>
@@ -149,7 +145,7 @@
         <li><a href="/find-a-school/moving/3986-choosing-a-school-from-a-distance.gs">Choosing a school from a distance</a></li>
       </ul>
       <a class='js-expand-collapse' href="javascript:void(0)">Additional resources »</a>
-      <ul class='expandable'>
+      <ul class='dn js-expandable'>
 
         <h4 style='margin-left: -40px;'>Preschool Resources</h4>
 
@@ -180,12 +176,12 @@
     </div>
   </div>
 
-  <div class="row mvl choosing-schools-step">
-    <%= image_tag('hubs/choosing_step5.png', class: 'pull-right') %>
+  <div class="row mvl">
+    <%= image_tag('hubs/choosing_step5.png', class: 'pull-right col-xs-12 col-sm-4 col-md-4 col-lg-6') %>
 
-    <div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 phm">
       <h5 class='mtn' style="margin-bottom: 1em;">Step 5</h5>
-      <h2 style="margin-top: 0;">Apply and enroll</h2>
+      <h2 class='mtn'>Apply and enroll</h2>
       <p>
         Once you've made your choices, find out the details of the enrollment process for each school and give yourself enough time to complete and submit your applications. You may need to gather important documents like a birth certificate or proof of residency. Also, your first choice school may not be available, so you will want to apply to at least two other schools that meet all or most of your needs.
       </p>

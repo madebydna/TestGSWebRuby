@@ -177,15 +177,15 @@ describe CollectionConfig do
 
     context 'valid json string' do
       before(:each) { FactoryGirl.create(:important_events_collection_config) }
+      let(:collection_configs) { CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY) }
+
       it 'parses the important events string and returns a hash' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
 
         expect(result).to be_an_instance_of(Hash)
       end
 
       it 'limits to the max number of events' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs, 1)
         expect(result[:events].length).to eq(1)
 
@@ -194,7 +194,6 @@ describe CollectionConfig do
       end
 
       it 'sorts by date' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
 
         sorted_result = result.clone
@@ -204,7 +203,6 @@ describe CollectionConfig do
       end
 
       it 'removes past events' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY)
         result = CollectionConfig.city_hub_important_events(collection_configs)
         dates = []
         result[:events].each do |event|
@@ -231,7 +229,6 @@ describe CollectionConfig do
       let(:key) { CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY }
       let(:method) { :important_events }
     end
-
 
     context 'valid json string' do
       before(:each) { FactoryGirl.create(:important_events_collection_config) }
@@ -344,7 +341,7 @@ describe CollectionConfig do
     end
   end
 
-  describe '.ed_community_partner' do
+  describe '.partner' do
     before(:each) do
       FactoryGirl.create(:community_sponsor_collection_config_name)
       FactoryGirl.create(:community_sponsor_collection_config_page_name)
@@ -353,18 +350,18 @@ describe CollectionConfig do
 
     let(:result) do
       collection_configs = CollectionConfig.where(collection_id: 1)
-      CollectionConfig.ed_community_partner(collection_configs)
+      CollectionConfig.partner(collection_configs)
     end
 
     it_behaves_like 'it rejects empty configs' do
       before(:each) { clean_dbs :gs_schooldb }
-      let(:method) { :ed_community_partner }
+      let(:method) { :partner }
     end
 
     it_behaves_like 'it fails with an error' do
       before(:each) { clean_dbs :gs_schooldb }
       let(:key) { CollectionConfig::SPONSOR_ACRO_NAME_KEY }
-      let(:method) { :ed_community_partner }
+      let(:method) { :partner }
     end
 
     it 'returns the acro name and page name' do
@@ -375,7 +372,7 @@ describe CollectionConfig do
     it 'sets sponsor data' do
       expect(result[:data]).to_not be_nil
       expect(result[:data]).to be_an_instance_of(Array)
-      expect(result[:data]).to have(1).partner
+      expect(result[:data].size).to eq(1)
     end
 
     it 'adds the cdn host to each image' do
@@ -391,7 +388,7 @@ describe CollectionConfig do
       it 'returns links' do
         result = CollectionConfig.choosing_page_links(configs)
         expect(result).to be_an_instance_of(Array)
-        expect(result).to have(4).links
+        expect(result.size).to eq(4)
       end
     end
 
@@ -743,6 +740,63 @@ describe CollectionConfig do
         [:public, :private].each do |type|
           expect(result[type]).to be_an_instance_of(String)
         end
+      end
+    end
+  end
+
+  describe '.browse_links' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :browse_links }
+    end
+
+    it_behaves_like "it fails with an error" do
+      let(:key) { CollectionConfig::CITY_HUB_BROWSE_LINKS_KEY }
+      let(:method) { :browse_links }
+    end
+
+    context 'by default' do
+      before { FactoryGirl.create(:browse_links_config) }
+      let(:configs) { CollectionConfig.where(collection_id: 1) }
+      let(:result) { CollectionConfig.browse_links(configs) }
+
+      it 'parses browse links' do
+        expect(result).to be_an_instance_of(Array)
+        expect(result.size).to eq(7)
+      end
+    end
+  end
+
+  describe '.programs_heading' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_heading }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_heading_config)] }
+      let(:heading) { CollectionConfig.programs_heading(configs) }
+
+      it 'returns the programs heading' do
+        expect(heading).to start_with 'What makes a great after'
+      end
+    end
+  end
+
+  describe '.programs_intro' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_heading }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:key) { CollectionConfig::PROGRAMS_INTRO_KEY }
+      let(:method) { :programs_intro }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_intro_config)] }
+      let(:result) { CollectionConfig.programs_intro(configs) }
+
+      it 'returns the intro section html blob' do
+        expect(result[:content]).to start_with 'Quality after-school and summer learning'
       end
     end
   end

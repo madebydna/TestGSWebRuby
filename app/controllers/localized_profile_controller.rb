@@ -2,6 +2,7 @@ class LocalizedProfileController < ApplicationController
   protect_from_forgery
 
   include OmnitureConcerns
+  include AdvertisingHelper
 
   before_filter :redirect_tab_urls, only: [:overview]
   before_filter :require_state, :require_school
@@ -11,11 +12,11 @@ class LocalizedProfileController < ApplicationController
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_filter :set_seo_meta_tags
-  before_filter :set_optimizely_gon_env_value
+
   before_filter :ad_setTargeting_through_gon
   before_filter :set_city_state
-  before_filter :set_footer_cities
   before_filter :set_hub_params, if: :is_hub_school?
+  before_filter :enable_ads
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -63,7 +64,7 @@ class LocalizedProfileController < ApplicationController
   end
 
   def init_page
-    @school_reviews_all = @school.reviews.all
+    @school_reviews_all = @school.reviews.load
     @google_signed_image = GoogleSignedImages.new @school, gon
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews_all.count();
@@ -170,30 +171,27 @@ class LocalizedProfileController < ApplicationController
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end
 
-  def set_optimizely_gon_env_value
-    gon.optimizely_key = ENV_GLOBAL['optimizely_key']
-  end
-
   def set_footer_cities
-    @cities = City.popular_cities(@state[:short], limit: 28)
+    @cities = City.popular_cities(@state, limit: 28)
   end
 
   def ad_setTargeting_through_gon
     if @school.show_ads
       set_targeting = {}
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
-      set_targeting['City'] = @school.city
-      set_targeting['compfilter'] = 1 + rand(4) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      set_targeting['county'] = @school.county # county name?
-      set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-      set_targeting['gs_rating'] = @school.gs_rating
-      set_targeting['level'] = @school.level_code # p,e,m,h
-      set_targeting['school_id'] = @school.id
-      set_targeting['State'] = @school.state # abbreviation
-      set_targeting['type'] = @school.type  # private, public, charter
-      set_targeting['zipcode'] = @school.zipcode
-      set_targeting['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
-      set_targeting['template'] = "ros" # use this for page name - configured_page_name
+      # @school.city.delete(' ').slice(0,10)
+      set_targeting['City'] = format_ad_setTargeting(@school.city)
+      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      set_targeting['county'] = format_ad_setTargeting(@school.county) # county name?
+      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
+      set_targeting['gs_rating'] = format_ad_setTargeting(@school.gs_rating)
+      set_targeting['level'] = format_ad_setTargeting(@school.level_code) # p,e,m,h
+      set_targeting['school_id'] = format_ad_setTargeting(@school.id.to_s)
+      set_targeting['State'] = format_ad_setTargeting(@school.state) # abbreviation
+      set_targeting['type'] = format_ad_setTargeting(@school.type)  # private, public, charter
+      set_targeting['zipcode'] = format_ad_setTargeting(@school.zipcode)
+      set_targeting['district_id'] = format_ad_setTargeting(@school.district.present? ? @school.district.FIPScounty : "")
+      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
 
       gon.ad_set_targeting = set_targeting
     end
@@ -201,5 +199,9 @@ class LocalizedProfileController < ApplicationController
 
   def is_hub_school?
     @school && !@school.try(:collection).nil?
+  end
+
+  def enable_ads
+    @show_ads = @school.show_ads
   end
 end

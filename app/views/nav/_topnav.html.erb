@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="limit_width_1200">
+    <div class="limit-width-1200">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -11,12 +11,12 @@
             <div class="fl pam"><%= link_to(home_url) { image_tag 'nav/GS_logo_x2.png', size:'189x38' } %></div>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse topnav_float">
+        <div class="collapse navbar-collapse navbar-ex1-collapse topnav-float">
             <% nav = topnav(@school, @hub_params) %>
             <ul class="nav navbar-nav">
                 <li>
                     <%- if nav.has_topnav? %>
-                        <a class="dropdown-toggle " data-toggle="dropdown" href="#home" style="text-transform:capitalize;">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#home">
                             <%= nav.topnav_title %>  <b class="caret"></b>
                         </a>
                     <% end %>
@@ -31,7 +31,7 @@
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= nav.city.gs_capitalize_words %></span>?
+                                        <span><%= nav.city.gs_capitalize_words %></span>?
                                     <% end %>
                                 </li>
                             <% else %>
@@ -42,7 +42,7 @@
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span style="text-transform:capitalize;"><%= States.state_name(nav.state).gs_capitalize_words %></span>?
+                                        <span><%= States.state_name(nav.state).gs_capitalize_words %></span>?
                                     <% end %>
                                 </li>
                             <% end %>
@@ -107,7 +107,7 @@
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_url, class: 'secondary-color')  %>
+                        <%= link_to('Sign In', signin_url, class: 'brand-secondary')  %>
                     <% end %>
                 </li>
             </ul>

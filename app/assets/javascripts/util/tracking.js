@@ -163,6 +163,7 @@ GS.track.propLookup = {
     'schoolType':2,
     'schoolLevel':3,
     'schoolLocale':4,
+    'locale':4,
     'schoolRating':31,
     'userLoginStatus':5,
     'requestUrl':59,
@@ -187,7 +188,7 @@ GS.track.setOmnitureData = function() {
     if(typeof gon.omniture_school_state !== 'undefined'){
         GS.track.baseOmnitureObject.channel = gon.omniture_school_state;
     } else if (typeof gon.omniture_channel !== 'undefined' ){
-      GS.track.baseOmnitureObject.channel = gon.omniture_channel;
+        GS.track.baseOmnitureObject.channel = gon.omniture_channel;
     }
 
     var events = [];

@@ -38,7 +38,7 @@ describe 'Enrollment Page' do
   context 'on a state enrollment page' do
     before(:each) do
       setup(6, 'Indiana')
-      FactoryGirl.create(:hub_city_mapping, city: nil, state: 'indiana', collection_id: 6)
+      FactoryGirl.create(:hub_city_mapping, city: nil, state: 'in', collection_id: 6)
       visit '/indiana/enrollment'
     end
 

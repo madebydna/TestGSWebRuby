@@ -20,7 +20,7 @@ class School < ActiveRecord::Base
   has_many :school_metadatas
   belongs_to :district
 
-  scope :held, joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state")
+  scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
   self.inheritance_column = nil
 
@@ -64,11 +64,12 @@ class School < ActiveRecord::Base
 
   # get the schools metadata
   def school_metadata
-    schoolMetadata = Hashie::Mash.new()
-    on_db(shard).school_metadatas.each do |metadata|
-      schoolMetadata[metadata.meta_key] = metadata.meta_value
+    metadata_hash = Hashie::Mash.new()
+    school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
+    school_metadatas.each do |metadata|
+      metadata_hash[metadata.meta_key] = metadata.meta_value
     end
-    return schoolMetadata
+    return metadata_hash
   end
 
   def school_media_first_hash

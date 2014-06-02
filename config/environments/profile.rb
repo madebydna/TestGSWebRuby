@@ -92,4 +92,8 @@ LocalizedProfiles::Application.configure do
   sql_logger = Logger.new Rails.root.join('log', 'development_sql.log')
   # sql_logger.formatter = Logger::Formatter.new
   config.active_record.logger = sql_logger
+  
+  config.hub_mapping_cache_time = 60 * 24
+  config.hub_config_cache_time = 10
+  config.hub_recent_reviews_cache_time = 10
 end

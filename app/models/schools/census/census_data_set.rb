@@ -59,12 +59,12 @@ class CensusDataSet < ActiveRecord::Base
     census_data_config_entry.label if has_config_entry?
   end
 
-  scope :with_data_types, lambda { |data_type_names_or_ids|
+  scope :with_data_types, ->(data_type_names_or_ids) {
     data_type_ids = CensusDataType.data_type_ids(data_type_names_or_ids)
     where(data_type_id: Array(data_type_ids))
   }
 
-  scope :with_max_years_for_data_types, lambda { |state, data_type_ids|
+  scope :with_max_years_for_data_types, ->(state, data_type_ids) {
     max_years = max_year_per_data_type(state)
     years = max_years.select { |data_type_id| data_type_ids.include? data_type_id }.values
     years << 0
@@ -72,7 +72,7 @@ class CensusDataSet < ActiveRecord::Base
     where(year: years)
   }
 
-  scope :active, where(active: true)
+  scope :active, -> { where(active: true) }
 
   def self.max_year_per_data_type(state)
     Rails.cache.fetch("census_data_set/max_year_per_data_type/#{state}", expires_in: 5.minutes) do

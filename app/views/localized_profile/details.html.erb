@@ -1,12 +1,18 @@
 <%= render 'nav/topnav' %>
 <%= render 'localized_profile/header', school: @school %>
-<%= render 'localized_profile/profile-nav', school: @school, page_name: :details %>
+<%= render 'localized_profile/profile_nav', school: @school, page_name: :details %>
 
-<div class="row limit_width_1200">
+<div class="row limit-width-1200">
     <%= render 'shared/breadcrumbs', breadcrumbs: breadcrumb_hash %>
     <% root_placements = @page_config.root_placements_with_data %>
     <% if root_placements.empty? %>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <% if @show_ads %>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
             <div class="mvl well">
                 <% if @school.preschool? %>
                     <p>Thank you for looking into the details of this school.</p>
@@ -22,6 +28,10 @@
           <%= render 'category_placement_nav' %>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" role="main">
+            <% if @show_ads %>
+                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            <% end %>
             <div class="row">
                 <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
 

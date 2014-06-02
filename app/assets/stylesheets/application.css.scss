@@ -30,20 +30,18 @@
 @import "sprites/140106-72x72_ratings";
 @import "sprites/140117-32x32_connect_with_us_buttons";
 @import "sprites/search-hero-sprites";
-@import "sprites/120905-ratingsx24";
 @import "sprites/calendar_month";
+@import "sprites/140106-72x58_ESD_ratings"; /* city specific */
+@import "sprites/choose-a-school";
 @import "resources/bootstrap/sass/sass-bootstrap";
 @import "gs/typography";
 @import "gs/navigation";
-@import "gs/tables";
 @import "gs/spacing";
+@import "resources/tables";
 @import "resources/galleria.classic";
-@import "gs/social-buttons";
+@import "gs/home_prototype";
+@import "resources/bootstrap/social-buttons";
 @import "gs/city-hub";
-
-/* city specific */
-@import "sprites/140106-72x58_ESD_ratings";
-
-.bg-white { background-color: #FFFFFF;}
+@import "gs/search-hero";
 
 

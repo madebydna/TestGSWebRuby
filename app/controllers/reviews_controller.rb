@@ -7,7 +7,7 @@ class ReviewsController < ApplicationController
   before_filter :require_state, :require_school, :find_user, except: [:create, :report]
   before_filter :store_location, only: [:overview, :quality, :details, :reviews]
   before_filter :set_last_school_visited, only: [:new]
-  before_filter :set_footer_cities, only: :new
+  before_filter :set_city_state
 
   def new
     init_page

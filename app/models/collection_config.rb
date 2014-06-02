@@ -24,6 +24,9 @@ class CollectionConfig < ActiveRecord::Base
   STATE_CHOOSE_A_SCHOOL_KEY = 'statehubHome_chooseSchool'
   STATE_FEATURED_ARTICLES_KEY = 'statehubHome_featuredArticles'
   STATE_SPONSOR_KEY = 'statehubHome_sponsor'
+  CITY_HUB_BROWSE_LINKS_KEY = 'hubHome_browseLinks'
+  PROGRAMS_HEADING_KEY = 'programsPage_heading'
+  PROGRAMS_INTRO_KEY = 'programsPage_introModule'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -119,6 +122,8 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def city_hub_partners(collection_configs)
+      partners = nil
+
       unless collection_configs.empty?
         begin
           raw_partners_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_PARTNERS_KEY }).first.value
@@ -129,11 +134,11 @@ class CollectionConfig < ActiveRecord::Base
             partner[:anchoredLink].prepend('education-community/')
           end
         rescue Exception => e
-          partners = nil
           Rails.logger.error('Something went wrong while parsing city_hub_partners ' + e.to_s)
         end
-        partners
       end
+
+      partners
     end
 
     def sponsor(collection_configs, city_or_state = :city)
@@ -149,33 +154,40 @@ class CollectionConfig < ActiveRecord::Base
       rescue Exception => e
         Rails.logger.error("Something went wrong while parsing  #{city_or_state} sponsor" + e.to_s)
       end
+
       result
     end
 
     def city_hub_choose_school(collection_configs)
+      choose_school = nil
+
       begin
         raw_choose_school_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_CHOOSE_A_SCHOOL_KEY }).first.value
         choose_school = eval(raw_choose_school_str)
       rescue Exception => e
-        choose_school = nil
         Rails.logger.error('Something went wrong while parsing city_hub_choose_school ' + e.to_s)
       end
+
       choose_school
     end
 
     def city_hub_announcement(collection_configs)
+      announcement = nil
+
       begin
         raw_annoucement_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_ANNOUNCEMENT_KEY }).first.value
         announcement = eval(raw_annoucement_str)
         announcement[:visible] = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_SHOW_ANNOUNCEMENT_KEY }).first.value == 'true'
       rescue Exception => e
-        announcement = nil
         Rails.logger.error('Something went wrong while parsing city_hub_announcement ' + e.to_s)
       end
+
       announcement
     end
 
     def city_hub_important_events(collection_configs, max_events = 2)
+      important_events = nil
+
       begin
         raw_important_events_str = collection_configs.select(&lambda { |cc| cc.quay == CITY_HUB_IMPORTANT_EVENTS_KEY }).first.value
         important_events = eval(raw_important_events_str)
@@ -190,9 +202,12 @@ class CollectionConfig < ActiveRecord::Base
           important_events[:events].pop
         end
 
+        if important_events[:max_important_event_to_display] > important_events[:events].length
+          important_events[:max_important_event_to_display] = important_events[:events].length
+        end
+
         important_events = nil if important_events[:events].empty?
       rescue Exception => e
-        important_events = nil
         Rails.logger.error('Something went wrong while parsing city_hub_important_events ' + e.to_s)
       end
 
@@ -265,22 +280,22 @@ class CollectionConfig < ActiveRecord::Base
       end
     end
 
-    def ed_community_partner(collection_configs)
-      result = {}
+    def partner(collection_configs)
+      partner = {}
       begin
-        result[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
-        result[:page_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_PAGE_NAME_KEY }).first.value
+        partner[:acro_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_ACRO_NAME_KEY }).first.value
+        partner[:page_name] = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_PAGE_NAME_KEY }).first.value
         raw_data_str = collection_configs.select(&lambda { |cc| cc.quay == SPONSOR_DATA_KEY }).first.value
         raw_data_str.gsub!(/(\w+)\s:/) { |match| ":#{match[0..-2]}=>" }
-        result[:data] = eval(raw_data_str)[:sponsors]
-        result[:data].each do |partner_data|
+        partner[:data] = eval(raw_data_str)[:sponsors]
+        partner[:data].each do |partner_data|
           partner_data[:logo].prepend(ENV_GLOBAL['cdn_host'])
         end
       rescue Exception => e
-        Rails.logger.error('Something went wrong while parsing ed_community_partner ' + e.to_s)
-        result = nil
+        Rails.logger.error('Something went wrong while parsing partner ' + e.to_s)
+        partner = nil
       end
-      result
+      partner
     end
 
     def choosing_page_links(collection_configs)
@@ -416,11 +431,41 @@ class CollectionConfig < ActiveRecord::Base
       result
     end
 
+    def browse_links(configs)
+      links = nil
+      begin
+        config = configs.select(&lambda { |cc| cc.quay == CITY_HUB_BROWSE_LINKS_KEY }).first
+        links = eval(config.value)[:browseLinks] if config
+      rescue Exception => e
+        Rails.logger.error('Something went wrong while parsing browse_links ' + e.to_s)
+      end
+
+      links
+    end
+
+    def programs_heading(configs)
+      configs.select(&lambda { |cc| cc.quay == PROGRAMS_HEADING_KEY }).first.try(:value)
+    end
+
+    def programs_intro(configs)
+      intro = nil
+
+      begin
+        raw_intro_str = configs.select(&lambda { |cc| cc.quay == PROGRAMS_INTRO_KEY }).first.try(:value)
+        intro = eval(raw_intro_str)
+      rescue Exception => e
+        Rails.logger.error('something went wrong while parsing programs_intro')
+      end
+
+      intro
+    end
+
     [
       :sponsor, :city_hub_choose_school, :city_hub_announcement, :city_hub_important_events,
-      :ed_community_subheading, :ed_community_show_tabs, :ed_community_partner, :ed_community_partners,
+      :ed_community_subheading, :ed_community_show_tabs, :partner, :ed_community_partners,
       :enrollment_subheading, :key_dates, :enrollment_tips, :state_featured_articles,
-      :city_featured_articles, :state_choose_school, :choosing_page_links
+      :city_featured_articles, :state_choose_school, :choosing_page_links, :browse_links,
+      :programs_heading, :programs_intro
     ].each do |method_name|
       new_method = "#{method_name}_with_nil_check".to_sym
       define_method new_method do |*args|

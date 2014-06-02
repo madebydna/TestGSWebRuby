@@ -6,10 +6,12 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
+  # get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
-  scope '', to: 'error#page_not_found' do
+  scope '', controller: 'error', action: 'page_not_found' do
     get '/index.page', as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
@@ -34,7 +36,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/school/parentReview.page', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
-    get '/community/registrationConfirm.page', as: :verify_email
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
     get '/official-school-profile/dashboard/', as: :osp_dashboard
@@ -56,6 +57,10 @@ LocalizedProfiles::Application.routes.draw do
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
+    scope '/style-guide/', as: :style_guide, to: :style_guide do
+       get '/index', to: 'style_guide#index'
+    end
+
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
         get 'moderate'
@@ -64,9 +69,9 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :reviews do
       get 'moderation', on: :collection
-      put 'publish', on: :member
-      put 'disable', on: :member
-      put 'resolve', on: :member
+      patch 'publish', on: :member
+      patch 'disable', on: :member
+      patch 'resolve', on: :member
     end
 
     resources :held_school
@@ -83,10 +88,10 @@ LocalizedProfiles::Application.routes.draw do
   resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
-  match '/logout', :to => 'signin#destroy', :as => :logout
-  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect
-  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback
-  match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation
+  match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
+  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
+  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
+  match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
   post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
@@ -99,7 +104,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/join', :to => 'signin#new_join', :as => :join
     get '/gsr/login', :to => 'signin#new', :as => :signin
 
-    # State page
     scope '/:state', as: :state, constraints: {
         state: States.any_state_name_regex,
     } do
@@ -130,6 +134,7 @@ LocalizedProfiles::Application.routes.draw do
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'cities#enrollment'
       end
+      get 'programs', to: 'cities#programs', as: :programs
 
       scope '/education-community', as: :education_community do
         get '', to: 'cities#community'
@@ -170,19 +175,19 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   constraints(PathWithPeriod) do
-    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path))
+    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
   end
 
   constraints(PreschoolSubdomain) do
     # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
-    match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain))
+    match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain)), via: [:get, :post]
   end
 
   # error handlers
-  match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found
-  match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found
-  match '/error/internal_error' => 'error#internal_error', :as => :internal_error
+  match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found, via: [:get, :post]
+  match '/error/school_not_found' => 'error#school_not_found', :as => :school_not_found, via: [:get, :post]
+  match '/error/internal_error' => 'error#internal_error', :as => :internal_error, via: [:get, :post]
 
   # route not found catch-all
-  match '*path' => 'error#page_not_found'
+  match '*path' => 'error#page_not_found', via: [:get, :post]
 end

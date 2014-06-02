@@ -3,8 +3,8 @@ class SchoolMedia < ActiveRecord::Base
 
   self.table_name='school_media'
 
-  scope :limit_number, lambda { |limit_number| limit(limit_number)  unless limit_number.to_s.empty? }
-  scope :status, where("status = 1")
+  scope :limit_number, ->(count) { limit(count) unless count.to_s.empty? }
+  scope :status, -> { where("status = 1") }
 
   def self.order_by()
         order("sort DESC")

@@ -13,6 +13,7 @@ describe CensusDataReader do
     it 'should find out all possible configured census data types' do
       allow(CensusDataSetQuery).to receive(:new).and_return double('query').as_null_object
       expect(page).to receive(:all_configured_keys).with('census_data')
+      expect(page).to receive(:all_configured_keys).with('census_data_points')
       subject.send :census_data_by_data_type_query
     end
 

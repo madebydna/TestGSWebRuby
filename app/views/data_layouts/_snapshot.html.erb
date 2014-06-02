@@ -17,14 +17,13 @@
 <% column_2_contents = data[left_table_size..total_array_size] %>
 <% all_columns = [column_1_contents, column_2_contents]  %>
 
-<% showAds = @school.show_ads %>
-<div class="row limit_width_1200">
+<div class="row limit-width-1200">
     <div class="mtl pvl clearfix">
-        <%= showAds ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
+        <%= @show_ads ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
 
         <%  all_columns.each_with_index do |col_arr, index_all| %>
 
-            <% layout_grid = (showAds ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
+            <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
             <div class="<%= layout_grid %>">
 
                 <div class="mhm">
@@ -55,15 +54,15 @@
                     <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
                 </div>
             <% end %>
-        <%= showAds ?  '</div>'.html_safe : '' %>
-        <% if showAds %>
+        <%= @show_ads ?  '</div>'.html_safe : '' %>
+        <% if @show_ads %>
             <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
                 <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :desktop  %>
             </div>
         <% end %>
     </div>
 
-    <% if showAds %>
+    <% if @show_ads %>
         <div class="plm">
             <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :mobile  %>
         </div>

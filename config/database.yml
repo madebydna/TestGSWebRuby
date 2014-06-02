@@ -95,6 +95,14 @@ development: &development
     <<: *mysql_ro_server_to_use_in_development
     database: us_geo
     legacy: true
+  gscms_pub_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: gscms_pub
+    legacy: true
+  gscms_pub:
+    <<: *mysql_ro_server_to_use_in_development
+    database: gscms_pub
+    legacy: true
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -150,6 +158,14 @@ test: &test
   us_geo:
     <<: *mysql_localhost_rw
     database: us_geo_test
+    legacy: true
+  gscms_pub_rw:
+    <<: *mysql_localhost_rw
+    database: gscms_pub_test
+    legacy: true
+  gscms_pub:
+    <<: *mysql_localhost_rw
+    database: gscms_pub_test
     legacy: true
 
 cucumber:

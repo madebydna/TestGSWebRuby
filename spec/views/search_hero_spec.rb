@@ -9,6 +9,7 @@ describe 'shared/_search_hero.html.erb' do
     allow(view).to receive(:collection_nickname) { 'Fiji' }
     allow(view).to receive(:sponsor) { nil }
     allow(view).to receive(:params) { { state: 'michigan', city: 'detroit' } }
+    allow(view).to receive(:browse_links) { nil }
   end
 
   context 'on a city page' do
@@ -16,13 +17,6 @@ describe 'shared/_search_hero.html.erb' do
       allow(view).to receive(:collection_id) { 1 }
       allow(view).to receive(:state) { { short: 'mi', long: 'michigan' } }
       allow(view).to receive(:breakdown_results) { { foo: nil, bar: nil } }
-    end
-
-    context 'without breakdown results' do
-      it 'renders an error message' do
-        render
-        expect(rendered).to have_content('No data found for school breakdown')
-      end
     end
 
     it 'adds the collection_id to a name search' do
@@ -45,9 +39,6 @@ describe 'shared/_search_hero.html.erb' do
       allow(view).to receive(:state_page) { true }
 
       render
-    end
-    it 'does not render browse links' do
-      expect(rendered).to_not have_selector('.browse-school-link')
     end
 
     it 'does not add the collection_id to a name search' do

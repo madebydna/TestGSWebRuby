@@ -16,13 +16,12 @@ describe 'Education Comunity Page' do
     it 'exists' do
       expect(page).to have_content 'Find a school in Detroit'
       expect(page).to have_content 'Not in Detroit?'
-      expect(page).to have_css '.search-bar'
+      expect(page).to have_css '#js-findByNameBox'
     end
   end
 
   describe 'upcoming events module' do
     it 'shows 2 upcoming events' do
-      expect(page).to have_content 'Upcoming Events'
       expect(page).to have_css '.upcoming-event', count: 2
     end
   end

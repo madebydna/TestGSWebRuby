@@ -5,7 +5,10 @@
         <% visible_for = "visible-xs"  %>
     <% end %>
 <% end %>
-
+<% unless defined? id_counter %>
+    <% id_counter = "" %>
+<% end %>
+<% slot = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
 <% width = @ad_definition.get_width(page, slot, view) %>
 <% height = @ad_definition.get_height(page, slot, view) %>
 <% insert_mobile = '' %>
@@ -13,5 +16,7 @@
     <% insert_mobile = 'Mobile_' %>
 <% end %>
 <% slotdef = "School_#{page}_#{insert_mobile}#{slot}_#{width}x#{height}" %>
-<% iddef = "#{page}#{slot}#{insert_mobile}Ad" %>
+<% iddef = "#{page}#{slot}#{insert_mobile}Ad#{id_counter}" %>
 <div class="gs_ad_slot <%= visible_for %> ma" id="<%= iddef %>" data-ad-size="[<%= width %>,<%= height %>]" style="width: <%= width %>px"  data-dfp="<%= slotdef %>"></div>
+<% partial_params = {visible_for: visible_for}%>
+<%= render partial: '/shared/advertising_word', locals: partial_params %>

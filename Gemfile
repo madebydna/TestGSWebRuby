@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'rails', '3.2.11'
+gem 'rails', '4.0.4'
 
 gem 'mysql2', '0.3.13'
 
@@ -17,7 +17,10 @@ gem 'devise'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
-gem 'db-charmer', '1.8.4', :require => 'db_charmer'
+
+# No Rails 4:
+# gem 'db-charmer', '1.8.4', :require => 'db_charmer'
+gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails4'
 
 # Adds support for reserved-word column names as model attributes. Useful when writing models for legacy schemas
 gem 'safe_attributes'
@@ -25,9 +28,6 @@ gem 'safe_attributes'
 # paper_trail allows implementing versioning to models
 gem 'paper_trail'
 gem 'haml', '4.0.3'
-
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 
 # Hashie is a simple collection of useful Hash extensions
 gem 'hashie'
@@ -39,7 +39,8 @@ gem 'to_regexp'
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
 # Adds composite primary key support to ActiveRecord. Use minimally
-gem 'composite_primary_keys'
+# No Rail 4:
+# gem 'composite_primary_keys'
 
 # Adds lodash JS to the project. Version of lodash added depends on environment
 gem 'lodash-rails'
@@ -70,6 +71,7 @@ gem 'has_scope'
 
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
+# Rails 4
 gem 'draper', '~> 1.3'
 
 gem 'addressable'
@@ -79,6 +81,10 @@ gem 'rubocop', '= 0.20.1', require: false
 gem 'rubocop-checkstyle_formatter', require: false
 
 gem 'rack_after_reply'
+
+gem 'protected_attributes'
+
+gem 'nokogiri', '= 1.6.1'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
@@ -110,7 +116,9 @@ group :development, :test do
   gem 'rails_best_practices'
 
   # gem for setting up ruby objects as test data
-  gem 'factory_girl_rails', '~> 4.2.1'
+  # gem 'factory_girl_rails', '~> 4.2.1'
+  # Rails 4
+  gem 'factory_girl_rails', '~> 4.4.0'
 
   # testing frameworks
   gem 'rspec', '~> 3.0.0.beta2'
@@ -157,21 +165,26 @@ group :development, :test do
   gem 'launchy'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+# gem 'sass-rails',   '~> 3.2.3'
+# Rails 4
+gem 'sass-rails',   '~> 4.0.1'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+# gem 'coffee-rails', '~> 3.2.1'
+# Rails 4
+gem 'coffee-rails', '~> 4.0.1'
 
-  #gem 'compass-rails', '~> 2.0.alpha.0'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-wysihtml5-rails'
-  gem 'css_splitter', '~> 0.1.1'
-  gem "yui-compressor", "~> 0.12.0"
-end
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platforms => :ruby
+
+#gem 'compass-rails', '~> 2.0.alpha.0'
+gem 'uglifier', '>= 1.0.3'
+gem 'bootstrap-wysihtml5-rails'
+
+# gem 'css_splitter', '~> 0.1.1'
+# Rails 4
+gem 'css_splitter'
+
+gem "yui-compressor", "~> 0.12.0"
 
 group :profile do
   gem 'ruby-prof'

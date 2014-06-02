@@ -22,15 +22,15 @@
     });
 <% end %>
 
-<div class="row limit_width_1200 pam">
+<div class="row limit-width-1200 pam">
   <br/>
   <%= link_to 'Back to moderation', moderation_admin_reviews_path %>
 
   <h3><%= link_to @school.name, school_url(@school) %></h3>
 
   <div>
-    <%= render 'held_school_form', 
-      school: @school, 
+    <%= render 'held_school_form',
+      school: @school,
       held_school: @held_school %>
     <br/>
   </div>
@@ -52,6 +52,6 @@
         Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
     <% end %>
   </div>
-    
+
   <%= render partial: 'review', collection: @reviews, as: :review %>
 </div>

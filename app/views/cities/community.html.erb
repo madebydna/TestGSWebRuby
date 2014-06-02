@@ -1,13 +1,11 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<div class="upcoming-events fixed-top pvm">
-  <div class="limit_width_1200">
-    <%= render 'upcoming_events', important_events: @events, community_page: true %>
-  </div>
-</div>
+<% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>
+  <%= render 'upcoming_events', important_events: @important_events, community_page: true %>
+<% end %>
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200 mbl">
   <div class="row">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   </div>
@@ -20,4 +18,7 @@
   <%= render 'tabs', tab: @tab, city: @city, state: @state[:long], show_tabs: @show_tabs %>
   <%= render 'education_community_partners', partners: @partners, tab: @tab, show_tabs: @show_tabs %>
 </div>
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>

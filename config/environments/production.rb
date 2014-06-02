@@ -8,6 +8,9 @@ LocalizedProfiles::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
+  # Do not eager load code on boot.
+  config.eager_load = true
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -34,7 +37,8 @@ LocalizedProfiles::Application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -64,10 +68,14 @@ LocalizedProfiles::Application.configure do
 
   # Use a different cache store in production
   config.cache_store = :memory_store, { size: 128.megabytes }
-
+   # Shomi Arora -Dont Cache so QA can test quickly
+  # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
+
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :sass
 
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)

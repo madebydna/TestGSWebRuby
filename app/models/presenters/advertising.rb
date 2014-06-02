@@ -127,8 +127,35 @@ class Advertising
           height:50
         }
       },
-      Test_Scores: {
-        name: "Test_Scores",
+      Test_Scores1: {
+        name: "Test_Scores1",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores2: {
+        name: "Test_Scores2",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores3: {
+        name: "Test_Scores3",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },Test_Scores4: {
+        name: "Test_Scores4",
+        desktop:{
+          width:300,
+          height:250
+        }
+      },
+      Test_Scores5: {
+        name: "Test_Scores5",
         desktop:{
           width:300,
           height:250
@@ -166,7 +193,7 @@ class Advertising
     }
 
     # Details Page Ads
-    @ad_slots[:Quality] = {
+    @ad_slots[:Details] = {
       Content_Top: {
         name: "Content_Top",
         desktop:{
@@ -249,12 +276,17 @@ class Advertising
     }
 
     def get_width(page, slot, view)
-
-      @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:width] : @ad_slots[page][slot][view][:width]
+      hash_val = @ad_slots.seek page, slot, :desktop
+      if hash_val.present?
+        @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:width] : @ad_slots[page][slot][view][:width]
+      end
     end
 
     def get_height(page, slot, view)
-      @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:height] : @ad_slots[page][slot][view][:height]
+      hash_val = @ad_slots.seek page, slot, :desktop
+      if hash_val.present?
+        @ad_slots[page][slot][view].nil? ? @ad_slots[page][slot][:desktop][:height] : @ad_slots[page][slot][view][:height]
+      end
     end
 
   end

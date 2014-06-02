@@ -4,8 +4,8 @@ class BannedIp < ActiveRecord::Base
 
   EXPIRED_TIME = 1.year
 
-  scope :active, where("updated >= ?", EXPIRED_TIME.ago)
-  scope :expired, where("updated < ?", EXPIRED_TIME.ago)
+  scope :active, -> { where("updated >= ?", EXPIRED_TIME.ago) }
+  scope :expired, -> { where("updated < ?", EXPIRED_TIME.ago) }
 
   def self.banned_ips
     Rails.cache.fetch("banned_ip/active_ips", expires_in: 5.minutes) do

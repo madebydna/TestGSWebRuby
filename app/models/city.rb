@@ -5,7 +5,7 @@ class City < ActiveRecord::Base
 
   attr_accessible :population, :bp_census_id, :name, :state
 
-  scope :active, where(active: true)
+  scope :active, -> { where(active: true) }
 
   def self.popular_cities(state, options = {})
     result = where(state: state, active: 1).order('population desc')

@@ -13,25 +13,20 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% unless @events.nil? ||  @events[:events].empty? %>
-  <div class="upcoming-events fixed-top pvm">
-    <div class="limit_width_1200">
-      <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-    </div>
-  </div>
+  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
 
-<div class="limit_width_1200" style='margin-bottom: 40px;'>
+<div class="limit-width-1200 mbl">
   <div class="row">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
     <div class="row" style='margin-bottom: 215px;'>
-      <div class="img-container-mobile" style='width: 100%; left: 0;'>
-        <div style="background-image: url('/assets/hubs/small/enrollment_small.png'); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
+      <div class="hidden-lg hidden-md hidden-sm" style='width: 100%; left: 0;'>
+        <div style="background-image: url(<%= image_path('hubs/small/enrollment_small.png') %>); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
       </div>
-
-      <div class="img-container" style='width: 100%; left: 0;'>
-        <div style="background-image: url('/assets/hubs/enrollment.png'); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
+      <div class="hidden-xs" style='width: 100%; left: 0;'>
+        <div style="background-image: url(<%= image_path('hubs/enrollment.png') %>); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
       </div>
     </div>
 
@@ -43,7 +38,8 @@
       <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
     <% end %>
 
-    <ul class='js-enrollment-tabs' style='margin-bottom: 80px'>
+    <ul class='tac enrollment-tabs' style='margin-bottom: 80px'>
+      <!-- TODO: should we check hub params city or just the city url?  5/19/14 -->
       <% if params[:city] %>
         <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
         <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
@@ -59,11 +55,13 @@
   </div>
 
   <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :public, key_dates: @key_dates %>
-  <hr style='display: inline-block;'>
+  <hr class="dib">
   <hr style='clear: both; margin-top: 70px; margin-bottom: 70px;'>
   <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :private, key_dates: @key_dates %>
 
   </div>
 </div>
 
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>
