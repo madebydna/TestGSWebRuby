@@ -3,6 +3,7 @@ require 'controllers/concerns/authentication_concerns_shared'
 
 describe SigninController do
 
+  before { request.host = 'localhost'; request.port = 3000 }
   it { should respond_to :new }
 
   it_behaves_like 'controller with authentication'
@@ -89,6 +90,7 @@ describe SigninController do
       context 'successful registration' do
         let(:user) { instance_double(User) }
         before do
+          user.stub(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
         end
 
@@ -148,7 +150,7 @@ describe SigninController do
       get :facebook_connect
       redirect_uri = 'https://graph.facebook.com/oauth/authorize' +
                      '?client_id=178930405559082&' +
-                     'redirect_uri=http%3A%2F%2Ftest.host%2Fgsr%2Fsession%2Ffacebook_callback%2F&scope=email'
+                     'redirect_uri=http%3A%2F%2Flocalhost%2Fgsr%2Fsession%2Ffacebook_callback%2F&scope=email'
       expect(response).to redirect_to(redirect_uri)
     end
   end
@@ -159,8 +161,10 @@ describe SigninController do
     end
 
     def stub_fb_login_success
-      allow(controller).to receive(:current_user) { double('user', id: 1, auth_token: 'foo') }
-      allow(controller).to receive(:facebook_login) { [double('user', id: 1, auth_token: 'foo'), nil] }
+      user = double('user', id: 1, auth_token: 'foo')
+      user.stub(:provisional?).and_return(false)
+      allow(controller).to receive(:current_user) { user }
+      allow(controller).to receive(:facebook_login) { [user, nil] }
     end
 
     context 'without an access code' do

@@ -22,7 +22,8 @@ FactoryGirl.define do
 
         params = {
           page: p,
-          category: category
+          category: category,
+          title: category.name
         }
         params[:layout] = evaluator.layout if evaluator.layout
 

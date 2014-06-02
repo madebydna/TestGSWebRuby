@@ -7,12 +7,14 @@
     <%= render 'shared/breadcrumbs', breadcrumbs: breadcrumb_hash %>
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
         <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
+        <%= render 'data_layouts/nearby_schools' %>
         <div class="mtl pll ptl" style="color:#999999">Last modified: <%= @last_modified_date.strftime('%B %d, %Y') %></div>
     </div>
-
 </div>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
 <%= render 'shared/rich_snippets/rich_snippets_school_info', school: @school %>
 <%= render 'shared/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
 <%= render 'shared/rich_snippets/rich_snippets_average_review_rating', school: @school %>
+
+

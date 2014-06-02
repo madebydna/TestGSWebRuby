@@ -83,6 +83,8 @@ key_dates_value = "{ content: '02-01-2014<br>Individual schools hold open houses
 browse_links_value = "{   browseLinks: [     { label: 'PreSchools', link: '/schools/?gradeLevels=p'  },     { label: 'Elementary Schools', link: '/schools/?gradeLevels=e'  },     { label: 'Middle Schools', link: '/schools/?gradeLevels=m'  },     { label: 'High Schools', link: '/schools/?gradeLevels=h'  },     { label: 'Public Schools', link: '/schools/?st=public&st=charter'  },     { label: 'Private Schools', link: '/schools/?st=private'  },     { label: 'Charter Schools', link: '/schools/?st=charter'  }   ] }"
 programs_heading_value = 'What makes a great after school or summer program?'
 programs_intro_value = "{ content: 'Quality after-school and summer learning opportunities. Each has its own enrollment procedure.', view_more: '<u>Traditional public schools</u><br/>Traditional public schools are tuition-free and offer open enrollment to individuals living within a specific district. In some cases, traditional public school districts will allow inter-district transfers, which permit students who live outside the district boundary to enroll at no cost. Parents should contact school districts directly about this option.<br/><br/><u>Public charter schools</u><br/>Public Charter schools are free, and don’t require students to reside in a specific district in order to attend. Like traditional public schools, public charter schools are required to have an open enrollment policy, and cannot charge tuition. Contact individual schools or school websites for enrollment and other information.<br/><br/><u>Magnet schools </u><br/>Magnet schools are public schools that offer a specific subject or curriculum focus. A magnet school may emphasize performing arts, math, business and finance, or international studies, for example. Families must apply to attend a magnet school. When there are more applicants than available seats, the schools will hold a lottery. Contact individual schools or school websites for enrollment and other information.'}"
+programs_sponsor_value = "{ logo: 'hubs/after_school_programs.png', description: 'description of an excellent sponsor', link: 'http://google.com', newwindow:'true' }"
+
 
 FactoryGirl.define do
   factory :state_hub_content_module, class: CollectionConfig do
@@ -265,5 +267,11 @@ FactoryGirl.define do
     collection_id 1
     quay CollectionConfig::PROGRAMS_INTRO_KEY
     value programs_intro_value
+  end
+
+  factory :programs_sponsor_config, class: CollectionConfig do
+    collection_id 1
+    quay CollectionConfig::PROGRAMS_SPONSOR_KEY
+    value programs_sponsor_value
   end
 end

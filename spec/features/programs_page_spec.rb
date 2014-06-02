@@ -6,15 +6,13 @@ describe 'Programs Page' do
     FactoryGirl.create :hub_city_mapping
     FactoryGirl.create :programs_heading_config
     FactoryGirl.create :programs_intro_config
+    FactoryGirl.create :programs_sponsor_config
     FactoryGirl.create :important_events_collection_config
+    visit '/michigan/detroit/programs'
   end
   after { clean_dbs :gs_schooldb }
 
   describe 'heading and intro section' do
-    before do
-      visit '/michigan/detroit/programs'
-    end
-
     it 'renders the search bar' do
       expect(page).to have_selector '#js-findByNameBox'
     end
@@ -28,6 +26,13 @@ describe 'Programs Page' do
     end
 
     it 'renders the intro section' do
+      expect(page).to have_content 'Quality after-school and summer learning opportunities.'
+    end
+  end
+
+  describe 'sponsor section' do
+    it 'renders the sponsor section' do
+      expect(page).to have_content 'description of an excellent sponsor'
     end
   end
 end

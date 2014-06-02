@@ -7,18 +7,8 @@
     <div class="row pal limit-width-1200 open-sans">
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">
-                <% media_hash = @school.school_media_first_hash %>
-                <% if media_hash %>
-                    <%= image_tag( generate_img_path( "130", media_hash), :class => "thumbnail-border") %>
-                <% else %>
-                    <% google_formatted_street_address = @google_signed_image.google_formatted_street_address %>
-                    <% if google_formatted_street_address.present? %>
-                        <%= image_tag @google_signed_image.sign_url(
-                            "http://maps.googleapis.com/maps/api/streetview?fov=70&size=130x130&location=" +
-                            google_formatted_street_address+"&sensor=false"
-                        ), :class => "thumbnail_border" %>
-                    <% end %>
-                <% end %>
+                <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
+                <%= school_profile_decorator.photo %>
             </div>
 
             <div class="fl header-title-width" >

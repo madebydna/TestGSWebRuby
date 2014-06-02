@@ -6,7 +6,7 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
-  # get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  get '/gsr/home', as: :home_prototype, to: 'home#prototype'
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -85,6 +85,7 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
+  get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user

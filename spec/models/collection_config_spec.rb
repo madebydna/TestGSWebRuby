@@ -783,7 +783,7 @@ describe CollectionConfig do
 
   describe '.programs_intro' do
     it_behaves_like 'it rejects empty configs' do
-      let(:method) { :programs_heading }
+      let(:method) { :programs_intro }
     end
 
     it_behaves_like 'it fails with an error' do
@@ -797,6 +797,26 @@ describe CollectionConfig do
 
       it 'returns the intro section html blob' do
         expect(result[:content]).to start_with 'Quality after-school and summer learning'
+      end
+    end
+  end
+
+  describe '.programs_sponsor' do
+    it_behaves_like 'it rejects empty configs' do
+      let(:method) { :programs_sponsor }
+    end
+
+    it_behaves_like 'it fails with an error' do
+      let(:method) { :programs_sponsor }
+      let(:key) { CollectionConfig::PROGRAMS_SPONSOR_KEY }
+    end
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_sponsor_config)] }
+      let(:result) { CollectionConfig.programs_sponsor(configs) }
+
+      it 'parses the programs page sponsor' do
+        expect(result[:logo]).to eq('hubs/after_school_programs.png')
       end
     end
   end

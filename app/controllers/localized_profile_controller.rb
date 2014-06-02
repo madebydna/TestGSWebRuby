@@ -65,7 +65,7 @@ class LocalizedProfileController < ApplicationController
 
   def init_page
     @school_reviews_all = @school.reviews.load
-    @google_signed_image = GoogleSignedImages.new @school, gon
+    create_sized_maps(gon)
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
@@ -203,5 +203,25 @@ class LocalizedProfileController < ApplicationController
 
   def enable_ads
     @show_ads = @school.show_ads
+  end
+
+  def create_sized_maps(gon)
+    google_apis_path = GoogleSignedImages::STATIC_MAP_URL
+    address = GoogleSignedImages.google_formatted_street_address(@school)
+
+    sizes = {
+        'sm' => [280, 150],
+        'md' => [400, 150],
+        'lg' => [500, 150]
+    }
+
+    gon.contact_map ||= sizes.inject({}) do |sized_maps, element|
+      label = element[0]
+      size = element[1]
+      sized_maps[label] = GoogleSignedImages.sign_url(
+        "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false"
+      )
+      sized_maps
+    end
   end
 end

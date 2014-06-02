@@ -17,4 +17,8 @@ class Subscription < ActiveRecord::Base
     SUBSCRIPTIONS[list.to_sym]
   end
 
+  def self.have_available?(list)
+    SUBSCRIPTIONS.include?(list.to_sym)
+  end
+
 end
