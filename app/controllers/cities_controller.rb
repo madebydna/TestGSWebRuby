@@ -44,9 +44,8 @@ class CitiesController < ApplicationController
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
-        'Home' => '/',
-        params[:state].titleize => "/#{params[:state]}",
-        @city.titleize => city_path(params[:state], params[:city])
+        @city.titleize => city_path(params[:state], params[:city]) ,
+        'Events' =>nil
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
@@ -159,6 +158,10 @@ class CitiesController < ApplicationController
       @sponsor = CollectionConfig.programs_sponsor(configs)
       @articles = CollectionConfig.programs_articles(configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
+      @breadcrumbs = {
+              @city.titleize => city_path(params[:state], params[:city]) ,
+              'After school and summer programs' =>nil
+            }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
     end
   end
