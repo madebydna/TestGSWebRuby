@@ -1,23 +1,2 @@
 <%= render 'nav/topnav' %>
-<<<<<<< HEAD
 <%= render 'data_load_form' %>
-=======
-<div class="row limit_width_1200">
-  <div class="row pbl">
-    <div class="container" style="padding:10px;">
-      <%= form_for @load do |f| %>
-        State: <%= f.text_field :state, class:'form-control' %><br>
-        Description: <%= f.text_field :description, class:'form-control' %><br>
-        Load type: <%= f.text_field :load_type, class:'form-control' %><br>
-        Year to load: <%= f.date_select :year_to_load, discard_day: true, discard_month: true %><br>
-        Released: <%= f.date_select :released, class:'form-control' %><br>
-        Acquired: <%= f.date_select :acquired, class:'form-control' %><br>
-        Live by: <%= f.date_select :live_by, class:'form-control' %><br>
-        Updated by: <%= f.text_field :updated_by, class:'form-control' %><br>
-        <%= f.submit 'Save', class:'btn btn-primary' %>
-      <% end %>
-      <%= link_to 'back to list', admin_data_load_schedules_path %>
-    </div>
-  </div>
-</div>
->>>>>>> initial prototyping

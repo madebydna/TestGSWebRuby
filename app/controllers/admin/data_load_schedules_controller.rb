@@ -1,6 +1,5 @@
 class Admin::DataLoadSchedulesController < ApplicationController
 
-<<<<<<< HEAD
   before_filter :get_params
   before_filter :get_load_types
   before_filter :get_states
@@ -10,17 +9,12 @@ class Admin::DataLoadSchedulesController < ApplicationController
     @sorts = [:state,:released,:live_by, :priority]
     @loads = filter_and_sort_data_loads
     @outstanding_loads = get_outstanding_loads if @view_type == 'calendar'
-=======
-  def index
-    @loads = Admin::DataLoadSchedule.all
->>>>>>> initial prototyping
   end
 
   def new
     @load = Admin::DataLoadSchedule.new
   end
 
-<<<<<<< HEAD
   def edit
     @load = Admin::DataLoadSchedule.find(params[:id])
   end
@@ -134,23 +128,4 @@ class Admin::DataLoadSchedulesController < ApplicationController
     @states = States.state_hash.values.sort.map { |state| state.upcase }
     @states.unshift 'All'
   end
-
-=======
-  def create
-    p = params[:admin_data_load_schedule]
-    @load = Admin::DataLoadSchedule.new
-    @load.state = p[:state]
-    @load.description = p[:description]
-    @load.load_type = p[:load_type]
-    @load.year_to_load = p['year_to_load(1i)']
-    @load.released = "#{p['released(1i)']}-0#{p['released(2i)']}-0#{p['released(3i)']}"
-    @load.acquired = "#{p['acquired(1i)']}-0#{p['acquired(2i)']}-0#{p['acquired(3i)']}"
-    @load.live_by = "#{p['live_by(1i)']}-0#{p['live_by(2i)']}-0#{p['live_by(3i)']}"
-    @load.updated_by = p['updated_by']
-    if @load.save
-      redirect_to '/admin/gsr/data-planning'
-    end
-  end
-
->>>>>>> initial prototyping
 end

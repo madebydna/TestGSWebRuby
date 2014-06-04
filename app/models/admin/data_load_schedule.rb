@@ -2,7 +2,6 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'data_load_schedule'
 
-<<<<<<< HEAD
   attr_accessible :state, :description, :load_type, :year_on_site, :year_to_load, :released, :acquired, :live_by, :complete, :status, :updated, :updated_by
 
   scope :complete, where('complete = 1')
@@ -53,7 +52,4 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
       end
     end
   end
-=======
-  attr_accessible :state,:description,:load_type,:year_to_load,:released,:acquired,:live_by,:updated,:updated_by
->>>>>>> initial prototyping
 end
