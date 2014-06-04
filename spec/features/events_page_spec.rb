@@ -17,7 +17,7 @@ describe 'Events Page' do
 
   it 'shows basic layout and breadcrumbs' do
     expect(page).to have_text 'All events'
-    expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']", count: 3)
+    expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']", count: 2)
   end
 
   describe 'search bar' do
