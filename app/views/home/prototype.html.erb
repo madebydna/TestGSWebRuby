@@ -1,8 +1,8 @@
 <% content_for :javascript_includes do %>
     <script>
         $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '/assets/homepage_hero.jpg', mobileImage: '/assets/hero_mobile.jpg' });
-            GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '/assets/homepage_picnic.jpg', mobileImage: '' });
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '/assets/homepage_hero.jpg', mobileImage: '/assets/hero_mobile.jpg', classes:'scaling' });
+            GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '/assets/homepage_picnic.jpg', mobileImage: '', classes:'scaling' });
         })
     </script>
 <% end %>
