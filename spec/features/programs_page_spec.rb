@@ -13,6 +13,8 @@ describe 'Programs Page' do
   end
   after { clean_dbs :gs_schooldb }
 
+
+
   describe 'heading and intro section' do
     it 'renders the search bar' do
       expect(page).to have_selector '#js-findByNameBox'
@@ -29,6 +31,10 @@ describe 'Programs Page' do
     it 'renders the intro section' do
       expect(page).to have_content 'Quality after-school and summer learning opportunities.'
     end
+
+     it 'shows breadcrumbs' do
+        expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']", count: 2)
+     end
   end
 
   it 'renders the sponsor section' do
