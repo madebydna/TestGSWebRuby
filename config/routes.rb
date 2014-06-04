@@ -80,7 +80,6 @@ LocalizedProfiles::Application.routes.draw do
     resources :reported_entity do
       put 'deactivate', on: :member
     end
-
   end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
