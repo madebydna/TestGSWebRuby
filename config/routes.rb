@@ -7,12 +7,14 @@ LocalizedProfiles::Application.routes.draw do
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  get '/gsr/home', as: :home, to: 'home#prototype'
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
     get '/index.page', as: :home
+    #get '/index.page', as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
@@ -78,7 +80,6 @@ LocalizedProfiles::Application.routes.draw do
     resources :reported_entity do
       put 'deactivate', on: :member
     end
-
   end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
@@ -91,6 +92,7 @@ LocalizedProfiles::Application.routes.draw do
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
+  match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post]
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
@@ -144,6 +146,8 @@ LocalizedProfiles::Application.routes.draw do
         get '/funders', to: 'cities#community'
         get '/partner', to: 'cities#partner', as: :partner
       end
+
+      get 'programs', to: 'cities#foobar'
     end
 
     # Routes for city page
