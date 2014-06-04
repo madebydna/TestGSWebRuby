@@ -1,16 +1,22 @@
 <div class="row limit_width_1200">
   <div class="row pbl">
     <div class="container" style="padding:10px;">
-      <%= form_for @load, url: admin_data_load_schedule_path(@load, params) do |f| %>
-        State: <%= f.text_field :state, class:'form-control' %><br>
+      <%= form_for @load do |f| %>
+        State: <%= f.select :state, @states, class:'form-control' %><br>
         Description: <%= f.text_field :description, class:'form-control' %><br>
-        Load type: <%= f.text_field :load_type, class:'form-control' %><br>
-        Year to load: <%= f.date_select :year_to_load, discard_day: true, discard_month: true %><br>
-        Released: <%= f.date_select :released, class:'form-control' %><br>
-        Acquired: <%= f.date_select :acquired, class:'form-control' %><br>
-        Live by: <%= f.date_select :live_by, class:'form-control' %><br>
+        <div class="row">
+      <div class="form-group">
+        <% form_load_types = @load_types; form_load_types.delete('All') %>
+        Load type: <%= f.select :load_type, form_load_types, include_blank: true, class:'form-control' %>
+        Or create a new load type:&nbsp;<%= text_field_tag :load_type2, nil, placeholder: 'Enter new load type', class: 'form-control'%><br>
+      </div>
+      </div>
+      Year to load: <%= f.date_select :year_to_load, default: '', include_blank: true, discard_day: true, discard_month: true %><br>
+        Released: <%= f.date_select :released, default: '', include_blank: true %><br>
+        Acquired: <%= f.date_select :acquired, default: '', include_blank: true %><br>
+        Live by: <%= f.date_select :live_by, default: '', include_blank: true %><br>
         Updated by: <%= f.text_field :updated_by, class:'form-control' %><br>
-        Complete: <%= f.text_field :complete, class:'form-control' %><br>
+        Complete: <%= f.check_box :complete %><br>
         <%= f.submit 'Save', class:'btn btn-primary' %>
       <% end %>
       <%= link_to 'back to list', admin_data_load_schedules_path(params) %>

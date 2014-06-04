@@ -3,28 +3,28 @@ require 'spec_helper'
 describe Admin::DataLoadSchedulesController do
 
   it 'should have the right methods' do
-    expect(controller).to respond_to :update
-    expect(controller).to respond_to :create
     expect(controller).to respond_to :index
+    expect(controller).to respond_to :new
+    expect(controller).to respond_to :create
+    expect(controller).to respond_to :edit
+    expect(controller).to respond_to :update
   end
 
   describe '#update' do
+
+    let(:data_load) { FactoryGirl.build(:data_load) }
+
     before do
-      request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
-    end
-    after do
-      expect(response).to redirect_to request.env['HTTP_REFERER']
+      allow_any_instance_of(Admin::DataLoadSchedulesController).to receive(:format_attributes).and_return(data_load.attributes)
     end
 
     it 'should update the data load if one is found' do
-      data_load = FactoryGirl.build(:data_load)
       Admin::DataLoadSchedule.stub(:find).and_return(data_load)
       expect(data_load).to receive(:update_attributes).and_return true
       post :update, id: 1
     end
 
     it 'should handle update failure by setting flash message' do
-      data_load = FactoryGirl.build(:data_load)
       Admin::DataLoadSchedule.stub(:find).and_return(data_load)
       expect(data_load).to receive(:update_attributes).and_return false
       expect(controller).to receive(:flash_error)
@@ -33,142 +33,97 @@ describe Admin::DataLoadSchedulesController do
   end
 
   describe '#create' do
-    before do
-      request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
-    end
-    after do
-      expect(response).to redirect_to request.env['HTTP_REFERER']
-    end
 
-    it 'should create a data load if one is found' do
-      data_load = FactoryGirl.build(:data_load)
-      Admin::DataLoadSchedule.stub(:find).and_return(data_load)
-      expect(data_load).to receive(:update_attributes).and_return true
-      post :update, id: 1
-    end
-
-    it 'should handle update failure by setting flash message' do
-      data_load = FactoryGirl.build(:data_load)
-      Admin::DataLoadSchedule.stub(:find).and_return(data_load)
-      expect(data_load).to receive(:update_attributes).and_return false
-      expect(controller).to receive(:flash_error)
-      post :update, id: 1
-    end
-  end
-
-  describe '#index' do
     let(:data_load) { FactoryGirl.build(:data_load) }
-    let(:completed_data_load) { FactoryGirl.build(:completed_data_load) }
-    let(:incomplete_data_load) { FactoryGirl.build(:incomplete_data_load) }
 
     before do
-      controller.stub(:filter_and_sort_data_loads).and_return data_loads
+      allow_any_instance_of(Admin::DataLoadSchedulesController).to receive(:format_attributes).and_return(data_load.attributes)
     end
 
-    it 'should look for all data loads if not provided a filter' do
-      expect(Admin::DataLoadSchedule).to receive(:all)
-      get :index
+    it 'should create the data load if one is found' do
+      expect_any_instance_of(Admin::DataLoadSchedule).to receive(:update_attributes).and_return true
+      post :create, id: 1
     end
 
-    context 'provided a completed only filter' do
-      before do
-        expect(Admin::DataLoadSchedule).to receive(:completed).and_return(completed_data_load)
-      end
+    it 'should handle creation failure by setting flash message' do
+      expect_any_instance_of(Admin::DataLoadSchedule).to receive(:update_attributes).and_return false
+      expect(controller).to receive(:flash_error)
+      post :create, id: 1
+    end
+  end
 
-      it 'should look for a completed school if provided a completed filter' do
-        expect(Admin::DataLoadSchedule).to_not receive(:completed)
-        get :index, filter_by: 'complete'
-      end
+  describe '#construct_filter_where_clause' do
 
-      it 'should expose reported reviews to the view' do
-        get :moderation, filter_by: 'complete'
-        expect(assigns[:loads]).to eq data_loads
+    context '#with a complete status' do
+      it 'should create a where clause with status = \'complete\'' do
+        status = 'complete'
+        load_type = nil
+        controller.send(:construct_filter_where_clause, status,load_type) == 'where status = \'complete\''
+      end
+    end
+
+    context '#with a complete status and load_type test' do
+      it 'should create a where clause with status = \'complete\' and load_type = \'test\'' do
+        status = 'complete'
+        load_type = 'test'
+        controller.send(:construct_filter_where_clause, status,load_type) == 'where status = \'complete\' and load_type = \'test\''
+      end
+    end
+
+    context '#with an available status' do
+      it "should create a where clause with 'released < 'TODAY' and status != 'complete'" do
+        status = 'available'
+        load_type = nil
+        controller.send(:construct_filter_where_clause, status,load_type) == "'released < '#{Time.now.strftime("%Y-%m-%d")}' and status != 'complete'"
+      end
+    end
+
+    context '#with an incomplete status' do
+      it "should create a where clause with 'status != 'complete'" do
+        status = 'incomplete'
+        load_type = nil
+        controller.send(:construct_filter_where_clause, status,load_type) == "'status != 'complete'"
+      end
+    end
+
+    context '#with no status' do
+      it "should create a where clause with no status clause" do
+        status = nil
+        load_type = 'test'
+        controller.send(:construct_filter_where_clause, status,load_type) !~ /status/
+      end
+    end
+
+    context '#with no load_type' do
+      it "should create a where clause with no load_type clause" do
+        status = 'available'
+        load_type = nil
+        controller.send(:construct_filter_where_clause, status,load_type) !~ /load_type/
       end
     end
   end
-  #
-  # describe '#unprocessed_reviews' do
-  #   let(:school) { FactoryGirl.build(:school) }
-  #   let(:reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
-  #
-  #   it 'should return reviews for specific school if school is set' do
-  #     controller.instance_variable_set(:@school, school)
-  #     reviews = double('reviews')
-  #     expect(reviews).to receive(:order).and_return reviews
-  #     expect(reviews).to receive(:page).and_return reviews
-  #     expect(reviews).to receive(:per).and_return reviews
-  #     school.stub(:school_ratings).and_return reviews
-  #     expect(controller.send :unprocessed_reviews).to eq(reviews)
-  #   end
-  #
-  #   it 'should return unpublished and held reviews if no school is set' do
-  #     reviews = double('reviews')
-  #     expect(reviews).to receive(:order).and_return reviews
-  #     expect(reviews).to receive(:page).and_return reviews
-  #     expect(reviews).to receive(:per).and_return reviews
-  #     expect(SchoolRating).to receive(:where).with(status: %w[u h]).and_return reviews
-  #     expect(controller.send :unprocessed_reviews).to eq(reviews)
-  #   end
-  # end
-  #
-  # describe '#flagged reviews' do
-  #   let(:school) { FactoryGirl.build(:school) }
-  #   let(:reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
-  #
-  #   it 'should return any previously flagged review for school if school is set' do
-  #     controller.instance_variable_set(:@school, school)
-  #     reviews = double('reviews')
-  #     expect(reviews).to receive(:order).and_return reviews
-  #     expect(reviews).to receive(:page).and_return reviews
-  #     expect(reviews).to receive(:per).and_return reviews
-  #     expect(reviews).to receive(:ever_flagged).and_return reviews
-  #     school.stub(:school_ratings).and_return reviews
-  #     expect(controller.send :flagged_reviews).to eq(reviews)
-  #   end
-  #
-  #   it 'should return flagged reviews if no school is set' do
-  #     reviews = double('reviews')
-  #     expect(reviews).to receive(:order).and_return reviews
-  #     expect(reviews).to receive(:page).and_return reviews
-  #     expect(reviews).to receive(:per).and_return reviews
-  #     expect(reviews).to receive(:flagged).and_return reviews
-  #
-  #     expect(SchoolRating).to receive(:where).with(status: %w[p d r a]).and_return reviews
-  #     expect(controller.send :flagged_reviews).to eq(reviews)
-  #   end
-  # end
-  #
-  # describe '.load_reported_entities_onto_reviews' do
-  #   let(:reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
-  #
-  #   it 'should correctly map reported entities to reviews' do
-  #     reported_entities = []
-  #     reported_entities += FactoryGirl.build_list(:reported_review, 3, reported_entity_id: reviews[0].id)
-  #     reported_entities += FactoryGirl.build_list(:reported_review, 2, reported_entity_id: reviews[1].id)
-  #     reported_entities += FactoryGirl.build_list(:reported_review, 1, reported_entity_id: reviews[2].id)
-  #
-  #     controller.class.send :load_reported_entities_onto_reviews, reviews, reported_entities
-  #
-  #     expect(reviews[0].reported_entities.size).to eq(3)
-  #     expect(reviews[1].reported_entities.size).to eq(2)
-  #     expect(reviews[2].reported_entities.size).to eq(1)
-  #   end
-  #
-  #   it 'handles empty arrays and nils' do
-  #     controller.class.send :load_reported_entities_onto_reviews, [], []
-  #     controller.class.send :load_reported_entities_onto_reviews, [], nil
-  #     controller.class.send :load_reported_entities_onto_reviews, nil, []
-  #     controller.class.send :load_reported_entities_onto_reviews, nil, nil
-  #   end
-  # end
-  #
-  # describe '#reported_entities_for_reviews' do
-  #   it 'should ask for reported entities' do
-  #     reviews = double('reviews')
-  #     expect(ReportedEntity).to receive(:find_by_reviews).and_return reviews
-  #     expect(reviews).to receive(:order).and_return reviews
-  #     controller.class.send :reported_entities_for_reviews, reviews
-  #   end
-  # end
 
+  describe '#get_load_status' do
+
+    context '#with completed checked' do
+      it 'should return a status of complete' do
+        attributes = {completed: '1'}
+        controller.send(:get_load_status, attributes) == 'complete'
+      end
+    end
+
+    context '#with completed not checked and acquired date chosen' do
+      it 'should return a status of acquired' do
+        attributes = {completed: '0', acquired: '2013-04-04'}
+        controller.send(:get_load_status, attributes) == 'acquired'
+      end
+    end
+
+    context '#with completed not checked and no acquired date chosen' do
+      it 'should return a status of none' do
+        attributes = {completed: '0', acquired: ''}
+        controller.send(:get_load_status, attributes) == 'none'
+      end
+    end
+  end
 end
