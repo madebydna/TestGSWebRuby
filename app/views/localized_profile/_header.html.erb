@@ -13,7 +13,7 @@
 
             <div class="fl header-title-width" >
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm">
+                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm notranslate">
                         <%= link_to school_url(@school) do %>
                             <h1 class="mtn pts"><%= @school.name %></h1>
                         <% end %>
@@ -22,7 +22,7 @@
                         <% if @school.gs_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
                                 <div class="fl prl open-sans rating-header-h24">
-                                    <span class="mrs link-darkgray">GreatSchools rating:</span>
+                                    <span class="mrs link-darkgray notranslate">GreatSchools rating:</span>
                                     <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
 
                                 </div>
