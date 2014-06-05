@@ -28,7 +28,7 @@ class CollectionConfig < ActiveRecord::Base
   PROGRAMS_HEADING_KEY = 'programsPage_heading'
   PROGRAMS_INTRO_KEY = 'programsPage_introModule'
   PROGRAMS_SPONSOR_KEY = 'programsPage_sponsorModule'
-  PROGRAMS_PARTNERS_KEY = 'programsPage_partnersModule'
+  PROGRAMS_PARTNERS_KEY = 'programsPage_partnerModule'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
