@@ -476,14 +476,14 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def programs_partners(configs)
-      articles = nil
+      partners = nil
       begin
-        articles = eval(configs.select(&lambda { |cc| cc.quay == PROGRAMS_PARTNERS_KEY }).first.try(:value))
+        partners = eval(configs.select(&lambda { |cc| cc.quay == PROGRAMS_PARTNERS_KEY }).first.try(:value) || '')
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing programs_partners ' + e.to_s)
       end
 
-      articles
+      partners
     end
 
     [
