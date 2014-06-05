@@ -1,0 +1,161 @@
+<%= render 'nav/topnav' %>
+<div class="row limit_width_1200">
+  <div class="row pbl">
+    <div class="container" style="padding:10px;">
+      <h2>Data loading schedule</h2>
+      <div class="well" id="filters">
+        <h5>Filter by
+          <div class="pull-right">
+            <div class="btn-group">
+              <%= link_to 'List view',
+                admin_data_load_schedules_path(params.merge({view_type: :list})),
+                class: 'btn btn-default' %>
+              <%= link_to 'Calendar view',
+                admin_data_load_schedules_path(params.merge({view_type: :calendar})),
+                class: 'btn btn-default' %>
+            </div>
+          </div>
+        </h5>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Type
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <% @load_types.each do |load_type| %>
+              <li>
+                <%= link_to load_type,
+                            admin_data_load_schedules_path(params.merge({type: load_type})) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Status
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <% @statuses.each do |status| %>
+              <li>
+                <%= link_to status.to_s.titleize,
+                            admin_data_load_schedules_path(params.merge({status: status})) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <%= link_to 'reset filters', admin_data_load_schedules_path(sort_by: @sort_by) %>
+    </div>
+    <strong>Sort by:</strong>&nbsp;
+    <% @sorts.each do |sort_param| %>
+      <%= link_to sort_param.to_s.gsub('_',' ').titleize, admin_data_load_schedules_path(params.merge({sort_by: sort_param})) %>&nbsp;&nbsp;
+    <% end %>
+    <% # For viewing ease, only show one month back and two in the future%>
+    <% current_month = Date::MONTHNAMES.index(Time.now.strftime("%B")) %>
+    <% months = Date::MONTHNAMES[(current_month-1)..(current_month+2)] %>
+    <% if @view_type == 'calendar' %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td><h5>State</h5></td>
+            <% months.each do |month| %>
+              <% next if month.nil? %>
+              <% [1, 15].each do |release| %>
+                <td><h5><%= "#{month} #{release}" %></h5></td>
+              <% end %>
+            <% end %>
+          </tr>
+        </thead>
+        <% @loads.each do |load| %>
+          <% next unless load.live_by and load.live_by.year <= Time.now.year %>
+          <% next unless load.released and load.released.year <= Time.now.year %>
+          <% next unless months.include? load.live_by_month.gsub(/ \w+/,'') or months.include? load.released_month.gsub(/ \w+/,'')%>
+          <tr>
+            <td>
+              <% if load.state =~ /all/i %>
+                <%= load.state %>
+              <% else %>
+                <%= load.state %>
+              <% end %>
+            </td>
+            <% months.each do |month| %>
+              <% next if month.nil? %>
+            <% [1, 15].each do |release| %>
+              <% if load.live_by_month == "#{month} #{release}" and load.released_month == "#{month} #{release}" and !['Complete','Acquired'].include? load.status %>
+                <td>
+                  [A]&nbsp;
+                  <% if load.state =~ /all/i %>
+                    <%= load.description + ' ' + load.load_type %>
+                    &
+                    <%= load.description + ' ' + load.load_type %>
+                  <% else %>
+                    <%= load.load_type %>
+                  &&nbsp;[L]
+                    <%= load.load_type %>
+                  <% end %>
+                </td>
+              <% elsif load.live_by_month == "#{month} #{release}" %>
+                <td>
+                  [L]&nbsp;
+                  <% if load.state =~ /all/i %>
+                    <%= load.description + ' ' + load.load_type %>
+                  <% else %>
+                    <%= load.load_type %>
+                  <% end %>
+                  <% if load.live_by.year != Time.now.year %>
+                    <%= '(' + load.live_by.year.to_s + ')' %>
+                  <% end %>
+                </td>
+              <% elsif load.released_month == "#{month} #{release}" and !['Complete','Acquired'].include? load.status%>
+                <td>
+                  [A]&nbsp;
+                  <% if load.state =~ /all/i %>
+                    <%= load.description + ' ' + load.load_type %>
+                  <% else %>
+                    <%= load.load_type %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td></td>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tr>
+    </table>
+  <% end %>
+  <% if @view_type == 'list' %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>State</td>
+          <td>Description</td>
+          <td>Type</td>
+          <td>Year on site</td>
+          <td>Year to load</td>
+          <td>Released</td>
+          <td>Live by</td>
+          <td>Status</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @loads.each do |load|%>
+          <tr>
+            <td><%= load.state %></td>
+            <td><%= load.description %></td>
+            <td><%= load.load_type %></td>
+            <td><%= load.year_on_site %></td>
+            <td><%= load.year_to_load %></td>
+            <td><%= load.released %></td>
+            <td><%= load.live_by %></td>
+            <td><%= load.status ? load.status.titleize : 'None' %></td>
+            <td><%= link_to 'edit', edit_admin_data_load_schedule_path(load, params)%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <%= link_to 'Add one', new_admin_data_load_schedule_path %><br>
+</div>
+  </div>
+</div>
