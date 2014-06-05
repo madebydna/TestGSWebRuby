@@ -6,6 +6,7 @@
       <div class="col-xs-12 mtl">
         <% partners[:resources].each do |resource| %>
           <h4><%= resource[:heading] %></h4>
+          <%= image_tag(resource[:imagePath]) %>
           <%= resource[:content].html_safe %>
         <% end %>
       </div>
