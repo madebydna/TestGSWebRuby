@@ -814,10 +814,10 @@ describe CollectionConfig do
     end
   end
 
-  describe '.programs_articles' do
+  describe '.programs_partners' do
     it_behaves_like 'it rejects empty or malformed configs' do
-      let(:method) { :programs_articles }
-      let(:key) { CollectionConfig::PROGRAMS_ARTICLES_KEY }
+      let(:method) { :programs_partners }
+      let(:key) { CollectionConfig::PROGRAMS_PARTNERS_KEY }
     end
   end
 end

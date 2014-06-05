@@ -156,7 +156,7 @@ class CitiesController < ApplicationController
       @heading = CollectionConfig.programs_heading(configs)
       @intro = CollectionConfig.programs_intro(configs)
       @sponsor = CollectionConfig.programs_sponsor(configs)
-      @articles = CollectionConfig.programs_articles(configs)
+      @partners = CollectionConfig.programs_partners(configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
       @breadcrumbs = {
               @city.titleize => city_path(params[:state], params[:city]) ,

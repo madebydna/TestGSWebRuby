@@ -8,18 +8,16 @@ describe 'Programs Page' do
     before { visit url }
 
     it 'renders an empty page' do
-      save_and_open_page
       expect(page.status_code).to eq(200)
     end
   end
 
   context 'by default' do
     before do
-
       FactoryGirl.create :programs_heading_config
       FactoryGirl.create :programs_intro_config
       FactoryGirl.create :programs_sponsor_config
-      FactoryGirl.create :programs_articles_config
+      FactoryGirl.create :programs_partners_config
       FactoryGirl.create :important_events_collection_config
       visit url
     end
@@ -47,7 +45,7 @@ describe 'Programs Page' do
       expect(page).to have_content 'description of an excellent sponsor'
     end
 
-    it 'renders the articles section' do
+    it 'renders the resources section' do
       expect(page).to have_selector 'h4', text: 'Facebook Aquires Greatschools'
     end
 

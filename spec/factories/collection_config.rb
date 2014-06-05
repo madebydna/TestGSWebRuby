@@ -84,7 +84,7 @@ browse_links_value = "{   browseLinks: [     { label: 'PreSchools', link: '/scho
 programs_heading_value = 'What makes a great after school or summer program?'
 programs_intro_value = "{ content: 'Quality after-school and summer learning opportunities. Each has its own enrollment procedure.', view_more: '<u>Traditional public schools</u><br/>Traditional public schools are tuition-free and offer open enrollment to individuals living within a specific district. In some cases, traditional public school districts will allow inter-district transfers, which permit students who live outside the district boundary to enroll at no cost. Parents should contact school districts directly about this option.<br/><br/><u>Public charter schools</u><br/>Public Charter schools are free, and don’t require students to reside in a specific district in order to attend. Like traditional public schools, public charter schools are required to have an open enrollment policy, and cannot charge tuition. Contact individual schools or school websites for enrollment and other information.<br/><br/><u>Magnet schools </u><br/>Magnet schools are public schools that offer a specific subject or curriculum focus. A magnet school may emphasize performing arts, math, business and finance, or international studies, for example. Families must apply to attend a magnet school. When there are more applicants than available seats, the schools will hold a lottery. Contact individual schools or school websites for enrollment and other information.'}"
 programs_sponsor_value = "{ logo: 'hubs/after_school_programs.png', description: 'description of an excellent sponsor', link: 'http://google.com', newwindow:'true' }"
-programs_articles_value = "{ heading: 'Detroit Partners', subheading: 'more partner info', articles: [  { heading: 'Facebook Aquires Greatschools', content: 'For 1 bagillion dollars', path: 'http://facebook.com', imagePath: '/res/img/cityHubs/1_Article_1.png', newWindow: true },   { heading: 'Google Aquires Greatschools', content: 'For 1 bagillion dollars', path: 'http://google.com', imagePath: '/res/img/cityHubs/1_Article_2.png', newWindow: true } ] }"
+programs_resources_value = "{ heading: 'Detroit Partners', subheading: 'more partner info', resources: [  { heading: 'Facebook Aquires Greatschools', content: 'For 1 bagillion dollars' }, { heading: 'Facebook Aquires Greatschools', content: 'For 1 bagillion dollars' } ] }"
 
 
 FactoryGirl.define do
@@ -276,9 +276,9 @@ FactoryGirl.define do
     value programs_sponsor_value
   end
 
-  factory :programs_articles_config, class: CollectionConfig do
+  factory :programs_partners_config, class: CollectionConfig do
     collection_id 1
-    quay CollectionConfig::PROGRAMS_ARTICLES_KEY
-    value programs_articles_value
+    quay CollectionConfig::PROGRAMS_PARTNERS_KEY
+    value programs_resources_value
   end
 end
