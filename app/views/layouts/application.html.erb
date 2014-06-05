@@ -2,6 +2,7 @@
 <html>
 <head>
   <%= display_meta_tags %>
+  <meta name="google-translate-customization" content="f2de2b2d5878217a-6b29fa5c63ed04fa-g4b85244d931270bb-10"></meta>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= include_gon %>
@@ -19,6 +20,7 @@
 </head>
 <body class="open-sans">
 
+
 <%= render :partial => 'shared/top_notification_bar' %>
 
 <div class="dn">
@@ -30,5 +32,10 @@
 <%=  render 'omniture/omniture' %>
 <%=  render 'omniture/quantcast' %>
 <%=  render 'omniture/comscore' %>
+<div class="fr"  id="google_translate_element"></div><script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+    }
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
