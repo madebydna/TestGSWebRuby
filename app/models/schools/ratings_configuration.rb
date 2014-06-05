@@ -35,7 +35,7 @@ class RatingsConfiguration
   def state_rating_data_type_ids
     data_type_ids = []
     if @state_rating_configuration.present?
-      data_type_ids = Array(@state_rating_configuration["overall"]["data_type_id"])
+      data_type_ids = Array.wrap(@state_rating_configuration.seek('overall', 'data_type_id'))
       if @state_rating_configuration["rating_breakdowns"].present?
         data_type_ids += @state_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
       end
@@ -46,7 +46,7 @@ class RatingsConfiguration
   def city_rating_data_type_ids
     data_type_ids = []
     if @city_rating_configuration.present?
-      data_type_ids = Array(@city_rating_configuration["overall"]["data_type_id"])
+      data_type_ids = Array.wrap(@city_rating_configuration.seek('overall', 'data_type_id'))
       if @city_rating_configuration["rating_breakdowns"].present?
         data_type_ids += @city_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
       end
@@ -55,7 +55,8 @@ class RatingsConfiguration
   end
 
   def prek_rating_data_type_ids
-    @prek_rating_configuration.blank? ? [] : Array(@prek_rating_configuration["star_rating"]["data_type_id"])
+    return [] if @prek_rating_configuration.nil?
+    Array.wrap(@prek_rating_configuration.seek('star_rating', 'data_type_id'))
   end
 
 end
