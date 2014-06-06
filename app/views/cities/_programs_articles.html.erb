@@ -6,7 +6,11 @@
       <ul class='oa pll'>
         <% articles[:articles].each do |article| %>
           <li class="col-xs-12 col-sm-6 mvl">
-            <%= link_to(article[:heading], article[:path]) %>
+             <% if article[:newwindow]!='true' %>
+                <%= link_to(article[:heading], article[:path]) %>
+             <% else %>
+                   <%= link_to(article[:heading], article[:path],:target => "_blank") %>
+              <% end %>
           </li>
         <% end %>
       </ul>
