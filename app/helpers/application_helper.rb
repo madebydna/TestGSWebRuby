@@ -206,22 +206,7 @@ module ApplicationHelper
   def remote_ip
     request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
   end
-
-  def breadcrumb_hash
-    if hub_params[:city]
-      {
-          'Home' => home_url,
-          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-          hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
-      }
-    else
-      {
-          'Home' => home_url,
-          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-      }
-    end
-  end
-
+  
   def zillow_url(school)
     # test that values needed are populated
     zillow = ''

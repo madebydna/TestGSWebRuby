@@ -48,6 +48,22 @@ FactoryGirl.define do
         type 'public'
       end
 
+      factory :south_san_francisco_high_school do
+        name 'South San Francisco High School'
+        city 'San Francisco'
+        state 'CA'
+        level_code 'h'
+        type 'public'
+      end
+
+      factory :washington_dc_ps_head_start do
+        name 'Washington Dc Ps Head Start'
+        city 'Washington'
+        state 'DC'
+        level_code 'p'
+        type 'private'
+      end
+
       factory :an_elementary_school do
         name 'Elementary School'
         city 'San Francisco'

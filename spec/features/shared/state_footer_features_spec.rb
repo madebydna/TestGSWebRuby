@@ -1,27 +1,29 @@
 require 'spec_helper'
 
-shared_examples_for 'page with state footer features' do
-  before(:each) do
-    @page = FactoryGirl.create(:page)
-  end
-  let(:school) { FactoryGirl.create(:alameda_high_school) }
-  subject do
-    visit school_path(school)
-    page
-  end
-  after(:each) do
-    clean_models School, Page, City
-  end
-
+shared_examples_for 'page with state footer features' do |state|
   feature 'state specific footer' do
     before(:each) do
-      FactoryGirl.create(:city, name:'A city in California', state: 'CA')
-      FactoryGirl.create(:city, name:'A city in New York', state: 'NY')
+      alt = { short: 'NY', long: 'New York' }
+      alt = { short: 'TX', long: 'Texas' } if state[:short] == 'NY'
+      @city = FactoryGirl.create(
+        :city,
+        name: "A city in #{state[:long]}",
+        state: state[:short]
+      )
+      @alt_city = FactoryGirl.create(
+        :city,
+        name: "A city in #{alt[:long]}",
+        state: alt[:short]
+      )
+      @state = state
+    end
+    after(:each) do
+      clean_models City
     end
     scenario 'should contain cities for current state' do
-      expect(subject).to have_content('Find the great schools in California')
-      expect(subject).to have_content('A city in California')
-      expect(subject).to_not have_content('A city in New york')
+      expect(subject).to have_content("Find the great schools in #{@state[:long]}")
+      expect(subject).to have_content(@city.name)
+      expect(subject).to_not have_content(@alt_city.name)
     end
   end
 end

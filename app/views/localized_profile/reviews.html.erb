@@ -3,7 +3,7 @@
 <%= render 'localized_profile/profile_nav', school: @school, page_name: :reviews %>
 
 <div class="row limit-width-1200">
-    <%= render 'shared/breadcrumbs', breadcrumbs: breadcrumb_hash %>
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <% if @show_ads %>
