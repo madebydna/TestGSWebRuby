@@ -17,6 +17,7 @@ class LocalizedProfileController < ApplicationController
   before_filter :set_city_state
   before_filter :set_hub_params, if: :is_hub_school?
   before_filter :enable_ads
+  before_filter :set_breadcrumbs
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -205,5 +206,12 @@ class LocalizedProfileController < ApplicationController
     @show_ads = @school.show_ads
   end
 
-  
+  def set_breadcrumbs
+    school = SchoolProfileDecorator.decorate(@school)
+    @breadcrumbs = {
+      'Home' => home_url,
+      school.state_breadcrumb_text => state_url(state_params(school.state)),
+      school.city_breadcrumb_text => city_url(city_params(school.state, school.city))
+    }
+  end
 end

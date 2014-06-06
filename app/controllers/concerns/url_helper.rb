@@ -69,6 +69,12 @@ module UrlHelper
 		}
   end
 
+  def state_params(state)
+    {
+      state: gs_legacy_url_encode(States.state_name state)
+    }
+  end
+
   %w(school school_details school_quality school_reviews school_review_form).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       params = school_params school

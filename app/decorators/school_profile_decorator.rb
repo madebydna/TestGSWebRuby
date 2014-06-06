@@ -50,4 +50,24 @@ class SchoolProfileDecorator < Draper::Decorator
     end
   end
 
+  def state_breadcrumb_text
+    text =
+      if state == 'DC'
+        'District of Columbia'
+      else
+        States.state_name(state).gs_capitalize_words
+      end
+  end
+
+  def city_breadcrumb_text
+    text =
+      if state == 'DC'
+        'Washington, D.C.'
+      else
+        city
+      end
+
+    text.gs_capitalize_words
+  end
+
 end
