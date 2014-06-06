@@ -20,9 +20,14 @@
       </div>
     </div>
   <% end %>
+</div>
 
+<%= render 'programs_articles', articles: @articles %>
+
+<div class="limit-width-1200">
   <%= render 'programs_partners', partners: @partners %>
 </div>
+
 
 <div class="bg-light-gray pvl mtl">
   <%= render 'programs_sponsor', sponsor: @sponsor %>
