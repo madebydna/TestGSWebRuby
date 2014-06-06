@@ -12,14 +12,16 @@ feature 'School profile overview page' do
   feature 'breadcrumbs' do
     context 'when on a washington, dc profile page' do
       let(:school) do
-        FactoryGirl.create(:washington_dc_ps_head_start)
+        s = FactoryGirl.build(:washington_dc_ps_head_start)
+        s.on_db(:dc).save
+        s
       end
       subject do
         visit school_path(school)
         page
       end
       after do
-        clean_models School
+        clean_models :dc, School
       end
       scenario 'State and city breadcrumbs says "/ District of Columbia / Washington, D.C."' do
         expect(subject).to have_content '/ District of Columbia / Washington, D.C.'

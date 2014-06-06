@@ -63,8 +63,10 @@ def clean_models(db, *models)
 
   models.each do |model|
     if db
-      model.connection.execute("TRUNCATE #{model.table_name}")
-      #model.on_db(db).destroy_all
+      db_name = db.to_s
+      db_name = "_#{db_name}" if States.abbreviations.include?(db_name)
+      db_name << '_test'
+      model.connection.execute("TRUNCATE #{db_name}.#{model.table_name}")
     else
       model.destroy_all
     end
