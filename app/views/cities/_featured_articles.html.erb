@@ -4,7 +4,9 @@
       <h2 class="mtn">Featured articles</h2>
       <% articles.each do |article| %>
         <div class='row'>
-          <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", class: 'col-md-2 prl pbm') %>
+          <div class="col-md-2 prl pbm">
+            <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", class: '') %>
+          </div>
           <div class="col-md-10 mbl">
             <h4 class="mvn pvn"><%= article[:heading] %></h4>
             <p class='mobile-clearfix'><%= article[:content] %></p>
