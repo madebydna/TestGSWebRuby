@@ -91,6 +91,19 @@ p, a {
   .best-known-for { font-size: 20px; }
 }
 
+@media (min-width: 990px) {
+  .sm-black-lg-white-text, .sm-black-lg-white-text:hover {
+    color: white;
+  }
+}
+
+@media (max-width: 990px) {
+  .sm-black-lg-white-text, .sm-black-lg-white-text:hover {
+    color: black;
+
+  }
+}
+
 @media (min-width:481px) and (max-width:768) {
   h1{font-size:32px;}
   h2{font-size:26px;}
