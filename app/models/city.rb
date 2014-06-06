@@ -16,4 +16,11 @@ class City < ActiveRecord::Base
   def state_long
     States.abbreviation_hash[state.downcase]
   end
+
+  def display_name
+    if state == 'DC'
+      "Washington, DC"
+    end
+    name
+  end
 end

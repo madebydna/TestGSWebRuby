@@ -6,7 +6,7 @@ describe 'Solr' do
       it 'connects to the solr server' do
         expect(RSolr).to receive(:connect)
 
-        solr = Solr.new('mi', 1)
+        solr = Solr.new({:state=>'mi', :collection_id => 1})
         solr.breakdown_results(grade_level: 'p')
       end
       it 'returns formatted breakdown results' do
@@ -23,7 +23,7 @@ describe 'Solr' do
         allow_any_instance_of(RSolr::Client).to receive(:get).and_raise(Exception)
 
         expect {
-          result = Solr.new('mi', 1).breakdown_results(grade_level: 'p')
+          result = Solr.new({:state=>'mi', :collection_id=>1}).breakdown_results(grade_level: 'p')
           expect(result).to be_nil
         }.to raise_error
       end

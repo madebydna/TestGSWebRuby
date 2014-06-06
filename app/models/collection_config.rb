@@ -398,7 +398,7 @@ class CollectionConfig < ActiveRecord::Base
 
     def enrollment_tabs(state_short, collection_id, tab)
       # Todo: drop this spike and test-drive
-      solr = Solr.new(state_short, collection_id)
+      solr = Solr.new({:state_short => state_short, :collection_id => collection_id})
       tab = 'preschool' if tab.nil?
 
       display_names = {
