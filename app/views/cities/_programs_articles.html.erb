@@ -1,0 +1,17 @@
+<% if defined?(articles) && !articles[:sectionHeading].nil? && !articles[:articles].nil? %>
+  <div class="bg-light-gray oa mvl">
+    <div class="limit-width-1200">
+      <h2><%= articles[:sectionHeading] %></h2>
+
+      <ul class='oa pll'>
+        <% articles[:articles].each do |article| %>
+          <li class="col-xs-12 col-sm-6 mvl">
+            <%= link_to(article[:heading], article[:path]) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+

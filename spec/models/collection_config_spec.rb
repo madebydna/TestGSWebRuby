@@ -819,5 +819,27 @@ describe CollectionConfig do
       let(:method) { :programs_partners }
       let(:key) { CollectionConfig::PROGRAMS_PARTNERS_KEY }
     end
+
+    context 'by default' do
+      it 'parses programs page partners'
+    end
+  end
+
+  describe '.programs_articles' do
+    let(:method) { :programs_articles }
+    let(:key) { CollectionConfig::PROGRAMS_ARTICLES_KEY }
+
+    it_behaves_like 'it rejects empty configs'
+    it_behaves_like 'it fails with an error'
+
+    context 'by default' do
+      let(:configs) { [FactoryGirl.build(:programs_articles_config)] }
+      let(:result) { CollectionConfig.programs_articles(configs) }
+
+      it 'parses programs page articles' do
+        expect(result).to have_key :sectionHeading
+        expect(result).to have_key :articles
+      end
+    end
   end
 end

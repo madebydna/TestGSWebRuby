@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'Programs Page' do
   before { FactoryGirl.create :hub_city_mapping }
+  after { clean_dbs :gs_schooldb }
   let(:url) { '/michigan/detroit/programs' }
 
   context 'without data' do
@@ -18,10 +19,10 @@ describe 'Programs Page' do
       FactoryGirl.create :programs_intro_config
       FactoryGirl.create :programs_sponsor_config
       FactoryGirl.create :programs_partners_config
+      FactoryGirl.create :programs_articles_config
       FactoryGirl.create :important_events_collection_config
       visit url
     end
-    after { clean_dbs :gs_schooldb }
 
     describe 'heading and intro section' do
       it 'renders the search bar' do
@@ -51,6 +52,10 @@ describe 'Programs Page' do
 
     it 'shows breadcrumbs' do
       expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']", count: 2)
+    end
+
+    it 'renders the articles module' do
+      expect(page).to have_content 'Resources In Detroit'
     end
   end
 end
