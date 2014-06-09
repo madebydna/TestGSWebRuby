@@ -26,7 +26,6 @@ class CensusDataSetQuery
     CensusDataSet
       .on_db(state.downcase.to_sym)
       .active
-      .scoped
   end
 
   def with_data_types(data_type_names_or_ids)
