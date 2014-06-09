@@ -25,7 +25,7 @@ class StatesController < ApplicationController
       @articles = CollectionConfig.state_featured_articles(configs)
       @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = state_url(@state[:long])
+      @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
 
       set_omniture_data('GS:State:Home', 'Home,StateHome')
     end

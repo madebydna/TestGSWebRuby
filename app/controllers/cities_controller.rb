@@ -29,7 +29,7 @@ class CitiesController < ApplicationController
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = city_url(@state[:long], @city)
+      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     end
   end
