@@ -4,8 +4,8 @@ class Admin::DataLoadSchedule < ActiveRecord::Base
 
   attr_accessible :state, :description, :load_type, :year_on_site, :year_to_load, :released, :acquired, :live_by, :complete, :status, :updated, :updated_by
 
-  scope :complete, where('complete = 1')
-  scope :incomplete, where('complete = 0')
+  scope :complete, -> { where('complete = 1') }
+  scope :incomplete, -> { where('complete = 0') }
 
   belongs_to :state_attribute, foreign_key: 'state', class_name: 'State'
 

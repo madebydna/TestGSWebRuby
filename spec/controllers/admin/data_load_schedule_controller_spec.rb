@@ -19,13 +19,13 @@ describe Admin::DataLoadSchedulesController do
     end
 
     it 'should update the data load if one is found' do
-      Admin::DataLoadSchedule.stub(:find).and_return(data_load)
+      allow(Admin::DataLoadSchedule).to receive(:find).and_return(data_load)
       expect(data_load).to receive(:update_attributes).and_return true
       post :update, id: 1
     end
 
     it 'should handle update failure by setting flash message' do
-      Admin::DataLoadSchedule.stub(:find).and_return(data_load)
+      allow(Admin::DataLoadSchedule).to receive(:find).and_return(data_load)
       expect(data_load).to receive(:update_attributes).and_return false
       expect(controller).to receive(:flash_error)
       post :update, id: 1
