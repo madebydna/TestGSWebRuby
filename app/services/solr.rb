@@ -13,12 +13,6 @@ class Solr
     @connection.get "select/", params: parse_params(options)
   end
 
-  def city_browse(state, city, options)
-    param_options = {:state => state, :city => city, :sort => 'overall_gs_rating desc', :rows => 25}
-    param_options.merge! options
-    get_search_results parse_params(param_options)
-  end
-
   def school_name_suggest(options)
     params = parse_params(options)
     params[:fq] << '+document_type:school'
@@ -77,11 +71,11 @@ class Solr
     end
   end
 
-  private
+  def get_search_results(params)
+    @connection.get "select/", params: parse_params(params)
+  end
 
-    def get_search_results(params)
-      @connection.get "select/", params: params
-    end
+  private
 
     def cache_time
       LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now
