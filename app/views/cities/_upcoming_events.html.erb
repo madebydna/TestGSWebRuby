@@ -30,7 +30,7 @@
       <% end %>
     </div>
 
-    <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement[:visible] %>
+    <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
       <%= render 'event_announcements', announcement: announcement  %>
     <% end %>
   </div>
