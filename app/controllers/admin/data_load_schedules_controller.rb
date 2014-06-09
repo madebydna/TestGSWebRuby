@@ -1,8 +1,8 @@
 class Admin::DataLoadSchedulesController < ApplicationController
 
-  before_filter :get_params
-  before_filter :get_load_types
-  before_filter :get_states
+  before_action :get_params
+  before_action :get_load_types
+  before_action :get_states
 
   def index
     @statuses = [:all, :complete, :incomplete, :acquired, :available].sort

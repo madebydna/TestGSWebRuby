@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   include SessionConcerns
   include UrlHelper
 
-  before_filter :login_from_cookie, :init_omniture
-  before_filter :set_optimizely_gon_env_value
+  before_action :login_from_cookie, :init_omniture
+  before_action :set_optimizely_gon_env_value
 
   after_filter :disconnect_connection_pools
 

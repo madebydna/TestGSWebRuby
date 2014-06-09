@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   protect_from_forgery
   include OmnitureConcerns
 
-  before_filter :ad_setTargeting_through_gon
+  before_action :ad_setTargeting_through_gon
 
   layout 'application'
 

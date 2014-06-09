@@ -9,7 +9,7 @@ class SigninController < ApplicationController
 
   # store this join / login url only if another location isn't stored
   # If the user was looking at a profile page, we want to go back there instead
-  before_filter :store_location, only: [:new], unless: :has_stored_location?
+  before_action :store_location, only: [:new], unless: :has_stored_location?
 
   # gets the join / login form page
   def new

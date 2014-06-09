@@ -1,6 +1,6 @@
 class Admin::SchoolsController < ApplicationController
 
-  before_filter :require_state, :require_school, except: :index
+  before_action :require_state, :require_school, except: :index
 
   has_scope :unpublished, :type => :boolean
   has_scope :provisional, :type => :boolean

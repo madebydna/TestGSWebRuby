@@ -3,11 +3,11 @@ class StatesController < ApplicationController
   include OmnitureConcerns
   include MetaTagsHelper
 
-  before_filter :set_city_state
-  before_filter :set_hub_params
-  before_filter :set_login_redirect
-  before_filter :set_footer_cities
-  before_filter :write_meta_tags, only: [:show]
+  before_action :set_city_state
+  before_action :set_hub_params
+  before_action :set_login_redirect
+  before_action :set_footer_cities
+  before_action :write_meta_tags, only: [:show]
 
   def show
     hub_city_mapping = mapping

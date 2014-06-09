@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
 
-  before_filter :set_city_state
+  before_action :set_city_state
 
   layout 'application'
 
