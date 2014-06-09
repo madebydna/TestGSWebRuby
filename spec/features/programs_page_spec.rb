@@ -55,7 +55,7 @@ describe 'Programs Page' do
     end
 
     it 'renders the articles module' do
-      expect(page).to have_content 'Resources In Detroit'
+      expect(page).to have_content 'Resources in San Francisco'
     end
   end
 end
