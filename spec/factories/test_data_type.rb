@@ -5,8 +5,8 @@ FactoryGirl.define do
     id :id
     description 'This test is awesome.'
     display_name 'Awesome Test'
-    display_type 'graph'
+    display_type 'hgraph'
     name 'awesome test'
-    type ''
+    type 'num'
   end
 end
