@@ -3,8 +3,8 @@
 <% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
 
     <div class="row mbm pam">
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4>GreatSchools Rating</h4>
+        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
+        <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10"><h4>GreatSchools Rating</h4>
             <% if data["gs_rating"]["disclaimer_private"].present? && @school.private_school? %>
                 <p class="alert alert-warning man mbm"><%= data["gs_rating"]["disclaimer_private"].html_safe %></p>
             <% end %>

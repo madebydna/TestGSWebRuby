@@ -3,14 +3,14 @@
 <% if !data["city_rating"].nil? && !data["city_rating"]["overall_rating"].nil? %>
 
     <div class="row mbm pam">
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
             <% rating = data["city_rating"]["overall_rating"] %>
             <% rating.gsub!("+", "plus") %>
             <% icon_to_use = 'iconx72-ESD-ratings' %>
             <% icon_to_choose = 'i-72-ratings-' %>
             <span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span>
         </div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
             <h4><%= data["city_rating"]["city_rating_label"] %></h4>
             <p><%= data["city_rating"]["description"] %></p>
 
