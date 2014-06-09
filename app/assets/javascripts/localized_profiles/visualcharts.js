@@ -88,7 +88,9 @@ GS.visualchart = GS.visualchart || function($) {
             var data = google.visualization.arrayToDataTable(barChartData);
             //The 3rd and the 5th columns are used for tool tips.
             data.setColumnProperty(2, 'role', 'tooltip');
-            data.setColumnProperty(4, 'role', 'tooltip');
+            data.setColumnProperty(3, 'role', 'annotation');
+            data.setColumnProperty(5, 'role', 'tooltip');
+            data.setColumnProperty(6, 'role', 'annotation');
 
             $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
             var defaultOptions = {
