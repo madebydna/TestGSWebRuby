@@ -16,6 +16,7 @@
 
 
 @import "resources/normalize";
+@import "resources/bootstrap/sass/sass-bootstrap";
 @import "gs/fonts-opensans";
 @import "gs/fonts-sourcesans";
 @import "sprites/arrows";
@@ -33,7 +34,6 @@
 @import "sprites/calendar_month";
 @import "sprites/140106-72x58_ESD_ratings"; /* city specific */
 @import "sprites/choose-a-school";
-@import "resources/bootstrap/sass/sass-bootstrap";
 @import "gs/typography";
 @import "gs/navigation";
 @import "gs/spacing";

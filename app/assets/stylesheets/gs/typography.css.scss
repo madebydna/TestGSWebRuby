@@ -1,5 +1,5 @@
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
-h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font-weight-bold; }
+h6, .h6 { @extend .open-sans_i; }
 
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
