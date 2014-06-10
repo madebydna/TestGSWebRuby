@@ -123,8 +123,8 @@ LocalizedProfiles::Application.routes.draw do
       end
 
       scope '/education-community', as: :education_community do
-        get '', to: 'states#foobar'
-        get '/partner', to: 'states#foobar', as: :partner
+        get '', to: 'states#community'
+        get '/partner', to: 'states#community', as: :partner
       end
     end
 

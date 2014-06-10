@@ -3,11 +3,11 @@ class StatesController < ApplicationController
   include OmnitureConcerns
   include MetaTagsHelper
 
-  before_action :set_city_state
-  before_action :set_hub_params
-  before_action :set_login_redirect
-  before_action :set_footer_cities
-  before_action :write_meta_tags, only: [:show]
+  before_filter :set_city_state
+  before_filter :set_hub_params
+  before_filter :set_login_redirect
+  before_filter :set_footer_cities
+  before_filter :write_meta_tags, only: [:show, :community]
 
   def show
     hub_city_mapping = mapping
@@ -85,11 +85,48 @@ class StatesController < ApplicationController
     end
   end
 
+  def community
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      debugger
+      @collection_id = hub_city_mapping.collection_id
+      collection_configs = configs
+
+      set_community_tab(collection_configs)
+      set_community_omniture_data
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
+      @partners = CollectionConfig.ed_community_partners(collection_configs)
+      @breadcrumbs = {
+        @state[:long].titleize => state_path(gs_legacy_url_encode @state[:long]),
+        'Education Community' => nil
+      }
+      @canonical_url = state_education_community_url(params[:state])
+
+      render 'shared/community'
+    end
+  end
+
   private
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@state[:long]}-active:1"
       Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
         HubCityMapping.where(active: 1, city: nil, state: @state[:short]).first
       end
+    end
+
+    def set_community_omniture_data
+      if @tab == 'Community'
+        page_name = "GS:State:EducationCommunity"
+        page_hier = "Home,StateHome,EducationCommunity"
+      else
+        page_name = "GS:State:EducationCommunity:#{@tab}"
+        page_hier = "Home,StateHome,EducationCommunity,#{@tab}"
+      end
+
+      set_omniture_data(page_name, page_hier, @state[:long].titleize)
     end
 end
