@@ -1,20 +1,14 @@
 <div class="row">
-  <h1 class='mha tac'>All events</h1>
+  <h1 class='tac'>All events</h1>
   <% if events.nil? %>
     <h3>Something went wrong while parsing important events, collection_id: <%= @collection_id %>, quay: <%= CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY %> </h3>
   <% elsif !events.empty? %>
     <% events.each do |event| %>
-      <div class="col-xs-12 col-sm-12 col-md-10 col-xs-10 mvm mha fn">
+      <div class="mvm">
         <hr>
-        <div class="pull-left mhm iconx48 i-48-calender-month-<%= event[:date].month %>">
-          <div class="tac" style='margin-top: 18px;'>
-            <h4 style='margin-bottom: -10px; font-size: 15px;'><%= event[:date].day %></h4>
-            <small style='font-size: 10px;'><%= event[:date].year %></small>
-          </div>
-        </div>
+        <%= render 'event_icon', date: event[:date] %>
         <div>
-          <span><%= event[:description] %></span>
-          <br>
+          <h6 class='bottom'><%= event[:description] %></h6>
           <%= link_to 'Find out more', event[:url] %>
         </div>
       </div>
