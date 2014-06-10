@@ -7,7 +7,7 @@
 
 <div class="limit-width-1200">
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-  <h1 class='tac'><%= @heading %></h1>
+  <h1 class='tac mbl'><%= @heading %></h1>
 
   <% if @intro %>
     <div class='row mvl'>
@@ -15,7 +15,7 @@
         <%= @intro[:content].html_safe %>
       </div>
 
-      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar hidden-xs'>
+      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar hidden-xs tac'>
         <%= image_tag('hubs/after_summer_programs.png') %>
       </div>
     </div>

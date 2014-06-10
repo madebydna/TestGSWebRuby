@@ -3,9 +3,9 @@
     <div class="limit-width-1200">
       <h2><%= articles[:sectionHeading] %></h2>
 
-      <ul class='oa pll'>
+      <ul class='oa pll mbl'>
         <% articles[:articles].each do |article| %>
-          <li class="col-xs-12 col-sm-6 mvl">
+          <li class="col-xs-12 col-sm-6">
              <% if article[:newwindow]!='true' %>
                 <%= link_to(article[:heading], article[:path]) %>
              <% else %>
