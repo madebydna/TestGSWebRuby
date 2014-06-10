@@ -5,7 +5,7 @@
 
       <ul class='oa pll mbl'>
         <% articles[:articles].each do |article| %>
-          <li class="col-xs-12 col-sm-6">
+          <li class="col-xs-12 col-sm-12 col-md-6">
              <% if article[:newwindow]!='true' %>
                 <%= link_to(article[:heading], article[:path]) %>
              <% else %>
