@@ -1,0 +1,62 @@
+<div class="row full-width pam">
+  <div class="row full-width partner-carousel-image">
+    <div class="col-md-2 col-lg-3 hidden-xs hidden-sm">
+      <% school_profile_decorator = SchoolProfileDecorator.decorate(school) %>
+      <% @school = school %>
+      <%= school_profile_decorator.photo(130, 130) %>
+    </div>
+
+    <div class="<%=search_by_location? ? "col-xs-12 col-sm-4 col-md-4 col-lg-4" : "col-xs-12 col-sm-6 col-md-6 col-lg-5"%>">
+        <div class="ptm">
+          <span class="open-sans_b"><%= link_to school.name, school_path(school) %></span><br>
+          <span class="ptm"><%=school.street + ", " + school.city + " " + school.state.upcase + " " + school.zip %></span><br>
+          <div class="row">
+            <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
+              <span class="prm col-lg-3"><%= draw_stars_16 school.community_rating%></span>
+              <%=link_to "#{school.review_count} reviews", school_reviews_path(school), class: 'prl col-lg-3'%>
+            <% else %>
+              <span class="prm col-lg-6" style="font-style: italic;">No Community Reviews</span>
+            <% end %>
+            <span class="prs col-lg-2"><%= school.type.capitalize%></span>
+            <span class="col-lg-3"><%= school.grades[0] + " - " + school.grades[-1]%></span>
+          </div>
+        </div>
+      </div>
+
+    <% if search_by_location? %>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
+        <div class="ptl">
+            <div class="iconx16 i-16-map-pin ma db vam"></div>
+            <span class="tac db">10 miles</span>
+        </div>
+      </div>
+    <% end%>
+
+    <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+      <div class="ptl">
+        <%=link_to school_quality_path(school) do%>
+          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 'nr' )%>"></div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
+      <div class="ptl">
+        <span class="tac db">fit score</span>
+      </div>
+    </div>
+
+    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
+      <div class="ptm">
+        <button type="button" class="btn btn-default">
+          <input type="checkbox">
+          compare
+        </button>
+        <button type="button" class="btn btn-default">
+          <span class="iconx16 i-16-home vam"></span>
+          homes for sale
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

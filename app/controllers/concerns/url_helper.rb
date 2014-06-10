@@ -9,7 +9,7 @@ module UrlHelper
 
     # Make this modules methods into helper methods view can access
     if base < ActionController::Base
-      (UrlHelper.instance_methods - UrlHelper.ancestors).each do |m| 
+      (UrlHelper.instance_methods - UrlHelper.ancestors).each do |m|
         base.helper_method m
       end
     end
@@ -22,9 +22,9 @@ module UrlHelper
 
   def encode_school_name(param)
     param = param.gsub(' ', '-')
-      .gsub('/', '-')
-      .gsub('#', '')
-      .gsub('`', '')
+    .gsub('/', '-')
+    .gsub('#', '')
+    .gsub('`', '')
 
     # Replaces non-ASCII characters with an ASCII approximation, or if none exists,
     # a replacement character which defaults to “?”
@@ -44,29 +44,38 @@ module UrlHelper
     hash[:schoolId] = school.id if school.id
     hash[:school_name] = encode_school_name(school.name) if school.name.present?
     return hash
-	end
+  end
 
-	def hub_params
-		if @school.present?
-			{
-				state: gs_legacy_url_encode(@school.state_name),
-				city: gs_legacy_url_encode(@school.hub_city)
-			}
-		elsif cookies[:ishubUser] == 'y' && cookies[:hubState].present? && cookies[:hubCity].present?
-			{
-				state: gs_legacy_url_encode(States.state_name cookies[:hubState]),
-				city: gs_legacy_url_encode(cookies[:hubCity])
-			}
-		else
-			{}
-		end
-	end
+  def school_params_hash(school_hash)
+    hash = {}
+    hash[:state] = gs_legacy_url_encode(school_hash[:state_name]) if school_hash[:state_name].present?
+    hash[:city] = gs_legacy_url_encode(school_hash[:city]) if school_hash[:city].present?
+    hash[:schoolId] = school_hash[:id ]if school_hash[:id]
+    hash[:school_name] = encode_school_name(school_hash[:name]) if school_hash[:name].present?
+    return hash
+  end
 
-	def city_params(state, city)
-		{
-			state: gs_legacy_url_encode(States.state_name state),
-			city: gs_legacy_url_encode(city)
-		}
+  def hub_params
+    if @school.present?
+      {
+          state: gs_legacy_url_encode(@school.state_name),
+          city: gs_legacy_url_encode(@school.hub_city)
+      }
+    elsif cookies[:ishubUser] == 'y' && cookies[:hubState].present? && cookies[:hubCity].present?
+      {
+          state: gs_legacy_url_encode(States.state_name cookies[:hubState]),
+          city: gs_legacy_url_encode(cookies[:hubCity])
+      }
+    else
+      {}
+    end
+  end
+
+  def city_params(state, city)
+    {
+        state: gs_legacy_url_encode(States.state_name state),
+        city: gs_legacy_url_encode(city)
+    }
   end
 
   def state_params(state)
@@ -77,10 +86,16 @@ module UrlHelper
 
   %w(school school_details school_quality school_reviews school_review_form).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      params = school_params school
-      params.merge! params_hash
+      if school == nil
+        params = school_params_hash params_hash
+        is_preschool = params_hash[:preschool]
+      else
+        params = school_params school
+        params.merge! params_hash
+        is_preschool = school.preschool?
+      end
 
-      if school.preschool?
+      if is_preschool
         send "pre#{helper_name}_path", params
       else
         super params

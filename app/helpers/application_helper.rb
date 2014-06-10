@@ -262,4 +262,8 @@ module ApplicationHelper
   def topnav(school, hub_params)
     TopNav.new(school, hub_params, cookies)
   end
+
+  def search_by_location?
+    @options.present? && @options[:search_type] == :by_location
+  end
 end

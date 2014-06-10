@@ -16,10 +16,12 @@ class SchoolSearchService
       school_search_result.entries.each do |key, value|
         school_search_result[key[7..-1]] = value if key.start_with? 'school_' # remove preceding 'school_' from keys
       end
+      school_search_result['zipcode'] = school_search_result['zip']
       school_search_result['enrollment'] = school_search_result['size'] if school_search_result.include? 'size'
       school_search_result['state'] = get_state_abbreviation(school_search_result)
       school_search_result['state_name'] = States.state_name(school_search_result['state'])
       school_search_result.delete_if {|key| key.start_with?('school_') || keys_to_delete.include?(key)}
+      school_search_result['school_media_first_hash'] = ((photo = school_search_result['small_size_photos'].presence) ? photo[0].match(/\/(\w*)-/)[1] : nil)
       add_profile_url(school_search_result)
       add_level_codes(school_search_result, school_search_result['grade_level'])
       result_obj = SchoolSearchResult.new school_search_result
@@ -30,6 +32,8 @@ class SchoolSearchService
   end
 
   class SchoolSearchResult
+    include ActionView::Helpers::AssetTagHelper
+
     def initialize(hash)
       @attributes = hash
       @attributes.each do |k,v|

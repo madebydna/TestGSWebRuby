@@ -25,13 +25,13 @@ class SearchController < ApplicationController
     @page_size = (params[:pageSize])?(params[:pageSize].to_i):25
     @page_size = 1 if @page_size < 1
     solr_params[:rows] = @page_size
-    results = Solr.new.city_browse(@state[:short], @city.name, solr_params)
+    results = SchoolSearchService.city_browse(@state[:short], @city.name, solr_params)
 
     unless results.empty?
-      @total_results = results['response']['numFound']
-      @results = results['response']['docs']
+      @total_results = results[:num_found]
+      @schools = results[:results]
     end
-    render 'search_results'
+    render 'browse_city'
   end
 
 

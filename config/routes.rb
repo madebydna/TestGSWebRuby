@@ -7,7 +7,6 @@ LocalizedProfiles::Application.routes.draw do
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
-  get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
@@ -63,7 +62,7 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     scope '/style-guide/', as: :style_guide, to: :style_guide do
-       get '/index', to: 'style_guide#index'
+      get '/index', to: 'style_guide#index'
     end
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
@@ -170,9 +169,9 @@ LocalizedProfiles::Application.routes.draw do
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
-    state: States.any_state_name_regex,
-    schoolId: /\d+/,
-    school_name: /.+/,
+      state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /.+/,
   } do
 
     get 'quality', to: 'localized_profile#quality', as: :quality

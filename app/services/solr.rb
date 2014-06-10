@@ -77,67 +77,59 @@ class Solr
 
   private
 
-    def cache_time
-      LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now
-    end
+  def cache_time
+    LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now
+  end
 
-    def parse_base_params(options)
-      params = {}
-      params[:qt] = options[:qt] || 'standard'
-      params[:fq] = []
-      params[:q] = options[:query] if options[:query]
-      params[:sort] = options[:sort] if options[:sort]
-      params[:rows] = options[:rows] if options[:rows]
-      params[:start] = options[:start] if options[:start]
-      params[:spellcheck] = options[:spellcheck]?options[:spellcheck]:false
+  def parse_base_params(options)
+    params = {}
+    params[:qt] = options[:qt] || 'standard'
+    params[:fq] = []
+    params[:q] = options[:query] if options[:query]
+    params[:sort] = options[:sort] if options[:sort]
+    params[:rows] = options[:rows] if options[:rows]
+    params[:start] = options[:start] if options[:start]
+    params[:spellcheck] = options[:spellcheck]?options[:spellcheck]:false
 
-      params
-    end
+    params
+  end
 
-    def parse_params(options)
-      params = parse_base_params options
-      params[:fq] << "+school_database_state:#{options[:state]}" if options[:state]
-      params[:fq] << "+city:(#{options[:city]})" if options[:city]
-      params
-    end
+  def parse_params(options)
+    params = parse_base_params options
+    params[:fq] << "+school_database_state:#{options[:state]}" if options[:state]
+    params[:fq] << "+city:(#{options[:city]})" if options[:city]
+    params
+  end
 
-    def parse_city_params(options)
-      params = parse_base_params options
-      params[:fq] << "+city_state:#{options[:state]}" if options[:state]
-      params
-    end
+  def parse_city_params(options)
+    params = parse_base_params options
+    params[:fq] << "+city_state:#{options[:state]}" if options[:state]
+    params
+  end
 
-    def parse_district_params(options)
-      params = parse_base_params options
-      params[:fq] << "+district_state:#{options[:state]}" if options[:state]
-      params
-    end
+  def parse_district_params(options)
+    params = parse_base_params options
+    params[:fq] << "+district_state:#{options[:state]}" if options[:state]
+    params
+  end
 
-    def parse_params_hubs(options)
-      params = { qt: 'school-search', fq: ["+school_database_state:#{@state_short}", "+collection_id:\"#{@collection_id}\""] }
-      params[:fq] << "+school_grade_level:(#{options[:grade_level]})" if options[:grade_level]
-      params[:fq] << "+school_type:(#{options[:type]})" if options[:type]
-      params
-    end
+  def parse_params_hubs(options)
+    params = { qt: 'school-search', fq: ["+school_database_state:#{@state_short}", "+collection_id:\"#{@collection_id}\""] }
+    params[:fq] << "+school_grade_level:(#{options[:grade_level]})" if options[:grade_level]
+    params[:fq] << "+school_type:(#{options[:type]})" if options[:type]
+    params
+  end
 
-    def parse_url_hubs(options)
-      url = "schools"
-      url += "/?gradeLevels=#{options[:grade_level]}" if options[:grade_level]
-      if options[:type].try(:index, 'OR') # public or charter
-        if options[:grade_level]
-          url += "&st=public&st=charter"
-        else
-          url += "/?st=public&st=charter"
-        end
+  def parse_url_hubs(options)
+    url = "schools"
+    url += "/?gradeLevels=#{options[:grade_level]}" if options[:grade_level]
+    if options[:type].try(:index, 'OR') # public or charter
+      if options[:grade_level]
+        url += "&st=#{options[:type]}"
       else
-        if options[:type]
-          if options[:grade_level]
-            url += "&st=#{options[:type]}"
-          else
-            url += "/?st=#{options[:type]}"
-          end
-        end
+        url += "/?st=#{options[:type]}"
       end
-      url
     end
+    url
+  end
 end

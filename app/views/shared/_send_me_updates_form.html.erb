@@ -1,6 +1,6 @@
 <% unique_content_for :global_hidden_content do %>
   <%= form_for Subscription.new, url: subscriptions_url, html: { id: form_id} do |f| %>
-    <% if school.present? %>
+    <% if school.present? && school.class == School %>
         <%= f.hidden_field :list, :value => school.private_school? ? 'mystat_private' : 'mystat' %>
         <%= f.hidden_field :school_id, :value => school.id %>
         <%= f.hidden_field :state, :value => school.state %>

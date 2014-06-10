@@ -1,0 +1,12 @@
+<div class="limit-width-1200 full-width">
+  <div class="row mbl">
+
+    <%= render 'sorting_toolbar' %>
+
+    <div class="full-width ptl">
+      <% @schools.each do |school| %>
+        <%= render 'search_result', school: school %>
+      <% end %>
+    </div>
+  </div>
+</div>
