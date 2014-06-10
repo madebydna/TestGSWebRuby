@@ -1,8 +1,9 @@
 <% if defined?(partners) && !partners.try(:[], :resources).nil? %>
   <div class="row mvl phm">
-    <h2 class='mtn'><%= partners[:heading] %></h2>
+    <h2 class='mtl'><%= partners[:heading] %></h2>
+     <% if partners[:subheading]%>
     <h6 class='mvl'><%= partners[:subheading] %></h6>
-
+    <% end %>
       <div class="col-xs-12 mtl">
         <% partners[:resources].each do |resource| %>
           <div class="row mvl">
