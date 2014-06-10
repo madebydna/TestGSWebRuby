@@ -87,10 +87,10 @@ GS.visualchart = GS.visualchart || function($) {
 
             var data = google.visualization.arrayToDataTable(barChartData);
             //The 3rd and the 5th columns are used for tool tips.
-            data.setColumnProperty(2, 'role', 'tooltip');
-            data.setColumnProperty(3, 'role', 'annotation');
-            data.setColumnProperty(5, 'role', 'tooltip');
-            data.setColumnProperty(6, 'role', 'annotation');
+            data.setColumnProperty(2, 'role', 'annotation');
+            data.setColumnProperty(3, 'role', 'tooltip');
+            data.setColumnProperty(5, 'role', 'annotation');
+            data.setColumnProperty(6, 'role', 'tooltip');
 
             $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
             var defaultOptions = {
@@ -112,6 +112,7 @@ GS.visualchart = GS.visualchart || function($) {
                 colors: colors,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%"}
+//                isStacked:true
             };
 
 

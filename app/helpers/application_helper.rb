@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 
   def to_bar_chart_array(data_hash)
-    @bar_chart_data = [['year', 'This school','School tool tip','School Annotation', 'State average','State tool tip','State Annotation']] + data_hash.collect.with_index { |(key, value), index|
+    @bar_chart_data = [['year', 'This school','School tool tip','School Annotation','State average','State tool tip','State Annotation']] + data_hash.collect.with_index { |(key, value), index|
       #The google bar chart requires values to be numerical.
       #Hence set default to 0(This also catches the case when there is no data for state
       #average or school test score ie. value['state_avg']= nil).
@@ -65,7 +65,7 @@ module ApplicationHelper
       end
 
 
-      [key.to_s, school_score_int, school_score_tool_tip, school_percent_annotation, state_score_int, state_score_tool_tip, state_percent_annotation]
+      [key.to_s, school_score_int, school_percent_annotation, school_score_tool_tip, state_score_int, state_percent_annotation, state_score_tool_tip]
     }
   end
 
