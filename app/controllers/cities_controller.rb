@@ -74,7 +74,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
 
-
+      render 'shared/community'
     end
   end
 
@@ -168,21 +168,7 @@ class CitiesController < ApplicationController
   end
 
   private
-    def set_community_tab(collection_configs)
-      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
-      case request.path
-      when /(education-community\/education)/
-        @tab = 'Education'
-      when /(education-community\/funders)/
-        @tab = 'Funders'
-      when /(education-community$)/
-        if @show_tabs == false
-          @tab = ''
-        else
-          @tab = 'Community'
-        end
-      end
-    end
+
 
     def set_enrollment_omniture_data
       if @tab == 'Preschools'

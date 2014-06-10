@@ -92,4 +92,16 @@ module MetaTagsHelper
   def cities_programs_description
     "Resources and providers of after school and summer programs in #{@city.gs_capitalize_words}"
   end
+
+  def states_community_title
+    "#{@state[:long].titleize} School Enrollment Information"
+  end
+
+  def states_community_description
+    "Practical information including rules, deadlines and tips, for enrolling your child in #{@state[:long].titleize} schools"
+  end
+
+  def states_community_keywords
+    "#{@state[:long]} school enrollment, #{@state[:long]} school enrollment information, #{@state[:long]} school enrollment info, #{@state[:long]} school enrollment process, #{@state[:long]} school enrollment deadlines"
+  end
 end

@@ -73,6 +73,12 @@ def clean_models(db, *models)
   end
 end
 
+RSpec::Matchers.define :be_boolean do
+  match do |actual|
+    expect(actual).to satisfy { |x| x == true || x == false }
+  end
+end
+
 
 Capybara::RSpecMatchers::HaveText.class_eval do
   alias_method :failure_message, :failure_message_for_should
