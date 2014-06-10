@@ -89,6 +89,7 @@ describe SigninController do
 
       context 'successful registration' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
           user.stub(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
@@ -102,6 +103,26 @@ describe SigninController do
         it 'should set the current user to the newly created user' do
           post :create, email: 'blah@example.com'
           expect(controller.send :current_user).to eq(user)
+        end
+
+        it 'should redirect to join if no redirect specified' do
+          expect(subject).to redirect_to join_url
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
         end
       end
     end
