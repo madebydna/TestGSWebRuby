@@ -231,30 +231,42 @@ describe LocalizedProfileController do
       end
     end
 
-
-    #description
-    #Alameda High School serves grades 9-12 in the Alameda City Unified district.  It has received a GreatSchools Rating of 7 out of 10, based on its performance on state standardized tests
-    #title
-    #Alameda High School - Alameda, California - CA - School overview
-    #keywords
-    #Alameda High School, Alameda High School Alameda, Alameda High School Alameda California, Alameda High School Alameda CA, Alameda High School California, Alameda High School Overview
-
-    #prek
-    #title
-    #Greater St. Stephen Baptist Training - Detroit, Michigan - MI - School overview
-    #description
-    #Greater St. Stephen Baptist Training
-    #keywords
-    #Greater St. Stephen Baptist Training in Detroit, Michigan (MI). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.
-
-    #prek DC
-    #title
-    #Amazing Life Games Pre-School - Washington, DC - School overview
-    #description
-    #Amazing Life Games Pre-School in Washington, Washington DC (DC). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.
-    #keywords
-    #Amazing Life Games Pre-School, Amazing Life Games Preschool
-
   end
 
+  describe 'Ads are getting correct values in gon' do
+    describe '#ad_setTargeting_through_gon' do
+      let(:school) {
+        FactoryGirl.build(:school,
+                          id: 1,
+                          state: 'CA',
+                          city: 'San Francisco',
+                          name: 'Alameda High School'
+        )
+
+      }
+
+      before(:each) do
+        controller.instance_variable_set(:@school, school.extend(SchoolProfileDataDecorator) )
+        allow(school).to receive(:show_ads) { true }
+        allow(school).to receive(:gs_rating) { nil }
+        controller.send :ad_setTargeting_through_gon
+      end
+
+      it 'should have show ads true if we are going to have a gon object' do
+        expect(school.show_ads).to eq(true)
+      end
+
+      it 'should school id defined in gon object' do
+        expect(controller.gon.ad_set_targeting['school_id']).to eq( '1' )
+      end
+
+      it 'should City defined in gon object' do
+        expect(controller.gon.ad_set_targeting['City']).to eq( 'SanFrancis' )
+      end
+
+      it 'should State defined in gon object' do
+        expect(controller.gon.ad_set_targeting['State']).to eq( 'CA' )
+      end
+    end
+  end
 end

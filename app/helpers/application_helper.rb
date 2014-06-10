@@ -46,7 +46,8 @@ module ApplicationHelper
       #The google bar chart requires values to be numerical.
       #Hence set default to 0(This also catches the case when there is no data for state
       #average or school test score ie. value['state_avg']= nil).
-      #The 3rd and the 5th columns are used for tool tips. Hence they are strings.
+      #The 4rd and the 6th columns are used for tool tips. Hence they are strings.
+      #The 3rd and the 5th columns are used for annotation.
 
       state_score_int = 0
       state_score_tool_tip = ''
