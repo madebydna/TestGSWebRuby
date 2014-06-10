@@ -90,6 +90,7 @@ class StatesController < ApplicationController
     if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
+      debugger
       @collection_id = hub_city_mapping.collection_id
       collection_configs = configs
 

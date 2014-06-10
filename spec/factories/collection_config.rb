@@ -288,4 +288,10 @@ FactoryGirl.define do
     quay CollectionConfig::PROGRAMS_ARTICLES_KEY
     value programs_articles_value
   end
+
+  factory :community_show_tabs_config, class: CollectionConfig do
+    quay CollectionConfig::EDUCATION_COMMUNITY_TABS_KEY
+    value 'true'
+    collection_id 6
+  end
 end
