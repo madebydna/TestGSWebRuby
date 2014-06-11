@@ -189,5 +189,13 @@
     $(function() {
         GS_bind_and_sync('.js-signin-email', '.js-join-email');
 
-    })
+    });
+
+    if (location.hash.substr(1) == "join" || $('.js-join-tab').hasClass('active')) {
+        GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
+        GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
+    } else {
+        GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
+        GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
+    }
 </script>

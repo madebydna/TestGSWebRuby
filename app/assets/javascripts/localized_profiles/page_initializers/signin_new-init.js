@@ -5,14 +5,6 @@ if(gon.pagename == 'signin/new'){
     var SIGNIN_PAGENAME = 'GS:Admin:Login';
     var SIGNIN_HIER = 'Account,LogIn';
 
-    if (location.hash.substr(1) == "join") {
-        GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
-        GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
-    } else {
-        GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
-        GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
-    }
-
     $(function () {
         
         if (location.hash.substr(1) == "join") {
