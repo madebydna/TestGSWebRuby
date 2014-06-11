@@ -72,7 +72,10 @@ class CitiesController < ApplicationController
         @city.titleize => city_path(@state[:long], @city),
         'Education Community' => nil
       }
-      @canonical_url = city_education_community_url(params[:state], params[:city])
+      @canonical_url =
+
+
+      _url(params[:state], params[:city])
 
       render 'shared/community'
     end
