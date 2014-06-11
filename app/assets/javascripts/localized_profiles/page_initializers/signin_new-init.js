@@ -1,5 +1,18 @@
 if(gon.pagename == 'signin/new'){
 
+    var JOIN_PAGENAME = 'GS:Admin:CreateAccount';
+    var JOIN_HIER = 'Account,SignUp';
+    var SIGNIN_PAGENAME = 'GS:Admin:Login';
+    var SIGNIN_HIER = 'Account,LogIn';
+
+    if (location.hash.substr(1) == "join") {
+        GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
+        GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
+    } else {
+        GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
+        GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
+    }
+
     $(function () {
         
         if (location.hash.substr(1) == "join") {
@@ -13,8 +26,8 @@ if(gon.pagename == 'signin/new'){
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.
             var omnitureObject = GS.track.getOmnitureObject();
-            omnitureObject.pageName = 'GS:Admin:Login';
-            omnitureObject.hier1 = 'Account,LogIn';
+            omnitureObject.pageName = SIGNIN_PAGENAME;
+            omnitureObject.hier1 = SIGNIN_HIER;
             sendToOmniture(omnitureObject);
             location.hash = '';
         });
@@ -24,8 +37,8 @@ if(gon.pagename == 'signin/new'){
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.
             var omnitureObject = GS.track.getOmnitureObject();
-            omnitureObject.pageName = 'GS:Admin:CreateAccount';
-            omnitureObject.hier1 = 'Account,SignUp';
+            omnitureObject.pageName = JOIN_PAGENAME;
+            omnitureObject.hier1 = JOIN_HIER;
             sendToOmniture(omnitureObject);
             location.hash = '#join';
         });
