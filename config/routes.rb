@@ -124,6 +124,8 @@ LocalizedProfiles::Application.routes.draw do
 
       scope '/education-community', as: :education_community do
         get '', to: 'states#community'
+        get '/education', to: 'states#community'
+        get '/funders', to: 'states#community'
         get '/partner', to: 'states#community', as: :partner
       end
     end
