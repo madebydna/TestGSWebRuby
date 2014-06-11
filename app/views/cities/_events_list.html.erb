@@ -1,20 +1,23 @@
-<div class="row">
+<div class="row phm">
   <h1 class='tac'>All events</h1>
   <% if events.nil? %>
     <h3>Something went wrong while parsing important events, collection_id: <%= @collection_id %>, quay: <%= CollectionConfig::CITY_HUB_IMPORTANT_EVENTS_KEY %> </h3>
   <% elsif !events.empty? %>
     <% events.group_by { |event| event[:date].year }.each do |year, events| %>
-      <h3 class='bottom'><%= year %> Events</h3>
-      <hr>
-      <% events.each do |event| %>
-        <div class="mvm">
-          <%= render 'event_icon', date: event[:date] %>
-          <div>
-            <h6 class='bottom'><%= event[:description] %></h6>
-            <%= link_to 'Find out more', event[:url] %>
+      <div class="mbl">
+        <h3 class='bottom'><%= year %> Events</h3>
+        <hr class='mtn'>
+        <% events.each do |event| %>
+          <div class="mvl">
+            <%= render 'event_icon', date: event[:date] %>
+            <div>
+              <span class='bottom'><%= event[:description] %></span>
+              <br>
+              <%= link_to 'Find out more', event[:url] %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
