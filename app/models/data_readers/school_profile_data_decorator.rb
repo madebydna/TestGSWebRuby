@@ -119,7 +119,7 @@ module SchoolProfileDataDecorator
   end
 
   def preK_star_rating
-    rating_data.fetch('preK_ratings',{}).fetch('star_rating',nil)
+    rating_data.fetch('preschool_rating',{}).fetch('overall_rating',nil)
   end
 
   def school_data(category = nil)

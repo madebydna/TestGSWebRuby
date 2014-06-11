@@ -312,10 +312,10 @@ class CategoryDataReader
     results = RatingsHelper.fetch_ratings_for_school school
 
     #Build a hash to hold the ratings results.
-    gs_rating_value = RatingsHelper.construct_GS_ratings results, school
-    city_rating_value =  RatingsHelper.construct_city_ratings results, school
-    state_rating_value = RatingsHelper.construct_state_ratings results, school
-    preK_ratings = RatingsHelper.construct_preK_ratings results, school
+    gs_rating_value = RatingsHelper.construct_gs_rating results, school
+    city_rating_value =  RatingsHelper.construct_city_rating results, school
+    state_rating_value = RatingsHelper.construct_state_rating results, school
+    preschool_ratings = RatingsHelper.construct_preschool_rating results, school
 
     return_var = {}
     if gs_rating_value.present?
@@ -327,8 +327,8 @@ class CategoryDataReader
     if state_rating_value.present?
       return_var["state_rating"] = state_rating_value
     end
-    if preK_ratings.present?
-      return_var["preK_ratings"] = preK_ratings
+    if preschool_ratings.present?
+      return_var["preschool_rating"] = preschool_ratings
     end
 
     return_var

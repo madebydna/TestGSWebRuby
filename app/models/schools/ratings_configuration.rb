@@ -1,62 +1,22 @@
-class RatingsConfiguration
-
-  attr_accessor :city_rating_configuration, :state_rating_configuration, :gs_rating_configuration, :prek_rating_configuration, :city
-
-  def initialize(city_rating_configuration,state_rating_configuration,gs_rating_configuration,prek_rating_configuration)
-    @city_rating_configuration = city_rating_configuration
-    @state_rating_configuration = state_rating_configuration
-    @gs_rating_configuration = gs_rating_configuration
-    @prek_rating_configuration = prek_rating_configuration
-  end
+class RatingsConfiguration < Hashie::Mash
 
   def self.configuration_for_school(state)
-    city_rating_configuration, state_rating_configuration, gs_rating_configuration, prek_rating_configuration = nil
-    rating_configuration = SchoolProfileConfiguration.for_state(state)
+    school_profile_configuration = SchoolProfileConfiguration.for_state(state)
 
+    params = {
+      city_rating: nil,
+      state_rating: nil,
+      preschool_rating: nil,
+      gs_rating: nil,
+      pcsb_rating: nil
+    }
 
-    rating_configuration.each do |config|
-      if config.configuration_key == 'city_rating'
-        city_rating_configuration = JSON.parse(config.value)
-      elsif config.configuration_key == 'state_rating'
-        state_rating_configuration = JSON.parse(config.value)
-      elsif config.configuration_key == 'gs_rating'
-        gs_rating_configuration = JSON.parse(config.value)
-      elsif config.configuration_key == 'preK_rating'
-        prek_rating_configuration = JSON.parse(config.value)
-      end
+    school_profile_configuration.each do |config|
+      hash = config.present? ? JSON.parse(config.value) : {}
+      params[config.configuration_key.downcase] = hash
     end
-    RatingsConfiguration.new(city_rating_configuration, state_rating_configuration, gs_rating_configuration, prek_rating_configuration)
-  end
 
-  def gs_rating_data_type_ids
-    @gs_rating_configuration.blank? ? [] : @gs_rating_configuration["rating_breakdowns"].values.map{|r| r["data_type_id"]}
-  end
-
-  def state_rating_data_type_ids
-    data_type_ids = []
-    if @state_rating_configuration.present?
-      data_type_ids = Array.wrap(@state_rating_configuration.seek('overall', 'data_type_id'))
-      if @state_rating_configuration["rating_breakdowns"].present?
-        data_type_ids += @state_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
-      end
-    end
-    data_type_ids
-  end
-
-  def city_rating_data_type_ids
-    data_type_ids = []
-    if @city_rating_configuration.present?
-      data_type_ids = Array.wrap(@city_rating_configuration.seek('overall', 'data_type_id'))
-      if @city_rating_configuration["rating_breakdowns"].present?
-        data_type_ids += @city_rating_configuration["rating_breakdowns"].values.map{|r|r["data_type_id"]}
-      end
-    end
-    data_type_ids
-  end
-
-  def prek_rating_data_type_ids
-    return [] if @prek_rating_configuration.nil?
-    Array.wrap(@prek_rating_configuration.seek('star_rating', 'data_type_id'))
+    return RatingsConfiguration.new(params)
   end
 
 end

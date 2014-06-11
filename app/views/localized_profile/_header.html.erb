@@ -56,7 +56,7 @@
                                 </div>
                             <% end %>
                         <% end %>
-                        <% prek_star_rating = @school.preK_star_rating %>
+                        <% prek_star_rating = @school.preK_star_rating.to_i %>
                         <% if prek_star_rating  %>
                             <% prek_star_rating_text = 'star' %>
                             <% if prek_star_rating == 0 %>
