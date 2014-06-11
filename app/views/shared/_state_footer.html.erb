@@ -12,14 +12,13 @@
 
       <ul class='di'>
         <% ('A'..'Z').to_a.each do |letter| %>
-          <li class='di'><%= link_to(letter, city_alphabet_path(state[:long].capitalize, state[:short].upcase, letter)) %></li>
+          <li class='di'><%= link_to(letter, city_alphabet_path(gs_legacy_url_encode(state[:long].capitalize), state[:short].upcase, letter)) %></li>
         <% end %>
       </ul>
 
       <hr/>
 
       <%= render 'shared/gs_address_and_copyright' %>
-
     </div>
   </div>
 </div>

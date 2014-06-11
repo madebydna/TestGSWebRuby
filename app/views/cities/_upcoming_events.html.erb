@@ -11,7 +11,9 @@
     <div class='oh'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
         <h4 class='bottom mtn'>Upcoming events</h4>
-        <%= link_to('See all', city_events_path(params[:state], params[:city])) %>
+        <% if params[:city] %>
+          <%= link_to('See all', city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_encode(params[:city]))) %>
+        <% end %>
       </div>
       <% important_events[:max_important_event_to_display].times do |i| %>
         <% event = important_events[:events][i - 1] %>
