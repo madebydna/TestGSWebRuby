@@ -273,8 +273,8 @@ describe CollectionConfig do
   describe '.ed_community_subheading' do
     context 'with missing data' do
       it 'returns an error message' do
-        result = CollectionConfig.ed_community_subheading([])
-        expect(result).to start_with('Error:')
+        subheading = CollectionConfig.ed_community_subheading([])
+        expect(subheading).to start_with('Error:')
       end
     end
 
@@ -282,9 +282,9 @@ describe CollectionConfig do
       it 'returns the subheading string' do
         FactoryGirl.create(:community_partners_subheading_collection_config)
         collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_SUBHEADING_KEY)
-        result = CollectionConfig.ed_community_subheading(collection_configs)
+        subheading = CollectionConfig.ed_community_subheading(collection_configs)
 
-        expect(result).to start_with("Education doesn't happen in a vacuum")
+        expect(subheading).to start_with("Education doesn't happen in a vacuum")
       end
     end
   end
@@ -351,12 +351,10 @@ describe CollectionConfig do
       end
 
       it 'logs an error' do
-        FactoryGirl.create(:community_sponsor_collection_config_name)
         expect(Rails.logger).to receive(:error)
-        wrong_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::SPONSOR_ACRO_NAME_KEY)
-        result = CollectionConfig.ed_community_show_tabs(wrong_configs)
 
-        expect(result).to be_boolean
+        wrong_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::SPONSOR_ACRO_NAME_KEY)
+        subheading = CollectionConfig.ed_community_show_tabs(wrong_configs)
       end
     end
   end

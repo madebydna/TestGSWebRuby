@@ -257,16 +257,15 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def ed_community_subheading(collection_configs)
-      subheading = nil
+      subheading = ''
 
       begin
         config = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first
 
         if config
-          raw_subheading_str = config.value
-          subheading = raw_subheading_str.gsub(/\{\scontent\:'/, '')
-                                         .gsub(/'\s\}/, '')
-                                         .gsub(/\\/, '')
+          subheading = config.value.gsub(/\{\scontent\:'/, '').gsub(/'\s\}/, '').gsub(/\\/, '')
+        else
+          subheading = "Error: missing data for #{EDUCATION_COMMUNITY_SUBHEADING_KEY}"
         end
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing ed_community_subheading ' + e.to_s)

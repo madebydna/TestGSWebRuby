@@ -2,7 +2,12 @@
   <div class="row">
     <div class="row tac col-lg-6 ma fn">
       <ul class='education-community-tabs mvs mhn'>
-        <base href="<%= city_education_community_path(state, city) %>">
+        <% if city %>
+          <base href="<%= city_education_community_path(state, city) %>">
+        <% else %>
+          <base href="<%= state_education_community_path(state, city) %>">
+        <% end %>
+
         <li class="dib ov pr tac <%= 'active' if tab == 'Community' %>"><a href="">Community</a></li>
         <li class="dib ov pr tac <%= 'active' if tab == 'Education' %>"><a href="education">Education</a></li>
         <li class="dib ov pr tac <%= 'active' if tab == 'Funders' %>"><a href="funders">Funders</a></li>
