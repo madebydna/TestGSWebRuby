@@ -68,7 +68,7 @@ class SigninController < ApplicationController
           city_hub_page = URI.decode(cookies[:redirect_uri])
           delete_cookie :redirect_uri
         end
-        redirect_to (overview_page_for_last_school || city_hub_page || join_url)
+        redirect_to (overview_page_for_last_school || city_hub_page || (should_attempt_login ? home_url : join_url))
       end
     end
   end
