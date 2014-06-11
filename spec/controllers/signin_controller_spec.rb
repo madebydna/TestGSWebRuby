@@ -48,6 +48,7 @@ describe SigninController do
 
       context 'successful login' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {password: 'abc'} }
 
         before do
           expect(controller).to receive(:authenticate).and_return([user, nil])
@@ -56,6 +57,35 @@ describe SigninController do
         it 'should log the user in' do
           expect(controller).to receive(:log_user_in).with(user)
           get :create, password: 'abc'
+        end
+
+        it 'should redirect to home if no redirect specified' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:home_url).and_return('/') # To avoid issue where rspec generates join_url incorrectly (with trailing slash)
+          expect(subject).to redirect_to '/'
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
         end
       end
     end

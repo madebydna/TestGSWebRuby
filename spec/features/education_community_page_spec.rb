@@ -93,12 +93,6 @@ describe 'State Education Comunity Page' do
     end
   end
 
-  describe 'upcoming events module' do
-    it 'shows 2 upcoming events' do
-      expect(page).to have_css '.upcoming-event', count: 2
-    end
-  end
-
   describe 'heading' do
     it 'shows the heading and subheading' do
       expect(page).to have_content 'Indiana Education Community'
