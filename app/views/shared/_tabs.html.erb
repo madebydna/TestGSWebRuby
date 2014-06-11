@@ -3,9 +3,9 @@
     <div class="row tac col-lg-6 ma fn">
       <ul class='education-community-tabs mvs mhn'>
         <% if city %>
-          <% base = city_education_community_path(state, city) %>
+          <% base = city_education_community_path(gs_legacy_url_encode(state), gs_legacy_url_encode(city)) %>
         <% else %>
-          <% base = state_education_community_path(state) %>
+          <% base = state_education_community_path(gs_legacy_url_encode(state)) %>
         <% end %>
 
         <li class="dib ov pr tac <%= 'active' if tab == 'Community' %>"><a href="<%= base %>">Community</a></li>
