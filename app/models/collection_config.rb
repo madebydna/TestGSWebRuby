@@ -257,15 +257,23 @@ class CollectionConfig < ActiveRecord::Base
     end
 
     def ed_community_subheading(collection_configs)
+      subheading = nil
+
       begin
-        raw_subheading_str = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first.value
-        raw_subheading_str.gsub(/\{\scontent\:'/, '')
-                          .gsub(/'\s\}/, '')
-                          .gsub(/\\/, '')
+        config = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_SUBHEADING_KEY }).first
+
+        if config
+          raw_subheading_str = config.value
+          subheading = raw_subheading_str.gsub(/\{\scontent\:'/, '')
+                                         .gsub(/'\s\}/, '')
+                                         .gsub(/\\/, '')
+        end
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing ed_community_subheading ' + e.to_s)
-        "Error: something went wrong while parsing education community subheading"
+        subheading = 'Error: something went wrong while parsing education community subheading'
       end
+
+      subheading
     end
 
     def ed_community_partners(collection_configs)
@@ -300,10 +308,8 @@ class CollectionConfig < ActiveRecord::Base
       show_tabs = false
 
       begin
-        if config
-          config = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first
-          show_tabs = config.value == 'true'
-        end
+        config = collection_configs.select(&lambda { |cc| cc.quay == EDUCATION_COMMUNITY_TABS_KEY }).first
+        show_tabs = config.value == 'true' if config
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing ed_community_show_tabs ' + e.to_s)
       end
