@@ -213,7 +213,7 @@ class CollectionConfig < ActiveRecord::Base
             event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
           end
           important_events[:events].delete_if { |event| event[:date] < Date.today }
-          important_events[:events].sort_by! { |e| e[:date] }
+          important_events[:events].sort_by { |e| e[:date] }
           important_events[:max_important_event_to_display] = max_events
 
           while important_events[:events].length > max_events
@@ -244,7 +244,7 @@ class CollectionConfig < ActiveRecord::Base
             important_events.each do |event|
               event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
             end
-            important_events.sort_by! { |e| e[:date] }
+            important_events.sort_by { |e| e[:date] }
             important_events.delete_if { |event| event[:date] < Date.today }
             important_events
           end
