@@ -1,15 +1,19 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
 
-  before_action :set_city_state
-
   layout 'application'
 
   def city_browse
+    set_city_state
+    if @state.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+      return
+    end
+
     @city = City.find_by_state_and_name(@state[:short], @city)
 
     if @city.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
+      redirect_to state_path(@state[:long])
       return
     end
 
@@ -18,14 +22,10 @@ class SearchController < ApplicationController
     set_omniture_pagename_browse_city
     ad_setTargeting_through_gon
 
-    solr_params = {:query => '*'} # no keyword searches, just fetch all schools that match the filters
-    @results_offset = (params[:start])?(params[:start].to_i):0
-    @results_offset = 0 if @results_offset.to_i < 0
-    solr_params[:start] = @results_offset
-    @page_size = (params[:pageSize])?(params[:pageSize].to_i):25
-    @page_size = 1 if @page_size < 1
-    solr_params[:rows] = @page_size
-    results = SchoolSearchService.city_browse(@state[:short], @city.name, solr_params)
+    @results_offset = get_results_offset
+    @page_size = get_page_size
+    @page_number = get_page_number(@page_size, @results_offset) # for use in view
+    results = SchoolSearchService.city_browse(:state => @state[:short], :city => @city.name, :rows => @page_size, :start => @results_offset)
 
     unless results.empty?
       @total_results = results[:num_found]
@@ -96,6 +96,31 @@ class SearchController < ApplicationController
     end
 
     render json:response_objects
+  end
+
+  protected
+
+  def get_page_number(page_size, results_offset)
+    page_size = 1 if page_size < 1
+    results_offset = 0 if results_offset < 0
+
+    if results_offset > 0
+      (results_offset / page_size).ceil
+    else
+      1
+    end
+  end
+
+  def get_results_offset
+    results_offset = (params[:start])?(params[:start].to_i):0
+    results_offset = 0 if results_offset.to_i < 0
+    results_offset
+  end
+
+  def get_page_size
+    page_size = (params[:pageSize])?(params[:pageSize].to_i):25
+    page_size = 1 if page_size < 1
+    page_size
   end
 
   private
