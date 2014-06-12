@@ -431,7 +431,7 @@ describe RatingsHelper do
 
   #There is configuration and rating results.
   it 'should return overall gs rating, description and label' do
-    gs_rating_config = JSON.parse('{"rating_breakdowns":{"test_scores":{"data_type_id":164,"label":"Test score rating"},"progress":{"data_type_id":165,"label":"Student growth rating"},"college_readiness":{"data_type_id":166,"label":"College readiness rating"}},"overall":{"description_key": "what_is_gs_rating_summary", "use_school_value_float": "true"}}')
+    gs_rating_config = JSON.parse('{"rating_breakdowns":{"test_scores":{"data_type_id":164,"label":"Test score rating"},"progress":{"data_type_id":165,"label":"Student growth rating"},"college_readiness":{"data_type_id":166,"label":"College readiness rating"}},"overall":{"description_key": "what_is_gs_rating_summary", "use_school_value_float": "true", "use_gs_rating": "true"}}')
     ratings_config = construct_ratings_configuration(school.state, gs_rating: gs_rating_config)
     rating_results = build_rating_results_for_gs
 

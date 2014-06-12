@@ -43,6 +43,10 @@ class RatingConfiguration
     overall['label']
   end
 
+  def use_gs_rating?
+    overall['use_gs_rating'].to_s == 'true'
+  end
+
   def use_school_value_float?
     star_rating['use_school_value_float'].to_s == 'true' ||
     overall['use_school_value_float'].to_s == 'true'
@@ -79,11 +83,11 @@ class RatingConfiguration
 
   def overall_rating_hash(results, school)
     hash = {}
-    data_set = results.detect { |tds| tds['data_type_id'] == data_type_id }
-    if data_set
-      overall_rating = school_value(data_set)
-    else
+    if use_gs_rating?
       overall_rating = school.school_metadata.overallRating
+    else
+      data_set = results.detect { |tds| tds['data_type_id'] == data_type_id }
+      overall_rating = school_value(data_set) if data_set
     end
 
     if overall_rating.present?
