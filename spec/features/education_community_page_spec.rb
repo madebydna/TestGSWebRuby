@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Education Comunity Page' do
+describe 'Education Community Page' do
   after(:each) { clean_dbs :gs_schooldb }
   before(:each) do
     FactoryGirl.create(:hub_city_mapping)
@@ -39,8 +39,8 @@ describe 'Education Comunity Page' do
     end
 
     it 'shows links to other education community pages' do
-      expect(page).to have_link('Education', href: 'education')
-      expect(page).to have_link('Funders', href: 'funders')
+      expect(page).to have_link('Education', href: '/michigan/detroit/education-community/education')
+      expect(page).to have_link('Funders', href: '/michigan/detroit/education-community/funders')
     end
   end
 end
@@ -74,10 +74,10 @@ describe 'Education Community Partner Page' do
 end
 
 
-describe 'State Education Comunity Page' do
+describe 'State Education Community Page' do
   after(:each) { clean_dbs :gs_schooldb }
   before(:each) do
-    FactoryGirl.create(:hub_city_mapping, collection_id: 6)
+    FactoryGirl.create(:hub_city_mapping, collection_id: 6, city: nil, state: 'in')
     FactoryGirl.create(:community_tabs_collection_config, collection_id: 6)
     FactoryGirl.create(:community_partners_subheading_collection_config, collection_id: 6)
     FactoryGirl.create(:community_partners_collection_config, collection_id: 6)
@@ -106,8 +106,8 @@ describe 'State Education Comunity Page' do
     end
 
     it 'shows links to other education community pages' do
-      expect(page).to have_link('Education', href: 'education')
-      expect(page).to have_link('Funders', href: 'funders')
+      expect(page).to have_link('Education', href: '/indiana/education-community/education')
+      expect(page).to have_link('Funders', href: '/indiana/education-community/funders')
     end
   end
 end

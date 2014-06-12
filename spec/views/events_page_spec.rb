@@ -6,6 +6,7 @@ describe 'cities/events.html.erb' do
     assign(:state, { long: 'Michigan', short: 'MI' })
     allow(view).to receive(:city_params).and_return({ state: 'michigan', city: 'detroit' })
     assign(:hub_params, { state: 'michigan', city: 'detroit' })
+    allow(view).to receive(:gs_legacy_url_encode) { |input| input }
   end
   context 'by default' do
     before(:each) do

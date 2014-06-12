@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 describe 'cities/_upcoming_events.html.erb' do
+  before { allow(view).to receive(:gs_legacy_url_encode) { |input| input } }
+
   context 'without events' do
     it 'hides the section' do
       allow(view).to receive(:important_events) { nil }
       allow(view).to receive(:params) { { city: 'detroit', state: 'michigan' } }
+
       render
       expect(rendered).to_not have_selector('.row')
     end

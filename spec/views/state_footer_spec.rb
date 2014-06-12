@@ -6,6 +6,7 @@ describe 'shared/_state_footer.html.erb' do
   before(:each) do
     allow(view).to receive(:state) { { long: 'Indiana', short: 'IN' } }
     allow(view).to receive(:city_params).and_return({ state: 'indiana', city: 'indianapolis' })
+    allow(view).to receive(:gs_legacy_url_encode) { |input| input }
   end
 
   shared_examples_for 'it has a city list' do |city_count|

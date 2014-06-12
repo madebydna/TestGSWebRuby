@@ -1,49 +1,11 @@
 require 'spec_helper'
 
-# Sins.
-# def city_hub_stubs(view)
-#   view.stub(:collection_id) { 1 }
-#   allow(view).to receive(:city) { 'detroit' }
-#   allow(view).to receive(:logged_in?) { false } #sins(?)
-#   allow(view).to receive(:state) { 'michigan' }
-# end
-
-# def state_hub_stubs(view)
-#   view.stub(:collection_id) { 6 }
-#   allow(view).to receive(:logged_in?) { false } #sins(?)
-#   allow(view).to receive(:state) { 'indiana' }
-# end
-
-# describe 'shared/community.html.erb' do
-#   context 'showing tabs on a state page' do
-#     before do
-#       state_hub_stubs(view)
-#     end
-
-#     it 'sets a base href to the state page' do
-#       render
-#       debugger
-#       puts 'foo'
-#       # find selector, make sure state is in the href
-#     end
-#   end
-
-#   context 'showing tabs on a city page' do
-#     before do
-
-#     end
-
-#     it 'sets a base href to the city page' do
-#       render
-#       expect(rendered).to have_selector('base')
-#       # Find the selector, make sure the city is in the href
-#     end
-#   end
-# end
-
 describe 'shared/_tabs.html.erb' do
   before(:each) do
-    city_hub_stubs(view)
+    allow(view).to receive(:city) { 'detroit' }
+    allow(view).to receive(:logged_in?) { false }
+    allow(view).to receive(:state) { 'michigan' }
+    allow(view).to receive(:gs_legacy_url_encode) { |input| input }
   end
 
   it 'sets an active class' do

@@ -349,13 +349,6 @@ describe CollectionConfig do
         result = CollectionConfig.ed_community_show_tabs([])
         expect(result).to be_boolean
       end
-
-      it 'logs an error' do
-        expect(Rails.logger).to receive(:error)
-
-        wrong_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::SPONSOR_ACRO_NAME_KEY)
-        subheading = CollectionConfig.ed_community_show_tabs(wrong_configs)
-      end
     end
   end
 
