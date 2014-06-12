@@ -5,9 +5,17 @@ class SchoolSearchService
 
   # :city, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
   def self.city_browse(options = {})
+    raise ArgumentError, 'State is required' unless options.include?(:state)
+    raise ArgumentError, 'State should be a two-letter abbreviation' unless options[:state].length == 2
+    raise ArgumentError, 'City is required' unless options.include?(:city)
+    key_map = {
+        number_of_results: :rows,
+        offset: :start
+    }
+    rename_keys(options, key_map)
+    remap_sort(options)
     param_options = {:sort => 'overall_gs_rating desc', :rows => 25, :query => '*'}.merge(options)
-    # param_options.merge! options
-    solr_results = @@solr.get_search_results param_options
+    solr_results = get_results param_options
 
     normalized_hash = {
         :num_found => solr_results['response']['numFound'],
@@ -66,5 +74,28 @@ class SchoolSearchService
     level_codes << 'h' if grade_level.include? 'h'
     hash['level_code'] = level_codes.join ','
     hash['level_codes'] = level_codes
+  end
+
+  def self.get_results(options)
+    @@solr.get_search_results options
+  end
+
+  def self.rename_keys(hash, key_map)
+    key_map.each do |k, v|
+      hash[v] = hash[k]
+      hash.delete k
+    end
+  end
+
+  def self.remap_value(hash, key, value_map)
+    hash[key] = value_map[hash[key]] if hash.include? key
+  end
+
+  def self.remap_sort(hash)
+    sort_map = {
+        rating_asc: 'overall_gs_rating asc',
+        rating_desc: 'overall_gs_rating desc'
+    }
+    remap_value(hash, :sort, sort_map)
   end
 end

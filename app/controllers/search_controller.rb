@@ -25,7 +25,7 @@ class SearchController < ApplicationController
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
-    results = SchoolSearchService.city_browse(:state => @state[:short], :city => @city.name, :rows => @page_size, :start => @results_offset)
+    results = SchoolSearchService.city_browse(:state => @state[:short], :city => @city.name, :number_of_results => @page_size, :offset => @results_offset)
 
     unless results.empty?
       @total_results = results[:num_found]
@@ -36,6 +36,8 @@ class SearchController < ApplicationController
 
 
   def suggest_school_by_name
+    #For now the javascript will add in a state and rails will set a @state, but in the future we may want to not require a state
+    #TODO Account for not having access to state variable
     solr = Solr.new
 
     results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
@@ -51,10 +53,9 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        response_objects << {:name => s.name, :id => s.id, :url => ''}#school_path(s)}
+        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :url => ''}#school_path(s)}
       end
     end
-
     render json:response_objects
   end
 
@@ -67,7 +68,7 @@ class SearchController < ApplicationController
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
       results['response']['docs'].each do |city_search_result|
         output_city = {}
-        output_city[:name] = city_search_result['city_sortable_name']
+        output_city[:city_name] = city_search_result['city_sortable_name']
 
         output_city[:url] = "/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools"
 
@@ -87,7 +88,7 @@ class SearchController < ApplicationController
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
       results['response']['docs'].each do |district_search_result|
         output_district = {}
-        output_district[:name] = district_search_result['district_sortable_name']
+        output_district[:district_name] = district_search_result['district_sortable_name']
 
         output_district[:url] = "/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools"
 
