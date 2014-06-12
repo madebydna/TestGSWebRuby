@@ -17,17 +17,19 @@
         <p class="alert alert-warning man mbm"><%= rating_hash["disclaimer_private"].html_safe %></p>
       <% end %>
     <p><%= rating_hash["description"] %></p>
-      <% if rating_hash["rating_breakdowns"].present? %>
+      <% if rating_hash["rating_breakdowns"].present? || rating_hash["methodology_url"].present? %>
         <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
         <div class="dn well bg-white">
-          <h5>Rating Breakdown</h5>
-          <table class="table table-striped">
-            <% rating_hash["rating_breakdowns"].each do |key, value| %>
-              <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
-              <tr><td colspan="2"><%= value['description'] %></td></tr>
+            <% if rating_hash["rating_breakdowns"].present? %>
+              <h5>Rating Breakdown</h5>
+              <table class="table table-striped">
+                <% rating_hash["rating_breakdowns"].each do |key, value| %>
+                  <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
+                  <tr><td colspan="2"><%= value['description'] %></td></tr>
+                <% end %>
+              </table>
             <% end %>
-          </table>
-          <% if rating_hash["methodology_url"]%>
+          <% if rating_hash["methodology_url"].present? %>
             <h5>Methodology</h5>
             <a href="<%= rating_hash["methodology_url"] %>" target="_blank">View more details about the GreatSchools rating</a>
           <% end %>
