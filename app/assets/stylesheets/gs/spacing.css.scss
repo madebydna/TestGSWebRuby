@@ -72,6 +72,9 @@ body { padding-top: 50px }
 
 .pt-1 { padding-top: 1% }
 
+//default module padding
+.dvp {padding-top: 60px; padding-bottom: 60px}
+
 .mha { margin-right: auto; margin-left: auto; }
 
 .bottom { margin-bottom: 0; padding-bottom: 0; }
@@ -168,6 +171,11 @@ body { padding-top: 50px }
   .content-centered {
     margin-top: 0;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  //default  mobile module padding
+  .dvp {padding-top: 40px; padding-bottom: 40px}
 }
 
 @media only screen and (max-width: 480px) {

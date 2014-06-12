@@ -8,9 +8,6 @@ class HomeController < ApplicationController
 
   def prototype
 
-    @article_1 = "/assets/article_img.jpg"
-    @parent_img = "/assets/article_img.jpg"
-
     set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
                   robots: 'noindex'
 
