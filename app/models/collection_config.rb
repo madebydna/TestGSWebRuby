@@ -201,7 +201,7 @@ class CollectionConfig < ActiveRecord::Base
       announcement
     end
 
-    def city_hub_important_events(collection_configs, max_events = 2)
+    def city_hub_important_events(collection_configs, max_events = 3)
       important_events = nil
 
       begin
@@ -213,7 +213,7 @@ class CollectionConfig < ActiveRecord::Base
             event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
           end
           important_events[:events].delete_if { |event| event[:date] < Date.today }
-          important_events[:events].sort_by { |e| e[:date] }
+          important_events[:events].sort! { |event1,event2| event2[:date] <=>event1[:date] }
           important_events[:max_important_event_to_display] = max_events
 
           while important_events[:events].length > max_events
@@ -244,7 +244,7 @@ class CollectionConfig < ActiveRecord::Base
             important_events.each do |event|
               event[:date] = Date.strptime(event[:date], '%m-%d-%Y')
             end
-            important_events.sort_by { |e| e[:date] }
+            important_events.sort! { |event1,event2| event1[:date] <=>event2[:date] }
             important_events.delete_if { |event| event[:date] < Date.today }
             important_events
           end
