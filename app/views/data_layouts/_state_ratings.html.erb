@@ -1,6 +1,9 @@
 <% data # A +Hash+ that contains a state rating +Hash+ if available %>
 <%= debug data if params[:debug] %>
-<% rating_hash = data['state_rating'] %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% data_config = category_placement.layout_config_json %>
+<% rating_type = (data_config || {}).fetch('rating_type', 'state') %>
+<% rating_hash = data["#{rating_type}_rating"] %>
 
 <% if rating_hash.present? && rating_hash["overall_rating"].present? %>
 
