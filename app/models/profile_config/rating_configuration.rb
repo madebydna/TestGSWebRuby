@@ -111,16 +111,16 @@ class RatingConfiguration
 
       school_value = school_value(matching_data_set)
 
-      subrating_hash[breakdown_hash['label']] = school_value
-
-      if school_value.present?
+      if school_value.present? && false
         label_hash = {
-          'rating' => school_value
+          'rating' => school_value,
+          'description' =>  RatingsHelper.get_sub_rating_descriptions(
+                              breakdown_hash,
+                              school,
+                              description_lookup_table
+                            )
         }
-
-        #get the sub-rating descriptions
-        sub_rating_description = RatingsHelper.get_sub_rating_descriptions(breakdown_hash, school, description_lookup_table)
-        label_hash['description'] = sub_rating_description if sub_rating_description.present?
+        label_hash.select! { |k,v| v.present? }
 
         subrating_hash[breakdown_hash['label']] = label_hash
       end
