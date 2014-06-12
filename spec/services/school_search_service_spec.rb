@@ -14,14 +14,8 @@ describe 'School Search Service' do
       SchoolSearchService.city_browse({:state => 'de', :city => 'dover', :number_of_results => 50, :offset => 25})
     end
 
-    # it 'sorts results' do
-    #   expect(SchoolSearchService).to receive(:get_results) do |options|
-    #     expect(options[:sort]).to eql('overall_gs_rating asc')
-    #   end.and_return(empty_result)
-    #   SchoolSearchService.city_browse({:state => 'de', :city => 'dover', :sort => :rating_asc})
-    # end
-
     it 'does not error if provided city and state' do
+      allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
       expect{SchoolSearchService.city_browse({:state => 'de', :city => 'dover'})}.not_to raise_error
     end
     it 'errors if not provided a state' do
