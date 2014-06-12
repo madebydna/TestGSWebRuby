@@ -4,7 +4,7 @@ GS.hubs.setupResponsiveCarousel = function() {
     slides: "> div",
     loader: "wait",
     speed: "1000",
-    pauseOnHover: true,
+    pauseOnHover: "true",
     timeout: "1000",
     easing: "linear",
     carouselVisible: '6',
