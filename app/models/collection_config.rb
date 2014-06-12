@@ -201,7 +201,7 @@ class CollectionConfig < ActiveRecord::Base
       announcement
     end
 
-    def city_hub_important_events(collection_configs, max_events = 3)
+    def city_hub_important_events(collection_configs, max_events = 2)
       important_events = nil
 
       begin
