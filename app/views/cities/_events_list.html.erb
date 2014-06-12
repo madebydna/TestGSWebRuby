@@ -6,7 +6,7 @@
     <% events.group_by { |event| event[:date].year }.each do |year, events| %>
       <div class="mbl">
         <h3 class='bottom'><%= year %> Events</h3>
-        <hr class='mtn'>
+        <hr class='mtn mbm'>
         <% events.each do |event| %>
           <div class="mvl">
             <%= render 'event_icon', date: event[:date] %>
