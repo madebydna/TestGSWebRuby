@@ -37,7 +37,8 @@ p, a {
   font-size: $font-size-block;
 }
 
-.text_fff { color: #ffffff}
+.text_fff { color: #ffffff; }
+.text_000 { color: #000000; }
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
@@ -79,7 +80,24 @@ p, a {
 .jumbo-header {
   font-size: 62px;
 }
-.rating_text_w_box{letter-spacing: 1px; border: #CCCCCC solid thin; text-transform: uppercase; border-radius: 4px;}
+
+.default_rating_circle {
+  width: 72px;
+  height: 72px;
+  border: #CCCCCC solid thin;
+  border-radius: 36px;
+  font-size: 32px;
+}
+.default_rating_rect {
+  letter-spacing: 1px;
+  border: #CCCCCC solid thin;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-size: 24px;
+  &.small {
+    font-size: 14px;
+  }
+}
 
 .bg-white { background-color: #FFFFFF; }
 .bg-light-gray { background-color: $well-bg; }
@@ -116,3 +134,5 @@ p, a {
     text-align: right;
   }
 }
+
+

@@ -1,23 +1,23 @@
 <% if page == 'overview' %>
     <div class="tac pal">
         <% if rating.to_s.length < 3 %>
-            <div class="ma" style="width: 72px; height: 72px; border: #CCCCCC solid thin; border-radius: 36px;">
-                <div style="padding-top: 10px; color:#000000; font-size: 32px"><%= rating %></div>
+            <div class="default_rating_circle ma">
+                <div class="ptm text_000"><%= rating %></div>
             </div>
         <% else %>
-            <div class="tac ptm" style="font-size: 24px">
-                <span class="pam link-darkgray open-sans_sb rating_text_w_box"><%= rating %></span>
+            <div class="tac ptm">
+                <span class="pam link-darkgray open-sans_sb default_rating_rect"><%= rating %></span>
             </div>
 
         <% end %>
         <div class="ptl link-darkgray"><%= supporting_text %></div>
     </div>
 <% elsif rating.to_s.length < 3 %>
-    <div class="tac" style="width: 72px; height: 72px; border: #CCCCCC solid thin; border-radius: 36px;">
-        <div style="padding-top: 10px; color:#000000; font-size: 32px"><%= rating %></div>
+    <div class="default_rating_circle tac">
+        <div class="ptm text_000"><%= rating %></div>
     </div>
 <% else %>
-    <div class="tal" style="font-size: 24px">
-        <span class="pam open-sans_sb rating_text_w_box"><%= rating %></span>
+    <div class="tal ptm">
+        <span class="pam open-sans_b default_rating_rect small"><%= rating %></span>
     </div>
 <% end %>
