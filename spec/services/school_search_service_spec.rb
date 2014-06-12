@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe 'School Search Service' do
   describe '.city_browse' do
 
@@ -31,8 +30,10 @@ describe 'School Search Service' do
 
   describe '.remap_sort' do
     @cases = {
-      rating_asc: 'overall_gs_rating asc',
-      rating_desc: 'overall_gs_rating desc'
+      rating_asc: 'sorted_gs_rating_asc asc',
+      rating_desc: 'overall_gs_rating desc',
+      name_asc: 'school_name asc',
+      name_desc: 'school_name desc'
     }
     @cases.each do | key, value |
       it "should replace #{key} with #{value}" do

@@ -2,31 +2,30 @@ class SchoolSearchService
   @@solr = Solr.new
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
+  DEFAULT_CITY_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*'}
+  PARAMETER_TO_SOLR_MAPPING = {
+      number_of_results: :rows,
+      offset: :start
+  }
+  SORT_VALUE_MAP = {
+      rating_asc: 'sorted_gs_rating_asc asc',
+      rating_desc: 'overall_gs_rating desc',
+      distance_asc: 'geodist() asc', # todo not relevant for browse
+      distance_desc: 'geodist() desc', # todo not relevant for browse
+      name_asc: 'school_name asc',
+      name_desc: 'school_name desc'
+  }
 
   # :city, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
   def self.city_browse(options = {})
     raise ArgumentError, 'State is required' unless options.include?(:state)
     raise ArgumentError, 'State should be a two-letter abbreviation' unless options[:state].length == 2
     raise ArgumentError, 'City is required' unless options.include?(:city)
-    key_map = {
-        number_of_results: :rows,
-        offset: :start
-    }
-    rename_keys(options, key_map)
+    rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
-    param_options = {:sort => 'overall_gs_rating desc', :rows => 25, :query => '*'}.merge(options)
-    solr_results = get_results param_options
+    param_options = DEFAULT_CITY_BROWSE_OPTIONS.merge(options)
 
-    normalized_hash = {
-        :num_found => solr_results['response']['numFound'],
-        :start => solr_results['response']['start']
-    }
-    normalized_results = []
-    solr_results['response']['docs'].each do |school_search_result|
-      normalized_results << parse_school_document(school_search_result)
-    end
-    normalized_hash[:results] = normalized_results
-    normalized_hash
+    parse_school_results(get_results param_options)
   end
 
   class SchoolSearchResult
@@ -58,6 +57,18 @@ class SchoolSearchService
     school_search_result['school_media_first_hash'] = ((photo = school_search_result['small_size_photos'].presence) ? photo[0].match(/\/(\w*)-/)[1] : nil)
     add_level_codes(school_search_result, school_search_result['grade_level'])
     SchoolSearchResult.new school_search_result
+  end
+
+  def self.parse_school_results(solr_results)
+    normalized_results = []
+    solr_results['response']['docs'].each do |school_search_result|
+      normalized_results << parse_school_document(school_search_result)
+    end
+    {
+        num_found: solr_results['response']['numFound'],
+        start: solr_results['response']['start'],
+        results: normalized_results
+    }
   end
 
   private
@@ -92,10 +103,6 @@ class SchoolSearchService
   end
 
   def self.remap_sort(hash)
-    sort_map = {
-        rating_asc: 'overall_gs_rating asc',
-        rating_desc: 'overall_gs_rating desc'
-    }
-    remap_value(hash, :sort, sort_map)
+    remap_value(hash, :sort, SORT_VALUE_MAP)
   end
 end

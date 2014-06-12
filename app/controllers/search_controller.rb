@@ -25,7 +25,7 @@ class SearchController < ApplicationController
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
-    results = SchoolSearchService.city_browse(:state => @state[:short], :city => @city.name, :number_of_results => @page_size, :offset => @results_offset)
+    results = SchoolSearchService.city_browse(state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset)
 
     unless results.empty?
       @total_results = results[:num_found]
