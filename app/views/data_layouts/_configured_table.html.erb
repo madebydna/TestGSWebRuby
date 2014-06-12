@@ -41,3 +41,10 @@
     </table>
 
 <% end %>
+
+
+<% if (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl">
+        Source: <a href="#Footnotes">See notes</a>
+    </div>
+<% end %>
