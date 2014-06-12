@@ -1,4 +1,6 @@
 GS.hubs.setupResponsiveCarousel = function() {
+  var CAROUSEL_SELECTOR = '.js-partner-carousel';
+
   var options = {
     fx: "carousel",
     slides: "> div",
@@ -13,14 +15,24 @@ GS.hubs.setupResponsiveCarousel = function() {
     prev: "#prev"
   };
 
+  function attachHoverEvents($slideshow) {
+    $slideshow.hover(function () {
+      $slideshow.cycle('pause'); //mouse leave - Pause the slideshow
+    },
+    function () {
+      $slideshow.cycle('resume'); //mouse enter - Resume the slideshow
+    });
+  }
+
   function cycle($slideshow, visibleCount) {
     $slideshow.cycle('destroy');
     $slideshow.cycle($.extend(options, { carouselVisible: visibleCount }));
+    attachHoverEvents($slideshow);
   }
 
   function initCycle() {
     var width = $(window).width();
-    var $slideshow = $('.js-partner-carousel');
+    var $slideshow = $(CAROUSEL_SELECTOR);
     if (width <= 400) {
       cycle($slideshow, 1);
     } else if (width > 400 && width <= 540) {
