@@ -49,12 +49,10 @@
                             <% end %>
                         <% end %>
                         <% if @school.state_rating  %>
-                            <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
-                                <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link-darkgray">State rating:</span>
-                                    <span class="open-sans_sb"><%= @school.state_rating %></span>
-                                </div>
-                            <% end %>
+                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"State rating" %>
+                        <% end %>
+                        <% if @school.pcsb_rating  %>
+                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.pcsb_rating, rating_label:"PCSB" %>
                         <% end %>
                         <% prek_star_rating = @school.preK_star_rating.to_i %>
                         <% if prek_star_rating > 0 %>
