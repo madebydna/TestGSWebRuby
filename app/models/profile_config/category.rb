@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   attr_accessible :description, :name, :parent, :source, :layout, :updated_at
   db_magic :connection => :profile_config
 
-  has_many :category_placements, :order => 'collection_id desc'
+  has_many :category_placements, -> { order('collection_id desc') }
 
   belongs_to :parent, :class_name => 'Category'
   has_many :categories, :foreign_key => 'parent_id'

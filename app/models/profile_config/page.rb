@@ -4,9 +4,9 @@ class Page < ActiveRecord::Base
 
   include BelongsToCollectionConcerns
 
-  has_many :category_placements, 
-           inverse_of: :page,
-           :order => 'collection_id desc'
+  has_many :category_placements,
+           -> { order('collection_id desc') },
+           inverse_of: :page
 
   def self.by_name(name)
     page = where(name: name).preload(
