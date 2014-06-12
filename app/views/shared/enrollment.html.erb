@@ -18,38 +18,54 @@
 
 
 <div class="limit-width-1200 mbl">
-  <div class="row">
-    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
-    <div class="row" style='margin-bottom: 215px;'>
-      <div class="hidden-lg hidden-md hidden-sm" style='width: 100%; left: 0;'>
-        <div style="background-image: url(<%= image_path('hubs/small/enrollment_small.png') %>); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
-      </div>
-      <div class="hidden-xs" style='width: 100%; left: 0;'>
-        <div style="background-image: url(<%= image_path('hubs/enrollment.png') %>); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
-      </div>
+  <!-- Sins. -->
+  <div class="row mtl" style='margin-bottom: 60px;'>
+    <div class="hidden-lg hidden-md hidden-sm" style='width: 100%; left: 0;'>
+      <div style="background-image: url(<%= image_path('hubs/small/enrollment_small.png') %>); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
     </div>
+    <div class="hidden-xs" style='width: 100%; left: 0;'>
+      <div style="background-image: url(<%= image_path('hubs/enrollment.png') %>); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
+    </div>
+  </div>
 
 
-    <h1 class='tac'>Enrollment Information</h1>
-    <% if @subheading[:error] %>
-      <h3 class='tac'>Error: <%= @subheading[:error] %></h3>
-    <% else %>
-      <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
-    <% end %>
+  <h1 class='tac'>Enrollment Information</h1>
+  <% if @subheading[:error] %>
+    <h3 class='tac'>Error: <%= @subheading[:error] %></h3>
+  <% else %>
+    <p class='col-xs-12 col-sm-6 col-md-6 col-lg-7 ma fn phm tac'><%= @subheading[:content] %></p>
+  <% end %>
 
-    <ul class='tac enrollment-tabs' style='margin-bottom: 80px'>
-      <!-- TODO: should we check hub params city or just the city url?  5/19/14 -->
+  <div class='tac mtl'>
+    <ul class='nav nav-pills' style='margin-bottom: 80px'>
       <% if params[:city] %>
-        <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', city_enrollment_path(params[:state], params[:city])) %></li>
-        <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary') %></li>
-        <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle') %></li>
-        <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high') %></li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == nil %>">
+          <%= link_to('Preschools', city_enrollment_path(params[:state], params[:city]), class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'elementary' %>">
+          <%= link_to('Elementary schools', city_enrollment_path(params[:state], params[:city]) + 'elementary', class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'middle' %>">
+          <%= link_to('Middle schools', city_enrollment_path(params[:state], params[:city]) + 'middle', class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'high' %>">
+          <%= link_to('High schools', city_enrollment_path(params[:state], params[:city]) + 'high', class: 'link-darkgray') %>
+        </li>
       <% else %>
-        <li class="<%= 'active' if params[:tab] == nil %>"><%= link_to('Preschools', state_enrollment_path(params[:state])) %></li>
-        <li class="<%= 'active' if params[:tab] == 'elementary' %>"><%= link_to('Elementary schools', state_enrollment_path(params[:state]) + 'elementary') %></li>
-        <li class="<%= 'active' if params[:tab] == 'middle' %>"><%= link_to('Middle schools', state_enrollment_path(params[:state]) + 'middle') %></li>
-        <li class="<%= 'active' if params[:tab] == 'high' %>"><%= link_to('High schools', state_enrollment_path(params[:state]) + 'high') %></li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == nil %>">
+          <%= link_to('Preschools', state_enrollment_path(params[:state]), class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'elementary' %>">
+          <%= link_to('Elementary schools', state_enrollment_path(params[:state]) + 'elementary', class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'middle' %>">
+          <%= link_to('Middle schools', state_enrollment_path(params[:state]) + 'middle', class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == 'high' %>">
+          <%= link_to('High schools', state_enrollment_path(params[:state]) + 'high', class: 'link-darkgray') %>
+        </li>
       <% end %>
     </ul>
   </div>

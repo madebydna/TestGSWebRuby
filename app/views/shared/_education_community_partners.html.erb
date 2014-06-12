@@ -1,5 +1,5 @@
-<% unless @partners.nil? %>
-  <% partners = show_tabs ? @partners[@tab] : @partners.values.flatten %>
+<% unless partners.nil? %>
+  <% partners = show_tabs ? partners[tab] : partners.values.flatten %>
   <% partners.each do |partner| %>
     <div class="row">
       <div class="community-partner-row phm col-xs-12 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
