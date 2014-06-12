@@ -111,7 +111,7 @@ class RatingConfiguration
 
       school_value = school_value(matching_data_set)
 
-      if school_value.present? && false
+      if school_value.present?
         label_hash = {
           'rating' => school_value,
           'description' =>  RatingsHelper.get_sub_rating_descriptions(
