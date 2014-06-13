@@ -1,0 +1,12 @@
+<%= render 'nav/topnav', hub_params: @hub_params %>
+
+<%= render 'nav/search_bar_guided_search'%>
+<%= render 'filter_toolbar' %>
+
+<div class="limit-width-1200 full-width" style="height: 500px;">
+  <%= render 'cities/google_maps' %>
+</div>
+
+<%= render :partial => 'search/search_results'%>
+<%= render 'shared/home_footer'%>
+

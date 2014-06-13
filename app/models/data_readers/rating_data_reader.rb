@@ -19,26 +19,13 @@ class RatingDataReader < SchoolProfileDataReader
     ratings_helper = RatingsHelper.new(results,ratings_config)
 
     #Build a hash to hold the ratings results.
-    gs_rating_value = ratings_helper.construct_GS_ratings(school)
-    city_rating_value =  ratings_helper.construct_city_ratings(school)
-    state_rating_value = ratings_helper.construct_state_ratings(school)
-    preK_ratings = ratings_helper.construct_preK_ratings(school)
-
-    return_var = {}
-    if gs_rating_value.present?
-      return_var["gs_rating"] = gs_rating_value
+    @data = %w[gs_rating city_rating state_rating preschool_rating pcsb_rating].each_with_object({}) do |name, hash|
+      method_name = "construct_#{name}"
+      ratings = ratings_helper.send method_name, school
+      if ratings.present?
+        hash[name] = ratings
+      end
     end
-    if city_rating_value.present?
-      return_var["city_rating"] = city_rating_value
-    end
-    if state_rating_value.present?
-      return_var["state_rating"] = state_rating_value
-    end
-    if preK_ratings.present?
-      return_var["preK_ratings"] = preK_ratings
-    end
-
-    @data = return_var
   end
 
 end

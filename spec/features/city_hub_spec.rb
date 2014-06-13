@@ -36,7 +36,7 @@ describe 'City Hub Page' do
     end
     it 'shows announcements' do
       expect(page).to have_css('.alert-success')
-      expect(page).to have_css('strong', text: 'ANNOUNCEMENT', count: 1)
+      expect(page).to have_css('strong', text: 'Announcement', count: 1)
       expect(page).to have_link 'Learn More'
     end
   end
@@ -47,7 +47,7 @@ describe 'City Hub Page' do
       expect(page).to have_content article_title
     end
     it 'shows nearby homes with zillow' do
-      expect(page).to have_content 'Nearby Homes for Sale'
+      expect(page).to have_content 'Nearby homes for sale'
       expect(page).to have_css('iframe')
     end
   end

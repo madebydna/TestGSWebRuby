@@ -6,9 +6,13 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
-  # get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  get '/gsr/home', as: :home_prototype, to: 'home#prototype'
 
-  # Routes within this scope are pages not handled by Rails.
+  # Routes for search pages
+  get ':state/:city/schools/', as: :search_city_browse,
+      constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
+
+# Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
@@ -58,7 +62,7 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     scope '/style-guide/', as: :style_guide, to: :style_guide do
-       get '/index', to: 'style_guide#index'
+      get '/index', to: 'style_guide#index'
     end
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
@@ -78,6 +82,8 @@ LocalizedProfiles::Application.routes.draw do
     resources :reported_entity do
       put 'deactivate', on: :member
     end
+
+    resources :data_load_schedules, path: '/data-planning'
   end
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
@@ -117,8 +123,10 @@ LocalizedProfiles::Application.routes.draw do
       end
 
       scope '/education-community', as: :education_community do
-        get '', to: 'states#foobar'
-        get '/partner', to: 'states#foobar', as: :partner
+        get '', to: 'states#community'
+        get '/education', to: 'states#community'
+        get '/funders', to: 'states#community'
+        get '/partner', to: 'states#community', as: :partner
       end
     end
 
@@ -163,9 +171,9 @@ LocalizedProfiles::Application.routes.draw do
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
-    state: States.any_state_name_regex,
-    schoolId: /\d+/,
-    school_name: /.+/,
+      state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /.+/,
   } do
 
     get 'quality', to: 'localized_profile#quality', as: :quality
@@ -174,6 +182,10 @@ LocalizedProfiles::Application.routes.draw do
     get 'reviews/write', to: 'reviews#new', as: :review_form
     get '', to: 'localized_profile#overview'
   end
+
+  get '/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
+  get '/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
+  get '/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]

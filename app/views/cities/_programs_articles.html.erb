@@ -1,0 +1,21 @@
+<% if defined?(articles) && !articles.nil?  %>
+  <div class="bg-light-gray oa mvl phm">
+    <div class="limit-width-1200">
+      <h2><%= articles[:sectionHeading] %></h2>
+
+      <ul class='oa pll mbl'>
+        <% articles[:articles].each do |article| %>
+          <li class="col-xs-12 col-sm-12 col-md-6">
+             <% if article[:newwindow]!='true' %>
+                <%= link_to(article[:heading], article[:path]) %>
+             <% else %>
+                   <%= link_to(article[:heading], article[:path],:target => "_blank") %>
+              <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+

@@ -63,11 +63,19 @@ def clean_models(db, *models)
 
   models.each do |model|
     if db
-      model.connection.execute("TRUNCATE #{model.table_name}")
-      #model.on_db(db).destroy_all
+      db_name = db.to_s
+      db_name = "_#{db_name}" if States.abbreviations.include?(db_name)
+      db_name << '_test'
+      model.connection.execute("TRUNCATE #{db_name}.#{model.table_name}")
     else
       model.destroy_all
     end
+  end
+end
+
+RSpec::Matchers.define :be_boolean do
+  match do |actual|
+    expect(actual).to satisfy { |x| x == true || x == false }
   end
 end
 
@@ -161,6 +169,10 @@ RSpec.configure do |config|
   # Capybara.app_host = "http://test.host:3000"
   Capybara.default_host = "http://localhost:3000"
   Capybara.app_host = "http://localhost:3000"
+  ENV_GLOBAL['app_host'] = 'localhost'
+  ENV_GLOBAL['gsweb_host'] = 'localhost'
+  ENV_GLOBAL['app_port'] = '3000'
+  ENV_GLOBAL['gsweb_port'] = '3000'
 
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above

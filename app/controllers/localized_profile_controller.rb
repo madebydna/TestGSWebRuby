@@ -4,19 +4,20 @@ class LocalizedProfileController < ApplicationController
   include OmnitureConcerns
   include AdvertisingHelper
 
-  before_filter :redirect_tab_urls, only: [:overview]
-  before_filter :require_state, :require_school
-  before_filter :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
-  before_filter :read_config_for_page
-  before_filter :init_page, :set_header_data
-  before_filter :store_location, only: [:overview, :quality, :details, :reviews]
-  before_filter :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
-  before_filter :set_seo_meta_tags
+  before_action :redirect_tab_urls, only: [:overview]
+  before_action :require_state, :require_school
+  before_action :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
+  before_action :read_config_for_page
+  before_action :init_page, :set_header_data
+  before_action :store_location, only: [:overview, :quality, :details, :reviews]
+  before_action :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
+  before_action :set_seo_meta_tags
 
-  before_filter :ad_setTargeting_through_gon
-  before_filter :set_city_state
-  before_filter :set_hub_params, if: :is_hub_school?
-  before_filter :enable_ads
+  before_action :ad_setTargeting_through_gon
+  before_action :set_city_state
+  before_action :set_hub_params, if: :is_hub_school?
+  before_action :enable_ads
+  before_action :set_breadcrumbs
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -205,5 +206,12 @@ class LocalizedProfileController < ApplicationController
     @show_ads = @school.show_ads
   end
 
-  
+  def set_breadcrumbs
+    school = SchoolProfileDecorator.decorate(@school)
+    @breadcrumbs = {
+      'Home' => home_url,
+      school.state_breadcrumb_text => state_url(state_params(school.state)),
+      school.city_breadcrumb_text => city_url(city_params(school.state, school.city))
+    }
+  end
 end

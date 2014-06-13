@@ -25,22 +25,21 @@
     <div class="content-centered">
       <div class="hub-hero-bg oh tal clearfix">
           <% if has_sponsor %>
-            <div class='tac pvm sponsor-bar'>
+            <div class='tac pvm sponsor-bar mbl'>
               <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
               <% if sponsor[:sponsor_page_visible] %>
                 <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
               <% else %>
                 <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
               <% end %>
-              <hr>
             </div>
           <% end %>
 
           <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <div class='oa'>
               <div class="pull-left">
-                <h4 class='mvn pbs brand-secondary'>Find a School in</h4>
-                <h1 class='mbn mbl mtn inverted-text jumbo-header'><%= collection_nickname %></h1>
+                <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
+                <h1 class='mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
               </div>
             </div>
 
@@ -73,7 +72,7 @@
             </div>
 
             <div class="name-search dn">
-              <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name (e.g. Niles Elementary School)' %>
+              <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name' %>
 
               <form name='searchBySchoolNameForm' class='js-findByNameForm mbl' action="/search/search.page" method='get'>
                 <input type="hidden" name='search_type' value='1'>
@@ -95,13 +94,13 @@
             </div>
           </div>
 
-          <% unless defined?(state_page) || browse_links.nil? %>
+          <% unless  browse_links.nil? %>
             <div class="school-breakdown pln col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h4 class='pbs mvn brand-secondary'>Browse Schools</h4>
+              <h4 class='pbs mvn brand-secondary'>Browse schools</h4>
               <ul class='pln'>
                 <% browse_links.each do |link| %>
                     <li class='mvm'>
-                      <%= link_to link[:label], link[:link], class: 'inverted-text pvm' %>
+                      <%= link_to link[:label], link[:link], class: 'sm-black-lg-white-text pvm' %>
                     </li>
                 <% end %>
               </ul>

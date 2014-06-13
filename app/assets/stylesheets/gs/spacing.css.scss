@@ -57,7 +57,6 @@ body { padding-top: 50px }
 .mls,.mhs,.mas{margin-left:5px}
 .mlm,.mhm,.mam{margin-left:10px}
 .mll,.mhl,.mal{margin-left:20px}
-.phxl { padding-left: 80px; padding-right: 80px; }
 
 .pt1 {padding-top:1px}
 .pt2 {padding-top:2px}
@@ -68,7 +67,13 @@ body { padding-top: 50px }
 .pt8 {padding-top:8px}
 .pt9 {padding-top:9px}
 
+.pb1 {padding-top:1px}
+.pb2 {padding-top:2px}
+
 .pt-1 { padding-top: 1% }
+
+//default module padding
+.dvp {padding-top: 60px; padding-bottom: 60px}
 
 .mha { margin-right: auto; margin-left: auto; }
 
@@ -156,13 +161,25 @@ body { padding-top: 50px }
   width: 100%;
 }
 
+.full-max-width {
+  max-width: 100%;
+}
+
+.brm { border-radius: 10px; }
+
 @media only screen and (max-width: 990px) {
   .content-centered {
     margin-top: 0;
   }
 }
 
+@media only screen and (max-width: 768px) {
+  //default  mobile module padding
+  .dvp {padding-top: 40px; padding-bottom: 40px}
+}
+
 @media only screen and (max-width: 480px) {
+  .xs-nav-stacked li { width: 100%; margin-top: 5px; }
   .mobile-clearfix {
     @include clearfix();
   }

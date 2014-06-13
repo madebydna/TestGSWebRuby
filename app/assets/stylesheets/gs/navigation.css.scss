@@ -147,38 +147,6 @@
   }
 }
 
-.education-community-tabs {
-  list-style-type: none;
-  padding-left: 0;
-
-  li {
-    width: auto;
-    white-space: nowrap;
-    border-radius: 40px;
-    padding: 0 24px;
-    font: bold 1em/2.75em Arial,Helvetica,sans-serif;
-    background: #fff;
-    color: $brand-primary;
-    border: 0;
-    box-shadow: none;
-    margin: 0 5px;
-  }
-
-  li:hover {
-    background-color: $gray-light;
-  }
-
-  li.active {
-    background: $brand-primary;
-    a { color: #fff; }
-  }
-
-  a:hover {
-    text-decoration: none;
-  }
-}
-
-
 @media only screen and (min-width: 1200px) {
   .limit-width-1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
 }
@@ -200,14 +168,5 @@
 @media only screen and (min-width: 650px) {
   .header-title-width {
     width: 75%;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  .education-community-tabs {
-    list-style-type: none;
-    li {
-      display: list-item;
-    }
   }
 }

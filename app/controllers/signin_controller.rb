@@ -9,7 +9,7 @@ class SigninController < ApplicationController
 
   # store this join / login url only if another location isn't stored
   # If the user was looking at a profile page, we want to go back there instead
-  before_filter :store_location, only: [:new], unless: :has_stored_location?
+  before_action :store_location, only: [:new], unless: :has_stored_location?
 
   # gets the join / login form page
   def new
@@ -68,7 +68,7 @@ class SigninController < ApplicationController
           city_hub_page = URI.decode(cookies[:redirect_uri])
           delete_cookie :redirect_uri
         end
-        redirect_to (overview_page_for_last_school || city_hub_page || user_profile_or_home)
+        redirect_to (overview_page_for_last_school || city_hub_page || (should_attempt_login ? home_url : join_url))
       end
     end
   end

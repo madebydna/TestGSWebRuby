@@ -1,8 +1,6 @@
 require 'spec_helper'
-require_relative '../../app/controllers/concerns/url_helper'
 
 describe 'school profile routing' do
-  include UrlHelper
 
   def request
     return double().as_null_object

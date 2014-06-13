@@ -48,6 +48,7 @@ describe SigninController do
 
       context 'successful login' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {password: 'abc'} }
 
         before do
           expect(controller).to receive(:authenticate).and_return([user, nil])
@@ -56,6 +57,35 @@ describe SigninController do
         it 'should log the user in' do
           expect(controller).to receive(:log_user_in).with(user)
           get :create, password: 'abc'
+        end
+
+        it 'should redirect to home if no redirect specified' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:home_url).and_return('/') # To avoid issue where rspec generates join_url incorrectly (with trailing slash)
+          expect(subject).to redirect_to '/'
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
         end
       end
     end
@@ -89,6 +119,7 @@ describe SigninController do
 
       context 'successful registration' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
           user.stub(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
@@ -102,6 +133,26 @@ describe SigninController do
         it 'should set the current user to the newly created user' do
           post :create, email: 'blah@example.com'
           expect(controller.send :current_user).to eq(user)
+        end
+
+        it 'should redirect to join if no redirect specified' do
+          expect(subject).to redirect_to join_url
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
         end
       end
     end
@@ -162,7 +213,7 @@ describe SigninController do
 
     def stub_fb_login_success
       user = double('user', id: 1, auth_token: 'foo')
-      user.stub(:provisional?).and_return(false)
+      allow(user).to receive(:provisional?).and_return(false)
       allow(controller).to receive(:current_user) { user }
       allow(controller).to receive(:facebook_login) { [user, nil] }
     end

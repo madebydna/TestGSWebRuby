@@ -3,11 +3,11 @@ class CitiesController < ApplicationController
   include MetaTagsHelper
   include OmnitureConcerns
 
-  before_filter :set_city_state
-  before_filter :set_hub_params
-  before_filter :set_login_redirect
-  before_filter :set_footer_cities
-  before_filter :write_meta_tags, except: [:partner]
+  before_action :set_city_state
+  before_action :set_hub_params
+  before_action :set_login_redirect
+  before_action :set_footer_cities
+  before_action :write_meta_tags, except: [:partner]
 
   def show
     hub_city_mapping = mapping
@@ -29,7 +29,7 @@ class CitiesController < ApplicationController
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = city_url(@state[:long], @city)
+      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     end
   end
@@ -44,9 +44,8 @@ class CitiesController < ApplicationController
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
-        'Home' => '/',
-        params[:state].titleize => "/#{params[:state]}",
-        @city.titleize => city_path(params[:state], params[:city])
+        @city.titleize => city_path(params[:state], params[:city]) ,
+        'Events' =>nil
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
@@ -75,7 +74,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
 
-
+      render 'shared/community'
     end
   end
 
@@ -157,27 +156,19 @@ class CitiesController < ApplicationController
       @heading = CollectionConfig.programs_heading(configs)
       @intro = CollectionConfig.programs_intro(configs)
       @sponsor = CollectionConfig.programs_sponsor(configs)
+      @partners = CollectionConfig.programs_partners(configs)
+      @articles = CollectionConfig.programs_articles(configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
+      @breadcrumbs = {
+              @city.titleize => city_path(params[:state], params[:city]) ,
+              'After school and summer programs' =>nil
+            }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
     end
   end
 
   private
-    def set_community_tab(collection_configs)
-      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
-      case request.path
-      when /(education-community\/education)/
-        @tab = 'Education'
-      when /(education-community\/funders)/
-        @tab = 'Funders'
-      when /(education-community$)/
-        if @show_tabs == false
-          @tab = ''
-        else
-          @tab = 'Community'
-        end
-      end
-    end
+
 
     def set_enrollment_omniture_data
       if @tab == 'Preschools'
@@ -190,20 +181,18 @@ class CitiesController < ApplicationController
 
       set_omniture_data(page_name, page_hier, @city.titleize)
     end
-     def set_community_omniture_data
-       if @tab == 'Community'
-         page_name = "GS:City:EducationCommunity"
-         page_hier = "Home,CityHome,EducationCommunity"
-       else
-         page_name = "GS:City:EducationCommunity:#{@tab}"
-         page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
-       end
 
-       set_omniture_data(page_name, page_hier, @city.titleize)
-     end
+    def set_community_omniture_data
+      if @tab == 'Community'
+        page_name = "GS:City:EducationCommunity"
+        page_hier = "Home,CityHome,EducationCommunity"
+      else
+        page_name = "GS:City:EducationCommunity:#{@tab}"
+        page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
+      end
 
-
-
+      set_omniture_data(page_name, page_hier, @city.titleize)
+    end
 
     def mapping
       hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
@@ -216,7 +205,7 @@ class CitiesController < ApplicationController
       configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
       Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
         CollectionConfig.where(collection_id: mapping.collection_id).to_a
-     end
+      end
     end
 
     def parse_partners(partners)

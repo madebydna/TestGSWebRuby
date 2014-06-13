@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   include SessionConcerns
   include UrlHelper
 
-  before_filter :login_from_cookie, :init_omniture
-  before_filter :set_optimizely_gon_env_value
+  before_action :login_from_cookie, :init_omniture
+  before_action :set_optimizely_gon_env_value
 
   after_filter :disconnect_connection_pools
 
@@ -240,6 +240,22 @@ class ApplicationController < ActionController::Base
         "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false"
       )
       sized_maps
+    end
+  end
+
+  def set_community_tab(collection_configs)
+    @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
+    case request.path
+    when /(education-community\/education)/
+      @tab = 'Education'
+    when /(education-community\/funders)/
+      @tab = 'Funders'
+    when /(education-community$)/
+      if @show_tabs == false
+        @tab = ''
+      else
+        @tab = 'Community'
+      end
     end
   end
 end

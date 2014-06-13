@@ -118,8 +118,12 @@ module SchoolProfileDataDecorator
     rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
   end
 
+  def pcsb_rating
+    rating_data.fetch('pcsb_rating',{}).fetch('overall_rating',nil)
+  end
+
   def preK_star_rating
-    rating_data.fetch('preK_ratings',{}).fetch('star_rating',nil)
+    rating_data.fetch('preschool_rating',{}).fetch('overall_rating',nil)
   end
 
   def school_data(category = nil)

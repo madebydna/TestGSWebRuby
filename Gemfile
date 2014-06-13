@@ -1,11 +1,12 @@
 source "https://rubygems.org"
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.1'
 
 gem 'mysql2', '0.3.13'
 
 gem 'jquery-rails'
 gem 'jquery-cookie-rails'
+gem 'twitter-typeahead-rails'
 
 gem 'rails_admin'
 

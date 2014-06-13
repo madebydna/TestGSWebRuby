@@ -2,11 +2,20 @@ class HomeController < ApplicationController
   protect_from_forgery
   include OmnitureConcerns
 
-  before_filter :ad_setTargeting_through_gon
+  before_action :ad_setTargeting_through_gon
 
   layout 'application'
 
   def prototype
+
+    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
+                  robots: 'noindex'
+
+    set_omniture_pagename
+
+  end
+
+  def search_prototype
 
     @article_1 = "/assets/article_img.jpg"
     @parent_img = "/assets/article_img.jpg"
@@ -17,7 +26,6 @@ class HomeController < ApplicationController
     set_omniture_pagename
 
   end
-
   def set_omniture_pagename
     gon.omniture_pagename = 'GS:Home'
     set_omniture_data(gon.omniture_pagename)

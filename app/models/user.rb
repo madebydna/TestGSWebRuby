@@ -6,9 +6,8 @@ class User < ActiveRecord::Base
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
-  has_many :esp_memberships, foreign_key: 'member_id', conditions: ['active = 1']
-  has_many :reported_reviews, class_name: 'ReportedEntity', foreign_key: 'reporter_id',
-           conditions: 'reported_entity_type = "schoolReview" and active = 1'
+  has_many :esp_memberships, -> { where('active = 1') }, foreign_key: 'member_id'
+  has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }

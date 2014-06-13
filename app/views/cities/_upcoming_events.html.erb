@@ -10,8 +10,10 @@
   <% end %>
     <div class='oh'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
-        <h3 class='bottom mtn'>Upcoming Events</h3>
-        <%= link_to('See all', city_events_path(params[:state], params[:city])) %>
+        <h4 class='bottom mtn'>Upcoming events</h4>
+        <% if params[:city] %>
+          <%= link_to('See all', city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_encode(params[:city]))) %>
+        <% end %>
       </div>
       <% important_events[:max_important_event_to_display].times do |i| %>
         <% event = important_events[:events][i - 1] %>
@@ -30,7 +32,7 @@
       <% end %>
     </div>
 
-    <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement[:visible] %>
+    <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
       <%= render 'event_announcements', announcement: announcement  %>
     <% end %>
   </div>
