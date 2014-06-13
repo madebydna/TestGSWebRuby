@@ -11,7 +11,11 @@
       <% rating_star = '1' %>
     <% end %>
     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-      <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
+      <% if @school.state == 'MI' %>
+        <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
+      <% else %>
+        <%= render state_partial(@school.state), page:'quality', rating: rating_hash["overall_rating"] %>
+      <% end %>
     </div>
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
       <h5><%= rating_hash["label"] %></h5>
