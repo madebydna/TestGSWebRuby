@@ -193,4 +193,9 @@ module UrlHelper
     return_url
   end
 
+  # parse a query string, adding repeat parameters into arrays
+  # e.g. ?a=b&a=c returns {'a' => ['b','c']}
+  def parse_array_query_string(query_string)
+    Rack::Utils.parse_query(query_string)
+  end
 end

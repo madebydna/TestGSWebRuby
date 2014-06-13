@@ -2,7 +2,7 @@ class SchoolSearchService
   @@solr = Solr.new
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
-  DEFAULT_CITY_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*'}
+  DEFAULT_CITY_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
   PARAMETER_TO_SOLR_MAPPING = {
       number_of_results: :rows,
       offset: :start
@@ -23,7 +23,13 @@ class SchoolSearchService
     raise ArgumentError, 'City is required' unless options.include?(:city)
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
+    filters = extract_filters(options)
+    filters << "+citykeyword:\"#{options[:city].downcase}\""
+    filters << "+school_database_state:\"#{options[:state].downcase}\""
+    options.delete :city
+    options.delete :state
     param_options = DEFAULT_CITY_BROWSE_OPTIONS.merge(options)
+    filters.each {|filter| param_options[:fq] << filter}
 
     parse_school_results(get_results param_options)
   end
@@ -71,8 +77,6 @@ class SchoolSearchService
     }
   end
 
-  private
-
   def self.get_state_abbreviation(solr_state)
     solr_state['database_state'].select {|v| v.length == 2}[0]
   end
@@ -104,5 +108,31 @@ class SchoolSearchService
 
   def self.remap_sort(hash)
     remap_value(hash, :sort, SORT_VALUE_MAP)
+  end
+
+  def self.extract_filters(hash)
+    filter_arr = []
+    if hash.include? :filters
+      filters = hash[:filters]
+      if filters.include? :school_type
+        filter_arr << "+school_type:(#{filters[:school_type].join(' ')})"
+      end
+      if filters.include? :level_code
+        level_codes = filters[:level_code].collect { |e| e[0] if ['p', 'e', 'm', 'h'].include? e[0]}
+        filter_arr << "+school_grade_level:(#{level_codes.join(' ')})"
+      end
+      if filters.include? :grades
+        normalized_grades = filters[:grades].collect do |e|
+          rval = nil
+          rval = 'PK' if e == :grade_p
+          rval = 'KG' if e == :grade_k
+          rval = e[6..-1] if ['1','2','3','4','5','6','7','8','9','10','11','12'].include? e[6..-1]
+          rval
+        end
+        filter_arr << "+grades:(#{normalized_grades.join(' ')})"
+      end
+      hash.delete :filters
+    end
+    filter_arr
   end
 end

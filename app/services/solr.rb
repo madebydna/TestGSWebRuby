@@ -84,7 +84,7 @@ class Solr
   def parse_base_params(options)
     params = {}
     params[:qt] = options[:qt] || 'standard'
-    params[:fq] = []
+    params[:fq] = options[:fq] || []
     params[:q] = options[:query] if options[:query]
     params[:sort] = options[:sort] if options[:sort]
     params[:rows] = options[:rows] if options[:rows]
@@ -97,7 +97,7 @@ class Solr
   def parse_params(options)
     params = parse_base_params options
     params[:fq] << "+school_database_state:#{options[:state]}" if options[:state]
-    params[:fq] << "+city:(#{options[:city]})" if options[:city]
+    params[:fq] << "+city:(#{options[:city]})" if options[:city] # TODO: This may be incorrect
     params
   end
 

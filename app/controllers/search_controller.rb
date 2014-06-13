@@ -25,7 +25,12 @@ class SearchController < ApplicationController
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
-    results = SchoolSearchService.city_browse(state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset)
+
+    filters = parse_filters request.query_string
+
+    results = SchoolSearchService.city_browse(state: @state[:short], city: @city.name,
+        number_of_results: @page_size, offset: @results_offset,
+        filters: filters)
 
     unless results.empty?
       @total_results = results[:num_found]
@@ -100,6 +105,40 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def parse_filters(query_string)
+    array_params = parse_array_query_string(query_string)
+    filters = {}
+    if array_params.include? 'st'
+      st_params = array_params['st']
+      st_params = [st_params] unless st_params.instance_of?(Array)
+      school_types = []
+      school_types << :public if st_params.include? 'public'
+      school_types << :charter if st_params.include? 'charter'
+      school_types << :private if st_params.include? 'private'
+      filters[:school_type] = school_types unless school_types.empty? || school_types.length == 3
+    end
+    if array_params.include? 'gradeLevels'
+      lc_params = array_params['gradeLevels']
+      lc_params = [lc_params] unless lc_params.instance_of?(Array)
+      level_codes = []
+      level_codes << :preschool if lc_params.include? 'p'
+      level_codes << :elementary if lc_params.include? 'e'
+      level_codes << :middle if lc_params.include? 'm'
+      level_codes << :high if lc_params.include? 'h'
+      filters[:level_code] = level_codes unless level_codes.empty? || level_codes.length == 4
+    end
+    if array_params.include? 'grades'
+      grades_params = array_params['grades']
+      grades_params = [grades_params] unless grades_params.instance_of?(Array)
+      grades = []
+      valid_grade_params = ['p','k', '1','2','3','4','5','6','7','8','9','10','11','12']
+      grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
+      filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
+    end
+    puts filters
+    filters
+  end
 
   def get_page_number(page_size, results_offset)
     page_size = 1 if page_size < 1

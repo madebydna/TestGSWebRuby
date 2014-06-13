@@ -158,4 +158,21 @@ describe UrlHelper do
       expect(url_helper.send :gs_legacy_url_encode, nil).to be_nil
     end
   end
+
+  describe '.parse_array_query_string' do
+    it 'should put duplicate params into array' do
+      result = url_helper.send :parse_array_query_string, 'a=b&a=c&f=g'
+      expect(result).to include('a','f')
+      expect(result['a']).not_to be_empty
+      expect(result['a']).to be_instance_of(Array)
+      expect(result['a']).to include('b', 'c')
+      expect(result['f']).to eq('g')
+    end
+    it 'should put put single params into strings' do
+      result = url_helper.send :parse_array_query_string, 'a=b&c=5'
+      expect(result).to include('a','c')
+      expect(result['a']).to eq('b')
+      expect(result['c']).to eq('5')
+    end
+  end
 end
