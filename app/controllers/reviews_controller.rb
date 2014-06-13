@@ -70,9 +70,4 @@ class ReviewsController < ApplicationController
     set_omniture_data
     set_meta_tags :title =>  'Rate and review ' + @school.name + ' in ' + @school.city + ', ' + @school.state
   end
-
-  def set_footer_cities
-    @cities = City.popular_cities(@state, limit: 28)
-  end
-
 end

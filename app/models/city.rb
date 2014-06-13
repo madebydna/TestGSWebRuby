@@ -18,9 +18,6 @@ class City < ActiveRecord::Base
   end
 
   def display_name
-    if state == 'DC'
-      "Washington, DC"
-    end
-    name
+    state == 'DC' ? "Washington, DC" : name
   end
 end

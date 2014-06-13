@@ -268,8 +268,8 @@ class CollectionConfig < ActiveRecord::Base
           subheading = "Error: missing data for #{EDUCATION_COMMUNITY_SUBHEADING_KEY}"
         end
       rescue Exception => e
-        Rails.logger.error('Something went wrong while parsing ed_community_subheading ' + e.to_s)
         subheading = 'Error: something went wrong while parsing education community subheading'
+        Rails.logger.error("#{subheading} #{e.to_s}")
       end
 
       subheading

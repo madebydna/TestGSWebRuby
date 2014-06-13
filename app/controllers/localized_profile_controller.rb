@@ -172,10 +172,6 @@ class LocalizedProfileController < ApplicationController
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end
 
-  def set_footer_cities
-    @cities = City.popular_cities(@state, limit: 28)
-  end
-
   def ad_setTargeting_through_gon
     if @school.show_ads
       set_targeting = {}
