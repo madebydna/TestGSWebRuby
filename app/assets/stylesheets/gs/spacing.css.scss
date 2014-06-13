@@ -179,6 +179,7 @@ body { padding-top: 50px }
 }
 
 @media only screen and (max-width: 480px) {
+  .xs-nav-stacked li { width: 100%; margin-top: 5px; }
   .mobile-clearfix {
     @include clearfix();
   }

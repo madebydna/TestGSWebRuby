@@ -39,7 +39,7 @@
   <% end %>
 
   <div class='tac mtl'>
-    <ul class='nav nav-pills' style='margin-bottom: 80px'>
+    <ul class='nav nav-pills xs-nav-stacked' style='margin-bottom: 80px'>
       <% if params[:city] %>
         <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == nil %>">
           <%= link_to('Preschools', city_enrollment_path(params[:state], params[:city]), class: 'link-darkgray') %>
