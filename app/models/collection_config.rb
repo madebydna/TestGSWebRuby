@@ -217,7 +217,7 @@ class CollectionConfig < ActiveRecord::Base
           important_events[:max_important_event_to_display] = max_events
 
           while important_events[:events].length > max_events
-            important_events[:events].pop
+            important_events[:events].shift
           end
 
           if important_events[:max_important_event_to_display] > important_events[:events].length
