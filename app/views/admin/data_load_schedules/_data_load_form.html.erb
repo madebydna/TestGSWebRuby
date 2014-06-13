@@ -11,7 +11,7 @@
         Or create a new load type:&nbsp;<%= text_field_tag :load_type2, nil, placeholder: 'Enter new load type', class: 'form-control'%><br>
       </div>
       </div>
-      Year to load: <%= f.date_select :year_to_load, default: '', include_blank: true, discard_day: true, discard_month: true %><br>
+      Year to load: <%= f.select :year_to_load, (Time.now.year-2...Time.now.year+2).to_a, include_blank: true %><br>
         Released: <%= f.date_select :released, default: '', include_blank: true %><br>
         Acquired: <%= f.date_select :acquired, default: '', include_blank: true %><br>
         Live by: <%= f.date_select :live_by, default: '', include_blank: true %><br>

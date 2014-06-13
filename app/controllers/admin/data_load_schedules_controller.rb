@@ -110,8 +110,8 @@ class Admin::DataLoadSchedulesController < ApplicationController
   end
 
   def get_params
-    @sort_by = params[:sort_by] || 'live_by'
-    @status = params[:status] || 'complete'
+    @sort_by = params[:sort_by] || 'priority'
+    @status = params[:status] || 'incomplete'
     @load_type = params[:type] || nil
     @view_type = params[:view_type] || 'calendar'
   end
