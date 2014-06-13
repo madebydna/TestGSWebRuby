@@ -22,7 +22,7 @@ describe 'shared/_tabs.html.erb' do
       allow(view).to receive(:tab) { 'Funders' }
       render
 
-      expect(rendered).to_not have_css('ul.education-community-tabs')
+      expect(rendered).to_not have_css('ul.nav-pills')
     end
   end
 

@@ -1,16 +1,22 @@
 <% if show_tabs %>
   <div class="row">
     <div class="row tac col-lg-6 ma fn">
-      <ul class='education-community-tabs mvs mhn'>
+      <ul class='nav nav-pills nav-stacked mvs mhn'>
         <% if city %>
           <% base = city_education_community_path(gs_legacy_url_encode(state), gs_legacy_url_encode(city)) %>
         <% else %>
           <% base = state_education_community_path(gs_legacy_url_encode(state)) %>
         <% end %>
 
-        <li class="dib ov pr tac <%= 'active' if tab == 'Community' %>"><a href="<%= base %>">Community</a></li>
-        <li class="dib ov pr tac <%= 'active' if tab == 'Education' %>"><a href="<%= base %>education">Education</a></li>
-        <li class="dib ov pr tac <%= 'active' if tab == 'Funders' %>"><a href="<%= base %>funders">Funders</a></li>
+        <li style='float: none; display: inline-block;' class="dib ov pr tac <%= 'active' if tab == 'Community' %>">
+          <%= link_to('Community', base, class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="dib ov pr tac <%= 'active' if tab == 'Education' %>">
+          <%= link_to('Education', "#{base}education", class: 'link-darkgray') %>
+        </li>
+        <li style='float: none; display: inline-block;' class="dib ov pr tac <%= 'active' if tab == 'Funders' %>">
+          <%= link_to('Funders', "#{base}funders", class: 'link-darkgray') %>
+        </li>
       </ul>
     </div>
   </div>
