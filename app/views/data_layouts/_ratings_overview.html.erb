@@ -14,7 +14,11 @@
             <%  ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'State rating') %>
         <% end %>
         <% if @school.preK_star_rating  %>
-            <%  ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+            <% if @school.state == 'MI' %>
+              <% ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+            <% else %>
+              <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.preK_star_rating, supporting_text:'State rating') %>
+            <% end %>
         <% end %>
     <!-- End detroit hub layout -->
 
