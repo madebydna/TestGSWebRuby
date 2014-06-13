@@ -64,12 +64,14 @@ class School < ActiveRecord::Base
 
   # get the schools metadata
   def school_metadata
-    metadata_hash = Hashie::Mash.new()
-    school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
-    school_metadatas.each do |metadata|
-      metadata_hash[metadata.meta_key] = metadata.meta_value
-    end
-    return metadata_hash
+    @school_metadata ||= (
+      metadata_hash = Hashie::Mash.new()
+      school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
+      school_metadatas.each do |metadata|
+        metadata_hash[metadata.meta_key] = metadata.meta_value
+      end
+      metadata_hash
+    )
   end
 
   def school_media_first_hash
