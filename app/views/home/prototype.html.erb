@@ -1,10 +1,7 @@
 <% content_for :javascript_includes do %>
     <script>
         $(function() {
-            console.log(123);
             GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
-            console.log('456' + '<%= image_path('home/homepage_hero.jpg')%>');
-
             GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '<%= image_path('home/homepage_picnic.jpg')%>', mobileImage: '', classes:'scaling' });
         })
     </script>
