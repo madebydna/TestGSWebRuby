@@ -69,6 +69,13 @@
                                     <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
                                 </div>
                             <% end %>
+                        <% elsif @school.preK_star_rating.present? && @school.preK_star_rating != '0' %>
+                          <%= link_to school_quality_url(@school, anchor:"Rating_15") do %>
+                              <div class="fl prl open-sans pt2 h24">
+                                <span class="mrs link-darkgray">Preschool rating:</span>
+                                <span class="open-sans_sb"><%= @school.preK_star_rating %></span>
+                              </div>
+                            <% end %>
                         <% end %>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">

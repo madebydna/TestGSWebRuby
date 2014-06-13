@@ -7,13 +7,18 @@ class RatingsHelper
     @results = results
   end
 
-  [:gs, :state, :city, :pcsb, :preschool].each do |var_name|
-    method_name = "construct_#{var_name}_rating".to_sym
+  [:gs, :state, :city, :pcsb, :preschool].each do |rating_type|
+    method_name = "construct_#{rating_type}_rating".to_sym
     define_method method_name do |school|
-      config = ratings_config.send "#{var_name}_rating"
+      config = ratings_config.send "#{rating_type}_rating"
       return {} unless config.present?
       rating_configuration = RatingConfiguration.new(school.state, config)
       rating_hash = rating_configuration.rating_hash(results, school)
+      if rating_type == :gs &&
+        rating_configuration.private_school_disclaimer.present? &&
+        rating_hash['overall_rating'].present? && school.private_school? &&
+          rating_hash['disclaimer_private'] = rating_configuration.private_school_disclaimer
+      end
       rating_hash
     end
   end
