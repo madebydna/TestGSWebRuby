@@ -18,7 +18,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.have_available?(list)
-    SUBSCRIPTIONS.include?(list.to_sym)
+    (list.is_a?(String) || list.is_a?(Symbol))? SUBSCRIPTIONS.include?(list.to_sym) : nil
   end
 
 end
