@@ -9,8 +9,7 @@ class HubCityMapping < ActiveRecord::Base
   end
 
   def has_edu_page?
-  #  (self.hasEduPage || self.hasStateEduPage) ? 'y' : nil
-     self.hasEduPage  ? 'y' : nil
+    (self.hasEduPage || self.hasStateEduPage) ? 'y' : nil
   end
 
   def has_choose_page?

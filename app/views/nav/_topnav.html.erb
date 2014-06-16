@@ -37,7 +37,7 @@
                             <% else %>
                                 <%= render 'nav/dropdown_link', text: "#{States.state_name(nav.state).gs_capitalize_words} Home", url: state_url(nav.url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: "Choosing a School", url: state_choosing_schools_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: '#' %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: state_education_community_url(nav.url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: "Enrollment Information", url: state_enrollment_url(nav.url_params) %>
 
                                 <li>
