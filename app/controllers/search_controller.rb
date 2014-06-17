@@ -41,6 +41,7 @@ class SearchController < ApplicationController
 
 
   def suggest_school_by_name
+    set_city_state
     #For now the javascript will add in a state and rails will set a @state, but in the future we may want to not require a state
     #TODO Account for not having access to state variable
     solr = Solr.new
@@ -56,15 +57,20 @@ class SearchController < ApplicationController
         HashUtils.split_keys school_search_result, 'school_name' do |value|
           {'name'=>value}
         end
+        HashUtils.split_keys school_search_result, 'city' do |value|
+          {'city_name'=>value}
+        end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :url => ''}#school_path(s)}
+        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}"
+        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url, :sort_order => school_search_result['overall_gs_rating']}#school_path(s)}
       end
     end
     render json:response_objects
   end
 
   def suggest_city_by_name
+    set_city_state
     solr = Solr.new
 
     results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
@@ -74,8 +80,8 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |city_search_result|
         output_city = {}
         output_city[:city_name] = city_search_result['city_sortable_name']
-
         output_city[:url] = "/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools"
+        output_city[:sort_order] = city_search_result['city_number_of_schools']
 
         response_objects << output_city
       end
@@ -85,6 +91,7 @@ class SearchController < ApplicationController
   end
 
   def suggest_district_by_name
+    set_city_state
     solr = Solr.new
 
     results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)

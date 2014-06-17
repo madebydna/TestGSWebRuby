@@ -7,6 +7,8 @@ LocalizedProfiles::Application.routes.draw do
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  # Route for Search Prototype
+  # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,

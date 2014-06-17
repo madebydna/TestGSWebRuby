@@ -18,7 +18,7 @@ class Solr
     params[:fq] << '+document_type:school'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+school_name_prefix:#{query}*"
+    params[:q] = "+school_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
@@ -28,7 +28,7 @@ class Solr
     params[:fq] << '+document_type:city'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+city_name_prefix:#{query}*"
+    params[:q] = "+city_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
@@ -38,7 +38,7 @@ class Solr
     params[:fq] << '+document_type:district'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+district_name_prefix:#{query}*"
+    params[:q] = "+district_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
