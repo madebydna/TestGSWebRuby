@@ -17,7 +17,7 @@
                 <li>
                     <%- if nav.has_topnav? %>
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#home">
-                            <%= nav.topnav_title %>  <b class="caret"></b>
+                            <%= nav.topnav_title %>  <span class="caret"></span>
                         </a>
                     <% end %>
                     <ul class="dropdown-menu">
@@ -56,8 +56,8 @@
                 </li>
                 <li><a class="dropdown-toggle"
                        data-toggle="dropdown"
-                       href="#back-to-school">Discover <b class="caret"></b></a>
-
+                       href="#back-to-school">Discover <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu">
                         <li class=" ">
                             <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url %>
@@ -80,14 +80,13 @@
 
 
                     </ul>
-
                 </li>
 
                 <li>
                     <% if logged_in? %>
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
-                           href="#back-to-school">My Account <b class="caret"></b>
+                           href="#back-to-school">My Account <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu_top_nav">
