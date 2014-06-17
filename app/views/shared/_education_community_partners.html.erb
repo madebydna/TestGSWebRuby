@@ -12,9 +12,9 @@
          <p><%= partner[:description] %></p>
           <% partner[:links].each do |link| %>
             <% if link[:newwindow] == 'true' %>
-              <%= link_to(link[:heading], link[:url], target: 'blank') %>
+              <%= link_to(link[:heading], link[:url], target: 'blank') %><br/>
             <% else %>
-              <%= link_to(link[:heading], link[:url]) %>
+              <%= link_to(link[:heading], link[:url]) %><br/>
             <% end %>
           <% end %>
         </div>
