@@ -29,6 +29,7 @@ class SchoolSearchService
     options.delete :city
     options.delete :state
     param_options = DEFAULT_CITY_BROWSE_OPTIONS.merge(options)
+    param_options[:fq] = DEFAULT_CITY_BROWSE_OPTIONS[:fq].clone
     filters.each {|filter| param_options[:fq] << filter}
 
     parse_school_results(get_results param_options)
