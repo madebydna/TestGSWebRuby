@@ -26,15 +26,22 @@ class SearchController < ApplicationController
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
 
-    filters = parse_filters request.query_string
-
-    results = SchoolSearchService.city_browse(state: @state[:short], city: @city.name,
-        number_of_results: @page_size, offset: @results_offset,
-        filters: filters)
+    search_options = {
+        state: @state[:short],
+        city: @city.name,
+        number_of_results: @page_size,
+        offset: @results_offset,
+        filters: parse_filters(request.query_string),
+        sort: parse_sorts(request.query_string)
+    }
+    search_options_string = CGI.unescape(search_options.to_query)
+    results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
       @total_results = results[:num_found]
       @schools = results[:results]
+      @next_page = get_next_page(request.path, search_options_string, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      @previous_page = get_previous_page(request.path, search_options_string, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
     end
     render 'browse_city'
   end
@@ -147,6 +154,11 @@ class SearchController < ApplicationController
     filters
   end
 
+  def parse_sorts(query_string)
+    array_params = parse_array_query_string(query_string)
+    array_params['sort'].to_sym if array_params.include?('sort') && !array_params['sort'].instance_of?(Array)
+  end
+
   def get_page_number(page_size, results_offset)
     page_size = 1 if page_size < 1
     results_offset = 0 if results_offset < 0
@@ -201,6 +213,20 @@ class SearchController < ApplicationController
       end
     end
     rval_map
+  end
+
+  def get_next_page(path, search_options_string, page_size, result_offset)
+    query = path + '?'
+    query << search_options_string
+    query << "&pageSize=#{page_size}"
+    query << "&start=#{result_offset + page_size}"
+  end
+
+  def get_previous_page(path, search_options_string, page_size, result_offset)
+    query = path + '?'
+    query << search_options_string
+    query << "&pageSize=#{page_size}"
+    query << "&start=#{result_offset - page_size}"
   end
 
 end
