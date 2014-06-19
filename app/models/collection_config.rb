@@ -288,7 +288,6 @@ class CollectionConfig < ActiveRecord::Base
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|
             partners[key].each do |partner|
-              partner[:logo].prepend(ENV_GLOBAL['cdn_host'])
               partner[:links].each do |link|
                 link[:url].prepend('http://') unless /^http/.match(link[:url])
               end
