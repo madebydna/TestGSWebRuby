@@ -89,7 +89,7 @@ def self.test_scores_cache_for_school(school)
       :state_value_text => 'state_value_text',
       :state_value_float => 'state_value_float',
       :breakdown_id => 'breakdown_id',
-      :number_tested => 'number_tested'
+      :school_number_tested => 'school_number_tested'
     }
 
     data_type_ids = []

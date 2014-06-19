@@ -25,13 +25,16 @@ class TestDataSet < ActiveRecord::Base
   end
 
   def self.fetch_test_scores(school, breakdown_id, active)
-    TestDataSet.on_db(school.shard).select("*,TestDataSet.id as data_set_id,TestDataStateValue.value_float as state_value_float, TestDataStateValue.value_text as state_value_text,
-                          TestDataSchoolValue.value_float as school_value_float, TestDataSchoolValue.value_text as school_value_text")
-                      .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-                      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,active: active,
-                             TestDataSchoolValue: {school_id: school.id, active: active})
-                      .with_display_target('desktop')
-                      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+    TestDataSet.on_db(school.shard)
+      .select("*,TestDataSet.id as data_set_id,TestDataStateValue.value_float as state_value_float,
+      TestDataStateValue.value_text as state_value_text,TestDataSchoolValue.value_float as school_value_float,
+      TestDataSchoolValue.value_text as school_value_text,TestDataSchoolValue.number_tested as school_number_tested,
+      TestDataStateValue.number_tested as state_number_tested ")
+      .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
+      .where(proficiency_band_id: nil, breakdown_id: breakdown_id,active: active,
+             TestDataSchoolValue: {school_id: school.id, active: active})
+      .with_display_target('desktop')
+      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
 
   end
 

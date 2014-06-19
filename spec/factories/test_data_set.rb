@@ -30,11 +30,13 @@ FactoryGirl.define do
       school_id 2
       value_text '1'
       value_float 1
+      number_tested 200
     end
 
     after(:create) do |data_set, evaluator|
       FactoryGirl.create_list(:test_data_school_value,1, data_set_id: data_set.id, school_id: evaluator.school_id,
-                              value_text: evaluator.value_text, value_float: evaluator.value_float)
+                              value_text: evaluator.value_text, value_float: evaluator.value_float,
+                              number_tested: evaluator.number_tested)
     end
   end
 
