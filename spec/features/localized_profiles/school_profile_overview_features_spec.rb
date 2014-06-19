@@ -68,4 +68,51 @@ feature 'School profile overview page' do
     end
   end
 
+  feature 'Apply now button' do
+    after do
+      clean_models :ca, School, SchoolMetadata
+      clean_models CategoryPlacement
+    end
+    let(:facebook_url) do
+      SchoolMetadata.create(
+        school_id: school.id,
+        meta_key: 'facebook_url',
+        meta_value: 'blah'
+      )
+    end
+    let(:facebook_section) do
+      FactoryGirl.create(
+        :category_placement,
+        title: 'Facebook',
+        page: profile_page,
+        layout: 'section'
+      )
+    end
+    let(:facebook_module) do
+      FactoryGirl.create(
+        :category_placement,
+        page: profile_page,
+        layout: 'facebook_like_box',
+        parent: facebook_section
+      )
+    end
+
+    context 'when on a school that has facebook url in school metadata' do
+      before do
+        facebook_url
+        facebook_module
+      end
+
+      scenario 'A Facebook module appears' do
+        expect(subject).to have_selector('h2', text: 'Facebook')
+      end
+    end
+
+    context 'when on a school without an apply now url' do
+      scenario 'A Facebook module does not appear' do
+        expect(subject).to_not have_selector('h2', text: 'Facebook')
+      end
+    end
+  end
+
 end
