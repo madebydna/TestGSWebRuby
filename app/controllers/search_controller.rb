@@ -34,14 +34,15 @@ class SearchController < ApplicationController
         filters: parse_filters(request.query_string),
         sort: parse_sorts(request.query_string)
     }
-    search_options_string = CGI.unescape(search_options.to_query)
+    full_query_string = query_path_and_parameters(request.path, search_options)
     results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
       @total_results = results[:num_found]
       @schools = results[:results]
-      @next_page = get_next_page(request.path, search_options_string, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      @previous_page = get_previous_page(request.path, search_options_string, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+      @next_page = get_next_page(full_query_string, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      @previous_page = get_previous_page(full_query_string, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+      @full_query_string = full_query_string
     end
     render 'browse_city'
   end
@@ -215,18 +216,19 @@ class SearchController < ApplicationController
     rval_map
   end
 
-  def get_next_page(path, search_options_string, page_size, result_offset)
-    query = path + '?'
-    query << search_options_string
-    query << "&pageSize=#{page_size}"
-    query << "&start=#{result_offset + page_size}"
+  def query_path_and_parameters(path, params_hash)
+    full_query = path + '?'
+    full_query << CGI.unescape(params_hash.to_query)
   end
 
-  def get_previous_page(path, search_options_string, page_size, result_offset)
-    query = path + '?'
-    query << search_options_string
-    query << "&pageSize=#{page_size}"
-    query << "&start=#{result_offset - page_size}"
+  def get_next_page(full_query, page_size, result_offset)
+    full_query << "&pageSize=#{page_size}"
+    full_query << "&start=#{result_offset + page_size}"
+  end
+
+  def get_previous_page(full_query, page_size, result_offset)
+    full_query << "&pageSize=#{page_size}"
+    full_query << "&start=#{result_offset - page_size}"
   end
 
 end

@@ -130,7 +130,7 @@ class SchoolSearchService
           rval = e[6..-1] if ['1','2','3','4','5','6','7','8','9','10','11','12'].include? e[6..-1]
           rval
         end
-        filter_arr << "+grades:(#{normalized_grades.join(' ')})"
+        filter_arr << "+grades:(#{normalized_grades.compact.join(' ')})"
       end
       hash.delete :filters
     end
