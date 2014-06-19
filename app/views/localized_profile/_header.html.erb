@@ -103,31 +103,39 @@
             </div>
         </div>
         <% if include_cta_button_group %>
-            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 ptn">
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 ptn">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                                <button data-link-value="<%= school_review_form_path(school) %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
-                                    <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
-                                </button>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                              <%= render 'shared/add_to_my_school_list_form', school: @school, driver: 'Header' %>
-                              <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
-                                <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
-                              </button>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                              <%= render 'shared/send_me_updates_form', school: @school, driver: 'Header',form_id: 'js-send-me-updates-form-header' %>
-                              <button class="btn btn-default tal js-send-me-updates-button-header" style="width:100%; padding-left: 8px; font-size: 14px;">
-                                <span class="vam iconx16 i-16-envelop mrm"></span>Follow this school
-                              </button>
-                            </div>
-                        </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                    <button data-link-value="<%= school_review_form_path(school) %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
+                      <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
+                    </button>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                    <%= render 'shared/add_to_my_school_list_form', school: @school, driver: 'Header' %>
+                    <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                      <span class="vam iconx16 i-16-heart mrm"></span>Add to My School List
+                    </button>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                    <%= render 'shared/send_me_updates_form', school: @school, driver: 'Header',form_id: 'js-send-me-updates-form-header' %>
+                    <button class="btn btn-default tal js-send-me-updates-button-header" style="width:100%; padding-left: 8px; font-size: 14px;">
+                      <span class="vam iconx16 i-16-envelop mrm"></span>Follow this school
+                    </button>
+                  </div>
+                  <% apply_now_url = school.school_metadata.apply_now_url %>
+                  <% if apply_now_url.present? %>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                      <button data-link-value="<%= apply_now_url %>" data-link-use-new-window="true" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;">
+                        <span class="vam iconx16 mrm"></span>Apply now
+                      </button>
                     </div>
+                  <% end %>
                 </div>
+              </div>
             </div>
+          </div>
         <% end %>
     </div>
 </div>
