@@ -14,13 +14,15 @@
                 <%= @show_ads ?  '</div>'.html_safe : '' %>
                 <% if @show_ads %>
                     <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-                        <div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="overviewMediaGalleryAd" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Media_Gallery_300x250"></div>
+                        <!--<div class="gs_ad_slot visible-lg visible-md visible-sm ma" id="overviewMediaGalleryAd" data-ad-size="[300,250]" style="width: 300px"  data-dfp="School_Overview_Media_Gallery_300x250"></div>-->
+                        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Media_Gallery, view: :desktop  %>
                     </div>
                 <% end %>
             </div>
             <% if @show_ads %>
                 <div class="plm">
-                    <div class="gs_ad_slot visible-xs ma" id="overviewMediaGalleryAdMobile" data-ad-size="[300,250]" style="width: 300px" data-dfp="School_Overview_Mobile_Media_Gallery_300x250"></div>
+                    <!--<div class="gs_ad_slot visible-xs ma" id="overviewMediaGalleryAdMobile" data-ad-size="[300,250]" style="width: 300px" data-dfp="School_Overview_Mobile_Media_Gallery_300x250"></div>-->
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Media_Gallery, view: :mobile  %>
                 </div>
             <% end %>
         </div>
