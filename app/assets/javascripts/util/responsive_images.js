@@ -16,8 +16,13 @@ $(function() {
     var desktopImage = options['desktopImage'];
     var domSelector = options['selector'];
     var imgClasses = options['classes'];
+    var breakpoint = options['breakpoint'];
     var mobileBreakPoint = 481;
+    if(typeof breakpoint !== "undefined"){
+        mobileBreakPoint = breakpoint;
 
+    }
+    console.log('breakpoint '+breakpoint);
     var checkPrepForImage = function(obj, imageUrl){
       // see if any image is loaded
       // see if the image is already loaded -
