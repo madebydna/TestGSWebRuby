@@ -1,5 +1,6 @@
 def usage
-  abort "USAGE: rails runner script/populate_school_cache_table (all|ratings|test_scores) [state] [school id].\n"
+  abort "USAGE: rails runner script/populate_school_cache_table (all|ratings|test_scores) [state] [school id].\n" +
+    "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
 end
 
 usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
