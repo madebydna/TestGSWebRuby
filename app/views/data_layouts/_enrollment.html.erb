@@ -1,0 +1,7 @@
+<%= debug data if params[:debug] %>
+
+<% esp_enrollment = EspEnrollmentDecorator.new(data) %>
+
+Application deadline: <%= esp_enrollment.application_deadline %>
+
+<%  %>

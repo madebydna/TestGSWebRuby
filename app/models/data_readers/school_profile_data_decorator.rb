@@ -49,7 +49,7 @@ module SchoolProfileDataDecorator
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
       test_scores: @test_scores_data_reader,
-      zillow: @zillow_data_reader
+      zillow: @zillow_data_reader,
     }
   end
 
@@ -67,6 +67,7 @@ module SchoolProfileDataDecorator
       zillow
       census_data_points
       footnotes
+      enrollment
     ]
   end
 
@@ -181,6 +182,12 @@ module SchoolProfileDataDecorator
   def zillow(options = {})
     category = options[:category]
     @zillow_data_reader.data_for_category category
+  end
+
+  def enrollment(options = {})
+    category = options[:category]
+    hash = @esp_data_reader.responses_for_category category
+    hash.gs_transform_values! { |array| array.first }
   end
 
   def footnotes(options = {})
