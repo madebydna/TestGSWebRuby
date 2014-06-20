@@ -34,15 +34,15 @@ class SearchController < ApplicationController
         filters: parse_filters(request.query_string),
         sort: parse_sorts(request.query_string)
     }
-    full_query_string = query_path_and_parameters(request.path, search_options)
+    query_string = query_parameters_string(search_options.deep_dup)
     results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
       @total_results = results[:num_found]
       @schools = results[:results]
-      @next_page = get_next_page(full_query_string, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      @previous_page = get_previous_page(full_query_string, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-      @full_query_string = full_query_string
+      @next_page = get_next_page(query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      @previous_page = get_previous_page(query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+      @query_string = query_string.dup
     end
     render 'browse_city'
   end
@@ -151,7 +151,6 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    puts filters
     filters
   end
 
@@ -216,19 +215,24 @@ class SearchController < ApplicationController
     rval_map
   end
 
-  def query_path_and_parameters(path, params_hash)
-    full_query = path + '?'
-    full_query << CGI.unescape(params_hash.to_query)
+  def query_parameters_string(params_hash)
+    params_hash.delete :city
+    params_hash.delete :state
+    params_hash.delete :number_of_results
+    params_hash.delete :offset
+    params_hash.delete :sort if params_hash[:sort].nil?
+    params_hash.delete :filters if params_hash[:filters].empty?
+    '?' << CGI.unescape(params_hash.to_query)
   end
 
-  def get_next_page(full_query, page_size, result_offset)
-    full_query << "&pageSize=#{page_size}"
-    full_query << "&start=#{result_offset + page_size}"
+  def get_next_page(query, page_size, result_offset)
+    query << "&pageSize=#{page_size}"
+    query << "&start=#{result_offset + page_size}"
   end
 
-  def get_previous_page(full_query, page_size, result_offset)
-    full_query << "&pageSize=#{page_size}"
-    full_query << "&start=#{result_offset - page_size}"
+  def get_previous_page(query, page_size, result_offset)
+    query << "&pageSize=#{page_size}"
+    query << "&start=#{result_offset - page_size}"
   end
 
 end
