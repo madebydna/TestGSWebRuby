@@ -38,7 +38,10 @@ class SchoolSearchService
   class SchoolSearchResult
     include ActionView::Helpers::AssetTagHelper
 
+    attr_accessor :fit_score
+
     def initialize(hash)
+      @fit_score = 0
       @attributes = hash
       @attributes.each do |k,v|
         define_singleton_method k do v end
@@ -47,6 +50,30 @@ class SchoolSearchService
 
     def preschool?
       (respond_to?('level_code') && level_code == 'p')
+    end
+
+    # Increments fit score for each matching key/value pair from params
+    def calculate_fit_score(params)
+      @fit_score = 0
+      params.each do |key, value|
+        if value.instance_of?(Array)
+          value.each do |v|
+            @fit_score += 1 if matches_soft_filter?(key, v)
+          end
+        else
+          @fit_score += 1 if matches_soft_filter?(key, value)
+        end
+      end
+    end
+
+    protected
+
+    def matches_soft_filter?(param, value)
+      if param == 'beforeAfterCare' || param == 'beforeAfterCare[]'
+        respond_to?('before_after_care') && before_after_care.include?(value)
+      else
+        false
+      end
     end
   end
 
