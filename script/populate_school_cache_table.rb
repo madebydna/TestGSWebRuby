@@ -1,3 +1,9 @@
+def usage
+  abort "USAGE: rails runner script/populate_school_cache_table (all|ratings|test_scores) [state] [school id].\n"
+end
+
+usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
+
 states = ['mi', 'in', 'wi', 'de','ca','nc','oh','dc']
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
