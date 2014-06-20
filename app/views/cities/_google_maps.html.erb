@@ -18,6 +18,18 @@
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw="></script>
 
   <script type="text/javascript">
+      var points = [];
+
+      <% schools.each do |school|%>
+
+          points.push({name:'<%=school.name%>', lat: <%= school.latitude%>,
+              lng: <%= school.longitude%>, gsRating: '<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 11 )%>',
+              schoolType: '<%= school.type%>', state: '<%= school.state%>',
+              id: '<%= school.id%>', levelCode: 'e'});
+
+      <% end %>
+
+//      console.log(points);
 
       var optionalLat = optionalLat || 37.807778;
       var optionalLon = optionalLon || -122.265149;
@@ -25,7 +37,7 @@
       var bounds = new google.maps.LatLngBounds();
       var infoWindow;
 
-      function initialize() {
+      var initialize = function() {
           var myOptions = {
               center: centerPoint,
               mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -40,7 +52,7 @@
               },
               streetViewControl: true,
               panControl: true,
-              infoWindow: infoWindow,
+//              infoWindow: infoWindow,
 
               zoom: 12
           };
@@ -49,35 +61,37 @@
 
           var position;
 
-          <% schools.each do |school|%>
-              position = new google.maps.LatLng(<%= school.latitude%>, <%= school.longitude%>);
+          var imageUrl;
+          var imageUrlPublic = '/assets/icons/140106-24x24_ratings.png';
+          var imageUrlPrivate = '/assets/icons/120905-ratingsx24-private-RYG.png';
+
+          for(var i = 0; i < points.length; i++) {
+              var point = points[i];
+              position = new google.maps.LatLng(point.lat, point.lng);
               var markerOptions = new google.maps.Marker({
                   position: position,
+//                  infoWindowMarkup: point.infoWindowMarkup,
                   map: map
-    //              title: 'hello'
+                  //              title: 'hello'
               });
 
-              var imageUrl;
-              var imageUrlPublic = '/assets/icons/140106-24x24_ratings.png';
-              var imageUrlPrivate = '/assets/icons/120905-ratingsx24-private-RYG.png';
 
-              var schoolRating = <%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 11 )%>; //NR is 11
+              // to handle case of no rating
 
-    //              need to add school level code
-              if ('<%= school.type%>' != 'private') {
+              // need to add school level code
+              if (point.schoolType != 'private') {
 
                   var pixelOffset = 240;// default to public NR
 
-    //need to handle case of no rating
-                  if (schoolRating != "" && parseInt(schoolRating) > 0) {
-                      pixelOffset = (schoolRating - 1) * 24;
+                  if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                      pixelOffset = (point.gsRating - 1) * 24;
                   }
                   imageUrl = imageUrlPublic;
 
               } else {
                   pixelOffset = 240;// default to private NR
-                  if (schoolRating != "" && parseInt(schoolRating) > 0) {
-                      pixelOffset = (schoolRating - 1) * 24;
+                  if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                      pixelOffset = (point.gsRating - 1) * 24;
                   }
                   imageUrl = imageUrlPrivate;
               }
@@ -91,7 +105,7 @@
 
 
               var infoWindow = new google.maps.InfoWindow({
-                content: ""
+                  content: ""
               });
 
               bounds.extend(position);
@@ -100,20 +114,33 @@
 
               bounds.extend(position);
 
-              google.maps.event.addListener(marker, 'click', (function (marker) {
+
+
+              google.maps.event.addListener(marker, 'click', (function (marker, point) {
                   return function () {
-                      var markerContent = '<%= school.name%><div><%= school.street%></div><div>GS rating: <%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 'NR' )%> Community rating: <%= school.community_rating%></div>';
-                      infoWindow.setContent(markerContent);
+
+                      var getInfoWindowMarkup = function(){
+                          var infoWindowMarkup =  '<div>point.name</div>';
+//                          '\<div>point.name</div>';
+                          console.log(point.name);
+                          console.log(point.gsRating);
+
+                      }
+//                      fix draw_stars_16 in community rating
+//                      infoWindow.setContent(point.infoWindowMarkup);
+                      infoWindow.setContent(getInfoWindowMarkup(point));
                       infoWindow.open(map, marker);
                   }
-              })(marker));
+              })(marker, point));
 
               if (!bounds.isEmpty()) {
                   map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
               }
-          <% end %>
+          }
 
       }
+
+
       google.maps.event.addDomListener(window, 'load', initialize);
 
   </script>
