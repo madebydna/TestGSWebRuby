@@ -28,8 +28,13 @@
                         <div id="<%= bar_chart_div_id %>" class="ma"><!--Div for bar chart--></div>
 
                         <% content_for :head do %>
+                            <% bar_chart_array = TestScoresBarChart.new(value).bar_chart_array %>
                             <script type="text/javascript">
-                                GS.visualchart.drawBarChartTestScores(<%= raw (to_bar_chart_array value).to_s %>,<%= raw '"'+bar_chart_div_id+'"' %>, 'testscores');
+                                GS.visualchart.drawBarChartTestScores(
+                                  <%= raw bar_chart_array.to_s %>,
+                                  <%= raw '"' + bar_chart_div_id + '"' %>,
+                                  'testscores'
+                                );
                             </script>
                         <% end %>
                     <% end %>

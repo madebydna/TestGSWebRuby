@@ -41,35 +41,6 @@ module ApplicationHelper
     @school_reviews_global.review_filter_totals.all.to_s + ' ' + text_s + write_s
   end
 
-  def to_bar_chart_array(data_hash)
-    @bar_chart_data = [['year', 'This school','School tool tip','School Annotation','State average','State tool tip','State Annotation']] + data_hash.collect.with_index { |(key, value), index|
-      #The google bar chart requires values to be numerical.
-      #Hence set default to 0(This also catches the case when there is no data for state
-      #average or school test score ie. value['state_avg']= nil).
-      #The 4rd and the 6th columns are used for tool tips. Hence they are strings.
-      #The 3rd and the 5th columns are used for annotation.
-
-      state_score_int = 0
-      state_score_tool_tip = ''
-      state_percent_annotation = ''
-      #Display the state average only for the latest year.
-      if index == 0 && !value['state_avg'].nil?
-        state_score_int = value['state_avg'].to_i
-        state_score_tool_tip = 'State average: ' + value['state_avg'].to_s + '%'
-        state_percent_annotation = value['state_avg'].to_s + '%'
-      end
-      school_score_int = value['score'].nil? ? 0 : value['score']
-      school_score_tool_tip = 'This school: ' + value['score'].to_s + '%'
-      school_percent_annotation = school_score_int.to_s + '%'
-      if !value['score'].nil? && value['score'].to_s.match(/<|=|>|\./)
-        school_score_int = value['score'].gsub(/<|=|>|\./,'').to_i
-      end
-
-
-      [key.to_s, school_score_int, school_percent_annotation, school_score_tool_tip, state_score_int, state_percent_annotation, state_score_tool_tip]
-    }
-  end
-
   def to_bar_chart_review_array(star_counts)
     [
       ['Star Count', 'count'],
