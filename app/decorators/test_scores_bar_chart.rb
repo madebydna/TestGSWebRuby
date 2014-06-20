@@ -20,12 +20,19 @@ class TestScoresBarChart
   def array_for_single_bar(value, tool_tip_prefix)
     string_value = value.to_s
     # Google bar chart requires values to be numerical. They will default to 0
-    int_value = string_value.gsub(/<|=|>|\./,'').to_i
-    # Tool tips and annotation columns should be strings.
-    annotation = string_value.present? ? "#{int_value}%" : ''
-    tool_tip = string_value.present? ? "#{tool_tip_prefix} #{string_value}%" : ''
+    bar_value = string_value.gsub(/<|=|>/,'').to_f.round
 
-    [int_value, annotation, tool_tip]
+    if string_value.match /<|=|>/
+      display_value = value
+    else
+      display_value = value.to_f.round
+    end
+
+    # Tool tips and annotation columns should be strings.
+    annotation = string_value.present? ? "#{display_value}%" : ''
+    tool_tip = string_value.present? ? "#{tool_tip_prefix} #{display_value}%" : ''
+
+    [bar_value, annotation, tool_tip]
   end
 
   def bar_chart_array

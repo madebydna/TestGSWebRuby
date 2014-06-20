@@ -22,11 +22,11 @@ describe TestScoresBarChart, type: 'model' do
 
     context 'when value contains >' do
       subject { test_scores_bar_chart.array_for_single_bar('>90', 'prefix') }
-      it 'it removes the > from the value' do
+      it 'it removes the > from the bar value' do
         expect(subject.first).to eq 90
       end
-      it 'it removes the > from the bar annotation' do
-        expect(subject[1]).to eq '90%'
+      it 'it leaves the > in the bar annotation' do
+        expect(subject[1]).to eq '>90%'
       end
       it 'it leaves the > in the tooltip' do
         expect(subject[2]).to eq 'prefix >90%'
@@ -43,8 +43,7 @@ describe TestScoresBarChart, type: 'model' do
     context 'when value is 90.9' do
       subject { test_scores_bar_chart.array_for_single_bar(90.9, 'prefix') }
       it 'rounds the value up to 91' do
-        pending 'Pending until we determine what to do about possible floats'
-        expect(subject.first).to eq 91
+        expect(subject).to eq [91, '91%', 'prefix 91%']
       end
     end
   end
