@@ -58,10 +58,14 @@ class SchoolSearchService
   class SchoolSearchResult
     include ActionView::Helpers::AssetTagHelper
 
-    attr_accessor :fit_score, :on_page
+    attr_accessor :fit_score, :fit_score_filters, :on_page
+    SOFT_FILTER_MAP = {
+        'beforeAfterCare' => 'before_after_care'
+    }
 
     def initialize(hash)
       @fit_score = 0
+      @fit_score_filters = {}
       @attributes = hash
       @attributes.each do |k,v|
         define_singleton_method k do v end
@@ -89,8 +93,14 @@ class SchoolSearchService
     protected
 
     def matches_soft_filter?(param, value)
-      if param == 'beforeAfterCare'
-        respond_to?('before_after_care') && before_after_care.include?(value)
+      if filter = SOFT_FILTER_MAP[param].presence
+        if respond_to?(filter) && send(filter).include?(value)
+          @fit_score_filters.merge!(value => true)
+          true
+        else
+          @fit_score_filters.merge!(value => false)
+          false
+        end
       else
         false
       end

@@ -24,6 +24,7 @@ class SearchController < ApplicationController
     ad_setTargeting_through_gon
 
     @params_hash = parse_array_query_string(request.query_string)
+    @filter_and_sort_display_map = filter_and_sort_display_map
 
     @results_offset = get_results_offset
     @page_size = get_page_size
@@ -308,5 +309,21 @@ class SearchController < ApplicationController
     results.each do |result|
       result.calculate_fit_score(params)
     end
+  end
+
+  def filter_and_sort_display_map
+    temp_map = {
+        'st' => {
+            'public' => 'Public Schools',
+            'private' => 'Private Schools',
+            'charter' => 'Charter Schools'
+        },
+        'beforeAfterCare' => {
+            'before' => 'Before School Care',
+            'after' => 'After School Care',
+        }
+    }
+    map = {}.merge(temp_map)
+    temp_map.inject(map) { |s,(k,v)| s.merge(v) }
   end
 end

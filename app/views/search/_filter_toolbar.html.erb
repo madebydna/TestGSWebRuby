@@ -10,9 +10,9 @@
             </div>
             <div class="divider" style="height: 2px; background-color: darkgrey"></div>
             <div>
-	            <% ['public', 'private', 'charter'].each do |school_type| %>
+	            <% @filter_and_sort_display_map['st'].each do |school_type, display_name| %>
 		            <span><input type="checkbox" name='st[]' value=<%=school_type%>
-                <%if @params_hash.include?('st') && @params_hash['st'].include?(school_type)%>checked<%end%>><%=school_type.capitalize %></span><br>
+                <%if @params_hash.include?('st') && @params_hash['st'].include?(school_type)%>checked<%end%>><%=display_name%></span><br>
 	            <% end %>
             </div>
             <div class="ptl">
@@ -33,9 +33,9 @@
             </div>
             <div class="divider" style="height: 2px; background-color: darkgrey"></div>
             <div>
-              <% ['before', 'after'].each do |program| %>
+              <% @filter_and_sort_display_map['beforeAfterCare'].each do |program, display_name| %>
 		            <span><input type="checkbox" name='beforeAfterCare[]' value=<%=program%>
-                <%if @params_hash.include?('beforeAfterCare') && @params_hash['beforeAfterCare'].include?(program)%>checked<%end%>><%=program.capitalize + ' School' %></span><br>
+                <%if @params_hash.include?('beforeAfterCare') && @params_hash['beforeAfterCare'].include?(program)%>checked<%end%>><%=display_name%></span><br>
               <% end %>
             </div>
             <div class="ptl">
