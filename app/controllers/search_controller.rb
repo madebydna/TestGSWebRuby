@@ -24,28 +24,25 @@ class SearchController < ApplicationController
     set_omniture_pagename_browse_city
     ad_setTargeting_through_gon
 
+    params_hash = parse_array_query_string(request.query_string)
+
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
 
-    search_options = {
-        state: @state[:short],
-        city: @city.name,
-        number_of_results: @page_size,
-        offset: @results_offset,
-        filters: parse_filters(request.query_string),
-        sort: parse_sorts(request.query_string)
-    }
-    query_string = query_parameters_string(search_options.deep_dup)
+    search_options = {state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset}
+    (filters = parse_filters(params_hash).presence) and search_options.merge!({filters: filters})
+    (sort = parse_sorts(params_hash).presence) and search_options.merge!({sort: sort})
+
     results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
+      @query_string = '?' + CGI.unescape(params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
       @total_results = results[:num_found]
       @schools = results[:results]
       calculate_fit_score @schools, request.query_string
-      @next_page = get_next_page(query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      @previous_page = get_previous_page(query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-      @query_string = query_string.dup
+      @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
     end
     render 'browse_city'
   end
@@ -124,11 +121,10 @@ class SearchController < ApplicationController
 
   protected
 
-  def parse_filters(query_string)
-    array_params = parse_array_query_string(query_string)
+  def parse_filters(params_hash)
     filters = {}
-    if array_params.include? 'st'
-      st_params = array_params['st']
+    if params_hash.include? 'st'
+      st_params = params_hash['st']
       st_params = [st_params] unless st_params.instance_of?(Array)
       school_types = []
       school_types << :public if st_params.include? 'public'
@@ -136,8 +132,8 @@ class SearchController < ApplicationController
       school_types << :private if st_params.include? 'private'
       filters[:school_type] = school_types unless school_types.empty? || school_types.length == 3
     end
-    if array_params.include? 'gradeLevels'
-      lc_params = array_params['gradeLevels']
+    if params_hash.include? 'gradeLevels'
+      lc_params = params_hash['gradeLevels']
       lc_params = [lc_params] unless lc_params.instance_of?(Array)
       level_codes = []
       level_codes << :preschool if lc_params.include? 'p'
@@ -146,8 +142,8 @@ class SearchController < ApplicationController
       level_codes << :high if lc_params.include? 'h'
       filters[:level_code] = level_codes unless level_codes.empty? || level_codes.length == 4
     end
-    if array_params.include? 'grades'
-      grades_params = array_params['grades']
+    if params_hash.include? 'grades'
+      grades_params = params_hash['grades']
       grades_params = [grades_params] unless grades_params.instance_of?(Array)
       grades = []
       valid_grade_params = ['p','k', '1','2','3','4','5','6','7','8','9','10','11','12']
@@ -157,9 +153,8 @@ class SearchController < ApplicationController
     filters
   end
 
-  def parse_sorts(query_string)
-    array_params = parse_array_query_string(query_string)
-    array_params['sort'].to_sym if array_params.include?('sort') && !array_params['sort'].instance_of?(Array)
+  def parse_sorts(params_hash)
+    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array)
   end
 
   def get_page_number(page_size, results_offset)
@@ -218,26 +213,17 @@ class SearchController < ApplicationController
     rval_map
   end
 
-  def query_parameters_string(params_hash)
-    params_hash.delete :city
-    params_hash.delete :state
-    params_hash.delete :number_of_results
-    params_hash.delete :offset
-    params_hash.delete :sort if params_hash[:sort].nil?
-    params_hash.delete :filters if params_hash[:filters].empty?
-    '?' << CGI.unescape(params_hash.to_query)
-  end
-
   def get_next_page(query, page_size, result_offset)
-    query << "&pageSize=#{page_size}"
+    query << '&' if query.length > 1
+    query << "pageSize=#{page_size}"
     query << "&start=#{result_offset + page_size}"
   end
 
   def get_previous_page(query, page_size, result_offset)
-    query << "&pageSize=#{page_size}"
+    query << '&' if query.length > 1
+    query << "pageSize=#{page_size}"
     query << "&start=#{result_offset - page_size}"
   end
-
 
   def calculate_fit_score(results, query_string)
     params = parse_array_query_string(query_string).keep_if do |key|
