@@ -1,20 +1,4 @@
-<head>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-  <style type="text/css">
-      html {
-          height: 100%
-      }
 
-      body {
-          height: 450px;
-          margin: 0;
-          padding: 0
-      }
-
-      #js-map-canvas {
-          height: 100%
-      }
-  </style>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw="></script>
 
   <script type="text/javascript">
@@ -142,8 +126,5 @@
       google.maps.event.addDomListener(window, 'load', function() {initialize(points)});
       })();
   </script>
-</head>
-<body>
 
-<div id="js-map-canvas"/>
-</body>
+<div id="js-map-canvas" style="height:100%;"/>
