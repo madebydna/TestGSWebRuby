@@ -1,19 +1,17 @@
 <div class="pvm bg-dark-blue" style="background-color: dodgerblue">
   <div class="row ma limit-width-1200">
     <div class="row pbl ptl">
-      <form method='get' class='js-findByNameForm' action="/search/search.page">
-        <input value="1" name="search_type" type="hidden">
-
+      <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
         <!-- Todo: make a class -->
         <div class="col-xs-12 col-sm-6 pam">
         <input  type="text"
                 name="q"
-                value="Address or Zipcode"
-                class="search-text full-width pam"
-                id="js-findByNameBox"
-                onfocus="GS.textSwitch(this, '', 'Address or Zipcode');"
-                onblur="GS.textSwitch(this, 'Address or Zipcode', '');"
-                placeholder="ex. 1999 Harrison St.">
+                value="Enter School, City, or District"
+                id="js-prototypeSearch"
+                class='typeahead search-text full-width pam'
+                onfocus="GS.textSwitch(this, '', 'Enter School, City, or District');"
+                onblur="GS.textSwitch(this, 'Enter School, City, or District', '');"
+                placeholder="ex. Dover High School">
         </div>
 
         <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
