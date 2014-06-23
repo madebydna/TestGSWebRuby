@@ -22,14 +22,14 @@
 
       <% schools.each do |school|%>
 
-          points.push({name:'<%=school.name%>', lat: <%= school.latitude%>,
+          points.push({name:'<%= link_to school.name, school_path(school) %>', lat: <%= school.latitude%>,
               lng: <%= school.longitude%>, gsRating: '<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 11 )%>',
-              schoolType: '<%= school.type%>', state: '<%= school.state%>',
-              id: '<%= school.id%>', levelCode: 'e'});
+              schoolType: '<%= school.type%>', state: '<%= school.state%>', street: '<%=school.street%>',
+              review: '<%=school.respond_to?(:review_count) ? (link_to school.review_count, school_reviews_path(school)) : '0'%>',
+              community_rating:'<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : 'None'%>', id: '<%= school.id%>', levelCode: '<%=school.level_code%>'
+              });
 
       <% end %>
-
-//      console.log(points);
 
       var optionalLat = optionalLat || 37.807778;
       var optionalLon = optionalLon || -122.265149;
@@ -37,7 +37,7 @@
       var bounds = new google.maps.LatLngBounds();
       var infoWindow;
 
-      var initialize = function() {
+      var initialize = function(points) {
           var myOptions = {
               center: centerPoint,
               mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -60,7 +60,6 @@
                   myOptions);
 
           var position;
-
           var imageUrl;
           var imageUrlPublic = '/assets/icons/140106-24x24_ratings.png';
           var imageUrlPrivate = '/assets/icons/120905-ratingsx24-private-RYG.png';
@@ -74,9 +73,6 @@
                   map: map
                   //              title: 'hello'
               });
-
-
-              // to handle case of no rating
 
               // need to add school level code
               if (point.schoolType != 'private') {
@@ -103,9 +99,8 @@
                       new google.maps.Point(12, 12) // anchor
               );
 
-
               var infoWindow = new google.maps.InfoWindow({
-                  content: ""
+                  content: ''
               });
 
               bounds.extend(position);
@@ -114,20 +109,9 @@
 
               bounds.extend(position);
 
-
-
               google.maps.event.addListener(marker, 'click', (function (marker, point) {
                   return function () {
 
-                      var getInfoWindowMarkup = function(){
-                          var infoWindowMarkup =  '<div>point.name</div>';
-//                          '\<div>point.name</div>';
-                          console.log(point.name);
-                          console.log(point.gsRating);
-
-                      }
-//                      fix draw_stars_16 in community rating
-//                      infoWindow.setContent(point.infoWindowMarkup);
                       infoWindow.setContent(getInfoWindowMarkup(point));
                   }
               })(marker, point));
@@ -138,9 +122,15 @@
           }
 
       }
+      var getInfoWindowMarkup = function(point){
+          var infoWindowMarkup = document.createElement('div');
+          infoWindowMarkup.innerHTML = '<div>' + point.name + '</div>'
+                                     + '<div>'+point.street+'</div>'
+                                     + '<div>'+point.gsRating + point.community_rating + point.review + ' reviews </div>';
+          return infoWindowMarkup;
+      }
 
-
-      google.maps.event.addDomListener(window, 'load', initialize);
+      google.maps.event.addDomListener(window, 'load', function() {initialize(points)});
 
   </script>
 </head>
