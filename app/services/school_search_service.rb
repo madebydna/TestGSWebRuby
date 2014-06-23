@@ -39,7 +39,7 @@ class SchoolSearchService
   class SchoolSearchResult
     include ActionView::Helpers::AssetTagHelper
 
-    attr_accessor :fit_score
+    attr_accessor :fit_score, :on_page
 
     def initialize(hash)
       @fit_score = 0

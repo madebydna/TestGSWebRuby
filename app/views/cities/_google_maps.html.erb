@@ -18,6 +18,7 @@
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw="></script>
 
   <script type="text/javascript">
+      (function() {
       var points = [];
 
       <% schools.each do |school|%>
@@ -26,7 +27,8 @@
               lng: <%= school.longitude%>, gsRating: '<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 11 )%>',
               schoolType: '<%= school.type%>', state: '<%= school.state%>', street: '<%=school.street%>',
               review: '<%=school.respond_to?(:review_count) ? (link_to school.review_count, school_reviews_path(school)) : '0'%>',
-              community_rating:'<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : 'None'%>', id: '<%= school.id%>', levelCode: '<%=school.level_code%>'
+              community_rating:'<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : 'None'%>', id: '<%= school.id%>', levelCode: '<%=school.level_code%>',
+              on_page: <%=school.on_page == true %>
               });
 
       <% end %>
@@ -61,49 +63,57 @@
 
           var position;
           var imageUrl;
+          var imageSize;
+          var imageAnchor;
+          var pixelOffset;
+          var size_24 = new google.maps.Size(24, 24);
+          var size_16 = new google.maps.Size(16, 16);
+          var point_12_12 = new google.maps.Point(12, 12);
+          var point_8_8 = new google.maps.Point(8, 8);
           var imageUrlPublic = '/assets/icons/140106-24x24_ratings.png';
           var imageUrlPrivate = '/assets/icons/120905-ratingsx24-private-RYG.png';
+          var imageUrlOffPage = '/assets/icons/120627-16x16_stars.png';
+          var infoWindow = new google.maps.InfoWindow({});
 
           for(var i = 0; i < points.length; i++) {
               var point = points[i];
               position = new google.maps.LatLng(point.lat, point.lng);
               var markerOptions = new google.maps.Marker({
                   position: position,
-//                  infoWindowMarkup: point.infoWindowMarkup,
                   map: map
-                  //              title: 'hello'
               });
 
               // need to add school level code
-              if (point.schoolType != 'private') {
+              if (point.on_page){
+                  imageSize = size_24;
+                  imageAnchor = point_12_12;
+                  if (point.schoolType != 'private') {
+                      pixelOffset = 240;// default to public NR
 
-                  var pixelOffset = 240;// default to public NR
-
-                  if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                      pixelOffset = (point.gsRating - 1) * 24;
+                      if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                          pixelOffset = (point.gsRating - 1) * 24;
+                      }
+                      imageUrl = imageUrlPublic;
+                  } else {
+                      pixelOffset = 240;// default to private NR
+                      if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                          pixelOffset = (point.gsRating - 1) * 24;
+                      }
+                      imageUrl = imageUrlPrivate;
                   }
-                  imageUrl = imageUrlPublic;
-
               } else {
-                  pixelOffset = 240;// default to private NR
-                  if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                      pixelOffset = (point.gsRating - 1) * 24;
-                  }
-                  imageUrl = imageUrlPrivate;
+                  imageUrl = imageUrlOffPage;
+                  pixelOffset = 0;
+                  imageSize = size_16;
+                  imageAnchor = point_8_8;
               }
 
               markerOptions.icon = new google.maps.MarkerImage(
                       imageUrl, // url
-                      new google.maps.Size(24, 24), // size
+                      imageSize, // size
                       new google.maps.Point(pixelOffset, 0), // origin
-                      new google.maps.Point(12, 12) // anchor
+                      imageAnchor
               );
-
-              var infoWindow = new google.maps.InfoWindow({
-                  content: ''
-              });
-
-              bounds.extend(position);
 
               var marker = new google.maps.Marker(markerOptions);
 
@@ -111,27 +121,26 @@
 
               google.maps.event.addListener(marker, 'click', (function (marker, point) {
                   return function () {
-
                       infoWindow.setContent(getInfoWindowMarkup(point));
+                      infoWindow.open(map, marker);
                   }
               })(marker, point));
 
-              if (!bounds.isEmpty()) {
-                  map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
-              }
           }
-
-      }
+          if (!bounds.isEmpty()) {
+              map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
+          }
+      };
       var getInfoWindowMarkup = function(point){
           var infoWindowMarkup = document.createElement('div');
           infoWindowMarkup.innerHTML = '<div>' + point.name + '</div>'
                                      + '<div>'+point.street+'</div>'
                                      + '<div>'+point.gsRating + point.community_rating + point.review + ' reviews </div>';
           return infoWindowMarkup;
-      }
+      };
 
       google.maps.event.addDomListener(window, 'load', function() {initialize(points)});
-
+      })();
   </script>
 </head>
 <body>

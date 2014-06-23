@@ -44,6 +44,20 @@ class SearchController < ApplicationController
       @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
       @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
     end
+
+    results = SchoolSearchService.city_browse(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+
+    unless results.empty?
+      # @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+      # @total_results = results[:num_found]
+      @map_schools = results[:results]
+      @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
+        school.on_page = true
+      end
+      calculate_fit_score(@map_schools, @params_hash)
+      # @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      # @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+    end
     render 'browse_city'
   end
 
