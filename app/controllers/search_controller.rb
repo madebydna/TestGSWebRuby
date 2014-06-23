@@ -40,7 +40,7 @@ class SearchController < ApplicationController
       @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
       @total_results = results[:num_found]
       @schools = results[:results]
-      calculate_fit_score(@schools, @params_hash.deep_dup)
+      calculate_fit_score(@schools, @params_hash)
       @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
       @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
     end
@@ -226,7 +226,7 @@ class SearchController < ApplicationController
   end
 
   def calculate_fit_score(results, params_hash)
-    params = params_hash.keep_if do |key|
+    params = params_hash.select do |key|
       SOFT_FILTER_KEYS.include? key
     end
     results.each do |result|
