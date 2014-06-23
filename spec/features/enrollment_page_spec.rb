@@ -19,7 +19,7 @@ describe 'Enrollment Page' do
 
     it 'includes a basic hub page layout' do
       # Header
-      expect(page).to have_selector('.upcoming-event', count: 2)
+      expect(page).to have_no_selector('.upcoming-event', count: 2)
       expect(page).to have_selector('.navbar')
       expect(page).to have_text('Find a school in Detroit')
 

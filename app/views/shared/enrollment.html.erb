@@ -13,10 +13,6 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<% unless @events.nil? ||  @events[:events].empty? %>
-  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-<% end %>
-
 
 <div class="limit-width-1200 mbl">
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
