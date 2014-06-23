@@ -22,11 +22,21 @@ GS.search.results = GS.search.results || (function() {
         window.location = GS.uri.Uri.getHref().split('?')[0] + query;
     };
 
+    var keepSearchResultsFilterMenuOpen = function() {
+        stopEventPropagation('#searchResultsFilterMenu');
+    };
+
+    var stopEventPropagation = function(selector) {
+        $(selector).bind('click', function (e) { e.stopPropagation() });
+    };
+
     return {
         pagination: pagination,
-        sortBy: sortBy
+        sortBy: sortBy,
+        keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen
     };
 })();
 
-//$(document).ready(function() {
-//});
+$(document).ready(function() {
+    GS.search.results.keepSearchResultsFilterMenuOpen();
+});

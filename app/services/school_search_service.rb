@@ -69,7 +69,7 @@ class SchoolSearchService
     protected
 
     def matches_soft_filter?(param, value)
-      if param == 'beforeAfterCare' || param == 'beforeAfterCare[]'
+      if param == 'beforeAfterCare'
         respond_to?('before_after_care') && before_after_care.include?(value)
       else
         false

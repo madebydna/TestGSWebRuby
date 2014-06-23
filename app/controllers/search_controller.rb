@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'beforeAfterCare[]']
+  SOFT_FILTER_KEYS = ['beforeAfterCare']
 
   def city_browse
     set_city_state
@@ -24,23 +24,23 @@ class SearchController < ApplicationController
     set_omniture_pagename_browse_city
     ad_setTargeting_through_gon
 
-    params_hash = parse_array_query_string(request.query_string)
+    @params_hash = parse_array_query_string(request.query_string)
 
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
 
     search_options = {state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset}
-    (filters = parse_filters(params_hash).presence) and search_options.merge!({filters: filters})
-    (sort = parse_sorts(params_hash).presence) and search_options.merge!({sort: sort})
+    (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
+    (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
 
     results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
-      @query_string = '?' + CGI.unescape(params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+      @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
       @total_results = results[:num_found]
       @schools = results[:results]
-      calculate_fit_score @schools, request.query_string
+      calculate_fit_score(@schools, @params_hash.deep_dup)
       @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
       @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
     end
@@ -225,8 +225,8 @@ class SearchController < ApplicationController
     query << "&start=#{result_offset - page_size}"
   end
 
-  def calculate_fit_score(results, query_string)
-    params = parse_array_query_string(query_string).keep_if do |key|
+  def calculate_fit_score(results, params_hash)
+    params = params_hash.keep_if do |key|
       SOFT_FILTER_KEYS.include? key
     end
     results.each do |result|
