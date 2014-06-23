@@ -33,9 +33,9 @@
             </div>
             <div class="divider" style="height: 2px; background-color: darkgrey"></div>
             <div>
-              <% ['afterSchool', 'summerPrograms', 'childCare'].each do |program| %>
+              <% ['before', 'after'].each do |program| %>
 		            <span><input type="checkbox" name='beforeAfterCare[]' value=<%=program%>
-                <%if @params_hash.include?('beforeAfterCare') && @params_hash['beforeAfterCare'].include?(program)%>checked<%end%>><%=program.capitalize %></span><br>
+                <%if @params_hash.include?('beforeAfterCare') && @params_hash['beforeAfterCare'].include?(program)%>checked<%end%>><%=program.capitalize + ' School' %></span><br>
               <% end %>
             </div>
             <div class="ptl">
