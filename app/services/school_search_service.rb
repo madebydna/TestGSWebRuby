@@ -17,10 +17,11 @@ class SchoolSearchService
   }
 
   # :city, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
-  def self.city_browse(options = {})
-    raise ArgumentError, 'State is required' unless options.include?(:state)
-    raise ArgumentError, 'State should be a two-letter abbreviation' unless options[:state].length == 2
-    raise ArgumentError, 'City is required' unless options.include?(:city)
+  def self.city_browse(options_param = {})
+    raise ArgumentError, 'State is required' unless options_param.include?(:state)
+    raise ArgumentError, 'State should be a two-letter abbreviation' unless options_param[:state].length == 2
+    raise ArgumentError, 'City is required' unless options_param.include?(:city)
+    options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
     filters = extract_filters(options)
