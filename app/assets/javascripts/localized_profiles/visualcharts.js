@@ -129,34 +129,28 @@ GS.visualchart = GS.visualchart || function($) {
                 return false;
             }
 
-            var data = google.visualization.arrayToDataTable(barChartData);
+            var dataTable = new google.visualization.DataTable();
             //The 3rd and the 5th columns are used for tool tips.
-            data.setColumnProperty(2, 'role', 'annotation');
-            data.setColumnProperty(3, 'role', 'tooltip');
-            data.setColumnProperty(5, 'role', 'annotation');
-            data.setColumnProperty(6, 'role', 'tooltip');
+            dataTable.addColumn('string', 'year');
+            dataTable.addColumn('number', 'This school');
+            dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+            dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+            dataTable.addRows(barChartData);
 
             $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
             var defaultOptions = {
                 width: GS.window.sizing.barChartWidth(chartname),
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
-                tooltip: {
-                    showColorCode: true,
-                    text:'value',
-                    textStyle: {
-                        color: '#2b2b2b',
-                        fontName: 'Arial',
-                        fontSize: '10'
-                    }
-                },
+                tooltip: { isHtml: true },
                 colors: colors,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%"}
             };
 
             var chart = new google.visualization.BarChart(domNode);
-            chart.draw(data, defaultOptions);
+            chart.draw(dataTable, defaultOptions);
 
         };
         if (loader) {

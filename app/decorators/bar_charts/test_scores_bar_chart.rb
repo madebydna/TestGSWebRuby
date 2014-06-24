@@ -6,25 +6,12 @@ class BarCharts::TestScoresBarChart
     @test_scores_hash = test_scores_hash
   end
 
-  def bar_chart_array_header
-    [
-      'year',
-      'This school',
-      'School Annotation',
-      'School tool tip',
-      'State average',
-      'State Annotation',
-      'State tool tip'
-    ]
-  end
-
   def create_bar(hash)
     BarCharts::TestScoresBar.new(hash)
   end
 
   def bar_chart_array
     array_for_all_bars = []
-    array_for_all_bars << bar_chart_array_header
     array_for_all_bars += @test_scores_hash.map do |(key, value)|
       bar_hash = value.clone
       bar_hash['year'] = key
