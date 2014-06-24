@@ -1,51 +1,96 @@
 require 'spec_helper'
 
-describe BarCharts::TestScoresBar, type: 'model' do
-  let(:bar_charts) { BarCharts::TestScoresBar.new({}) }
+describe BarCharts::TestScoresBarChart, type: 'model' do
 
-  describe '#array_for_single_bar' do
-    subject { bar_charts.array_for_single_bar('90', 'prefix') }
-
-    it 'adds the correct tooltip to the array' do
-      expect(subject[2]).to eq 'prefix 90%'
+  describe '#test_scores_bar_chart' do
+    subject do
+      BarCharts::TestScoresBarChart.new(testscoredata).bar_chart_array
     end
 
-    it 'adds the correct annotation to the array' do
-      expect(subject[1]).to eq '90%'
-    end
+    context 'When test score graph is created' do
+      let(:testscoredata) do
+        {
+          2013 => {
+            'score' => 60,
+            'school_number_tested' => 123,
+            'state_avg' =>  77
+          },
+          2012 => {
+            'score' =>  81,
+            'school_number_tested' =>  145,
+            'state_avg' =>  79
+          },
+          2011 => {
+            'score' =>  63,
+            'school_number_tested' =>  120,
+            'state_avg' =>  65
+          }
+        }
+      end
+      # [["2013", 60, "60%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>123</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>60%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>77%</b></td><td>State average</td></tr></table>"], ["2012", 81, "81%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>145</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>81%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>79%</b></td><td>State average</td></tr></table>"], ["2011", 63, "63%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>120</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>63%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>65%</b></td><td>State average</td></tr></table>"]]
+      it 'it should return the year' do
+        expect(subject[0][0]).to eq '2013'
+      end
 
-    context 'when value is a number' do
-      it 'it returns an array with the value' do
-        expect(subject.first).to eq 90
+      it 'it should return the score' do
+        expect(subject[0][1]).to eq 60
       end
-    end
 
-    context 'when value contains >' do
-      subject { bar_charts.array_for_single_bar('>90', 'prefix') }
-      it 'it removes the > from the bar value' do
-        expect(subject.first).to eq 90
+      it 'it should return the display value' do
+        expect(subject[0][2]).to eq '60%'
       end
-      it 'it leaves the > in the bar annotation' do
-        expect(subject[1]).to eq '>90%'
-      end
-      it 'it leaves the > in the tooltip' do
-        expect(subject[2]).to eq 'prefix >90%'
-      end
-    end
 
-    context 'when value is nil' do
-      subject { bar_charts.array_for_single_bar(nil, 'prefix') }
-      it 'it returns an array where value is zero' do
-        expect(subject.first).to eq 0
-      end
-    end
-
-    context 'when value is 90.9' do
-      subject { bar_charts.array_for_single_bar(90.9, 'prefix') }
-      it 'rounds the value up to 91' do
-        expect(subject).to eq [91, '91%', 'prefix 91%']
+      it 'it should return the tooltip' do
+        expect(subject[0][3]).to eq '<table style="line-height:1.2" cellpadding=5><tr><td valign="top"><b>123</b></td><td>Students tested</td></tr><tr><td valign="top"><b>60%</b></td><td>Students are proficient or better</td></tr><tr><td valign="top"><b>77%</b></td><td>State average</td></tr></table>'
       end
     end
   end
 
+
+  describe BarCharts::TestScoresBarChartStacked, type: 'model' do
+
+    describe '#test_scores_bar_chart' do
+      subject do
+        BarCharts::TestScoresBarChartStacked.new(testscoredata).bar_chart_array
+      end
+
+      context 'When test score graph is created' do
+        let(:testscoredata) do
+          {
+            2013 => {
+              'score' => 60,
+              'school_number_tested' => 123,
+              'state_avg' =>  77
+            },
+            2012 => {
+              'score' =>  81,
+              'school_number_tested' =>  145,
+              'state_avg' =>  79
+            },
+            2011 => {
+              'score' =>  63,
+              'school_number_tested' =>  120,
+              'state_avg' =>  65
+            }
+          }
+        end
+        # [["2013", 60, "60%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>123</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>60%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>77%</b></td><td>State average</td></tr></table>"], ["2012", 81, "81%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>145</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>81%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>79%</b></td><td>State average</td></tr></table>"], ["2011", 63, "63%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>120</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>63%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>65%</b></td><td>State average</td></tr></table>"]]
+        it 'it should return the year' do
+          expect(subject[0][0]).to eq '2013'
+        end
+
+        it 'it should return the score' do
+          expect(subject[0][1]).to eq 60
+        end
+
+        it 'it should return the display value' do
+          expect(subject[0][2]).to eq '60%'
+        end
+
+        it 'it should return the tooltip' do
+          expect(subject[0][3]).to eq '<table style="line-height:1.2" cellpadding=5><tr><td valign="top"><b>123</b></td><td>Students tested</td></tr><tr><td valign="top"><b>60%</b></td><td>Students are proficient or better</td></tr><tr><td valign="top"><b>77%</b></td><td>State average</td></tr></table>'
+        end
+      end
+    end
+  end
 end
