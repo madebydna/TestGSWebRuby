@@ -12,7 +12,7 @@
               schoolType: '<%= school.type%>', state: '<%= school.state%>', street: '<%=school.street%>',
               review: '<%=school.respond_to?(:review_count) ? (link_to school.review_count, school_reviews_path(school)) : '0'%>',
               community_rating:'<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : 'None'%>', id: '<%= school.id%>', levelCode: '<%=school.level_code%>',
-              on_page: <%=school.on_page == true %>
+              on_page: <%=school.on_page == true %>, zillowUrl: '<%= zillow_url(school)%>'
               });
 
       <% end %>
@@ -119,7 +119,8 @@
           var infoWindowMarkup = document.createElement('div');
           infoWindowMarkup.innerHTML = '<div>' + point.name + '</div>'
                                      + '<div>'+point.street+'</div>'
-                                     + '<div>'+point.gsRating + point.community_rating + point.review + ' reviews </div>';
+                                     + '<div>'+point.gsRating + point.community_rating + point.review + ' reviews </div>'
+                                     + '<div>'+ '<a href='+point.zillowUrl+' target="_blank" >' + 'Nearby homes for sale </a>' + '</div>';
           return infoWindowMarkup;
       };
 

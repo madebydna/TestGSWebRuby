@@ -199,7 +199,8 @@ module ApplicationHelper
             'overview' => 'localoverview',
             'reviews' => 'localreviews',
             'quality' => 'localquality',
-            'details' => 'localdetails'
+            'details' => 'localdetails',
+            'city_browse' => 'localcitybrowse'
         }
 
   end
