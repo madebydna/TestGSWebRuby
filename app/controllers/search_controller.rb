@@ -75,6 +75,7 @@ class SearchController < ApplicationController
     set_city_state
     @by_location = true
     @params_hash = parse_array_query_string(request.query_string)
+    @filter_and_sort_display_map = filter_and_sort_display_map
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
