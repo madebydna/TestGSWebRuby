@@ -22,7 +22,7 @@
             <h5>Rating Breakdown</h5>
             <table class="table table-striped">
               <% rating_hash["rating_breakdowns"].each do |key, value| %>
-                <tr><td><%= key %></td><td><%= value %></td></tr>
+                <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
               <% end %>
             </table>
           <% end %>
