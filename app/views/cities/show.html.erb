@@ -21,6 +21,9 @@
                             hero_image_mobile: @hero_image_mobile %>
 
 <div class="limit-width-1200">
+ <!-- <% if @show_ads %>
+  <%= @show_ads%>
+  <% end %> -->
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
 
   <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>

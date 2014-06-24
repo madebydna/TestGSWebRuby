@@ -8,6 +8,7 @@ class CitiesController < ApplicationController
   before_action :set_login_redirect
   before_action :set_footer_cities
   before_action :write_meta_tags, except: [:partner]
+  before_action :enable_ads
 
   def show
     hub_city_mapping = mapping
@@ -211,5 +212,9 @@ class CitiesController < ApplicationController
     def parse_partners(partners)
       partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
       partners
+    end
+
+    def enable_ads
+      @show_ads = CollectionConfig.show_ads(configs)
     end
 end
