@@ -54,9 +54,9 @@
           var size_16 = new google.maps.Size(16, 16);
           var point_12_12 = new google.maps.Point(12, 12);
           var point_8_8 = new google.maps.Point(8, 8);
-          var imageUrlPublic = '/assets/icons/140106-24x24_ratings.png';
-          var imageUrlPrivate = '/assets/icons/120905-ratingsx24-private-RYG.png';
-          var imageUrlOffPage = '/assets/icons/120627-16x16_stars.png';
+          var imageUrlPublic = '<%= image_path('icons/140106-24x24_ratings.png')%>';
+          var imageUrlPrivate = '<%= image_path('icons/120905-ratingsx24-private-RYG.png')%>';
+          var imageUrlOffPage = '<%= image_path('icons/120627-16x16_stars.png')%>';
           var infoWindow = new google.maps.InfoWindow({});
 
           for(var i = 0; i < points.length; i++) {
