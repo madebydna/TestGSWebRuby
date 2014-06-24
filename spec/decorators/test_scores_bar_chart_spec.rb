@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TestScoresBarChart, type: 'model' do
-  let(:test_scores_bar_chart) { TestScoresBarChart.new({}) }
+describe BarCharts::TestScoresBarChart, type: 'model' do
+  let(:bar_charts) { BarCharts::TestScoresBarChart.new({}) }
 
   describe '#array_for_single_bar' do
     subject { test_scores_bar_chart.array_for_single_bar('90', 'prefix') }

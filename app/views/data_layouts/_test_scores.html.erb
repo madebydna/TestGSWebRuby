@@ -28,14 +28,30 @@
                         <div id="<%= bar_chart_div_id %>" class="ma"><!--Div for bar chart--></div>
 
                         <% content_for :head do %>
-                            <% bar_chart_array = TestScoresBarChart.new(value).bar_chart_array %>
-                            <script type="text/javascript">
-                                GS.visualchart.drawBarChartTestScores(
-                                  <%= raw bar_chart_array.to_s %>,
-                                  <%= raw '"' + bar_chart_div_id + '"' %>,
-                                  'testscores'
-                                );
-                            </script>
+                            <!-- Only show stacked with proficiency for Delaware -->
+                            <% if @school.state.upcase == "DE" %>
+                                <% bar_chart_array = BarCharts::TestScoresBarChartStacked.new(value).bar_chart_array %>
+                                <script type="text/javascript">
+
+                                    GS.visualchart.drawBarChartTestScoresStacked(
+                                            <%= raw bar_chart_array.to_s %>,
+                                            <%= raw '"' + bar_chart_div_id + '"' %>,
+                                            'testscores'
+                                    );
+
+                                </script>
+                            <% else %>
+                                <% bar_chart_array = BarCharts::TestScoresBarChart.new(value).bar_chart_array %>
+                                <script type="text/javascript">
+
+                                    GS.visualchart.drawBarChartTestScores(
+                                            <%= raw bar_chart_array.to_s %>,
+                                            <%= raw '"' + bar_chart_div_id + '"' %>,
+                                            'testscores'
+                                    );
+
+                                </script>
+                            <% end %>
                         <% end %>
                     <% end %>
                 <% end %>
