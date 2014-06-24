@@ -46,7 +46,7 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
     end
   end
 
-
+  #  needs to be refined once actual proficiency and advanced scores are available
   describe BarCharts::TestScoresBarChartStacked, type: 'model' do
 
     describe '#test_scores_bar_chart' do
@@ -74,7 +74,7 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
             }
           }
         end
-        # [["2013", 60, "60%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>123</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>60%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>77%</b></td><td>State average</td></tr></table>"], ["2012", 81, "81%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>145</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>81%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>79%</b></td><td>State average</td></tr></table>"], ["2011", 63, "63%", "<table style=\"line-height:1.2\" cellpadding=5><tr><td valign=\"top\"><b>120</b></td><td>Students tested</td></tr><tr><td valign=\"top\"><b>63%</b></td><td>Students are proficient or better</td></tr><tr><td valign=\"top\"><b>65%</b></td><td>State average</td></tr></table>"]]
+
         it 'it should return the year' do
           expect(subject[0][0]).to eq '2013'
         end
