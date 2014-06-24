@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe BarCharts::TestScoresBarChart, type: 'model' do
-  let(:bar_charts) { BarCharts::TestScoresBarChart.new({}) }
+describe BarCharts::TestScoresBar, type: 'model' do
+  let(:bar_charts) { BarCharts::TestScoresBar.new({}) }
 
   describe '#array_for_single_bar' do
-    subject { test_scores_bar_chart.array_for_single_bar('90', 'prefix') }
+    subject { bar_charts.array_for_single_bar('90', 'prefix') }
 
     it 'adds the correct tooltip to the array' do
       expect(subject[2]).to eq 'prefix 90%'
@@ -21,7 +21,7 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
     end
 
     context 'when value contains >' do
-      subject { test_scores_bar_chart.array_for_single_bar('>90', 'prefix') }
+      subject { bar_charts.array_for_single_bar('>90', 'prefix') }
       it 'it removes the > from the bar value' do
         expect(subject.first).to eq 90
       end
@@ -34,14 +34,14 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
     end
 
     context 'when value is nil' do
-      subject { test_scores_bar_chart.array_for_single_bar(nil, 'prefix') }
+      subject { bar_charts.array_for_single_bar(nil, 'prefix') }
       it 'it returns an array where value is zero' do
         expect(subject.first).to eq 0
       end
     end
 
     context 'when value is 90.9' do
-      subject { test_scores_bar_chart.array_for_single_bar(90.9, 'prefix') }
+      subject { bar_charts.array_for_single_bar(90.9, 'prefix') }
       it 'rounds the value up to 91' do
         expect(subject).to eq [91, '91%', 'prefix 91%']
       end
