@@ -16,6 +16,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
+  get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
+  get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
+
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
@@ -186,10 +190,6 @@ LocalizedProfiles::Application.routes.draw do
     get 'reviews/write', to: 'reviews#new', as: :review_form
     get '', to: 'localized_profile#overview'
   end
-
-  get '/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
-  get '/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
-  get '/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]

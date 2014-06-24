@@ -161,7 +161,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             return 0;
         },
         remote: {
-            url: '/search/suggest/school?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/school?query=%QUERY&state=Delaware',
             filter: function(data) {
                 schools = $(GS.search.schoolSearchForm.schools)[0];
                 cacheList = schools.cacheList;
@@ -192,7 +192,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             return 0;
         },
         remote: {
-            url: '/search/suggest/city?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/city?query=%QUERY&state=Delaware',
             filter: function(data) {
                 cities = $(GS.search.schoolSearchForm.cities)[0];
                 cacheList = cities.cacheList;
@@ -223,7 +223,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             return 0;
         },
         remote: {
-            url: '/search/suggest/district?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/district?query=%QUERY&state=Delaware',
             filter: function(data) {
                 districts = $(GS.search.schoolSearchForm.districts)[0];
                 cacheList = districts.cacheList;
