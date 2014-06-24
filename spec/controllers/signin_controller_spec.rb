@@ -310,7 +310,7 @@ describe SigninController do
               stub_fb_login_fail
               allow(controller).to receive(:overview_page_for_last_school) { nil }
               get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/index.page')
+              expect(response).to redirect_to('/')
             end
           end
         end

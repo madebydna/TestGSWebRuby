@@ -24,7 +24,7 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get '/index.page', as: :home
+    get ENV_GLOBAL['home_path'], as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs

@@ -17,3 +17,4 @@ solr.rw.server.url:  "http://localhost:8580/main/"
 cdn_host: 'http://www.gscdn.org'
 optimizely_key: "384121511"
 advertising_env: "dev"
+home_path: "/"
