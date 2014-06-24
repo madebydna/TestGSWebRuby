@@ -141,5 +141,20 @@ describe EspEnrollmentDecorator do
         expect(subject).to eq 'no info'
       end
     end
+    context 'When enrollment_chances has nil applications received' do
+      # MI 5874
+      let(:esp_enrollment_data) do
+        {
+          'applications_received_year' => '2013-2014',
+          'students_accepted_year' => '2013-2014',
+          'students_accepted'  => nil,
+          'applications_received'  => nil
+        }
+      end
+
+      it 'it should return "no info"' do
+        expect(subject).to eq 'no info'
+      end
+    end
   end
 end
