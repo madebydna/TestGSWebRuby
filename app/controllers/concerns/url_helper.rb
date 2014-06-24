@@ -84,6 +84,22 @@ module UrlHelper
     }
   end
 
+  def district_params(state, city, district)
+    {
+      state: gs_legacy_url_encode(States.state_name state),
+      city: gs_legacy_url_encode(city),
+      district: gs_legacy_url_encode(district)
+    }
+  end
+
+  def district_params_from_district(district)
+    {
+      state: gs_legacy_url_encode(States.state_name district.state),
+      city: gs_legacy_url_encode(district.city),
+      district: gs_legacy_url_encode(district.name)
+    }
+  end
+
   %w(school school_details school_quality school_reviews school_review_form).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       if school == nil

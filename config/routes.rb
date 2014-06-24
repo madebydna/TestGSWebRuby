@@ -142,7 +142,6 @@ LocalizedProfiles::Application.routes.draw do
         state: States.any_state_name_regex,
     } do
 
-
       get '', to: 'cities#show'
       get 'events', to: 'cities#events', as: :events
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
@@ -159,6 +158,16 @@ LocalizedProfiles::Application.routes.draw do
         get '/funders', to: 'cities#community'
         get '/partner', to: 'cities#partner', as: :partner
       end
+
+      # Route to district home. Java will handle this, so set controller
+      # to just 404 by default. route helper will be city_district_path(...)
+      # NOTE: this must come last in the city scope, because it will match
+      # Anything after the cty name
+      get '/:district', to: 'error#page_not_found', as: :district, constraints: lambda{ |request|
+        district = request.params[:district]
+        # district can't = preschools and must start with letter
+        return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
+      }
     end
 
     # Routes for city page
