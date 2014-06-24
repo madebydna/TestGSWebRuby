@@ -14,6 +14,8 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
 
+  get '/search/search.page', as: :search, to: 'search#search'
+
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found

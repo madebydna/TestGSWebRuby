@@ -27,7 +27,7 @@
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
         <div class="ptl">
             <div class="iconx16 i-16-map-pin ma db vam"></div>
-            <span class="tac db">10 miles</span>
+            <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
         </div>
       </div>
     <% end%>

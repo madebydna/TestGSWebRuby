@@ -21,7 +21,6 @@ class SearchController < ApplicationController
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_pagename_browse_city
     ad_setTargeting_through_gon
 
     @params_hash = parse_array_query_string(request.query_string)
@@ -29,6 +28,8 @@ class SearchController < ApplicationController
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
+
+    set_omniture_pagename_browse_city @page_number
 
     search_options = {state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
@@ -61,6 +62,57 @@ class SearchController < ApplicationController
     render 'browse_city'
   end
 
+  def search
+    if params.include?(:lat) && params.include?(:lon)
+      self.by_location
+    end
+
+    render 'browse_city'
+  end
+
+  def by_location
+    set_city_state
+    @by_location = true
+    @params_hash = parse_array_query_string(request.query_string)
+    @results_offset = get_results_offset
+    @page_size = get_page_size
+    @page_number = get_page_number(@page_size, @results_offset) # for use in view
+
+    set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
+    ad_setTargeting_through_gon
+    set_omniture_pagename_search_school @page_number
+
+    @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
+
+    @lat = @params_hash['lat']
+    @lon = @params_hash['lon']
+    @radius = @params_hash['distance'] || 5
+    search_options = {state: @state[:short], number_of_results: @page_size, offset: @results_offset, lat: @lat, lon: @lon, radius: @radius}
+    (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
+    (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+
+    results = SchoolSearchService.by_location(search_options)
+
+    unless results.empty?
+      @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+      @total_results = results[:num_found]
+      @schools = results[:results]
+      calculate_fit_score(@schools, @params_hash)
+      @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+      @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+    end
+
+    results = SchoolSearchService.by_location(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+
+    unless results.empty?
+      @map_schools = results[:results]
+      @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
+        school.on_page = true
+      end
+      calculate_fit_score(@map_schools, @params_hash)
+    end
+
+  end
 
   def suggest_school_by_name
     set_city_state
@@ -204,6 +256,16 @@ class SearchController < ApplicationController
   def set_omniture_data_browse_city(page_num = 1)
     set_omniture_data_for_user_request
     gon.omniture_hier1 = "Search,Schools,City,#{page_num}"
+  end
+
+  def set_omniture_pagename_search_school(page_num = 1)
+    gon.omniture_pagename = "School Search:Page#{page_num}"
+    set_omniture_data_search_school(page_num)
+  end
+
+  def set_omniture_data_search_school(page_num = 1)
+    set_omniture_data_for_user_request
+    gon.omniture_hier1 = "Search,School Search,#{page_num}"
   end
 
   def ad_setTargeting_through_gon

@@ -235,6 +235,6 @@ module ApplicationHelper
   end
 
   def search_by_location?
-    @options.present? && @options[:search_type] == :by_location
+    @by_location
   end
 end

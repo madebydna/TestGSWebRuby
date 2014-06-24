@@ -3,6 +3,7 @@ class SchoolSearchService
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
   DEFAULT_CITY_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
+  DEFAULT_BY_LOCATION_OPTIONS = {sort: 'distance asc', rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
   PARAMETER_TO_SOLR_MAPPING = {
       number_of_results: :rows,
       offset: :start
@@ -10,8 +11,8 @@ class SchoolSearchService
   SORT_VALUE_MAP = {
       rating_asc: 'sorted_gs_rating_asc asc',
       rating_desc: 'overall_gs_rating desc',
-      distance_asc: 'geodist() asc', # todo not relevant for browse
-      distance_desc: 'geodist() desc', # todo not relevant for browse
+      distance_asc: 'distance asc', # todo not relevant for browse
+      distance_desc: 'distance desc', # todo not relevant for browse
       name_asc: 'school_name asc',
       name_desc: 'school_name desc'
   }
@@ -33,6 +34,24 @@ class SchoolSearchService
     param_options[:fq] = DEFAULT_CITY_BROWSE_OPTIONS[:fq].clone
     filters.each {|filter| param_options[:fq] << filter}
 
+    parse_school_results(get_results param_options)
+  end
+
+  def self.by_location(options_param = {})
+    raise ArgumentError, 'Latitude is required' unless options_param.include?(:lat)
+    raise ArgumentError, 'Longitude is required' unless options_param.include?(:lon)
+    options = options_param.deep_dup
+    rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
+    remap_sort(options)
+    filters = extract_filters(options)
+    filters << "+school_database_state:\"#{options[:state].downcase}\"" if options[:state]
+    options.delete :city
+    options.delete :state
+    query = extract_by_location options
+    param_options = DEFAULT_BY_LOCATION_OPTIONS.merge(options)
+    param_options[:fq] = DEFAULT_BY_LOCATION_OPTIONS[:fq].clone
+    filters.each {|filter| param_options[:fq] << filter}
+    param_options[:query] = query
     parse_school_results(get_results param_options)
   end
 
@@ -91,6 +110,8 @@ class SchoolSearchService
     school_search_result['state_name'] = States.state_name(school_search_result['state'])
     school_search_result['school_media_first_hash'] = ((photo = school_search_result['small_size_photos'].presence) ? photo[0].match(/\/(\w*)-/)[1] : nil)
     add_level_codes(school_search_result, school_search_result['grade_level'])
+    # convert KM to miles
+    school_search_result['distance'] = school_search_result['distance'] / 1.6 if school_search_result['distance']
     SchoolSearchResult.new school_search_result
   end
 
@@ -163,5 +184,15 @@ class SchoolSearchService
       hash.delete :filters
     end
     filter_arr
+  end
+
+  def self.extract_by_location(hash)
+    radius = hash[:radius] || 5.0
+    radius_in_km = radius.to_f * 1.6 # convert to KM
+    query = "{!spatial circles=#{hash[:lat]},#{hash[:lon]},#{radius_in_km}}"
+    hash.delete :lat
+    hash.delete :lon
+    hash.delete :radius
+    query
   end
 end
