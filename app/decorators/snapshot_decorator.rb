@@ -30,7 +30,7 @@ class SnapshotDecorator < Draper::Decorator
     if configured_format(key) == 'integer'
       value = value.is_a?(Numeric) ? value.round : value
     end
-    if value == 'no info'
+    if value.is_a?(String) && value != 'no info'
       value = value.gs_capitalize_first
     end
     if key == 'district'

@@ -38,8 +38,11 @@ describe SnapshotDecorator do
       expect(subject.format_value('data point', 50.5)).to eq 50.5
     end
 
-    it 'it should format the value "no info" to "No info"' do
-      expect(subject.format_value('data point', 'no info')).to eq 'No info'
+    it 'it should capitalize the first letter if it is not "no info"' do
+      expect(subject.format_value('data point', 'no info')).to eq 'no info'
+      expect(subject.format_value('data point', 'foo')).to eq 'Foo'
+      expect(subject.format_value('data point', 'foo bar')).to eq 'Foo bar'
+      expect(subject.format_value('data point', '123 bar')).to eq '123 bar'
     end
 
     it 'should link the district name if it exists' do
