@@ -106,7 +106,7 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return a number' do
-        expect(subject).to eq '10'
+        expect(subject.to_s).to eq '{"chance"=>"10", "year"=>"2013-2014"}'
       end
     end
 
@@ -122,7 +122,7 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return 5' do
-        expect(subject).to eq '5'
+        expect(subject.to_s).to eq '{"chance"=>"5", "year"=>"2013-2014"}'
       end
     end
     context 'When enrollment_chances has the different dates' do
@@ -136,8 +136,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
     context 'When enrollment_chances has 0 applications received' do
@@ -151,8 +151,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
     context 'When enrollment_chances has nil applications received' do
@@ -166,8 +166,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
   end
