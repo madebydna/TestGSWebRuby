@@ -8,7 +8,7 @@
     <% if esp_enrollment.enrollment_chances.present?%>
         <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
                                         supporting_text:'Students accepted for the '+esp_enrollment.enrollment_chances['year']+' school year',
-                                        icon_text: (esp_enrollment.enrollment_chances['chance']+'/10') ) %>
+                                        icon_text: (esp_enrollment.enrollment_chances['chance']+' / 10') ) %>
     <% end %>
 
     <% if esp_enrollment.application_deadline.present? %>
