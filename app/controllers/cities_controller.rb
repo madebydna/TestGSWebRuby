@@ -217,20 +217,14 @@ class CitiesController < ApplicationController
       partners
     end
 
-    # def enable_ads
-    #   @show_ads = CollectionConfig.show_ads(configs)
-    # end
 
   def ad_setTargeting_through_gon
     if @show_ads
       set_targeting = {}
-      # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
-      # @school.city.delete(' ').slice(0,10)
-      set_targeting['City'] = format_ad_setTargeting(@city)
+      set_targeting['City'] = format_ad_setTargeting(@city.gs_capitalize_words)
       set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
       set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation
-      # set_targeting['zipcode'] = format_ad_setTargeting(@school.zipcode)
       set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
 
       gon.ad_set_targeting = set_targeting

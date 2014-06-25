@@ -2,6 +2,7 @@ class StatesController < ApplicationController
   include SeoHelper
   include OmnitureConcerns
   include MetaTagsHelper
+  include AdvertisingHelper
 
   before_filter :set_city_state
   before_filter :set_hub_params
@@ -26,7 +27,8 @@ class StatesController < ApplicationController
       @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
-
+      @show_ads = CollectionConfig.show_ads(configs)
+      ad_setTargeting_through_gon
       set_omniture_data('GS:State:Home', 'Home,StateHome')
     end
   end
@@ -106,6 +108,19 @@ class StatesController < ApplicationController
       @canonical_url = state_education_community_url(params[:state])
 
       render 'shared/community'
+    end
+  end
+
+  def ad_setTargeting_through_gon
+    if @show_ads
+      set_targeting = {}
+      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
+      set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation
+      set_targeting['editorial'] = format_ad_setTargeting('Find a School')
+      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
+
+      gon.ad_set_targeting = set_targeting
     end
   end
 

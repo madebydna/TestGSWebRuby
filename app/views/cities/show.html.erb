@@ -21,10 +21,9 @@
                             hero_image_mobile: @hero_image_mobile %>
 
 <div class="limit-width-1200">
- <!-- <% if @show_ads %>
-  <%= @show_ads%>
-  <% end %> -->
+
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
+  <%= render 'shared/review_global'%>
 
   <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
 
@@ -33,6 +32,20 @@
   <%= render 'featured_articles', articles: @articles %>
 
   <%= render 'partner_carousel', partner_carousel: @partner_carousel %>
+
+
+
+   <% if @show_ads %>
+        <% ad_hash_desktop_footer={visible_for:'visible-lg visible-md visible-sm',ad_slot_id:'Ad_Id_Responsive_City_Home_Footer',ad_size:'[728,90]',ad_width:'728',ad_target:'Responsive_City_Home_Footer_728x90'}%>
+        <% ad_hash_mobile_footer={visible_for:'visible-xs',ad_slot_id:'Ad_Id_Responsive_City_Home_Mobile_Footer',ad_size:'[320,50]',ad_width:'320',ad_target:'Responsive_City_Home_Mobile_Footer_320x50'}%>
+
+      <div class="mvl">
+      <%= render 'shared/ad_slot', ad_data: ad_hash_desktop_footer %>
+      <%= render 'shared/ad_slot', ad_data: ad_hash_mobile_footer %>
+      </div>
+
+   <% end %>
+
 </div>
 
 <%= render 'shared/state_footer', state: @state, cities: @cities %>

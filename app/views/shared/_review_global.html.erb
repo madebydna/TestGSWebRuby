@@ -1,0 +1,25 @@
+<% grid_sizing='col-xs-12 col-sm-12 col-md-12 col-lg-12'%>
+<% if @show_ads %>
+    <% grid_sizing='col-xs-12 col-sm-6 col-md-6 col-lg-6'%>
+<% end %>
+
+<hr />
+<h2>Tell Your Story!</h2>
+<div class="<%= grid_sizing %> pbl">
+  <div class=" tac">
+    <p class="open-sans_b">
+          Let others know what you think about your school
+    </p>
+    <button type="button" data-link-value="<%= the_scoop_url %>" class="btn btn-primary mtm js-button-link" onclick="GS.omniture.track_reviews('');">
+      Write a review
+    </button>
+  </div>
+</div>
+<% if @show_ads %>
+    <div class="<%= grid_sizing %> pbl">
+      <% ad_hash_desktop_footer={visible_for:'visible-lg visible-md visible-sm',ad_slot_id:'Ad_Id_Responsive_City_Home_Content_Top',ad_size:'[300,250]',ad_width:'300',ad_target:'Responsive_City_Home_Content_Top_300x250'}%>
+      <% ad_hash_mobile_footer={visible_for:'visible-xs',ad_slot_id:'Ad_Id_Responsive_City_Home_Mobile_Content_Top',ad_size:'[300,250]',ad_width:'300',ad_target:'Responsive_City_Home_Mobile_Content_Top_300x250'}%>
+      <%= render 'shared/ad_slot', ad_data: ad_hash_desktop_footer %>
+      <%= render 'shared/ad_slot', ad_data: ad_hash_mobile_footer %>
+    </div>
+<% end %>
