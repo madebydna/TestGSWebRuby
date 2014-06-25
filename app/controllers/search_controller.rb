@@ -322,6 +322,30 @@ class SearchController < ApplicationController
         'beforeAfterCare' => {
             'before' => 'Before School Care',
             'after' => 'After School Care',
+        },
+        'grades' => {
+            'p' => 'Pre-School',
+            'k' => 'Kindergarten',
+            '1' => '1st Grade',
+            '2' => '2nd Grade',
+            '3' => '3rd Grade',
+            '4' => '4th Grade',
+            '5' => '5th Grade',
+            '6' => '6th Grade',
+            '7' => '7th Grade',
+            '8' => '8th Grade',
+            '9' => '9th Grade',
+            '10' => '10th Grade',
+            '11' => '11th Grade',
+            '12' => '12th Grade'
+        },
+        'distance' => {
+            '10' => '10 Miles',
+            '20' => '20 Miles',
+            '30' => '30 Miles',
+            '40' => '40 Miles',
+            '50' => '50 Miles',
+            '100' => '100 Miles'
         }
     }
     map = {}.merge(temp_map)

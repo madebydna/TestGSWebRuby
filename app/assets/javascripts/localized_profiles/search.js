@@ -13,7 +13,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
-    var prototypeSearch = 'input#js-prototypeSearch';
+    var prototypeSearchSelector = 'input#js-prototypeSearch';
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
 
@@ -36,10 +36,19 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             }
         });
 
-        $('.prototypeSearchForm').submit(function() {
-            var valid = validateField($(this).find(prototypeSearch)[0]);
+        $('.js-prototypeSearchForm').submit( function() {
+            var valid = validateField($(this).find(prototypeSearchSelector)[0]);
+            var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
-                return submitPrototypeSearch.apply(this);
+                if (searchType == 'byLocation') {
+                    findByLocationSelector = prototypeSearchSelector;
+                    return submitByLocationSearch.apply(this);
+                } else if (searchType == 'byName') {
+                    findByNameSelector = prototypeSearchSelector;
+                    return submitByNameSearch.apply(this);
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -127,10 +136,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
                     data['totalResults'] = geocodeResult['totalResults'];
                     data['locationSearchString'] = searchQuery;
-                    data['distance'] = 5;
+                    data['distance'] = $('#js-prototypeSearchDistanceFilter').val() || 5;
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
-
+                    $('#js-prototypeSearchGradeLevelFilter').val() == undefined || (data['grades'] = $('#js-prototypeSearchGradeLevelFilter').val());
                     // Not setting a timeout breaks back button
                     setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
                             SEARCH_PAGE_PATH +
@@ -401,7 +410,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         districts: districts,
         schools: schools,
         attachAutocomplete: attachAutocomplete,
-        handleAddressOrZipcode: handleAddressOrZipcode
+        handleAddressOrZipcode: handleAddressOrZipcode,
+        searchType: 'byLocation'
     };
 })();
 
