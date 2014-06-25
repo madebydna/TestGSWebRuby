@@ -66,9 +66,11 @@ class SearchController < ApplicationController
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
+      render 'browse_city'
+    else
+      self.city_browse
     end
 
-    render 'browse_city'
   end
 
   def by_location

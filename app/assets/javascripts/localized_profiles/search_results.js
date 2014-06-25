@@ -1,6 +1,16 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
+    var init = function() {
+        $('.js-searchResultsFilterForm').submit(function() {
+            var getParam = GS.uri.Uri.getFromQueryString;
+            queryParamters = {};
+            getParam('lat') == undefined || (queryParamters['lat'] = getParam('lat'));
+            getParam('lon') == undefined || (queryParamters['lon'] = getParam('lon'));
+            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this)
+        });
+    };
+
     var pagination = function(query) {
         //TODO handle ajax later
         goToPage(query);
@@ -31,6 +41,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     return {
+        init:init,
         pagination: pagination,
         sortBy: sortBy,
         keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen
@@ -38,5 +49,6 @@ GS.search.results = GS.search.results || (function() {
 })();
 
 $(document).ready(function() {
+    GS.search.results.init();
     GS.search.results.keepSearchResultsFilterMenuOpen();
 });

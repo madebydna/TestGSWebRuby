@@ -3,7 +3,7 @@
     <div class="dropdown drowpdown-large">
       <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
       <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:500px;">
-	      <form name="searchResultsFilterForm" action=<%="/#{@state[:long]}/#{@city[:name]}/schools"%> method="get">
+	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action="/search/search.page" method="get">
           <li class="pal col-xs-6">
             <div class="ptm">
               <span>School Types</span><br>
@@ -50,6 +50,8 @@
              <span>Swimming</span><br>
             </div>
           </li>
+          <% if @state.present?%><input type="hidden" name="state" value=<%=@state[:short]%>><%end%>
+          <% if @city.present?%><input type="hidden" name="city" value=<%=@city[:name]%>><%end%>
           <div class="col-xs-12">
             <button class="btn btn-default pull-right mrm mbm"type='submit'>Submit</button>
           </div>
