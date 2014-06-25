@@ -1,7 +1,7 @@
 <div class="row mvl">
   <% unless articles.nil? %>
     <div class="col-xs-12 col-md-7 mtl mbl pam">
-      <h2 class="mtn">Featured articles</h2>
+      <h2 class="mtn mbl">Featured articles</h2>
       <% articles.each do |article| %>
         <div class='row'>
           <div class="col-md-2 prl pbm">
@@ -11,9 +11,9 @@
             <h4 class="mvn pvn"><%= article[:heading] %></h4>
             <p class='mobile-clearfix'><%= article[:content] %></p>
                <% if article[:newwindow] %>
-              <%= link_to "Learn More >>", article[:articlepath], target: '_blank' %>
+              <%= link_to "Learn More &#187".html_safe, article[:articlepath], target: '_blank' %>
             <% else %>
-                <%= link_to "Learn More >>", article[:articlepath] %>
+                <%= link_to "Learn More &#187".html_safe, article[:articlepath] %>
             <% end %>
           </div>
         </div>
