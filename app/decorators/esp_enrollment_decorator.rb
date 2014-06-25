@@ -8,7 +8,12 @@ class EspEnrollmentDecorator
   def application_deadline
     deadline = esp_hash.application_deadline
     if deadline == 'date'
-      esp_hash.application_deadline_date
+      begin
+        date = Date.strptime(esp_hash.application_deadline_date, "%m/%d/%Y")
+        date.strftime("%B %d, %Y")
+      rescue => error
+        esp_hash.application_deadline_date
+      end
     elsif deadline == 'yearround'
       'Rolling deadline'
     elsif deadline == 'parents_contact'

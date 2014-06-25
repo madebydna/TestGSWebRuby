@@ -3,6 +3,7 @@ require 'spec_helper'
 describe EspEnrollmentDecorator do
 
   describe '#application_deadline' do
+
     subject do
       EspEnrollmentDecorator.new(esp_enrollment_data).application_deadline
     end
@@ -17,9 +18,22 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return the actual date' do
-        expect(subject).to eq '01/01/2020'
+        expect(subject).to eq 'January 01, 2020'
       end
     end
+
+    context 'When application_deadline is "date" and its not in the right format to parse' do
+      let(:esp_enrollment_data) do
+        {
+          'application_deadline' => 'date',
+          'application_deadline_date' => '28/01/2020'
+        }
+      end
+
+      it 'should return the date string' do
+        expect(subject).to eq '28/01/2020'
+        end
+      end
 
     context 'When application_deadline is "yearround"' do
       # MI 4667
