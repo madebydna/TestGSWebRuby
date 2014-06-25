@@ -5,7 +5,7 @@
 
 .iconx60 {
     display: inline-block;
-    background-image: image-url("icons/140414-60x60_sprite.png");
+    background-image: image-url("icons/140625-60x60_sprite.png");
     width: 60px;
     height: 60px;
 }
@@ -34,6 +34,18 @@
 
 .i-60-community {
   background-position: -300px 0px;
+}
+
+.i-60-students {
+  background-position: -360px 0px;
+}
+
+.i-60-community_blue {
+  background-position: -420px 0px;
+}
+
+.i-60-application {
+  background-position: -480px 0px;
 }
 
 .i-60-color-art {
