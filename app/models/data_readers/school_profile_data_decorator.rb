@@ -25,9 +25,6 @@ module SchoolProfileDataDecorator
     if (base.instance_variable_get :@test_scores_data_reader).nil?
       base.instance_variable_set :@test_scores_data_reader, TestScoresDataReader.new(base)
     end
-    if (base.instance_variable_get :@zillow_data_reader).nil?
-      base.instance_variable_set :@zillow_data_reader, ZillowDataReader.new(base)
-    end
   end
 
   def page=(page)
@@ -48,8 +45,7 @@ module SchoolProfileDataDecorator
       esp_response: @esp_data_reader,
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
-      test_scores: @test_scores_data_reader,
-      zillow: @zillow_data_reader,
+      test_scores: @test_scores_data_reader
     }
   end
 
@@ -64,7 +60,6 @@ module SchoolProfileDataDecorator
       rating_data
       snapshot
       test_scores
-      zillow
       census_data_points
       footnotes
       enrollment
@@ -177,11 +172,6 @@ module SchoolProfileDataDecorator
   def test_scores(options = {})
     category = options[:category]
     @test_scores_data_reader.data
-  end
-
-  def zillow(options = {})
-    category = options[:category]
-    @zillow_data_reader.data_for_category category
   end
 
   def enrollment(options = {})
