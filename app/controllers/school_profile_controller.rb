@@ -1,4 +1,4 @@
-class LocalizedProfileController < ApplicationController
+class SchoolProfileController < SchoolController
   protect_from_forgery
 
   include OmnitureConcerns
@@ -21,40 +21,6 @@ class LocalizedProfileController < ApplicationController
   # after_filter :set_last_modified_date
 
   layout 'application'
-
-  def overview
-    #Set the pagename before setting other omniture props.
-    gon.omniture_pagename = 'GS:SchoolProfiles:Overview'
-    set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_url(@school)
-  end
-
-  def quality
-    #Set the pagename before setting other omniture props.
-    gon.omniture_pagename = 'GS:SchoolProfiles:Quality'
-    set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_url(@school)
-  end
-
-  def details
-    #Set the pagename before setting other omniture props.
-    gon.omniture_pagename = 'GS:SchoolProfiles:Details'
-    set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_url(@school)
-  end
-
-  def reviews
-    #Set the pagename before setting other omniture props.
-    gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
-    set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_reviews_url(@school)
-    @canonical_url = school_url(@school)
-
-    @school_reviews = @school.reviews_filter quantity_to_return: 10
-
-    @review_offset = 0
-    @review_limit = 10
-  end
 
   protected
 
@@ -210,4 +176,13 @@ class LocalizedProfileController < ApplicationController
       school.city_breadcrumb_text => city_url(city_params(school.state, school.city))
     }
   end
+
+  # requires that @school has already been obtained from db
+  def canonical_path
+    helper_name = 'school_'
+    helper_name << "#{action_name}_" if action_name != 'overview'
+    helper_name << 'path'
+    canonical_path = self.send helper_name.to_sym, @school
+  end
+  
 end

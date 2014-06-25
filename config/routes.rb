@@ -178,11 +178,11 @@ LocalizedProfiles::Application.routes.draw do
         schoolId: /\d+/,
         school_name: /.+/,
     } do
-      get 'quality', to: 'localized_profile#quality', as: :quality
-      get 'details', to: 'localized_profile#details', as: :details
-      get 'reviews', to: 'localized_profile#reviews', as: :reviews
+      get 'quality', to: 'school_profile_quality#quality', as: :quality
+      get 'details', to: 'school_profile_details#details', as: :details
+      get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
       get 'reviews/write', to: 'reviews#new', as: :review_form
-      get '', to: 'localized_profile#overview'
+      get '', to: 'school_profile_overview#overview'
     end
   end
 
@@ -193,11 +193,11 @@ LocalizedProfiles::Application.routes.draw do
       school_name: /.+/,
   } do
 
-    get 'quality', to: 'localized_profile#quality', as: :quality
-    get 'details', to: 'localized_profile#details', as: :details
-    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get 'quality', to: 'school_profile_quality#quality', as: :quality
+    get 'details', to: 'school_profile_details#details', as: :details
+    get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
     get 'reviews/write', to: 'reviews#new', as: :review_form
-    get '', to: 'localized_profile#overview'
+    get '', to: 'school_profile_overview#overview'
   end
 
   constraints(PathWithPeriod) do

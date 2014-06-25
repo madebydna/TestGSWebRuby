@@ -1,88 +1,13 @@
 require 'spec_helper'
-describe LocalizedProfileController do
+describe SchoolProfileController do
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
 
-  it 'should have only four actions' do
-    expect(controller.action_methods.size).to eq(4)
-    expect(controller.action_methods - ['overview', 'reviews', 'quality', 'details']).to eq(Set.new)
-  end
-
-  shared_examples_for 'a configurable profile page' do |action|
-    before do
-      allow(controller).to receive(:find_school).and_return(school)
-      allow(PageConfig).to receive(:new).and_return(page_config)
-    end
-
-    it 'should set the correct cannonical url' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq("http://localhost/california/alameda/#{school.id}-Alameda-High-School/")
-    end
-
-    it 'should set a PageConfig object' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:page_config]).to be_present
-    end
-
-    it 'should look up the correct school' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:school]).to eq(school)
-    end
-
-    it 'should set data needed for header' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:school_reviews_global]).to be_present
-    end
-
-    it 'should 404 with non-existent school' do
-      allow(controller).to receive(:find_school).and_return(nil)
-      get action, controller.view_context.school_params(school)
-      expect(response.code).to eq('404')
-    end
-
-    it 'should convert a full state name to a state abbreviation' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:state]).to eq({ long: 'california', short: 'ca' })
-    end
-
-  end
-
-  describe 'GET overview' do
-    it_behaves_like 'a configurable profile page', 'overview'
-  end
-
-  describe 'GET quality' do
-    it_behaves_like 'a configurable profile page', 'quality'
-  end
-
-  describe 'GET details' do
-    it_behaves_like 'a configurable profile page', 'details'
-  end
-
-  describe 'GET reviews' do
-    before do
-      allow(controller).to receive(:find_school).and_return(school)
-      allow(PageConfig).to receive(:new).and_return(page_config)
-    end
-
-    it 'should set the list of reviews' do
-      reviews = [ instance_double(SchoolRating) ]
-      expect(school).to receive(:reviews_filter).and_return(reviews)
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school_reviews]).to eq(reviews)
-    end
-
-    it 'should look up the correct school' do
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school]).to eq(school)
-    end
-
-    it 'should set data needed for header' do
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school_reviews_global]).to be_present
-    end
-  end
+  it 'should have no actions' do
+    expect(controller.action_methods.size).to eq(0)
+    expect(controller.action_methods - []).to eq(Set.new)
+  end  
 
   describe 'Check SEO for school profile page' do
 

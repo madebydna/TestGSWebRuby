@@ -1,10 +1,12 @@
-class ReviewsController < ApplicationController
+class ReviewsController < SchoolController
   include ReviewControllerConcerns
   include DeferredActionConcerns
   include OmnitureConcerns
 
   # Find school before executing culture action
+
   before_action :require_state, :require_school, :find_user, except: [:create, :report]
+  before_action :redirect_to_canonical_url, only: [:new]
   before_action :store_location, only: [:overview, :quality, :details, :reviews]
   before_action :set_last_school_visited, only: [:new]
   before_action :set_city_state
@@ -69,5 +71,9 @@ class ReviewsController < ApplicationController
 
     set_omniture_data
     set_meta_tags :title =>  'Rate and review ' + @school.name + ' in ' + @school.city + ', ' + @school.state
+  end
+
+  def canonical_path
+    school_review_form_path(@school)
   end
 end
