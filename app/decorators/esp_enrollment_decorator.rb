@@ -19,10 +19,10 @@ class EspEnrollmentDecorator
   # Calculation is a rounded number out of 10. Formula is ROUND(students_accepted / applications_received * 10)
   # Schools without data get "no info"
   def enrollment_chances
-    return_value = "no info"
+    return_value = { 'chance' => 'no info', 'year' => '' }
     if esp_hash.students_accepted_year == esp_hash.applications_received_year
       if esp_hash.applications_received.to_i > 0
-        return_value =  ((esp_hash.students_accepted.to_f / esp_hash.applications_received.to_f) * 10).round.to_s
+        return_value =  { 'chance' => ((esp_hash.students_accepted.to_f / esp_hash.applications_received.to_f) * 10).round.to_s, 'year' => esp_hash.applications_received_year }
       end
     end
     return_value
