@@ -4,9 +4,9 @@ GS.search.results = GS.search.results || (function() {
     var init = function() {
         $('.js-searchResultsFilterForm').submit(function() {
             var getParam = GS.uri.Uri.getFromQueryString;
-            queryParamters = {};
-            getParam('lat') == undefined || (queryParamters['lat'] = getParam('lat'));
-            getParam('lon') == undefined || (queryParamters['lon'] = getParam('lon'));
+            var queryParamters = {};
+            var fields = ['lat', 'lon', 'grades', 'distance'];
+            for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this)
         });
     };
