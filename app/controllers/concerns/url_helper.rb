@@ -223,4 +223,10 @@ module UrlHelper
   # To handle both, the above method will remove [] from string and use parse_query
   # Thus making the resulting hash keys 'key' instead of 'key[]'
 
+  #removes rails convention bracket array parameters from string
+  #ex. {names: ['bob', 'bobby']} will now become names=bob&names=bobby instead of names[]=bob&names[]=bobby
+  #To prevent unintended behavior, pass in a params hash that has been normalized by the parse_array_query_string method above
+  def hash_to_query_string(hash)
+    CGI.unescape(hash.to_param).gsub(/\[\]/ , '')
+  end
 end
