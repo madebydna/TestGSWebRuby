@@ -19,8 +19,9 @@
 
 <div class="limit-width-1200 mvl">
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
+  <% ad_hash_review_module={content_ad_target_mobile_id:'Ad_Id_Responsive_State_Home_Mobile_Content_Top',content_ad_target_mobile:'Responsive_State_Home_Mobile_Content_Top_300x250',content_ad_target_id:'Ad_Id_Responsive_State_Home_Content_Top',content_ad_target:'Responsive_State_Home_Content_Top_300x250'}%>
+  <%= render 'shared/review_global', ad_data_review:ad_hash_review_module %>
   <%= render 'content_module', content_modules: @content_modules %>
-  <%= render 'shared/review_global'%>
   <%= render 'featured_articles', articles: @articles, state: @state %>
 </div>
 

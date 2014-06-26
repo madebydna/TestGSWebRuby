@@ -23,7 +23,9 @@
 <div class="limit-width-1200">
 
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-  <%= render 'shared/review_global' %>
+  <% ad_hash_review_module={content_ad_target_mobile_id:'Ad_Id_Responsive_City_Home_Mobile_Content_Top',content_ad_target_mobile:'Responsive_City_Home_Mobile_Content_Top_300x250',content_ad_target_id:'Ad_Id_Responsive_City_Home_Content_Top',content_ad_target:'Responsive_City_Home_Content_Top_300x250'}%>
+
+  <%= render 'shared/review_global', ad_data_review:ad_hash_review_module %>
 
   <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
 
