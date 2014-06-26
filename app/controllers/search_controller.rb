@@ -78,7 +78,7 @@ class SearchController < ApplicationController
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @lat = params_hash['lat']
       @lon = params_hash['lon']
-      @radius = params_hash['distance'] || 5
+      @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
     end
 
@@ -334,15 +334,12 @@ class SearchController < ApplicationController
   end
 
   def filter_and_sort_display_map
-    temp_map = {
+    #keys will collide and overwrite each other
+    main_map = {
         'st' => {
             'public' => 'Public Schools',
             'private' => 'Private Schools',
             'charter' => 'Charter Schools'
-        },
-        'beforeAfterCare' => {
-            'before' => 'Before School Care',
-            'after' => 'After School Care',
         },
         'grades' => {
             'p' => 'Pre-School',
@@ -361,7 +358,7 @@ class SearchController < ApplicationController
             '12' => '12th Grade'
         },
         'distance' => {
-            '1' => '1 Miles',
+            '1' => '1 Mile',
             '2' => '2 Miles',
             '3' => '3 Miles',
             '4' => '4 Miles',
@@ -374,7 +371,17 @@ class SearchController < ApplicationController
             '60' => '60 Miles'
         }
     }
-    map = {}.merge(temp_map)
-    temp_map.inject(map) { |s,(k,v)| s.merge(v) }
+    soft_filters = {
+        'beforeAfterCare' => {
+            'before' => 'Before School Care',
+            'after' => 'After School Care'
+        }
+    }
+    #The following code will copy hash values from the sub hash
+    #and put them into the main hash.
+    #This is for the soft filter display keys
+    #This should be fine as long as there are no duplicate keys among sub hashes
+    main_map.merge!(soft_filters)
+    soft_filters.inject(main_map) { |hash,(k,v)| hash.merge(v) }
   end
 end

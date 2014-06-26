@@ -16,6 +16,7 @@
 
         <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
           <select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">
+            <option value=""selected>--Distance--</option>
             <% @filter_and_sort_display_map['distance'].each do |distance, display_name| %>
                 <option value=<%=distance%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance%> selected<%end%>><%=display_name%></option>
             <% end %>
