@@ -334,7 +334,6 @@ class SearchController < ApplicationController
   end
 
   def filter_and_sort_display_map
-    #keys will collide and overwrite each other
     main_map = {
         'st' => {
             'public' => 'Public Schools',
