@@ -64,12 +64,9 @@ class SearchController < ApplicationController
       return
     end
 
-    search_options = setup_search_options { |search_options| search_options.merge!({state: @state[:short], district_id: @district.id})}
-
-    results = SchoolSearchService.district_browse(search_options)
-    process_results(results) unless results.empty?
-    results = SchoolSearchService.district_browse(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-    process_results_for_map(results) unless results.empty?
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.district_browse(search_options) }) do |search_options|
+      search_options.merge!({state: @state[:short], district_id: @district.id})
+    end
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
