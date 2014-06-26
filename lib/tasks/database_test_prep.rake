@@ -1,7 +1,7 @@
 namespace :db do
   namespace :test do
     desc 'Create the legacy test databases'
-    task :prepare => "db:load_config" do
+    task :prepare2 => "db:load_config" do
       require_relative '../database_configuration_helper'
       require_relative '../database_tasks_helper'
       legacy_database_names = DatabaseConfigurationHelper.legacy_database_names 'test'

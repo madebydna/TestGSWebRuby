@@ -5,7 +5,7 @@
 
 .iconx60 {
     display: inline-block;
-    background-image: image-url("icons/140414-60x60_sprite.png");
+    background-image: image-url("icons/140625-60x60_sprite.png");
     width: 60px;
     height: 60px;
 }
@@ -36,6 +36,18 @@
   background-position: -300px 0px;
 }
 
+.i-60-students {
+  background-position: -360px 0px;
+}
+
+.i-60-community_blue {
+  background-position: -420px 0px;
+}
+
+.i-60-application {
+  background-position: -480px 0px;
+}
+
 .i-60-color-art {
   color: #5fcbc8;
 }
@@ -53,6 +65,15 @@
 }
 .i-60-color-community {
   color: #b2718e;
+}
+.i-60-color-students {
+  color: #0083b2;
+}
+.i-60-color-community_blue {
+  color: #0083b2;
+}
+.i-60-color-application {
+  color: #0083b2;
 }
 
 /* **************** SPRITE ***************** */

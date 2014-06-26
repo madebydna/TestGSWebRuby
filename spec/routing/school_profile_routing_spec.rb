@@ -33,8 +33,13 @@ describe 'school profile routing' do
     expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
   end
 
-  it 'should route to 404 page if there is no school ID' do
-    expect( get '/california/alameda/Alameda-High-School/' ).to route_to('error#page_not_found', path:'california/alameda/Alameda-High-School')
+  it 'ruby should route to 404 page by default for district home page' do
+    expect( get '/california/alameda/Alameda-High-School/' ).to route_to(
+      'error#page_not_found',
+      state: 'california',
+      city: 'alameda',
+      district: 'Alameda-High-School'
+    )
   end
 
   describe 'non-pk school scope' do

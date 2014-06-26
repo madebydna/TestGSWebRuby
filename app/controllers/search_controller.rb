@@ -39,7 +39,7 @@ class SearchController < ApplicationController
     results = SchoolSearchService.city_browse(search_options)
 
     unless results.empty?
-      @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+      @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
       @total_results = results[:num_found]
       @schools = results[:results]
       calculate_fit_score(@schools, @params_hash)
@@ -66,9 +66,11 @@ class SearchController < ApplicationController
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
+      render 'browse_city'
+    else
+      self.city_browse
     end
 
-    render 'browse_city'
   end
 
   def by_location
@@ -96,7 +98,7 @@ class SearchController < ApplicationController
     results = SchoolSearchService.by_location(search_options)
 
     unless results.empty?
-      @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+      @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
       @total_results = results[:num_found]
       @schools = results[:results]
       calculate_fit_score(@schools, @params_hash)
@@ -322,6 +324,30 @@ class SearchController < ApplicationController
         'beforeAfterCare' => {
             'before' => 'Before School Care',
             'after' => 'After School Care',
+        },
+        'grades' => {
+            'p' => 'Pre-School',
+            'k' => 'Kindergarten',
+            '1' => '1st Grade',
+            '2' => '2nd Grade',
+            '3' => '3rd Grade',
+            '4' => '4th Grade',
+            '5' => '5th Grade',
+            '6' => '6th Grade',
+            '7' => '7th Grade',
+            '8' => '8th Grade',
+            '9' => '9th Grade',
+            '10' => '10th Grade',
+            '11' => '11th Grade',
+            '12' => '12th Grade'
+        },
+        'distance' => {
+            '10' => '10 Miles',
+            '20' => '20 Miles',
+            '30' => '30 Miles',
+            '40' => '40 Miles',
+            '50' => '50 Miles',
+            '100' => '100 Miles'
         }
     }
     map = {}.merge(temp_map)

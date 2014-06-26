@@ -3,6 +3,7 @@ require 'spec_helper'
 describe EspEnrollmentDecorator do
 
   describe '#application_deadline' do
+
     subject do
       EspEnrollmentDecorator.new(esp_enrollment_data).application_deadline
     end
@@ -17,9 +18,22 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return the actual date' do
-        expect(subject).to eq '01/01/2020'
+        expect(subject).to eq 'January 01, 2020'
       end
     end
+
+    context 'When application_deadline is "date" and its not in the right format to parse' do
+      let(:esp_enrollment_data) do
+        {
+          'application_deadline' => 'date',
+          'application_deadline_date' => '28/01/2020'
+        }
+      end
+
+      it 'should return the date string' do
+        expect(subject).to eq '28/01/2020'
+        end
+      end
 
     context 'When application_deadline is "yearround"' do
       # MI 4667
@@ -92,7 +106,7 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return a number' do
-        expect(subject).to eq '10'
+        expect(subject.to_s).to eq '{"chance"=>"10", "year"=>"2013-2014"}'
       end
     end
 
@@ -108,7 +122,7 @@ describe EspEnrollmentDecorator do
       end
 
       it 'it should return 5' do
-        expect(subject).to eq '5'
+        expect(subject.to_s).to eq '{"chance"=>"5", "year"=>"2013-2014"}'
       end
     end
     context 'When enrollment_chances has the different dates' do
@@ -122,8 +136,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
     context 'When enrollment_chances has 0 applications received' do
@@ -137,8 +151,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
     context 'When enrollment_chances has nil applications received' do
@@ -152,8 +166,8 @@ describe EspEnrollmentDecorator do
         }
       end
 
-      it 'it should return "no info"' do
-        expect(subject).to eq 'no info'
+      it 'it should return empty hash' do
+        expect(subject.to_s).to eq '{}'
       end
     end
   end
