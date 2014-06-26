@@ -6,9 +6,10 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
 
     <% if esp_enrollment.enrollment_chances.present?%>
+
         <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
-                                        supporting_text:'Students accepted for the '+esp_enrollment.enrollment_chances['year']+' school year',
-                                        icon_text: (esp_enrollment.enrollment_chances['chance']+' / 10') ) %>
+                                        supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances['year']} school year",
+                                        icon_text: "#{esp_enrollment.enrollment_chances['chance']} / 10" ) %>
     <% end %>
 
     <% if esp_enrollment.application_deadline.present? %>
@@ -17,7 +18,7 @@
     <% end %>
 
 
-    <% if !enrollment_array.empty? %>
+    <% if enrollment_array.present? %>
         <div class="row phs">
           <%= raw render_array_horizontally enrollment_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
         </div>

@@ -5,9 +5,8 @@ module SectionHelper
 
     title = category_placement.title
     data_config = category_placement.layout_config_json
-    link_to_text = data_config['link_text'] #admin configuration takes precedence
-    link_to_text ||= link_text
-    link_to_text ||= 'See all '+title.capitalize if title.present?
+    link_text ||= data_config['link_text']
+    link_text ||= 'See all '+title.capitalize if title.present?
 
     link_page = data_config['link_page'] #admin configuration takes precedence
     link_page ||= category_placement.title
@@ -15,9 +14,9 @@ module SectionHelper
     anchor_link = data_config['anchor_link'] #admin configuration takes precedence
     anchor_link ||= anchor
 
-    if link_to_text.present? && link_page.present? && (page_titles.include? link_page.downcase)
+    if link_text.present? && link_page.present? && (page_titles.include? link_page.downcase)
       return_str << '<div class="fr prm pt8">'
-      return_str << section_header_link(link_page,link_to_text, anchor_link)
+      return_str << section_header_link(link_page,link_text, anchor_link)
 
       return_str << '</div>'
     end
