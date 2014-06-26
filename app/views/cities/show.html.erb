@@ -5,6 +5,8 @@
   <script>
     $(document).ready(function() {
       GS.track.setOmnitureData();
+      GS.util.setupImages({ selector: '.js-choose-a-school-img', desktopImage: '<%= image_path('hubs/choose_a_school.png')%>',loadMobile: false});
+
     });
   </script>
 <% end %>

@@ -17,12 +17,15 @@ $(function() {
     var domSelector = options['selector'];
     var imgClasses = options['classes'];
     var breakpoint = options['breakpoint'];
+    var loadMobile= true;
     var mobileBreakPoint = 481;
     if(typeof breakpoint !== "undefined"){
         mobileBreakPoint = breakpoint;
 
     }
-    console.log('breakpoint '+breakpoint);
+    if(typeof options['loadMobile'] !== "undefined"){
+          loadMobile = options['loadMobile'];
+    }
     var checkPrepForImage = function(obj, imageUrl){
       // see if any image is loaded
       // see if the image is already loaded -
@@ -50,10 +53,14 @@ $(function() {
     var initImages = function() {
       var imageUrl = desktopImage;
       var imageSelector = $(domSelector);
+      var loadImage= true;
       if($(window).width() < mobileBreakPoint) {
+        if (!loadMobile ){
+            loadImage = false;
+        }
         imageUrl = mobileImage;
       }
-      if(checkPrepForImage(imageSelector, imageUrl)){
+      if(loadImage && checkPrepForImage(imageSelector, imageUrl)){
         if(attachImage(imageSelector, imageUrl)){
           GS.util.log("image loaded:"+imageUrl);
         }
