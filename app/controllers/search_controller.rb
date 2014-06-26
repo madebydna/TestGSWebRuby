@@ -5,6 +5,15 @@ class SearchController < ApplicationController
 
   SOFT_FILTER_KEYS = ['beforeAfterCare']
 
+  def search
+    if params.include?(:lat) && params.include?(:lon)
+      self.by_location
+      render 'browse_city'
+    else
+      self.city_browse
+    end
+  end
+
   def city_browse
     set_city_state
     if @state.nil?
@@ -13,109 +22,76 @@ class SearchController < ApplicationController
     end
 
     @city = City.find_by_state_and_name(@state[:short], @city)
-
     if @city.nil?
       redirect_to state_path(@state[:long])
       return
     end
 
-    meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
-    set_meta_tags title: meta_title, robots: 'noindex'
-    ad_setTargeting_through_gon
-
-    @params_hash = parse_array_query_string(request.query_string)
-    @filter_and_sort_display_map = filter_and_sort_display_map
-
-    @results_offset = get_results_offset
-    @page_size = get_page_size
-    @page_number = get_page_number(@page_size, @results_offset) # for use in view
-
-    set_omniture_pagename_browse_city @page_number
-
-    search_options = {state: @state[:short], city: @city.name, number_of_results: @page_size, offset: @results_offset}
-    (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
-    (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+    search_options = setup_search_options { |search_options| search_options.merge!({state: @state[:short], city: @city.name})}
 
     results = SchoolSearchService.city_browse(search_options)
-
-    unless results.empty?
-      @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
-      @total_results = results[:num_found]
-      @schools = results[:results]
-      calculate_fit_score(@schools, @params_hash)
-      @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-    end
-
+    process_results(results) unless results.empty?
     results = SchoolSearchService.city_browse(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+    process_results_for_map(results) unless results.empty?
 
-    unless results.empty?
-      # @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
-      # @total_results = results[:num_found]
-      @map_schools = results[:results]
-      @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
-        school.on_page = true
-      end
-      calculate_fit_score(@map_schools, @params_hash)
-      # @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      # @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-    end
+    meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
+    set_meta_tags title: meta_title, robots: 'noindex'
+    set_omniture_pagename_browse_city @page_number
     render 'browse_city'
   end
 
-  def search
-    if params.include?(:lat) && params.include?(:lon)
-      self.by_location
-      render 'browse_city'
-    else
-      self.city_browse
+  def by_location
+    search_options = setup_search_options do |search_options, params_hash|
+      @lat = params_hash['lat']
+      @lon = params_hash['lon']
+      @radius = params_hash['distance'] || 5
+      search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
     end
 
+    results = SchoolSearchService.by_location(search_options)
+    process_results(results) unless results.empty?
+    results = SchoolSearchService.by_location(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+    process_results_for_map(results) unless results.empty?
+
+    @by_location = true
+    set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
+    set_omniture_pagename_search_school @page_number
+    # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
-  def by_location
-    set_city_state
-    @by_location = true
+  def setup_search_options
     @params_hash = parse_array_query_string(request.query_string)
     @filter_and_sort_display_map = filter_and_sort_display_map
+
     @results_offset = get_results_offset
     @page_size = get_page_size
     @page_number = get_page_number(@page_size, @results_offset) # for use in view
 
-    set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
     ad_setTargeting_through_gon
-    set_omniture_pagename_search_school @page_number
 
-    @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
-
-    @lat = @params_hash['lat']
-    @lon = @params_hash['lon']
-    @radius = @params_hash['distance'] || 5
-    search_options = {state: @state[:short], number_of_results: @page_size, offset: @results_offset, lat: @lat, lon: @lon, radius: @radius}
+    search_options = {number_of_results: @page_size, offset: @results_offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
 
-    results = SchoolSearchService.by_location(search_options)
+    yield search_options, @params_hash if block_given?
+    search_options
+  end
 
-    unless results.empty?
-      @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
-      @total_results = results[:num_found]
-      @schools = results[:results]
-      calculate_fit_score(@schools, @params_hash)
-      @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-      @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+  def process_results(results)
+    @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+    @total_results = results[:num_found]
+    @schools = results[:results]
+    calculate_fit_score(@schools, @params_hash)
+    @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
+    @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+  end
+
+  def process_results_for_map(results)
+    @map_schools = results[:results]
+    @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
+      school.on_page = true
     end
-
-    results = SchoolSearchService.by_location(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-
-    unless results.empty?
-      @map_schools = results[:results]
-      @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
-        school.on_page = true
-      end
-      calculate_fit_score(@map_schools, @params_hash)
-    end
-
+    calculate_fit_score(@map_schools, @params_hash)
   end
 
   def suggest_school_by_name
