@@ -361,12 +361,17 @@ class SearchController < ApplicationController
             '12' => '12th Grade'
         },
         'distance' => {
+            '1' => '1 Miles',
+            '2' => '2 Miles',
+            '3' => '3 Miles',
+            '4' => '4 Miles',
+            '5' => '5 Miles',
             '10' => '10 Miles',
+            '15' => '15 Miles',
             '20' => '20 Miles',
+            '25' => '25 Miles',
             '30' => '30 Miles',
-            '40' => '40 Miles',
-            '50' => '50 Miles',
-            '100' => '100 Miles'
+            '60' => '60 Miles'
         }
     }
     map = {}.merge(temp_map)
