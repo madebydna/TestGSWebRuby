@@ -3,26 +3,24 @@
 <% esp_enrollment = EspEnrollmentDecorator.new(data) %>
 <% enrollment_array = [] %>
 
-<%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
+<% if esp_enrollment.enrollment_chances.present? && esp_enrollment.enrollment_chances['year'].present?
+     esp_enrollment.enrollment_chances['chance'].present? %>
 
-    <% if esp_enrollment.enrollment_chances.present? && esp_enrollment.enrollment_chances['year'].present?
-         esp_enrollment.enrollment_chances['chance'].present? %>
+    <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
+                                    supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances['year']} school year",
+                                    icon_text: "#{esp_enrollment.enrollment_chances['chance']} / 10" ) %>
+<% end %>
 
-        <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
-                                        supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances['year']} school year",
-                                        icon_text: "#{esp_enrollment.enrollment_chances['chance']} / 10" ) %>
-    <% end %>
+<% if esp_enrollment.application_deadline.present? %>
+    <% enrollment_array << (render 'shared/icon_text',sprite: 'application', supporting_text:'Applications Due',
+                                   icon_text: esp_enrollment.application_deadline ) %>
+<% end %>
 
-    <% if esp_enrollment.application_deadline.present? %>
-        <% enrollment_array << (render 'shared/icon_text',sprite: 'application', supporting_text:'Applications Due',
-                                       icon_text: esp_enrollment.application_deadline ) %>
-    <% end %>
+<% if enrollment_array.present? %>
+    <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
 
-
-    <% if enrollment_array.present? %>
         <div class="row phs">
           <%= raw render_array_horizontally enrollment_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
         </div>
     <% end %>
-
 <% end %>
