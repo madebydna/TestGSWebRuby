@@ -3,12 +3,12 @@
 <% esp_enrollment = EspEnrollmentDecorator.new(data) %>
 <% enrollment_array = [] %>
 
-<% if esp_enrollment.enrollment_chances.present? && esp_enrollment.enrollment_chances['year'].present?
-     esp_enrollment.enrollment_chances['chance'].present? %>
+<% if esp_enrollment.enrollment_chances.present? && esp_enrollment.enrollment_chances[:year].present?
+     esp_enrollment.enrollment_chances[:chance].present? %>
 
     <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
-                                    supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances['year']} school year",
-                                    icon_text: "#{esp_enrollment.enrollment_chances['chance']} / 10" ) %>
+                                    supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances[:year]} school year",
+                                    icon_text: "#{esp_enrollment.enrollment_chances[:chance]} / 10" ) %>
 <% end %>
 
 <% if esp_enrollment.application_deadline.present? %>
