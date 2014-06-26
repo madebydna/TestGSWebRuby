@@ -31,12 +31,9 @@ class SearchController < ApplicationController
       return
     end
 
-    search_options = setup_search_options { |search_options| search_options.merge!({state: @state[:short], city: @city.name})}
-
-    results = SchoolSearchService.city_browse(search_options)
-    process_results(results) unless results.empty?
-    results = SchoolSearchService.city_browse(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-    process_results_for_map(results) unless results.empty?
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
+      search_options.merge!({state: @state[:short], city: @city.name})
+    end
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
@@ -81,17 +78,12 @@ class SearchController < ApplicationController
   end
 
   def by_location
-    search_options = setup_search_options do |search_options, params_hash|
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @lat = params_hash['lat']
       @lon = params_hash['lon']
       @radius = params_hash['distance'] || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
     end
-
-    results = SchoolSearchService.by_location(search_options)
-    process_results(results) unless results.empty?
-    results = SchoolSearchService.by_location(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-    process_results_for_map(results) unless results.empty?
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
@@ -99,7 +91,7 @@ class SearchController < ApplicationController
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
-  def setup_search_options
+  def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
     @filter_and_sort_display_map = filter_and_sort_display_map
 
@@ -114,7 +106,11 @@ class SearchController < ApplicationController
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
 
     yield search_options, @params_hash if block_given?
-    search_options
+
+    results = search_method.call(search_options)
+    process_results(results) unless results.empty?
+    results = search_method.call(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+    process_results_for_map(results) unless results.empty?
   end
 
   def process_results(results)
