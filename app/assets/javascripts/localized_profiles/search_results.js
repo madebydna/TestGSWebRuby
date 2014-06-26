@@ -13,7 +13,7 @@ GS.search.results = GS.search.results || (function() {
 
     var pagination = function(query) {
         //TODO handle ajax later
-        goToPage(query);
+        GS.uri.Uri.reloadPageWithNewQuery(query);
     };
 
     var sortBy = function(sort_type, query) {
@@ -22,14 +22,10 @@ GS.search.results = GS.search.results || (function() {
         var argumentKey = (query.length > 1) ? '&sort=' : 'sort=';
 
         if (/asc/.test(sort)) {
-            goToPage(query + argumentKey + sort_type + '_desc');
+            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + sort_type + '_desc');
         } else {
-            goToPage(query + argumentKey + sort_type + '_asc');
+            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + sort_type + '_asc');
         }
-    };
-
-    var goToPage = function(query) {
-        window.location = GS.uri.Uri.getHref().split('?')[0] + query;
     };
 
     var keepSearchResultsFilterMenuOpen = function() {

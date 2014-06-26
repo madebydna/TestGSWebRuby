@@ -14,6 +14,14 @@ GS.uri.Uri.getPath = function() {
     return window.location.pathname;
 };
 
+GS.uri.Uri.goToPage = function(full_uri) {
+    window.location = full_uri;
+};
+
+GS.uri.Uri.reloadPageWithNewQuery = function(query) {
+    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + query)
+};
+
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order
  * to override any <base> tag that's on the page, *if* the base tag specifies a host that is different than current
