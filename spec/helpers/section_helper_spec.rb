@@ -30,7 +30,8 @@ describe SectionHelper do
         let(:category_placement) {FactoryGirl.build(:category_placement, title: 'details')}
 
         it 'should use category title as text' do
-          expect(helper.display_section_head_link(category_placement,nil)).to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/\">See all Details</a></div>")
+          expect(helper.display_section_head_link(category_placement,nil))
+          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/\">See all Details</a></div>")
         end
       end
 
@@ -43,24 +44,34 @@ describe SectionHelper do
         end
 
         it 'should return header link with anchor' do
-            expect(helper.display_section_head_link(category_placement,'See all information','enrollment')).to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/#enrollment\">See all information</a></div>")
+            expect(helper.display_section_head_link(category_placement,'See all information','enrollment'))
+            .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/#enrollment\">"+
+                     "See all information</a></div>")
         end
       end
 
     end
 
     context 'When the category placement and its layout configuration are both present' do
-      let(:category_placement) {FactoryGirl.build(:category_placement, title: 'details', layout_config: {'link_text'=>'See more quality','link_page'=>'quality'}.to_json)}
+      let(:category_placement) {FactoryGirl.build(:category_placement, title: 'details',
+                                                  layout_config: {'link_text'=>'See more quality',
+                                                                  'link_page'=>'quality'}.to_json)}
 
       it 'should return header link, with precedence to layout config' do
-        expect(helper.display_section_head_link(category_placement,'See all information')).to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/\">See all information</a></div>")
+        expect(helper.display_section_head_link(category_placement,'See all information'))
+        .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/\">See all information</a></div>")
       end
 
       context 'When the anchor_link is present' do
-        let(:category_placement) {FactoryGirl.build(:category_placement, title: 'details', layout_config: {"link_text"=>"See more information","link_page"=>"quality","anchor_link"=>"test_scores"}.to_json)}
+        let(:category_placement) {FactoryGirl.build(:category_placement, title: 'details',
+                                                    layout_config: {"link_text"=>"See more information",
+                                                                    "link_page"=>"quality",
+                                                                    "anchor_link"=>"test_scores"}.to_json)}
 
         it 'should return header link and anchor link' do
-          expect(helper.display_section_head_link(category_placement,'See more information')).to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/#test_scores\">See more information</a></div>")
+          expect(helper.display_section_head_link(category_placement,'See more information'))
+          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/#test_scores\">"+
+                   "See more information</a></div>")
         end
       end
 

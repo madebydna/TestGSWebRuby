@@ -5,7 +5,8 @@
 
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
 
-    <% if esp_enrollment.enrollment_chances.present?%>
+    <% if esp_enrollment.enrollment_chances.present? && esp_enrollment.enrollment_chances['year'].present?
+         esp_enrollment.enrollment_chances['chance'].present? %>
 
         <%  enrollment_array << (render 'shared/icon_text',sprite: 'community_blue',
                                         supporting_text:"Students accepted for the #{esp_enrollment.enrollment_chances['year']} school year",
