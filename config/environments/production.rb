@@ -65,6 +65,7 @@ LocalizedProfiles::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = ActiveSupport::Logger.new('/var/log/gswebruby/production.log')
 
   # Use a different cache store in production
    config.cache_store = :memory_store, { size: 128.megabytes }
