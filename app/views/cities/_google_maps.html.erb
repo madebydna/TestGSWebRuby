@@ -8,8 +8,12 @@
           points.push({
               name: '<%= school.name %>', id: '<%= school.id%>',
               lat: <%= school.latitude%>, lng: <%= school.longitude%>,
-              street: '<%=school.street%>', city: '<%= school.city%>', state: '<%= school.state%>',
-              schoolType: '<%= school.type%>', levelCode: '<%=school.level_code%>', preschool: <%= school.preschool? %>,
+              street: '<%=school.street%>', city: '<%= school.city%>',
+              state: '<%= school.state%>', zipcode: '<%= school.zipcode %>',
+              schoolType: '<%= school.type%>', preschool: <%= school.preschool? %>,
+              gradeRange: '<%= school.grades[0] + " - " + school.grades[-1]%>',
+              fitScore: <%= school.fit_score %>,
+              maxFitScore: <%= school.fit_score_filters.keys.length %>,
               gsRating: <%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 0 )%>,
               communityRating: <%=school.respond_to?(:community_rating) ? school.community_rating : 0%>,
               numReviews: <%=school.respond_to?(:review_count) ? school.review_count : 0 %>,
@@ -113,11 +117,16 @@
       };
       var getInfoWindowMarkup = function(point){
           var infoWindowMarkup = document.createElement('div');
-          jQuery(infoWindowMarkup).css("height", 140);
-          var markup = '<div><a href="' + point.profileUrl + '">' + point.name + '</a></div>'
-                  + '<div>' + point.street + ' ' + point.city + ', ' + point.state + '</div>';
+          jQuery(infoWindowMarkup).css("height", 180);
+          var markup = '<div style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
+          markup += '<div>' + point.schoolType + ', ' + point.gradeRange + '</div>';
+          markup += '<div>' + point.street + '<br/>';
+          markup += point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
           if (point.gsRating > 0) {
-              markup += "<div>Rating=" + point.gsRating + "</div>";
+              markup += "<div>Rating=" + point.gsRating + "/10</div>";
+          }
+          if (point.maxFitScore > 0) {
+              markup += '<div>Fit: ' + point.fitScore + '/' + point.maxFitScore + '</div>';
           }
           markup += "<div>";
           if (point.communityRating > 0) {
@@ -128,8 +137,8 @@
           } else {
               markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
           }
-          markup += '</div>'
-                  + '<div><a href="' + point.zillowUrl + '" target="_blank">Nearby homes for sale</a></div>';
+          markup += '</div>';
+          markup += '<div><a href="' + point.zillowUrl + '" target="_blank">Nearby homes for sale</a></div>';
           infoWindowMarkup.innerHTML = markup;
           return infoWindowMarkup;
       };
