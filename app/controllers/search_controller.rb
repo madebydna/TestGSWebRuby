@@ -9,8 +9,12 @@ class SearchController < ApplicationController
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
-    else
+    elsif params.include?(:city) && params.include?(:district_name)
+      self.district_browse
+    elsif params.include?(:city)
       self.city_browse
+    elsif params.include?(:q)
+      #self.by_name
     end
   end
 
@@ -37,6 +41,42 @@ class SearchController < ApplicationController
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_city @page_number
+    render 'browse_city'
+  end
+
+  def district_browse
+    set_city_state
+    if @state.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+      return
+    end
+
+    @city = City.find_by_state_and_name(@state[:short], @city)
+    if @city.nil?
+      redirect_to state_path(@state[:long])
+      return
+    end
+
+    district_name = params[:district_name]
+    district_name = URI.unescape district_name # url decode
+    district_name = district_name.gsub('-', ' ') # replace hyphens with spaces
+    @district = params[:district_name] ? District.on_db(@state[:short].downcase.to_sym).where(name: district_name, active:1).first : nil
+
+    if @district.nil?
+      redirect_to city_path(@state[:long], @city.name)
+      return
+    end
+
+    search_options = setup_search_options { |search_options| search_options.merge!({state: @state[:short], district_id: @district.id})}
+
+    results = SchoolSearchService.district_browse(search_options)
+    process_results(results) unless results.empty?
+    results = SchoolSearchService.district_browse(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
+    process_results_for_map(results) unless results.empty?
+
+    meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
+    set_meta_tags title: meta_title, robots: 'noindex'
+    set_omniture_pagename_browse_district @page_number
     render 'browse_city'
   end
 
@@ -236,6 +276,16 @@ class SearchController < ApplicationController
   def set_omniture_data_browse_city(page_num = 1)
     set_omniture_data_for_user_request
     gon.omniture_hier1 = "Search,Schools,City,#{page_num}"
+  end
+
+  def set_omniture_pagename_browse_district(page_num = 1)
+    gon.omniture_pagename = "schools:district:#{page_num}"
+    set_omniture_data_browse_city(page_num)
+  end
+
+  def set_omniture_data_browse_district(page_num = 1)
+    set_omniture_data_for_user_request
+    gon.omniture_hier1 = "Search,Schools,District,#{page_num}"
   end
 
   def set_omniture_pagename_search_school(page_num = 1)

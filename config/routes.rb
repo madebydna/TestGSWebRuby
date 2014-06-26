@@ -14,6 +14,9 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
 
+  get ':state/:city/:district_name/schools/', as: :search_district_browse,
+      constraints: {state: States.any_state_name_regex}, to: 'search#district_browse'
+
   get '/search/search.page', as: :search, to: 'search#search'
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'

@@ -2,7 +2,7 @@ class SchoolSearchService
   @@solr = Solr.new
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
-  DEFAULT_CITY_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
+  DEFAULT_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
   DEFAULT_BY_LOCATION_OPTIONS = {sort: 'distance asc', rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
   PARAMETER_TO_SOLR_MAPPING = {
       number_of_results: :rows,
@@ -30,11 +30,31 @@ class SchoolSearchService
     filters << "+school_database_state:\"#{options[:state].downcase}\""
     options.delete :city
     options.delete :state
-    param_options = DEFAULT_CITY_BROWSE_OPTIONS.merge(options)
-    param_options[:fq] = DEFAULT_CITY_BROWSE_OPTIONS[:fq].clone
+    param_options = DEFAULT_BROWSE_OPTIONS.merge(options)
+    param_options[:fq] = DEFAULT_BROWSE_OPTIONS[:fq].clone
     filters.each {|filter| param_options[:fq] << filter}
 
     parse_school_results(get_results param_options)
+  end
+
+  def self.district_browse(options_param = {})
+    raise ArgumentError, 'State is required' unless options_param.include?(:state)
+    raise ArgumentError, 'State should be a two-letter abbreviation' unless options_param[:state].length == 2
+    raise ArgumentError, 'District id is required' unless options_param.include?(:district_id)
+    options = options_param.deep_dup
+    rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
+    remap_sort(options)
+    filters = extract_filters(options)
+    filters << "+school_district_id:\"#{options[:district_id]}\""
+    filters << "+school_database_state:\"#{options[:state].downcase}\""
+    options.delete :district_id
+    options.delete :state
+    param_options = DEFAULT_BROWSE_OPTIONS.merge(options)
+    param_options[:fq] = DEFAULT_BROWSE_OPTIONS[:fq].clone
+    filters.each {|filter| param_options[:fq] << filter}
+
+    parse_school_results(get_results param_options)
+
   end
 
   def self.by_location(options_param = {})
