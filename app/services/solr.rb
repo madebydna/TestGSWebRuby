@@ -123,13 +123,9 @@ class Solr
   def parse_url_hubs(options)
     url = "schools"
     url += "/?gradeLevels=#{options[:grade_level]}" if options[:grade_level]
-    if options[:type].try(:index, 'OR') # public or charter
-      if options[:grade_level]
-        url += "&st=#{options[:type]}"
-      else
-        url += "/?st=#{options[:type]}"
-      end
-    end
+    types = options[:type].split /OR/
+    types.map!(&:strip)
+    url += '&st=' + types.join('&st=')
     url
   end
 end
