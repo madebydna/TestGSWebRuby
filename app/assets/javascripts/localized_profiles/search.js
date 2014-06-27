@@ -297,6 +297,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
             }
         })
+        .on('typeahead:selected', function(event, suggestion, dataset) {
+            GS.uri.Uri.goToPage(suggestion['url']);
+        })
     };
 
     var handleAddressOrZipcode = function() {
