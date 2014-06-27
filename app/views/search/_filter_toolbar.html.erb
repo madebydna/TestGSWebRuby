@@ -50,8 +50,11 @@
              <span>Swimming</span><br>
             </div>
           </li>
-          <% if @state.present?%><input type="hidden" name="state" value=<%=@state[:short]%>><%end%>
-          <% if @city.present?%><input type="hidden" name="city" value=<%=@city[:name]%>><%end%>
+          <!--This Currently sets state and city even on by location search. We may want to remove this behavior.
+          For now, since java looks for the state delaware in the parameter in order to pass the request to ruby
+          setting the state on every search type is necessary.-->
+          <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
+          <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
           <div class="col-xs-12">
             <button class="btn btn-default pull-right mrm mbm"type='submit'>Submit</button>
           </div>
