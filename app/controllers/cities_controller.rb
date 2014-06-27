@@ -16,8 +16,6 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = mapping.collection_id
-      @zillow_data = ZillowRegionId.data_for(@city, @state)
-
       collection_configs = configs
       @browse_links = CollectionConfig.browse_links(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)

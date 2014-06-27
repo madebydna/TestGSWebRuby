@@ -1,9 +1,13 @@
 <% region_id = nil %>
 <% zillow_formatted_location = nil %>
 <% if defined? @school %>
-  <% zillow_school_decorator = ZillowSchoolDecorator.decorate @school %>
-  <% region_id = zillow_school_decorator.region_id %>
-  <% zillow_formatted_location = zillow_school_decorator.zillow_formatted_location %>
+     <% zillow_school_decorator = ZillowSchoolDecorator.decorate @school %>
+     <% region_id = zillow_school_decorator.region_id %>
+     <% zillow_formatted_location = zillow_school_decorator.zillow_formatted_location %>
+<% elsif defined?(@city) && defined?(@state) %>
+     <% zillow_data = ZillowRegionId.data_for(@city, @state) %>
+     <% region_id = zillow_data['region_id'] %>
+     <% zillow_formatted_location = zillow_data['zillow_formatted_location'] %>
 <% end %>
 
 <% if region_id.present? && zillow_formatted_location.present? %>
