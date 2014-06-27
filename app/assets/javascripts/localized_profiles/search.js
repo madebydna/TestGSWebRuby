@@ -266,7 +266,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     '(no results)',
                     '</div>'
                 ].join('\n'),
-                suggestion: Handlebars.compile('<a href="http://greatschools.org{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{city_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{city_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -280,7 +280,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     '(no results)',
                     '</div>'
                 ].join('\n'),
-                suggestion: Handlebars.compile('<a href="http://greatschools.org{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{district_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{district_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -294,7 +294,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     '(no results)',
                     '</div>'
                 ].join('\n'),
-                suggestion: Handlebars.compile('<a href="http://greatschools.org{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
             }
         })
     };
