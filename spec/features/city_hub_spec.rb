@@ -74,17 +74,17 @@ describe 'City Hub Page' do
     end
   end
 
-  describe 'sign up for email updates button' do
-    pending 'Pending until Jenkins works with webkit'
-    context 'when viewing the mobile version', js: true do
-      before do
-        Capybara.current_session.driver.browser.resize_window(300, 1000)
-      end
-      it_behaves_like 'sign up for email updates button'
-    end
-    context 'when viewing the desktop version', js: true do
-      it_behaves_like 'sign up for email updates button'
-    end
-  end
+  # describe 'sign up for email updates button' do
+  #   pending 'Pending until Jenkins works with webkit'
+  #   context 'when viewing the mobile version', js: true do
+  #     before do
+  #       Capybara.current_session.driver.browser.resize_window(300, 1000)
+  #     end
+  #     it_behaves_like 'sign up for email updates button'
+  #   end
+  #   context 'when viewing the desktop version', js: true do
+  #     it_behaves_like 'sign up for email updates button'
+  #   end
+  # end
 
 end
