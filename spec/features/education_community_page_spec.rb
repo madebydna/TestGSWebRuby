@@ -34,10 +34,6 @@ describe 'Education Community Page' do
   end
 
   describe 'body' do
-    it 'shows community partners' do
-      expect(page).to have_css('.community-partner-row', count: 11)
-    end
-
     it 'shows links to other education community pages' do
       expect(page).to have_link('Education', href: '/michigan/detroit/education-community/education')
       expect(page).to have_link('Funders', href: '/michigan/detroit/education-community/funders')
@@ -101,10 +97,6 @@ describe 'State Education Community Page' do
   end
 
   describe 'body' do
-    it 'shows community partners' do
-      expect(page).to have_css('.community-partner-row', count: 11)
-    end
-
     it 'shows links to other education community pages' do
       expect(page).to have_link('Education', href: '/indiana/education-community/education')
       expect(page).to have_link('Funders', href: '/indiana/education-community/funders')

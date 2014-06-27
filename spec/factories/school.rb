@@ -98,6 +98,19 @@ FactoryGirl.define do
         end
       end
 
+      trait :with_district do
+        ignore do
+          district_name ''
+        end
+        before(:create) do |school, evaluator|
+          district = FactoryGirl.create(
+            :district,
+            name: evaluator.district_name
+          )
+          school.district_id = district.id
+        end
+      end
+
       trait :with_collection do
         after(:create) do |school, evaluator|
           FactoryGirl.create(

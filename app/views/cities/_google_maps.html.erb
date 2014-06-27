@@ -1,130 +1,150 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <style type="text/css">
-      html { height: 100% }
-      body { height: 500px; margin: 0; padding: 0 }
-      #js-map-canvas { height: 100% }
-  </style>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw="></script>
 
   <script type="text/javascript">
-
+      (function() {
       var points = [];
 
-      points.push({name:'Bay Farm Elementary School', lat: 37.74410629272461,
-          lng: -122.25144958496094, gsRating: '1', schoolType: 'private',
-          state: 'CA',
-          id: '2', levelCode: 'e'});
+      <% schools.each do |school|%>
+          points.push({
+              name: '<%= school.name %>', id: '<%= school.id%>',
+              lat: <%= school.latitude%>, lng: <%= school.longitude%>,
+              street: '<%=school.street%>', city: '<%= school.city%>',
+              state: '<%= school.state%>', zipcode: '<%= school.zipcode %>',
+              schoolType: '<%= school.type%>', preschool: <%= school.preschool? %>,
+              gradeRange: '<%= school.grades[0] + " - " + school.grades[-1]%>',
+              fitScore: <%= school.fit_score %>,
+              maxFitScore: <%= school.fit_score_filters.keys.length %>,
+              gsRating: <%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 0 )%>,
+              communityRating: <%=school.respond_to?(:community_rating) ? school.community_rating : 0%>,
+              numReviews: <%=school.respond_to?(:review_count) ? school.review_count : 0 %>,
+              communityRatingStars: '<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''%>',
+              on_page: <%= school.on_page == true %>,
+              profileUrl: '<%= school_path(school) %>',
+              reviewUrl: '<%= school_reviews_path(school) %>',
+              zillowUrl: '<%= zillow_url(school)%>'
+          });
+      <% end %>
 
-      points.push({name:'Amelia Earhart Elementary School', lat: 37.74451446533203,
-          lng: -122.23810577392578, gsRating: '1', schoolType: 'public',
-          state: 'CA',
-          id: '4', levelCode: 'e'});
-
-      points.push({name:'Edison Elementary School', lat: 37.76444625854492,
-          lng: -122.23482513427734, gsRating: '10', schoolType: 'public',
-          state: 'CA',
-          id: '5', levelCode: 'e'});
-
-      points.push({name:'Franklin Elementary School', lat: 37.769290924072266,
-          lng: -122.26260375976562, gsRating: '5', schoolType: 'public',
-          state: 'CA',
-          id: '7', levelCode: 'e'});
+      var imageUrlPublic = '<%= image_path('icons/140106-24x24_ratings.png')%>';
+      var imageUrlPrivate = '<%= image_path('icons/120905-ratingsx24-private-RYG.png')%>';
+      var imageUrlPreschool = '<%= image_path('icons/130919-24x24_search.png')%>';
+      var imageUrlOffPage = '<%= image_path('icons/120627-16x16_stars.png')%>';
 
       var optionalLat = optionalLat || 37.807778;
       var optionalLon = optionalLon || -122.265149;
       var centerPoint = new google.maps.LatLng(optionalLat, optionalLon);
       var bounds = new google.maps.LatLngBounds();
-      var infoWindow = new google.maps.InfoWindow({
-          content: 'more hello'
-      });
 
-      function initialize() {
+      var initialize = function(points) {
           var myOptions = {
               center: centerPoint,
-              mapTypeId:google.maps.MapTypeId.ROADMAP,
-              disableDefaultUI:true,
-              mapTypeControl:true,
-              mapTypeControlOptions:{
-                  mapTypeIds:[google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              disableDefaultUI: true,
+              mapTypeControl: true,
+              mapTypeControlOptions: {
+                  mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
               },
-              zoomControl:true,
-              zoomControlOptions:{
-                  style:google.maps.ZoomControlStyle.DEFAULT
+              zoomControl: true,
+              zoomControlOptions: {
+                  style: google.maps.ZoomControlStyle.DEFAULT
               },
-              streetViewControl:true,
-              panControl:true,
-              infoWindow:infoWindow,
-
+              streetViewControl: true,
+              panControl: true,
               zoom: 12
           };
-          var map = new google.maps.Map(document.getElementById("js-map-canvas"),
-                  myOptions);
+          var map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
           var position;
-          for(var i = 0; i < points.length; i++){
+          var imageUrl;
+          var imageSize;
+          var imageAnchor;
+          var pixelOffset;
+          var size_24 = new google.maps.Size(24, 24);
+          var size_16 = new google.maps.Size(16, 16);
+          var point_12_12 = new google.maps.Point(12, 12);
+          var point_8_8 = new google.maps.Point(8, 8);
+          var infoWindow = new google.maps.InfoWindow({});
+
+          for(var i = 0; i < points.length; i++) {
               var point = points[i];
               position = new google.maps.LatLng(point.lat, point.lng);
+              bounds.extend(position);
               var markerOptions = new google.maps.Marker({
                   position: position,
-//                  infoWindowMarkup: point.infoWindowMarkup,
-                  map: map,
-                  title: "Hello"
-
+                  map: map
               });
-              var imageUrl;
-              var imageUrlPublic ='/assets/icons/140106-24x24_ratings.png';
-              var imageUrlPrivate='/assets/icons/120905-ratingsx24-private-RYG.png';
 
-//              need to add school level code
-              if(point.schoolType != 'private'){
-
-                  var pixelOffset = 240;// default to public NR
-
-                  if(point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                      pixelOffset = (point.gsRating - 1) * 24;
+              if (point.on_page){
+                  imageSize = size_24;
+                  imageAnchor = point_12_12; // center of image
+                  if (point.preschool) {
+                      pixelOffset = 168;
+                      imageUrl = imageUrlPreschool;
+                  } else {
+                      pixelOffset = 240;// default to NR
+                      if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                          pixelOffset = (point.gsRating - 1) * 24;
+                      }
+                      imageUrl = (point.schoolType == 'private' ? imageUrlPrivate : imageUrlPublic);
                   }
-                  imageUrl = imageUrlPublic;
-
-              }else {
-                  pixelOffset = 240;// default to private NR
-                  if(point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                      pixelOffset = (point.gsRating - 1) * 24;
-                  }
-                  imageUrl = imageUrlPrivate;
+              } else {
+                  imageUrl = imageUrlOffPage;
+                  pixelOffset = 0;
+                  imageSize = size_16;
+                  imageAnchor = point_8_8; // center of image
               }
 
               markerOptions.icon = new google.maps.MarkerImage(
-                  imageUrl, // url
-                  new google.maps.Size(24, 24), // size
-                  new google.maps.Point(pixelOffset, 0), // origin
-                  new google.maps.Point(12, 12) // anchor
+                      imageUrl, // url
+                      imageSize, // size
+                      new google.maps.Point(pixelOffset, 0), // index into sprite
+                      imageAnchor // which point of the image anchors to the map
               );
 
               var marker = new google.maps.Marker(markerOptions);
 
-              bounds.extend(position);
-
-              google.maps.event.addListener(marker, 'click', (function (marker) {
+              google.maps.event.addListener(marker, 'click', (function (marker, point) {
                   return function () {
+                      infoWindow.setContent(getInfoWindowMarkup(point));
                       infoWindow.open(map, marker);
                   }
-              })(marker));
+              })(marker, point));
 
           }
           if (!bounds.isEmpty()) {
               map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
           }
+      };
+      var getInfoWindowMarkup = function(point){
+          var infoWindowMarkup = document.createElement('div');
+          jQuery(infoWindowMarkup).css("height", 180);
+          var markup = '<div style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
+          markup += '<div>' + point.schoolType + ', ' + point.gradeRange + '</div>';
+          markup += '<div>' + point.street + '<br/>';
+          markup += point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+          if (point.gsRating > 0) {
+              markup += "<div>Rating=" + point.gsRating + "/10</div>";
+          }
+          if (point.maxFitScore > 0) {
+              markup += '<div>Fit: ' + point.fitScore + '/' + point.maxFitScore + '</div>';
+          }
+          markup += "<div>";
+          if (point.communityRating > 0) {
+              markup += '<div>Community rating: <a href="' + point.reviewUrl + '">' + point.communityRatingStars + '</a>';
+              if (point.numReviews > 0) {
+                  markup += ' (based on ' + point.numReviews + ' review' + (point.numReviews > 1 ? 's' : '') + ')';
+              }
+          } else {
+              markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
+          }
+          markup += '</div>';
+          markup += '<div><a href="' + point.zillowUrl + '" target="_blank">Nearby homes for sale</a></div>';
+          infoWindowMarkup.innerHTML = markup;
+          return infoWindowMarkup;
+      };
 
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-
+      google.maps.event.addDomListener(window, 'load', function() {initialize(points)});
+      })();
   </script>
-</head>
-<body>
 
-<div id="js-map-canvas"/>
-</body>
-</html>
+<div id="js-map-canvas" style="height:100%;"/>

@@ -7,16 +7,27 @@ LocalizedProfiles::Application.routes.draw do
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  # Route for Search Prototype
+  # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
 
+  get ':state/:city/:district_name/schools/', as: :search_district_browse,
+      constraints: {state: States.any_state_name_regex}, to: 'search#district_browse'
+
+  get '/search/search.page', as: :search, to: 'search#search'
+
+  get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
+  get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
+  get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
+
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get '/index.page', as: :home
+    get ENV_GLOBAL['home_path'], as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
@@ -134,7 +145,6 @@ LocalizedProfiles::Application.routes.draw do
         state: States.any_state_name_regex,
     } do
 
-
       get '', to: 'cities#show'
       get 'events', to: 'cities#events', as: :events
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
@@ -151,6 +161,16 @@ LocalizedProfiles::Application.routes.draw do
         get '/funders', to: 'cities#community'
         get '/partner', to: 'cities#partner', as: :partner
       end
+
+      # Route to district home. Java will handle this, so set controller
+      # to just 404 by default. route helper will be city_district_path(...)
+      # NOTE: this must come last in the city scope, because it will match
+      # Anything after the cty name
+      get '/:district', to: 'error#page_not_found', as: :district, constraints: lambda{ |request|
+        district = request.params[:district]
+        # district can't = preschools and must start with letter
+        return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
+      }
     end
 
     # Routes for city page
@@ -161,11 +181,11 @@ LocalizedProfiles::Application.routes.draw do
         schoolId: /\d+/,
         school_name: /.+/,
     } do
-      get 'quality', to: 'localized_profile#quality', as: :quality
-      get 'details', to: 'localized_profile#details', as: :details
-      get 'reviews', to: 'localized_profile#reviews', as: :reviews
+      get 'quality', to: 'school_profile_quality#quality', as: :quality
+      get 'details', to: 'school_profile_details#details', as: :details
+      get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
       get 'reviews/write', to: 'reviews#new', as: :review_form
-      get '', to: 'localized_profile#overview'
+      get '', to: 'school_profile_overview#overview'
     end
   end
 
@@ -176,16 +196,12 @@ LocalizedProfiles::Application.routes.draw do
       school_name: /.+/,
   } do
 
-    get 'quality', to: 'localized_profile#quality', as: :quality
-    get 'details', to: 'localized_profile#details', as: :details
-    get 'reviews', to: 'localized_profile#reviews', as: :reviews
+    get 'quality', to: 'school_profile_quality#quality', as: :quality
+    get 'details', to: 'school_profile_details#details', as: :details
+    get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
     get 'reviews/write', to: 'reviews#new', as: :review_form
-    get '', to: 'localized_profile#overview'
+    get '', to: 'school_profile_overview#overview'
   end
-
-  get '/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
-  get '/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
-  get '/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]

@@ -14,6 +14,14 @@ GS.uri.Uri.getPath = function() {
     return window.location.pathname;
 };
 
+GS.uri.Uri.goToPage = function(full_uri) {
+    window.location = full_uri;
+};
+
+GS.uri.Uri.reloadPageWithNewQuery = function(query) {
+    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + query)
+};
+
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order
  * to override any <base> tag that's on the page, *if* the base tag specifies a host that is different than current
@@ -225,4 +233,16 @@ GS.uri.Uri.mergeObjectInto = function(obj1, obj2, overwrite) {
     }
 
     return obj2;
+};
+
+GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
+    for (var name in fieldNameAndValueMap) {
+        var input = $("<input>").attr("type", "hidden").attr("name", name).val(fieldNameAndValueMap[name]);
+        $(formObject).append(input);
+    }
+    return formObject;
+};
+
+GS.uri.Uri.changeFormAction = function(action, formObject) {
+    $(formObject).attr("action", action);
 };

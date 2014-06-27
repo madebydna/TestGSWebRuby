@@ -4,7 +4,7 @@
 <%
   has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
   sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: params[:state] }) : city_education_community_partner_path({ state: params[:state], city: params[:city] })
-  bg_height = has_sponsor ? '650px' : '500px'
+  bg_height =  '550px'
 %>
 
 <% content_for :stylesheet_includes do %>
@@ -25,7 +25,7 @@
     <div class="content-centered">
       <div class="hub-hero-bg oh tal clearfix">
           <% if has_sponsor %>
-            <div class='tac pvm sponsor-bar mbl'>
+            <div class='tac sponsor-bar  mbl'>
               <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
               <% if sponsor[:sponsor_page_visible] %>
                 <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
@@ -39,7 +39,7 @@
             <div class='oa'>
               <div class="pull-left">
                 <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
-                <h1 class='mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
+                <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
               </div>
             </div>
 

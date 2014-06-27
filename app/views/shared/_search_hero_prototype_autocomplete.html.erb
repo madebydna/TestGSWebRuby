@@ -1,84 +1,26 @@
-<% content_for :javascript_includes do %>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
-<% end %>
-
 <div class="proto-image-bg-scale" style="height: 1000px; background: #3d3d3d;">
   <div class="img-container is-scaled"><!--not empty--></div>
-
   <div class="limit-width-1200">
     <div class="content-centered">
       <div class="row tal clearfix">
         <div class="plm">
           <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+            <% location_placeholder = 'Zip code, city or address' %>-->
             <div class="oa">
-              <h1 class='mbn mbl text_fff'>(OLD)Great Schools Search Prototype</h1>
+              <h1 class='mbn mbl text_fff'>Great Schools Autocomplete Prototype</h1>
             </div>
-            <% location_placeholder = 'Zip code, city or address' %>
-
             <div class="location-search">
               <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
                 <input type="text" name="locationSearchString"
-                       id="js-prototypeSearch" class='search-text lg-search-bar pull-left mrm'
+                       id="js-prototypeSearch" class='typeahead search-text lg-search-bar pull-left mrm'
                        onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
                        onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
                        placeholder="<%= location_placeholder %>"
                        value="<%= location_placeholder %>"/>
-                <button class="btn btn-primary btn-lg">Search</button>
+                <button class="btn btn-primary btn-lg" style="vertical-align: top;">Search</button>
               </form>
             </div>
-
-            <div class="oa">
-              <h1 class='mbn mbl text_fff'>(Typeahead.js)Great Schools Search Prototype</h1>
-            </div>
-
-            <div class="location-search">
-              <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
-                <input type="text" name="locationSearchString"
-                       id="js-prototypeSearch" class='search-text lg-search-bar pull-left mrm'
-                       onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
-                       onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
-                       placeholder="<%= location_placeholder %>"
-                       value="<%= location_placeholder %>"/>
-                <button class="btn btn-primary btn-lg">Search</button>
-              </form>
-            </div>
-
-            <div>
-              <h1 class='mbn mbl text_fff'>AJAX Request:</h1>
-            </div>
-            <div class='search-text pull-left' style="background: white; width: 700px;">
-              <div id="ajaxRequest" style="font-size: 18pt; color: black; margin-top: 5px;">
-                hello
-              </div>
-            </div>
-
           </div>
-
-          <!--<div class="hidden-xs col-xs-12 col-sm-4 col-md-3 col-lg-3 pvl clearfix">-->
-            <!--<h4 class="" style="color:#ffb725;">-->
-              <!--Featured communities-->
-            <!--</h4>-->
-            <!--<div class="fl">-->
-              <!--<div class="" style="font-size: 16px;">-->
-                <!--<a class="text_fff" href="/michigan/detroit/">Detroit</a>-->
-              <!--</div>-->
-              <!--<div class="" style="font-size: 16px;">-->
-                <!--<a class="text_fff" href="/wisconsin/milwaukee/">Milwaukee</a>-->
-              <!--</div>-->
-              <!--<div class="" style="font-size: 16px;">-->
-                <!--<a class="text_fff" href="/indiana/indianapolis/">Indianapolis</a>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="fr">-->
-              <!--<div class="" style="font-size: 16px;">-->
-                <!--<a class="text_fff" href="/california/oakland/">Oakland</a>-->
-              <!--</div>-->
-              <!--<div class="" style="font-size: 16px;">-->
-                <!--<a class="text_fff" href="/california/san-francisco/">San Francisco</a>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-
         </div>
       </div>
     </div>

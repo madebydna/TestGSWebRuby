@@ -118,7 +118,6 @@ p, a {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
   h2 { font-size:22px; font-family: $headings-font-family-bold; }
   .best-known-for { font-size: 20px; }
-  .jumbo-header {font-size: 32px}
   .subtitle-lg {font-size: 20px}
 }
 
@@ -145,6 +144,10 @@ p, a {
   .lar {
     text-align: right;
   }
+}
+
+@media only screen and (max-width: 767px) {
+  .jumbo-header {font-size: 32px}
 }
 
 

@@ -1,3 +1,10 @@
+def usage
+  abort "USAGE: rails runner script/populate_school_cache_table (all|ratings|test_scores) [state] [school id].\n" +
+    "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
+end
+
+usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
+
 states = ['mi', 'in', 'wi', 'de','ca','nc','oh','dc']
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
@@ -89,7 +96,7 @@ def self.test_scores_cache_for_school(school)
       :state_value_text => 'state_value_text',
       :state_value_float => 'state_value_float',
       :breakdown_id => 'breakdown_id',
-      :number_tested => 'number_tested'
+      :school_number_tested => 'school_number_tested'
     }
 
     data_type_ids = []

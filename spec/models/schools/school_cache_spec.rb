@@ -79,7 +79,9 @@ describe SchoolCache do
 
     context 'when a school has test scores' do
 
-      let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,display_target: 'desktop',school_id: 1,value_float: 2,value_text: '3')}
+      let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,
+                                                display_target: 'desktop',school_id: 1,value_float: 2,
+                                                value_text: '3', number_tested: 300)}
       let!(:test_data_type) { FactoryGirl.create(:test_data_type, id:1)}
 
       it 'should insert test scores for the school' do
@@ -94,6 +96,7 @@ describe SchoolCache do
         expect(test_scores['data_sets_and_values'][0]['data_type_id']).to eq(1)
         expect(test_scores['data_sets_and_values'][0]['school_value_float']).to eq(2)
         expect(test_scores['data_sets_and_values'][0]['school_value_text']).to eq('3')
+        expect(test_scores['data_sets_and_values'][0]['school_number_tested']).to eq(300)
         expect(test_scores['data_types']['1']['test_label']).to eq('Awesome Test')
 
       end

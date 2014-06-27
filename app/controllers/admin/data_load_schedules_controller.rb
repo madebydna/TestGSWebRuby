@@ -87,10 +87,12 @@ class Admin::DataLoadSchedulesController < ApplicationController
     updated_attributes['state'] = p[:state]
     updated_attributes['description'] = p[:description]
     updated_attributes['load_type'] = p[:load_type]
-    updated_attributes['year_to_load'] = p['year_to_load(1i)']
-    updated_attributes['released'] = "#{p['released(1i)']}-#{p['released(2i)'].to_s.rjust(2, '0')}-#{p['released(3i)'].to_s.rjust(2, '0')}"
-    updated_attributes['acquired'] = "#{p['acquired(1i)']}-#{p['acquired(2i)'].to_s.rjust(2, '0')}-#{p['acquired(3i)'].to_s.rjust(2, '0')}"
-    updated_attributes['live_by'] = "#{p['live_by(1i)']}-#{p['live_by(2i)'].to_s.rjust(2, '0')}-#{p['live_by(3i)'].to_s.rjust(2, '0')}"
+    updated_attributes['year_on_site'] = p['year_on_site']
+    updated_attributes['year_to_load'] = p['year_to_load']
+    ['released','acquired','live_by'].each do |date_type|
+      next if p["#{date_type}(1i)"].blank?
+      updated_attributes["#{date_type}"] = "#{p["#{date_type}(1i)"]}-#{p["#{date_type}(2i)"].to_s.rjust(2, '0')}-#{p["#{date_type}(3i)"].to_s.rjust(2, '0')}"
+    end
     updated_attributes['updated_by'] = p['updated_by']
     updated_attributes['complete'] = p['complete']
     status = get_load_status(updated_attributes)
@@ -110,8 +112,8 @@ class Admin::DataLoadSchedulesController < ApplicationController
   end
 
   def get_params
-    @sort_by = params[:sort_by] || 'live_by'
-    @status = params[:status] || 'complete'
+    @sort_by = params[:sort_by] || 'priority'
+    @status = params[:status] || 'incomplete'
     @load_type = params[:type] || nil
     @view_type = params[:view_type] || 'calendar'
   end

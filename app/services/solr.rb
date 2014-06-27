@@ -18,7 +18,7 @@ class Solr
     params[:fq] << '+document_type:school'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+school_name_prefix:#{query}*"
+    params[:q] = "+school_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
@@ -28,7 +28,7 @@ class Solr
     params[:fq] << '+document_type:city'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+city_name_prefix:#{query}*"
+    params[:q] = "+city_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
@@ -38,7 +38,7 @@ class Solr
     params[:fq] << '+document_type:district'
     query = options[:query]
     query.gsub! ' ', '\ '
-    params[:q] = "+district_name_prefix:#{query}*"
+    params[:q] = "+district_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
   end
@@ -84,7 +84,7 @@ class Solr
   def parse_base_params(options)
     params = {}
     params[:qt] = options[:qt] || 'standard'
-    params[:fq] = []
+    params[:fq] = options[:fq] || []
     params[:q] = options[:query] if options[:query]
     params[:sort] = options[:sort] if options[:sort]
     params[:rows] = options[:rows] if options[:rows]
@@ -97,7 +97,7 @@ class Solr
   def parse_params(options)
     params = parse_base_params options
     params[:fq] << "+school_database_state:#{options[:state]}" if options[:state]
-    params[:fq] << "+city:(#{options[:city]})" if options[:city]
+    params[:fq] << "+city:(#{options[:city]})" if options[:city] # TODO: This may be incorrect
     params
   end
 
@@ -123,13 +123,9 @@ class Solr
   def parse_url_hubs(options)
     url = "schools"
     url += "/?gradeLevels=#{options[:grade_level]}" if options[:grade_level]
-    if options[:type].try(:index, 'OR') # public or charter
-      if options[:grade_level]
-        url += "&st=#{options[:type]}"
-      else
-        url += "/?st=#{options[:type]}"
-      end
-    end
+    types = options[:type].split /OR/
+    types.map!(&:strip)
+    url += '&st=' + types.join('&st=')
     url
   end
 end

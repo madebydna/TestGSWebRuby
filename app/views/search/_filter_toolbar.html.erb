@@ -1,31 +1,65 @@
 <div class="limit-width-1200 full-width row ptm plm prm">
   <div class="col-xs-3 ptm">
-    <div class="dropdown">
+    <div class="dropdown drowpdown-large">
       <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
-      <ul class="dropdown-menu full-width">
-        <li class="pal">
-          <div class="ptm">
-            <span>School Types</span><br>
+      <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:500px;">
+	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
+          <li class="pal col-xs-6">
+            <div class="ptm">
+              <span>School Types</span><br>
+            </div>
+            <div class="divider" style="height: 2px; background-color: darkgrey"></div>
+            <div>
+	            <% @filter_and_sort_display_map['st'].each do |school_type, display_name| %>
+		            <span><input type="checkbox" name='st' value=<%=school_type%>
+                <%if @params_hash.include?('st') && @params_hash['st'].include?(school_type)%>checked<%end%>><%=display_name%></span><br>
+	            <% end %>
+            </div>
+            <div class="ptl">
+              <span>Quality</span><br>
+            </div>
+            <div class="divider" style="height: 2px; background-color: darkgrey"></div>
+            <div>
+             <span>GS Rating</span><br>
+             <span>Local Rating</span><br>
+             <span>Growth Rating</span><br>
+             <span>Test Score Rating</span><br>
+             <span>College Readiness Rating</span><br>
+            </div>
+          </li>
+          <li class="pal col-xs-6">
+            <div class="ptm">
+              <span>Child Care Programs</span><br>
+            </div>
+            <div class="divider" style="height: 2px; background-color: darkgrey"></div>
+            <div>
+              <% @filter_and_sort_display_map['beforeAfterCare'].each do |program, display_name| %>
+		            <span><input type="checkbox" name='beforeAfterCare' value=<%=program%>
+                <%if @params_hash.include?('beforeAfterCare') && @params_hash['beforeAfterCare'].include?(program)%>checked<%end%>><%=display_name%></span><br>
+              <% end %>
+            </div>
+            <div class="ptl">
+              <span>Sports</span><br>
+            </div>
+            <div class="divider" style="height: 2px; background-color: darkgrey"></div>
+            <div>
+             <span>Basketball</span><br>
+             <span>Baseball</span><br>
+             <span>Hockey</span><br>
+             <span>Soccer</span><br>
+             <span>Swimming</span><br>
+            </div>
+          </li>
+          <!--This Currently sets state and city even on by location search. We may want to remove this behavior.
+          For now, since java looks for the state delaware in the parameter in order to pass the request to ruby
+          setting the state on every search type is necessary.-->
+          <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
+          <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
+          <div class="col-xs-12">
+            <button class="btn btn-default pull-right mrm mbm"type='submit'>Submit</button>
           </div>
-          <div class="divider" style="height: 2px; background-color: darkgrey"></div>
-          <div>
-            <span><input type="checkbox"> Public district</span><br>
-            <span><input type="checkbox"> Public charter</span><br>
-            <span><input type="checkbox"> Private</span><br>
-            <span><input type="checkbox"> Private (accepts vouchers)</span><br>
-          </div>
-          <div class="ptl">
-            <span>Quality</span><br>
-          </div>
-          <div class="divider" style="height: 2px; background-color: darkgrey"></div>
-          <div>
-           <span>GS Rating</span><br>
-           <span>Local Rating</span><br>
-           <span>Growth Rating</span><br>
-           <span>Test Score Rating</span><br>
-           <span>College Readiness Rating</span><br>
-          </div>
-        </li>
+        </form>
+
       </ul>
     </div><br>
   </div>

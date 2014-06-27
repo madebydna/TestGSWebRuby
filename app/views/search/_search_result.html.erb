@@ -27,7 +27,7 @@
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
         <div class="ptl">
             <div class="iconx16 i-16-map-pin ma db vam"></div>
-            <span class="tac db">10 miles</span>
+            <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
         </div>
       </div>
     <% end%>
@@ -42,7 +42,21 @@
 
     <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
       <div class="ptl">
-        <span class="tac db">fit score</span>
+        <div class="dropdown">
+          <div data-toggle='dropdown' class="dropdown-toggle">fit score=<%=school.fit_score%><span class="caret"></span></div>
+          <ul class="dropdown-menu">
+            <!--TODO remove inline styling into classes-->
+            <li class="pal" style="font-size: 12px;">
+              <% school.fit_score_filters.each do |key, value| %>
+                <% if value == true %>
+                  <div>O <%=@filter_and_sort_display_map[key]%></div>
+                <% else %>
+                  <div>X <%=@filter_and_sort_display_map[key]%></div>
+                <% end %>
+              <% end %>
+            </li>
+          </ul>
+        </div><br>
       </div>
     </div>
 

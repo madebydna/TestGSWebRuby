@@ -19,9 +19,21 @@
 
 <div class="limit-width-1200 mvl">
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
+  <% ad_hash_review_module={content_ad_target_mobile_id:'Ad_Id_Responsive_State_Home_Mobile_Content_Top',content_ad_target_mobile:'Responsive_State_Home_Mobile_Content_Top_300x250',content_ad_target_id:'Ad_Id_Responsive_State_Home_Content_Top',content_ad_target:'Responsive_State_Home_Content_Top_300x250'}%>
+  <%= render 'shared/review_global', ad_data_review:ad_hash_review_module %>
   <%= render 'content_module', content_modules: @content_modules %>
   <%= render 'featured_articles', articles: @articles, state: @state %>
 </div>
 
 <%= render 'partners', partners: @partners %>
+<% if @show_ads %>
+    <% ad_hash_desktop_footer={visible_for:'visible-lg visible-md visible-sm',ad_slot_id:'Ad_Id_Responsive_State_Footer',ad_size:'[728,90]',ad_width:'728',ad_target:'Responsive_State_Home_Footer_728x90'}%>
+    <% ad_hash_mobile_footer={visible_for:'visible-xs',ad_slot_id:'Ad_Id_Responsive_State_Mobile_Footer',ad_size:'[320,50]',ad_width:'320',ad_target:'Responsive_State_Home_Mobile_Footer_320x50'}%>
+
+    <div class="mvl">
+      <%= render 'shared/ad_slot', ad_data: ad_hash_desktop_footer %>
+      <%= render 'shared/ad_slot', ad_data: ad_hash_mobile_footer %>
+    </div>
+
+<% end %>
 <%= render 'shared/state_footer', state: @state, cities: @cities %>

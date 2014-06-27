@@ -311,12 +311,6 @@ describe CollectionConfig do
         expect(result).to have_key('Funders')
       end
 
-      it 'adds the cdn host to logos' do
-        collection_configs = CollectionConfig.where(collection_id: 1, quay: CollectionConfig::EDUCATION_COMMUNITY_PARTNERS_KEY)
-        result = CollectionConfig.ed_community_partners(collection_configs)
-
-        expect(result['Education'][0][:logo]).to start_with(ENV_GLOBAL['cdn_host'])
-      end
     end
   end
 

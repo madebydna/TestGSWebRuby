@@ -164,7 +164,7 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
 
   require 'socket'
-  ip_address = IPSocket.getaddress(Socket.gethostname)
+  ip_address = '127.0.0.1'
   # Capybara.default_host = "http://test.host:3000"
   # Capybara.app_host = "http://test.host:3000"
   Capybara.default_host = "http://localhost:3000"

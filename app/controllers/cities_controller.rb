@@ -2,6 +2,7 @@ class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include OmnitureConcerns
+  include AdvertisingHelper
 
   before_action :set_city_state
   before_action :set_hub_params
@@ -15,8 +16,6 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = mapping.collection_id
-      @zillow_data = ZillowRegionId.data_for(@city, @state)
-
       collection_configs = configs
       @browse_links = CollectionConfig.browse_links(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
@@ -30,6 +29,8 @@ class CitiesController < ApplicationController
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
+      @show_ads = CollectionConfig.show_ads(collection_configs)
+      ad_setTargeting_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     end
   end
@@ -164,6 +165,7 @@ class CitiesController < ApplicationController
               'After school and summer programs' =>nil
             }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
+
     end
   end
 
@@ -183,7 +185,7 @@ class CitiesController < ApplicationController
     end
 
     def set_community_omniture_data
-      if @tab == 'Community'
+      if @tab == 'Community' || @show_tabs == false
         page_name = "GS:City:EducationCommunity"
         page_hier = "Home,CityHome,EducationCommunity"
       else
@@ -212,4 +214,18 @@ class CitiesController < ApplicationController
       partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
       partners
     end
+
+
+  def ad_setTargeting_through_gon
+    if @show_ads
+      set_targeting = {}
+      set_targeting['City'] = format_ad_setTargeting(@city.gs_capitalize_words)
+      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
+      set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation
+      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
+
+      gon.ad_set_targeting = set_targeting
+    end
+  end
 end

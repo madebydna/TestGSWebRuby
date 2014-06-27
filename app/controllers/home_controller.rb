@@ -26,6 +26,7 @@ class HomeController < ApplicationController
     set_omniture_pagename
 
   end
+
   def set_omniture_pagename
     gon.omniture_pagename = 'GS:Home'
     set_omniture_data(gon.omniture_pagename)

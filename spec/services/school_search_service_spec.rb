@@ -28,6 +28,33 @@ describe 'School Search Service' do
     end
   end
 
+  describe '.district_browse' do
+
+    let(:empty_result) { { 'response' => {'docs' => [] } } }
+
+    it 'should pass offset options to get_results method' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:rows]).to eql(50)
+        expect(options[:start]).to eql(25)
+      end.and_return(empty_result)
+      SchoolSearchService.district_browse({:state => 'de', :district_id => 11, :number_of_results => 50, :offset => 25})
+    end
+
+    it 'does not error if provided district id and state' do
+      allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
+      expect{SchoolSearchService.district_browse({:state => 'de', :district_id => 11})}.not_to raise_error
+    end
+    it 'errors if not provided a state' do
+      expect{SchoolSearchService.district_browse({:district_id => 11})}.to raise_error ArgumentError, 'State is required'
+    end
+    it 'errors if state is not an abbreviation' do
+      expect{SchoolSearchService.district_browse({:state => 'California', :district_id => 11})}.to raise_error ArgumentError, /abbreviation/
+    end
+    it 'errors if not provided a district id' do
+      expect{SchoolSearchService.district_browse({:state => 'de'})}.to raise_error ArgumentError, 'District id is required'
+    end
+  end
+
   describe '.remap_sort' do
     @cases = {
       rating_asc: 'sorted_gs_rating_asc asc',

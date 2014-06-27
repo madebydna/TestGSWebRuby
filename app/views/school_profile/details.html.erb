@@ -1,0 +1,43 @@
+<%= render 'nav/topnav' %>
+<%= render 'school_profile/header', school: @school %>
+<%= render 'school_profile/profile_nav', school: @school, page_name: :details %>
+
+<div class="row limit-width-1200">
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    <% root_placements = @page_config.root_placements_with_data %>
+    <% if root_placements.empty? %>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <% if @show_ads %>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
+            <div class="mvl well">
+                <% if @school.preschool? %>
+                    <p>Thank you for looking into the details of this school.</p>
+                    <p>However, we do not have further information for this school at this time. We strive to acquire additional school data whenever available.</p>
+                <% else %>
+                    <p>Does this school offer arts programs or sports? Share what you know and help other families. <%= link_to "Get started &raquo;".html_safe, osp_form_url(school_id: @school.id.to_s,state: @school.state) %></p>
+                    <p>Are you a school official? Help your school stand out on GreatSchools by updating your school's information, adding program highlights and more, for free! <%= link_to "Get started &raquo;".html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %></p>
+                <% end %>
+            </div>
+        </div>
+    <% else %>
+        <div class="hidden-xs col-sm-4 col-md-3 col-lg-3 gs_set-z-1">
+          <%= render 'category_placement_nav' %>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9" role="main">
+            <% if @show_ads %>
+                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            <% end %>
+            <div class="row">
+                <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
+            </div>
+        </div>
+    <% end %>
+</div>
+<%= render 'data_layouts/nearby_schools' %>
+
+<%= render 'nav/school_profile_footer', state: @state, cities: @cities %>

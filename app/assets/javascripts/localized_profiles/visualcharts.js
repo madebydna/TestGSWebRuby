@@ -77,6 +77,50 @@ GS.visualchart = GS.visualchart || function($) {
         }
     };
 
+    var drawBarChartTestScoresStacked = function (barChartData, divId, chartname) {
+      var func = function () {
+        var domNode = document.getElementById(divId);
+        // If the dom node that the chart wants to fill is not on the page, just early exit
+        if(domNode == null) {
+          return false;
+        }
+
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn('string', 'year');
+        dataTable.addColumn('number', 'Proficient');
+        dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+        dataTable.addColumn('number', 'Advanced');
+        dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+        dataTable.addRows(barChartData);
+
+        $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
+        var defaultOptions = {
+          width: GS.window.sizing.barChartWidth(chartname),
+          height: GS.window.sizing.barChartHeight(chartname),
+          legend: { position: GS.window.sizing.barChartLegend(chartname) },
+          tooltip: { isHtml: true },
+          colors: colors,
+          hAxis: { maxValue: '100', minValue:'0' },
+          chartArea: { left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%" },
+          isStacked:true
+        };
+
+        var chart = new google.visualization.BarChart(domNode);
+        chart.draw(dataTable, defaultOptions);
+
+      };
+      if (loader) {
+        loader.push(func);
+      } else {
+        google.setOnLoadCallback(func);
+      }
+
+    };
+
     var drawBarChartTestScores = function (barChartData, divId, chartname) {
         var func = function () {
             var domNode = document.getElementById(divId);
@@ -85,41 +129,28 @@ GS.visualchart = GS.visualchart || function($) {
                 return false;
             }
 
-            var data = google.visualization.arrayToDataTable(barChartData);
+            var dataTable = new google.visualization.DataTable();
             //The 3rd and the 5th columns are used for tool tips.
-            data.setColumnProperty(2, 'role', 'annotation');
-            data.setColumnProperty(3, 'role', 'tooltip');
-            data.setColumnProperty(5, 'role', 'annotation');
-            data.setColumnProperty(6, 'role', 'tooltip');
+            dataTable.addColumn('string', 'year');
+            dataTable.addColumn('number', 'This school');
+            dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+            dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+            dataTable.addRows(barChartData);
 
             $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
             var defaultOptions = {
                 width: GS.window.sizing.barChartWidth(chartname),
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
-                tooltip: {
-                    showColorCode: true,
-                    text:'value',
-                    textStyle: {
-                        color: '#2b2b2b',
-                        fontName: 'Arial',
-                        fontSize: '10'
-                    }
-                },
-
-//                chartArea:{left:15,top:15,bottom:10,right:10,width:"90%",height:"90%"},
-
+                tooltip: { isHtml: true },
                 colors: colors,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%"}
-//                isStacked:true
             };
 
-
-           // var options = {chartArea: {left:50,top:20, width:"55%"}};
-           // $.extend(true, defaultOptions, options);
             var chart = new google.visualization.BarChart(domNode);
-            chart.draw(data, defaultOptions);
+            chart.draw(dataTable, defaultOptions);
 
         };
         if (loader) {
@@ -152,6 +183,7 @@ GS.visualchart = GS.visualchart || function($) {
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
         drawBarChartTestScores: drawBarChartTestScores,
+        drawBarChartTestScoresStacked: drawBarChartTestScoresStacked,
         drawBarChartReviews:drawBarChartReviews,
         loader: loader
     }

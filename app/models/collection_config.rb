@@ -30,6 +30,7 @@ class CollectionConfig < ActiveRecord::Base
   PROGRAMS_SPONSOR_KEY = 'programsPage_sponsorModule'
   PROGRAMS_PARTNERS_KEY = 'programsPage_partnerModule'
   PROGRAMS_ARTICLES_KEY = 'programsPage_articlesModule'
+  ADS_KEY='showAds'
   self.table_name = 'hub_config'
   db_magic :connection => :gs_schooldb
 
@@ -268,8 +269,8 @@ class CollectionConfig < ActiveRecord::Base
           subheading = "Error: missing data for #{EDUCATION_COMMUNITY_SUBHEADING_KEY}"
         end
       rescue Exception => e
-        Rails.logger.error('Something went wrong while parsing ed_community_subheading ' + e.to_s)
         subheading = 'Error: something went wrong while parsing education community subheading'
+        Rails.logger.error("#{subheading} #{e.to_s}")
       end
 
       subheading
@@ -288,7 +289,6 @@ class CollectionConfig < ActiveRecord::Base
           partners = partners.group_by { |partner| partner[:tabName] }
           partners.keys.each do |key|
             partners[key].each do |partner|
-              partner[:logo].prepend(ENV_GLOBAL['cdn_host'])
               partner[:links].each do |link|
                 link[:url].prepend('http://') unless /^http/.match(link[:url])
               end
@@ -314,6 +314,19 @@ class CollectionConfig < ActiveRecord::Base
       end
 
       show_tabs
+    end
+
+    def show_ads(collection_configs)
+      @show_ads = false
+
+      begin
+        config = collection_configs.select(&lambda { |cc| cc.quay == ADS_KEY }).first
+        @show_ads = config.value == 'true' if config
+      rescue Exception => e
+        Rails.logger.error('Something went wrong while parsing showAds ' + e.to_s)
+      end
+
+      @show_ads
     end
 
     def partner(collection_configs)

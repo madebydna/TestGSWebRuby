@@ -15,18 +15,32 @@
     <div>
       <span>Sort by:</span>
       <span>
-        <a class="plm">Quality</a>
-        <a class="plm">Distance</a>
-        <a class="plm">Fit</a>
+        <% if @query_string.present? %>
+          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('rating', '<%=@query_string%>')">Quality</a>
+          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('distance', '<%=@query_string%>')">Distance</a>
+          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('fit', '<%=@query_string%>')">Fit</a>
+        <% else %>
+          <a>Quality</a><a>Distance</a><a>Fit</a>
+        <% end %>
       </span>
     </div>
   </div>
 
   <div class="col-xs-6">
     <div class="pull-right prl">
-      <div class="tar">Schools <%=@results_offset+1%> to
-          <%= [@results_offset+@page_size,@total_results].min %> of
-          <%= @total_results %> < > </div><br>
+      <div class="tar">
+        <span class="prm">Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span>
+        <% if @previous_page.present? %>
+            <a href="javascript:void(0)" onclick="GS.search.results.pagination('<%=@previous_page%>')"> < </a>
+        <% else %>
+            <
+        <% end %>
+        <% if @next_page.present? %>
+            <a href="javascript:void(0)" onclick="GS.search.results.pagination('<%=@next_page%>')"> > </a>
+        <% else %>
+            >
+        <% end %>
+      </div><br>
       <div class="row">
         <div class="col-sm-5"><button class="btn btn-default">Compare (2/4)</button></div>
         <div class="col-xs-12 hidden-sm hidden-md hidden-lg ptm"></div>

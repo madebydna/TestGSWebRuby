@@ -54,7 +54,8 @@ class TestScoreResults
           state_avg = result_hash['state_value_text'].nil? ? result_hash['state_value_float'] : result_hash['state_value_text']
           state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
           breakdown_id = result_hash['breakdown_id']
-          number_tested = result_hash['number_tested']
+          school_number_tested = result_hash['school_number_tested']
+
           if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
             label = data_type_descriptions[test_data_type_id.to_s]['test_label']
             description = data_type_descriptions[test_data_type_id.to_s]['test_description'] || ''
@@ -81,7 +82,7 @@ class TestScoreResults
                                       {year =>
                                            {
                                                "score" => test_score,
-                                               "number_tested" => number_tested,
+                                               "school_number_tested" => school_number_tested,
                                                "state_avg" => state_avg
                                            }
                                       }
@@ -109,7 +110,7 @@ class TestScoreResults
                                          {year =>
                                               {
                                                   "score" => test_score,
-                                                  "number_tested" => number_tested,
+                                                  "school_number_tested" => school_number_tested,
                                                   "state_avg" => state_avg
                                               }
                                          }
@@ -135,7 +136,7 @@ class TestScoreResults
                          {year =>
                               {
                                   "score" => test_score,
-                                  "number_tested" => number_tested,
+                                  "school_number_tested" => school_number_tested,
                                   "state_avg" => state_avg
                               }
                          }
@@ -152,7 +153,7 @@ class TestScoreResults
                       {year =>
                            {
                                "score" => test_score,
-                               "number_tested" => number_tested,
+                               "school_number_tested" => school_number_tested,
                                "state_avg" => state_avg
                            }
                       }
@@ -167,7 +168,7 @@ class TestScoreResults
                     test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject][year] =
                         {
                             "score" => test_score,
-                            "number_tested" => number_tested,
+                            "school_number_tested" => school_number_tested,
                             "state_avg" => state_avg
                         }
 

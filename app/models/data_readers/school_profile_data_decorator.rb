@@ -25,9 +25,6 @@ module SchoolProfileDataDecorator
     if (base.instance_variable_get :@test_scores_data_reader).nil?
       base.instance_variable_set :@test_scores_data_reader, TestScoresDataReader.new(base)
     end
-    if (base.instance_variable_get :@zillow_data_reader).nil?
-      base.instance_variable_set :@zillow_data_reader, ZillowDataReader.new(base)
-    end
   end
 
   def page=(page)
@@ -48,8 +45,7 @@ module SchoolProfileDataDecorator
       esp_response: @esp_data_reader,
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
-      test_scores: @test_scores_data_reader,
-      zillow: @zillow_data_reader
+      test_scores: @test_scores_data_reader
     }
   end
 
@@ -64,10 +60,9 @@ module SchoolProfileDataDecorator
       rating_data
       snapshot
       test_scores
-      zillow
       census_data_points
       footnotes
-      facebook_url
+      enrollment
     ]
   end
 
@@ -100,7 +95,7 @@ module SchoolProfileDataDecorator
     raise(ArgumentError, ':category must be provided') if category.nil?
 
     source = category.source
-    if source && source != 'facebook_url'
+    if source
       reader = data_reader_config[source.to_sym]
       return reader.send :footnotes_for_category, category if reader.respond_to? :footnotes_for_category
     end
@@ -179,14 +174,10 @@ module SchoolProfileDataDecorator
     @test_scores_data_reader.data
   end
 
-  def zillow(options = {})
+  def enrollment(options = {})
     category = options[:category]
-    @zillow_data_reader.data_for_category category
-  end
-
-  def facebook_url(options = {})
-    school_metadata = self.school_metadata
-    school_metadata['facebook_url'].presence
+    hash = @esp_data_reader.responses_for_category category
+    hash.gs_transform_values! { |array| array.first }
   end
 
   def footnotes(options = {})

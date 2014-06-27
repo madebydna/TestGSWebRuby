@@ -189,7 +189,7 @@ class ApplicationController < ActionController::Base
       long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
       short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
     } if params[:state]
-    @city = params[:city].gsub(/\-/, ' ') if params[:city]
+    @city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-') if params[:city]
   end
 
   def set_hub_params

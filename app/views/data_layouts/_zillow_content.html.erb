@@ -1,17 +1,29 @@
-<% if data['region_id'].present? && data['zillow_formatted_location'].present? %>
+<% region_id = nil %>
+<% zillow_formatted_location = nil %>
+<% if defined? @school %>
+     <% zillow_school_decorator = ZillowSchoolDecorator.decorate @school %>
+     <% region_id = zillow_school_decorator.region_id %>
+     <% zillow_formatted_location = zillow_school_decorator.zillow_formatted_location %>
+<% elsif defined?(@city) && defined?(@state) %>
+     <% zillow_data = ZillowRegionId.data_for(@city, @state) %>
+     <% region_id = zillow_data['region_id'] %>
+     <% zillow_formatted_location = zillow_data['zillow_formatted_location'] %>
+<% end %>
+
+<% if region_id.present? && zillow_formatted_location.present? %>
 
      <div class="ma" style="width:298px;height:298px;border:1px solid #adaaad;background-color:#f4f4f4;box-shadow:inset -2px -2px 7px rgba(0,0,0,0.16);-moz-box-shadow: inset -2px -2px 7px rgba(0,0,0,0.16);-webkit-box-shadow: inset 2px 2px 7px rgba(0,0,0,0.16);border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;overflow:hidden;">
         <iframe marginheight="0" hspace="0" width="298" marginwidth="0" noresize="true" frameborder="0" height="272"
                 style="border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;" scrolling="no"
                 allowtransparency="true"
-                src="http://www.zillow.com/widgets/search/PartnerAdWidget.htm?bucket=map&amp;pn=Great+Schools&amp;rid=<%= data['region_id'] %>&amp;style=default&amp;ulbm=false"
+                src="http://www.zillow.com/widgets/search/PartnerAdWidget.htm?bucket=map&amp;pn=Great+Schools&amp;rid=<%= region_id %>&amp;style=default&amp;ulbm=false"
                 vspace="0"> Your browser doesn't support frames. Please visit <a
         href="http://www.zillow.com?cbpartner=Great+Schools&amp;utm_source=Great_Schools&amp;utm_medium=referral&amp;utm_content=map&amp;utm_campaign=partner_widgets"
         onclick="if (s.tl) {s.tl(this,'o', 'Zillow_Widget_'+gon.pagename);} return true;"
         target="_blank" style="text-decoration:none;" id="zillow">Zillow Home Page</a> to see this content.
         </iframe>
         <div style="margin:4px 10px 0;overflow:hidden;">
-            <a href="http://www.zillow.com/<%= data['zillow_formatted_location'] %>/"
+            <a href="http://www.zillow.com/<%= zillow_formatted_location %>/"
                target="_blank"
                onclick="if (s.tl) {s.tl(this,'o', 'Zillow_Widget_'+gon.pagename);} return true;"
                style="font-size:11px;display:inline;width:210px;float:left;text-decoration:none;color:#999;font-family:arial;font-weight:normal;">Browse on Zillow</a>

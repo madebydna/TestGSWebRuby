@@ -73,6 +73,7 @@ class School < ActiveRecord::Base
       metadata_hash
     )
   end
+  alias_method :metadata, :school_metadata
 
   def school_media_first_hash
     result = SchoolMedia.fetch_school_media self, 1

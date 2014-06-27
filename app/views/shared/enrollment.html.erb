@@ -2,9 +2,10 @@
   <%= javascript_include_tag "cycle/jquery.cycle2.js" %>
   <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
   <script>
-    $(document).ready(function() {
+    $(function() {
       GS.viewMoreCollapseInit({'foldHeight': 292 });
       GS.customCarouselControl.cycle2Carousel.enableMultipleCarouselsNav();
+      GS.util.setupImages({ selector: '.js-enrollment-image', desktopImage: '<%= image_path('hubs/enrollment.png')%>', mobileImage: '<%= image_path('hubs/small/enrollment_small.png')%>',breakpoint: 768});
     });
   </script>
 <% end %>
@@ -12,25 +13,10 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<% unless @events.nil? ||  @events[:events].empty? %>
-  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
-<% end %>
-
 
 <div class="limit-width-1200 mbl">
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-
-  <!-- Sins. -->
-  <div class="row mtl" style='margin-bottom: 60px;'>
-    <div class="hidden-lg hidden-md hidden-sm" style='width: 100%; left: 0;'>
-      <div style="background-image: url(<%= image_path('hubs/small/enrollment_small.png') %>); height: 130px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 60% 80%;"></div>
-    </div>
-    <div class="hidden-xs" style='width: 100%; left: 0;'>
-      <div style="background-image: url(<%= image_path('hubs/enrollment.png') %>); height: 185px; background-position: center; background-repeat: no-repeat; width: 100%; background-size: 40% 80%;"></div>
-    </div>
-  </div>
-
-
+  <div class="tac ptl mtl  js-enrollment-image"></div>
   <h1 class='tac'>Enrollment Information</h1>
   <% if @subheading[:error] %>
     <h3 class='tac'>Error: <%= @subheading[:error] %></h3>
@@ -39,7 +25,7 @@
   <% end %>
 
   <div class='tac mtl'>
-    <ul class='nav nav-pills xs-nav-stacked' style='margin-bottom: 80px'>
+    <ul class='nav nav-pills xs-nav-stacked mbl'>
       <% if params[:city] %>
         <li style='float: none; display: inline-block;' class="<%= 'active' if params[:tab] == nil %>">
           <%= link_to('Preschools', city_enrollment_path(params[:state], params[:city]), class: 'link-darkgray') %>
@@ -71,8 +57,7 @@
   </div>
 
   <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :public, key_dates: @key_dates %>
-  <hr class="dib">
-  <hr style='clear: both; margin-top: 70px; margin-bottom: 70px;'>
+  <hr class="mtl mbl">
   <%= render 'shared/enrollment_module', collection_nickname: @collection_nickname, city: @city, state: @state, tab: @tab, enrollment_module: @enrollment_module, tips: @tips, type: :private, key_dates: @key_dates %>
 
   </div>

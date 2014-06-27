@@ -33,63 +33,67 @@ describe 'school profile routing' do
     expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
   end
 
-  it 'should route to 404 page if there is no school ID' do
-    expect( get '/california/alameda/Alameda-High-School/' ).to route_to('error#page_not_found', path:'california/alameda/Alameda-High-School')
+  it 'ruby should route to 404 page by default for district home page' do
+    expect( get '/california/alameda/Alameda-High-School/' ).to route_to(
+      'error#page_not_found',
+      state: 'california',
+      city: 'alameda',
+      district: 'Alameda-High-School'
+    )
   end
 
   describe 'non-pk school scope' do
 
-
     it 'has a route for overview' do
       expect( get '/california/alameda/1-Alameda-High-School/' ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for overview' do
       expect( get school_path(@school) ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
 
       expect( get school_url(@school) ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for  reviews' do
       expect( get '/california/alameda/1-Alameda-High-School/reviews/' ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for reviews' do
       expect( get school_reviews_path(@school) ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_reviews_url(@school) ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for details' do
       expect( get '/california/alameda/1-Alameda-High-School/details/' ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for details' do
       expect( get school_details_path(@school) ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_details_url(@school) ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for quality' do
       expect( get '/california/alameda/1-Alameda-High-School/quality/' ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for quality' do
       expect( get school_quality_path(@school) ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_quality_url(@school) ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
@@ -118,54 +122,54 @@ describe 'school profile routing' do
 
     it 'has a route for overview' do
       expect( get '/california/alameda/preschools/Alameda-High-School/1/' ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for overview' do
       expect( get school_path(@school) ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
 
       expect( get school_url(@school) ).
-          to route_to('localized_profile#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for reviews' do
       expect( get '/california/alameda/preschools/Alameda-High-School/1/reviews/' ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for reviews' do
       expect( get school_reviews_path(@school) ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_reviews_url(@school) ).
-          to route_to('localized_profile#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for details' do
       expect( get '/california/alameda/preschools/Alameda-High-School/1/details/' ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for details' do
       expect( get school_details_path(@school) ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_details_url(@school) ).
-          to route_to('localized_profile#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 
     it 'has a route for quality' do
       expect( get '/california/alameda/preschools/Alameda-High-School/1/quality/' ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
     it 'has a url helper for quality' do
       expect( get school_quality_path(@school) ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
       expect( get school_quality_url(@school) ).
-          to route_to('localized_profile#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
 

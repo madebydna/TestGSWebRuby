@@ -94,14 +94,14 @@ module MetaTagsHelper
   end
 
   def states_community_title
-    "#{@state[:long].titleize} School Enrollment Information"
+    "#{@state[:long].titleize} Education Community"
   end
 
   def states_community_description
-    "Practical information including rules, deadlines and tips, for enrolling your child in #{@state[:long].titleize} schools"
+    "Key local and state organizations that make up the #{@state[:long].titleize} education system"
   end
 
   def states_community_keywords
-    "#{@state[:long]} school enrollment, #{@state[:long]} school enrollment information, #{@state[:long]} school enrollment info, #{@state[:long]} school enrollment process, #{@state[:long]} school enrollment deadlines"
+    "#{@state[:long].titleize} education system, #{@state[:long].titleize} education community, #{@state[:long].titleize} education partnerships"
   end
 end
