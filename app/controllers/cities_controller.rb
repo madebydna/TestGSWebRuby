@@ -187,7 +187,7 @@ class CitiesController < ApplicationController
     end
 
     def set_community_omniture_data
-      if @tab == 'Community'
+      if @tab == 'Community' || @show_tabs == false
         page_name = "GS:City:EducationCommunity"
         page_hier = "Home,CityHome,EducationCommunity"
       else
