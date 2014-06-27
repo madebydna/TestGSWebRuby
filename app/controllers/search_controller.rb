@@ -9,12 +9,9 @@ class SearchController < ApplicationController
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
-    elsif params.include?(:city) && params.include?(:district_name)
-      self.district_browse
-    elsif params.include?(:city)
-      self.city_browse
-    elsif params.include?(:q)
-      #self.by_name
+    else
+      render 'error/page_not_found', layout: 'error', status: 404
+      return
     end
   end
 
@@ -335,52 +332,53 @@ class SearchController < ApplicationController
 
   def filter_and_sort_display_map
     main_map = {
-        'st' => {
-            'public' => 'Public Schools',
-            'private' => 'Private Schools',
-            'charter' => 'Charter Schools'
-        },
-        'grades' => {
-            'p' => 'Pre-School',
-            'k' => 'Kindergarten',
-            '1' => '1st Grade',
-            '2' => '2nd Grade',
-            '3' => '3rd Grade',
-            '4' => '4th Grade',
-            '5' => '5th Grade',
-            '6' => '6th Grade',
-            '7' => '7th Grade',
-            '8' => '8th Grade',
-            '9' => '9th Grade',
-            '10' => '10th Grade',
-            '11' => '11th Grade',
-            '12' => '12th Grade'
-        },
-        'distance' => {
-            '1' => '1 Mile',
-            '2' => '2 Miles',
-            '3' => '3 Miles',
-            '4' => '4 Miles',
-            '5' => '5 Miles',
-            '10' => '10 Miles',
-            '15' => '15 Miles',
-            '20' => '20 Miles',
-            '25' => '25 Miles',
-            '30' => '30 Miles',
-            '60' => '60 Miles'
-        }
+      'st' => {
+        'public' => 'Public Schools',
+        'private' => 'Private Schools',
+        'charter' => 'Charter Schools'
+      },
+      'grades' => {
+        'p' => 'Pre-School',
+        'k' => 'Kindergarten',
+        '1' => '1st Grade',
+        '2' => '2nd Grade',
+        '3' => '3rd Grade',
+        '4' => '4th Grade',
+        '5' => '5th Grade',
+        '6' => '6th Grade',
+        '7' => '7th Grade',
+        '8' => '8th Grade',
+        '9' => '9th Grade',
+        '10' => '10th Grade',
+        '11' => '11th Grade',
+        '12' => '12th Grade'
+      },
+      'distance' => {
+        '1' => '1 Mile',
+        '2' => '2 Miles',
+        '3' => '3 Miles',
+        '4' => '4 Miles',
+        '5' => '5 Miles',
+        '10' => '10 Miles',
+        '15' => '15 Miles',
+        '20' => '20 Miles',
+        '25' => '25 Miles',
+        '30' => '30 Miles',
+        '60' => '60 Miles'
+      }
     }
     soft_filters = {
-        'beforeAfterCare' => {
-            'before' => 'Before School Care',
-            'after' => 'After School Care'
-        }
+      'beforeAfterCare' => {
+        'before' => 'Before School Care',
+        'after' => 'After School Care'
+      }
     }
-    #The following code will copy hash values from the sub hash
-    #and put them into the main hash.
+    #The following code will copy hash values from the soft_filters sub hash
+    #and put them into the main_map hash. (ex. 'beforeAfterCare' hash will be merged)
     #This is for the soft filter display keys
-    #This should be fine as long as there are no duplicate keys among sub hashes
+    #This should be fine as long as there are no duplicate keys in the soft_filter sub hashes
+    #as they will get overwritten
     main_map.merge!(soft_filters)
-    soft_filters.inject(main_map) { |hash,(k,v)| hash.merge(v) }
+    soft_filters.inject(main_map) { |main_hash,(k,v)| main_hash.merge(v) }
   end
 end

@@ -3,7 +3,7 @@
     <div class="dropdown drowpdown-large">
       <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
       <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:500px;">
-	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action="/search/search.page" method="get">
+	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action=<%=request.path%> method="get">
           <li class="pal col-xs-6">
             <div class="ptm">
               <span>School Types</span><br>

@@ -6,8 +6,12 @@ GS.search.results = GS.search.results || (function() {
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
             var fields = ['lat', 'lon', 'grades', 'distance'];
+
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
-            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this)
+            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
+
+//            var action = formActionType();
+//            GS.uri.Uri.changeFormAction(action, this);
         });
     };
 
@@ -35,6 +39,9 @@ GS.search.results = GS.search.results || (function() {
     var stopEventPropagation = function(selector) {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
+
+//    var formActionType = function() {
+//    };
 
     return {
         init:init,

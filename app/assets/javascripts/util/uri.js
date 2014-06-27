@@ -242,3 +242,7 @@ GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
     }
     return formObject;
 };
+
+GS.uri.Uri.changeFormAction = function(action, formObject) {
+    $(formObject).attr("action", action);
+};
