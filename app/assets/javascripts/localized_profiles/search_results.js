@@ -10,8 +10,8 @@ GS.search.results = GS.search.results || (function() {
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
 
-//            var action = formActionType();
-//            GS.uri.Uri.changeFormAction(action, this);
+            var formAction = getQueryPath();
+            GS.uri.Uri.changeFormAction(formAction, this);
         });
     };
 
@@ -40,8 +40,9 @@ GS.search.results = GS.search.results || (function() {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
 
-//    var formActionType = function() {
-//    };
+    var getQueryPath = function() {
+        return GS.uri.Uri.getPath();
+    };
 
     return {
         init:init,
