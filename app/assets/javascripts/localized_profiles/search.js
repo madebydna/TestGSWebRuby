@@ -45,6 +45,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     findByNameSelector = prototypeSearchSelector;
+//                    ToDo Hard coded byName search to Delaware
+                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this)
                     return submitByNameSearch.apply(this);
                 } else {
                     return false;
@@ -388,7 +390,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var submitByNameSearch = function() {
         var searchString = $(this).find(findByNameSelector).val();
-        var state = $(this).find('input#js-state').val();
+//        TODO temporarily added find('[name=state]')
+        var state = $(this).find('input#js-state').val() || $(this).find('[name=state]').val();
         var collectionId = $(this).find('input#js-collectionId').val();
         var searchType = $(this).find('input[name="search_type"]').val();
         var queryString = GS.uri.Uri.getQueryData();
