@@ -9,9 +9,14 @@ class SearchController < ApplicationController
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
+    elsif params.include?(:city) && params.include?(:district_name)
+      self.district_browse
+    elsif params.include?(:city)
+      self.city_browse
+    elsif params.include?(:q)
+      self.by_name
     else
       render 'error/page_not_found', layout: 'error', status: 404
-      return
     end
   end
 
@@ -83,6 +88,23 @@ class SearchController < ApplicationController
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
     set_omniture_pagename_search_school @page_number
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
+  end
+
+  def by_name
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
+      state = {
+          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+      } if params_hash['state']
+      @query_string = params_hash['q']
+      search_options.merge!({query: @query_string})
+      search_options.merge!({state: state[:short]}) if state
+    end
+
+    @by_name = true
+    set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
+    set_omniture_pagename_search_school @page_number
+    render 'browse_city'
   end
 
   def setup_search_results!(search_method)

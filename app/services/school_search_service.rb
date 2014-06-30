@@ -4,6 +4,7 @@ class SchoolSearchService
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
   DEFAULT_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
   DEFAULT_BY_LOCATION_OPTIONS = {sort: 'distance asc', rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
+  DEFAULT_BY_NAME_OPTIONS = {rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
   PARAMETER_TO_SOLR_MAPPING = {
       number_of_results: :rows,
       offset: :start
@@ -72,6 +73,24 @@ class SchoolSearchService
     param_options[:fq] = DEFAULT_BY_LOCATION_OPTIONS[:fq].clone
     filters.each {|filter| param_options[:fq] << filter}
     param_options[:query] = query
+    parse_school_results(get_results param_options)
+  end
+
+  def self.by_name(options_param = {})
+    raise ArgumentError, 'Query is required' unless options_param.include?(:query)
+    raise ArgumentError, 'Query must be at least one character' unless options_param[:query].length > 0
+    raise ArgumentError, 'Query is required' if options_param[:query] =~ /^[\p{Punct}\s]*$/
+    options = options_param.deep_dup
+    rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
+    remap_sort(options)
+    filters = extract_filters(options)
+    filters << "+school_database_state:\"#{options[:state].downcase}\"" if options[:state]
+    options.delete :state
+    param_options = DEFAULT_BY_NAME_OPTIONS.merge(options)
+    param_options[:fq] = DEFAULT_BY_NAME_OPTIONS[:fq].clone
+    param_options[:query] = Solr.prepare_query_string param_options[:query]
+    param_options[:query] = Solr.require_non_optional_words param_options[:query]
+    filters.each {|filter| param_options[:fq] << filter}
     parse_school_results(get_results param_options)
   end
 
@@ -163,10 +182,12 @@ class SchoolSearchService
 
   def self.add_level_codes(hash, grade_level)
     level_codes = []
-    level_codes << 'p' if grade_level.include? 'p'
-    level_codes << 'e' if grade_level.include? 'e'
-    level_codes << 'm' if grade_level.include? 'm'
-    level_codes << 'h' if grade_level.include? 'h'
+    if grade_level
+      level_codes << 'p' if grade_level.include? 'p'
+      level_codes << 'e' if grade_level.include? 'e'
+      level_codes << 'm' if grade_level.include? 'm'
+      level_codes << 'h' if grade_level.include? 'h'
+    end
     hash['level_code'] = level_codes.join ','
     hash['level_codes'] = level_codes
   end
