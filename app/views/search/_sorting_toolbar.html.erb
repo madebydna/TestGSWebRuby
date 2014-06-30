@@ -17,7 +17,7 @@
       <span>
         <% if @query_string.present? %>
           <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('rating', '<%=@query_string%>')">Quality</a>
-          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('distance', '<%=@query_string%>')">Distance</a>
+          <% if search_by_location? %><a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('distance', '<%=@query_string%>')">Distance</a><%else%><span>Distance</span><%end%>
           <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('fit', '<%=@query_string%>')">Fit</a>
         <% else %>
           <a>Quality</a><a>Distance</a><a>Fit</a>
