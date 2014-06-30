@@ -33,10 +33,10 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var keepSearchResultsFilterMenuOpen = function() {
-        stopEventPropagation('#searchResultsFilterMenu');
+        stopClickEventPropagation('#searchResultsFilterMenu');
     };
 
-    var stopEventPropagation = function(selector) {
+    var stopClickEventPropagation = function(selector) {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
 

@@ -308,7 +308,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (/\d{5}/.test($input)) {
                 $(this).data().ttTypeahead.minLength = 100;
                 $(this).typeahead('close');
+                GS.search.schoolSearchForm.searchType = "byLocation";
             } else {
+                GS.search.schoolSearchForm.searchType = "byName";
                 $(this).data().ttTypeahead.minLength = 1;
             }
         })
@@ -414,11 +416,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         schools: schools,
         attachAutocomplete: attachAutocomplete,
         handleAddressOrZipcode: handleAddressOrZipcode,
-        searchType: 'byLocation'
+        searchType: 'byName'
     };
 })();
 
 $(document).ready(function() {
+  GS.search.schoolSearchForm.handleAddressOrZipcode();
   GS.search.schoolSearchForm.init();
   GS.search.schoolSearchForm.setupTabs();
   GS.search.schoolSearchForm.cities.initialize();
@@ -428,5 +431,4 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.initialize();
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
-  GS.search.schoolSearchForm.handleAddressOrZipcode();
 });
