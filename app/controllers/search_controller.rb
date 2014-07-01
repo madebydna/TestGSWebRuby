@@ -9,7 +9,6 @@ class SearchController < ApplicationController
   SOFT_FILTER_KEYS = ['beforeAfterCare']
 
   def search
-    self.city_browse
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
