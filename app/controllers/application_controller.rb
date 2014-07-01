@@ -86,7 +86,21 @@ class ApplicationController < ActionController::Base
   end
 
   def require_state
-    render 'error/school_not_found', layout: 'error', status: 404 if state_param.blank?
+    render 'error/page_not_found', layout: 'error', status: 404 if state_param.blank?
+  end
+
+  def require_state_instance_variable
+    render('error/page_not_found', layout: 'error', status: 404) if @state.nil?
+  end
+
+  def require_city_instance_variable
+    if @city.nil?
+      if @state.present? && @state.respond_to?(:long)
+        redirect_to state_path(@state[:long])
+      else
+        render('error/page_not_found', layout: 'error', status: 404)
+      end
+    end
   end
 
   # Finds school given request param schoolId

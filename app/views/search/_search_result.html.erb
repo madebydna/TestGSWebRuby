@@ -9,7 +9,7 @@
     <div class="<%=search_by_location? ? "col-xs-12 col-sm-4 col-md-4 col-lg-4" : "col-xs-12 col-sm-6 col-md-6 col-lg-5"%>">
         <div class="ptm">
           <span class="open-sans_b"><%= link_to school.name, school_path(school) %></span><br>
-          <span class="ptm"><%=school.street + ", " + school.city + " " + school.state.upcase + " " + school.zip %></span><br>
+          <span class="ptm"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></span><br>
           <div class="row">
             <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
               <span class="prm col-lg-3"><%= draw_stars_16 school.community_rating%></span>

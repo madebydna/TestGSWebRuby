@@ -1,11 +1,15 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
 
+  before_action :set_city_state, only: [:city_browse, :district_browse]
+  before_action :require_state_instance_variable, :require_city_instance_variable, only: [:city_browse, :district_browse]
+
   layout 'application'
 
   SOFT_FILTER_KEYS = ['beforeAfterCare']
 
   def search
+    self.city_browse
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
@@ -21,17 +25,7 @@ class SearchController < ApplicationController
   end
 
   def city_browse
-    set_city_state
-    if @state.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-      return
-    end
-
     @city = City.find_by_state_and_name(@state[:short], @city)
-    if @city.nil?
-      redirect_to state_path(@state[:long])
-      return
-    end
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: @state[:short], city: @city.name})
@@ -44,17 +38,7 @@ class SearchController < ApplicationController
   end
 
   def district_browse
-    set_city_state
-    if @state.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-      return
-    end
-
     @city = City.find_by_state_and_name(@state[:short], @city)
-    if @city.nil?
-      redirect_to state_path(@state[:long])
-      return
-    end
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
