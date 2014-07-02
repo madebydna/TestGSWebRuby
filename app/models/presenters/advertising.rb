@@ -390,8 +390,6 @@ class Advertising
       },
     }
 
-    Homepage_Pos1
-
     def get_width(page, slot, view)
       ret_value = 0
       dim_array = get_dimensions(page, slot, view)
