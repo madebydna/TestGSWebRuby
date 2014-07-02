@@ -200,7 +200,9 @@ module ApplicationHelper
             'reviews' => 'localreviews',
             'quality' => 'localquality',
             'details' => 'localdetails',
-            'city_browse' => 'localcitybrowse'
+            'city_browse' => 'schoolsearch',
+            'district_browse' => 'schoolsearch',
+            'search' => 'schoolsearch'
         }
 
   end

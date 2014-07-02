@@ -66,10 +66,12 @@
           <input type="checkbox">
           compare
         </button>
-        <button type="button" class="btn btn-default">
-          <span class="iconx16 i-16-home vam"></span>
-          homes for sale
-        </button>
+        <div>
+          <%= link_to  zillow_url(school), :class=> 'btn btn-default vam', target: '_blank' do %>
+            <span class="iconx16 i-16-home vam"></span>
+              homes for sale
+          <%end%>
+        </div>
       </div>
     </div>
   </div>
