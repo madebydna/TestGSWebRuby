@@ -96,7 +96,7 @@ class SearchController < ApplicationController
 
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
-    @filter_and_sort_display_map = filter_and_sort_display_map
+    setup_filter_display_map
 
     @results_offset = get_results_offset
     @page_size = get_page_size
@@ -339,13 +339,17 @@ class SearchController < ApplicationController
     end
   end
 
-  def filter_and_sort_display_map
-    main_map = {
-      'st' => {
-        'public' => 'Public Schools',
-        'private' => 'Private Schools',
-        'charter' => 'Charter Schools'
-      },
+  def setup_filter_display_map
+    @search_bar_display_map = get_search_bar_display_map
+    @filter_display_map = get_filter_display_map
+    @fit_score_display_map = get_fit_score_display_map(@filter_display_map)
+  end
+
+  #ToDo: Refactor into method that is database driven
+  #Method should take parameters like state/city/hub/etc... and return the appropriate filter map
+  #Also perhaps refactor below into symbols, but currently solr results return strings
+  def get_search_bar_display_map
+    {
       'grades' => {
         'p' => 'Pre-School',
         'k' => 'Kindergarten',
@@ -376,18 +380,43 @@ class SearchController < ApplicationController
         '60' => '60 Miles'
       }
     }
-    soft_filters = {
+  end
+
+  def get_filter_display_map
+    {
+      'st' => {
+        'title' => 'School Types',
+        'public' => 'Public Schools',
+        'private' => 'Private Schools',
+        'charter' => 'Charter Schools'
+      },
       'beforeAfterCare' => {
+        'title' => 'Child Care Programs',
         'before' => 'Before School Care',
         'after' => 'After School Care'
+      },
+      'sports' => {
+        'title' => 'Sports (dont check)',
+        'basketball' => 'Basketball',
+        'soccer' => 'Soccer',
+        'football' => 'Football',
+        'tennis' => 'Tennis'
+      },
+      'language' => {
+        'title' => 'Languages (dont check)',
+        'french' => 'French',
+        'spanish' => 'Spanish',
+        'japanese' => 'Japanese',
+        'german' => 'German'
       }
     }
-    #The following code will copy hash values from the soft_filters sub hash
-    #and put them into the main_map hash. (ex. 'beforeAfterCare' hash will be merged)
-    #This is for the soft filter display keys
-    #This should be fine as long as there are no duplicate keys in the soft_filter sub hashes
-    #as they will get overwritten
-    main_map.merge!(soft_filters)
-    soft_filters.inject(main_map) { |main_hash,(k,v)| main_hash.merge(v) }
+  end
+
+  #The following code will copy hash values from each sub hash in filter_display_map
+  #This is for the fit score filter display key map
+  #This should be fine as long as there are no duplicate keys in the sub hashes of filter_display_map
+  #as they will get overwritten
+  def get_fit_score_display_map(filter_display_map)
+    filter_display_map.inject({}) { |hash,(k,v)| hash.merge(v) }
   end
 end
