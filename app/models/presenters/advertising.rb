@@ -7,58 +7,42 @@ class Advertising
       Snapshot: {
         name: "Snapshot",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Reviews: {
         name: "Reviews",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[[300,600],[300,250]]
         }
       },
       Media_Gallery: {
         name: "Media_Gallery",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Details: {
         name: "Details",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Facebook: {
         name: "Facebook",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Contact_Info: {
         name: "Contact_Info",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       }
@@ -69,55 +53,39 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Review1: {
         name: "Review1",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Review2: {
         name: "Review2",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Review3: {
         name: "Review3",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Contact_Info: {
         name: "Contact_Info",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       }
@@ -128,94 +96,68 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Ratings: {
         name: "Ratings",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Test_Scores1: {
         name: "Test_Scores1",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Test_Scores2: {
         name: "Test_Scores2",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Test_Scores3: {
         name: "Test_Scores3",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },Test_Scores4: {
         name: "Test_Scores4",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Test_Scores5: {
         name: "Test_Scores5",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       College_Readiness: {
         name: "College_Readiness",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Climate: {
         name: "Climate",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Contact_Info: {
         name: "Contact_Info",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       }
@@ -226,92 +168,66 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Students: {
         name: "Students",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Programs: {
         name: "Programs",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Culture: {
         name: "Culture",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Teachers: {
         name: "Teachers",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Neighborhood: {
         name: :Neighborhood,
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
       Enrollment: {
         name: "Enrollment",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Sources: {
         name: "Sources",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Contact_Info: {
         name: "Contact_Info",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       }
@@ -321,21 +237,15 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Footer: {
         name: "Footer",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
@@ -345,21 +255,15 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Footer: {
         name: "Footer",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },
@@ -370,21 +274,15 @@ class Advertising
       Pos1: {
         name: "Pos1",
         desktop:{
-          width:300,
-          height:250,
           dimensions:[300,250]
         }
       },
       Pos2: {
         name: "Pos2",
         desktop:{
-          width:728,
-          height:90,
           dimensions:[728,90]
         },
         mobile:{
-          width:320,
-          height:50,
           dimensions:[320,50]
         }
       },

@@ -16,7 +16,7 @@ class StatesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       collection_id = hub_city_mapping.collection_id
-      @ad_definition = Advertising.new
+
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
@@ -113,6 +113,7 @@ class StatesController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
+    @ad_definition = Advertising.new
     if @show_ads
       set_targeting = {}
       set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
