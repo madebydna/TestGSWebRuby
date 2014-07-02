@@ -12,10 +12,6 @@ class Solr
     end
   end
 
-  def school_search(options)
-    @connection.get "select/", params: parse_params(options)
-  end
-
   def school_name_suggest(options)
     params = parse_params(options)
     params[:fq] << '+document_type:school'
@@ -44,21 +40,6 @@ class Solr
     params[:q] = "+district_name_untokenized:#{query}*"
 
     @connection.get 'select/', params: params
-  end
-
-  def school_location_autosuggest(options)
-    params = parse_params(options)
-    params[:facet] = 'true'
-    params[:rows] = 0
-    params[:spellcheck] = false
-    params['facet.field'] = 'school_autosuggest'
-    params['facet.limit'] = 150
-    params['facet.mincount'] = 1
-    params['f.school_autosuggest.facet.prefix'] = options[:query]
-    params[:q] = "+school_autosuggest:#{options[:query]}*"
-    params[:fq] << "+state:#{options[:state]}" if options[:state]
-
-    @connection.get "select/", params: params
   end
 
   def breakdown_results(options)

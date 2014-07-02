@@ -38,6 +38,7 @@ class SchoolSearchService
     parse_school_results(get_results param_options)
   end
 
+  # :district_id, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
   def self.district_browse(options_param = {})
     raise ArgumentError, 'State is required' unless options_param.include?(:state)
     raise ArgumentError, 'State should be a two-letter abbreviation' unless options_param[:state].length == 2
@@ -176,8 +177,11 @@ class SchoolSearchService
     }
   end
 
-  def self.get_state_abbreviation(solr_state)
-    solr_state['database_state'].select {|v| v.length == 2}[0]
+  def self.get_state_abbreviation(hash)
+    if hash.include? 'database_state'
+      return hash['database_state'].select {|v| v.length == 2 && States.abbreviation_hash.include?(v)}[0]
+    end
+    return nil
   end
 
   def self.add_level_codes(hash, grade_level)
@@ -188,7 +192,7 @@ class SchoolSearchService
       level_codes << 'm' if grade_level.include? 'm'
       level_codes << 'h' if grade_level.include? 'h'
     end
-    hash['level_code'] = level_codes.join ','
+    hash['level_code'] = (level_codes.join ',') || ''
     hash['level_codes'] = level_codes
   end
 
@@ -215,14 +219,14 @@ class SchoolSearchService
     filter_arr = []
     if hash.include? :filters
       filters = hash[:filters]
-      if filters.include? :school_type
+      if filters.include?(:school_type) && filters[:school_type].size > 0
         filter_arr << "+school_type:(#{filters[:school_type].join(' ')})"
       end
-      if filters.include? :level_code
+      if filters.include?(:level_code) && filters[:level_code].size > 0
         level_codes = filters[:level_code].collect { |e| e[0] if ['p', 'e', 'm', 'h'].include? e[0]}
         filter_arr << "+school_grade_level:(#{level_codes.join(' ')})"
       end
-      if filters.include? :grades
+      if filters.include?(:grades) && filters[:grades].size > 0
         normalized_grades = filters[:grades].collect do |e|
           rval = nil
           rval = 'PK' if e == :grade_p
@@ -238,9 +242,12 @@ class SchoolSearchService
   end
 
   def self.extract_by_location(hash)
-    radius = hash[:radius] || 5.0
-    radius_in_km = radius.to_f * 1.6 # convert to KM
-    query = "{!spatial circles=#{hash[:lat]},#{hash[:lon]},#{radius_in_km}}"
+    query = ''
+    if hash.include?(:lat) && hash.include?(:lon)
+      radius = hash[:radius] || 5.0
+      radius_in_km = radius.to_f * 1.6 # convert to KM
+      query = "{!spatial circles=#{hash[:lat]},#{hash[:lon]},#{radius_in_km}}"
+    end
     hash.delete :lat
     hash.delete :lon
     hash.delete :radius
