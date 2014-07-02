@@ -1,8 +1,8 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
 
-  before_action :set_city_state, only: [:city_browse, :district_browse]
-  before_action :require_state_instance_variable, :require_city_instance_variable, only: [:city_browse, :district_browse]
+  before_action :set_verified_city_state, only: [:city_browse, :district_browse]
+  before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
 
   layout 'application'
 
@@ -23,8 +23,12 @@ class SearchController < ApplicationController
     end
   end
 
+  #todo decide to use or not use before filters
+  #Currently the before filters are only activated if city_browse is hit directly from the route (also affects district browse)
+  #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
+  #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
-    @city = City.find_by_state_and_name(@state[:short], @city)
+    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: @state[:short], city: @city.name})
@@ -37,7 +41,7 @@ class SearchController < ApplicationController
   end
 
   def district_browse
-    @city = City.find_by_state_and_name(@state[:short], @city)
+    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode

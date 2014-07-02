@@ -89,17 +89,16 @@ class ApplicationController < ActionController::Base
     render 'error/page_not_found', layout: 'error', status: 404 if state_param.blank?
   end
 
+  #todo think of better name than require_state_instance_variable or refactor require_state code
   def require_state_instance_variable
-    render('error/page_not_found', layout: 'error', status: 404) if @state.nil?
+    if @state.nil?
+      block_given? ? yield : render('error/page_not_found', layout: 'error', status: 404)
+    end
   end
 
   def require_city_instance_variable
     if @city.nil?
-      if @state.present? && @state.respond_to?(:long)
-        redirect_to state_path(@state[:long])
-      else
-        render('error/page_not_found', layout: 'error', status: 404)
-      end
+      block_given? ? yield : render('error/page_not_found', layout: 'error', status: 404)
     end
   end
 
@@ -204,6 +203,19 @@ class ApplicationController < ActionController::Base
       short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
     } if params[:state]
     @city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-') if params[:city]
+  end
+
+  def set_verified_city_state
+    if params[:state].present?
+      long_name = States.state_name(params[:state].downcase.gsub(/\-/, ' ')) || return
+      short_name = States.abbreviation(params[:state].downcase.gsub(/\-/, ' ')) || return
+      @state = {long: long_name, short: short_name}
+    end
+    if params[:city]
+      city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
+      city = City.find_by_state_and_name(@state[:short], city) || return
+      @city = city
+    end
   end
 
   def set_hub_params
