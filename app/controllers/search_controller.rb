@@ -117,7 +117,7 @@ class SearchController < ApplicationController
   end
 
   def process_results(results)
-    @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+    @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
     @total_results = results[:num_found]
     @schools = results[:results]
     calculate_fit_score(@schools, @params_hash)

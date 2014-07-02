@@ -394,7 +394,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var state = $(this).find('input#js-state').val() || $(this).find('[name=state]').val();
         var collectionId = $(this).find('input#js-collectionId').val();
         var searchType = $(this).find('input[name="search_type"]').val();
-        var queryString = GS.uri.Uri.getQueryData();
+        var queryString = {};
 
         queryString.q = encodeURIComponent(searchString);
         queryString.search_type = encodeURIComponent(searchType);
