@@ -16,6 +16,7 @@ class StatesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       collection_id = hub_city_mapping.collection_id
+      @ad_definition = Advertising.new
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)

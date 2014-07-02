@@ -15,6 +15,7 @@ class CitiesController < ApplicationController
     if hub_city_mapping.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
+      @ad_definition = Advertising.new
       @collection_id = mapping.collection_id
       collection_configs = configs
       @browse_links = CollectionConfig.browse_links(collection_configs)
