@@ -10,8 +10,8 @@
             </div>
             <% if @show_ads %>
                 <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :desktop  %>
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :mobile  %>
+                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Reviews, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Reviews, view: :mobile  %>
                 </div>
             <% end %>
         </div>

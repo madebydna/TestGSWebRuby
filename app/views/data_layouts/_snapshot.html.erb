@@ -46,13 +46,13 @@
     <%= @show_ads ?  '</div>'.html_safe : '' %>
     <% if @show_ads %>
       <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Snapshot, view: :desktop  %>
       </div>
     <% end %>
   </div>
     <% if @show_ads %>
       <div class="plm">
-        <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :mobile  %>
+        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Snapshot, view: :mobile  %>
       </div>
     <% end %>
 </div>

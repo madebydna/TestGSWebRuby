@@ -18,10 +18,8 @@
 </div>
 <% if @show_ads %>
     <div class="<%= grid_sizing %> pbl">
-      <% ad_hash_desktop_footer={visible_for:'visible-lg visible-md visible-sm',ad_slot_id:ad_data_review[:content_ad_target_id],ad_size:'[300,250]',ad_width:'300',ad_target:ad_data_review[:content_ad_target]} %>
-      <% ad_hash_mobile_footer={visible_for:'visible-xs',ad_slot_id:ad_data_review[:content_ad_target_mobile_id],ad_size:'[300,250]',ad_width:'300',ad_target: ad_data_review[:content_ad_target_mobile]} %>
-      <%= render 'shared/ad_slot', ad_data: ad_hash_desktop_footer %>
-      <%= render 'shared/ad_slot', ad_data: ad_hash_mobile_footer %>
+        <%= render 'layouts/ad_layer', page: ad_data[:page], slot: ad_data[:slot], view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: ad_data[:page], slot: ad_data[:slot], view: :mobile  %>
     </div>
 <% end %>
 </div>

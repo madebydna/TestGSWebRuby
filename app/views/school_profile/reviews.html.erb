@@ -8,8 +8,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <% if @show_ads %>
                 <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
                 </div>
             <% end %>
             <div class="well tac">
