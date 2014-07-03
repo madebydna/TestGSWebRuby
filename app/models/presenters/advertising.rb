@@ -15,6 +15,9 @@ class Advertising
         name: "Reviews",
         desktop:{
           dimensions:[[300,600],[300,250]]
+        },
+        mobile:{
+          dimensions:[300,250]
         }
       },
       Media_Gallery: {
