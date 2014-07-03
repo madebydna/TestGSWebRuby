@@ -131,7 +131,6 @@ class SearchController < ApplicationController
     @schools = school_results[@results_offset .. (@results_offset+@page_size)]
     map_start = @results_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
     map_start = 0 if map_start < 0
-    puts "Map range=#{map_start}..#{map_start+MAX_RESULTS_FOR_MAP}"
     @map_schools = school_results[map_start .. (map_start+MAX_RESULTS_FOR_MAP)]
 
     @schools.each do |school|
