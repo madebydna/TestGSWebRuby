@@ -129,9 +129,9 @@ class SearchController < ApplicationController
     @total_results = results[:num_found]
     school_results = results[:results] || []
     @schools = school_results[@results_offset .. (@results_offset+@page_size)]
-    map_start = @results_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
-    map_start = 0 if map_start < 0
-    @map_schools = school_results[map_start .. (map_start+MAX_RESULTS_FOR_MAP)]
+    (map_start, map_end) = calculate_map_range
+    #puts "Map range=#{map_start}..#{map_start+MAX_RESULTS_FOR_MAP}"
+    @map_schools = school_results[map_start .. map_end]
 
     @schools.each do |school|
       school.on_page = true # mark the results that appear in the list so the map can handle them differently
@@ -213,6 +213,20 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def calculate_map_range
+    map_start = @results_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
+    map_start = 0 if map_start < 0
+    map_start = @results_offset if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
+    map_end = map_start + MAX_RESULTS_FOR_MAP
+    if map_end > @total_results
+      map_end = @total_results
+      map_start = map_end - MAX_RESULTS_FOR_MAP
+      map_start = 0 if map_start < 0
+      map_start = @results_offset if map_start > @results_offset
+    end
+    [map_start, map_end]
+  end
 
   def parse_filters(params_hash)
     filters = {}
