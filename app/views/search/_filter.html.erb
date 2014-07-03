@@ -1,13 +1,13 @@
 <li class="pal col-xs-4">
   <div class="ptm">
-    <span><%=filters['title']%></span><br>
+    <span><%=filters[:title]%></span><br>
   </div>
   <div class="divider" style="height: 2px; background-color: darkgrey"></div>
   <div>
   <% filters.each do |filter, display_name| %>
-    <%next if filter == 'title'%>
-    <span><input type="checkbox" name=<%="#{filter_category}[]" %> value=<%=filter%>
-      <%if @params_hash.include?(filter_category) && @params_hash[filter_category].include?(filter)%>checked<%end%>><%=display_name%>
+    <%next if filter == :title %>
+    <span><input type="checkbox" name=<%="#{filter_category.to_s}[]" %> value=<%=filter.to_s%>
+      <%if @params_hash.include?(filter_category.to_s) && @params_hash[filter_category.to_s].include?(filter.to_s)%>checked<%end%>><%=display_name%>
     </span><br>
   <% end %>
   </div>

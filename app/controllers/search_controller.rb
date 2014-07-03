@@ -372,64 +372,64 @@ class SearchController < ApplicationController
   #Also perhaps refactor below into symbols, but currently solr results return strings
   def get_search_bar_display_map
     {
-      'grades' => {
-        'p' => 'Pre-School',
-        'k' => 'Kindergarten',
-        '1' => '1st Grade',
-        '2' => '2nd Grade',
-        '3' => '3rd Grade',
-        '4' => '4th Grade',
-        '5' => '5th Grade',
-        '6' => '6th Grade',
-        '7' => '7th Grade',
-        '8' => '8th Grade',
-        '9' => '9th Grade',
-        '10' => '10th Grade',
-        '11' => '11th Grade',
-        '12' => '12th Grade'
+      :grades => {
+        :p => 'Pre-School',
+        :k => 'Kindergarten',
+        1 => '1st Grade',
+        2 => '2nd Grade',
+        3 => '3rd Grade',
+        4 => '4th Grade',
+        5 => '5th Grade',
+        6 => '6th Grade',
+        7 => '7th Grade',
+        8 => '8th Grade',
+        9 => '9th Grade',
+        10 => '10th Grade',
+        11 => '11th Grade',
+        12 => '12th Grade'
       },
-      'distance' => {
-        '1' => '1 Mile',
-        '2' => '2 Miles',
-        '3' => '3 Miles',
-        '4' => '4 Miles',
-        '5' => '5 Miles',
-        '10' => '10 Miles',
-        '15' => '15 Miles',
-        '20' => '20 Miles',
-        '25' => '25 Miles',
-        '30' => '30 Miles',
-        '60' => '60 Miles'
+      :distance => {
+        1 => '1 Mile',
+        2 => '2 Miles',
+        3 => '3 Miles',
+        4 => '4 Miles',
+        5 => '5 Miles',
+        10 => '10 Miles',
+        15 => '15 Miles',
+        20 => '20 Miles',
+        25 => '25 Miles',
+        30 => '30 Miles',
+        60 => '60 Miles'
       }
     }
   end
 
   def get_filter_display_map
     {
-      'st' => {
-        'title' => 'School Types',
-        'public' => 'Public Schools',
-        'private' => 'Private Schools',
-        'charter' => 'Charter Schools'
+      :st => {
+        :title => 'School Types',
+        :public => 'Public Schools',
+        :private => 'Private Schools',
+        :charter => 'Charter Schools'
       },
-      'beforeAfterCare' => {
-        'title' => 'Child Care Programs',
-        'before' => 'Before School Care',
-        'after' => 'After School Care'
+      :beforeAfterCare => {
+        :title => 'Child Care Programs',
+        :before => 'Before School Care',
+        :after => 'After School Care'
       },
-      'sports' => {
-        'title' => 'Sports (dont check)',
-        'basketball' => 'Basketball',
-        'soccer' => 'Soccer',
-        'football' => 'Football',
-        'tennis' => 'Tennis'
+      :sports => {
+        :title => 'Sports (dont check)',
+        :basketball => 'Basketball',
+        :soccer => 'Soccer',
+        :football => 'Football',
+        :tennis => 'Tennis'
       },
-      'language' => {
-        'title' => 'Languages (dont check)',
-        'french' => 'French',
-        'spanish' => 'Spanish',
-        'japanese' => 'Japanese',
-        'german' => 'German'
+      :language => {
+        :title => 'Languages (dont check)',
+        :french => 'French',
+        :spanish => 'Spanish',
+        :japanese => 'Japanese',
+        :german => 'German'
       }
     }
   end

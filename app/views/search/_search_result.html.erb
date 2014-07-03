@@ -49,9 +49,9 @@
             <li class="pal" style="font-size: 12px;">
               <% school.fit_score_filters.each do |key, value| %>
                 <% if value %>
-                  <div>O <%=@fit_score_display_map[key]%></div>
+                  <div>O <%=@fit_score_display_map[key.to_sym]%></div>
                 <% else %>
-                  <div>X <%=@fit_score_display_map[key]%></div>
+                  <div>X <%=@fit_score_display_map[key.to_sym]%></div>
                 <% end %>
               <% end %>
             </li>
