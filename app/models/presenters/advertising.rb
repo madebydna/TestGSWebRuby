@@ -295,10 +295,7 @@ class Advertising
       Parenting_Content: {
         name: "Parenting_Content",
         desktop:{
-          dimensions:[728,90]
-        },
-        mobile:{
-          dimensions:[320,50]
+          dimensions:[300,250]
         }
       },
     }
