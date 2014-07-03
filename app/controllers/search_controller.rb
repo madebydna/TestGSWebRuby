@@ -106,16 +106,29 @@ class SearchController < ApplicationController
 
     ad_setTargeting_through_gon
 
-    search_options = {number_of_results: MAX_RESULTS_FROM_SOLR, offset: 0}
+    # calculate offset and number of results such that we'll definitely have 200 map pins to display
+    # To guarantee this in a simple way I fetch a total of 400 results centered around the page to be displayed
+    offset = @results_offset - MAX_RESULTS_FOR_MAP
+    offset = 0 if offset < 0
+    number_of_results = @results_offset + MAX_RESULTS_FOR_MAP
+    number_of_results = (MAX_RESULTS_FOR_MAP * 2) if number_of_results > (MAX_RESULTS_FOR_MAP*2)
+    search_options = {number_of_results: number_of_results, offset: offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+
+    # To sort by fit, we need all the schools matching the search. So override offset and num results here
+    is_fit_sort = (sort == :fit_desc || sort == :fit_asc)
+    if is_fit_sort
+      search_options[:number_of_results] = MAX_RESULTS_FROM_SOLR
+      search_options[:offset] = 0
+    end
 
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
     calculate_fit_score(results[:results], @params_hash) unless results.empty?
-    sort_by_fit(results[:results], sort) if sort == :fit_desc || sort == :fit_asc
-    process_results(results) unless results.empty?
+    sort_by_fit(results[:results], sort) if is_fit_sort
+    process_results(results, offset) unless results.empty?
   end
 
   def sort_by_fit(school_results, direction)
@@ -124,13 +137,16 @@ class SearchController < ApplicationController
     school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
   end
 
-  def process_results(results)
+  def process_results(results, solr_offset)
     @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
     @total_results = results[:num_found]
     school_results = results[:results] || []
-    @schools = school_results[@results_offset .. (@results_offset+@page_size)]
-    (map_start, map_end) = calculate_map_range
-    #puts "Map range=#{map_start}..#{map_start+MAX_RESULTS_FOR_MAP}"
+    # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
+    # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
+    # 225 (the user requested offset)
+    relative_offset = @results_offset - solr_offset
+    @schools = school_results[relative_offset .. (relative_offset+@page_size)]
+    (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 
     @schools.each do |school|
@@ -214,16 +230,20 @@ class SearchController < ApplicationController
 
   protected
 
-  def calculate_map_range
-    map_start = @results_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
+  def calculate_map_range(solr_offset)
+    # solr_offset is used to convert from an absolute range to a relative range.
+    # e.g. if user requested 225-250, we want to display on map 150-350. That's the absolute range
+    # If we asked solr to give us results 25-425, then the relative range into that resultset is
+    # 125-325
+    map_start = @results_offset - solr_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
     map_start = 0 if map_start < 0
-    map_start = @results_offset if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
+    map_start = (@results_offset - solr_offset) if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
     map_end = map_start + MAX_RESULTS_FOR_MAP
     if map_end > @total_results
       map_end = @total_results
       map_start = map_end - MAX_RESULTS_FOR_MAP
       map_start = 0 if map_start < 0
-      map_start = @results_offset if map_start > @results_offset
+      map_start = (@results_offset - solr_offset) if map_start > @results_offset
     end
     [map_start, map_end]
   end
