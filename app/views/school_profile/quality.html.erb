@@ -17,6 +17,12 @@
                 <h3>Thank you for looking into the quality of this school.</h3>
                 <p>However, we do not have detailed quality information for this school at this time. We strive to acquire additional school data whenever available.</p>
             </div>
+            <% root_placements_show = @page_config.root_placements_to_always_show %>
+            <% if root_placements_show.empty? %>
+                <div class="row">
+                    <%= render partial: 'category_placement', collection: root_placements_show, as: :category_placement %>
+                </div>
+            <% end %>
         </div>
     <% else %>
     <div class="hidden-xs col-sm-4 col-md-3 col-lg-3 gs_set-z-1">

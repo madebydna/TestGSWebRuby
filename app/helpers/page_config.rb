@@ -18,6 +18,10 @@ class PageConfig
     root_placements.select { |cp| category_placement_has_data? cp }
   end
 
+  def root_placements_to_always_show
+    root_placements.select { |cp| always_show_category_placement? cp }
+  end
+
   def category_placement_children_with_data(parent)
     parent.children.select { |cp| category_placement_has_data? cp }
   end
@@ -31,6 +35,15 @@ class PageConfig
         cp.category.nil? || cp.category.has_data?(school, page_config: self)
       end
     )
+  end
+
+  def always_show_category_placement?(cp)
+    if cp.has_children?
+      always_show_category_placement?(cp).any?
+    else
+      cp.category.nil?
+    end
+
   end
 
   def method_missing(name, *args, &block)
