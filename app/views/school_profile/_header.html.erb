@@ -81,7 +81,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
                            @school.process_level,
-                           @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
+                           @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
                            @school.city.gs_capitalize_first + ' ' + @school.state.upcase,
                         ].compact  %>
 
