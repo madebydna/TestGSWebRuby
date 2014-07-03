@@ -85,18 +85,19 @@ def self.test_scores_cache_for_school(school)
 
   if data_sets_and_values.present?
     config_map = {
-      :data_type_id => 'data_type_id',
-      :data_set_id => 'data_set_id',
-      :level_code => 'level_code',
-      :subject_id => 'subject_id',
-      :grade => 'grade',
-      :year => 'year',
-      :school_value_text => 'school_value_text',
-      :school_value_float => 'school_value_float',
-      :state_value_text => 'state_value_text',
-      :state_value_float => 'state_value_float',
-      :breakdown_id => 'breakdown_id',
-      :school_number_tested => 'school_number_tested'
+      data_type_id: 'data_type_id',
+      data_set_id: 'data_set_id',
+      level_code: 'level_code',
+      subject_id: 'subject_id',
+      grade: 'grade',
+      year: 'year',
+      school_value_text: 'school_value_text',
+      school_value_float: 'school_value_float',
+      state_value_text: 'state_value_text',
+      state_value_float: 'state_value_float',
+      breakdown_id: 'breakdown_id',
+      proficiency_band_id: 'proficiency_band_id',
+      school_number_tested: 'school_number_tested'
     }
 
     data_type_ids = []

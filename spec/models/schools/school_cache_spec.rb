@@ -98,9 +98,18 @@ describe SchoolCache do
         expect(test_scores['data_sets_and_values'][0]['school_value_text']).to eq('3')
         expect(test_scores['data_sets_and_values'][0]['school_number_tested']).to eq(300)
         expect(test_scores['data_types']['1']['test_label']).to eq('Awesome Test')
+      end
 
+      it 'should insert proficiency_band_id with the cached data' do
+        test_data_set.proficiency_band_id = '99'
+        test_data_set.save
+        system("rails runner script/populate_school_cache_table.rb test_scores ca 1")
+
+        cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
+
+        test_scores = JSON.parse(cache_row[0].value)
+        expect(test_scores['data_sets_and_values'][0]['proficiency_band_id']).to eq(99)
       end
     end
-
   end
 end
