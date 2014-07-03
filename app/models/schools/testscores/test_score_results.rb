@@ -55,6 +55,7 @@ class TestScoreResults
           state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
           breakdown_id = result_hash['breakdown_id']
           school_number_tested = result_hash['school_number_tested']
+          proficiency_band_id = result_hash['proficiency_band_id']
 
           if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
             label = data_type_descriptions[test_data_type_id.to_s]['test_label']
@@ -64,122 +65,43 @@ class TestScoreResults
 
           next if subject.nil? # skip this test data if subject is nil
 
-          #Check if the test is already in the map.
-          if test_scores[test_data_type_id].nil?
+          test_scores ||= {}
 
-            #Test not present
-            test_scores[test_data_type_id] = {
-                test_label: label,
-                test_description: description,
-                test_source: source,
-                lowest_grade: grade.value,
-                grades: {
-                    grade =>
-                        {label: grade_label,
-                         level_code: {
-                             level_code =>
-                                 {subject =>
-                                      {year =>
-                                           {
-                                               "score" => test_score,
-                                               "school_number_tested" => school_number_tested,
-                                               "state_avg" => state_avg
-                                           }
-                                      }
-                                 }
-                         }
+          hash = {
+            test_data_type_id => {
+              test_label: label,
+              test_description: description,
+              test_source: source,
+              lowest_grade: grade.value,
+              grades: {
+                grade => {
+                  label: grade_label,
+                  level_code: {
+                    level_code => {
+                      subject => {
+                        year => {
+                          "score" => test_score,
+                          "school_number_tested" => school_number_tested,
+                          "state_avg" => state_avg,
+                          "proficiency_band_id" => proficiency_band_id
                         }
-                }
-            }
-          else
-            #Test already present.
-
-            #Check if grade is already in the map.
-            if test_scores[test_data_type_id][:grades].nil? || test_scores[test_data_type_id][:grades][grade].nil?
-
-              #Grade not present.
-              if (test_scores[test_data_type_id][:lowest_grade]).to_i > grade.value
-                test_scores[test_data_type_id][:lowest_grade] = grade.value
-              end
-
-
-              grade_map =
-                  {label: grade_label,
-                   level_code: {level_code =>
-                                    {subject =>
-                                         {year =>
-                                              {
-                                                  "score" => test_score,
-                                                  "school_number_tested" => school_number_tested,
-                                                  "state_avg" => state_avg
-                                              }
-                                         }
-                                    }
-                   }
-                  }
-
-              if test_scores[test_data_type_id][:grades].nil?
-                test_scores[test_data_type_id][:grades] = Hash.new
-              end
-
-              test_scores[test_data_type_id][:grades][grade] =grade_map
-
-            else
-              #Grade already present
-
-              #Check if level code is already in the map
-              if test_scores[test_data_type_id][:grades][grade][:level_code][level_code].nil?
-
-                #Level code not present
-                test_scores[test_data_type_id][:grades][grade][:level_code][level_code] =
-                    {subject =>
-                         {year =>
-                              {
-                                  "score" => test_score,
-                                  "school_number_tested" => school_number_tested,
-                                  "state_avg" => state_avg
-                              }
-                         }
-                    }
-
-              else
-                #Level code already present.
-
-                #Check if subject is already in the map
-                if test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject].nil?
-
-                  #Subject not present.
-                  test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject] =
-                      {year =>
-                           {
-                               "score" => test_score,
-                               "school_number_tested" => school_number_tested,
-                               "state_avg" => state_avg
-                           }
                       }
-
-                else
-                  #Subject already present.
-
-                  #Check if year is already in the map
-                  if test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject][year].nil?
-
-                    #year is not present.
-                    test_scores[test_data_type_id][:grades][grade][:level_code][level_code][subject][year] =
-                        {
-                            "score" => test_score,
-                            "school_number_tested" => school_number_tested,
-                            "state_avg" => state_avg
-                        }
-
-                  end
-                end
-              end
-            end
-          end
+                    }
+                  }
+                }
+              }
+            }
+          }
+          test_scores.deep_merge!(hash)
         end
       end
     end
+
+    test_scores.each do |data_type_id, hash|
+      lowest_grade = hash[:grades].keys.map(&:value).min
+      hash[:lowest_grade] = lowest_grade
+    end
+
     test_scores
   end
 
