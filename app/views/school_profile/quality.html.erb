@@ -5,7 +5,8 @@
 <div class="row limit-width-1200">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
     <% root_placements = @page_config.root_placements_with_data %>
-    <% if root_placements.empty? %>
+    <% root_placements_w_data = @page_config.root_placements_with_profile_data %>
+    <% if root_placements_w_data.empty? %>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <% if @show_ads %>
                 <div class="pvl">
@@ -17,10 +18,9 @@
                 <h3>Thank you for looking into the quality of this school.</h3>
                 <p>However, we do not have detailed quality information for this school at this time. We strive to acquire additional school data whenever available.</p>
             </div>
-            <% root_placements_show = @page_config.root_placements_to_always_show %>
             <% if root_placements_show.empty? %>
                 <div class="row">
-                    <%= render partial: 'category_placement', collection: root_placements_show, as: :category_placement %>
+                    <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
                 </div>
             <% end %>
         </div>
