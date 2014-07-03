@@ -54,7 +54,10 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          dimensions:[300,250]
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
         }
       },
       Review1: {
@@ -97,7 +100,10 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          dimensions:[300,250]
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
         }
       },
       Ratings: {
@@ -169,7 +175,10 @@ class Advertising
       Content_Top: {
         name: "Content_Top",
         desktop:{
-          dimensions:[300,250]
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
         }
       },
       Students: {
