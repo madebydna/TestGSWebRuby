@@ -2,6 +2,7 @@ class Advertising
 
   def initialize
     @ad_slots = Hash.new
+
     # Overview Page Ads
     @ad_slots[:School_Overview] = {
       Snapshot: {
@@ -232,6 +233,7 @@ class Advertising
         }
       }
     }
+
     # City Home Page Ads
     @ad_slots[:City_Home] = {
       Content_Top: {
@@ -250,6 +252,7 @@ class Advertising
         }
       },
     }
+
     # State Home Page Ads
     @ad_slots[:State_Home] = {
       Content_Top: {
@@ -271,14 +274,14 @@ class Advertising
 
     # State Home Page Ads
     @ad_slots[:Homepage] = {
-      Pos1: {
-        name: "Pos1",
+      Choosing_Content: {
+        name: "Choosing_Content",
         desktop:{
           dimensions:[300,250]
         }
       },
-      Pos2: {
-        name: "Pos2",
+      Parenting_Content: {
+        name: "Parenting_Content",
         desktop:{
           dimensions:[728,90]
         },
@@ -313,7 +316,6 @@ class Advertising
       end
       ret_value
     end
-
 
     def get_dimensions(page, slot, view = :desktop)
       desktop_config_val = (@ad_slots.seek(page, slot, view) || @ad_slots.seek(page, slot, :desktop))
