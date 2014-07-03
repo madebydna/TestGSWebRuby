@@ -6,9 +6,9 @@
   <div>
   <% filters.each do |filter, display_name| %>
     <%next if filter == :title %>
-    <span><%= check_box_tag category.to_s, filter.to_s,
+    <label><%= check_box_tag "#{category.to_s}[]", filter.to_s,
       (@params_hash.include?(category.to_s) && @params_hash[category.to_s].include?(filter.to_s) ? true : false)%>
-    <%=display_name%></span><br>
+    <%=display_name%></label><br>
   <% end %>
   </div>
 </li>
