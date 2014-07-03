@@ -15,7 +15,9 @@ class SchoolSearchService
       distance_asc: 'distance asc', # todo not relevant for browse
       distance_desc: 'distance desc', # todo not relevant for browse
       name_asc: 'school_name asc',
-      name_desc: 'school_name desc'
+      name_desc: 'school_name desc',
+      fit_asc: 'overall_gs_rating desc',
+      fit_desc: 'overall_gs_rating desc'
   }
 
   # :city, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
@@ -98,7 +100,7 @@ class SchoolSearchService
   class SchoolSearchResult
     include ActionView::Helpers::AssetTagHelper
 
-    attr_accessor :fit_score, :fit_score_filters, :on_page
+    attr_accessor :fit_score, :fit_score_filters, :on_page, :overall_gs_rating
     SOFT_FILTER_MAP = {
         'beforeAfterCare' => 'before_after_care'
     }

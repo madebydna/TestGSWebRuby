@@ -35,7 +35,7 @@
     <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
       <div class="ptl">
         <%=link_to school_quality_path(school) do%>
-          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 'nr' )%>"></div>
+          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
         <% end %>
       </div>
     </div>

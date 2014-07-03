@@ -14,7 +14,7 @@
               gradeRange: '<%= school.grades[0] + " - " + school.grades[-1]%>',
               fitScore: <%= school.fit_score %>,
               maxFitScore: <%= school.fit_score_filters.keys.length %>,
-              gsRating: <%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 0 )%>,
+              gsRating: <%=school.overall_gs_rating || 0 %>,
               communityRating: <%=school.respond_to?(:community_rating) ? school.community_rating : 0%>,
               numReviews: <%=school.respond_to?(:review_count) ? school.review_count : 0 %>,
               communityRatingStars: '<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''%>',

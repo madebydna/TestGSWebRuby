@@ -7,6 +7,8 @@ class SearchController < ApplicationController
   layout 'application'
 
   SOFT_FILTER_KEYS = ['beforeAfterCare']
+  MAX_RESULTS_FROM_SOLR = 2000
+  MAX_RESULTS_FOR_MAP = 200
 
   def search
     if params.include?(:lat) && params.include?(:lon)
@@ -104,33 +106,40 @@ class SearchController < ApplicationController
 
     ad_setTargeting_through_gon
 
-    search_options = {number_of_results: @page_size, offset: @results_offset}
+    search_options = {number_of_results: MAX_RESULTS_FROM_SOLR, offset: 0}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
 
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
+    calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    sort_by_fit(results[:results], sort) if sort == :fit_desc || sort == :fit_asc
     process_results(results) unless results.empty?
-    results = search_method.call(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-    process_results_for_map(results) unless results.empty?
+  end
+
+  def sort_by_fit(school_results, direction)
+    # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
+    n = 0
+    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
   end
 
   def process_results(results)
     @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
     @total_results = results[:num_found]
-    @schools = results[:results]
-    calculate_fit_score(@schools, @params_hash)
+    school_results = results[:results] || []
+    @schools = school_results[@results_offset .. (@results_offset+@page_size)]
+    map_start = @results_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
+    map_start = 0 if map_start < 0
+    puts "Map range=#{map_start}..#{map_start+MAX_RESULTS_FOR_MAP}"
+    @map_schools = school_results[map_start .. (map_start+MAX_RESULTS_FOR_MAP)]
+
+    @schools.each do |school|
+      school.on_page = true # mark the results that appear in the list so the map can handle them differently
+    end
+
     @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
     @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-  end
-
-  def process_results_for_map(results)
-    @map_schools = results[:results]
-    @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
-      school.on_page = true
-    end
-    calculate_fit_score(@map_schools, @params_hash)
   end
 
   def suggest_school_by_name
