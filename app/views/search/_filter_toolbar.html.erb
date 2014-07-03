@@ -5,7 +5,7 @@
       <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:750px;">
 	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
           <% @filter_display_map.each do |filter_category, filters| %>
-            <%= render 'search/filter', filter_category: filter_category, filters: filters %>
+            <%= render 'search/filter', category: filter_category, filters: filters %>
           <% end %>
           <!--This Currently sets state and city even on by location search. We may want to remove this behavior.
           For now, since java looks for the state delaware in the parameter in order to pass the request to ruby
