@@ -28,9 +28,9 @@
 
                 </div>
             </div>
-            <% if @school.show_ads %>
-                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            <% if @show_ads %>
+                <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
             <div class="row">
                 <hr />
