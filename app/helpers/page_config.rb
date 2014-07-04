@@ -26,6 +26,10 @@ class PageConfig
     parent.children.select { |cp| category_placement_has_data? cp }
   end
 
+  def category_placement_children_with_profile_data(parent)
+    parent.children.select { |cp| category_placement_has_profile_data? cp }
+  end
+
   def category_placement_has_data?(cp)
     @category_placement_has_data ||= {}
     @category_placement_has_data[cp.cache_key] ||= (
@@ -41,7 +45,7 @@ class PageConfig
     @category_placement_has_data ||= {}
     @category_placement_has_data[cp.cache_key] ||= (
     if cp.has_children?
-      parent.children.select { |cp| category_placement_has_profile_data? cp }.any?
+      category_placement_children_with_profile_data(cp).any?
     else
       cp.category.has_data?(school, page_config: self)
     end
