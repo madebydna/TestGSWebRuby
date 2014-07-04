@@ -32,6 +32,7 @@ class TestScoreResults
         data_sets_and_values.each do |result_hash|
           #TODO get the subject from the school cache.
 
+          test_scores ||= {}
           test_data_type_id = result_hash['data_type_id']
           test_data_set_id = result_hash['data_set_id']
           level_code = LevelCode.new(result_hash['level_code'])
@@ -55,7 +56,7 @@ class TestScoreResults
           state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
           breakdown_id = result_hash['breakdown_id']
           school_number_tested = result_hash['school_number_tested']
-          proficiency_band_id = result_hash['proficiency_band_id']
+          proficiency_band = result_hash['proficiency_band']
 
           if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
             label = data_type_descriptions[test_data_type_id.to_s]['test_label']
@@ -65,7 +66,17 @@ class TestScoreResults
 
           next if subject.nil? # skip this test data if subject is nil
 
-          test_scores ||= {}
+          innermost_hash = {
+            "score" => test_score,
+            "school_number_tested" => school_number_tested,
+            "state_avg" => state_avg
+          }
+
+          if proficiency_band
+            innermost_hash.transform_keys! do |key|
+              "#{proficiency_band}_#{key}"
+            end
+          end
 
           hash = {
             test_data_type_id => {
@@ -79,12 +90,7 @@ class TestScoreResults
                   level_code: {
                     level_code => {
                       subject => {
-                        year => {
-                          "score" => test_score,
-                          "school_number_tested" => school_number_tested,
-                          "state_avg" => state_avg,
-                          "proficiency_band_id" => proficiency_band_id
-                        }
+                        year => innermost_hash
                       }
                     }
                   }

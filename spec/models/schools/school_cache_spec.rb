@@ -79,6 +79,14 @@ describe SchoolCache do
 
     context 'when a school has test scores' do
 
+      before do
+        @proficiency_band = TestProficiencyBand.create(id: 99, name: 'a proficiency band')
+      end
+
+      after do
+        clean_models TestProficiencyBand
+      end
+
       let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,
                                                 display_target: 'desktop',school_id: 1,value_float: 2,
                                                 value_text: '3', number_tested: 300)}
@@ -100,15 +108,15 @@ describe SchoolCache do
         expect(test_scores['data_types']['1']['test_label']).to eq('Awesome Test')
       end
 
-      it 'should insert proficiency_band_id with the cached data' do
-        test_data_set.proficiency_band_id = '99'
+      it 'should insert proficiency_band with the cached data' do
+        test_data_set.proficiency_band_id = @proficiency_band.id
         test_data_set.save
         system("rails runner script/populate_school_cache_table.rb test_scores ca 1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
         test_scores = JSON.parse(cache_row[0].value)
-        expect(test_scores['data_sets_and_values'][0]['proficiency_band_id']).to eq(99)
+        expect(test_scores['data_sets_and_values'][0]['proficiency_band']).to eq 'a proficiency band'
       end
     end
   end
