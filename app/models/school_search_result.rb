@@ -1,7 +1,7 @@
 class SchoolSearchResult
   include ActionView::Helpers::AssetTagHelper
 
-  attr_accessor :fit_score, :fit_score_filters, :on_page, :overall_gs_rating
+  attr_accessor :fit_score, :max_fit_score, :fit_score_map, :on_page, :overall_gs_rating
   # Map alternate forms (e.g. legacy Java URL parameters) to solr fields when they do not match
   SOFT_FILTER_MAP = {
       beforeAfterCare: 'before_after_care'
@@ -9,7 +9,8 @@ class SchoolSearchResult
 
   def initialize(hash)
     @fit_score = 0
-    @fit_score_filters = {}
+    @max_fit_score = 0
+    @fit_score_map = {}
     @attributes = hash
     @attributes.each do |k,v|
       define_singleton_method k do v end
@@ -23,13 +24,22 @@ class SchoolSearchResult
   # Increments fit score for each matching key/value pair from params
   def calculate_fit_score(params)
     @fit_score = 0
+    @fit_score_map = {}
+    @max_fit_score = 0
     params.each do |key, value|
+      @fit_score_map[key] ||= {}
       if value.instance_of?(Array)
         value.each do |v|
-          @fit_score += 1 if matches_soft_filter?(key, v)
+          @max_fit_score += 1
+          is_match = matches_soft_filter?(key, v)
+          @fit_score += 1 if is_match
+          @fit_score_map[key][v] = is_match
         end
       else
-        @fit_score += 1 if matches_soft_filter?(key, value)
+        @max_fit_score += 1
+        is_match = matches_soft_filter?(key, value)
+        @fit_score += 1 if is_match
+        fit_score_map[key][value] = is_match
       end
     end
   end
@@ -38,12 +48,6 @@ class SchoolSearchResult
 
   def matches_soft_filter?(param, value)
     filter = SOFT_FILTER_MAP[param.to_sym].presence || param
-    if filter && respond_to?(filter) && send(filter).include?(value)
-      @fit_score_filters.merge!(value => true)
-      true
-    else
-      @fit_score_filters.merge!(value => false)
-      false
-    end
+    filter && respond_to?(filter) && send(filter).include?(value)
   end
 end

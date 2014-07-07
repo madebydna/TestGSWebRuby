@@ -13,7 +13,7 @@
               schoolType: '<%= school.type%>', preschool: <%= school.preschool? %>,
               gradeRange: '<%= school.grades[0] + " - " + school.grades[-1]%>',
               fitScore: <%= school.fit_score %>,
-              maxFitScore: <%= school.fit_score_filters.keys.length %>,
+              maxFitScore: <%= school.max_fit_score %>,
               gsRating: <%=school.overall_gs_rating || 0 %>,
               communityRating: <%=school.respond_to?(:community_rating) ? school.community_rating : 0%>,
               numReviews: <%=school.respond_to?(:review_count) ? school.review_count : 0 %>,

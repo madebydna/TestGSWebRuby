@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
 
@@ -384,7 +384,7 @@ class SearchController < ApplicationController
   def setup_filter_display_map
     @search_bar_display_map = get_search_bar_display_map
     @filter_display_map = get_filter_display_map
-    @fit_score_display_map = get_fit_score_display_map(@filter_display_map)
+    @fit_score_display_map = get_fit_score_display_map(@filter_display_map) # TODO: no longer used?
   end
 
   #ToDo: Refactor into method that is database driven
@@ -426,36 +426,45 @@ class SearchController < ApplicationController
 
   def get_filter_display_map
     {
-      :st => {
-        :title => 'School Types',
-        :public => 'Public Schools',
-        :private => 'Private Schools',
-        :charter => 'Charter Schools'
+      st: {
+        title: 'School Types',
+        public: 'Public Schools',
+        private: 'Private Schools',
+        charter: 'Charter Schools'
       },
-      :beforeAfterCare => {
-        :title => 'Child Care Programs',
-        :before => 'Before School Care',
-        :after => 'After School Care'
+      beforeAfterCare: {
+        title: 'Child Care Programs',
+        before: 'Before School Care',
+        after: 'After School Care'
       },
-      :sports => {
-        :title => 'Sports (dont check)',
-        :basketball => 'Basketball',
-        :soccer => 'Soccer',
-        :football => 'Football',
-        :tennis => 'Tennis'
-      },
-      :language => {
-        :title => 'Languages (dont check)',
-        :french => 'French',
-        :spanish => 'Spanish',
-        :japanese => 'Japanese',
-        :german => 'German'
+      language: {
+        title: 'Languages (dont check)',
+        french: 'French',
+        spanish: 'Spanish',
+        japanese: 'Japanese',
+        german: 'German'
       },
       dress_code: {
         title: 'Dress Code',
         dress_code: 'Dress code',
         uniform: 'Uniform',
         no_dress_code: 'No dress code'
+      },
+      boys_sports: {
+        title: 'Boys Sports',
+        baseball: 'Baseball',
+        basketball: 'Basketball',
+        football: 'Football',
+        soccer: 'Soccer',
+        track: 'Track'
+      },
+      girls_sports: {
+        title: 'Girls Sports',
+        basketball: 'Basketball',
+        cheerleading: 'Cheerleading',
+        soccer: 'Soccer',
+        track: 'Track',
+        volleyball: 'Volleyball'
       }
     }
   end
@@ -464,6 +473,7 @@ class SearchController < ApplicationController
   #This is for the fit score filter display key map
   #This should be fine as long as there are no duplicate keys in the sub hashes of filter_display_map
   #as they will get overwritten
+  # TODO: no longer used?
   def get_fit_score_display_map(filter_display_map)
     filter_display_map.inject({}) { |hash,(k,v)| hash.merge(v) }
   end

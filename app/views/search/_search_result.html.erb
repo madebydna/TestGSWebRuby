@@ -47,12 +47,13 @@
           <ul class="dropdown-menu">
             <!--TODO remove inline styling into classes-->
             <li class="pal" style="font-size: 12px;">
-              <% school.fit_score_filters.each do |key, value| %>
-                <% if value %>
-                  <div>O <%=@fit_score_display_map[key.to_sym]%></div>
-                <% else %>
-                  <div>X <%=@fit_score_display_map[key.to_sym]%></div>
-                <% end %>
+              <% school.fit_score_map.each do |category_name, category_map| %>
+                <div>
+                  <strong><%=@filter_display_map[category_name.to_sym][:title]%></strong>
+                  <% category_map.each do |key, value| %>
+                    <div><% if value %>&#10003;<% else %>X<%end%> <%=@filter_display_map[category_name.to_sym][key.to_sym]%></div>
+                  <% end %>
+                </div>
               <% end %>
             </li>
           </ul>
