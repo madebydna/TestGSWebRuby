@@ -18,7 +18,7 @@
                 <h3>Thank you for looking into the quality of this school.</h3>
                 <p>However, we do not have detailed quality information for this school at this time. We strive to acquire additional school data whenever available.</p>
             </div>
-            <% if root_placements_show.empty? %>
+            <% if root_placements.present? %>
                 <div class="row">
                     <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
                 </div>

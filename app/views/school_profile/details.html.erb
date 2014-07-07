@@ -5,7 +5,8 @@
 <div class="row limit-width-1200">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
     <% root_placements = @page_config.root_placements_with_data %>
-    <% if root_placements.empty? %>
+    <% root_placements_w_data = @page_config.root_placements_with_profile_data %>
+    <% if root_placements_w_data.empty? %>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <% if @show_ads %>
                 <div class="pvl">
@@ -22,6 +23,11 @@
                     <p>Are you a school official? Help your school stand out on GreatSchools by updating your school's information, adding program highlights and more, for free! <%= link_to "Get started &raquo;".html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %></p>
                 <% end %>
             </div>
+            <% if root_placements.present? %>
+                <div class="row">
+                    <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
+                </div>
+            <% end %>
         </div>
     <% else %>
         <div class="hidden-xs col-sm-4 col-md-3 col-lg-3 gs_set-z-1">
