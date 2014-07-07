@@ -52,7 +52,7 @@ class PageConfig
     if cp.has_children?
       category_placement_children_with_profile_data(cp).any?
     else
-      cp.category.has_data?(school, page_config: self)
+      cp.category && cp.category.has_data?(school, page_config: self)
     end
     )
   end
