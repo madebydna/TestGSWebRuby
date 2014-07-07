@@ -1,14 +1,18 @@
 <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
-<div class="row">
+<div class="row mtl">
     <div class="tac <%= layout_grid %>">
-        <% if @page_config.page == "Details" %>
-            How important is cultural diversity?
-            Learn how cultural diversity can affect your child's education.
-            Article links to: http://www.greatschools.org/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs
+        <% if @page_config.page.name == "Details" %>
+            <% article_hash={title:'How important is cultural diversity?',
+                             content: "Learn how cultural diversity can affect your child's education.",
+                             image: 'articles/school-cultural-diversity1.jpg',
+                             link: '/find-a-school/defining-your-ideal/284-cultural-diversity-at-school.gs' } %>
+            <%= render 'shared/article_module', data: article_hash  %>
         <% else %>
-            Facts (and fiction) about school test scores
-            They're never the whole story, but test scores do offer important information about a school. If you know how to dig deeper.
-            Article links to: http://www.greatschools.org/school-choice/standardized-testing/7262-school-test-scores-video.gs
+            <% article_hash={title:'Facts (and fiction) about school test scores',
+                             content: "They're never the whole story, but test scores do offer important information about a school. If you know how to dig deeper.",
+                             image: 'articles/test-score-video1-350x208.jpg',
+                             link: '/school-choice/standardized-testing/7262-school-test-scores-video.gs' } %>
+            <%= render 'shared/article_module', data: article_hash  %>
         <% end %>
     </div>
     <% if @show_ads %>
