@@ -109,6 +109,12 @@ class Advertising
           dimensions:[320,50]
         }
       },
+      CMS: {
+        name: "CMS",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
       Ratings: {
         name: "Ratings",
         desktop:{
@@ -135,7 +141,8 @@ class Advertising
         desktop:{
           dimensions:[300,250]
         }
-      },Test_Scores4: {
+      },
+      Test_Scores4: {
         name: "Test_Scores4",
         desktop:{
           dimensions:[300,250]
@@ -182,6 +189,12 @@ class Advertising
         },
         mobile:{
           dimensions:[320,50]
+        }
+      },
+      CMS: {
+        name: "CMS",
+        desktop:{
+          dimensions:[300,250]
         }
       },
       Students: {
