@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
 
@@ -450,6 +450,12 @@ class SearchController < ApplicationController
         :spanish => 'Spanish',
         :japanese => 'Japanese',
         :german => 'German'
+      },
+      dress_code: {
+        title: 'Dress Code',
+        dress_code: 'Dress code',
+        uniform: 'Uniform',
+        no_dress_code: 'No dress code'
       }
     }
   end
