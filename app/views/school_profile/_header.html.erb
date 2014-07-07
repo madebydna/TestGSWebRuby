@@ -22,7 +22,7 @@
                         <% if @school.gs_rating  %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
                                 <div class="fl prl open-sans rating-header-h24">
-                                    <span class="mrs link-darkgray notranslate">GreatSchools rating:</span>
+                                    <span class="mrs link-darkgray">GreatSchools rating:</span>
                                     <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
 
                                 </div>
@@ -82,7 +82,7 @@
                         <% subheader_content = [
                            @school.process_level,
                            @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
-                           @school.city.gs_capitalize_first + ' ' + @school.state.upcase,
+                           raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 
                         <% if include_contact_info_link %>

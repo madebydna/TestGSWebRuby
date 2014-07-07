@@ -36,13 +36,16 @@ class SnapshotDecorator < Draper::Decorator
     if key == 'district'
       value = district_home_link_from_school(school)
     end
+    if key == 'head official name'
+      value = '<span class="notranslate">'+value+'</span>'
+    end
     value
   end
 
   def district_home_link_from_school(school, options = {}, &blk)
     return nil if school.district.nil?
 
-    options['class'] = 'link-darkgray'
+    options['class'] = 'link-darkgray notranslate'
 
     path = h.city_district_path(
       h.district_params_from_district(school.district)

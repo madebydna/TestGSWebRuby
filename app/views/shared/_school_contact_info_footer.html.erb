@@ -9,8 +9,8 @@
         <div class="row">
 
           <p class="col-sm-4 col-md-4 col-lg-5 contact-content">
-            <span><%= @school.street %></span><br/>
-            <span><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
+            <span class="notranslate"><%= @school.street %></span><br/>
+            <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
             <br/>
             <% if @school.home_page_url.present? %>
                   <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank">School website</a><br/>
