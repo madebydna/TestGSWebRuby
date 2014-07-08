@@ -145,7 +145,7 @@ class SearchController < ApplicationController
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
-    @schools = school_results[relative_offset .. (relative_offset+@page_size)]
+    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 
@@ -238,9 +238,9 @@ class SearchController < ApplicationController
     map_start = @results_offset - solr_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
     map_start = 0 if map_start < 0
     map_start = (@results_offset - solr_offset) if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
-    map_end = map_start + MAX_RESULTS_FOR_MAP
+    map_end = map_start + MAX_RESULTS_FOR_MAP-1
     if map_end > @total_results
-      map_end = @total_results
+      map_end = @total_results-1
       map_start = map_end - MAX_RESULTS_FOR_MAP
       map_start = 0 if map_start < 0
       map_start = (@results_offset - solr_offset) if map_start > @results_offset
