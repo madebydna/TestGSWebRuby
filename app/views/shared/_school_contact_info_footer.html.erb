@@ -24,7 +24,7 @@
           </p>
 
           <div class="col-sm-8 col-md-8 col-lg-7 pbl ">
-            <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm') %>
+            <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm', alt: "Map of "+@school.name+" address.") %>
               <br /><span class="iconx16 i-16-home vam"></span><a
                                                             class="mlm vam contact-content"
                                                             href="<%= zillow_url ( @school ) %>"

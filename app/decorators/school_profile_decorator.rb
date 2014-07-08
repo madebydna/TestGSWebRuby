@@ -30,7 +30,8 @@ class SchoolProfileDecorator < Draper::Decorator
     return unless media_hash.present?
     image_tag(
       h.generate_img_path(size, media_hash),
-      class: 'thumbnail-border'
+      class: 'thumbnail-border',
+      alt: "Photo provided by "+name+"."
     )
   end
 
@@ -47,7 +48,9 @@ class SchoolProfileDecorator < Draper::Decorator
     if google_formatted_street_address.present?
       image_tag(
         GoogleSignedImages.sign_url(street_view_url),
-        class: 'thumbnail_border'
+        class: 'thumbnail_border',
+        alt: "Google Street View of "+name+" address."
+
       )
     end
   end
