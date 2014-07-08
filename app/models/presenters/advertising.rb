@@ -63,6 +63,12 @@ class Advertising
           dimensions:[320,50]
         }
       },
+      CTA: {
+        name: "CTA",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
       Review1: {
         name: "Review1",
         desktop:{

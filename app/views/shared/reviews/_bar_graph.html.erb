@@ -1,0 +1,42 @@
+<div class="ma notranslate" style="width:250px;">
+    <% reviews_chart_array = to_bar_chart_review_array ( @school_reviews_global.star_counts )%>
+    <% reviews_bar_chart_div_id = "js_reviews_bar_chart_div" %>
+
+    <div id="<%= reviews_bar_chart_div_id %>"><!--Div for bar chart--></div>
+    <% content_for :head do %>
+        <script type="text/javascript">
+            var options = {
+                colors: ['#339cc1'],
+                legend:{
+                    position: 'none'
+                },
+                hAxis:{
+                    title: 'Ratings Distribution',
+                    titleTextStyle:{
+                        fontName: 'Arial',
+                        fontSize: 12,
+                        italic: false
+                    },
+                    textStyle:{
+                        fontName: 'Arial',
+                        fontSize: 12,
+                        italic: false
+                    }
+                },
+                vAxis:{
+                    textStyle:{
+                        fontName: 'Arial',
+                        fontSize: 12,
+                        italic: false
+                    }
+                },
+                width:250,
+                height:130,
+                chartArea:{
+                    top:0
+                }
+            };
+            GS.visualchart.drawBarChartReviews(<%= raw (reviews_chart_array).to_s %>,<%= raw '"'+reviews_bar_chart_div_id+'"' %>, options);
+        </script>
+    <% end %>
+</div>
