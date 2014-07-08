@@ -1,9 +1,9 @@
 <div class="row full-width pam">
   <div class="row full-width partner-carousel-image">
     <div class="col-md-2 col-lg-3 hidden-xs hidden-sm">
-      <% school_profile_decorator = SchoolProfileDecorator.decorate(school) %>
-      <% @school = school %>
-      <%= school_profile_decorator.photo(130, 130) %>
+      <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
+      <% @school = decorated_school %>
+      <%= decorated_school.photo(130, 130) %>
     </div>
 
     <div class="<%=search_by_location? ? "col-xs-12 col-sm-4 col-md-4 col-lg-4" : "col-xs-12 col-sm-6 col-md-6 col-lg-5"%>">
@@ -18,7 +18,7 @@
               <span class="prm col-lg-6" style="font-style: italic;">No Community Reviews</span>
             <% end %>
             <span class="prs col-lg-2"><%= school.type.capitalize%></span>
-            <span class="col-lg-3"><%= school.grades[0] + " - " + school.grades[-1]%></span>
+            <span class="col-lg-3"><%= decorated_school.process_level %></span>
           </div>
         </div>
       </div>

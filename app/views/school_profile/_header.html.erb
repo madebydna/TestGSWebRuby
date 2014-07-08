@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
-                           @school.process_level,
+                           school_profile_decorator.process_level,
                            @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
                            raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>

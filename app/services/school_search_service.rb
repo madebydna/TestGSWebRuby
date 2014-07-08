@@ -105,6 +105,7 @@ class SchoolSearchService
     end
     school_search_result.delete_if { |key| key.start_with?('school_') || KEYS_TO_DELETE.include?(key) }
     school_search_result['zipcode'] = school_search_result['zip']
+    school_search_result['level'] = school_search_result['grades']
     school_search_result['enrollment'] = school_search_result['size'] if school_search_result.include? 'size'
     school_search_result['state'] = get_state_abbreviation(school_search_result)
     school_search_result['state_name'] = States.state_name(school_search_result['state'])

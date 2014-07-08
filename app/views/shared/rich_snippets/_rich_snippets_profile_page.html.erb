@@ -6,8 +6,9 @@
             Last modified <time itemprop="dateModified" datetime="<%= @last_modified_date.strftime('%Y-%m-%d') %>">
             <%= @last_modified_date.strftime('%B %e, %Y') %>
             </time>
-            <% if @school.description %>
-    			<span itemprop="description"><%= @school.description %></span>
+        <% decorated_school = SchoolProfileDecorator.decorate(@school) %>
+        <% if decorated_school.description %>
+    			<span itemprop="description"><%= decorated_school.description %></span>
    			<% end %>
         </div>
     </div>
