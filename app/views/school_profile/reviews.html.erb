@@ -13,7 +13,9 @@
                 </div>
             <% end %>
             <%= render "shared/review_no_ratings" %>
-            <%= render "shared/reviews/top_section_with_ad",driver: 'Reviews' %>
+            <% if @show_ads %>
+                <%= render "shared/reviews/top_section_with_ad",driver: 'Reviews' %>
+            <% end %>
         </div>
     <% else %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 ptl"  style="z-index: 1;">
