@@ -109,6 +109,10 @@ class School < ActiveRecord::Base
     level_code.split ','
   end
 
+  def great_schools_rating
+    school_metadata[:overallRating].presence
+  end
+
   def school_ratings
     SchoolRating.where(state: state, school_id: id)
   end
