@@ -3,8 +3,15 @@ class SchoolSearchResult
 
   attr_accessor :fit_score, :max_fit_score, :fit_score_map, :on_page, :overall_gs_rating
   # Map alternate forms (e.g. legacy Java URL parameters) to solr fields when they do not match
-  SOFT_FILTER_MAP = {
-      beforeAfterCare: 'before_after_care'
+  SOFT_FILTER_FIELD_MAP = {
+    beforeAfterCare: :before_after_care
+  }
+  # Rollup values
+  SOFT_FILTER_VALUE_MAP = {
+    transportation: {
+      public_transit: ['accessible_via_public_transportation', 'passes'],
+      provided_transit: ['busses', 'shared_bus']
+    }
   }
 
   def initialize(hash)
@@ -28,18 +35,11 @@ class SchoolSearchResult
     @max_fit_score = 0
     params.each do |key, value|
       @fit_score_map[key] ||= {}
-      if value.instance_of?(Array)
-        value.each do |v|
-          @max_fit_score += 1
-          is_match = matches_soft_filter?(key, v)
-          @fit_score += 1 if is_match
-          @fit_score_map[key][v] = is_match
-        end
-      else
+      [*value].each do |v|
         @max_fit_score += 1
-        is_match = matches_soft_filter?(key, value)
+        is_match = matches_soft_filter?(key, v)
         @fit_score += 1 if is_match
-        fit_score_map[key][value] = is_match
+        @fit_score_map[key][v] = is_match
       end
     end
   end
@@ -47,7 +47,18 @@ class SchoolSearchResult
   protected
 
   def matches_soft_filter?(param, value)
-    filter = SOFT_FILTER_MAP[param.to_sym].presence || param
-    filter && respond_to?(filter) && send(filter).include?(value)
+    # See if the filter name needs to be mapped to a canonical field name
+    filter = SOFT_FILTER_FIELD_MAP[param.to_sym].presence || param.to_sym
+    if filter && respond_to?(filter)
+      localVal = send(filter) # Grab the value of the field for this result
+      # potentially expand the value into an array of possible values, which handles rollup filters
+      filter_value_map = SOFT_FILTER_VALUE_MAP[filter]
+      ((filter_value_map && filter_value_map[value.to_sym].presence) || [value]).each do |val|
+        if localVal.include?(val)
+          return true
+        end
+      end
+    end
+    false
   end
 end
