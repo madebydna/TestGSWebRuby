@@ -25,7 +25,7 @@
     <% if !ratings_array.empty? %>
 
         <%= render "shared/section_header", category_placement:category_placement, link_text:'See all Quality', link_to:'quality', subtitle:'These ratings help make it easier to find and compare schools.' %>
-        <a href="quality#Ratings_15">
+        <a href="quality#Ratings">
             <div class="row">
                 <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
             </div>
