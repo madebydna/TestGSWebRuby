@@ -59,4 +59,34 @@ class SnapshotDecorator < Draper::Decorator
     config[key.to_s]['format']
   end
 
+  def get_link_to_or_value(school, key, value)
+    hash = {
+      'Transportation' => {
+        page: :details,
+        anchor: 'Neighborhood'
+      },
+      'Before school' => {
+        page: :details,
+        anchor: 'Programs'
+      },
+      'After school' => {
+        page: :details,
+        anchor: 'Programs'
+      },
+      'Summer programs' => {
+        page: :details,
+        anchor: 'Programs'
+      }
+    }
+    if value.to_s == 'Yes' && hash[key].present?
+      helper_name = 'school_'
+      helper_name << "#{hash[key][:page]}_" if hash[key][:page] != 'overview'
+      helper_name << 'url'
+      url = h.send(helper_name, school, anchor: hash[key][:anchor])
+      h.link_to(value.to_s, url, class: 'link-darkgray')
+    else
+      value
+    end
+  end
+
 end
