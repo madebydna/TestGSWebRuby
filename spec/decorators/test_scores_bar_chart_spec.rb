@@ -63,7 +63,10 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
               'state_avg' =>  77,
               'proficient_score' => 61,
               'proficient_school_number_tested' => 124,
-              'proficient_state_avg' => 78
+              'proficient_state_avg' => 78,
+              'advanced_score' => 1,
+              'advanced_school_number_tested' => 1,
+              'advanced_state_avg' => 1
             },
             2012 => {
               'score' =>  81,

@@ -20,6 +20,16 @@
                 <% grade_hash[:level_code].each do |levelcode,value| %>
                     <% value.each_with_index do |(subject,value),  index_subject| %>
 
+                        <!-- Only show stacked with proficiency for Delaware -->
+                        <% if @school.state.upcase == "DE" %>
+                          <% bar_chart = BarCharts::TestScoresBarChartStacked.new(value) %>
+                          <% if bar_chart.contains_empty_bar? %>
+                            <% bar_chart = BarCharts::TestScoresBarChart.new(value) %>
+                          <% end %>
+                        <% else %>
+                          <% bar_chart = BarCharts::TestScoresBarChart.new(value) %>
+                        <% end %>
+
                         <h4 <%= ((index_subject == 0) ? "class=ptl" : '') %>><%= subject.gs_capitalize_first %></h4>
                         <!--TODO change this to test id-->
 
@@ -28,30 +38,7 @@
                         <div id="<%= bar_chart_div_id %>" class="notranslate ma"><!--Div for bar chart--></div>
 
                         <% content_for :head do %>
-                            <!-- Only show stacked with proficiency for Delaware -->
-                            <% if @school.state.upcase == "DE" %>
-                                <% bar_chart_array = BarCharts::TestScoresBarChartStacked.new(value).bar_chart_array %>
-                                <script type="text/javascript">
-
-                                    GS.visualchart.drawBarChartTestScoresStacked(
-                                            <%= raw bar_chart_array.to_s %>,
-                                            <%= raw '"' + bar_chart_div_id + '"' %>,
-                                            'testscores'
-                                    );
-
-                                </script>
-                            <% else %>
-                                <% bar_chart_array = BarCharts::TestScoresBarChart.new(value).bar_chart_array %>
-                                <script type="text/javascript">
-
-                                    GS.visualchart.drawBarChartTestScores(
-                                            <%= raw bar_chart_array.to_s %>,
-                                            <%= raw '"' + bar_chart_div_id + '"' %>,
-                                            'testscores'
-                                    );
-
-                                </script>
-                            <% end %>
+                            <%= raw bar_chart.script_tag(bar_chart_div_id) %>
                         <% end %>
                     <% end %>
                 <% end %>
