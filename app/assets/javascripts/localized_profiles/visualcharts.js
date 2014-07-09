@@ -132,7 +132,7 @@ GS.visualchart = GS.visualchart || function($) {
             var dataTable = new google.visualization.DataTable();
             //The 3rd and the 5th columns are used for tool tips.
             dataTable.addColumn('string', 'year');
-            dataTable.addColumn('number', 'This school');
+            dataTable.addColumn('number', 'Proficient or better');
             dataTable.addColumn({'type': 'string', 'role': 'annotation'});
             dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
 
