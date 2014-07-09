@@ -1,6 +1,6 @@
 <% if @school %>
-  <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
-    <div class="phs col-sm-4 col-md-4 col-lg-4 contact-content">
+  <%= render layout:'col', locals: { css_class:'phs', category_placement: category_placement } do %>
+    <div class="col-sm-4 col-md-4 col-lg-4 contact-content">
       <span class="notranslate"><%= @school.street %></span><br/>
       <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
       <br/>
@@ -11,7 +11,7 @@
         <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
       <% end %>
       <% if @school.fax.present? %>
-        <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span>
+        <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span><br/>
       <% end %>
       <span class="iconx16 i-16-home vam"></span>
       <a class="mlm vam contact-content"
