@@ -7,7 +7,7 @@ class BarCharts::TestScoresBarStacked < BarCharts::TestScoresBar
     proficient_bar_value = self.bar_value(raw_proficient)
     proficient_bar_annotation = raw_proficient ? proficient_bar_value.to_s + '%' : ''
     advanced_bar_value = self.bar_value(raw_advanced)
-    advanced_bar_annotation = advanced_bar_value.to_s + '%'
+    advanced_bar_annotation = raw_advanced ? advanced_bar_value.to_s + '%' : ''
 
     # Tool tips and annotation columns should be strings.
     student_count = test_scores_bar_hash['school_number_tested']
@@ -15,7 +15,7 @@ class BarCharts::TestScoresBarStacked < BarCharts::TestScoresBar
     state_average = test_scores_bar_hash['state_avg']
     tool_tip = bar_chart_tooltip_html(student_count, total_score, state_average)
 
-    if proficient_bar_value > 0 && advanced_bar_value > 0
+    if proficient_bar_value > 0 || advanced_bar_value > 0
       [
         proficient_bar_value,
         proficient_bar_annotation,
