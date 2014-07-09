@@ -37,7 +37,7 @@ class SnapshotDecorator < Draper::Decorator
       value = district_home_link_from_school(school)
     end
     if key == 'head official name'
-      value = '<span class="notranslate">'+value+'</span>'
+      value = "<span class='notranslate'>#{value}</span>"
     end
     value
   end
