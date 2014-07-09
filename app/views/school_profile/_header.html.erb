@@ -86,7 +86,10 @@
                         ].compact  %>
 
                         <% if include_contact_info_link %>
-                            <% subheader_content << raw('<a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span></a>') %>
+                          <% contact_info_link = link_to(school_url(@school, anchor: 'Contact_this_school')) do %>
+                            <span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span>
+                          <% end %>
+                          <% subheader_content << contact_info_link %>
                         <% end %>
 
                         <% subheader_content.each_with_index do | value, index | %>
