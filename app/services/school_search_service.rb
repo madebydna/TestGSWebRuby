@@ -22,9 +22,9 @@ class SchoolSearchService
 
   # :city, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
   def self.city_browse(options_param = {})
-    raise ArgumentError, 'State is required' unless options_param.include?(:state)
+    raise ArgumentError, 'State is required' unless options_param[:state].presence
     raise ArgumentError, 'State should be a two-letter abbreviation' unless options_param[:state].length == 2
-    raise ArgumentError, 'City is required' unless options_param.include?(:city)
+    raise ArgumentError, 'City is required' unless options_param[:city].presence
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
@@ -42,9 +42,9 @@ class SchoolSearchService
 
   # :district_id, :state required. Defaults to sorting by gs rating descending, and 25 results per page.
   def self.district_browse(options_param = {})
-    raise ArgumentError, 'State is required' unless options_param.include?(:state)
+    raise ArgumentError, 'State is required' unless options_param[:state].presence
     raise ArgumentError, 'State should be a two-letter abbreviation' unless options_param[:state].length == 2
-    raise ArgumentError, 'District id is required' unless options_param.include?(:district_id)
+    raise ArgumentError, 'District id is required' unless options_param[:district_id].presence
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
@@ -62,8 +62,8 @@ class SchoolSearchService
   end
 
   def self.by_location(options_param = {})
-    raise ArgumentError, 'Latitude is required' unless options_param.include?(:lat)
-    raise ArgumentError, 'Longitude is required' unless options_param.include?(:lon)
+    raise ArgumentError, 'Latitude is required' unless options_param[:lat].presence
+    raise ArgumentError, 'Longitude is required' unless options_param[:lon].presence
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
@@ -80,8 +80,7 @@ class SchoolSearchService
   end
 
   def self.by_name(options_param = {})
-    raise ArgumentError, 'Query is required' unless options_param.include?(:query)
-    raise ArgumentError, 'Query must be at least one character' unless options_param[:query].length > 0
+    raise ArgumentError, 'Query is required' unless options_param[:query].presence
     raise ArgumentError, 'Query is required' if options_param[:query] =~ /^[\p{Punct}\s]*$/
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
@@ -171,21 +170,25 @@ class SchoolSearchService
     if hash.include? :filters
       filters = hash[:filters]
       if filters.include?(:school_type) && filters[:school_type].size > 0
-        filter_arr << "+school_type:(#{filters[:school_type].join(' ')})"
+        school_types = filters[:school_type].collect {|e| e if [:public, :charter, :private].include? e}
+        filter_arr << "+school_type:(#{school_types.compact.join(' ')})" if school_types.compact.size > 0
       end
       if filters.include?(:level_code) && filters[:level_code].size > 0
-        level_codes = filters[:level_code].collect { |e| e[0] if ['p', 'e', 'm', 'h'].include? e[0]}
-        filter_arr << "+school_grade_level:(#{level_codes.join(' ')})"
+        level_codes = filters[:level_code].collect { |e| e[0] if [:preschool, :elementary, :middle, :high].include? e}
+        filter_arr << "+school_grade_level:(#{level_codes.compact.join(' ')})" if level_codes.compact.size > 0
       end
       if filters.include?(:grades) && filters[:grades].size > 0
+        numeric_grade_array = %w(1 2 3 4 5 6 7 8 9 10 11 12)
         normalized_grades = filters[:grades].collect do |e|
-          rval = nil
-          rval = 'PK' if e == :grade_p
-          rval = 'KG' if e == :grade_k
-          rval = e[6..-1] if ['1','2','3','4','5','6','7','8','9','10','11','12'].include? e[6..-1]
-          rval
+          if :grade_p == e
+            'PK'
+          elsif :grade_k == e
+            'KG'
+          elsif numeric_grade_array.include? e[6..-1]
+            e[6..-1]
+          end
         end
-        filter_arr << "+grades:(#{normalized_grades.compact.join(' ')})"
+        filter_arr << "+grades:(#{normalized_grades.compact.join(' ')})" if normalized_grades.compact.size > 0
       end
       hash.delete :filters
     end

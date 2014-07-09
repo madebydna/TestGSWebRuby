@@ -61,18 +61,19 @@ class Solr
 
   # trim, downcase, add spaces after commas, normalize spaces, escape lucene special chars
   def self.prepare_query_string(query_string)
-    query_string.strip! # trim
-    query_string.downcase! # convert to lower case
-    query_string.gsub!(/,/, ', ') # pad commas with spaces
-    query_string.gsub!(/\s+/, ' ') # normalize spaces
+    query_string_work = query_string.clone
+    query_string_work.strip! # trim
+    query_string_work.downcase! # convert to lower case
+    query_string_work.gsub!(/,/, ', ') # pad commas with spaces
+    query_string_work.gsub!(/\s+/, ' ') # normalize spaces
     # escape lucene special characters
     # Note use block form of gsub to avoid special parsing of the replacement string in the two-arg format
     # In particular "\\+" has special meaning in the two-arg format.
     # See http://stackoverflow.com/questions/7074337/why-does-stringgsub-double-content
     # Also please note that backslash must be escaped FIRST or else you'll be escaping all your previous escapes!
-    LUCENE_SPECIAL_CHARACTERS.each {|char| query_string.gsub!(char) {|m| "\\#{m}" } }
-    query_string.strip! # trim once more
-    query_string
+    LUCENE_SPECIAL_CHARACTERS.each {|char| query_string_work.gsub!(char) {|m| "\\#{m}" } }
+    query_string_work.strip! # trim once more
+    query_string_work
   end
 
   # Split on space, add a "+" in front of any non-optional word to make it required, join back up on space

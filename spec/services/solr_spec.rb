@@ -49,6 +49,11 @@ describe 'Solr' do
     it 'trims the query string again after padding commas' do
       expect(Solr.prepare_query_string('anthony,')).to eq('anthony,')
     end
+    it 'does not alter the parameter in place' do
+      input = '  foo  '
+      expect(Solr.prepare_query_string(input)).to eq('foo')
+      expect(input).to eq('  foo  ')
+    end
   end
 
   describe '#require_non_optional_words' do

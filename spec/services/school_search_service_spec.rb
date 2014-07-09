@@ -7,24 +7,24 @@ describe 'School Search Service' do
 
     it 'should pass offset options to get_results method' do
       expect(SchoolSearchService).to receive(:get_results) do |options|
-        expect(options[:rows]).to eql(50)
-        expect(options[:start]).to eql(25)
+        expect(options[:rows]).to eq(50)
+        expect(options[:start]).to eq(25)
       end.and_return(empty_result)
-      SchoolSearchService.by_location({:lat => 39.1001, :lon => -75.511, :number_of_results => 50, :offset => 25})
+      SchoolSearchService.by_location(lat: 39.1001, lon: -75.511, number_of_results: 50, offset: 25)
     end
 
     it 'does not error if provided lat and lon' do
       allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
-      expect{SchoolSearchService.by_location({:lat => 39.1001, :lon => -75.511})}.not_to raise_error
+      expect{SchoolSearchService.by_location(lat: 39.1001, lon: -75.511)}.not_to raise_error
     end
     it 'errors if not provided a lat' do
-      expect{SchoolSearchService.by_location({:lon => -75.511})}.to raise_error ArgumentError, 'Latitude is required'
+      expect{SchoolSearchService.by_location(lon: -75.511)}.to raise_error ArgumentError, 'Latitude is required'
     end
     it 'errors if not provided a lon' do
-      expect{SchoolSearchService.by_location({:lat => 39.1001})}.to raise_error ArgumentError, 'Longitude is required'
+      expect{SchoolSearchService.by_location(lat: 39.1001)}.to raise_error ArgumentError, 'Longitude is required'
     end
     it 'errors if not provided a lat or lon' do
-      expect{SchoolSearchService.by_location({})}.to raise_error ArgumentError, 'Latitude is required'
+      expect{SchoolSearchService.by_location}.to raise_error ArgumentError, 'Latitude is required'
     end
   end
 
@@ -34,24 +34,24 @@ describe 'School Search Service' do
 
     it 'should pass offset options to get_results method' do
       expect(SchoolSearchService).to receive(:get_results) do |options|
-        expect(options[:rows]).to eql(50)
-        expect(options[:start]).to eql(25)
+        expect(options[:rows]).to eq(50)
+        expect(options[:start]).to eq(25)
       end.and_return(empty_result)
-      SchoolSearchService.city_browse({:state => 'de', :city => 'dover', :number_of_results => 50, :offset => 25})
+      SchoolSearchService.city_browse(state: 'de', city: 'dover', number_of_results: 50, offset: 25)
     end
 
     it 'does not error if provided city and state' do
       allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
-      expect{SchoolSearchService.city_browse({:state => 'de', :city => 'dover'})}.not_to raise_error
+      expect{SchoolSearchService.city_browse(state: 'de', city: 'dover')}.not_to raise_error
     end
     it 'errors if not provided a state' do
-      expect{SchoolSearchService.city_browse({:city => 'dover'})}.to raise_error ArgumentError, 'State is required'
+      expect{SchoolSearchService.city_browse(city: 'dover')}.to raise_error ArgumentError, 'State is required'
     end
     it 'errors if state is not an abbreviation' do
-      expect{SchoolSearchService.city_browse({:state => 'California', :city => 'dover'})}.to raise_error ArgumentError, /abbreviation/
+      expect{SchoolSearchService.city_browse(state: 'California', city: 'dover')}.to raise_error ArgumentError, /abbreviation/
     end
     it 'errors if not provided a city' do
-      expect{SchoolSearchService.city_browse({:state => 'de'})}.to raise_error ArgumentError, 'City is required'
+      expect{SchoolSearchService.city_browse(state: 'de')}.to raise_error ArgumentError, 'City is required'
     end
   end
 
@@ -61,24 +61,24 @@ describe 'School Search Service' do
 
     it 'should pass offset options to get_results method' do
       expect(SchoolSearchService).to receive(:get_results) do |options|
-        expect(options[:rows]).to eql(50)
-        expect(options[:start]).to eql(25)
+        expect(options[:rows]).to eq(50)
+        expect(options[:start]).to eq(25)
       end.and_return(empty_result)
-      SchoolSearchService.district_browse({:state => 'de', :district_id => 11, :number_of_results => 50, :offset => 25})
+      SchoolSearchService.district_browse(state: 'de', district_id: 11, number_of_results: 50, offset: 25)
     end
 
     it 'does not error if provided district id and state' do
       allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
-      expect{SchoolSearchService.district_browse({:state => 'de', :district_id => 11})}.not_to raise_error
+      expect{SchoolSearchService.district_browse(state: 'de', district_id: 11)}.not_to raise_error
     end
     it 'errors if not provided a state' do
-      expect{SchoolSearchService.district_browse({:district_id => 11})}.to raise_error ArgumentError, 'State is required'
+      expect{SchoolSearchService.district_browse(district_id: 11)}.to raise_error ArgumentError, 'State is required'
     end
     it 'errors if state is not an abbreviation' do
-      expect{SchoolSearchService.district_browse({:state => 'California', :district_id => 11})}.to raise_error ArgumentError, /abbreviation/
+      expect{SchoolSearchService.district_browse(state: 'California', district_id: 11)}.to raise_error ArgumentError, /abbreviation/
     end
     it 'errors if not provided a district id' do
-      expect{SchoolSearchService.district_browse({:state => 'de'})}.to raise_error ArgumentError, 'District id is required'
+      expect{SchoolSearchService.district_browse(state: 'de')}.to raise_error ArgumentError, 'District id is required'
     end
   end
 
@@ -87,33 +87,33 @@ describe 'School Search Service' do
 
     it 'should pass offset options to get_results method' do
       expect(SchoolSearchService).to receive(:get_results) do |options|
-        expect(options[:rows]).to eql(50)
-        expect(options[:start]).to eql(25)
+        expect(options[:rows]).to eq(50)
+        expect(options[:start]).to eq(25)
       end.and_return(empty_result)
-      SchoolSearchService.by_name({:state => 'de', :query => 'school name', :number_of_results => 50, :offset => 25})
+      SchoolSearchService.by_name(state: 'de', query: 'school name', number_of_results: 50, offset: 25)
     end
 
     it 'does not error if provided query string' do
       allow(SchoolSearchService).to receive(:get_results).and_return(empty_result)
-      expect{SchoolSearchService.by_name({:query => 'school name'})}.not_to raise_error
+      expect{SchoolSearchService.by_name(query: 'school name')}.not_to raise_error
     end
     it 'errors if not provided a query string' do
-      expect{SchoolSearchService.by_name({})}.to raise_error ArgumentError, 'Query is required'
+      expect{SchoolSearchService.by_name}.to raise_error ArgumentError, 'Query is required'
     end
     it 'errors if query string is entirely whitespace' do
-      expect{SchoolSearchService.by_name({:query => '   '})}.to raise_error ArgumentError, 'Query is required'
-      expect{SchoolSearchService.by_name({:query => " \t "})}.to raise_error ArgumentError, 'Query is required'
+      expect{SchoolSearchService.by_name(query: '   ')}.to raise_error ArgumentError, 'Query is required'
+      expect{SchoolSearchService.by_name(query: " \t ")}.to raise_error ArgumentError, 'Query is required'
     end
     it 'errors if query string is empty' do
-      expect{SchoolSearchService.by_name({:query => ''})}.to raise_error ArgumentError, 'Query must be at least one character'
+      expect{SchoolSearchService.by_name(query: '')}.to raise_error ArgumentError, 'Query is required'
     end
     it 'prepares query string before issuing query' do
       allow(SchoolSearchService).to receive(:prepare_query_string).and_return('roy school')
       allow(SchoolSearchService).to receive(:require_non_optional_words).and_return('+roy school')
       expect(SchoolSearchService).to receive(:get_results) do |options|
-        expect(options[:query]).to eql('+roy school')
+        expect(options[:query]).to eq('+roy school')
       end.and_return(empty_result)
-      SchoolSearchService.by_name({:query => 'Roy School'})
+      SchoolSearchService.by_name(query: 'Roy School')
     end
   end
 
@@ -181,7 +181,7 @@ describe 'School Search Service' do
       it "should replace #{key} with #{value}" do
         hash = {sort: key}
         SchoolSearchService.remap_sort(hash)
-        expect(hash[:sort]).to eql(value)
+        expect(hash[:sort]).to eq(value)
       end
     end
   end
@@ -189,12 +189,12 @@ describe 'School Search Service' do
   describe '.rename_keys' do
     let(:mapping_hash) { {anthony: :shomi, erik: :ines, marcelo: :lusine}}
     it 'renames keys preserving values' do
-      hash = {:anthony => 'dev', :erik => 'pm', :marcelo => 'qa', :krusty => 'comedic relief'}
+      hash = {anthony: 'dev', erik: 'pm', marcelo: 'qa', krusty: 'comedic relief'}
       SchoolSearchService.rename_keys(hash, mapping_hash)
-      expect(hash).to include(:shomi => 'dev')
-      expect(hash).to include(:ines => 'pm')
-      expect(hash).to include(:lusine => 'qa')
-      expect(hash).to include(:krusty => 'comedic relief')
+      expect(hash).to include(shomi: 'dev')
+      expect(hash).to include(ines: 'pm')
+      expect(hash).to include(lusine: 'qa')
+      expect(hash).to include(krusty: 'comedic relief')
       expect(hash).not_to include(:anthony)
       expect(hash).not_to include(:erik)
       expect(hash).not_to include(:marcelo)
@@ -203,16 +203,25 @@ describe 'School Search Service' do
 
   describe '.extract_filters' do
     describe 'handles school type' do
-      let (:single_school_type) { {:filters => {:school_type => [:public] }} }
-      let (:multiple_school_types) { {:filters => {:school_type => [:charter, :private] }} }
-      let (:no_school_types) { {:filters => {:school_type => [] }} }
-      it 'public' do
-        rval = SchoolSearchService.extract_filters single_school_type
+      @valid_school_types = [:public, :charter, :private]
+      (1..3).each do |i|
+        @valid_school_types.combination(i) do |st|
+          it "#{st.join(',')}" do
+            filter_hash = {filters: {school_type: st}}
+            expect(SchoolSearchService.extract_filters(filter_hash)).to include("+school_type:(#{st.join(' ')})")
+          end
+        end
+      end
+      let (:no_school_types) { {filters: {school_type: [] }} }
+      let (:invalid_school_types) { {filters: {school_type: [:district, :montessori] }} }
+      let (:invalid_and_valid) { {filters: {school_type: [:district, :public, :montessori] }} }
+      it 'invalid mixed with valid' do
+        rval = SchoolSearchService.extract_filters invalid_and_valid
         expect(rval).to include('+school_type:(public)')
       end
-      it 'charter and private' do
-        rval = SchoolSearchService.extract_filters multiple_school_types
-        expect(rval).to include('+school_type:(charter private)')
+      it 'invalid' do
+        rval = SchoolSearchService.extract_filters invalid_school_types
+        expect(rval).not_to include('+school_type:()')
       end
       it 'when empty' do
         rval = SchoolSearchService.extract_filters no_school_types
@@ -220,16 +229,26 @@ describe 'School Search Service' do
       end
     end
     describe 'handles level code' do
-      let (:single_level_code) { {:filters => {:level_code => [:elementary] }} }
-      let (:multiple_level_codes) { {:filters => {:level_code => [:middle, :high] }} }
-      let (:no_level_codes) { {:filters => {:level_code => [] }} }
-      it 'elementary' do
-        rval = SchoolSearchService.extract_filters single_level_code
-        expect(rval).to include('+school_grade_level:(e)')
+      @valid_level_codes = [:preschool, :elementary, :middle, :high]
+      (1..4).each do |i|
+        @valid_level_codes.combination(i) do |lc|
+          it "#{lc.join(',')}" do
+            lc_space_separated = lc.collect {|fullname| fullname[0]}.join(' ')
+            filter_hash = {filters: {level_code: lc}}
+            expect(SchoolSearchService.extract_filters(filter_hash)).to include("+school_grade_level:(#{lc_space_separated})")
+          end
+        end
       end
-      it 'middle and high' do
-        rval = SchoolSearchService.extract_filters multiple_level_codes
-        expect(rval).to include('+school_grade_level:(m h)')
+      let (:invalid_level_codes) { {filters: {level_code: [:morning, :afternoon, :evening, :night] }} }
+      let (:invalid_and_valid) { {filters: {level_code: [:morning, :elementary, :afternoon, :middle] }} }
+      let (:no_level_codes) { {filters: {level_code: [] }} }
+      it 'invalid mixed with valid' do
+        rval = SchoolSearchService.extract_filters invalid_and_valid
+        expect(rval).to include('+school_grade_level:(e m)')
+      end
+      it 'invalid' do
+        rval = SchoolSearchService.extract_filters invalid_level_codes
+        expect(rval).not_to include('+school_grade_level:()')
       end
       it 'when empty' do
         rval = SchoolSearchService.extract_filters no_level_codes
@@ -237,14 +256,16 @@ describe 'School Search Service' do
       end
     end
     describe 'handles grades' do
-      let (:preschool) { {:filters => {:grades => [:grade_p] }} }
-      let (:kindergarten) { {:filters => {:grades => [:grade_k] }} }
-      let (:high_school) { {:filters => {:grades => [:grade_9, :grade_10, :grade_11, :grade_12] }} }
-      let (:single_grade) { {:filters => {:grades => [:grade_1] }} }
-      let (:multiple_grades) { {:filters => {:grades => [:grade_2, :grade_3] }} }
-      let (:no_grades) { {:filters => {:grades => [] }} }
+      let (:preschool) { {filters: {grades: [:grade_p] }} }
+      let (:kindergarten) { {filters: {grades: [:grade_k] }} }
+      let (:high_school) { {filters: {grades: [:grade_9, :grade_10, :grade_11, :grade_12] }} }
+      let (:non_contiguous_range) { {filters: {grades: [:grade_k, :grade_1, :grade_2, :grade_3, :grade_7, :grade_8, :grade_11, :grade_12] }} }
+      let (:first_grade) { {filters: {grades: [:grade_1] }} }
+      let (:invalid_grades) { {filters: {grades: [:first, :second, :preschool] }} }
+      let (:invalid_and_valid) { {filters: {grades: [:first, :second, :grade_3, :preschool, :grade_4] }} }
+      let (:no_grades) { {filters: {grades: [] }} }
       it 'first grade' do
-        rval = SchoolSearchService.extract_filters single_grade
+        rval = SchoolSearchService.extract_filters first_grade
         expect(rval).to include('+grades:(1)')
       end
       it 'preschool' do
@@ -258,6 +279,18 @@ describe 'School Search Service' do
       it 'high school' do
         rval = SchoolSearchService.extract_filters high_school
         expect(rval).to include('+grades:(9 10 11 12)')
+      end
+      it 'non-contiguous range' do
+        rval = SchoolSearchService.extract_filters non_contiguous_range
+        expect(rval).to include('+grades:(KG 1 2 3 7 8 11 12)')
+      end
+      it 'invalid grades' do
+        rval = SchoolSearchService.extract_filters invalid_grades
+        expect(rval).not_to include('+grades:()')
+      end
+      it 'invalid grades mixed with valid' do
+        rval = SchoolSearchService.extract_filters invalid_and_valid
+        expect(rval).to include('+grades:(3 4)')
       end
       it 'when empty' do
         rval = SchoolSearchService.extract_filters no_grades
