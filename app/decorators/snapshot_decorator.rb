@@ -61,7 +61,7 @@ class SnapshotDecorator < Draper::Decorator
 
   def get_link_to_or_value(school, key, value)
     hash = {
-      'Transportation' => {
+      'Transportation options' => {
         page: :details,
         anchor: 'Neighborhood'
       },
@@ -73,7 +73,7 @@ class SnapshotDecorator < Draper::Decorator
         page: :details,
         anchor: 'Programs'
       },
-      'Summer programs' => {
+      'Summer program' => {
         page: :details,
         anchor: 'Programs'
       }
