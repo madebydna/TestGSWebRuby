@@ -53,6 +53,18 @@ class StatesController < ApplicationController
     end
   end
 
+  def guided_search
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      @canonical_url = state_guided_search_url(params[:state])
+      @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
+      render 'shared/guided_search'
+    end
+  end
+
   def enrollment
     hub_city_mapping = mapping
     if hub_city_mapping.nil?

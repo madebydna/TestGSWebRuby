@@ -20,6 +20,8 @@
 //= require_tree ./resources
 //= require_tree ./auth
 //= require_tree ./localized_profiles
+//= require_tree ./guided_search
+
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;

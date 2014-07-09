@@ -170,3 +170,16 @@
     width: 75%;
   }
 }
+
+// Guided Search CSS for page navigation
+.nav-tabs{
+  border-bottom: none;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  border-bottom: 5px #007EAA solid;
+  color: #007EAA;
+}
+.nav-tabs > li > a {
+  margin-right: 0px;
+  border: none;
+}

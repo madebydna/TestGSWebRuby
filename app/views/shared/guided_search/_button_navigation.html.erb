@@ -1,0 +1,18 @@
+<% previous_tab_name=previous_tab_name || '' %>
+<div class="pal clearfix">
+  <% if previous_tab_name.present? %>
+      <div class="fl">
+        <button class="btn btn-default js-guided-search-back" data-previous-tab="<%= previous_tab_name %>">&#171; Back</button>
+      </div>
+  <% end %>
+  <% if hide_next %>
+      <div class="fr">
+        <button class="btn btn-primary js-guided-search-submit" >Submit</button>
+      </div>
+  <% else %>
+      <div class="fr">
+        <button class="btn btn-primary js-guided-search-next" data-next-tab="<%= next_tab_name %>">Next &#187;</button>
+      </div>
+  <% end %>
+
+</div>

@@ -128,6 +128,8 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'states#show'
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
+      get 'guided-search', to: 'states#guided_search', as: :guided_search
+
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'states#enrollment'
