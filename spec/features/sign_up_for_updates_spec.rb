@@ -35,11 +35,10 @@ describe 'Sign Up For Updates Partial', :type => :feature do
 #         expect(page).to have_css('.js-join-tab.active')
 #         expect(page).to_not have_css('.js-login-tab.active')
 #       end
-
-    # end
-
-# TODO: need to write a test for mystery sign up button on _email_signup.html
-  end
+#     end
+#
+# # TODO: need to write a test for mystery sign up button on _email_signup.html
+#   end
 
   describe 'Connect With Us' do
     it 'should say "Connect with us"'
