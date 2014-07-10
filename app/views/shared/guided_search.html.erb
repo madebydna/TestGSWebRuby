@@ -1,30 +1,35 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
-<div class="limit-width-1200" style="border-right: 1px #cccccc solid;border-left: 1px #cccccc solid;border-bottom: 1px #cccccc solid;">
+<div class="limit-width-940 tac pal primary-bg-color mtl" >
+  <h2 class="text_fff">Help me find a School</h2>
+</div>
+<div class="limit-width-940 border-all-light-grey">
   <ul class="nav nav-tabs" >
 
-    <li class="tac active" style="width: 20%;border-right:1px #cccccc solid ;border-bottom: 1px #cccccc solid">
-      <a href="#<%= @guided_search_tab[0]%>" data-toggle="tab" class="tab_<%= @guided_search_tab[0]%>">
-        <span style="font-size: 22px">1</span>
-        <span class="hidden-xs" style="color: #999999">Get Started</span></a>
+    <li class="tac active tab_<%= @guided_search_tab[0]%>" >
+      <p class="pvm">
+        <span class="subtitle-lg open-sans_sb" >1</span>
+        <span class="hidden-xs text_dark_grey">Get Started</span></p>
     </li>
-    <li class="tac" style="width: 20%;border-right:1px #cccccc solid;border-bottom: 1px #cccccc solid">
-      <a href="#<%= @guided_search_tab[1]%>" data-toggle="tab" class="tab_<%= @guided_search_tab[1]%>">
-        <span style="font-size: 22px">2</span>
-        <span class="hidden-xs" style="color: #999999">Child Care</span>
-      </a>
+    <li class="tac tab_<%= @guided_search_tab[1]%>">
+      <p class="pvm">
+        <span class="subtitle-lg open-sans_sb">2</span>
+        <span class="hidden-xs text_dark_grey">Child Care</span></p>
+
     </li>
-    <li class="tac" style="width: 20%;border-right:1px #cccccc solid;border-bottom: 1px #cccccc solid">
-      <a href="#<%= @guided_search_tab[2]%>" data-toggle="tab" class="tab_<%= @guided_search_tab[2]%>">
-        <span style="font-size: 22px">3</span>
-        <span class="hidden-xs" style="color: #999999">Dress Code</span></a></li>
-    <li class="tac" style="width: 20%;border-right:1px #cccccc solid;border-bottom: 1px #cccccc solid">
-      <a href="#<%= @guided_search_tab[3]%>" data-toggle="tab" class="tab_<%= @guided_search_tab[3]%>">
-        <span style="font-size: 22px">4</span>
-        <span class="hidden-xs" style="color: #999999">School Focus</span></a></li>
-    <li class="tac" style="width: 20%;border-bottom: 1px #cccccc solid">
-      <a href="#<%= @guided_search_tab[4]%>" data-toggle="tab" class="tab_<%= @guided_search_tab[4]%>">
-        <span style="font-size: 22px">5</span>
-        <span class="hidden-xs" style="color: #999999">Class Offerings</span></a></li>
+    <li class="tac tab_<%= @guided_search_tab[2]%>">
+      <p class="pvm">
+        <span class="subtitle-lg open-sans_sb">3</span>
+        <span class="hidden-xs text_dark_grey">Dress Code</span></p></li>
+    <li class="tac tab_<%= @guided_search_tab[3]%>">
+      <p class="pvm">
+        <span class="subtitle-lg open-sans_sb">4</span>
+        <span class="hidden-xs text_dark_grey">School Focus</span></p></li>
+    <li class="tac tab_<%= @guided_search_tab[4]%>">
+       <p class="pvm tab_last">
+        <span class="subtitle-lg open-sans_sb">5</span>
+        <span class="hidden-xs text_dark_grey">Class Offerings</span>
+       </p>
+    </li>
   </ul>
   <div id="my-tab-content" class="tab-content">
     <div class="tab-pane active" id="<%= @guided_search_tab[0]%>">

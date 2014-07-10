@@ -151,6 +151,10 @@
   .limit-width-1200 {max-width:1200px; margin-left: auto; margin-right: auto;}
 }
 
+@media only screen and (min-width: 940px) {
+  .limit-width-940 {max-width:940px; margin-left: auto; margin-right: auto;}
+}
+
 @media only screen and (min-width: 950px) {
   .topnav-float {
     float: right;
@@ -172,14 +176,31 @@
 }
 
 // Guided Search CSS for page navigation
+
+
 .nav-tabs{
   border-bottom: none;
 }
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-  border-bottom: 5px #007EAA solid;
+.nav-tabs > li >p{
+  border-right: $border-light-grey;
+  border-bottom: $border-light-grey;
+}
+.nav-tabs > li.active >p {
+  border-bottom: 7px #007EAA solid;
   color: #007EAA;
 }
-.nav-tabs > li > a {
+.nav-tabs > li  {
+  width: 20%;
   margin-right: 0px;
   border: none;
+}
+.nav-tabs > li >p.tab_last {
+  border-right: none;
+}
+
+.primary-bg-color {
+  background-color: $brand-primary;
+}
+.border-all-light-grey{
+  border: $border-light-grey;
 }

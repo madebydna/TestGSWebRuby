@@ -45,6 +45,7 @@ p, a {
 
 .text_fff { color: #ffffff; }
 .text_000 { color: #000000; }
+.text_dark_grey {color: $gray-dark;}
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}

@@ -4,12 +4,20 @@ $(function() {
 
     $('.js-guided-search-next').on('click',function(){
        var next_tab= $(this).data('next-tab');
-        $(".tab_"+next_tab ).trigger( "click" );
+       changeTabs(next_tab);
+
     });
     $('.js-guided-search-back').on('click',function(){
         var previous_tab= $(this).data('previous-tab');
-        $(".tab_"+previous_tab ).trigger( "click" );
+        changeTabs(previous_tab);
+
     });
 
+ var changeTabs=function(tab){
+     $(".tab_"+tab).siblings().removeClass('active');
+     $(".tab_"+tab).addClass('active');
+     $("#"+tab).siblings().removeClass('active');
+     $("#"+tab).addClass('active');
 
+ }
 });
