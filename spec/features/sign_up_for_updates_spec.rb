@@ -19,6 +19,28 @@ describe 'Sign Up For Updates Partial', :type => :feature do
     end
   end
 
+  context 'When on Rorr home page', js: true do
+    let(:home_prototype) { '/gsr/home' }
+    before(:each) { visit home_prototype_path }
+
+    describe 'Sign up' do
+      it 'browse button should go to join url' do
+           click_button('browse-sign-up')
+           expect(page).to have_css('.js-join-tab.active')
+           expect(page).to_not have_css('.js-login-tab.active')
+      end
+
+      it 'footer button should go to join url' do
+        click_button('footer-sign-up')
+        expect(page).to have_css('.js-join-tab.active')
+        expect(page).to_not have_css('.js-login-tab.active')
+      end
+
+    end
+
+# TODO: need to write a test for mystery sign up button on _email_signup.html
+  end
+
   describe 'Connect With Us' do
     it 'should say "Connect with us"'
     it 'should have facebook logo'

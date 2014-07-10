@@ -27,12 +27,14 @@ class SubscriptionsController < ApplicationController
 
   def attempt_sign_up(subscription_params, error_message, redirect_path = nil)
     if logged_in?
+      puts 'logged in'
       create_subscription subscription_params
       redirect_path.nil? ? redirect_back_or_default : redirect_back_or_default(redirect_path)
     else
+      puts 'NOT logged in'
       save_deferred_action :create_subscription_deferred, subscription_params
       flash_error error_message
-      redirect_to signin_url
+      redirect_to join_url
     end
   end
 
