@@ -25,4 +25,26 @@
             <% end %>
         </div>
     <% end %>
+<% else %>
+    <% if !@school.preschool? %>
+        <%= render "shared/section_header", category_placement:category_placement %>
+        <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
+        <div class="row mtl">
+            <div class=" <%= layout_grid %>">
+                <div class="well ma" style="max-width: 400px">Uh oh! No photos. This frame will look much better when you
+                    <%= link_to 'upload photos&nbsp;&raquo;'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+                </div>
+            </div>
+            <% if @show_ads %>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :desktop  %>
+                </div>
+            <% end %>
+        </div>
+        <% if @show_ads %>
+            <div class="ptl">
+                <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :mobile  %>
+            </div>
+        <% end %>
+    <% end %>
 <% end %>

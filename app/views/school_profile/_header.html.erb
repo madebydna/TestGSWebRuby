@@ -2,13 +2,15 @@
 <% # the ||= wouldnt do what you might expect here, since the variable in question is a boolean and might be false %>
 <% include_contact_info_link = true if include_contact_info_link.nil? %>
 <% include_cta_button_group  = true if include_cta_button_group.nil? %>
+<% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
 
 <div class="header-bg-color ">
     <div class="row pal limit-width-1200 open-sans">
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">
-                <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
-                <%= school_profile_decorator.photo %>
+                <%= link_to(school_url(@school, anchor: 'Media_Gallery')) do %>
+                    <%= school_profile_decorator.photo %>
+                <% end %>
             </div>
 
             <div class="fl header-title-width" >
