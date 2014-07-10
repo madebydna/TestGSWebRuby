@@ -60,7 +60,7 @@ LocalizedProfiles::Application.configure do
     orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
 
     UDPSocket.open do |s|
-      s.connect 'greatschools.org', 1
+      s.connect 'localhost', 1
       s.addr.last
     end
   ensure
