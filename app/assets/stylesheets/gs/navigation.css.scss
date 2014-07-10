@@ -186,8 +186,8 @@
   border-bottom: $border-light-grey;
 }
 .nav-tabs > li.active >p {
-  border-bottom: 7px #007EAA solid;
-  color: #007EAA;
+  border-bottom: 7px $brand-primary solid;
+  color: $brand-primary;
 }
 .nav-tabs > li  {
   width: 20%;
