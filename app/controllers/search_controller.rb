@@ -383,31 +383,15 @@ class SearchController < ApplicationController
 
   def setup_filter_display_map
     @search_bar_display_map = get_search_bar_display_map
-    @filter_display_map = get_filter_display_map
-    @fit_score_display_map = get_fit_score_display_map(@filter_display_map) # TODO: no longer used?
+
+    filter_builder = FilterBuilder.new
+    @filter_display_map = filter_builder.filter_display_map
+    @filters = filter_builder.filters
   end
 
-  #ToDo: Refactor into method that is database driven
-  #Method should take parameters like state/city/hub/etc... and return the appropriate filter map
-  #Also perhaps refactor below into symbols, but currently solr results return strings
+  #ToDo: Refactor into method into FilterBuilder to add into the filter_map
   def get_search_bar_display_map
     {
-      :grades => {
-        :p => 'Pre-School',
-        :k => 'Kindergarten',
-        1 => '1st Grade',
-        2 => '2nd Grade',
-        3 => '3rd Grade',
-        4 => '4th Grade',
-        5 => '5th Grade',
-        6 => '6th Grade',
-        7 => '7th Grade',
-        8 => '8th Grade',
-        9 => '9th Grade',
-        10 => '10th Grade',
-        11 => '11th Grade',
-        12 => '12th Grade'
-      },
       :distance => {
         1 => '1 Mile',
         2 => '2 Miles',
@@ -424,62 +408,4 @@ class SearchController < ApplicationController
     }
   end
 
-  def get_filter_display_map
-    {
-      st: {
-        title: 'School Types',
-        public: 'Public Schools',
-        private: 'Private Schools',
-        charter: 'Charter Schools'
-      },
-      beforeAfterCare: {
-        title: 'Child Care Programs',
-        before: 'Before School Care',
-        after: 'After School Care'
-      },
-      language: {
-        title: 'Languages (dont check)',
-        french: 'French',
-        spanish: 'Spanish',
-        japanese: 'Japanese',
-        german: 'German'
-      },
-      dress_code: {
-        title: 'Dress Code',
-        dress_code: 'Dress code',
-        uniform: 'Uniform',
-        no_dress_code: 'No dress code'
-      },
-      boys_sports: {
-        title: 'Boys Sports',
-        baseball: 'Baseball',
-        basketball: 'Basketball',
-        football: 'Football',
-        soccer: 'Soccer',
-        track: 'Track'
-      },
-      girls_sports: {
-        title: 'Girls Sports',
-        basketball: 'Basketball',
-        cheerleading: 'Cheerleading',
-        soccer: 'Soccer',
-        track: 'Track',
-        volleyball: 'Volleyball'
-      },
-      transportation: {
-        title: 'Transportation',
-        public_transit: 'Accessible via public transit',
-        provided_transit: 'District/school provided busses'
-      }
-    }
-  end
-
-  #The following code will copy hash values from each sub hash in filter_display_map
-  #This is for the fit score filter display key map
-  #This should be fine as long as there are no duplicate keys in the sub hashes of filter_display_map
-  #as they will get overwritten
-  # TODO: no longer used?
-  def get_fit_score_display_map(filter_display_map)
-    filter_display_map.inject({}) { |hash,(k,v)| hash.merge(v) }
-  end
 end

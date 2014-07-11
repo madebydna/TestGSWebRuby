@@ -3,7 +3,7 @@
     <div class="row pbl ptl">
       <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
         <!-- Todo: make a class -->
-        <div class="col-xs-12 col-sm-6 pam">
+        <div class="col-xs-12 col-sm-8 pam">
         <input  type="text"
                 name="locationSearchString"
                 value="Enter 5-digits for byLocation Search, Else byName Search"
@@ -15,20 +15,11 @@
         </div>
 
         <!--Todo Refactor Distance and Grade together-->
-        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
+        <div class='col-xs-12 col-sm-2 col-md-2 col-lg-2 pam'>
           <select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">
             <option value=""selected>--Distance--</option>
             <% @search_bar_display_map[:distance].each do |distance, display_name| %>
                 <option value=<%=distance.to_s%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance.to_s%> selected<%end%>><%=display_name%></option>
-            <% end %>
-          </select>
-        </div>
-
-        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
-          <select class="form-control input-lg" id="js-prototypeSearchGradeLevelFilter" name="grades">
-            <option value=""selected>--Select a Grade--</option>
-            <% @search_bar_display_map[:grades].each do |grade, display_name| %>
-		            <option value=<%=grade.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grade.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
           </select>
         </div>
