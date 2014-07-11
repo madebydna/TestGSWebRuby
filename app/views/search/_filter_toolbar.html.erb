@@ -30,9 +30,20 @@
     </div><br>
   </div>
   <div class="col-xs-2 ptm">??Guide Me??</div>
-  <div class="col-xs-7">
+  <div class="col-xs-7 clearfix">
     <div class="fr">
-      <%=image_tag 'nav/hamburger.png'%> list | <span class="iconx16 i-16-map-pin"></span>Map
+      <span id="js-search-list-view"><%=image_tag 'nav/hamburger.png'%> List</span> | <span id='js-search-map-view' class="iconx16 i-16-map-pin"></span>Map
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready( function(){
+      $('#js-search-list-view').on("click", function(){
+        $('#js-map-canvas').hide();
+          $('#js-search-map-view').on("click", function(){
+              $('#js-map-canvas').show();
+          });
+      });
+  });
+</script>
