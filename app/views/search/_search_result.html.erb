@@ -1,15 +1,15 @@
 <div class="row full-width pam">
   <div class="row full-width partner-carousel-image">
     <div class="col-md-2 col-lg-3 hidden-xs hidden-sm">
-      <% school_profile_decorator = SchoolProfileDecorator.decorate(school) %>
-      <% @school = school %>
-      <%= school_profile_decorator.photo(130, 130) %>
+      <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
+      <% @school = decorated_school %>
+      <%= decorated_school.photo(130, 130) %>
     </div>
 
     <div class="<%=search_by_location? ? "col-xs-12 col-sm-4 col-md-4 col-lg-4" : "col-xs-12 col-sm-6 col-md-6 col-lg-5"%>">
         <div class="ptm">
           <span class="open-sans_b"><%= link_to school.name, school_path(school) %></span><br>
-          <span class="ptm"><%=school.street + ", " + school.city + " " + school.state.upcase + " " + school.zip %></span><br>
+          <span class="ptm"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></span><br>
           <div class="row">
             <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
               <span class="prm col-lg-3"><%= draw_stars_16 school.community_rating%></span>
@@ -18,7 +18,7 @@
               <span class="prm col-lg-6" style="font-style: italic;">No Community Reviews</span>
             <% end %>
             <span class="prs col-lg-2"><%= school.type.capitalize%></span>
-            <span class="col-lg-3"><%= school.grades[0] + " - " + school.grades[-1]%></span>
+            <span class="col-lg-3"><%= decorated_school.process_level %></span>
           </div>
         </div>
       </div>
@@ -35,10 +35,31 @@
     <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
       <div class="ptl">
         <%=link_to school_quality_path(school) do%>
-          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.respond_to?(:overall_gs_rating) ? school.overall_gs_rating : 'nr' )%>"></div>
+          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
         <% end %>
       </div>
     </div>
+
+    <!--<div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">-->
+      <!--<div class="ptl">-->
+        <!--<div class="dropdown">-->
+          <!--<div data-toggle='dropdown' class="dropdown-toggle">fit score=%=school.fit_score%><span class="caret"></span></div>-->
+          <!--<ul class="dropdown-menu">-->
+            <!--TODO remove inline styling into classes-->
+            <!--<li class="pal" style="font-size: 12px;">-->
+              <!--% school.fit_score_map.each do |category_name, category_map| %>-->
+                <!--<div>-->
+                  <!--<strong>%=@filter_display_map[category_name.to_sym][:title]%></strong>-->
+                  <!--% category_map.each do |key, value| %>-->
+                    <!--<div>% if value %>&#10003;% else %>X%end%> %=@filter_display_map[category_name.to_sym][key.to_sym]%></div>-->
+                  <!--% end %>-->
+                <!--</div>-->
+              <!--% end %>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div><br>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
       <div class="ptl">
@@ -47,12 +68,13 @@
           <ul class="dropdown-menu">
             <!--TODO remove inline styling into classes-->
             <li class="pal" style="font-size: 12px;">
-              <% school.fit_score_filters.each do |key, value| %>
-                <% if value == true %>
-                  <div>O <%=@filter_and_sort_display_map[key]%></div>
-                <% else %>
-                  <div>X <%=@filter_and_sort_display_map[key]%></div>
-                <% end %>
+              <% school.fit_score_map.each do |category_name, category_map| %>
+                <div>
+                  <strong><%=@filter_display_map[category_name.to_sym][:name]%></strong>
+                  <% category_map.each do |key, value| %>
+                      <div><% if value %>&#10003;<% else %>X<%end%> <%=@filter_display_map[category_name.to_sym][key.to_sym]%></div>
+                  <% end %>
+                </div>
               <% end %>
             </li>
           </ul>
@@ -66,10 +88,12 @@
           <input type="checkbox">
           compare
         </button>
-        <button type="button" class="btn btn-default">
-          <span class="iconx16 i-16-home vam"></span>
-          homes for sale
-        </button>
+        <div>
+          <%= link_to  zillow_url(school), :class=> 'btn btn-default vam', target: '_blank' do %>
+            <span class="iconx16 i-16-home vam"></span>
+              homes for sale
+          <%end%>
+        </div>
       </div>
     </div>
   </div>

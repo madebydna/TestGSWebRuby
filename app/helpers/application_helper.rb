@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def category_placement_anchor(category_placement)
-    "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
+    "#{category_placement_title category_placement}".gsub(/\W+/, '_')
   end
 
   def category_placement_title(category_placement)
@@ -200,7 +200,9 @@ module ApplicationHelper
             'reviews' => 'localreviews',
             'quality' => 'localquality',
             'details' => 'localdetails',
-            'city_browse' => 'localcitybrowse'
+            'city_browse' => 'schoolsearch',
+            'district_browse' => 'schoolsearch',
+            'search' => 'schoolsearch'
         }
 
   end

@@ -42,7 +42,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/privacy/', as: :privacy
     get '/privacy/#advertiserNotice', as: :advertiser_notice
     get '/community/forgotPassword.page', as: :forgot_password
-    get '/summer-learning.topic?content=7082', as: :summer_learning
+    get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
     get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
     get '/special-education.topic?content=1541', as: :learning_difficulties
@@ -128,6 +128,8 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'states#show'
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
+      get 'guided-search', to: 'states#guided_search', as: :guided_search
+
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'states#enrollment'

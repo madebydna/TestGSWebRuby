@@ -23,12 +23,8 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
         <div class="pam tac">
-          <div class="gs_ad_slot visible-xs visible-sm visible-md visible-lg ma" id="responsive-homepage-pos1-300x250-ad" data-ad-size="[300,250]" style="width: 300px" data-dfp="Responsive_Homepage_Pos1_300x250"></div>
-          <div class="visible-lg visible-md visible-sm visible-xs" width="100%">
-            <div class="advertisement-text ma">
-              ADVERTISEMENT
-            </div>
-          </div>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :mobile  %>
         </div>
       </div>
     </div>
@@ -63,12 +59,9 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
         <div class="pam tac">
-          <div class="gs_ad_slot visible-xs visible-sm visible-md visible-lg ma" id="responsive-homepage-pos2-300x250-ad" data-ad-size="[300,250]" style="width: 300px" data-dfp="Responsive_Homepage_Pos2_300x250"></div>
-          <div class="visible-lg visible-md visible-sm visible-xs" width="100%">
-            <div class="advertisement-text ma">
-              ADVERTISEMENT
-            </div>
-          </div>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :mobile  %>
+
         </div>
       </div>
 

@@ -5,7 +5,7 @@ GS.search.results = GS.search.results || (function() {
         $('.js-searchResultsFilterForm').submit(function() {
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
-            var fields = ['lat', 'lon', 'grades', 'distance'];
+            var fields = ['lat', 'lon', 'grades', 'distance', 'q'];
 
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
@@ -20,23 +20,30 @@ GS.search.results = GS.search.results || (function() {
         GS.uri.Uri.reloadPageWithNewQuery(query);
     };
 
-    var sortBy = function(sort_type, query) {
-        var sort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
+    var sortBy = function(sortType, query) {
+        var previousSort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
         query = GS.uri.Uri.removeFromQueryString(query, 'sort');
         var argumentKey = (query.length > 1) ? '&sort=' : 'sort=';
+        GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + determineSort(sortType, previousSort));
+    };
 
-        if (/asc/.test(sort)) {
-            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + sort_type + '_desc');
+    var determineSort = function(sortType, previousSort) {
+        if (new RegExp(sortType).test(previousSort)) {
+            return /asc/.test(previousSort) ? sortType + '_desc' : sortType + '_asc';
         } else {
-            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + sort_type + '_asc');
+            switch(sortType) {
+                case 'rating': return 'rating_desc';
+                case 'distance': return 'distance_asc';
+                case 'fit': return 'fit_desc';
+            }
         }
     };
 
     var keepSearchResultsFilterMenuOpen = function() {
-        stopEventPropagation('#searchResultsFilterMenu');
+        stopClickEventPropagation('#searchResultsFilterMenu');
     };
 
-    var stopEventPropagation = function(selector) {
+    var stopClickEventPropagation = function(selector) {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
 

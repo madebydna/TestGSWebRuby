@@ -191,7 +191,7 @@ module SchoolProfileDataDecorator
       leaves = root.has_children? ? root.leaves : [ root ]
       leaves.each do |leaf|
         # Skip if category is for footnotes, otherwise infinite recursion
-        next if leaf.category.id == category.id
+        next if (leaf.category.nil? || leaf.category.id == category.id)
         footnotes = footnotes_for_category category: leaf.category
         parent = leaf.parent
         if footnotes.present?

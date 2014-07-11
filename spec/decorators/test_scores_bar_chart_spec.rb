@@ -60,7 +60,13 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
             2013 => {
               'score' => 60,
               'school_number_tested' => 123,
-              'state_avg' =>  77
+              'state_avg' =>  77,
+              'proficient_score' => 61,
+              'proficient_school_number_tested' => 124,
+              'proficient_state_avg' => 78,
+              'advanced_score' => 1,
+              'advanced_school_number_tested' => 1,
+              'advanced_state_avg' => 1
             },
             2012 => {
               'score' =>  81,
@@ -80,11 +86,11 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
         end
 
         it 'it should return the score' do
-          expect(subject[0][1]).to eq 60
+          expect(subject[0][1]).to eq 61
         end
 
         it 'it should return the display value' do
-          expect(subject[0][2]).to eq '60%'
+          expect(subject[0][2]).to eq '61%'
         end
 
         it 'it should return the tooltip' do

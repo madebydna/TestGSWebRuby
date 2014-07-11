@@ -1,0 +1,14 @@
+<li class="pal col-xs-4">
+  <div class="ptm">
+    <span><%=filters[:title]%></span><br>
+  </div>
+  <div class="divider" style="height: 2px; background-color: darkgrey"></div>
+  <div>
+  <% filters.each do |filter, display_name| %>
+    <%next if filter == :title %>
+    <label><%= check_box_tag "#{category.to_s}[]", filter.to_s,
+      (@params_hash.include?(category.to_s) && @params_hash[category.to_s].include?(filter.to_s) ? true : false)%>
+    <%=display_name%></label><br>
+  <% end %>
+  </div>
+</li>

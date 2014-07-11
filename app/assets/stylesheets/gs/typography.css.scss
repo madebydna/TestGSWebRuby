@@ -67,6 +67,10 @@ p, a {
   color: $brand-secondary;
 }
 
+.brand-primary {
+  color:$brand-primary;
+}
+
 .gray-dark {
   color: $gray-dark;
 }
@@ -150,4 +154,9 @@ p, a {
   .jumbo-header {font-size: 32px}
 }
 
+// Translate classes to hide some of googles' images and top gadget bar.
+.goog-te-banner-frame.skiptranslate {display: none !important;}
+body { top: 0px !important; }
+.goog-te-gadget-icon {display:none;}
+.goog-te-gadget-simple a {text-decoration: none !important;}
 

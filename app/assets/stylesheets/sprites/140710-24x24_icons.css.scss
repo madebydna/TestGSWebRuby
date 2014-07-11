@@ -1,0 +1,20 @@
+/* -------------------------------------------------------------------------------------------*/
+
+/* **************** SPRITE ***************** */
+
+.iconx24-icons {
+  display: inline-block;
+  background-image: image-url("icons/140710-24x24_icons.png");
+  width: 24px;
+  height: 24px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-24-checkmark-on {
+  background-position: 0 0;
+}
+
+.i-24-checkmark-off {
+  background-position: 0px -24px;
+}

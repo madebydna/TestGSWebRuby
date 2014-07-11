@@ -1,36 +1,43 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
 
+  before_action :set_verified_city_state, only: [:city_browse, :district_browse]
+  before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
+
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation']
+  MAX_RESULTS_FROM_SOLR = 2000
+  MAX_RESULTS_FOR_MAP = 200
+  NUM_NEARBY_CITIES = 5
 
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'browse_city'
+    elsif params.include?(:city) && params.include?(:district_name)
+      self.district_browse
+    elsif params.include?(:city)
+      self.city_browse
+    elsif params.include?(:q)
+      self.by_name
     else
       render 'error/page_not_found', layout: 'error', status: 404
-      return
     end
   end
 
+  #todo decide to use or not use before filters
+  #Currently the before filters are only activated if city_browse is hit directly from the route (also affects district browse)
+  #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
+  #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
-    set_city_state
-    if @state.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-      return
-    end
-
-    @city = City.find_by_state_and_name(@state[:short], @city)
-    if @city.nil?
-      redirect_to state_path(@state[:long])
-      return
-    end
+    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: @state[:short], city: @city.name})
     end
+
+    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
@@ -39,17 +46,7 @@ class SearchController < ApplicationController
   end
 
   def district_browse
-    set_city_state
-    if @state.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-      return
-    end
-
-    @city = City.find_by_state_and_name(@state[:short], @city)
-    if @city.nil?
-      redirect_to state_path(@state[:long])
-      return
-    end
+    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
@@ -65,6 +62,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], district_id: @district.id})
     end
 
+    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_district @page_number
@@ -79,15 +78,34 @@ class SearchController < ApplicationController
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
     end
 
+    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES)
+
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
     set_omniture_pagename_search_school @page_number
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
+  def by_name
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
+      state = {
+          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+      } if params_hash['state']
+      @query_string = params_hash['q']
+      search_options.merge!({query: @query_string})
+      search_options.merge!({state: state[:short]}) if state
+    end
+
+    @by_name = true
+    set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
+    set_omniture_pagename_search_school @page_number
+    render 'browse_city'
+  end
+
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
-    @filter_and_sort_display_map = filter_and_sort_display_map
+    setup_filter_display_map
 
     @results_offset = get_results_offset
     @page_size = get_page_size
@@ -95,33 +113,55 @@ class SearchController < ApplicationController
 
     ad_setTargeting_through_gon
 
-    search_options = {number_of_results: @page_size, offset: @results_offset}
+    # calculate offset and number of results such that we'll definitely have 200 map pins to display
+    # To guarantee this in a simple way I fetch a total of 400 results centered around the page to be displayed
+    offset = @results_offset - MAX_RESULTS_FOR_MAP
+    offset = 0 if offset < 0
+    number_of_results = @results_offset + MAX_RESULTS_FOR_MAP
+    number_of_results = (MAX_RESULTS_FOR_MAP * 2) if number_of_results > (MAX_RESULTS_FOR_MAP*2)
+    search_options = {number_of_results: number_of_results, offset: offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+
+    # To sort by fit, we need all the schools matching the search. So override offset and num results here
+    is_fit_sort = (sort == :fit_desc || sort == :fit_asc)
+    if is_fit_sort
+      search_options[:number_of_results] = MAX_RESULTS_FROM_SOLR
+      search_options[:offset] = 0
+    end
 
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    process_results(results) unless results.empty?
-    results = search_method.call(search_options.merge({number_of_results:(@total_results > 200 ? 200 : @total_results), offset:0}))
-    process_results_for_map(results) unless results.empty?
+    calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    sort_by_fit(results[:results], sort) if is_fit_sort
+    process_results(results, offset) unless results.empty?
   end
 
-  def process_results(results)
-    @query_string = '?' + hash_to_query_string(@params_hash).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+  def sort_by_fit(school_results, direction)
+    # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
+    n = 0
+    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
+  end
+
+  def process_results(results, solr_offset)
+    @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
     @total_results = results[:num_found]
-    @schools = results[:results]
-    calculate_fit_score(@schools, @params_hash)
+    school_results = results[:results] || []
+    # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
+    # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
+    # 225 (the user requested offset)
+    relative_offset = @results_offset - solr_offset
+    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+    (map_start, map_end) = calculate_map_range solr_offset
+    @map_schools = school_results[map_start .. map_end]
+
+    @schools.each do |school|
+      school.on_page = true # mark the results that appear in the list so the map can handle them differently
+    end
+
     @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
     @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
-  end
-
-  def process_results_for_map(results)
-    @map_schools = results[:results]
-    @map_schools[@results_offset..(@results_offset+@page_size)].each do |school|
-      school.on_page = true
-    end
-    calculate_fit_score(@map_schools, @params_hash)
   end
 
   def suggest_school_by_name
@@ -196,6 +236,24 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def calculate_map_range(solr_offset)
+    # solr_offset is used to convert from an absolute range to a relative range.
+    # e.g. if user requested 225-250, we want to display on map 150-350. That's the absolute range
+    # If we asked solr to give us results 25-425, then the relative range into that resultset is
+    # 125-325
+    map_start = @results_offset - solr_offset - (MAX_RESULTS_FOR_MAP/2) + @page_size
+    map_start = 0 if map_start < 0
+    map_start = (@results_offset - solr_offset) if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
+    map_end = map_start + MAX_RESULTS_FOR_MAP-1
+    if map_end > @total_results
+      map_end = @total_results-1
+      map_start = map_end - MAX_RESULTS_FOR_MAP
+      map_start = 0 if map_start < 0
+      map_start = (@results_offset - solr_offset) if map_start > @results_offset
+    end
+    [map_start, map_end]
+  end
 
   def parse_filters(params_hash)
     filters = {}
@@ -330,55 +388,31 @@ class SearchController < ApplicationController
     end
   end
 
-  def filter_and_sort_display_map
-    main_map = {
-      'st' => {
-        'public' => 'Public Schools',
-        'private' => 'Private Schools',
-        'charter' => 'Charter Schools'
-      },
-      'grades' => {
-        'p' => 'Pre-School',
-        'k' => 'Kindergarten',
-        '1' => '1st Grade',
-        '2' => '2nd Grade',
-        '3' => '3rd Grade',
-        '4' => '4th Grade',
-        '5' => '5th Grade',
-        '6' => '6th Grade',
-        '7' => '7th Grade',
-        '8' => '8th Grade',
-        '9' => '9th Grade',
-        '10' => '10th Grade',
-        '11' => '11th Grade',
-        '12' => '12th Grade'
-      },
-      'distance' => {
-        '1' => '1 Mile',
-        '2' => '2 Miles',
-        '3' => '3 Miles',
-        '4' => '4 Miles',
-        '5' => '5 Miles',
-        '10' => '10 Miles',
-        '15' => '15 Miles',
-        '20' => '20 Miles',
-        '25' => '25 Miles',
-        '30' => '30 Miles',
-        '60' => '60 Miles'
-      }
-    }
-    soft_filters = {
-      'beforeAfterCare' => {
-        'before' => 'Before School Care',
-        'after' => 'After School Care'
-      }
-    }
-    #The following code will copy hash values from the soft_filters sub hash
-    #and put them into the main_map hash. (ex. 'beforeAfterCare' hash will be merged)
-    #This is for the soft filter display keys
-    #This should be fine as long as there are no duplicate keys in the soft_filter sub hashes
-    #as they will get overwritten
-    main_map.merge!(soft_filters)
-    soft_filters.inject(main_map) { |main_hash,(k,v)| main_hash.merge(v) }
+  def setup_filter_display_map
+    @search_bar_display_map = get_search_bar_display_map
+
+    filter_builder = FilterBuilder.new
+    @filter_display_map = filter_builder.filter_display_map
+    @filters = filter_builder.filters
   end
+
+  #ToDo: Refactor into method into FilterBuilder to add into the filter_map
+  def get_search_bar_display_map
+    {
+      :distance => {
+        1 => '1 Mile',
+        2 => '2 Miles',
+        3 => '3 Miles',
+        4 => '4 Miles',
+        5 => '5 Miles',
+        10 => '10 Miles',
+        15 => '15 Miles',
+        20 => '20 Miles',
+        25 => '25 Miles',
+        30 => '30 Miles',
+        60 => '60 Miles'
+      }
+    }
+  end
+
 end

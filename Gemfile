@@ -101,6 +101,7 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
+  gem 'spring-commands-rspec'
 
   gem 'pry-debugger'
 end

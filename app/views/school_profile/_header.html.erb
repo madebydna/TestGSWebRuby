@@ -2,13 +2,19 @@
 <% # the ||= wouldnt do what you might expect here, since the variable in question is a boolean and might be false %>
 <% include_contact_info_link = true if include_contact_info_link.nil? %>
 <% include_cta_button_group  = true if include_cta_button_group.nil? %>
+<% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
 
 <div class="header-bg-color ">
     <div class="row pal limit-width-1200 open-sans">
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">
-                <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
-                <%= school_profile_decorator.photo %>
+                <% if !@school.preschool? %>
+                    <%= link_to(school_url(@school, anchor: 'Media_Gallery')) do %>
+                        <%= school_profile_decorator.photo %>
+                    <% end %>
+                <% else %>
+                    <%= school_profile_decorator.photo %>
+                <% end %>
             </div>
 
             <div class="fl header-title-width" >
@@ -20,9 +26,9 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
                         <% if @school.gs_rating  %>
-                            <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
+                            <%= link_to school_quality_url(@school, anchor:"Ratings") do %>
                                 <div class="fl prl open-sans rating-header-h24">
-                                    <span class="mrs link-darkgray notranslate">GreatSchools rating:</span>
+                                    <span class="mrs link-darkgray">GreatSchools rating:</span>
                                     <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
 
                                 </div>
@@ -39,7 +45,7 @@
                             <% end %>
                         <% end %>
                         <% if @school.local_rating  %>
-                            <%= link_to school_quality_url(@school, anchor:"Ratings_15") do %>
+                            <%= link_to school_quality_url(@school, anchor:"Ratings") do %>
                                 <div class="fl prl open-sans pt2 rating-header-h24">
                                     <span class="mrs link-darkgray">Excellent Schools Detroit rating:</span>
                                     <span class="open-sans_sb">
@@ -49,7 +55,11 @@
                             <% end %>
                         <% end %>
                         <% if @school.state_rating  %>
+                          <% if @school.state == 'CA' %>
+                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"API score" %>
+                          <% else %>
                             <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"State rating" %>
+                          <% end %>
                         <% end %>
                         <% if @school.pcsb_rating  %>
                             <%= render "shared/rating/header_standard", school:@school, rating_value:@school.pcsb_rating, rating_label:"PMF rating" %>
@@ -63,14 +73,14 @@
                             <% elsif prek_star_rating > 1 %>
                                 <% prek_star_rating_text = 'stars' %>
                             <% end %>
-                            <%= link_to school_quality_url(@school, anchor:"Rating_15") do %>
+                            <%= link_to school_quality_url(@school, anchor:"Rating") do %>
                                 <div class="fl prl open-sans pt2 h24">
                                     <span class="mrs link-darkgray">Preschool rating:</span>
                                     <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
                                 </div>
                             <% end %>
                         <% elsif @school.preK_star_rating.present? && @school.preK_star_rating != '0' %>
-                          <%= link_to school_quality_url(@school, anchor:"Rating_15") do %>
+                          <%= link_to school_quality_url(@school, anchor:"Rating") do %>
                               <div class="fl prl open-sans pt2 h24">
                                 <span class="mrs link-darkgray">Preschool rating:</span>
                                 <span class="open-sans_sb"><%= @school.preK_star_rating %></span>
@@ -80,13 +90,16 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
-                           @school.process_level,
-                           @school.type == "public" ? "District" : @school.type.gs_capitalize_first,
-                           @school.city.gs_capitalize_first + ' ' + @school.state.upcase,
+                           school_profile_decorator.process_level,
+                           @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
+                           raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 
                         <% if include_contact_info_link %>
-                            <% subheader_content << raw('<a href="#ContactInfo"><span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span></a>') %>
+                          <% contact_info_link = link_to(school_url(@school, anchor: 'Contact_this_school')) do %>
+                            <span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span>
+                          <% end %>
+                          <% subheader_content << contact_info_link %>
                         <% end %>
 
                         <% subheader_content.each_with_index do | value, index | %>

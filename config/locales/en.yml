@@ -53,4 +53,10 @@ en:
       facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
     my_school_list:
       school_added: "%{school_name} has been saved to your school list."
-
+    subscription:
+      default:
+        login_required: 'Please log in or register your email in order to receive updates.'
+      mystat:
+        login_required: 'Please log in or register your email in order to follow this school.'
+      gsnewsletter:
+        login_required: 'Please log in or register your email in order to sign up for GreatSchool''s newsletter'

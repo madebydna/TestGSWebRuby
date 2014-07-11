@@ -16,6 +16,7 @@ class StatesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
       collection_id = hub_city_mapping.collection_id
+
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
@@ -49,6 +50,18 @@ class StatesController < ApplicationController
       }
       @canonical_url = state_choosing_schools_url(params[:state])
       render 'shared/choosing_schools'
+    end
+  end
+
+  def guided_search
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      @canonical_url = state_guided_search_url(params[:state])
+      @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
+      render 'shared/guided_search'
     end
   end
 
@@ -112,6 +125,7 @@ class StatesController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
+    @ad_definition = Advertising.new
     if @show_ads
       set_targeting = {}
       set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser

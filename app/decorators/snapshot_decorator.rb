@@ -36,13 +36,16 @@ class SnapshotDecorator < Draper::Decorator
     if key == 'district'
       value = district_home_link_from_school(school)
     end
+    if key == 'head official name'
+      value = "<span class='notranslate'>#{value}</span>"
+    end
     value
   end
 
   def district_home_link_from_school(school, options = {}, &blk)
     return nil if school.district.nil?
 
-    options['class'] = 'link-darkgray'
+    options['class'] = 'link-darkgray notranslate'
 
     path = h.city_district_path(
       h.district_params_from_district(school.district)
@@ -54,6 +57,36 @@ class SnapshotDecorator < Draper::Decorator
   def configured_format(key)
     return unless config.present? && config[key.to_s].present?
     config[key.to_s]['format']
+  end
+
+  def get_link_to_or_value(school, key, value)
+    hash = {
+      'Transportation options' => {
+        page: :details,
+        anchor: 'Neighborhood'
+      },
+      'Before school' => {
+        page: :details,
+        anchor: 'Programs'
+      },
+      'After school' => {
+        page: :details,
+        anchor: 'Programs'
+      },
+      'Summer program' => {
+        page: :details,
+        anchor: 'Programs'
+      }
+    }
+    if value.to_s == 'Yes' && hash[key].present?
+      helper_name = 'school_'
+      helper_name << "#{hash[key][:page]}_" if hash[key][:page] != 'overview'
+      helper_name << 'url'
+      url = h.send(helper_name, school, anchor: hash[key][:anchor])
+      h.link_to(value.to_s, url, class: 'link-darkgray')
+    else
+      value
+    end
   end
 
 end

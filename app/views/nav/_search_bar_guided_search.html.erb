@@ -3,31 +3,23 @@
     <div class="row pbl ptl">
       <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
         <!-- Todo: make a class -->
-        <div class="col-xs-12 col-sm-6 pam">
+        <div class="col-xs-12 col-sm-8 pam">
         <input  type="text"
                 name="locationSearchString"
-                value="Enter School, City, or District"
+                value="Enter 5-digits for byLocation Search, Else byName Search"
                 id="js-prototypeSearch"
                 class='typeahead search-text full-width pam'
-                onfocus="GS.textSwitch(this, '', 'Enter School, City, or District');"
-                onblur="GS.textSwitch(this, 'Enter School, City, or District', '');"
-                placeholder="ex. Dover High School">
+                onfocus="GS.textSwitch(this, '', 'Enter 5-digits for byLocation Search, Else byName Search');"
+                onblur="GS.textSwitch(this, 'Enter 5-digits for byLocation Search, Else byName Search', '');"
+                placeholder="ex. 19703 or Dover High School">
         </div>
 
-        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
+        <!--Todo Refactor Distance and Grade together-->
+        <div class='col-xs-12 col-sm-2 col-md-2 col-lg-2 pam'>
           <select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">
             <option value=""selected>--Distance--</option>
-            <% @filter_and_sort_display_map['distance'].each do |distance, display_name| %>
-                <option value=<%=distance%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance%> selected<%end%>><%=display_name%></option>
-            <% end %>
-          </select>
-        </div>
-
-        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 pam'>
-          <select class="form-control input-lg" id="js-prototypeSearchGradeLevelFilter" name="grades">
-            <option value=""selected>--Select a Grade--</option>
-            <% @filter_and_sort_display_map['grades'].each do |grade, display_name| %>
-		            <option value=<%=grade%><%if @params_hash.include?('grades') && @params_hash['grades'] == grade%> selected<%end%>><%=display_name%></option>
+            <% @search_bar_display_map[:distance].each do |distance, display_name| %>
+                <option value=<%=distance.to_s%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
           </select>
         </div>
@@ -38,14 +30,15 @@
       </form>
     </div>
 
-    <div class="row pbl plm prm" style="color:#f5f5f5;">
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs" style="font-weight:bold;">Nearby Cities:</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 1</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 2</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 3</div>
-      <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">City 4</div>
-      <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">City 5</div>
-    </div>
+    <% if @nearby_cities && @nearby_cities.size > 0 %>
+        <div class="row pbl plm prm" style="color:#f5f5f5;">
+          <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs" style="font-weight:bold;">Nearby Cities:</div>
+            <% @nearby_cities.each_index do |x|
+                city = @nearby_cities[x] %>
+                <div class="hidden-xs <%= x < 3 ? 'col-sm-3' : 'hidden-sm'%> col-md-2 col-lg-2"><%= link_to city.name, search_city_browse_path(city.state_name, city.name.downcase) %></div>
+            <% end %>
+        </div>
+    <% end %>
     <div class="row pbl plm prm" style="color:#f5f5f5;">
       <div class="col-sm-12 col-md-6 hidden-xs"><span style="font-weight:bold;">Additional Information:</span> How enrollment works in Delaware</div>
       <div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>

@@ -1,0 +1,35 @@
+   <%= render 'nav/topnav', hub_params: @hub_params %>
+   <%= render 'shared/guided_search/helpme_module' %>
+<div class="limit-width-940 border-all-light-grey">
+   <%= render 'shared/guided_search/steps_navigation' %>
+  <div   class="tab-content">
+    <div class="tab-pane active" id="<%= @guided_search_tab[0]%>">
+      <h4 class="tac brand-primary mbl">Get started as easy as 1-2-3!</h4>
+      <h4 class="mtl pll"><span class="brand-primary">1.</span> Tell us what you're looking for</h4>
+      <h4 class="mtl pll"><span class="brand-primary">2.</span> See which schools are a good match</h4>
+      <h4 class="mtl pll"><span class="brand-primary">3.</span> Save your favorites so you can visit, apply and get updates</h4>
+
+      <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[1]%>
+    </div>
+    <div class="tab-pane" id="<%= @guided_search_tab[1]%>">
+      <h4 class="tac brand-primary mbl">Step 2</h4>
+      <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[2], previous_tab_name: @guided_search_tab[0]%>
+
+    </div>
+    <div class="tab-pane" id="<%= @guided_search_tab[2]%>">
+      <h4 class="tac brand-primary mbl">Step 3</h4>
+      <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[3], previous_tab_name: @guided_search_tab[1]%>
+
+    </div>
+    <div class="tab-pane" id="<%= @guided_search_tab[3]%>">
+      <h4 class="tac brand-primary mbl">Step 4</h4>
+      <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[4], previous_tab_name: @guided_search_tab[2]%>
+
+    </div>
+    <div class="tab-pane" id="<%= @guided_search_tab[4]%>">
+      <h4 class="tac brand-primary mbl">Step 5</h4>
+      <%=render 'shared/guided_search/button_navigation', previous_tab_name: @guided_search_tab[3],current_tab_name:@guided_search_tab[4]%>
+
+    </div>
+  </div>
+</div>

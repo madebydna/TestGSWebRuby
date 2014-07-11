@@ -7,12 +7,12 @@ describe ApplicationHelper do
     }
 
     it 'should use the category placement title if available' do
-      expect(helper.category_placement_anchor(category_placement)).to eq 'A_title_1'
+      expect(helper.category_placement_anchor(category_placement)).to eq 'A_title'
     end
 
     it 'should use the category name if there is no title' do
       category_placement.title = nil
-      expect(helper.category_placement_anchor(category_placement)).to eq 'Test_category_1'
+      expect(helper.category_placement_anchor(category_placement)).to eq 'Test_category'
     end
   end
 

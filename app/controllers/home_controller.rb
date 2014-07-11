@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   protect_from_forgery
   include OmnitureConcerns
+  include AdvertisingHelper
 
   before_action :ad_setTargeting_through_gon
 
@@ -52,6 +53,7 @@ class HomeController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
+    @ad_definition = Advertising.new
     #if @school.show_ads
     set_targeting = {}
     # City, compfilter, env,State, type, template

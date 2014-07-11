@@ -13,6 +13,7 @@ all_cache_keys=['ratings','test_scores']
 
 @@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
 @@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
+@@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
 
 def self.create_cache(school, cache_key)
   if (school.active?)
@@ -85,18 +86,18 @@ def self.test_scores_cache_for_school(school)
 
   if data_sets_and_values.present?
     config_map = {
-      :data_type_id => 'data_type_id',
-      :data_set_id => 'data_set_id',
-      :level_code => 'level_code',
-      :subject_id => 'subject_id',
-      :grade => 'grade',
-      :year => 'year',
-      :school_value_text => 'school_value_text',
-      :school_value_float => 'school_value_float',
-      :state_value_text => 'state_value_text',
-      :state_value_float => 'state_value_float',
-      :breakdown_id => 'breakdown_id',
-      :school_number_tested => 'school_number_tested'
+      data_type_id: 'data_type_id',
+      data_set_id: 'data_set_id',
+      level_code: 'level_code',
+      subject_id: 'subject_id',
+      grade: 'grade',
+      year: 'year',
+      school_value_text: 'school_value_text',
+      school_value_float: 'school_value_float',
+      state_value_text: 'state_value_text',
+      state_value_float: 'state_value_float',
+      breakdown_id: 'breakdown_id',
+      school_number_tested: 'school_number_tested'
     }
 
     data_type_ids = []
@@ -104,7 +105,12 @@ def self.test_scores_cache_for_school(school)
       data_type_id = data_sets_and_value.data_type_id
       next if !@@test_data_types || @@test_data_types[data_type_id].nil? # skip this if no corresponding test data type
       data_type_ids << data_type_id
-      results_hash_array << active_record_to_hash(config_map,data_sets_and_value)
+      hash = active_record_to_hash(config_map,data_sets_and_value)
+      proficiency_band = @@proficiency_bands[data_sets_and_value['proficiency_band_id']]
+      if proficiency_band
+        hash[:proficiency_band] = proficiency_band.name
+      end
+      results_hash_array << hash
     end
 
     data_type_descriptions = {}

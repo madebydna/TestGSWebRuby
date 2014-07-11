@@ -328,6 +328,93 @@ describe TestScoreResults do
 
     end
 
+    it 'should handle proficiency bands' do
+      data_sets_and_values = {
+        'data_sets_and_values' => [
+          {
+            'data_type_id' => 18,
+            'data_set_id' => 84122,
+            'level_code' => 'e,m,h',
+            'subject_id' => 7,
+            'grade' => '9',
+            'year' => 2010,
+            'school_value_text' => nil,
+            'school_value_float' => 50,
+            'state_value_text' => nil,
+            'state_value_float' => 30,
+            'breakdown_id' => 1,
+            'proficiency_band' => nil,
+            'school_number_tested' => 269697
+          },
+          {
+            'data_type_id' => 18,
+            'data_set_id' => 84123,
+            'level_code' => 'e,m,h',
+            'subject_id' => 7,
+            'grade' => '9',
+            'year' => 2010,
+            'school_value_text' => nil,
+            'school_value_float' => 60,
+            'state_value_text' => nil,
+            'state_value_float' => 40,
+            'breakdown_id' => 1,
+            'proficiency_band' => 'advanced',
+            'school_number_tested' => 269697
+          }
+        ]
+      }
+
+      test_scores_hash = subject.build_test_scores_hash(data_sets_and_values,school)
+
+      expect(
+        test_scores_hash.values.first.seek(
+          :grades,
+          Grade.from_string('9'),
+          :level_code,
+          LevelCode.new('e,m,h'),
+          'algebra 1',
+          2010,
+          'score'
+        )
+      ).to eq 50
+
+      expect(
+        test_scores_hash.values.first.seek(
+          :grades,
+          Grade.from_string('9'),
+          :level_code,
+          LevelCode.new('e,m,h'),
+          'algebra 1',
+          2010,
+          'advanced_score'
+        )
+      ).to eq 60
+
+      expect(
+        test_scores_hash.values.first.seek(
+          :grades,
+          Grade.from_string('9'),
+          :level_code,
+          LevelCode.new('e,m,h'),
+          'algebra 1',
+          2010,
+          'state_avg'
+        )
+      ).to eq 30
+
+      expect(
+        test_scores_hash.values.first.seek(
+          :grades,
+          Grade.from_string('9'),
+          :level_code,
+          LevelCode.new('e,m,h'),
+          'algebra 1',
+          2010,
+          'advanced_state_avg'
+        )
+      ).to eq 40
+    end
+
     it 'should set the number of students tested' do
       data_sets_and_values = {
         'data_sets_and_values' =>[

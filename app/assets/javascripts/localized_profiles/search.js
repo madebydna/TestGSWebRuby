@@ -45,6 +45,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     findByNameSelector = prototypeSearchSelector;
+//                    ToDo Hard coded byName search to Delaware
+                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this)
                     return submitByNameSearch.apply(this);
                 } else {
                     return false;
@@ -297,6 +299,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
             }
         })
+        .on('typeahead:selected', function(event, suggestion, dataset) {
+            GS.uri.Uri.goToPage(suggestion['url']);
+        })
     };
 
     var handleAddressOrZipcode = function() {
@@ -305,7 +310,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (/\d{5}/.test($input)) {
                 $(this).data().ttTypeahead.minLength = 100;
                 $(this).typeahead('close');
+                GS.search.schoolSearchForm.searchType = "byLocation";
             } else {
+                GS.search.schoolSearchForm.searchType = "byName";
                 $(this).data().ttTypeahead.minLength = 1;
             }
         })
@@ -383,10 +390,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var submitByNameSearch = function() {
         var searchString = $(this).find(findByNameSelector).val();
-        var state = $(this).find('input#js-state').val();
+//        TODO temporarily added find('[name=state]')
+        var state = $(this).find('input#js-state').val() || $(this).find('[name=state]').val();
         var collectionId = $(this).find('input#js-collectionId').val();
         var searchType = $(this).find('input[name="search_type"]').val();
-        var queryString = GS.uri.Uri.getQueryData();
+        var queryString = {};
 
         queryString.q = encodeURIComponent(searchString);
         queryString.search_type = encodeURIComponent(searchType);
@@ -411,11 +419,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         schools: schools,
         attachAutocomplete: attachAutocomplete,
         handleAddressOrZipcode: handleAddressOrZipcode,
-        searchType: 'byLocation'
+        searchType: 'byName'
     };
 })();
 
 $(document).ready(function() {
+  GS.search.schoolSearchForm.handleAddressOrZipcode();
   GS.search.schoolSearchForm.init();
   GS.search.schoolSearchForm.setupTabs();
   GS.search.schoolSearchForm.cities.initialize();
@@ -425,5 +434,4 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.initialize();
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
-  GS.search.schoolSearchForm.handleAddressOrZipcode();
 });
