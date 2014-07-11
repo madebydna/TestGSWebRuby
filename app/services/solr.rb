@@ -76,6 +76,12 @@ class Solr
     query_string_work
   end
 
+  def self.prepare_term(term)
+    term_work = term.clone
+    term_work.gsub!(/"/, '\\"')
+    "\"#{term_work}\""
+  end
+
   # Split on space, add a "+" in front of any non-optional word to make it required, join back up on space
   def self.require_non_optional_words(query_string)
     query_string.split(/ /).collect do |token|

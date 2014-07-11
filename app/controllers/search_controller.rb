@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
+  NUM_NEARBY_CITIES = 5
 
   def search
     if params.include?(:lat) && params.include?(:lon)
@@ -36,6 +37,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], city: @city.name})
     end
 
+    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_city @page_number
@@ -59,6 +62,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], district_id: @district.id})
     end
 
+    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_district @page_number
@@ -72,6 +77,8 @@ class SearchController < ApplicationController
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
     end
+
+    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES)
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'

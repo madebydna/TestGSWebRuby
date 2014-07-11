@@ -30,14 +30,15 @@
       </form>
     </div>
 
-    <div class="row pbl plm prm" style="color:#f5f5f5;">
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs" style="font-weight:bold;">Nearby Cities:</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 1</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 2</div>
-      <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs">City 3</div>
-      <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">City 4</div>
-      <div class="col-md-2 col-lg-2 hidden-xs hidden-sm">City 5</div>
-    </div>
+    <% if @nearby_cities && @nearby_cities.size > 0 %>
+        <div class="row pbl plm prm" style="color:#f5f5f5;">
+          <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs" style="font-weight:bold;">Nearby Cities:</div>
+            <% @nearby_cities.each_index do |x|
+                city = @nearby_cities[x] %>
+                <div class="hidden-xs <%= x < 3 ? 'col-sm-3' : 'hidden-sm'%> col-md-2 col-lg-2"><%= link_to city.name, search_city_browse_path(city.state_name, city.name.downcase) %></div>
+            <% end %>
+        </div>
+    <% end %>
     <div class="row pbl plm prm" style="color:#f5f5f5;">
       <div class="col-sm-12 col-md-6 hidden-xs"><span style="font-weight:bold;">Additional Information:</span> How enrollment works in Delaware</div>
       <div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>
