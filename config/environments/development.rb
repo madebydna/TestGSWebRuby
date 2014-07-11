@@ -56,18 +56,11 @@ LocalizedProfiles::Application.configure do
   # Don't cache in dev environment
   config.cache_store = :null_store
 
-  def local_ip
-    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
-
-    UDPSocket.open do |s|
-      s.connect 'localhost', 1
-      s.addr.last
-    end
-  ensure
-    Socket.do_not_reverse_lookup = orig
+  if ENV_GLOBAL['cdn_prefix'].present?
+    config.action_controller.asset_host = ENV_GLOBAL['cdn_prefix']
+  else
+    config.action_controller.asset_host = 'http://localhost:3000'
   end
-
-  config.action_controller.asset_host = 'http://' + local_ip + ':3000'
 
   # For dev environments, use domain: all which will makes session cookies have a domain of localhost
   # or a domain of blah.greatschools.org
