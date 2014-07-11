@@ -157,102 +157,165 @@ describe SchoolRating do
       expect(subject).to_not be_unpublished
     end
 
-    context 'with new user, parent' do
-      before do
-        subject.who = 'parent'
-        subject.user = new_user
-      end
-
-      after do
-        expect(subject).to be_provisional
-      end
-
-      context 'non-held school' do
+    context 'when reviews are not per-moderated' do
+      context 'with new user, parent' do
         before do
-          allow(subject.school).to receive(:held?).and_return(false)
+          subject.who = 'parent'
+          subject.user = new_user
         end
 
-        it 'should have a status of pp' do
-          subject.calculate_and_set_status
-          expect(subject).to be_provisional_published
+        after do
+          expect(subject).to be_provisional
         end
 
-        it 'should be unpublished if user is student' do
-          subject.who = 'student'
-          subject.calculate_and_set_status
-          expect(subject).to be_unpublished
+        context 'non-held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(false)
+          end
+
+          it 'should have a status of pp' do
+            subject.calculate_and_set_status
+            expect(subject).to be_provisional_published
+          end
+
+          it 'should be unpublished if user is student' do
+            subject.who = 'student'
+            subject.calculate_and_set_status
+            expect(subject).to be_unpublished
+          end
+
+          it 'should not be affected by alert words' do
+            allow(AlertWord).to receive(:search).and_return(alert_words)
+            subject.calculate_and_set_status
+            expect(subject).to be_provisional_published
+          end
+
+          it 'status should be set to disabled if there are really bad words' do
+            allow(AlertWord).to receive(:search).and_return(really_bad_words)
+            subject.calculate_and_set_status
+            expect(subject).to be_disabled
+          end
         end
 
-        it 'should not be affected by alert words' do
-          allow(AlertWord).to receive(:search).and_return(alert_words)
-          subject.calculate_and_set_status
-          expect(subject).to be_provisional_published
-        end
+        context 'held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(true)
+          end
 
-        it 'status should be set to disabled if there are really bad words' do
-          allow(AlertWord).to receive(:search).and_return(really_bad_words)
-          subject.calculate_and_set_status
-          expect(subject).to be_disabled
+          it 'should have a held status' do
+            subject.calculate_and_set_status
+            expect(subject).to be_held
+          end
         end
       end
 
-      context 'held school' do
+      context 'with registered user' do
+        let(:registered_user) { FactoryGirl.build(:verified_user) }
+
         before do
-          allow(subject.school).to receive(:held?).and_return(true)
+          subject.school = school
+          subject.user = registered_user
+          allow(AlertWord).to receive(:search).and_return(no_bad_language)
         end
 
-        it 'should have a held status' do
-          subject.calculate_and_set_status
-          expect(subject).to be_held
+        after do
+          expect(subject).to_not be_provisional
+        end
+
+        context 'non-held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(false)
+          end
+
+          it 'should be published when user is a parent' do
+            subject.who = 'parent'
+            subject.calculate_and_set_status
+            expect(subject).to be_published
+          end
+
+          it 'should be published when user is a principal' do
+            subject.who = 'principal'
+            subject.calculate_and_set_status
+            expect(subject).to be_published
+          end
+
+          it 'should be unpublished if user is student' do
+            subject.who = 'student'
+            subject.calculate_and_set_status
+            expect(subject).to be_unpublished
+          end
+        end
+
+        context 'held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(true)
+          end
+
+          it 'should have a held status' do
+            subject.calculate_and_set_status
+            expect(subject).to be_held
+          end
         end
       end
     end
 
-    context 'with registered user' do
-      let(:registered_user) { FactoryGirl.build(:verified_user) }
-
+    context 'when reviews are pre-moderated' do
+      let(:fake_property_class) { Class.new }
       before do
-        subject.school = school
-        subject.user = registered_user
-        allow(AlertWord).to receive(:search).and_return(no_bad_language)
+        stub_const('PropertyConfig', fake_property_class)
+        allow(fake_property_class).to receive(:force_review_moderation?)
+          .and_return(true)
       end
-
-      after do
-        expect(subject).to_not be_provisional
-      end
-
-      context 'non-held school' do
+      context 'with new user, parent' do
         before do
-          allow(subject.school).to receive(:held?).and_return(false)
-        end
-
-        it 'should be published when user is a parent' do
           subject.who = 'parent'
-          subject.calculate_and_set_status
-          expect(subject).to be_published
+          subject.user = new_user
         end
 
-        it 'should be published when user is a principal' do
-          subject.who = 'principal'
-          subject.calculate_and_set_status
-          expect(subject).to be_published
+        after do
+          expect(subject).to be_provisional
         end
 
-        it 'should be unpublished if user is student' do
-          subject.who = 'student'
-          subject.calculate_and_set_status
-          expect(subject).to be_unpublished
+        context 'non-held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(false)
+          end
+
+          %w[parent principal student].each do |who|
+            it "should be unpublished when user is a #{who}" do
+              subject.who = who
+              subject.calculate_and_set_status
+              expect(subject).to be_unpublished
+            end
+          end
         end
       end
 
-      context 'held school' do
+      context 'with registered user' do
+        let(:registered_user) { FactoryGirl.build(:verified_user) }
+
         before do
-          allow(subject.school).to receive(:held?).and_return(true)
+          subject.school = school
+          subject.user = registered_user
+          allow(AlertWord).to receive(:search).and_return(no_bad_language)
         end
 
-        it 'should have a held status' do
-          subject.calculate_and_set_status
-          expect(subject).to be_held
+        after do
+          expect(subject).to_not be_provisional
+        end
+
+        context 'non-held school' do
+          before do
+            allow(subject.school).to receive(:held?).and_return(false)
+          end
+
+          %w[parent principal student].each do |who|
+            it "should be unpublished when user is a #{who}" do
+              subject.who = who
+              subject.calculate_and_set_status
+              expect(subject).to be_unpublished
+            end
+          end
         end
       end
     end

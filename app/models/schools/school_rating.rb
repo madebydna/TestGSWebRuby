@@ -167,6 +167,8 @@ class SchoolRating < ActiveRecord::Base
       status = 'u'
     elsif AlertWord.search(review_text).has_really_bad_words?
       status = 'd'
+    elsif PropertyConfig.force_review_moderation?
+      status = 'u'
     else
       status = 'p'
     end
