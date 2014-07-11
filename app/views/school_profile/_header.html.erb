@@ -55,7 +55,11 @@
                             <% end %>
                         <% end %>
                         <% if @school.state_rating  %>
+                          <% if @school.state == 'CA' %>
+                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"API score" %>
+                          <% else %>
                             <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"State rating" %>
+                          <% end %>
                         <% end %>
                         <% if @school.pcsb_rating  %>
                             <%= render "shared/rating/header_standard", school:@school, rating_value:@school.pcsb_rating, rating_label:"PMF rating" %>
