@@ -28,7 +28,7 @@
       var imageUrlPublic = '<%= image_path('icons/140106-24x24_ratings.png')%>';
       var imageUrlPrivate = '<%= image_path('icons/120905-ratingsx24-private-RYG.png')%>';
       var imageUrlPreschool = '<%= image_path('icons/130919-24x24_search.png')%>';
-      var imageUrlOffPage = '<%= image_path('icons/120627-16x16_stars.png')%>';
+      var imageUrlOffPage = '<%= image_path('icons/140710-10x10_dots_icons.png')%>';
 
       var optionalLat = optionalLat || 37.807778;
       var optionalLon = optionalLon || -122.265149;
@@ -62,9 +62,9 @@
           var imageAnchor;
           var pixelOffset;
           var size_24 = new google.maps.Size(24, 24);
-          var size_16 = new google.maps.Size(16, 16);
+          var size_10 = new google.maps.Size(10, 10);
           var point_12_12 = new google.maps.Point(12, 12);
-          var point_8_8 = new google.maps.Point(8, 8);
+          var point_5_5 = new google.maps.Point(5, 5);
           var infoWindow = new google.maps.InfoWindow({});
 
           for(var i = 0; i < points.length; i++) {
@@ -91,9 +91,20 @@
                   }
               } else {
                   imageUrl = imageUrlOffPage;
-                  pixelOffset = 0;
-                  imageSize = size_16;
-                  imageAnchor = point_8_8; // center of image
+                  imageSize = size_10;
+                  imageAnchor = point_5_5; // center of image
+
+                  if (point.preschool) {
+                      pixelOffset = 40;
+                  } else if (parseInt(point.gsRating) >= 8 ) {
+                      pixelOffset = 0;
+                  } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
+                      pixelOffset = 10;
+                  } else if (parseInt(point.gsRating) <= 3 && parseInt(point.gsRating) > 0) {
+                      pixelOffset = 20;
+                  } else {
+                      pixelOffset = 30;
+                  }
               }
 
               markerOptions.icon = new google.maps.MarkerImage(
