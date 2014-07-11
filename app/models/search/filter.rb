@@ -3,12 +3,12 @@ class Filter
   attr_accessor :name, :key, :display_type, :filters, :sort_order, :category
 
   def initialize(attributes)
-    @name = attributes[:name] #required
+    @name = attributes[:name]
     @key = attributes[:key] #only required for actual filters
     @display_type = attributes[:display_type] #required
     @filters = attributes[:filters]
     @category = attributes[:category] #only required for actual filters
-    @sort_order = attributes[:sort_order] #for sorting the filters when building the tree
+    @sort_order = attributes[:sort_order] #for sorting the tree to have filters displayed in order
   end
 
   def filters_display_map #returns map for search result fit score map

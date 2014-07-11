@@ -131,12 +131,12 @@ class FilterBuilder
         filters: {
           display_type: :blank_container,
           filters: {
-            ap: {name: 'AP Courses', display_type: :basic_checkbox, category: :ap, key: true},
-            performance_arts: {name: 'Performance Art', display_type: :basic_checkbox, category: :performance_arts, key: true},
-            visual_media_arts: {name: 'Carrer & Tech', display_type: :basic_checkbox, category: :visual_media_arts, key: true},
-            music: {name: 'Montessori', display_type: :basic_checkbox, category: :music, key: true},
+            ap: {name: 'AP Courses', display_type: :basic_checkbox, category: :class_offerings, key: :ap},
+            performance_arts: {name: 'Performance Art', display_type: :basic_checkbox, category: :performance_arts, key: :performance_arts},
+            visual_media_arts: {name: 'Career & Tech', display_type: :basic_checkbox, category: :visual_media_arts, key: :visual_media_arts},
+            music: {name: 'Montessori', display_type: :basic_checkbox, category: :class_offerings, key: :music},
             language: {
-              name: 'World Languages',
+              name: 'World Languages (dropdown)',
               key: :language,
               display_type: :collapsible_box,
               filters: {
@@ -155,16 +155,16 @@ class FilterBuilder
         filters: {
           display_type: :blank_container,
           filters: {
-            arts: {name: 'Art', display_type: :basic_checkbox, category: :art, key: true},
-            language: {name: 'World Language Immerson', display_type: :basic_checkbox, category: :language, key: true},
-            career_tech: {name: 'Carrer & Tech', display_type: :basic_checkbox, category: :career_tech, key: true},
-            montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :montessori, key: true},
-            ib: {name: 'International Baccelaureate', display_type: :basic_checkbox, category: :ib, key: true},
-            is: {name: 'Indepedent Study', display_type: :basic_checkbox, category: :is, key: true},
-            college_focus: {name: 'College Focus', display_type: :basic_checkbox, category: :college_focus, key: true},
-            waldorf: {name: 'Waldorf', display_type: :basic_checkbox, category: :waldorf, key: true},
-            project: {name: 'Project-based Learning', display_type: :basic_checkbox, category: :project, key: true},
-            online: {name: 'Online Learning', display_type: :basic_checkbox, category: :online, key: true},
+            arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
+            language: {name: 'World Language Immersion', display_type: :basic_checkbox, category: :school_focus, key: :language},
+            career_tech: {name: 'Career & Tech', display_type: :basic_checkbox, category: :school_focus, key: :career_tech},
+            montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :school_focus, key: :montessori},
+            ib: {name: 'International Baccalaureate', display_type: :basic_checkbox, category: :school_focus, key: :ib},
+            is: {name: 'Independent Study', display_type: :basic_checkbox, category: :school_focus, key: :is},
+            college_focus: {name: 'College Focus', display_type: :basic_checkbox, category: :school_focus, key: :college_focus},
+            waldorf: {name: 'Waldorf', display_type: :basic_checkbox, category: :school_focus, key: :waldorf},
+            project: {name: 'Project-based Learning', display_type: :basic_checkbox, category: :school_focus, key: :project},
+            online: {name: 'Online Learning', display_type: :basic_checkbox, category: :school_focus, key: :online}
           }
         }
       },
