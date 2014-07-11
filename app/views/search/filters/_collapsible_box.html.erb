@@ -1,0 +1,15 @@
+<label>
+  <input type="checkbox" id="<%=filter.key.to_s%>_collapsible_box" class="accordion-toggle">
+  <%=filter.name%>
+</label></br>
+
+<!--ToDo Change Styling and dropdown functionality. dropdown buggy-->
+<script>
+  $("#<%=filter.key.to_s%>_collapsible_box").on('click', function () {
+    $(".<%=filter.key.to_s%>_collapsible_checkbox").collapse('toggle');
+  })
+</script>
+
+<div class="pll accordion-body collapse <%=filter.key.to_s%>_collapsible_checkbox">
+  <%= yield %>
+</div>
