@@ -1,15 +1,18 @@
 <% if @school.metadata.facebook_url %>
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row">
-    <div class="fb-like-box tac <%= layout_grid %>"
-      data-href="<%= @school.metadata.facebook_url %>"
-      data-width="300"
-      data-colorscheme="light"
-      data-show-faces="true"
-      data-header="false"
-      data-stream="false"
-      data-show-border="false">
+    <div class="<%= layout_grid %> ma">
+        <div class="fb-like-box tac"
+          data-href="<%= @school.metadata.facebook_url %>"
+          data-width="300"
+          data-colorscheme="light"
+          data-show-faces="true"
+          data-header="false"
+          data-stream="false"
+          data-show-border="false">
+        </div>
     </div>
+      <div id="fb-root"></div>
     <% if @show_ads %>
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
         <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :desktop  %>
@@ -17,10 +20,8 @@
     <% end %>
   </div>
   <% if @show_ads %>
-      <div class="ptl">
-              <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :mobile  %>
+    <div class="ptl mtl">
+     <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :mobile  %>
     </div>
   <% end %>
-  
-  <div id="fb-root"></div>
 <% end %>
