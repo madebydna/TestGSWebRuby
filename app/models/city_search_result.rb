@@ -1,7 +1,8 @@
 class CitySearchResult
   include ActionView::Helpers::AssetTagHelper
+  include UrlHelper
 
-  attr_accessor :name, :state, :state_name, :number_of_schools, :latitude, :longitude
+  attr_accessor :name, :name_url, :state, :state_name, :number_of_schools, :latitude, :longitude, :state_name_url
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'indexedTimestamp']
 
@@ -13,8 +14,10 @@ class CitySearchResult
     @state = get_state_abbreviation(hash)
     hash.delete('state')
     @state_name = States.state_name(@state)
+    @state_name_url = gs_legacy_url_encode(@state_name)
     @name = hash.delete('sortable_name')
     @name = 'Washington, DC' if @state == 'DC' and @name == 'Washington'
+    @name_url = gs_legacy_url_encode(@name)
     @number_of_schools = hash.delete('number_of_schools')
     @latitude = hash.delete('latitude')
     @longitude = hash.delete('longitude')
