@@ -16,7 +16,7 @@ class SearchController < ApplicationController
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
-      render 'browse_city'
+      render 'search_page'
     elsif params.include?(:city) && params.include?(:district_name)
       self.district_browse
     elsif params.include?(:city)
@@ -44,7 +44,7 @@ class SearchController < ApplicationController
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_city @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def district_browse
@@ -69,7 +69,7 @@ class SearchController < ApplicationController
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_district @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def by_location
@@ -102,7 +102,7 @@ class SearchController < ApplicationController
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
     set_omniture_pagename_search_school @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def setup_search_results!(search_method)
