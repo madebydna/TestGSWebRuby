@@ -4,7 +4,7 @@
 <%= render 'filter_toolbar' %>
 
 <div class="limit-width-1200 full-width" style="height: 500px;">
-  <%= render 'cities/google_maps', schools: @map_schools %>
+  <%= render 'search/google_maps', schools: @map_schools %>
 </div>
 
 <%= render :partial => 'search/search_results', schools: @schools%>

@@ -1,5 +1,7 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
+  include ApplicationHelper
+  include ActionView::Helpers::TagHelper
 
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
@@ -160,6 +162,10 @@ class SearchController < ApplicationController
       school.on_page = true # mark the results that appear in the list so the map can handle them differently
     end
 
+    mapping_points_through_gon
+    assign_sprite_files_though_gon
+
+
     @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
     @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
   end
@@ -254,7 +260,6 @@ class SearchController < ApplicationController
     end
     [map_start, map_end]
   end
-
   def parse_filters(params_hash)
     filters = {}
     if params_hash.include? 'st'
@@ -353,6 +358,48 @@ class SearchController < ApplicationController
     set_targeting['template'] = 'search' # use this for page name - configured_page_name
 
     gon.ad_set_targeting = set_targeting
+  end
+
+  def mapping_points_through_gon
+    points = []
+    i = 0
+    @map_schools.each do |school|
+
+      points[i] = {name: school.name,
+          id: school.id,
+          lat: school.latitude,
+          lng: school.longitude,
+          street: school.street,
+          city: school.city,
+          state: school.state,
+          zipcode: school.zipcode,
+          schoolType: school.type,
+          preschool: school.preschool?,
+          gradeRange: school.grades[0] + " - " + school.grades[-1],
+          fitScore: school.fit_score,
+          maxFitScore: school.max_fit_score,
+          gsRating: school.overall_gs_rating || 0,
+          communityRating: school.respond_to?(:community_rating) ? school.community_rating : 0,
+          numReviews: school.respond_to?(:review_count) ? school.review_count : 0,
+          communityRatingStars: school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : '',
+          on_page: (school.on_page),
+          profileUrl: school_path(school),
+          reviewUrl: school_reviews_path(school),
+          zillowUrl: zillow_url(school)}
+      i = i +1
+    end
+    gon.map_points = points
+  end
+
+  def assign_sprite_files_though_gon
+    sprite_files = {}
+    sprite_files['imageUrlPublic'] = view_context.image_path('icons/140106-24x24_ratings.png')
+    sprite_files['imageUrlPrivate'] = view_context.image_path('icons/120905-ratingsx24-private-RYG.png')
+    sprite_files['imageUrlPreschool'] = view_context.image_path('icons/130919-24x24_search.png')
+    sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
+
+    gon.sprite_files = sprite_files
+
   end
 
   def hash_to_hash(configuration_map, hash)

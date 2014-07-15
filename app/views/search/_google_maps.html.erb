@@ -3,32 +3,15 @@
   <script type="text/javascript">
       (function() {
       var points = [];
+//          lodash sytax
+        _(gon.map_points).each(function( point ){
+            points.push(point);
+        });
 
-      <% schools.each do |school|%>
-          points.push({
-              name: '<%= school.name %>', id: '<%= school.id%>',
-              lat: <%= school.latitude%>, lng: <%= school.longitude%>,
-              street: '<%=school.street%>', city: '<%= school.city%>',
-              state: '<%= school.state%>', zipcode: '<%= school.zipcode %>',
-              schoolType: '<%= school.type%>', preschool: <%= school.preschool? %>,
-              gradeRange: '<%= school.grades[0] + " - " + school.grades[-1]%>',
-              fitScore: <%= school.fit_score %>,
-              maxFitScore: <%= school.max_fit_score %>,
-              gsRating: <%=school.overall_gs_rating || 0 %>,
-              communityRating: <%=school.respond_to?(:community_rating) ? school.community_rating : 0%>,
-              numReviews: <%=school.respond_to?(:review_count) ? school.review_count : 0 %>,
-              communityRatingStars: '<%=school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''%>',
-              on_page: <%= school.on_page == true %>,
-              profileUrl: '<%= school_path(school) %>',
-              reviewUrl: '<%= school_reviews_path(school) %>',
-              zillowUrl: '<%= zillow_url(school)%>'
-          });
-      <% end %>
-
-      var imageUrlPublic = '<%= image_path('icons/140106-24x24_ratings.png')%>';
-      var imageUrlPrivate = '<%= image_path('icons/120905-ratingsx24-private-RYG.png')%>';
-      var imageUrlPreschool = '<%= image_path('icons/130919-24x24_search.png')%>';
-      var imageUrlOffPage = '<%= image_path('icons/140710-10x10_dots_icons.png')%>';
+      var imageUrlPublic = gon.sprite_files['imageUrlPublic'];
+      var imageUrlPrivate = gon.sprite_files['imageUrlPrivate'];
+      var imageUrlPreschool = gon.sprite_files['imageUrlPreschool'];
+      var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
       var optionalLat = optionalLat || 37.807778;
       var optionalLon = optionalLon || -122.265149;
@@ -51,7 +34,7 @@
               streetViewControl: true,
               panControl: true,
               scrollwheel: false,
-              draggable: false,
+//              draggable: false,
               zoom: 12
           };
           var map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
@@ -75,8 +58,8 @@
                   position: position,
                   map: map
               });
-
               if (point.on_page){
+
                   imageSize = size_24;
                   imageAnchor = point_12_12; // center of image
                   if (point.preschool) {
