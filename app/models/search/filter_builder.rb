@@ -1,3 +1,4 @@
+#ToDo Tests Needed
 class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
@@ -126,37 +127,37 @@ class FilterBuilder
         }
       },
       class_offerings: {
-        name: 'Class Offerings (Not Ready)',
+        name: 'Class Offerings',
         display_type: :title,
         filters: {
           display_type: :blank_container,
           filters: {
             ap: {name: 'AP Courses', display_type: :basic_checkbox, category: :class_offerings, key: :ap},
-            performance_arts: {name: 'Performance Art', display_type: :basic_checkbox, category: :performance_arts, key: :performance_arts},
-            visual_media_arts: {name: 'Career & Tech', display_type: :basic_checkbox, category: :visual_media_arts, key: :visual_media_arts},
+            performance_arts: {name: 'Performance Art', display_type: :basic_checkbox, category: :class_offerings, key: :performance_arts},
+            visual_media_arts: {name: 'Career & Tech', display_type: :basic_checkbox, category: :class_offerings, key: :visual_media_arts},
             music: {name: 'Montessori', display_type: :basic_checkbox, category: :class_offerings, key: :music},
-            language: {
+            world_languages: {
               name: 'World Languages (dropdown)',
-              key: :language,
+              key: :world_languages,
               display_type: :collapsible_box,
               filters: {
-                french: {name: 'French', display_type: :basic_checkbox, category: :language, key: :french},
-                german: {name: 'German', display_type: :basic_checkbox, category: :language, key: :german},
-                spanish: {name: 'Spanish', display_type: :basic_checkbox, category: :language, key: :spanish},
-                mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :language, key: :mandarin}
+                french: {name: 'French', display_type: :basic_checkbox, category: :class_offerings, key: :french},
+                german: {name: 'German', display_type: :basic_checkbox, category: :class_offerings, key: :german},
+                spanish: {name: 'Spanish', display_type: :basic_checkbox, category: :class_offerings, key: :spanish},
+                mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :class_offerings, key: :mandarin}
               }
             }
           }
         }
       },
       school_focus: {
-        name: 'School Focus (Not Ready)',
+        name: 'School Focus',
         display_type: :title,
         filters: {
           display_type: :blank_container,
           filters: {
             arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
-            language: {name: 'World Language Immersion', display_type: :basic_checkbox, category: :school_focus, key: :language},
+            language_immersion: {name: 'World Language Immersion', display_type: :basic_checkbox, category: :school_focus, key: :language_immersion},
             career_tech: {name: 'Career & Tech', display_type: :basic_checkbox, category: :school_focus, key: :career_tech},
             montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :school_focus, key: :montessori},
             ib: {name: 'International Baccalaureate', display_type: :basic_checkbox, category: :school_focus, key: :ib},

@@ -1,3 +1,4 @@
+#ToDo Tests Needed
 class Filter
 
   attr_accessor :name, :key, :display_type, :filters, :sort_order, :category

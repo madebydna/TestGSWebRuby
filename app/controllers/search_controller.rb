@@ -6,7 +6,7 @@ class SearchController < ApplicationController
 
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
   NUM_NEARBY_CITIES = 5
