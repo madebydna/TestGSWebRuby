@@ -157,7 +157,17 @@ class FilterBuilder
           display_type: :blank_container,
           filters: {
             arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
-            language_immersion: {name: 'World Language Immersion', display_type: :basic_checkbox, category: :school_focus, key: :language_immersion},
+            language_immersion: {
+              name: 'World Language Immersion (dropdown)',
+              key: :world_language_immersion,
+              display_type: :collapsible_box,
+              filters: {
+                french: {name: 'French', display_type: :basic_checkbox, category: :school_focus, key: :french},
+                german: {name: 'German', display_type: :basic_checkbox, category: :school_focus, key: :german},
+                spanish: {name: 'Spanish', display_type: :basic_checkbox, category: :school_focus, key: :spanish},
+                mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :school_focus, key: :mandarin}
+              }
+            },
             career_tech: {name: 'Career & Tech', display_type: :basic_checkbox, category: :school_focus, key: :career_tech},
             montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :school_focus, key: :montessori},
             ib: {name: 'International Baccalaureate', display_type: :basic_checkbox, category: :school_focus, key: :ib},

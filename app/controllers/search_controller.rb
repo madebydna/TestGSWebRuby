@@ -382,6 +382,7 @@ class SearchController < ApplicationController
   def calculate_fit_score(results, params_hash)
     params = params_hash.select do |key|
       SOFT_FILTER_KEYS.include? key
+      params_hash[key].present?
     end
     results.each do |result|
       result.calculate_fit_score(params)
