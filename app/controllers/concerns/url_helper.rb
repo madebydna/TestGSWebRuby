@@ -131,6 +131,24 @@ module UrlHelper
     end
   end
 
+  def email_verification_url(user)
+    tracking_code = 'eml_join_verify'
+
+    verification_link_params = {}
+    post_registration_redirect = Addressable::URI.parse(
+      post_registration_confirmation_url
+    )
+    post_registration_redirect.query_values ||= { redirect: stored_location }
+    hash, date = user.email_verification_token
+    verification_link_params.merge!(
+      id: hash,
+      date: date,
+      redirect: post_registration_redirect.to_s,
+      s_cid: tracking_code
+    )
+    path = verify_email_url(verification_link_params)
+  end
+
   #
   # Adds a hash of query params to a given path or URL.
   # @param  s [String] a full URL or URL path

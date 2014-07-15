@@ -16,8 +16,8 @@ shared_context 'user registers a new account' do
 end
 
 shared_context 'user clicks link in the email verification email' do
-  let(:verification_email) { ActionMailer::Base.deliveries.last }
-  let(:verification_link) { verification_email.body.match(/href=\"(.+)\"/)[1] }
+  let(:verification_email) { ExactTarget.last_delivery_args }
+  let(:verification_link) { verification_email[:attributes][:VERIFICATION_LINK].match(/(http.+)(\">.+)/)[1] }
   let(:user) { User.with_email verification_email.recipient }
   before do
     visit verification_link
