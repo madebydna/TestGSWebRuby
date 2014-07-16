@@ -8,9 +8,7 @@
             points.push(point);
         });
 
-      var imageUrlPublic = gon.sprite_files['imageUrlPublic'];
-      var imageUrlPrivate = gon.sprite_files['imageUrlPrivate'];
-      var imageUrlPreschool = gon.sprite_files['imageUrlPreschool'];
+      var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
       var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
       var optionalLat = optionalLat || 37.807778;
@@ -44,9 +42,9 @@
           var imageSize;
           var imageAnchor;
           var pixelOffset;
-          var size_24 = new google.maps.Size(24, 24);
+          var size_29 = new google.maps.Size(29, 40);
           var size_10 = new google.maps.Size(10, 10);
-          var point_12_12 = new google.maps.Point(12, 12);
+          var point_12_20 = new google.maps.Point(12, 20);
           var point_5_5 = new google.maps.Point(5, 5);
           var infoWindow = new google.maps.InfoWindow({});
 
@@ -60,17 +58,17 @@
               });
               if (point.on_page){
 
-                  imageSize = size_24;
-                  imageAnchor = point_12_12; // center of image
+                  imageSize = size_29;
+                  imageAnchor = point_12_20; // center of image
                   if (point.preschool) {
-                      pixelOffset = 168;
-                      imageUrl = imageUrlPreschool;
+                      pixelOffset = 318;
+                      imageUrl = imageUrlOnPage;
                   } else {
-                      pixelOffset = 240;// default to NR
+                      pixelOffset = 290;// default to NR
                       if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                          pixelOffset = (point.gsRating - 1) * 24;
+                          pixelOffset = 290 - (point.gsRating * 29);
                       }
-                      imageUrl = (point.schoolType == 'private' ? imageUrlPrivate : imageUrlPublic);
+                      imageUrl = imageUrlOnPage;
                   }
               } else {
                   imageUrl = imageUrlOffPage;

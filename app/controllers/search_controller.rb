@@ -393,10 +393,8 @@ class SearchController < ApplicationController
 
   def assign_sprite_files_though_gon
     sprite_files = {}
-    sprite_files['imageUrlPublic'] = view_context.image_path('icons/140106-24x24_ratings.png')
-    sprite_files['imageUrlPrivate'] = view_context.image_path('icons/120905-ratingsx24-private-RYG.png')
-    sprite_files['imageUrlPreschool'] = view_context.image_path('icons/130919-24x24_search.png')
     sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
+    sprite_files['imageUrlOnPage'] = view_context.image_path('icons/143007-29x40_pins.png')
 
     gon.sprite_files = sprite_files
 
