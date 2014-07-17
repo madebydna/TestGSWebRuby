@@ -48,7 +48,6 @@ GS.search.results = GS.search.results || (function() {
 
     return {
         init:init,
-        pagination: pagination,
         sortBy: sortBy,
         keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen
     };
