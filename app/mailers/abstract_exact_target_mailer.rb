@@ -11,13 +11,17 @@ class AbstractExactTargetMailer
   end
 
   def self.deliver(recipient, exact_target_email_attributes)
-    exact_target.send_triggered_email(
-      exact_target_email_key,
-      recipient,
-      exact_target_email_attributes,
-      from,
-      priority
-    )
+    begin
+      exact_target.send_triggered_email(
+        exact_target_email_key,
+        recipient,
+        exact_target_email_attributes,
+        from,
+        priority
+      )
+    rescue => e
+      Rails.logger.error "Error when triggering ExactTarget email send: #{e}"
+    end
   end
 
 end
