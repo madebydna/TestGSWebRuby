@@ -136,19 +136,23 @@
       <h4 class="tac mbl">Do you need a school that offers child care...</h4>
       <div class="row mtl ma">
         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-3 col-md-3 col-sm-3 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px; font-size: 14px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm"></span>Before school
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="before"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Before school
           </button>
-          <input type="hidden" name="before_school" value="0">
+          <input type="hidden" name="beforeAfterCare[]" value="" class="js-gs-checkbox-value">
 
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">After school</span>
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="after"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>After school
           </button>
-          <input type="hidden" name="after_school" value="0">
+          <input type="hidden" name="beforeAfterCare[]" value="" class="js-gs-checkbox-value">
         </div>
       </div>
 
@@ -160,9 +164,17 @@
       <div class="row mtl">
         <div class="tac col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="btn-group">
-            <button type="button" class="btn btn-default">No Dress Code</button>
-            <button type="button" class="btn btn-default">Dress Code/Uniform</button>
-            <button type="button" class="btn btn-default">No preference</button>
+            <button type="button"
+                    class="btn btn-default js-gs-radio"
+                    data-gs-radio="val1">
+              No Dress Code</button>
+            <button type="button"
+                    class="btn btn-default js-gs-radio"
+                    data-gs-radio="val2">Dress Code/Uniform</button>
+            <button type="button"
+                    class="btn btn-default js-gs-radio"
+                    data-gs-radio="val3">No preference</button>
+            <input type="hidden" name="dresscode" value="" class="js-gs-radio-value">
           </div>
 
         </div>

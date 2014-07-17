@@ -1,17 +1,27 @@
-GS.search = GS.search || {};
+GS.guidedsearch = GS.guidedsearch || {};
 
 $(function() {
+    $('.js-gs-radio').on('click',function(){
+        var self = $(this);
+        var hidden_field = self.siblings(".js-gs-radio-value");
+        var gs_radio = self.data('gs-radio');
+        hidden_field.val(gs_radio);
+        self.siblings().removeClass('active');
+        self.addClass('active');
+
+    });
+
     $('.js-gs-checkbox').on('click',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
-        var siblings = self.siblings(".js-gs-checkbox-value");
+        var hidden_field = self.siblings(".js-gs-checkbox-value");
         var gs_checkBox= self.data('gs-checkbox');
-        if (siblings.val()== '') {
+        if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            siblings.val(gs_checkBox);
+            hidden_field.val(gs_checkBox);
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
-            siblings.val('');
+            hidden_field.val('');
         }
 
     });
