@@ -7,6 +7,8 @@
   <%= render 'search/google_maps', schools: @map_schools %>
 </div>
 
-<%= render :partial => 'search/search_results', schools: @schools%>
+<%= render partial: 'search/search_results', schools: @schools%>
+<%= render partial: 'pagination_toolbar' %>
+
 <%= render 'shared/home_footer'%>
 

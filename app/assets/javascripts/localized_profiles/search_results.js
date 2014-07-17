@@ -15,11 +15,6 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
-    var pagination = function(query) {
-        //TODO handle ajax later
-        GS.uri.Uri.reloadPageWithNewQuery(query);
-    };
-
     var sortBy = function(sortType, query) {
         var previousSort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
         query = GS.uri.Uri.removeFromQueryString(query, 'sort');

@@ -111,7 +111,7 @@ class SearchController < ApplicationController
 
     @results_offset = get_results_offset
     @page_size = get_page_size
-    @page_number = get_page_number(@page_size, @results_offset) # for use in view
+    @page_number = get_page_number # for use in view
 
     ad_setTargeting_through_gon
 
@@ -165,9 +165,7 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-
-    @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-    @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+    @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
   def suggest_school_by_name
@@ -296,21 +294,14 @@ class SearchController < ApplicationController
     params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array)
   end
 
-  def get_page_number(page_size, results_offset)
-    page_size = 1 if page_size < 1
-    results_offset = 0 if results_offset < 0
-
-    if results_offset > 0
-      (results_offset / page_size).ceil
-    else
-      1
-    end
+  def get_page_number
+    page_number = (params[:page] || 1).to_i
+    page_number < 1 ? 1 : page_number
   end
 
   def get_results_offset
-    results_offset = (params[:start])?(params[:start].to_i):0
-    results_offset = 0 if results_offset.to_i < 0
-    results_offset
+    result_offset = (params[:page].to_i - 1) * get_page_size
+    result_offset < 0 ? 0 : result_offset
   end
 
   def get_page_size
