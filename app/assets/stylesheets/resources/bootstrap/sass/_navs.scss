@@ -255,12 +255,12 @@
 
 // Make dropdown carets use link color in navs
 .nav .caret {
-  border-top-color: $brand-secondary;
-  border-bottom-color: $brand-secondary;
+  border-top-color: $brand-primary;
+  border-bottom-color: $brand-primary;
 }
 .nav a:hover .caret {
-  border-top-color: #FFFFFF;
-  border-bottom-color: #FFFFFF;
+  border-top-color: $brand-primary-darker;
+  border-bottom-color: $brand-primary-darker;
 }
 
 // Specific dropdowns

@@ -381,9 +381,9 @@
       color: $navbar-default-link-color;
 
       &.brand-secondary { //GS
-        color: $brand-secondary;
+        color: $brand-primary;
         &:hover {
-          color: #FFFFFF;
+          color: #000000;
         }
       }
 
@@ -445,10 +445,10 @@
       &:hover,
       &:focus {
         background-color: $navbar-default-link-active-bg;
-        color: #FFFFFF;//$navbar-default-link-active-color;
+        color: #000000;//$navbar-default-link-active-color;
         .caret {
-          border-top-color: $brand-secondary;//$navbar-default-link-active-color;
-          border-bottom-color: $brand-secondary;//$navbar-default-link-active-color;
+          border-top-color: $brand-primary-dark;//$navbar-default-link-active-color;
+          border-bottom-color: $brand-primary-dark;//$navbar-default-link-active-color;
         }
       }
     }
