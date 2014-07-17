@@ -21,15 +21,15 @@ $(function() {
         changeTabs(previous_tab);
 
     });
-    $('.js-guided-search-submit').on('click',function(){
-        var current_tab= $(this).data('current-tab');
-        $(".tab_"+current_tab).find(id_tab_number).addClass(displayNone);
-        $(".tab_"+current_tab).find(id_tab_check).removeClass(displayNone);
-        $(".tab_"+current_tab).removeClass(active);
-
-
-
-    });
+//    $('.js-guided-search-submit').on('click',function(){
+//        var current_tab= $(this).data('current-tab');
+//        $(".tab_"+current_tab).find(id_tab_number).addClass(displayNone);
+//        $(".tab_"+current_tab).find(id_tab_check).removeClass(displayNone);
+//        $(".tab_"+current_tab).removeClass(active);
+//
+//
+//
+//    });
 
  var changeTabs=function(tab){
      $(".tab_"+tab).siblings().removeClass(active);
