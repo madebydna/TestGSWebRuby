@@ -26,10 +26,10 @@ class Filter
   end
 
   def build_map(filter)
-    if [*filter][0].filters.nil?
+    if (filter = [*filter][0]).filters.nil?
       { filter.category => { filter.key => filter.name } }
     else
-      [*filter][0].filters.inject({}) do |hash, f|
+      filter.filters.inject({}) do |hash, f|
         build_map(f).inject({}) do |h, (k, v)|
           hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}); hash
         end

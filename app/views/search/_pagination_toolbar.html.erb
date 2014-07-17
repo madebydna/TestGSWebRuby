@@ -1,6 +1,9 @@
 <div class="limit-width-1200 full-width">
-    <div align='right' class="prl">
+  <div align='right' class="prl">
+    <% unless @total_results < 1 %>
       <span class="prm">Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>
-      <%= paginate @pagination, theme: 'guided_search_theme', params: @params_hash %> <!--view file located in /views/shared/kaminari/guided_search_theme -->
-    </div>
+    <% end %>
+    <%= paginate @pagination, theme: 'guided_search_theme', params: @params_hash %>
+    <% #view file located in /views/kaminari/guided_search_theme %>
+  </div>
 </div>
