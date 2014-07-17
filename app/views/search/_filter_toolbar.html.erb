@@ -1,3 +1,6 @@
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "google_maps/toggle_list_map_view" %>
+<% end %>
 <div class="limit-width-1200 full-width row ptm plm prm">
   <div class="col-xs-3 ptm">
     <div class="dropdown drowpdown-large">
@@ -32,18 +35,17 @@
   <div class="col-xs-2 ptm">??Guide Me??</div>
   <div class="col-xs-7 clearfix">
     <div class="fr">
-      <span id="js-search-list-view"><%=image_tag 'nav/hamburger.png'%> List</span> | <span id='js-search-map-view' class="iconx16 i-16-map-pin"></span>Map
+       <span class="js-search-list-view">
+      <span  class="iconx24-stars i-24-grey-star"></span>
+      List
+      </span>
+      |
+      <span class="js-search-map-view">
+      <span  class="iconx24-stars i-24-grey-star"></span>
+        Map
+      </span>
     </div>
   </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready( function(){
-      $('#js-search-list-view').on("click", function(){
-        $('#js-map-canvas').hide();
-          $('#js-search-map-view').on("click", function(){
-              $('#js-map-canvas').show();
-          });
-      });
-  });
-</script>
+
