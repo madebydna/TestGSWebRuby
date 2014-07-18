@@ -14,7 +14,8 @@ class SchoolSearchResult
     },
     school_focus: {
       arts: :academic_focus,
-      career_tech: :instructional_model,
+      science_tech: :instructional_model,
+      career_tech: :academic_focus,
       french: :immersion_language,
       german: :immersion_language,
       spanish: :immersion_language,
@@ -46,7 +47,8 @@ class SchoolSearchResult
     },
     school_focus: {
       arts: [/^all_arts$/, /^visual_arts$/, /^performing_arts$/, /^music$/],
-      career_tech: /^STEM$/,
+      science_tech: /^STEM$/,
+      career_tech: /^vocational$/,
       french: /^french$/,
       german: /^german$/,
       spanish: /^spanish$/,

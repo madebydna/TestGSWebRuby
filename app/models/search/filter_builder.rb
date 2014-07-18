@@ -145,6 +145,7 @@ class FilterBuilder
               mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :school_focus, key: :mandarin}
             }
           },
+          science_tech: {name: 'Science/Tech (STEM)', display_type: :basic_checkbox, category: :school_focus, key: :science_tech},
           career_tech: {name: 'Career & Tech', display_type: :basic_checkbox, category: :school_focus, key: :career_tech},
           montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :school_focus, key: :montessori},
           ib: {name: 'International Baccalaureate', display_type: :basic_checkbox, category: :school_focus, key: :ib},

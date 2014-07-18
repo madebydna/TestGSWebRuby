@@ -22,11 +22,11 @@ class Filter
         football: 'Football'
       }
     }
-    build_map(filters).each {|k, v| v.merge!(name: name)} unless filters.nil?
+    build_map(self).each {|k, v| v.merge!(name: name)} unless filters.nil?
   end
 
   def build_map(filter)
-    if (filter = [*filter][0]).filters.nil?
+    if filter.filters.nil?
       { filter.category => { filter.key => filter.name } }
     else
       filter.filters.inject({}) do |hash, f|
