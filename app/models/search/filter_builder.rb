@@ -113,9 +113,9 @@ class FilterBuilder
         display_type: :title,
         filters: {
           ap: {name: 'AP Courses', display_type: :basic_checkbox, category: :class_offerings, key: :ap},
-          performance_arts: {name: 'Performance Art', display_type: :basic_checkbox, category: :class_offerings, key: :performance_arts},
-          visual_media_arts: {name: 'Career & Tech', display_type: :basic_checkbox, category: :class_offerings, key: :visual_media_arts},
-          music: {name: 'Montessori', display_type: :basic_checkbox, category: :class_offerings, key: :music},
+          performance_arts: {name: 'Performance Arts', display_type: :basic_checkbox, category: :class_offerings, key: :performance_arts},
+          visual_media_arts: {name: 'Visual Media Arts', display_type: :basic_checkbox, category: :class_offerings, key: :visual_media_arts},
+          music: {name: 'Music', display_type: :basic_checkbox, category: :class_offerings, key: :music},
           world_languages: {
             name: 'World Languages (dropdown)',
             key: :world_languages,
