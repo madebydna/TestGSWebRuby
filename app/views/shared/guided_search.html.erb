@@ -1,5 +1,13 @@
-   <%= render 'nav/topnav', hub_params: @hub_params %>
-   <%= render 'shared/guided_search/helpme_module' %>
+<% content_for :javascript_includes do %>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
+<% end %>
+
+
+
+<%= render 'nav/topnav', hub_params: @hub_params %>
+
+
+<%= render 'shared/guided_search/helpme_module' %>
 <div class="limit-width-940 border-all-light-grey">
    <%= render 'shared/guided_search/steps_navigation' %>
   <form role="form" name="guidedSearch" action="/search/search.page"
@@ -95,7 +103,7 @@
                   style="width:100%;"
                   type="button"
           >
-            <span class="vam iconx24-icons i-24-checkmark-on mrl js-icon"></span>District Provided
+            <span class="vam iconx24-icons i-24-checkmark-off mrl js-icon"></span>District Provided
           </button>
           <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
         </div>

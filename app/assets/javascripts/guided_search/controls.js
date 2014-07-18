@@ -16,7 +16,7 @@ $(function() {
             }else {
                 $(this).parent().removeClass('has-error');
                 $(this).siblings(".js-error-message").addClass(displayNone);
-                hasError = false;
+//                hasError = false;
 
             }
         });
