@@ -1,12 +1,29 @@
 GS.guidedSearch = GS.guidedSearch || {};
 
 $(function() {
-    var displayNone='dn';
-    var active='active';
-    var id_tab_number='.js-tab-number';
-    var id_tab_check='.js-tab-check';
+    var displayNone = 'dn';
+    var active = 'active';
+    var id_tab_number = '.js-tab-number';
+    var id_tab_check = '.js-tab-check';
 
     $('.js-guided-search-next').on('click',function(){
+        var hasError = false;
+        $(".js-error-validation").each(function() {
+            if ($(this).val() === '') {
+                $(this).parent().addClass('has-error');
+                $(this).siblings(".js-error-message").removeClass(displayNone);
+                hasError = true;
+            }else {
+                $(this).parent().removeClass('has-error');
+                $(this).siblings(".js-error-message").addClass(displayNone);
+                hasError = false;
+
+            }
+        });
+        if (hasError === true){
+            return false ;
+        }
+
         var next_tab= $(this).data('next-tab');
         $(".tab_"+next_tab).prev().find(id_tab_number).addClass(displayNone);
         $(".tab_"+next_tab).prev().find(id_tab_check).removeClass(displayNone);

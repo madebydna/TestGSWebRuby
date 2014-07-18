@@ -17,7 +17,7 @@
       <div class="mtl pll font-size-large"><span class="brand-primary">3.</span> Save your favorites so you can visit, apply and get updates</div>
       <div class="row mtl">
          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
-           <label>Grade</label>
+           <label class="control-label">Grade</label>
            <!--<div class="dropdown">-->
            <!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">-->
            <!--<span class="caret"></span>-->
@@ -30,9 +30,7 @@
            <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>-->
            <!--</ul>-->
            <!--</div>-->
-           <select  class="form-control"   data-parsley-required="true"
-                    data-parsley-error-container=".js-grade-selection-errors"
-                    data-parsley-error-message="Please select a grade"	name="grade">
+           <select  class="form-control js-error-validation" name="grade">
              <option value="" >--Grade--</option>
              <option value="p">Pre-School</option>
              <option value="k">Kindergarten</option>
@@ -50,12 +48,14 @@
              <option value="12">12th Grade</option>
 
            </select>
-           <p class="phl js-grade-selection-errors help-block"></p>
+           <p class="js-error-message help-block dn">Please select a grade</p>
 
          </div>
-         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
-           <label>Location</label>
-           <input type="text" class="form-control">
+         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
+           <label class="control-label">Location</label>
+           <input type="text" class="form-control js-error-validation" name="location">
+           <p class="js-error-message help-block dn">Please enter a location</p>
+
          </div>
          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
            <label>Distance</label>
@@ -166,15 +166,18 @@
           <div class="btn-group">
             <button type="button"
                     class="btn btn-default js-gs-radio"
-                    data-gs-radio="val1">
-              No Dress Code</button>
+                    data-gs-radio="no_dress_code">
+              No Dress Code
+            </button>
             <button type="button"
                     class="btn btn-default js-gs-radio"
-                    data-gs-radio="val2">Dress Code/Uniform</button>
+                    data-gs-radio="uniform&dress_code[]=dress_code">
+              Dress Code/Uniform
+            </button>
             <button type="button"
-                    class="btn btn-default js-gs-radio"
-                    data-gs-radio="val3">No preference</button>
-            <input type="hidden" name="dresscode" value="" class="js-gs-radio-value">
+                    class="btn btn-default js-gs-radio active">
+                  No preference</button>
+            <input type="hidden" name="dress_code[]" value="" class="js-gs-radio-value">
           </div>
 
         </div>
