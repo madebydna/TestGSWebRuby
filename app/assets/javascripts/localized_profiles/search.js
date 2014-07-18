@@ -308,12 +308,17 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         $('#js-prototypeSearch').keyup(function() {
             var $input = $(this).val();
             if (/\d{5}/.test($input)) {
+                if ($(this).data().ttTypeahead !=undefined)
+                {
                 $(this).data().ttTypeahead.minLength = 100;
                 $(this).typeahead('close');
+                }
                 GS.search.schoolSearchForm.searchType = "byLocation";
             } else {
                 GS.search.schoolSearchForm.searchType = "byName";
-                $(this).data().ttTypeahead.minLength = 1;
+                if ( $(this).data().ttTypeahead !=undefined) {
+                    $(this).data().ttTypeahead.minLength = 1;
+                }
             }
         })
     };

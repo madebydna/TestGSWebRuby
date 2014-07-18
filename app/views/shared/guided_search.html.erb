@@ -10,7 +10,7 @@
 <%= render 'shared/guided_search/helpme_module' %>
 <div class="limit-width-940 border-all-light-grey">
    <%= render 'shared/guided_search/steps_navigation' %>
-  <form role="form" name="guidedSearch" action="/search/search.page"
+  <form role="form" name="guidedSearch" action="/search/search.page" class="js-prototypeSearchForm"
         method="get" >
 
 
@@ -61,7 +61,7 @@
          </div>
          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
            <label class="control-label">Location</label>
-           <input type="text" class="form-control js-error-validation" name="location">
+           <input type="text" class="form-control js-error-validation js-noAuto" name="location"  id="js-prototypeSearch">
            <p class="js-error-message help-block dn">Please enter a location</p>
 
          </div>
