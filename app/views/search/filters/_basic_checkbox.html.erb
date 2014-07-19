@@ -1,5 +1,7 @@
 <label>
-  <%= check_box_tag "#{filter.category.to_s}[]", filter.key.to_s,
-    (@params_hash.include?(filter.category.to_s) && @params_hash[filter.category.to_s].include?(filter.key.to_s) ? true : false)%>
+  <%= check_box_tag "#{filter.category.to_s}[]",
+        filter.key.to_s,
+        (@params_hash.include?(filter.category.to_s) && @params_hash[filter.category.to_s].include?(filter.key.to_s) ? true : false),
+        class: "#{filter.category.to_s}_#{filter.key.to_s}" %>
   <%=filter.name%>
 </label><br>

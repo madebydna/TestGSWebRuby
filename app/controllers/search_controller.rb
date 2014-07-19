@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   include ApplicationHelper
   include ActionView::Helpers::TagHelper
 
+  #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
 
@@ -435,18 +436,21 @@ class SearchController < ApplicationController
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map
   def get_search_bar_display_map
     {
-      :distance => {
-        1 => '1 Mile',
-        2 => '2 Miles',
-        3 => '3 Miles',
-        4 => '4 Miles',
-        5 => '5 Miles',
-        10 => '10 Miles',
-        15 => '15 Miles',
-        20 => '20 Miles',
-        25 => '25 Miles',
-        30 => '30 Miles',
-        60 => '60 Miles'
+      grades: {
+        :p => 'Pre-School',
+        :k => 'Kindergarten',
+        1 => '1st Grade',
+        2 => '2nd Grade',
+        3 => '3rd Grade',
+        4 => '4th Grade',
+        5 => '5th Grade',
+        6 => '6th Grade',
+        7 => '7th Grade',
+        8 => '8th Grade',
+        9 => '9th Grade',
+        10 => '10th Grade',
+        11 => '11th Grade',
+        12 => '12th Grade'
       }
     }
   end

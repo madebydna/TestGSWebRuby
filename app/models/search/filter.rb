@@ -22,7 +22,7 @@ class Filter
         football: 'Football'
       }
     }
-    build_map(self).each {|k, v| v.merge!(name: name)} unless filters.nil?
+    build_map(self) unless filters.nil?
   end
 
   def build_map(filter)
@@ -30,9 +30,10 @@ class Filter
       { filter.category => { filter.key => filter.name } }
     else
       filter.filters.inject({}) do |hash, f|
-        build_map(f).inject({}) do |h, (k, v)|
-          hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}); hash
+        map = build_map(f).inject({}) do |h, (k, v)|
+          hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}) ; hash
         end
+        map[f.category].merge!({name: f.name}) if f.display_type == :title ; map
       end
     end
   end

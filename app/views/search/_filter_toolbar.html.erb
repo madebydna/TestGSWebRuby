@@ -5,27 +5,27 @@
   <div class="col-xs-3 ptm">
     <div class="dropdown drowpdown-large">
       <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
-      <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:1000px;"> <!--ToDo set to 768px and use three columns-->
-	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
 
-           <%lam = lambda do |filters| %>
-             <% [*filters].each do |filter| %>
-               <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
-                 <% lam.call(filter.filters) %>
-               <% end %>
-             <% end %>
-           <% end %>
-           <% lam.call(@filters) %>
 
-          <!--% @filter_display_map.each do |filter_category, filters| %>-->
-            <!--%= render 'search/filter', category: filter_category, filters: filters %>-->
-          <!--% end %>-->
-          <!--This Currently sets state and city even on by location search. We may want to remove this behavior.
-          For now, since java looks for the state delaware in the parameter in order to pass the request to ruby
-          setting the state on every search type is necessary.-->
+      <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:256px;">
+        <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
+
+          <%lam = lambda do |filters| %>
+              <% [*filters].each do |filter| %>
+                  <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
+                      <% lam.call(filter.filters) %>
+                  <% end %>
+              <% end %>
+          <% end %>
+          <% lam.call(@filters) %>
+
           <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
           <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
-          <div class="col-xs-12">
+
+          <div class="col-xs-12 ptl">
+            <label>
+              <a type="checkbox" id="advancedFilters" class="accordion-toggle pll ">Advanced Filters</a>
+            </label>
             <button class="btn btn-default pull-right mrm mbm" type='submit'>Submit</button>
           </div>
         </form>

@@ -138,7 +138,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
                     data['totalResults'] = geocodeResult['totalResults'];
                     data['locationSearchString'] = searchQuery;
-                    data['distance'] = $('#js-prototypeSearchDistanceFilter').val() || 5;
+                    data['distance'] = 5;
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
                     $('#js-prototypeSearchGradeLevelFilter').val() == undefined || (data['grades'] = $('#js-prototypeSearchGradeLevelFilter').val());

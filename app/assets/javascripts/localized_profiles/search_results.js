@@ -15,6 +15,36 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
+    var advancedFiltersMenuOpen = false;
+
+    var toggleAdvancedFiltersMenuHandler = function() {
+        $("#advancedFilters").on('click', function () {
+            if (advancedFiltersMenuOpen) {
+                advancedFiltersMenuOpen = false;
+                closeAdvancedFiltersMenu();
+            } else {
+                advancedFiltersMenuOpen = true;
+                openAdvancedFiltersMenu();
+            }
+        });
+    };
+
+//    ToDo Refactor to be able to handle multiple col sizes dynamically
+//    ToDo Add Detection for viewport size
+    var openAdvancedFiltersMenu = function() {
+        $('#searchResultsFilterMenu').css('width', '768px');
+        $('.primaryFiltersColumn').removeClass('col-md-12');
+        $('.primaryFiltersColumn').addClass('col-md-4');
+        $('.secondaryFiltersColumn').removeClass('dn');
+    };
+
+    var closeAdvancedFiltersMenu = function() {
+        $('#searchResultsFilterMenu').css('width', '256px');
+        $('.primaryFiltersColumn').removeClass('col-md-4');
+        $('.primaryFiltersColumn').addClass('col-md-12');
+        $('.secondaryFiltersColumn').addClass('dn');
+    };
+
     var sortBy = function(sortType, query) {
         var previousSort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
         query = GS.uri.Uri.removeFromQueryString(query, 'sort');
@@ -49,11 +79,14 @@ GS.search.results = GS.search.results || (function() {
     return {
         init:init,
         sortBy: sortBy,
-        keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen
+        keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen,
+        advancedFiltersMenuOpen: advancedFiltersMenuOpen,
+        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler
     };
 })();
 
 $(document).ready(function() {
     GS.search.results.init();
     GS.search.results.keepSearchResultsFilterMenuOpen();
+    GS.search.results.toggleAdvancedFiltersMenuHandler();
 });

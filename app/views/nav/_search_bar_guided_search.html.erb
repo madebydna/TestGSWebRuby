@@ -14,12 +14,11 @@
                 placeholder="ex. 19703 or Dover High School">
         </div>
 
-        <!--Todo Refactor Distance and Grade together-->
         <div class='col-xs-12 col-sm-2 col-md-2 col-lg-2 pam'>
-          <select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">
-            <option value=""selected>--Distance--</option>
-            <% @search_bar_display_map[:distance].each do |distance, display_name| %>
-                <option value=<%=distance.to_s%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance.to_s%> selected<%end%>><%=display_name%></option>
+          <select class="form-control input-lg" id="js-prototypeSearchGradeLevelFilter" name="grades">
+            <option value=""selected>--Grade Level--</option>
+            <% @search_bar_display_map[:grades].each do |grades, display_name| %>
+                <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
           </select>
         </div>
