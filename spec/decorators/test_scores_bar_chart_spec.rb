@@ -12,18 +12,18 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
         {
           2013 => {
             'score' => 60,
-            'school_number_tested' => 123,
-            'state_avg' =>  77
+            'number_students_tested' => 123,
+            'state_average' =>  77
           },
           2012 => {
             'score' =>  81,
-            'school_number_tested' =>  145,
-            'state_avg' =>  79
+            'number_students_tested' =>  145,
+            'state_average' =>  79
           },
           2011 => {
             'score' =>  63,
-            'school_number_tested' =>  120,
-            'state_avg' =>  65
+            'number_students_tested' =>  120,
+            'state_average' =>  65
           }
         }
       end
@@ -59,24 +59,24 @@ describe BarCharts::TestScoresBarChart, type: 'model' do
           {
             2013 => {
               'score' => 60,
-              'school_number_tested' => 123,
-              'state_avg' =>  77,
+              'number_students_tested' => 123,
+              'state_average' =>  77,
               'proficient_score' => 61,
-              'proficient_school_number_tested' => 124,
-              'proficient_state_avg' => 78,
+              'proficient_number_students_tested' => 124,
+              'proficient_state_average' => 78,
               'advanced_score' => 1,
-              'advanced_school_number_tested' => 1,
-              'advanced_state_avg' => 1
+              'advanced_number_students_tested' => 1,
+              'advanced_state_average' => 1
             },
             2012 => {
               'score' =>  81,
-              'school_number_tested' =>  145,
-              'state_avg' =>  79
+              'number_students_tested' =>  145,
+              'state_average' =>  79
             },
             2011 => {
               'score' =>  63,
-              'school_number_tested' =>  120,
-              'state_avg' =>  65
+              'number_students_tested' =>  120,
+              'state_average' =>  65
             }
           }
         end

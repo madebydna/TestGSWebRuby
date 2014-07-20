@@ -15,8 +15,17 @@ describe SchoolCache do
   describe '#ratings' do
 
     context 'when a school has ratings data' do
-      let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,
-                                                display_target: 'ratings',school_id: 1, value_float: 2,value_text: '3')}
+      let!(:test_data_set) do
+        FactoryGirl.create(
+          :test_data_set,
+          :with_school_values,
+          data_type_id: 1,
+          display_target: 'ratings',
+          school_id: 1,
+          value_float: 2,
+          value_text: '3'
+        )
+      end
 
       it 'should insert ratings for the school' do
         system("rails runner script/populate_school_cache_table.rb ratings ca 1")
@@ -57,23 +66,7 @@ describe SchoolCache do
         expect(cache_row).to be_empty
       end
     end
-
-    # context 'when a school has NULL school values' do
-    #
-    #   let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,
-    #                                             display_target: 'feed,ratings',school_id: 1,value_float: nil,value_text: nil)}
-    #
-    #   it 'should not insert ratings for the school' do
-    #     system("rails runner script/populate_school_cache_table.rb ratings ca 1")
-    #
-    #     cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
-    #
-    #     expect(cache_row).to be_empty
-    #   end
-    # end
-
   end
-
 
   describe '#test_scores' do
 
@@ -87,10 +80,22 @@ describe SchoolCache do
         clean_models TestProficiencyBand
       end
 
-      let!(:test_data_set) { FactoryGirl.create(:test_data_set, :with_school_values, data_type_id: 1,
-                                                display_target: 'desktop',school_id: 1,value_float: 2,
-                                                value_text: '3', number_tested: 300)}
-      let!(:test_data_type) { FactoryGirl.create(:test_data_type, id:1)}
+      let!(:test_data_set) do
+        FactoryGirl.create(
+          :test_data_set,
+          :with_school_values,
+          data_type_id: 1,
+          display_target: 'desktop',
+          school_id: 1,
+          value_float: 2,
+          value_text: '3',
+          number_tested: 300
+        )
+      end
+
+      let!(:test_data_type) do
+        FactoryGirl.create(:test_data_type, id: 1)
+      end
 
       it 'should insert test scores for the school' do
         system("rails runner script/populate_school_cache_table.rb test_scores ca 1")
@@ -100,12 +105,28 @@ describe SchoolCache do
         expect(cache_row).to_not be_empty
         expect(cache_row.size).to eq(1)
         test_scores = JSON.parse(cache_row[0].value)
-        expect(test_scores.size).to eq(2)
-        expect(test_scores['data_sets_and_values'][0]['data_type_id']).to eq(1)
-        expect(test_scores['data_sets_and_values'][0]['school_value_float']).to eq(2)
-        expect(test_scores['data_sets_and_values'][0]['school_value_text']).to eq('3')
-        expect(test_scores['data_sets_and_values'][0]['school_number_tested']).to eq(300)
-        expect(test_scores['data_types']['1']['test_label']).to eq('Awesome Test')
+        expect(test_scores.size).to eq(1)
+        expect(test_scores.keys.first).to eq('1')
+        expect(test_scores.seek(
+          '1',
+          'grades',
+          '14',
+          'level_code',
+          'e,m,h',
+          'All subjects',
+          '2013',
+          'score'
+        )).to eq('3')
+        expect(test_scores.seek(
+          '1',
+          'grades',
+          '14',
+          'level_code',
+          'e,m,h',
+          'All subjects',
+          '2013',
+          'number_students_tested'
+        )).to eq(300)
       end
 
       it 'should insert proficiency_band with the cached data' do
@@ -116,7 +137,18 @@ describe SchoolCache do
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
         test_scores = JSON.parse(cache_row[0].value)
-        expect(test_scores['data_sets_and_values'][0]['proficiency_band']).to eq 'a proficiency band'
+
+        test_scores.seek(
+          '1',
+          'grades',
+          '14',
+          'level_code',
+          'e,m,h',
+          'All subjects',
+          '2013'
+        ).keys.each do |key|
+          expect(key).to include 'a proficiency band'
+        end
       end
     end
   end

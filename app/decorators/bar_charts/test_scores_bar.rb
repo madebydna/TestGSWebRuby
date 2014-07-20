@@ -2,11 +2,11 @@ class BarCharts::TestScoresBar
   attr_accessor :test_scores_bar_hash
 
   def initialize(test_scores_bar_hash)
-    @test_scores_bar_hash = test_scores_bar_hash
+    @test_scores_bar_hash = test_scores_bar_hash.symbolize_keys
   end
 
   def array_for_bar
-    array = [test_scores_bar_hash['year'].to_s]
+    array = [test_scores_bar_hash[:year].to_s]
     array += array_for_single_bar
   end
 
@@ -25,14 +25,14 @@ class BarCharts::TestScoresBar
   end
 
   def array_for_single_bar
-    value = test_scores_bar_hash['score']
+    value = test_scores_bar_hash[:score]
     bar_value = self.bar_value(value)
     display_value = self.display_value(value)
 
     # Tool tips and annotation columns should be strings.
-    student_count = test_scores_bar_hash['school_number_tested']
-    student_proficiency = test_scores_bar_hash['score']
-    state_average = test_scores_bar_hash['state_avg']
+    student_count = test_scores_bar_hash[:number_students_tested]
+    student_proficiency = test_scores_bar_hash[:score]
+    state_average = test_scores_bar_hash[:state_average]
 
     # Tool tips and annotation columns should be strings.
     annotation = value.present? ? "#{display_value}%" : ''
@@ -54,10 +54,10 @@ class BarCharts::TestScoresBar
         tooltip << '<tr><td valign="top"><b>' + student_count.to_s + '</b></td><td>Students tested</td></tr>'
       end
       if student_proficiency.present?
-        tooltip << '<tr><td valign="top"><b>' +student_proficiency.to_s+'%</b></td><td>Students are proficient or better</td></tr>'
+        tooltip << "<tr><td valign=\"top\"><b>#{display_value(student_proficiency)}%</b></td><td>Students are proficient or better</td></tr>"
       end
       if state_average.present?
-        tooltip << '<tr><td valign="top"><b>' +state_average.to_s+'%</b></td><td>State average</td></tr>'
+        tooltip << "<tr><td valign=\"top\"><b>#{display_value(state_average)}%</b></td><td>State average</td></tr>"
       end
       tooltip << '</table>'
     end

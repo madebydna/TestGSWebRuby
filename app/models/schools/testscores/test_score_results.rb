@@ -4,111 +4,18 @@ class TestScoreResults
     cached_test_scores = SchoolCache.for_school('test_scores',school.id,school.state)
 
     begin
-      results = cached_test_scores.blank? ? {} : JSON.parse(cached_test_scores.value)
+      results = cached_test_scores.blank? ? {} : JSON.parse(cached_test_scores.value, symbolize_names: true)
     rescue JSON::ParserError => e
       results = {}
       Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +
                            "Exception message: #{e.message}"
     end
 
+    data = {}
     if results.present?
-      test_scores = build_test_scores_hash(results,school)
-      sort_test_scores(test_scores)
-    else
-      {}
+      data = sort_test_scores(results) rescue {}
     end
-  end
-
-  def build_test_scores_hash(cached_results, school)
-    #Hash to hold the results
-    test_scores = Hash.new
-
-    if cached_results.present?
-      data_sets_and_values = cached_results['data_sets_and_values']
-      data_type_descriptions = cached_results['data_types']
-
-
-      if data_sets_and_values.present?
-        data_sets_and_values.each do |result_hash|
-          #TODO get the subject from the school cache.
-
-          test_scores ||= {}
-          test_data_type_id = result_hash['data_type_id']
-          test_data_set_id = result_hash['data_set_id']
-          level_code = LevelCode.new(result_hash['level_code'])
-          subject = TestDataSet.lookup_subject[result_hash['subject_id']]
-          grade = Grade.from_string(result_hash['grade'])
-
-          #If the grade = all then get the grade from the level_code. Do not show the level if the school does not have it.
-          if !grade.name.nil? && grade.name == 'All'
-            level_code.levels = level_code.levels.select {|level| school.includes_level_code?(level.abbreviation) }
-            level_code.level_codes = level_code.level_codes.select {|level| school.includes_level_code?(level) }
-            if !level_code.level_codes.blank?
-              grade = Grade.from_level_code(level_code)
-            end
-          end
-
-          grade_label = get_grade_label(grade,level_code)
-          year = result_hash['year']
-          test_score = result_hash['school_value_text'].nil? ? (result_hash['school_value_float']) : result_hash['school_value_text']
-          test_score = test_score.round if(!test_score.nil? && test_score.is_a?(Float))
-          state_avg = result_hash['state_value_text'].nil? ? result_hash['state_value_float'] : result_hash['state_value_text']
-          state_avg = state_avg.round if(!state_avg.nil? && state_avg.is_a?(Float))
-          breakdown_id = result_hash['breakdown_id']
-          school_number_tested = result_hash['school_number_tested']
-          proficiency_band = result_hash['proficiency_band']
-
-          if data_type_descriptions && data_type_descriptions[test_data_type_id.to_s].present?
-            label = data_type_descriptions[test_data_type_id.to_s]['test_label']
-            description = data_type_descriptions[test_data_type_id.to_s]['test_description'] || ''
-            source = data_type_descriptions[test_data_type_id.to_s]['test_source'] || ''
-          end
-
-          next if subject.nil? # skip this test data if subject is nil
-
-          innermost_hash = {
-            "score" => test_score,
-            "school_number_tested" => school_number_tested,
-            "state_avg" => state_avg
-          }
-
-          if proficiency_band
-            innermost_hash.transform_keys! do |key|
-              "#{proficiency_band}_#{key}"
-            end
-          end
-
-          hash = {
-            test_data_type_id => {
-              test_label: label,
-              test_description: description,
-              test_source: source,
-              lowest_grade: grade.value,
-              grades: {
-                grade => {
-                  label: grade_label,
-                  level_code: {
-                    level_code => {
-                      subject => {
-                        year => innermost_hash
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          test_scores.deep_merge!(hash)
-        end
-      end
-    end
-
-    test_scores.each do |data_type_id, hash|
-      lowest_grade = hash[:grades].keys.map(&:value).min
-      hash[:lowest_grade] = lowest_grade
-    end
-
-    test_scores
+    data
   end
 
   def sort_test_scores(test_scores)
@@ -118,7 +25,7 @@ class TestScoreResults
           subjects_hash.each do |subject, years_hash|
             years_hash.each do
               #Sort years
-              test_scores[test_id][:grades][grade][:level_code][level_code][subject] = Hash[years_hash.sort_by { |k, v| k.to_i }.reverse!]
+              test_scores[test_id][:grades][grade][:level_code][level_code][subject] = Hash[years_hash.sort_by { |k, v| k.to_s.to_i }.reverse!]
             end
           end
           #Sort subjects
@@ -126,23 +33,11 @@ class TestScoreResults
         end
       end
       #sort grades
-      test_scores[test_id][:grades] = Hash[grades_hash[:grades].sort_by { |k, v| k.value }]
+      test_scores[test_id][:grades] = Hash[grades_hash[:grades].sort_by { |k, v| Grade.from_string(k.to_s).value }]
     end
 
     #Sort the tests by lowest grade in the test
     Hash[test_scores.sort_by { |k, v| v[:lowest_grade] }]
-  end
-
-  def get_grade_label(grade, level_code)
-    grade_label = "GRADE " + grade.value.to_s
-    if !grade.name.nil? && grade.name.start_with?('All')
-      if level_code.levels.size >= 3
-        grade_label = "All grades"
-      else
-        grade_label = level_code.levels.collect(&:long_name).join(" and ") + " school"
-      end
-    end
-    grade_label
   end
 
 end
