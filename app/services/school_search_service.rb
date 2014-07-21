@@ -198,7 +198,7 @@ class SchoolSearchService
   def self.extract_by_location(hash)
     query = ''
     if hash.include?(:lat) && hash.include?(:lon)
-      radius = hash[:radius] || 5.0
+      radius = [*hash[:radius]][0] || 5.0
       radius_in_km = radius.to_f * 1.6 # convert to KM
       query = "{!spatial circles=#{hash[:lat]},#{hash[:lon]},#{radius_in_km}}"
     end

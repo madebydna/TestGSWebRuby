@@ -159,9 +159,8 @@ class SearchController < ApplicationController
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 
-    @schools.each do |school|
-      school.on_page = true # mark the results that appear in the list so the map can handle them differently
-    end
+    # mark the results that appear in the list so the map can handle them differently
+    @schools.each { |school| school.on_page = true } if @schools.present?
 
     mapping_points_through_gon
     assign_sprite_files_though_gon
