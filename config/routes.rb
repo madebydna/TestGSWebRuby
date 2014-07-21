@@ -1,3 +1,4 @@
+
 LocalizedProfiles::Application.routes.draw do
   require 'states'
   require 'regular_subdomain'
@@ -60,6 +61,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    get '/school-district-boundaries-map/', as: :district_boundary
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do

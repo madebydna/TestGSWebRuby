@@ -20,7 +20,18 @@
         target="_blank">Nearby homes for sale</a>
     </div>
     <div class="col-sm-8 col-md-8 col-lg-8 pbl ">
-      <%= image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm', alt: "Map of "+@school.name+" address.") %>
+    <% level_value = 'h' %>
+    <% level_value = 'm' if @school.level_code_array.include? 'm' %>
+    <% level_value = 'e' if @school.level_code_array.include? 'e' %>
+    <% level_value = 'p' if @school.level_code_array.include? 'p' %>
+      <% if @school.district == '' %>
+        <% db_hash = {:level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% else %>
+        <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% end %>
+      <%= link_to(
+         image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm', alt: "Map of "+@school.name+" address."),
+         district_boundary_path(db_hash)) %>
     </div>
     <% if @show_ads %>
       <div class="pbl mbl">
