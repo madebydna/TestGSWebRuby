@@ -7,6 +7,8 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
+  root 'home#prototype'
+  get ENV_GLOBAL['home_path'], as: :home, to: 'home#prototype'
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
@@ -28,7 +30,6 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get ENV_GLOBAL['home_path'], as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
