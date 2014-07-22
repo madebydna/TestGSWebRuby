@@ -20,6 +20,7 @@ class SchoolRating < ActiveRecord::Base
   scope :held, -> { where(status: %w[h ph]) }
   scope :flagged, -> { joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)") }
   scope :ever_flagged, -> { joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id") }
+  scope :no_rating_and_comments, -> { where("((comments != '' && status != 'a') || quality != 'decline')") }
 
   attr_accessor :reported_entities
   attr_accessor :count
@@ -133,6 +134,7 @@ class SchoolRating < ActiveRecord::Base
       .offset_number(options[:offset_start])
       .published
       .not_principal
+      .no_rating_and_comments
   end
 
   # group_to_fetch, order_results_by, offset_start, quantity_to_return
