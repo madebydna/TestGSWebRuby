@@ -295,10 +295,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var isAddress = function(query) {
         if (/\d{5}/.test(query)) {
-            searchType = "byLocation";
+            GS.search.schoolSearchForm.searchType = "byLocation";
             return true;
         } else {
-            searchType = "byName";
+            GS.search.schoolSearchForm.searchType = "byName";
             return false
         }
     };
