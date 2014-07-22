@@ -64,6 +64,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/school-district-boundaries-map/', as: :district_boundary
+    get '/about/guidelines.page', as: :review_guidelines
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
