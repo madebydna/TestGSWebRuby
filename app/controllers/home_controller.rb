@@ -9,12 +9,12 @@ class HomeController < ApplicationController
 
   def prototype
 
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-                  robots: 'noindex'
+    @canonical_url = home_url
+    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community'
 
     set_omniture_pagename
 
-  end
+    end
 
   def search_prototype
 
