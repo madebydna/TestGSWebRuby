@@ -9,6 +9,7 @@ LocalizedProfiles::Application.routes.draw do
 
   root 'home#prototype'
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#prototype'
+  # This route ("/gsr/home/") is REQUIRED by Apache as long as we are running Tomcat
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
