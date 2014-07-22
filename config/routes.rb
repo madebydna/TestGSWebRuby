@@ -43,7 +43,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
-    get '/privacy/#advertiserNotice', as: :advertiser_notice
     get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
