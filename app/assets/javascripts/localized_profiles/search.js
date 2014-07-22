@@ -294,7 +294,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var isAddress = function(query) {
-        if (/\d{1}/.test(query)) {
+        if (/\d{5}/.test(query)) {
             searchType = "byLocation";
             return true;
         } else {
