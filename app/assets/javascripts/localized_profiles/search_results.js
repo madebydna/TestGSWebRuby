@@ -5,10 +5,14 @@ GS.search.results = GS.search.results || (function() {
         $('.js-searchResultsFilterForm').submit(function() {
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
-            var fields = ['lat', 'lon', 'grades', 'distance', 'q'];
+            var fields = ['lat', 'lon', 'grades', 'q'];
 
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
+
+            if($("#js-distance-select-box").val()=="") {
+                $("#js-distance-select-box").remove();
+            }
 
             var formAction = getQueryPath();
             GS.uri.Uri.changeFormAction(formAction, this);

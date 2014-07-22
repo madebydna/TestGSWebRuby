@@ -60,17 +60,24 @@ class FilterBuilder
             display_type: :title,
             category: :distance,
             filters: {
-              1  => { name: '1 Mile', display_type: :basic_checkbox, category: :distance, key: 1},
-              2  => { name: '2 Miles', display_type: :basic_checkbox, category: :distance, key: 2},
-              3  => { name: '3 Miles', display_type: :basic_checkbox, category: :distance, key: 3},
-              4  => { name: '4 Miles', display_type: :basic_checkbox, category: :distance, key: 4},
-              5  => { name: '5 Miles', display_type: :basic_checkbox, category: :distance, key: 5},
-              10 => { name: '10 Miles', display_type: :basic_checkbox, category: :distance, key: 10},
-              15 => { name: '15 Miles', display_type: :basic_checkbox, category: :distance, key: 15},
-              20 => { name: '20 Miles', display_type: :basic_checkbox, category: :distance, key: 20},
-              25 => { name: '25 Miles', display_type: :basic_checkbox, category: :distance, key: 25},
-              30 => { name: '30 Miles', display_type: :basic_checkbox, category: :distance, key: 30},
-              60 => { name: '60 Miles', display_type: :basic_checkbox, category: :distance, key: 60}
+              select_box: {
+                display_type: :select_box,
+                category: :distance,
+                filters: {
+                   :default => {name: 'Select Miles', display_type: :select_box_value, category: :distance, key: nil},
+                   1 => {name: '1 Mile', display_type: :select_box_value, category: :distance, key: 1},
+                   2 => {name: '2 Miles', display_type: :select_box_value, category: :distance, key: 2},
+                   3 => {name: '3 Miles', display_type: :select_box_value, category: :distance, key: 3},
+                   4 => {name: '4 Miles', display_type: :select_box_value, category: :distance, key: 4},
+                   5 => {name: '5 Miles', display_type: :select_box_value, category: :distance, key: 5},
+                   10 => {name: '10 Miles', display_type: :select_box_value, category: :distance, key: 10},
+                   15 => {name: '15 Miles', display_type: :select_box_value, category: :distance, key: 15},
+                   20 => {name: '20 Miles', display_type: :select_box_value, category: :distance, key: 20},
+                   25 => {name: '25 Miles', display_type: :select_box_value, category: :distance, key: 25},
+                   30 => {name: '30 Miles', display_type: :select_box_value, category: :distance, key: 30},
+                   60 => {name: '60 Miles', display_type: :select_box_value, category: :distance, key: 60}
+                }
+              }
             }
           },
           st: {

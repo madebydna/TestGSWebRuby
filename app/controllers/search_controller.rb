@@ -391,6 +391,7 @@ class SearchController < ApplicationController
     sprite_files = {}
     sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
     sprite_files['imageUrlOnPage'] = view_context.image_path('icons/143007-29x40_pins.png')
+    sprite_files['gsRating_sprite'] = view_context.image_path('icons/140106-24x24_ratings.png')
 
     gon.sprite_files = sprite_files
 
