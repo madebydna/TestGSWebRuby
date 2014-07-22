@@ -25,4 +25,19 @@ $(function() {
         }
 
     });
+    $('.js-gs-popover').on('click',function(){
+        alert('I am here');
+        var self=$(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.siblings(".js-gs-popover-value");
+        var gs_popover= self.data('gs-popover');
+        if (hidden_field.val()== '') {
+            checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            hidden_field.val(gs_popover);
+        }else {
+            checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
+            hidden_field.val('');
+        }
+
+    });
 });
