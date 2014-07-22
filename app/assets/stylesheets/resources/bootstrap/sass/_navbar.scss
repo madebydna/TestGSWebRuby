@@ -359,7 +359,8 @@
 // Default navbar
 .navbar-default {
   background-color: $navbar-default-bg;
-  border-color: $navbar-default-border;
+//  border-color: $navbar-default-border;
+  box-shadow: 0px 1px 1px #CCCCCC;
 
 
 
