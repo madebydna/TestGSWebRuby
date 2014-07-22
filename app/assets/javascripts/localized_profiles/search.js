@@ -16,6 +16,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var prototypeSearchSelector = 'input#js-prototypeSearch';
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
+    var searchType = 'byName';
 
     var init = function(state) {
         $('.js-findByLocationForm').submit(function() {
@@ -111,7 +112,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
-
+    var autocompleteSort = function(obj1, obj2) {
+        if (obj1.sort_order > obj2.sort_order)
+            return -1;
+        if (obj1.sort_order < obj2.sort_order)
+            return 1;
+        return 0;
+    };
 
     var submitByLocationSearch = function() {
         var searchQuery = $(this).find(findByLocationSelector).val();
@@ -164,13 +171,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
-        sorter: function(school1, school2) {
-            if (school1.sort_order > school2.sort_order)
-                return -1;
-            if (school1['sort_order'] < school2['sort_order'])
-                return 1;
-            return 0;
-        },
+        sorter: autocompleteSort,
         remote: {
             url: '/gsr/search/suggest/school?query=%QUERY&state=Delaware',
             filter: function(data) {
@@ -182,7 +183,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         cacheList[data[i].url] = true;
                     }
                 }
-                return data;
+                return data.sort(autocompleteSort);
             },
             rateLimitWait: 100
         }
@@ -195,13 +196,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
-        sorter: function(city1, city2) {
-            if (city1.sort_order > city2.sort_order)
-                return -1;
-            if (city1['sort_order'] < city2['sort_order'])
-                return 1;
-            return 0;
-        },
+        sorter: autocompleteSort,
         remote: {
             url: '/gsr/search/suggest/city?query=%QUERY&state=Delaware',
             filter: function(data) {
@@ -213,7 +208,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         cacheList[data[i].url] = true;
                     }
                 }
-                return data;
+                return data.sort(autocompleteSort);
             },
             rateLimitWait: 100
         }
@@ -226,13 +221,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
-        sorter: function(district1, district2) {
-            if (district1.sort_order > district2.sort_order)
-                return -1;
-            if (district1['sort_order'] < district2['sort_order'])
-                return 1;
-            return 0;
-        },
+        sorter: autocompleteSort,
         remote: {
             url: '/gsr/search/suggest/district?query=%QUERY&state=Delaware',
             filter: function(data) {
@@ -244,7 +233,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         cacheList[data[i].url] = true;
                     }
                 }
-                return data;
+                return data.sort(autocompleteSort);
             },
             rateLimitWait: 100
         }
@@ -304,23 +293,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         })
     };
 
-    var handleAddressOrZipcode = function() {
-        $('#js-prototypeSearch').keyup(function() {
-            var $input = $(this).val();
-            if (/\d{5}/.test($input)) {
-                if ($(this).data().ttTypeahead !=undefined)
-                {
-                $(this).data().ttTypeahead.minLength = 100;
-                $(this).typeahead('close');
-                }
-                GS.search.schoolSearchForm.searchType = "byLocation";
-            } else {
-                GS.search.schoolSearchForm.searchType = "byName";
-                if ( $(this).data().ttTypeahead !=undefined) {
-                    $(this).data().ttTypeahead.minLength = 1;
-                }
-            }
-        })
+    var isAddress = function(query) {
+        if (/\d{1}/.test(query)) {
+            searchType = "byLocation";
+            return true;
+        } else {
+            searchType = "byName";
+            return false
+        }
     };
 
     var formatNormalizedAddress = function(address) {
@@ -423,13 +403,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         districts: districts,
         schools: schools,
         attachAutocomplete: attachAutocomplete,
-        handleAddressOrZipcode: handleAddressOrZipcode,
-        searchType: 'byName'
+        isAddress: isAddress,
+        searchType: searchType
     };
 })();
 
 $(document).ready(function() {
-  GS.search.schoolSearchForm.handleAddressOrZipcode();
   GS.search.schoolSearchForm.init();
   GS.search.schoolSearchForm.setupTabs();
   GS.search.schoolSearchForm.cities.initialize();

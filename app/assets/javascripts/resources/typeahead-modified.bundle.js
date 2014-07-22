@@ -4,6 +4,8 @@
  * Copyright 2013-2014 Twitter, Inc. and other contributors; Licensed MIT
  */
 
+//To view modifications to the library, search for ModifiedBehavior - Harrison
+
 (function($) {
     var _ = {
         isMsie: function() {
@@ -1491,14 +1493,40 @@
                 this.input.resetInputValue();
             },
             _onUpKeyed: function onUpKeyed() {
+//                ModifiedBehavior
                 var query = this.input.getQuery();
-                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorUp();
-                this.dropdown.open();
+                if (GS.search.schoolSearchForm.isAddress(query)) {
+                    this.dropdown.close();
+                } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
+                    this.dropdown.update(query);
+                    this.dropdown.open();
+                } else {
+                    this.dropdown.moveCursorUp();
+                    this.dropdown.open();
+                }
+
+//                Previous Behavior
+//                var query = this.input.getQuery();
+//                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorUp();
+//                this.dropdown.open();
             },
             _onDownKeyed: function onDownKeyed() {
+//                ModifiedBehavior
                 var query = this.input.getQuery();
-                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorDown();
-                this.dropdown.open();
+                if (GS.search.schoolSearchForm.isAddress(query)) {
+                    this.dropdown.close();
+                } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
+                    this.dropdown.update(query);
+                    this.dropdown.open();
+                } else {
+                    this.dropdown.moveCursorUp();
+                    this.dropdown.open();
+                }
+
+//                Previous Behavior
+//                var query = this.input.getQuery();
+//                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorDown();
+//                this.dropdown.open();
             },
             _onLeftKeyed: function onLeftKeyed() {
                 this.dir === "rtl" && this._autocomplete();
@@ -1507,10 +1535,22 @@
                 this.dir === "ltr" && this._autocomplete();
             },
             _onQueryChanged: function onQueryChanged(e, query) {
+//                ModifiedBehavior
                 this.input.clearHintIfInvalid();
-                query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.empty();
-                this.dropdown.open();
-                this._setLanguageDirection();
+                if (GS.search.schoolSearchForm.isAddress(query) || query.length == 0 ) {
+                    this.dropdown.close();
+                } else if (query.length >= this.minLength) {
+                    this.dropdown.update(query);
+                    this.dropdown.open();
+                    this._setLanguageDirection();
+                }
+
+//                ModifiedBehavior
+//                Previous Behavior
+//                this.input.clearHintIfInvalid();
+//                query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.empty();
+//                this.dropdown.open();
+//                this._setLanguageDirection();
             },
             _onWhitespaceChanged: function onWhitespaceChanged() {
                 this._updateHint();
