@@ -61,7 +61,7 @@
          </div>
          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
            <label class="control-label">Location</label>
-           <input type="text" class="form-control js-error-validation js-noAuto" name="location"  id="js-prototypeSearch">
+           <input type="text" class="form-control js-error-validation js-noAuto" name="location">
            <p class="js-error-message help-block dn">Please enter a location</p>
 
          </div>
@@ -198,74 +198,97 @@
       <h4 class="tac mbl">Are any of the following programs important for you?</h4>
       <div class="row mtl ma mbl">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px; font-size: 14px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm"></span>Montessori/Waldorf
+
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="montessori&school_focus[]=waldorf"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Montessori/Waldorf
           </button>
-          <input type="hidden" name="before_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
 
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">Science/Technology STEM</span>
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="science_tech"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Science/Technology STEM
           </button>
-          <input type="hidden" name="after_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">College focus</span>
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="college_focus"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>College focus
           </button>
-          <input type="hidden" name="after_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
         </div>
       </div>
       <div class="row mtl ma mbl">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px; font-size: 14px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm"></span>Independent study
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="is"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Independent study
           </button>
-          <input type="hidden" name="before_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
 
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">Online learning</span>
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="online"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Online learning
           </button>
-          <input type="hidden" name="after_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">Carrer and tech</span>
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="career_tech"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Carreer and tech
           </button>
-          <input type="hidden" name="after_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
         </div>
       </div>
       <div class="row mtl ma mbl">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px; font-size: 14px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm"></span>World language immersion
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>World language immersion
           </button>
-          <input type="hidden" name="before_school" value="0">
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="project"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Project-based learning
+          </button>
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
+          <button class="btn btn-default tal js-gs-checkbox"
+                  data-gs-checkbox="arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Arts
+          </button>
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
 
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">Project-based learning</span>
-          </button>
-          <input type="hidden" name="after_school" value="0">
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button data-link-value="/michigan/detroit/1273-Bates-Academy/reviews/write/" class="btn btn-default tal js-button-link"
-                  style="width:100%; padding-left: 8px;">
-            <span class="vam iconx24-icons i-24-checkmark-on mrm "></span><span class="border-right-light-grey">Arts</span>
-          </button>
-          <input type="hidden" name="after_school" value="0">
         </div>
       </div>
       <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[4], previous_tab_name: @guided_search_tab[2]%>
