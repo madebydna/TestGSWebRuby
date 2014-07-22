@@ -11,7 +11,7 @@
                 <h2 class="ptn mtn">School Official Point of View</h2>
                 <span class="open-sans_i"><%= @school_principal_review.comments %></span>
                 <br />
-                <div class="fr ptm"><%= @school_principal_review.posted.strftime('%b %d, %Y') %></div>
+                <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
             </div>
         </div>
     <% end %>
