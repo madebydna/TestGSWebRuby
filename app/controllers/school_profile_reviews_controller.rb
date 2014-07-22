@@ -15,6 +15,8 @@ class SchoolProfileReviewsController < SchoolProfileController
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
+    @school_principal_review = @school.principal_review
+
     @review_offset = 0
     @review_limit = 10
   end

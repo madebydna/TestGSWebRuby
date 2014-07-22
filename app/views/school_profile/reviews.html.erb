@@ -4,6 +4,14 @@
 
 <div class="row limit-width-1200">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    <% if @school_principal_review %>
+        <div class="well mvl clearfix" style="padding:40px">
+            <h2 class="ptn mtn">School Official Point of View</h2>
+            <%= @school_principal_review.comments %>
+            <br />
+            <div class="fr ptm"><%= @school_principal_review.posted %></div>
+        </div>
+    <% end %>
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <% if @show_ads %>

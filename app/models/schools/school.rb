@@ -122,6 +122,10 @@ class School < ActiveRecord::Base
     SchoolRating.fetch_reviews self
   end
 
+  def principal_review
+    SchoolRating.fetch_principal_review self
+  end
+
   # group_to_fetch, order_results_by, offset_start, quantity_to_return
   def reviews_filter( options ={} )
     #second parameter is group to filter by leave it as empty string '' for all

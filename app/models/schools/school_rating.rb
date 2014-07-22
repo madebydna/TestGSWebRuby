@@ -12,6 +12,8 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, -> { where('length(status) > 1 AND status LIKE ?', 'p%') }
   scope :not_provisional, -> { where('length(status) = 1') }
   scope :quality_decline, -> { where("quality != 'decline'") }
+  scope :principal, -> { where(who: 'principal') }
+  scope :not_principal, -> { where("who != 'principal'") }
   scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
   scope :disabled, -> { where(status: %w[d pd]) }
   scope :unpublished, -> { where(status: %w[u pu]) }
@@ -130,6 +132,15 @@ class SchoolRating < ActiveRecord::Base
       .limit_number(options[:quantity_to_return])
       .offset_number(options[:offset_start])
       .published
+      .not_principal
+  end
+
+  # group_to_fetch, order_results_by, offset_start, quantity_to_return
+  def self.fetch_principal_review(school, options = {})
+    SchoolRating.where(school_id: school.id, state: school.state)
+    .published
+    .principal
+    .first
   end
 
   def remove_provisional_status!
