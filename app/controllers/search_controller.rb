@@ -40,7 +40,7 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], city: @city.name})
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
@@ -65,7 +65,7 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], district_id: @district.id})
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
@@ -75,13 +75,18 @@ class SearchController < ApplicationController
 
   def by_location
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
+      @state = {
+          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+      } if params_hash['state']
       @lat = params_hash['lat']
       @lon = params_hash['lon']
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
+      search_options.merge!({state: @state[:short]}) if @state
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'

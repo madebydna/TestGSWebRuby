@@ -15,6 +15,7 @@ class SearchNearbyCities
       solr_params[:fq] << "-city_keyword:#{city_keyword}"
     end
     solr_params[:fq] << '+document_type:city'
+    solr_params[:fq] << "+city_state:#{options[:state]}" if options[:state]
     solr_params[:qt] = 'city-search'
     parse_city_results(Solr.new.get_search_results(solr_params))
   end
