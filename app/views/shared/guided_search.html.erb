@@ -1,6 +1,14 @@
 <% content_for :javascript_includes do %>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
+    <script>
+        $(document).ready(function() {
+            $('div[data-toggle="popover"]').popover()
+
+        });
+    </script>
 <% end %>
+
+
 
 
 
@@ -263,13 +271,51 @@
       </div>
       <div class="row mtl ma mbl">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-          <button class="btn btn-default tal js-gs-checkbox"
-                  data-gs-checkbox="arts"
-                  type="button"
-                  style="width:100%;">
-            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>World language immersion
-          </button>
-          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+              <div class="btn btn-default tal js-gs-checkbox"
+                   data-html="true"
+                   data-content='<button class="btn btn-default tal js-gs-checkbox mbm"
+                                  data-gs-checkbox="mandarin"
+                                  type="button"
+                                  style="width:100%;">
+                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                                  Mandarin
+                                  </button>
+                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+                                  <button class="btn btn-default tal js-gs-checkbox mbm"
+                                  data-gs-checkbox="spanish"
+                                  type="button"
+                                  style="width:100%;">
+                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                                  Spanish
+                                  </button>
+                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+                                  <button class="btn btn-default tal js-gs-checkbox mbm"
+                                  data-gs-checkbox="german"
+                                  type="button"
+                                  style="width:100%;">
+                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                                  German
+                                  </button>
+                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+                                  <button class="btn btn-default tal js-gs-checkbox mbm"
+                                  data-gs-checkbox="french"
+                                  type="button"
+                                  style="width:100%;">
+                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                                  French
+                                  </button>
+                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">'
+                                           data-template='<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                   data-toggle="popover" placement="left">
+                <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span> World language immersion
+              </div>
+          <!--<button class="btn btn-default tal js-gs-checkbox"-->
+                  <!--data-gs-checkbox="arts"-->
+                  <!--type="button"-->
+                  <!--style="width:100%;">-->
+            <!--<span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>World language immersion-->
+          <!--</button>-->
+          <!--<input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">-->
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
           <button class="btn btn-default tal js-gs-checkbox"
