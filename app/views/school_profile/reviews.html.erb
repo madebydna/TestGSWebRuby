@@ -4,23 +4,24 @@
 
 <div class="row limit-width-1200">
     <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-    <% if @school_principal_review %>
-        <div class="well mvl row" style="padding:40px">
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 tac pvm prm"><%= image_tag(image_path("lib/school_principal_icon_130x130_072214.png"))%></div>
-            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12  clearfix">
-                <h2 class="ptn mtn">School Official Point of View</h2>
-                <span class="open-sans_i"><%= @school_principal_review.comments %></span>
-                <br />
-                <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
-            </div>
-        </div>
-    <% end %>
+
     <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <% if @show_ads %>
                 <div class="pvl">
                     <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
                     <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
+            <% if @school_principal_review %>
+                <div class="well mvl row" style="padding:40px">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 tac pvm prm"><%= image_tag(image_path("lib/school_principal_icon_130x130_072214.png"))%></div>
+                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12  clearfix">
+                        <h2 class="ptn mtn">School Official Point of View</h2>
+                        <span class="open-sans_i"><%= @school_principal_review.comments %></span>
+                        <br />
+                        <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
+                    </div>
                 </div>
             <% end %>
             <%= render "shared/review_no_ratings" %>
@@ -33,6 +34,17 @@
             <% if @show_ads %>
                 <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
                 <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            <% end %>
+            <% if @school_principal_review %>
+                <div class="well mvl row" style="padding:40px">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 tac pvm prm"><%= image_tag(image_path("lib/school_principal_icon_130x130_072214.png"))%></div>
+                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12  clearfix">
+                        <h2 class="ptn mtn">School Official Point of View</h2>
+                        <span class="open-sans_i"><%= @school_principal_review.comments %></span>
+                        <br />
+                        <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
+                    </div>
+                </div>
             <% end %>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
