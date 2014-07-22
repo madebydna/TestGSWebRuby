@@ -5,7 +5,7 @@ end
 
 usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
 
-states = ['mi', 'in', 'wi', 'de','ca','nc','oh','dc']
+states = States.abbreviations
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
 cache_key_arg= ARGV[0]
