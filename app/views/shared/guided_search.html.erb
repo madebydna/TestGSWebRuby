@@ -1,11 +1,5 @@
 <% content_for :javascript_includes do %>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
-    <script>
-        $(document).ready(function() {
-            $('div[data-toggle="popover"]').popover()
-
-        });
-    </script>
 <% end %>
 
 
@@ -271,59 +265,17 @@
       </div>
       <div class="row mtl ma mbl">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
-              <div class="btn btn-default tal js-gs-checkbox"
-                   data-html="true"
-                   data-content=' <div class="row">
-                                  <button class="btn btn-default tal js-gs-popover mbm"
-                                  data-gs-popover="mandarin"
-                                  type="button"
-                                  style="width:100%;">
-                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-                                  Mandarin
-                                  </button>
-                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-popover-value">
-                                  </div>
-                                  <div class="row">
-                                  <button class="btn btn-default tal js-gs-popover mbm"
-                                  data-gs-popover="spanish"
-                                  type="button"
-                                  style="width:100%;">
-                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-                                  Spanish
-                                  </button>
-                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-popover-value">
-                                  </div>
-                                  <div class="row">
-                                  <button class="btn btn-default tal js-gs-popover mbm"
-                                  data-gs-popover="german"
-                                  type="button"
-                                  style="width:100%;">
-                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-                                  German
-                                  </button>
-                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-popover-value">
-                                  </div>
-                                  <div class="row">
-                                  <button class="btn btn-default tal js-gs-popover mbm"
-                                  data-gs-popover="french"
-                                  type="button"
-                                  style="width:100%;">
-                                  <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-                                  French
-                                  </button>
-                                  <input type="hidden" name="school_focus[]" value="" class="js-gs-popover-value">
-                                  </div>'
+
+              <div class="js-gs-checkbox"
+                   data-content-wrapper=".js-world-language"
                    data-toggle="popover"
-                   placement="bottom">
+                  >
+                <button class="btn btn-default tal js-gs-popover-button"
+                type="button"
+                style="width:100%;">
                 <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span> World language immersion
+                </button>
               </div>
-          <!--<button class="btn btn-default tal js-gs-checkbox"-->
-                  <!--data-gs-checkbox="arts"-->
-                  <!--type="button"-->
-                  <!--style="width:100%;">-->
-            <!--<span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>World language immersion-->
-          <!--</button>-->
-          <!--<input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">-->
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl pbl">
           <button class="btn btn-default tal js-gs-checkbox"
@@ -356,4 +308,59 @@
   </div>
   </form>
 </div>
+
+
+
 <%= render 'nav/short_footer' %>
+
+
+<div class="dn js-world-language">
+    <div class="">
+      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+              data-gs-checkbox="mandarin"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+        Mandarin
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+    </div>
+    <div class="">
+      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+              data-gs-popover="spanish"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+        Spanish
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+    </div>
+    <div class="">
+      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+              data-gs-popover="german"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+        German
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+    </div>
+    <div class="">
+      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+              data-gs-popover="french"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+        French
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+    </div>
+    <div class="clearfix">
+      <div class="fl prm">
+        <button class="btn btn-default btn-sm" type="button">Cancel</button>
+      </div>
+      <div class="fr">
+        <button class="btn btn-primary btn-sm " type="button">Done</button>
+      </div>
+    </div>
+</div>

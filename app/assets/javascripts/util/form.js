@@ -1,6 +1,20 @@
 GS.guidedsearch = GS.guidedsearch || {};
 
 $(function() {
+    $('div[data-toggle="popover"]').popover(
+        {
+            html:true,
+            placement:'bottom',
+            content:function(){
+
+                return $($(this).data('content-wrapper')).html();
+
+            }
+        }
+
+
+    );
+
     $('.js-gs-radio').on('click',function(){
         var self = $(this);
         var hidden_field = self.siblings(".js-gs-radio-value");
@@ -11,7 +25,8 @@ $(function() {
 
     });
 
-    $('.js-gs-checkbox').on('click',function(){
+    $("body").on('click','.js-gs-checkbox',function(){
+
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -25,15 +40,15 @@ $(function() {
         }
 
     });
-    $('.js-gs-popover').on('click',function(){
-        alert('I am here');
+    $("body").on('click','.js-gs-popover-checkbox',function(){
+
         var self=$(this);
         var checkbox = self.children(".js-icon");
-        var hidden_field = self.siblings(".js-gs-popover-value");
-        var gs_popover= self.data('gs-popover');
+        var hidden_field = self.siblings(".js-gs-checkbox-value");
+        var gs_checkBox= self.data('gs-checkbox');
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            hidden_field.val(gs_popover);
+            hidden_field.val(gs_checkBox);
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
             hidden_field.val('');
