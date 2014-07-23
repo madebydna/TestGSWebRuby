@@ -24,7 +24,7 @@ LocalizedProfiles::Application.configure do
     host: ENV_GLOBAL['app_host'] || hostname,
     port: ENV_GLOBAL['app_port'] || 3000
   }
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = ENV_GLOBAL['mail_enabled']
 
   config.action_mailer.delivery_method = :smtp
 
