@@ -1,7 +1,11 @@
 GS.search = GS.search || {};
 GS.search.googleMap = GS.search.googleMap || (function() {
 
+    var needsInit = true;
+
   var init = function() {
+      if (!needsInit) {return;}
+      needsInit = false;
       if(gon.sprite_files != undefined) {
 
 
@@ -139,9 +143,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               return infoWindowMarkup;
           };
 
-          google.maps.event.addDomListener(window, 'load', function () {
-              initialize(points)
-          });
+          initialize(points);
       }
     };
 
@@ -152,5 +154,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 })();
 
 $(document).ready(function() {
-    GS.search.googleMap.init();
+    if ($.cookie('map_view') !== 'false') {
+        GS.search.googleMap.init();
+    }
 });
