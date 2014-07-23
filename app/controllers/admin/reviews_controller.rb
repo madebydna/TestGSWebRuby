@@ -85,7 +85,7 @@ unexpected error: #{e}."
       reviews = SchoolRating.where(status: %w[u h])
     end
 
-    reviews.order('posted desc').page(params[:unprocessed_reviews_page]).per(5)
+    reviews.order('posted desc').page(params[:unprocessed_reviews_page]).per(25)
   end
 
   def flagged_reviews
@@ -95,7 +95,7 @@ unexpected error: #{e}."
       reviews = SchoolRating.where(status: %w[p d r a]).flagged
     end
 
-    reviews.order('posted desc').page(params[:flagged_reviews_page]).per(5)
+    reviews.order('posted desc').page(params[:flagged_reviews_page]).per(25)
   end
 
   def self.load_reported_entities_onto_reviews(reviews, reported_entities)
