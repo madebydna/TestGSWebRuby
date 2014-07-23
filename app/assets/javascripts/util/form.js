@@ -17,7 +17,7 @@ $(function() {
 
     $('.js-gs-radio').on('click',function(){
         var self = $(this);
-        var hidden_field = self.siblings(".js-gs-radio-value");
+        var hidden_field = self.parent().siblings(".js-gs-radio-value");
         var gs_radio = self.data('gs-radio');
         hidden_field.val(gs_radio);
         self.siblings().removeClass('active');
