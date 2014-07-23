@@ -21,17 +21,17 @@
         <br/>
         Status: <%= review.status %>
         <br/>
-        <%= form_for review, url: publish_admin_review_path(review) do |f| %>
+        <%= form_for review, url: publish_admin_review_path(review), method: :put do |f| %>
         <%= f.submit 'Publish', class: 'btn btn-sm mtm ' +
             ((review.provisional_published? || review.published?) ? 'btn-disabled' : 'btn-primary'),
         data: { disable_with: 'Publishing...' } %>
         <% end %>
-        <%= form_for review, url: disable_admin_review_path(review) do |f| %>
+        <%= form_for review, url: disable_admin_review_path(review), method: :put do |f| %>
             <%= f.submit 'Disable',
                 class: 'btn btn-sm mtm ' + (review.disabled? ? 'btn-disabled' : 'btn-primary'),
                 data: { disable_with: 'Disabling...' } %>
         <% end %>
-        <%= form_for review, url: resolve_admin_review_path(review) do |f| %>
+        <%= form_for review, url: resolve_admin_review_path(review), method: :put do |f| %>
             <%= f.submit 'Resolve flags',
                 id: "js-resolve-review-#{review.id}",
                 class: "btn btn-sm mtm btn-primary",
@@ -68,7 +68,7 @@
         <br/>
         Notes:
         <br/>
-        <%= form_for(review, url: admin_review_path(review) ) do |f| %>
+        <%= form_for(review, url: admin_review_path(review), method: :put) do |f| %>
         <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
         <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
         <% end %>
