@@ -1,38 +1,43 @@
-<div class="limit-width-1200 full-width row ptm plm prm">
-  <div class="col-xs-3 ptm">
-    <div class="dropdown drowpdown-large">
-      <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
+<div class="limit-width-1200 pr ptm plm prm">
+  <div class="pa pam" style="left:-5px">
+    <div class="js-searchFiltersDropdown">Refine Search<span class="caret"></span>
+    </div>
+    <div class="dn zir-1 pam js-searchFiltersMenu">
+      <div class="ptm panel panel-primary">
+        <div class="clearfix">
+          <form name="searchFiltersForm" id="js-searchFiltersForm" action method="get">
 
+            <%lam = lambda do |filters| %>
+                <% [*filters].each do |filter| %>
+                    <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
+                        <% lam.call(filter.filters) %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            <% lam.call(@filters) %>
 
-      <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:256px;">
-        <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
+            <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
+            <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
+          </form>
+        </div>
 
-          <%lam = lambda do |filters| %>
-              <% [*filters].each do |filter| %>
-                  <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
-                      <% lam.call(filter.filters) %>
-                  <% end %>
-              <% end %>
-          <% end %>
-          <% lam.call(@filters) %>
-
-          <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
-          <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
-
-          <div class="col-xs-12 ptl">
-            <label>
-              <a type="checkbox" id="advancedFilters" class="accordion-toggle pll ">Advanced Filters</a>
-            </label>
-            <button class="btn btn-default pull-right mrm mbm" type='submit'>Submit</button>
-          </div>
-        </form>
-      </ul>
-    </div><br>
+        <div class="clearfix pal" style="">
+          <label class="fl">
+            <a class="js-advancedFilters">Advanced Filters</a>
+          </label>
+          <button class="btn btn-default fr" id="js-submitSearchFiltersForm" type='submit'>Submit</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-xs-2 ptm">??Guide Me??</div>
+</div>
+
+<div class="limit-width-1200 full-width row pam">
+  <div class="col-xs-3"></div>
+  <div class="col-xs-2 vam">??Guide Me??</div>
   <div class="col-xs-7 clearfix">
     <div class="fr">
-       <span class="js-search-list-view">
+      <span class="js-search-list-view">
       <span  class="iconx16 i-16-grey-list-view vam"></span>
       List
       </span>

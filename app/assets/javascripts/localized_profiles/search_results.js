@@ -1,52 +1,40 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
-    var init = function() {
-        $('.js-searchResultsFilterForm').submit(function() {
+    var searchFiltersFormSubmissionHandler = function() {
+        $('#js-submitSearchFiltersForm').on('click', function(){
+//          Todo Refactor to build and submit url, as opposed to building and submitting the form
+            self = $('#js-searchFiltersForm');
+
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
             var fields = ['lat', 'lon', 'grades', 'q'];
 
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
-            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
+            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, self);
 
             if($("#js-distance-select-box").val()=="") {
                 $("#js-distance-select-box").remove();
             }
 
             var formAction = getQueryPath();
-            GS.uri.Uri.changeFormAction(formAction, this);
+            GS.uri.Uri.changeFormAction(formAction, self);
+            self.submit();
         });
     };
 
-    var advancedFiltersMenuOpen = false;
+    var searchFiltersMenuHandler = function() {
+        $(".js-searchFiltersDropdown").on('click', function() {
+            var menu = $('.js-searchFiltersMenu');
+            menu.css('display') == 'none' ? menu.show() : menu.hide();
+        })
+    };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $("#advancedFilters").on('click', function () {
-            if (advancedFiltersMenuOpen) {
-                advancedFiltersMenuOpen = false;
-                closeAdvancedFiltersMenu();
-            } else {
-                advancedFiltersMenuOpen = true;
-                openAdvancedFiltersMenu();
-            }
+        $(".js-advancedFilters").on('click', function () {
+            var advancedFiltersMenu = $('.secondaryFiltersColumn');
+            advancedFiltersMenu.css('display') == 'none' ? advancedFiltersMenu.show('slow') : advancedFiltersMenu.hide('fast');
         });
-    };
-
-//    ToDo Refactor to be able to handle multiple col sizes dynamically
-//    ToDo Add Detection for viewport size
-    var openAdvancedFiltersMenu = function() {
-        $('#searchResultsFilterMenu').css('width', '768px');
-        $('.primaryFiltersColumn').removeClass('col-md-12');
-        $('.primaryFiltersColumn').addClass('col-md-4');
-        $('.secondaryFiltersColumn').removeClass('dn');
-    };
-
-    var closeAdvancedFiltersMenu = function() {
-        $('#searchResultsFilterMenu').css('width', '256px');
-        $('.primaryFiltersColumn').removeClass('col-md-4');
-        $('.primaryFiltersColumn').addClass('col-md-12');
-        $('.secondaryFiltersColumn').addClass('dn');
     };
 
     var sortBy = function(sortType, query) {
@@ -68,10 +56,6 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
-    var keepSearchResultsFilterMenuOpen = function() {
-        stopClickEventPropagation('#searchResultsFilterMenu');
-    };
-
     var stopClickEventPropagation = function(selector) {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
@@ -81,16 +65,15 @@ GS.search.results = GS.search.results || (function() {
     };
 
     return {
-        init:init,
+        searchFiltersFormSubmissionHandler:searchFiltersFormSubmissionHandler,
         sortBy: sortBy,
-        keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen,
-        advancedFiltersMenuOpen: advancedFiltersMenuOpen,
-        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler
+        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler,
+        searchFilterDropdownHandler: searchFiltersMenuHandler
     };
 })();
 
 $(document).ready(function() {
-    GS.search.results.init();
-    GS.search.results.keepSearchResultsFilterMenuOpen();
+    GS.search.results.searchFiltersFormSubmissionHandler();
     GS.search.results.toggleAdvancedFiltersMenuHandler();
+    GS.search.results.searchFilterDropdownHandler();
 });
