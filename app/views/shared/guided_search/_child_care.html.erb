@@ -1,0 +1,27 @@
+<div class="tab-pane" id="<%= @guided_search_tab[1]%>">
+  <h4 class="tac mbl">Do you need a school that offers child care...</h4>
+  <div class="row mtl ma">
+    <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-3 col-md-3 col-sm-3 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox"
+              data-gs-checkbox="before"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Before school
+      </button>
+      <input type="hidden" name="beforeAfterCare[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox"
+              data-gs-checkbox="after"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>After school
+      </button>
+      <input type="hidden" name="beforeAfterCare[]" value="" class="js-gs-checkbox-value">
+    </div>
+  </div>
+
+  <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[2], previous_tab_name: @guided_search_tab[0]%>
+
+</div>
