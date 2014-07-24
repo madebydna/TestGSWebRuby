@@ -16,13 +16,11 @@ $(function() {
             }else {
                 $(this).parent().removeClass('has-error');
                 $(this).siblings(".js-error-message").addClass(displayNone);
-//                hasError = false;
-
             }
         });
-//        if (hasError === true){
-//            return false ;
-//        }
+        if (hasError === true){
+            return false ;
+        }
 
         var next_tab= $(this).data('next-tab');
         $(".tab_"+next_tab).prev().find(id_tab_number).addClass(displayNone);

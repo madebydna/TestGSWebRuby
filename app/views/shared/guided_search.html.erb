@@ -40,18 +40,6 @@
       <div class="row mtl">
          <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
            <label class="control-label">Grade</label>
-           <!--<div class="dropdown">-->
-           <!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">-->
-           <!--<span class="caret"></span>-->
-           <!--</button>-->
-           <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">-->
-           <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>-->
-           <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>-->
-           <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>-->
-           <!--<li role="presentation" class="divider"></li>-->
-           <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>-->
-           <!--</ul>-->
-           <!--</div>-->
            <select  class="form-control js-error-validation" name="grade">
              <option value="" >--Grade--</option>
              <option value="p">Pre-School</option>
@@ -122,36 +110,6 @@
           <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
         </div>
       </div>
-
-      <!--<form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">-->
-        <!--<!-- Todo: make a class -->
-        <!--<div class="col-xs-12 col-sm-8 pam">-->
-          <!--<span class="twitter-typeahead" style="position: relative; display: inline-block; direction: ltr;">-->
-            <!--<input type="text" value="Enter 5-digits for byLocation Search, Else byName Search" class="typeahead search-text full-width pam tt-hint" onfocus="GS.textSwitch(this, '', 'Enter 5-digits for byLocation Search, Else byName Search');" onblur="GS.textSwitch(this, 'Enter 5-digits for byLocation Search, Else byName Search', '');" disabled="" autocomplete="off" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);"><input type="text" name="locationSearchString" value="Enter 5-digits for byLocation Search, Else byName Search" id="js-prototypeSearch" class="typeahead search-text full-width pam tt-input" onfocus="GS.textSwitch(this, '', 'Enter 5-digits for byLocation Search, Else byName Search');" onblur="GS.textSwitch(this, 'Enter 5-digits for byLocation Search, Else byName Search', '');" placeholder="ex. 19703 or Dover High School" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: opensans-regular, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><span class="tt-dropdown-menu" style="position: absolute; top: 100%; z-index: 100; display: none; left: 0px; right: auto;"><div class="tt-dataset-cities"></div><div class="tt-dataset-districts"></div><div class="tt-dataset-schools"></div></span></span>-->
-        <!--</div>-->
-
-        <!--<!--Todo Refactor Distance and Grade together-->
-        <!--<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 pam">-->
-          <!--<select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">-->
-            <!--<option value="" selected="">--Distance--</option>-->
-            <!--<option value="1">1 Mile</option>-->
-            <!--<option value="2">2 Miles</option>-->
-            <!--<option value="3">3 Miles</option>-->
-            <!--<option value="4">4 Miles</option>-->
-            <!--<option value="5" selected="">5 Miles</option>-->
-            <!--<option value="10">10 Miles</option>-->
-            <!--<option value="15">15 Miles</option>-->
-            <!--<option value="20">20 Miles</option>-->
-            <!--<option value="25">25 Miles</option>-->
-            <!--<option value="30">30 Miles</option>-->
-            <!--<option value="60">60 Miles</option>-->
-          <!--</select>-->
-        <!--</div>-->
-
-        <!--<div class="col-xs-12 col-sm-2 pam">-->
-          <!--<button type="submit" class="btn btn-lg btn-primary pull-right">Search</button>-->
-        <!--</div>-->
-      <!--</form>-->
       <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[1]%>
     </div>
     <div class="tab-pane" id="<%= @guided_search_tab[1]%>">
@@ -300,9 +258,8 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
 
-              <div class="js-gs-checkbox"
-                   data-content-wrapper=".js-world-language"
-                   data-toggle="popover"
+              <div class="js-gs-checkbox js-pull-down"
+                   data-pull-down-content=".js-world-language"
                   >
                 <button class="btn btn-default tal js-gs-popover-button"
                 type="button"
@@ -310,6 +267,56 @@
                 <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span> World language immersion
                 </button>
               </div>
+          <div class="dn js-world-language pal" style="border: thin solid #cccccc">
+            <div class="">
+              <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+                      data-gs-checkbox="mandarin"
+                      type="button"
+                      style="width:100%;">
+                <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                Mandarin
+              </button>
+              <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+            </div>
+            <div class="">
+              <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+                      data-gs-popover="spanish"
+                      type="button"
+                      style="width:100%;">
+                <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                Spanish
+              </button>
+              <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+            </div>
+            <div class="">
+              <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+                      data-gs-popover="german"
+                      type="button"
+                      style="width:100%;">
+                <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                German
+              </button>
+              <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+            </div>
+            <div class="">
+              <button class="btn btn-default tal js-gs-popover-checkbox mbm"
+                      data-gs-popover="french"
+                      type="button"
+                      style="width:100%;">
+                <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+                French
+              </button>
+              <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+            </div>
+            <div class="clearfix">
+              <div class="fl prm">
+                <button class="btn btn-default btn-sm" type="button">Cancel</button>
+              </div>
+              <div class="fr">
+                <button class="btn btn-primary btn-sm " type="button">Done</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
           <button class="btn btn-default tal js-gs-checkbox"
@@ -348,53 +355,3 @@
 <%= render 'nav/short_footer' %>
 
 
-<div class="dn js-world-language">
-    <div class="">
-      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
-              data-gs-checkbox="mandarin"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-        Mandarin
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-    </div>
-    <div class="">
-      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
-              data-gs-popover="spanish"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-        Spanish
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-    </div>
-    <div class="">
-      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
-              data-gs-popover="german"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-        German
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-    </div>
-    <div class="">
-      <button class="btn btn-default tal js-gs-popover-checkbox mbm"
-              data-gs-popover="french"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
-        French
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-    </div>
-    <div class="clearfix">
-      <div class="fl prm">
-        <button class="btn btn-default btn-sm" type="button">Cancel</button>
-      </div>
-      <div class="fr">
-        <button class="btn btn-primary btn-sm " type="button">Done</button>
-      </div>
-    </div>
-</div>
