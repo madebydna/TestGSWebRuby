@@ -14,17 +14,21 @@ $(function() {
     $("body").on('click','.js-pull-down',function(){
 
         var self=$(this);
-//        var checkbox = self.children(".js-icon");
-//        var hidden_field = self.siblings(".js-gs-checkbox-value");
-        var gs_pull_down= self.data('pull-down-content');
-        $(gs_pull_down).slideToggle();
-//        if (hidden_field.val()== '') {
-//            checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-//            hidden_field.val(gs_checkBox);
-//        }else {
-//            checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
-//            hidden_field.val('');
-//        }
+        var gs_pull_down = self.data('pull-down-content');
+        var pull_down_layer = $(gs_pull_down);
+        var pull_down_button = pull_down_layer.siblings('.js-pull-down');
+        pull_down_layer.slideToggle();
+        var is_pull_down_selected =false;
+        pull_down_layer.find('.js-gs-checkbox-value').each(function(){
+            if ($(this).val() != ''){
+                 is_pull_down_selected = true ;
+             }
+         });
+        if (is_pull_down_selected == true) {
+            pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+        }else {
+            pull_down_button.find('.js-icon').removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
+        }
 
     });
 
@@ -36,35 +40,14 @@ $(function() {
         var gs_checkBox= self.data('gs-checkbox');
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            self.removeClass('btn-default').addClass('btn-primary');
             hidden_field.val(gs_checkBox);
 
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
-            self.removeClass('btn-primary').addClass('btn-default');
             hidden_field.val('');
         }
 
     });
-//    $("body").on('click','.js-gs-popover-checkbox',function(){
-//
-//
-//        $('.js-gs-popover').on('click',function(){
-//            alert('I am here');
-//            var self=$(this);
-//            var checkbox = self.children(".js-icon");
-//            var hidden_field = self.siblings(".js-gs-checkbox-value");
-//            var gs_checkBox= self.data('gs-checkbox');
-//            if (hidden_field.val()== '') {
-//                checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-//                hidden_field.val(gs_checkBox);
-//            }else {
-//                checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
-//                hidden_field.val('');
-//            }
-//        });
-//    });
-
     $('.js-gs-checkbox-search').on('click',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
