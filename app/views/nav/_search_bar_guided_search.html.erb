@@ -1,8 +1,9 @@
-<div class="pvm header-bg-color">
+<div class="ptm pts header-bg-color">
+  <div class="shim-10 hidden-xs"></div>
   <div class="row ma limit-width-1200">
-    <div class="row pbm ptm">
-      <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
-        <div class="col-xs-12 col-sm-8 pam prl">
+    <div class="row">
+      <form name="prototypeSearchForm" class="js-prototypeSearchForm" action="/search/search.page" method="get">
+        <div class="col-xs-12 col-sm-8 plm prl mbm">
             <input  type="text"
                     name="locationSearchString"
                     value="Search schools"
@@ -13,7 +14,7 @@
                     placeholder="ex. 19703 or Dover High School">
         </div>
 
-        <div class='col-xs-12 col-sm-2 col-md-2 col-lg-2 pam prl'>
+        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
           <select class="form-control input-lg font-size-small" id="js-prototypeSearchGradeLevelFilter" name="grades">
             <option value="">--Grade Level--</option>
             <% @search_bar_display_map[:grades].each do |grades, display_name| %>
@@ -22,14 +23,14 @@
           </select>
         </div>
 
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 pam">
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 phm mbm">
           <button type='submit' class="btn btn-lg btn-primary">Search</button>
         </div>   
       </form>
     </div>
 
     <% if @nearby_cities && @nearby_cities.size > 0 %>
-        <div class="row pbm plm prm hidden-xs">
+        <div class="row phm mbm hidden-xs">
           <div class="fl mrl">Nearby Cities:</div>
             <% @nearby_cities.each_index do |x|
                 city = @nearby_cities[x] %>
