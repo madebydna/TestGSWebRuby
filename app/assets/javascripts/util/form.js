@@ -36,9 +36,12 @@ $(function() {
         var gs_checkBox= self.data('gs-checkbox');
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            self.removeClass('btn-default').addClass('btn-primary');
             hidden_field.val(gs_checkBox);
+
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
+            self.removeClass('btn-primary').addClass('btn-default');
             hidden_field.val('');
         }
 
@@ -75,5 +78,13 @@ $(function() {
             checkbox.removeClass('i-16-blue-check-box').addClass('i-grey-unchecked-box');
             hidden_field.removeAttr("value").removeAttr("name");
         }
+    });
+
+    $('.js-guidedSearch').on('submit',function() {
+        $(this).find("input").each( function () {
+            if (!$.trim($(this).val())) {
+                $(this).removeAttr("name");
+            }
+        });
     });
 });
