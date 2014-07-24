@@ -36,8 +36,8 @@ class AlertWord < ActiveRecord::Base
     alert_words, really_bad_words = all_words
     string = text.squeeze(' ')
 
-    matched_alert_words = alert_words.select { |word| string =~ /.*\b(#{Regexp.quote(word)})\b.*/i }
-    matched_really_bad_words = really_bad_words.select { |word| string =~ /.*\b(#{Regexp.quote(word)})\b.*/i }
+    matched_alert_words = alert_words.select { |word| string =~ /\b(#{Regexp.quote(word)})\b.*/i }
+    matched_really_bad_words = really_bad_words.select { |word| string =~ /\b(#{Regexp.quote(word)})\b.*/i }
 
     AlertWordSearchResult.new(
       matched_alert_words,
