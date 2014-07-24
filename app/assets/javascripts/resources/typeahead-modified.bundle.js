@@ -1519,7 +1519,7 @@
                     this.dropdown.update(query);
                     this.dropdown.open();
                 } else {
-                    this.dropdown.moveCursorUp();
+                    this.dropdown.moveCursorDown();
                     this.dropdown.open();
                 }
 
