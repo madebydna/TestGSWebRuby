@@ -10,23 +10,13 @@ class HomeController < ApplicationController
   def prototype
 
     @canonical_url = home_url
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community'
+    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
+      description: 'Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.',
+      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
 
     set_omniture_pagename
 
     end
-
-  def search_prototype
-
-    @article_1 = "/assets/article_img.jpg"
-    @parent_img = "/assets/article_img.jpg"
-
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-                  robots: 'noindex'
-
-    set_omniture_pagename
-
-  end
 
   def set_omniture_pagename
     gon.omniture_pagename = 'GS:Home'
