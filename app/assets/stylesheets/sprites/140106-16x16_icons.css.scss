@@ -59,37 +59,49 @@
 }
 
 .i-16-blue-check-box {
-  background-position: -175px 0px;
+  background-position: -176px 0px;
 }
 
 .i-16-blue-list-view {
-  background-position: -191px -1px ;
+  background-position: -192px 0px ;
 }
 
 .i-16-grey-list-view {
-  background-position: -191px 16px ;
+  background-position: -192px -16px ;
+}
+
+.i-16-white-list-view {
+  background-position: -192px -32px ;
 }
 
 .i-16-blue-map-view {
-  background-position: -207px 0px ;
+  background-position: -208px 0px ;
 }
 
 .i-16-grey-map-view {
-  background-position: -207px 16px ;
+  background-position: -208px -16px ;
+}
+
+.i-16-white-map-view {
+  background-position: -208px -32px ;
 }
 
 .i-16-closer{
-  background-position: -223px 0px ;
+  background-position: -224px 0px ;
 }
 
 .i-16-farther{
-  background-position: -223px 16px ;
+  background-position: -224px -16px ;
 }
 
-.i-16-info {
-  background-position: -239px 0px;
+.i-16-info, .i-16-blue-info {
+  background-position: -240px 0px;
 }
 
-.i-16-green_check {
-  background-position: -255px 0px;
+.i-16-white-info {
+  background-position: -240px -16px;
+}
+
+.i-16-green-check {
+  background-position: -256px 0px;
 }

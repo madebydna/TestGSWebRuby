@@ -6,6 +6,7 @@ $(document).ready(function () {
     var elemMapCanvas =      $('#js-map-canvas');
     var elemListViewToggle = $('.js-search-list-view');
     var elemMapViewToggle =  $('.js-search-map-view');
+    var elemMapViewMobileToggle =  $('.js-search-toggle-map-view');
 
     var hideMapView = function() {
         elemMapCanvas.hide('fast');
@@ -21,6 +22,14 @@ $(document).ready(function () {
     };
     elemListViewToggle.on("click", hideMapView);
     elemMapViewToggle.on("click", showMapView);
+    elemMapViewMobileToggle.on("click", function() {
+        var currentlyVisible = (elemMapCanvas.filter(":visible").length == 1);
+        if (currentlyVisible) {
+            hideMapView();
+        } else {
+            showMapView();
+        }
+    });
     if ($.cookie('map_view') === 'false') {
         hideMapView();
     }

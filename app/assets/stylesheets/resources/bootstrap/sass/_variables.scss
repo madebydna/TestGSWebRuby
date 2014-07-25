@@ -79,6 +79,7 @@ $font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica,
 
 $font-size-base:          16px !default;
 $font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
+$font-size-xs:            ceil($font-size-base * 0.750) !default; // ~12px
 $font-size-small:         ceil($font-size-base * 0.875) !default; // ~14px
 $font-size-block:         ceil($font-size-base * 1.5) !default; // ~24px
 
