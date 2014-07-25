@@ -300,7 +300,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         is_ad = is_ad || matchesFiveDigits(query);
         is_ad = is_ad || matchesFiveDigitsPlusFourDigits(query);
 
-        searchType = is_ad ? 'byLocation' : 'byName';
+        GS.search.schoolSearchForm.searchType = is_ad ? 'byLocation' : 'byName';
         return is_ad
     };
 
