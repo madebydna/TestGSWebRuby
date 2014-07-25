@@ -1,20 +1,23 @@
 class SearchController < ApplicationController
   include OmnitureConcerns
+  include ApplicationHelper
+  include ActionView::Helpers::TagHelper
 
+  #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
 
   layout 'application'
 
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
-  NUM_NEARBY_CITIES = 5
+  NUM_NEARBY_CITIES = 8
 
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
-      render 'browse_city'
+      render 'search_page'
     elsif params.include?(:city) && params.include?(:district_name)
       self.district_browse
     elsif params.include?(:city)
@@ -37,12 +40,12 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], city: @city.name})
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_city @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def district_browse
@@ -62,23 +65,28 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], district_id: @district.id})
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
     set_omniture_pagename_browse_district @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def by_location
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
+      @state = {
+          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+      } if params_hash['state']
       @lat = params_hash['lat']
       @lon = params_hash['lon']
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
+      search_options.merge!({state: @state[:short]}) if @state
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES)
+    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
@@ -100,7 +108,7 @@ class SearchController < ApplicationController
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
     set_omniture_pagename_search_school @page_number
-    render 'browse_city'
+    render 'search_page'
   end
 
   def setup_search_results!(search_method)
@@ -109,7 +117,7 @@ class SearchController < ApplicationController
 
     @results_offset = get_results_offset
     @page_size = get_page_size
-    @page_number = get_page_number(@page_size, @results_offset) # for use in view
+    @page_number = get_page_number # for use in view
 
     ad_setTargeting_through_gon
 
@@ -156,12 +164,13 @@ class SearchController < ApplicationController
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 
-    @schools.each do |school|
-      school.on_page = true # mark the results that appear in the list so the map can handle them differently
-    end
+    # mark the results that appear in the list so the map can handle them differently
+    @schools.each { |school| school.on_page = true } if @schools.present?
 
-    @next_page = get_next_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset + @page_size) >= @total_results
-    @previous_page = get_previous_page(@query_string.dup, @page_size, @results_offset) unless (@results_offset - @page_size) < 0
+    mapping_points_through_gon
+    assign_sprite_files_though_gon
+
+    @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
   def suggest_school_by_name
@@ -254,7 +263,6 @@ class SearchController < ApplicationController
     end
     [map_start, map_end]
   end
-
   def parse_filters(params_hash)
     filters = {}
     if params_hash.include? 'st'
@@ -291,21 +299,14 @@ class SearchController < ApplicationController
     params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array)
   end
 
-  def get_page_number(page_size, results_offset)
-    page_size = 1 if page_size < 1
-    results_offset = 0 if results_offset < 0
-
-    if results_offset > 0
-      (results_offset / page_size).ceil
-    else
-      1
-    end
+  def get_page_number
+    page_number = (params[:page] || 1).to_i
+    page_number < 1 ? 1 : page_number
   end
 
   def get_results_offset
-    results_offset = (params[:start])?(params[:start].to_i):0
-    results_offset = 0 if results_offset.to_i < 0
-    results_offset
+    result_offset = (params[:page].to_i - 1) * get_page_size
+    result_offset < 0 ? 0 : result_offset
   end
 
   def get_page_size
@@ -355,6 +356,47 @@ class SearchController < ApplicationController
     gon.ad_set_targeting = set_targeting
   end
 
+  def mapping_points_through_gon
+    points = []
+    i = 0
+    @map_schools.each do |school|
+
+      points[i] = {name: school.name,
+          id: school.id,
+          lat: school.latitude,
+          lng: school.longitude,
+          street: school.street,
+          city: school.city,
+          state: school.state,
+          zipcode: school.zipcode,
+          schoolType: school.type,
+          preschool: school.preschool?,
+          gradeRange: school.grades[0] + " - " + school.grades[-1],
+          fitScore: school.fit_score,
+          maxFitScore: school.max_fit_score,
+          gsRating: school.overall_gs_rating || 0,
+          communityRating: school.respond_to?(:community_rating) ? school.community_rating : 0,
+          numReviews: school.respond_to?(:review_count) ? school.review_count : 0,
+          communityRatingStars: school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : '',
+          on_page: (school.on_page),
+          profileUrl: school_path(school),
+          reviewUrl: school_reviews_path(school),
+          zillowUrl: zillow_url(school)}
+      i = i +1
+    end
+    gon.map_points = points
+  end
+
+  def assign_sprite_files_though_gon
+    sprite_files = {}
+    sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
+    sprite_files['imageUrlOnPage'] = view_context.image_path('icons/140725-29x40_pins.png')
+    sprite_files['gsRating_sprite'] = view_context.image_path('icons/140106-24x24_ratings.png')
+
+    gon.sprite_files = sprite_files
+
+  end
+
   def hash_to_hash(configuration_map, hash)
     rval_map = {}
     hash.each do |k,v|
@@ -381,7 +423,7 @@ class SearchController < ApplicationController
 
   def calculate_fit_score(results, params_hash)
     params = params_hash.select do |key|
-      SOFT_FILTER_KEYS.include? key
+      SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
     end
     results.each do |result|
       result.calculate_fit_score(params)
@@ -399,18 +441,21 @@ class SearchController < ApplicationController
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map
   def get_search_bar_display_map
     {
-      :distance => {
-        1 => '1 Mile',
-        2 => '2 Miles',
-        3 => '3 Miles',
-        4 => '4 Miles',
-        5 => '5 Miles',
-        10 => '10 Miles',
-        15 => '15 Miles',
-        20 => '20 Miles',
-        25 => '25 Miles',
-        30 => '30 Miles',
-        60 => '60 Miles'
+      grades: {
+        :p => 'Pre-School',
+        :k => 'Kindergarten',
+        1 => '1st Grade',
+        2 => '2nd Grade',
+        3 => '3rd Grade',
+        4 => '4th Grade',
+        5 => '5th Grade',
+        6 => '6th Grade',
+        7 => '7th Grade',
+        8 => '8th Grade',
+        9 => '9th Grade',
+        10 => '10th Grade',
+        11 => '11th Grade',
+        12 => '12th Grade'
       }
     }
   end

@@ -1,48 +1,47 @@
-<div class="pvm bg-dark-blue" style="background-color: dodgerblue">
+<div class="ptm pts header-bg-color">
+  <div class="shim-10 hidden-xs"></div>
   <div class="row ma limit-width-1200">
-    <div class="row pbl ptl">
-      <form name="prototypeSearchForm" class="js-prototypeSearchForm mbl" action="/search/search.page" method="get">
-        <!-- Todo: make a class -->
-        <div class="col-xs-12 col-sm-8 pam">
-        <input  type="text"
-                name="locationSearchString"
-                value="Enter 5-digits for byLocation Search, Else byName Search"
-                id="js-prototypeSearch"
-                class='typeahead search-text full-width pam'
-                onfocus="GS.textSwitch(this, '', 'Enter 5-digits for byLocation Search, Else byName Search');"
-                onblur="GS.textSwitch(this, 'Enter 5-digits for byLocation Search, Else byName Search', '');"
-                placeholder="ex. 19703 or Dover High School">
+    <div class="row">
+      <form name="prototypeSearchForm" class="js-prototypeSearchForm" action="/search/search.page" method="get">
+        <div class="col-xs-12 col-sm-8 plm prl mbm">
+            <input  type="text"
+                    name="locationSearchString"
+                    value="Search schools"
+                    id="js-prototypeSearch"
+                    class='typeahead search-text full-width pam'
+                    onfocus="GS.textSwitch(this, '', 'Search schools');"
+                    onblur="GS.textSwitch(this, 'Search schools', '');"
+                    placeholder="ex. 19703 or Dover High School">
         </div>
 
-        <!--Todo Refactor Distance and Grade together-->
-        <div class='col-xs-12 col-sm-2 col-md-2 col-lg-2 pam'>
-          <select class="form-control input-lg" id="js-prototypeSearchDistanceFilter" name="distance">
-            <option value=""selected>--Distance--</option>
-            <% @search_bar_display_map[:distance].each do |distance, display_name| %>
-                <option value=<%=distance.to_s%><%if @params_hash.include?('distance') && @params_hash['distance'] == distance.to_s%> selected<%end%>><%=display_name%></option>
+        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
+          <select class="form-control input-lg font-size-small" id="js-prototypeSearchGradeLevelFilter" name="grades">
+            <option value="">--Grade Level--</option>
+            <% @search_bar_display_map[:grades].each do |grades, display_name| %>
+                <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
           </select>
         </div>
 
-        <div class="col-xs-12 col-sm-2 pam">
-          <button type='submit' class="btn btn-lg btn-primary pull-right">Search</button>
+        <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 phm mbm">
+          <button type='submit' class="btn btn-lg btn-primary">Search</button>
         </div>   
       </form>
     </div>
 
     <% if @nearby_cities && @nearby_cities.size > 0 %>
-        <div class="row pbl plm prm" style="color:#f5f5f5;">
-          <div class="col-sm-3 col-md-2 col-lg-2 hidden-xs" style="font-weight:bold;">Nearby Cities:</div>
+        <div class="row phm mbm hidden-xs">
+          <div class="fl mrl">Nearby Cities:</div>
             <% @nearby_cities.each_index do |x|
                 city = @nearby_cities[x] %>
-                <div class="hidden-xs <%= x < 3 ? 'col-sm-3' : 'hidden-sm'%> col-md-2 col-lg-2"><%= link_to city.name, search_city_browse_path(city.state_name, city.name.downcase) %></div>
+                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
             <% end %>
         </div>
     <% end %>
-    <div class="row pbl plm prm" style="color:#f5f5f5;">
-      <div class="col-sm-12 col-md-6 hidden-xs"><span style="font-weight:bold;">Additional Information:</span> How enrollment works in Delaware</div>
-      <div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>
-    </div>
+    <!--<div class="row pbl plm prm">-->
+      <!--<div class="col-sm-12 col-md-6 hidden-xs"><span>Additional Information:</span> How enrollment works in Delaware</div>-->
+      <!--<div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>-->
+    <!--</div>-->
 
   </div>
 </div>

@@ -7,6 +7,7 @@ class SearchNearbyCities
     solr_params = {}
     solr_params[:query] = "{!cityspatial circles=#{options[:lat]},#{options[:lon]},#{NEARBY_CITY_RADIUS}}"
     solr_params[:rows] = options[:count] || DEFAULT_CITY_COUNT
+    solr_params[:sort] = 'distance asc'
     solr_params[:fq] = []
     if options[:exclude_city].presence
       city_keyword = options[:exclude_city].downcase
@@ -14,6 +15,7 @@ class SearchNearbyCities
       solr_params[:fq] << "-city_keyword:#{city_keyword}"
     end
     solr_params[:fq] << '+document_type:city'
+    solr_params[:fq] << "+city_state:#{options[:state]}" if options[:state]
     solr_params[:qt] = 'city-search'
     parse_city_results(Solr.new.get_search_results(solr_params))
   end

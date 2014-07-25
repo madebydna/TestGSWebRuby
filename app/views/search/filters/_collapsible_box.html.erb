@@ -1,0 +1,23 @@
+<div>
+    <label id="<%=filter.key.to_s%>_collapsible_box" class="tal js-gs-checkbox-search font-size-small">
+        <span  class="vam iconx16 mrl js-icon
+        <%= @params_hash.include?(filter.category.to_s) && @params_hash[filter.category.to_s].include?(filter.key.to_s) ?
+                                   'i-16-blue-check-box' : 'i-grey-unchecked-box' %> js-gs-checkbox-value accordion-toggle"></span><%=filter.name%>
+    </label>
+
+    <input type="hidden" class="js-gs-checkbox-value"
+         <%=@params_hash.include?(filter.category.to_s) && @params_hash[filter.category.to_s].include?(filter.key.to_s) ?
+                    "name=#{filter.category.to_s}[] value=#{filter.key.to_s}" : '' %>
+    >
+</div>
+
+<!--ToDo Change Styling and dropdown functionality. dropdown buggy-->
+<script>
+  $("#<%=filter.key.to_s%>_collapsible_box").on('click', function () {
+    $(".<%=filter.key.to_s%>_collapsible_checkbox").collapse('toggle');
+  })
+</script>
+
+<div class="pll accordion-body collapse <%=filter.key.to_s%>_collapsible_checkbox">
+  <%= yield %>
+</div>

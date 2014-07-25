@@ -2,12 +2,18 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: image-url("icons/140318-16x16_icons.png");
+  background-image: image-url("icons/140725-16x16_icons.png");
   width: 16px;
   height: 16px;
 }
 
 /* **************** VIEWPORT ***************** */
+
+.i-grey-unchecked-box {
+  width: 16px;
+  height: 16px;
+  background: #e6e6e6;
+}
 
 .i-16-map-pin {
   background-position: 0 0;
@@ -50,4 +56,40 @@
 
 .i-16-did-you-know {
   background-position: -160px 0px;
+}
+
+.i-16-blue-check-box {
+  background-position: -175px 0px;
+}
+
+.i-16-blue-list-view {
+  background-position: -191px -1px ;
+}
+
+.i-16-grey-list-view {
+  background-position: -191px 16px ;
+}
+
+.i-16-blue-map-view {
+  background-position: -207px 0px ;
+}
+
+.i-16-grey-map-view {
+  background-position: -207px 16px ;
+}
+
+.i-16-closer{
+  background-position: -223px 0px ;
+}
+
+.i-16-farther{
+  background-position: -223px 16px ;
+}
+
+.i-16-info {
+  background-position: -239px 0px;
+}
+
+.i-16-green_check {
+  background-position: -255px 0px;
 }

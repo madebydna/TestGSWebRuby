@@ -12,12 +12,15 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, -> { where('length(status) > 1 AND status LIKE ?', 'p%') }
   scope :not_provisional, -> { where('length(status) = 1') }
   scope :quality_decline, -> { where("quality != 'decline'") }
+  scope :principal, -> { where(who: 'principal') }
+  scope :not_principal, -> { where("who != 'principal'") }
   scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
   scope :disabled, -> { where(status: %w[d pd]) }
   scope :unpublished, -> { where(status: %w[u pu]) }
   scope :held, -> { where(status: %w[h ph]) }
   scope :flagged, -> { joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)") }
   scope :ever_flagged, -> { joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id") }
+  scope :no_rating_and_comments, -> { where("((comments != '' && status != 'a') || quality != 'decline')") }
 
   attr_accessor :reported_entities
   attr_accessor :count
@@ -130,6 +133,16 @@ class SchoolRating < ActiveRecord::Base
       .limit_number(options[:quantity_to_return])
       .offset_number(options[:offset_start])
       .published
+      .not_principal
+      .no_rating_and_comments
+  end
+
+  # group_to_fetch, order_results_by, offset_start, quantity_to_return
+  def self.fetch_principal_review(school, options = {})
+    SchoolRating.where(school_id: school.id, state: school.state)
+    .published
+    .principal
+    .first
   end
 
   def remove_provisional_status!

@@ -2,17 +2,76 @@ class SchoolSearchResult
   include ActionView::Helpers::AssetTagHelper
 
   attr_accessor :fit_score, :max_fit_score, :fit_score_map, :on_page, :overall_gs_rating
-  # Map alternate forms (e.g. legacy Java URL parameters) to solr fields when they do not match
-  SOFT_FILTER_FIELD_MAP = {
-    beforeAfterCare: :before_after_care
-  }
-  # Rollup values
-  SOFT_FILTER_VALUE_MAP = {
-    transportation: {
-      public_transit: ['accessible_via_public_transportation', 'passes'],
-      provided_transit: ['busses', 'shared_bus']
+
+  SOFT_FILTER_FIELD_MAP = Hash.new({}).merge!({
+    beforeAfterCare: {
+      before: :before_after_care,
+      after: :before_after_care
+    },
+    transporation: {
+      public_transit: :Transportation,
+      provided_transit: :Transportation
+    },
+    school_focus: {
+      arts: :academic_focus,
+      science_tech: :instructional_model,
+      career_tech: :academic_focus,
+      french: :immersion_language,
+      german: :immersion_language,
+      spanish: :immersion_language,
+      mandarin: :immersion_language,
+      montessori: :instructional_model,
+      ib: :instructional_model,
+      is: :instructional_model,
+      college_focus: :instructional_model,
+      waldorf: :instructional_model,
+      project: :instructional_model,
+      online: :instructional_model
+    },
+    class_offerings: {
+      ap: :instructional_model,
+      performance_arts: :arts_performing_written,
+      visual_media_arts: [:arts_visual, :arts_media],
+      music: :arts_music,
+      french: :foreign_language,
+      german: :foreign_language,
+      spanish: :foreign_language,
+      mandarin: :foreign_language
     }
-  }
+  })
+  # Rollup values
+  SOFT_FILTER_VALUE_MAP = Hash.new({}).merge!({
+    transportation: {
+      public_transit: [/^accessible_via_public_transportation$/, /^passes$/],
+      provided_transit: [/^busses$/, /^shared_bus$/]
+    },
+    school_focus: {
+      arts: [/^all_arts$/, /^visual_arts$/, /^performing_arts$/, /^music$/],
+      science_tech: /^STEM$/,
+      career_tech: /^vocational$/,
+      french: /^french$/,
+      german: /^german$/,
+      spanish: /^spanish$/,
+      mandarin: /^mandarin$/,
+      montessori: /^montessori$/,
+      ib: /^ib$/,
+      is: /^independent_study$/,
+      college_focus: [/^AP_courses$/, /^ib$/, /^college_prep$/],
+      waldorf: /^waldorf$/,
+      project: /^project_based$/,
+      online: [/^virtual$/, /^hybrid$/] #ToDo Check OSP Values
+    },
+    class_offerings: {
+      ap: /^AP_courses$/,
+      performance_arts: /\w*/,
+      visual_media_arts: /\w*/,
+      music: /\w*/,
+      french: /^french$/,
+      german: /^german$/,
+      spanish: /^spanish$/,
+      mandarin: /^mandarin$/
+    }
+  })
 
   def initialize(hash)
     @fit_score = 0
@@ -47,18 +106,17 @@ class SchoolSearchResult
   protected
 
   def matches_soft_filter?(param, value)
-    # See if the filter name needs to be mapped to a canonical field name
-    filter = SOFT_FILTER_FIELD_MAP[param.to_sym].presence || param.to_sym
-    if filter && respond_to?(filter)
-      localVal = send(filter) # Grab the value of the field for this result
-      # potentially expand the value into an array of possible values, which handles rollup filters
-      filter_value_map = SOFT_FILTER_VALUE_MAP[filter]
-      ((filter_value_map && filter_value_map[value.to_sym].presence) || [value]).each do |val|
-        if localVal.include?(val)
-          return true
+    # Default return value of SOFT_FILTER_FIELD_MAP and SOFT_FILTER_VALUE_MAP set to empty hash if no key found.
+    filters = SOFT_FILTER_FIELD_MAP[param.to_sym][value.to_sym] || param.to_sym
+    filter_value_map = SOFT_FILTER_VALUE_MAP[param.to_sym][value.to_sym] || /^#{value}$/
+    [*filters].each do |filter|
+      if filter && respond_to?(filter)
+        search_result_value = send(filter)
+        [*filter_value_map].each do |val|
+          [*search_result_value].each { |v| return true if v.match(val) }
         end
       end
     end
-    false
+    false #Returns false even if no soft filter is not supported. Intended?
   end
 end

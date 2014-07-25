@@ -1,49 +1,53 @@
-<div class="limit-width-1200 full-width row ptm plm prm">
-  <div class="col-xs-3 ptm">
-    <div class="dropdown drowpdown-large">
-      <div data-toggle='dropdown' class="dropdown-toggle">Refine Search<span class="caret"></span></div>
-      <ul class="dropdown-menu row" id="searchResultsFilterMenu" style="width:750px;">
-	      <form name="searchResultsFilterForm" class="js-searchResultsFilterForm" action method="get">
+<div class="limit-width-1200 pr ptm plm prm">
+  <div class="pa pam" style="left:-5px">
+    <div class="js-searchFiltersDropdown">Refine Search<span class="caret"></span>
+    </div>
+    <div class="dn zir-1 pam js-searchFiltersMenu">
+      <div class="ptm panel panel-primary">
+        <div class="clearfix">
+          <form name="searchFiltersForm" id="js-searchFiltersForm" action method="get">
 
-           <%lam = lambda do |filters| %>
-             <% [*filters].each do |filter| %>
-               <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
-                 <% lam.call(filter.filters) %>
-               <% end %>
-             <% end %>
-           <% end %>
-           <% lam.call(@filters) %>
+            <%lam = lambda do |filters| %>
+                <% [*filters].each do |filter| %>
+                    <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
+                        <% lam.call(filter.filters) %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            <% lam.call(@filters) %>
 
-          <!--% @filter_display_map.each do |filter_category, filters| %>-->
-            <!--%= render 'search/filter', category: filter_category, filters: filters %>-->
-          <!--% end %>-->
-          <!--This Currently sets state and city even on by location search. We may want to remove this behavior.
-          For now, since java looks for the state delaware in the parameter in order to pass the request to ruby
-          setting the state on every search type is necessary.-->
-          <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
-          <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
-          <div class="col-xs-12">
-            <button class="btn btn-default pull-right mrm mbm" type='submit'>Submit</button>
-          </div>
-        </form>
-      </ul>
-    </div><br>
-  </div>
-  <div class="col-xs-2 ptm">??Guide Me??</div>
-  <div class="col-xs-7 clearfix">
-    <div class="fr">
-      <span id="js-search-list-view"><%=image_tag 'nav/hamburger.png'%> List</span> | <span id='js-search-map-view' class="iconx16 i-16-map-pin"></span>Map
+            <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
+            <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
+          </form>
+        </div>
+
+        <div class="clearfix pal" style="">
+          <label class="fl">
+            <a class="js-advancedFilters">Advanced Filters</a>
+          </label>
+          <button class="btn btn-default fr" id="js-submitSearchFiltersForm" type='submit'>Submit</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready( function(){
-      $('#js-search-list-view').on("click", function(){
-        $('#js-map-canvas').hide();
-          $('#js-search-map-view').on("click", function(){
-              $('#js-map-canvas').show();
-          });
-      });
-  });
-</script>
+<div class="limit-width-1200 full-width row pam">
+  <div class="col-xs-3"></div>
+  <div class="col-xs-2 vam">??Guide Me??</div>
+  <div class="col-xs-7 clearfix">
+    <div class="fr">
+      <span class="js-search-list-view">
+      <span  class="iconx16 i-16-grey-list-view vam"></span>
+      List
+      </span>
+      |
+      <span class="js-search-map-view">
+      <span  class="iconx16 i-16-blue-map-view val"></span>
+        Map
+      </span>
+    </div>
+  </div>
+</div>
+
+

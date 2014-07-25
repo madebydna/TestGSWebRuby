@@ -1,23 +1,40 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
-    var init = function() {
-        $('.js-searchResultsFilterForm').submit(function() {
+    var searchFiltersFormSubmissionHandler = function() {
+        $('#js-submitSearchFiltersForm').on('click', function(){
+//          Todo Refactor to build and submit url, as opposed to building and submitting the form
+            self = $('#js-searchFiltersForm');
+
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
-            var fields = ['lat', 'lon', 'grades', 'distance', 'q'];
+            var fields = ['lat', 'lon', 'grades', 'q'];
 
             for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
-            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, this);
+            GS.uri.Uri.addHiddenFieldsToForm(queryParamters, self);
+
+            if($("#js-distance-select-box").val()=="") {
+                $("#js-distance-select-box").remove();
+            }
 
             var formAction = getQueryPath();
-            GS.uri.Uri.changeFormAction(formAction, this);
+            GS.uri.Uri.changeFormAction(formAction, self);
+            self.submit();
         });
     };
 
-    var pagination = function(query) {
-        //TODO handle ajax later
-        GS.uri.Uri.reloadPageWithNewQuery(query);
+    var searchFiltersMenuHandler = function() {
+        $(".js-searchFiltersDropdown").on('click', function() {
+            var menu = $('.js-searchFiltersMenu');
+            menu.css('display') == 'none' ? menu.show() : menu.hide();
+        })
+    };
+
+    var toggleAdvancedFiltersMenuHandler = function() {
+        $(".js-advancedFilters").on('click', function () {
+            var advancedFiltersMenu = $('.secondaryFiltersColumn');
+            advancedFiltersMenu.css('display') == 'none' ? advancedFiltersMenu.show('slow') : advancedFiltersMenu.hide('fast');
+        });
     };
 
     var sortBy = function(sortType, query) {
@@ -39,10 +56,6 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
-    var keepSearchResultsFilterMenuOpen = function() {
-        stopClickEventPropagation('#searchResultsFilterMenu');
-    };
-
     var stopClickEventPropagation = function(selector) {
         $(selector).bind('click', function (e) { e.stopPropagation() });
     };
@@ -52,14 +65,15 @@ GS.search.results = GS.search.results || (function() {
     };
 
     return {
-        init:init,
-        pagination: pagination,
+        searchFiltersFormSubmissionHandler:searchFiltersFormSubmissionHandler,
         sortBy: sortBy,
-        keepSearchResultsFilterMenuOpen: keepSearchResultsFilterMenuOpen
+        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler,
+        searchFilterDropdownHandler: searchFiltersMenuHandler
     };
 })();
 
 $(document).ready(function() {
-    GS.search.results.init();
-    GS.search.results.keepSearchResultsFilterMenuOpen();
+    GS.search.results.searchFiltersFormSubmissionHandler();
+    GS.search.results.toggleAdvancedFiltersMenuHandler();
+    GS.search.results.searchFilterDropdownHandler();
 });

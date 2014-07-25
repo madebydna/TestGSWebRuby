@@ -34,8 +34,8 @@ $brand-danger:          #d9534f !default;
 $brand-info:            #5bc0de !default;
 
 /////////////MS
-$brand-primary:                #0083B2;
-$brand-primary-darker:         #005877;
+$brand-primary:                #26ABE2;
+$brand-primary-darker:         #204362;
 $brand-primary-dark:           #007299;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
 $brand-primary-lighter2:       lighten($brand-primary, 60%); // #99CDE0
@@ -167,7 +167,7 @@ $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             #0083b2 !default;
+$btn-primary-border:             $brand-primary !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
@@ -317,8 +317,8 @@ $navbar-default-color:             #777 !default;
 $navbar-default-bg:                #f8f8f8 !default;
 
 ///////////////////GS
-$navbar-default-color:             #CCE5ED;
-$navbar-default-bg:                #007EAA;
+$navbar-default-color:             #777777;
+$navbar-default-bg:                #FFFFFF;
 
 $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
@@ -327,8 +327,8 @@ $navbar-default-link-color:                #777 !default;
 $navbar-default-link-hover-color:          #333 !default;
 
 ////////////////////GS
-$navbar-default-link-color:                #CCE5ED;
-$navbar-default-link-hover-color:          #FFF;
+$navbar-default-link-color:                #777777;
+$navbar-default-link-hover-color:          #000000;
 
 $navbar-default-link-hover-bg:             transparent !default;
 $navbar-default-link-active-color:         #555 !default;

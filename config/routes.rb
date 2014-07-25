@@ -1,3 +1,4 @@
+
 LocalizedProfiles::Application.routes.draw do
   require 'states'
   require 'regular_subdomain'
@@ -6,6 +7,9 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
+  root 'home#prototype'
+  get ENV_GLOBAL['home_path'], as: :home, to: 'home#prototype'
+  # This route ("/gsr/home/") is REQUIRED by Apache as long as we are running Tomcat
   get '/gsr/home', as: :home_prototype, to: 'home#prototype'
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
@@ -27,7 +31,6 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get ENV_GLOBAL['home_path'], as: :home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
@@ -40,7 +43,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
-    get '/privacy/#advertiserNotice', as: :advertiser_notice
     get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
@@ -60,6 +62,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    get '/school-district-boundaries-map/', as: :district_boundary
+    get '/about/guidelines.page', as: :review_guidelines
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -84,9 +88,9 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :reviews do
       get 'moderation', on: :collection
-      patch 'publish', on: :member
-      patch 'disable', on: :member
-      patch 'resolve', on: :member
+      put 'publish', on: :member
+      put 'disable', on: :member
+      put 'resolve', on: :member
     end
 
     resources :held_school

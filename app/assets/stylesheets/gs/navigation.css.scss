@@ -17,7 +17,7 @@
 }
 
 #navigation2 nav{
-  background-color: #ffb725;
+  background-color: $brand-primary;
   text-align: center;
   padding-top: 8px;
   ul{
@@ -31,16 +31,16 @@
   display: inline;
   a {
     font: 18px 'opensans-regular',Arial,Helvetica,sans-serif;
-    color: #ffe2a8;
+    color: #FFFFFF;
     text-decoration: none;
     padding: 9px 10px 10px 10px;
     &:hover {
-      background-color: #efae29;
+      background-color: $brand-primary-dark;
       color: #FFFFFF;
     }
   }
   &.active a {
-    background-color: #efae29;
+    background-color: $brand-primary-dark;
     color: #FFFFFF;
 
   }

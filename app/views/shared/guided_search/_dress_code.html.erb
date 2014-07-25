@@ -1,0 +1,53 @@
+<div class="tab-pane" id="<%= @guided_search_tab[2]%>">
+  <h4 class="tac mbl">Let's talk style. Is it important for the school to have...</h4>
+  <div class="row mtl">
+    <div class="tac col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs">
+      <div class="btn-group">
+        <button type="button"
+                class="btn btn-default js-gs-radio"
+
+                data-gs-radio="no_dress_code">
+          No Dress Code
+        </button>
+
+        <button type="button"
+                class="btn btn-default js-gs-radio"
+                data-gs-radio="uniform&dress_code[]=dress_code">
+          Dress Code/Uniform
+        </button>
+        <button type="button"
+                class="btn btn-default js-gs-radio active">
+          No preference</button>
+      </div>
+      <input type="hidden" name="dress_code[]" value="" class="js-gs-radio-value">
+
+    </div>
+    <div class="tac col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-xs">
+
+      <div class="btn-group-vertical">
+        <button type="button"
+                class="btn btn-default js-gs-radio"
+
+                data-gs-radio="no_dress_code">
+          No Dress Code
+        </button>
+
+        <button type="button"
+                class="btn btn-default js-gs-radio"
+                data-gs-radio="uniform&dress_code[]=dress_code">
+          Dress Code/Uniform
+        </button>
+        <button type="button"
+                class="btn btn-default js-gs-radio active">
+          No preference</button>
+      </div>
+
+      <input type="hidden" name="dress_code[]" value="" class="js-gs-radio-value">
+
+    </div>
+
+
+  </div>
+  <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[3], previous_tab_name: @guided_search_tab[1]%>
+
+</div>

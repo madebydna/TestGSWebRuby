@@ -25,6 +25,10 @@ class Grade
     end
   end
 
+  def to_s
+    name
+  end
+
   def self.from_string(value_or_name)
     @@grade_hash[value_or_name]
   end

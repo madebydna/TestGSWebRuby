@@ -43,4 +43,8 @@ describe StatesController do
   describe 'GET choosing_schools' do
     it_behaves_like 'a default state controller action', :choosing_schools
   end
+
+  describe 'GET guided_search' do
+    it_behaves_like 'a default state controller action', :guided_search
+  end
 end

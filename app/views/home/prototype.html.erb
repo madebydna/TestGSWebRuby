@@ -1,3 +1,7 @@
+<% content_for :head do %>
+    <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
+    <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+<% end %>
 <% content_for :javascript_includes do %>
     <script>
         $(function() {

@@ -12,6 +12,16 @@
   <meta name="google-translate-customization" content="f2de2b2d5878217a-6b29fa5c63ed04fa-g4b85244d931270bb-10" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- For third-generation iPad with high-resolution Retina display: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'144x144', href: image_path('icons/favicons/GS_favicon_144x144.png') %>
+  <!-- For iPhone with high-resolution Retina display: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'114x114', href: image_path('icons/favicons/GS_favicon_114x114.png') %>
+  <!-- For first- and second-generation iPad: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'72x72', href: image_path('icons/favicons/GS_favicon_72x72.png') %>
+  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
+
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
   <% else %>

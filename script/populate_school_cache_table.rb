@@ -5,7 +5,7 @@ end
 
 usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
 
-states = ['mi', 'in', 'wi', 'de','ca','nc','oh','dc']
+states = States.abbreviations
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
 cache_key_arg= ARGV[0]
@@ -80,60 +80,8 @@ end
 
 
 def self.test_scores_cache_for_school(school)
-  results_hash_array = []
-
-  data_sets_and_values = TestDataSet.fetch_test_scores(school, 1, 1)
-
-  if data_sets_and_values.present?
-    config_map = {
-      data_type_id: 'data_type_id',
-      data_set_id: 'data_set_id',
-      level_code: 'level_code',
-      subject_id: 'subject_id',
-      grade: 'grade',
-      year: 'year',
-      school_value_text: 'school_value_text',
-      school_value_float: 'school_value_float',
-      state_value_text: 'state_value_text',
-      state_value_float: 'state_value_float',
-      breakdown_id: 'breakdown_id',
-      school_number_tested: 'school_number_tested'
-    }
-
-    data_type_ids = []
-    data_sets_and_values.each do |data_sets_and_value|
-      data_type_id = data_sets_and_value.data_type_id
-      next if !@@test_data_types || @@test_data_types[data_type_id].nil? # skip this if no corresponding test data type
-      data_type_ids << data_type_id
-      hash = active_record_to_hash(config_map,data_sets_and_value)
-      proficiency_band = @@proficiency_bands[data_sets_and_value['proficiency_band_id']]
-      if proficiency_band
-        hash[:proficiency_band] = proficiency_band.name
-      end
-      results_hash_array << hash
-    end
-
-    data_type_descriptions = {}
-    data_type_ids.each do |data_type_id|
-      description_hash = {'test_label' => @@test_data_types[data_type_id].display_name}
-      test_description = test_description_for(data_type_id,school.state)
-      if !test_description.nil?
-        description_hash['test_description'] = test_description.description
-        description_hash['test_source'] = test_description.source
-      end
-      data_type_descriptions[data_type_id] = description_hash
-    end
-
-    school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name:'test_scores')
-    if results_hash_array.present?
-      final_hash = {'data_sets_and_values' => results_hash_array, 'data_types' => data_type_descriptions}
-      school_cache.update_attributes!(:value => final_hash.to_json, :updated => Time.now)
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
-    end
-
-  end
-
+  test_scores_cacher = TestScoresCaching::TestScoresCacher.new(school)
+  test_scores_cacher.cache
 end
 
 keys = []

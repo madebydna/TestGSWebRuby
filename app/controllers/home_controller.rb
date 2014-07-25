@@ -9,24 +9,14 @@ class HomeController < ApplicationController
 
   def prototype
 
+    @canonical_url = home_url
+    # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-                  robots: 'noindex'
+      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
 
     set_omniture_pagename
 
-  end
-
-  def search_prototype
-
-    @article_1 = "/assets/article_img.jpg"
-    @parent_img = "/assets/article_img.jpg"
-
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-                  robots: 'noindex'
-
-    set_omniture_pagename
-
-  end
+    end
 
   def set_omniture_pagename
     gon.omniture_pagename = 'GS:Home'

@@ -1,0 +1,4 @@
+<option value="<%=filter.key.to_s%>"
+    <%if @params_hash.include?('distance') && @params_hash['distance'] == filter.key.to_s%> selected<%end%>>
+    <%=filter.name%>
+</option>

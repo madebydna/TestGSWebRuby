@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery.cookie.js
 //= require jquery_ujs
-//= require twitter/typeahead.min
 //= require lodash
 //= require_self
 //= require_tree ./util
@@ -21,6 +20,7 @@
 //= require_tree ./auth
 //= require_tree ./localized_profiles
 //= require_tree ./guided_search
+//= require_tree ./google_maps
 
 
 Function.prototype.gs_bind = function(obj) {
