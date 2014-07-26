@@ -63,6 +63,19 @@ $(function() {
         }
     });
 
+     $('.js-gs-checkbox-search-dropdown').on('click',function(){
+        var self=$(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.siblings(".js-gs-checkbox-search-collapsible-box");
+        if (hidden_field.css('display') == 'none') {
+            checkbox.removeClass('i-grey-unchecked-box').addClass('i-16-blue-check-box');
+            hidden_field.show('slow')
+        } else {
+            checkbox.removeClass('i-16-blue-check-box').addClass('i-grey-unchecked-box');
+            hidden_field.hide('fast');
+        }
+    });
+
     $('.js-guidedSearch').on('submit',function() {
         $(this).find("input").each( function () {
             if (!$.trim($(this).val())) {

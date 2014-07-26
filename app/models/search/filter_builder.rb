@@ -133,7 +133,7 @@ class FilterBuilder
               visual_media_arts: {name: 'Visual/Media Arts', display_type: :basic_checkbox, category: :class_offerings, key: :visual_media_arts},
               music: {name: 'Music', display_type: :basic_checkbox, category: :class_offerings, key: :music},
               world_languages: {
-                name: 'World Languages (dropdown)',
+                name: 'World Languages',
                 key: :world_languages,
                 display_type: :collapsible_box,
                 filters: {
@@ -187,7 +187,7 @@ class FilterBuilder
             filters: {
               arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
               language_immersion: {
-                name: 'World Language Immersion (dropdown)',
+                name: 'World Language Immersion',
                 key: :world_language_immersion,
                 display_type: :collapsible_box,
                 filters: {
