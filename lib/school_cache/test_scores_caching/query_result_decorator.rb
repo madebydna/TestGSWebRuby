@@ -45,7 +45,7 @@ class TestScoresCaching::QueryResultDecorator
   end
 
   def breakdown_name
-    breakdown = TestScoresCaching::Base.test_data_breakdowns[data_type_id]
+    breakdown = TestScoresCaching::Base.test_data_breakdowns[breakdown_id]
     breakdown.name if breakdown
   end
 
@@ -64,6 +64,10 @@ class TestScoresCaching::QueryResultDecorator
 
   def data_type_id
     self['data_type_id']
+  end
+
+  def breakdown_id
+    self['breakdown_id']
   end
 
   def grade_label
