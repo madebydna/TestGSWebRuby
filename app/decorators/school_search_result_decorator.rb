@@ -7,10 +7,10 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
   delegate_all
 
   def strong_fit?
-    max_fit_score > 0 && (fit_score / max_fit_score) > 0.5
+    max_fit_score > 0 && (fit_score / max_fit_score.to_f) > 0.5
   end
 
   def ok_fit?
-    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score) <= 0.5
+    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) <= 0.5
   end
 end
