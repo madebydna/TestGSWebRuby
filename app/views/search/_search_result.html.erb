@@ -1,78 +1,96 @@
-<div class="row full-width pam">
-  <div class="row full-width partner-carousel-image">
-    <div class="col-md-2 col-lg-3 hidden-xs hidden-sm">
+<div class="full-width pam header-bg-color">
+  <div class="row partner-carousel-image prm bg-white">
+    <!-- Street view image -->
+    <div class="hidden-xs hidden-sm fl mrl">
       <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
       <% @school = decorated_school %>
       <%= decorated_school.photo(130, 130) %>
     </div>
 
-    <div class="<%=search_by_location? ? "col-xs-12 col-sm-4 col-md-4 col-lg-4" : "col-xs-12 col-sm-6 col-md-6 col-lg-5"%>">
-        <div class="ptm">
-          <span class="open-sans_b"><%= link_to school.name, school_path(school) %></span><br>
-          <span class="ptm"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></span><br>
-          <div class="row">
-            <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
-              <span class="prm col-lg-3"><%= draw_stars_16 school.community_rating%></span>
-              <%=link_to "#{school.review_count} reviews", school_reviews_path(school), class: 'prl col-lg-3'%>
-            <% else %>
-              <span class="prm col-lg-6" style="font-style: italic;">No Community Reviews</span>
-            <% end %>
-            <span class="prs col-lg-2"><%= school.type.capitalize%></span>
-            <span class="col-lg-3"><%= decorated_school.process_level %></span>
-          </div>
-        </div>
-      </div>
-
-    <% if search_by_location? %>
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
-        <div class="ptl">
-            <div class="iconx16 i-16-map-pin ma db vam"></div>
-            <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
-        </div>
-      </div>
-    <% end%>
-
-    <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
-      <div class="ptl">
-        <%=link_to school_quality_path(school) do%>
-          <div class="ma db iconx24-ratings i-24-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
-        <% end %>
-      </div>
+    <!-- Compare / Homes for Sale -->
+    <div class="hidden-xs fr mvl" style="width:170px;">
+      <button type="button" class="btn btn-default full-width mbm">
+        <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+        Compare
+      </button>
+      <%= link_to zillow_url(school), :class => 'btn btn-default vam full-width', target: '_blank' do %>
+        <span class="iconx16 i-16-home vam mrs"></span>
+        Homes for sale
+      <% end %>
     </div>
 
-    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-      <div class="ptl">
+    <!-- Fit score -->
+    <div class="col-xs-2 col-sm-1 fr mtl mbs">
+      <%  if decorated_school.strong_fit? || decorated_school.ok_fit? %>
         <div class="dropdown">
-          <div data-toggle='dropdown' class="dropdown-toggle">fit score=<%=school.fit_score%><span class="caret"></span></div>
+          <div data-toggle='dropdown' class="dropdown-toggle">
+            <div>
+              <span class="vam iconx24-icons mrs js-icon <%=(decorated_school.strong_fit?) ? 'i-24-green-check' : 'i-24-blue-ok' %>"></span>
+              <span class="caret"></span>
+            </div>
+            <span class="font-size-xs"><%=(decorated_school.strong_fit?) ? 'Strong fit' : 'Ok fit' %></span>
+          </div>
           <ul class="dropdown-menu">
-            <!--TODO remove inline styling into classes-->
-            <li class="pal" style="font-size: 12px;">
+            <li class="pal">
               <% school.fit_score_map.each do |category_name, category_map| %>
-                <div>
-                  <strong><%=@filter_display_map[category_name.to_sym][:name]%></strong>
+                <div class="font-size-xs">
                   <% category_map.each do |key, value| %>
-                      <div><% if value %>&#10003;<% else %>X<%end%> <%=@filter_display_map[category_name.to_sym][key.to_sym]%></div>
+                    <div class="<%= (value)?'':'gray-dark'%>">
+                      <% if value %>
+                        <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+                      <% else %>
+                        <span class="prm">X</span>
+                      <%end%>
+                      <%=@filter_display_map[category_name.to_sym][key.to_sym]%>
+                    </div>
                   <% end %>
                 </div>
               <% end %>
             </li>
           </ul>
-        </div><br>
-      </div>
+        </div>
+      <% end %>
     </div>
 
-    <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
-      <div class="ptm">
-        <button type="button" class="btn btn-default">
-          <input type="checkbox">
-          compare
-        </button>
-        <div>
-          <%= link_to  zillow_url(school), :class=> 'btn btn-default vam', target: '_blank' do %>
-            <span class="iconx16 i-16-home vam"></span>
-              homes for sale
-          <%end%>
+    <!-- GS Rating -->
+    <div class="col-xs-2 col-sm-1 fr mvl">
+      <%=link_to school_quality_path(school) do%>
+        <div class="ma db iconx24-ratings i-24-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
+      <% end %>
+    </div>
+
+    <% if search_by_location? %>
+      <!-- Distance -->
+      <div class="hidden-xs col-sm-1 fr mtl mbm font-size-small">
+        <div class="iconx16 i-16-map-pin ma db vam"></div>
+        <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
+      </div>
+    <% end%>
+
+    <!-- Photo, name, address, reviews, type, level -->
+    <div class="mll row">
+      <div class="ptm col-xs-6 <%=search_by_location? ? 'col-sm-5' : 'col-sm-6'%>">
+        <div class="open-sans_b mbs"><%= link_to "#{school.name}", school_path(school) %></div>
+        <div class="hidden-xs font-size-small"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></div>
+      </div>
+
+      <div class="font-size-small mvm fl">
+        <div style="clear:left" class="visible-xs visible-small fl"></div>
+        <div class="fl">
+        <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
+            <span class="prm"><%= draw_stars_16 school.community_rating %></span>
+            <%= link_to "#{school.review_count} reviews", school_reviews_path(school), class: 'font-size-small' %>
+        <% else %>
+          <em>No Community Reviews</em>
+        <% end %>
         </div>
+        <div class="phm fl">|</div>
+        <div class="prs fl"><%= school.type.capitalize %></div>
+        <div class="fl"><%= decorated_school.process_level %></div>
+        <% if search_by_location? %>
+          <div class="visible-xs phm fl">|</div>
+          <div class="visible-xs fl"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+        <% end %>
       </div>
     </div>
   </div>
