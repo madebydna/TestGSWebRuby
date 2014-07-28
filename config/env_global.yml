@@ -19,3 +19,6 @@ optimizely_key: "384121511"
 advertising_env: "dev"
 home_path: "/"
 mail_enabled: true
+exacttarget_api_key: API_86987
+exacttarget_api_secret: welcome@1
+exacttarget_wsdl: https://webservice.exacttarget.com/etframework.wsdl
