@@ -77,10 +77,47 @@ $(function() {
     });
 
     $('.js-guidedSearch').on('submit',function() {
-        $(this).find("input").each( function () {
-            if (!$.trim($(this).val())) {
-                $(this).removeAttr("name");
+        try {
+            return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
+        } catch (e) {
+            return false;
+        }
+    });
+
+    var addToArray = function(hash, key, value) {
+        if (hash[key] === undefined) {
+            hash[key] = [value];
+        } else {
+            hash[key].push(value);
+        }
+    };
+
+    var guidedGeocodeCallbackFn = function(geocodeResult) {
+        var searchOptions = jQuery.extend({}, geocodeResult);
+        searchOptions['locationSearchString'] = GS.search.schoolSearchForm.getSearchQuery();
+        // pull values from any selects here
+        searchOptions['distance'] = $('#js-guided-distance').val() || 5;
+        searchOptions['grades'] = $('#js-guided-grades').val();
+
+        // Add input names here to opt them out of form serialization
+        var EXCLUDE_THESE_INPUTS = ['location', 'distance'];
+
+        // values for inputs are iterated here
+        $('.js-guidedSearch').find("input").each( function () {
+            var $this = $(this);
+            var name = $this.attr('name');
+            if ($.trim($this.val()) > '' && name !== undefined && !EXCLUDE_THESE_INPUTS.contains(name)) {
+                if (name.indexOf('[]') > -1) {
+                    addToArray(searchOptions, name, $this.val());
+                } else {
+                    searchOptions[name] = $this.val();
+                }
             }
         });
-    });
+        // Not setting a timeout breaks back button
+        setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
+            '/search/search.page' +
+            GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
+    };
+
 });

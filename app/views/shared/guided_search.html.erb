@@ -13,21 +13,6 @@
   <form role="form" name="guidedSearch" action="/search/search.page" class="js-guidedSearch"
         method="get" >
 
-
-<!-- Hard coding to be removed once integration with search works-->
-  <input type="hidden" name="state" value=<%=@state[:short] %>>
-
-  <input type="hidden" name="lat" value="39.7961255">
-  <input type="hidden" name="lon" value="-75.53931549999999">
-  <input type="hidden" name="zipCode" value="19803">
-  <input type="hidden" name="locationType" value="postal_code">
-  <input type="hidden" name="normalizedAddress" value="Wilmington,%20DE%2019803">
-  <input type="hidden" name="locationSearchString" value="19803">
-  <input type="hidden" name="distance" value="60">
-  <input type="hidden" name="city" value="Wilmington">
-  <input type="hidden" name="sortBy" value="distance">
-
-
   <div   class="tab-content">
   <%=render 'shared/guided_search/get_started'%>
   <%=render 'shared/guided_search/child_care'%>

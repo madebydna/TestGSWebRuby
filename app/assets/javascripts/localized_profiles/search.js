@@ -120,7 +120,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return 0;
     };
 
-    var submitByLocationSearch = function() {
+    var submitByLocationSearch = function(geocodeCallbackFn) {
         var searchQuery = $(this).find(findByLocationSelector).val();
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
@@ -141,18 +141,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['lon'] = geocodeResult['lon'];
                     data['zipCode'] = geocodeResult['zipCode'];
                     data['state'] = geocodeResult['state'];
-                    data['locationType'] = geocodeResult['type'];
+//                    data['locationType'] = geocodeResult['type'];
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
-                    data['totalResults'] = geocodeResult['totalResults'];
-                    data['locationSearchString'] = searchQuery;
-                    data['distance'] = $('#js-distance-select-box').val() || 5;
+//                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
-                    $('#js-prototypeSearchGradeLevelFilter').val() == undefined || (data['grades'] = $('#js-prototypeSearchGradeLevelFilter').val());
-                    // Not setting a timeout breaks back button
-                    setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
-                            SEARCH_PAGE_PATH +
-                            GS.uri.Uri.getQueryStringFromObject(data); }, 1);
+                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
                     alert("Location not found. Please enter a valid address, city, or ZIP.");
                 }
@@ -162,6 +156,26 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
 
         return false;
+    };
+
+    var getSearchQuery = function() {
+        var searchQuery = $(findByLocationSelector).val();
+        return searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
+    };
+
+    var defaultGeocodeCallbackFn = function(geocodeResult) {
+        var searchOptions = jQuery.extend({}, geocodeResult);
+        searchOptions['locationSearchString'] = getSearchQuery();
+        searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
+        var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+        if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
+            searchOptions['grades'] = gradeLevelFilter.val();
+        }
+
+        // Not setting a timeout breaks back button
+        setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
+            SEARCH_PAGE_PATH +
+            GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
     };
 
     var schools = new Bloodhound({
@@ -750,6 +764,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         setupTabs: setupTabs,
         submitByLocationSearch: submitByLocationSearch,
         submitByNameSearch: submitByNameSearch,
+        getSearchQuery: getSearchQuery,
         gsGeocode: gsGeocode,
         cities: cities,
         districts: districts,
