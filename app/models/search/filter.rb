@@ -40,9 +40,3 @@ class Filter
 
 end
 
-class SliderFilter < Filter
-  def get_values_of_children #gets names and query_param_keys of children. For filters that need all values at once.
-  end
-end
-
-

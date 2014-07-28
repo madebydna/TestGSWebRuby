@@ -430,18 +430,6 @@ class SearchController < ApplicationController
     rval_map
   end
 
-  def get_next_page(query, page_size, result_offset)
-    query << '&' if query.length > 1
-    query << "pageSize=#{page_size}"
-    query << "&start=#{result_offset + page_size}"
-  end
-
-  def get_previous_page(query, page_size, result_offset)
-    query << '&' if query.length > 1
-    query << "pageSize=#{page_size}"
-    query << "&start=#{result_offset - page_size}"
-  end
-
   def calculate_fit_score(results, params_hash)
     params = params_hash.select do |key|
       SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
