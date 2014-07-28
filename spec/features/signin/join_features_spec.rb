@@ -31,7 +31,7 @@ feature "Join Page" do
       fill_in 'join-email', with: 'ssprouse+testing@greatschools.org'
       check 'terms_terms'
       click_button 'Register email'
-      @email = ActionMailer::Base.deliveries.last
+      @email = ExactTarget.last_delivery_args
     end
     after(:each) do
       clean_models User, SchoolRating
@@ -45,21 +45,20 @@ feature "Join Page" do
 
     it 'sends an email verification email' do
       expect(@email).to be_present
-      expect(@email.subject)
-        .to eq 'Please verify your email for GreatSchools'
+      expect(@email[:key]).to eq(EmailVerificationEmail.exact_target_email_key)
     end
 
     it 'sends the email to the right person' do
-      expect(@email.to).to include 'ssprouse+testing@greatschools.org'
+      expect(@email[:recipient]).to eq('ssprouse+testing@greatschools.org')
     end
 
     feature 'email verification email' do
       it 'contains an email verification link' do
-        expect(@email.body).to match verify_email_path
+        expect(@email[:attributes][:VERIFICATION_LINK]).to be_present
       end
 
       feature 'visiting the verification link' do
-        let(:verification_link) { @email.body.match(/href=\"(.+)\"/)[1] }
+        let(:verification_link) { @email[:attributes][:VERIFICATION_LINK].match(/(http.+)(\">.+)/)[1] }
         let(:user) { User.with_email 'ssprouse+testing@greatschools.org' }
         let(:review) {
           FactoryGirl.create(:school_rating,

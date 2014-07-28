@@ -160,7 +160,7 @@ module AuthenticationConcerns
       })
       if error.nil?
         flash_notice t('actions.account.created_via_facebook') # TODO: move this up a method
-        UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
+        EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
       end
     else
       unless user.has_facebook_account?
@@ -176,5 +176,7 @@ module AuthenticationConcerns
 
     return user, error
   end
+
+  
 
 end

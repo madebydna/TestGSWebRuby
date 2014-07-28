@@ -193,7 +193,7 @@ class SigninController < ApplicationController
     })
 
     if user && error.nil?
-      UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
+      EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 
     return user, error

@@ -86,6 +86,12 @@ gem 'protected_attributes'
 
 gem 'nokogiri', '= 1.6.1'
 
+# SOAP client
+gem 'savon', '~> 2.6.0'
+# Ruby/NTLM provides message creator and parser for the NTLM authentication.
+# Required by savon gem
+gem 'rubyntlm', '~> 0.4.0'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests

@@ -14,9 +14,9 @@
     </div>
     <div id="fb-root"></div>
     <% if @show_ads %>
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :desktop  %>
-      </div>
+        <div class="ptl mtl">
+            <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :mobile  %>
+        </div>
     <% end %>
   </div>
   <% if @show_ads %>
