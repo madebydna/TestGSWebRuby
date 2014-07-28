@@ -170,6 +170,8 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
+    max_num_of_pages = get_max_number_of_pages(@total_results, @page_size)
+    @window_size = get_window_size(@page_number, max_num_of_pages)
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
@@ -313,6 +315,25 @@ class SearchController < ApplicationController
     page_size = (params[:pageSize])?(params[:pageSize].to_i):25
     page_size = 1 if page_size < 1
     page_size
+  end
+
+  def get_max_number_of_pages(total_results, page_size)
+    return 1 if total_results <= page_size
+    if total_results % page_size == 0
+      total_results / page_size
+    else
+      total_results / page_size + 1
+    end
+  end
+
+  def get_window_size(page_number, max_number_of_pages)
+    if page_number < 5
+      9 - page_number
+    elsif page_number > max_number_of_pages - 6
+      9 - (max_number_of_pages - page_number)
+    else
+      4
+    end
   end
 
   private

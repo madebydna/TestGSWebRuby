@@ -4,7 +4,7 @@
       <span class="prm">Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>
     <% end %>
     <div>
-      <%= paginate @pagination, theme: 'guided_search_theme', params: @params_hash %>
+      <%= paginate @pagination, theme: 'guided_search_theme', window: @window_size, params: @params_hash %>
       <% #view file located in /views/kaminari/guided_search_theme %>
     </div>
   </div>
