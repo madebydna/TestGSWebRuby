@@ -121,7 +121,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var submitByLocationSearch = function(geocodeCallbackFn) {
-        var searchQuery = $(this).find(findByLocationSelector).val();
+        var searchQuery = getSearchQuery();
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
         if (searchQuery != '' &&
@@ -159,7 +159,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var getSearchQuery = function() {
-        var searchQuery = $(findByLocationSelector).val();
+        var searchQuery = $(GS.search.schoolSearchForm.findByLocationSelector).val();
         return searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
     };
 
@@ -739,20 +739,20 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
-    var submitByNameSearch = function() {
-        var searchString = $(this).find(findByNameSelector).val();
+    var submitByNameSearch = function(queryStringOptions) {
+        var searchString = $(this).find(GS.search.schoolSearchForm.findByNameSelector).val();
 //        TODO temporarily added find('[name=state]')
         var state = $(this).find('input#js-state').val() || $(this).find('[name=state]').val();
         var collectionId = $(this).find('input#js-collectionId').val();
-        var searchType = $(this).find('input[name="search_type"]').val();
-        var queryString = {};
+        var queryString = jQuery.extend({}, queryStringOptions);
 
         queryString.q = encodeURIComponent(searchString);
-        queryString.search_type = encodeURIComponent(searchType);
         if (typeof collectionId !== 'undefined') {
             queryString.collectionId = encodeURIComponent(collectionId);
         }
-        queryString.state = encodeURIComponent(state);
+        if (typeof state !== 'undefined') {
+            queryString.state = encodeURIComponent(state);
+        }
 
         setTimeout(function() { window.location = window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
@@ -771,7 +771,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         schools: schools,
         attachAutocomplete: attachAutocomplete,
         isAddress: isAddress,
-        searchType: searchType
+        searchType: searchType,
+        findByNameSelector: findByNameSelector,
+        findByLocationSelector: findByLocationSelector
     };
 })();
 

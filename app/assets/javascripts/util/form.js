@@ -122,9 +122,16 @@ $(function() {
     };
 
     $('.js-guidedSearch').on('submit',function() {
+        GS.search.schoolSearchForm.findByNameSelector = '#js-guidedQueryString';
+        GS.search.schoolSearchForm.findByLocationSelector = '#js-guidedQueryString';
         try {
-            return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
+            if (GS.search.schoolSearchForm.isAddress(GS.search.schoolSearchForm.getSearchQuery())) {
+                return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
+            } else {
+                return GS.search.schoolSearchForm.submitByNameSearch.call(this, getSelectedFilterValues());
+            }
         } catch (e) {
+            console.log(e);
             return false;
         }
     });
@@ -137,18 +144,12 @@ $(function() {
         }
     };
 
-    var guidedGeocodeCallbackFn = function(geocodeResult) {
-        var searchOptions = jQuery.extend({}, geocodeResult);
-        searchOptions['locationSearchString'] = GS.search.schoolSearchForm.getSearchQuery();
-        // pull values from any selects here
-        searchOptions['distance'] = $('#js-guided-distance').val() || 5;
-        searchOptions['grades'] = $('#js-guided-grades').val();
-
+    var getSelectedFilterValues = function() {
         // Add input names here to opt them out of form serialization
         var EXCLUDE_THESE_INPUTS = ['location', 'distance'];
-
+        var searchOptions = {};
         // values for inputs are iterated here
-        $('.js-guidedSearch').find("input").each( function () {
+        $('.js-guidedSearch').find("input").each(function () {
             var $this = $(this);
             var name = $this.attr('name');
             if ($.trim($this.val()) > '' && name !== undefined && !EXCLUDE_THESE_INPUTS.contains(name)) {
@@ -159,6 +160,18 @@ $(function() {
                 }
             }
         });
+        searchOptions.state = 'DE';
+        return searchOptions;
+    };
+
+    var guidedGeocodeCallbackFn = function(geocodeResult) {
+        var searchOptions = getSelectedFilterValues();
+        searchOptions = jQuery.extend(searchOptions, geocodeResult);
+        searchOptions['locationSearchString'] = GS.search.schoolSearchForm.getSearchQuery();
+        // pull values from any selects here
+        searchOptions['distance'] = $('#js-guided-distance').val() || 5;
+        searchOptions['grades'] = $('#js-guided-grades').val();
+
         // Not setting a timeout breaks back button
         setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
             '/search/search.page' +
