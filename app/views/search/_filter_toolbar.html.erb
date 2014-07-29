@@ -2,7 +2,7 @@
     <!-- button bar / button group. Look at guided search for dress code.  btn-group  -->
     <div class="btn-group row full-width">
         <button type="button" class="btn btn-primary col-xs-4 js-searchFiltersDropdown">Filters</button>
-        <button type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white;">Guide Me</button>
+        <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white;" href="<%=state_guided_search_path%>">Guide Me</a>
         <button type="button" class="btn btn-primary col-xs-4 js-search-toggle-map-view" style="border-left: thin solid white;">Map</button>
     </div>
 </div>
@@ -42,7 +42,10 @@
 
 <div class="hidden-xs limit-width-1200 full-width row pam">
   <div class="col-xs-3"></div>
-  <div class="col-xs-2 vam">??Guide Me??</div>
+  <div class="col-xs-2">
+    <span class="iconx16 i-16-blue-info vam"></span>
+    <a href='<%=state_guided_search_path%>'>Guide Me</a>
+  </div>
   <div class="col-xs-7 clearfix">
     <div class="fr">
       <span class="js-search-list-view">
