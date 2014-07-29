@@ -42,12 +42,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 if (searchType == 'byLocation') {
-                    findByLocationSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
-                    findByNameSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
 //                    ToDo Hard coded byName search to Delaware
-                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this)
+                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
                     return submitByNameSearch.apply(this);
                 } else {
                     return false;
@@ -72,7 +72,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             $(locationSelector).removeClass('selected');
             $('.location-search').hide();
         });
-    }
+    };
 
     var validateField = function(field) {
         if (field['value'] == field['defaultValue']) {
