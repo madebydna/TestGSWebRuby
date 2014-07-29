@@ -1,4 +1,40 @@
-GS.guidedsearch = GS.guidedsearch || {};
+var GS = GS || {};
+GS.forms = GS.forms || {};
+
+// Updates the custom checkboxes, radio buttons, and pulldowns, based
+// on the state of their hidden form fields
+GS.forms.updateFormVisualElements = function() {
+  // Set initial state of visual checkboxes based on if hidden fields
+  // have initial value
+  $('input.js-gs-checkbox-value:hidden').each(function() {
+    var $this = $(this);
+    if ($this.val() !== '') {
+      var checkbox = $this.parent().find('.i-24-checkmark-off');
+      checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+    }
+  });
+  // Set initial state of visual radio buttons based on if hidden fields
+  // have initial value
+  $('input.js-gs-radio-value:hidden').each(function() {
+    var $this = $(this);
+    if ($this.val() !== '') {
+      $this.parent().find('.js-gs-radio').removeClass('active');
+      checkbox = $this.parent().find('.js-gs-radio[data-gs-radio="' + $this.val() + '"]');
+      checkbox.addClass('active');
+    }
+  });
+  // For pulldowns, if any child elements are checked, then visually
+  // checkmark the pulldown button
+  var pulldowns = $('.js-pull-down.js-gs-checkbox');
+  pulldowns.each(function() {
+    var $parent = $(this).parent();
+    if ($parent.find('input.js-gs-checkbox-value:hidden').filter(function() {
+      return $(this).val() !== '';
+    }).length > 0) {
+      $(this).find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+    }
+  });
+};
 
 $(function() {
     $('.js-gs-radio').on('click',function(){
