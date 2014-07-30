@@ -4,13 +4,13 @@ GS.search.results = GS.search.results || (function() {
     var searchFiltersFormSubmissionHandler = function() {
         $('#js-submitSearchFiltersForm').on('click', function(){
 //          Todo Refactor to build and submit url, as opposed to building and submitting the form
-            self = $('#js-searchFiltersForm');
+            var self = $('#js-searchFiltersForm');
 
             var getParam = GS.uri.Uri.getFromQueryString;
             var queryParamters = {};
             var fields = ['lat', 'lon', 'grades', 'q'];
 
-            for (var i in fields) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
+            for (var i; i++; fields.length) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, self);
 
             if($("#js-distance-select-box").val()=="") {

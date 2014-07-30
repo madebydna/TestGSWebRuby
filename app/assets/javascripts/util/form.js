@@ -89,7 +89,7 @@ $(function() {
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
         var gs_checkBox= self.data('gs-checkbox-value');
-        var gs_checkBoxCategory= self.data('gs-checkbox-category');
+        var gs_checkBoxCategory= self.data('gs-checkbox-name');
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-grey-unchecked-box').addClass('i-16-blue-check-box');
             hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
