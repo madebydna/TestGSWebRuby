@@ -79,6 +79,12 @@ googletag.cmd = googletag.cmd || [];
 $(function(){
   var dfp_slots = $(".gs_ad_slot").filter(":visible");
   if (dfp_slots.length > 0 || gon.pagename == "Reviews") {
+
+//    Remove after ab test
+    if(!$.isEmptyObject(gon.ad_set_channel_ids)){
+      googletag.pubads().set("adsense_channel_ids", gon.ad_set_channel_ids);
+    }
+
     googletag.cmd.push(function() {
       $(dfp_slots).each(function(){
         var layerObj = $(this);

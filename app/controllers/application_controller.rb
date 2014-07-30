@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
+  before_action :add_ab_test_to_gon
 
   after_filter :disconnect_connection_pools
 
@@ -283,5 +284,22 @@ class ApplicationController < ActionController::Base
         @tab = 'Community'
       end
     end
+  end
+
+  def add_ab_test_to_gon
+    # Adding for a/b test
+    #     Responsive-Test Group ID: 4517881831
+    #     Control ID: 4020610234
+    responsive_ads = "4517881831"
+    control_id = "4020610234"
+
+    ab_id = ''
+    if(request.headers["X-ABVersion"] == "a")
+      ab_id = control_id
+    elsif (request.headers["X-ABVersion"] == "b")
+      ab_id = responsive_ads
+    end
+    gon.ad_set_channel_ids = ab_id
+    gon.ab_value = request.headers["X-ABVersion"]
   end
 end
