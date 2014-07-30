@@ -10,6 +10,7 @@ class SearchController < ApplicationController
   layout 'application'
 
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
+  SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
   NUM_NEARBY_CITIES = 8
@@ -298,7 +299,7 @@ class SearchController < ApplicationController
   end
 
   def parse_sorts(params_hash)
-    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array)
+    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
   end
 
   def get_page_number
