@@ -99,19 +99,23 @@ $(function() {
         }
     });
 
-     $('.js-gs-checkbox-search-dropdown').on('click',function(){
-        var self=$(this);
-        var checkbox = self.children(".js-icon");
-        var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
-        var children = hidden_box.children('div').children('.js-gs-checkbox-value');
+    $('.js-gs-checkbox-search-dropdown').on('click',function(){
+       var self=$(this);
+       var checkbox = self.children(".js-icon");
+       var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
+       var children = hidden_box.children('div').children('.js-gs-checkbox-value');
 
-        hidden_box.css('display') == 'none' ? hidden_box.show('slow') : hidden_box.hide('fast');
+       hidden_box.css('display') == 'none' ? hidden_box.show('slow') : hidden_box.hide('fast');
+       toggleCheckboxForCollapsibleBox(checkbox, children);
+    });
+
+    var toggleCheckboxForCollapsibleBox = function(checkbox, children) {
         if (childCheckboxesAreEmpty(children)) {
             checkbox.removeClass('i-16-blue-check-box').addClass('i-grey-unchecked-box');
         } else {
             checkbox.removeClass('i-grey-unchecked-box').addClass('i-16-blue-check-box');
         }
-    });
+    };
 
     var childCheckboxesAreEmpty = function(children) {
         var isEmpty = true;
@@ -119,6 +123,17 @@ $(function() {
             if ($(this).val() !== '') { isEmpty = false }
         });
         return isEmpty
+    };
+
+//    ToDo Refactor and combine collapsible box toggling functionality
+    var toggleCheckboxForCollapsibleBoxOnLoad = function() {
+        $('.js-gs-checkbox-search-dropdown').each(function(i) {
+            var self=$(this);
+            var checkbox = self.children(".js-icon");
+            var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
+            var children = hidden_box.children('div').children('.js-gs-checkbox-value');
+            toggleCheckboxForCollapsibleBox(checkbox, children);
+        });
     };
 
     $('.js-guidedSearch').on('submit',function() {
@@ -178,4 +193,9 @@ $(function() {
             GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
     };
 
+    GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
+});
+
+$(document).ready(function() {
+    GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
 });

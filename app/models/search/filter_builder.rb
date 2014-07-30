@@ -134,7 +134,7 @@ class FilterBuilder
               music: {name: 'Music', display_type: :basic_checkbox, category: :class_offerings, key: :music},
               world_languages: {
                 name: 'World Languages',
-                key: :world_languages,
+                category: :world_languages,
                 display_type: :collapsible_box,
                 filters: {
                   french: {name: 'French', display_type: :basic_checkbox, category: :class_offerings, key: :french},
@@ -188,7 +188,7 @@ class FilterBuilder
               arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
               language_immersion: {
                 name: 'World Language Immersion',
-                key: :world_language_immersion,
+                category: :world_language_immersion,
                 display_type: :collapsible_box,
                 filters: {
                   french: {name: 'French', display_type: :basic_checkbox, category: :school_focus, key: :french},
