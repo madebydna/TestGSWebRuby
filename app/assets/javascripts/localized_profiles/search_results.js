@@ -33,7 +33,14 @@ GS.search.results = GS.search.results || (function() {
     var toggleAdvancedFiltersMenuHandler = function() {
         $(".js-advancedFilters").on('click', function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
-            advancedFiltersMenu.css('display') == 'none' ? advancedFiltersMenu.show('slow') : advancedFiltersMenu.hide('fast');
+            if (advancedFiltersMenu.css('display') == 'none') {
+                advancedFiltersMenu.show('slow');
+                $(this).text('Less filters');
+            }
+            else {
+                advancedFiltersMenu.hide('fast');
+                $(this).text('More filters');
+            }
         });
     };
 
