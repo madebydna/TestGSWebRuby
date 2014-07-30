@@ -10,7 +10,7 @@ GS.search.results = GS.search.results || (function() {
             var queryParamters = {};
             var fields = ['lat', 'lon', 'grades', 'q'];
 
-            for (var i; i++; fields.length) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
+            for (var i = 0; i < fields.length; i++) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
             GS.uri.Uri.addHiddenFieldsToForm(queryParamters, self);
 
             if($("#js-distance-select-box").val()=="") {
