@@ -3,13 +3,14 @@
   <div class="row mtl ma mbl">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
       <button class="btn btn-default tal js-gs-checkbox"
-              data-gs-checkbox="montessori&school_focus[]=waldorf"
+              data-gs-checkbox="ap"
               type="button"
               style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Sports
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>AP courses
       </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-  </div>
+      <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+
+    </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
       <button class="btn btn-default tal js-gs-checkbox"
               data-gs-checkbox="montessori&school_focus[]=waldorf"
@@ -21,14 +22,54 @@
 
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
-      <button class="btn btn-default tal js-gs-checkbox"
-              data-gs-checkbox="ap"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>AP courses
-      </button>
-      <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
-
+        <div class="js-gs-checkbox js-pull-down"
+           data-pull-down-content=".js-arts" >
+        <button class="btn btn-default tal"
+                type="button"
+                style="width:100%;">
+          <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Arts
+        </button>
+        </div>
+      <div class="dn js-arts pal" style="border: thin solid #cccccc">
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm"
+                  data-gs-checkbox="visual_media_arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Visual/Media
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm"
+                  data-gs-checkbox="music"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Music
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm"
+                  data-gs-checkbox="performance_arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Performance
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="clearfix">
+          <div class="fr ">
+            <button class="btn btn-primary btn-sm js-pull-down" type="button"
+                    data-pull-down-content=".js-arts">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
       <div class="js-gs-checkbox js-pull-down"
@@ -92,6 +133,7 @@
       </div>
 
     </div>
+
   </div>
 
 
