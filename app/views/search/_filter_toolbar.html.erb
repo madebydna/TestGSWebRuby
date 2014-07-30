@@ -1,11 +1,12 @@
 <div class="visible-xs">
     <!-- button bar / button group. Look at guided search for dress code.  btn-group  -->
     <div class="btn-group row full-width">
-        <% show_guided_search = ((state = params['state'].presence) == 'DE' || state == 'Delaware' )%>
+        <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
+        <% state = 'delaware' #ToDo set state to actual state %>
         <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdown">Filters</button>
         <% if show_guided_search %>
           <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white;"
-            href="<%= state_guided_search_path(state: States.state_name(state)) %>">
+            href="<%= state_guided_search_path(state: state) %>">
             Guide Me
           </a>
         <%end %>
@@ -51,7 +52,7 @@
   <div class="col-xs-2">
     <% if show_guided_search %>
       <span class="iconx16 i-16-blue-info vam"></span>
-      <a href='<%= state_guided_search_path(state: States.state_name(state)) %>'>Guide Me</a>
+      <a href='<%= state_guided_search_path(state: state) %>'>Guide Me</a>
     <% end %>
   </div>
   <div class="col-xs-7 clearfix">
