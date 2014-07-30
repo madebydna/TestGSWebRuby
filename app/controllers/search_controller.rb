@@ -9,6 +9,7 @@ class SearchController < ApplicationController
 
   layout 'application'
 
+  #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
   SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
   MAX_RESULTS_FROM_SOLR = 2000
@@ -171,8 +172,7 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    max_num_of_pages = get_max_number_of_pages(@total_results, @page_size)
-    @window_size = get_window_size(@page_number, max_num_of_pages)
+    @window_size = get_kaminari_window_size(@page_number, @total_results, @page_size)
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
@@ -327,7 +327,8 @@ class SearchController < ApplicationController
     end
   end
 
-  def get_window_size(page_number, max_number_of_pages)
+  def get_kaminari_window_size(page_number, total_results, page_size)
+    max_number_of_pages = get_max_number_of_pages(total_results, page_size)
     if page_number < 5
       9 - page_number
     elsif page_number > max_number_of_pages - 6
