@@ -61,6 +61,8 @@ class StatesController < ApplicationController
       @collection_id = hub_city_mapping.collection_id
       @canonical_url = state_guided_search_url(params[:state])
       @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
+      set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search')
+
       render 'shared/guided_search'
     end
   end
