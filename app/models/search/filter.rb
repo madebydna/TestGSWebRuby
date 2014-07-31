@@ -13,29 +13,16 @@ class Filter
     @has_children = attributes[:filters].present?
   end
 
-  def filters_display_map #returns map for search result fit score map
-    ###EXAMPLE map to return
-    {
-      girls_sports: {
-        label: 'Girls Sports',
-        soccer: 'Soccer',
-        basketball: 'Basketball',
-        football: 'Football'
-      }
-    }
-    build_map(self) unless filters.nil?
-  end
-
-  def build_map(filter)
-    if filter.has_children
-      filter.filters.inject({}) do |hash, f|
-        map = build_map(f).inject({}) do |h, (k, v)|
+  def build_map #returns map for search result fit score map
+    if self.has_children
+      self.filters.inject({}) do |hash, f|
+        map = f.build_map.inject({}) do |h, (k, v)|
           hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}) ; hash
         end
         map[f.name].merge!({label: f.label}) if f.display_type == :title ; map
       end
     else
-      { filter.name => { filter.value => filter.label } }
+      { self.name => { self.value => self.label } }
     end
   end
 

@@ -23,11 +23,11 @@
           <form name="searchFiltersForm" id="js-searchFiltersForm" action method="get">
 
             <%lam = lambda do |filters| %>
-                <% [*filters].each do |filter| %>
-                    <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
-                        <% lam.call(filter.filters) %>
-                    <% end %>
+              <% [*filters].each do |filter| %>
+                <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
+                  <% lam.call(filter.filters) %>
                 <% end %>
+              <% end %>
             <% end %>
             <% lam.call(@filters) %>
 
