@@ -83,7 +83,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                       imageAnchor = point_5_5; // center of image
 
                       if (point.preschool) {
-                          pixelOffset = 40;
+                          pixelOffset = 30;
                       } else if (parseInt(point.gsRating) >= 8) {
                           pixelOffset = 0;
                       } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
