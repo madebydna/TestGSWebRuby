@@ -3,14 +3,14 @@ class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
   def initialize
-    @filters = build_filter(get_filters)[0]
+    @filters = build_filter_tree(get_filters)[0]
     @filter_display_map = @filters.build_map
   end
 
-  def build_filter(filters)
+  def build_filter_tree(filters)
     filters = {filter: filters} unless filters[:filters].nil?
     filters.map do |key, value|
-      value[:filters] = build_filter(value[:filters]) unless value[:filters].nil?
+      value[:filters] = build_filter_tree(value[:filters]) unless value[:filters].nil?
       Filter.new(value)
     end
   end
