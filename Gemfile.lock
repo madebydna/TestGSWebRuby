@@ -7,6 +7,17 @@ GIT
       activerecord
       activesupport
 
+GIT
+  remote: https://github.com/gs-samson/rails_admin_nestable.git
+  revision: 8abe93a61c7d051af02044453437331b7612ca18
+  specs:
+    rails_admin_nestable (0.2.0)
+      coffee-rails
+      haml-rails
+      rails (>= 3.1)
+      rails_admin
+      sass-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -291,12 +302,6 @@ GEM
       remotipart (~> 1.0)
       safe_yaml (~> 1.0)
       sass-rails (~> 4.0)
-    rails_admin_nestable (0.1.7)
-      coffee-rails
-      haml-rails
-      rails (>= 3.1)
-      rails_admin
-      sass-rails
     rails_best_practices (1.15.4)
       activesupport
       awesome_print
@@ -500,7 +505,7 @@ DEPENDENCIES
   rack_after_reply
   rails (= 4.1.1)
   rails_admin
-  rails_admin_nestable
+  rails_admin_nestable!
   rails_best_practices
   request_store (~> 1.0.3)
   rsolr

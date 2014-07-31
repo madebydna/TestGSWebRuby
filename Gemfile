@@ -54,7 +54,7 @@ gem 'mini_fb'
 gem 'ancestry'
 
 # gem to extend railsadmin with a view for working with models that are trees
-gem 'rails_admin_nestable'
+gem 'rails_admin_nestable', git: 'https://github.com/gs-samson/rails_admin_nestable.git'
 
 # Gives syntax highlighting functionality for code displayed on page
 gem 'coderay'
