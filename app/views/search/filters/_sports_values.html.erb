@@ -1,0 +1,15 @@
+
+<% is_match = (@params_hash.include?(filter.name.to_s) && [*@params_hash[filter.name.to_s]].include?(filter.value.to_s)).present? %>
+
+  <button type="button" class="btn btn-default fifth-width js-sportsIconButton
+         <%= is_match ? "btn-primary" : "btn-default"%>"
+         style="padding-left: 9px; padding-bottom: 4px;"
+         data-gs-checkbox-value="<%=filter.value%>"
+         data-gs-checkbox-category="<%=filter.name%>[]"
+         data-gs-checkbox-icon-label="i-<%=filter.label%>"
+  >
+
+    <span class='iconx24_search <%= is_match ? "i-#{filter.label}-on" : "i-#{filter.label}-off"%> js-icon'></span>
+    <input type="hidden" <%= is_match ? "name=#{filter.name.to_s}[] value=#{filter.value.to_s}" : '' %> class="js-value">
+  </button>
+

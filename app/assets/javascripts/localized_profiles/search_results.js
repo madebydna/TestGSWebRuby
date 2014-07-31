@@ -16,6 +16,7 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
+
     var buildAndSendFiltersForm = function(form) {
         var getParam = GS.uri.Uri.getFromQueryString;
         var queryParamters = {};

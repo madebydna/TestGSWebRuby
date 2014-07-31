@@ -69,7 +69,6 @@ $(function() {
     });
 
     $("body").on('click','.js-gs-checkbox',function(){
-
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -84,6 +83,7 @@ $(function() {
         }
 
     });
+
     $('.js-gs-checkbox-search').on('click',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
@@ -107,6 +107,38 @@ $(function() {
 
        hidden_box.css('display') == 'none' ? hidden_box.show('slow') : hidden_box.hide('fast');
        toggleCheckboxForCollapsibleBox(checkbox, children);
+    });
+
+    $('.js-sportsIconButton').on('click', function(){
+        var self = $(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.children(".js-value");
+        var gs_checkBox= self.data('gs-checkbox-value');
+        var gs_checkBoxCategory= self.data('gs-checkbox-category');
+        var gs_iconLabel = self.data('gs-checkbox-icon-label');
+
+        if (hidden_field.val()== '') {
+            checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
+            self.removeClass('btn-default').addClass('btn-primary');
+            hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
+        } else {
+            checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
+            self.removeClass('btn-primary').addClass('btn-default');
+            hidden_field.removeAttr("value").removeAttr("name");
+        }
+    });
+
+    $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
+        var self = $(this);
+        var sibling = self.siblings('.js-sports-gender');
+        var gs_gender = self.data('gs-gender');
+        var self_filters = $('.js-'+ gs_gender +'-sports-values');
+        var sibling_filters = self_filters.siblings('.js-sports-button-group');
+
+        sibling_filters.hide();
+        self_filters.slideToggle('slow');
+        self.removeClass('btn-default').addClass('btn-primary');
+        sibling.removeClass('btn-primary').addClass('btn-default');
     });
 
     var toggleCheckboxForCollapsibleBox = function(checkbox, children) {

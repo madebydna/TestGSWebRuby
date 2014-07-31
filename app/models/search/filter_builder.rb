@@ -136,30 +136,37 @@ class FilterBuilder
             },
             sports: {
               label: 'Sports',
-              display_type: :blank_container, #Replace this with new clickable icon styling
+              display_type: :title, #Replace this with new clickable icon styling
+              name: [:boys_sports, :girls_sports],
               filters: {
-                boys_sports: {
-                  label: 'Boys Sports',
-                  display_type: :title,
-                  name: :boys_sports,
+                sports_icons: {
+                  label: 'Sports',
+                  display_type: :sports_gender_button,
                   filters: {
-                    baseball: {label: 'Baseball', display_type: :basic_checkbox, name: :boys_sports, value: :baseball},
-                    basketball: {label: 'Basketball', display_type: :basic_checkbox, name: :boys_sports, value: :basketball},
-                    football: {label: 'Football', display_type: :basic_checkbox, name: :boys_sports, value: :football},
-                    soccer: {label: 'Soccer', display_type: :basic_checkbox, name: :boys_sports, value: :soccer},
-                    track: {label: 'Track', display_type: :basic_checkbox, name: :boys_sports, value: :track}
-                  }
-                },
-                girls_sports: {
-                  label: 'Girls Sports',
-                  display_type: :title,
-                  name: :girls_sports,
-                  filters: {
-                    cheerleading: {label: 'Cheerleading', display_type: :basic_checkbox, name: :girls_sports, value: :cheerleading},
-                    basketball: {label: 'Basketball', display_type: :basic_checkbox, name: :girls_sports, value: :basketball},
-                    volleyball: {label: 'Volleyball', display_type: :basic_checkbox, name: :girls_sports, value: :volleyball},
-                    soccer: {label: 'Soccer', display_type: :basic_checkbox, name: :girls_sports, value: :soccer},
-                    track: {label: 'Track', display_type: :basic_checkbox, name: :girls_sports, value: :track}
+                    boys_sports: {
+                      label: 'Boys Sports',
+                      display_type: :sports_button_group,
+                      name: :boys_sports,
+                      filters: {
+                        soccer: {label: 'soccer', display_type: :sports_values, name: :boys_sports, value: :soccer},
+                        track: {label: 'track', display_type: :sports_values, name: :boys_sports, value: :track},
+                        basketball: {label: 'basketball', display_type: :sports_values, name: :boys_sports, value: :basketball},
+                        football: {label: 'football', display_type: :sports_values, name: :boys_sports, value: :football},
+                        baseball: {label: 'baseball', display_type: :sports_values, name: :boys_sports, value: :baseball}
+                      }
+                    },
+                    girls_sports: {
+                      label: 'Girls Sports',
+                      display_type: :sports_button_group,
+                      name: :girls_sports,
+                      filters: {
+                        soccer: {label: 'soccer', display_type: :sports_values, name: :girls_sports, value: :soccer},
+                        track: {label: 'track', display_type: :sports_values, name: :girls_sports, value: :track},
+                        volleyball: {label: 'volleyball', display_type: :sports_values, name: :girls_sports, value: :volleyball},
+                        cheerleading: {label: 'cheerleading', display_type: :sports_values, name: :girls_sports, value: :cheerleading},
+                        basketball: {label: 'basketball', display_type: :sports_values, name: :girls_sports, value: :basketball}
+                      }
+                    }
                   }
                 }
               }
