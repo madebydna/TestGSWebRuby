@@ -155,7 +155,7 @@ class SearchController < ApplicationController
   end
 
   def process_results(results, solr_offset)
-    @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+    @query_string = '?' + CGI.unescape(@params_hash.to_param)
     @total_results = results[:num_found]
     school_results = results[:results] || []
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
@@ -313,9 +313,11 @@ class SearchController < ApplicationController
   end
 
   def get_page_size
-    page_size = (params[:pageSize])?(params[:pageSize].to_i):25
-    page_size = 1 if page_size < 1
-    page_size
+    #ToDo Hiding param to alter page size. Hardcode to 25 results per page?
+    # page_size = (params[:pageSize])?(params[:pageSize].to_i):25
+    # page_size = 1 if page_size < 1
+    # page_size
+    25
   end
 
   def get_max_number_of_pages(total_results, page_size)
