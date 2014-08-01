@@ -164,6 +164,7 @@ GS.track.propLookup = {
     'schoolLevel':3,
     'schoolLocale':4,
     'locale':4,
+    'searchTerm':6,
     'schoolRating':31,
     'userLoginStatus':5,
     'requestUrl':59,

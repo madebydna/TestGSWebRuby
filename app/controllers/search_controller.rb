@@ -46,7 +46,7 @@ class SearchController < ApplicationController
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_pagename_browse_city @page_number
+    set_omniture_data_search_school
     render 'search_page'
   end
 
@@ -71,7 +71,7 @@ class SearchController < ApplicationController
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_pagename_browse_district @page_number
+    set_omniture_data_search_school
     render 'search_page'
   end
 
@@ -86,13 +86,14 @@ class SearchController < ApplicationController
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
+      @search_term=params_hash['locationSearchString']
     end
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
-    set_omniture_pagename_search_school @page_number
+    set_omniture_data_search_school(@search_term)
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
@@ -105,11 +106,12 @@ class SearchController < ApplicationController
       @query_string = params_hash['q']
       search_options.merge!({query: @query_string})
       search_options.merge!({state: state[:short]}) if state
+      @search_term=@query_string
     end
 
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
-    set_omniture_pagename_search_school @page_number
+    set_omniture_data_search_school(@search_term)
     render 'search_page'
   end
 
@@ -342,34 +344,13 @@ class SearchController < ApplicationController
 
   private
 
-  def set_omniture_pagename_browse_city(page_num = 1)
-    gon.omniture_pagename = "schools:city:#{page_num}"
-    set_omniture_data_browse_city(page_num)
-  end
-
-  def set_omniture_data_browse_city(page_num = 1)
+  def set_omniture_data_search_school(search_term = '')
+    gon.omniture_pagename = "GS:SchoolSearchResults"
+    gon.omniture_hier1 = "Search,School Search"
     set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,Schools,City,#{page_num}"
-  end
-
-  def set_omniture_pagename_browse_district(page_num = 1)
-    gon.omniture_pagename = "schools:district:#{page_num}"
-    set_omniture_data_browse_city(page_num)
-  end
-
-  def set_omniture_data_browse_district(page_num = 1)
-    set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,Schools,District,#{page_num}"
-  end
-
-  def set_omniture_pagename_search_school(page_num = 1)
-    gon.omniture_pagename = "School Search:Page#{page_num}"
-    set_omniture_data_search_school(page_num)
-  end
-
-  def set_omniture_data_search_school(page_num = 1)
-    set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,School Search,#{page_num}"
+    puts "Setting search_term to #{search_term}"
+    gon.omniture_sprops['searchTerm'] = search_term
+    # gon.omniture_evars ||= {}
   end
 
   def ad_setTargeting_through_gon
