@@ -21,10 +21,10 @@
         <div class="dropdown">
           <div data-toggle="dropdown" class="dropdown-toggle">
             <div>
-              <span class="vam iconx24-icons mrs js-icon <%=(decorated_school.strong_fit?) ? 'i-24-green-check' : (decorated_school.ok_fit?) ? 'i-24-blue-ok' : 'i-24-blue-hand'%>"></span>
+              <span class="vam iconx24-icons js-icon <%=(decorated_school.strong_fit?) ? 'i-24-happy-face' : (decorated_school.ok_fit?) ? 'i-24-smiling-face' : 'i-24-neutral-face'%>"></span>
               <span class="caret"></span>
             </div>
-            <span class="font-size-xs"><%=(decorated_school.strong_fit?) ? 'Strong fit' : (decorated_school.ok_fit?) ? 'Ok fit' : 'Weak fit' %></span>
+            <span class="font-size-xs"><%=(decorated_school.strong_fit?) ? 'Strong fit' : (decorated_school.ok_fit?) ? 'Ok fit' : 'Low fit' %></span>
           </div>
           <ul class="dropdown-menu">
             <li class="pal">
