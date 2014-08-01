@@ -3,18 +3,18 @@
     <div class="btn-group row full-width">
         <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
         <% state = 'delaware' #ToDo set state to actual state %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
+        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile" style="font-size:11px;">
           <span class="iconx16 i-16-white-list-view vam"></span>
           Filters
         </button>
         <% if show_guided_search %>
-          <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white;"
+          <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white; font-size:11px;"
             href="<%= state_guided_search_path(state: state) %>">
             <span class="iconx16 i-16-white-info vam"></span>
             Guide Me
           </a>
         <%end %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view" style="border-left: thin solid white;">
+        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view" style="border-left: thin solid white; font-size:11px; ">
           <span class="iconx16 i-16-white-map-view vam"></span>
           Map
         </button>
