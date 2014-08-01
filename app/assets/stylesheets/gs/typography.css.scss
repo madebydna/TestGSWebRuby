@@ -19,6 +19,10 @@ h6, .h6 { @extend .open-sans_i; }
   border-radius: 3px;
 }
 
+.toolbar-text {
+  font-size: 16px;
+}
+
 p, a {
   font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
 }

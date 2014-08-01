@@ -3,44 +3,37 @@
     <div class="btn-group row full-width">
         <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
         <% state = 'delaware' #ToDo set state to actual state %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdown">Filters</button>
+        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
+          <span class="iconx16 i-16-white-list-view vam"></span>
+          Filters
+        </button>
         <% if show_guided_search %>
           <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white;"
             href="<%= state_guided_search_path(state: state) %>">
+            <span class="iconx16 i-16-white-info vam"></span>
             Guide Me
           </a>
         <%end %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view" style="border-left: thin solid white;">Map</button>
+        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view" style="border-left: thin solid white;">
+          <span class="iconx16 i-16-white-map-view vam"></span>
+          Map
+        </button>
     </div>
 </div>
 <div class="limit-width-1200 pr ptm plm prm">
-  <div class="pa pam" style="left:-5px">
-    <div class="hidden-xs js-searchFiltersDropdown">Refine Search<span class="caret"></span>
+  <div class="pa ptm pbm">
+    <div class="hidden-xs zir-1 js-searchFiltersDropdown toolbar-text open-sans_b">Refine Search<span class="caret"></span>
     </div>
-    <div class="dn zir-1 pam js-searchFiltersMenu">
+    <div class="dn zir-1 ptm prm pbm js-searchFiltersMenu">
       <div class="ptm panel panel-primary">
-        <div class="clearfix">
-          <form name="searchFiltersForm" id="js-searchFiltersForm" action method="get">
-
-            <%lam = lambda do |filters| %>
-              <% [*filters].each do |filter| %>
-                <%= render layout: "search/filters/#{filter.display_type.to_s}", locals: {filter: filter} do %>
-                  <% lam.call(filter.filters) %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% lam.call(@filters) %>
-
-            <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
-            <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
-          </form>
+        <div class="clearfix js-searchFiltersFormParent">
+          <%= render 'search/filter_form' %>
         </div>
-
-        <div class="clearfix pal" style="">
+        <div class="clearfix pal">
           <label class="fl">
             <a class="js-advancedFilters">More Filters</a>
           </label>
-          <button class="btn btn-default fr" id="js-submitSearchFiltersForm" type='submit'>Submit</button>
+          <button class="btn btn-default fr js-submitSearchFiltersForm" type='submit'>Submit</button>
         </div>
       </div>
     </div>
@@ -48,12 +41,13 @@
 </div>
 
 <div class="hidden-xs limit-width-1200 full-width row pam">
-  <div class="col-xs-3"></div>
-  <div class="col-xs-2">
-    <% if show_guided_search %>
-      <span class="iconx16 i-16-blue-info vam"></span>
-      <a href='<%= state_guided_search_path(state: state) %>'>Guide Me</a>
-    <% end %>
+  <div class="col-xs-5">
+    <div class="pa" style="padding-left:150px">
+      <% if show_guided_search %>
+        <span class="iconx16 i-16-blue-info vam"></span>
+        <a class='toolbar-text open-sans_b' href='<%= state_guided_search_path(state: state) %>'>Guide Me</a>
+      <% end %>
+    </div>
   </div>
   <div class="col-xs-7 clearfix">
     <div class="fr">
