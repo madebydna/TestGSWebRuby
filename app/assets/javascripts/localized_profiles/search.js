@@ -186,11 +186,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var schools = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('school_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit:4,
+        limit: 10,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
-        sorter: autocompleteSort,
         remote: {
             url: '/gsr/search/suggest/school?query=%QUERY&state=Delaware',
             filter: function(data) {
@@ -202,7 +201,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         cacheList[data[i].url] = true;
                     }
                 }
-                return data.sort(autocompleteSort);
+                return data
             },
             rateLimitWait: 100
         }
@@ -211,7 +210,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var cities = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('city_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 2,
+        limit: 5,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
@@ -236,7 +235,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var districts = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('district_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit:2,
+        limit: 5,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
@@ -270,13 +269,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             source: cities.ttAdapter(),
 
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Cities</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{city_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{city_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -284,13 +277,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'district_name',
             source: districts.ttAdapter(),
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Districts</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{district_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -298,13 +285,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'school_name',
             source: schools.ttAdapter(),
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Schools</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, DE</span></p></a>')
             }
         })
         .on('typeahead:selected', function(event, suggestion, dataset) {

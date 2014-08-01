@@ -35,6 +35,7 @@ class Solr
   def district_name_suggest(options)
     params = parse_district_params(options)
     params[:fq] << '+document_type:district'
+    params[:fq] << '+district_charter_only:false'
     query = options[:query]
     query.gsub! ' ', '\ '
     params[:q] = "+district_name_untokenized:#{query}*"
