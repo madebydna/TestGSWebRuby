@@ -42,6 +42,7 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], city: @city.name})
     end
 
+    @search_term = "#{@city.name}, #{@state[:short].upcase}"
     @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
@@ -62,6 +63,8 @@ class SearchController < ApplicationController
       redirect_to city_path(@state[:long], @city.name)
       return
     end
+
+    @search_term = @district.name
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.district_browse(search_options) }) do |search_options|
       search_options.merge!({state: @state[:short], district_id: @district.id})

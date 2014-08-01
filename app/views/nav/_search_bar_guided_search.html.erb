@@ -6,7 +6,7 @@
         <div class="col-xs-12 col-sm-8 plm prm mbm">
           <input  type="text"
                   name="locationSearchString"
-                  value="Search for schools"
+                  value="<%= @search_term || 'Search for schools' %>"
                   id="js-prototypeSearch"
                   class='typeahead search-text full-width pam'
                   onfocus="GS.textSwitch(this, '', 'Search for schools');"
