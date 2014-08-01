@@ -48,7 +48,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
 //                    ToDo Hard coded byName search to Delaware
                     GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
-                    return submitByNameSearch.apply(this);
+                    var searchOptions = {};
+                    var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+                    if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
+                        searchOptions['grades'] = gradeLevelFilter.val();
+                    }
+                    return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
                 }
