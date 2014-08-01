@@ -2,6 +2,7 @@ GS.search = GS.search || {};
 GS.search.googleMap = GS.search.googleMap || (function() {
 
     var needsInit = true;
+    GS.search.map = GS.search.map || {};
 
   var init = function() {
       if (!needsInit) {return;}
@@ -42,7 +43,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   //              draggable: false,
                   zoom: 12
               };
-              var map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
+              GS.search.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
               var position;
               var imageUrl;
@@ -61,7 +62,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   bounds.extend(position);
                   var markerOptions = new google.maps.Marker({
                       position: position,
-                      map: map
+                      map: GS.search.map
                   });
                   if (point.on_page) {
 
@@ -107,13 +108,25 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   google.maps.event.addListener(marker, 'click', (function (marker, point) {
                       return function () {
                           infoWindow.setContent(getInfoWindowMarkup(point));
-                          infoWindow.open(map, marker);
+                          infoWindow.open(GS.search.map, marker);
                       }
                   })(marker, point));
 
+                  // Responsive map sizing and centering
+                  var center;
+                  var calculateCenter = function () {
+                      center = GS.search.map.getCenter();
+                  };
+                  google.maps.event.addDomListener(GS.search.map, 'idle', function() {
+                      calculateCenter();
+                  });
+                  google.maps.event.addDomListener(window, 'resize', function() {
+                      GS.search.map.setCenter(center);
+                  })
+
               }
               if (!bounds.isEmpty()) {
-                  map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
+                  GS.search.map.setCenter(bounds.getCenter(), GS.search.map.fitBounds(bounds));
               }
           };
           var getInfoWindowMarkup = function (point) {
@@ -147,8 +160,13 @@ GS.search.googleMap = GS.search.googleMap || (function() {
       }
     };
 
+    var getMap = function () {
+     return GS.search.map;
+    };
+
     return {
-       init: init
+       init: init,
+        getMap: getMap
     }
 
 })();

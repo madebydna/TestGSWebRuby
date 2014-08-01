@@ -14,8 +14,12 @@ $(document).ready(function () {
         elemMapViewToggle .find('span').addClass(mapViewNormal)      .removeClass(mapViewHighlighted);
         $.cookie('map_view', 'false', { path: '/' });
     };
+    var initAndShowMap = function () {
+        GS.search.googleMap.init();
+        google.maps.event.trigger(GS.search.googleMap.getMap(), 'resize');
+    };
     var showMapView = function() {
-        elemMapCanvas.show('slow', GS.search.googleMap.init);
+        elemMapCanvas.show('slow',initAndShowMap);
         elemMapViewToggle .find('span').addClass(mapViewHighlighted).removeClass(mapViewNormal);
         elemListViewToggle.find('span').addClass(listViewNormal)    .removeClass(listViewHighlighted);
         $.cookie('map_view', 'true', { path: '/' });
