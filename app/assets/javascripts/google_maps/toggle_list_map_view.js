@@ -16,7 +16,10 @@ $(document).ready(function () {
     };
     var initAndShowMap = function () {
         GS.search.googleMap.init();
-        google.maps.event.trigger(GS.search.googleMap.getMap(), 'resize');
+        var map = GS.search.googleMap.getMap();
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
     };
     var showMapView = function() {
         elemMapCanvas.show('slow',initAndShowMap);
