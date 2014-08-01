@@ -35,7 +35,7 @@ GS.search.results = GS.search.results || (function() {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
-                $(this).text('Less filters');
+                $(this).text('Fewer filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
