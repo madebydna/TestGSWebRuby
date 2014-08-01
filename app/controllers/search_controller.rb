@@ -102,13 +102,13 @@ class SearchController < ApplicationController
 
   def by_name
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
-      state = {
+      @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
           short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
       } if params_hash['state']
       @query_string = params_hash['q']
       search_options.merge!({query: @query_string})
-      search_options.merge!({state: state[:short]}) if state
+      search_options.merge!({state: @state[:short]}) if @state
       @search_term=@query_string
     end
 
@@ -351,8 +351,15 @@ class SearchController < ApplicationController
     gon.omniture_pagename = "GS:SchoolSearchResults"
     gon.omniture_hier1 = "Search,School Search"
     set_omniture_data_for_user_request
-    puts "Setting search_term to #{search_term}"
     gon.omniture_sprops['searchTerm'] = search_term
+    if @district
+      gon.omniture_sprops['locale'] = @district.name
+    elsif @city
+      gon.omniture_sprops['locale'] = @city.name
+    end
+    if @state
+      gon.omniture_channel = @state[:short].try(:upcase)
+    end
     # gon.omniture_evars ||= {}
   end
 
