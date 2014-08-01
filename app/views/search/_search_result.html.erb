@@ -7,13 +7,9 @@
       <%= decorated_school.photo(130, 130) %>
     </div>
 
-    <!-- Compare / Homes for Sale -->
-    <div class="hidden-xs fr mvl" style="width:170px;">
-      <button type="button" class="btn btn-default full-width mbm">
-        <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
-        Compare
-      </button>
-      <%= link_to zillow_url(school), :class => 'btn btn-default vam full-width', target: '_blank' do %>
+    <!-- Homes for Sale -->
+    <div class="hidden-xs fr pvl mvl vam" style="width:170px;">
+      <%= link_to zillow_url(school), class: 'btn btn-default vam full-width', target: '_blank' do %>
         <span class="iconx16 i-16-home vam mrs"></span>
         Homes for sale
       <% end %>
