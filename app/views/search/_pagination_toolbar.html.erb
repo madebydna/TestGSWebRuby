@@ -1,4 +1,5 @@
-<div class="limit-width-1200 full-width">
+<div class="limit-width-1200 full-width ptm">
+  <div class="ptm hidden-xs"></div>
   <div align='right' class="prm">
     <% unless @total_results < 1 || @results_offset > @total_results%>
       <span>Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>

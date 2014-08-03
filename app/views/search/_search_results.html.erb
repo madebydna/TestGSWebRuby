@@ -1,12 +1,11 @@
-<div class="limit-width-1200 full-width">
-  <div class="row mbl">
-
-    <%= render 'sorting_toolbar' %>
-
-    <div class="full-width ptl">
+<div class="full-width header-bg-color">
+  <div class="ptm hidden-xs"></div>
+  <div class="row ptm pbm">
+    <div class="full-width ">
       <% @schools.each do |school| %>
         <%= render 'search_result', school: school %>
       <% end %>
     </div>
   </div>
+  <div class="pbm hidden-xs"></div>
 </div>

@@ -1,7 +1,7 @@
-<div class="ptm pts header-bg-color">
-  <div class="ptm hidden-xs"></div>
+<div class="header-bg-color">
+  <div class="ptl hidden-xs"></div>
   <div class="row ma limit-width-1200">
-    <div class="row">
+    <div class="row ptm">
       <form name="prototypeSearchForm" class="js-prototypeSearchForm" action="/search/search.page" method="get">
         <div class="col-xs-12 col-sm-8 plm prm mbm">
           <input  type="text"
@@ -30,7 +30,7 @@
     </div>
 
     <% if @nearby_cities && @nearby_cities.size > 0 %>
-        <div class="row phm mbm hidden-xs">
+        <div class="row phm ptm pbl hidden-xs">
           <div class="fl mrl">Nearby Cities:</div>
             <% @nearby_cities.each_index do |x|
                 city = @nearby_cities[x] %>
