@@ -13,17 +13,17 @@
     <%= raw(decorator.tabs_for_test(test)) %>
     <%= raw decorator.render_bar_charts(test) %>
     
-    <% if value[:test_description] %>
+    <% if decorator.description(value) %>
       <div>
         <p class="mbm"><span class="open-sans_sb">About the test</span>
           <!--<a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a>-->
         </p>
-        <div><%= raw value[:test_description]%></div>
+        <div><%= raw decorator.description(value) %></div>
       </div>
     <% end %>
-    <% if value[:test_source] %>
+    <% if decorator.source(value) %>
       <div class="pbm">
-        <p class="font-size-small ptm">Source: <%= value[:test_source] %></p>
+        <p class="font-size-small ptm">Source: <%= decorator.source(value) %></p>
       </div>
     <% end %>
     <% if @school.show_ads %>

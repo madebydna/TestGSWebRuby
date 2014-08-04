@@ -9,6 +9,14 @@ class TestScoresDecorator < Draper::Decorator
     hash.fetch(test, {}).keys
   end
 
+  def description(test)
+    test[:All][:test_description]
+  end
+
+  def source(test)
+    test[:All][:test_source]
+  end
+
   def tabs_for_test(test)
     buttons = ''
     grades = self.grades(test)
