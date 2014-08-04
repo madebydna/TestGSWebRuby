@@ -1,20 +1,20 @@
 <div class="visible-xs pbm">
     <!-- button bar / button group. Look at guided search for dress code.  btn-group  -->
-    <div class="btn-group row full-width" style="margin-left: 0px;">
+    <div class="btn-group row full-width mln">
         <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
         <% state = 'delaware' #ToDo set state to actual state %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile" style="font-size:11px; border-radius: 0px;margin-left: 0px;">
+        <button type="button" class="btn btn-primary nav-button nav-button-font <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
           <span class="iconx16 i-16-white-check-box vam"></span>
           Filters
         </button>
         <% if show_guided_search %>
-          <a type="button" class="btn btn-primary col-xs-4" style="border-left: thin solid white; font-size:11px; border-radius: 0px;margin-left: 0px;"
+          <a type="button" class="btn btn-primary col-xs-4 nav-button nav-button-left-border nav-button-font"
             href="<%= state_guided_search_path(state: state) %>">
             <span class="iconx16 i-16-white-info vam"></span>
             Guide Me
           </a>
         <%end %>
-        <button type="button" class="btn btn-primary <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view" style="border-left: thin solid white; font-size:11px; border-radius: 0px; margin-left: 0px;">
+        <button type="button" class="btn btn-primary nav-button nav-button-left-border nav-button-font <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view">
           <span class="iconx16 i-16-white-map-view vam"></span>
           Map
         </button>

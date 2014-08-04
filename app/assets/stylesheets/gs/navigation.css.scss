@@ -198,6 +198,19 @@
   border-right: none;
 }
 
+.nav-button { //Mobile Filters
+  border-radius: 0px;
+  margin-left: 0px !important;
+}
+
+.nav-button-font {
+  font-size: 11px;
+}
+
+.nav-button-left-border {
+  border-left: thin solid white;
+}
+
 .primary-bg-color {
   background-color: $brand-primary;
 }
@@ -207,3 +220,5 @@
 .border-all-light-grey{
   border: $border-light-grey;
 }
+
+
