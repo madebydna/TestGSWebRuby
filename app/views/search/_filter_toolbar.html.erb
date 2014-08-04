@@ -27,6 +27,7 @@
     <div class="dn zir-1 ptm prm pbm js-searchFiltersMenu">
       <div class="ptm panel panel-primary">
         <div class="clearfix js-searchFiltersFormParent">
+          <!--ToDo perhaps there is a way to combine the desktop and mobile filters, so two sets do not have to be generated-->
           <%= render 'search/filter_form' %>
         </div>
         <div class="clearfix pal">
@@ -44,8 +45,8 @@
   <div class="col-xs-5">
     <div class="pa" style="padding-left:150px">
       <% if show_guided_search %>
-        <span class="iconx16 i-16-blue-info vam"></span>
-        <a class='toolbar-text open-sans_b' href='<%= state_guided_search_path(state: state) %>'>Guide Me</a>
+        <div class="iconx16 i-16-blue-info vam pull-left mas "></div>
+        <div class="pull-left"><a class='toolbar-text open-sans_b' href='<%= state_guided_search_path(state: state) %>'>Guide Me</a></div>
       <% end %>
     </div>
   </div>
