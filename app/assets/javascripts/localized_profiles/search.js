@@ -20,7 +20,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var init = function(state) {
         $('.js-findByLocationForm').submit(function() {
-            var valid = validateField($(this).find(findByLocationSelector)[0]);
+            var input = $(this).find(findByLocationSelector)[0];
+            var valid = validateField(input, input['defaultValue']);
             if (valid) {
                 return submitByLocationSearch.apply(this);
             } else {
@@ -29,7 +30,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-findByNameForm').submit(function() {
-            var valid = validateField($(this).find(findByNameSelector)[0]);
+            var input = $(this).find(findByNameSelector)[0];
+            var valid = validateField(input, input['defaultValue']);
             if (valid) {
                 return submitByNameSearch.apply(this);
             } else {
@@ -38,7 +40,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-prototypeSearchForm').submit(function() {
-            var valid = validateField($(this).find(prototypeSearchSelector)[0]);
+            var input = $(this).find(prototypeSearchSelector)[0];
+            var valid = validateField(input, input['placeholder']);
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 if (searchType == 'byLocation') {
@@ -79,8 +82,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
     };
 
-    var validateField = function(field) {
-        if (field['value'] == field['defaultValue']) {
+    var validateField = function(field, valueToIgnore) {
+        if (valueToIgnore && field['value'] == valueToIgnore) {
             return false;
         }
 
@@ -93,7 +96,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
 
         return true;
-    }
+    };
 
     var isTermState = function(term) {
         var stateTermList = new Array
