@@ -20,9 +20,9 @@
       <% if school.fit_score > 0 %>
         <div class="dropdown">
           <div data-toggle="dropdown" class="dropdown-toggle tac">
-            <div class="<%=decorated_school.ok_fit? ? 'mlm' : 'mls'%>"> <%# Center label on icon %>
+            <div>
               <span class="vam iconx24-icons js-icon <%=(decorated_school.strong_fit?) ? 'i-24-happy-face' : (decorated_school.ok_fit?) ? 'i-24-smiling-face' : 'i-24-neutral-face'%>"></span>
-              <span class="caret"></span>
+              <span class="caret pa" style="top: 12px;"></span>
             </div>
             <span class="font-size-xs"><%=(decorated_school.strong_fit?) ? 'Strong fit' : (decorated_school.ok_fit?) ? 'Ok fit' : 'Low fit' %></span>
           </div>
