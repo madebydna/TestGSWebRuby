@@ -47,7 +47,7 @@ class SearchController < ApplicationController
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_data_search_school
+    set_omniture_data_search_school(nil, @city.name)
     render 'search_page'
   end
 
@@ -74,11 +74,12 @@ class SearchController < ApplicationController
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_data_search_school
+    set_omniture_data_search_school(nil, @district.name)
     render 'search_page'
   end
 
   def by_location
+    city = nil
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -90,13 +91,14 @@ class SearchController < ApplicationController
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
       @search_term=params_hash['locationSearchString']
+      city = params_hash['city']
     end
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
-    set_omniture_data_search_school(@search_term)
+    set_omniture_data_search_school(@search_term, city)
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
@@ -114,7 +116,7 @@ class SearchController < ApplicationController
 
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
-    set_omniture_data_search_school(@search_term)
+    set_omniture_data_search_school(@search_term, nil)
     render 'search_page'
   end
 
@@ -347,19 +349,13 @@ class SearchController < ApplicationController
 
   private
 
-  def set_omniture_data_search_school(search_term = '')
+  def set_omniture_data_search_school(search_term, locale)
     gon.omniture_pagename = "GS:SchoolSearchResults"
     gon.omniture_hier1 = "Search,School Search"
     set_omniture_data_for_user_request
-    gon.omniture_sprops['searchTerm'] = search_term
-    if @district
-      gon.omniture_sprops['locale'] = @district.name
-    elsif @city
-      gon.omniture_sprops['locale'] = @city.name
-    end
-    if @state
-      gon.omniture_channel = @state[:short].try(:upcase)
-    end
+    gon.omniture_sprops['searchTerm'] = search_term if search_term
+    gon.omniture_sprops['locale'] = locale if locale
+    gon.omniture_channel = @state[:short].try(:upcase) if @state
     # gon.omniture_evars ||= {}
   end
 
