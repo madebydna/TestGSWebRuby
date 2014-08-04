@@ -371,34 +371,16 @@ class SearchController < ApplicationController
   end
 
   def mapping_points_through_gon
-    points = []
-    i = 0
-    @map_schools.each do |school|
-
-      points[i] = {name: school.name,
-          id: school.id,
-          lat: school.latitude,
-          lng: school.longitude,
-          street: school.street,
-          city: school.city,
-          state: school.state,
-          zipcode: school.zipcode,
-          schoolType: school.type,
-          preschool: school.preschool?,
-          gradeRange: school.grades[0] + " - " + school.grades[-1],
-          fitScore: school.fit_score,
-          maxFitScore: school.max_fit_score,
-          gsRating: school.overall_gs_rating || 0,
-          communityRating: school.respond_to?(:community_rating) ? school.community_rating : 0,
-          numReviews: school.respond_to?(:review_count) ? school.review_count : 0,
-          communityRatingStars: school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : '',
-          on_page: (school.on_page),
-          profileUrl: school_path(school),
-          reviewUrl: school_reviews_path(school),
-          zillowUrl: zillow_url(school)}
-      i = i +1
+    gon.map_points = @map_schools.map do |school|
+      SchoolSearchResultDecorator.decorate(school).google_map_data_point do |map_points|
+        map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
+        map_points[:profileUrl] = school_path(school)
+        map_points[:reviewUrl] = school_reviews_path(school)
+        map_points[:zillowUrl] = zillow_url(school)
+        map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
+      end
     end
-    gon.map_points = points
+
   end
 
   def assign_sprite_files_though_gon

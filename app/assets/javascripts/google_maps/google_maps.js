@@ -18,7 +18,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
-//          var gsRating_sprite = gon.sprite_files['gsRating_sprite'] ;
+          var gsRating_sprite = gon.sprite_files['gsRating_sprite'] ;
 
           var optionalLat = optionalLat || 37.807778;
           var optionalLon = optionalLon || -122.265149;
@@ -137,7 +137,6 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               var pixelOffset;
 //              if (point.gsRating > 0) {
 //                  pixelOffset = 350;// default to NR
-              console.log(1);
                   if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
                       pixelOffset = 290 - (point.gsRating * 24);
                       var imageUrl = gsRating_sprite;
