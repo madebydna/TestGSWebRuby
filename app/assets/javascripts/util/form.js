@@ -141,6 +141,14 @@ $(function() {
         sibling.removeClass('btn-primary').addClass('btn-default');
     });
 
+    var toggleButtonForSports = function(button, children){
+        if (childCheckboxesAreEmpty(children)){
+            button.removeClass('btn-primary').addClass('btn-default');
+        } else {
+            button.removeClass('btn-default').addClass('btn-primary');
+        }
+    };
+
     var toggleCheckboxForCollapsibleBox = function(checkbox, children) {
         if (childCheckboxesAreEmpty(children)) {
             checkbox.removeClass('i-16-blue-check-box').addClass('i-grey-unchecked-box');
@@ -166,6 +174,21 @@ $(function() {
             var children = hidden_box.children('div').children('.js-gs-checkbox-value');
             toggleCheckboxForCollapsibleBox(checkbox, children);
         });
+    };
+
+    var toggleButtonForSportsOnLoad = function(){
+        $('.js-sports-gender').each(function(i){
+            var self = $(this);
+            var gs_gender = self.data('gs-gender');
+            var selfFilters = self.parents().siblings('.js-'+ gs_gender +'-sports-values');
+
+            var inputElements = [];
+            $(selfFilters).children('.js-sportsIconButton').each(function(i){
+                inputElements.push($(this).children('.js-value'));
+            });
+            toggleButtonForSports(self,inputElements);
+        });
+
     };
 
     $('.js-guidedSearch').on('submit',function() {
@@ -225,9 +248,17 @@ $(function() {
             GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
     };
 
+    var sportsToolTip = function(){
+        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+    };
+
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
+    GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;
+    GS.forms.sportsToolTip = sportsToolTip;
 });
 
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
+    GS.forms.toggleButtonForSportsOnLoad();
+    GS.forms.sportsToolTip();
 });

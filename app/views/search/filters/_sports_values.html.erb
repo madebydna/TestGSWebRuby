@@ -3,6 +3,7 @@
 
   <button type="button" class="btn btn-default fifth-width js-sportsIconButton
          <%= is_match ? "btn-primary" : "btn-default"%>"
+         data-toggle="tooltip" title="<%=filter.label%>"
          style="padding-left: 9px; padding-bottom: 4px;"
          data-gs-checkbox-value="<%=filter.value%>"
          data-gs-checkbox-category="<%=filter.name%>[]"
