@@ -47,7 +47,7 @@ class SearchController < ApplicationController
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_data_search_school(nil, @city.name)
+    set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     render 'search_page'
   end
 
@@ -74,7 +74,7 @@ class SearchController < ApplicationController
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_data_search_school(nil, @district.name)
+    set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     render 'search_page'
   end
 
@@ -98,7 +98,7 @@ class SearchController < ApplicationController
 
     @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
-    set_omniture_data_search_school(@search_term, city)
+    set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
@@ -116,7 +116,7 @@ class SearchController < ApplicationController
 
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
-    set_omniture_data_search_school(@search_term, nil)
+    set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
   end
 
@@ -349,14 +349,16 @@ class SearchController < ApplicationController
 
   private
 
-  def set_omniture_data_search_school(search_term, locale)
+  def set_omniture_data_search_school(page_number, search_type, search_term, locale)
     gon.omniture_pagename = "GS:SchoolSearchResults"
     gon.omniture_hier1 = "Search,School Search"
     set_omniture_data_for_user_request
     gon.omniture_sprops['searchTerm'] = search_term if search_term
     gon.omniture_sprops['locale'] = locale if locale
     gon.omniture_channel = @state[:short].try(:upcase) if @state
-    # gon.omniture_evars ||= {}
+    gon.omniture_evars ||= {}
+    gon.omniture_evars['search_page_number'] = page_number if page_number
+    gon.omniture_evars['search_page_type'] = search_type if search_type
   end
 
   def ad_setTargeting_through_gon

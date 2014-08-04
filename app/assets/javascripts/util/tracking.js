@@ -180,7 +180,9 @@ GS.track.eventLookup = {
 };
 
 GS.track.evarsLookup = {
-    'review_updates_mss_traffic_driver' :25
+    'review_updates_mss_traffic_driver' :25,
+    'search_page_number': 26,
+    'search_page_type': 27
 };
 
 GS.track.setOmnitureData = function() {
