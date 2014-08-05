@@ -8,6 +8,7 @@ h6, .h6 { @extend .open-sans_i; }
 .font-size-xs    {font-size: $font-size-xs}
 .font-size-small {font-size: $font-size-small}
 .font-size-large {font-size: $font-size-large}
+.font-size-block {font-size: $font-size-block}
 
 
 .search-text {
@@ -44,6 +45,8 @@ p, a {
 .best-known-for {
   font-size: $font-size-block;
 }
+
+.fx
 
 .stat-block-number {
   font-family: $font-family-base;

@@ -1,4 +1,4 @@
-<div class="limit-width-1200 full-width pam">
+<div class="limit-width-1200 pam">
   <div class="row partner-carousel-image prm bg-white">
     <!-- Street view image -->
     <div class="hidden-xs hidden-sm fl mrl">
@@ -8,13 +8,15 @@
     </div>
 
     <!-- Homes for Sale -->
-    <div class="hidden-xs fr pvl mvl vam" style="width:170px;">
-      <%= link_to zillow_url(school), class: 'btn btn-default vam full-width', target: '_blank' do %>
-        <span class="iconx16 i-16-home vam mrs"></span>
-        Homes for sale
+    <div class="hidden-xs fr pvl mvl">
+      <div class="hidden-sm pts"></div>
+      <%= link_to zillow_url(school), class: 'btn btn-default clearfix', target: '_blank' do %>
+        <div class="iconx16 i-16-home fl mrs"></div>
+        <div class="fl">Homes for sale</div>
       <% end %>
     </div>
 
+    <div class="hidden-sm pts"></div>
     <!-- Fit score -->
     <div class="col-xs-2 col-sm-1 fr mtl mbs">
       <% if school.fit_score > 0 %>

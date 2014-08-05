@@ -1,9 +1,7 @@
-<div class="limit-width-1200 full-width row prm plm">
-  <div class="ptm hidden-xs"></div>
-  <div class="col-xs-12 ptm">
-    <span class="toolbar-text open-sans_b ptm pbm"><%= @total_results %> schools meet your criteria</span>
-    <br>
-    <div class="hidden-xs ptm pbl">
+<div class="limit-width-1200 row phm">
+  <div class="col-xs-12 pvl clearfix">
+    <span class="open-sans_sb fl font-size-block"><%= @total_results %> schools meet your criteria</span>
+    <div class="hidden-xs pts fr">
       <span>Sort by:</span>
       <span>
         <% if @query_string.present? %>
@@ -17,7 +15,7 @@
     </div>
   </div>
 
-  <div class="visible-xs col-xs-4 ptm pbl">
+  <div class="visible-xs col-xs-4 pbl">
     <% if @query_string.present? %>
       <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
         <option value="">Sort By:</option>
