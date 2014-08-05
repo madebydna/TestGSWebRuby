@@ -378,9 +378,9 @@ class SearchController < ApplicationController
         map_points[:reviewUrl] = school_reviews_path(school)
         map_points[:zillowUrl] = zillow_url(school)
         map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
+        map_points[:zIndex] = -1 if !school.on_page
       end
     end
-
   end
 
   def assign_sprite_files_though_gon

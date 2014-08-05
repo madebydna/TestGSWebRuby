@@ -42,7 +42,57 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   panControl: true,
                   scrollwheel: false,
                   //              draggable: false,
-                  zoom: 12
+                  zoom: 12,
+                  styles: [
+                      {
+                          "featureType": "road.highway",
+                          "elementType": "geometry.fill",
+                          "stylers": [
+                              { "color": "#f5f5f5" }
+                          ]
+                      },{
+                          "featureType": "road.highway",
+                          "elementType": "geometry.stroke",
+                          "stylers": [
+                              { "color": "#f5f5f5" }
+                          ]
+                      },{
+                          "featureType": "road.highway",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "simplified" }
+                          ]
+                      },{
+                          "featureType": "poi.school",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.school",
+                          "elementType": "geometry",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.business",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.medical",
+                          "elementType": "geometry",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      }
+                  ]
               };
               GS.search.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
@@ -61,10 +111,16 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   var point = points[i];
                   position = new google.maps.LatLng(point.lat, point.lng);
                   bounds.extend(position);
-                  var markerOptions = new google.maps.Marker({
+                  markerOptions = {
                       position: position,
                       map: GS.search.map
-                  });
+                  };
+
+                  if (point['zIndex'] != undefined) {
+                      markerOptions['zIndex'] = point['zIndex']
+                  }
+
+                  var markerOptions = new google.maps.Marker(markerOptions);
                   if (point.on_page) {
 
                       imageSize = size_29;
