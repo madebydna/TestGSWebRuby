@@ -230,6 +230,7 @@ $(function() {
                 }
             }
         });
+        searchOptions['grades'] = $('#js-guided-grades').val();
         searchOptions.state = 'DE';
         return searchOptions;
     };
