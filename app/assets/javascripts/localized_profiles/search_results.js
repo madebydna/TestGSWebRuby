@@ -59,13 +59,13 @@ GS.search.results = GS.search.results || (function() {
 
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
+            $('.js-searchFiltersMenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
             $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
         });
     };
 
     var searchFilterMenuMobileCloseWindowHandler = function() {
         $(".js-searchFiltersCloseWindow").on('click', function() {
-//            $('.js-searchFiltersMenuMobile').css('left', '-300px');
             $('.js-searchFiltersMenuMobile').animate({left: '-300px'}, 'slow');
         });
     };
