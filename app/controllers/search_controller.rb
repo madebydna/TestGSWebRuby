@@ -206,7 +206,7 @@ class SearchController < ApplicationController
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
         school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}"
-        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url, :sort_order => school_search_result['overall_gs_rating']}#school_path(s)}
+        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
     render json:response_objects
@@ -244,7 +244,7 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |district_search_result|
         output_district = {}
         output_district[:district_name] = district_search_result['district_sortable_name']
-
+        output_district[:sort_order] = district_search_result['district_number_of_schools']
         output_district[:url] = "/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools"
 
         response_objects << output_district
