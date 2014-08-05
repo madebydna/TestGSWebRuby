@@ -44,6 +44,10 @@ describe FilterBuilder do
       check_title_layers(filters_hash)
     end
 
+    it 'should have :display_type at every layer of the hash' do
+      expect(every_layer_has_display_type(filters_hash)).to be_truthy
+    end
+
     it 'the bottom layer should have label, display_type, name and value' do
       filter_elements(filters_hash).each do |filter|
         [:label, :display_type, :name, :value].each do |filter_key|

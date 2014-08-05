@@ -26,4 +26,12 @@ module FilterBuilderSpecHelper
     end
   end
 
+  def every_layer_has_display_type(filters_hash)
+    return false unless filters_hash.key?(:display_type)
+    !filters_hash.has_key?(:filters) || filters_hash[:filters].each do | key, inner_hash |
+      every_layer_has_display_type(inner_hash)
+    end
+    true
+  end
+
 end
