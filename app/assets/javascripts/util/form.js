@@ -191,7 +191,8 @@ $(function() {
 
     };
 
-    $('.js-guidedSearch').on('submit',function() {
+    var guidedSearchForm = $('.js-guidedSearch');
+    guidedSearchForm.on('submit',function() {
         GS.search.schoolSearchForm.findByNameSelector = '#js-guidedQueryString';
         GS.search.schoolSearchForm.findByLocationSelector = '#js-guidedQueryString';
         try {
@@ -204,6 +205,14 @@ $(function() {
             console.log(e);
             return false;
         }
+    });
+
+    guidedSearchForm.on('keyup keypress', function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+        return true;
     });
 
     var addToArray = function(hash, key, value) {
