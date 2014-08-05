@@ -47,7 +47,7 @@ describe FilterBuilder do
     it 'the bottom layer should have label, display_type, name and value' do
       filter_elements(filters_hash).each do |filter|
         [:label, :display_type, :name, :value].each do |filter_key|
-          return false unless filter.key?(filter_key)
+          expect(filter).to have_key(filter_key)
         end
       end
     end
