@@ -78,17 +78,18 @@ $font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica,
 
 
 $font-size-base:          14px !default;
-$font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-xs:            ceil($font-size-base * 0.750) !default; // ~12px
-$font-size-small:         ceil($font-size-base * 0.875) !default; // ~14px
-$font-size-block:         ceil($font-size-base * 1.5) !default; // ~24px
+$font-size-large:         ceil($font-size-base * 1.285) !default; // ~18px
+$font-size-xs:            ceil($font-size-base * 0.714) !default; // ~10px
+$font-size-small:         ceil($font-size-base * 0.857) !default; // ~12px
+$font-size-block:         ceil($font-size-base * 1.5) !default; // ~21px
 
-$font-size-h1:            floor($font-size-base * 2.25) !default; // ~36px
-$font-size-h2:            floor($font-size-base * 1.75) !default; // ~28px
-$font-size-h3:            ceil($font-size-base * 1.32) !default; // ~21px
-$font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-h5:            $font-size-small !default;
-$font-size-h6:            $font-size-base !default; // ~12px
+$font-size-h1:            floor($font-size-base * 2.286) !default; // ~32px
+$font-size-h2:            floor($font-size-base * 2.00) !default; // ~28px
+$font-size-h3:            ceil($font-size-base * 1.57) !default; // ~22px
+$font-size-h4:            ceil($font-size-base * 1.285) !default; // ~18px
+
+$font-size-h5:            ceil($font-size-base * 1.285) !default; // ~16px
+$font-size-h6:            $font-size-base !default; // ~14px
 
 $line-height-base:        1.5 !default; // 24/16
 $line-height-computed:    floor($font-size-base * $line-height-base) !default; // ~20px
