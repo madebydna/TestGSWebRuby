@@ -125,13 +125,13 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
                       imageSize = size_29;
                       imageAnchor = point_12_20; // center of image
-                      if (point.preschool && point.gsRating == 0) {
+                      if (point.preschool && parseInt(point.gsRating) == 0) {
                           pixelOffset = 290;
                           imageUrl = imageUrlOnPage;
                       } else {
                           pixelOffset = 290;// default to NR
                           if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                              pixelOffset = 290 - (point.gsRating * 29);
+                              pixelOffset = 290 - (parseInt(point.gsRating) * 29);
                           }
                           imageUrl = imageUrlOnPage;
                       }
@@ -140,7 +140,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                       imageSize = size_10;
                       imageAnchor = point_5_5; // center of image
 
-                      if (point.preschool && point.gsRating == 0) {
+                      if (point.preschool && parseInt(point.gsRating) == 0) {
                           pixelOffset = 30;
                       } else if (parseInt(point.gsRating) >= 8) {
                           pixelOffset = 0;
