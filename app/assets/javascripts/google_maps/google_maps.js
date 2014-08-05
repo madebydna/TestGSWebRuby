@@ -26,6 +26,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var bounds = new google.maps.LatLngBounds();
 
           var initialize = function (points) {
+              var isdraggable = $(document).width() > 767 ? true : false
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -41,7 +42,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   streetViewControl: true,
                   panControl: true,
                   scrollwheel: false,
-                  //              draggable: false,
+                  draggable: isdraggable,
                   zoom: 12,
                   styles: [
                       {
