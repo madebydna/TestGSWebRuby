@@ -1,7 +1,7 @@
 class SchoolSearchResult
   include ActionView::Helpers::AssetTagHelper
 
-  attr_accessor :fit_score, :max_fit_score, :fit_score_map, :on_page, :overall_gs_rating
+  attr_accessor :fit_score, :max_fit_score, :fit_score_breakdown, :on_page, :overall_gs_rating
 
   SOFT_FILTER_FIELD_MAP = Hash.new({}).merge!({
     beforeAfterCare: {
@@ -76,7 +76,7 @@ class SchoolSearchResult
   def initialize(hash)
     @fit_score = 0
     @max_fit_score = 0
-    @fit_score_map = {}
+    @fit_score_breakdown = []
     @attributes = hash
     @attributes.each do |k,v|
       define_singleton_method k do v end
@@ -90,15 +90,23 @@ class SchoolSearchResult
   # Increments fit score for each matching key/value pair from params
   def calculate_fit_score(params)
     @fit_score = 0
-    @fit_score_map = {}
+    @fit_score_breakdown = []
     @max_fit_score = 0
     params.each do |key, value|
-      @fit_score_map[key] ||= {}
       [*value].each do |v|
         @max_fit_score += 1
         is_match = matches_soft_filter?(key, v)
         @fit_score += 1 if is_match
-        @fit_score_map[key][v] = is_match
+        @fit_score_breakdown << {category: key, filter: v, match: is_match}
+      end
+    end
+    @fit_score_breakdown.sort! do |a, b|
+      if a[:match] == b[:match]
+        a[:filter] <=> b[:filter]
+      elsif a[:match]
+        -1
+      else
+        1
       end
     end
   end

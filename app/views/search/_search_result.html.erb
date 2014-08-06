@@ -30,18 +30,16 @@
           </div>
           <ul class="dropdown-menu">
             <li class="pal">
-              <% school.fit_score_map.each do |category_name, category_map| %>
+              <% school.fit_score_breakdown.each do |fit_score_breakdown| %>
                 <div class="font-size-xs">
-                  <% category_map.each do |key, value| %>
-                    <div class="<%= (value)?'':'gray-dark'%>">
-                      <% if value %>
-                        <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
-                      <% else %>
-                        <span class="prm">X</span>
-                      <%end%>
-                      <%=@filter_display_map[category_name.to_sym][key.to_sym]%>
-                    </div>
-                  <% end %>
+                  <div class="<%= fit_score_breakdown[:match] ? '' : 'gray-dark'%>">
+                    <% if fit_score_breakdown[:match] %>
+                      <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+                    <% else %>
+                      <span class="prm">X</span>
+                    <%end%>
+                    <%=@filter_display_map[fit_score_breakdown[:category].to_sym][fit_score_breakdown[:filter].to_sym]%>
+                  </div>
                 </div>
               <% end %>
             </li>
