@@ -76,10 +76,13 @@ $(function() {
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
             hidden_field.val(gs_checkBox);
+            self.addClass('btn-border-green');
 
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
             hidden_field.val('');
+            self.removeClass('btn-border-green');
+
         }
 
     });
