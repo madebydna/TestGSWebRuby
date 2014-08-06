@@ -56,7 +56,7 @@ class SearchController < ApplicationController
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
-    district_name = district_name.gsub('-', ' ') # replace hyphens with spaces
+    district_name = district_name.gsub('-', ' ').gsub('_', '-') # replace hyphens with spaces ToDo Move url decoding elsewhere
     @district = params[:district_name] ? District.on_db(@state[:short].downcase.to_sym).where(name: district_name, active:1).first : nil
 
     if @district.nil?
@@ -205,7 +205,7 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}"
+        school_url = gs_legacy_url_encode("/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}")
         response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
@@ -223,7 +223,7 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |city_search_result|
         output_city = {}
         output_city[:city_name] = city_search_result['city_sortable_name']
-        output_city[:url] = "/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools"
+        output_city[:url] = gs_legacy_url_encode("/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools")
         output_city[:sort_order] = city_search_result['city_number_of_schools']
 
         response_objects << output_city
@@ -245,7 +245,7 @@ class SearchController < ApplicationController
         output_district = {}
         output_district[:district_name] = district_search_result['district_sortable_name']
         output_district[:sort_order] = district_search_result['district_number_of_schools']
-        output_district[:url] = "/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools"
+        output_district[:url] = gs_legacy_url_encode("/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
 
         response_objects << output_district
       end
