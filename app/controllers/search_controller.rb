@@ -139,6 +139,7 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+    @sort_name = sort.to_s.split('_').first
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
     is_fit_sort = (sort == :fit_desc || sort == :fit_asc)

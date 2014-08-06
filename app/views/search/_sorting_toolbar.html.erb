@@ -4,26 +4,24 @@
     <div class="hidden-xs pts fr">
       <span>Sort by:</span>
       <span>
-        <% if @query_string.present? %>
-          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('rating', '<%=@query_string%>')">Quality</a>
-          <% if search_by_location? %><a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('distance', '<%=@query_string%>')">Distance</a><%end%>
-          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('fit', '<%=@query_string%>')">Fit</a>
-        <% else %>
-          <a>Quality</a><a>Distance</a><a>Fit</a>
+        <% ['rating','distance','fit'].each do |sort_type| %>
+            <% next if sort_type == 'distance' && !search_by_location? %>
+            <% sort_type_class = @sort_name == sort_type ? 'plm open-sans_sb active-search-sort' : 'plm' %>
+            <a href="javascript:void(0)" class="<%=sort_type_class%>" onclick="GS.search.results.sortBy('<%=sort_type%>', '<%=@query_string%>')"><%=sort_type.titleize%></a>
         <% end %>
       </span>
     </div>
   </div>
 
   <div class="visible-xs col-xs-4 pbl ptl">
-    <% if @query_string.present? %>
-      <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
-        <option value="">Sort By:</option>
-        <option value="rating" <%if @params_hash.include?('sort') && @params_hash['sort'] == 'rating_desc'%>selected<%end%>>Quality</option>
-        <% if search_by_location? %><option value="distance" <%if @params_hash.include?('sort') && @params_hash['sort'] == 'distance_asc'%>selected<%end%>>Distance</option><%end%>
-        <option value="fit" <%if @params_hash.include?('sort') && @params_hash['sort'] == 'fit_desc'%>selected<%end%>>Fit</option>
-      </select>
-    <% end %>
+    <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
+      <option value="">Sort By:</option>
+      <% ['rating','distance','fit'].each do |sort_type| %>
+          <% next if sort_type == 'distance' && !search_by_location? %>
+          <% asc_or_desc = sort_type == 'distance' ? 'asc' : 'desc' %>
+          <option value="<%=sort_type%>" <%if @params_hash.include?('sort') && @params_hash['sort'] == "#{sort_type}_#{asc_or_desc}"%>selected<%end%>><%=sort_type.titleize%></option>
+      <% end %>
+    </select>
   </div>
 
 </div>
