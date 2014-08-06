@@ -126,10 +126,10 @@ class FilterBuilder
                   name: :world_languages,
                   display_type: :collapsible_box,
                   filters: {
-                    french: {label: 'French', display_type: :basic_checkbox, name: :class_offerings, value: :french},
-                    german: {label: 'German', display_type: :basic_checkbox, name: :class_offerings, value: :german},
-                    spanish: {label: 'Spanish', display_type: :basic_checkbox, name: :class_offerings, value: :spanish},
-                    mandarin: {label: 'Mandarin', display_type: :basic_checkbox, name: :class_offerings, value: :mandarin}
+                    french: {label: 'French', unique_label: 'French (class)', display_type: :basic_checkbox, name: :class_offerings, value: :french},
+                    german: {label: 'German', unique_label: 'German (class)', display_type: :basic_checkbox, name: :class_offerings, value: :german},
+                    spanish: {label: 'Spanish', unique_label: 'Spanish (class)', display_type: :basic_checkbox, name: :class_offerings, value: :spanish},
+                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (class)', display_type: :basic_checkbox, name: :class_offerings, value: :mandarin}
                   }
                 }
               }
@@ -148,11 +148,11 @@ class FilterBuilder
                       display_type: :sports_button_group,
                       name: :boys_sports,
                       filters: {
-                        soccer: {label: 'soccer', display_type: :sports_values, name: :boys_sports, value: :soccer},
-                        track: {label: 'track', display_type: :sports_values, name: :boys_sports, value: :track},
-                        basketball: {label: 'basketball', display_type: :sports_values, name: :boys_sports, value: :basketball},
-                        football: {label: 'football', display_type: :sports_values, name: :boys_sports, value: :football},
-                        baseball: {label: 'baseball', display_type: :sports_values, name: :boys_sports, value: :baseball}
+                        soccer: {label: 'Soccer', unique_label: 'Soccer (boys)', display_type: :sports_values, name: :boys_sports, value: :soccer},
+                        track: {label: 'Track', unique_label: 'Track (boys)', display_type: :sports_values, name: :boys_sports, value: :track},
+                        basketball: {label: 'Basketball', unique_label: 'Basketball (boys)', display_type: :sports_values, name: :boys_sports, value: :basketball},
+                        football: {label: 'Football', unique_label: 'Football (boys)', display_type: :sports_values, name: :boys_sports, value: :football},
+                        baseball: {label: 'Baseball', unique_label: 'Baseball (boys)', display_type: :sports_values, name: :boys_sports, value: :baseball}
                       }
                     },
                     girls_sports: {
@@ -160,11 +160,11 @@ class FilterBuilder
                       display_type: :sports_button_group,
                       name: :girls_sports,
                       filters: {
-                        soccer: {label: 'soccer', display_type: :sports_values, name: :girls_sports, value: :soccer},
-                        track: {label: 'track', display_type: :sports_values, name: :girls_sports, value: :track},
-                        volleyball: {label: 'volleyball', display_type: :sports_values, name: :girls_sports, value: :volleyball},
-                        cheerleading: {label: 'cheerleading', display_type: :sports_values, name: :girls_sports, value: :cheerleading},
-                        basketball: {label: 'basketball', display_type: :sports_values, name: :girls_sports, value: :basketball}
+                        soccer: {label: 'Soccer', unique_label: 'Soccer (girls)', display_type: :sports_values, name: :girls_sports, value: :soccer},
+                        track: {label: 'Track', unique_label: 'Track (girls)', display_type: :sports_values, name: :girls_sports, value: :track},
+                        volleyball: {label: 'Volleyball', unique_label: 'Volleyball (girls)', display_type: :sports_values, name: :girls_sports, value: :volleyball},
+                        cheerleading: {label: 'Cheerleading', unique_label: 'Cheerleading (girls)', display_type: :sports_values, name: :girls_sports, value: :cheerleading},
+                        basketball: {label: 'Basketball', unique_label: 'Basketball (girls)', display_type: :sports_values, name: :girls_sports, value: :basketball}
                       }
                     }
                   }
@@ -187,10 +187,10 @@ class FilterBuilder
                   name: :world_language_immersion,
                   display_type: :collapsible_box,
                   filters: {
-                    french: {label: 'French', display_type: :basic_checkbox, name: :school_focus, value: :french},
-                    german: {label: 'German', display_type: :basic_checkbox, name: :school_focus, value: :german},
-                    spanish: {label: 'Spanish', display_type: :basic_checkbox, name: :school_focus, value: :spanish},
-                    mandarin: {label: 'Mandarin', display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
+                    french: {label: 'French', unique_label: 'French (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :french},
+                    german: {label: 'German', unique_label: 'German (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :german},
+                    spanish: {label: 'Spanish', unique_label: 'Spanish (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :spanish},
+                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
                   }
                 },
                 science_tech: {label: 'Science/Tech (STEM)', display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
