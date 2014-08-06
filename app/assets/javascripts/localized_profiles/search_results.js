@@ -40,6 +40,7 @@ GS.search.results = GS.search.results || (function() {
         $(".js-searchFiltersDropdown").on('click', function() {
             var menu = $('.js-searchFiltersMenu');
             menu.css('display') == 'none' ? menu.show() : menu.hide();
+            $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
         })
     };
 
