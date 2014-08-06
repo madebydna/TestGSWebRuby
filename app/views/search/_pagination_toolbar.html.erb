@@ -1,5 +1,5 @@
-<div class="limit-width-1200 full-width ptm">
-  <div class="ptm hidden-xs"></div>
+<div class="limit-width-1200 full-width ptm hidden-xs">
+  <div class="ptm"></div>
   <div align='right' class="prm">
     <% unless @total_results < 1 || @results_offset > @total_results%>
       <span>Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>
@@ -9,4 +9,8 @@
       <% #view file located in /views/kaminari/great_schools %>
     </div>
   </div>
+</div>
+<div class="visible-xs row">
+    <%= paginate @pagination, theme: 'search_xs', params: @params_hash %>
+    <% #view file located in /views/kaminari/search_xs %>
 </div>
