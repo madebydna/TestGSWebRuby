@@ -1,7 +1,6 @@
 class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
-  include OmnitureConcerns
   include AdvertisingHelper
 
   before_action :set_city_state

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcerns
   include SessionConcerns
   include UrlHelper
+  include OmnitureConcerns
 
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value

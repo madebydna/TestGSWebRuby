@@ -1,7 +1,6 @@
 class ReviewsController < SchoolController
   include ReviewControllerConcerns
   include DeferredActionConcerns
-  include OmnitureConcerns
 
   # Find school before executing culture action
 

@@ -1,6 +1,5 @@
 class SigninController < ApplicationController
   include DeferredActionConcerns
-  include OmnitureConcerns
 
   protect_from_forgery
 

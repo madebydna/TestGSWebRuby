@@ -1,6 +1,5 @@
 class StatesController < ApplicationController
   include SeoHelper
-  include OmnitureConcerns
   include MetaTagsHelper
   include AdvertisingHelper
 

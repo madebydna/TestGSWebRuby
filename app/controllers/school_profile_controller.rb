@@ -1,7 +1,6 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
-  include OmnitureConcerns
   include AdvertisingHelper
 
   before_action :redirect_tab_urls, only: [:overview]

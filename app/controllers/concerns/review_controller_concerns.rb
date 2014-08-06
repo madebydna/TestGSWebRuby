@@ -1,6 +1,5 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
-  include OmnitureConcerns
   include ApplicationHelper
 
   protected

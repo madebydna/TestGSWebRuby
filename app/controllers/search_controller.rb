@@ -1,5 +1,4 @@
 class SearchController < ApplicationController
-  include OmnitureConcerns
   include ApplicationHelper
   include ActionView::Helpers::TagHelper
 

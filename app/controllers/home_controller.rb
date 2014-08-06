@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   protect_from_forgery
-  include OmnitureConcerns
   include AdvertisingHelper
 
   before_action :ad_setTargeting_through_gon
