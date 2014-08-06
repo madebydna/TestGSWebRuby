@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
+  before_action :track_ab_version_in_omniture
 
   after_filter :disconnect_connection_pools
 
@@ -286,6 +287,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def ab_version
+    request.headers["X-ABVersion"]
+  end
+
   def add_ab_test_to_gon
     # Adding for a/b test
     #     Responsive-Test Group ID: 4517881831
@@ -294,12 +299,17 @@ class ApplicationController < ActionController::Base
     control_id = "4020610234"
 
     ab_id = ''
-    if(request.headers["X-ABVersion"] == "a")
+    if(ab_version == "a")
       ab_id = control_id
-    elsif (request.headers["X-ABVersion"] == "b")
+    elsif (ab_version == "b")
       ab_id = responsive_ads
     end
     gon.ad_set_channel_ids = ab_id
-    gon.ab_value = request.headers["X-ABVersion"]
+    gon.ab_value = ab_version
+  end
+
+  def track_ab_version_in_omniture
+    set_omniture_evars_in_cookie('ab_version' => ab_version)
+    set_omniture_sprops_in_cookie('ab_version' => ab_version)
   end
 end
