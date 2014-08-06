@@ -198,28 +198,18 @@ $(function() {
 
     };
 
-    var guidedSearchForm = $('.js-guidedSearch');
-    guidedSearchForm.on('submit',function() {
+    $('.js-guidedSearch').on('submit',function() {
+        // prevent submission of form when not on final page (e.g. by pressing 'enter' in address field)
+        if (!($('.js-guided-search-submit').is(':visible'))) {
+            return false;
+        }
         GS.search.schoolSearchForm.findByNameSelector = '#js-guidedQueryString';
         GS.search.schoolSearchForm.findByLocationSelector = '#js-guidedQueryString';
-        try {
-            if (GS.search.schoolSearchForm.isAddress(GS.search.schoolSearchForm.getSearchQuery())) {
-                return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
-            } else {
-                return GS.search.schoolSearchForm.submitByNameSearch.call(this, getSelectedFilterValues());
-            }
-        } catch (e) {
-            console.log(e);
-            return false;
+        if (GS.search.schoolSearchForm.isAddress(GS.search.schoolSearchForm.getSearchQuery())) {
+            return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
+        } else {
+            return GS.search.schoolSearchForm.submitByNameSearch.call(this, getSelectedFilterValues());
         }
-    });
-
-    guidedSearchForm.on('keyup keypress', function(e) {
-        if (e.keyCode == 13) {
-            e.preventDefault();
-            return false;
-        }
-        return true;
     });
 
     var addToArray = function(hash, key, value) {
