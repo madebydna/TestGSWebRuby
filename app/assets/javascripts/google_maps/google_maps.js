@@ -189,38 +189,47 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              jQuery(infoWindowMarkup).css("height", 180);
-              var markup;
-              var pixelOffset;
-//              if (point.gsRating > 0) {
-//                  pixelOffset = 350;// default to NR
-                  if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                      pixelOffset = 290 - (point.gsRating * 24);
-                      var imageUrl = gsRating_sprite;
-                      markup += "<div>" + imageUrl +"</div>";
-                  }
-//                  var imageUrl = gsRating_sprite;
-                  markup += "<div>Rating=" + point.gsRating + "/10</div>";
-
-//              }
-              markup += '<div style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
-              markup += '<div>' + point.street + ' ' + point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
-
-              if (point.maxFitScore > 0) {
-                  markup += '<div>Fit: ' + point.fitScore + '/' + point.maxFitScore + '</div>';
+              jQuery(infoWindowMarkup).css("height", 140);
+              var markup = '<div class="clearfix">'; //school data
+              markup += '<div class="pbm" style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="fl mrl">'; //address
+              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '<br/>'+ point.schoolType + ' | ' + point.gradeRange + '</div>';
+              markup += '</div>';//address
+              markup += '<div class="fr mts">'; //sprites
+              if (parseInt(point.gsRating) > 0){
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-ratings i-24-ratings-'+ point.gsRating+ '"' +'></span>GS rating' +  '</div>';
+              } else {
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-ratings i-24-ratings-nr"></span>GS rating' +  '</div>';
               }
-              markup += '<div>' + point.schoolType + ' | ' + point.gradeRange + '</div>';
-              markup += "<div>";
-              if (point.communityRating > 0) {
-                  markup += '<div><a href="' + point.reviewUrl + '">' + point.communityRatingStars + '</a>';
-                  if (point.numReviews > 0) {
-                      markup += ' (based on ' + point.numReviews + ' review' + (point.numReviews > 1 ? 's' : '') + ')';
+
+              if(point.fitScore > 0){
+                  if (point.maxFitScore > 0 && (point.fitScore / point.maxFitScore) > .666){
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-happy-face"></span>Strong fit' + '</div>';
+                  } else if (point.maxFitScore > 0 && (point.fitScore / point.maxFitScore) > .333){
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-smiling-face"></span>OK fit' + '</div>';
+                  } else {
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-neutral-face"></span>Weak fit' + '</div>';
                   }
+              }
+              markup += '</div>'; //sprites
+              markup += '</div>'; //school data
+              markup += '<hr class="mvm">';
+              markup += '<div class="fl mrs">'; //stars
+              if (point.numReviews > 0) {
+                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;//reviews link
+                  markup += '<span class="mls">'+ point.numReviews +' reviews </span>';
+                  markup += '</a>';//reviews link
               } else {
                   markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
               }
-              markup += '</div>';
-              markup += '<div><a href="' + point.zillowUrl + '" target="_blank">Nearby homes for sale</a></div>';
+              markup += '</div>'; //stars
+              markup += '<div class="fr">'; //zillow
+              markup += '<a href="http://www.zillow.com/DE-19904?cbpartner=GreatSchools&amp;utm_source=GreatSchools&amp;utm_medium=referral&amp;utm_campaign=schoolsearch" target="_blank">';
+              markup += '<span class="vam iconx16 i-16-home mrs"></span><span class="gray-dark">Homes for sale</span>';
+              markup += '</a>';
+              markup += '</div>'; //zillow
+
+
               infoWindowMarkup.innerHTML = markup;
               return infoWindowMarkup;
           };
