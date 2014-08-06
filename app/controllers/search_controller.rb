@@ -366,7 +366,7 @@ class SearchController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
-    set_targeting = {}
+    set_targeting = gon.ad_set_targeting || {}
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['template'] = 'search' # use this for page name - configured_page_name

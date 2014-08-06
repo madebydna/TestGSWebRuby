@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
+  before_action :set_global_ad_targeting_through_gon
 
   after_filter :disconnect_connection_pools
 
@@ -312,5 +313,15 @@ class ApplicationController < ActionController::Base
   def track_ab_version_in_omniture
     set_omniture_evars_in_cookie('ab_version' => ab_version)
     set_omniture_sprops_in_cookie('ab_version' => ab_version)
+  end
+
+  def set_global_ad_targeting_through_gon
+    set_targeting = gon.ad_set_targeting || {}
+    if ab_version == 'a'
+      set_targeting['Responsive_Group'] = 'Control'
+    elsif ab_version == 'b'
+      set_targeting['Responsive_Group'] = 'Test'
+    end
+    gon.ad_set_targeting = set_targeting
   end
 end
