@@ -38,7 +38,7 @@ LocalizedProfiles::Application.configure do
   config.cache_store = :memory_store, { size: 128.megabytes }
 
   # set host that rails should use when building absolute urls
-  config.action_controller.default_url_options = {
+  Rails.application.routes.default_url_options = {
     # host: 'test.host',
     host: 'localhost',
     trailing_slash: true
