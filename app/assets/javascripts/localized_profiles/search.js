@@ -46,6 +46,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (valid) {
                 if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
+                    document.cookie="show_filters_menu=true;path=/;";
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
@@ -56,6 +57,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
                         searchOptions['grades'] = gradeLevelFilter.val();
                     }
+                    document.cookie="show_filters_menu=true;path=/;";
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;

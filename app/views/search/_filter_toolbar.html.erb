@@ -24,7 +24,7 @@
   <div class="pa ptl pbm">
     <div class="hidden-xs zir-1 js-searchFiltersDropdown toolbar-text open-sans_b pointer">Refine Search<span class="caret"></span>
     </div>
-    <div class="dn zir-1 ptm prm pbm js-searchFiltersMenu">
+    <div class="<%= @show_filters_menu ? '' : 'dn' %> zir-1 ptm prm pbm js-searchFiltersMenu">
       <div class="ptm panel panel-primary">
         <div class="clearfix js-searchFiltersFormParent">
           <!--ToDo perhaps there is a way to combine the desktop and mobile filters, so two sets do not have to be generated-->
