@@ -1,12 +1,12 @@
 <div class="tab-pane active" id="<%= @guided_search_tab[0]%>">
 
-  <h4 class="tac brand-primary mbl">Get started as easy as 1-2-3!</h4>
-  <div class="mtl pll font-size-large"><span class="brand-primary">1.</span> Tell us what you're looking for</div>
-  <div class="mtl pll font-size-large"><span class="brand-primary">2.</span> See which schools are a good match</div>
-  <div class="mtl pll font-size-large"><span class="brand-primary">3.</span> Save your favorites so you can visit, apply and get updates</div>
+  <h4 class="tac brand-primary mbl">Finding the right fit is as easy as 1-2-3!</h4>
+  <div class="mtl pll font-size-large"><span class="brand-primary">1. </span>Tell us what you're looking for in a school</div>
+  <div class="mtl pll font-size-large"><span class="brand-primary">2. </span>See which schools are a good fit</div>
+  <div class="mtl pll font-size-large"><span class="brand-primary">3. </span>Save your favorites so you can visit, apply and get updates</div>
   <div class="row mtl">
     <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
-      <label class="control-label">Grade</label>
+      <label class="control-label">Grade<sup>*</sup></label>
       <select  class="form-control js-error-validation" name="grades" id="js-guided-grades">
         <option value="" >--Grade--</option>
         <option value="p">Pre-School</option>
@@ -29,13 +29,13 @@
 
     </div>
     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
-      <label class="control-label">Location</label>
+      <label class="control-label">Location<sup>*</sup><span class="gray-dark">(Address or ZIP)</span></label>
       <input type="text" class="form-control js-error-validation js-noAuto" name="location" id="js-guidedQueryString">
       <p class="js-error-message help-block dn">Please enter a location</p>
 
     </div>
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
-      <label>Distance</label>
+      <label>Show schools within</label>
       <select class="form-control" id="js-guided-distance">
         <option value="1">1 Mile</option>
         <option value="2">2 Miles</option>
@@ -60,7 +60,7 @@
               style="width:100%;"
               type="button"
       >
-        <span class="vam iconx24-icons i-24-checkmark-off mrl js-icon"></span>Public Transit
+        <span class="vam iconx24-icons i-24-checkmark-off mrl js-icon"></span>Near public transit
       </button>
       <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
 
@@ -72,7 +72,7 @@
               style="width:100%;"
               type="button"
       >
-        <span class="vam iconx24-icons i-24-checkmark-off mrl js-icon"></span>District Provided
+        <span class="vam iconx24-icons i-24-checkmark-off mrl js-icon"></span>District provided
       </button>
       <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
     </div>

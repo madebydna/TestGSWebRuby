@@ -66,8 +66,8 @@ class StatesController < ApplicationController
                     description: "#{@state[:long].titleize} school wizard, #{@state[:long].titleize} schools,
                                   #{@state[:short].upcase} schools, #{@state[:short].upcase} school guided search",
                     keywords:    "Use this 5-step guide to discover #{@state[:long].titleize} schools that match your
-                               child\'s unique needs and preferences including programs and extracurriculars, school
-                               focus areas, transportation, and daily schedules."
+                                 child\'s unique needs and preferences including programs and extracurriculars, school
+                                 focus areas, transportation, and daily schedules."
 
       render 'shared/guided_search'
     end
