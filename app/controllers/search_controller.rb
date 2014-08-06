@@ -79,6 +79,7 @@ class SearchController < ApplicationController
 
   def by_location
     city = nil
+    @by_location = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -95,7 +96,6 @@ class SearchController < ApplicationController
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
@@ -138,7 +138,11 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
-    @sort_name = sort.to_s.split('_').first
+    @sort_name = if sort.nil?
+                   search_by_location? ? 'distance' : 'rating'
+                 else
+                   sort.to_s.split('_').first
+                 end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
     is_fit_sort = (sort == :fit_desc || sort == :fit_asc)

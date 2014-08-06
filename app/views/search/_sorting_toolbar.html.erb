@@ -4,10 +4,10 @@
     <div class="hidden-xs pts fr">
       <span>Sort by:</span>
       <span>
-        <% ['rating','distance','fit'].each do |sort_type| %>
-            <% next if sort_type == 'distance' && !search_by_location? %>
-            <% sort_type_class = @sort_name == sort_type ? 'plm open-sans_sb active-search-sort' : 'plm' %>
-            <a href="javascript:void(0)" class="<%=sort_type_class%>" onclick="GS.search.results.sortBy('<%=sort_type%>', '<%=@query_string%>')"><%=sort_type.titleize%></a>
+        <% ['rating','distance','fit'].each do |sort_name| %>
+            <% next if sort_name == 'distance' && !search_by_location? %>
+            <% sort_type_class = @sort_name == sort_name ? 'plm open-sans_sb active-search-sort' : 'plm' %>
+            <a href="javascript:void(0)" class="<%=sort_type_class%>" onclick="GS.search.results.sortBy('<%=sort_name%>', '<%=@query_string%>')"><%=sort_name.titleize%></a>
         <% end %>
       </span>
     </div>
@@ -16,10 +16,10 @@
   <div class="visible-xs col-xs-4 pbl ptl">
     <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
       <option value="">Sort By:</option>
-      <% ['rating','distance','fit'].each do |sort_type| %>
-          <% next if sort_type == 'distance' && !search_by_location? %>
-          <% asc_or_desc = sort_type == 'distance' ? 'asc' : 'desc' %>
-          <option value="<%=sort_type%>" <%if @params_hash.include?('sort') && @params_hash['sort'] == "#{sort_type}_#{asc_or_desc}"%>selected<%end%>><%=sort_type.titleize%></option>
+      <% ['rating','distance','fit'].each do |sort_name| %>
+          <% next if sort_name == 'distance' && !search_by_location? %>
+          <% asc_or_desc = sort_name == 'distance' ? 'asc' : 'desc' %>
+          <option value="<%=sort_name%>" <%if @params_hash.include?('sort') && @params_hash['sort'] == "#{sort_name}_#{asc_or_desc}"%>selected<%end%>><%=sort_name.titleize%></option>
       <% end %>
     </select>
   </div>
