@@ -62,8 +62,12 @@ $(function() {
          });
         if (is_pull_down_selected == true) {
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            pull_down_button.find('.btn').addClass('btn-border-green');
+
         }else {
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
+            pull_down_button.find('.btn').removeClass('btn-border-green');
+
         }
 
     });
