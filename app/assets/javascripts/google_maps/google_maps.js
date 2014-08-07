@@ -243,7 +243,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
     };
 
     return {
-       init: init,
+        init: init,
         getMap: getMap
     }
 

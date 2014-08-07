@@ -39,13 +39,20 @@ $(document).ready(function () {
         elemMapCanvas.hide('fast');
         addActiveToggleStateFor('list');
         removeActiveToggleStateFor('map');
+        switchListMapViewTextForMobile('list', 'map');
         $.cookie('map_view', 'false', { path: '/' });
     };
     var showMapView = function() {
         elemMapCanvas.show('slow',initAndShowMap);
         addActiveToggleStateFor('map');
         removeActiveToggleStateFor('list');
+        switchListMapViewTextForMobile('map', 'list');
         $.cookie('map_view', 'true', { path: '/' });
+    };
+    var switchListMapViewTextForMobile = function(oldText, newText) {
+        var text = $(".js-toggle-list-map-view-text");
+        text.siblings('span').removeClass('i-16-white-' + oldText + '-view').addClass('i-16-white-' + newText + '-view');
+        text.text(newText.charAt(0).toUpperCase() + newText.slice(1));
     };
     elemListViewToggle.on("click", hideMapView);
     elemListViewToggle.hover(
