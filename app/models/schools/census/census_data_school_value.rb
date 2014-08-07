@@ -12,4 +12,5 @@ class CensusDataSchoolValue < ActiveRecord::Base
     where(data_set_id: Array(data_sets.map(&:id)))
   }
 
+  default_scope -> { where(active: true) }
 end
