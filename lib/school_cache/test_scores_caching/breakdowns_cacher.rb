@@ -1,15 +1,19 @@
 class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
 
-  CACHE_KEY = 'test_score_breakdowns'
+  CACHE_KEY = 'test_scores'
 
-  def active_data_without_breakdown
-    @active_data_without_breakdown ||= (
-      results = TestDataSet.fetch_test_scores(school, 1).select do |result|
-        data_type_id = result.data_type_id
-        # skip this if no corresponding test data type
-        test_data_types && test_data_types[data_type_id].present?
-      end
-      results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
+  def query_results
+    @query_results ||= (
+      results =
+        (
+          TestDataSet.fetch_test_scores(school, 1, breakdown_id: 1) +
+          TestDataSet.fetch_test_scores(school, 1, grade: 'All')
+        ).select do |result|
+          data_type_id = result.data_type_id
+          # skip this if no corresponding test data type
+          test_data_types && test_data_types[data_type_id].present?
+        end
+        results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
     )
   end
 
@@ -30,7 +34,7 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
           test_source: test.test_source,
           test_description: test.test_description,
           grades: {
-            test.grade.value => {
+            test.grade.to_s => {
               label: test.grade_label,
               level_code: {
                 test.level_code.to_s => {

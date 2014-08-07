@@ -80,7 +80,7 @@ end
 
 
 def self.test_scores_cache_for_school(school)
-  test_scores_cacher = TestScoresCaching::TestScoresCacher.new(school)
+  test_scores_cacher = TestScoresCaching::BreakdownsCacher.new(school)
   test_scores_cacher.cache
 end
 
