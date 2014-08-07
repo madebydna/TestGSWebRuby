@@ -60,6 +60,12 @@ $(function() {
                  is_pull_down_selected = true ;
              }
          });
+
+        pull_down_layer.find('.js-value').each(function(){
+            if ($(this).val() != ''){
+                is_pull_down_selected = true ;
+            }
+        });
         if (is_pull_down_selected == true) {
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
             pull_down_button.find('.btn').addClass('btn-border-green');
@@ -258,6 +264,43 @@ $(function() {
     var sportsToolTip = function(){
         $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
     };
+
+    $('.js-guidedSearchSportsIconsButton').on('click', function(){
+        var self = $(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.children(".js-value");
+        var gs_checkBox= self.data('gs-checkbox-value');
+        var gs_checkBoxCategory= self.data('gs-checkbox-category');
+        var gs_iconLabel = self.data('gs-checkbox-icon-label');
+
+        if (hidden_field.val()== '') {
+            checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
+            self.addClass('btn-bg-green');
+            hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
+        } else {
+            checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
+            self.removeClass('btn-bg-green');
+            hidden_field.removeAttr("value").removeAttr("name");
+        }
+    });
+
+    $('.js-guidedSearch').on('click', '.js-sports-gender', function() {
+        var self = $(this);
+
+        if (!self.hasClass('btn-bg-green')) {
+            var gs_gender = self.data('gs-gender');
+            var self_filters = $('.js-' + gs_gender + '-sports-values');
+            self_filters.show();
+            self.addClass('btn-bg-green');
+
+
+            var sibling = self.siblings('.js-sports-gender');
+            var sibling_filters = self_filters.siblings('.js-sports-button-group');
+            sibling_filters.hide();
+            sibling.removeClass('btn-bg-green');
+        }
+
+    });
 
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
     GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;

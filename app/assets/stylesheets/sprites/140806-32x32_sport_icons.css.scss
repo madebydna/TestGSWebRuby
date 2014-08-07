@@ -9,11 +9,11 @@
   /* **************** VIEWPORT ***************** */
 }
 
-.i-32-sport-basketball-off {
+.i-32-sport-baseball-off {
   @extend .iconx32-sport-icons;
   background-position: 0 0;
 }
-.i-32-sport-basketball-on {
+.i-32-sport-baseball-on {
   @extend .iconx32-sport-icons;
   background-position: 0 -32px;
 }
@@ -24,7 +24,7 @@
 }
 .i-32-sport-soccer-on {
   @extend .iconx32-sport-icons;
-  background-position: -32px 0px;
+  background-position: -32px -32px;
 }
 
 .i-32-sport-cheerleading-off {
@@ -33,7 +33,7 @@
 }
 .i-32-sport-cheerleading-on {
   @extend .iconx32-sport-icons;
-  background-position: -64px 0px;
+  background-position: -64px -32px;
 }
 
 .i-32-sport-track-off  {
@@ -42,7 +42,7 @@
 }
 .i-32-sport-track-on  {
   @extend .iconx32-sport-icons;
-  background-position: -96px 0px;
+  background-position: -96px -32px;
 }
 
 .i-32-sport-football-off {
@@ -51,13 +51,22 @@
 }
 .i-32-sport-football-on {
   @extend .iconx32-sport-icons;
-  background-position: -128px 0px;
+  background-position: -128px -32px;
 }
-.i-32-sport-volleyball-off {
+.i-32-sport-basketball-off {
   @extend .iconx32-sport-icons;
   background-position: -160px 0px;
+}
+.i-32-sport-basketball-on {
+  @extend .iconx32-sport-icons;
+  background-position: -160px -32px;
+}
+
+.i-32-sport-volleyball-off {
+  @extend .iconx32-sport-icons;
+  background-position: -192px 0px;
 }
 .i-32-sport-volleyball-on {
   @extend .iconx32-sport-icons;
-  background-position: -160px 0px;
+  background-position: -192px -32px;
 }
