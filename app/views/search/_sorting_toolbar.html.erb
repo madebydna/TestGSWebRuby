@@ -7,7 +7,7 @@
         <% ['rating','distance','fit'].each do |sort_name| %>
             <% next if sort_name == 'distance' && !search_by_location? %>
             <% if @sort_name == sort_name %>
-                <span class="plm open-sans_sb active-search-sor>"><%=sort_name.titleize%></span>
+                <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
             <% else %>
                 <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>', '<%=@query_string%>')"><%=sort_name.titleize%></a>
             <% end %>
