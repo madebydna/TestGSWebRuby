@@ -46,7 +46,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (valid) {
                 if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
-                    document.cookie="show_filters_menu=true;path=/;";
+//                    document.cookie="showFiltersMenu=true;path=/;";
+                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
@@ -57,7 +58,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
                         searchOptions['grades'] = gradeLevelFilter.val();
                     }
-                    document.cookie="show_filters_menu=true;path=/;";
+//                    document.cookie="showFiltersMenu=true;path=/;";
+                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
@@ -750,6 +752,17 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 GS.uri.Uri.getQueryStringFromObject(queryString); }, 1);
     };
 
+    var showFiltersMenuOnLoad = function() {
+        if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
+            if ($(document).width() > 767 ) {
+                $('.js-searchFiltersMenu').show();
+            }
+        }
+        $.cookie('showFiltersMenu', 'false', {path:'/'});
+    };
+
+
+
     return {
         init:init,
         setupTabs: setupTabs,
@@ -764,7 +777,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         isAddress: isAddress,
         searchType: searchType,
         findByNameSelector: findByNameSelector,
-        findByLocationSelector: findByLocationSelector
+        findByLocationSelector: findByLocationSelector,
+        showFiltersMenuOnLoad: showFiltersMenuOnLoad
     };
 })();
 
@@ -778,4 +792,5 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.initialize();
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
+  GS.search.schoolSearchForm.showFiltersMenuOnLoad();
 });

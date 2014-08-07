@@ -182,7 +182,6 @@ class SearchController < ApplicationController
 
     mapping_points_through_gon
     assign_sprite_files_though_gon
-    set_open_filter_menu_variable
 
     @window_size = get_kaminari_window_size(@page_number, @total_results, @page_size)
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
@@ -447,11 +446,6 @@ class SearchController < ApplicationController
         12 => '12th Grade'
       }
     }
-  end
-
-  def set_open_filter_menu_variable
-    @show_filters_menu = cookies[:show_filters_menu].nil? ? true : (cookies[:show_filters_menu] == 'true')
-    cookies[:show_filters_menu] = false
   end
 
 end
