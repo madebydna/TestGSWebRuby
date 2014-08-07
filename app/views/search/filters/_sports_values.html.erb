@@ -7,10 +7,10 @@
          style="padding-left: 9px; padding-bottom: 4px;"
          data-gs-checkbox-value="<%=filter.value%>"
          data-gs-checkbox-category="<%=filter.name%>[]"
-         data-gs-checkbox-icon-label="i-<%=filter.label%>"
+         data-gs-checkbox-icon-label="i-24-<%=filter.label%>"
   >
 
-    <span class='iconx24_search <%= is_match ? "i-#{filter.label}-on" : "i-#{filter.label}-off"%> js-icon'></span>
+    <span class='iconx24-icons <%= is_match ? "i-24-#{filter.label}-on" : "i-24-#{filter.label}-off"%> js-icon'></span>
     <input type="hidden" <%= is_match ? "name=#{filter.name.to_s}[] value=#{filter.value.to_s}" : '' %> class="js-value">
   </button>
 
