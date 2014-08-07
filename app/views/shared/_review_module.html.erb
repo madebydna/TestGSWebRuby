@@ -43,22 +43,32 @@
         <% else %>
             <div class="well mbn">This review submitted without content.</div>
         <% end %>
+        <div class="clearfix pts">
+            <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
+                <div class="pull-left ptm">
+                    <button type="button" class="btn btn-default js_reviewHelpfulButton mrm" data-review_id="<%= review.id %>">Helpful?</button>
+                    <span>
+                    <% if @school_reviews_helpful_counts && @school_reviews_helpful_counts[review.id].present? %>
+                        <%= pluralize(@school_reviews_helpful_counts[review.id], 'person') %>
+                        found this helpful
+                    <% end %>
+                    </span>
+                </div>
+                <% if logged_in? && current_user.reported_review?(review) %>
+                    <div class="pull-right small ptm">You've reported this review</div>
+                <% else %>
+                    <div class="pull-right small ptm js-report-review-link-<%= review.id %>">
+                        <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
+                    </div>
+                    <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
+                        <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
     <% end %>
 
-    <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
-        <% if logged_in? && current_user.reported_review?(review) %>
-            <div class="pull-right small ptm">You've reported this review</div>
-        <% else %>
-            <% if review.comments.strip.present? %>
-                <div class="pull-right small ptm js-report-review-link-<%= review.id %>">
-                    <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
-                </div>
-                <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
-                    <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
-                </div>
-            <% end %>
-        <% end %>
-    <% end %>
+
 </div>
 
 <div class="row pam" style="display:none;">

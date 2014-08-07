@@ -26,7 +26,6 @@
             state = _(GS.uri.Uri.getPath().split('/')).filter(function(pathComponent) {
                 return GS.states.isStateName(hyphensToSpaces(pathComponent));
             }).first();
-            console.log('state name is ' + state);
             stateAbbreviation = GS.states.abbreviation(hyphensToSpaces(state));
         }
 

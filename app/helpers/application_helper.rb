@@ -181,7 +181,7 @@ module ApplicationHelper
   end
 
   def remote_ip
-    request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
+    request.env['HTTP_X_FORWARDED_FOR'] || request.env['X_Forwarded_For'] || request.remote_ip
   end
   
   def zillow_url(school)

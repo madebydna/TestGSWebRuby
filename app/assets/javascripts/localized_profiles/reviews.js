@@ -65,6 +65,16 @@ GS.reviews = GS.reviews || function($) {
             }
         });
 
+        $("body").on("click", ".js_reviewHelpfulButton", function(){
+          // disable button
+
+          $(this).prop("disabled",true);
+          var review_id = $(this).data( "review_id" );
+          if($.isNumeric(review_id)){
+            helpfulReviewAjax(review_id, $(this));
+          }
+        });
+
         var callReviewsAjax = function(results, nextTen){
             jQuery.ajax({
                 type:'GET',
@@ -163,6 +173,28 @@ GS.reviews = GS.reviews || function($) {
             form.parent().parent().hide();
             form.remove();
         }
+    };
+
+    var helpfulReviewAjax = function(reviewId, obj) {
+      jQuery.ajax({
+        type:'GET',
+        url:"/gsr/ajax/create_helpful_review",
+        data:{
+          review_id: reviewId
+        },
+        dataType: "json",
+        async:true
+      }).done(function (data) {
+        var count = data[reviewId];
+        if(count == 1){
+          obj.html('Thank you!');
+          obj.siblings("span").replaceWith(count + ' person found this helpful');
+        }
+        else{
+          obj.html('Thank you!');
+          obj.siblings("span").replaceWith(count + ' people found this helpful');
+        }
+      }.gs_bind(this));
     };
 
     return {
