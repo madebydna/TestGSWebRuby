@@ -7,7 +7,8 @@ describe 'Nearby cities on city browse' do
   let(:dover_city_browse) { '/delaware/dover/schools' }
   let(:state) { {long: 'delaware', short: 'de'} }
   let(:city) { City.new(name: 'dover', state: 'de') }
-  let(:nearby_cities) { set_up_nearby_cities }
+  let(:cities) { %w(Anthony Christina Harrison Keith) }
+  let(:nearby_cities) { set_up_nearby_cities(cities) }
 
   context 'with some nearby cities' do
     before do
@@ -17,6 +18,9 @@ describe 'Nearby cities on city browse' do
     end
     it 'should show the nearby cities' do
       expect(page).to have_content 'Nearby Cities:'
+      cities.each do |city|
+        expect(page).to have_content city
+      end
     end
   end
 
