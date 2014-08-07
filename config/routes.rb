@@ -16,7 +16,7 @@ LocalizedProfiles::Application.routes.draw do
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
-      constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
+      constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
 
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
       constraints: {state: States.any_state_name_regex, district_name: /[^\/]*/}, to: 'search#district_browse'

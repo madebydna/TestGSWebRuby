@@ -227,7 +227,7 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |city_search_result|
         output_city = {}
         output_city[:city_name] = city_search_result['city_sortable_name']
-        output_city[:url] = gs_legacy_url_encode("/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools")
+        output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools")
         output_city[:sort_order] = city_search_result['city_number_of_schools']
 
         response_objects << output_city
@@ -249,7 +249,7 @@ class SearchController < ApplicationController
         output_district = {}
         output_district[:district_name] = district_search_result['district_sortable_name']
         output_district[:sort_order] = district_search_result['district_number_of_schools']
-        output_district[:url] = gs_legacy_url_encode("/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
+        output_district[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
 
         response_objects << output_district
       end
