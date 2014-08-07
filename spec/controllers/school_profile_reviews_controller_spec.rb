@@ -18,6 +18,7 @@ describe SchoolProfileReviewsController do
 
     it 'should set the list of reviews' do
       reviews = [ instance_double(SchoolRating) ]
+      expect(HelpfulReview).to receive(:helpful_counts).with(reviews).and_return({})
       expect(school).to receive(:reviews_filter).and_return(reviews)
       get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews]).to eq(reviews)
