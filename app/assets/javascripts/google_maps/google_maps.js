@@ -18,7 +18,6 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
-          var gsRating_sprite = gon.sprite_files['gsRating_sprite'] ;
 
           var optionalLat = optionalLat || 37.807778;
           var optionalLon = optionalLon || -122.265149;
@@ -114,7 +113,8 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   bounds.extend(position);
                   markerOptions = {
                       position: position,
-                      map: GS.search.map
+                      map: GS.search.map,
+                      title: point.name
                   };
 
                   if (point['zIndex'] != undefined) {
@@ -191,24 +191,25 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               var infoWindowMarkup = document.createElement('div');
               jQuery(infoWindowMarkup).css("height", 140);
               var markup = '<div class="clearfix">'; //school data
-              markup += '<div class="pbm" style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="pbm" style="width: 101%"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="fl mrl">'; //address
-              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '<br/>'+ point.schoolType + ' | ' + point.gradeRange + '</div>';
+              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
               markup += '</div>';//address
               markup += '<div class="fr mts">'; //sprites
               if (parseInt(point.gsRating) > 0){
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-ratings i-24-ratings-'+ point.gsRating+ '"' +'></span>GS rating' +  '</div>';
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'+ point.gsRating+ '"' +'></span>GS rating' +  '</div>';
               } else {
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-ratings i-24-ratings-nr"></span>GS rating' +  '</div>';
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-nr"></span>GS rating' +  '</div>';
               }
 
               if(point.fitScore > 0){
-                  if (point.maxFitScore > 0 && (point.fitScore / point.maxFitScore) > .666){
+                  if (point.strongFit){
                       markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-happy-face"></span>Strong fit' + '</div>';
-                  } else if (point.maxFitScore > 0 && (point.fitScore / point.maxFitScore) > .333){
+                  } else if (point.okFit){
                       markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-smiling-face"></span>OK fit' + '</div>';
                   } else {
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-neutral-face"></span>Weak fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-neutral-face"></span>Low fit' + '</div>';
                   }
               }
               markup += '</div>'; //sprites
@@ -216,8 +217,9 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<hr class="mvm">';
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
-                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;//reviews link
-                  markup += '<span class="mls">'+ point.numReviews +' reviews </span>';
+                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
+//                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
+                  markup += '<span class="mls mrm">'+ point.numReviews +' reviews </span>';//reviews link
                   markup += '</a>';//reviews link
               } else {
                   markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';

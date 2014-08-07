@@ -33,11 +33,13 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
       zipcode: self.zipcode,
       schoolType: self.type,
       preschool: self.preschool?,
-      gradeRange: self.grades[0] + " - " + self.grades[-1],
+      gradeRange: process_level,
       fitScore: self.fit_score,
       maxFitScore: self.max_fit_score,
       gsRating: self.overall_gs_rating || 0,
-      on_page: (self.on_page)
+      on_page: (self.on_page),
+      strongFit: self.strong_fit?,
+      okFit: self.ok_fit?
     }
 
     yield map_points if block_given?
