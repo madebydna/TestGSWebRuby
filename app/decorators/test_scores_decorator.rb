@@ -38,7 +38,7 @@ class TestScoresDecorator < Draper::Decorator
       buttons << h.content_tag(:span, class: 'js_test_groups dropdown pll') do
         h.concat(
           h.button_tag('groups', class: 'btn btn-group btn-default', 'data-toggle' => 'dropdown') do
-            'Groups <b class="caret"></b>'.html_safe
+            'By Group <b class="caret"></b>'.html_safe
           end
         )
         h.concat(h.content_tag(:ul, class: 'dropdown-menu mll', style: '') do
