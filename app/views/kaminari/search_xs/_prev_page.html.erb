@@ -5,9 +5,7 @@
 <% #  total_pages:   total number of pages %>
 <% #  per_page:      number of items to fetch per page %>
 <% #  remote:        data-remote %>
-<div class="col-xs-4 pvl">
-  <% if !current_page.first? %>
-    <%= link_to url, :rel => 'prev', :type => 'button', :class => 'btn font-size-large' do %>&lt; Prev.<% end %>
-  <% end %>
-</div>
+<% if !current_page.first? %>
+  <%= link_to url, :rel => 'prev', :type => 'button', :class => 'btn font-size-block' do %>&lt; Prev<% end %>
+<% end %>
 

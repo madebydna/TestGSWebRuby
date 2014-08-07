@@ -6,14 +6,11 @@
 <% #  remote:        data-remote %>
 <% #  paginator:     the paginator that renders the pagination tags inside %>
 <%= paginator.render do %>
-  <nav>
-    <%= prev_page_tag %>
-    <div class="col-xs-1 pvl"></div>
-    <div class="col-xs-2 pvl tac">
-      <div class="btn font-size-large"><%= current_page.number %></div>
+  <nav class="pagination full-width row mvl tac">
+    <div class="btn-group">
+      <%= prev_page_tag %>
+      <span class="btn font-size-block active"><%= current_page.number %></span>
+      <%= next_page_tag  %>
     </div>
-    <div class="col-xs-1 pvl"></div>
-    <%= next_page_tag  %>
   </nav>
-  <br class="clearfloat"/>
 <% end %>
