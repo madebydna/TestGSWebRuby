@@ -1,45 +1,31 @@
 <% content_for :javascript_includes do %>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
+    <script>
+      $(function() {
+        GS.forms.updateFormVisualElements();
+      });
+    </script>
 <% end %>
 
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
 <%= render 'shared/guided_search/helpme_module' %>
 
-<div class="limit-width-940 border-all-light-grey mbl">
+<div class="limit-width-940 border-all-light-grey mbxl">
 
   <%= render 'shared/guided_search/steps_navigation' %>
 
   <form role="form" name="guidedSearch" action="/search/search.page" class="js-guidedSearch"
         method="get" >
+    <input type="hidden" name="sort" value="rating_desc">
 
-
-<!-- Hard coding to be removed once integration with search works-->
-  <input type="hidden" name="state" value=<%=@state[:short] %>>
-
-  <input type="hidden" name="lat" value="39.7961255">
-  <input type="hidden" name="lon" value="-75.53931549999999">
-  <input type="hidden" name="zipCode" value="19803">
-  <input type="hidden" name="locationType" value="postal_code">
-  <input type="hidden" name="normalizedAddress" value="Wilmington,%20DE%2019803">
-  <input type="hidden" name="locationSearchString" value="19803">
-  <input type="hidden" name="distance" value="60">
-  <input type="hidden" name="city" value="Wilmington">
-  <input type="hidden" name="sortBy" value="distance">
-
-
-  <div   class="tab-content">
+    <div   class="tab-content">
   <%=render 'shared/guided_search/get_started'%>
   <%=render 'shared/guided_search/child_care'%>
   <%=render 'shared/guided_search/dress_code'%>
   <%=render 'shared/guided_search/school_focus'%>
-  <!--<%=render 'shared/guided_search/class_offerings'%>-->
+  <%=render 'shared/guided_search/class_offerings'%>
 
-    <div class="tab-pane" id="<%= @guided_search_tab[4]%>">
-      <h4 class="tac mbl">Which classes are important to you?</h4>
-      <%=render 'shared/guided_search/button_navigation', previous_tab_name: @guided_search_tab[3],current_tab_name:@guided_search_tab[4]%>
-
-    </div>
   </div>
   </form>
 </div>

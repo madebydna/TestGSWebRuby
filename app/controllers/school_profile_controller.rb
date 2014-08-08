@@ -1,7 +1,6 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
-  include OmnitureConcerns
   include AdvertisingHelper
 
   before_action :redirect_tab_urls, only: [:overview]
@@ -140,7 +139,7 @@ class SchoolProfileController < SchoolController
 
   def ad_setTargeting_through_gon
     if @school.show_ads
-      set_targeting = {}
+      set_targeting = gon.ad_set_targeting || {}
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
       set_targeting['City'] = format_ad_setTargeting(@school.city)

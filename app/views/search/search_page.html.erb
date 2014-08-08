@@ -1,13 +1,13 @@
+<%= render partial: 'search/filter_toolbar_mobile' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
 <%= render 'nav/search_bar_guided_search'%>
 <%= render 'filter_toolbar' %>
 
-<div class="limit-width-1200 full-width">
-  <%= render 'search/google_maps', schools: @map_schools %>
-</div>
+<%= render 'search/google_maps', schools: @map_schools %>
 
 <% if @schools.present? %>
+  <%= render 'sorting_toolbar' %>
   <%= render partial: 'search/search_results', schools: @schools%>
 <% end %>
 <%= render partial: 'pagination_toolbar' %>

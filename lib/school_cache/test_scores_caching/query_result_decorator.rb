@@ -45,7 +45,7 @@ class TestScoresCaching::QueryResultDecorator
   end
 
   def breakdown_name
-    breakdown = TestScoresCaching::Base.test_data_breakdowns[data_type_id]
+    breakdown = TestScoresCaching::Base.test_data_breakdowns[breakdown_id]
     breakdown.name if breakdown
   end
 
@@ -64,6 +64,14 @@ class TestScoresCaching::QueryResultDecorator
 
   def data_type_id
     self['data_type_id']
+  end
+
+  def breakdown_id
+    self['breakdown_id']
+  end
+
+  def subject_id
+    self['subject_id']
   end
 
   def grade_label
@@ -87,7 +95,10 @@ class TestScoresCaching::QueryResultDecorator
   end
 
   def subject
-    TestDataSet.lookup_subject[self['subject_id']]
+    subject = TestScoresCaching::Base.test_data_subjects[subject_id]
+    display_name = subject.name if subject
+    display_name += ' subjects' if display_name == 'All'
+    display_name
   end
 
   def data_type_id

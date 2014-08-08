@@ -1,48 +1,35 @@
 #ToDo Tests Needed
 class Filter
 
-  attr_accessor :name, :key, :display_type, :filters, :sort_order, :category
+  attr_accessor :label, :unique_label, :name, :value, :display_type, :filters, :sort_order, :has_children
 
   def initialize(attributes)
-    @name = attributes[:name]
-    @key = attributes[:key] #only required for actual filters
+    @label = attributes[:label]
+    if attributes.include?(:unique_label) # Label that can distinguish filter from others when category is hidden (e.g. fit score popup)
+      @unique_label = attributes[:unique_label]
+    else
+      @unique_label = @label
+    end
+    @value = attributes[:value] #only required for actual filters
     @display_type = attributes[:display_type] #required
     @filters = attributes[:filters]
-    @category = attributes[:category] #only required for actual filters
+    @name = attributes[:name] #only required for actual filters
     @sort_order = attributes[:sort_order] #for sorting the tree to have filters displayed in order
+    @has_children = attributes[:filters].present?
   end
 
-  def filters_display_map #returns map for search result fit score map
-    ###EXAMPLE map to return
-    {
-      girls_sports: {
-        name: 'Girls Sports',
-        soccer: 'Soccer',
-        basketball: 'Basketball',
-        football: 'Football'
-      }
-    }
-    build_map(self) unless filters.nil?
-  end
-
-  def build_map(filter)
-    if filter.filters.nil?
-      { filter.category => { filter.key => filter.name } }
-    else
-      filter.filters.inject({}) do |hash, f|
-        map = build_map(f).inject({}) do |h, (k, v)|
+  def build_map #returns map for search result fit score map
+    if self.has_children
+      self.filters.inject({}) do |hash, f|
+        map = f.build_map.inject({}) do |h, (k, v)|
           hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}) ; hash
         end
-        map[f.category].merge!({name: f.name}) if f.display_type == :title ; map
+        [*f.name].each { |name| map[name].merge!({label: f.label}) } if f.display_type == :title ; map
       end
+    else
+      { self.name => { self.value => self.unique_label } }
     end
   end
 
 end
-
-class SliderFilter < Filter
-  def get_values_of_children #gets names and query_param_keys of children. For filters that need all values at once.
-  end
-end
-
 

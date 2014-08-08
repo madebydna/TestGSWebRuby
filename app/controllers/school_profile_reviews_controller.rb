@@ -1,7 +1,6 @@
 class SchoolProfileReviewsController < SchoolProfileController
   protect_from_forgery
 
-  include OmnitureConcerns
   include AdvertisingHelper
 
   layout 'application'
@@ -15,6 +14,7 @@ class SchoolProfileReviewsController < SchoolProfileController
 
     @school_reviews = @school.reviews_filter quantity_to_return: 10
 
+    @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
     @school_principal_review = @school.principal_review
 
     @review_offset = 0

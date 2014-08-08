@@ -20,7 +20,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var init = function(state) {
         $('.js-findByLocationForm').submit(function() {
-            var valid = validateField($(this).find(findByLocationSelector)[0]);
+            var input = $(this).find(findByLocationSelector)[0];
+            var valid = validateField(input, input['defaultValue']);
             if (valid) {
                 return submitByLocationSearch.apply(this);
             } else {
@@ -29,7 +30,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-findByNameForm').submit(function() {
-            var valid = validateField($(this).find(findByNameSelector)[0]);
+            var input = $(this).find(findByNameSelector)[0];
+            var valid = validateField(input, input['defaultValue']);
             if (valid) {
                 return submitByNameSearch.apply(this);
             } else {
@@ -38,17 +40,27 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-prototypeSearchForm').submit(function() {
-            var valid = validateField($(this).find(prototypeSearchSelector)[0]);
+            var input = $(this).find(prototypeSearchSelector)[0];
+            var valid = validateField(input, input['placeholder']);
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 if (searchType == 'byLocation') {
-                    findByLocationSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
+//                    document.cookie="showFiltersMenu=true;path=/;";
+                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
-                    findByNameSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
 //                    ToDo Hard coded byName search to Delaware
-                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this)
-                    return submitByNameSearch.apply(this);
+                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
+                    var searchOptions = {};
+                    var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+                    if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
+                        searchOptions['grades'] = gradeLevelFilter.val();
+                    }
+//                    document.cookie="showFiltersMenu=true;path=/;";
+                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
+                    return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
                 }
@@ -72,10 +84,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             $(locationSelector).removeClass('selected');
             $('.location-search').hide();
         });
-    }
+    };
 
-    var validateField = function(field) {
-        if (field['value'] == field['defaultValue']) {
+    var validateField = function(field, valueToIgnore) {
+        if (valueToIgnore && field['value'] == valueToIgnore) {
             return false;
         }
 
@@ -88,7 +100,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
 
         return true;
-    }
+    };
 
     var isTermState = function(term) {
         var stateTermList = new Array
@@ -120,8 +132,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return 0;
     };
 
-    var submitByLocationSearch = function() {
-        var searchQuery = $(this).find(findByLocationSelector).val();
+    var submitByLocationSearch = function(geocodeCallbackFn) {
+        var searchQuery = getSearchQuery();
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
         if (searchQuery != '' &&
@@ -141,18 +153,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['lon'] = geocodeResult['lon'];
                     data['zipCode'] = geocodeResult['zipCode'];
                     data['state'] = geocodeResult['state'];
-                    data['locationType'] = geocodeResult['type'];
+//                    data['locationType'] = geocodeResult['type'];
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
-                    data['totalResults'] = geocodeResult['totalResults'];
-                    data['locationSearchString'] = searchQuery;
-                    data['distance'] = $('#js-distance-select-box').val() || 5;
+//                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
-                    $('#js-prototypeSearchGradeLevelFilter').val() == undefined || (data['grades'] = $('#js-prototypeSearchGradeLevelFilter').val());
-                    // Not setting a timeout breaks back button
-                    setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
-                            SEARCH_PAGE_PATH +
-                            GS.uri.Uri.getQueryStringFromObject(data); }, 1);
+                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
                     alert("Location not found. Please enter a valid address, city, or ZIP.");
                 }
@@ -164,14 +170,33 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
+    var getSearchQuery = function() {
+        var searchQuery = $(GS.search.schoolSearchForm.findByLocationSelector).val();
+        return searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
+    };
+
+    var defaultGeocodeCallbackFn = function(geocodeResult) {
+        var searchOptions = jQuery.extend({}, geocodeResult);
+        searchOptions['locationSearchString'] = getSearchQuery();
+        searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
+        var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+        if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
+            searchOptions['grades'] = gradeLevelFilter.val();
+        }
+
+        // Not setting a timeout breaks back button
+        setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
+            SEARCH_PAGE_PATH +
+            GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
+    };
+
     var schools = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('school_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit:4,
+        limit: 10,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
-        sorter: autocompleteSort,
         remote: {
             url: '/gsr/search/suggest/school?query=%QUERY&state=Delaware',
             filter: function(data) {
@@ -183,7 +208,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         cacheList[data[i].url] = true;
                     }
                 }
-                return data.sort(autocompleteSort);
+                return data
             },
             rateLimitWait: 100
         }
@@ -192,7 +217,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var cities = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('city_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 2,
+        limit: 5,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
@@ -217,7 +242,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var districts = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('district_name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit:2,
+        limit: 5,
         dupDetector: function(remoteMatch, localMatch) {
             return remoteMatch.url == localMatch.url;
         },
@@ -251,13 +276,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             source: cities.ttAdapter(),
 
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Cities</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{city_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{city_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -265,13 +284,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'district_name',
             source: districts.ttAdapter(),
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Districts</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><span style="color:grey; font-style: italic">Schools in</span> <strong style="font-weight: 900;">{{district_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, DE</strong></p></a>')
             }
         },
         {
@@ -279,13 +292,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'school_name',
             source: schools.ttAdapter(),
             templates: {
-                header: '<h3 style="font-weight: bold;border-bottom: 1px solid #ccc;">Schools</h3>',
-                empty: [
-                    '<div class="empty-message" style="font-style:italic;">',
-                    '(no results)',
-                    '</div>'
-                ].join('\n'),
-                suggestion: Handlebars.compile('<a href="{{url}}" style="text-decoration:none; color: #000000"><p><strong style="font-weight: 900;">{{school_name}}</strong></br><span style="color:grey">- {{city_name}}, DE</span></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, DE</span></p></a>')
             }
         })
         .on('typeahead:selected', function(event, suggestion, dataset) {
@@ -725,38 +732,53 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
-    var submitByNameSearch = function() {
-        var searchString = $(this).find(findByNameSelector).val();
+    var submitByNameSearch = function(queryStringOptions) {
+        var searchString = $(this).find(GS.search.schoolSearchForm.findByNameSelector).val();
 //        TODO temporarily added find('[name=state]')
         var state = $(this).find('input#js-state').val() || $(this).find('[name=state]').val();
         var collectionId = $(this).find('input#js-collectionId').val();
-        var searchType = $(this).find('input[name="search_type"]').val();
-        var queryString = {};
+        var queryString = jQuery.extend({}, queryStringOptions);
 
         queryString.q = encodeURIComponent(searchString);
-        queryString.search_type = encodeURIComponent(searchType);
         if (typeof collectionId !== 'undefined') {
             queryString.collectionId = encodeURIComponent(collectionId);
         }
-        queryString.state = encodeURIComponent(state);
+        if (typeof state !== 'undefined') {
+            queryString.state = encodeURIComponent(state);
+        }
 
         setTimeout(function() { window.location = window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
                 GS.uri.Uri.getQueryStringFromObject(queryString); }, 1);
     };
 
+    var showFiltersMenuOnLoad = function() {
+        if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
+            if ($(document).width() > 767 ) {
+                $('.js-searchFiltersMenu').show();
+            }
+        }
+        $.cookie('showFiltersMenu', 'false', {path:'/'});
+    };
+
+
+
     return {
         init:init,
         setupTabs: setupTabs,
         submitByLocationSearch: submitByLocationSearch,
         submitByNameSearch: submitByNameSearch,
+        getSearchQuery: getSearchQuery,
         gsGeocode: gsGeocode,
         cities: cities,
         districts: districts,
         schools: schools,
         attachAutocomplete: attachAutocomplete,
         isAddress: isAddress,
-        searchType: searchType
+        searchType: searchType,
+        findByNameSelector: findByNameSelector,
+        findByLocationSelector: findByLocationSelector,
+        showFiltersMenuOnLoad: showFiltersMenuOnLoad
     };
 })();
 
@@ -770,4 +792,5 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.initialize();
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
+  GS.search.schoolSearchForm.showFiltersMenuOnLoad();
 });

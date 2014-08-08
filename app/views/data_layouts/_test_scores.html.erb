@@ -7,51 +7,23 @@
 
 <% data.each_with_index do |(test,value),index| %>
   <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
-    <h3><%= value[:test_label] %></h3><br/>
-    <div class="btn-group js_grades_div js_bootstrapExtButtonSelect">
-      <% value[:grades].each_with_index do | (grade, grade_hash), index_grade| %>
-          <button id="js_<%= test %>_<%= grade %>" class="btn btn-default js_test_scores_grades<%= index_grade == 0 ? ' active' : '' %>"> <%= grade_hash[:label] %></button>
-      <% end %>
-    </div>
+    <h3><%= value[:All][:test_label] %></h3><br/>
 
-    <% value[:grades].each_with_index do |(grade,grade_hash), index_grade| %>
-      <div id="js_<%= test %>_<%= grade %>_scores" class="js_<%= test %>_grades">
-        <% grade_hash[:level_code].each do |levelcode,value| %>
-          <% value.each_with_index do |(subject,value),  index_subject| %>
-
-            <!-- Only show stacked with proficiency for Delaware -->
-            <% if @school.state.upcase == "DE" %>
-              <% bar_chart = BarCharts::TestScoresBarChartStacked.new(value) %>
-              <% if bar_chart.contains_empty_bar? %>
-                <% bar_chart = BarCharts::TestScoresBarChart.new(value) %>
-              <% end %>
-            <% else %>
-              <% bar_chart = BarCharts::TestScoresBarChart.new(value) %>
-            <% end %>
-
-            <h4 <%= ((index_subject == 0) ? "class=ptl" : '') %>><%= subject.to_s.gs_capitalize_first %></h4>
-            <!--TODO change this to test id-->
-            <% bar_chart_div_id = "js_bar_chart_div_#{test.to_s.gsub(/\s/,'')}_#{grade}_#{subject.to_s.gsub(/\s/,'')}" %>
-            <div id="<%= bar_chart_div_id %>" class="notranslate ma"><!--Div for bar chart--></div>
-            <% content_for :head do %>
-              <%= raw bar_chart.script_tag(bar_chart_div_id) %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-
-    <% if value[:test_description] %>
+    <% decorator = TestScoresDecorator.decorate(data, context: { state: @school.state }) %>
+    <%= raw(decorator.tabs_for_test(test)) %>
+    <%= raw decorator.render_bar_charts(test) %>
+    
+    <% if decorator.description(value) %>
       <div>
         <p class="mbm"><span class="open-sans_sb">About the test</span>
           <!--<a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a>-->
         </p>
-        <div><%= raw value[:test_description]%></div>
+        <div><%= raw decorator.description(value) %></div>
       </div>
     <% end %>
-    <% if value[:test_source] %>
+    <% if decorator.source(value) %>
       <div class="pbm">
-        <p class="font-size-small ptm">Source: <%= value[:test_source] %></p>
+        <p class="font-size-small ptm">Source: <%= decorator.source(value) %></p>
       </div>
     <% end %>
     <% if @school.show_ads %>

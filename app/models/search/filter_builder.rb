@@ -3,24 +3,16 @@ class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
   def initialize
-    @filters = build_filter(get_filters)
-    @filter_display_map = build_filter_display_map(@filters)
+    @filters = build_filter_tree(get_filters)[0]
+    @filter_display_map = @filters.build_map
   end
 
   def build_filter_tree(filters)
-    filters.map { |key, value| build_filter(value)}
-  end
-
-  def build_filter(filters)
     filters = {filter: filters} unless filters[:filters].nil?
     filters.map do |key, value|
-      value[:filters] = build_filter(value[:filters]) unless value[:filters].nil?
+      value[:filters] = build_filter_tree(value[:filters]) unless value[:filters].nil?
       Filter.new(value)
     end
-  end
-
-  def build_filter_display_map(filters)
-    filters.inject({}) { |map,filter| map.merge!(filter.filters_display_map) }
   end
 
   def get_filters
@@ -28,23 +20,18 @@ class FilterBuilder
 
     ### EXAMPLE ###
     {
-      group1: { #group of filters in the view
-        name: "Group of Filters",
-        display_type: :title,
-        filters: {
-          name: 'A Dropdown',
-          display_type: :drop_down_level_1,
+      display_type: :blank_container,
+      filters: {
+        group1: { #group of filters in the view
+          label: "Group of Filters",
+          display_type: :title,
           filters: {
-            name: 'Another Dropdown',
-            display_type: :drop_down_level_2,
+            label: 'A Dropdown',
+            display_type: :collapsible_box,
             filters: {
-              display_type: :blank_container,
-              key: :programs,
-              filters: {
-                filter1: { name: 'Filter 1', display_type: :basic_checkbox, category: :st, key: :filter1},
-                filter2: { name: 'Filter 2', display_type: :basic_checkbox, category: :st, key: :filter2},
-                filter3: { name: 'Filter 3', display_type: :basic_checkbox, category: :st, key: :filter3}
-              }
+              filter1: { label: 'Filter 1', display_type: :basic_checkbox, name: :checkbox_name, value: :checkbox_value},
+              filter2: { label: 'Filter 2', display_type: :basic_checkbox, name: :checkbox_name, value: :checkbox_value},
+              filter3: { label: 'Filter 3', display_type: :basic_checkbox, name: :checkbox_name, value: :checkbox_value}
             }
           }
         }
@@ -52,160 +39,170 @@ class FilterBuilder
     }
 
     {
-      group1: {
-        display_type: :filter_column_primary,
-        filters: {
-          distance: {
-            name: 'Distance',
-            display_type: :title,
-            category: :distance,
-            filters: {
-              select_box: {
-                display_type: :select_box,
-                category: :distance,
-                filters: {
-                   :default => {name: 'Select Miles', display_type: :select_box_value, category: :distance, key: nil},
-                   1 => {name: '1 Mile', display_type: :select_box_value, category: :distance, key: 1},
-                   2 => {name: '2 Miles', display_type: :select_box_value, category: :distance, key: 2},
-                   3 => {name: '3 Miles', display_type: :select_box_value, category: :distance, key: 3},
-                   4 => {name: '4 Miles', display_type: :select_box_value, category: :distance, key: 4},
-                   5 => {name: '5 Miles', display_type: :select_box_value, category: :distance, key: 5},
-                   10 => {name: '10 Miles', display_type: :select_box_value, category: :distance, key: 10},
-                   15 => {name: '15 Miles', display_type: :select_box_value, category: :distance, key: 15},
-                   20 => {name: '20 Miles', display_type: :select_box_value, category: :distance, key: 20},
-                   25 => {name: '25 Miles', display_type: :select_box_value, category: :distance, key: 25},
-                   30 => {name: '30 Miles', display_type: :select_box_value, category: :distance, key: 30},
-                   60 => {name: '60 Miles', display_type: :select_box_value, category: :distance, key: 60}
+      display_type: :blank_container,
+      filters: {
+        group1: {
+          display_type: :filter_column_primary,
+          filters: {
+            distance: {
+              label: 'Distance',
+              display_type: :title,
+              name: :distance,
+              filters: {
+                select_box: {
+                  display_type: :select_box,
+                  name: :distance,
+                  filters: {
+                     :default => {label: 'Select Miles', display_type: :select_box_value, name: :distance, value: nil},
+                     1 => {label: '1 Mile', display_type: :select_box_value, name: :distance, value: 1},
+                     2 => {label: '2 Miles', display_type: :select_box_value, name: :distance, value: 2},
+                     3 => {label: '3 Miles', display_type: :select_box_value, name: :distance, value: 3},
+                     4 => {label: '4 Miles', display_type: :select_box_value, name: :distance, value: 4},
+                     5 => {label: '5 Miles', display_type: :select_box_value, name: :distance, value: 5},
+                     10 => {label: '10 Miles', display_type: :select_box_value, name: :distance, value: 10},
+                     15 => {label: '15 Miles', display_type: :select_box_value, name: :distance, value: 15},
+                     20 => {label: '20 Miles', display_type: :select_box_value, name: :distance, value: 20},
+                     25 => {label: '25 Miles', display_type: :select_box_value, name: :distance, value: 25},
+                     30 => {label: '30 Miles', display_type: :select_box_value, name: :distance, value: 30},
+                     60 => {label: '60 Miles', display_type: :select_box_value, name: :distance, value: 60}
+                  }
                 }
               }
-            }
-          },
-          st: {
-            name: 'School Types',
-            display_type: :title,
-            category: :st,
-            filters: {
-              public: {name: 'Public Schools', display_type: :basic_checkbox, category: :st, key: :public},
-              private: {name: 'Private Schools', display_type: :basic_checkbox, category: :st, key: :private},
-              charter: {name: 'Charter Schools', display_type: :basic_checkbox, category: :st, key: :charter}
-            }
-          },
-          transportation: {
-            name: 'Transportation',
-            display_type: :title,
-            category: :transportation,
-            filters: {
-              povided_transit: {name: 'District provided', display_type: :basic_checkbox, category: :transportation, key: :provided_transit},
-              public_transit: {name: 'Accessible via public transit', display_type: :basic_checkbox, category: :transportation, key: :public_transit}
-            }
-          },
-          beforeAfterCare: {
-            name: 'Care',
-            display_type: :title,
-            category: :beforeAfterCare,
-            filters: {
-              before: {name: 'Before School Care', display_type: :basic_checkbox, category: :beforeAfterCare, key: :before},
-              after: {name: 'After School Care', display_type: :basic_checkbox, category: :beforeAfterCare, key: :after}
-            }
-          }
-        }
-      },
-      group2: {
-        display_type: :filter_column_secondary,
-        filters: {
-          dress_code: {
-            name: 'Dress Code',
-            display_type: :title,
-            category: :dress_code,
-            filters: {
-              dress_code: {name: 'Dress Code', display_type: :basic_checkbox, category: :dress_code, key: :dress_code},
-              uniform: {name: 'Uniform', display_type: :basic_checkbox, category: :dress_code, key: :uniform},
-              no_dress_code: {name: 'No dress code', display_type: :basic_checkbox, category: :dress_code, key: :no_dress_code}
-            }
-          },
-          class_offerings: {
-            name: 'Class Offerings',
-            display_type: :title,
-            category: :class_offerings,
-            filters: {
-              ap: {name: 'AP Courses', display_type: :basic_checkbox, category: :class_offerings, key: :ap},
-              performance_arts: {name: 'Performance Arts', display_type: :basic_checkbox, category: :class_offerings, key: :performance_arts},
-              visual_media_arts: {name: 'Visual/Media Arts', display_type: :basic_checkbox, category: :class_offerings, key: :visual_media_arts},
-              music: {name: 'Music', display_type: :basic_checkbox, category: :class_offerings, key: :music},
-              world_languages: {
-                name: 'World Languages (dropdown)',
-                key: :world_languages,
-                display_type: :collapsible_box,
-                filters: {
-                  french: {name: 'French', display_type: :basic_checkbox, category: :class_offerings, key: :french},
-                  german: {name: 'German', display_type: :basic_checkbox, category: :class_offerings, key: :german},
-                  spanish: {name: 'Spanish', display_type: :basic_checkbox, category: :class_offerings, key: :spanish},
-                  mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :class_offerings, key: :mandarin}
-                }
+            },
+            st: {
+              label: 'School Types',
+              display_type: :title,
+              name: :st,
+              filters: {
+                public: {label: 'Public Schools', display_type: :basic_checkbox, name: :st, value: :public},
+                private: {label: 'Private Schools', display_type: :basic_checkbox, name: :st, value: :private},
+                charter: {label: 'Charter Schools', display_type: :basic_checkbox, name: :st, value: :charter}
               }
-            }
-          },
-          sports: {
-            name: 'Sports',
-            display_type: :blank_container, #Replace this with new clickable icon styling
-            filters: {
-              boys_sports: {
-                name: 'Boys Sports',
-                display_type: :title,
-                category: :boys_sports,
-                filters: {
-                  baseball: {name: 'Baseball', display_type: :basic_checkbox, category: :boys_sports, key: :baseball},
-                  basketball: {name: 'Basketball', display_type: :basic_checkbox, category: :boys_sports, key: :basketball},
-                  football: {name: 'Football', display_type: :basic_checkbox, category: :boys_sports, key: :football},
-                  soccer: {name: 'Soccer', display_type: :basic_checkbox, category: :boys_sports, key: :soccer},
-                  track: {name: 'Track', display_type: :basic_checkbox, category: :boys_sports, key: :track}
-                }
-              },
-              girls_sports: {
-                name: 'Girls Sports',
-                display_type: :title,
-                category: :girls_sports,
-                filters: {
-                  cheerleading: {name: 'Cheerleading', display_type: :basic_checkbox, category: :girls_sports, key: :cheerleading},
-                  basketball: {name: 'Basketball', display_type: :basic_checkbox, category: :girls_sports, key: :basketball},
-                  volleyball: {name: 'Volleyball', display_type: :basic_checkbox, category: :girls_sports, key: :volleyball},
-                  soccer: {name: 'Soccer', display_type: :basic_checkbox, category: :girls_sports, key: :soccer},
-                  track: {name: 'Track', display_type: :basic_checkbox, category: :girls_sports, key: :track}
-                }
+            },
+            transportation: {
+              label: 'Transportation',
+              display_type: :title,
+              name: :transportation,
+              filters: {
+                povided_transit: {label: 'District provided', display_type: :basic_checkbox, name: :transportation, value: :provided_transit},
+                public_transit: {label: 'Accessible via public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
+              }
+            },
+            beforeAfterCare: {
+              label: 'Care',
+              display_type: :title,
+              name: :beforeAfterCare,
+              filters: {
+                before: {label: 'Before School Care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
+                after: {label: 'After School Care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
             }
           }
-        }
-      },
-      group3: {
-        display_type: :filter_column_secondary,
-        filters: {
-          school_focus: {
-            name: 'School Focus',
-            display_type: :title,
-            category: :school_focus,
-            filters: {
-              arts: {name: 'Art', display_type: :basic_checkbox, category: :school_focus, key: :arts},
-              language_immersion: {
-                name: 'World Language Immersion (dropdown)',
-                key: :world_language_immersion,
-                display_type: :collapsible_box,
-                filters: {
-                  french: {name: 'French', display_type: :basic_checkbox, category: :school_focus, key: :french},
-                  german: {name: 'German', display_type: :basic_checkbox, category: :school_focus, key: :german},
-                  spanish: {name: 'Spanish', display_type: :basic_checkbox, category: :school_focus, key: :spanish},
-                  mandarin: {name: 'Mandarin', display_type: :basic_checkbox, category: :school_focus, key: :mandarin}
+        },
+        group2: {
+          display_type: :filter_column_secondary,
+          filters: {
+            dress_code: {
+              label: 'Dress Code',
+              display_type: :title,
+              name: :dress_code,
+              filters: {
+                dress_code: {label: 'Dress Code', display_type: :basic_checkbox, name: :dress_code, value: :dress_code},
+                uniform: {label: 'Uniform', display_type: :basic_checkbox, name: :dress_code, value: :uniform},
+                no_dress_code: {label: 'No dress code', display_type: :basic_checkbox, name: :dress_code, value: :no_dress_code}
+              }
+            },
+            class_offerings: {
+              label: 'Class Offerings',
+              display_type: :title,
+              name: :class_offerings,
+              filters: {
+                ap: {label: 'AP Courses', display_type: :basic_checkbox, name: :class_offerings, value: :ap},
+                performance_arts: {label: 'Performance Arts', display_type: :basic_checkbox, name: :class_offerings, value: :performance_arts},
+                visual_media_arts: {label: 'Visual/Media Arts', display_type: :basic_checkbox, name: :class_offerings, value: :visual_media_arts},
+                music: {label: 'Music', display_type: :basic_checkbox, name: :class_offerings, value: :music},
+                world_languages: {
+                  label: 'World Languages',
+                  name: :world_languages,
+                  display_type: :collapsible_box,
+                  filters: {
+                    french: {label: 'French', unique_label: 'French (class)', display_type: :basic_checkbox, name: :class_offerings, value: :french},
+                    german: {label: 'German', unique_label: 'German (class)', display_type: :basic_checkbox, name: :class_offerings, value: :german},
+                    spanish: {label: 'Spanish', unique_label: 'Spanish (class)', display_type: :basic_checkbox, name: :class_offerings, value: :spanish},
+                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (class)', display_type: :basic_checkbox, name: :class_offerings, value: :mandarin}
+                  }
                 }
-              },
-              science_tech: {name: 'Science/Tech (STEM)', display_type: :basic_checkbox, category: :school_focus, key: :science_tech},
-              career_tech: {name: 'Career & Tech', display_type: :basic_checkbox, category: :school_focus, key: :career_tech},
-              montessori: {name: 'Montessori', display_type: :basic_checkbox, category: :school_focus, key: :montessori},
-              ib: {name: 'International Baccalaureate', display_type: :basic_checkbox, category: :school_focus, key: :ib},
-              is: {name: 'Independent Study', display_type: :basic_checkbox, category: :school_focus, key: :is},
-              college_focus: {name: 'College Focus', display_type: :basic_checkbox, category: :school_focus, key: :college_focus},
-              waldorf: {name: 'Waldorf', display_type: :basic_checkbox, category: :school_focus, key: :waldorf},
-              project: {name: 'Project-based Learning', display_type: :basic_checkbox, category: :school_focus, key: :project},
-              online: {name: 'Online Learning', display_type: :basic_checkbox, category: :school_focus, key: :online}
+              }
+            },
+            sports: {
+              label: 'Sports',
+              display_type: :title, #Replace this with new clickable icon styling
+              name: [:boys_sports, :girls_sports],
+              filters: {
+                sports_icons: {
+                  label: 'Sports',
+                  display_type: :sports_gender_button,
+                  filters: {
+                    boys_sports: {
+                      label: 'Boys Sports',
+                      display_type: :sports_button_group,
+                      name: :boys_sports,
+                      filters: {
+                        soccer: {label: 'Soccer', unique_label: 'Soccer (boys)', display_type: :sports_values, name: :boys_sports, value: :soccer},
+                        track: {label: 'Track', unique_label: 'Track (boys)', display_type: :sports_values, name: :boys_sports, value: :track},
+                        basketball: {label: 'Basketball', unique_label: 'Basketball (boys)', display_type: :sports_values, name: :boys_sports, value: :basketball},
+                        football: {label: 'Football', unique_label: 'Football (boys)', display_type: :sports_values, name: :boys_sports, value: :football},
+                        baseball: {label: 'Baseball', unique_label: 'Baseball (boys)', display_type: :sports_values, name: :boys_sports, value: :baseball}
+                      }
+                    },
+                    girls_sports: {
+                      label: 'Girls Sports',
+                      display_type: :sports_button_group,
+                      name: :girls_sports,
+                      filters: {
+                        soccer: {label: 'Soccer', unique_label: 'Soccer (girls)', display_type: :sports_values, name: :girls_sports, value: :soccer},
+                        track: {label: 'Track', unique_label: 'Track (girls)', display_type: :sports_values, name: :girls_sports, value: :track},
+                        volleyball: {label: 'Volleyball', unique_label: 'Volleyball (girls)', display_type: :sports_values, name: :girls_sports, value: :volleyball},
+                        cheerleading: {label: 'Cheerleading', unique_label: 'Cheerleading (girls)', display_type: :sports_values, name: :girls_sports, value: :cheerleading},
+                        basketball: {label: 'Basketball', unique_label: 'Basketball (girls)', display_type: :sports_values, name: :girls_sports, value: :basketball}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        group3: {
+          display_type: :filter_column_secondary,
+          filters: {
+            school_focus: {
+              label: 'School Focus',
+              display_type: :title,
+              name: :school_focus,
+              filters: {
+                arts: {label: 'Art', display_type: :basic_checkbox, name: :school_focus, value: :arts},
+                language_immersion: {
+                  label: 'World Language Immersion',
+                  name: :world_language_immersion,
+                  display_type: :collapsible_box,
+                  filters: {
+                    french: {label: 'French', unique_label: 'French (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :french},
+                    german: {label: 'German', unique_label: 'German (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :german},
+                    spanish: {label: 'Spanish', unique_label: 'Spanish (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :spanish},
+                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
+                  }
+                },
+                science_tech: {label: 'Science/Tech (STEM)', display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
+                career_tech: {label: 'Career & Tech', display_type: :basic_checkbox, name: :school_focus, value: :career_tech},
+                montessori: {label: 'Montessori', display_type: :basic_checkbox, name: :school_focus, value: :montessori},
+                ib: {label: 'International Baccalaureate', display_type: :basic_checkbox, name: :school_focus, value: :ib},
+                is: {label: 'Independent Study', display_type: :basic_checkbox, name: :school_focus, value: :is},
+                college_focus: {label: 'College Focus', display_type: :basic_checkbox, name: :school_focus, value: :college_focus},
+                waldorf: {label: 'Waldorf', display_type: :basic_checkbox, name: :school_focus, value: :waldorf},
+                project: {label: 'Project-based Learning', display_type: :basic_checkbox, name: :school_focus, value: :project},
+                online: {label: 'Online Learning', display_type: :basic_checkbox, name: :school_focus, value: :online}
+              }
             }
           }
         }

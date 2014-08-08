@@ -36,6 +36,7 @@ $(function() {
 
     });
  var changeTabs=function(tab){
+     $("html, body").animate({ scrollTop: 0 }, "fast");
      $(".tab_"+tab).siblings().removeClass(active);
      $(".tab_"+tab).addClass(active);
      $("#"+tab).siblings().removeClass(active);

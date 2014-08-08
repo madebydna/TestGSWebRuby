@@ -36,7 +36,9 @@
   }
 
   > li > a,
-  > li > span {
+  > li > span,
+  > .btn-group > a,
+  > .btn-group > span {
     &:hover,
     &:focus {
       background-color: $pagination-hover-bg;
@@ -44,7 +46,9 @@
   }
 
   > .active > a,
-  > .active > span {
+  > .active > span,
+  > .btn-group > a.active,
+  > .btn-group > span.active {
     &,
     &:hover,
     &:focus {

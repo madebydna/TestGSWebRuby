@@ -6,10 +6,12 @@ require 'spec_helper'
 describe SchoolCache do
 
   let!(:school) { FactoryGirl.create(:school, id:1) }
+  let!(:test_data_breakdown) { FactoryGirl.create(:test_data_breakdown) }
+  let!(:test_data_subject) { FactoryGirl.create(:test_data_subject) }
 
   after(:each) do
     clean_models :ca, School, TestDataSet, TestDataSchoolValue
-    clean_models TestDataType, SchoolCache
+    clean_models TestDataType, SchoolCache, TestDataBreakdown, TestDataSubject
   end
 
   describe '#ratings' do
@@ -20,6 +22,8 @@ describe SchoolCache do
           :test_data_set,
           :with_school_values,
           data_type_id: 1,
+          breakdown_id: 1,
+          subject_id: 1,
           display_target: 'ratings',
           school_id: 1,
           value_float: 2,
@@ -85,6 +89,8 @@ describe SchoolCache do
           :test_data_set,
           :with_school_values,
           data_type_id: 1,
+          breakdown_id: 1,
+          subject_id: 1,
           display_target: 'desktop',
           school_id: 1,
           value_float: 2,
@@ -109,8 +115,9 @@ describe SchoolCache do
         expect(test_scores.keys.first).to eq('1')
         expect(test_scores.seek(
           '1',
+          'All',
           'grades',
-          '14',
+          'All',
           'level_code',
           'e,m,h',
           'All subjects',
@@ -119,8 +126,9 @@ describe SchoolCache do
         )).to eq('3')
         expect(test_scores.seek(
           '1',
+          'All',
           'grades',
-          '14',
+          'All',
           'level_code',
           'e,m,h',
           'All subjects',
@@ -140,8 +148,9 @@ describe SchoolCache do
 
         test_scores.seek(
           '1',
+          'All',
           'grades',
-          '14',
+          'All',
           'level_code',
           'e,m,h',
           'All subjects',

@@ -5,9 +5,13 @@ class ApplicationController < ActionController::Base
   include AuthenticationConcerns
   include SessionConcerns
   include UrlHelper
+  include OmnitureConcerns
 
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
+  before_action :add_ab_test_to_gon
+  before_action :track_ab_version_in_omniture
+  before_action :set_global_ad_targeting_through_gon
 
   after_filter :disconnect_connection_pools
 
@@ -283,5 +287,41 @@ class ApplicationController < ActionController::Base
         @tab = 'Community'
       end
     end
+  end
+
+  def ab_version
+    request.headers["X-ABVersion"]
+  end
+
+  def add_ab_test_to_gon
+    # Adding for a/b test
+    #     Responsive-Test Group ID: 4517881831
+    #     Control ID: 4020610234
+    responsive_ads = "4517881831"
+    control_id = "4020610234"
+
+    ab_id = ''
+    if(ab_version == "a")
+      ab_id = control_id
+    elsif (ab_version == "b")
+      ab_id = responsive_ads
+    end
+    gon.ad_set_channel_ids = ab_id
+    gon.ab_value = ab_version
+  end
+
+  def track_ab_version_in_omniture
+    set_omniture_evars_in_cookie('ab_version' => ab_version)
+    set_omniture_sprops_in_cookie('ab_version' => ab_version)
+  end
+
+  def set_global_ad_targeting_through_gon
+    set_targeting = gon.ad_set_targeting || {}
+    if ab_version == 'a'
+      set_targeting['Responsive_Group'] = 'Control'
+    elsif ab_version == 'b'
+      set_targeting['Responsive_Group'] = 'Test'
+    end
+    gon.ad_set_targeting = set_targeting
   end
 end

@@ -1,12 +1,12 @@
 <div>
   <label class="tal js-gs-checkbox-search font-size-small"
-         data-gs-checkbox-value="<%=filter.key%>"
-         data-gs-checkbox-category="<%=filter.category%>[]"
+         data-gs-checkbox-value="<%=filter.value%>"
+         data-gs-checkbox-name="<%=filter.name%>[]"
          style="width:100%;">
-    <% is_match = (@params_hash.include?(filter.category.to_s) && [*@params_hash[filter.category.to_s]].grep(/^#{filter.key.to_s}$/)).present? %>
-    <span class="vam iconx16 mrl js-icon <%= is_match ? 'i-16-blue-check-box' : 'i-grey-unchecked-box' %>"></span>
-    <%=filter.name%>
+    <% is_match = (@params_hash.include?(filter.name.to_s) && [*@params_hash[filter.name.to_s]].include?(filter.value.to_s)).present? %>
+    <span class="vam iconx16 mrm js-icon <%= is_match ? 'i-16-blue-check-box' : 'i-grey-unchecked-box' %>"></span>
+    <%=filter.label%>
   </label>
-  <input type="hidden" class="js-gs-checkbox-value" <%= is_match ? "name=#{filter.category.to_s}[] value=#{filter.key.to_s}" : '' %>>
+  <input type="hidden" class="js-gs-checkbox-value" <%= is_match ? "name=#{filter.name.to_s}[] value=#{filter.value.to_s}" : '' %>>
 </div>
 

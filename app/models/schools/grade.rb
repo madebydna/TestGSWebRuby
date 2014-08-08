@@ -26,7 +26,7 @@ class Grade
   end
 
   def to_s
-    name
+    name || value
   end
 
   def self.from_string(value_or_name)

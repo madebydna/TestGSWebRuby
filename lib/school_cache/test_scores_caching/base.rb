@@ -4,8 +4,9 @@ class TestScoresCaching::Base
   @@test_data_breakdowns = Hash[TestDataBreakdown.all.map { |f| [f.id, f] }]
   @@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
   @@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
+  @@test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
 
-  cattr_accessor :test_data_types, :test_data_breakdowns, :test_descriptions, :proficiency_bands
+  cattr_accessor :test_data_types, :test_data_breakdowns, :test_descriptions, :proficiency_bands, :test_data_subjects
 
   attr_accessor :school
 
@@ -27,6 +28,10 @@ class TestScoresCaching::Base
 
   def test_data_breakdowns
     @@test_data_breakdowns
+  end
+
+  def test_data_subjects
+    @@test_data_subjects
   end
 
   def build_hash_for_cache

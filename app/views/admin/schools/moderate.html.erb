@@ -46,7 +46,12 @@
   </div>
   <div>
     <strong><%= pluralize @reviews.count, 'review' %></strong> displayed
-      <%= link_to('Show all', review_id: nil) if params[:review_id] %>
+      <%= link_to('Show all',
+                  admin_school_moderate_path(
+                    state: school_params(@school)[:state],
+                    school_id: @school.id
+                  )
+                ) if params[:review_id] %>
     <% if current_scopes.any? %>
         <br/>
         Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>

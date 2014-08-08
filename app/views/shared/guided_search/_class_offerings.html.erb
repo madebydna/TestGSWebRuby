@@ -1,27 +1,8 @@
 <div class="tab-pane" id="<%= @guided_search_tab[4]%>">
-  <h4 class="tac mbl">Which classes are important to you?</h4>
+  <h3 class="tac mbl prm">Are any of the following classes or activities important to you?</h3>
   <div class="row mtl ma mbl">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
-      <button class="btn btn-default tal js-gs-checkbox"
-              data-gs-checkbox="montessori&school_focus[]=waldorf"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Sports
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-  </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
-      <button class="btn btn-default tal js-gs-checkbox"
-              data-gs-checkbox="montessori&school_focus[]=waldorf"
-              type="button"
-              style="width:100%;">
-        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Sports
-      </button>
-      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
-
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
-      <button class="btn btn-default tal js-gs-checkbox"
+    <div class="col-lg-offset-2 col-md-offset-2  col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
               data-gs-checkbox="ap"
               type="button"
               style="width:100%;">
@@ -30,11 +11,197 @@
       <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
 
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 phl pbl">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <div class="js-gs-checkbox js-pull-down"
+           data-pull-down-content=".js-sports" >
+        <button class="btn btn-default tal mbm font-size-medium"
+                type="button"
+                style="width:100%;">
+          <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Sports
+        </button>
+      </div>
+     <div class="dn js-sports pal" style="border: thin solid #cccccc">
+      <div class="btn-group full-width">
+        <button type="button" class="btn btn-bg-green btn-default js-sports-gender half-width"
+                data-gs-gender="boys"
+
+        >
+         Boys</button>
+
+        <button type="button" class="btn btn-default js-sports-gender half-width"
+                data-gs-gender="girls"
+        >
+        Girls</button>
+
+
+
+      </div>
+       <div class="btn-group js-girls-sports-values js-sports-button-group dn pts" >
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="soccer" data-gs-checkbox-category="girls_sports[]" data-gs-checkbox-icon-label="i-32-sport-soccer" data-original-title="soccer">
+
+           <span class="i-32-sport-soccer-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="track" data-gs-checkbox-category="girls_sports[]" data-gs-checkbox-icon-label="i-32-sport-track" data-original-title="track">
+
+           <span class="i-32-sport-track-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="volleyball" data-gs-checkbox-category="girls_sports[]" data-gs-checkbox-icon-label="i-32-sport-volleyball" data-original-title="volleyball">
+
+           <span class="i-32-sport-volleyball-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="cheerleading" data-gs-checkbox-category="girls_sports[]" data-gs-checkbox-icon-label="i-32-sport-cheerleading" data-original-title="cheerleading">
+
+           <span class="i-32-sport-cheerleading-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="basketball" data-gs-checkbox-category="girls_sports[]" data-gs-checkbox-icon-label="i-32-sport-basketball" data-original-title="basketball">
+
+           <span class="i-32-sport-basketball-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+       </div>
+       <div class="btn-group js-boys-sports-values js-sports-button-group  pts" >
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="soccer" data-gs-checkbox-category="boys_sports[]" data-gs-checkbox-icon-label="i-32-sport-soccer" data-original-title="soccer">
+
+           <span class="i-32-sport-soccer-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="track" data-gs-checkbox-category="boys_sports[]" data-gs-checkbox-icon-label="i-32-sport-track" data-original-title="track">
+
+           <span class="i-32-sport-track-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="basketball" data-gs-checkbox-category="boys_sports[]" data-gs-checkbox-icon-label="i-32-sport-basketball" data-original-title="basketball">
+
+           <span class="i-32-sport-basketball-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="football" data-gs-checkbox-category="boys_sports[]" data-gs-checkbox-icon-label="i-32-sport-football" data-original-title="football">
+
+           <span class="i-32-sport-football-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+
+         <button type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
+         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="baseball" data-gs-checkbox-category="boys_sports[]" data-gs-checkbox-icon-label="i-32-sport-baseball" data-original-title="baseball">
+
+           <span class="i-32-sport-baseball-off js-icon"></span>
+           <input type="hidden" class="js-value">
+         </button>
+
+
+       </div>
+      <div class="clearfix">
+         <div class="fr mtm ">
+           <button class="btn btn-primary btn-sm js-pull-down" type="button"
+                   data-pull-down-content=".js-sports">
+             Done
+           </button>
+         </div>
+       </div>
+
+     </div>
+
+
+    </div>
+    <div class="col-lg-offset-2 col-md-offset-2  col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+        <div class="js-gs-checkbox js-pull-down"
+           data-pull-down-content=".js-arts" >
+        <button class="btn btn-default tal mbm font-size-medium"
+                type="button"
+                style="width:100%;">
+          <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Arts
+        </button>
+        </div>
+      <div class="dn js-arts pal" style="border: thin solid #cccccc">
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
+                  data-gs-checkbox="visual_media_arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Visual/Media
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
+                  data-gs-checkbox="music"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Music
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
+                  data-gs-checkbox="performance_arts"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Performance
+          </button>
+          <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="clearfix">
+          <div class="fr ">
+            <button class="btn btn-primary btn-sm js-pull-down" type="button"
+                    data-pull-down-content=".js-arts">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
       <div class="js-gs-checkbox js-pull-down"
            data-pull-down-content=".js-world-language-study"
       >
-        <button class="btn btn-default tal mbm"
+        <button class="btn btn-default tal mbm font-size-medium"
                 type="button"
                 style="width:100%;">
           <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span> World language study
@@ -42,7 +209,7 @@
       </div>
       <div class="dn js-world-language-study pal" style="border: thin solid #cccccc">
         <div class="">
-          <button class="btn btn-default tal js-gs-checkbox mbm"
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
                   data-gs-checkbox="mandarin"
                   type="button"
                   style="width:100%;">
@@ -52,7 +219,7 @@
           <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
         </div>
         <div class="">
-          <button class="btn btn-default tal js-gs-checkbox mbm"
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
                   data-gs-checkbox="spanish"
                   type="button"
                   style="width:100%;">
@@ -62,7 +229,7 @@
           <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
         </div>
         <div class="">
-          <button class="btn btn-default tal js-gs-checkbox mbm"
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
                   data-gs-checkbox="german"
                   type="button"
                   style="width:100%;">
@@ -72,7 +239,7 @@
           <input type="hidden" name="class_offerings[]" value="" class="js-gs-checkbox-value">
         </div>
         <div class="">
-          <button class="btn btn-default tal js-gs-checkbox mbm"
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
                   data-gs-checkbox="french"
                   type="button"
                   style="width:100%;">
@@ -92,6 +259,7 @@
       </div>
 
     </div>
+
   </div>
 
 

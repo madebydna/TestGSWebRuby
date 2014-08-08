@@ -96,6 +96,18 @@
     </tbody>
 </table>
 
+<h3 id="request-headers">Request headers:</h3>
+<table class="table table-striped">
+    <tbody>
+    <% request.headers.each do |key, value| %>
+        <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+
 <h3 id="cookies">Cookies:</h3>
 <table class="table table-striped">
     <tbody>
@@ -116,7 +128,7 @@
 <h3 id="session">Session:</h3>
 <table class="table table-striped">
     <tbody>
-    <% session.each do |key, value| %>
+    <% session.to_hash.each do |key, value| %>
         <tr>
             <td><%= key %></td>
             <% if value[0] == '{' && value[-1] == '}' %>
@@ -131,27 +143,6 @@
         </tr>
     <% end %>
 
-    </tbody>
-</table>
-
-<h3 id="misc-configuration">Misc configuration:</h3>
-<table class="table table-striped">
-    <tbody>
-        <% config = LocalizedProfiles::Application.config.as_json %>
-        <% config.select { |key, value| value.present? }.each do |key, value| %>
-        <tr>
-            <td>
-                <%= key %>
-            </td>
-            <td>
-                <% if value.is_a?(String) || value.is_a?(Fixnum) || value.is_a?(TrueClass) || value.is_a?(FalseClass) %>
-                    <%= value %>
-                <% else %>
-                    <%= debug value %>
-                <% end %>
-            </td>
-        </tr>
-        <% end %>
     </tbody>
 </table>
 

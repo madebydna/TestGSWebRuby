@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   protect_from_forgery
-  include OmnitureConcerns
   include AdvertisingHelper
 
   before_action :ad_setTargeting_through_gon
@@ -45,7 +44,7 @@ class HomeController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     #if @school.show_ads
-    set_targeting = {}
+    set_targeting = gon.ad_set_targeting || {}
     # City, compfilter, env,State, type, template
     # set_targeting needs to be a string to work
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser

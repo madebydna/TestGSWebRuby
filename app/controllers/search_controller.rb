@@ -1,5 +1,4 @@
 class SearchController < ApplicationController
-  include OmnitureConcerns
   include ApplicationHelper
   include ActionView::Helpers::TagHelper
 
@@ -9,7 +8,9 @@ class SearchController < ApplicationController
 
   layout 'application'
 
+  #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
+  SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
   NUM_NEARBY_CITIES = 8
@@ -40,11 +41,12 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short], city: @city.name})
     end
 
+    @search_term = "#{@city.name}, #{@state[:short].upcase}"
     @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
     meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_pagename_browse_city @page_number
+    set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     render 'search_page'
   end
 
@@ -53,13 +55,15 @@ class SearchController < ApplicationController
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
-    district_name = district_name.gsub('-', ' ') # replace hyphens with spaces
+    district_name = district_name.gsub('-', ' ').gsub('_', '-') # replace hyphens with spaces ToDo Move url decoding elsewhere
     @district = params[:district_name] ? District.on_db(@state[:short].downcase.to_sym).where(name: district_name, active:1).first : nil
 
     if @district.nil?
       redirect_to city_path(@state[:long], @city.name)
       return
     end
+
+    @search_term = @district.name
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.district_browse(search_options) }) do |search_options|
       search_options.merge!({state: @state[:short], district_id: @district.id})
@@ -69,11 +73,13 @@ class SearchController < ApplicationController
 
     meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
     set_meta_tags title: meta_title, robots: 'noindex'
-    set_omniture_pagename_browse_district @page_number
+    set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     render 'search_page'
   end
 
   def by_location
+    city = nil
+    @by_location = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -84,30 +90,32 @@ class SearchController < ApplicationController
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
+      @search_term=params_hash['locationSearchString']
+      city = params_hash['city']
     end
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    @by_location = true
     set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
-    set_omniture_pagename_search_school @page_number
+    set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
     # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
   def by_name
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
-      state = {
+      @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
           short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
       } if params_hash['state']
       @query_string = params_hash['q']
       search_options.merge!({query: @query_string})
-      search_options.merge!({state: state[:short]}) if state
+      search_options.merge!({state: @state[:short]}) if @state
+      @search_term=@query_string
     end
 
     @by_name = true
     set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
-    set_omniture_pagename_search_school @page_number
+    set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
   end
 
@@ -130,6 +138,11 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
+    @sort_name = if sort.nil?
+                   search_by_location? ? 'distance' : 'rating'
+                 else
+                   sort.to_s.split('_').first
+                 end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
     is_fit_sort = (sort == :fit_desc || sort == :fit_asc)
@@ -153,7 +166,7 @@ class SearchController < ApplicationController
   end
 
   def process_results(results, solr_offset)
-    @query_string = '?' + CGI.unescape(@params_hash.to_param).gsub(/&?pageSize=\w*|&?start=\w*/, '')
+    @query_string = '?' + CGI.unescape(@params_hash.to_param)
     @total_results = results[:num_found]
     school_results = results[:results] || []
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
@@ -170,6 +183,7 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
+    @window_size = get_kaminari_window_size(@page_number, @total_results, @page_size)
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
@@ -195,8 +209,8 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}"
-        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url, :sort_order => school_search_result['overall_gs_rating']}#school_path(s)}
+        school_url = gs_legacy_url_encode("/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}")
+        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
     render json:response_objects
@@ -213,7 +227,7 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |city_search_result|
         output_city = {}
         output_city[:city_name] = city_search_result['city_sortable_name']
-        output_city[:url] = "/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools"
+        output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools")
         output_city[:sort_order] = city_search_result['city_number_of_schools']
 
         response_objects << output_city
@@ -234,8 +248,8 @@ class SearchController < ApplicationController
       results['response']['docs'].each do |district_search_result|
         output_district = {}
         output_district[:district_name] = district_search_result['district_sortable_name']
-
-        output_district[:url] = "/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools"
+        output_district[:sort_order] = district_search_result['district_number_of_schools']
+        output_district[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
 
         response_objects << output_district
       end
@@ -296,7 +310,7 @@ class SearchController < ApplicationController
   end
 
   def parse_sorts(params_hash)
-    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array)
+    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
   end
 
   def get_page_number
@@ -310,45 +324,49 @@ class SearchController < ApplicationController
   end
 
   def get_page_size
-    page_size = (params[:pageSize])?(params[:pageSize].to_i):25
-    page_size = 1 if page_size < 1
-    page_size
+    #ToDo Hiding param to alter page size. Hardcode to 25 results per page?
+    # page_size = (params[:pageSize])?(params[:pageSize].to_i):25
+    # page_size = 1 if page_size < 1
+    # page_size
+    25
+  end
+
+  def get_max_number_of_pages(total_results, page_size)
+    return 1 if total_results <= page_size
+    if total_results % page_size == 0
+      total_results / page_size
+    else
+      total_results / page_size + 1
+    end
+  end
+
+  def get_kaminari_window_size(page_number, total_results, page_size)
+    max_number_of_pages = get_max_number_of_pages(total_results, page_size)
+    if page_number < 5
+      9 - page_number
+    elsif page_number > max_number_of_pages - 6
+      9 - (max_number_of_pages - page_number)
+    else
+      4
+    end
   end
 
   private
 
-  def set_omniture_pagename_browse_city(page_num = 1)
-    gon.omniture_pagename = "schools:city:#{page_num}"
-    set_omniture_data_browse_city(page_num)
-  end
-
-  def set_omniture_data_browse_city(page_num = 1)
+  def set_omniture_data_search_school(page_number, search_type, search_term, locale)
+    gon.omniture_pagename = "GS:SchoolSearchResults"
+    gon.omniture_hier1 = "Search,School Search"
     set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,Schools,City,#{page_num}"
-  end
-
-  def set_omniture_pagename_browse_district(page_num = 1)
-    gon.omniture_pagename = "schools:district:#{page_num}"
-    set_omniture_data_browse_city(page_num)
-  end
-
-  def set_omniture_data_browse_district(page_num = 1)
-    set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,Schools,District,#{page_num}"
-  end
-
-  def set_omniture_pagename_search_school(page_num = 1)
-    gon.omniture_pagename = "School Search:Page#{page_num}"
-    set_omniture_data_search_school(page_num)
-  end
-
-  def set_omniture_data_search_school(page_num = 1)
-    set_omniture_data_for_user_request
-    gon.omniture_hier1 = "Search,School Search,#{page_num}"
+    gon.omniture_sprops['searchTerm'] = search_term if search_term
+    gon.omniture_sprops['locale'] = locale if locale
+    gon.omniture_channel = @state[:short].try(:upcase) if @state
+    gon.omniture_evars ||= {}
+    gon.omniture_evars['search_page_number'] = page_number if page_number
+    gon.omniture_evars['search_page_type'] = search_type if search_type
   end
 
   def ad_setTargeting_through_gon
-    set_targeting = {}
+    set_targeting = gon.ad_set_targeting || {}
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['template'] = 'search' # use this for page name - configured_page_name
@@ -357,41 +375,22 @@ class SearchController < ApplicationController
   end
 
   def mapping_points_through_gon
-    points = []
-    i = 0
-    @map_schools.each do |school|
-
-      points[i] = {name: school.name,
-          id: school.id,
-          lat: school.latitude,
-          lng: school.longitude,
-          street: school.street,
-          city: school.city,
-          state: school.state,
-          zipcode: school.zipcode,
-          schoolType: school.type,
-          preschool: school.preschool?,
-          gradeRange: school.grades[0] + " - " + school.grades[-1],
-          fitScore: school.fit_score,
-          maxFitScore: school.max_fit_score,
-          gsRating: school.overall_gs_rating || 0,
-          communityRating: school.respond_to?(:community_rating) ? school.community_rating : 0,
-          numReviews: school.respond_to?(:review_count) ? school.review_count : 0,
-          communityRatingStars: school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : '',
-          on_page: (school.on_page),
-          profileUrl: school_path(school),
-          reviewUrl: school_reviews_path(school),
-          zillowUrl: zillow_url(school)}
-      i = i +1
+    gon.map_points = @map_schools.map do |school|
+      SchoolSearchResultDecorator.decorate(school).google_map_data_point do |map_points|
+        map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
+        map_points[:profileUrl] = school_path(school)
+        map_points[:reviewUrl] = school_reviews_path(school)
+        map_points[:zillowUrl] = zillow_url(school)
+        map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
+        map_points[:zIndex] = -1 if !school.on_page
+      end
     end
-    gon.map_points = points
   end
 
   def assign_sprite_files_though_gon
     sprite_files = {}
     sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
     sprite_files['imageUrlOnPage'] = view_context.image_path('icons/140725-29x40_pins.png')
-    sprite_files['gsRating_sprite'] = view_context.image_path('icons/140106-24x24_ratings.png')
 
     gon.sprite_files = sprite_files
 
@@ -407,18 +406,6 @@ class SearchController < ApplicationController
       end
     end
     rval_map
-  end
-
-  def get_next_page(query, page_size, result_offset)
-    query << '&' if query.length > 1
-    query << "pageSize=#{page_size}"
-    query << "&start=#{result_offset + page_size}"
-  end
-
-  def get_previous_page(query, page_size, result_offset)
-    query << '&' if query.length > 1
-    query << "pageSize=#{page_size}"
-    query << "&start=#{result_offset - page_size}"
   end
 
   def calculate_fit_score(results, params_hash)

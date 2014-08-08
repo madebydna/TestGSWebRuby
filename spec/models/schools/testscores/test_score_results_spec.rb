@@ -8,6 +8,9 @@ describe TestScoreResults do
       allow(subject).to receive(:sort_test_scores) do |test_scores|
         test_scores
       end
+      allow(subject).to receive(:force_inclusion_of_breakdown) do |test_scores|
+        test_scores
+      end
     end
     
     it 'should not return data, since there are no results from the database.' do
@@ -46,145 +49,149 @@ describe TestScoreResults do
     let(:test_scores_hash) do
       {
         18 => {
-          test_label: 'a label',
-          test_source: 'a source',
-          test_description: 'a description',
-          grades: {
-            3 => {
-              label: 'a grade label',
-              level_code: {
-                'h' => {
-                  'Algebra 2' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+          All: {
+            test_label: 'a label',
+            test_source: 'a source',
+            test_description: 'a description',
+            grades: {
+              3 => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'Algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                    'Algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     }
-                  },
-                  'Algebra 1' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                  }
+                }
+              },
+              2 => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'Algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                    'Algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     }
                   }
                 }
               }
             },
-            2 => {
-              label: 'a grade label',
-              level_code: {
-                'h' => {
-                  'Algebra 2' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    }
-                  },
-                  'Algebra 1' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    }
-                  }
-                }
-              }
-            }
-          },
-          lowest_grade: 2
+            lowest_grade: 2
+          }
         },
         19 => {
-          test_label: 'a label',
-          test_source: 'a source',
-          test_description: 'a description',
-          grades: {
-            2 => {
-              label: 'a grade label',
-              level_code: {
-                'h' => {
-                  'Algebra 2' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+          All: {
+            test_label: 'a label',
+            test_source: 'a source',
+            test_description: 'a description',
+            grades: {
+              2 => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'Algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                    'Algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     }
-                  },
-                  'Algebra 1' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                  }
+                }
+              },
+              1 => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
+                    'algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
                     }
                   }
                 }
               }
             },
-            1 => {
-              label: 'a grade label',
-              level_code: {
-                'h' => {
-                  'algebra 2' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    }
-                  },
-                  'algebra 1' => {
-                    2010 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    },
-                    2011 => {
-                      number_students_tested: 100,
-                      score: '10',
-                      state_average: '20'
-                    }
-                  }
-                }
-              }
-            }
-          },
-          lowest_grade: 1
-        },
+            lowest_grade: 1
+          }
+        }
       }
     end
 
@@ -193,7 +200,7 @@ describe TestScoreResults do
       expect(sorted_test_scores.size).to eq(2)
     end
 
-    it 'should sort test data types by lowest grade, ascending' do
+    it 'should sort test data types by lowest grade, descending' do
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)
       #test should be sorted by the lowest grade. Hence test data type id 19 should be first.
       expect(sorted_test_scores.keys[0]).to eq(19)
@@ -203,22 +210,22 @@ describe TestScoreResults do
     it 'should sort grades in ascending order' do
       #grades should be sorted in ascending order.
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)
-      expect(sorted_test_scores.values[0][:grades].keys[0]).to eq(1)
-      expect(sorted_test_scores.values[0][:grades].keys[1]).to eq(2)
+      expect(sorted_test_scores.values[0][:All][:grades].keys[0]).to eq(1)
+      expect(sorted_test_scores.values[0][:All][:grades].keys[1]).to eq(2)
     end
 
     it 'should sort subjects in ascending order' do
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)
       #subjects should be sorted in alphabetical order.
-      expect(sorted_test_scores.values[0].seek(:grades, 1, :level_code, 'h').keys[0]).to eq('algebra 1')
-      expect(sorted_test_scores.values[0].seek(:grades, 1, :level_code, 'h').keys[1]).to eq('algebra 2')
+      expect(sorted_test_scores.values[0].seek(:All, :grades, 1, :level_code, 'h').keys[0]).to eq('algebra 1')
+      expect(sorted_test_scores.values[0].seek(:All, :grades, 1, :level_code, 'h').keys[1]).to eq('algebra 2')
     end
 
     it 'should sort years in descending order' do
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)
       #years are sorted in descending order.
-      expect(sorted_test_scores.values[0].seek(:grades, 1, :level_code, 'h', 'algebra 1').keys[0]).to eq(2011)
-      expect(sorted_test_scores.values[0].seek(:grades, 1, :level_code, 'h', 'algebra 1').keys[1]).to eq(2010)
+      expect(sorted_test_scores.values[0].seek(:All, :grades, 1, :level_code, 'h', 'algebra 1').keys[0]).to eq(2011)
+      expect(sorted_test_scores.values[0].seek(:All, :grades, 1, :level_code, 'h', 'algebra 1').keys[1]).to eq(2010)
     end
   end
 

@@ -16,8 +16,8 @@ LocalizedProfiles::Application.configure do
   config.action_controller.perform_caching = true
 
   # set host that rails should use when building absolute urls
-  config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
-  config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
+  Rails.application.routes.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
+  Rails.application.routes.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 
   # For setting up Devise.
   config.action_mailer.default_url_options = {

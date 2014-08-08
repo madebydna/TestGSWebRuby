@@ -1,6 +1,5 @@
 class StatesController < ApplicationController
   include SeoHelper
-  include OmnitureConcerns
   include MetaTagsHelper
   include AdvertisingHelper
 
@@ -61,6 +60,14 @@ class StatesController < ApplicationController
       @collection_id = hub_city_mapping.collection_id
       @canonical_url = state_guided_search_url(params[:state])
       @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
+      set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search')
+      set_meta_tags title:       "Your Personalized #{@state[:long].titleize} School Search | GreatSchools",
+                    description: "#{@state[:long].titleize} school wizard, #{@state[:long].titleize} schools,
+                                  #{@state[:short].upcase} schools, #{@state[:short].upcase} school guided search",
+                    keywords:    "Use this 5-step guide to discover #{@state[:long].titleize} schools that match your
+                                 child\'s unique needs and preferences including programs and extracurriculars, school
+                                 focus areas, transportation, and daily schedules."
+
       render 'shared/guided_search'
     end
   end
@@ -127,7 +134,7 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if @show_ads
-      set_targeting = {}
+      set_targeting = gon.ad_set_targeting || {}
       set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
       set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation

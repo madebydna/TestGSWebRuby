@@ -153,9 +153,17 @@
   }
 }
 
+//Search Menu
+
+.search-filters-menu-mobile {
+  left: -300px;
+  z-index: 10;
+  top: 60px;
+}
+
 //Autocomplete
 .tt-dropdown-menu {
-  width: 450px;
+  width: 100%;
   margin-top: 12px;
   padding: 8px 0;
   padding-bottom: 20px;
@@ -170,32 +178,52 @@
 }
 
 .tt-suggestion {
-  padding: 3px 20px;
+  padding: 4px 20px;
   font-size: 18px;
-  line-height: 24px;
+//  line-height: 24px;
+
+  .tt-suggestion-link {
+    text-decoration:none;
+    color: #000000;
+
+    .tt-suggestion-text {
+      font-size: 14px;
+      margin: 0px;
+      padding: 0px;
+      line-height: 13pt;
+
+      .tt-schools-in {
+        font-style: italic;
+        color: grey;
+      }
+
+      .tt-state-name {
+        color: grey;
+        font-size: 12px;
+      }
+    }
+  }
+
 }
 
 .tt-dataset-cities {
-  padding: 3px 20px;
   font-size: 18px;
   line-height: 24px;
 }
 
 .tt-dataset-schools {
-  padding: 3px 20px;
   font-size: 18px;
   line-height: 24px;
 }
 
 .tt-dataset-districts {
-  padding: 3px 20px;
   font-size: 18px;
   line-height: 24px;
 }
 
 .tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: lightblue;
+  text-decoration: none;
+  background: #eee;
 }
 
 .typeahead {

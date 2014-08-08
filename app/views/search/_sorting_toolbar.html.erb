@@ -1,40 +1,30 @@
-<div class="limit-width-1200 full-width row ptl plm prm">
-
-  <div class="col-xs-6">
-    <div class="dropdown">
-      <div data-toggle='dropdown' class="dropdown-toggle"><%= @total_results %> schools meet your criteria<span class="caret"></span></div>
-      <ul class="dropdown-menu">
-        <li class="pal">
-          <div>Something</div>
-          <div>Something Else</div>
-          <div>Some Other Thing</div>
-          <div>etc...</div>
-        </li>
-      </ul>
-    </div><br>
-    <div>
+<div class="limit-width-1200 row phm ptm pbl">
+  <div class="col-xs-12 clearfix">
+    <span class="open-sans_sb fl font-size-block"><%= @total_results %> schools meet your criteria</span>
+    <div class="hidden-xs pts fr">
       <span>Sort by:</span>
       <span>
-        <% if @query_string.present? %>
-          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('rating', '<%=@query_string%>')">Quality</a>
-          <% if search_by_location? %><a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('distance', '<%=@query_string%>')">Distance</a><%end%>
-          <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('fit', '<%=@query_string%>')">Fit</a>
-        <% else %>
-          <a>Quality</a><a>Distance</a><a>Fit</a>
+        <% ['rating','distance','fit'].each do |sort_name| %>
+            <% next if sort_name == 'distance' && !search_by_location? %>
+            <% if @sort_name == sort_name %>
+                <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
+            <% else %>
+                <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>', '<%=@query_string%>')"><%=sort_name.titleize%></a>
+            <% end %>
         <% end %>
       </span>
     </div>
   </div>
 
-  <div class="col-xs-6">
-    <div class="pull-right prl">
-      <div class="row">
-        <div class="col-sm-5"><button class="btn btn-default">Compare (2/4)</button></div>
-        <div class="col-xs-12 hidden-sm hidden-md hidden-lg ptm"></div>
-        <div class="col-sm-2 hidden-xs"></div>
-        <div class="col-sm-5"><button class="btn btn-primary">Save Search</button></div>
-      </div>
-    </div>
+  <div class="visible-xs col-xs-4 pbl ptl">
+    <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
+      <option value="">Sort By:</option>
+      <% ['rating','distance','fit'].each do |sort_name| %>
+          <% next if sort_name == 'distance' && !search_by_location? %>
+          <% asc_or_desc = sort_name == 'distance' ? 'asc' : 'desc' %>
+          <option value="<%=sort_name%>" <%if @params_hash.include?('sort') && @params_hash['sort'] == "#{sort_name}_#{asc_or_desc}"%>selected<%end%>><%=sort_name.titleize%></option>
+      <% end %>
+    </select>
   </div>
 
 </div>

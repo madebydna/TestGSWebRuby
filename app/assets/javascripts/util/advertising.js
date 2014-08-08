@@ -79,7 +79,13 @@ googletag.cmd = googletag.cmd || [];
 $(function(){
   var dfp_slots = $(".gs_ad_slot").filter(":visible");
   if (dfp_slots.length > 0 || gon.pagename == "Reviews") {
+
     googletag.cmd.push(function() {
+      //    Remove after ab test
+      if(!$.isEmptyObject(gon.ad_set_channel_ids)){
+        googletag.pubads().set("adsense_channel_ids", gon.ad_set_channel_ids);
+      }
+
       $(dfp_slots).each(function(){
         var layerObj = $(this);
         GS.ad.slot[GS.ad.getDivId(layerObj)] = googletag.defineSlot( GS.ad.getSlotName(layerObj), GS.ad.getDimensions(layerObj), GS.ad.getDivId(layerObj) ).addService(googletag.pubads());

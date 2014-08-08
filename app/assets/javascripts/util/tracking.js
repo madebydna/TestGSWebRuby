@@ -164,6 +164,8 @@ GS.track.propLookup = {
     'schoolLevel':3,
     'schoolLocale':4,
     'locale':4,
+    'searchTerm':6,
+    'ab_version':7,
     'schoolRating':31,
     'userLoginStatus':5,
     'requestUrl':59,
@@ -179,7 +181,10 @@ GS.track.eventLookup = {
 };
 
 GS.track.evarsLookup = {
-    'review_updates_mss_traffic_driver' :25
+    'ab_version': 4,
+    'review_updates_mss_traffic_driver': 25,
+    'search_page_number': 26,
+    'search_page_type': 27
 };
 
 GS.track.setOmnitureData = function() {

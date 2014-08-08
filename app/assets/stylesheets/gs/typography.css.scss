@@ -5,8 +5,12 @@ h6, .h6 { @extend .open-sans_i; }
 
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
+.font-size-xs    {font-size: $font-size-xs}
+.font-size-medium {font-size: $font-size-medium}
+
 .font-size-small {font-size: $font-size-small}
 .font-size-large {font-size: $font-size-large}
+.font-size-block {font-size: $font-size-block}
 
 
 .search-text {
@@ -18,8 +22,16 @@ h6, .h6 { @extend .open-sans_i; }
   border-radius: 3px;
 }
 
+.active-search-sort {
+  color: #007299;
+}
+
+.toolbar-text {
+  font-size: 16px;
+}
+
 p, a {
-  font: 16px 'opensans-regular',Arial,Helvetica,sans-serif;
+  font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
 }
 
 .invert-colors{
@@ -37,11 +49,6 @@ p, a {
 }
 
 .best-known-for {
-  font-size: $font-size-block;
-}
-
-.stat-block-number {
-  font-family: $font-family-base;
   font-size: $font-size-block;
 }
 
@@ -161,4 +168,17 @@ p, a {
 body { top: 0px !important; }
 .goog-te-gadget-icon {display:none;}
 .goog-te-gadget-simple a {text-decoration: none !important;}
+
+
+.btn-border-green{
+  border: 1px #8fcdaa solid;
+  //  box-shadow :1px 1px 2px #E6e6e6;
+}
+.btn-bg-green {
+  background-color: #8fcdaa;
+  color: #FFFFFF;
+  &:focus {
+    color: #FFFFFF;
+  }
+}
 

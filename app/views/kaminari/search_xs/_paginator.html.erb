@@ -1,0 +1,16 @@
+<% #The container tag%>
+<% #available local variables%>
+<% #  current_page:  a page object for the currently displayed page%>
+<% #  total_pages:   total number of pages%>
+<% #  per_page:      number of items to fetch per page%>
+<% #  remote:        data-remote %>
+<% #  paginator:     the paginator that renders the pagination tags inside %>
+<%= paginator.render do %>
+  <nav class="pagination full-width row mvl tac">
+    <div class="btn-group">
+      <%= prev_page_tag %>
+      <span class="btn font-size-block active"><%= current_page.number %></span>
+      <%= next_page_tag  %>
+    </div>
+  </nav>
+<% end %>

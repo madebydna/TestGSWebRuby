@@ -16,10 +16,10 @@ LocalizedProfiles::Application.routes.draw do
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
-      constraints: {state: States.any_state_name_regex}, to: 'search#city_browse'
+      constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
 
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
-      constraints: {state: States.any_state_name_regex}, to: 'search#district_browse'
+      constraints: {state: States.any_state_name_regex, district_name: /[^\/]*/}, to: 'search#district_browse'
 
   get '/search/search.page', as: :search, to: 'search#search'
 
@@ -103,6 +103,7 @@ LocalizedProfiles::Application.routes.draw do
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
+  get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'

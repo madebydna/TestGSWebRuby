@@ -1,4 +1,7 @@
 class SchoolRating < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  include UrlHelper
+
   db_magic :connection => :surveys
 
   self.table_name='school_rating'
@@ -48,6 +51,7 @@ class SchoolRating < ActiveRecord::Base
   before_save :calculate_and_set_status, unless: '@moderated == true'
   before_save :set_processed_date_if_published
   after_save :auto_report_bad_language, unless: '@moderated == true'
+  after_save :send_thank_you_email_if_published
 
   def self.cache_time
     LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
@@ -248,6 +252,13 @@ class SchoolRating < ActiveRecord::Base
     cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
     Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time, race_condition_ttl: SchoolRating.cache_time) do
       SchoolRating.where(state: state_abbr, school_id: school_id).published.count
+    end
+  end
+
+  def send_thank_you_email_if_published
+    if self.status_changed? && self.published?
+      review_url = school_reviews_url(school)
+      ThankYouForReviewEmail.deliver_to_user(user, school, review_url)
     end
   end
 

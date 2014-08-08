@@ -2,6 +2,7 @@ GS.search = GS.search || {};
 GS.search.googleMap = GS.search.googleMap || (function() {
 
     var needsInit = true;
+    GS.search.map = GS.search.map || {};
 
   var init = function() {
       if (!needsInit) {return;}
@@ -24,6 +25,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var bounds = new google.maps.LatLngBounds();
 
           var initialize = function (points) {
+              var isdraggable = $(document).width() > 767 ? true : false
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -39,10 +41,60 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   streetViewControl: true,
                   panControl: true,
                   scrollwheel: false,
-                  //              draggable: false,
-                  zoom: 12
+                  draggable: isdraggable,
+                  zoom: 12,
+                  styles: [
+                      {
+                          "featureType": "road.highway",
+                          "elementType": "geometry.fill",
+                          "stylers": [
+                              { "color": "#f5f5f5" }
+                          ]
+                      },{
+                          "featureType": "road.highway",
+                          "elementType": "geometry.stroke",
+                          "stylers": [
+                              { "color": "#f5f5f5" }
+                          ]
+                      },{
+                          "featureType": "road.highway",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "simplified" }
+                          ]
+                      },{
+                          "featureType": "poi.school",
+                          "elementType": "labels",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.school",
+                          "elementType": "geometry",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.business",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      },{
+                          "featureType": "poi.medical",
+                          "elementType": "geometry",
+                          "stylers": [
+                              { "visibility": "off" }
+                          ]
+                      }
+                  ]
               };
-              var map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
+              GS.search.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
               var position;
               var imageUrl;
@@ -59,21 +111,28 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   var point = points[i];
                   position = new google.maps.LatLng(point.lat, point.lng);
                   bounds.extend(position);
-                  var markerOptions = new google.maps.Marker({
+                  markerOptions = {
                       position: position,
-                      map: map
-                  });
+                      map: GS.search.map,
+                      title: point.name
+                  };
+
+                  if (point['zIndex'] != undefined) {
+                      markerOptions['zIndex'] = point['zIndex']
+                  }
+
+                  var markerOptions = new google.maps.Marker(markerOptions);
                   if (point.on_page) {
 
                       imageSize = size_29;
                       imageAnchor = point_12_20; // center of image
-                      if (point.preschool) {
-                          pixelOffset = 318;
+                      if (point.preschool && parseInt(point.gsRating) == 0) {
+                          pixelOffset = 290;
                           imageUrl = imageUrlOnPage;
                       } else {
                           pixelOffset = 290;// default to NR
                           if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                              pixelOffset = 290 - (point.gsRating * 29);
+                              pixelOffset = 290 - (parseInt(point.gsRating) * 29);
                           }
                           imageUrl = imageUrlOnPage;
                       }
@@ -82,8 +141,8 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                       imageSize = size_10;
                       imageAnchor = point_5_5; // center of image
 
-                      if (point.preschool) {
-                          pixelOffset = 40;
+                      if (point.preschool && parseInt(point.gsRating) == 0) {
+                          pixelOffset = 30;
                       } else if (parseInt(point.gsRating) >= 8) {
                           pixelOffset = 0;
                       } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
@@ -107,38 +166,72 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   google.maps.event.addListener(marker, 'click', (function (marker, point) {
                       return function () {
                           infoWindow.setContent(getInfoWindowMarkup(point));
-                          infoWindow.open(map, marker);
+                          infoWindow.open(GS.search.map, marker);
                       }
                   })(marker, point));
 
+                  // Responsive map sizing and centering
+                  var center;
+                  var calculateCenter = function () {
+                      center = GS.search.map.getCenter();
+                  };
+                  google.maps.event.addDomListener(GS.search.map, 'idle', function() {
+                      calculateCenter();
+                  });
+                  google.maps.event.addDomListener(window, 'resize', function() {
+                      GS.search.map.setCenter(center);
+                  })
+
               }
               if (!bounds.isEmpty()) {
-                  map.setCenter(bounds.getCenter(), map.fitBounds(bounds));
+                  GS.search.map.setCenter(bounds.getCenter(), GS.search.map.fitBounds(bounds));
               }
           };
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              jQuery(infoWindowMarkup).css("height", 180);
-              var markup = '<div style="width: 101%"><a href="' + point.profileUrl + '">' + point.name + '</a></div>';
-              markup += '<div>' + point.street + ' ' + point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
-              if (point.gsRating > 0) {
-                  markup += "<div>Rating=" + point.gsRating + "/10</div>";
+              jQuery(infoWindowMarkup).css("height", 140);
+              var markup = '<div class="clearfix">'; //school data
+              markup += '<div class="pbm" style="width: 101%"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="fl mrl">'; //address
+              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
+              markup += '</div>';//address
+              markup += '<div class="fr mts">'; //sprites
+              if (parseInt(point.gsRating) > 0){
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'+ point.gsRating+ '"' +'></span>GS rating' +  '</div>';
+              } else {
+                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-nr"></span>GS rating' +  '</div>';
               }
-              if (point.maxFitScore > 0) {
-                  markup += '<div>Fit: ' + point.fitScore + '/' + point.maxFitScore + '</div>';
-              }
-              markup += '<div>' + point.schoolType + ' | ' + point.gradeRange + '</div>';
-              markup += "<div>";
-              if (point.communityRating > 0) {
-                  markup += '<div><a href="' + point.reviewUrl + '">' + point.communityRatingStars + '</a>';
-                  if (point.numReviews > 0) {
-                      markup += ' (based on ' + point.numReviews + ' review' + (point.numReviews > 1 ? 's' : '') + ')';
+
+              if(point.fitScore > 0){
+                  if (point.strongFit){
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-happy-face"></span>Strong fit' + '</div>';
+                  } else if (point.okFit){
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-smiling-face"></span>OK fit' + '</div>';
+                  } else {
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-neutral-face"></span>Low fit' + '</div>';
                   }
+              }
+              markup += '</div>'; //sprites
+              markup += '</div>'; //school data
+              markup += '<hr class="mvm">';
+              markup += '<div class="fl mrs">'; //stars
+              if (point.numReviews > 0) {
+                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
+//                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
+                  markup += '<span class="mls mrm">'+ point.numReviews +' reviews </span>';//reviews link
+                  markup += '</a>';//reviews link
               } else {
                   markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
               }
-              markup += '</div>';
-              markup += '<div><a href="' + point.zillowUrl + '" target="_blank">Nearby homes for sale</a></div>';
+              markup += '</div>'; //stars
+              markup += '<div class="fr">'; //zillow
+              markup += '<a href="http://www.zillow.com/DE-19904?cbpartner=GreatSchools&amp;utm_source=GreatSchools&amp;utm_medium=referral&amp;utm_campaign=schoolsearch" target="_blank">';
+              markup += '<span class="vam iconx16 i-16-home mrs"></span><span class="gray-dark">Homes for sale</span>';
+              markup += '</a>';
+              markup += '</div>'; //zillow
+
+
               infoWindowMarkup.innerHTML = markup;
               return infoWindowMarkup;
           };
@@ -147,8 +240,13 @@ GS.search.googleMap = GS.search.googleMap || (function() {
       }
     };
 
+    var getMap = function () {
+     return GS.search.map;
+    };
+
     return {
-       init: init
+        init: init,
+        getMap: getMap
     }
 
 })();

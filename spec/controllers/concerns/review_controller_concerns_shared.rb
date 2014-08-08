@@ -255,20 +255,20 @@ shared_examples_for 'a controller that can save a review' do
         controller.send :save_review_and_redirect, review_params
       end
 
-      it 'should flash a notice to user if review from student' do
-        # REVIEW: what messaging do users get if review is held??
-        review.status = 'u'
-        review.who = 'student'
-        expect(controller).to receive(:flash_notice)
-        expect(controller).to receive(:redirect_to).with '/reviewspage'
-        controller.send :save_review_and_redirect, review_params
+      ['u', 'pu', 'h', 'ph', 'd', 'pd'].each do |status|
+        it "should flash actions.review.pending_moderation message if review status is #{status}" do
+          review.status = status
+          expect(controller).to receive(:flash_notice)
+            .with I18n.t('actions.review.pending_moderation')
+          expect(controller).to receive(:redirect_to).with '/reviewspage'
+          controller.send :save_review_and_redirect, review_params
+        end
       end
 
-      it 'should flash notice if review not published & user not a student' do
-        review.status = 'u'
-        review.who = 'parent'
+      it 'should flash actions.review.activated message if review is published' do
+        review.status = 'p'
         expect(controller).to receive(:flash_notice)
-          .with I18n.t('actions.review.pending_email_verification')
+          .with I18n.t('actions.review.activated')
         expect(controller).to receive(:redirect_to).with '/reviewspage'
         controller.send :save_review_and_redirect, review_params
       end

@@ -1,9 +1,9 @@
-<% unless filter.category == :distance && !search_by_location? %>
+<% unless filter.name == :distance && !search_by_location? %>
 <div class="">
   <div class="ptm">
-    <span class="font-size-small"><%=filter.name%></span><br>
+    <span class="font-size-small"><%=filter.label%></span><span class="val"></span><br>
   </div>
-  <div class="divider mtm mbm" style="height: 2px; background-color: darkgrey"></div>
+  <div class="hbs mts mbs"></div>
   <div>
     <%= yield %>
   </div>
