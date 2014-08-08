@@ -70,6 +70,10 @@ class TestScoresCaching::QueryResultDecorator
     self['breakdown_id']
   end
 
+  def subject_id
+    self['subject_id']
+  end
+
   def grade_label
     grade_label = "GRADE " + grade.value.to_s
     if grade.name && grade.name.start_with?('All')
@@ -91,7 +95,10 @@ class TestScoresCaching::QueryResultDecorator
   end
 
   def subject
-    TestDataSet.lookup_subject[self['subject_id']]
+    subject = TestScoresCaching::Base.test_data_subjects[subject_id]
+    display_name = subject.name if subject
+    display_name += ' subjects' if display_name == 'All'
+    display_name
   end
 
   def data_type_id
