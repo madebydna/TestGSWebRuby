@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   include ApplicationHelper
+  include MetaTagsHelper
   include ActionView::Helpers::TagHelper
 
   #Todo move before filters to methods
@@ -44,8 +45,7 @@ class SearchController < ApplicationController
     @search_term = "#{@city.name}, #{@state[:short].upcase}"
     @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
-    set_meta_tags title: meta_title, robots: 'noindex'
+    set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     render 'search_page'
   end
@@ -71,8 +71,7 @@ class SearchController < ApplicationController
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
-    set_meta_tags title: meta_title, robots: 'noindex'
+    set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     render 'search_page'
   end
@@ -96,9 +95,8 @@ class SearchController < ApplicationController
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
+    set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
-    # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
   def by_name
@@ -114,7 +112,7 @@ class SearchController < ApplicationController
     end
 
     @by_name = true
-    set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
+    set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
   end
@@ -183,7 +181,8 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    @window_size = get_kaminari_window_size(@page_number, @total_results, @page_size)
+    @max_number_of_pages = get_max_number_of_pages(@total_results, @page_size) #for pagination and meta tags
+    @window_size = get_kaminari_window_size
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
@@ -340,12 +339,11 @@ class SearchController < ApplicationController
     end
   end
 
-  def get_kaminari_window_size(page_number, total_results, page_size)
-    max_number_of_pages = get_max_number_of_pages(total_results, page_size)
-    if page_number < 5
-      9 - page_number
-    elsif page_number > max_number_of_pages - 6
-      9 - (max_number_of_pages - page_number)
+  def get_kaminari_window_size
+    if @page_number < 5
+      9 - @page_number
+    elsif @page_number > @max_number_of_pages - 6
+      9 - (@max_number_of_pages - @page_number)
     else
       4
     end
