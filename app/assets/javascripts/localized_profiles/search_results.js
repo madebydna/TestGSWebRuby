@@ -20,7 +20,7 @@ GS.search.results = GS.search.results || (function() {
     var buildAndSendFiltersForm = function(form) {
         var getParam = GS.uri.Uri.getFromQueryString;
         var queryParamters = {};
-        var fields = ['lat', 'lon', 'grades', 'q', 'sort'];
+        var fields = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
 
         for (var i = 0; i < fields.length; i++) { getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i])) }
         GS.uri.Uri.addHiddenFieldsToForm(queryParamters, form);
