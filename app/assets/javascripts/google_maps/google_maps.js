@@ -226,7 +226,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               }
               markup += '</div>'; //stars
               markup += '<div class="fr">'; //zillow
-              markup += '<a href="http://www.zillow.com/DE-19904?cbpartner=GreatSchools&amp;utm_source=GreatSchools&amp;utm_medium=referral&amp;utm_campaign=schoolsearch" target="_blank">';
+              markup += '<a href="' + point.zillowUrl + '" target="_blank">';
               markup += '<span class="vam iconx16 i-16-home mrs"></span><span class="gray-dark">Homes for sale</span>';
               markup += '</a>';
               markup += '</div>'; //zillow
