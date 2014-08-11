@@ -182,13 +182,17 @@ module MetaTagsHelper
     end
   end
 
+  def canonical_url_without_params(state_name, city_name)
+    search_city_browse_url(state_name, city_name).downcase[0..-2]
+  end
+
   def search_city_browse_meta_tag_hash
     school_type, level_code, page = search_params_for_meta_tags
     parameters = "#{level_code.param}#{school_type.param}"
-    url_without_params = request.url.split('?').first.downcase
+    url_without_params = canonical_url_without_params(@state[:long], @city.name) #downcase and cut trailing slash Todo add test for this!!!
 
     canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
-    if url_without_params.casecmp(search_city_browse_url(@state[:long], @city.name)) == 0
+    if url_without_params.casecmp(request.url.split('?').first) == 0
       prev_url = (url = "#{parameters}#{page.prev}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.prev.nil?
       next_url = (url = "#{parameters}#{page.next}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.next.nil?
     end
@@ -204,10 +208,10 @@ module MetaTagsHelper
   def search_district_browse_meta_tag_hash
     school_type, level_code, page = search_params_for_meta_tags
     parameters = "#{level_code.param}"
-    url_without_params = request.url.split('?').first.downcase
+    url_without_params = canonical_url_without_params(@state[:long], @city.name)
 
     canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
-    if url_without_params.casecmp(search_city_browse_url(@state[:long], @city.name)) == 0
+    if url_without_params.casecmp(request.url.split('?').first) == 0
       prev_url = (url = "#{parameters}#{page.prev}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.prev.nil?
       next_url = (url = "#{parameters}#{page.next}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.next.nil?
     end
@@ -225,7 +229,7 @@ module MetaTagsHelper
     if city = City.find_by_state_and_name(@state[:short], @params_hash['city'])
       school_type, level_code, page = search_params_for_meta_tags
       parameters = "#{level_code.param}#{school_type.param}"
-      url_without_params = search_city_browse_url(@state[:long], city.name)
+      url_without_params = canonical_url_without_params(@state[:long], city.name)
 
       canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
     end
@@ -239,8 +243,8 @@ module MetaTagsHelper
     if city = City.find_by_state_and_name(@state[:short], @params_hash['q'])
       school_type, level_code, page = search_params_for_meta_tags
       parameters = "#{level_code.param}#{school_type.param}"
-      url_without_params = search_city_browse_url(@state[:long], city.name)
-k
+      url_without_params = canonical_url_without_params(@state[:long], city.name)
+
       canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
     end
     {
