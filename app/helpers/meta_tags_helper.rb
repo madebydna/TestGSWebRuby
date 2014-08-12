@@ -150,11 +150,11 @@ module MetaTagsHelper
         p: nil
     }.stringify_keys
 
-    value = lc_array.each { |lc| break lc if [*@params_hash['gradeLevel']].include?(lc)}
+    value = lc_array.each { |lc| break lc if [*@params_hash['gradeLevels']].include?(lc)}
     value = nil unless lc_array.include?(value)
-    text = text_map[value] if [*@params_hash['gradeLevel']].count == 1
+    text = text_map[value] if [*@params_hash['gradeLevels']].count == 1
     school = value == 'p' ? 'Preschools ' : 'Schools '
-    param = "&gradeLevel=#{value}" if value.present?
+    param = "&gradeLevels=#{value}" if value.present?
 
     Struct.new(:param, :text, :school).new(param, text, school)
   end
