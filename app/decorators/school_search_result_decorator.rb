@@ -23,27 +23,24 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
 
   def google_map_data_point
     map_points = {
-      name: self.name,
-      id: self.id,
-      lat: self.latitude,
-      lng: self.longitude,
-      street: self.street,
-      city: self.city,
-      state: self.state,
-      zipcode: self.zipcode,
-      schoolType: self.type,
-      preschool: self.preschool?,
+      name: name,
+      id: id,
+      street: street,
+      city: city,
+      state: state,
+      zipcode: zipcode,
+      schoolType: type,
+      preschool: preschool?,
       gradeRange: process_level,
-      fitScore: self.fit_score,
-      maxFitScore: self.max_fit_score,
-      gsRating: self.overall_gs_rating || 0,
-      on_page: (self.on_page),
-      strongFit: self.strong_fit?,
-      okFit: self.ok_fit?
+      fitScore: fit_score,
+      maxFitScore: max_fit_score,
+      gsRating: overall_gs_rating || 0,
+      on_page: (on_page),
+      strongFit: strong_fit?,
+      okFit: ok_fit?
     }
 
     yield map_points if block_given?
-
     map_points
   end
 end

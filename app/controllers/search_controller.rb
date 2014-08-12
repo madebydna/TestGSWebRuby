@@ -374,15 +374,26 @@ class SearchController < ApplicationController
 
   def mapping_points_through_gon
     gon.map_points = @map_schools.map do |school|
-      SchoolSearchResultDecorator.decorate(school).google_map_data_point do |map_points|
+      begin
+        map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
         map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
         map_points[:profileUrl] = school_path(school)
         map_points[:reviewUrl] = school_reviews_path(school)
         map_points[:zillowUrl] = zillow_url(school)
+        school.respond_to?(:latitude) ? map_points[:lat] = school.latitude : next
+        school.respond_to?(:longitude) ? map_points[:lng] = school.longitude : next
+        map_points[:zillowUrl] = zillow_url(school)
         map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
         map_points[:zIndex] = -1 if !school.on_page
+        map_points
+      rescue NoMethodError => e
+        puts e.message
+        puts 'School Not Added as a Map Pin'
+        nil
+      else
+        map_points
       end
-    end
+    end.compact
   end
 
   def assign_sprite_files_though_gon
