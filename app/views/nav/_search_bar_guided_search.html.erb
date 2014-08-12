@@ -7,6 +7,7 @@
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term || 'Search for schools' %>"
+                  data-prev-search="<%= @search_term || '' %>"
                   id="js-prototypeSearch"
                   class='typeahead search-text full-width pam'
                   placeholder="Enter city, zip code, address or school name">

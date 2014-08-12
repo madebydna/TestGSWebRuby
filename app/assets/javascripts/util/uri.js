@@ -40,6 +40,23 @@ GS.uri.Uri.getBaseHostname = function() {
     return baseHostname;
 };
 
+GS.uri.Uri.putParamObjectIntoQueryString = function(queryString, obj) {
+    params = '';
+    for (var prop in obj) {
+        val = obj[prop];
+        if (val != undefined && val.length > 0) {
+            params = params + '&' + prop + '=' + val;
+        }
+    }
+
+    if (queryString === '' || queryString === '?') {
+        queryString = '?' + params.slice(1, params.length);
+        return queryString === '?' ? '' : queryString
+    } else {
+        return queryString + params
+    }
+};
+
 /**
  * Static method that takes a string that resembles a URL querystring in the format ?key=value&amp;key=value&amp;key=value
  * @param queryString

@@ -44,22 +44,27 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             var valid = validateField(input, input['placeholder']);
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
-                if (searchType == 'byLocation') {
+                var searchOptions = {};
+                var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+                if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
+                    searchOptions['grades'] = gradeLevelFilter.val();
+                }
+
+                if (input.value == $(prototypeSearchSelector).data('prev-search')) {
+                    $.cookie('showFiltersMenu', 'true', {path: '/'});
+                    params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
+                    params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
+                    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + params);
+                    return false
+                } else if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
-//                    document.cookie="showFiltersMenu=true;path=/;";
-                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
+                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
 //                    ToDo Hard coded byName search to Delaware
                     GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
-                    var searchOptions = {};
-                    var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
-                    if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
-                        searchOptions['grades'] = gradeLevelFilter.val();
-                    }
-//                    document.cookie="showFiltersMenu=true;path=/;";
-                    $.cookie('showFiltersMenu', 'true', { path    : '/'});
+                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
@@ -70,6 +75,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
     };
+
 
     var setupTabs = function() {
         $(locationSelector).click(function() {
@@ -754,7 +760,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var showFiltersMenuOnLoad = function() {
         if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
-            if ($(document).width() > 767 ) {
+            if ($(document).width() > GS.window.sizing.maxMobileWidth ) {
                 $('.js-searchFiltersMenu').show();
             }
         }
