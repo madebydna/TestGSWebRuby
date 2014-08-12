@@ -12,5 +12,6 @@ class LocalizedProfileAjaxController < ApplicationController
     order_by = params[:order_by] || nil
 
     @school_reviews_pagination = @school.reviews_filter group_type:filter_by, order_results_by:order_by, offset_start: offset.to_i, quantity_to_return: limit.to_i
+    @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews_pagination)
   end
 end
