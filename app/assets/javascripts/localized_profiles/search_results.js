@@ -16,7 +16,6 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
-
     var buildAndSendFiltersForm = function(form) {
         var getParam = GS.uri.Uri.getFromQueryString;
         var queryParamters = {};
@@ -74,8 +73,10 @@ GS.search.results = GS.search.results || (function() {
 
     var setSearchFilterMenuMobileOffsetFromTop = function() {
         var filterToolbarHeight = 45;
-        var offset = $('.js-mobileFiltersToolbar').offset().top + filterToolbarHeight;
-        $('.js-searchFiltersMenuMobile').css('top', offset + 'px' );
+        if ($('.js-mobileFiltersToolbar').length > 0) {
+            var offset = $('.js-mobileFiltersToolbar').offset().top + filterToolbarHeight;
+            $('.js-searchFiltersMenuMobile').css('top', offset + 'px');
+        }
     };
 
     var searchFilterMenuMobileCloseWindowHandler = function() {
@@ -140,12 +141,14 @@ GS.search.results = GS.search.results || (function() {
 })();
 
 $(document).ready(function() {
-    GS.search.results.searchFiltersFormSubmissionHandler();
-    GS.search.results.searchFiltersFormSubmissionMobileHandler();
-    GS.search.results.toggleAdvancedFiltersMenuHandler();
-    GS.search.results.searchFilterDropdownHandler();
-    GS.search.results.searchFilterMenuMobileHandler();
-    GS.search.results.searchFilterMenuMobileCloseWindowHandler();
-    GS.search.results.searchSortingSelectTagHandler();
-    GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
+    if($('.js-submitSearchFiltersForm').length > 0){
+        GS.search.results.searchFiltersFormSubmissionHandler();
+        GS.search.results.searchFiltersFormSubmissionMobileHandler();
+        GS.search.results.toggleAdvancedFiltersMenuHandler();
+        GS.search.results.searchFilterDropdownHandler();
+        GS.search.results.searchFilterMenuMobileHandler();
+        GS.search.results.searchFilterMenuMobileCloseWindowHandler();
+        GS.search.results.searchSortingSelectTagHandler();
+        GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
+    }
 });

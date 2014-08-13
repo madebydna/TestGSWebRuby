@@ -102,10 +102,12 @@ $(document).ready(function () {
         }
     });
 
-    if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
-        hideMapView();
-    }
-    else {
-        showMapView();
+    if (elemMapCanvas.length > 0) {
+        if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
+            hideMapView();
+        }
+        else {
+            showMapView();
+        }
     }
 });
