@@ -197,11 +197,13 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
               markup += '</div>';//address
               markup += '<div class="fr mts">'; //sprites
+              markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'
               if (parseInt(point.gsRating) > 0){
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'+ point.gsRating+ '"' +'></span>Rating' +  '</div>';
+                  markup += + point.gsRating;
               } else {
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-nr"></span>GS rating' +  '</div>';
+                  markup += 'nr';
               }
+              markup += '"></span>Rating' +  '</div>'
 
               if(point.fitScore > 0){
                   if (point.strongFit){
