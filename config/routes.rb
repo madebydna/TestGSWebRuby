@@ -64,6 +64,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
+    get '/moving.topic?content=2220', as: :moving
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
