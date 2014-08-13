@@ -65,9 +65,8 @@ $(document).ready(function () {
     };
 
     var mapHeightForMobile = function() {
-        toolbarHeight = $(".js-mapContainer").offset().top - $(".js-mobileFiltersToolbar").offset().top;
-        mapPadding = 10;
-        return $(window).height() - toolbarHeight - GS.window.sizing.navBarHeight - mapPadding;
+        toolbarHeight = $(".js-mapContainer").offset().top - $(".js-mobileFiltersToolbar").offset().top - 10; //10 for padding
+        return $(window).height() - toolbarHeight - GS.window.sizing.navBarHeight;
     };
 
     var switchListMapViewTextForMobile = function(oldText, newText) {
