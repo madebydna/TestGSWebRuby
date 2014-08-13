@@ -21,6 +21,16 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
     max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
   end
 
+  def decorated_school_type
+    if type == 'Charter'
+      'Public charter'
+    elsif type == 'Public'
+      'Public district'
+    else
+      'Private'
+    end
+  end
+
   def google_map_data_point
     begin
       map_points = {
@@ -30,7 +40,7 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
         city: city,
         state: state,
         zipcode: zipcode,
-        schoolType: type,
+        schoolType: decorated_school_type,
         preschool: preschool?,
         gradeRange: process_level,
         fitScore: fit_score,
