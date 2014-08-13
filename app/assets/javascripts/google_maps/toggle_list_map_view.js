@@ -35,6 +35,17 @@ $(document).ready(function () {
         google.maps.event.trigger(map, 'resize');
         map.setCenter(center);
     };
+
+    var setHeightForMap = function(height) {
+        $('#js-map-canvas').css('height', height + 'px');
+    };
+
+    var moveScreenToFilters = function() {
+        $('html, body').animate({
+            scrollTop: $(".js-mobileFiltersToolbar").offset().top - GS.window.sizing.navBarHeight
+        }, 700);
+    };
+
     var hideMapView = function() {
         elemMapCanvas.hide('fast');
         addActiveToggleStateFor('list');
@@ -42,18 +53,29 @@ $(document).ready(function () {
         switchListMapViewTextForMobile('list', 'map');
         $.cookie('map_view', 'false', { path: '/' });
     };
+
     var showMapView = function() {
+        setHeightForMap( $(document).width() <= GS.window.sizing.maxMobileWidth ? mapHeightForMobile() : 400 );
+        moveScreenToFilters();
         elemMapCanvas.show('slow',initAndShowMap);
         addActiveToggleStateFor('map');
         removeActiveToggleStateFor('list');
         switchListMapViewTextForMobile('map', 'list');
         $.cookie('map_view', 'true', { path: '/' });
     };
+
+    var mapHeightForMobile = function() {
+        toolbarHeight = $(".js-mapContainer").offset().top - $(".js-mobileFiltersToolbar").offset().top;
+        mapPadding = 10;
+        return $(window).height() - toolbarHeight - GS.window.sizing.navBarHeight - mapPadding;
+    };
+
     var switchListMapViewTextForMobile = function(oldText, newText) {
         var text = $(".js-toggle-list-map-view-text");
         text.siblings('span').removeClass('i-16-white-' + oldText + '-view').addClass('i-16-white-' + newText + '-view');
         text.text(newText.charAt(0).toUpperCase() + newText.slice(1));
     };
+
     elemListViewToggle.on("click", hideMapView);
     elemListViewToggle.hover(
         function () { addActiveToggleStateFor('list') },
@@ -80,7 +102,8 @@ $(document).ready(function () {
             showMapView();
         }
     });
-    if ($.cookie('map_view') === 'false') {
+
+    if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
         hideMapView();
     }
     else {

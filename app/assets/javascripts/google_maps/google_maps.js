@@ -25,7 +25,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var bounds = new google.maps.LatLngBounds();
 
           var initialize = function (points) {
-              var isdraggable = $(document).width() > 767 ? true : false
+              var isdraggable = true;
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -250,9 +250,3 @@ GS.search.googleMap = GS.search.googleMap || (function() {
     }
 
 })();
-
-$(document).ready(function() {
-    if ($.cookie('map_view') !== 'false') {
-        GS.search.googleMap.init();
-    }
-});

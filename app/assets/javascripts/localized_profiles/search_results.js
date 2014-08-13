@@ -59,10 +59,23 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchFilterMenuMobileHandler = function() {
-        $(".js-searchFiltersDropdownMobile").on('click', function() {
-            $('.js-searchFiltersMenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
-            $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
+        $(".js-searchFiltersDropdownMobile").click(function() {
+            $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
+    };
+
+    var showFilterMenuMobile = function() {
+        $('.js-searchfiltersmenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
+        $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
+    };
+    var hideFilterMenuMobile = function() {
+        $('.js-searchFiltersMenuMobile').animate({left: '-300px'}, 'slow');
+    };
+
+    var setSearchFilterMenuMobileOffsetFromTop = function() {
+        var filterToolbarHeight = 45;
+        var offset = $('.js-mobileFiltersToolbar').offset().top + filterToolbarHeight;
+        $('.js-searchFiltersMenuMobile').css('top', offset + 'px' );
     };
 
     var searchFilterMenuMobileCloseWindowHandler = function() {
@@ -121,7 +134,8 @@ GS.search.results = GS.search.results || (function() {
         searchFilterDropdownHandler: searchFiltersMenuHandler,
         searchFilterMenuMobileHandler: searchFilterMenuMobileHandler,
         searchFilterMenuMobileCloseWindowHandler: searchFilterMenuMobileCloseWindowHandler,
-        searchSortingSelectTagHandler: searchSortingSelectTagHandler
+        searchSortingSelectTagHandler: searchSortingSelectTagHandler,
+        setSearchFilterMenuMobileOffsetFromTop: setSearchFilterMenuMobileOffsetFromTop
     };
 })();
 
@@ -133,4 +147,5 @@ $(document).ready(function() {
     GS.search.results.searchFilterMenuMobileHandler();
     GS.search.results.searchFilterMenuMobileCloseWindowHandler();
     GS.search.results.searchSortingSelectTagHandler();
+    GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
 });
