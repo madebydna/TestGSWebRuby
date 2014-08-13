@@ -21,6 +21,7 @@ class GoogleSignedImages
   def self.google_formatted_street_address(school)
     address = school.street+","+school.city+","+school.state+"+"+school.zipcode
     address.gsub!(/\s+/,'+')
+    address.gsub!(/'/,'')
   end
 
   def self.sign_url(url)
