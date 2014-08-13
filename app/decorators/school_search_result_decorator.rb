@@ -22,25 +22,31 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
   end
 
   def google_map_data_point
-    map_points = {
-      name: name,
-      id: id,
-      street: street,
-      city: city,
-      state: state,
-      zipcode: zipcode,
-      schoolType: type,
-      preschool: preschool?,
-      gradeRange: process_level,
-      fitScore: fit_score,
-      maxFitScore: max_fit_score,
-      gsRating: overall_gs_rating || 0,
-      on_page: (on_page),
-      strongFit: strong_fit?,
-      okFit: ok_fit?
-    }
-
-    yield map_points if block_given?
-    map_points
+    begin
+      map_points = {
+        name: name,
+        id: id,
+        street: street,
+        city: city,
+        state: state,
+        zipcode: zipcode,
+        schoolType: type,
+        preschool: preschool?,
+        gradeRange: process_level,
+        fitScore: fit_score,
+        maxFitScore: max_fit_score,
+        gsRating: overall_gs_rating || 0,
+        on_page: (on_page),
+        strongFit: strong_fit?,
+        okFit: ok_fit?
+      }
+    rescue NameError => e
+      puts e.message
+      puts 'School Does not have method/solr attribute'
+      nil
+    else
+      yield map_points if block_given?
+      map_points
+    end
   end
 end
