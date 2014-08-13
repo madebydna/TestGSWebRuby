@@ -2,11 +2,10 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
 <%= render 'nav/search_bar_guided_search'%>
+<%= render 'filter_toolbar' %>
+
 <% if @schools.present? %>
-    <%= render 'filter_toolbar' %>
-
     <%= render 'search/google_maps', schools: @map_schools %>
-
     <%= render 'sorting_toolbar' %>
     <%= render partial: 'search/search_results', schools: @schools%>
     <%= render partial: 'pagination_toolbar' %>
