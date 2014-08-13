@@ -221,7 +221,12 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               if (point.numReviews > 0) {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
 //                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
-                  markup += '<span class="mls mrm">'+ point.numReviews +' reviews </span>';//reviews link
+                  markup += '<span class="mls mrm">'+ point.numReviews;
+                  if (point.numReviews > 1) {
+                      markup += ' reviews </span>';
+                  } else {
+                      markup += ' review </span>';
+                  }//reviews link
                   markup += '</a>';//reviews link
               } else {
                   markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
