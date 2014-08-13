@@ -110,6 +110,7 @@ class CitiesController < ApplicationController
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
       @step3_links = CollectionConfig.choosing_page_links(configs)
+      @step3_search_links = CollectionConfig.choosing_page_search_links(configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Choosing a School' => nil
