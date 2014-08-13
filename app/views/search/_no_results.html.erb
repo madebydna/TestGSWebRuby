@@ -1,0 +1,21 @@
+<div class="header-bg-color pvl">
+  <div class="limit-width-1200 bg-white partner-carousel-image">
+    <div class="pvl pll">
+      <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
+      <br><br>
+      <p class="open-sans_sb font-size-medium">Suggestions:</p>
+      <ul>
+        <li>Make sure all words are spelled correctly.</li>
+        <li>Try different or fewer keywords.</li>
+        <li>Try more general keywords.</li>
+        <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
+        <% state = 'delaware' #ToDo set state to actual state %>
+        <% if show_guided_search %>
+            <li>Try our <div class="iconx16 i-16-blue-info vam "></div>
+              <a class='toolbar-text ' href='<%= state_guided_search_path(state: state) %>'>Guide Me Search &#8594;</a>
+              </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
