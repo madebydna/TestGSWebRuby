@@ -76,7 +76,7 @@
         <div class="fl">
         <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
             <span class="prm"><%= draw_stars_16 school.community_rating %></span>
-            <%= link_to "#{school.review_count} reviews", school_reviews_path(school), class: 'font-size-small' %>
+            <%= link_to pluralize(school.review_count, 'review'), school_reviews_path(school), class: 'font-size-small' %>
         <% else %>
           <em>No Community Reviews</em>
         <% end %>
