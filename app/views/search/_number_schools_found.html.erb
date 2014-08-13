@@ -1,0 +1,10 @@
+<span class="open-sans_sb fl font-size-block">
+  <%= pluralize(@total_results,'school') + ' found' %>
+  <% if @by_location %>
+      near <%= @search_term %>
+  <% elsif @district %>
+      in <%= @district.name %>
+  <% elsif @city %>
+      in <%= @city.name + ', ' + @city.state %>
+  <% end %>
+</span>
