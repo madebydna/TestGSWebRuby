@@ -53,6 +53,7 @@
       <%=link_to school_quality_path(school) do%>
         <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
       <% end %>
+      GreatSchools Rating
     </div>
 
     <% if search_by_location? %>
@@ -81,7 +82,7 @@
         <% end %>
         </div>
         <div class="phm fl">|</div>
-        <div class="prs fl"><%= school.type.capitalize %></div>
+        <div class="prs fl"><%= decorated_school.decorated_school_type %></div>
         <div class="fl"><%= decorated_school.process_level %></div>
         <% if search_by_location? %>
           <div class="visible-xs phm fl">|</div>
