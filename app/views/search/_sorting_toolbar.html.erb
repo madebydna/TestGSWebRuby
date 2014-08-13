@@ -16,11 +16,12 @@
     </div>
   </div>
 
-  <div class="visible-xs col-xs-4 pbl ptl">
+  <div class="visible-xs col-xs-6 pbl ptl">
     <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
       <% sort_types = ['rating','distance','fit'] - [@sort_name] %>
       <option value="<%= @sort_name %>" selected>Sort by: <%= @sort_name.titleize %></option>
       <% sort_types.each do |sort_name| %>
+          <% next if sort_name == 'distance' && !search_by_location? %>
           <option value="<%=sort_name%>"><%=sort_name.titleize%></option>
       <% end %>
     </select>
