@@ -53,6 +53,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 if (input.value == $(prototypeSearchSelector).data('prev-search')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
                     params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
+                    params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + params);
                     return false
