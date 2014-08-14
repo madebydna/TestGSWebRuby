@@ -50,7 +50,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
-
+      render 'shared/events'
     end
   end
 

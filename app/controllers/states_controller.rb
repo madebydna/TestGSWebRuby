@@ -53,6 +53,26 @@ class StatesController < ApplicationController
     end
   end
 
+  def events
+    hub_city_mapping = mapping
+    if hub_city_mapping.nil?
+      render 'error/page_not_found', layout: 'error', status: 404
+    else
+      @collection_id = hub_city_mapping.collection_id
+      collection_configs = configs
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @events = CollectionConfig.important_events(@collection_id)
+      @breadcrumbs = {
+          @state[:long].titleize => state_path(params[:state]),
+          'Events' =>nil
+      }
+      @canonical_url = state_events_url(params[:state])
+      set_omniture_data('GS:State:Events', 'Home,StateHome,Events',@state[:long].titleize)
+      render 'shared/events'
+
+    end
+  end
+
   def guided_search
     hub_city_mapping = mapping
     if hub_city_mapping.nil?

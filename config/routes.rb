@@ -135,6 +135,7 @@ LocalizedProfiles::Application.routes.draw do
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
       get 'guided-search', to: 'states#guided_search', as: :guided_search
+      get 'events', to: 'states#events', as: :events
 
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do
