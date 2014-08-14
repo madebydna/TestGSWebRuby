@@ -40,7 +40,7 @@ GS.search.results = GS.search.results || (function() {
             var menu = $('.js-searchFiltersMenu');
             menu.css('display') == 'none' ? menu.show() : menu.hide();
             $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
-        })
+        });
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
@@ -79,16 +79,33 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
+    var closeMenuHandlerSet = false;
+
+    var closeMenuHandler = function() {
+        $('html').on('click', function () {
+            $('.js-fitScorePopup').hide();
+        });
+    };
+
     var searchResultFitScoreTogglehandler = function() {
         $('.js-searchResultDropdown').on('click', function() {
-            var popup = $(this).siblings('.panel');
+            var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 offset = getFitScorePopupOffset.call(this, popup);
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
-            }
-        })
+            };
+
+            if (closeMenuHandlerSet === false) {
+                closeMenuHandler();
+                closeMenuHandlerSet = true;
+                console.log('hello')
+            };
+
+        });
+        stopClickEventPropagation($('.js-searchResultDropdown'));
+        stopClickEventPropagation($('.js-fitScorePopup'));
     };
 
     var getFitScorePopupOffset = function(popup) {
