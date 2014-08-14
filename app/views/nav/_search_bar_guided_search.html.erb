@@ -15,7 +15,7 @@
 
         <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
           <select class="form-control input-lg font-size-small" id="js-prototypeSearchGradeLevelFilter" name="grades">
-            <option value="">--Grade Level--</option>
+            <option value="">Select Grade</option>
             <% @search_bar_display_map[:grades].each do |grades, display_name| %>
                 <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
