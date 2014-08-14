@@ -206,3 +206,11 @@ body { padding-top: 50px }
 @media only screen and (min-width:480px) {
   .rating-header-h24 { height:24px; }
 }
+
+.search-result-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+.search-result-border:hover{
+  border: 1px solid $brand-primary;
+}

@@ -1,24 +1,61 @@
-<div class="limit-width-1200 pam">
-  <div class="row partner-carousel-image prm bg-white">
+<div class="pam">
+  <div class="row search-result-border prm bg-white">
     <!-- Street view image -->
-    <div class="hidden-xs hidden-sm fl mrl">
-      <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
-      <% @school = decorated_school %>
-      <%= decorated_school.photo(130, 130) %>
-    </div>
+        <div class="col-xs-6 col-sm-5 col-md-6 clearfix">
+            <div class="hidden-xs hidden-sm fl mrl">
+              <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
+              <% @school = decorated_school %>
+              <%= decorated_school.photo(130, 130) %>
+            </div>
+          <div class="mll fl">
+              <div class="ptm">
+                  <div class="open-sans_b mbs font-size-large"><%= link_to "#{school.name}", school_path(school) %></div>
+                  <div class="hidden-xs font-size-small"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></div>
+              </div>
 
-    <!-- Homes for Sale -->
-    <div class="hidden-xs fr pvl mvl">
-      <div class="hidden-sm pts"></div>
-      <%= link_to zillow_url(school), class: 'btn btn-default clearfix', target: '_blank' do %>
-        <div class="iconx16 i-16-home fl mrs"></div>
-        <div class="fl">Homes for sale</div>
-      <% end %>
-    </div>
+              <div class="font-size-small mvm clearfix ptm">
 
-    <div class="hidden-sm pts"></div>
+                  <div class="fl">
+                      <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
+                          <span class="prm"><%= draw_stars_16 school.community_rating %></span>
+                          <%= link_to "#{school.review_count} reviews", school_reviews_path(school), class: 'font-size-small' %>
+                      <% else %>
+                          <em>No Community Reviews</em>
+                      <% end %>
+                  </div>
+                  <div class="phm fl">|</div>
+                  <div class="prs fl"><%= school.type.capitalize %></div>
+                  <div class="fl"><%= decorated_school.process_level %></div>
+                  <% if search_by_location? %>
+                      <div class="visible-xs phm fl">|</div>
+                      <div class="visible-xs fl"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+                  <% end %>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="col-xs-6 col-sm-4 ">
+          <div class="ptl hidden-xs"></div>
+         <div class="row">
+      <% if search_by_location? %>
+          <!-- Distance -->
+          <div class="hidden-xs col-sm-4 mtl pts mbm font-size-xs">
+              <div class="iconx16 i-16-map-pin ma db vam"></div>
+              <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
+          </div>
+      <% end%>
+
+      <!-- GS Rating -->
+      <div class="col-xs-6 col-sm-4 mvl">
+          <%=link_to school_quality_path(school) do%>
+              <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
+              <span class="tac font-size-xs db">GS Rating</span>
+          <% end %>
+      </div>
+
     <!-- Fit score -->
-    <div class="col-xs-2 col-sm-1 fr mtl mbs">
+    <div class="col-xs-6 col-sm-4 mtl mbs">
       <% if school.fit_score > 0 %>
         <div class="dropdown">
           <div data-toggle="dropdown" class="dropdown-toggle tac">
@@ -47,23 +84,24 @@
         </div>
       <% end %>
     </div>
+         </div>
+      </div>
 
     <!-- GS Rating -->
     <div class="col-xs-2 col-sm-1 fr mvl">
       <%=link_to school_quality_path(school) do%>
         <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
       <% end %>
-      GreatSchools Rating
     </div>
 
-    <% if search_by_location? %>
-      <!-- Distance -->
-      <div class="hidden-xs col-sm-1 fr mtl mbm font-size-small">
-        <div class="iconx16 i-16-map-pin ma db vam"></div>
-        <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
+      <!-- Homes for Sale -->
+      <div class="hidden-xs col-sm-3 col-md-2 tar pvl mvl">
+          <div class="hidden-sm pts"></div>
+          <%= link_to zillow_url(school), class: 'btn btn-default clearfix', target: '_blank' do %>
+              <div class="iconx16 i-16-home fl mrs"></div>
+              <div class="fl">Homes for sale</div>
+          <% end %>
       </div>
-    <% end%>
-
     <!-- Photo, name, address, reviews, type, level -->
     <div class="mll row">
       <div class="ptm col-xs-6 <%=search_by_location? ? 'col-sm-5' : 'col-sm-6'%>">
