@@ -189,14 +189,17 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              jQuery(infoWindowMarkup).css("height", 140);
-              var markup = '<div class="clearfix">'; //school data
-              markup += '<div class="pbm" style="width: 101%"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
-              markup += '<div class="fl mrl">'; //address
+              var markup = '<div class="">'; //school data
+              markup += '<div class="pbm"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="row">'; //row
+
+              markup += '<div class="col-xs-8 col-sm-9">';
+              markup += '<div class="mrl">'; //address
               markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
               markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
               markup += '</div>';//address
-              markup += '<div class="fr mts">'; //sprites
+              markup += '</div>'; //
+              markup += '<div class="mts col-xs-4 col-sm-3">'; //sprites
               markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'
               if (parseInt(point.gsRating) > 0){
                   markup += + point.gsRating;
@@ -215,14 +218,18 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   }
               }
               markup += '</div>'; //sprites
+
+              markup += '</div>'; //
+
               markup += '</div>'; //school data
               markup += '<hr class="mvm">';
+              markup += '<div class="clearfix">';
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
 //                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
                   markup += '<span class="mls mrm">'+ point.numReviews;
-                  if (point.numReviews > 1) {
+                  if (point.numReviews != 1) {
                       markup += ' reviews </span>';
                   } else {
                       markup += ' review </span>';
@@ -233,10 +240,11 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               }
               markup += '</div>'; //stars
               markup += '<div class="fr">'; //zillow
-              markup += '<a href="' + point.zillowUrl + '" target="_blank">';
-              markup += '<span class="vam iconx16 i-16-home mrs"></span><span class="gray-dark">Homes for sale</span>';
+              markup += '<a class="clearfix" href="' + point.zillowUrl + '" target="_blank">';
+              markup += '<div class="fl mrs pt3"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs">Homes for sale</div><div class="fl gray-dark visible-xs">Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
+              markup += '</div>';
 
 
               infoWindowMarkup.innerHTML = markup;
