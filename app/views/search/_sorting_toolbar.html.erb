@@ -2,7 +2,7 @@
   <div class="col-xs-12 clearfix">
     <%= render 'number_schools_found' %>
     <div class="hidden-xs pts fr">
-      <span>Sort by: <%= @sort_name %> </span>
+      <span>Sort by:</span>
       <span>
         <% ['relevance','rating','distance','fit'].each do |sort_name| %>
             <% next if sort_name == 'distance' && !search_by_location? %>
