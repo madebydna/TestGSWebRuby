@@ -68,6 +68,12 @@ class StatesController < ApplicationController
       }
       @canonical_url = state_events_url(params[:state])
       set_omniture_data('GS:State:Events', 'Home,StateHome,Events',@state[:long].titleize)
+      set_meta_tags title:       "Education Events in  #{@state[:long].titleize}",
+                    description: "Key #{@state[:long].titleize} dates and events to mark on your calendar",
+                    keywords:    "#{@state[:long].titleize} school system events, #{@state[:long].titleize}
+                                  public schools events, #{@state[:long].titleize} school system dates,
+                                  #{@state[:long].titleize} public schools dates, #{@state[:long].titleize} school
+                                  system calendar, #{@state[:long].titleize} public schools calendar"
       render 'shared/events'
 
     end

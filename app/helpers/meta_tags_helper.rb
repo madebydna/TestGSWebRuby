@@ -105,18 +105,6 @@ module MetaTagsHelper
     "#{@state[:long].titleize} education system, #{@state[:long].titleize} education community, #{@state[:long].titleize} education partnerships"
   end
 
-  def states_guided_search_title
-    "#{@state[:long].titleize} Guided Search XXX NEEDS TO BE CHANGED"
-  end
-
-  def states_guided_search_description
-    " XXX NEEDS TO BE CHANGED #{@state[:long].titleize} "
-  end
-
-  def states_guided_search_keywords
-    "#{@state[:long].titleize} XXXXNEEDS TO BE CHANGED"
-  end
-
   def search_params_for_meta_tags
     school_type = school_type_param_for_meta_tags
     level_code = level_code_param_for_meta_tags
