@@ -4,7 +4,7 @@
 <div class="limit-width-1200" style='mbl'>
   <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
   <% unless @events.nil? %>
-    <%= render 'events_list', events: @events %>
+    <%= render 'shared/events_list', events: @events %>
   <% end %>
 </div>
 

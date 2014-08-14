@@ -9,7 +9,7 @@
         <hr class='mtn mbm'>
         <% events.each do |event| %>
           <div class="mvl">
-            <%= render 'event_icon', date: event[:date] %>
+            <%= render 'shared/event_icon', date: event[:date] %>
             <div>
               <span class='bottom'><%= event[:description] %></span>
               <br>
