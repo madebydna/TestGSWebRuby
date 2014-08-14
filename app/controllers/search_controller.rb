@@ -100,6 +100,7 @@ class SearchController < ApplicationController
   end
 
   def by_name
+    @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
       @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -111,7 +112,6 @@ class SearchController < ApplicationController
       @search_term=@query_string
     end
 
-    @by_name = true
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
@@ -137,7 +137,13 @@ class SearchController < ApplicationController
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
     @sort_name = if sort.nil?
-                   search_by_location? ? 'distance' : 'rating'
+                   if search_by_location?
+                     'distance'
+                   elsif search_by_name?
+                     'relevance'
+                   else
+                     'rating'
+                   end
                  else
                    sort.to_s.split('_').first
                  end

@@ -2,10 +2,11 @@
   <div class="col-xs-12 clearfix">
     <%= render 'number_schools_found' %>
     <div class="hidden-xs pts fr">
-      <span>Sort by:</span>
+      <span>Sort by: <%= @sort_name %> </span>
       <span>
-        <% ['rating','distance','fit'].each do |sort_name| %>
+        <% ['relevance','rating','distance','fit'].each do |sort_name| %>
             <% next if sort_name == 'distance' && !search_by_location? %>
+            <% next if sort_name == 'relevance' && !search_by_name? %>
             <% if @sort_name == sort_name %>
                 <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
             <% else %>
@@ -18,10 +19,11 @@
 
   <div class="visible-xs col-xs-6 pbl ptl">
     <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
-      <% sort_types = ['rating','distance','fit'] - [@sort_name] %>
+      <% sort_types = ['relevance','rating','distance','fit'] - [@sort_name] %>
       <option value="<%= @sort_name %>" selected>Sort by: <%= @sort_name.titleize %></option>
       <% sort_types.each do |sort_name| %>
           <% next if sort_name == 'distance' && !search_by_location? %>
+          <% next if sort_name == 'relevance' && !search_by_name? %>
           <option value="<%=sort_name%>"><%=sort_name.titleize%></option>
       <% end %>
     </select>
