@@ -79,10 +79,31 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
-    var searchFilterMenuMobileCloseWindowHandler = function() {
-        $(".js-searchFiltersCloseWindow").on('click', function() {
-            $('.js-searchFiltersMenuMobile').animate({left: '-300px'}, 'slow');
-        });
+    var searchResultFitScoreTogglehandler = function() {
+        $('.js-searchResultDropdown').on('click', function() {
+            var popup = $(this).siblings('.panel');
+            if (popup.css('display') === 'none') {
+                offset = getFitScorePopupOffset.call(this, popup);
+                displayFitScorePopup(popup, offset);
+            } else {
+                popup.hide()
+            }
+        })
+    };
+
+    var getFitScorePopupOffset = function(popup) {
+        if ($(document).width() <= GS.window.sizing.maxMobileWidth) {
+            return popup.width() - $(this).width(); //parent width
+        } else {
+            var parentCenter = $(this).width() / 2;
+            var popupCenter = popup.width() / 2;
+            return popupCenter - parentCenter;
+        };
+    };
+
+    var displayFitScorePopup = function(popup, offset) {
+        popup.css('left', '-' + offset + 'px');
+        popup.show()
     };
 
     var sortBy = function(sortType, query) {
@@ -139,7 +160,7 @@ GS.search.results = GS.search.results || (function() {
         toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler,
         searchFilterDropdownHandler: searchFiltersMenuHandler,
         searchFilterMenuMobileHandler: searchFilterMenuMobileHandler,
-        searchFilterMenuMobileCloseWindowHandler: searchFilterMenuMobileCloseWindowHandler,
+        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
         searchSortingSelectTagHandler: searchSortingSelectTagHandler,
         setSearchFilterMenuMobileOffsetFromTop: setSearchFilterMenuMobileOffsetFromTop
     };
@@ -152,7 +173,7 @@ $(document).ready(function() {
         GS.search.results.toggleAdvancedFiltersMenuHandler();
         GS.search.results.searchFilterDropdownHandler();
         GS.search.results.searchFilterMenuMobileHandler();
-        GS.search.results.searchFilterMenuMobileCloseWindowHandler();
+        GS.search.results.searchResultFitScoreTogglehandler();
         GS.search.results.searchSortingSelectTagHandler();
         GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
     }
