@@ -44,7 +44,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $(".js-advancedFilters").on('click', function () {
+        $(".js-advancedFilters").on('click tap', function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
@@ -58,13 +58,13 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchFilterMenuMobileHandler = function() {
-        $(".js-searchFiltersDropdownMobile").click(function() {
+        $(".js-searchFiltersDropdownMobile").on('click tap', function() {
             $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
     };
 
     var showFilterMenuMobile = function() {
-        $('.js-searchfiltersmenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
+        $('.js-searchFiltersMenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
         $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
     };
     var hideFilterMenuMobile = function() {
@@ -82,27 +82,25 @@ GS.search.results = GS.search.results || (function() {
     var closeMenuHandlerSet = false;
 
     var closeMenuHandler = function() {
-        $('html').on('click', function () {
+        $('html').on('click tap', function () {
             $('.js-fitScorePopup').hide();
         });
     };
 
     var searchResultFitScoreTogglehandler = function() {
-        $('.js-searchResultDropdown').on('click', function() {
+        $('.js-searchResultDropdown').on('click tap', function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 offset = getFitScorePopupOffset.call(this, popup);
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
-            };
+            }
 
             if (closeMenuHandlerSet === false) {
                 closeMenuHandler();
                 closeMenuHandlerSet = true;
-                console.log('hello')
-            };
-
+            }
         });
         stopClickEventPropagation($('.js-searchResultDropdown'));
         stopClickEventPropagation($('.js-fitScorePopup'));
@@ -115,7 +113,7 @@ GS.search.results = GS.search.results || (function() {
             var parentCenter = $(this).width() / 2;
             var popupCenter = popup.width() / 2;
             return popupCenter - parentCenter;
-        };
+        }
     };
 
     var displayFitScorePopup = function(popup, offset) {
