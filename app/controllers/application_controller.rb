@@ -225,7 +225,8 @@ class ApplicationController < ActionController::Base
   def set_hub_params
     @hub_params = {}
     @hub_params[:state] = @state[:long] if @state[:long]
-    @hub_params[:city] = @city if @city
+    city = @city.is_a?(String) ? @city : @city.name
+    @hub_params[:city] = city if city
   end
 
   def configs

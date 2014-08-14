@@ -124,6 +124,7 @@ class SearchController < ApplicationController
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
     setup_filter_display_map
+    set_hub_params
 
     @results_offset = get_results_offset
     @page_size = get_page_size
