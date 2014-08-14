@@ -44,7 +44,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $(".js-advancedFilters").on('click tap', function () {
+        $(".js-advancedFilters").on('click', function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
@@ -58,8 +58,10 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchFilterMenuMobileHandler = function() {
-        $(".js-searchFiltersDropdownMobile").on('click tap', function() {
-            $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
+        $(".js-searchFiltersDropdownMobile").on('click touchstart', function(e) {
+            touchEventWrapper(e, function() {
+                $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
+            });
         });
     };
 
@@ -82,28 +84,43 @@ GS.search.results = GS.search.results || (function() {
     var closeMenuHandlerSet = false;
 
     var closeMenuHandler = function() {
-        $('html').on('click tap', function () {
-            $('.js-fitScorePopup').hide();
+        $('html').on('click touchstart', function (e) {
+            touchEventWrapper(e, function() {
+                $('.js-fitScorePopup').hide();
+            });
         });
     };
 
-    var searchResultFitScoreTogglehandler = function() {
-        $('.js-searchResultDropdown').on('click tap', function() {
-            var popup = $(this).siblings('.js-fitScorePopup');
-            if (popup.css('display') === 'none') {
-                offset = getFitScorePopupOffset.call(this, popup);
-                displayFitScorePopup(popup, offset);
-            } else {
-                popup.hide()
-            }
+    var touchEventWrapper = function(e, func) {
+        if (e.handled !== true) {
+            e.stopPropagation();
+            e.preventDefault();
+            func();
+            e.handled = true;
+        } else {
+            return false
+        }
+    };
 
-            if (closeMenuHandlerSet === false) {
-                closeMenuHandler();
-                closeMenuHandlerSet = true;
-            }
+    var searchResultFitScoreTogglehandler = function() {
+        $('.js-searchResultDropdown').on('click touchstart', function(e) {
+            var that = this;
+            touchEventWrapper(e, function() {
+                var popup = $(that).siblings('.js-fitScorePopup');
+                if (popup.css('display') === 'none') {
+                    offset = getFitScorePopupOffset.call(that, popup);
+                    displayFitScorePopup(popup, offset);
+                } else {
+                    popup.hide()
+                }
+                if (closeMenuHandlerSet === false) {
+                    closeMenuHandler();
+                    closeMenuHandlerSet = true;
+                }
+            });
         });
-        stopClickEventPropagation($('.js-searchResultDropdown'));
-        stopClickEventPropagation($('.js-fitScorePopup'));
+        stopClickAndTouchstartEventPropogation($('.js-searchResultDropdown'));
+        stopClickAndTouchstartEventPropogation($('.js-fitScorePopup'));
     };
 
     var getFitScorePopupOffset = function(popup) {
@@ -160,8 +177,8 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
-    var stopClickEventPropagation = function(selector) {
-        $(selector).bind('click', function (e) { e.stopPropagation() });
+    var stopClickAndTouchstartEventPropogation = function(selector) {
+        $(selector).bind('click touchstart', function (e) { e.stopPropagation() });
     };
 
     var getQueryPath = function() {
