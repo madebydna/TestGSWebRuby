@@ -194,7 +194,7 @@ class ApplicationController < ActionController::Base
 
   def set_login_redirect
     delete_cookie(:last_school)
-      write_cookie :redirect_uri, request.url, { expires: 10.minutes.from_now }
+    write_cookie :redirect_uri, request.url, { expires: 10.minutes.from_now }
   end
 
   def set_footer_cities
