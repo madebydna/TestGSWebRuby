@@ -472,11 +472,14 @@ class SearchController < ApplicationController
     if local_search?
       if hub_city_state?
         set_hub_params(@state,@city.name)
-      else
+      elsif hub_state?
         set_hub_params(@state,nil)
+      elsif first_school_result_is_in_hub?
+        set_hub_params(@state,@school.hub_city)
       end
     end
   end
+
   def local_search?
     if search_by_location? || search_by_name?
       first_school_result_is_in_hub?
@@ -486,15 +489,17 @@ class SearchController < ApplicationController
   end
 
   def first_school_result_is_in_hub?
-    @school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
-    is_hub_school?
+    if @schools.present?
+      @school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+      is_hub_school?
+    end
   end
 
   def hub_city_state?
-    @city && @state && HubCityMapping.where(active: 1, city: @city, state: @state[:short]).present?
+    @city && @state && HubCityMapping.where(active: 1, city: @city.name, state: @state[:short]).present?
   end
 
   def hub_state?
-    @city && @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
+    @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
   end
 end
