@@ -490,8 +490,8 @@ class SearchController < ApplicationController
 
   def first_school_result_is_in_hub?
     if @schools.present?
-      @school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
-      is_hub_school?
+      school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+      is_hub_school?(school)
     end
   end
 

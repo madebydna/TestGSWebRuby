@@ -325,7 +325,7 @@ class ApplicationController < ActionController::Base
     gon.ad_set_targeting = set_targeting
   end
 
-  def is_hub_school?
-    @school && !@school.try(:collection).nil?
+  def is_hub_school?(school=@school)
+    school && !school.try(:collection).nil?
   end
 end
