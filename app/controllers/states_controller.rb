@@ -51,6 +51,12 @@ class StatesController < ApplicationController
         'Choosing a School' => nil
       }
       @canonical_url = state_choosing_schools_url(params[:state])
+      set_omniture_data('GS:State:ChoosingSchools', 'Home,StateHome,ChoosingSchools',@state[:long].titleize)
+      set_meta_tags title:       "Choosing a school in #{@state[:long].titleize}",
+                    description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}",
+                    keywords:    "choose a #{@state[:long].titleize} school, choosing #{@state[:long].titleize} schools,
+                                  school choice #{@state[:long].titleize}, #{@state[:long].titleize} school choice tips,
+                                  #{@state[:long].titleize} school choice steps"
       render 'shared/choosing_schools'
     end
   end
@@ -89,7 +95,7 @@ class StatesController < ApplicationController
       @collection_id = hub_city_mapping.collection_id
       @canonical_url = state_guided_search_url(params[:state])
       @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
-      set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search')
+      set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search',@state[:long].titleize)
       set_meta_tags title:       "Your Personalized #{@state[:long].titleize} School Search | GreatSchools",
                     description: "#{@state[:long].titleize} school wizard, #{@state[:long].titleize} schools,
                                   #{@state[:short].upcase} schools, #{@state[:short].upcase} school guided search",
@@ -132,6 +138,16 @@ class StatesController < ApplicationController
       }
 
       @canonical_url = state_enrollment_url(params[:state])
+      set_omniture_data('GS:State:Enrollment', 'Home,StateHome,Enrollment',@state[:long].titleize)
+      set_meta_tags title:       "#{@state[:long].titleize} Schools Enrollment Information",
+                    description: " Practical information including rules, deadlines and tips, for enrolling your child
+                                   in #{@state[:long].titleize}  schools",
+                    keywords:    "#{@state[:long].titleize}  school enrollment, #{@state[:long].titleize}  school
+                                  enrollment information, #{@state[:long].titleize} school enrollment info,
+                                  #{@state[:long].titleize} school enrollment process, #{@state[:long].titleize} school
+                                   enrollment deadlines"
+
+
       render 'shared/enrollment'
     end
   end
