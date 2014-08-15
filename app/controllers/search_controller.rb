@@ -475,7 +475,7 @@ class SearchController < ApplicationController
       elsif hub_state?
         set_hub_params(@state,nil)
       elsif first_school_result_is_in_hub?
-        set_hub_params(@state,@school.hub_city)
+        set_hub_params(@state,@first_school.hub_city)
       end
     end
   end
@@ -490,8 +490,8 @@ class SearchController < ApplicationController
 
   def first_school_result_is_in_hub?
     if @schools.present?
-      school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
-      is_hub_school?(school)
+      @first_school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+      is_hub_school?(@first_school)
     end
   end
 
