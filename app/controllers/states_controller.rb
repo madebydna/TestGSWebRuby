@@ -28,6 +28,8 @@ class StatesController < ApplicationController
       @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
       @show_ads = CollectionConfig.show_ads(configs)
+      @important_events = CollectionConfig.city_hub_important_events(configs)
+
       ad_setTargeting_through_gon
       set_omniture_data('GS:State:Home', 'Home,StateHome')
     end

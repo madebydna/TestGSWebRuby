@@ -2,7 +2,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% if params[:city] %>
-  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
+  <%= render 'shared/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
 <div class="limit-width-1200 mbl">
