@@ -1,13 +1,7 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
-    var clickOrTouchType = function() {
-        if (Modernizr.touch) {
-            return 'touchstart';
-        } else {
-            return 'click';
-        }
-    }();
+    var clickOrTouchType = GS.util.clickOrTouchType;
 
 //  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {

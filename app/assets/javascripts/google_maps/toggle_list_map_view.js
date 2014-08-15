@@ -7,6 +7,7 @@ $(document).ready(function () {
     var elemListViewToggle = $('.js-search-list-view');
     var elemMapViewToggle =  $('.js-search-map-view');
     var elemMapViewMobileToggle =  $('.js-search-toggle-map-view');
+    var clickOrTouchType = GS.util.clickOrTouchType;
 
     var addActiveToggleStateFor = function (toggleType) {
         if (toggleType == 'list') {
@@ -75,7 +76,7 @@ $(document).ready(function () {
         text.text(newText.charAt(0).toUpperCase() + newText.slice(1));
     };
 
-    elemListViewToggle.on("click", hideMapView);
+    elemListViewToggle.on(clickOrTouchType, hideMapView);
     elemListViewToggle.hover(
         function () { addActiveToggleStateFor('list') },
         function () {
@@ -84,7 +85,7 @@ $(document).ready(function () {
             }
         }
     );
-    elemMapViewToggle.on("click", showMapView);
+    elemMapViewToggle.on(clickOrTouchType, showMapView);
     elemMapViewToggle.hover(
         function () { addActiveToggleStateFor('map') },
         function () {
@@ -93,7 +94,7 @@ $(document).ready(function () {
             }
         }
     );
-    elemMapViewMobileToggle.on("click", function() {
+    elemMapViewMobileToggle.on(clickOrTouchType, function() {
         var currentlyVisible = (elemMapCanvas.filter(":visible").length == 1);
         if (currentlyVisible) {
             hideMapView();
