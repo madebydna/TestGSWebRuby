@@ -229,7 +229,6 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
-//                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
                   markup += '<span class="mls mrm font-size-small">'+ point.numReviews;
                   if (point.numReviews != 1) {
                       markup += ' reviews </span>';
