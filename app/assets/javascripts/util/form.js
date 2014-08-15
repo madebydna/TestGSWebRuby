@@ -37,6 +37,9 @@ GS.forms.updateFormVisualElements = function() {
 };
 
 $(function() {
+
+    var clickOrTouchType = GS.util.clickOrTouchType;
+
     $('.js-gs-radio').on('click',function(){
         var self = $(this);
         var hidden_field = self.parent().siblings(".js-gs-radio-value");
@@ -97,7 +100,7 @@ $(function() {
 
     });
 
-    $('.js-gs-checkbox-search').on('click',function(){
+    $('.js-gs-checkbox-search').on(clickOrTouchType,function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -112,7 +115,7 @@ $(function() {
         }
     });
 
-    $('.js-gs-checkbox-search-dropdown').on('click',function(){
+    $('.js-gs-checkbox-search-dropdown').on(clickOrTouchType,function(){
        var self=$(this);
        var checkbox = self.children(".js-icon");
        var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
@@ -122,7 +125,7 @@ $(function() {
        toggleCheckboxForCollapsibleBox(checkbox, children);
     });
 
-    $('.js-sportsIconButton').on('click', function(){
+    $('.js-sportsIconButton').on(clickOrTouchType, function(){
         var self = $(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.children(".js-value");
@@ -141,7 +144,7 @@ $(function() {
         }
     });
 
-    $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
+    $('.js-searchFiltersForm').on(clickOrTouchType, '.js-sports-gender', function() {
         var self = $(this);
         var sibling = self.siblings('.js-sports-gender');
         var gs_gender = self.data('gs-gender');

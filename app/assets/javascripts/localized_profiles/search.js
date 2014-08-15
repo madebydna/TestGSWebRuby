@@ -761,14 +761,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var showFiltersMenuOnLoad = function() {
         if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
-            if ($(document).width() > GS.window.sizing.maxMobileWidth ) {
+            if ($(document).width() > GS.window.sizing.maxMobileWidth && searchResultsDisplayed() ) {
                 $('.js-searchFiltersMenu').show();
             }
         }
         $.cookie('showFiltersMenu', 'false', {path:'/'});
     };
 
-
+    var searchResultsDisplayed = function() {
+        return $('.js-searchResultsContainer').length > 0
+    };
 
     return {
         init:init,
