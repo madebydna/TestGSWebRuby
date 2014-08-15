@@ -222,10 +222,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_hub_params
+  def set_hub_params(state=@state,city=@city)
     @hub_params = {}
-    @hub_params[:state] = @state[:long] if @state[:long]
-    city = @city.is_a?(String) ? @city : @city.name
+    @hub_params[:state] = state[:long] if state[:long]
     @hub_params[:city] = city if city
   end
 
@@ -324,5 +323,9 @@ class ApplicationController < ActionController::Base
       set_targeting['Responsive_Group'] = 'Test'
     end
     gon.ad_set_targeting = set_targeting
+  end
+
+  def is_hub_school?
+    @school && !@school.try(:collection).nil?
   end
 end

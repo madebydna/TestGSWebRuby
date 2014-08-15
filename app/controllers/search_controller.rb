@@ -124,7 +124,6 @@ class SearchController < ApplicationController
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
     setup_filter_display_map
-    set_hub_params
 
     @results_offset = get_results_offset
     @page_size = get_page_size
@@ -166,6 +165,8 @@ class SearchController < ApplicationController
     calculate_fit_score(results[:results], @params_hash) unless results.empty?
     sort_by_fit(results[:results], sort) if is_fit_sort
     process_results(results, offset) unless results.empty?
+    set_up_localized_search_hub_params
+
   end
 
   def sort_by_fit(school_results, direction)
@@ -467,4 +468,33 @@ class SearchController < ApplicationController
     }
   end
 
+  def set_up_localized_search_hub_params
+    if local_search?
+      if hub_city_state?
+        set_hub_params(@state,@city.name)
+      else
+        set_hub_params(@state,nil)
+      end
+    end
+  end
+  def local_search?
+    if search_by_location? || search_by_name?
+      first_school_result_is_in_hub?
+    else
+      hub_city_state? || hub_state?
+    end
+  end
+
+  def first_school_result_is_in_hub?
+    @school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+    is_hub_school?
+  end
+
+  def hub_city_state?
+    @city && @state && HubCityMapping.where(active: 1, city: @city, state: @state[:short]).present?
+  end
+
+  def hub_state?
+    @city && @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
+  end
 end
