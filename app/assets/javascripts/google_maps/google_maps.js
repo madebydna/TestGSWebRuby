@@ -243,7 +243,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '</div>'; //stars
               markup += '<div class="fr">'; //zillow
               markup += '<a class="clearfix" href="' + point.zillowUrl + '" target="_blank">';
-              markup += '<div class="fl mrs pt3"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small">Homes for sale</div><div class="fl gray-dark visible-xs"">Homes</div>';
+              markup += '<div class="fl mrs pt3"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small">Homes for sale</div><div class="fl gray-dark visible-xs font-size-small pt3">Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
               markup += '</div>';
