@@ -57,11 +57,17 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
+    var clickOrTouchType = function() {
+        if (Modernizr.touch) {
+            return 'touchstart';
+        } else {
+            return 'click'
+        }
+    }();
+
     var searchFilterMenuMobileHandler = function() {
-        $(".js-searchFiltersDropdownMobile").on('click touchstart', function(e) {
-            touchEventWrapper(e, function() {
-                $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
-            });
+        $(".js-searchFiltersDropdownMobile").on(clickOrTouchType, function() {
+            $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
     };
 
@@ -84,40 +90,24 @@ GS.search.results = GS.search.results || (function() {
     var closeMenuHandlerSet = false;
 
     var closeMenuHandler = function() {
-        $('html').on('click touchstart', function (e) {
-            touchEventWrapper(e, function() {
-                $('.js-fitScorePopup').hide();
-            });
+        $('html').on(clickOrTouchType, function () {
+            $('.js-fitScorePopup').hide();
         });
     };
 
-    var touchEventWrapper = function(e, func) {
-        if (e.handled !== true) {
-            e.stopPropagation();
-            e.preventDefault();
-            func();
-            e.handled = true;
-        } else {
-            return false
-        }
-    };
-
     var searchResultFitScoreTogglehandler = function() {
-        $('.js-searchResultDropdown').on('click touchstart', function(e) {
-            var that = this;
-            touchEventWrapper(e, function() {
-                var popup = $(that).siblings('.js-fitScorePopup');
-                if (popup.css('display') === 'none') {
-                    offset = getFitScorePopupOffset.call(that, popup);
-                    displayFitScorePopup(popup, offset);
-                } else {
-                    popup.hide()
-                }
-                if (closeMenuHandlerSet === false) {
-                    closeMenuHandler();
-                    closeMenuHandlerSet = true;
-                }
-            });
+        $('.js-searchResultDropdown').on(clickOrTouchType, function() {
+            var popup = $(this).siblings('.js-fitScorePopup');
+            if (popup.css('display') === 'none') {
+                offset = getFitScorePopupOffset.call(this, popup);
+                displayFitScorePopup(popup, offset);
+            } else {
+                popup.hide()
+            }
+            if (closeMenuHandlerSet === false) {
+                closeMenuHandler();
+                closeMenuHandlerSet = true;
+            }
         });
         stopClickAndTouchstartEventPropogation($('.js-searchResultDropdown'));
         stopClickAndTouchstartEventPropogation($('.js-fitScorePopup'));
