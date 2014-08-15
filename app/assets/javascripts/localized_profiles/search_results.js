@@ -1,16 +1,24 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
+    var clickOrTouchType = function() {
+        if (Modernizr.touch) {
+            return 'touchstart';
+        } else {
+            return 'click';
+        }
+    }();
+
 //  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {
-        $('.js-submitSearchFiltersForm').on('click', function(){
+        $('.js-submitSearchFiltersForm').on(clickOrTouchType, function(){
             var form = $('.js-searchFiltersFormParent').children('.js-searchFiltersForm');
             buildAndSendFiltersForm($(form))
         });
     };
 
     var searchFiltersFormSubmissionMobileHandler = function() {
-        $('.js-submitSearchFiltersFormMobile').on('click', function(){
+        $('.js-submitSearchFiltersFormMobile').on(clickOrTouchType, function(){
             var form = $('.js-searchFiltersFormParentMobile').children('.js-searchFiltersForm');
             buildAndSendFiltersForm($(form))
         });
@@ -36,7 +44,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchFiltersMenuHandler = function() {
-        $(".js-searchFiltersDropdown").on('click', function() {
+        $(".js-searchFiltersDropdown").on(clickOrTouchType, function() {
             var menu = $('.js-searchFiltersMenu');
             menu.css('display') == 'none' ? menu.show() : menu.hide();
             $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
@@ -44,7 +52,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $(".js-advancedFilters").on('click', function () {
+        $(".js-advancedFilters").on(clickOrTouchType, function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
@@ -56,14 +64,6 @@ GS.search.results = GS.search.results || (function() {
             }
         });
     };
-
-    var clickOrTouchType = function() {
-        if (Modernizr.touch) {
-            return 'touchstart';
-        } else {
-            return 'click'
-        }
-    }();
 
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on(clickOrTouchType, function() {
