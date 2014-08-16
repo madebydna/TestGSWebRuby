@@ -69,6 +69,7 @@ class CensusDataReader < SchoolProfileDataReader
 
           # Add human-readable labels
           data_set_hash[:label] = cd.computed_label.gs_capitalize_first
+          data_set_hash[:description] = cd.computed_description(school.state)
           data_set_hash[:data_type_id] = matching_data_set.data_type_id
           results_array << data_set_hash
         end
@@ -92,13 +93,6 @@ class CensusDataReader < SchoolProfileDataReader
     (category_data.response_key == data_set.data_type_id ||
       category_data.response_key.to_s.match(/#{data_set.data_type}/i)) &&
     category_data.subject_id == data_set.subject_id
-  end
-
-  def label_lookup_table(category)
-    CensusDataType.lookup_table
-      .merge(
-        category.key_label_map(school.collections)
-      )
   end
 
   def footnotes_for_category(category)

@@ -104,10 +104,10 @@ RailsAdmin.config do |config|
           Collection.all.map { |collection| [collection.name, collection.id] }
         end
       end
-      field :json_config, :text, :code_mirror do
-        def value
-          data = super
-          JSON.pretty_unparse(JSON.parse(data)) if data.present?
+      field :subject_id
+      field :description_key, :enum do
+        enum do
+          CategoryData.rails_admin_description_keys
         end
       end
     end

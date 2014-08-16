@@ -42,6 +42,17 @@
 
 <% end %>
 
+<% data_point_descriptions = data.rows.map { |hash| hash[:description] }.uniq.compact %>
+<% if data_point_descriptions.present? %>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls clearfix">
+    <div class="prm">About this data: <a href="#about-this-data-<%= category_placement.id %>" data-toggle="collapse">Learn more</a></div>
+    <ul id="about-this-data-<%= category_placement.id %>" class="list-unstyled collapse mtm">
+      <% data_point_descriptions.each do |description| %>
+        <li class="pts"><%= description %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
 <% if @page_config.root_placements_with_data.present? &&
         @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&

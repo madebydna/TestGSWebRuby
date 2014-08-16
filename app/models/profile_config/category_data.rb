@@ -11,10 +11,33 @@ class CategoryData < ActiveRecord::Base
                   :rails_admin_category_data_key,
                   :rails_admin_category_data_key_freeform
 
+  cattr_accessor :jsonified_attributes
+
   db_magic :connection => :profile_config
 
   include BelongsToCollectionConcerns
   belongs_to :category
+
+  # valid types:  :integer | :string
+  def self.jsonified_attribute(attribute_name, type = :string)
+    self.jsonified_attributes ||= []
+    self.jsonified_attributes << attribute_name
+    attr_accessible attribute_name
+
+    # define setter
+    define_method("#{attribute_name}=") do |value|
+      value = value.to_i if type == :integer
+      instance_variable_set("@#{attribute_name}", value)
+      write_json_config
+    end
+    # define getter
+    define_method(attribute_name) do
+      json_config.try(:fetch, attribute_name.to_s, nil)
+    end
+  end
+
+  jsonified_attribute :subject_id, :integer
+  jsonified_attribute :description_key
 
   # return CategoryData with collection_id in the provided
   # collections. If a single object is passed in, the Array(...) call will convert it to an array
@@ -32,18 +55,20 @@ class CategoryData < ActiveRecord::Base
     end
   end
 
-  def json_config=(config)
-    json = config.present? ? JSON.parse(config).to_json : nil
+  def write_json_config
+    hash = jsonified_attributes.each_with_object({}) do |attribute_name, h|
+      value = instance_variable_get("@#{attribute_name}")
+      if value.present?
+        h[attribute_name] = value
+      end
+    end
+    json = hash.present? ? hash.to_json : nil
     write_attribute(:json_config, json)
   end
 
   def json_config
     json = read_attribute(:json_config)
     JSON.parse(json) rescue {}
-  end
-
-  def subject_id
-    json_config.try(:fetch, 'subject_id', nil)
   end
 
   def possible_sources
@@ -81,6 +106,11 @@ class CategoryData < ActiveRecord::Base
     else
       response_key
     end
+  end
+
+  def computed_description(state)
+    return unless description_key.present?
+    DataDescription.description(state, description_key)
   end
 
   # Behavior to support RailsAdmin below here
@@ -147,6 +177,10 @@ class CategoryData < ActiveRecord::Base
       self.key_type = 'esp_response'
       self.response_key = text
     end
+  end
+
+  def self.rails_admin_description_keys
+    DataDescription.pluck(:data_key).uniq
   end
 
 end
