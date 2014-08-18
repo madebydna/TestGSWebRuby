@@ -26,7 +26,7 @@ class CategoryData < ActiveRecord::Base
 
     # define setter
     define_method("#{attribute_name}=") do |value|
-      value = value.to_i if type == :integer
+      value = value.to_i if value.present? && type == :integer
       instance_variable_set("@#{attribute_name}", value)
       write_json_config
     end
