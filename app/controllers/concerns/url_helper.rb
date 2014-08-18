@@ -249,6 +249,11 @@ module UrlHelper
   #removes rails convention bracket array parameters from string
   #ex. {names: ['bob', 'bobby']} will now become names=bob&names=bobby instead of names[]=bob&names[]=bobby
   #To prevent unintended behavior, pass in a params hash that has been normalized by the parse_array_query_string method above
+
+  def encode_square_brackets(query_string)
+    query_string.gsub('[','%5B').gsub(']','%5D')
+  end
+
   def hash_to_query_string(hash)
     CGI.unescape(hash.to_param).gsub(/\[\]/ , '')
   end

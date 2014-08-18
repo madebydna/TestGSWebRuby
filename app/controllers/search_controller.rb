@@ -176,7 +176,7 @@ class SearchController < ApplicationController
   end
 
   def process_results(results, solr_offset)
-    @query_string = '?' + CGI.unescape(@params_hash.to_param)
+    @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
     school_results = results[:results] || []
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
