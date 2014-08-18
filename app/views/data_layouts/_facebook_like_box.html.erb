@@ -14,7 +14,7 @@
     </div>
     <div id="fb-root"></div>
     <% if @show_ads %>
-        <div class="ptl mtl">
+        <div class="mtl <%= layout_grid %>">
             <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Facebook, view: :desktop  %>
         </div>
     <% end %>
