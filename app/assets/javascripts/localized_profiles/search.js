@@ -192,9 +192,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
 
         // Not setting a timeout breaks back button
-        setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
             SEARCH_PAGE_PATH +
-            GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
+            GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
     };
 
     var schools = new Bloodhound({
@@ -746,17 +746,17 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var collectionId = $(this).find('input#js-collectionId').val();
         var queryString = jQuery.extend({}, queryStringOptions);
 
-        queryString.q = encodeURIComponent(searchString);
+        queryString.q = searchString;
         if (typeof collectionId !== 'undefined') {
-            queryString.collectionId = encodeURIComponent(collectionId);
+            queryString.collectionId = collectionId;
         }
         if (typeof state !== 'undefined') {
-            queryString.state = encodeURIComponent(state);
+            queryString.state = state;
         }
 
-        setTimeout(function() { window.location = window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
-                GS.uri.Uri.getQueryStringFromObject(queryString); }, 1);
+                GS.uri.Uri.getQueryStringFromObject(queryString)); }, 1);
     };
 
     var showFiltersMenuOnLoad = function() {

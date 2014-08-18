@@ -15,6 +15,7 @@ GS.uri.Uri.getPath = function() {
 };
 
 GS.uri.Uri.goToPage = function(full_uri) {
+    full_uri = encodeURI(full_uri);
     window.location = full_uri;
 };
 

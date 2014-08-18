@@ -259,9 +259,9 @@ $(function() {
         searchOptions['grades'] = $('#js-guided-grades').val();
 
         // Not setting a timeout breaks back button
-        setTimeout(function() { window.location.href = window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
             '/search/search.page' +
-            GS.uri.Uri.getQueryStringFromObject(searchOptions); }, 1);
+            GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
     };
 
     var sportsToolTip = function(){
