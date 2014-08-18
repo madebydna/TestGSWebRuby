@@ -78,7 +78,7 @@ class TestScoresCaching::QueryResultDecorator
     grade_label = "GRADE " + grade.value.to_s
     if grade.name && grade.name.start_with?('All')
       if level_code.levels.size >= 3
-        grade_label = "All grades"
+        grade_label = "School-wide"
       else
         grade_label = level_code.levels.collect(&:long_name).join(" and ") + " school"
       end
