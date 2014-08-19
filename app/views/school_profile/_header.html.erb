@@ -25,11 +25,11 @@
                         <% end %>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                        <% if @school.gs_rating  %>
+                        <% if !@school.preschool? %>
                             <%= link_to school_quality_url(@school, anchor:"Ratings") do %>
                                 <div class="fl prl open-sans rating-header-h24">
                                     <span class="mrs link-darkgray">GreatSchools rating:</span>
-                                    <span class="vam iconx24-ratings i-24-ratings-<%= @school.gs_rating %>"></span>
+                                    <span class="vam iconx24-icons i-24-new-ratings-<%= @school.gs_rating %>"></span>
 
                                 </div>
                             <% end %>

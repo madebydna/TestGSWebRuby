@@ -23,6 +23,15 @@ class RatingConfiguration
     ]
   end
 
+  def what_is_not_rated
+    DataDescription.lookup_table[
+      [state.upcase, 'what_is_not_rated']
+    ] ||
+      DataDescription.lookup_table[
+        [nil, 'what_is_not_rated']
+      ]
+  end
+
   def rating_breakdowns
     configuration['rating_breakdowns'] || {}
   end
@@ -78,23 +87,28 @@ class RatingConfiguration
     if rating_hash['overall_rating'] && methodology_url
       rating_hash['methodology_url'] = methodology_url 
     end
+    if rating_hash['overall_rating'] == 'nr'
+      rating_hash['what_is_not_rated'] = what_is_not_rated
+    end
     rating_hash
   end
 
   def overall_rating_hash(results, school)
     hash = {}
     if use_gs_rating?
-      overall_rating = school.school_metadata.overallRating
+      rating = school.school_metadata.overallRating
     else
       data_set = results.detect { |tds| tds['data_type_id'] == data_type_id }
-      overall_rating = school_value(data_set) if data_set
+      rating = school_value(data_set) if data_set
     end
-
-    if overall_rating.present?
+    if use_gs_rating? && rating.blank? && !school.preschool?
+      rating = 'nr'
+    end
+    if rating.present?
       hash = {
         'description' => description,
         'label' => label,
-        'overall_rating' => overall_rating
+        'overall_rating' => rating
       }
     end
     hash
