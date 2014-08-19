@@ -41,7 +41,7 @@ $(function() {
   });
 
   $('.js_toggle_parent_sib').on('click', function(){
-    $(this).parent().siblings('div').slideToggle('fast');
+    $(this).parent().siblings('div:first').slideToggle('fast');
     if($(this).html() == 'Close'){
       $(this).html('Learn More &raquo;');
     }

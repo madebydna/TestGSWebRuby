@@ -2,12 +2,15 @@
 <% descriptions # The descriptions to display %>
   
 <% if descriptions.present? %>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls clearfix">
-    <div class="prm">About this data: <a href="#about-this-data-<%= unique_id %>" data-toggle="collapse">Learn more</a></div>
-    <ul id="about-this-data-<%= unique_id %>" class="list-unstyled collapse mtm">
-      <% descriptions.each do |description| %>
-        <li class="pts"><%= description %></li>
-      <% end %>
-    </ul>
+  <div>
+    <p>About this data: <a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+    <div class="dn well bg-white">
+      <ul id="about-this-data-<%= unique_id %>" class="list-unstyled">
+        <% descriptions.each do |description| %>
+          <li class="pts"><%= description %></li>
+          <li class="pts"><%= description %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 <% end %>
