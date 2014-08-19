@@ -92,8 +92,11 @@ class SchoolSearchService
     param_options[:fq] = DEFAULT_BY_NAME_OPTIONS[:fq].clone
     param_options[:query] = Solr.prepare_query_string param_options[:query]
     param_options[:query] = Solr.require_non_optional_words param_options[:query]
+    param_options[:spellcheck] = true
     filters.each {|filter| param_options[:fq] << filter}
-    parse_school_results(get_results param_options)
+    results = parse_school_results(get_results param_options.clone)
+    results[:suggestion] = get_suggested_search_term(results[:spellcheck], param_options) if results[:num_found] == 0 && results[:spellcheck].present?
+    results
   end
 
   protected
@@ -123,8 +126,40 @@ class SchoolSearchService
     {
         num_found: solr_results['response']['numFound'],
         start: solr_results['response']['start'],
-        results: normalized_results
+        results: normalized_results,
+        spellcheck: parse_spellcheck_results(solr_results)
     }
+  end
+
+  def self.parse_spellcheck_results(solr_results)
+    if solr_results['spellcheck'].present?
+      if (suggestions = solr_results['spellcheck']['suggestions']).present?
+        params = solr_results['responseHeader']['params']
+        q = params['q'].gsub('+', '')
+        suggestion_map = Hash[*suggestions].symbolize_keys
+        suggestion_map.each { |k, v| suggestion_map[k] = v['suggestion'] }
+        { q: q,
+          suggestion_map: suggestion_map }
+      else
+        nil
+      end
+    else
+      nil
+    end
+  end
+
+  def self.get_suggested_search_term(spellcheck_hash, search_options)
+    search_options[:query] = parse_query_and_suggestions(spellcheck_hash)
+    require 'pry'; binding.pry;
+    results = get_results(search_options)
+    results['response']['numFound'] > 0 ? search_options[:query].gsub('+', '') : nil
+  end
+
+  def self.parse_query_and_suggestions(spellcheck_hash)
+    suggestion_map = spellcheck_hash[:suggestion_map]
+    spellcheck_hash[:q].split(' ').inject('') do |suggestion, word|
+      suggestion << (suggestion_map.has_key?(word.to_sym) ? "+#{suggestion_map[word.to_sym].first} " : "+#{word} ")
+    end.chop
   end
 
   def self.get_state_abbreviation(hash)

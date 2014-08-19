@@ -116,6 +116,7 @@ class SearchController < ApplicationController
       @search_term=@query_string
     end
 
+    @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
@@ -179,6 +180,7 @@ class SearchController < ApplicationController
     @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
     school_results = results[:results] || []
+    @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
@@ -444,6 +446,10 @@ class SearchController < ApplicationController
     filter_builder = FilterBuilder.new
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
+  end
+
+  def get_suggested_school(spellcheck_hash)
+
   end
 
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map

@@ -7,6 +7,10 @@
   <div class="limit-width-1200 bg-white partner-carousel-image">
     <div class="pvl pll">
       <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
+      <% if @suggested_query.present? %>
+        <br><br>
+        <span>Did you mean: </span><a href="<%= @suggested_query[:url]%>"><%= @suggested_query[:term]%></a>
+      <% end %>
       <br><br>
       <p class="open-sans_sb font-size-medium">Suggestions:</p>
       <ul>
