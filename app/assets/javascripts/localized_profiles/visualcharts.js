@@ -161,6 +161,52 @@ GS.visualchart = GS.visualchart || function($) {
 
     };
 
+    var drawBarChart = function(barChartData, divId, chartname) {
+        var func = function () {
+            var domNode = document.getElementById(divId);
+            // If the dom node that the chart wants to fill is not on the page, just early exit
+            if(domNode == null) {
+                return false;
+            }
+
+            var legendLabel = 'This school'
+
+            var dataTable = new google.visualization.DataTable();
+            //The 3rd and the 5th columns are used for tool tips.
+            dataTable.addColumn('string', 'label');
+            dataTable.addColumn('number', 'This school');
+            dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+            dataTable.addRows(barChartData);
+
+            $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
+            var defaultOptions = {
+                width: GS.window.sizing.barChartWidth(chartname),
+                height: GS.window.sizing.barChartHeight(chartname),
+                legend: {position: GS.window.sizing.barChartLegend(chartname)},
+                tooltip: { isHtml: true },
+                colors: colors,
+                hAxis: {maxValue: '100', minValue:'0'},
+                chartArea: {
+                  left: GS.window.sizing.barChartLabelWidth(chartname),
+                  top:'20',
+                  width: GS.window.sizing.barChartAreaWidth(chartname),
+                  height:"60%"
+                }
+            };
+
+            var chart = new google.visualization.BarChart(domNode);
+            chart.draw(dataTable, defaultOptions);
+
+        };
+        if (loader) {
+            loader.push(func);
+        } else {
+            google.setOnLoadCallback(func);
+        }
+
+    };
+
     var drawBarChartReviews = function (barChartData, div) {
         var func = function () {
           var options = {
@@ -213,6 +259,7 @@ GS.visualchart = GS.visualchart || function($) {
         colors: colors,
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
+        drawBarChart: drawBarChart,
         drawBarChartTestScores: drawBarChartTestScores,
         drawBarChartTestScoresStacked: drawBarChartTestScoresStacked,
         drawBarChartReviews:drawBarChartReviews,
