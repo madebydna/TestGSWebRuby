@@ -150,7 +150,6 @@ class SchoolSearchService
 
   def self.get_suggested_search_term(spellcheck_hash, search_options)
     search_options[:query] = parse_query_and_suggestions(spellcheck_hash)
-    require 'pry'; binding.pry;
     results = get_results(search_options)
     results['response']['numFound'] > 0 ? search_options[:query].gsub('+', '') : nil
   end
