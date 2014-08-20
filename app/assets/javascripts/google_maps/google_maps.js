@@ -191,17 +191,17 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              var markup = '<div class="">'; //school data
-              markup += '<div class="pbm"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              var markup = '<div>'; //school data
+              markup += '<div class="pbm notranslate"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
 
               markup += '<div class="col-xs-7 col-sm-8">';
               markup += '<div class="mrl">'; //address
-              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              markup += '<div class="notranslate">' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
               markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
               markup += '</div>';//address
               markup += '</div>'; //
-              markup += '<div class="mts col-xs-5 col-sm-4">'; //sprites
+              markup += '<div class="mts col-xs-5 col-sm-4 ">'; //sprites
               markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'
               if (parseInt(point.gsRating) > 0){
                   markup += + point.gsRating;
