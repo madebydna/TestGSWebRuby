@@ -72,10 +72,10 @@ class TestScoresDecorator < Draper::Decorator
   end
 
   def self.bar_chart_div_id(test, breakdown, grade, subject)
-    test = test.to_s.gsub(/[^0-9a-z]/,'')
-    breakdown = breakdown.to_s.gsub(/[^0-9a-z]/, '')
-    subject = subject.to_s.gsub(/[^0-9a-z]/,'')
-    bar_chart_div_id = "js_bar_chart_div_#{test}_#{breakdown},#{grade}_#{subject}"
+    test = test.to_s.gsub(/[^0-9A-Za-z]/,'')
+    breakdown = breakdown.to_s.gsub(/[^0-9A-Za-z]/, '')
+    subject = subject.to_s.gsub(/[^0-9A-Za-z]/,'')
+    bar_chart_div_id = "js_bar_chart_div_#{test}_#{breakdown}_#{grade}_#{subject}"
   end
 
   def test_container_dom_id(test, breakdown, grade)
@@ -83,8 +83,8 @@ class TestScoresDecorator < Draper::Decorator
   end
 
   def test_button_dom_id(test, breakdown, grade)
-    test = test.to_s.gsub(/[^0-9a-z]/,'')
-    breakdown = breakdown.to_s.gsub(/[^0-9a-z]/, '')
+    test = test.to_s.gsub(/[^0-9A-Za-z]/,'')
+    breakdown = breakdown.to_s.gsub(/[^0-9A-Za-z]/, '')
     "js_#{test}_#{breakdown}_#{grade}"
   end
 
