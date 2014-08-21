@@ -1,7 +1,7 @@
 GS.search = GS.search || {};
 GS.search.results = GS.search.results || (function() {
 
-    var clickOrTouchType = GS.util.clickOrTouchType;
+    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
 //  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {

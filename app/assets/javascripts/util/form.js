@@ -63,9 +63,9 @@ GS.forms.updateFormVisualElements = function() {
 
 $(function() {
 
-    var clickOrTouchType = GS.util.clickOrTouchType;
+    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
-    $('.js-gs-radio').on('click',function(){
+    $('.js-gs-radio').on(clickOrTouchType,function(){
         var self = $(this);
         var hidden_field = self.parent().siblings(".js-gs-radio-value");
         var gs_radio = self.data('gs-radio');
@@ -75,7 +75,7 @@ $(function() {
 
     });
 
-    $("body").on('click','.js-pull-down',function(){
+    $("body").on(clickOrTouchType,'.js-pull-down',function(){
 
         var self=$(this);
         var gs_pull_down = self.data('pull-down-content');
@@ -106,7 +106,7 @@ $(function() {
 
     });
 
-    $("body").on('click','.js-gs-checkbox',function(){
+    $("body").on(clickOrTouchType,'.js-gs-checkbox',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -293,7 +293,7 @@ $(function() {
         $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
     };
 
-    $('.js-guidedSearchSportsIconsButton').on('click', function(){
+    $('.js-guidedSearchSportsIconsButton').on(clickOrTouchType, function(){
         var self = $(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.children(".js-value");
@@ -311,7 +311,7 @@ $(function() {
         }
     });
 
-    $('.js-guidedSearch').on('click', '.js-sports-gender', function() {
+    $('.js-guidedSearch').on(clickOrTouchType, '.js-sports-gender', function() {
         var self = $(this);
 
         if (!self.hasClass('btn-bg-green')) {

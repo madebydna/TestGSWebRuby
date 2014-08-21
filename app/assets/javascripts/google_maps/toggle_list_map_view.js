@@ -7,7 +7,7 @@ $(document).ready(function () {
     var elemListViewToggle = $('.js-search-list-view');
     var elemMapViewToggle =  $('.js-search-map-view');
     var elemMapViewMobileToggle =  $('.js-search-toggle-map-view');
-    var clickOrTouchType = GS.util.clickOrTouchType;
+    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
     var addActiveToggleStateFor = function (toggleType) {
         if (toggleType == 'list') {
