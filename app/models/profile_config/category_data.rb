@@ -64,11 +64,18 @@ class CategoryData < ActiveRecord::Base
     end
     json = hash.present? ? hash.to_json : nil
     write_attribute(:json_config, json)
+    @parsed_json_config = nil
   end
 
   def json_config
-    json = read_attribute(:json_config)
-    JSON.parse(json) rescue {}
+    @parsed_json_config ||= (
+      json = read_attribute(:json_config)
+      if json.present?
+        JSON.parse(json) rescue {}
+      else
+        {}
+      end
+    )
   end
 
   def possible_sources
