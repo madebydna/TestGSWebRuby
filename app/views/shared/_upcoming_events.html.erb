@@ -11,8 +11,11 @@
     <div class='oh'>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
         <h4 class='bottom mtn'>Upcoming events</h4>
-        <% if params[:city] %>
+        <% if (params[:city] && params[:state]) %>
           <%= link_to('See all', city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_encode(params[:city]))) %>
+        <% end %>
+        <% if (params[:state] && params[:city].nil?) %>
+            <%= link_to('See all', state_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_encode(params[:city]))) %>
         <% end %>
       </div>
       <% important_events[:max_important_event_to_display].times do |i| %>

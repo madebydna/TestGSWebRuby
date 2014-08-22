@@ -159,10 +159,6 @@ class SchoolProfileController < SchoolController
     end
   end
 
-  def is_hub_school?
-    @school && !@school.try(:collection).nil?
-  end
-
   def enable_ads
     @show_ads = @school.show_ads
   end

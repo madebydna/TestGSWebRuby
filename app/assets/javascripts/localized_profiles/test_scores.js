@@ -18,6 +18,12 @@ GS.testScores = GS.testScores || function($) {
             var breakdown = $(this).attr("id").split("_")[2];
             var grade_id = $(this).attr("id").split("_")[3];
 
+            var filter_title = $(this).html();
+            var filter_title_link = $(this).find('a').html();
+            if(filter_title_link){
+              filter_title = filter_title_link;
+            }
+            $('.js_button-filter-title-'+test_id).html(filter_title);
             var classToHide = ".js_"+test_id+"_grades";
             var idToShow = _(["#js", test_id, breakdown, grade_id, 'scores']).join('_');
 
@@ -33,6 +39,8 @@ GS.testScores = GS.testScores || function($) {
               $('.js_test_groups .btn').addClass('active');
             }
         });
+//        set the value of filter string based on active button
+        $('.js_test_scores_grades.btn.active').trigger('click');
     };
 
     return {

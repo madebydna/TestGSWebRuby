@@ -5,6 +5,10 @@ GS.window.sizing.width = function(){
     return $(window).width();
 };
 
+GS.window.sizing.maxMobileWidth = 767;
+
+GS.window.sizing.navBarHeight = 60;
+
 GS.window.sizing.pieChartWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".pieChartWidth");

@@ -38,3 +38,10 @@
 
     </table>
 <% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+  }
+%>

@@ -53,6 +53,7 @@ class Admin::ReviewsController < ApplicationController
       review.moderated = true
       review.disable!
       if review.save
+        email_user_about_review_removal(review)
         flash_notice 'Review disabled.'
       else
         flash_error 'Sorry, something went wrong while disabling the review.'
@@ -111,6 +112,14 @@ unexpected error: #{e}."
 
   def reported_entities_for_reviews(reviews)
     ReportedEntity.find_by_reviews(reviews).order('created desc')
+  end
+
+  def email_user_about_review_removal(review)
+    if review.who == 'student'
+      StudentReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
+    else
+      ReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
+    end
   end
 
 end

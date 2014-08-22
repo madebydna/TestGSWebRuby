@@ -25,7 +25,7 @@
 <div class="limit-width-1200">
 
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-  <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
+  <%= render 'shared/upcoming_events', important_events: @important_events, announcement: @announcement %>
   <% if @show_ads %>
      <% ad_hash_review_module={page:'City_Home'.to_sym,slot:'Content_Top'.to_sym}%>
   <%end%>

@@ -13,9 +13,12 @@
     <% label = rating_hash['label'] || 'GreatSchools Rating' %>
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
       <h4><%= label %></h4>
-      <% if rating_hash["disclaimer_private"].present? && @school.private_school? %>
+      <% if rating_hash["disclaimer_private"].present? && @school.private_school? && @school.gs_rating != 'nr' %>
         <p class="alert alert-warning man mbm"><%= rating_hash["disclaimer_private"].html_safe %></p>
       <% end %>
+        <% if rating_hash["what_is_not_rated"].present? && !@school.preschool? %>
+            <p class="alert alert-warning man mbm"><%= rating_hash["what_is_not_rated"].html_safe %></p>
+        <% end %>
     <p><%= rating_hash["description"] %></p>
       <% if rating_hash["rating_breakdowns"].present? || rating_hash["methodology_url"].present? %>
         <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>

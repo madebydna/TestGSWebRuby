@@ -28,9 +28,9 @@ describe EspDataReader do
 
     it 'returns an array of hashes with correct data' do
       expected = [
-        { key: 'key',  label: 'key',  value: %w[foo bar baz] },
-        { key: 'key2', label: 'key2', value: %w[foo bar baz] },
-        { key: 'key3', label: 'key3', value: %w[foo bar baz] }
+        { key: 'key',  label: 'key',  value: %w[foo bar baz], description: nil },
+        { key: 'key2', label: 'key2', value: %w[foo bar baz], description: nil },
+        { key: 'key3', label: 'key3', value: %w[foo bar baz], description: nil }
       ]
       results = reader.data_for_category category
       expect(results).to eq expected
@@ -42,14 +42,9 @@ describe EspDataReader do
         'key2' => 'bar',
         'key3' => 'bar'
       }
-      expected = [
-        { key: 'key',  label: 'foo',  value: %w[foo bar baz] },
-        { key: 'key2', label: 'bar', value: %w[foo bar baz] },
-        { key: 'key3', label: 'bar', value: %w[foo bar baz] }
-      ]
       allow(category).to receive(:key_label_map).and_return key_label_map
       results = reader.data_for_category category
-      expect(results).to eq expected
+      expect(results.map { |h| h[:label] }).to eq %w[foo bar bar]
     end
   end
 

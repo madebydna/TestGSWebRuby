@@ -15,7 +15,7 @@ GS.uri.Uri.getPath = function() {
 };
 
 GS.uri.Uri.goToPage = function(full_uri) {
-    window.location = full_uri;
+    window.location = encodeURI(decodeURI(full_uri));
 };
 
 GS.uri.Uri.reloadPageWithNewQuery = function(query) {
@@ -38,6 +38,23 @@ GS.uri.Uri.getBaseHostname = function() {
     }
 
     return baseHostname;
+};
+
+GS.uri.Uri.putParamObjectIntoQueryString = function(queryString, obj) {
+    params = '';
+    for (var prop in obj) {
+        val = obj[prop];
+        if (val != undefined && val.length > 0) {
+            params = params + '&' + prop + '=' + val;
+        }
+    }
+
+    if (queryString === '' || queryString === '?') {
+        queryString = '?' + params.slice(1, params.length);
+        return queryString === '?' ? '' : queryString
+    } else {
+        return queryString + params
+    }
 };
 
 /**

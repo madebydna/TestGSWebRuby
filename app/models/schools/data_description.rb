@@ -13,4 +13,13 @@ class DataDescription < ActiveRecord::Base
     end
   end
 
+  def self.description(state, key)
+    DataDescription.lookup_table[
+      [state.upcase, key]
+    ] ||
+    DataDescription.lookup_table[
+      [nil, key]
+    ]
+  end
+
 end

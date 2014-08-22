@@ -16,6 +16,11 @@ LocalizedProfiles::Application.configure do
   config.action_controller.perform_caching = true
 
   # set host that rails should use when building absolute urls
+  # Both config.action_controller and Rails.application.routes must be assigned
+  config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
+  config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
+  # Setting Rails.application.routes is needed so that URLs created
+  # within models use the correct host
   Rails.application.routes.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
   Rails.application.routes.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 

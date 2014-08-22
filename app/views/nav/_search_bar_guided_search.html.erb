@@ -7,6 +7,7 @@
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term || 'Search for schools' %>"
+                  data-prev-search="<%= @search_term || '' %>"
                   id="js-prototypeSearch"
                   class='typeahead search-text full-width pam'
                   placeholder="Enter city, zip code, address or school name">
@@ -14,7 +15,7 @@
 
         <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
           <select class="form-control input-lg font-size-small" id="js-prototypeSearchGradeLevelFilter" name="grades">
-            <option value="">--Grade Level--</option>
+            <option value="">Select Grade</option>
             <% @search_bar_display_map[:grades].each do |grades, display_name| %>
                 <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
             <% end %>
@@ -32,7 +33,7 @@
           <div class="fl mrl">Nearby Cities:</div>
             <% @nearby_cities.each_index do |x|
                 city = @nearby_cities[x] %>
-                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
+                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
             <% end %>
         </div>
     <% end %>

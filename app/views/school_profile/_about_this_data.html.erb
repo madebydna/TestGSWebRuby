@@ -1,0 +1,15 @@
+<% unique_id # Will be used as a suffix for DOM ID %>
+<% descriptions # The descriptions to display %>
+  
+<% if descriptions.present? %>
+  <div>
+    <p>About this data: <a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+    <div class="dn well bg-white">
+      <ul id="about-this-data-<%= unique_id %>" class="list-unstyled">
+        <% descriptions.each do |description| %>
+          <li class="pts"><%= description %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

@@ -58,6 +58,8 @@ en:
         login_required: 'Please log in or register your email in order to receive updates.'
       mystat:
         login_required: 'Please log in or register your email in order to follow this school.'
+      mystat_private:
+        login_required: 'Please log in or register your email in order to follow this school.'
       gsnewsletter:
         login_required: 'Please log in or register your email in order to sign up for GreatSchool''s newsletter'
 #  Kaminari Helpers

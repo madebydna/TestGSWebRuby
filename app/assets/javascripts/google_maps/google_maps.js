@@ -25,7 +25,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var bounds = new google.maps.LatLngBounds();
 
           var initialize = function (points) {
-              var isdraggable = $(document).width() > 767 ? true : false
+              var isdraggable = true;
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -167,6 +167,8 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                       return function () {
                           infoWindow.setContent(getInfoWindowMarkup(point));
                           infoWindow.open(GS.search.map, marker);
+                          infoWindow.setCenter(marker.getPosition());
+
                       }
                   })(marker, point));
 
@@ -189,19 +191,24 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              jQuery(infoWindowMarkup).css("height", 140);
-              var markup = '<div class="clearfix">'; //school data
-              markup += '<div class="pbm" style="width: 101%"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
-              markup += '<div class="fl mrl">'; //address
-              markup += '<div>' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              var markup = '<div>'; //school data
+              markup += '<div class="pbm notranslate"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="row">'; //row
+
+              markup += '<div class="col-xs-7 col-sm-8">';
+              markup += '<div class="mrl">'; //address
+              markup += '<div class="notranslate">' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
               markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
               markup += '</div>';//address
-              markup += '<div class="fr mts">'; //sprites
+              markup += '</div>'; //
+              markup += '<div class="mts col-xs-5 col-sm-4 ">'; //sprites
+              markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'
               if (parseInt(point.gsRating) > 0){
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'+ point.gsRating+ '"' +'></span>GS rating' +  '</div>';
+                  markup += + point.gsRating;
               } else {
-                  markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-nr"></span>GS rating' +  '</div>';
+                  markup += 'nr';
               }
+              markup += '"></span>Rating' +  '</div>'
 
               if(point.fitScore > 0){
                   if (point.strongFit){
@@ -213,23 +220,32 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   }
               }
               markup += '</div>'; //sprites
+
+              markup += '</div>'; //
+
               markup += '</div>'; //school data
               markup += '<hr class="mvm">';
+              markup += '<div class="clearfix">';
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
-//                  markup += '<a href="' + point.reviewUrl + '">' + point.communityRatingStars;
-                  markup += '<span class="mls mrm">'+ point.numReviews +' reviews </span>';//reviews link
+                  markup += '<span class="mls mrm font-size-small">'+ point.numReviews;
+                  if (point.numReviews != 1) {
+                      markup += ' reviews </span>';
+                  } else {
+                      markup += ' review </span>';
+                  }//reviews link
                   markup += '</a>';//reviews link
               } else {
                   markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
               }
               markup += '</div>'; //stars
               markup += '<div class="fr">'; //zillow
-              markup += '<a href="http://www.zillow.com/DE-19904?cbpartner=GreatSchools&amp;utm_source=GreatSchools&amp;utm_medium=referral&amp;utm_campaign=schoolsearch" target="_blank">';
-              markup += '<span class="vam iconx16 i-16-home mrs"></span><span class="gray-dark">Homes for sale</span>';
+              markup += '<a class="clearfix" href="' + point.zillowUrl + '" target="_blank">';
+              markup += '<div class="fl mrs pt1"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small">Homes for sale</div><div class="fl gray-dark visible-xs font-size-small">Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
+              markup += '</div>';
 
 
               infoWindowMarkup.innerHTML = markup;
@@ -250,9 +266,3 @@ GS.search.googleMap = GS.search.googleMap || (function() {
     }
 
 })();
-
-$(document).ready(function() {
-    if ($.cookie('map_view') !== 'false') {
-        GS.search.googleMap.init();
-    }
-});

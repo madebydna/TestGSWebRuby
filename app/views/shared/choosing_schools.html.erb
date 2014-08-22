@@ -2,7 +2,7 @@
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% if params[:city] %>
-  <%= render 'cities/upcoming_events', important_events: @events, community_page: true %>
+  <%= render 'shared/upcoming_events', important_events: @events, community_page: true %>
 <% end %>
 
 <div class="limit-width-1200 mbl">
@@ -100,12 +100,17 @@
         As you search for schools that fit your family, look for information in three key areas - academic performance, extracurricular programs, and school culture and community.
       </p>
       <h4>Featured resources</h4>
-      <% if params[:city] %>
-        <%= link_to 'Try our advanced school search', city_browse_path(params[:state], params[:city]) %>
-      <% else %>
-        <%= link_to 'Try our advanced school search', state_browse_path(params[:state], params[:city]) %>
+      <% unless @step3_search_links.nil? %>
+          <% @step3_search_links.each do |link| %>
+              <% if link[:newWindow] == 'true' %>
+                  <%= link_to(link[:name], link[:path], target: '_blank') %>
+              <% else %>
+                  <%= link_to(link[:name], link[:path]) %>
+              <% end %>
+              <br>
+          <% end %>
       <% end %>
-      <br>
+
       <p>
         GreatSchools provides independent ratings based on a mixture of factors. You should consider GreatSchools ratings along with local and state ratings.
       </p>

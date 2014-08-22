@@ -37,6 +37,15 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def key_description_map(state, collections = nil)
+    category_data(collections).
+      select { |cd| cd.description_key.present? }.
+      each_with_object({}) do |cd, map|
+        description = DataDescription.description(state, cd.description_key)
+        map[cd.response_key] ||= description if description.present?
+      end
+  end
+
   def code_name
     name.gsub /\W+/, '_'
   end

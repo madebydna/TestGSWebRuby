@@ -21,29 +21,42 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
     max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
   end
 
+  def decorated_school_type
+    if type == 'Charter'
+      'Public charter'
+    elsif type == 'Public'
+      'Public district'
+    else
+      'Private'
+    end
+  end
+
   def google_map_data_point
-    map_points = {
-      name: self.name,
-      id: self.id,
-      lat: self.latitude,
-      lng: self.longitude,
-      street: self.street,
-      city: self.city,
-      state: self.state,
-      zipcode: self.zipcode,
-      schoolType: self.type,
-      preschool: self.preschool?,
-      gradeRange: process_level,
-      fitScore: self.fit_score,
-      maxFitScore: self.max_fit_score,
-      gsRating: self.overall_gs_rating || 0,
-      on_page: (self.on_page),
-      strongFit: self.strong_fit?,
-      okFit: self.ok_fit?
-    }
-
-    yield map_points if block_given?
-
-    map_points
+    begin
+      map_points = {
+        name: name,
+        id: id,
+        street: street,
+        city: city,
+        state: state,
+        zipcode: zipcode,
+        schoolType: decorated_school_type,
+        preschool: preschool?,
+        gradeRange: process_level,
+        fitScore: fit_score,
+        maxFitScore: max_fit_score,
+        gsRating: overall_gs_rating || 0,
+        on_page: (on_page),
+        strongFit: strong_fit?,
+        okFit: ok_fit?
+      }
+    rescue NameError => e
+      puts e.message
+      puts 'School Does not have method/solr attribute'
+      nil
+    else
+      yield map_points if block_given?
+      map_points
+    end
   end
 end

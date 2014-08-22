@@ -17,6 +17,7 @@ class CollectionConfig < ActiveRecord::Base
   SPONSOR_PAGE_NAME_KEY = 'sponsorPage_seoPageName'
   SPONSOR_DATA_KEY = 'sponsorPage_sponsorData'
   CHOOSING_STEP3_LINKS_KEY = 'choosePage_step3_localLinks'
+  CHOOSING_STEP3_SEARCH_LINKS_KEY = 'choosePage_step3_searchLinks'
   CONTENT_MODULE_KEY = 'statehubHome_content'
   STATE_PARTNERS_KEY = 'statehubHome_partnerModule'
   ENROLLMENT_SUBHEADING_KEY = 'enrollmentPage_subHeading'
@@ -361,6 +362,18 @@ class CollectionConfig < ActiveRecord::Base
         links = eval(raw_links_str)[:link]
       rescue Exception => e
         Rails.logger.error('Something went wrong while parsing choosing_page_links ' + e.to_s)
+      end
+
+      links
+    end
+
+    def choosing_page_search_links(collection_configs)
+      links = nil
+      begin
+        raw_links_str = collection_configs.select(&lambda { |cc| cc.quay == CHOOSING_STEP3_SEARCH_LINKS_KEY }).first.value
+        links = eval(raw_links_str)[:link]
+      rescue Exception => e
+        Rails.logger.error('Something went wrong while parsing choosing_page_searchlinks ' + e.to_s)
       end
 
       links

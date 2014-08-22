@@ -1,0 +1,23 @@
+<div class="tac js-searchResultDropdown">
+  <div>
+    <span class="vam iconx24-icons js-icon <%=(decorated_school.strong_fit?) ? 'i-24-happy-face' : (decorated_school.ok_fit?) ? 'i-24-smiling-face' : 'i-24-neutral-face'%>"></span>
+    <span class="caret pa" style="top: 12px;"></span>
+  </div>
+  <span class="font-size-xs"><%=(decorated_school.strong_fit?) ? 'Strong fit' : (decorated_school.ok_fit?) ? 'Ok fit' : 'Low fit' %></span>
+</div>
+<div class="panel pa dn js-fitScorePopup" style="z-index: 1; width: 200px;">
+  <div class="pal">
+    <% school.fit_score_breakdown.each do |fit_score_breakdown| %>
+      <div class="font-size-xs">
+        <div class="<%= fit_score_breakdown[:match] ? '' : 'gray-dark'%>">
+          <% if fit_score_breakdown[:match] %>
+            <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+          <% else %>
+            <span class="prm">X</span>
+          <%end%>
+          <%=@filter_display_map[fit_score_breakdown[:category].to_sym][fit_score_breakdown[:filter].to_sym]%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

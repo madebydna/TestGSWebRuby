@@ -22,9 +22,9 @@ describe TestScoresCaching::QueryResultDecorator do
   end
 
   describe '#grade_label' do
-    it 'should handle "All grades"' do
+    it 'should handle "School-wide"' do
       expect(decorator(grade: 'All', level_code: 'e,m,h').grade_label)
-        .to eq('All grades')
+        .to eq('School-wide')
     end
 
     it 'should handle "Elementary"' do

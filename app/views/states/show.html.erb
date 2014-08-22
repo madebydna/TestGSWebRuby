@@ -21,7 +21,9 @@
 
 <div class="limit-width-1200 mvl">
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-    <% ad_hash_review_module={page:'State_Home'.to_sym,slot:'Content_Top'.to_sym}%>
+  <%= render 'shared/upcoming_events', important_events: @important_events, announcement: @announcement %>
+
+  <% ad_hash_review_module={page:'State_Home'.to_sym,slot:'Content_Top'.to_sym}%>
     <%= render 'shared/review_global', ad_data:ad_hash_review_module %>
   <%= render 'content_module', content_modules: @content_modules %>
   <%= render 'featured_articles', articles: @articles, state: @state %>

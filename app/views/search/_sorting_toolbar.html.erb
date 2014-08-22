@@ -1,11 +1,12 @@
-<div class="limit-width-1200 row phm ptm pbl">
+<div class="limit-width-1200 row phm pbl">
   <div class="col-xs-12 clearfix">
-    <span class="open-sans_sb fl font-size-block"><%= @total_results %> schools meet your criteria</span>
+    <%= render 'number_schools_found' %>
     <div class="hidden-xs pts fr">
       <span>Sort by:</span>
       <span>
-        <% ['rating','distance','fit'].each do |sort_name| %>
+        <% ['relevance','rating','distance','fit'].each do |sort_name| %>
             <% next if sort_name == 'distance' && !search_by_location? %>
+            <% next if sort_name == 'relevance' && !search_by_name? %>
             <% if @sort_name == sort_name %>
                 <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
             <% else %>
@@ -16,13 +17,14 @@
     </div>
   </div>
 
-  <div class="visible-xs col-xs-4 pbl ptl">
+  <div class="visible-xs col-xs-6 pbl ptl">
     <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
-      <option value="">Sort By:</option>
-      <% ['rating','distance','fit'].each do |sort_name| %>
+      <% sort_types = ['relevance','rating','distance','fit'] - [@sort_name] %>
+      <option value="<%= @sort_name %>" selected>Sort by: <%= @sort_name.titleize %></option>
+      <% sort_types.each do |sort_name| %>
           <% next if sort_name == 'distance' && !search_by_location? %>
-          <% asc_or_desc = sort_name == 'distance' ? 'asc' : 'desc' %>
-          <option value="<%=sort_name%>" <%if @params_hash.include?('sort') && @params_hash['sort'] == "#{sort_name}_#{asc_or_desc}"%>selected<%end%>><%=sort_name.titleize%></option>
+          <% next if sort_name == 'relevance' && !search_by_name? %>
+          <option value="<%=sort_name%>"><%=sort_name.titleize%></option>
       <% end %>
     </select>
   </div>

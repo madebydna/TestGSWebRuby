@@ -39,6 +39,7 @@
                                 <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: "Choosing a School", url: state_choosing_schools_url(nav.url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: state_education_community_url(nav.url_params) %>
                                 <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: "Enrollment Information", url: state_enrollment_url(nav.url_params) %>
+                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: "Events", url: state_events_url(nav.url_params) %>
 
                                 <li>
                                     <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
@@ -63,8 +64,11 @@
                             <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url %>
                         </li>
                         <li class=" ">
-                            <%= link_to 'Back-to-school'.html_safe, back_to_school_url %>
+                            <%= link_to 'Back to School'.html_safe, back_to_school_url %>
                         </li>
+                      <li>
+                        <%= link_to 'Moving'.html_safe, moving_url %>
+                      </li>
                         <li class=" ">
                             <%= link_to 'Common Core'.html_safe, common_core_url %>
                         </li>
@@ -73,9 +77,6 @@
                         </li>
                         <li>
                             <%= link_to 'Learning Difficulties', learning_difficulties_url %>
-                        </li>
-                        <li>
-                            <%= link_to 'Health &amp; Behavior'.html_safe, health_and_behavior_url %>
                         </li>
 
 

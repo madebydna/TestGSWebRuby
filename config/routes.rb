@@ -64,6 +64,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
+    get '/moving.topic?content=2220', as: :moving
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -134,6 +135,7 @@ LocalizedProfiles::Application.routes.draw do
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
       get 'guided-search', to: 'states#guided_search', as: :guided_search
+      get 'events', to: 'states#events', as: :events
 
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do

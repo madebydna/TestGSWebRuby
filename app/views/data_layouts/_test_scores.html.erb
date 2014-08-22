@@ -8,6 +8,8 @@
 <% data.each_with_index do |(test,value),index| %>
   <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
     <h3><%= value[:All][:test_label] %></h3><br/>
+    <span class="">Showing results for all <span class="open-sans_sb js_button-filter-title-<%= test %>"></span> students</span>
+    <br/><br/>
 
     <% decorator = TestScoresDecorator.decorate(data, context: { state: @school.state }) %>
     <%= raw(decorator.tabs_for_test(test)) %>

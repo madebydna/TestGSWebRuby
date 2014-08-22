@@ -22,7 +22,8 @@ class SchoolProfileDecorator < Draper::Decorator
 
   def google_formatted_street_address
     address = "#{street},#{city},#{state}+#{zipcode}"
-    address.gsub(/\s+/,'+')
+    # We may want to look into CGI.escape() to prevent the chained gsubs
+    address.gsub(/\s+/,'+').gsub(/'/,'')
   end
 
   def uploaded_photo(size = 130)

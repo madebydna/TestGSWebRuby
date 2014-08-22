@@ -45,7 +45,7 @@ class FilterBuilder
           display_type: :filter_column_primary,
           filters: {
             distance: {
-              label: 'Distance',
+              label: 'Show schools within',
               display_type: :title,
               name: :distance,
               filters: {
@@ -70,31 +70,31 @@ class FilterBuilder
               }
             },
             st: {
-              label: 'School Types',
+              label: 'School Type',
               display_type: :title,
               name: :st,
               filters: {
-                public: {label: 'Public Schools', display_type: :basic_checkbox, name: :st, value: :public},
-                private: {label: 'Private Schools', display_type: :basic_checkbox, name: :st, value: :private},
-                charter: {label: 'Charter Schools', display_type: :basic_checkbox, name: :st, value: :charter}
+                public: {label: 'Public district schools', display_type: :basic_checkbox, name: :st, value: :public},
+                charter: {label: 'Public charter schools', display_type: :basic_checkbox, name: :st, value: :charter},
+                private: {label: 'Private schools', display_type: :basic_checkbox, name: :st, value: :private}
               }
             },
             transportation: {
-              label: 'Transportation',
+              label: 'Transportation options',
               display_type: :title,
               name: :transportation,
               filters: {
-                povided_transit: {label: 'District provided', display_type: :basic_checkbox, name: :transportation, value: :provided_transit},
-                public_transit: {label: 'Accessible via public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
+                povided_transit: {label: 'District provided transit', display_type: :basic_checkbox, name: :transportation, value: :provided_transit},
+                public_transit: {label: 'Near public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
               }
             },
             beforeAfterCare: {
-              label: 'Care',
+              label: 'Before/After Care',
               display_type: :title,
               name: :beforeAfterCare,
               filters: {
-                before: {label: 'Before School Care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
-                after: {label: 'After School Care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
+                before: {label: 'Before school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
+                after: {label: 'After school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
             }
           }
@@ -103,26 +103,26 @@ class FilterBuilder
           display_type: :filter_column_secondary,
           filters: {
             dress_code: {
-              label: 'Dress Code',
+              label: 'Dress code',
               display_type: :title,
               name: :dress_code,
               filters: {
-                dress_code: {label: 'Dress Code', display_type: :basic_checkbox, name: :dress_code, value: :dress_code},
+                dress_code: {label: 'Dress code', display_type: :basic_checkbox, name: :dress_code, value: :dress_code},
                 uniform: {label: 'Uniform', display_type: :basic_checkbox, name: :dress_code, value: :uniform},
                 no_dress_code: {label: 'No dress code', display_type: :basic_checkbox, name: :dress_code, value: :no_dress_code}
               }
             },
             class_offerings: {
-              label: 'Class Offerings',
+              label: 'Class Offering',
               display_type: :title,
               name: :class_offerings,
               filters: {
-                ap: {label: 'AP Courses', display_type: :basic_checkbox, name: :class_offerings, value: :ap},
-                performance_arts: {label: 'Performance Arts', display_type: :basic_checkbox, name: :class_offerings, value: :performance_arts},
-                visual_media_arts: {label: 'Visual/Media Arts', display_type: :basic_checkbox, name: :class_offerings, value: :visual_media_arts},
+                ap: {label: 'AP courses', display_type: :basic_checkbox, name: :class_offerings, value: :ap},
                 music: {label: 'Music', display_type: :basic_checkbox, name: :class_offerings, value: :music},
+                performance_arts: {label: 'Performance arts', display_type: :basic_checkbox, name: :class_offerings, value: :performance_arts},
+                visual_media_arts: {label: 'Visual/Media arts', display_type: :basic_checkbox, name: :class_offerings, value: :visual_media_arts},
                 world_languages: {
-                  label: 'World Languages',
+                  label: 'World languages',
                   name: :world_languages,
                   display_type: :collapsible_box,
                   filters: {
@@ -181,9 +181,18 @@ class FilterBuilder
               display_type: :title,
               name: :school_focus,
               filters: {
-                arts: {label: 'Art', display_type: :basic_checkbox, name: :school_focus, value: :arts},
+                arts: {label: 'Arts focus', display_type: :basic_checkbox, name: :school_focus, value: :arts},
+                career_tech: {label: 'Career & technology', display_type: :basic_checkbox, name: :school_focus, value: :career_tech},
+                college_focus: {label: 'College focus', display_type: :basic_checkbox, name: :school_focus, value: :college_focus},
+                is: {label: 'Independent study', display_type: :basic_checkbox, name: :school_focus, value: :is},
+                ib: {label: 'International Baccalaureate', display_type: :basic_checkbox, name: :school_focus, value: :ib},
+                montessori: {label: 'Montessori', display_type: :basic_checkbox, name: :school_focus, value: :montessori},
+                online: {label: 'Online learning', display_type: :basic_checkbox, name: :school_focus, value: :online},
+                project: {label: 'Project-based learning', display_type: :basic_checkbox, name: :school_focus, value: :project},
+                science_tech: {label: 'Science/Technology (STEM)', display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
+                waldorf: {label: 'Waldorf', display_type: :basic_checkbox, name: :school_focus, value: :waldorf},
                 language_immersion: {
-                  label: 'World Language Immersion',
+                  label: 'World language immersion',
                   name: :world_language_immersion,
                   display_type: :collapsible_box,
                   filters: {
@@ -192,16 +201,7 @@ class FilterBuilder
                     spanish: {label: 'Spanish', unique_label: 'Spanish (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :spanish},
                     mandarin: {label: 'Mandarin', unique_label: 'Mandarin (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
                   }
-                },
-                science_tech: {label: 'Science/Tech (STEM)', display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
-                career_tech: {label: 'Career & Tech', display_type: :basic_checkbox, name: :school_focus, value: :career_tech},
-                montessori: {label: 'Montessori', display_type: :basic_checkbox, name: :school_focus, value: :montessori},
-                ib: {label: 'International Baccalaureate', display_type: :basic_checkbox, name: :school_focus, value: :ib},
-                is: {label: 'Independent Study', display_type: :basic_checkbox, name: :school_focus, value: :is},
-                college_focus: {label: 'College Focus', display_type: :basic_checkbox, name: :school_focus, value: :college_focus},
-                waldorf: {label: 'Waldorf', display_type: :basic_checkbox, name: :school_focus, value: :waldorf},
-                project: {label: 'Project-based Learning', display_type: :basic_checkbox, name: :school_focus, value: :project},
-                online: {label: 'Online Learning', display_type: :basic_checkbox, name: :school_focus, value: :online}
+                }
               }
             }
           }

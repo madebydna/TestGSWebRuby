@@ -1,0 +1,14 @@
+<span class="open-sans_sb fl font-size-block">
+  <%= pluralize(@total_results,'school') + ' found' %>
+  <% if @by_location %>
+      <% if @radius %>
+          within <%= pluralize(@radius, 'mile') %> of <%= @search_term %>
+      <% else %>
+          near <%= @search_term %>
+      <% end %>
+  <% elsif @district %>
+      in <%= @district.name %>
+  <% elsif @city %>
+      in <%= @city.name + ', ' + @city.state %>
+  <% end %>
+</span>

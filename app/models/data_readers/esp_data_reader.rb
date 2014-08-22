@@ -19,11 +19,14 @@ class EspDataReader < SchoolProfileDataReader
     array_of_hashes = []
 
     keys_and_labels = category.key_label_map
+    keys_and_descriptions = category.key_description_map(school.state)
     responses_per_key.each do |key, values|
       label = keys_and_labels[key] || key
+      description = keys_and_descriptions[key] || nil
       array_of_hashes << {
         key: key,
         label: label,
+        description: description,
         value: values
       }
     end

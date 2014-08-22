@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   include ApplicationHelper
+  include MetaTagsHelper
   include ActionView::Helpers::TagHelper
 
   #Todo move before filters to methods
@@ -35,6 +36,7 @@ class SearchController < ApplicationController
   #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
   #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
+    set_login_redirect
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
@@ -44,13 +46,13 @@ class SearchController < ApplicationController
     @search_term = "#{@city.name}, #{@state[:short].upcase}"
     @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    meta_title = "#{@city.display_name} Schools - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
-    set_meta_tags title: meta_title, robots: 'noindex'
+    set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     render 'search_page'
   end
 
   def district_browse
+    set_login_redirect
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     district_name = params[:district_name]
@@ -71,13 +73,13 @@ class SearchController < ApplicationController
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    meta_title = "Schools in #{@district.name} - #{@city.display_name}, #{@state[:short].upcase} | GreatSchools"
-    set_meta_tags title: meta_title, robots: 'noindex'
+    set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     render 'search_page'
   end
 
   def by_location
+    set_login_redirect
     city = nil
     @by_location = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
@@ -96,12 +98,13 @@ class SearchController < ApplicationController
 
     @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
 
-    set_meta_tags title: "GreatSchools.org Search", robots: 'noindex'
+    set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
-    # @city = City.find_by_state_and_name(@state[:short], @city) if @city # TODO: unnecessary?
   end
 
   def by_name
+    set_login_redirect
+    @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
       @state = {
           long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -113,8 +116,8 @@ class SearchController < ApplicationController
       @search_term=@query_string
     end
 
-    @by_name = true
-    set_meta_tags title: "GreatSchools.org Search: #{@query_string}", robots: 'noindex'
+    @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
+    set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     render 'search_page'
   end
@@ -139,7 +142,13 @@ class SearchController < ApplicationController
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
     @sort_name = if sort.nil?
-                   search_by_location? ? 'distance' : 'rating'
+                   if search_by_location?
+                     'distance'
+                   elsif search_by_name?
+                     'relevance'
+                   else
+                     'rating'
+                   end
                  else
                    sort.to_s.split('_').first
                  end
@@ -157,6 +166,8 @@ class SearchController < ApplicationController
     calculate_fit_score(results[:results], @params_hash) unless results.empty?
     sort_by_fit(results[:results], sort) if is_fit_sort
     process_results(results, offset) unless results.empty?
+    set_up_localized_search_hub_params
+
   end
 
   def sort_by_fit(school_results, direction)
@@ -166,9 +177,10 @@ class SearchController < ApplicationController
   end
 
   def process_results(results, solr_offset)
-    @query_string = '?' + CGI.unescape(@params_hash.to_param)
+    @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
     school_results = results[:results] || []
+    @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
@@ -183,7 +195,8 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    @window_size = get_kaminari_window_size(@page_number, @total_results, @page_size)
+    @max_number_of_pages = get_max_number_of_pages(@total_results, @page_size) #for pagination and meta tags
+    @window_size = get_kaminari_window_size
     @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
   end
 
@@ -209,7 +222,7 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = gs_legacy_url_encode("/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+school_search_result['name']}")
+        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
         response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
@@ -340,12 +353,11 @@ class SearchController < ApplicationController
     end
   end
 
-  def get_kaminari_window_size(page_number, total_results, page_size)
-    max_number_of_pages = get_max_number_of_pages(total_results, page_size)
-    if page_number < 5
-      9 - page_number
-    elsif page_number > max_number_of_pages - 6
-      9 - (max_number_of_pages - page_number)
+  def get_kaminari_window_size
+    if @page_number < 5
+      9 - @page_number
+    elsif @page_number > @max_number_of_pages - 6
+      9 - (@max_number_of_pages - @page_number)
     else
       4
     end
@@ -376,15 +388,26 @@ class SearchController < ApplicationController
 
   def mapping_points_through_gon
     gon.map_points = @map_schools.map do |school|
-      SchoolSearchResultDecorator.decorate(school).google_map_data_point do |map_points|
+      begin
+        map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
         map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
         map_points[:profileUrl] = school_path(school)
         map_points[:reviewUrl] = school_reviews_path(school)
         map_points[:zillowUrl] = zillow_url(school)
+        school.respond_to?(:latitude) ? map_points[:lat] = school.latitude : next
+        school.respond_to?(:longitude) ? map_points[:lng] = school.longitude : next
+        map_points[:zillowUrl] = zillow_url(school)
         map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
         map_points[:zIndex] = -1 if !school.on_page
+        map_points
+      rescue NoMethodError => e
+        puts e.message
+        puts 'School Not Added as a Map Pin'
+        nil
+      else
+        map_points
       end
-    end
+    end.compact
   end
 
   def assign_sprite_files_though_gon
@@ -425,6 +448,10 @@ class SearchController < ApplicationController
     @filters = filter_builder.filters
   end
 
+  def get_suggested_school(spellcheck_hash)
+
+  end
+
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map
   def get_search_bar_display_map
     {
@@ -447,4 +474,38 @@ class SearchController < ApplicationController
     }
   end
 
+  def set_up_localized_search_hub_params
+    if local_search?
+      if hub_city_state?
+        set_hub_params(@state,@city.name)
+      elsif hub_state?
+        set_hub_params(@state,nil)
+      elsif first_school_result_is_in_hub?
+        set_hub_params(@state,@first_school.hub_city)
+      end
+    end
+  end
+
+  def local_search?
+    if search_by_location? || search_by_name?
+      first_school_result_is_in_hub?
+    else
+      hub_city_state? || hub_state?
+    end
+  end
+
+  def first_school_result_is_in_hub?
+    if @schools.present?
+      @first_school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+      is_hub_school?(@first_school)
+    end
+  end
+
+  def hub_city_state?
+    @city && @state && HubCityMapping.where(active: 1, city: @city.name, state: @state[:short]).present?
+  end
+
+  def hub_state?
+    @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
+  end
 end
