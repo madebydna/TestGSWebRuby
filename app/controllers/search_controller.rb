@@ -2,6 +2,7 @@ class SearchController < ApplicationController
   include ApplicationHelper
   include MetaTagsHelper
   include ActionView::Helpers::TagHelper
+  include PaginationConcerns
 
   #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
@@ -126,9 +127,7 @@ class SearchController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     setup_filter_display_map
 
-    @results_offset = get_results_offset
-    @page_size = get_page_size
-    @page_number = get_page_number # for use in view
+    set_page_instance_variables # @results_offset @page_size @page_number
 
     ad_setTargeting_through_gon
 
@@ -195,9 +194,7 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    @max_number_of_pages = get_max_number_of_pages(@total_results, @page_size) #for pagination and meta tags
-    @window_size = get_kaminari_window_size
-    @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
+    set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
   end
 
   def suggest_school_by_name
@@ -326,43 +323,6 @@ class SearchController < ApplicationController
     params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
   end
 
-  def get_page_number
-    page_number = (params[:page] || 1).to_i
-    page_number < 1 ? 1 : page_number
-  end
-
-  def get_results_offset
-    result_offset = (params[:page].to_i - 1) * get_page_size
-    result_offset < 0 ? 0 : result_offset
-  end
-
-  def get_page_size
-    #ToDo Hiding param to alter page size. Hardcode to 25 results per page?
-    # page_size = (params[:pageSize])?(params[:pageSize].to_i):25
-    # page_size = 1 if page_size < 1
-    # page_size
-    25
-  end
-
-  def get_max_number_of_pages(total_results, page_size)
-    return 1 if total_results <= page_size
-    if total_results % page_size == 0
-      total_results / page_size
-    else
-      total_results / page_size + 1
-    end
-  end
-
-  def get_kaminari_window_size
-    if @page_number < 5
-      9 - @page_number
-    elsif @page_number > @max_number_of_pages - 6
-      9 - (@max_number_of_pages - @page_number)
-    else
-      4
-    end
-  end
-
   private
 
   def set_omniture_data_search_school(page_number, search_type, search_term, locale)
@@ -419,18 +379,6 @@ class SearchController < ApplicationController
 
   end
 
-  def hash_to_hash(configuration_map, hash)
-    rval_map = {}
-    hash.each do |k,v|
-      if configuration_map.has_key? k
-        rval_map[configuration_map[k]] = v
-      else
-        rval_map[k] = v
-      end
-    end
-    rval_map
-  end
-
   def calculate_fit_score(results, params_hash)
     params = params_hash.select do |key|
       SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
@@ -446,10 +394,6 @@ class SearchController < ApplicationController
     filter_builder = FilterBuilder.new
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
-  end
-
-  def get_suggested_school(spellcheck_hash)
-
   end
 
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map
