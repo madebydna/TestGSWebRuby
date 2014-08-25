@@ -25,5 +25,38 @@ describe 'Sorting search results' do
       expect(page).to have_content 'Sort by: Rating Fit'
     end
   end
+
+  context 'by location search' do
+
+    before do
+      set_up_by_location_search
+    end
+
+    it 'should display rating, distance and fit sorting, in that order' do
+      expect(page).to have_content 'Sort by: Rating Distance Fit'
+    end
+  end
+
+  context 'by name search' do
+
+    before do
+      set_up_by_name_search
+    end
+
+    it 'should display rating, distance and fit sorting, in that order' do
+      expect(page).to have_content 'Sort by: Relevance Rating Fit'
+    end
+  end
+
+  context 'no results' do
+
+    before do
+      set_up_by_name_search('xkcd')
+    end
+
+    it 'should not display sort options' do
+      expect(page).to_not have_content 'Sort by:'
+    end
+  end
 end
 
