@@ -168,11 +168,39 @@ describe UrlHelper do
       expect(result['a']).to include('b', 'c')
       expect(result['f']).to eq('g')
     end
+    it 'should put duplicate params into array dropping square brackets' do
+      result = url_helper.send :parse_array_query_string, 'a[]=b&a[]=c&f=g'
+      expect(result).to include('a','f')
+      expect(result['a']).not_to be_empty
+      expect(result['a']).to be_instance_of(Array)
+      expect(result['a']).to include('b', 'c')
+      expect(result['f']).to eq('g')
+    end
+    it 'should put duplicate params into array dropping encoded square brackets' do
+      result = url_helper.send :parse_array_query_string, 'a%5B%5D=b&a%5B%5D=c&f=g'
+      expect(result).to include('a','f')
+      expect(result['a']).not_to be_empty
+      expect(result['a']).to be_instance_of(Array)
+      expect(result['a']).to include('b', 'c')
+      expect(result['f']).to eq('g')
+    end
+    it 'should allow encoded square brackets as values' do
+      result = url_helper.send :parse_array_query_string, 'a%5B%5D=%5B%5D%3Db&a%5B%5D=c&f=g'
+      expect(result).to include('a','f')
+      expect(result['a']).not_to be_empty
+      expect(result['a']).to be_instance_of(Array)
+      expect(result['a']).to include('[]=b', 'c')
+      expect(result['f']).to eq('g')
+    end
     it 'should put put single params into strings' do
       result = url_helper.send :parse_array_query_string, 'a=b&c=5'
       expect(result).to include('a','c')
       expect(result['a']).to eq('b')
       expect(result['c']).to eq('5')
+    end
+    it 'should handle url encoding correctly' do
+      result = url_helper.send :parse_array_query_string, 'q=%25+a%20b+%2525c+%5B%5D%3D+%26foo%3Dbar'
+      expect(result['q']).to eq('% a b %25c []= &foo=bar')
     end
   end
 end

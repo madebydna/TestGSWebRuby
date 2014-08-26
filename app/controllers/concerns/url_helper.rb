@@ -235,8 +235,7 @@ module UrlHelper
   # parse a query string, adding repeat parameters into arrays
   # e.g. ?a=b&a=c returns {'a' => ['b','c']}
   def parse_array_query_string(query_string)
-    query_s = CGI.unescape(query_string)
-    query_s.gsub!( /\[\]/ , '')
+    query_s = query_string.gsub( /\[\]\=/ , '=').gsub('%5B%5D=', '=') # %5B%5D is []
     Rack::Utils.parse_query(query_s)
   end
   # Rack::Utils.parse_query does not handle rails style arrays
