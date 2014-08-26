@@ -24,8 +24,9 @@ GS.search.results = GS.search.results || (function() {
         var fields = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
 
         for (var i = 0; i < fields.length; i++) {
-            getParam(fields[i]) == undefined || (queryParamters[fields[i]] = encodeURIComponent(decodeURIComponent(getParam(fields[i]))))
+            getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i]));
         }
+
         GS.uri.Uri.addHiddenFieldsToForm(queryParamters, form);
 
         $(".js-distance-select-box").each(function(i) {

@@ -184,7 +184,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var defaultGeocodeCallbackFn = function(geocodeResult) {
         var searchOptions = jQuery.extend({}, geocodeResult);
-        searchOptions['locationSearchString'] = getSearchQuery();
+        searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
         var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
         if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
@@ -746,7 +746,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var collectionId = $(this).find('input#js-collectionId').val();
         var queryString = jQuery.extend({}, queryStringOptions);
 
-        queryString.q = searchString;
+        queryString.q = encodeURIComponent(searchString);
         if (typeof collectionId !== 'undefined') {
             queryString.collectionId = collectionId;
         }
@@ -757,6 +757,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
                 GS.uri.Uri.getQueryStringFromObject(queryString)); }, 1);
+        return false;
     };
 
     var showFiltersMenuOnLoad = function() {

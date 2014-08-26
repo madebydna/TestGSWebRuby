@@ -278,7 +278,7 @@ $(function() {
     var guidedGeocodeCallbackFn = function(geocodeResult) {
         var searchOptions = getSelectedFilterValues();
         searchOptions = jQuery.extend(searchOptions, geocodeResult);
-        searchOptions['locationSearchString'] = GS.search.schoolSearchForm.getSearchQuery();
+        searchOptions['locationSearchString'] = encodeURIComponent(GS.search.schoolSearchForm.getSearchQuery());
         // pull values from any selects here
         searchOptions['distance'] = $('#js-guided-distance').val() || 5;
         searchOptions['grades'] = $('#js-guided-grades').val();
