@@ -75,7 +75,7 @@ $(function() {
 
     });
 
-    $("body").on(clickOrTouchType,'.js-pull-down',function(){
+    $(".js-pull-down").on(clickOrTouchType, function(){
 
         var self=$(this);
         var gs_pull_down = self.data('pull-down-content');
@@ -106,7 +106,7 @@ $(function() {
 
     });
 
-    $("body").on(clickOrTouchType,'.js-gs-checkbox',function(){
+    $(".js-gs-checkbox").on(clickOrTouchType, function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
