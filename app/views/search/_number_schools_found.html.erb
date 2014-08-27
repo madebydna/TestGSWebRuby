@@ -1,8 +1,8 @@
 <span class="open-sans_sb fl font-size-block">
-  <%= pluralize(@total_results,'school') + ' found' %>
+  <%= pluralize(@total_results,'school', 'schools') + ' found' %>
   <% if @by_location %>
       <% if @radius %>
-          within <%= pluralize(@radius, 'mile') %> of <%= @search_term %>
+          within <%= pluralize(@radius, 'mile', 'miles') %> of <%= @search_term %>
       <% else %>
           near <%= @search_term %>
       <% end %>

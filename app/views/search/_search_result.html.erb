@@ -26,7 +26,7 @@
               <div class="fl">
                 <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
                   <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-                  <%= link_to pluralize(school.review_count, 'review'), school_reviews_page_url, class: 'font-size-small' %>
+                  <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
                 <% else %>
                   <em>No Community Reviews</em>
                 <% end %>
@@ -82,7 +82,7 @@
       <div class="fl">
       <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
         <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-        <%= link_to pluralize(school.review_count, 'review'), school_reviews_page_url, class: 'font-size-small' %>
+        <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
       <% else %>
         <em>No Community Reviews</em>
       <% end %>
