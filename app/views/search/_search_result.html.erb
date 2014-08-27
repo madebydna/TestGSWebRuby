@@ -1,3 +1,7 @@
+<% school_page_url = school_path(school) %>
+<% school_reviews_page_url = school_page_url + 'reviews/' %>
+<% school_quality_page_url = school_page_url + 'quality/' %>
+
 <div class="pam">
   <div class="row search-result-border prm bg-white">
     <div class="col-xs-12">
@@ -11,7 +15,7 @@
           <div class="mll fl">
             <div class="ptm notranslate">
               <div class="mtm hidden-xs"></div>
-              <div><%= link_to "#{school.name}", school_path(school), style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
+              <div><%= link_to "#{school.name}", school_page_url, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
               <div class="hidden-xs font-size-small"><%="#{school.street}, #{school.city} #{school.state.upcase} #{school.zip}"%></div>
               <div class="clearfix visible-xs font-size-small">
                 <div class="prs fl "><%= decorated_school.decorated_school_type %></div>
@@ -22,7 +26,7 @@
               <div class="fl">
                 <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
                   <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-                  <%= link_to pluralize(school.review_count, 'review'), school_reviews_path(school), class: 'font-size-small' %>
+                  <%= link_to pluralize(school.review_count, 'review'), school_reviews_page_url, class: 'font-size-small' %>
                 <% else %>
                   <em>No Community Reviews</em>
                 <% end %>
@@ -49,7 +53,7 @@
             <% end%>
             <!-- GS Rating -->
             <div class="col-xs-6 col-sm-4 mvl">
-              <%=link_to school_quality_path(school) do%>
+              <%=link_to school_quality_page_url do%>
               <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
               <div class="hidden-xs pts"></div>
               <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em">GreatSchools<br />Rating</span>
@@ -78,7 +82,7 @@
       <div class="fl">
       <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
         <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-        <%= link_to pluralize(school.review_count, 'review'), school_reviews_path(school), class: 'font-size-small' %>
+        <%= link_to pluralize(school.review_count, 'review'), school_reviews_page_url, class: 'font-size-small' %>
       <% else %>
         <em>No Community Reviews</em>
       <% end %>
