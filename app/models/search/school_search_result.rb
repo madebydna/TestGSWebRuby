@@ -8,10 +8,6 @@ class SchoolSearchResult
       before: :before_after_care,
       after: :before_after_care
     }.stringify_keys!,
-    transporation: {
-      public_transit: :Transportation,
-      provided_transit: :Transportation
-    }.stringify_keys!,
     school_focus: {
       arts: :academic_focus,
       science_tech: :instructional_model,
