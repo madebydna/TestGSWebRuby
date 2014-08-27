@@ -6,11 +6,11 @@ describe ExactTarget do
     expect { ExactTarget.new }.to_not raise_error
   end
 
-  it { should respond_to(:send_triggered_email) }
+  it { is_expected.to respond_to(:send_triggered_email) }
 
   it "captures the triggered send when send_triggered_email is called in test environment" do
     et = ExactTarget.new
-    et.should_receive(:capture_delivery)
+    expect(et).to receive(:capture_delivery)
     et.send_triggered_email("foo", "foo@example.com")
   end
 
