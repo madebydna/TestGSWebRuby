@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cities/_upcoming_events.html.erb' do
+describe 'shared/_upcoming_events.html.erb' do
   context 'without upcoming events' do
     it 'does not render an error message' do
       allow(view).to receive(:important_events) { nil }
