@@ -121,7 +121,7 @@ describe SigninController do
         let(:user) { instance_double(User) }
         subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
-          user.stub(:provisional?).and_return(false)
+          allow(user).to receive(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
         end
 
