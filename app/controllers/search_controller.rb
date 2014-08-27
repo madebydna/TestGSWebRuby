@@ -350,14 +350,14 @@ class SearchController < ApplicationController
     gon.map_points = @map_schools.map do |school|
       begin
         map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
-        map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
+        map_points[:communityRatingStars] = school.community_rating.nil? ? '' : (draw_stars_16 school.community_rating)
         map_points[:profileUrl] = "/#{@state[:long]}/city/#{school.id}-school"
         map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
         map_points[:zillowUrl] = zillow_url(school)
-        school.respond_to?(:latitude) ? map_points[:lat] = school.latitude : next
-        school.respond_to?(:longitude) ? map_points[:lng] = school.longitude : next
-        map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
-        map_points[:zIndex] = -1 if !school.on_page
+        school.latitude.nil? ? next : map_points[:lat] = school.latitude
+        school.longitude.nil? ? next : map_points[:lng] = school.longitude
+        map_points[:numReviews] = school.review_count.nil? ? 0 : school.review_count
+        map_points[:zIndex] = -1 unless school.on_page
         map_points
       rescue NoMethodError => e
         puts e.message

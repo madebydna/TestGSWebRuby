@@ -1,7 +1,12 @@
 class SchoolSearchResult
   include ActionView::Helpers::AssetTagHelper
 
-  attr_accessor :fit_score, :max_fit_score, :fit_score_breakdown, :on_page, :overall_gs_rating
+  attr_accessor :academic_focus, :arts_media, :arts_music, :arts_performing_written, :arts_visual, :before_after_care,
+                :boys_sports, :city, :community_rating, :distance, :dress_code, :enrollment, :fit_score,
+                :fit_score_breakdown, :foreign_language, :girls_sports, :id, :immersion_language, :instructional_model,
+                :latitude, :level, :level_code, :longitude, :max_fit_score, :name, :on_page, :overall_gs_rating,
+                :overall_gs_rating, :review_count, :school_media_first_hash, :state, :state_name, :street,
+                :transportation, :type, :zip, :zipcode
 
   SOFT_FILTER_FIELD_MAP = Hash.new({}).merge!({
     beforeAfterCare: {
@@ -74,13 +79,11 @@ class SchoolSearchResult
     @max_fit_score = 0
     @fit_score_breakdown = []
     @attributes = hash
-    @attributes.each do |k,v|
-      define_singleton_method k do v end
-    end
+    hash.each { |name, value| instance_variable_set("@#{name}", value) }
   end
 
   def preschool?
-    (respond_to?('level_code') && level_code == 'p')
+    (!level_code.nil? && level_code == 'p')
   end
 
   # Increments fit score for each matching key/value pair from params
@@ -114,7 +117,7 @@ class SchoolSearchResult
     filters = SOFT_FILTER_FIELD_MAP[param][value] || param
     filter_value_map = SOFT_FILTER_VALUE_MAP[param][value] || /^#{value}$/
     [*filters].each do |filter|
-      if filter && respond_to?(filter)
+      if filter && respond_to?(filter) && !send(filter).nil?
         search_result_value = send(filter)
         [*filter_value_map].each do |val|
           [*search_result_value].each { |v| return true if v.match(val) }
