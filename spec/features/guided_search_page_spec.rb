@@ -28,10 +28,10 @@ feature 'Guided Search Page' do
     it 'includes guided search navigation options' do
       # Navigation
       expect(page).to have_text('Get Started')
-      expect(page).to have_text('Child Care')
-      expect(page).to have_text('Dress Code')
-      expect(page).to have_text('School Focus')
-      expect(page).to have_text('Class Offerings')
+      expect(page).to have_text('Before/After care')
+      expect(page).to have_text('Dress code')
+      expect(page).to have_text('School focus')
+      expect(page).to have_text('Classes and activities')
       #Have Next Button
       expect(page).to have_css('.js-guided-search-next')
 
@@ -44,9 +44,10 @@ feature 'Guided Search Page' do
     end
 
     feature 'Navigating steps' do
-      pending 'Pending until Jenkins works with webkit'
       (1..5).each do |step|
         it "when I go to step #{step} by clicking next then I should see #{step - 1} completed steps", js:true do
+          pending 'Pending until Jenkins works with webkit. This also needs to be rewritten since the form has JS validation now.'
+          fail
           # save_and_open_page
           (step - 1).times.each { find(:css, ".js-guided-search-next").click }
           expect(page).to have_css('.js-tab-check.i-24-checkmark-on', count: step - 1 )
