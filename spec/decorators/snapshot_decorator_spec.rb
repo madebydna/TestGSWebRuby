@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SnapshotDecorator do
   let(:school) do
     s = FactoryGirl.build(:school)
-    s.stub(:district).and_return(FactoryGirl.build(:district))
+    allow(s).to receive(:district).and_return(FactoryGirl.build(:district))
     s
   end
   subject(:snapshot_decorator) do
