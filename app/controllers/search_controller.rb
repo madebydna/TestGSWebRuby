@@ -351,12 +351,11 @@ class SearchController < ApplicationController
       begin
         map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
         map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
-        map_points[:profileUrl] = school_path(school)
-        map_points[:reviewUrl] = school_reviews_path(school)
+        map_points[:profileUrl] = "/#{@state[:long]}/city/#{school.id}-school"
+        map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
         map_points[:zillowUrl] = zillow_url(school)
         school.respond_to?(:latitude) ? map_points[:lat] = school.latitude : next
         school.respond_to?(:longitude) ? map_points[:lng] = school.longitude : next
-        map_points[:zillowUrl] = zillow_url(school)
         map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
         map_points[:zIndex] = -1 if !school.on_page
         map_points
