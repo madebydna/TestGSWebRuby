@@ -12,9 +12,9 @@ describe PaginationConcerns do
 
   describe '#set_page_instance_variables' do
     before do
-      controller.stub(:results_offset)
-      controller.stub(:page_size)
-      controller.stub(:page_number)
+      allow(controller).to receive(:results_offset)
+      allow(controller).to receive(:page_size)
+      allow(controller).to receive(:page_number)
     end
     [:@results_offset, :@page_size, :@page_number].each do |var|
       it "should set #{var.to_s} instance variable" do
