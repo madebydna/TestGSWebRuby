@@ -72,7 +72,7 @@ gem 'has_scope'
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
 # Rails 4
-gem 'draper', '~> 1.3'
+gem 'draper', '~> 1.3.1'
 
 gem 'addressable'
 
