@@ -1,4 +1,6 @@
 GS.search = GS.search || {};
+GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
+GS.window.sizing.width = GS.window.sizing.width || {};
 GS.search.googleMap = GS.search.googleMap || (function() {
 
     var needsInit = true;
@@ -26,6 +28,16 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
           var initialize = function (points) {
               var isdraggable = true;
+
+              var isZoomControl = function(){
+
+                if(((GS.window.sizing.width)()) <= GS.window.sizing.maxMobileWidth){
+                    return false;
+                }else{
+                    return true;
+                }
+              };
+
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -34,12 +46,12 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   mapTypeControlOptions: {
                       mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
                   },
-                  zoomControl: true,
+                  zoomControl: isZoomControl(),
                   zoomControlOptions: {
                       style: google.maps.ZoomControlStyle.DEFAULT
                   },
-                  streetViewControl: true,
-                  panControl: true,
+                  streetViewControl: false,
+                  panControl: false,
                   scrollwheel: false,
                   draggable: isdraggable,
                   zoom: 12,
@@ -167,8 +179,6 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                       return function () {
                           infoWindow.setContent(getInfoWindowMarkup(point));
                           infoWindow.open(GS.search.map, marker);
-                          infoWindow.setCenter(marker.getPosition());
-
                       }
                   })(marker, point));
 
