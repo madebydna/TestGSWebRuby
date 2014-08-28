@@ -31,9 +31,9 @@ module UrlHelper
     .gsub('#', '')
     .gsub('`', '')
 
-    # Replaces non-ASCII characters with an ASCII approximation, or if none exists,
-    # a replacement character which defaults to “?”
-    param = ActiveSupport::Inflector.transliterate param, ''
+    # Transliterates UTF-8 characters to ASCII. By default this method will
+    # transliterate only Latin strings to an ASCII approximation:
+    param = I18n.transliterate(param)
 
     param.gs_capitalize_words!
 

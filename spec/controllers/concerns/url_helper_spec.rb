@@ -203,4 +203,36 @@ describe UrlHelper do
       expect(result['q']).to eq('% a b %25c []= &foo=bar')
     end
   end
+
+  describe '#encode_school_name' do
+    it 'should transliterate the input' do
+      input = "Ca\u00F1ada"
+      expect(url_helper.send(:encode_school_name, input)).to eq('Canada')
+    end
+
+    {
+      ' ' => '-',
+      '/' => '-',
+      '#' => '',
+      '`' => '',
+      '[' => ''   # Character [ will get url-encoded, and then removed
+    }.each_pair do |match, replacement|
+      it "should replace '#{match}' with '#{replacement}'" do
+        input = "Foo#{match}Bar"
+        expect(url_helper.send(:encode_school_name, input)).
+          to eq("Foo#{replacement}Bar")
+      end
+    end
+
+    it "should capitalize each word of the input" do
+      input = "la canada"
+      expect(url_helper.send(:encode_school_name, input)).to eq('La-Canada')
+    end
+
+    it 'should remove transliterated accent marks' do
+      input = "N\u00E0auao"
+      expect(url_helper.send(:encode_school_name, input)).
+        to eq('Naauao')
+    end
+  end
 end
