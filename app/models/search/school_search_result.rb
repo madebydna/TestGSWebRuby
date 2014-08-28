@@ -2,7 +2,7 @@ class SchoolSearchResult
   include ActionView::Helpers::AssetTagHelper
 
   attr_accessor :academic_focus, :arts_media, :arts_music, :arts_performing_written, :arts_visual, :before_after_care,
-                :boys_sports, :city, :community_rating, :distance, :dress_code, :enrollment, :fit_score,
+                :boys_sports, :city, :community_rating, :database_state, :distance, :dress_code, :enrollment, :fit_score,
                 :fit_score_breakdown, :foreign_language, :girls_sports, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :max_fit_score, :name, :on_page, :overall_gs_rating,
                 :overall_gs_rating, :review_count, :school_media_first_hash, :state, :state_name, :street,
