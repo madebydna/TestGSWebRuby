@@ -42,6 +42,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         $('.js-prototypeSearchForm').submit(function() {
             var input = $(this).find(prototypeSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
+            isAddress(input.value);
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};
