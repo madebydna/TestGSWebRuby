@@ -4,9 +4,8 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
 
   def query_results
     @query_results ||= (
-    results = CensusDataSet.fetch_census_values(school, 1).select do |result|
-      data_type_id = result.data_type_id
-    end
+    reader = CensusDataReader.new(school)
+    results = reader.all_raw_data(characteristics_data_types.keys)
     results.map { |obj| CharacteristicsCaching::QueryResultDecorator.new(school.state, obj) }
     )
   end

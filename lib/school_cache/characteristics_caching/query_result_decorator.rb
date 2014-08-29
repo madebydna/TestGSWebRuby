@@ -42,31 +42,31 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def school_value
-    self['school_value_text'] || self['school_value_float']
+    data_set_with_values.school_value
   end
 
   def state_value
-    self['state_value_text'] || self['state_value_float']
+    data_set_with_values.state_value
   end
 
   def breakdown_id
-    self['breakdown_id']
+    data_set_with_values.breakdown_id
   end
 
   def subject_id
-    self['subject_id']
+    data_set_with_values.subject_id
   end
 
   def data_set_id
-    self['id']
+    data_set_with_values.id
   end
 
   def grade
-    self['grade'] || 'no_grade_specified'
+    data_set_with_values.grade || 'no_grade_specified'
   end
 
   def level_code
-    LevelCode.new(self['level_code'])
+    LevelCode.new(data_set_with_values.level_code)
   end
 
   def subject
@@ -77,11 +77,11 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def data_type_id
-    self['data_type_id']
+    data_set_with_values.data_type_id
   end
 
   def year
-    self['year']
+    data_set_with_values.year
   end
 
 end
