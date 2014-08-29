@@ -50,7 +50,7 @@ class SchoolRating < ActiveRecord::Base
 
   before_save :calculate_and_set_status, unless: '@moderated == true'
   before_save :set_processed_date_if_published
-  after_save :auto_report_bad_language, unless: '@moderated == true'
+  after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
 
   def self.cache_time
@@ -197,8 +197,10 @@ class SchoolRating < ActiveRecord::Base
     self.status = status
   end
 
-  def auto_report_bad_language
+  def auto_moderate
     alert_word_results = AlertWord.search(review_text)
+
+    reason = nil
 
     if alert_word_results.any?
       reason = 'Review contained '
@@ -211,7 +213,16 @@ class SchoolRating < ActiveRecord::Base
       if alert_word_results.has_really_bad_words?
         reason << "really bad words (#{ alert_word_results.really_bad_words.join(',') })"
       end
+    end
 
+    if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
+      if reason.nil?
+        reason = "Review is for GreatSchools Delaware school."
+      else
+        reason << " Review is for GreatSchools Delaware school."
+      end
+    end
+    if reason
       report = ReportedEntity.from_review(self, reason)
 
       begin
