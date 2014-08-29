@@ -3,13 +3,13 @@ def usage
     "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
 end
 
-usage unless ARGV[0] && ['all','ratings','test_scores'].include?(ARGV[0])
+usage unless ARGV[0] && ['all','ratings','test_scores', 'characteristics'].include?(ARGV[0])
 
 states = States.abbreviations
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
 cache_key_arg= ARGV[0]
-all_cache_keys=['ratings','test_scores']
+all_cache_keys=['ratings','test_scores','characteristics']
 
 @@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
 @@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
@@ -82,6 +82,11 @@ end
 def self.test_scores_cache_for_school(school)
   test_scores_cacher = TestScoresCaching::BreakdownsCacher.new(school)
   test_scores_cacher.cache
+end
+
+def self.characteristics_cache_for_school(school)
+  characteristics_cacher = CharacteristicsCaching::CharacteristicsCacher.new(school)
+  characteristics_cacher.cache
 end
 
 keys = []

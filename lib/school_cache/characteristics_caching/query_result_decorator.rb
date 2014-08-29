@@ -11,15 +11,13 @@ class CharacteristicsCaching::QueryResultDecorator
 
   def to_hash(data_set_and_value)
     {
-        data_type_id: data_type_id,
         characteristic_label: characteristic_label,
-        characteristic_source: characteristic_source,
+        #characteristic_source: characteristic_source,
         grade: grade,
-        grade_label:  grade_label,
         subject: subject,
         year: year,
-        characteristic_value: characteristic_value,
-        state_value: state_value,
+        characteristic_value: school_value,
+        state_average: state_value,
         breakdown_name: breakdown_name
     }.merge(test_description_hash)
   end
@@ -39,7 +37,7 @@ class CharacteristicsCaching::QueryResultDecorator
     breakdown.breakdown if breakdown
   end
 
-  def characteristic_value
+  def school_value
     self['school_value_text'] || self['school_value_float']
   end
 
@@ -55,20 +53,8 @@ class CharacteristicsCaching::QueryResultDecorator
     self['subject_id']
   end
 
-  def grade_label
-    grade_label = "GRADE " + grade.value.to_s
-    if grade.name && grade.name.start_with?('All')
-      if level_code.levels.size >= 3
-        grade_label = "School-wide"
-      else
-        grade_label = level_code.levels.collect(&:long_name).join(" and ") + " school"
-      end
-    end
-    grade_label
-  end
-
   def grade
-    Grade.from_string(self['grade'])
+    self['grade']
   end
 
   def level_code
