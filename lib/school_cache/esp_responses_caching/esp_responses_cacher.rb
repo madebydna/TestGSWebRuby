@@ -1,6 +1,6 @@
 class EspResponsesCaching::EspResponsesCacher < Cacher
 
-  CACHE_KEY = 'esp_response'
+  CACHE_KEY = 'esp_responses'
 
   def query_results
     @query_results ||= (

@@ -1,19 +1,19 @@
+cache_key_arg= ARGV[0]
+states_arg=ARGV[1]
+school_ids_arg=ARGV[2]
+
+def all_cache_keys
+  ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot']
+end
+
 def usage
-  abort "USAGE: rails runner script/populate_school_cache_table (all|ratings|test_scores) [state] [school id].\n" +
+  abort "USAGE: rails runner script/populate_school_cache_table (all|#{all_cache_keys.join('|')}) [state] [school id].\n" +
     "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
 end
 
-usage unless ARGV[0] && ['all','ratings','test_scores', 'characteristics', 'esp_response', 'reviews_snapshot'].include?(ARGV[0])
+usage unless cache_key_arg && (all_cache_keys + ['all']).include?(cache_key_arg)
 
 states = States.abbreviations
-states_arg=ARGV[1]
-school_ids_arg=ARGV[2]
-cache_key_arg= ARGV[0]
-all_cache_keys=['ratings','test_scores','characteristics', 'esp_response', 'reviews_snapshot']
-
-@@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
-@@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
-@@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
 
 def self.create_cache(school, cache_key)
   if (school.active?)
@@ -89,8 +89,8 @@ def self.characteristics_cache_for_school(school)
   characteristics_cacher.cache
 end
 
-def self.esp_response_cache_for_school(school)
-  esp_response_cacher = EspResponseCaching::EspResponseCacher.new(school)
+def self.esp_responses_cache_for_school(school)
+  esp_response_cacher = EspResponsesCaching::EspResponsesCacher.new(school)
   esp_response_cacher.cache
 end
 
