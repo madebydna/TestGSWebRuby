@@ -12,7 +12,7 @@ class CharacteristicsCaching::QueryResultDecorator
   def to_hash(data_set_and_value)
     {
         characteristic_label: characteristic_label,
-        #characteristic_source: characteristic_source,
+        characteristic_source: characteristic_source,
         grade: grade,
         subject: subject,
         year: year,
@@ -22,8 +22,8 @@ class CharacteristicsCaching::QueryResultDecorator
     }.merge(test_description_hash)
   end
 
-  def test_source
-    description_obj = TestScoresCaching::Base.test_descriptions["#{data_type_id}#{state}"]
+  def characteristic_source
+    description_obj = CharacteristicsCaching::Base.characteristics_descriptions["#{data_set_id}#{state}"]
     description_obj.source if description_obj
   end
 
@@ -34,7 +34,11 @@ class CharacteristicsCaching::QueryResultDecorator
 
   def breakdown_name
     breakdown = CharacteristicsCaching::Base.characteristics_data_breakdowns[breakdown_id]
-    breakdown.breakdown if breakdown
+    if breakdown
+      breakdown.breakdown
+    else
+      'no_breakdown_specified'
+    end
   end
 
   def school_value
@@ -53,8 +57,12 @@ class CharacteristicsCaching::QueryResultDecorator
     self['subject_id']
   end
 
+  def data_set_id
+    self['id']
+  end
+
   def grade
-    self['grade']
+    self['grade'] || 'no_grade_specified'
   end
 
   def level_code
@@ -65,7 +73,7 @@ class CharacteristicsCaching::QueryResultDecorator
     subject = TestScoresCaching::Base.test_data_subjects[subject_id]
     display_name = subject.name if subject
     display_name += ' subjects' if display_name == 'All'
-    display_name
+    display_name || 'no_subject_specified'
   end
 
   def data_type_id

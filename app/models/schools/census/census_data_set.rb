@@ -49,7 +49,7 @@ class CensusDataSet < ActiveRecord::Base
                                                         }
                                                     })
     CensusDataSet.on_db(school.shard)
-    .select('*,census_data_set.id as data_set_id,
+    .select('*,census_data_set.id as id,
       census_data_state_value.value_float as state_value_float,
       census_data_state_value.value_text as state_value_text,
       census_data_school_value.value_float as school_value_float,

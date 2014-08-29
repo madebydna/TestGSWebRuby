@@ -31,18 +31,13 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
     {
         characteristic.characteristic_label => {
             characteristic.year => {
-                #test_source: characteristic.test_source,
                 grades: {
                     characteristic.grade => {
-                        source: {
-                        characteristic.breakdown_name => {
-                            level_code: {
+                        characteristic.characteristic_source => {
+                            characteristic.breakdown_name => {
                                 characteristic.level_code.to_s => {
-                                    characteristic.subject => {
-                                        characteristic.year => innermost_hash(characteristic)
-                                    }
+                                    characteristic.subject => innermost_hash(characteristic)
                                 }
-                            }
                             }
                         }
                     }
