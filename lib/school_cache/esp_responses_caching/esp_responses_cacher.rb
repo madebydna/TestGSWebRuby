@@ -1,4 +1,4 @@
-class EspResponseCaching::EspResponseCacher < Cacher
+class EspResponsesCaching::EspResponsesCacher < Cacher
 
   CACHE_KEY = 'esp_response'
 

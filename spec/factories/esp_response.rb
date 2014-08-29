@@ -4,7 +4,7 @@ FactoryGirl.define do
     association :school, factory: :school, strategy: :build
     association :user, factory: :user, strategy: :build
     response_key 'a_key'
-    response_value 'a value'
+    sequence(:response_value) { |n| "#{n} value"}
     esp_source 'osp'
     active 1
     created Time.zone.now
