@@ -1,0 +1,12 @@
+<% school_page_url = school_path(@school) %>
+<% school_reviews_page_url = school_page_url + 'reviews/' %>
+<% school_quality_page_url = school_page_url + 'quality/' %>
+
+<div class="mam">
+  <% #ToDo make own decorator and do not use draper %>
+  <% decorated_school = SchoolSearchResultDecorator.decorate(@school) %>
+  <div><%= link_to "#{@school.name}", school_page_url, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div><br>
+  <div><%= decorated_school.decorated_school_type %> | <%= decorated_school.process_level %></div><br>
+  <div><%= draw_stars_16 5 %></div>
+  <%= link_to pluralize(11, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
+</div>

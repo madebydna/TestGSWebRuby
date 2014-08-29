@@ -1,2 +1,8 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
 Compare Schools
+
+<% if @schools.present? %>
+  <%= render 'compare_schools/compare_schools_list'%>
+<% end %>
+
+<%= render 'shared/home_footer'%>
