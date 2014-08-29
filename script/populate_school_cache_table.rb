@@ -3,13 +3,13 @@ def usage
     "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
 end
 
-usage unless ARGV[0] && ['all','ratings','test_scores', 'characteristics', 'esp_response'].include?(ARGV[0])
+usage unless ARGV[0] && ['all','ratings','test_scores', 'characteristics', 'esp_response', 'reviews_snapshot'].include?(ARGV[0])
 
 states = States.abbreviations
 states_arg=ARGV[1]
 school_ids_arg=ARGV[2]
 cache_key_arg= ARGV[0]
-all_cache_keys=['ratings','test_scores','characteristics', 'esp_response']
+all_cache_keys=['ratings','test_scores','characteristics', 'esp_response', 'reviews_snapshot']
 
 @@test_data_types = Hash[TestDataType.all.map { |f| [f.id, f] }]
 @@test_descriptions = Hash[TestDescription.all.map { |f| [f.data_type_id.to_s+f.state, f] }]
@@ -91,6 +91,11 @@ end
 
 def self.esp_response_cache_for_school(school)
   esp_response_cacher = EspResponseCaching::EspResponseCacher.new(school)
+  esp_response_cacher.cache
+end
+
+def self.reviews_snapshot_cache_for_school(school)
+  esp_response_cacher = ReviewsCaching::ReviewsSnapshotCacher.new(school)
   esp_response_cacher.cache
 end
 
