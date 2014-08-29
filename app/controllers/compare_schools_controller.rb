@@ -27,7 +27,40 @@ class CompareSchoolsController < ApplicationController
             { display_type: 'quality/college_readiness' },
             { display_type: 'quality/add_to_my_schools_list' }
           ]
-        }
+        },
+        {
+          display_type: 'blank_container',
+          children: [
+            {
+              display_type: 'subtitle',
+              opt: {
+                label: 'Fit Criteria'
+              }
+            }
+          ]
+        },
+        {
+          display_type: 'blank_container',
+          children: [
+            {
+              display_type: 'subtitle',
+              opt: {
+                label: 'Reviews'
+              }
+            }
+          ]
+        },
+        {
+          display_type: 'blank_container',
+          children: [
+            {
+              display_type: 'subtitle',
+              opt: {
+                label: 'Details'
+              }
+            }
+          ]
+        },
       ]
     }
 
