@@ -12,38 +12,30 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
 
   def build_hash_for_cache
     hash = {}
-    query_results.map do |data_set_and_value|
-      hash.deep_merge!(build_hash_for_data_set(data_set_and_value))
+    query_results.each do |characteristic|
+      unless hash.key? characteristic.label
+        hash[characteristic.label] = []
+      end
+      additional_data = build_hash_for_data_set(characteristic)
+      hash[characteristic.label] << additional_data if additional_data
     end
-
     hash
   end
 
-  def innermost_hash(characteristic)
-    {
-        value: characteristic.school_value,
-        state_average: characteristic.state_value,
-    }
+  def build_hash_for_data_set(characteristic)
+    return nil unless characteristic.school_value || characteristic.state_average
+    hash = {}
+    data_keys.each do |key|
+      value = characteristic.send(key)
+      if value
+        hash[key] = value
+      end
+    end
+    hash
   end
 
-  def build_hash_for_data_set(characteristic)
-    {
-        characteristic.characteristic_label => {
-            characteristic.year => {
-                grades: {
-                    characteristic.grade => {
-                        characteristic.characteristic_source => {
-                            characteristic.breakdown_name => {
-                                characteristic.level_code.to_s => {
-                                    characteristic.subject => innermost_hash(characteristic)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+  def data_keys
+    [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average]
   end
 
 end

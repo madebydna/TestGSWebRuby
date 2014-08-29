@@ -9,43 +9,26 @@ class CharacteristicsCaching::QueryResultDecorator
     @state = state
   end
 
-  def to_hash
-    {
-        characteristic_label: characteristic_label,
-        characteristic_source: characteristic_source,
-        grade: grade,
-        subject: subject,
-        year: year,
-        characteristic_value: school_value,
-        state_average: state_value,
-        breakdown_name: breakdown_name
-    }
-  end
-
-  def characteristic_source
+  def source
     description_obj = CharacteristicsCaching::Base.characteristics_descriptions["#{data_set_id}#{state}"]
     description_obj.source if description_obj
   end
 
-  def characteristic_label
+  def label
     data_type = CharacteristicsCaching::Base.characteristics_data_types[data_type_id]
     data_type.description if data_type
   end
 
-  def breakdown_name
+  def breakdown
     breakdown = CharacteristicsCaching::Base.characteristics_data_breakdowns[breakdown_id]
-    if breakdown
-      breakdown.breakdown
-    else
-      'no_breakdown_specified'
-    end
+    breakdown.breakdown if breakdown
   end
 
   def school_value
     data_set_with_values.school_value
   end
 
-  def state_value
+  def state_average
     data_set_with_values.state_value
   end
 
@@ -62,18 +45,14 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def grade
-    data_set_with_values.grade || 'no_grade_specified'
-  end
-
-  def level_code
-    LevelCode.new(data_set_with_values.level_code)
+    data_set_with_values.grade
   end
 
   def subject
     subject = TestScoresCaching::Base.test_data_subjects[subject_id]
     display_name = subject.name if subject
     display_name += ' subjects' if display_name == 'All'
-    display_name || 'no_subject_specified'
+    display_name
   end
 
   def data_type_id
