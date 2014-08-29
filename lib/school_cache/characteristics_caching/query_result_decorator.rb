@@ -9,7 +9,7 @@ class CharacteristicsCaching::QueryResultDecorator
     @state = state
   end
 
-  def to_hash(data_set_and_value)
+  def to_hash
     {
         characteristic_label: characteristic_label,
         characteristic_source: characteristic_source,
@@ -19,7 +19,7 @@ class CharacteristicsCaching::QueryResultDecorator
         characteristic_value: school_value,
         state_average: state_value,
         breakdown_name: breakdown_name
-    }.merge(test_description_hash)
+    }
   end
 
   def characteristic_source
