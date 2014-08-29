@@ -11,14 +11,14 @@ describe EspResponsesCaching::EspResponsesCacher do
       allow_any_instance_of(EspResponsesCaching::EspResponsesCacher).to receive(:query_results).and_return(esp_response)
       expected = {
           'a_key' => {
-              '1 value' => {
-                  member_id: 1,
-                  source: 'osp',
+              "#{esp_response.first.response_value}" => {
+                  member_id: esp_response.first.member_id,
+                  source: esp_response.first.esp_source,
                   created: esp_response.first.created
               },
-              '2 value' => {
-                  member_id: 2,
-                  source: 'osp',
+              "#{esp_response.last.response_value}" => {
+                  member_id: esp_response.last.member_id,
+                  source: esp_response.last.esp_source,
                   created: esp_response.last.created
               }
           }
