@@ -8,12 +8,6 @@ class TestScoresCaching::Base < Cacher
 
   cattr_accessor :test_data_types, :test_data_breakdowns, :test_descriptions, :proficiency_bands, :test_data_subjects
 
-  attr_accessor :school
-
-  def initialize(school)
-    @school = school
-  end
-
   def test_data_types
     @@test_data_types
   end

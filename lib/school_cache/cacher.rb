@@ -1,5 +1,11 @@
 class Cacher
 
+  attr_accessor :school
+
+  def initialize(school)
+    @school = school
+  end
+
   def cache
     final_hash = build_hash_for_cache
 

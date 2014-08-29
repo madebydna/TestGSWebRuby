@@ -6,12 +6,6 @@ class CharacteristicsCaching::Base < Cacher
 
   cattr_accessor :characteristics_data_types, :characteristics_data_breakdowns, :characteristics_descriptions
 
-  attr_accessor :school
-
-  def initialize(school)
-    @school = school
-  end
-
   def characteristics_data_types
     @@characteristics_data_types
   end
