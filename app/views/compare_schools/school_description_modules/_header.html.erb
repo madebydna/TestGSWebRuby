@@ -7,6 +7,23 @@
   <% decorated_school = SchoolCompareDecorator.decorate(@school) %>
   <div><%= link_to "#{@school.name}", school_page_path, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div><br>
   <div><%= decorated_school.decorated_school_type %> | <%= decorated_school.process_level %></div><br>
-  <div><%= draw_stars_16 decorated_school.star_rating %></div>
+  <div><%= draw_stars_16(decorated_school.star_rating) %></div>
   <%= link_to pluralize(decorated_school.num_reviews, 'review', 'reviews'), school_reviews_page_path, class: 'font-size-small' %>
+  <br>
+  enrollment: <%= number_with_delimiter(decorated_school.enrollment, :delimiter => ',') %>
+  <br>
+  transportation: <%= decorated_school.transportation %>
+  <br>
+  before: <%= decorated_school.before_after_care('before') %>
+  <br>
+  after: <%= decorated_school.before_after_care('after') %>
+  <br>
+  clubs: <%= decorated_school.num_clubs %>
+  <br>
+  sports: <%= decorated_school.num_sports %>
+  <br>
+  language: <%= decorated_school.num_languages %>
+  <br>
+  arts: <%= decorated_school.num_arts_music %>
+  <br>
 </div>
