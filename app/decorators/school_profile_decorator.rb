@@ -12,6 +12,16 @@ class SchoolProfileDecorator < Draper::Decorator
     school.type.gs_capitalize_first
   end
 
+  def decorated_school_type
+    if type == 'Charter'
+      'Public charter'
+    elsif type == 'Public'
+      'Public district'
+    else
+      'Private'
+    end
+  end
+
   def photo(width = 130, height = 130)
     uploaded_photo(height) || street_view_photo(width, height)
   end

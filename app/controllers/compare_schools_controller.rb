@@ -2,7 +2,7 @@ class CompareSchoolsController < ApplicationController
 
   def show
 
-    @schools = School.on_db(:ca).find(1), School.on_db(:ca).find(2), School.on_db(:ca).find(3)
+    @schools = School.on_db(:de).find(3), School.on_db(:de).find(4), School.on_db(:de).find(6)
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
 
   end
