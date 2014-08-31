@@ -7,8 +7,9 @@
         <% end %>
     <% end %>
   <% end %>
-  <% @schools.each do | school | %>
+  <% @schools.each_with_index do | school, index| %>
     <% @school = school %>
+    <% @index = index %>
     <% lam.call(@school_compare_config) %>
   <% end %>
 </div>
