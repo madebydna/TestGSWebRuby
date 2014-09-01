@@ -5,14 +5,14 @@ GS.search.results = GS.search.results || (function() {
 
 //  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {
-        $('.js-submitSearchFiltersForm').on(clickOrTouchType, function(){
+        $('.js-submitSearchFiltersForm').on('click', function(){
             var form = $('.js-searchFiltersFormParent').children('.js-searchFiltersForm');
             buildAndSendFiltersForm($(form))
         });
     };
 
     var searchFiltersFormSubmissionMobileHandler = function() {
-        $('.js-submitSearchFiltersFormMobile').on(clickOrTouchType, function(){
+        $('.js-submitSearchFiltersFormMobile').on('click', function(){
             var form = $('.js-searchFiltersFormParentMobile').children('.js-searchFiltersForm');
             buildAndSendFiltersForm($(form))
         });
@@ -49,7 +49,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $(".js-advancedFilters").on(clickOrTouchType, function () {
+        $(".js-advancedFilters").on('click', function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');

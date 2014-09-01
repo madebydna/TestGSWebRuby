@@ -94,7 +94,7 @@ $(document).ready(function () {
             }
         }
     );
-    elemMapViewMobileToggle.on(clickOrTouchType, function() {
+    elemMapViewMobileToggle.on('click', function() {
         var currentlyVisible = (elemMapCanvas.filter(":visible").length == 1);
         if (currentlyVisible) {
             hideMapView();
