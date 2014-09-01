@@ -236,7 +236,7 @@ module MetaTagsHelper
       canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
     end
     {
-        title: "GreatSchools.org Search #{@params_hash['q']}",
+        title: "GreatSchools.org Search: #{@params_hash['q']}",
         canonical: (canonical_url ||= state_url(@state[:long])).downcase
     }
   end
