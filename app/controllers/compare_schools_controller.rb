@@ -5,17 +5,20 @@ class CompareSchoolsController < ApplicationController
   def show
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
 
-    @params_schools = params[:school_ids].split(',').uniq
-    @state = :de
-    @cache_data = cache_data
     @schools = []
-    @params_schools.each do |id|
-      if @schools.size < 4
-        begin
-          school = School.on_db(@state).find(id)
-          @schools << SchoolCompareDecorator.new(school, context: @cache_data[id.to_i])
-        rescue
-          Rails.logger.error "Compare: no school found in state #{@state} with id #{id}"
+    if params[:school_ids]
+      @params_schools = params[:school_ids].split(',').uniq
+      @state = :de
+      @cache_data = cache_data
+      @params_schools.each do |id|
+        if @schools.size < 4
+          begin
+            school = School.on_db(@state).find(id)
+            next unless school.active == 1
+            @schools << SchoolCompareDecorator.new(school, context: @cache_data[id.to_i])
+          rescue
+            Rails.logger.error "Compare: no school found in state #{@state} with id #{id}"
+          end
         end
       end
     end
