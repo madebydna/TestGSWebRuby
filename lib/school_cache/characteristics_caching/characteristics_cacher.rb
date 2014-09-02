@@ -28,7 +28,11 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
     data_keys.each do |key|
       value = characteristic.send(key)
       if value
-        hash[key] = value
+        if characteristic.data_set_with_values.census_data_config_entry && key == :breakdown
+          hash[key] = characteristic.data_set_with_values.census_data_config_entry.label
+        else
+          hash[key] = value
+        end
       end
     end
     hash
