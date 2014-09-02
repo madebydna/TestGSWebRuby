@@ -4,37 +4,34 @@ GS.search.results = GS.search.results || (function() {
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
     var searchFiltersFormSubmissionHandler = function() {
-        $('.js-submitSearchFiltersForm').on('click', function(){
-            var path = getQueryPath();
-            var form = $('.js-searchFiltersFormParent').children('.js-searchFiltersForm');
-            var query = buildQuery(form);
-            GS.uri.Uri.goToPage(path + query)
-        });
+        var $button = $('.js-submitSearchFiltersForm');
+        var $form = $('.js-searchFiltersFormParent').find('.js-searchFiltersForm');
+        formSubmissionHandler($button, $form)
     };
 
     var searchFiltersFormSubmissionMobileHandler = function() {
-        $('.js-submitSearchFiltersFormMobile').on('click', function(){
+        var $button = $('.js-submitSearchFiltersFormMobile');
+        var $form = $('.js-searchFiltersFormParentMobile').find('.js-searchFiltersForm');
+        formSubmissionHandler($button, $form)
+    };
+
+    var formSubmissionHandler = function($button, $form) {
+        $button.on('click', function(){
             var path = getQueryPath();
-            var form = $('.js-searchFiltersFormParentMobile').children('.js-searchFiltersForm');
-            var query = buildQuery(form);
+            var query = buildQuery($form);
             GS.uri.Uri.goToPage(path + query)
         });
     };
 
-    var buildQuery = function(form) {
+    var buildQuery = function($form) {
+        var queryString = GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+
         var getParam = GS.uri.Uri.getFromQueryString;
-        var distanceSelectBox = form.find('.js-distance-select-box');
-        var fields = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
-        var queryString = '';
-
-        for (var i = 0; i < fields.length; i++) {
-            getParam(fields[i]) == undefined || (queryString += '&' + fields[i] + '=' + getParam(fields[i]));
-        }
-
-        queryString += GS.uri.Uri.getQueryStringFromFormElements(form.find('input'));
-
-        if (distanceSelectBox.length > 0) {
-            queryString += GS.uri.Uri.getQueryStringFromFormElements(distanceSelectBox)
+        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
+        for (var i = 0; i < urlParamsToPreserve.length; i++) {
+            if (getParam(urlParamsToPreserve[i]) != undefined) {
+                queryString += '&' + urlParamsToPreserve[i] + '=' + getParam(urlParamsToPreserve[i]);
+            }
         }
 
         if (queryString.length > 0) {
@@ -88,7 +85,6 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
-    var closeMenuHandlerSet = false;
 
     var closeMenuHandler = function() {
         $('html').on(clickOrTouchType, function () {
@@ -97,10 +93,12 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchResultFitScoreTogglehandler = function() {
+        var closeMenuHandlerSet = false;
+
         $('.js-searchResultDropdown').on(clickOrTouchType, function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
-                offset = getFitScorePopupOffset.call(this, popup);
+                var offset = getFitScorePopupOffset.call(this, popup);
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
@@ -176,28 +174,25 @@ GS.search.results = GS.search.results || (function() {
         return GS.uri.Uri.getPath();
     };
 
+    var init = function() {
+        searchFiltersFormSubmissionHandler();
+        searchFiltersFormSubmissionMobileHandler();
+        toggleAdvancedFiltersMenuHandler();
+        searchFiltersMenuHandler();
+        searchFilterMenuMobileHandler();
+        searchResultFitScoreTogglehandler();
+        searchSortingSelectTagHandler();
+        setSearchFilterMenuMobileOffsetFromTop();
+    };
+
     return {
-        searchFiltersFormSubmissionHandler:searchFiltersFormSubmissionHandler,
-        searchFiltersFormSubmissionMobileHandler: searchFiltersFormSubmissionMobileHandler,
-        sortBy: sortBy,
-        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler,
-        searchFilterDropdownHandler: searchFiltersMenuHandler,
-        searchFilterMenuMobileHandler: searchFilterMenuMobileHandler,
-        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
-        searchSortingSelectTagHandler: searchSortingSelectTagHandler,
-        setSearchFilterMenuMobileOffsetFromTop: setSearchFilterMenuMobileOffsetFromTop
+        init: init,
+        sortBy: sortBy
     };
 })();
 
 $(document).ready(function() {
     if($('.js-submitSearchFiltersForm').length > 0){
-        GS.search.results.searchFiltersFormSubmissionHandler();
-        GS.search.results.searchFiltersFormSubmissionMobileHandler();
-        GS.search.results.toggleAdvancedFiltersMenuHandler();
-        GS.search.results.searchFilterDropdownHandler();
-        GS.search.results.searchFilterMenuMobileHandler();
-        GS.search.results.searchResultFitScoreTogglehandler();
-        GS.search.results.searchSortingSelectTagHandler();
-        GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
+        GS.search.results.init();
     }
 });

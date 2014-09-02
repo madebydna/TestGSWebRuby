@@ -260,14 +260,21 @@ GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
     return formObject;
 };
 
+//Pass in jQuery elements and it will iterate through and build a query string.
+//example: GS.uri.Uri.getQueryStringFromFormElements($form.find('input, select'))
 GS.uri.Uri.getQueryStringFromFormElements = function($elements) {
     var queryString = '';
 
     $elements.each(function() {
-        if ($(this).val().length > 0) {
-            queryString += '&' + encodeURIComponent(this.name) + '=' + encodeURIComponent($(this).val());
+        value = $(this).val();
+        if (value.length > 0) {
+            queryString += '&' + encodeURIComponent(this.name) + '=' + encodeURIComponent(value);
         }
     });
+
+    if (queryString.length > 0) {
+        queryString = '?' + queryString.slice(1, queryString.length)
+    }
 
     return queryString
 };
