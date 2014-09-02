@@ -74,6 +74,14 @@ class CompareSchoolsController < ApplicationController
                 }
             },
             { display_type: 'section_dividing_bar' },
+            {
+                display_type: 'details/programs',
+                opt: {
+                    label: 'Programs',
+                    datapoints: [:world_languages, :clubs, :sports, [:arts_and_music, 'Arts & Music']]
+                }
+            },
+            { display_type: 'section_dividing_bar' },
           ]
         },
       ]

@@ -1,0 +1,13 @@
+<div class="phm">
+  <span class="open-sans_sb"><%= config.opt[:label] %></span><br>
+  <% config.opt[:datapoints].each do |datapoint| %>
+      <% if datapoint.is_a?(Array) %>
+          <span class="fl"><%= datapoint[1] %></span>
+          <% datapoint = datapoint[0] %>
+      <% else %>
+          <span class="fl"><%= datapoint.to_s.gsub(/_/,' ').gs_capitalize_first %></span>
+      <% end %>
+      <span class="fr open-sans_sb"><%= @school.send(datapoint) %></span>
+      <br>
+  <% end %>
+</div>

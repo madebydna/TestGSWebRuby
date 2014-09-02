@@ -1,7 +1,7 @@
 <div class="phm">
   <span class="open-sans_sb"><%= config.opt[:label] %></span><br>
   <% config.opt[:datapoints].each do |datapoint| %>
-        <span class="fl"><%= datapoint.to_s.gsub(/_/,' ').titleize %></span>
+        <span class="fl"><%= datapoint.to_s.gsub(/_/,' ').gs_capitalize_first %></span>
         <span class="fr open-sans_sb"><%= @school.send(datapoint) %></span>
       <br>
   <% end %>

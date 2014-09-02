@@ -106,19 +106,19 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     end
   end
 
-  def num_sports
+  def sports
     num_programs('boys_sports','girls_sports','boys_sports_other','girls_sports_other')
   end
 
-  def num_clubs
+  def clubs
     num_programs('student_clubs','student_clubs_other')
   end
 
-  def num_languages
+  def world_languages
     num_programs('foreign_language')
   end
 
-  def num_arts_music
+  def arts_and_music
     num_programs('arts_music','arts_media','arts_performing_written','arts_visual')
   end
 
@@ -127,7 +127,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     program_keys.each do |program|
       count += programs[program].keys.size if programs.key? program
     end
-    count
+    count == 0 ? NO_DATA_SYMBOL : count
   end
 
   ################################# Quality ##################################
