@@ -8,6 +8,7 @@
                 <%= msg %> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <% end -%>
         <% end %>
+        <% flash.discard(key) %>
     <% end %>
 </div>
 <script type="text/javascript">

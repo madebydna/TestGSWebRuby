@@ -280,4 +280,23 @@ describe ApplicationController do
         .to raise_error(ActionController::RoutingError)
     end
   end
+
+  describe '#adapt_flash_messages_from_java' do
+    it 'method should be defined' do
+      expect(controller).to respond_to :adapt_flash_messages_from_java
+    end
+
+    it 'should handle the flash_notice cookie' do
+      cookies[:flash_notice_key] = 'foo.bar.baz'
+      allow(controller).to receive(:t).and_return 'Foo'
+      controller.send(:adapt_flash_messages_from_java)
+      expect(flash[:notice].first).to eq('Foo')
+    end
+
+    it 'should translate the given key' do
+      cookies[:flash_notice_key] = 'foo.bar.baz'
+      expect(controller).to receive(:t)
+      controller.send(:adapt_flash_messages_from_java)
+    end
+  end
 end

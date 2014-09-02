@@ -62,6 +62,10 @@ en:
         login_required: 'Please log in or register your email in order to follow this school.'
       gsnewsletter:
         login_required: 'Please log in or register your email in order to sign up for GreatSchool''s newsletter'
+    official_school_profile: # osp
+      # This key is referenced in Java
+      register: 'You''re almost there! Thank you for registering as a school leader. We just need to verify your email address. We''ve sent you an email - please click on the link in that message to get started editing your school''s information!'
+
 #  Kaminari Helpers
   views:
     pagination:
