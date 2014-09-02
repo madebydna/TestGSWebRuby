@@ -3,41 +3,45 @@ GS.search.results = GS.search.results || (function() {
 
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
-//  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {
         $('.js-submitSearchFiltersForm').on('click', function(){
+            var path = getQueryPath();
             var form = $('.js-searchFiltersFormParent').children('.js-searchFiltersForm');
-            buildAndSendFiltersForm($(form))
+            var query = buildQuery(form);
+            GS.uri.Uri.goToPage(path + query)
         });
     };
 
     var searchFiltersFormSubmissionMobileHandler = function() {
         $('.js-submitSearchFiltersFormMobile').on('click', function(){
+            var path = getQueryPath();
             var form = $('.js-searchFiltersFormParentMobile').children('.js-searchFiltersForm');
-            buildAndSendFiltersForm($(form))
+            var query = buildQuery(form);
+            GS.uri.Uri.goToPage(path + query)
         });
     };
 
-    var buildAndSendFiltersForm = function(form) {
+    var buildQuery = function(form) {
         var getParam = GS.uri.Uri.getFromQueryString;
-        var queryParamters = {};
+        var distanceSelectBox = form.find('.js-distance-select-box');
         var fields = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
+        var queryString = '';
 
         for (var i = 0; i < fields.length; i++) {
-            getParam(fields[i]) == undefined || (queryParamters[fields[i]] = getParam(fields[i]));
+            getParam(fields[i]) == undefined || (queryString += '&' + fields[i] + '=' + getParam(fields[i]));
         }
 
-        GS.uri.Uri.addHiddenFieldsToForm(queryParamters, form);
+        queryString += GS.uri.Uri.getQueryStringFromFormElements(form.find('input'));
 
-        $(".js-distance-select-box").each(function(i) {
-            if ($(this).val() == "") {
-                $(this).remove();
-            }
-        });
+        if (distanceSelectBox.length > 0) {
+            queryString += GS.uri.Uri.getQueryStringFromFormElements(distanceSelectBox)
+        }
 
-        var formAction = getQueryPath();
-        GS.uri.Uri.changeFormAction(formAction, form);
-        form.submit();
+        if (queryString.length > 0) {
+            queryString = '?' + queryString.slice(1, queryString.length)
+        }
+
+        return queryString
     };
 
     var searchFiltersMenuHandler = function() {

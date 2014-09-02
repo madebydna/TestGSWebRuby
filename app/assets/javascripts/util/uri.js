@@ -260,6 +260,18 @@ GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
     return formObject;
 };
 
+GS.uri.Uri.getQueryStringFromFormElements = function($elements) {
+    var queryString = '';
+
+    $elements.each(function() {
+        if ($(this).val().length > 0) {
+            queryString += '&' + encodeURIComponent(this.name) + '=' + encodeURIComponent($(this).val());
+        }
+    });
+
+    return queryString
+};
+
 GS.uri.Uri.changeFormAction = function(action, formObject) {
     $(formObject).attr("action", action);
 };
