@@ -51,6 +51,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 
@@ -78,6 +79,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 
@@ -103,6 +105,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
+    gon.pagename = "SearchResultsPage"
   end
 
   def by_name
@@ -122,6 +125,7 @@ class SearchController < ApplicationController
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 

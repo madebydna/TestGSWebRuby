@@ -287,12 +287,6 @@ GS.search.googleMap = GS.search.googleMap || (function() {
      return GS.search.map;
     };
 
-    $(document).ready(function () {
-        var elemMapCanvas = $('#js-map-canvas');
-        setHeightForMap(200);
-        elemMapCanvas.show('fast',initAndShowMap);
-    });
-
     return {
         init: init,
         getMap: getMap,
