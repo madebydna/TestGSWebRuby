@@ -185,6 +185,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var defaultGeocodeCallbackFn = function(geocodeResult) {
         var searchOptions = jQuery.extend({}, geocodeResult);
+        for (var urlParam in searchOptions) {
+            if (searchOptions.hasOwnProperty(urlParam)) {
+                searchOptions[urlParam] = encodeURIComponent(searchOptions[urlParam]);
+            }
+        }
         searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
         var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');

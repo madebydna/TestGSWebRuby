@@ -10,7 +10,7 @@
             <% if @sort_name == sort_name %>
                 <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
             <% else %>
-                <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>', '<%=@query_string%>')"><%=sort_name.titleize%></a>
+                <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.titleize%></a>
             <% end %>
         <% end %>
       </span>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="visible-xs col-xs-6 pbl ptl">
-    <select class="form-control js-searchSortingSelectTag" data-query-string='<%=@query_string%>'>
+    <select class="form-control js-searchSortingSelectTag">
       <% sort_types = ['relevance','rating','distance','fit'] - [@sort_name] %>
       <option value="<%= @sort_name %>" selected>Sort by: <%= @sort_name.titleize %></option>
       <% sort_types.each do |sort_name| %>

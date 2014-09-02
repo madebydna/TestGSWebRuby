@@ -30,7 +30,7 @@ GS.search.results = GS.search.results || (function() {
         var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {
-                queryString += '&' + urlParamsToPreserve[i] + '=' + getParam(urlParamsToPreserve[i]);
+                queryString += '&' + urlParamsToPreserve[i] + '=' + encodeURIComponent(getParam(urlParamsToPreserve[i]));
             }
         }
 
@@ -127,15 +127,19 @@ GS.search.results = GS.search.results || (function() {
         popup.show()
     };
 
-    var sortBy = function(sortType, query) {
+    var sortBy = function(sortType) {
+        var query = window.location.search || '';
+        if (query.length > 0) {
+            query = query.substring(1);
+        }
+
         query = GS.uri.Uri.removeFromQueryString(query, 'sort');
         if (sortType == 'relevance') {
             GS.uri.Uri.reloadPageWithNewQuery(query);
         }
         else {
-            var previousSort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
             var argumentKey = (query.length > 1) ? '&sort=' : 'sort=';
-            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + determineSort(sortType, previousSort));
+            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + determineSort(sortType));
         }
     };
 
@@ -158,10 +162,9 @@ GS.search.results = GS.search.results || (function() {
 
     var searchSortingSelectTagHandler = function() {
         $('.js-searchSortingSelectTag').change(function() {
-            var queryString = $(this).data('query-string');
             var sortType = $(this).val();
             if (sortType != "") {
-                sortBy(sortType, queryString);
+                sortBy(sortType);
             }
         });
     };
