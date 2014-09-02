@@ -65,7 +65,7 @@ $(document).ready(function () {
         text.text(newText.charAt(0).toUpperCase() + newText.slice(1));
     };
 
-    elemListViewToggle.on(clickOrTouchType, hideMapView);
+    elemListViewToggle.on('click', hideMapView);
     elemListViewToggle.hover(
         function () { addActiveToggleStateFor('list') },
         function () {
@@ -74,7 +74,7 @@ $(document).ready(function () {
             }
         }
     );
-    elemMapViewToggle.on(clickOrTouchType, showMapView);
+    elemMapViewToggle.on('click', showMapView);
     elemMapViewToggle.hover(
         function () { addActiveToggleStateFor('map') },
         function () {

@@ -140,7 +140,7 @@ $(function() {
         }
     });
 
-    $('.js-gs-checkbox-search-dropdown').on(clickOrTouchType,function(){
+    $('.js-gs-checkbox-search-dropdown').on('click',function(){
        var self=$(this);
        var checkbox = self.children(".js-icon");
        var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
