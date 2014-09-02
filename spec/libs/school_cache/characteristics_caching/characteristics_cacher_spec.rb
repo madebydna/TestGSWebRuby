@@ -29,6 +29,7 @@ describe CharacteristicsCaching::CharacteristicsCacher do
 
   describe '#build_hash_for_data_set' do
     it 'builds the correct hash' do
+      allow_any_instance_of(Object).to receive(:census_data_config_entry).and_return(false)
       expect(cacher.build_hash_for_data_set(result)).to eq(result_hash)
     end
   end
@@ -36,6 +37,7 @@ describe CharacteristicsCaching::CharacteristicsCacher do
   describe '$build_hash_for_cache' do
     it 'builds the correct hash' do
       allow_any_instance_of(CharacteristicsCaching::CharacteristicsCacher).to receive(:query_results).and_return([decorator])
+      allow_any_instance_of(Object).to receive(:census_data_config_entry).and_return(false)
       expect(cacher.build_hash_for_cache).to eq(results_hash)
     end
   end
