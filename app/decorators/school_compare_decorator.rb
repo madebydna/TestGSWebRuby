@@ -13,11 +13,38 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def students_enrolled
-    number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',') || NO_DATA_SYMBOL
+    if characteristics['Enrollment']
+      number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',')
+    else
+      NO_DATA_SYMBOL
+    end
   end
 
   def ethnicity_data
     characteristics['Ethnicity']
+  end
+
+  def graduates_high_school
+    style_school_value_as_percent('Graduation rate')
+  end
+
+  def enroll_in_college
+    style_school_value_as_percent('Percent enrolled in any institution of higher learning in the last 0-16 months')
+  end
+
+  def stays_2nd_year
+    style_school_value_as_percent('Percent Enrolled in College and Returned for a Second Year')
+  end
+
+  def style_school_value_as_percent(data_name)
+    if characteristics[data_name]
+      value = characteristics[data_name].first['school_value'].to_i
+      if value
+        "#{value.round(0)}%"
+      end
+    else
+      NO_DATA_SYMBOL
+    end
   end
 
   ################################ Reviews ################################
@@ -91,6 +118,13 @@ class SchoolCompareDecorator < SchoolProfileDecorator
       count += programs[program].keys.size if programs.key? program
     end
     count
+  end
+
+  ################################# Quality ##################################
+
+  def ratings
+    return @ratings if @ratings
+    @ratings = begin JSON.parse(SchoolCache.for_school('ratings',id,state).value) rescue {} end
   end
 
 end
