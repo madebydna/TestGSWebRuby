@@ -182,3 +182,23 @@ body { top: 0px !important; }
   }
 }
 
+.text-ad-panel {
+  background-color: white;
+  border: 1px solid #F5F5F5;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.175);
+}
+
+.text_ad_desktop {
+  width: 728px; height:60px; padding: 20px;
+}
+
+.text_ad_mobile {
+  width: 320px; height:60px; padding: 10px;
+}
+
+.text-ad-panel a.green_link {
+  color: #68bc8c;
+}
+

@@ -56,7 +56,14 @@
                     <% end %>
                 </div>
             </div>
-
+            <% if @show_ads %>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Text'.to_sym, view: :desktop  %>
+                        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Text'.to_sym, view: :mobile  %>
+                    </div>
+                </div>
+            <% end %>
             <div class="row">
                 <hr />
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pam">
