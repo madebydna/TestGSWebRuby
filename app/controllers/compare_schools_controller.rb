@@ -72,7 +72,8 @@ class CompareSchoolsController < ApplicationController
                     label: 'At a glance',
                     datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
                 }
-            }
+            },
+            { display_type: 'section_dividing_bar' },
           ]
         },
       ]
