@@ -1,0 +1,8 @@
+  <span class="plm open-sans_sb"><%= config.opt[:label] %></span>
+  <% config.opt[:datapoints].each do |datapoint| %>
+      <div class="phm">
+        <span class="fl"><%= datapoint.to_s.gsub(/_/,' ').titleize %></span>
+        <span class="fr open-sans_sb"><%= @school.send(datapoint) %></span>
+      </div>
+      <br>
+  <% end %>

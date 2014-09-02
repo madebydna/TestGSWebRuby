@@ -1,0 +1,32 @@
+<% data = @school.ethnicity_data %>
+<% table_data = TableData.new data %>
+<% data_array = table_data.to_piechart 'breakdown', 'school_value' %>
+
+<%= debug ['Pie chart data', data_array] if params[:debug] %>
+
+<% piechart_options = {
+        fontSize: '13',
+        title: 'diversity',
+   columns: [{key: 'breakdown'},{key:'school_value'}]
+}.stringify_keys;
+%>
+
+<% piechart_id = "pie-chart#{@school.id}" %>
+<div id="<%= piechart_id %>" class="notranslate">
+
+</div>
+
+<% content_for :head do %>
+    <script type="text/javascript">
+        $(function() {
+            GS.visualchart.drawPieChart(
+                    <%= raw data_array.to_json %>,
+                    "<%= piechart_id %>",
+                    null,
+                    <%= raw piechart_options.to_json %>,
+                    // Probably want to add a new name & sizing to window.sizing.js
+                    '<%= raw 'ethnicity' %>'
+            );
+        });
+    </script>
+<% end %>

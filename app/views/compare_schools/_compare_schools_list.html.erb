@@ -8,7 +8,7 @@
     <% end %>
   <% end %>
   <% @schools.each_with_index do | school, index| %>
-    <% @school = school %>
+    <% @school = SchoolCompareDecorator.new(school) %>
     <% @index = index %>
     <% lam.call(@school_compare_config) %>
   <% end %>

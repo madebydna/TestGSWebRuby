@@ -9,11 +9,15 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def characteristics
     return @characteristics if @characteristics
-    @characteristics = JSON.parse(SchoolCache.for_school('characteristics',id,state).value)
+    @characteristics = begin JSON.parse(SchoolCache.for_school('characteristics',id,state).value) rescue {} end
   end
 
-  def enrollment
-    characteristics['Enrollment'].first['school_value'].to_i || NO_DATA_SYMBOL
+  def students_enrolled
+    number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',') || NO_DATA_SYMBOL
+  end
+
+  def ethnicity_data
+    characteristics['Ethnicity']
   end
 
   ################################ Reviews ################################
@@ -35,7 +39,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def programs
     return @programs if @programs
-    @programs = JSON.parse(SchoolCache.for_school('esp_responses',id,state).value)
+    @programs = begin JSON.parse(SchoolCache.for_school('esp_responses',id,state).value) rescue {} end
   end
 
   def transportation
@@ -47,6 +51,14 @@ class SchoolCompareDecorator < SchoolProfileDecorator
       else
         'Yes'
     end
+  end
+
+  def before_care
+    before_after_care('before')
+  end
+
+  def after_school
+    before_after_care('after')
   end
 
   def before_after_care(before_after)

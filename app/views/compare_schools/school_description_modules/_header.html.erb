@@ -11,22 +11,4 @@
     <span class="prs vam"><%= draw_stars_16 decorated_school.star_rating%></span>
     <%= link_to pluralize(decorated_school.num_reviews, 'review', 'reviews'), school_reviews_page_path, class: 'font-size-small' %>
   </div>
-
-  <br>
-  enrollment: <%= number_with_delimiter(decorated_school.enrollment, :delimiter => ',') %>
-  <br>
-  transportation: <%= decorated_school.transportation %>
-  <br>
-  before: <%= decorated_school.before_after_care('before') %>
-  <br>
-  after: <%= decorated_school.before_after_care('after') %>
-  <br>
-  clubs: <%= decorated_school.num_clubs %>
-  <br>
-  sports: <%= decorated_school.num_sports %>
-  <br>
-  language: <%= decorated_school.num_languages %>
-  <br>
-  arts: <%= decorated_school.num_arts_music %>
-  <br>
 </div>

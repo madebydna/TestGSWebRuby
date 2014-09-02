@@ -58,6 +58,14 @@ class CompareSchoolsController < ApplicationController
               opt: {
                 label: 'Details'
               }
+            },
+            # { display_type: 'details/compare_pie_chart' },
+            {
+                display_type: 'details/at_a_glance',
+                opt: {
+                    label: 'At a glance',
+                    datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
+                }
             }
           ]
         },
