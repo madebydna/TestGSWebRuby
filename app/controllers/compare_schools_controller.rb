@@ -3,8 +3,8 @@ class CompareSchoolsController < ApplicationController
 
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   def show
+    @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
 
-<<<<<<< HEAD
     @params_schools = params[:school_ids].split(',').uniq
     @state = :de
     @cache_data = cache_data
