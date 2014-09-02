@@ -1,5 +1,5 @@
 <div id="js-top-notification-bar" class="limit-width-1200" style="display:none; margin-top: 8px;">
-    <% flash_type_to_alert_class_mapping = { error: 'alert-danger', notice: 'alert-warning' } %>
+    <% flash_type_to_alert_class_mapping = { 'error' => 'alert-danger', 'notice' => 'alert-warning' } %>
     <% flash.each do |key, value| %>
         <% css_class = flash_type_to_alert_class_mapping[key] %>
         <% value = Array(value) %>
