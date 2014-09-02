@@ -24,6 +24,21 @@ module GoogleMapConcerns
     end.compact
   end
 
+  def mapping_points_through_gon_from_db
+    gon.map_points = @map_schools.map do |school|
+      map_points = {}
+      map_points[:name] = school.name
+      map_points[:id] = school.id
+      map_points[:preschools] = school.preschool?
+      # TODO this hit database unessacarly
+      map_points[:gsRating] = school.great_schools_rating
+      map_points[:on_page] = true
+      school.lat.nil? ? next : map_points[:lat] = school.lat
+      school.lon.nil? ? next : map_points[:lng] = school.lon
+      map_points
+    end.compact
+  end
+
   def assign_sprite_files_though_gon
     sprite_files = {}
     sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')

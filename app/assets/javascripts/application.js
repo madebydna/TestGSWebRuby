@@ -20,7 +20,7 @@
 //= require_tree ./auth
 //= require_tree ./localized_profiles
 //= require_tree ./guided_search
-//= require_tree ./google_maps
+//= require ./google_maps/google_maps.js
 
 
 Function.prototype.gs_bind = function(obj) {

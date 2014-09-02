@@ -7,6 +7,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
     GS.search.map = GS.search.map || {};
 
   var init = function() {
+
       if (!needsInit) {return;}
       needsInit = false;
       if(gon.sprite_files != undefined) {
@@ -17,6 +18,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           _(gon.map_points).each(function (point) {
               points.push(point);
           });
+
 
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
@@ -174,13 +176,14 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   );
 
                   var marker = new google.maps.Marker(markerOptions);
-
-                  google.maps.event.addListener(marker, 'click', (function (marker, point) {
-                      return function () {
-                          infoWindow.setContent(getInfoWindowMarkup(point));
-                          infoWindow.open(GS.search.map, marker);
-                      }
-                  })(marker, point));
+                  if (point.profileUrl ) {
+                      google.maps.event.addListener(marker, 'click', (function (marker, point) {
+                          return function () {
+                              infoWindow.setContent(getInfoWindowMarkup(point));
+                              infoWindow.open(GS.search.map, marker);
+                          }
+                      })(marker, point));
+                  }
 
                   // Responsive map sizing and centering
                   var center;
@@ -263,16 +266,38 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
 
           initialize(points);
+
       }
     };
+
+    var initAndShowMap = function () {
+        init();
+        var map = getMap();
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
+    };
+
+    var setHeightForMap = function(height) {
+        $('#js-map-canvas').css('height', height + 'px');
+    };
+
 
     var getMap = function () {
      return GS.search.map;
     };
 
+    $(document).ready(function () {
+        var elemMapCanvas = $('#js-map-canvas');
+        setHeightForMap(200);
+        elemMapCanvas.show('fast',initAndShowMap);
+    });
+
     return {
         init: init,
-        getMap: getMap
+        getMap: getMap,
+        setHeightForMap: setHeightForMap,
+        initAndShowMap : initAndShowMap
     }
 
 })();

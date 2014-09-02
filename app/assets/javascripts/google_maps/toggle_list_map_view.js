@@ -29,17 +29,6 @@ $(document).ready(function () {
             elemMapViewToggle.removeClass('brand-primary');
         }
     };
-    var initAndShowMap = function () {
-        GS.search.googleMap.init();
-        var map = GS.search.googleMap.getMap();
-        var center = map.getCenter();
-        google.maps.event.trigger(map, 'resize');
-        map.setCenter(center);
-    };
-
-    var setHeightForMap = function(height) {
-        $('#js-map-canvas').css('height', height + 'px');
-    };
 
     var moveScreenToFilters = function() {
         $('html, body').animate({
@@ -56,9 +45,9 @@ $(document).ready(function () {
     };
 
     var showMapView = function() {
-        setHeightForMap( $(document).width() <= GS.window.sizing.maxMobileWidth ? mapHeightForMobile() : 400 );
+        GS.search.googleMap.setHeightForMap( $(document).width() <= GS.window.sizing.maxMobileWidth ? mapHeightForMobile() : 400 );
         moveScreenToFilters();
-        elemMapCanvas.show('slow',initAndShowMap);
+        elemMapCanvas.show('slow', GS.search.googleMap.initAndShowMap);
         addActiveToggleStateFor('map');
         removeActiveToggleStateFor('list');
         switchListMapViewTextForMobile('map', 'list');

@@ -1,11 +1,18 @@
 class CompareSchoolsController < ApplicationController
+  include GoogleMapConcerns
 
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   def show
 
     @schools = School.on_db(:de).find(14), School.on_db(:de).find(4), School.on_db(:de).find(6)
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
+
     @cache_data = cache_data
+    @map_schools = @schools
+
+    mapping_points_through_gon_from_db
+    assign_sprite_files_though_gon
+
 
   end
 
