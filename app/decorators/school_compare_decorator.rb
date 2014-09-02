@@ -150,7 +150,11 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def school_rating_by_data_type_id(data_type_id)
     overall_ratings_obj = ratings.find { |rating| rating['data_type_id'] == data_type_id  }
-    overall_ratings_obj['school_value_float'].to_i
+    if overall_ratings_obj
+      overall_ratings_obj['school_value_float'].to_i
+    else
+      NO_DATA_SYMBOL
+    end
   end
 
 end

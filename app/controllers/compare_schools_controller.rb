@@ -4,10 +4,14 @@ class CompareSchoolsController < ApplicationController
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   def show
 
-    @schools = School.on_db(:de).find(14), School.on_db(:de).find(4), School.on_db(:de).find(6)
+    @params_schools = params[:school_ids].split(',')
+    @cache_data = cache_data
+    @schools = []
+    @params_schools.each do |id|
+      @schools << SchoolCompareDecorator.new(School.on_db(:de).find(id), context: @cache_data[id.to_i])
+    end
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
 
-    @cache_data = cache_data
     @map_schools = @schools
 
     mapping_points_through_gon_from_db
@@ -17,7 +21,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def cache_data
-    SchoolCache.for_schools_keys(SCHOOL_CACHE_KEYS,[4,14,6],'DE')
+    SchoolCache.for_schools_keys(SCHOOL_CACHE_KEYS,@params_schools,'DE')
   end
 
   def compare_schools_list_mapping
