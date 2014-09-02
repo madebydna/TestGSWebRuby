@@ -1,10 +1,16 @@
 class CompareSchoolsController < ApplicationController
 
+  SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   def show
 
     @schools = School.on_db(:de).find(14), School.on_db(:de).find(4), School.on_db(:de).find(6)
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
+    @cache_data = cache_data
 
+  end
+
+  def cache_data
+    SchoolCache.for_schools_keys(SCHOOL_CACHE_KEYS,[4,14,6],'DE')
   end
 
   def compare_schools_list_mapping

@@ -5,15 +5,19 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   NO_DATA_SYMBOL = 'n/a'
 
+  def cache_data
+    # Draper special initialize key
+    context
+  end
+
   ################################ Characteristics ################################
 
   def characteristics
-    return @characteristics if @characteristics
-    @characteristics = begin JSON.parse(SchoolCache.for_school('characteristics',id,state).value) rescue {} end
+    cache_data['characteristics'] || {}
   end
 
   def students_enrolled
-    if characteristics['Enrollment']
+    if valid_characteristic_cache(characteristics['Enrollment'])
       number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',')
     else
       NO_DATA_SYMBOL
@@ -37,7 +41,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def style_school_value_as_percent(data_name)
-    if characteristics[data_name]
+    if valid_characteristic_cache(characteristics[data_name])
       value = characteristics[data_name].first['school_value'].to_i
       if value
         "#{value.round(0)}%"
@@ -47,11 +51,18 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     end
   end
 
+  def valid_characteristic_cache(cache)
+    if cache && cache.is_a?(Array)
+      true
+    else
+      false
+    end
+  end
+
   ################################ Reviews ################################
 
   def reviews_snapshot
-    return @reviews_snapshot if @reviews_snapshot
-    @reviews_snapshot = begin JSON.parse(SchoolCache.for_school('reviews_snapshot',id,state).value) rescue {} end
+    cache_data['reviews_snapshot'] || {}
   end
 
   def star_rating
@@ -65,8 +76,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   ################################# Programs ##################################
 
   def programs
-    return @programs if @programs
-    @programs = begin JSON.parse(SchoolCache.for_school('esp_responses',id,state).value) rescue {} end
+    cache_data['esp_responses'] || {}
   end
 
   def transportation
@@ -123,8 +133,12 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   ################################# Quality ##################################
 
   def ratings
-    return @ratings if @ratings
-    @ratings = begin JSON.parse(SchoolCache.for_school('ratings',id,state).value) rescue {} end
+    cache_data['ratings'] || {}
+  end
+
+  def overall_gs_rating
+    overall_ratings_obj = ratings.find { |rating| rating['data_type_id'] == 174  }
+    overall_ratings_obj['school_value_float'].to_i
   end
 
 end
