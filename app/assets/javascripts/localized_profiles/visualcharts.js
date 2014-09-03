@@ -161,25 +161,26 @@ GS.visualchart = GS.visualchart || function($) {
 
     };
 
-    var drawBarChart = function(barChartData, divId, chartname) {
+    var drawBarChart = function(barChartData, domId, chartname, barLabels) {
         var func = function () {
-            var domNode = document.getElementById(divId);
+            var domNode = document.getElementById(domId);
             // If the dom node that the chart wants to fill is not on the page, just early exit
             if(domNode == null) {
                 return false;
             }
 
-            var legendLabel = 'This school'
-
             var dataTable = new google.visualization.DataTable();
             //The 3rd and the 5th columns are used for tool tips.
-            dataTable.addColumn('string', 'label');
-            dataTable.addColumn('number', 'This school');
-            dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+
+            var numberOfBars = barLabels.length;
+            dataTable.addColumn('string', 'data point');
+            for(var i = 0; i < numberOfBars; i++) {
+              dataTable.addColumn('number', barLabels[i]);
+            }
 
             dataTable.addRows(barChartData);
 
-            $("#"+divId).css("width", GS.window.sizing.barChartWidth(chartname));
+            $("#"+domId).css("width", GS.window.sizing.barChartWidth(chartname));
             var defaultOptions = {
                 width: GS.window.sizing.barChartWidth(chartname),
                 height: GS.window.sizing.barChartHeight(chartname),

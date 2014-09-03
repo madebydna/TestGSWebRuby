@@ -1,36 +1,24 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this bar chart %>
 
-<% data_config = category_placement.table_config %>
-<% data = TableData.new data %>
+<%= debug(data) if params[:debug] %>
+
+<% if data.is_a?(Hash) %>
+  <% data = data.values.inject([], &:+) %>
+<% end %>
+
+<%
+  bar_chart = BarCharts::BasicBarChart.decorate(
+  data,
+  context: {
+    config: category_placement.layout_config_json
+    }
+  )
+%>
 
 <% bar_chart_id = "barchart-#{category_placement_anchor category_placement}" %>
 
-<div id="<%= bar_chart_id %>" class="notranslate ma">
-
-</div>
-
-<% first_key = data_config.config['columns'][0]['key'].to_sym %>
-<% second_key = data_config.config['columns'][1]['key'].to_sym %>
-<% chart_name = data_config.config['chart_name'] || 'global' %>
-
-<% data_array = data.to_barchart first_key, second_key %>
-
-<%= debug ['Bar chart data', data_array] if params[:debug] %>
-
-<% barchart_options = {
-    fontSize: '13',
-    title: category_placement.category.name
-}.stringify_keys;
-%>
+<div id="<%= bar_chart_id %>" class="notranslate ma"></div>
 
 <% content_for :head do %>
-    <script type="text/javascript">
-        $(function() {
-            GS.visualchart.drawBarChart(
-                <%= raw data_array.to_json %>,
-                "<%= bar_chart_id %>",
-                '<%= raw chart_name %>'
-            );
-        });
-    </script>
+  <%= bar_chart.script_tag(bar_chart_id).html_safe %>
 <% end %>
