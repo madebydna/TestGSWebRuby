@@ -20,19 +20,10 @@ GS.compareSchools = GS.compareSchools || function () {
         $('body').on('click', '.js-categoryTitle', function() {
             var $categoryData = $(this).siblings('.js-categoryData');
             var categoryDataClass = '.' + $categoryData.attr('class').split(/\s+/)[0];
-            var showOrHide = $($(categoryDataClass)[0]).css('display') == 'none' ? show : hide;
             $(categoryDataClass).each(function() {
-                showOrHide.apply($(this));
+                  $(this).slideToggle('slow');
             });
         });
-    };
-
-    var show = function() {
-        this.show('slow')
-    };
-
-    var hide = function() {
-        this.hide('slow')
     };
 
     var init = function() {
