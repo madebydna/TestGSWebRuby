@@ -42,65 +42,53 @@ class CompareSchoolsController < ApplicationController
       children: [
         { display_type: 'header' },
         {
-          display_type: 'blank_container',
+          display_type: 'category',
+          opt: {
+            subtitle: 'Quality',
+            key: :quality
+          },
           children: [
-            {
-              display_type: 'subtitle',
-              opt: {
-                subtitle: 'Quality'
-              }
-            },
             { display_type: 'quality/rating' },
             { display_type: 'quality/college_readiness' },
             { display_type: 'quality/add_to_my_schools_list' }
           ]
         },
         {
-          display_type: 'blank_container',
-          children: [
-            {
-              display_type: 'subtitle',
-              opt: {
-                  subtitle: 'Fit Criteria'
-              }
-            }
-          ]
+          display_type: 'category',
+          opt: {
+            subtitle: 'Fit Criteria',
+            key: :fit
+          }
         },
         {
-          display_type: 'blank_container',
-          children: [
-            {
-              display_type: 'subtitle',
-              opt: {
-                  subtitle: 'Reviews'
-              }
-            }
-          ]
+          display_type: 'category',
+          opt: {
+            subtitle: 'Reviews',
+            key: :reviews
+          }
         },
         {
-          display_type: 'blank_container',
+          display_type: 'category',
+          opt: {
+            subtitle: 'Details',
+            key: :details
+          },
           children: [
-            {
-              display_type: 'subtitle',
-              opt: {
-                  subtitle: 'Details'
-              }
-            },
             # { display_type: 'details/compare_pie_chart' },
             {
-                display_type: 'details/at_a_glance',
-                opt: {
-                    label: 'At a glance',
-                    datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
-                }
+              display_type: 'details/at_a_glance',
+              opt: {
+                label: 'At a glance',
+                datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
+              }
             },
             { display_type: 'section_dividing_bar' },
             {
-                display_type: 'details/programs',
-                opt: {
-                    label: 'Programs',
-                    datapoints: [:world_languages, :clubs, :sports, [:arts_and_music, 'Arts & Music']]
-                }
+              display_type: 'details/programs',
+              opt: {
+                label: 'Programs',
+                datapoints: [:world_languages, :clubs, :sports, [:arts_and_music, 'Arts & Music']]
+              }
             },
             { display_type: 'section_dividing_bar' },
           ]

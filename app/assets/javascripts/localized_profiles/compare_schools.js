@@ -15,13 +15,38 @@ GS.compareSchools = GS.compareSchools || function () {
     var adjustSchoolResultsHeights = function () {
         adjustHeights('.js-schoolName');
     };
+
+    var setAccordianHandlerForCategories = function() {
+        $('body').on('click', '.js-categoryTitle', function() {
+            var $categoryData = $(this).siblings('.js-categoryData');
+            var categoryDataClass = '.' + $categoryData.attr('class').split(/\s+/)[0];
+            var showOrHide = $($(categoryDataClass)[0]).css('display') == 'none' ? show : hide;
+            $(categoryDataClass).each(function() {
+                showOrHide.apply($(this));
+            });
+        });
+    };
+
+    var show = function() {
+        this.show('slow')
+    };
+
+    var hide = function() {
+        this.hide('fast')
+    };
+
+    var init = function() {
+        adjustSchoolResultsHeights();
+        setAccordianHandlerForCategories();
+    };
+
     return {
-        adjustSchoolResultsHeights: adjustSchoolResultsHeights
-    }
+        init: init
+    };
 }();
 
-$(document).ready(function () {
-    if($('.js-comparedSchool').length > 0) {
-        GS.compareSchools.adjustSchoolResultsHeights();
-    }
-});
+if (gon.pagename == "CompareSchoolsPage") {
+    $(document).ready(function () {
+        GS.compareSchools.init();
+    });
+}
