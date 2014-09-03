@@ -1,16 +1,18 @@
 <% #ToDo Temporarily using Bootstrap, but will probably need to calculate by hand how many schools to show based on the screen width %>
-<div class="full-width limit-width-1200 row">
-  <%lam = lambda do |configs| %>
-    <% [*configs].each do |config| %>
-        <%= render 'compare_schools/school_description_modules/label', label: config.opt[:label] if config.opt && config.opt[:label] %>
+<div class="header-bg-color full-width">
+  <div class="full-width limit-width-1200 row">
+    <%lam = lambda do |configs| %>
+      <% [*configs].each do |config| %>
         <%= render layout: "compare_schools/school_description_modules/#{config.display_type.to_s}", locals: {config: config} do %>
-            <% lam.call(config.children) %>
+          <% lam.call(config.children) %>
         <% end %>
+      <% end %>
     <% end %>
-  <% end %>
-  <% @schools.each_with_index do | school, index| %>
-    <% @school = school %>
-    <% @index = index %>
-    <% lam.call(@school_compare_config) %>
-  <% end %>
+
+    <% @schools.each_with_index do | school, index| %>
+      <% @school = school %>
+      <% @index = index %>
+      <% lam.call(@school_compare_config) %>
+    <% end %>
+  </div>
 </div>

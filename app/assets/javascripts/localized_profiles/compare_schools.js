@@ -32,7 +32,7 @@ GS.compareSchools = GS.compareSchools || function () {
     };
 
     var hide = function() {
-        this.hide('fast')
+        this.hide('slow')
     };
 
     var init = function() {
