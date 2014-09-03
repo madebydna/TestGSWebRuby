@@ -176,6 +176,8 @@ GS.visualchart = GS.visualchart || function($) {
             dataTable.addColumn('string', 'data point');
             for(var i = 0; i < numberOfBars; i++) {
               dataTable.addColumn('number', barLabels[i]);
+              dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+              dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
             }
 
             dataTable.addRows(barChartData);
@@ -185,7 +187,7 @@ GS.visualchart = GS.visualchart || function($) {
                 width: GS.window.sizing.barChartWidth(chartname),
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
-                tooltip: { isHtml: true },
+                tooltip: { isHtml: false },
                 colors: colors,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {

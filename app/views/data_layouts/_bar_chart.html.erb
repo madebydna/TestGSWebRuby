@@ -6,6 +6,29 @@
   <% data = data.values.inject([], &:+) %>
 <% end %>
 
+<% bar_chart_id = "barchart-#{category_placement_anchor category_placement}" %>
+
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
+    <a name="<%= category.code_name %>"></a>
+    <%= render "shared/section_header", category_placement:category_placement %>
+    <div id="<%= bar_chart_id %>" class="notranslate ma"></div>
+<% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: data.map { |hash| hash[:description] }.uniq.compact
+  }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+        (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+    </div>
+<% end %>
+
 <%
   bar_chart = BarCharts::BasicBarChart.decorate(
   data,
@@ -14,10 +37,6 @@
     }
   )
 %>
-
-<% bar_chart_id = "barchart-#{category_placement_anchor category_placement}" %>
-
-<div id="<%= bar_chart_id %>" class="notranslate ma"></div>
 
 <% content_for :head do %>
   <%= bar_chart.script_tag(bar_chart_id).html_safe %>
