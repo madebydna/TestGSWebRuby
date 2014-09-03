@@ -30,7 +30,6 @@ module GoogleMapConcerns
       map_points[:name] = school.name
       map_points[:id] = school.id
       map_points[:preschools] = school.preschool?
-      # TODO this hit database unessacarly
       map_points[:gsRating] = school.great_schools_rating
       map_points[:on_page] = true
       school.lat.nil? ? next : map_points[:lat] = school.lat
