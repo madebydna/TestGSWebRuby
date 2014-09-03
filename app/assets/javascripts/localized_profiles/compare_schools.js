@@ -43,11 +43,7 @@ GS.compareSchools = GS.compareSchools || function () {
     var pieChartLabelColor = function() {
         var colors = GS.visualchart.colors;
         $('.js-comparePieChartTable').each( function() {
-            console.log($(this).children());
             $(this).children('.js-comparePieChartSquare').each(function (index) {
-                console.log(index);
-                console.log(colors[index]);
-                console.log(this);
                 $(this).css({ background: colors[index] });
             });
         });
