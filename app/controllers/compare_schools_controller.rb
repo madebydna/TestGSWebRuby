@@ -47,7 +47,7 @@ class CompareSchoolsController < ApplicationController
             {
               display_type: 'subtitle',
               opt: {
-                label: 'Quality'
+                subtitle: 'Quality'
               }
             },
             { display_type: 'quality/rating' },
@@ -61,7 +61,7 @@ class CompareSchoolsController < ApplicationController
             {
               display_type: 'subtitle',
               opt: {
-                label: 'Fit Criteria'
+                  subtitle: 'Fit Criteria'
               }
             }
           ]
@@ -72,7 +72,7 @@ class CompareSchoolsController < ApplicationController
             {
               display_type: 'subtitle',
               opt: {
-                label: 'Reviews'
+                  subtitle: 'Reviews'
               }
             }
           ]
@@ -83,7 +83,7 @@ class CompareSchoolsController < ApplicationController
             {
               display_type: 'subtitle',
               opt: {
-                label: 'Details'
+                  subtitle: 'Details'
               }
             },
             # { display_type: 'details/compare_pie_chart' },

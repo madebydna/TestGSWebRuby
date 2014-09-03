@@ -2,6 +2,7 @@
 <div class="full-width limit-width-1200 row">
   <%lam = lambda do |configs| %>
     <% [*configs].each do |config| %>
+        <%= render 'compare_schools/school_description_modules/label', label: config.opt[:label] if config.opt && config.opt[:label] %>
         <%= render layout: "compare_schools/school_description_modules/#{config.display_type.to_s}", locals: {config: config} do %>
             <% lam.call(config.children) %>
         <% end %>

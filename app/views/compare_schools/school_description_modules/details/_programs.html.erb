@@ -1,5 +1,4 @@
 <div class="phm">
-  <span class="open-sans_sb"><%= config.opt[:label] %></span><br>
   <% config.opt[:datapoints].each do |datapoint| %>
       <% if datapoint.is_a?(Array) %>
           <span class="fl"><%= datapoint[1] %></span>
