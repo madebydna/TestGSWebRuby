@@ -80,8 +80,9 @@ class SchoolSearchService
   end
 
   def self.by_name(options_param = {})
-    raise ArgumentError, 'Query is required' unless options_param[:query].presence
-    raise ArgumentError, 'Query is required' if options_param[:query] =~ /^[\p{Punct}\s]*$/
+    empty_response = {}
+    return empty_response unless options_param[:query].presence
+    return empty_response if options_param[:query] =~ /^[\p{Punct}\s]*$/
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
