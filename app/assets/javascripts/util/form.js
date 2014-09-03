@@ -264,7 +264,10 @@ $(function() {
             var name = $this.attr('name');
             if ($.trim($this.val()) > '' && name !== undefined && !EXCLUDE_THESE_INPUTS.contains(name)) {
                 if (name.indexOf('[]') > -1) {
-                    addToArray(searchOptions, encodeURIComponent(name), encodeURIComponent($this.val()));
+                    var values = $this.val().split("&&");
+                    for (var x=0; x < values.length; x++) {
+                        addToArray(searchOptions, encodeURIComponent(name), encodeURIComponent(values[x]));
+                    }
                 } else {
                     searchOptions[encodeURIComponent(name)] = encodeURIComponent($this.val());
                 }
