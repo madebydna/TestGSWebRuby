@@ -264,13 +264,13 @@ $(function() {
             var name = $this.attr('name');
             if ($.trim($this.val()) > '' && name !== undefined && !EXCLUDE_THESE_INPUTS.contains(name)) {
                 if (name.indexOf('[]') > -1) {
-                    addToArray(searchOptions, name, $this.val());
+                    addToArray(searchOptions, encodeURIComponent(name), encodeURIComponent($this.val()));
                 } else {
-                    searchOptions[name] = $this.val();
+                    searchOptions[encodeURIComponent(name)] = encodeURIComponent($this.val());
                 }
             }
         });
-        searchOptions['grades'] = $('#js-guided-grades').val();
+        searchOptions['grades'] = encodeURIComponent($('#js-guided-grades').val());
         searchOptions.state = 'DE';
         return searchOptions;
     };
