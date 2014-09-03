@@ -74,13 +74,12 @@ class CompareSchoolsController < ApplicationController
             key: :details
           },
           children: [
-            # { display_type: 'details/compare_pie_chart' },
             {
-              display_type: 'details/at_a_glance',
-              opt: {
-                label: 'At a glance',
-                datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
-              }
+                display_type: 'details/at_a_glance',
+                opt: {
+                    label: 'At a glance',
+                    datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
+                }
             },
             { display_type: 'section_dividing_bar' },
             {
@@ -91,6 +90,12 @@ class CompareSchoolsController < ApplicationController
               }
             },
             { display_type: 'section_dividing_bar' },
+            {
+                display_type: 'details/compare_pie_chart',
+                opt: {
+                    label: 'Student Diversity'
+                }
+            },
           ]
         },
       ]

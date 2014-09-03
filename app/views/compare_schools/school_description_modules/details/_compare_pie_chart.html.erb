@@ -30,3 +30,11 @@
         });
     </script>
 <% end %>
+
+<div class="phm">
+  <% data_array.each do |data_row|%>
+      <span class="fl"><%= data_row[0] %></span>
+      <span class="fr open-sans_sb"><%= data_row[1] %>%</span>
+      <br>
+  <% end %>
+</div>
