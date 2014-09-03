@@ -187,7 +187,7 @@ GS.visualchart = GS.visualchart || function($) {
                 width: GS.window.sizing.barChartWidth(chartname),
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
-                tooltip: { isHtml: false },
+                tooltip: { isHtml: true },
                 colors: colors,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {

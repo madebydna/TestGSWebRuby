@@ -54,7 +54,7 @@ class BarCharts::BasicBarChart < Draper::Decorator
       if column_format == 'percentage'
         bar_annotation << '%'
       end
-      bar_tooltip = "#{column_label}: #{bar_annotation}"
+      bar_tooltip = bar_chart_tooltip_html(data_point_label, column_label, bar_value)
 
       return nil if bar_value.nil?
 
@@ -71,6 +71,11 @@ class BarCharts::BasicBarChart < Draper::Decorator
       "GS.visualchart.drawBarChart(#{google_bar_chart_array}, '#{bar_chart_dom_id}', '#{name}', #{bar_labels});" +
       '</script>'
     end
+  end
+
+  def bar_chart_tooltip_html(data_point_label, bar_label, value)
+    tooltip = "<div class='open-sans_b' style='width:100px;'>#{data_point_label}</div>#{bar_label}: #{value}"
+    tooltip
   end
 
 end
