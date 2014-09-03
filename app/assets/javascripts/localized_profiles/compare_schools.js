@@ -40,13 +40,28 @@ GS.compareSchools = GS.compareSchools || function () {
         setAccordianHandlerForCategories();
     };
 
+    var pieChartLabelColor = function() {
+        var colors = GS.visualchart.colors;
+        $('.js-comparePieChartTable').each( function() {
+            console.log($(this).children());
+            $(this).children('.js-comparePieChartSquare').each(function (index) {
+                console.log(index);
+                console.log(colors[index]);
+                console.log(this);
+                $(this).css({ background: colors[index] });
+            });
+        });
+    };
+
     return {
-        init: init
+        init: init,
+        pieChartLabelColor: pieChartLabelColor
     };
 }();
 
 if (gon.pagename == "CompareSchoolsPage") {
     $(document).ready(function () {
         GS.compareSchools.init();
+        GS.compareSchools.pieChartLabelColor();
     });
 }

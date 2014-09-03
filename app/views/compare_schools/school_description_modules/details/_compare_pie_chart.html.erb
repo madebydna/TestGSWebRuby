@@ -2,7 +2,7 @@
 <% table_data = TableData.new data %>
 <% data_array = table_data.to_piechart 'breakdown', 'school_value' %>
 
-<%= debug ['Pie chart data', data_array] if params[:debug] %>
+<%= debug ['Pie chart data', data_array.sort] if params[:debug] %>
 
 <% piechart_options = {
         fontSize: '13',
@@ -20,7 +20,7 @@
     <script type="text/javascript">
         $(function() {
             GS.visualchart.drawPieChart(
-                    <%= raw data_array.to_json %>,
+                    <%= raw data_array.sort.to_json %>,
                     "<%= piechart_id %>",
                     null,
                     <%= raw piechart_options.to_json %>,
@@ -31,8 +31,9 @@
     </script>
 <% end %>
 
-<div class="phm">
-  <% data_array.each do |data_row|%>
+<div class="phm js-comparePieChartTable">
+  <% data_array.sort.each_with_index do |data_row,index|%>
+      <div class="fl mts mrs square js-comparePieChartSquare"></div>
       <span class="fl"><%= data_row[0] %></span>
       <span class="fr open-sans_sb"><%= data_row[1] %>%</span>
       <br>
