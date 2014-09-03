@@ -24,6 +24,7 @@ module PaginationConcerns
     page_number < 1 ? 1 : page_number
   end
 
+  #to calculate what row solr should start return from. ex. offset = 25 means start returning from row #25
   def results_offset
     result_offset = (page_parameter.to_i - 1) * page_size
     result_offset < 0 ? 0 : result_offset
