@@ -54,7 +54,7 @@ class BarCharts::BasicBarChart < Draper::Decorator
       if column_format == 'percentage'
         bar_annotation << '%'
       end
-      bar_tooltip = bar_chart_tooltip_html(data_point_label, column_label, bar_value)
+      bar_tooltip = bar_chart_tooltip_html(data_point_label, column_label, bar_annotation)
 
       return nil if bar_value.nil?
 
