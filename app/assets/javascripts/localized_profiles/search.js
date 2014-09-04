@@ -780,6 +780,18 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return $('.js-searchResultsContainer').length > 0
     };
 
+
+    var checkGooglePlaceholderTranslate = function () {
+        var placeholder = $('#js-schoolResultsSearch').attr('placeholder');
+        var translatedPlaceholder = $('.js-translate-placeholder').attr('font');
+        if (placeholder != translatedPlaceholder) {
+            $('#js-schoolResultsSearch').attr('placeholder', $('.js-translate-placeholder').text());
+            setTimeout(checkGooglePlaceholderTranslate, 1000);
+        } else {
+            setTimeout(checkGooglePlaceholderTranslate, 1000);
+        }
+    };
+
     return {
         init:init,
         setupTabs: setupTabs,
@@ -795,7 +807,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        showFiltersMenuOnLoad: showFiltersMenuOnLoad
+        showFiltersMenuOnLoad: showFiltersMenuOnLoad,
+        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate
     };
 })();
 
@@ -810,4 +823,5 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
   GS.search.schoolSearchForm.showFiltersMenuOnLoad();
+  GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
 });
