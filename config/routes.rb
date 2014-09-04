@@ -94,6 +94,7 @@ LocalizedProfiles::Application.routes.draw do
       put 'publish', on: :member
       put 'disable', on: :member
       put 'resolve', on: :member
+      put 'report', on: :member
     end
 
     resources :held_school

@@ -91,6 +91,41 @@ describe Admin::ReviewsController do
     end
   end
 
+  describe '#report' do
+    before do
+      request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
+    end
+    after do
+      expect(response).to redirect_to request.env['HTTP_REFERER']
+    end
+
+    it 'should report the review if one is found' do
+      reason = 'foo'
+      reported_entity = double(ReportedEntity)
+      review = FactoryGirl.build(:school_rating)
+      allow(SchoolRating).to receive(:find).and_return(review)
+      expect(ReportedEntity).to receive(:from_review).with(review, reason) {
+        reported_entity
+      }
+      expect(reported_entity).to receive(:save).and_return(true)
+      expect(controller).to receive(:flash_notice)
+      post :report, id: 1, reason: reason
+    end
+
+    it 'should handle save failure by setting flash message' do
+      reason = 'foo'
+      reported_entity = double(ReportedEntity)
+      review = FactoryGirl.build(:school_rating)
+      allow(SchoolRating).to receive(:find).and_return(review)
+      expect(ReportedEntity).to receive(:from_review).with(review, reason) {
+        reported_entity
+      }
+      expect(reported_entity).to receive(:save).and_return(false)
+      expect(controller).to receive(:flash_error)
+      post :report, id: 1, reason: reason
+    end
+  end
+
   describe '#moderation' do
     let(:school) { FactoryGirl.build(:school) }
     let(:reported_entities) { FactoryGirl.build_list(:reported_review, 3) }

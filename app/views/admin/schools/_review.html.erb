@@ -37,7 +37,12 @@
                 class: "btn btn-sm mtm btn-primary",
                 data: { disable_with: 'Resolving...' } %>
         <% end %>
-
+        <%= button_tag('Report review', class: 'btn btn-sm mtm btn-primary',
+          data: {
+            toggle: 'collapse',
+            target: "#flag-review-form-#{review.id}"
+          }
+        ) %>
     </div>
     <div class="rightcolumn col-lg-8">
         <h5>Review</h5>
@@ -46,7 +51,7 @@
         <br/>
         <% reported_entities.each do |reported_entity| %>
             <hr/>
-            <h5>Reported:</h5>
+            <h5>Reported</h5>
             <%= reported_entity.reason %>
             <br/>
             Reported on: <%= reported_entity.created %>
@@ -65,12 +70,19 @@
             <% end %>
         <% end %>
         <hr/>
-        <br/>
-        Notes:
-        <br/>
+        <h5>Notes</h5>
         <%= form_for(review, url: admin_review_path(review), method: :put) do |f| %>
-        <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-        <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+          <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+          <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
         <% end %>
+          <br/>
+
+        <div id="flag-review-form-<%= review.id %>" class="collapse">
+          <h5>Report review</h5>
+          <%= form_for(review, url: report_admin_review_path(review), method: :put) do |f| %>
+            <%= text_area_tag(:reason, '', rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+            <%= content_tag :div, f.submit('Report review', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+          <% end %>
+        </div>
     </div>
 </div>
