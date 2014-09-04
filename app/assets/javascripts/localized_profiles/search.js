@@ -53,10 +53,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
                 if (input.value == $(schoolResultsSearchSelector).data('prev-search')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
-                    params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
+                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
                     params = GS.uri.Uri.removeFromQueryString(params, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
-                    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + params);
+                    var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
+                    GS.uri.Uri.goToPage(url);
                     return false
                 } else if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = schoolResultsSearchSelector;
