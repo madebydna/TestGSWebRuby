@@ -129,7 +129,7 @@ module UrlHelper
         # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
         # and although the user will get to the right page when they click the link,
         # it will happen via a 301 redirect, which we dont want
-        send "pre#{helper_name}_url", (params.merge(subdomain: PreschoolSubdomain.pk_subdomain(request)))
+        send "pre#{helper_name}_url", (params.merge(host: ENV_GLOBAL['app_pk_host']))
       else
         super params
       end
