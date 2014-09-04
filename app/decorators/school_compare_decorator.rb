@@ -140,6 +140,11 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     school_rating_by_data_type_id(174)
   end
 
+  def great_schools_rating_icon
+    rating = school_rating_by_data_type_id(174)
+    "<i class=\"iconx24-icons i-24-new-ratings-#{rating}\"></i>".html_safe
+  end
+
   def test_scores_rating
     school_rating_by_data_type_id(164)
   end

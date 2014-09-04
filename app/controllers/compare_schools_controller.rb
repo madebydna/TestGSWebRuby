@@ -48,6 +48,17 @@ class CompareSchoolsController < ApplicationController
             key: :quality
           },
           children: [
+              { display_type: 'label', opt: { label: 'Rating'} },
+              {
+                  display_type: 'line_data',
+                  opt: {
+                      datapoints: [
+                          {datapoint: :great_schools_rating_icon, label: 'GreatSchools rating'},
+                          {datapoint: :test_scores_rating, label: 'Test scores rating'},
+                          {datapoint: :student_growth_rating, label: 'Student growth rating'},
+                      ]
+                  }
+              },
             { display_type: 'quality/rating' },
             { display_type: 'quality/college_readiness' },
             { display_type: 'quality/add_to_my_schools_list' }
@@ -76,17 +87,27 @@ class CompareSchoolsController < ApplicationController
           children: [
             { display_type: 'label', opt: { label: 'At a glance'} },
             {
-              display_type: 'details/at_a_glance',
+              display_type: 'line_data',
               opt: {
-                datapoints: [:students_enrolled, :transportation, :before_care, :after_school]
+                datapoints: [
+                    {datapoint: :students_enrolled, label: 'Students enrolled', icon: 'i-16-blue-students-enrolled'},
+                    {datapoint: :transportation, label: 'Transportation', icon: 'i-16-blue-transportation'},
+                    {datapoint: :before_care, label: 'Before care', icon: 'i-16-blue-before-care'},
+                    {datapoint: :after_school, label: 'After school', icon: 'i-16-blue-after-school'}
+                ]
               }
             },
             { display_type: 'section_dividing_bar' },
             { display_type: 'label', opt: { label: 'Programs'} },
             {
-              display_type: 'details/programs',
+              display_type: 'line_data',
               opt: {
-                datapoints: [:world_languages, :clubs, :sports, [:arts_and_music, 'Arts & Music']]
+                datapoints: [
+                    {datapoint: :world_languages, label: 'World language', icon: 'i-16-blue-world-languages'},
+                    {datapoint: :clubs, label: 'Clubs', icon: 'i-16-blue-clubs'},
+                    {datapoint: :sports, label: 'Sports', icon: 'i-16-blue-sports-trophy'},
+                    {datapoint: :arts_and_music, label: 'Arts & Music', icon: 'i-16-blue-arts-and-music'}
+                ]
               }
             },
             { display_type: 'section_dividing_bar' },

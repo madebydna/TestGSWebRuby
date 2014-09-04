@@ -1,7 +1,0 @@
-<div class="phm">
-  <% config.opt[:datapoints].each do |datapoint| %>
-        <span class="fl"><%= datapoint.to_s.gsub(/_/,' ').gs_capitalize_first %></span>
-        <span class="fr open-sans_sb"><%= @school.send(datapoint) %></span>
-      <br>
-  <% end %>
-</div>

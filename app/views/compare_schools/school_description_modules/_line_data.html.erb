@@ -1,0 +1,12 @@
+<div class="phm">
+  <% config.opt[:datapoints].each do |datapoint_config| %>
+      <div class="pts">
+        <% if datapoint_config[:icon] %>
+            <i class="fl mrm iconx16 <%= datapoint_config[:icon] %>"></i>
+        <% end %>
+        <span class="fl"><%= datapoint_config[:label] %></span>
+        <div class="fr open-sans_sb mbn"><%= @school.send(datapoint_config[:datapoint]) %></div>
+      </div>
+      <div class="clearfix"></div>
+  <% end %>
+</div>
