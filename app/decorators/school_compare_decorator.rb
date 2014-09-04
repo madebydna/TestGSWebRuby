@@ -3,7 +3,8 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   decorates :school
   delegate_all
 
-  NO_DATA_SYMBOL = 'n/a'
+  NO_DATA_SYMBOL = '?'
+  NO_RATING_TEXT = 'NR'
 
   def cache_data
     # Draper special initialize key
@@ -142,6 +143,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def great_schools_rating_icon
     rating = school_rating_by_data_type_id(174)
+    rating = 'nr' if rating == NO_RATING_TEXT
     "<i class=\"iconx24-icons i-24-new-ratings-#{rating}\"></i>".html_safe
   end
 
@@ -158,7 +160,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     if overall_ratings_obj
       overall_ratings_obj['school_value_float'].to_i
     else
-      NO_DATA_SYMBOL
+      NO_RATING_TEXT
     end
   end
 
