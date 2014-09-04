@@ -228,7 +228,8 @@ module MetaTagsHelper
   end
 
   def search_by_name_meta_tag_hash
-    if city = City.find_by_state_and_name(@state[:short], @params_hash['q'])
+    city = City.where("state=? and name = ? COLLATE 'utf8_general_ci' and active=1", @state[:short], @params_hash['q']).first
+    if city
       school_type, level_code, page = search_params_for_meta_tags
       parameters = "#{level_code.param}#{school_type.param}"
       url_without_params = canonical_url_without_params(@state[:long], city.name)
