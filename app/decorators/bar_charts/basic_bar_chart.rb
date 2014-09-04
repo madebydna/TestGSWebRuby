@@ -48,15 +48,19 @@ class BarCharts::BasicBarChart < Draper::Decorator
       column_key = column_config['key'].to_sym
       column_label = column_config['label']
       column_format = column_config['format']
-      # The label we use for this data
-      bar_value = bar_value(data_for_single_row[column_key])
-      bar_annotation = bar_value.to_s
-      if column_format == 'percentage'
-        bar_annotation << '%'
-      end
-      bar_tooltip = bar_chart_tooltip_html(data_point_label, column_label, bar_annotation)
 
-      return nil if bar_value.nil?
+      bar_value = 0
+      bar_annotation = ''
+      bar_tooltip = ''
+
+      if data_for_single_row[column_key].present?
+        bar_value = bar_value(data_for_single_row[column_key])
+        bar_annotation = bar_value.to_s
+        if column_format == 'percentage'
+          bar_annotation << '%'
+        end
+        bar_tooltip = bar_chart_tooltip_html(data_point_label, column_label, bar_annotation)
+      end
 
       [bar_value, bar_annotation, bar_tooltip]
     end
