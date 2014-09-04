@@ -4,24 +4,11 @@ class CompareSchoolsController < ApplicationController
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   def show
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
+    @params_schools = params[:school_ids].nil? ? [] : params[:school_ids].split(',').uniq
+    @state = :de
 
-    @schools = []
-    if params[:school_ids]
-      @params_schools = params[:school_ids].split(',').uniq
-      @state = :de
-      @cache_data = cache_data
-      @params_schools.each do |id|
-        if @schools.size < 4
-          begin
-            school = School.on_db(@state).find(id)
-            next unless school.active == 1
-            @schools << SchoolCompareDecorator.new(school, context: @cache_data[id.to_i])
-          rescue
-            Rails.logger.error "Compare: no school found in state #{@state} with id #{id}"
-          end
-        end
-      end
-    end
+    @schools = decorated_schools
+
     gon.pagename = 'CompareSchoolsPage'
 
     @map_schools = @schools
@@ -30,7 +17,19 @@ class CompareSchoolsController < ApplicationController
     assign_sprite_files_though_gon
   end
 
-  def cache_data
+  def decorated_schools
+    decorated_schools = []
+    cache_data = school_cache_data
+    db_schools = School.on_db(@state).where(id: @params_schools, active: true)
+    db_schools.each do |db_school|
+      if decorated_schools.size < 4
+        decorated_schools << SchoolCompareDecorator.new(db_school, context: cache_data[db_school.id.to_i])
+      end
+    end
+    decorated_schools
+  end
+
+  def school_cache_data
     SchoolCache.for_schools_keys(SCHOOL_CACHE_KEYS,@params_schools,@state)
   end
 
