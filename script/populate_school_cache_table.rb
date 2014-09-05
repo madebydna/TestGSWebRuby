@@ -1,22 +1,65 @@
-cache_key_arg= ARGV[0]
-states_arg=ARGV[1]
-school_ids_arg=ARGV[2]
-
 def all_cache_keys
   ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot']
 end
 
-def usage
-  abort "USAGE: rails runner script/populate_school_cache_table (all|#{all_cache_keys.join('|')}) [state] [school id].\n" +
-    "If no state is provided, then as of r250 it does mi,in,wi,de,ca,nc,oh,dc."
+def nightly_states
+  ['de']
 end
 
-usage unless cache_key_arg && (all_cache_keys + ['all']).include?(cache_key_arg)
+def usage
+  abort "\n\nUSAGE: rails runner script/populate_school_cache_table (all | [state]:[cache_keys]:[school_ids])
 
-states = States.abbreviations
+Ex: rails runner script/populate_school_cache_table al:test_scores de:all:9,18,23
+
+Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
+end
+
+def all_states
+  States.abbreviations
+end
+
+def parse_arguments
+  # Returns false or parsed arguments
+  if ARGV[0] == 'all'
+    [{
+         states: all_states,
+         cache_keys: all_cache_keys
+     }]
+    # TODO Limit nightly cache keys
+  else
+    args = []
+    ARGV.each_with_index do |arg, i|
+      state,cache_keys,school_ids = arg.split(':')
+      return false unless all_states.include?(state) || state == 'all'
+      state = state == 'all' ? all_states : [state]
+      cache_keys ||= 'none_given'
+      cache_keys = cache_keys.split(',')
+      cache_keys = all_cache_keys if cache_keys == ['all']
+      cache_keys.each do |cache_key|
+        return false unless all_cache_keys.include?(cache_key)
+      end
+      if school_ids
+        school_ids = school_ids.split(',')
+        school_ids.each do |school_id|
+          return false unless school_id.numeric?
+        end
+      end
+      args[i] = {}
+      args[i][:states] = state
+      args[i][:cache_keys] = cache_keys
+      args[i][:school_ids] = school_ids if school_ids.present?
+    end
+    args
+  end
+end
+
+parsed_arguments = parse_arguments
+
+usage unless parsed_arguments
+
 
 def self.create_cache(school, cache_key)
-  if (school.active?)
+  if school.active?
     begin
       action = "#{cache_key}_cache_for_school"
       self.send action, school
@@ -62,7 +105,7 @@ def self.ratings_cache_for_school(school)
   results_obj_array = TestDataSet.ratings_for_school(school)
   school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name: 'ratings')
 
-  if (results_obj_array.present?)
+  if results_obj_array.present?
     config_map = {
       :data_type_id => 'data_type_id',
       :year => 'year',
@@ -99,32 +142,21 @@ def self.reviews_snapshot_cache_for_school(school)
   esp_response_cacher.cache
 end
 
-keys = []
-
-if cache_key_arg.present? && cache_key_arg == 'all'
-  keys = all_cache_keys
-elsif cache_key_arg.present? && cache_key_arg != 'all'
-  keys = all_cache_keys.select { |key| cache_key_arg.to_s.split(',').include?(key) }
-end
-
-keys.each do |cache_key|
-  if !states_arg.nil? && !school_ids_arg.nil?
-    school_ids_arg.to_s.split(',').each do | school_id_arg |
-      school = School.on_db(states_arg.downcase.to_sym).find(school_id_arg)
-      unless (school.nil?)
+parsed_arguments.each do |args|
+  states = args[:states]
+  cache_keys = args[:cache_keys]
+  school_ids = args[:school_ids]
+  states.each do |state|
+    next if ARGV[0] == 'all' && !nightly_states.include?(state)
+    cache_keys.each do |cache_key|
+      if school_ids
+        School.on_db(state.downcase.to_sym).where(id: school_ids).each do |school|
           create_cache(school, cache_key)
-      end
-    end
-  elsif !states_arg.nil? && school_ids_arg.nil?
-    states_arg.to_s.split(',').each do | state_arg |
-      School.on_db(state_arg.downcase.to_sym).all.each do |school|
-        create_cache(school, cache_key)
-      end
-    end
-  else
-    states.each do |state|
-      School.on_db(state.downcase.to_sym).all.each do |school|
-        create_cache(school, cache_key)
+        end
+      else
+        School.on_db(state.downcase.to_sym).all.each do |school|
+          create_cache(school, cache_key)
+        end
       end
     end
   end
