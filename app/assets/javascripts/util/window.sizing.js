@@ -134,11 +134,11 @@ GS.window.sizing.sizeBasedObjHash = function() {
                     sizeHash.testscores.barChartHeight = 170;
                     sizeHash.testscores.barChartLegend = 'bottom';
                     sizeHash.testscores.barChartAreaWidth = '75%';
-                    sizeHash.global.barChartWidth = 270;
+                    sizeHash.global.barChartWidth = 280;
                     sizeHash.global.barChartHeight = 170;
-                    sizeHash.global.barChartLabelWidth = 70;
+                    sizeHash.global.barChartLabelWidth = 60;
                     sizeHash.global.barChartLegend = 'bottom';
-                    sizeHash.global.barChartAreaWidth = '80%';
+                    sizeHash.global.barChartAreaWidth = '75%';
                     if (gon.hasOwnProperty('contact_map') && gon.contact_map.hasOwnProperty('md')) {
                         sizeHash.global.map = gon.contact_map.sm;
                     }
