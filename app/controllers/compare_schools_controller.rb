@@ -5,7 +5,7 @@ class CompareSchoolsController < ApplicationController
   def show
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
     @params_schools = params[:school_ids].nil? ? [] : params[:school_ids].split(',').uniq
-    @state = :de
+    @state = params[:state] || :de
 
     @schools = decorated_schools
 
