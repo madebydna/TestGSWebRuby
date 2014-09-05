@@ -20,7 +20,7 @@ end
 
 def parse_arguments
   # Returns false or parsed arguments
-  if ARGV[0] == 'all'
+  if ARGV[0] == 'all' && ARGV[1].nil?
     [{
          states: all_states,
          cache_keys: all_cache_keys
