@@ -144,7 +144,11 @@ class SigninController < ApplicationController
         user = token.user
         user.verify!
         if user.save
-          user.publish_reviews!
+          newly_published_reviews = user.publish_reviews!
+          if newly_published_reviews.any?
+            set_omniture_events_in_cookie(['review_updates_mss_end_event'])
+            set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
+          end
           log_user_in user
           redirect_to success_redirect
         else

@@ -378,6 +378,17 @@ describe SigninController do
         subject
       end
 
+      it 'should track user review submission conversion in omniture' do
+        expect(user).to receive(:publish_reviews!).and_return([SchoolRating.new])
+        expect(controller).to receive(:set_omniture_events_in_cookie).
+          with(['review_updates_mss_end_event'])
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({"ab_version"=>nil})
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({'custom_completion_sprop' => 'PublishReview'})
+        subject
+      end
+
       it 'should verify the user\'s email' do
         expect{ subject }.to change{ user.email_verified? }
           .from(false).to(true)
