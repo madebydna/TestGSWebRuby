@@ -93,34 +93,76 @@ describe SchoolRating do
     expect(review).to be_valid
   end
 
-  describe '#auto_report_bad_language' do
+  describe '#auto_moderate' do
+    before do
+      subject.school = school
+    end
 
     it 'should not report a review with no bad language' do
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
       expect(ReportedEntity).to_not receive(:from_review)
-      subject.auto_report_bad_language
+      subject.auto_moderate
     end
 
     it 'should save a reported entity' do
       expect(AlertWord).to receive(:search).and_return(alert_words)
       expect(ReportedEntity).to receive(:from_review)
-      subject.auto_report_bad_language
+      subject.auto_moderate
     end
 
     it 'should send the correct reason' do
       expect(AlertWord).to receive(:search).and_return(alert_words)
       expect(ReportedEntity).to receive(:from_review).with(subject, 'Review contained warning words (alert_word_1,alert_word_2)')
-      subject.auto_report_bad_language
+      subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(really_bad_words)
       expect(ReportedEntity).to receive(:from_review).with(subject, 'Review contained really bad words (really_bad_word_1,really_bad_word_2)')
-      subject.auto_report_bad_language
+      subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(alert_and_really_bad_words)
       expect(ReportedEntity).to receive(:from_review).with(subject, 'Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)')
-      subject.auto_report_bad_language
+      subject.auto_moderate
     end
 
+    it 'should report reviews for Delaware public schools' do
+      school.state = 'DE'
+      school.type = 'public'
+      expect(AlertWord).to receive(:search).and_return(no_bad_language)
+      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review is for GreatSchools Delaware school.')
+      subject.auto_moderate
+    end
+
+    it 'should report reviews for Delaware charter schools' do
+      school.state = 'DE'
+      school.type = 'charter'
+      expect(AlertWord).to receive(:search).and_return(no_bad_language)
+      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review is for GreatSchools Delaware school.')
+      subject.auto_moderate
+    end
+
+    it 'should not report reviews for Delaware private schools' do
+      school.state = 'DE'
+      school.type = 'private'
+      expect(AlertWord).to receive(:search).and_return(no_bad_language)
+      expect(ReportedEntity).to_not receive(:from_review)
+      subject.auto_moderate
+    end
+
+    it 'should not report reviews for New York public schools' do
+      school.state = 'NY'
+      school.type = 'public'
+      expect(AlertWord).to receive(:search).and_return(no_bad_language)
+      expect(ReportedEntity).to_not receive(:from_review)
+      subject.auto_moderate
+    end
+
+    it 'should not report reviews for New York charter schools' do
+      school.state = 'NY'
+      school.type = 'charter'
+      expect(AlertWord).to receive(:search).and_return(no_bad_language)
+      expect(ReportedEntity).to_not receive(:from_review)
+      subject.auto_moderate
+    end
   end
 
   describe '#calculate_and_set_status' do

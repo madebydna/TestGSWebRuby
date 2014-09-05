@@ -1,9 +1,10 @@
 <div class="pam">
-  <div>
-    <%= image_tag(image_path(data[:image]), class:"mobile_img")%>
-
-  </div>
   <a href="<%= data[:link] %>">
+    <div>
+      <%= image_tag(image_path(data[:image]), class:"mobile_img")%>
+
+    </div>
+
     <h4 class=""><%= data[:title] %></h4>
   </a>
 

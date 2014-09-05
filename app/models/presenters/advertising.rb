@@ -101,6 +101,15 @@ class Advertising
         mobile:{
           dimensions:[300,250]
         }
+      },
+      Text: {
+        name: "Text",
+        desktop:{
+          dimensions:[728,60]
+        },
+        mobile:{
+          dimensions:[320,60]
+        }
       }
     }
 

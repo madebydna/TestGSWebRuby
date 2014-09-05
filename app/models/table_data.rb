@@ -143,4 +143,9 @@ class TableData
                       "<p>#{row[label_column]}" << ' ' << row[value_column].to_f.round.to_s << '%</p>'] }
   end
 
+  def to_barchart(label_column, value_column)
+    rows.map { |row| ["#{row[label_column]}", row[value_column].to_f.round,
+                      "<p>#{row[label_column]}" << ' ' << row[value_column].to_f.round.to_s << '%</p>'] }
+  end
+
 end

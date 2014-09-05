@@ -1,44 +1,65 @@
-  <% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
-  <% if neighbors.size >= 4 %>
-    <div class="limit-width-1200 clearfix pam">
-      <hr/>
-      <div class="clearfix mbm">
-        <div class="fl">
-            <h2 class="mvn">Nearby schools</h2>
+<% version_with_ad = false || params[:gs_nearbyschoolswithad] # temporary param for testing %>
+<% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
+<% if version_with_ad %>
+  <% neighbor_sizes = [
+    [
+      { xs: 12, sm: 8, md: 8, lg: 4 },
+      { xs: 12, sm: 4, md: 4, lg: 2 },
+      { xs: 12, sm: 4, md: 4, lg: 2 },
+      { xs: 12, sm: 4, md: 4, lg: 2 },
+      { xs: 12, sm: 4, md: 4, lg: 2 }
+    ]
+  ] %>
+<% else %>
+  <% neighbor_sizes = [
+    [
+      { xs: 12, sm: 3, md: 3, lg: 3 },
+      { xs: 12, sm: 3, md: 3, lg: 3 },
+      { xs: 12, sm: 3, md: 3, lg: 3 },
+      { xs: 12, sm: 3, md: 3, lg: 3 }
+    ]
+  ] %>
+<% end %>
+
+<% if neighbors.size >= 4 %>
+  <% ad_content = capture do %>
+    <% neighbor = neighbors[0] %>
+    <%= div_tag(class: 'pbm', sizes: neighbor_sizes.first.first) do %>
+      <div class="pam" style="width:100%;">
+        <div class="partner-carousel-image center-block" style="width:300px;">
+          <%= neighbor.link_to_overview do %>
+            <div class="ma oh ">
+                <%= neighbor.street_view_photo(300,250) %>
+            </div>
+          <% end %>
         </div>
       </div>
-      <div class="row">
-        <% neighbors[0..3].each_with_index do |neighbor, index| %>
-          <%= neighbor.link_to_overview do %>
-            <%= div_tag(class: 'pbm link-darkgray', sizes: { xs: 12, sm: 6, md: 3, lg: 3 }) do %>
-              <div class="partner-carousel-image mam">
-                <div class="ma oh hidden-xs" style="width: 100%;">
-                  <%= neighbor.street_view_photo(450,150) %>
-                </div>
-                <div class="pam">
-                  <div class="clearfix">
-                    <div class="fl prm">
-                    <% rating = neighbor.great_schools_rating %>
-                    <% if rating.present? && rating.to_i > 0 %>
-                      <span class="vam iconx24-ratings i-24-ratings-<%= neighbor.great_schools_rating %>"></span>
-                    <% end %>
-                    </div>
-                    <div class="fl" style="width: 80%;">
-                      <span class="open-sans_b notranslate">
-                        <%= neighbor.name %>
-                      </span>
-                      <br/>
-                      <span class="notranslate"><%= neighbor.city_state %></span>
-                      <br/>
-                      <%= neighbor.type %> | <%= neighbor.process_level %>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
+    <% end %>
+  <% end %>
+  <div class="limit-width-1200 clearfix pam">
+    <div class="clearfix mbm">
+      <hr />
+      <div class="fl">
+          <h2 class="mvn">Nearby schools</h2>
+      </div>
+    </div>
+    <% neighbor_index = 0 %>
+    <% neighbor_sizes.each_with_index do |column_sizes, row| %>
+      <div class="row mtl">
+        <% column_sizes.each_with_index do |sizes, column| %>
+          <% if version_with_ad && row == 0 && column == 0 %>
+            <%= ad_content %>
+          <% else %>
+            <% neighbor = neighbors[neighbor_index] %>
+            <% neighbor_index += 1 %>
+            <% css_class = 'pbm ' %>
+            <%= div_tag(class: css_class, sizes: sizes) do %>
+              <%= render partial: 'school_profile/nearby_school',
+                locals: { neighbor: neighbor } %>
             <% end %>
           <% end %>
         <% end %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+<% end %>

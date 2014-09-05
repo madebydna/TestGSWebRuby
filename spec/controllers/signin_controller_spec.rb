@@ -121,7 +121,7 @@ describe SigninController do
         let(:user) { instance_double(User) }
         subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
-          user.stub(:provisional?).and_return(false)
+          allow(user).to receive(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
         end
 
@@ -153,6 +153,13 @@ describe SigninController do
           allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
           cookies[:redirect_uri] = '/city-hub/'
           expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+          cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject.request.url).not_to include '['
+          expect(subject.request.url).not_to include ']'
         end
       end
     end
@@ -294,6 +301,15 @@ describe SigninController do
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/overview-url-double')
             end
+            it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+              stub_fb_login_fail
+              cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              allow(controller).to receive(:overview_page_for_last_school) { nil }
+              get :facebook_callback, code: 'fb-code'
+              expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              expect(subject.request.url).not_to include '['
+              expect(subject.request.url).not_to include ']'
+            end
           end
 
           context 'logged in' do
@@ -375,6 +391,17 @@ describe SigninController do
 
       it 'should publish the user\'s reviews' do
         expect(user).to receive(:publish_reviews!)
+        subject
+      end
+
+      it 'should track user review submission conversion in omniture' do
+        expect(user).to receive(:publish_reviews!).and_return([SchoolRating.new])
+        expect(controller).to receive(:set_omniture_events_in_cookie).
+          with(['review_updates_mss_end_event'])
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({"ab_version"=>nil})
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({'custom_completion_sprop' => 'PublishReview'})
         subject
       end
 

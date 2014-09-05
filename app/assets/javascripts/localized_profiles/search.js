@@ -13,7 +13,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
-    var prototypeSearchSelector = 'input#js-prototypeSearch';
+    var schoolResultsSearchSelector = 'input#js-schoolResultsSearch';
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
@@ -39,30 +39,32 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             }
         });
 
-        $('.js-prototypeSearchForm').submit(function() {
-            var input = $(this).find(prototypeSearchSelector)[0];
+        $('.js-schoolResultsSearchForm').submit(function() {
+            var input = $(this).find(schoolResultsSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
+            isAddress(input.value);
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};
-                var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+                var gradeLevelFilter = $('#js-searchGradeLevelFilter');
                 if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
                     searchOptions['grades'] = gradeLevelFilter.val();
                 }
 
-                if (input.value == $(prototypeSearchSelector).data('prev-search')) {
+                if (input.value == $(schoolResultsSearchSelector).data('prev-search')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
-                    params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
+                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
                     params = GS.uri.Uri.removeFromQueryString(params, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
-                    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + params);
+                    var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
+                    GS.uri.Uri.goToPage(url);
                     return false
                 } else if (searchType == 'byLocation') {
-                    GS.search.schoolSearchForm.findByLocationSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByLocationSelector = schoolResultsSearchSelector;
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
-                    GS.search.schoolSearchForm.findByNameSelector = prototypeSearchSelector;
+                    GS.search.schoolSearchForm.findByNameSelector = schoolResultsSearchSelector;
 //                    ToDo Hard coded byName search to Delaware
                     GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
@@ -184,9 +186,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var defaultGeocodeCallbackFn = function(geocodeResult) {
         var searchOptions = jQuery.extend({}, geocodeResult);
-        searchOptions['locationSearchString'] = getSearchQuery();
+        for (var urlParam in searchOptions) {
+            if (searchOptions.hasOwnProperty(urlParam)) {
+                searchOptions[urlParam] = encodeURIComponent(searchOptions[urlParam]);
+            }
+        }
+        searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
-        var gradeLevelFilter = $('#js-prototypeSearchGradeLevelFilter');
+        var gradeLevelFilter = $('#js-searchGradeLevelFilter');
         if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
             searchOptions['grades'] = gradeLevelFilter.val();
         }
@@ -746,7 +753,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         var collectionId = $(this).find('input#js-collectionId').val();
         var queryString = jQuery.extend({}, queryStringOptions);
 
-        queryString.q = searchString;
+        queryString.q = encodeURIComponent(searchString);
         if (typeof collectionId !== 'undefined') {
             queryString.collectionId = collectionId;
         }
@@ -757,6 +764,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
                 SEARCH_PAGE_PATH +
                 GS.uri.Uri.getQueryStringFromObject(queryString)); }, 1);
+        return false;
     };
 
     var showFiltersMenuOnLoad = function() {
@@ -770,6 +778,18 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var searchResultsDisplayed = function() {
         return $('.js-searchResultsContainer').length > 0
+    };
+
+
+    var checkGooglePlaceholderTranslate = function () {
+        var placeholder = $('#js-schoolResultsSearch').attr('placeholder');
+        var translatedPlaceholder = $('.js-translate-placeholder').attr('font');
+        if (placeholder != translatedPlaceholder) {
+            $('#js-schoolResultsSearch').attr('placeholder', $('.js-translate-placeholder').text());
+            setTimeout(checkGooglePlaceholderTranslate, 1000);
+        } else {
+            setTimeout(checkGooglePlaceholderTranslate, 1000);
+        }
     };
 
     return {
@@ -787,7 +807,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        showFiltersMenuOnLoad: showFiltersMenuOnLoad
+        showFiltersMenuOnLoad: showFiltersMenuOnLoad,
+        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate
     };
 })();
 
@@ -802,4 +823,5 @@ $(document).ready(function() {
   GS.search.schoolSearchForm.schools.cacheList = {};
   GS.search.schoolSearchForm.attachAutocomplete();
   GS.search.schoolSearchForm.showFiltersMenuOnLoad();
+  GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
 });

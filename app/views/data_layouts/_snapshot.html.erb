@@ -38,11 +38,16 @@
         </div>
       </div>
       <% end %>
-      <% if !@school.preschool? %>
-        <div class="fr prl">
-          <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
-        </div>
-      <% end %>
+      <div class="fr prl">
+        <%= link_to(
+          '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe,
+          osp_register_url(
+            city: @school.city,
+            school_id: @school.id.to_s,
+            state: @school.state
+          )
+        ) %>
+      </div>
     <%= @show_ads ?  '</div>'.html_safe : '' %>
     <% if @show_ads %>
       <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">

@@ -2,6 +2,9 @@ class SearchController < ApplicationController
   include ApplicationHelper
   include MetaTagsHelper
   include ActionView::Helpers::TagHelper
+  include PaginationConcerns
+  include GoogleMapConcerns
+  include HubConcerns
 
   #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
@@ -48,6 +51,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 
@@ -75,6 +79,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 
@@ -100,6 +105,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
+    gon.pagename = "SearchResultsPage"
   end
 
   def by_name
@@ -119,6 +125,7 @@ class SearchController < ApplicationController
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
+    gon.pagename = "SearchResultsPage"
     render 'search_page'
   end
 
@@ -126,9 +133,7 @@ class SearchController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     setup_filter_display_map
 
-    @results_offset = get_results_offset
-    @page_size = get_page_size
-    @page_number = get_page_number # for use in view
+    set_page_instance_variables # @results_offset @page_size @page_number
 
     ad_setTargeting_through_gon
 
@@ -195,9 +200,7 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    @max_number_of_pages = get_max_number_of_pages(@total_results, @page_size) #for pagination and meta tags
-    @window_size = get_kaminari_window_size
-    @pagination = Kaminari.paginate_array([], total_count: @total_results).page(get_page_number).per(@page_size)
+    set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
   end
 
   def suggest_school_by_name
@@ -326,43 +329,6 @@ class SearchController < ApplicationController
     params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
   end
 
-  def get_page_number
-    page_number = (params[:page] || 1).to_i
-    page_number < 1 ? 1 : page_number
-  end
-
-  def get_results_offset
-    result_offset = (params[:page].to_i - 1) * get_page_size
-    result_offset < 0 ? 0 : result_offset
-  end
-
-  def get_page_size
-    #ToDo Hiding param to alter page size. Hardcode to 25 results per page?
-    # page_size = (params[:pageSize])?(params[:pageSize].to_i):25
-    # page_size = 1 if page_size < 1
-    # page_size
-    25
-  end
-
-  def get_max_number_of_pages(total_results, page_size)
-    return 1 if total_results <= page_size
-    if total_results % page_size == 0
-      total_results / page_size
-    else
-      total_results / page_size + 1
-    end
-  end
-
-  def get_kaminari_window_size
-    if @page_number < 5
-      9 - @page_number
-    elsif @page_number > @max_number_of_pages - 6
-      9 - (@max_number_of_pages - @page_number)
-    else
-      4
-    end
-  end
-
   private
 
   def set_omniture_data_search_school(page_number, search_type, search_term, locale)
@@ -386,50 +352,6 @@ class SearchController < ApplicationController
     gon.ad_set_targeting = set_targeting
   end
 
-  def mapping_points_through_gon
-    gon.map_points = @map_schools.map do |school|
-      begin
-        map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
-        map_points[:communityRatingStars] = school.respond_to?(:community_rating) ? (draw_stars_16 school.community_rating) : ''
-        map_points[:profileUrl] = "/#{@state[:long]}/city/#{school.id}-school"
-        map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
-        map_points[:zillowUrl] = zillow_url(school)
-        school.respond_to?(:latitude) ? map_points[:lat] = school.latitude : next
-        school.respond_to?(:longitude) ? map_points[:lng] = school.longitude : next
-        map_points[:numReviews] = school.respond_to?(:review_count) ? school.review_count : 0
-        map_points[:zIndex] = -1 if !school.on_page
-        map_points
-      rescue NoMethodError => e
-        puts e.message
-        puts 'School Not Added as a Map Pin'
-        nil
-      else
-        map_points
-      end
-    end.compact
-  end
-
-  def assign_sprite_files_though_gon
-    sprite_files = {}
-    sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
-    sprite_files['imageUrlOnPage'] = view_context.image_path('icons/140725-29x40_pins.png')
-
-    gon.sprite_files = sprite_files
-
-  end
-
-  def hash_to_hash(configuration_map, hash)
-    rval_map = {}
-    hash.each do |k,v|
-      if configuration_map.has_key? k
-        rval_map[configuration_map[k]] = v
-      else
-        rval_map[k] = v
-      end
-    end
-    rval_map
-  end
-
   def calculate_fit_score(results, params_hash)
     params = params_hash.select do |key|
       SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
@@ -445,10 +367,6 @@ class SearchController < ApplicationController
     filter_builder = FilterBuilder.new
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
-  end
-
-  def get_suggested_school(spellcheck_hash)
-
   end
 
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map
@@ -471,40 +389,5 @@ class SearchController < ApplicationController
         12 => '12th Grade'
       }
     }
-  end
-
-  def set_up_localized_search_hub_params
-    if local_search?
-      if hub_city_state?
-        set_hub_params(@state,@city.name)
-      elsif hub_state?
-        set_hub_params(@state,nil)
-      elsif first_school_result_is_in_hub?
-        set_hub_params(@state,@first_school.hub_city)
-      end
-    end
-  end
-
-  def local_search?
-    if search_by_location? || search_by_name?
-      first_school_result_is_in_hub?
-    else
-      hub_city_state? || hub_state?
-    end
-  end
-
-  def first_school_result_is_in_hub?
-    if @schools.present?
-      @first_school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
-      is_hub_school?(@first_school)
-    end
-  end
-
-  def hub_city_state?
-    @city && @state && HubCityMapping.where(active: 1, city: @city.name, state: @state[:short]).present?
-  end
-
-  def hub_state?
-    @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
   end
 end

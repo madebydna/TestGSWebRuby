@@ -31,9 +31,9 @@ module UrlHelper
     .gsub('#', '')
     .gsub('`', '')
 
-    # Replaces non-ASCII characters with an ASCII approximation, or if none exists,
-    # a replacement character which defaults to “?”
-    param = ActiveSupport::Inflector.transliterate param, ''
+    # Transliterates UTF-8 characters to ASCII. By default this method will
+    # transliterate only Latin strings to an ASCII approximation:
+    param = I18n.transliterate(param)
 
     param.gs_capitalize_words!
 
@@ -129,7 +129,7 @@ module UrlHelper
         # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
         # and although the user will get to the right page when they click the link,
         # it will happen via a 301 redirect, which we dont want
-        send "pre#{helper_name}_url", (params.merge(subdomain: PreschoolSubdomain.pk_subdomain(request)))
+        send "pre#{helper_name}_url", (params.merge(host: ENV_GLOBAL['app_pk_host']))
       else
         super params
       end
@@ -235,8 +235,7 @@ module UrlHelper
   # parse a query string, adding repeat parameters into arrays
   # e.g. ?a=b&a=c returns {'a' => ['b','c']}
   def parse_array_query_string(query_string)
-    query_s = CGI.unescape(query_string)
-    query_s.gsub!( /\[\]/ , '')
+    query_s = query_string.gsub( /\[\]\=/ , '=').gsub('%5B%5D=', '=') # %5B%5D is []
     Rack::Utils.parse_query(query_s)
   end
   # Rack::Utils.parse_query does not handle rails style arrays

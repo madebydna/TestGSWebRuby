@@ -124,6 +124,11 @@ class CensusDataReader < SchoolProfileDataReader
     end
   end
 
+  def all_raw_data(specified_data_types=nil)
+    results = raw_data(specified_data_types) || []
+    results
+  end
+
   #############################################################################
   # Methods for actually building Hashes that view will consume
 
@@ -176,25 +181,25 @@ class CensusDataReader < SchoolProfileDataReader
   # Methods for actually retrieving raw data. The "data reader" portion of this
   # class
 
-  def census_data_by_data_type_query
-    configured_data_types =
+  def census_data_by_data_type_query(specified_data_types=nil)
+    specified_data_types ||=
       Array.wrap(page.all_configured_keys('census_data')) +
       Array.wrap(page.all_configured_keys('census_data_points'))
 
     CensusDataSetQuery.new(school.state)
-      .with_data_types(configured_data_types)
+      .with_data_types(specified_data_types)
       .with_school_values(school.id)
       .with_district_values(school.district_id)
       .with_state_values
       .with_census_descriptions(school.type)
   end
 
-  def raw_data
+  def raw_data(specified_data_types=nil)
     @all_census_data ||= nil
     return @all_census_data if @all_census_data
 
     # Get data for all data types
-    results = census_data_by_data_type_query.to_a
+    results = census_data_by_data_type_query(specified_data_types).to_a
 
     @all_census_data =
       CensusDataResults.new(results)

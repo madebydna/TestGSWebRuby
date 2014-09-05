@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   include AdvertisingHelper
 
   before_action :ad_setTargeting_through_gon
+  before_action :set_login_redirect
 
   layout 'application'
 

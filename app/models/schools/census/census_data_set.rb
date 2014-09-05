@@ -40,6 +40,24 @@ class CensusDataSet < ActiveRecord::Base
     census_data_type.type if census_data_type
   end
 
+  def self.fetch_census_values(school, active, data_set_conditions = {})
+    data_set_conditions = data_set_conditions.merge({
+                                                        active: active,
+                                                        census_data_school_value: {
+                                                            school_id: school.id,
+                                                            active: active
+                                                        }
+                                                    })
+    CensusDataSet.on_db(school.shard)
+    .select('*,census_data_set.id as id,
+      census_data_state_value.value_float as state_value_float,
+      census_data_state_value.value_text as state_value_text,
+      census_data_school_value.value_float as school_value_float,
+      census_data_school_value.value_text as school_value_text ')
+    .joins('LEFT OUTER JOIN census_data_school_value on census_data_school_value.data_set_id = census_data_set.id')
+    .where(data_set_conditions)
+    .joins('LEFT OUTER JOIN census_data_state_value on census_data_state_value.data_set_id = census_data_set.id and census_data_state_value.active = 1')
+  end
 
   def census_data_school_value
     census_data_school_values[0] if census_data_school_values.any?

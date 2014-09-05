@@ -11,7 +11,20 @@ feature 'configurable dropdown menu', caching: true do
     [
       { collection_id: 1, city: 'detroit', state: 'MI', active: 1, hasEduPage: 1, hasChoosePage: 1, hasEventsPage: 1, hasEnrollPage: 1, hasPartnerPage: 1 },
       { collection_id: 2, city: 'Oakland', state: 'CA', active: 1, hasEduPage: 0, hasChoosePage: 0, hasEventsPage: 0, hasEnrollPage: 0, hasPartnerPage: 0 },
-      { collection_id: 6, city: nil, state: 'IN', active: 1, hasStateEduPage: 1, hasStateChoosePage: 1, hasStateEnrollPage: 0, hasStatePartnerPage: 1 },
+      {
+        collection_id: 6,
+        city: nil,
+        state: 'IN',
+        active: 1,
+        hasEduPage: 0,
+        hasStateEduPage: 1,
+        hasChoosePage: 0,
+        hasStateChoosePage: 1,
+        hasEnrollPage: 0,
+        hasStateEnrollPage: 0,
+        hasPartnerPage: 0,
+        hasStatePartnerPage: 1
+      },
       { collection_id: 7, city: nil, state: 'OH', active: 1, hasEduPage: 0, hasChoosePage: 0 },
       { collection_id: 8, city: nil, state: 'NC', active: 1, hasEduPage: 1, hasChoosePage: 0 },
       { collection_id: 9, city: nil, state: 'DE', active: 1, hasEduPage: 1, hasChoosePage: 0 }

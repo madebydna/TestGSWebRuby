@@ -8,10 +8,18 @@ class CensusDataBreakdown < ActiveRecord::Base
 
   has_many :census_data_sets, :class_name => 'CensusDataSet', foreign_key: 'breakdown_id'
 
-  attr_reader :gender
-
   preload_all :language, :as => :language, :foreign_key => 'language_id', :field => 'name'
   preload_all :ethnicity, :as => :ethnicity, :foreign_key => 'ethnicity_id', :field => 'name'
+
+  def gender
+    if attributes['gender'].nil?
+      nil
+    elsif attributes['gender'] == 'M'
+      'Male'
+    else
+      'Female'
+    end
+  end
 
   def breakdown
     gender.presence || ethnicity.presence || language.presence

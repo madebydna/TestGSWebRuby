@@ -1,10 +1,13 @@
 GS.search = GS.search || {};
+GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
+GS.window.sizing.width = GS.window.sizing.width || {};
 GS.search.googleMap = GS.search.googleMap || (function() {
 
     var needsInit = true;
     GS.search.map = GS.search.map || {};
 
   var init = function() {
+
       if (!needsInit) {return;}
       needsInit = false;
       if(gon.sprite_files != undefined) {
@@ -16,6 +19,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               points.push(point);
           });
 
+
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
@@ -26,6 +30,16 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
           var initialize = function (points) {
               var isdraggable = true;
+
+              var isZoomControl = function(){
+
+                if(((GS.window.sizing.width)()) <= GS.window.sizing.maxMobileWidth){
+                    return false;
+                }else{
+                    return true;
+                }
+              };
+
               var myOptions = {
                   center: centerPoint,
                   mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -34,12 +48,12 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   mapTypeControlOptions: {
                       mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
                   },
-                  zoomControl: true,
+                  zoomControl: isZoomControl(),
                   zoomControlOptions: {
                       style: google.maps.ZoomControlStyle.DEFAULT
                   },
-                  streetViewControl: true,
-                  panControl: true,
+                  streetViewControl: false,
+                  panControl: false,
                   scrollwheel: false,
                   draggable: isdraggable,
                   zoom: 12,
@@ -162,15 +176,14 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   );
 
                   var marker = new google.maps.Marker(markerOptions);
-
-                  google.maps.event.addListener(marker, 'click', (function (marker, point) {
-                      return function () {
-                          infoWindow.setContent(getInfoWindowMarkup(point));
-                          infoWindow.open(GS.search.map, marker);
-                          infoWindow.setCenter(marker.getPosition());
-
-                      }
-                  })(marker, point));
+                  if (point.profileUrl ) {
+                      google.maps.event.addListener(marker, 'click', (function (marker, point) {
+                          return function () {
+                              infoWindow.setContent(getInfoWindowMarkup(point));
+                              infoWindow.open(GS.search.map, marker);
+                          }
+                      })(marker, point));
+                  }
 
                   // Responsive map sizing and centering
                   var center;
@@ -253,8 +266,22 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           };
 
           initialize(points);
+
       }
     };
+
+    var initAndShowMap = function () {
+        init();
+        var map = getMap();
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
+    };
+
+    var setHeightForMap = function(height) {
+        $('#js-map-canvas').css('height', height + 'px');
+    };
+
 
     var getMap = function () {
      return GS.search.map;
@@ -262,7 +289,9 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
     return {
         init: init,
-        getMap: getMap
+        getMap: getMap,
+        setHeightForMap: setHeightForMap,
+        initAndShowMap : initAndShowMap
     }
 
 })();

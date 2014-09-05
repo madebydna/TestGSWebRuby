@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include UrlHelper
   include OmnitureConcerns
 
+  before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
@@ -173,6 +174,16 @@ class ApplicationController < ActionController::Base
         render 'error/page_not_found', layout: 'error', status: 404
       else
         render 'error/internal_error', layout: 'error', status: 500
+    end
+  end
+
+  # delete this (and the before_action call) after the java pages that use the
+  # flash_notice_key go away
+  def adapt_flash_messages_from_java
+    if cookies[:flash_notice_key]
+      translated_message = t(read_cookie_value(:flash_notice_key))
+      flash_notice(translated_message)
+      delete_cookie(:flash_notice_key)
     end
   end
 

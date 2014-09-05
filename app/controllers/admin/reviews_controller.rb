@@ -77,6 +77,26 @@ unexpected error: #{e}."
     redirect_back
   end
 
+  def report
+    review = SchoolRating.find(params[:id]) rescue nil
+    reason = params[:reason]
+
+    if review.present? && reason.present?
+      reported_entity = ReportedEntity.from_review(review, reason)
+      if logged_in?
+        reported_entity.reporter_id = current_user.id
+      end
+
+      if reported_entity.save
+        flash_notice 'Review has been reported'
+      else
+        flash_error 'Sorry, something went wrong while reporting the review.'
+      end
+    end
+
+    redirect_back
+  end
+
   protected
 
   def unprocessed_reviews

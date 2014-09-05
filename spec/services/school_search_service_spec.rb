@@ -98,14 +98,14 @@ describe 'School Search Service' do
       expect{SchoolSearchService.by_name(query: 'school name')}.not_to raise_error
     end
     it 'errors if not provided a query string' do
-      expect{SchoolSearchService.by_name}.to raise_error ArgumentError, 'Query is required'
+      expect(SchoolSearchService.by_name).to be_empty
     end
     it 'errors if query string is entirely whitespace' do
-      expect{SchoolSearchService.by_name(query: '   ')}.to raise_error ArgumentError, 'Query is required'
-      expect{SchoolSearchService.by_name(query: " \t ")}.to raise_error ArgumentError, 'Query is required'
+      expect(SchoolSearchService.by_name(query: '   ')).to be_empty
+      expect(SchoolSearchService.by_name(query: " \t ")).to be_empty
     end
     it 'errors if query string is empty' do
-      expect{SchoolSearchService.by_name(query: '')}.to raise_error ArgumentError, 'Query is required'
+      expect(SchoolSearchService.by_name(query: '')).to be_empty
     end
     it 'prepares query string before issuing query' do
       allow(SchoolSearchService).to receive(:prepare_query_string).and_return('roy school')

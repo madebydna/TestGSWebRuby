@@ -228,7 +228,8 @@ module MetaTagsHelper
   end
 
   def search_by_name_meta_tag_hash
-    if city = City.find_by_state_and_name(@state[:short], @params_hash['q'])
+    city = City.where("state=? and name = ? COLLATE 'utf8_general_ci' and active=1", @state[:short], @params_hash['q']).first
+    if city
       school_type, level_code, page = search_params_for_meta_tags
       parameters = "#{level_code.param}#{school_type.param}"
       url_without_params = canonical_url_without_params(@state[:long], city.name)
@@ -236,7 +237,7 @@ module MetaTagsHelper
       canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
     end
     {
-        title: "GreatSchools.org Search #{@params_hash['q']}",
+        title: "GreatSchools.org Search: #{@params_hash['q']}",
         canonical: (canonical_url ||= state_url(@state[:long])).downcase
     }
   end

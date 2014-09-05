@@ -3,40 +3,42 @@ GS.search.results = GS.search.results || (function() {
 
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
-//  Todo Refactor to build and submit url, as opposed to building and submitting the form
     var searchFiltersFormSubmissionHandler = function() {
-        $('.js-submitSearchFiltersForm').on(clickOrTouchType, function(){
-            var form = $('.js-searchFiltersFormParent').children('.js-searchFiltersForm');
-            buildAndSendFiltersForm($(form))
-        });
+        var $button = $('.js-submitSearchFiltersForm');
+        var $form = $('.js-searchFiltersFormParent').find('.js-searchFiltersForm');
+        formSubmissionHandler($button, $form)
     };
 
     var searchFiltersFormSubmissionMobileHandler = function() {
-        $('.js-submitSearchFiltersFormMobile').on(clickOrTouchType, function(){
-            var form = $('.js-searchFiltersFormParentMobile').children('.js-searchFiltersForm');
-            buildAndSendFiltersForm($(form))
+        var $button = $('.js-submitSearchFiltersFormMobile');
+        var $form = $('.js-searchFiltersFormParentMobile').find('.js-searchFiltersForm');
+        formSubmissionHandler($button, $form)
+    };
+
+    var formSubmissionHandler = function($button, $form) {
+        $button.on('click', function(){
+            var path = getQueryPath();
+            var query = buildQuery($form);
+            GS.uri.Uri.goToPage(path + query)
         });
     };
 
-    var buildAndSendFiltersForm = function(form) {
+    var buildQuery = function($form) {
+        var queryString = GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+
         var getParam = GS.uri.Uri.getFromQueryString;
-        var queryParamters = {};
-        var fields = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
-
-        for (var i = 0; i < fields.length; i++) {
-            getParam(fields[i]) == undefined || (queryParamters[fields[i]] = encodeURIComponent(decodeURIComponent(getParam(fields[i]))))
-        }
-        GS.uri.Uri.addHiddenFieldsToForm(queryParamters, form);
-
-        $(".js-distance-select-box").each(function(i) {
-            if ($(this).val() == "") {
-                $(this).remove();
+        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
+        for (var i = 0; i < urlParamsToPreserve.length; i++) {
+            if (getParam(urlParamsToPreserve[i]) != undefined) {
+                queryString += '&' + urlParamsToPreserve[i] + '=' + encodeURIComponent(getParam(urlParamsToPreserve[i]));
             }
-        });
+        }
 
-        var formAction = getQueryPath();
-        GS.uri.Uri.changeFormAction(formAction, form);
-        form.submit();
+        if (queryString.length > 0) {
+            queryString = '?' + queryString.slice(1, queryString.length)
+        }
+
+        return queryString
     };
 
     var searchFiltersMenuHandler = function() {
@@ -48,7 +50,7 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
-        $(".js-advancedFilters").on(clickOrTouchType, function () {
+        $(".js-advancedFilters").on('click', function () {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
@@ -83,7 +85,6 @@ GS.search.results = GS.search.results || (function() {
         }
     };
 
-    var closeMenuHandlerSet = false;
 
     var closeMenuHandler = function() {
         $('html').on(clickOrTouchType, function () {
@@ -92,10 +93,12 @@ GS.search.results = GS.search.results || (function() {
     };
 
     var searchResultFitScoreTogglehandler = function() {
+        var closeMenuHandlerSet = false;
+
         $('.js-searchResultDropdown').on(clickOrTouchType, function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
-                offset = getFitScorePopupOffset.call(this, popup);
+                var offset = getFitScorePopupOffset.call(this, popup);
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
@@ -124,15 +127,19 @@ GS.search.results = GS.search.results || (function() {
         popup.show()
     };
 
-    var sortBy = function(sortType, query) {
+    var sortBy = function(sortType) {
+        var query = window.location.search || '';
+        if (query.length > 0) {
+            query = query.substring(1);
+        }
+
         query = GS.uri.Uri.removeFromQueryString(query, 'sort');
         if (sortType == 'relevance') {
             GS.uri.Uri.reloadPageWithNewQuery(query);
         }
         else {
-            var previousSort = GS.uri.Uri.getFromQueryString('sort', query.substring[1]);
             var argumentKey = (query.length > 1) ? '&sort=' : 'sort=';
-            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + determineSort(sortType, previousSort));
+            GS.uri.Uri.reloadPageWithNewQuery(query + argumentKey + determineSort(sortType));
         }
     };
 
@@ -155,10 +162,9 @@ GS.search.results = GS.search.results || (function() {
 
     var searchSortingSelectTagHandler = function() {
         $('.js-searchSortingSelectTag').change(function() {
-            var queryString = $(this).data('query-string');
             var sortType = $(this).val();
             if (sortType != "") {
-                sortBy(sortType, queryString);
+                sortBy(sortType);
             }
         });
     };
@@ -171,28 +177,25 @@ GS.search.results = GS.search.results || (function() {
         return GS.uri.Uri.getPath();
     };
 
+    var init = function() {
+        searchFiltersFormSubmissionHandler();
+        searchFiltersFormSubmissionMobileHandler();
+        toggleAdvancedFiltersMenuHandler();
+        searchFiltersMenuHandler();
+        searchFilterMenuMobileHandler();
+        searchResultFitScoreTogglehandler();
+        searchSortingSelectTagHandler();
+        setSearchFilterMenuMobileOffsetFromTop();
+    };
+
     return {
-        searchFiltersFormSubmissionHandler:searchFiltersFormSubmissionHandler,
-        searchFiltersFormSubmissionMobileHandler: searchFiltersFormSubmissionMobileHandler,
-        sortBy: sortBy,
-        toggleAdvancedFiltersMenuHandler: toggleAdvancedFiltersMenuHandler,
-        searchFilterDropdownHandler: searchFiltersMenuHandler,
-        searchFilterMenuMobileHandler: searchFilterMenuMobileHandler,
-        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
-        searchSortingSelectTagHandler: searchSortingSelectTagHandler,
-        setSearchFilterMenuMobileOffsetFromTop: setSearchFilterMenuMobileOffsetFromTop
+        init: init,
+        sortBy: sortBy
     };
 })();
 
 $(document).ready(function() {
     if($('.js-submitSearchFiltersForm').length > 0){
-        GS.search.results.searchFiltersFormSubmissionHandler();
-        GS.search.results.searchFiltersFormSubmissionMobileHandler();
-        GS.search.results.toggleAdvancedFiltersMenuHandler();
-        GS.search.results.searchFilterDropdownHandler();
-        GS.search.results.searchFilterMenuMobileHandler();
-        GS.search.results.searchResultFitScoreTogglehandler();
-        GS.search.results.searchSortingSelectTagHandler();
-        GS.search.results.setSearchFilterMenuMobileOffsetFromTop();
+        GS.search.results.init();
     }
 });

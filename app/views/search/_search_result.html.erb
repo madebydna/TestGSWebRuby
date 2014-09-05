@@ -1,4 +1,4 @@
-<% school_page_url = school_path(school) %>
+<% school_page_url = school_url(school) %>
 <% school_reviews_page_url = school_page_url + 'reviews/' %>
 <% school_quality_page_url = school_page_url + 'quality/' %>
 
@@ -24,7 +24,7 @@
             </div>
             <div class="font-size-small mvm clearfix ptm hidden-xs">
               <div class="fl">
-                <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
+                <% if !school.community_rating.nil? && !school.review_count.nil? %>
                   <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
                   <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
                 <% else %>
@@ -80,7 +80,7 @@
 
     <div class="col-xs-12 visible-xs clearfix phl pbm font-size-small">
       <div class="fl">
-      <% if school.respond_to?(:community_rating) && school.respond_to?(:review_count) %>
+      <% if !school.community_rating.nil? && !school.review_count.nil? %>
         <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
         <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
       <% else %>

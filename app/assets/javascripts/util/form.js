@@ -75,7 +75,7 @@ $(function() {
 
     });
 
-    $(".js-pull-down").on(clickOrTouchType, function(){
+    $(".js-pull-down").on('click', function(){
 
         var self=$(this);
         var gs_pull_down = self.data('pull-down-content');
@@ -125,7 +125,7 @@ $(function() {
 
     });
 
-    $('.js-gs-checkbox-search').on(clickOrTouchType,function(){
+    $('.js-gs-checkbox-search').on('click',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -140,7 +140,7 @@ $(function() {
         }
     });
 
-    $('.js-gs-checkbox-search-dropdown').on(clickOrTouchType,function(){
+    $('.js-gs-checkbox-search-dropdown').on('click',function(){
        var self=$(this);
        var checkbox = self.children(".js-icon");
        var hidden_box = self.siblings(".js-gs-checkbox-search-collapsible-box");
@@ -264,21 +264,30 @@ $(function() {
             var name = $this.attr('name');
             if ($.trim($this.val()) > '' && name !== undefined && !EXCLUDE_THESE_INPUTS.contains(name)) {
                 if (name.indexOf('[]') > -1) {
-                    addToArray(searchOptions, name, $this.val());
+                    var values = $this.val().split("&&");
+                    for (var x=0; x < values.length; x++) {
+                        addToArray(searchOptions, encodeURIComponent(name), encodeURIComponent(values[x]));
+                    }
                 } else {
-                    searchOptions[name] = $this.val();
+                    searchOptions[encodeURIComponent(name)] = encodeURIComponent($this.val());
                 }
             }
         });
-        searchOptions['grades'] = $('#js-guided-grades').val();
+        searchOptions['grades'] = encodeURIComponent($('#js-guided-grades').val());
         searchOptions.state = 'DE';
         return searchOptions;
     };
 
     var guidedGeocodeCallbackFn = function(geocodeResult) {
         var searchOptions = getSelectedFilterValues();
-        searchOptions = jQuery.extend(searchOptions, geocodeResult);
-        searchOptions['locationSearchString'] = GS.search.schoolSearchForm.getSearchQuery();
+        if (geocodeResult) {
+            for (var urlParam in geocodeResult) {
+                if (geocodeResult.hasOwnProperty(urlParam)) {
+                    searchOptions[urlParam] = encodeURIComponent(geocodeResult[urlParam]);
+                }
+            }
+        }
+        searchOptions['locationSearchString'] = encodeURIComponent(GS.search.schoolSearchForm.getSearchQuery());
         // pull values from any selects here
         searchOptions['distance'] = $('#js-guided-distance').val() || 5;
         searchOptions['grades'] = $('#js-guided-grades').val();

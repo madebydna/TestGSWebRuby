@@ -15,7 +15,7 @@ GS.uri.Uri.getPath = function() {
 };
 
 GS.uri.Uri.goToPage = function(full_uri) {
-    window.location = encodeURI(decodeURI(full_uri));
+    window.location = full_uri;
 };
 
 GS.uri.Uri.reloadPageWithNewQuery = function(query) {
@@ -100,7 +100,7 @@ GS.uri.Uri.putIntoQueryString = function(queryString, key, value, overwrite) {
  * @param key
  */
 GS.uri.Uri.getFromQueryString = function(key, queryString) {
-    queryString = queryString || decodeURIComponent(window.location.search.substring(1));
+    queryString = queryString || window.location.search.substring(1);
     var vars = [];
     var result;
 
@@ -112,8 +112,8 @@ GS.uri.Uri.getFromQueryString = function(key, queryString) {
         var pair = vars[i].split("=");
         var thisKey = pair[0];
 
-        if (thisKey === key) {
-            result = pair[1];
+        if (decodeURIComponent(thisKey) === key) {
+            result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
             break;
         }
     }
@@ -258,6 +258,25 @@ GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
         $(formObject).append(input);
     }
     return formObject;
+};
+
+//Pass in jQuery elements and it will iterate through and build a query string.
+//example: GS.uri.Uri.getQueryStringFromFormElements($form.find('input, select'))
+GS.uri.Uri.getQueryStringFromFormElements = function($elements) {
+    var queryString = '';
+
+    $elements.each(function() {
+        value = $(this).val();
+        if (value.length > 0) {
+            queryString += '&' + encodeURIComponent(this.name) + '=' + encodeURIComponent(value);
+        }
+    });
+
+    if (queryString.length > 0) {
+        queryString = '?' + queryString.slice(1, queryString.length)
+    }
+
+    return queryString
 };
 
 GS.uri.Uri.changeFormAction = function(action, formObject) {

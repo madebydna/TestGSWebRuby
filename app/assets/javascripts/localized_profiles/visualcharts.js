@@ -25,7 +25,7 @@ GS.visualchart = GS.visualchart || function($) {
         // TODO: need to track omniture data?
     };
 
-    var colors = ['#68bc8c','#5bbab7','#ffc44f','#C8604E','#F0904F','#68BCBC','#5ECAC7','#5fcbc8','#5f83a7','#c4d76b','#77b671','#71b2b2','#78778f','#a48683','#b2718e','#bd726a'];
+    var colors = ['#69b684','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#af698c','#7a6f8d','#c9614f','#a9816a','#6f95b5','#86b16f'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {
@@ -161,6 +161,55 @@ GS.visualchart = GS.visualchart || function($) {
 
     };
 
+    var drawBarChart = function(barChartData, domId, chartname, barLabels) {
+        var func = function () {
+            var domNode = document.getElementById(domId);
+            // If the dom node that the chart wants to fill is not on the page, just early exit
+            if(domNode == null) {
+                return false;
+            }
+
+            var dataTable = new google.visualization.DataTable();
+            //The 3rd and the 5th columns are used for tool tips.
+
+            var numberOfBars = barLabels.length;
+            dataTable.addColumn('string', 'data point');
+            for(var i = 0; i < numberOfBars; i++) {
+              dataTable.addColumn('number', barLabels[i]);
+              dataTable.addColumn({'type': 'string', 'role': 'annotation'});
+              dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+            }
+
+            dataTable.addRows(barChartData);
+
+            $("#"+domId).css("width", GS.window.sizing.barChartWidth(chartname));
+            var defaultOptions = {
+                width: GS.window.sizing.barChartWidth(chartname),
+                height: GS.window.sizing.barChartHeight(chartname),
+                legend: {position: GS.window.sizing.barChartLegend(chartname)},
+                tooltip: { isHtml: true },
+                colors: colors,
+                hAxis: {maxValue: '100', minValue:'0'},
+                chartArea: {
+                  left: GS.window.sizing.barChartLabelWidth(chartname),
+                  top:'20',
+                  width: GS.window.sizing.barChartAreaWidth(chartname),
+                  height:"60%"
+                }
+            };
+
+            var chart = new google.visualization.BarChart(domNode);
+            chart.draw(dataTable, defaultOptions);
+
+        };
+        if (loader) {
+            loader.push(func);
+        } else {
+            google.setOnLoadCallback(func);
+        }
+
+    };
+
     var drawBarChartReviews = function (barChartData, div) {
         var func = function () {
           var options = {
@@ -213,6 +262,7 @@ GS.visualchart = GS.visualchart || function($) {
         colors: colors,
         pieSelectHandler: pieSelectHandler,
         drawPieChart: drawPieChart,
+        drawBarChart: drawBarChart,
         drawBarChartTestScores: drawBarChartTestScores,
         drawBarChartTestScoresStacked: drawBarChartTestScoresStacked,
         drawBarChartReviews:drawBarChartReviews,

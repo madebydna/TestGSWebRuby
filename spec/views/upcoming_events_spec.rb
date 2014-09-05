@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cities/_upcoming_events.html.erb' do
+describe 'shared/_upcoming_events.html.erb' do
   before { allow(view).to receive(:gs_legacy_url_encode) { |input| input } }
 
   context 'without events' do
