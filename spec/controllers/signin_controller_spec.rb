@@ -154,6 +154,13 @@ describe SigninController do
           cookies[:redirect_uri] = '/city-hub/'
           expect(subject).to redirect_to '/profile-url'
         end
+
+        it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+          cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject.request.url).not_to include '['
+          expect(subject.request.url).not_to include ']'
+        end
       end
     end
 
@@ -293,6 +300,15 @@ describe SigninController do
               allow(controller).to receive(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/overview-url-double')
+            end
+            it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+              stub_fb_login_fail
+              cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              allow(controller).to receive(:overview_page_for_last_school) { nil }
+              get :facebook_callback, code: 'fb-code'
+              expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              expect(subject.request.url).not_to include '['
+              expect(subject.request.url).not_to include ']'
             end
           end
 
