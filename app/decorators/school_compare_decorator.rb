@@ -26,7 +26,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def ethnicity_data
-    characteristics['Ethnicity'] || {}
+    characteristics['Ethnicity'] || []
   end
 
   def graduates_high_school

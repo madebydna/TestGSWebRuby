@@ -2,7 +2,7 @@
 <% table_data = TableData.new data %>
 <% data_array = table_data.to_piechart 'breakdown', 'school_value' %>
 
-<%= debug ['Pie chart data', data_array.sort] if params[:debug] %>
+<%= debug ['Pie chart data', table_data] if params[:debug] %>
 
 <% piechart_options = {
         fontSize: '13',
@@ -32,10 +32,11 @@
 <% end %>
 
 <div class="phm js-comparePieChartTable">
-  <% data_array.sort.each_with_index do |data_row,index|%>
+  <% table_data.rows.sort_by{ |hash| hash['breakdown'] }.each do |data_row|%>
+      <% school_value = data_row['school_value'].nil? ? 'n/a' : "#{data_row['school_value'].to_f.round}%" %>
       <div class="fl mts mrs square js-comparePieChartSquare"></div>
-      <span class="fl"><%= data_row[0] %></span>
-      <span class="fr open-sans_sb"><%= data_row[1] %>%</span>
+      <span class="fl"><%= truncate(data_row['breakdown'], length: 28) %></span>
+      <span class="fr open-sans_sb"><%= school_value %></span>
       <br>
   <% end %>
 </div>
