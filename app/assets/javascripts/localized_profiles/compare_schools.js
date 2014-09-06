@@ -14,6 +14,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
     var adjustSchoolResultsHeights = function () {
         adjustHeights('.js-schoolName');
+        adjustHeights('.js-comparePieChartTable');
     };
 
     var setAccordianHandlerForCategories = function() {
