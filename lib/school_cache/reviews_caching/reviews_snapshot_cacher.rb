@@ -13,7 +13,7 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
   def build_hash_for_cache
     {
         avg_star_rating: review_snapshot.rating_averages.overall.avg_score,
-        num_ratings: review_snapshot.rating_averages.overall.total,
+        num_ratings: review_snapshot.rating_averages.overall.counter,
         num_reviews: review_snapshot.review_filter_totals.all,
         most_recent_reviews: most_recent_reviews,
         star_counts: review_snapshot.star_counts
