@@ -1,0 +1,9 @@
+<% school_reviews_page_path = school_path(@school) + 'reviews/' %>
+<% star_rating = @school.star_rating %>
+
+<div class="ptm tac">
+  <span><%= draw_stars_24 star_rating%></span><br>
+  <span class="font-size-large"><%= star_rating %> stars</span><br>
+  <span>Based on <%= @school.num_ratings %> ratings</span><br><br>
+  <%= link_to pluralize(@school.num_reviews, 'review', 'reviews'), school_reviews_page_path %><br><br>
+</div>

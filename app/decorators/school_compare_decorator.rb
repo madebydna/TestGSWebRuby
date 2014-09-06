@@ -74,6 +74,10 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     reviews_snapshot['num_reviews'] || 0
   end
 
+  def num_ratings
+    reviews_snapshot['num_ratings'] || 0
+  end
+
   ################################# Programs ##################################
 
   def programs

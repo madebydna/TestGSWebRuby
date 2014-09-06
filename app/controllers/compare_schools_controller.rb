@@ -75,7 +75,10 @@ class CompareSchoolsController < ApplicationController
           opt: {
             subtitle: 'Reviews',
             key: :reviews
-          }
+          },
+          children: [
+              {display_type: 'reviews_snapshot'}
+          ]
         },
         {
           display_type: 'category',
