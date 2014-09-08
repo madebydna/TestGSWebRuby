@@ -104,8 +104,12 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def before_after_care(before_after)
-    if programs['before_after_care'] && programs['before_after_care'].keys.include?(before_after)
-      'Yes'
+    if programs['before_after_care']
+      if programs['before_after_care'].keys.include?(before_after)
+        'Yes'
+      elsif programs['before_after_care'].keys.include?('neither')
+        'No'
+      end
     else
       NO_DATA_SYMBOL
     end
