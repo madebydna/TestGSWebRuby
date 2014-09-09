@@ -10,6 +10,10 @@ describe 'Compare Schools Page' do
     allow_any_instance_of(CompareSchoolsController).to receive(:prepare_map)
   end
 
+  # Since this code requires JS it will execute using webkit capybara
+  # As a result, to get this test working you will need to make a school cache factory and save it to the db before running this test
+  # Currently as constructed the test below uses the development db and not test db to get the school cache data
+
   # context 'when showing multiple schools', js: true do
   #   let(:heights) do
   #     heights = [0, 1, 2, 3].map do |number|
