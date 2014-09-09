@@ -4,6 +4,24 @@ module SchoolCacheHelper
     characteristics.merge(reviews_snapshot.merge(esp_responses.merge(ratings)))
   end
 
+  #for saving into a test db
+  def create_school_cache_set_in_db!(school_id, state)
+    char = {name: 'characteristics', value: characteristics['characteristics']}
+    rev = { name: 'reviews_snapshot', value: reviews_snapshot['reviews_snapshot']}
+    esp = { name: 'esp_responses', value: esp_responses['esp_responses']}
+    rat = { name: 'ratings', value: ratings['ratings']}
+
+    yield char[:value], rev[:value], esp[:value], rat[:value] if block_given?
+
+    save_school_cache_to_db!(school_id, state, [char, rev, esp, rat])
+  end
+
+  def save_school_cache_to_db!(school_id, state, cache_data)
+    [*cache_data].each do | c_data |
+      FactoryGirl.create(:school_cache, name: c_data[:name], school_id: school_id, state: state, value: c_data[:value].to_json)
+    end
+  end
+
   #generic layout for different data types. modify with blocks where desired
   def characteristics
     char = {
