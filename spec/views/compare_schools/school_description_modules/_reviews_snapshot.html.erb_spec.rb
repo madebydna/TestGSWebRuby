@@ -35,14 +35,8 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
       render
     end
 
-    it 'displays no stars' do
-      expect(rendered).to have_selector('span.iconx24-stars.i-24-grey-star.i-24-star-5')
-    end
-
-    it 'displays the correct text' do
-      expect(rendered).to have_selector('span', text: '0 stars')
-      expect(rendered).to have_selector('span', text: 'Based on 0 ratings')
-      expect(rendered).to have_link('0 reviews', href: "#{school_path}reviews/")
+    it 'displays no No community reviews' do
+      expect(rendered).to have_content('No community reviews')
     end
   end
 
@@ -57,8 +51,8 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
     end
 
     it 'displays the correct text' do
-      expect(rendered).to have_selector('span', text: '4 stars')
-      expect(rendered).to have_selector('span', text: 'Based on 14 ratings')
+      expect(rendered).to have_selector('div', text: '4 stars')
+      expect(rendered).to have_selector('div', text: 'Based on 14 ratings')
       expect(rendered).to have_link('17 reviews', href: "#{school_path}reviews/")
     end
   end
