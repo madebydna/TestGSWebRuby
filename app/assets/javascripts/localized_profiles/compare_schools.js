@@ -14,6 +14,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
     var adjustSchoolResultsHeights = function () {
         adjustHeights('.js-schoolName');
+        adjustHeights('.js-gradeLevel');
         adjustHeights('.js-comparePieChartTable');
         adjustHeights('.js-reviewSnapshot');
         adjustHeights('.js-reviewStars');

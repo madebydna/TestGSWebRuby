@@ -28,7 +28,7 @@ module CompareSchoolsSpecHelper
         FactoryGirl.build(:school, :with_levels, id: 1),
         FactoryGirl.build(:school, :with_levels, id: 2),
         FactoryGirl.build(:school, :with_levels, id: 3),
-        FactoryGirl.build(:school, id: 4, level: "PK,KG,1,2,3,4,5,7,8,9,10,11,12,UG", level_code: "p,e,m,h")
+        FactoryGirl.build(:school, id: 4, level: "PK,KG,1,2,4,5,7,9,11,UG", level_code: "p,e,m,h")
     ]
   end
 
