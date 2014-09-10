@@ -54,6 +54,7 @@ GS.compareSchools = GS.compareSchools || function () {
         var windowWidth = $(window).width();
 
         if (windowWidth < 1200) {
+            scrollSchools(0, 0);
             var numberOfSchools = $('.js-comparedSchool').length || 1;
             var minWidthNeededToDisplayAll = numberOfSchools * schoolWidth;
 
