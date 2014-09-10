@@ -1,5 +1,16 @@
 //ToDo is it ok to add this conditional to prevent js from executing on every page?
 GS.compareSchools = GS.compareSchools || function () {
+    var comparedSchoolsList = '.js-comparedSchoolsList';
+    var comparedSchoolsListContainer = '.js-comparedSchoolsListContainer';
+    var prevSchoolButton = '.js-compareSchoolsPrev';
+    var nextSchoolButton = '.js-compareSchoolsNext';
+    var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
+    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
+    var schoolWidth = 300;
+    var maxNumberOfSchools = 4;
+    var currentSchool = 0;
+    var carouselSpeed = 500;
+
     var adjustHeights = function (className) {
         var maxHeight = 0;
         $(className).each(function () {
@@ -21,7 +32,7 @@ GS.compareSchools = GS.compareSchools || function () {
     };
 
     var setAccordianHandlerForCategories = function() {
-        $('body').on('click', '.js-categoryTitle', function() {
+        $(comparedSchoolsList).on('click', '.js-categoryTitle', function() {
             var $categoryData = $(this).siblings('.js-categoryData');
             var categoryDataClass = '.' + $categoryData.attr('class').split(/\s+/)[0];
             $(categoryDataClass).each(function() {
@@ -30,9 +41,121 @@ GS.compareSchools = GS.compareSchools || function () {
         });
     };
 
+    var setCarouselHandler = function() {
+        setupCarousel();
+
+        $(window).resize(function() {
+            destroyCarousel();
+            setupCarousel();
+        });
+    };
+
+    var setupCarousel = function() {
+        var windowWidth = $(window).width();
+
+        if (windowWidth < 1200) {
+            var numberOfSchools = $('.js-comparedSchool').length || 1;
+            var minWidthNeededToDisplayAll = numberOfSchools * schoolWidth;
+
+            if (windowWidth < minWidthNeededToDisplayAll) {
+                var numberOfSchoolsToShow = Math.floor(windowWidth / schoolWidth);
+                initCarousel(schoolWidth, numberOfSchoolsToShow);
+                showNextPrevNavigation();
+            } else {
+                hideNextPrevNavigation();
+            }
+        }
+    };
+
+    var initCarousel = function(schoolWidth, numberOfSchoolsToShow) {
+        $(comparedSchoolsListContainer).width(schoolWidth * numberOfSchoolsToShow);
+        $(comparedSchoolsList).swipe({
+            triggerOnTouchEnd: true,
+            swipeStatus: swipeStatus,
+            allowPageScroll: "vertical"
+        });
+    };
+
+    var showNextPrevNavigation = function() {
+        if (clickOrTouchType == 'touchstart') {
+            $(carouselNavigation).hide();
+        } else {
+            $(carouselNavigation).addClass('hidden-lg').removeClass('hidden')
+        }
+    };
+
+    var hideNextPrevNavigation = function() {
+        $(carouselNavigation).hide().removeClass('hidden-lg');
+    };
+
+    var setNextPrevHandler = function() {
+        $(prevSchoolButton).on('click', function() {
+            previousSchool();
+        });
+        $(nextSchoolButton).on('click', function() {
+            nextSchool();
+        })
+    };
+
+    var destroyCarousel = function() {
+        var $comparedSchoolsList = $(comparedSchoolsList);
+
+        $(comparedSchoolsListContainer).css('width', '');
+        if ($comparedSchoolsList.length != 0 ) {
+            $comparedSchoolsList.swipe('destroy');
+        }
+    };
+
+    var swipeStatus = function(event, phase, direction, distance, fingers) {
+        //If we are moving before swipe, and we are going L or R, then manually drag the images
+        if (phase == "move" && (direction == "left" || direction == "right")) {
+           var duration = 0;
+
+           if (direction == "left") {
+               scrollSchools((schoolWidth * currentSchool) + distance, duration);
+           } else if (direction == "right") {
+               scrollSchools((schoolWidth * currentSchool) - distance, duration);
+           }
+
+        } else if (phase == "cancel") { //Else, cancel means snap back to the beginning
+            scrollSchools(schoolWidth * currentSchool, carouselSpeed);
+
+        } else if (phase == "end") { //Else end means the swipe was completed, so move to the next image
+            if (direction == "right") {
+                previousSchool();
+            } else if (direction == "left") {
+                nextSchool();
+            }
+        }
+    };
+
+    var previousSchool = function() {
+        currentSchool = Math.max(currentSchool - 1, 0);
+        scrollSchools(schoolWidth * currentSchool, carouselSpeed);
+    };
+
+    var nextSchool = function() {
+        var numberOfSchoolsToShow = Math.floor($(window).width() / schoolWidth);
+        currentSchool = Math.min(currentSchool + 1, maxNumberOfSchools - numberOfSchoolsToShow);
+        scrollSchools(schoolWidth * currentSchool, carouselSpeed);
+    };
+
+    var scrollSchools = function(distance, duration) {
+        var $comparedSchoolsList = $(comparedSchoolsList);
+
+        $comparedSchoolsList.css({transition: (duration / 1000).toFixed(1) + "s"});
+
+        //inverse the number we set in the css
+        var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
+
+        $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
+    };
+
     var init = function() {
         adjustSchoolResultsHeights();
         setAccordianHandlerForCategories();
+        setCarouselHandler();
+        setNextPrevHandler();
     };
 
     var pieChartLabelColor = function() {
