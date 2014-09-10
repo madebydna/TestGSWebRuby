@@ -12,6 +12,12 @@ class CompareSchoolsController < ApplicationController
 
     prepare_schools
     prepare_map
+
+    set_meta_tags title:'Compare Schools',
+                  description:'Compare schools to find the right school for your family',
+                  keywords:'Compare schools, school comparison',
+                  robots: 'noindex'
+    set_omniture_data
   end
 
   def prepare_schools
@@ -25,4 +31,11 @@ class CompareSchoolsController < ApplicationController
     assign_sprite_files_though_gon
   end
 
+  def set_omniture_data
+    gon.omniture_pagename = "GS:CompareSchools"
+    gon.omniture_hier1 = "Compare"
+    set_omniture_data_for_user_request
+    gon.omniture_channel = @state.try(:upcase) if @state
+
+  end
 end
