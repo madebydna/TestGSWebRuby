@@ -31,12 +31,15 @@
     </script>
 <% end %>
 
-<div class="phm js-comparePieChartTable">
-  <% table_data.rows.sort_by{ |hash| hash['breakdown'] }.each do |data_row|%>
-      <% school_value = data_row['school_value'].nil? ? 'n/a' : "#{data_row['school_value'].to_f.round}%" %>
-      <div class="fl mts mrs square js-comparePieChartSquare"></div>
-      <span class="fl"><%= truncate(data_row['breakdown'], length: 28) %></span>
-      <span class="fr open-sans_sb"><%= school_value %></span>
-      <br>
-  <% end %>
+<div class="phm">
+  <table class="full-width js-comparePieChartTable">
+    <% table_data.rows.sort_by{ |hash| hash['breakdown'] }.each do |data_row|%>
+        <% school_value = data_row['school_value'].nil? ? 'n/a' : "#{data_row['school_value'].to_f.round}%" %>
+        <tr>
+          <td><div class="fl mts mrs square js-comparePieChartSquare"></div></td>
+          <td><%= truncate(data_row['breakdown'], length: 28) %></td>
+          <td class="tac open-sans_sb" style="width: 40px"><%= school_value %></td>
+        </tr>
+    <% end %>
+  </table>
 </div>
