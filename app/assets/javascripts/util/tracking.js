@@ -112,6 +112,24 @@ GS.track.setEventsInCookies = function(event){
     GS.track.setOmnitureCookie(omnitureCookie);
 };
 
+GS.track.setLists = function(lists) {
+    GS.track.doUnlessTrackingIsDisabled(function() {
+        var missingLists = [];
+        for (var p in lists) {
+            if (lists.hasOwnProperty(p)) {
+                if (!GS.track.listLookup[p]) {
+                    missingLists.push(p);
+                } else {
+                    GS.track.baseOmnitureObject['list' + GS.track.listLookup[p]] = lists[p];
+                }
+            }
+        }
+        if (missingLists.length > 0) {
+            GS.util.log('Lists missing for the following:' + missingLists);
+        }
+    });
+};
+
 
 //TODO The following tracking is for the events and links that do not have page refresh associated with
 // them. Refactor this when omniture requirements come in for these.
@@ -187,6 +205,10 @@ GS.track.evarsLookup = {
     'search_page_type': 27
 };
 
+GS.track.listLookup = {
+    'search_filters' : 1
+};
+
 GS.track.setOmnitureData = function() {
     GS.track.baseOmnitureObject.pageName = gon.omniture_pagename;
     GS.track.baseOmnitureObject.hier1 = gon.omniture_hier1;
@@ -199,6 +221,7 @@ GS.track.setOmnitureData = function() {
     var events = [];
     var sprops = {};
     var evars = {};
+    var lists = {};
 
     if(!(_.isEmpty(gon.omniture_sprops))){
         sprops = gon.omniture_sprops;
@@ -209,6 +232,10 @@ GS.track.setOmnitureData = function() {
     if(!(_.isEmpty(gon.omniture_evars))){
         evars=gon.omniture_evars;
     }
+    if(!(_.isEmpty(gon.omniture_lists))){
+        lists=gon.omniture_lists;
+    }
+
 
     var omnitureCookie = GS.track.getOmnitureCookie();
     if (!(_.isEmpty(omnitureCookie))){
@@ -222,12 +249,16 @@ GS.track.setOmnitureData = function() {
         if(!(_.isEmpty(omnitureCookie.evars))){
             $.extend(evars, omnitureCookie.evars);
         }
+        if(!(_.isEmpty(omnitureCookie.lists))){
+            $.extend(lists, omnitureCookie.lists);
+        }
     }
 
     GS.track.setSProps(sprops);
     $.unique(events);
     GS.track.setEvents(events);
     GS.track.setEVars(evars);
+    GS.track.setLists(lists);
 
     $.removeCookie(GS.track.cookieName, { path: '/' ,domain: ".greatschools.org"});
 };
