@@ -133,10 +133,19 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def num_programs(*program_keys)
     count = 0
+    show_numeric = false
     program_keys.each do |program|
-      count += programs[program].keys.size if programs.key? program
+      if programs.key? program
+        keys = programs[program].keys - ['none']
+        count += keys.size
+        show_numeric = true
+      end
     end
-    count == 0 ? NO_DATA_SYMBOL : count
+    if show_numeric
+      count
+    else
+      NO_DATA_SYMBOL
+    end
   end
 
   ################################# Quality ##################################
