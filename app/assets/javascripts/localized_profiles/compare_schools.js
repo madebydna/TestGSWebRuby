@@ -82,21 +82,29 @@ GS.compareSchools = GS.compareSchools || function () {
 
     var showNextPrevNavigation = function() {
         if (clickOrTouchType != 'touchstart') {
-            $(carouselNavigation).addClass('hidden-lg').removeClass('hidden')
+            $(carouselNavigation).each(function() {
+                $(this).addClass('hidden-lg').removeClass('hidden')
+            })
         }
     };
 
     var hideNextPrevNavigation = function() {
-        $(carouselNavigation).hide().removeClass('hidden-lg');
+        $(carouselNavigation).each(function() {
+            $(this).hide().removeClass('hidden-lg');
+        })
     };
 
     var setNextPrevHandler = function() {
-        $(prevSchoolButton).on('click', function() {
-            previousSchool();
+        $(prevSchoolButton).each(function() {
+            $(this).on('click', function() {
+                previousSchool();
+            });
         });
-        $(nextSchoolButton).on('click', function() {
-            nextSchool();
-        })
+        $(nextSchoolButton).each(function() {
+            $(this).on('click', function() {
+                nextSchool();
+            })
+        });
     };
 
     var destroyCarousel = function() {
