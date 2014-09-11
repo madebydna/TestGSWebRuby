@@ -362,7 +362,7 @@ class SearchController < ApplicationController
     params = soft_filters_params_hash(params_hash)
 
     results.each do |result|
-      result.calculate_fit_score(params)
+      result.calculate_fit_score!(params)
     end
   end
 

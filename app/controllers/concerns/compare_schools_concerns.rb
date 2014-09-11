@@ -27,7 +27,9 @@ module CompareSchoolsConcerns
     db_schools = School.on_db(@state).where(id: @params_schools, active: true)
     db_schools.each do |db_school|
       if decorated_schools.size < 4
-        decorated_schools << SchoolCompareDecorator.new(db_school, context: cache_data[db_school.id.to_i])
+        decorated_school = SchoolCompareDecorator.new(db_school, context: cache_data[db_school.id.to_i])
+        decorated_school.calculate_fit_score!({})
+        decorated_schools << decorated_school
       end
     end
     decorated_schools
@@ -66,13 +68,6 @@ module CompareSchoolsConcerns
                     { display_type: 'quality/college_readiness' },
                     { display_type: 'quality/add_to_my_schools_list' }
                 ]
-            },
-            {
-                display_type: 'category',
-                opt: {
-                    subtitle: 'Fit Criteria',
-                    key: :fit
-                }
             },
             {
                 display_type: 'category',

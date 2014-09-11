@@ -5,6 +5,8 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   decorates :school
   delegate_all
 
+  include FitScoreConcerns
+
   NO_DATA_SYMBOL = '?'
   NO_RATING_TEXT = 'NR'
 
