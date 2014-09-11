@@ -3,12 +3,12 @@ require 'spec_helper'
 describe 'compare_schools/school_description_modules/details/_compare_pie_chart.html.erb' do
   let(:ethnicity_data) {[
       {'year'=>2012,
-       'source'=>'NCES',
+       'source'=>'Source',
        'breakdown'=>'Schoolstate val brkdwn',
        'school_value'=>40.63,
        'state_average'=>1.15},
       {'year'=>2012,
-       'source'=>'NCES',
+       'source'=>'Source',
        'breakdown'=>'Another valid breakdown',
        'school_value'=>46.09,
        'state_average'=>13.0},
@@ -17,16 +17,16 @@ describe 'compare_schools/school_description_modules/details/_compare_pie_chart.
        'breakdown'=>'No state value breakdown',
        'school_value'=>11.33},
       {'year'=>2012,
-       'source'=>'NCES',
+       'source'=>'Source',
        'breakdown'=>'No school value breakdown',
        'state_average'=>1.0},
       {'year'=>2012,
-       'source'=>'NCES',
+       'source'=>'Source',
        'breakdown'=>'Zero valued breakdown',
        'school_value'=>0.0,
        'state_average'=>0.0},
       {'year'=>2012,
-       'source'=>'NCES',
+       'source'=>'Source',
        'breakdown'=>'Hawaiian Native/Pacific Islander',
        'school_value'=>0.0,
        'state_average'=>0.0}
@@ -34,7 +34,6 @@ describe 'compare_schools/school_description_modules/details/_compare_pie_chart.
 
   let(:school) { FactoryGirl.build(:an_elementary_school) }
   let(:decorated_school) { SchoolCompareDecorator.new(school) }
-  let(:school_path) { 'www.greatschools.org/state/city/55-school/' }
 
   before do
     assign(:school, decorated_school)
@@ -49,7 +48,7 @@ describe 'compare_schools/school_description_modules/details/_compare_pie_chart.
     it 'does not display any breakdowns' do
       ethnicity_data.each do |ethnicity|
         breakdown = ethnicity['breakdown']
-        expect(rendered).to_not have_content truncate(breakdown, length: 28)
+        expect(rendered).to_not have_content truncate(breakdown, length: 26)
       end
     end
   end
@@ -65,7 +64,7 @@ describe 'compare_schools/school_description_modules/details/_compare_pie_chart.
         breakdown = ethnicity['breakdown']
         value = ethnicity['school_value'] || 'n/a'
         value = value == 'n/a' ? 'n/a' : "#{value.to_f.round}%"
-        expect(rendered).to have_content "#{truncate(breakdown, length: 28)} #{value}"
+        expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{value}"
       end
     end
   end
