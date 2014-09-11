@@ -1,7 +1,7 @@
 <%= render partial: 'search/filter_toolbar_mobile' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
-<%= render 'nav/search_bar_guided_search'%>
+<%= render 'nav/search_bar_guided_search', locals: { show_grades_filter: true } %>
 <%= render 'filter_toolbar' %>
 
 <% if @schools.present? %>

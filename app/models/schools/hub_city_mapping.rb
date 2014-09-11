@@ -29,4 +29,23 @@ class HubCityMapping < ActiveRecord::Base
       where(collection_id: collection_id, active: true).first
     end
   end
+
+  def self.for_city_and_state(city = nil, state = nil)
+    unless city.is_a?(String) || city.nil?
+      raise ArgumentError('City must either be nil or a String')
+    end
+    unless state.is_a?(String) || state.nil?
+      raise ArgumentError('State must either be nil or a String')
+    end
+    criteria = {
+      active: 1
+    }
+    if city.present?
+      criteria[:city] = city
+    end
+    if state.present?
+      criteria[:state] = state
+    end
+    HubCityMapping.where(criteria).first
+  end
 end

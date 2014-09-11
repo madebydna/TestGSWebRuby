@@ -233,8 +233,8 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav(school, hub_params)
-    TopNav.new(school, hub_params, cookies)
+  def topnav(school, hub = nil)
+    TopNav.new(school, cookies, hub)
   end
 
   def search_by_location?

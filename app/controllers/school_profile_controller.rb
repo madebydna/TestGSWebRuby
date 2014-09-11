@@ -14,7 +14,7 @@ class SchoolProfileController < SchoolController
 
   before_action :ad_setTargeting_through_gon
   before_action :set_city_state
-  before_action :set_hub_params, if: :is_hub_school?
+  before_action :set_hub
   before_action :enable_ads
   before_action :set_breadcrumbs
   # after_filter :set_last_modified_date
