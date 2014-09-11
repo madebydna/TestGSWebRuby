@@ -25,7 +25,7 @@ GS.visualchart = GS.visualchart || function($) {
         // TODO: need to track omniture data?
     };
 
-    var colors = ['#69b684','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#af698c','#7a6f8d','#c9614f','#a9816a','#6f95b5','#86b16f'];
+    var colors = ['#69b684','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#836d93','#e4b4d4','#3c97d3','#db688c','#67499d','#aa5e5b'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {

@@ -9,7 +9,6 @@ class SubscriptionsController < ApplicationController
     end
     set_omniture_events_in_cookie(['review_updates_mss_start_event'])
     set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'SignUpForUpdates'})
-    subscription_params = params['subscription']
 
     attempt_sign_up(subscription_params, log_in_required_message(subscription_params[:list]))
   end

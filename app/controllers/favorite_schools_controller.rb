@@ -14,6 +14,7 @@ class FavoriteSchoolsController < ApplicationController
 
     if logged_in?
       add_favorite_school favorite_schools_params
+      create_subscription favorite_schools_params
       redirect_back_or_default
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
