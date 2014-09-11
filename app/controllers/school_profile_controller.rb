@@ -182,7 +182,7 @@ class SchoolProfileController < SchoolController
   end
 
   def ad_page_name
-    'School_' + @page_config.name
+    ('School_' + @page_config.name).to_sym
   end
   
 end
