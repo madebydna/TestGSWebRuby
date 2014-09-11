@@ -5,9 +5,9 @@ GS.compareSchools = GS.compareSchools || function () {
     var prevSchoolButton = '.js-compareSchoolsPrev';
     var nextSchoolButton = '.js-compareSchoolsNext';
     var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
+    var numberOfSchools = $('.js-comparedSchool').length || 1;
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolWidth = 300;
-    var maxNumberOfSchools = 4;
     var currentSchool = 0;
     var carouselSpeed = 500;
 
@@ -55,7 +55,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
         if (windowWidth < 1200) {
             scrollSchools(0, 0);
-            var numberOfSchools = $('.js-comparedSchool').length || 1;
+            numberOfSchools = $('.js-comparedSchool').length || numberOfSchools;
             var minWidthNeededToDisplayAll = numberOfSchools * schoolWidth;
 
             if (windowWidth < minWidthNeededToDisplayAll) {
@@ -137,7 +137,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
     var nextSchool = function() {
         var numberOfSchoolsToShow = Math.floor($(window).width() / schoolWidth);
-        currentSchool = Math.min(currentSchool + 1, maxNumberOfSchools - numberOfSchoolsToShow);
+        currentSchool = Math.min(currentSchool + 1, numberOfSchools - numberOfSchoolsToShow);
         scrollSchools(schoolWidth * currentSchool, carouselSpeed);
     };
 
