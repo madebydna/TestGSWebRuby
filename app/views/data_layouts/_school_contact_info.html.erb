@@ -35,8 +35,8 @@
     </div>
     <% if @show_ads %>
       <div class="pbl mbl">
-        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Contact_Info, view: :desktop  %>
-        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Contact_Info, view: :mobile  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :mobile  %>
       </div>
     <% end %>
   <% end %>

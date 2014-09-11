@@ -14,13 +14,13 @@
         <%= @show_ads ?  '</div>'.html_safe : '' %>
         <% if @show_ads %>
           <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-            <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Media_Gallery, view: :desktop  %>
           </div>
         <% end %>
       </div>
       <% if @show_ads %>
         <div class="plm">
-          <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :mobile  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Media_Gallery, view: :mobile  %>
         </div>
       <% end %>
     </div>
@@ -39,13 +39,13 @@
     </div>
     <% if @show_ads %>
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Media_Gallery, view: :desktop  %>
       </div>
     <% end %>
   </div>
   <% if @show_ads %>
     <div class="ptl">
-      <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: :Media_Gallery, view: :mobile  %>
+      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Media_Gallery, view: :mobile  %>
     </div>
   <% end %>
 <% end %>

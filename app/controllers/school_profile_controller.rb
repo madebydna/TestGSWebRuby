@@ -37,6 +37,7 @@ class SchoolProfileController < SchoolController
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @ad_definition = Advertising.new
+    @ad_page_name = ad_page_name
     set_last_modified_date
   end
 
@@ -178,6 +179,10 @@ class SchoolProfileController < SchoolController
     helper_name << "#{action_name}_" if action_name != 'overview'
     helper_name << 'path'
     canonical_path = self.send helper_name.to_sym, @school
+  end
+
+  def ad_page_name
+    'School_' + @page_config.name
   end
   
 end

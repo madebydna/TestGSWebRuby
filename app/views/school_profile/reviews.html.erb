@@ -9,8 +9,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
             <% if @show_ads %>
                 <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                    <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
                 </div>
             <% end %>
             <% if @school_principal_review %>
@@ -32,8 +32,8 @@
     <% else %>
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 ptl"  style="z-index: 1;">
             <% if @show_ads %>
-                <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
             <% if @school_principal_review %>
                 <div class="well mvl row" style="padding:40px">
@@ -59,8 +59,8 @@
             <% if @show_ads %>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Text'.to_sym, view: :desktop  %>
-                        <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: 'Text'.to_sym, view: :mobile  %>
+                        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
+                        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
                     </div>
                 </div>
             <% end %>
