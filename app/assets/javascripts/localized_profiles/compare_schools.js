@@ -1,14 +1,15 @@
 //ToDo is it ok to add this conditional to prevent js from executing on every page?
 GS.compareSchools = GS.compareSchools || function () {
+    var comparedSchools = '.js-comparedSchool';
     var comparedSchoolsList = '.js-comparedSchoolsList';
-    var comparedSchoolsListContainer = '.js-comparedSchoolsListContainer';
+    var carouselContainer = '.js-comparedSchoolsListContainer';
+    var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
     var prevSchoolButton = '.js-compareSchoolsPrev';
     var nextSchoolButton = '.js-compareSchoolsNext';
-    var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
-    var numberOfSchools = $('.js-comparedSchool').length || 1;
+    var numberOfSchools = $(comparedSchools).length || 1;
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolWidth = 300;
-    var currentSchool = 0;
+    var currentSchool = 0; //school that is currently on the left most slot of the carousel. max values are 0-3
     var carouselSpeed = 500;
 
     var adjustHeights = function (className) {
@@ -54,8 +55,9 @@ GS.compareSchools = GS.compareSchools || function () {
         var windowWidth = $(window).width();
 
         if (windowWidth < 1200) {
+            //reset carousel to first school, so on resize there won't be blank spaces after last school
             scrollSchools(0, 0);
-            numberOfSchools = $('.js-comparedSchool').length || numberOfSchools;
+            numberOfSchools = $(comparedSchools).length || numberOfSchools;
             var minWidthNeededToDisplayAll = numberOfSchools * schoolWidth;
 
             if (windowWidth < minWidthNeededToDisplayAll) {
@@ -69,7 +71,8 @@ GS.compareSchools = GS.compareSchools || function () {
     };
 
     var initCarousel = function(schoolWidth, numberOfSchoolsToShow) {
-        $(comparedSchoolsListContainer).width(schoolWidth * numberOfSchoolsToShow);
+        //set carousel container's width to how many max schools can fit on page
+        $(carouselContainer).width(schoolWidth * numberOfSchoolsToShow);
         $(comparedSchoolsList).swipe({
             triggerOnTouchEnd: true,
             swipeStatus: swipeStatus,
@@ -78,9 +81,7 @@ GS.compareSchools = GS.compareSchools || function () {
     };
 
     var showNextPrevNavigation = function() {
-        if (clickOrTouchType == 'touchstart') {
-            $(carouselNavigation).hide();
-        } else {
+        if (clickOrTouchType != 'touchstart') {
             $(carouselNavigation).addClass('hidden-lg').removeClass('hidden')
         }
     };
@@ -101,7 +102,7 @@ GS.compareSchools = GS.compareSchools || function () {
     var destroyCarousel = function() {
         var $comparedSchoolsList = $(comparedSchoolsList);
 
-        $(comparedSchoolsListContainer).css('width', '');
+        $(carouselContainer).css('width', '');
         if ($comparedSchoolsList.length != 0 ) {
             $comparedSchoolsList.swipe('destroy');
         }
@@ -146,7 +147,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
         $comparedSchoolsList.css({transition: (duration / 1000).toFixed(1) + "s"});
 
-        //inverse the number we set in the css
+        //Inverse the number we set in the css. To show the next schools we slide the carousel negatively
         var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
 
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
