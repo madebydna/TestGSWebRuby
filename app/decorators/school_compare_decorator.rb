@@ -100,13 +100,14 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def transportation
-    case programs['transportation']
-      when 'none'
+    if programs['transportation']
+      if programs['transportation'].keys == ['none']
         'No'
-      when nil
-        NO_DATA_SYMBOL
       else
         'Yes'
+      end
+    else
+      NO_DATA_SYMBOL
     end
   end
 

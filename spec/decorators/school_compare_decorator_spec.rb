@@ -37,6 +37,15 @@ describe SchoolCompareDecorator do
       ]
   }}
 
+  let(:transportation_none_hash) {{
+      'transportation' => {'none' => {'member_id' => 5391163,'source' => 'osp','created' => '2013-12-23T12:50:52.000-08:00'}}
+  }}
+
+  let(:transportation_some_hash) {{
+      'transportation' => {'public_transit' => {'member_id' => 5391163,'source' => 'osp','created' => '2013-12-23T12:50:52.000-08:00'},
+                           'none' => {'member_id' => 5391163,'source' => 'osp','created' => '2013-12-23T12:50:52.000-08:00'}}
+  }}
+
 
 
   describe 'programs' do
@@ -75,6 +84,24 @@ describe SchoolCompareDecorator do
         allow(school).to receive(:programs).and_return({})
         expect(school.before_care).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
         expect(school.after_school).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
+      end
+    end
+
+    context 'transportation' do
+
+     it 'should return No for none' do
+       allow(school).to receive(:programs).and_return(transportation_none_hash)
+       expect(school.transportation).to eq('No')
+     end
+
+     it 'should return Yes for some even if none is one of the responses' do
+       allow(school).to receive(:programs).and_return(transportation_some_hash)
+       expect(school.transportation).to eq('Yes')
+     end
+
+      it 'should return NO DATA SYMBOL when no data' do
+        allow(school).to receive(:programs).and_return({})
+        expect(school.transportation).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
       end
     end
   end
