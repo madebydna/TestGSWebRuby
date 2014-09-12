@@ -2,6 +2,7 @@
 GS.compareSchools = GS.compareSchools || function () {
     var comparedSchools = '.js-comparedSchool';
     var comparedSchoolsList = '.js-comparedSchoolsList';
+    var removeComparedSchool = '.js-removeComparedSchool';
     var carouselContainer = '.js-comparedSchoolsListContainer';
     var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
     var prevSchoolButton = '.js-compareSchoolsPrev';
@@ -156,7 +157,7 @@ GS.compareSchools = GS.compareSchools || function () {
         $comparedSchoolsList.css({transition: (duration / 1000).toFixed(1) + "s"});
 
         //Inverse the number we set in the css. To show the next schools we slide the carousel negatively
-        var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
+        var value = "-" + Math.abs(distance).toString();
 
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
     };
@@ -177,9 +178,23 @@ GS.compareSchools = GS.compareSchools || function () {
         });
     };
 
+    var removeSchool = function() {
+        var schoolDiv = $(this).parent('div'+comparedSchools);
+        var schoolId = schoolDiv.data('school-id');
+        $(schoolDiv).hide('slow', function(){
+            $(schoolDiv).remove();
+            destroyCarousel();
+            setupCarousel();
+            GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
+        });
+    };
+
     return {
         init: init,
-        pieChartLabelColor: pieChartLabelColor
+        pieChartLabelColor: pieChartLabelColor,
+        comparedSchoolsList: comparedSchoolsList,
+        removeComparedSchool: removeComparedSchool,
+        removeSchool: removeSchool
     };
 }();
 
@@ -187,5 +202,6 @@ if (gon.pagename == "CompareSchoolsPage") {
     $(document).ready(function () {
         GS.compareSchools.init();
         GS.compareSchools.pieChartLabelColor();
+        $(GS.compareSchools.comparedSchoolsList).on('click', GS.compareSchools.removeComparedSchool, GS.compareSchools.removeSchool);
     });
 }
