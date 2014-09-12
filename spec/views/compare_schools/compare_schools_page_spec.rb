@@ -24,40 +24,69 @@ describe 'Compare Schools Page' do
   #     clean_models :ca, School
   #     SchoolCache.destroy_all
   #   end
+  #
+  #   let(:playground_school) { FactoryGirl.create(:school, :with_levels, id: 4) }
+  #
   #   let(:heights) do
   #     heights = [0, 1, 2, 3].map do |number|
-  #       page.evaluate_script("$(\'.js-comparedSchool#{number}\').height()")
+  #       page.evaluate_script("$('.js-comparedSchool#{number}').height()")
   #     end
   #     heights.reject! { |number| number.class != Fixnum}
   #   end
   #
   #   it 'should have aligned columns even when there is a school with a 2 line grade level' do
   #     create_school_cache_set_in_db!(4, :ca)
-  #     create_school_with_long_grade_level!
+  #     playground_school.level = 'PK,KG,1,2,4,5,7,9,11,UG'
   #     visit compare_schools_path school_ids: '1, 2, 3, 4', state: :ca
   #     expect(heights.uniq.count).to eq 1
+  #     playground_school.level = 'PK,KG'
   #   end
   #
   #   it 'should have aligned columns even when there is a school with a multline name' do
   #     create_school_cache_set_in_db!(4, :ca)
-  #     create_school_with_long_name!
+  #     playground_school.name = 'Great Schools: an experimental school for the gifted and not gifted'
   #     visit compare_schools_path school_ids: '1, 2, 3, 4', state: :ca
   #     expect(heights.uniq.count).to eq 1
   #   end
   #
   #   it 'should have aligned columns even when there is a school cache with a blank pie chart (no ethnicity data)' do
-  #     FactoryGirl.create(:school, :with_levels, id: 4)
-  #     create_school_cache_data_with_no_ethnicity_data!
+  #     create_school_cache_data_with_no_ethnicity_data!(playground_school)
   #     visit compare_schools_path school_ids: '1, 2, 3, 4', state: :ca
   #     expect(heights.uniq.count).to eq 1
   #   end
   #
   #   it 'should have aligned columns even when there is a school cache with a long ethnicity breakdown' do
-  #     FactoryGirl.create(:school, :with_levels, id: 4)
-  #     create_school_cache_data_with_long_ethnicity!
+  #     create_school_cache_data_with_long_ethnicity!(playground_school)
   #     visit compare_schools_path school_ids: '1, 2, 3, 4', state: :ca
   #     expect(heights.uniq.count).to eq 1
   #   end
-
+  #
+  #   context 'and removing a school' do
+  #
+  #     before do
+  #       visit compare_schools_path school_ids: '1, 2, 3, 4', state: :ca
+  #
+  #       [0, 1, 2].each do |i|
+  #         expect(page).to have_css("div.js-comparedSchool#{i}")
+  #       end
+  #       expect(school_ids_displayed_on_map).to eq([1,2,4])
+  #
+  #
+  #       # Click the link. now go to examples to test results
+  #       page.first('a', text: 'remove').click
+  #     end
+  #
+  #     it 'should remove only the one school' do
+  #       expect(page).to_not have_css('div.js-comparedSchool0')
+  #       [1, 2].each do |i|
+  #         expect(page).to have_css("div.js-comparedSchool#{i}")
+  #       end
+  #     end
+  #
+  #     it 'should take the school off of the map' do
+  #      # This is basically a smoke test as Google Maps doesn't seem to play well with capybara like this
+  #       expect(school_ids_displayed_on_map).to eq([1,2,4])
+  #     end
+  #   end
   # end
 end

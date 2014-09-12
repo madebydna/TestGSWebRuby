@@ -11,20 +11,20 @@ module CompareSchoolsSpecHelper
   end
 
   #long descriptions for school name, ethnic breakdown, grade levels
-  def create_school_cache_data_with_long_ethnicity!
-    create_school_cache_set_in_db!(4, :ca) do |char, rev, esp, rat|
+  def create_school_cache_data_with_long_ethnicity!(school)
+    create_school_cache_set_in_db!(school.id, school.shard) do |char, rev, esp, rat|
       char["Ethnicity"] << {"year"=>2014, "source"=>"DE Dept. of Education", "breakdown"=>"Hawaiian Native/Pacific Islander", "state_average"=>0.0}
     end
   end
 
-  def create_school_cache_data_with_long_enrollment!
-    create_school_cache_set_in_db!(4, :ca) do |char, rev, esp, rat|
+  def create_school_cache_data_with_long_enrollment!(school)
+    create_school_cache_set_in_db!(school.id, school.shard) do |char, rev, esp, rat|
       char["Enrollment"][0] = {"year"=>2014, "source"=>"DE Dept. of Education", "school_value"=>30000.0}
     end
   end
 
-  def create_school_cache_data_with_no_ethnicity_data!
-    create_school_cache_set_in_db!(4, :ca) do |char, rev, esp, rat|
+  def create_school_cache_data_with_no_ethnicity_data!(school)
+    create_school_cache_set_in_db!(school.id, school.shard) do |char, rev, esp, rat|
       char.delete('Ethnicity')
     end
   end
@@ -35,12 +35,8 @@ module CompareSchoolsSpecHelper
     FactoryGirl.create(:school, :with_levels, id: 3, state: :ca)
   end
 
-  def create_school_with_long_name!
-    FactoryGirl.create(:school, id: 4, state: :ca, name: 'Great Schools: an experimental school for the gifted and not gifted')
-  end
-
-  def create_school_with_long_grade_level!
-    FactoryGirl.create(:school, id: 4, state: :ca, level: "PK,KG,1,2,4,5,7,9,11,UG", level_code: "p,e,m,h")
+  def school_ids_displayed_on_map
+    page.evaluate_script("GS.search.mapMarkers.map(function(x) {if(x.map){return x.schoolId;} })")
   end
 
   # def decorate_schools(schools, cache_data)
