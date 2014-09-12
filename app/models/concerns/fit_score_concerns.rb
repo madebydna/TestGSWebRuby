@@ -88,8 +88,9 @@ module FitScoreConcerns
       [*value].each do |v|
         @max_fit_score += 1
         is_match = matches_soft_filter?(key, v)
+        match_status = (is_match ? :yes : (is_match.nil? ? :no_data : :no))
         @fit_score += 1 if is_match
-        @fit_score_breakdown << {category: key, filter: v, match: is_match}
+        @fit_score_breakdown << {category: key, filter: v, match: is_match, match_status: match_status}
       end
     end
     @fit_score_breakdown.sort! do |a, b|
@@ -109,6 +110,7 @@ module FitScoreConcerns
     # Default return value of SOFT_FILTER_FIELD_MAP and SOFT_FILTER_VALUE_MAP set to empty hash if no key found.
     filters = SOFT_FILTER_FIELD_MAP[param][value] || param
     filter_value_map = SOFT_FILTER_VALUE_MAP[param][value] || /^#{value}$/
+    all_responses_for_filter = []
     [*filters].each do |filter|
       filter_values = []
       if filter && respond_to?(filter) && !send(filter).nil?
@@ -117,8 +119,10 @@ module FitScoreConcerns
         filter_values = programs[filter.to_s].keys
       end
       [*filter_value_map].each { |val| filter_values.each { |v| return true if v.match(val) } }
+      all_responses_for_filter += filter_values
     end
-    false #Returns false even if no soft filter is not supported. Intended?
+    return nil if all_responses_for_filter.empty?
+    false
   end
 
 end
