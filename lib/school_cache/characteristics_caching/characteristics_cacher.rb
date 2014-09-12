@@ -13,6 +13,9 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
   def build_hash_for_cache
     hash = {}
     query_results.each do |characteristic|
+      if configured_characteristics_data_types.key? characteristic.data_type_id
+        next unless characteristic.data_set_with_values.has_config_entry?
+      end
       unless hash.key? characteristic.label
         hash[characteristic.label] = []
       end

@@ -10,6 +10,14 @@ class CharacteristicsCaching::Base < Cacher
     @@characteristics_data_types
   end
 
+  def configured_characteristics_data_types
+    if @@configured_characteristics_data_types
+      @@configured_characteristics_data_types
+    else
+      @@configured_characteristics_data_types  = Hash[CensusDataConfigEntry.on_db(school.shard).all.map { |f| [f.data_type_id, f] }]
+    end
+  end
+
   def characteristics_descriptions
     @@characteristics_descriptions
   end
