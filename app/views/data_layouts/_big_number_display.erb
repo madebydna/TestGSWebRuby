@@ -1,0 +1,48 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+
+
+
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
+  <% data = TableData.new data if !data.is_a? TableData %>
+  <a name="<%= category.code_name %>"></a>
+  <%= render "shared/section_header", category_placement:category_placement %>
+  <div class="row limit_1200 phs pbl">
+    <% last_key = nil %>
+    <% columns_to_print = data_config.columns_to_print(data) %>
+    <% data.rows[0..3].each do |hash| %>
+      <% size = 12 / data.rows[0..3].size %>
+      <% sizes = { xs: 12, sm: size, md: size, lg: size } %>
+      <%= div_tag(sizes: sizes ) do %>
+        <% label = hash[columns_to_print.first['key'].to_sym] %>
+        <% value = hash[columns_to_print.second['key'].to_sym] %>
+        <% value = data_config.format(columns_to_print[1], value) %>
+        <div class="tac">
+          <span class="jumbo-text"><%= value %></span>
+        </div>
+        <p class="tac">
+          <%= label %>
+          <% columns_to_print[2..-1].each do |column| %>
+            <% key = column['key'].to_sym %>
+            <% if hash.has_key?(key) %>
+              </br><%= column['label'] %>: <%= hash[key] %>
+            <% end %>
+          <% end %>
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+  }
+%>
+</br>
+</hr>
