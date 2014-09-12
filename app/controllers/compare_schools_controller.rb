@@ -32,7 +32,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def set_omniture_data
-    gon.omniture_pagename = "GS:CompareSchools"
+    gon.omniture_pagename = "GS:Compare"
     gon.omniture_hier1 = "Compare"
     set_omniture_data_for_user_request
     gon.omniture_channel = @state.try(:upcase) if @state
