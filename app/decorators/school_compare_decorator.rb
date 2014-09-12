@@ -67,6 +67,14 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     end
   end
 
+  def school_page_path
+    h.school_path(school)
+  end
+
+  def zillow_formatted_url
+    h.zillow_url(school)
+  end
+
   ################################ Reviews ################################
 
   def reviews_snapshot

@@ -202,7 +202,8 @@ module ApplicationHelper
             'details' => 'localdetails',
             'city_browse' => 'schoolsearch',
             'district_browse' => 'schoolsearch',
-            'search' => 'schoolsearch'
+            'search' => 'schoolsearch',
+            'show' => 'schoolsearch'
         }
 
   end

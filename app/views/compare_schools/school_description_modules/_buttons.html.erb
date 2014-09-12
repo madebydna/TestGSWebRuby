@@ -1,0 +1,15 @@
+<% school_page_path = school_path(@school) %>
+
+<div class="row">
+  <div class="col-lg-12 tac">
+
+    <% config.opt[:datapoints].each do |datapoints| %>
+        <div class="pbm">
+          <%= link_to @school.send(datapoints[:method]), class: datapoints[:class], target: datapoints[:target] do %>
+              <div class="<%= datapoints[:icon] %> fl mrs"></div>
+              <div class="fl"><%= datapoints[:label] %></div>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>
