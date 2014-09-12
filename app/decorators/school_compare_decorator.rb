@@ -109,6 +109,8 @@ class SchoolCompareDecorator < SchoolProfileDecorator
         'Yes'
       elsif programs['before_after_care'].keys.include?('neither')
         'No'
+      else
+        NO_DATA_SYMBOL
       end
     else
       NO_DATA_SYMBOL
