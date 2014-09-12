@@ -33,13 +33,15 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
     reviews = []
     num.times do |i|
       review = school_reviews[i]
-      review_blob = {
-          comments: review.comments,
-          posted: review.posted.to_s,
-          who: review.who,
-          quality: review.overall
-      }
-      reviews << review_blob
+      if review
+        review_blob = {
+            comments: review.comments,
+            posted: review.posted.to_s,
+            who: review.who,
+            quality: review.overall
+        }
+        reviews << review_blob
+      end
     end
     reviews
     end
