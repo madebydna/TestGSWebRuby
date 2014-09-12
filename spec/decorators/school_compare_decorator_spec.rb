@@ -25,6 +25,18 @@ describe SchoolCompareDecorator do
       'before_after_care' => {'neither' => {member_id: 5059707, source: 'osp', created: '2013-07-22T11:18:32.000-07:00'}}
   }}
 
+  let(:characteristics_hash) {{
+      'Enrollment' => [
+          {'year' => 2012,'source' => 'NCES','grade' => '5','school_value' => 10.0},
+          {'year' => 2012,'source' => 'NCES','grade' => '4','school_value' => 9.0},
+          {'year' => 2012,'source' => 'NCES','grade' => 'KG','school_value' => 8.0},
+          {'year' => 2012,'source' => 'NCES','grade' => '1','school_value' => 7.0},
+          {'year' => 2012,'source' => 'NCES','grade' => '2','school_value' => 7.0},
+          {'year' => 2012,'source' => 'NCES','grade' => '3','school_value' => 6.0},
+          {'year' => 2012,'source' => 'NCES','school_value' => 4700.0}
+      ]
+  }}
+
 
 
   describe 'programs' do
@@ -63,6 +75,21 @@ describe SchoolCompareDecorator do
         allow(school).to receive(:programs).and_return({})
         expect(school.before_care).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
         expect(school.after_school).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
+      end
+    end
+  end
+
+  describe 'characteristics' do
+
+    context 'enrollment' do
+      it 'should only display enrollment with no grade value' do
+        allow(school).to receive(:characteristics).and_return(characteristics_hash)
+        expect(school.students_enrolled).to eq('4,700')
+      end
+
+      it 'should dispaly NO DATA SYMBOL if there is no enrollment' do
+        allow(school).to receive(:characteristics).and_return({})
+        expect(school.students_enrolled).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
       end
     end
   end

@@ -1,5 +1,7 @@
 class SchoolCompareDecorator < SchoolProfileDecorator
 
+  include ActionView::Helpers
+
   decorates :school
   delegate_all
 
@@ -19,7 +21,12 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def students_enrolled
     if valid_characteristic_cache(characteristics['Enrollment'])
-      number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',')
+      characteristics['Enrollment'].each do |enrollment|
+        if enrollment['grade'].nil?
+          return number_with_delimiter(enrollment['school_value'].to_i, delimiter: ',')
+        end
+      end
+      NO_DATA_SYMBOL
     else
       NO_DATA_SYMBOL
     end
