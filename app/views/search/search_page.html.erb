@@ -6,6 +6,7 @@
 
 <% if @schools.present? %>
     <%= render 'search/google_maps', schools: @map_schools %>
+    <%= render 'number_schools_found' %>
     <%= render 'sorting_toolbar' %>
     <%= render partial: 'search/search_results', schools: @schools%>
     <%= render partial: 'pagination_toolbar' %>
