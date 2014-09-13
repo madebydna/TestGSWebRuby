@@ -63,10 +63,7 @@ module CompareSchoolsConcerns
                                 {method: :student_growth_rating, label: 'Student growth rating'},
                             ]
                         }
-                    },
-                    { display_type: 'quality/rating' },
-                    { display_type: 'quality/college_readiness' },
-                    { display_type: 'quality/add_to_my_schools_list' }
+                    }
                 ]
             },
             {
