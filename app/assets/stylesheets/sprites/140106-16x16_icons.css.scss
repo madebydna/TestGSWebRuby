@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: image-url("icons/140910-16x16_sprite.png");
+  background-image: image-url("icons/20140912-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -144,4 +144,24 @@
 
 .i-16-blue-world-languages {
   background-position: -399px 0px;
+}
+
+.i-16-green-check-bigger {
+  background-position: -415px 0px;
+}
+
+.i-16-gray-check-bigger {
+  background-position: -415px -16px;
+}
+
+.i-16-blue-x-circle {
+  background-position: -431px 0px;
+}
+
+.i-16-gray-x-circle {
+  background-position: -431px -16px;
+}
+
+.i-16-active-x-circle {
+  background-position: -431px -32px;
 }

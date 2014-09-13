@@ -3,6 +3,9 @@ GS.compareSchools = GS.compareSchools || function () {
     var comparedSchools = '.js-comparedSchool';
     var comparedSchoolsList = '.js-comparedSchoolsList';
     var removeComparedSchool = '.js-removeComparedSchool';
+    var activeLinkStyle = 'gs-active-link';
+    var activeXCircle = 'i-16-active-x-circle';
+    var blueXCircle = 'i-16-blue-x-circle';
     var carouselContainer = '.js-comparedSchoolsListContainer';
     var carouselNavigation = '.js-compareSchoolsCarouselNavigation';
     var prevSchoolButton = '.js-compareSchoolsPrev';
@@ -162,22 +165,6 @@ GS.compareSchools = GS.compareSchools || function () {
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
     };
 
-    var init = function() {
-        adjustSchoolResultsHeights();
-        setAccordianHandlerForCategories();
-        setCarouselHandler();
-        setNextPrevHandler();
-    };
-
-    var pieChartLabelColor = function() {
-        var colors = GS.visualchart.colors;
-        $('.js-comparePieChartTable').each( function() {
-            $(this).children('tbody').children('tr').children('td').children('.js-comparePieChartSquare').each(function (index) {
-                $(this).css({ background: colors[index] });
-            });
-        });
-    };
-
     var removeSchool = function() {
         var schoolDiv = $(this).parent('div'+comparedSchools);
         var schoolId = schoolDiv.data('school-id');
@@ -189,19 +176,50 @@ GS.compareSchools = GS.compareSchools || function () {
         });
     };
 
+    var setRemoveSchoolHandler = function () {
+        $(comparedSchoolsList).on('click', removeComparedSchool, removeSchool);
+    };
+
+    var colorPieChartLabels = function() {
+        var colors = GS.visualchart.colors;
+        $('.js-comparePieChartTable').each( function() {
+            $(this).children('tbody').children('tr').children('td').children('.js-comparePieChartSquare').each(function (index) {
+                $(this).css({ background: colors[index] });
+            });
+        });
+    };
+
+    var setRemoveActiveStateHandler = function () {
+        $(removeComparedSchool).hover(
+            function () {
+                $(this).addClass(activeLinkStyle);
+                $(this).children('i').removeClass(blueXCircle).addClass(activeXCircle);
+            },
+            function () {
+                $(this).removeClass(activeLinkStyle);
+                $(this).children('i').addClass(blueXCircle).removeClass(activeXCircle);
+            }
+        );
+    };
+
+    var init = function() {
+        adjustSchoolResultsHeights();
+        setAccordianHandlerForCategories();
+        setCarouselHandler();
+        setNextPrevHandler();
+        setRemoveSchoolHandler();
+        colorPieChartLabels();
+        setRemoveActiveStateHandler();
+    };
+
+
     return {
-        init: init,
-        pieChartLabelColor: pieChartLabelColor,
-        comparedSchoolsList: comparedSchoolsList,
-        removeComparedSchool: removeComparedSchool,
-        removeSchool: removeSchool
+        init: init
     };
 }();
 
 if (gon.pagename == "CompareSchoolsPage") {
     $(document).ready(function () {
         GS.compareSchools.init();
-        GS.compareSchools.pieChartLabelColor();
-        $(GS.compareSchools.comparedSchoolsList).on('click', GS.compareSchools.removeComparedSchool, GS.compareSchools.removeSchool);
     });
 }
