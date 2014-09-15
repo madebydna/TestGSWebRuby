@@ -18,10 +18,15 @@ module CompareSchoolsConcerns
       end
     end
     @schools.each do |school|
+      school.prepped_ethnicities = []
       all_breakdowns.each do |breakdown|
-        unless school.ethnicity_data.any? { |ethnicity| ethnicity['breakdown'] == breakdown }
-          school.ethnicity_data << { 'breakdown' => breakdown, 'school_value' => nil }
-        end
+        school_ethnicity = school.ethnicity_data.find { |ethnicity| ethnicity['breakdown'] == breakdown }
+        school_value = if school_ethnicity
+                         school_ethnicity['school_value']
+                       else
+                         nil
+                       end
+        school.prepped_ethnicities << { 'breakdown' => breakdown, 'school_value' => school_value }
         unless @ethnicity_datapoints.any? { |datapoint| datapoint[:label] == breakdown }
           @ethnicity_datapoints << {
               method: :school_ethnicity, argument: breakdown,

@@ -6,6 +6,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   delegate_all
 
   attr_accessor :prepped_ratings
+  attr_accessor :prepped_ethnicities
 
   include FitScoreConcerns
 
@@ -42,7 +43,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def school_ethnicity(breakdown)
-    ethnicity_obj = ethnicity_data.find { |rating| rating['breakdown'] == breakdown  }
+    ethnicity_obj = prepped_ethnicities.find { |rating| rating['breakdown'] == breakdown  }
     if ethnicity_obj && ethnicity_obj['school_value']
       ethnicity_obj['school_value'].round.to_s + '%'
     else

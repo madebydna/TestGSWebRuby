@@ -5,8 +5,8 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
       display_type: 'line_data',
       opt: {
           datapoints: [
-              {method: :school_rating_by_data_type_id, argument: 164, label: 'Test scores rating'},
-              {method: :school_rating_by_data_type_id, argument: 165, label: 'Student growth rating'},
+              {method: :school_rating_by_name, argument: 'Test scores rating', label: 'Test scores rating'},
+              {method: :school_rating_by_name, argument: 'Student growth rating', label: 'Student growth rating'},
           ]
       }
   }}
