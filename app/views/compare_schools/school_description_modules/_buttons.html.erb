@@ -1,9 +1,9 @@
 <div class="ptl tac">
   <% config.opt[:datapoints].each do |datapoints| %>
-      <div class="pbm">
-        <%= link_to @school.send(datapoints[:method]), class: datapoints[:class], target: datapoints[:target] do %>
-            <div class="<%= datapoints[:icon] %> fl mrs"></div>
-            <div class="fl"><%= datapoints[:label] %></div>
+      <div class="pbm phl">
+        <%= link_to @school.send(datapoints[:method]), class: datapoints[:class], target: datapoints[:target], style: 'width:80%' do %>
+            <span class="vat <%= datapoints[:icon] %> mrs"></span>
+            <%= datapoints[:label] %>
         <% end %>
       </div>
   <% end %>
