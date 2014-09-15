@@ -60,6 +60,7 @@ GS.compareSchools = GS.compareSchools || function () {
 
         if (windowWidth < 1200) {
             //reset carousel to first school, so on resize there won't be blank spaces after last school
+            currentSchool = 0;
             scrollSchools(0, 0);
             numberOfSchools = $(comparedSchools).length || numberOfSchools;
             var minWidthNeededToDisplayAll = numberOfSchools * schoolWidth;
@@ -159,8 +160,8 @@ GS.compareSchools = GS.compareSchools || function () {
 
         $comparedSchoolsList.css({transition: (duration / 1000).toFixed(1) + "s"});
 
-        //Inverse the number we set in the css. To show the next schools we slide the carousel negatively
-        var value = "-" + Math.abs(distance).toString();
+        //Inverse the number we set in the css. To show the next schools we slide the carousel negatively and for natural movement positively
+        var value = (distance < 0 ? "" : "-") + Math.abs(distance).toString();
 
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
     };
