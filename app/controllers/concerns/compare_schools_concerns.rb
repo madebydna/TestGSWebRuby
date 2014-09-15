@@ -3,7 +3,7 @@ module CompareSchoolsConcerns
 
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   OVERALL_RATING_NAME = 'GreatSchools rating'
-  COMPARE_RATING_TYPES = ['GreatSchools rating', 'Test score rating', 'Student growth rating', 'College readiness rating']
+  COMPARE_RATING_TYPES = {'GreatSchools rating' => 1, 'Test score rating' => 2, 'Student growth rating' => 3, 'College readiness rating' => 4}
 
   def prep_school_ethnicity_data!
     all_breakdowns = []
@@ -58,7 +58,7 @@ module CompareSchoolsConcerns
         unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == rating_name }
           if rating_name == OVERALL_RATING_NAME
             @ratings_datapoints << { method: :great_schools_rating_icon, argument: rating_name, label: rating_name}
-          elsif COMPARE_RATING_TYPES.include? rating_name
+          elsif COMPARE_RATING_TYPES.key? rating_name
             @ratings_datapoints << { method: :school_rating_by_name, argument: rating_name, label: rating_name}
           end
         end
@@ -182,12 +182,12 @@ module CompareSchoolsConcerns
     overall_rating = @ratings_datapoints.find { |datapoint| datapoint[:label] == OVERALL_RATING_NAME }
     if overall_rating
       @ratings_datapoints -= [overall_rating]
-      @ratings_datapoints.sort_by! { |datapoint| datapoint[:argument] }
+      @ratings_datapoints.sort_by! { |datapoint| COMPARE_RATING_TYPES[datapoint[:label]] }
       @ratings_datapoints = [overall_rating] + @ratings_datapoints
     elsif @ratings_datapoints.empty?
       @ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}]
     else
-      @ratings_datapoints.sort_by! { |datapoint| datapoint[:argument] }
+      @ratings_datapoints.sort_by! { |datapoint| COMPARE_RATING_TYPES[datapoint[:label]] }
       @ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}] + @ratings_datapoints
     end
   end
