@@ -208,7 +208,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
-              markup += '<div class="pbm notranslate"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
 
               markup += '<div class="col-xs-7 col-sm-8">';
