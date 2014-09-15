@@ -5,8 +5,15 @@ module FavoriteSchoolsConcerns
 
   def add_favorite_school(params)
     begin
-      school_id = Array.wrap(params[:school_id])
-      state = Array.wrap(params[:state])
+      school_id = params[:school_id].to_s
+      state = params[:state].to_s
+
+      if school_id.present? && state.present?
+        school_id = school_id.split(/,/)
+        state = state.split(/,/)
+      else
+        raise "state and school_id both need to be present to follow the school"
+      end
 
       if school_id.count != state.count
         raise "state and school_id mismatch school_ids count #{school_id.count} with state count #{state.count}"
@@ -28,8 +35,9 @@ module FavoriteSchoolsConcerns
           set_omniture_events_in_cookie(['review_updates_mss_end_event'])
           set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'AddToSchoolList'})
         end
-        flash_notice t('actions.my_school_list.school_added', school_name: school.name)
+
       }
+      flash_notice t('actions.my_school_list.school_added_subscribed')
     rescue => e
       flash_error e.message
       raise e
