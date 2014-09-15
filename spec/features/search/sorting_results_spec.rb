@@ -4,6 +4,8 @@ require_relative 'search_spec_helper'
 describe 'Sorting search results' do
   include SearchSpecHelper
 
+  let(:active_link_class) {'.gs-active-link'}
+
   context 'city browse' do
 
     before do
@@ -12,7 +14,7 @@ describe 'Sorting search results' do
 
     it 'should display only rating and fit sorting, in that order' do
       expect(page).to have_content 'Sort by: Rating Fit'
-      expect(page.find('.active-search-sort')).to have_content('Rating')
+      expect(page.find(active_link_class)).to have_content('Rating')
     end
   end
 
@@ -24,7 +26,7 @@ describe 'Sorting search results' do
 
     it 'should display only rating and fit sorting, in that order' do
       expect(page).to have_content 'Sort by: Rating Fit'
-      expect(page.find('.active-search-sort')).to have_content('Rating')
+      expect(page.find(active_link_class)).to have_content('Rating')
     end
   end
 
@@ -36,7 +38,7 @@ describe 'Sorting search results' do
 
     it 'should display rating, distance and fit sorting, in that order' do
       expect(page).to have_content 'Sort by: Rating Distance Fit'
-      expect(page.find('.active-search-sort')).to have_content('Distance')
+      expect(page.find(active_link_class)).to have_content('Distance')
     end
   end
 
@@ -48,7 +50,7 @@ describe 'Sorting search results' do
 
     it 'should display rating, distance and fit sorting, in that order' do
       expect(page).to have_content 'Sort by: Relevance Rating Fit'
-      expect(page.find('.active-search-sort')).to have_content('Relevance')
+      expect(page.find(active_link_class)).to have_content('Relevance')
     end
   end
 
