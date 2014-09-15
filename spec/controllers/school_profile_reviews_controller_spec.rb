@@ -14,6 +14,7 @@ describe SchoolProfileReviewsController do
     before do
       allow(controller).to receive(:find_school).and_return(school)
       allow(PageConfig).to receive(:new).and_return(page_config)
+      allow(page_config).to receive(:name).and_return('reviews')
     end
 
     it 'should set the list of reviews' do

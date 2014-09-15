@@ -4,6 +4,7 @@ shared_examples_for 'a configurable profile page' do |action|
     before do
       allow(controller).to receive(:find_school).and_return(school)
       allow(PageConfig).to receive(:new).and_return(page_config)
+      allow(page_config).to receive(:name).and_return(action)
     end
 
     it 'should set the correct cannonical url' do
