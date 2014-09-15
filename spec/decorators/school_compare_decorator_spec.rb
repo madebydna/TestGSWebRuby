@@ -46,7 +46,49 @@ describe SchoolCompareDecorator do
                            'none' => {'member_id' => 5391163,'source' => 'osp','created' => '2013-12-23T12:50:52.000-08:00'}}
   }}
 
+  let(:ethnicity_data_hash) {[
+      {'year'=>2012,
+       'source'=>'Source',
+       'breakdown'=>'Schoolstate val brkdwn',
+       'school_value'=>40.63,
+       'state_average'=>1.15},
+      {'year'=>2012,
+       'source'=>'Source',
+       'breakdown'=>'Another valid breakdown',
+       'school_value'=>46.09,
+       'state_average'=>13.0},
+      {'year'=>2012,
+       'source'=>'Source',
+       'breakdown'=>'No state value breakdown',
+       'school_value'=>11.33},
+      {'year'=>2012,
+       'source'=>'Source',
+       'breakdown'=>'No school value breakdown',
+       'state_average'=>1.0},
+      {'year'=>2012,
+       'source'=>'Source',
+       'breakdown'=>'Zero valued breakdown',
+       'school_value'=>0.0,
+       'state_average'=>0.0}
+  ]}
 
+  let(:ratings_hash) {[
+      {'data_type_id'=>164,
+       'year'=>2014,
+       'school_value_text'=>nil,
+       'school_value_float'=>10.0,
+       'name'=>'Test score rating'},
+      {'data_type_id'=>165,
+       'year'=>2014,
+       'school_value_text'=>nil,
+       'school_value_float'=>8.0,
+       'name'=>'Student growth rating'},
+      {'data_type_id'=>174,
+       'year'=>2014,
+       'school_value_text'=>nil,
+       'school_value_float'=>10.0,
+       'name'=>'GreatSchools rating'}
+  ]}
 
   describe 'programs' do
 
@@ -118,6 +160,77 @@ describe SchoolCompareDecorator do
         allow(school).to receive(:characteristics).and_return({})
         expect(school.students_enrolled).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
       end
+    end
+
+    context 'ethnicity' do
+
+      context 'icon' do
+        it 'should have the icon method' do
+          expect(school).to respond_to(:ethnicity_label_icon)
+        end
+
+        it 'should have the square and js classes' do
+          expect(school.ethnicity_label_icon).to match('square')
+          expect(school.ethnicity_label_icon).to match('js-comparePieChartSquare')
+        end
+      end
+
+      context '#school_ethnicity' do
+        before do
+          allow(school).to receive(:ethnicity_data).and_return(ethnicity_data_hash)
+        end
+
+        it 'should display NO_ETHNICITY_SYMBOL where the school has no school_value' do
+          expect(school.school_ethnicity('No school value breakdown')).to eq(SchoolCompareDecorator::NO_ETHNICITY_SYMBOL)
+        end
+
+        it 'should display NO_ETHNICITY_SYMBOL where the school does not have that breakdown' do
+          expect(school.school_ethnicity('Random breakdown')).to eq(SchoolCompareDecorator::NO_ETHNICITY_SYMBOL)
+        end
+
+        it 'should display the school\' value, rounded with a percent' do
+          expect(school.school_ethnicity('Schoolstate val brkdwn')).to eq('41%')
+        end
+      end
+
+    end
+
+    context 'ratings' do
+      before do
+        allow(school).to receive(:ratings).and_return(ratings_hash)
+      end
+
+      context '#school_rating_by_name' do
+
+        it 'should return NO_RATING_TEXT with no argument' do
+          expect(school.school_rating_by_name).to eq(SchoolCompareDecorator::NO_RATING_TEXT)
+        end
+
+        it 'should return NO_RATING_TEXT with nil' do
+          expect(school.school_rating_by_name(nil)).to eq(SchoolCompareDecorator::NO_RATING_TEXT)
+        end
+
+        it 'should return the rating as an integer if there is one' do
+          expect(school.school_rating_by_name('GreatSchools rating')).to eq(10)
+          expect(school.school_rating_by_name('GreatSchools rating').class).to eq(Fixnum)
+        end
+      end
+
+      context '#great_schools_rating_icon' do
+
+        it 'should default to the NR symbol' do
+          expect(school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
+        end
+
+        it 'should return the NR symbol when there is no school value' do
+          expect(school.great_schools_rating_icon('Random rating')).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
+        end
+
+        it 'should return the correct symbol when there is a rating' do
+          expect(school.great_schools_rating_icon('GreatSchools rating')).to eq("<i class='iconx24-icons i-24-new-ratings-10'></i>")
+        end
+      end
+
     end
   end
 end

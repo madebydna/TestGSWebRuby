@@ -1,12 +1,16 @@
 <div class="phm">
-  <table class="full-width">
+  <table class="full-width <%= config.opt[:table_name] %>">
   <% config.opt[:datapoints].each do |datapoint_config| %>
         <tr>
           <% if datapoint_config[:icon] %>
-              <td style="width: 30px"><i class="iconx16 <%= datapoint_config[:icon] %>"></i></td>
+              <td style="width: 30px"><i class="<%= datapoint_config[:icon] %>"></i></td>
           <% end %>
-          <td><%= datapoint_config[:label] %></td>
-          <td class="tac open-sans_sb" style="width: 40px"><%= @school.send(datapoint_config[:method]) %></td>
+          <td><%= truncate(datapoint_config[:label], length: 26) %></td>
+          <% if datapoint_config[:argument] %>
+              <td class="tac open-sans_sb" style="width: 40px"><%= @school.send(datapoint_config[:method], datapoint_config[:argument]) %></td>
+          <% else %>
+              <td class="tac open-sans_sb" style="width: 40px"><%= @school.send(datapoint_config[:method]) %></td>
+          <% end %>
         </tr>
   <% end %>
   </table>

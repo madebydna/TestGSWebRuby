@@ -5,10 +5,13 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   decorates :school
   delegate_all
 
+  attr_accessor :prepped_ratings
+
   include FitScoreConcerns
 
   NO_DATA_SYMBOL = '?'
   NO_RATING_TEXT = 'NR'
+  NO_ETHNICITY_SYMBOL = 'n/a'
 
   def cache_data
     # Draper special initialize key
@@ -36,6 +39,19 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def ethnicity_data
     characteristics['Ethnicity'] || []
+  end
+
+  def school_ethnicity(breakdown)
+    ethnicity_obj = ethnicity_data.find { |rating| rating['breakdown'] == breakdown  }
+    if ethnicity_obj && ethnicity_obj['school_value']
+      ethnicity_obj['school_value'].round.to_s + '%'
+    else
+      NO_ETHNICITY_SYMBOL
+    end
+  end
+
+  def ethnicity_label_icon
+    'fl square js-comparePieChartSquare'
   end
 
   def graduates_high_school
@@ -171,31 +187,22 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   ################################# Quality ##################################
 
   def ratings
-    cache_data['ratings'] || {}
+    cache_data['ratings'] || []
   end
 
   def great_schools_rating
-    school_rating_by_data_type_id(174)
+    school_rating_by_name('GreatSchools rating')
   end
 
-  def great_schools_rating_icon
-    rating = school_rating_by_data_type_id(174)
-    rating = 'nr' if rating == NO_RATING_TEXT
-    "<i class=\"iconx24-icons i-24-new-ratings-#{rating}\"></i>".html_safe
+  def great_schools_rating_icon(rating_name=nil)
+    rating = school_rating_by_name(rating_name).to_s.downcase
+    "<i class='iconx24-icons i-24-new-ratings-#{rating}'></i>".html_safe
   end
 
-  def test_scores_rating
-    school_rating_by_data_type_id(164)
-  end
-
-  def student_growth_rating
-    school_rating_by_data_type_id(165)
-  end
-
-  def school_rating_by_data_type_id(data_type_id)
-    overall_ratings_obj = ratings.find { |rating| rating['data_type_id'] == data_type_id  }
-    if overall_ratings_obj
-      overall_ratings_obj['school_value_float'].to_i
+  def school_rating_by_name(rating_name=nil)
+    ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
+    if ratings_obj
+      ratings_obj['school_value_float'].to_i
     else
       NO_RATING_TEXT
     end
