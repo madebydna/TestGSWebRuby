@@ -257,6 +257,7 @@ GS.search.results = GS.search.results || (function() {
                 var stateHubCookie = $.cookie('hubState');
 
                 if (compareSchoolSchools != undefined && compareSchoolsState == stateHubCookie) {
+                    state = compareSchoolsState;
                     schools = JSON.parse(compareSchoolSchools);
                 } else {
                     state = stateHubCookie;
@@ -406,9 +407,21 @@ GS.search.results = GS.search.results || (function() {
                 });
             };
 
+            var setCompareSchoolsRemoveSchoolHoverHandler = function() {
+                $('.js-compareSchoolsPopup').on({
+                    mouseenter: function () {
+                        $(this).removeClass('i-16-blue-x-circle').addClass('i-16-active-x-circle');
+                    },
+                    mouseleave: function () {
+                        $(this).removeClass('i-16-active-x-circle').addClass('i-16-blue-x-circle');
+                    }
+                }, '.js-compareSchoolsPopupRemoveSchool')
+            };
+
             var init = function() {
                 setCompareSchoolsPopupHandler();
                 setCompareSchoolsRemoveSchoolHandler();
+                setCompareSchoolsRemoveSchoolHoverHandler();
                 syncPopupBox();
             };
 
@@ -428,36 +441,56 @@ GS.search.results = GS.search.results || (function() {
 
                 if (schoolsList.isInSchoolsList(schoolId) == true) {
                     schoolsList.removeSchool(schoolId);
-                    toggleOffCompareSchoolButton.call($school);
+                    toggleOffCompareSchoolButton(schoolId);
                 } else if (schoolsList.numberOfSchoolsInList() < maxNumberOfSchools) {
                     schoolsList.addSchool(schoolId, schoolName, schoolRating);
-                    toggleOnCompareSchoolButton.call($school);
+                    toggleOnCompareSchoolButton(schoolId);
                 }
                 popupBox.syncPopupBox();
                 syncSchoolCount();
             });
         };
 
-        var toggleOnCompareSchoolButton = function() {
+        var toggleOnCompareSchoolsOnPageLoad = function() {
+            var ids = schoolsList.getSchoolIds();
 
-            //check to see if button is on page
-            if (this.length < 0) {
-                //toggle on school
+            for (var i = 0; i < ids.length; i++) {
+                toggleOnCompareSchoolButton(ids[i])
             }
-
         };
 
-        var toggleOffCompareSchoolButton = function() {
-
+        var toggleOnCompareSchoolButton = function(id) {
+            var $school = $('#js-compareSchool' + schoolsList.getState().toUpperCase() + id);
             //check to see if button is on page
-            if (this.length < 0) {
-                //toggle on school
+            if ($school.length > 0) {
+                $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
+                $school.addClass('btn-border-green')
             }
+        };
 
+        var toggleOffCompareSchoolButton = function(id) {
+            var $school = $('#js-compareSchool' + schoolsList.getState().toUpperCase() + id);
+            //check to see if button is on page
+            if ($school.length > 0) {
+                $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
+                $school.removeClass('btn-border-green')
+            }
         };
 
         var syncSchoolCount = function() {
-            $('.js-compareSchoolsCount').text(schoolsList.numberOfSchoolsInList())
+            var numOfSchools = schoolsList.numberOfSchoolsInList();
+            var $schoolCountElement = $('.js-compareSchoolsCount');
+            $schoolCountElement.text(numOfSchools);
+            numOfSchools > 0 ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
+        };
+
+        var setCompareSchoolsSubmitHandler = function() {
+            $('.js-compareSchoolsSubmit').on('click', function() {
+                var ids = schoolsList.getSchoolIds();
+                var url = '/gsr/school-comparison-tool/results.page?school_ids=' + ids.toString();
+
+                GS.uri.Uri.goToPage(url);
+            });
         };
 
         var init = function() {
@@ -466,6 +499,8 @@ GS.search.results = GS.search.results || (function() {
             popupBox.init();
             syncSchoolCount();
             setCompareSchoolButtonHandler();
+            setCompareSchoolsSubmitHandler();
+            toggleOnCompareSchoolsOnPageLoad();
         };
 
         return {
