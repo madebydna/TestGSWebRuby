@@ -110,6 +110,7 @@ RailsAdmin.config do |config|
           CategoryData.rails_admin_description_keys
         end
       end
+      field :icon_css_class
     end
   end
 

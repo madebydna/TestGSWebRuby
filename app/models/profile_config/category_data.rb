@@ -38,6 +38,7 @@ class CategoryData < ActiveRecord::Base
 
   jsonified_attribute :subject_id, :integer
   jsonified_attribute :description_key
+  jsonified_attribute :icon_css_class
 
   # return CategoryData with collection_id in the provided
   # collections. If a single object is passed in, the Array(...) call will convert it to an array

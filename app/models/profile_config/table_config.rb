@@ -43,18 +43,22 @@ class TableConfig
 
   def row_values(columns, hash)
 
-    columns.each do |column|
+    columns.each_with_index do |column, index|
       if hash[column['key'].to_sym]
         label = column['label']
         value = hash[column['key'].to_sym]
-
         if value.is_a? Array
           value.map { |value| format(column, value) }
         else
           value = format column, value
         end
 
-        yield label, value
+        #only display the image for the first
+        if index == 0 && hash[:icon_css_class].present?
+          yield label, value, hash[:icon_css_class]
+        else
+          yield label, value
+        end
       else
         # TODO: clean up
         yield column['label'], column['default'] || 'N/A'

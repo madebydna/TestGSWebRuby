@@ -70,6 +70,7 @@ class CensusDataReader < SchoolProfileDataReader
           # Add human-readable labels
           data_set_hash[:label] = cd.computed_label.gs_capitalize_first
           data_set_hash[:description] = cd.computed_description(school.state)
+          data_set_hash[:icon_css_class] = cd.icon_css_class
           data_set_hash[:data_type_id] = matching_data_set.data_type_id
           results_array << data_set_hash
         end
