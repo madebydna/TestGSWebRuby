@@ -21,23 +21,23 @@ end
 
 #visual_media_arts matches arts_visual=['painting']
 def expect_matches_true(options)
-  it "#{options[:filter_value]} if #{options[:filter_attr].to_s}=#{options[:attr_val]}" do
-    allow(model).to receive(options[:filter_attr]).and_return(options[:attr_val])
+  it "#{options[:filter_value]} if #{options[:model_key].to_s}=#{options[:model_value]}" do
+    allow(model).to receive(options[:model_key]).and_return(options[:model_value])
     expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_truthy
   end
 end
 
 #visual_media_arts if arts_visual is ['none']
 def expect_matches_false(options)
-  it "#{options[:filter_value]} if #{options[:filter_attr].to_s} is #{options[:attr_val]}" do
-    allow(model).to receive(options[:filter_attr]).and_return(options[:attr_val])
+  it "#{options[:filter_value]} if #{options[:model_key].to_s} is #{options[:model_value]}" do
+    allow(model).to receive(options[:model_key]).and_return(options[:model_value])
     expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_falsey
   end
 end
 
 #visual_media_arts if arts_visual is not defined
 def expect_matches_nil(options)
-  it "#{options[:filter_value]} if #{options[:filter_attr].to_s} is not defined" do
+  it "#{options[:filter_value]} if #{options[:model_key].to_s} is not defined" do
     expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_nil
   end
 end
@@ -204,97 +204,100 @@ describe FitScoreConcerns do
   describe '#matches_soft_filter?' do
     describe 'returns true' do
       describe 'for class_offerings equals' do
-        expect_matches_true filter_key:'class_offerings', filter_value:'visual_media_arts', filter_attr: :arts_visual,
-            attr_val: %w(painting)
-        expect_matches_true filter_key:'class_offerings', filter_value:'performance_arts', filter_attr: :arts_performing_written,
-            attr_val: %w(drama)
-        expect_matches_true filter_key:'class_offerings', filter_value:'music', filter_attr: :arts_music,
-            attr_val: %w(band)
+        expect_matches_true filter_key:'class_offerings', filter_value:'visual_media_arts',
+                            model_key: :arts_visual, model_value: %w(painting)
+        expect_matches_true filter_key:'class_offerings', filter_value:'performance_arts',
+                            model_key: :arts_performing_written, model_value: %w(drama)
+        expect_matches_true filter_key:'class_offerings', filter_value:'music',
+                            model_key: :arts_music, model_value: %w(band)
       end
       describe 'for school_focus equals' do
         %w(all_arts visual_arts performing_arts music).each do |var|
-          expect_matches_true filter_key:'school_focus', filter_value:'arts', filter_attr: :academic_focus,
-              attr_val: [var]
+          expect_matches_true filter_key:'school_focus', filter_value:'arts',
+                              model_key: :academic_focus, model_value: [var]
         end
-        expect_matches_true filter_key:'school_focus', filter_value:'career_tech', filter_attr: :academic_focus,
-            attr_val: ['vocational']
+        expect_matches_true filter_key:'school_focus', filter_value:'career_tech',
+                            model_key: :academic_focus, model_value: ['vocational']
         %w(AP_courses ib college_prep).each do |var|
-          expect_matches_true filter_key:'school_focus', filter_value:'college_focus', filter_attr: :instructional_model,
-              attr_val: [var]
+          expect_matches_true filter_key:'school_focus', filter_value:'college_focus',
+                              model_key: :instructional_model, model_value: [var]
         end
-        expect_matches_true filter_key:'school_focus', filter_value:'montessori', filter_attr: :instructional_model,
-            attr_val: ['montessori']
-        expect_matches_true filter_key:'school_focus', filter_value:'montessori', filter_attr: :instructional_model,
-            attr_val: %w(AP_courses ib college_prep montessori)
-        expect_matches_true filter_key:'school_focus', filter_value:'college_focus', filter_attr: :instructional_model,
-            attr_val: %w(AP_courses ib college_prep montessori)
+        expect_matches_true filter_key:'school_focus', filter_value:'montessori',
+                            model_key: :instructional_model, model_value: ['montessori']
+        expect_matches_true filter_key:'school_focus', filter_value:'montessori',
+                            model_key: :instructional_model, model_value: %w(AP_courses ib college_prep montessori)
+        expect_matches_true filter_key:'school_focus', filter_value:'college_focus',
+                            model_key: :instructional_model, model_value: %w(AP_courses ib college_prep montessori)
       end
       describe 'for boys_sports equals' do
-        expect_matches_true filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
-            attr_val: %w(baseball football basketball)
-        expect_matches_true filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
-            attr_val: %w(none basketball none)
+        expect_matches_true filter_key:'boys_sports', filter_value:'basketball',
+                            model_key: :boys_sports, model_value: %w(baseball football basketball)
+        expect_matches_true filter_key:'boys_sports', filter_value:'basketball',
+                            model_key: :boys_sports, model_value: %w(none basketball none)
       end
       describe 'for before_after_care equals' do
-        expect_matches_true filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
-            attr_val: %w(before)
-        expect_matches_true filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
-            attr_val: %w(after)
+        expect_matches_true filter_key:'before_after_care', filter_value:'before',
+                            model_key: :before_after_care, model_value: %w(before)
+        expect_matches_true filter_key:'before_after_care', filter_value:'after',
+                            model_key: :before_after_care, model_value: %w(after)
       end
     end
 
     describe 'returns false' do
       describe ' for class_offerings equals' do
-        expect_matches_false filter_key:'class_offerings', filter_value:'visual_media_arts', filter_attr: :arts_visual,
-            attr_val: ['none']
-        expect_matches_false filter_key:'class_offerings', filter_value:'performance_arts', filter_attr: :arts_performing_written,
-            attr_val: ['none']
-        expect_matches_false filter_key:'class_offerings', filter_value:'music', filter_attr: :arts_music,
-            attr_val: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'visual_media_arts',
+                                                                       model_key: :arts_visual,
+            model_value: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'performance_arts',
+                                                                       model_key: :arts_performing_written,
+            model_value: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'music',
+                                                                       model_key: :arts_music,
+            model_value: ['none']
       end
       describe 'for school_focus equals' do
-        expect_matches_false filter_key:'school_focus', filter_value:'arts', filter_attr: :academic_focus,
-            attr_val: ['none']
-        expect_matches_false filter_key:'school_focus', filter_value:'arts', filter_attr: :academic_focus,
-            attr_val: ['business']
-        expect_matches_false filter_key:'school_focus', filter_value:'college_focus', filter_attr: :instructional_model,
-            attr_val: ['none']
+        expect_matches_false filter_key:'school_focus', filter_value:'arts',
+                             model_key: :academic_focus, model_value: ['none']
+        expect_matches_false filter_key:'school_focus', filter_value:'arts',
+                             model_key: :academic_focus, model_value: ['business']
+        expect_matches_false filter_key:'school_focus', filter_value:'college_focus',
+                             model_key: :instructional_model, model_value: ['none']
       end
       describe 'for boys_sports equals' do
-        expect_matches_false filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
-            attr_val: ['none']
-        expect_matches_false filter_key:'boys_sports', filter_value:'basketball', filter_attr: :girls_sports,
-            attr_val: ['basketball']
-        expect_matches_false filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
-            attr_val: %w(baseball football)
+        expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
+                             model_key: :boys_sports, model_value: ['none']
+        expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
+                             model_key: :girls_sports, model_value: ['basketball']
+        expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
+                             model_key: :boys_sports, model_value: %w(baseball football)
       end
       describe 'for before_after_care equals' do
-        expect_matches_false filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
-            attr_val: %w(after)
-        expect_matches_false filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
-            attr_val: %w(neither)
-        expect_matches_false filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
-            attr_val: %w(before)
-        expect_matches_false filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
-            attr_val: %w(neither)
+        expect_matches_false filter_key:'before_after_care', filter_value:'before',
+                             model_key: :before_after_care, model_value: %w(after)
+        expect_matches_false filter_key:'before_after_care', filter_value:'before',
+                             model_key: :before_after_care, model_value: %w(neither)
+        expect_matches_false filter_key:'before_after_care', filter_value:'after',
+                             model_key: :before_after_care, model_value: %w(before)
+        expect_matches_false filter_key:'before_after_care', filter_value:'after',
+                             model_key: :before_after_care, model_value: %w(neither)
       end
     end
 
     describe 'returns nil' do
       describe 'for class_offerings equals' do
-        expect_matches_nil filter_key:'class_offerings', filter_value:'visual_media_arts', filter_attr: :arts_visual
-        expect_matches_nil filter_key:'class_offerings', filter_value:'performance_arts', filter_attr: :arts_performing_written
-        expect_matches_nil filter_key:'class_offerings', filter_value:'music', filter_attr: :arts_music
+        expect_matches_nil filter_key:'class_offerings', filter_value:'visual_media_arts', model_key: :arts_visual
+        expect_matches_nil filter_key:'class_offerings', filter_value:'performance_arts', model_key: :arts_performing_written
+        expect_matches_nil filter_key:'class_offerings', filter_value:'music', model_key: :arts_music
       end
       describe 'for school_focus equals' do
-        expect_matches_nil filter_key:'school_focus', filter_value:'arts', filter_attr: :academic_focus
-        expect_matches_nil filter_key:'school_focus', filter_value:'college_focus', filter_attr: :instructional_model
+        expect_matches_nil filter_key:'school_focus', filter_value:'arts', model_key: :academic_focus
+        expect_matches_nil filter_key:'school_focus', filter_value:'college_focus', model_key: :instructional_model
       end
       describe 'for boys_sports equals' do
-        expect_matches_nil filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports
+        expect_matches_nil filter_key:'boys_sports', filter_value:'basketball', model_key: :boys_sports
       end
       describe 'for before_after_care equals' do
-        expect_matches_nil filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care
+        expect_matches_nil filter_key:'before_after_care', filter_value:'before', model_key: :before_after_care
       end
     end
   end
