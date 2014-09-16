@@ -14,7 +14,7 @@ LocalizedProfiles::Application.routes.draw do
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
-  get '/my-account/', as: :manage_account, to: 'account_management#show'
+  get '/gsr/account/', as: :manage_account, to: 'account_management#show'
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
