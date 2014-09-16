@@ -1,0 +1,23 @@
+<%= render 'nav/topnav' %>
+
+<id id="navigation2" class="nav limit-width-1200">
+  <nav class="nav">
+    <ul>
+      <li>
+        <a href="javascript(:void)">
+        <%= @current_user.first_name || @current_user.email if logged_in? %>
+        </a>
+      </li>
+      <li>
+        <a href="javascript(:void)">Account settings</a>
+      </li>
+    </ul>
+  </nav>
+</id>
+
+<div class="limit-width-1200 mtl">
+  <% @my_school_list_schools.each do |school| %>
+    <% decorated_school = MySchoolListDecorator.decorate(school) %>
+    <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+  <% end %>
+</div>

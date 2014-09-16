@@ -3,7 +3,9 @@
   <div class="row ptm pbm">
     <div class="full-width ">
       <% @schools.each do |school| %>
-        <%= render 'search_result', school: school %>
+        <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
+        <% @school = decorated_school %>
+        <%= render 'search_result', school: school, decorated_school: decorated_school %>
       <% end %>
     </div>
   </div>

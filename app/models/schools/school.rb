@@ -197,4 +197,54 @@ class School < ActiveRecord::Base
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
+  def self.for_states_and_ids(states, ids)
+    raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
+    raise ArgumentError, 'Number of states and school IDs provided must be equal' unless states.size == ids.size
+
+    schools = []
+
+    state_to_id_hashes = []
+    states.each_with_index do |state, index|
+      state_to_id_hashes <<
+        {
+          state: state,
+          id: ids[index]
+        }
+    end
+    states_to_ids = state_to_id_hashes.group_by { |pair| pair[:state] }
+    states_to_ids.each do |state, values|
+      values.map! { |pair| pair[:id] }
+    end
+
+    states_to_ids.each do |state, ids|
+      schools += self.on_db(state.to_sym).where(id: ids).to_a
+    end
+
+    # Sort schools the way they were passed in
+    schools = schools.sort_by do |school|
+      state_to_id_hashes.index(
+        {
+          state: school.state.downcase,
+          id: school.id
+        }
+      )
+    end
+  end
+
+  def all_reviews
+    @all_reviews ||= reviews.load
+  end
+
+  def review_count
+    all_reviews.count
+  end
+
+  def calculate_review_data
+    SchoolReviews.calc_review_data(all_reviews)
+  end
+
+  def community_rating
+    calculate_review_data.seek('rating_averages','overall','avg_score')
+  end
+
 end
