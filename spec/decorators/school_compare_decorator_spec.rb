@@ -1,6 +1,10 @@
 require 'spec_helper'
 require 'decorators/concerns/grade_level_concerns_shared'
 
+RSpec.configure do |c|
+  c.include CompareSchoolsConcerns
+end
+
 describe SchoolCompareDecorator do
   let(:school) { SchoolCompareDecorator.decorate(FactoryGirl.build(:school_search_result)) }
   let(:programs_counts_hash) {{
@@ -82,7 +86,7 @@ describe SchoolCompareDecorator do
        'year'=>2014,
        'school_value_text'=>nil,
        'school_value_float'=>8.0,
-       'name'=>'Student growth rating'},
+      },
       {'data_type_id'=>174,
        'year'=>2014,
        'school_value_text'=>nil,
@@ -178,6 +182,8 @@ describe SchoolCompareDecorator do
       context '#school_ethnicity' do
         before do
           allow(school).to receive(:ethnicity_data).and_return(ethnicity_data_hash)
+          instance_variable_set('@schools', [school])
+          prep_school_ethnicity_data!
         end
 
         it 'should display NO_ETHNICITY_SYMBOL where the school has no school_value' do
