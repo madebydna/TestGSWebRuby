@@ -1,8 +1,11 @@
-<div class="panel pa dn mtm js-compareSchoolsPopup" style="z-index: 1; width: 360px; left:-188px">
+<% max_num_of_compare_schools  = 4%>
+<div class="panel pa dn mtm js-compareSchoolsPopup"
+     data-max-num-of-compare-schools="<%= max_num_of_compare_schools %>"
+     style="z-index: 1; width: 360px; left:-188px">
 
   <% #School Partials %>
   <div class="row mam">
-    <% 4.times do  %>
+    <% max_num_of_compare_schools.times do  %>
       <%= render 'compare_schools_popup_school' %>
     <% end %>
   </div>

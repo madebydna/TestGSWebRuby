@@ -72,9 +72,10 @@
             <div class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
                  id='js-compareSchool<%= "#{school.state.upcase}#{school.id}" %>'
                  style="width:150px"
-                 data-schoolName="<%= school.name %>"
-                 data-schoolId="<%= school.id %>"
-                 data-schoolRating="<%= school.overall_gs_rating || 'nr' %>">
+                 data-schoolname="<%= school.name %>"
+                 data-schoolstate="<%= school.state.upcase %>"
+                 data-schoolid="<%= school.id %>"
+                 data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
               <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
               <div class="fl">Compare</div>
             </div>
