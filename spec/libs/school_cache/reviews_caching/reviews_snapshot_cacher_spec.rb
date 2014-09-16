@@ -50,14 +50,12 @@ describe ReviewsCaching::ReviewsSnapshotCacher do
 
     it 'builds the correct hash' do
 
-      allow_any_instance_of(School).to receive(:reviews).and_return(sample_reviews)
       allow_any_instance_of(ReviewsCaching::ReviewsSnapshotCacher).to receive(:school_reviews).and_return(sample_reviews)
 
       expect(cacher.most_recent_reviews).to eq(most_recent_reviews)
     end
 
     it 'gracefully skips schools without reviews' do
-      allow_any_instance_of(School).to receive(:reviews).and_return([])
       allow_any_instance_of(ReviewsCaching::ReviewsSnapshotCacher).to receive(:school_reviews).and_return([])
 
       expect(cacher.most_recent_reviews).to eq([])
