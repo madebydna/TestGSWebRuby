@@ -8,7 +8,7 @@ class AccountManagementController < ApplicationController
   def show
     favorite_schools = @current_user.favorite_schools
     if favorite_schools.present?
-      favorite_school_states = favorite_schools.map(&:state)
+      favorite_school_states = favorite_schools.map(&:state).map(&:downcase)
       favorite_school_ids = favorite_schools.map(&:school_id)
       my_school_list_schools = School.for_states_and_ids(favorite_school_states, favorite_school_ids)
       query_results = SchoolCacheQuery.new.
