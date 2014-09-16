@@ -26,6 +26,23 @@ feature 'Topnav' do
     end
   end
 
+  feature 'On a page with a city and state' do
+    let!(:state_hub_mapping) { FactoryGirl.create(:state_hub_mapping, state: 'ca') }
+    subject do
+      visit '/california/?city=alameda'
+      page
+    end
+    before { subject }
+    after(:each) do
+      clean_models(HubCityMapping)
+    end
+    it 'finds a hub matching the state but not matching the city' do
+      within('.navbar-fixed-top') do
+        expect(page).to have_text 'California Home'
+      end
+    end
+  end
+
   feature 'On state hub pages' do
     let!(:state_hub_mapping) { FactoryGirl.create(:state_hub_mapping, state: 'ak') }
     subject do

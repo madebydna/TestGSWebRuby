@@ -34,18 +34,11 @@ class HubCityMapping < ActiveRecord::Base
     unless city.is_a?(String) || city.nil?
       raise ArgumentError('City must either be nil or a String')
     end
-    unless state.is_a?(String) || state.nil?
-      raise ArgumentError('State must either be nil or a String')
+    unless state.is_a?(String)
+      raise ArgumentError('State must be non-nill and String')
     end
-    criteria = {
-      active: 1
-    }
-    if city.present?
-      criteria[:city] = city
-    end
-    if state.present?
-      criteria[:state] = state
-    end
-    HubCityMapping.where(criteria).first
+    mappings_matching_state = HubCityMapping.where(state: state)
+    match = mappings_matching_state.find { |mapping| mapping.city == city }
+    match ||= mappings_matching_state.find { |mapping| mapping.city.nil? }
   end
 end
