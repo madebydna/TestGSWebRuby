@@ -235,6 +235,12 @@ describe FitScoreConcerns do
         expect_matches_true filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
             attr_val: %w(none basketball none)
       end
+      describe 'for before_after_care equals' do
+        expect_matches_true filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
+            attr_val: %w(before)
+        expect_matches_true filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
+            attr_val: %w(after)
+      end
     end
 
     describe 'returns false' do
@@ -262,6 +268,16 @@ describe FitScoreConcerns do
         expect_matches_false filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports,
             attr_val: %w(baseball football)
       end
+      describe 'for before_after_care equals' do
+        expect_matches_false filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
+            attr_val: %w(after)
+        expect_matches_false filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care,
+            attr_val: %w(neither)
+        expect_matches_false filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
+            attr_val: %w(before)
+        expect_matches_false filter_key:'before_after_care', filter_value:'after', filter_attr: :before_after_care,
+            attr_val: %w(neither)
+      end
     end
 
     describe 'returns nil' do
@@ -276,6 +292,9 @@ describe FitScoreConcerns do
       end
       describe 'for boys_sports equals' do
         expect_matches_nil filter_key:'boys_sports', filter_value:'basketball', filter_attr: :boys_sports
+      end
+      describe 'for before_after_care equals' do
+        expect_matches_nil filter_key:'before_after_care', filter_value:'before', filter_attr: :before_after_care
       end
     end
   end
