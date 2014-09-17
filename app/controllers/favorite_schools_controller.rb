@@ -26,27 +26,25 @@ class FavoriteSchoolsController < ApplicationController
   end
 
   def destroy
-    favorite_school = FavoriteSchool.find(params[:id]) rescue nil
+    @favorite_school = FavoriteSchool.find(params[:id]) rescue nil
+    success = false
+    message = ''
 
-    result = {}
-
-    if favorite_school && @current_user.id == favorite_school.member_id
-      success = !!favorite_school.destroy
-      result[:success] = success
+    if @favorite_school && @current_user.id == @favorite_school.member_id
+      success = !!@favorite_school.destroy
       if success
-        result[:message] = 'School has been removed from your school list'
+        message = 'School has been removed from your school list'
       else
-        result[:message] = 'A problem occurred when removing the school from your school list. Please try again later.'
+        message = 'A problem occurred when removing the school from your school list. Please try again later.'
       end
     else
-      result[:message] = 'The given school was not on your school list'
+      message = 'The given school was not on your school list'
     end
 
-    # response = "gon.flash_message='#{result[:message]}';"
-    css_selector = ".js-favorite-school-#{favorite_school.id}"
-    response = "$('#{css_selector}').slideUp();"
-
-    render js: response, content_type: 'text/javascript'
+    @result = {
+      success: success,
+      message: message
+    }
   end
 
 end
