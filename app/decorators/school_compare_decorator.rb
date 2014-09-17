@@ -87,7 +87,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     end
   end
 
-  def school_page_path
+  def school_page_url
     h.school_url(school)
   end
 

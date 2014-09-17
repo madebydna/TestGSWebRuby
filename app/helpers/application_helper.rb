@@ -191,7 +191,7 @@ module ApplicationHelper
     zillow << 'http://www.zillow.com/'
     zillow << States.abbreviation(school.state).upcase
     zillow << '-'+school.zipcode
-    zillow << '?cbpartner=GreatSchools&utm_source=GreatSchools&utm_medium=referral&utm_campaign='
+    zillow << '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign='
     zillow << (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
   end
 
