@@ -43,7 +43,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def school_ethnicity(breakdown)
-    ethnicity_obj = prepped_ethnicities.find { |rating| rating['breakdown'] == breakdown  }
+    ethnicity_obj = prepped_ethnicities.find { |ethnicity| ethnicity['breakdown'] == breakdown  }
     if ethnicity_obj && ethnicity_obj['school_value']
       ethnicity_obj['school_value'].round.to_s + '%'
     else

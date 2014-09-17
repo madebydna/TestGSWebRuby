@@ -1,5 +1,9 @@
 require 'spec_helper'
 
+RSpec.configure do |c|
+  c.include CompareSchoolsConcerns
+end
+
 describe 'compare_schools/school_description_modules/_line_data.html.erb' do
   let(:no_icon_config) {{
       display_type: 'line_data',
@@ -88,7 +92,9 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
 
   context 'when no ethnicity data are present' do
     before do
-      allow_any_instance_of(SchoolCompareDecorator).to receive(:ethnicity_data).and_return([])
+      allow(decorated_school).to receive(:ethnicity_data).and_return([])
+      instance_variable_set('@schools', [decorated_school])
+      prep_school_ethnicity_data!
       allow(view).to receive(:config) { ethnicity_compare_config }
       render
     end
@@ -103,7 +109,9 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
 
   context 'when ethnicity data is present' do
     before do
-      allow_any_instance_of(SchoolCompareDecorator).to receive(:ethnicity_data).and_return(ethnicity_data)
+      allow(decorated_school).to receive(:ethnicity_data).and_return(ethnicity_data)
+      instance_variable_set('@schools', [decorated_school])
+      prep_school_ethnicity_data!
       allow(view).to receive(:config) { ethnicity_compare_config }
       render
     end
