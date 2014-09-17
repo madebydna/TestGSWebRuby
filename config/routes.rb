@@ -111,6 +111,8 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
+  get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
+  get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'

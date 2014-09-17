@@ -175,11 +175,9 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.password_is? params[:password]
-        # no op
-      elsif existing_user.provisional?
+      if existing_user.provisional?
         error = t('forms.errors.email.provisional')
-      else
+      elsif !(existing_user.password_is? params[:password])
         error = t('forms.errors.password.invalid', join_url: join_url).html_safe
       end
     else
