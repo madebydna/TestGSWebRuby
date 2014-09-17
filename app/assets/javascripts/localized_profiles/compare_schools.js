@@ -86,15 +86,35 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     };
 
     var showNextPrevNavigation = function() {
+        hideNextPrevWhenAtBeginningOrEnd();
         $(carouselNavigation).each(function() {
             $(this).addClass('hidden-lg').removeClass('hidden');
-        })
+        });
     };
 
     var hideNextPrevNavigation = function() {
         $(carouselNavigation).each(function() {
             $(this).hide().removeClass('hidden-lg');
         })
+    };
+
+    var hideNextPrevWhenAtBeginningOrEnd = function() {
+        var windowWidth = $(window).width();
+        var numberOfSchoolsToShow = Math.floor(windowWidth / schoolWidth);
+        var beginningOfCarousel = (currentSchool === 0);
+        var endOfCarousel = (currentSchool + numberOfSchoolsToShow === numberOfSchools);
+
+        if (beginningOfCarousel) {
+            $(prevSchoolButton).each(function() { $(this).addClass('hidden') })
+        } else {
+            $(prevSchoolButton).each(function() { $(this).removeClass('hidden') })
+        }
+
+        if (endOfCarousel) {
+            $(nextSchoolButton).each(function() { $(this).addClass('hidden') })
+        } else {
+            $(nextSchoolButton).each(function() { $(this).removeClass('hidden') })
+        }
     };
 
     var setNextPrevHandler = function() {
@@ -145,12 +165,14 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var previousSchool = function() {
         currentSchool = Math.max(currentSchool - 1, 0);
         scrollSchools(schoolWidth * currentSchool, carouselSpeed);
+        hideNextPrevWhenAtBeginningOrEnd();
     };
 
     var nextSchool = function() {
         var numberOfSchoolsToShow = Math.floor($(window).width() / schoolWidth);
         currentSchool = Math.min(currentSchool + 1, numberOfSchools - numberOfSchoolsToShow);
         scrollSchools(schoolWidth * currentSchool, carouselSpeed);
+        hideNextPrevWhenAtBeginningOrEnd();
     };
 
     var scrollSchools = function(distance, duration) {
