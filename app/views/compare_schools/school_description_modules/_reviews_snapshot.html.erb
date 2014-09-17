@@ -7,7 +7,7 @@
         <div class="pts"><%= draw_stars_24 star_rating%></div>
         <div class="font-size-large"><%= star_rating %> stars</div>
       </div>
-      <div>Based on <%= @school.num_ratings %> ratings</div>
+      <div>Based on <%= pluralize(@school.num_ratings, 'rating', 'ratings') %></div>
       <div class="ptm pbl"><%= link_to pluralize(@school.num_reviews, 'review', 'reviews'), school_reviews_page_path %></div>
   <% else %>
       <div class="js-reviewStars"></div>
