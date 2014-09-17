@@ -3,8 +3,9 @@ class CompareSchoolsController < ApplicationController
   include CompareSchoolsConcerns
 
   def show
+    require_state
     @params_schools = params[:school_ids].nil? ? [] : params[:school_ids].split(',').uniq
-    @state = params[:state] || :de
+    @state = state_param
 
 
     gon.pagename = 'CompareSchoolsPage'
@@ -20,6 +21,8 @@ class CompareSchoolsController < ApplicationController
 
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
   end
+
+  private
 
   def prepare_schools
     @schools = decorated_schools

@@ -1,6 +1,8 @@
 module CompareSchoolsConcerns
   extend ActiveSupport::Concern
 
+  protected
+
   SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
   OVERALL_RATING_NAME = 'GreatSchools rating'
   COMPARE_RATING_TYPES = {'GreatSchools rating' => 1, 'Test score rating' => 2, 'Student growth rating' => 3, 'College readiness rating' => 4}
@@ -175,8 +177,6 @@ module CompareSchoolsConcerns
     }
 
   end
-
-  protected
 
   def prep_ratings_display!
     overall_rating = @ratings_datapoints.find { |datapoint| datapoint[:label] == OVERALL_RATING_NAME }
