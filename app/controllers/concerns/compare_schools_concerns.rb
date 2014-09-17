@@ -1,5 +1,6 @@
 module CompareSchoolsConcerns
   extend ActiveSupport::Concern
+  extend SubscriptionConcerns
 
   protected
 
@@ -168,11 +169,12 @@ module CompareSchoolsConcerns
                 display_type: 'buttons',
                 opt: {
                     datapoints:[
-                      {method: :school_page_path, label: 'View full profile', class: 'btn btn-primary tac clearfix'},
+                      {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix'},
                       {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-home ', class: 'btn btn-default tal clearfix' ,target: '_blank'},
                     ]
                 }
             },
+        ]
         ]
     }
 
