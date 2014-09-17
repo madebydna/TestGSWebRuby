@@ -11,10 +11,11 @@ class AccountManagementController < ApplicationController
       favorite_school_states = favorite_schools.map(&:state).map(&:downcase)
       favorite_school_ids = favorite_schools.map(&:school_id)
       my_school_list_schools = School.for_states_and_ids(favorite_school_states, favorite_school_ids)
-      query_results = SchoolCacheQuery.new.
-        include_cache_keys('ratings').
-        include_schools('ca', my_school_list_schools.map(&:id)).
-        query
+      query = SchoolCacheQuery.new.include_cache_keys('ratings')
+      my_school_list_schools.each do |school|
+        query = query.include_schools(school.state, school.id)
+      end
+      query_results = query.query
       school_cache_results = SchoolCacheResults.new('ratings', query_results)
       @my_school_list_schools = school_cache_results.decorate_schools(my_school_list_schools)
     end

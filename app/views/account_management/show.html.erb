@@ -15,9 +15,11 @@
   </nav>
 </id>
 
-<div class="limit-width-1200 mtl">
-  <% @my_school_list_schools.each do |school| %>
-    <% decorated_school = MySchoolListDecorator.decorate(school) %>
-    <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
-  <% end %>
-</div>
+<% if @my_school_list_schools.present? %>
+  <div class="limit-width-1200 mtl">
+    <% @my_school_list_schools.each do |school| %>
+      <% decorated_school = MySchoolListDecorator.decorate(school) %>
+      <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+    <% end %>
+  </div>
+<% end %>
