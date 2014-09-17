@@ -1,6 +1,5 @@
 module CompareSchoolsConcerns
   extend ActiveSupport::Concern
-  extend SubscriptionConcerns
 
   protected
 
@@ -174,7 +173,6 @@ module CompareSchoolsConcerns
                     ]
                 }
             },
-        ]
         ]
     }
 
