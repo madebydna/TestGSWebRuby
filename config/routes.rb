@@ -25,7 +25,6 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
-  get '/gsr/school-comparison-tool/results.page', as: :compare_schools_old, to: 'compare_schools#show' #TODO: Remove
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
