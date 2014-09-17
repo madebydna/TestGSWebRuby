@@ -9,6 +9,7 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   attr_accessor :prepped_ethnicities
 
   include FitScoreConcerns
+  include SubscriptionConcerns
 
   NO_DATA_SYMBOL = '?'
   NO_RATING_TEXT = 'NR'
@@ -87,11 +88,15 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def school_page_path
-    h.school_path(school)
+    h.school_url(school)
   end
 
   def zillow_formatted_url
     h.zillow_url(school)
+  end
+
+  def follow_this_school
+    h.render 'shared/add_to_my_school_list_form', school: school, driver: 'Compare'
   end
 
   ################################ Reviews ################################
