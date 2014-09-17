@@ -86,11 +86,9 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     };
 
     var showNextPrevNavigation = function() {
-        if (clickOrTouchType != 'touchstart') {
-            $(carouselNavigation).each(function() {
-                $(this).addClass('hidden-lg').removeClass('hidden')
-            })
-        }
+        $(carouselNavigation).each(function() {
+            $(this).addClass('hidden-lg').removeClass('hidden');
+        })
     };
 
     var hideNextPrevNavigation = function() {
