@@ -13,6 +13,7 @@ class CompareSchoolsController < ApplicationController
 
     prepare_schools
     prepare_map
+    set_back_to_search_results_instance_variable
 
     set_meta_tags title:'Compare Schools',
                   description:'Compare schools to find the right school for your family',

@@ -1,5 +1,9 @@
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
+<% if @back_to_search_results_url %>
+  <%= render 'compare_schools/back_to_search_results'%>
+<% end %>
+
 <%= render 'compare_schools/google_map'%>
 
 <% if @schools.present? %>

@@ -192,4 +192,12 @@ module CompareSchoolsConcerns
       @ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}] + @ratings_datapoints
     end
   end
+
+  def set_back_to_search_results_instance_variable
+    #search_url parameter is encoded in compare_schools_popup.js and rails by default decodes for params
+    if params[:search_url].present?
+      @back_to_search_results_url = params[:search_url]
+    end
+  end
+
 end
