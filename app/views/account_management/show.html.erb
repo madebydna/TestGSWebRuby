@@ -15,11 +15,25 @@
   </nav>
 </id>
 
-<% if @my_school_list_schools.present? %>
+<% if @school_to_favorite_school.present? %>
   <div class="limit-width-1200 mtl">
-    <% @my_school_list_schools.each do |school| %>
-      <% decorated_school = MySchoolListDecorator.decorate(school) %>
-      <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+    <h2>My School List</h2>
+    <% # favorite_school is the object representing the row in favorite_school table %>
+    <% @school_to_favorite_school.each do |school, favorite_school| %>
+      <div class="js-favorite-school-<%= favorite_school.id %>">
+        <% decorated_school = MySchoolListDecorator.decorate(school) %>
+        <span class="fr prm">
+          <%= link_to('Remove', favorite_school_path(favorite_school),
+            {
+              class: "js-delete-favorite-school-#{favorite_school.id}",
+              method: 'delete',
+              remote: true
+            }
+          ) %>
+        </span>
+        <div class="clearfix"></div>
+        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+      </div>
     <% end %>
   </div>
 <% end %>

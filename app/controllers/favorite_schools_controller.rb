@@ -2,6 +2,8 @@ class FavoriteSchoolsController < ApplicationController
   include DeferredActionConcerns
   include FavoriteSchoolsConcerns
 
+  before_action :login_required, only: [:destroy]
+
   def create
     favorite_schools_params = params['favorite_school']
 
@@ -21,6 +23,30 @@ class FavoriteSchoolsController < ApplicationController
       flash_error 'Please log in or register your email to begin tracking your favorite schools.'
       redirect_to signin_url
     end
+  end
+
+  def destroy
+    favorite_school = FavoriteSchool.find(params[:id]) rescue nil
+
+    result = {}
+
+    if favorite_school && @current_user.id == favorite_school.member_id
+      success = !!favorite_school.destroy
+      result[:success] = success
+      if success
+        result[:message] = 'School has been removed from your school list'
+      else
+        result[:message] = 'A problem occurred when removing the school from your school list. Please try again later.'
+      end
+    else
+      result[:message] = 'The given school was not on your school list'
+    end
+
+    # response = "gon.flash_message='#{result[:message]}';"
+    css_selector = ".js-favorite-school-#{favorite_school.id}"
+    response = "$('#{css_selector}').slideUp();"
+
+    render js: response, content_type: 'text/javascript'
   end
 
 end
