@@ -4,6 +4,7 @@ class CompareSchoolsController < ApplicationController
 
   def show
     require_state
+    set_login_redirect
     @params_schools = params[:school_ids].nil? ? [] : params[:school_ids].split(',').uniq
     @state = state_param
 
