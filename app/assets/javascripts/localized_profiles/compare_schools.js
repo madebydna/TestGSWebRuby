@@ -1,5 +1,5 @@
-//ToDo is it ok to add this conditional to prevent js from executing on every page?
-GS.compareSchools = GS.compareSchools || function () {
+GS.compare= GS.compare || {};
+GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var comparedSchools = '.js-comparedSchool';
     var comparedSchoolsList = '.js-comparedSchoolsList';
     var removeComparedSchool = '.js-removeComparedSchool';
@@ -217,10 +217,10 @@ GS.compareSchools = GS.compareSchools || function () {
     return {
         init: init
     };
-}();
+})();
 
 if (gon.pagename == "CompareSchoolsPage") {
     $(document).ready(function () {
-        GS.compareSchools.init();
+        GS.compare.compareSchoolsPage.init();
     });
 }
