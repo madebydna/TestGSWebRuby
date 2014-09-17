@@ -1,9 +1,17 @@
 <div class="ptl tac">
   <% config.opt[:datapoints].each do |datapoints| %>
       <div class="pbm phl">
-        <%= link_to @school.send(datapoints[:method]), class: datapoints[:class], target: datapoints[:target], style: 'width:80%' do %>
-            <span class="vat <%= datapoints[:icon] %> mrs"></span>
-            <%= datapoints[:label] %>
+        <% if datapoints[:form] %>
+            <form <%= @school.send(datapoints[:method]) %></form>
+            <button class="<%= datapoints[:class] %>" style="width:80%">
+              <span class="vat <%= datapoints[:icon] %> mrs"></span>
+              <%= datapoints[:label] %>
+            </button>
+        <% else %>
+            <%= link_to @school.send(datapoints[:method]), class: datapoints[:class], target: datapoints[:target], style: 'width:80%' do %>
+                <span class="vat <%= datapoints[:icon] %> mrs"></span>
+                <%= datapoints[:label] %>
+            <% end %>
         <% end %>
       </div>
   <% end %>
