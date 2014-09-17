@@ -80,7 +80,7 @@ if(gon.pagename == 'signin/new'){
 
 
         //TODO do this using parsley.remote.js after updating parsley version.
-        $('.js-signin-form #email').on('blur', function() {
+        $('#email').on('blur', function() {
             $.ajax({
             type: 'GET',
             url: "/gsr/validations/email_provisional",
