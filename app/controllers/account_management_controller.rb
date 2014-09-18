@@ -6,6 +6,9 @@ class AccountManagementController < ApplicationController
   before_action :login_required
 
   def show
+    @page_name = 'Account management'
+    gon.pagename = 'Account management'
+
     favorite_schools = @current_user.favorite_schools
     favorite_schools_map = favorite_schools.group_by { |s| "#{s.state.downcase}#{s.school_id}"}
     if favorite_schools.present?
@@ -26,6 +29,7 @@ class AccountManagementController < ApplicationController
       @school_to_favorite_school
     end
   end
+
 
 
 end

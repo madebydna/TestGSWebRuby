@@ -186,7 +186,7 @@ module AuthenticationConcerns
       accepts.html do
         if request.xhr?
           store_location(request.referrer)
-          render :js => "window.location='#{new_session_path}';", :content_type => 'text/javascript'
+          render(js: "window.location='#{signin_url}';", content_type: 'text/javascript')
         else
           flash_notice('You must sign in to access the page you were trying to reach')
           store_location

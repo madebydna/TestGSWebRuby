@@ -1,5 +1,7 @@
 class UserController < ApplicationController
 
+  before_action :login_required, only: [:change_password]
+
   def email_available
     email = params[:email]
     result = ! User.exists?(email: email)
@@ -37,6 +39,39 @@ class UserController < ApplicationController
     end
 
     redirect_to signin_url
+  end
+
+  def change_password
+    response = { success: false }
+
+    if params[:password] != params[:confirm_password]
+      render json: {
+        success: false,
+        message: 'The passwords do not match'
+      }
+      return
+    end
+
+    begin
+      @current_user.updating_password = true        
+      @current_user.password = params[:password]
+      success = @current_user.save
+      if success
+        response[:message] = t('actions.account.password_changed')
+      else
+        response[:message] = @current_user.errors.full_messages.first
+      end
+      response[:success] = success
+    rescue => e
+      response = {
+        success: false,
+        message: e.message
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: response}
+    end
   end
 
 end
