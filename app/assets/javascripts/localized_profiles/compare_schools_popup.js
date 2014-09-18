@@ -13,7 +13,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     var popupRemoveSchoolHtmlClass = '.js-compareSchoolsPopupRemoveSchool';
     var popupSubmitSchoolsHtmlClass = '.js-compareSchoolsSubmit';
     var schoolCountHtmlClass = '.js-compareSchoolsCount';
-    var ratingsSpriteHtmlClassRegex = /i-24-new-ratings-(\w{1,2})/;
+    var ratingsSpriteHtmlClassRegex = /i-24-new-ratings-\w{1,2}/;
 
     //show all elements with data objects
     //hide all elements that don't have data objects
@@ -71,8 +71,10 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
             var $schoolRatingElement = $schoolElement.find(popupRatingHtmlClass);
             var $schoolNameElement = $schoolElement.find(popupSchoolNameHtmlClass);
             var previousRatingHtmlClass = $schoolRatingElement.attr('class').match(ratingsSpriteHtmlClassRegex);
+            if (previousRatingHtmlClass instanceof Array) {
+                $schoolRatingElement.removeClass(previousRatingHtmlClass[0]);
+            }
 
-            $schoolRatingElement.removeClass(previousRatingHtmlClass);
             $schoolRatingElement.addClass('i-24-new-ratings-' + schoolObject['rating']);
             $schoolRatingElement.data('schoolrating', schoolObject['rating']);
             $schoolNameElement.text(schoolObject['name']);
