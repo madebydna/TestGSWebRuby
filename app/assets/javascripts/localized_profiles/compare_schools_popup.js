@@ -5,12 +5,15 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     var schoolsList;
     var popupHtmlClass = '.js-compareSchoolsPopup';
     var popupSchoolHtmlClass = '.js-compareSchoolsPopupSchool';
+    var popupSchoolSelectedHtmlClass = '.js-compareSchoolsPopupSchool.js-selected';
+    var popupSchoolUnselectedHtmlClass = '.js-compareSchoolsPopupSchool.js-unselected';
     var popupRatingHtmlClass = '.js-compareSchoolsPopupSchoolRating';
     var popupSchoolNameHtmlClass = '.js-compareSchoolsPopupSchoolName';
     var popupContainerHtmlClass = '.js-compareSchoolsPopupContainer';
     var popupRemoveSchoolHtmlClass = '.js-compareSchoolsPopupRemoveSchool';
     var popupSubmitSchoolsHtmlClass = '.js-compareSchoolsSubmit';
     var schoolCountHtmlClass = '.js-compareSchoolsCount';
+    var ratingsSpriteHtmlClassRegex = /i-24-new-ratings-(\w{1,2})/;
 
     //show all elements with data objects
     //hide all elements that don't have data objects
@@ -51,7 +54,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     var getCompareSchoolsPopupIds = function() {
         var popupIds = [];
 
-        $(popupSchoolHtmlClass).each(function() {
+        $(popupSchoolSelectedHtmlClass).each(function() {
             var id = $(this).data('schoolid').toString();
             if (id.length > 0) {
                 popupIds.push(id)
@@ -62,18 +65,21 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
 
     var addSchool = function(schoolObject) {
         //checks to see if there is space to add school
-        var $schoolElements = $(popupSchoolHtmlClass + '.js-unselected');
+        var $schoolElements = $(popupSchoolUnselectedHtmlClass);
         if ($schoolElements.length > 0) {
             var $schoolElement = $($schoolElements[0]);
             var $schoolRatingElement = $schoolElement.find(popupRatingHtmlClass);
             var $schoolNameElement = $schoolElement.find(popupSchoolNameHtmlClass);
+            var previousRatingHtmlClass = $schoolRatingElement.attr('class').match(ratingsSpriteHtmlClassRegex);
 
+            $schoolRatingElement.removeClass(previousRatingHtmlClass);
             $schoolRatingElement.addClass('i-24-new-ratings-' + schoolObject['rating']);
             $schoolRatingElement.data('schoolrating', schoolObject['rating']);
             $schoolNameElement.text(schoolObject['name']);
             $schoolElement.data('schoolid', schoolObject['id'].toString());
             $schoolElement.show('slow');
             $schoolElement.removeClass('js-unselected');
+            $schoolElement.addClass('js-selected');
         }
     };
 
@@ -82,16 +88,9 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         $(popupSchoolHtmlClass).each(function() {
             var $schoolElement = $(this);
             if ($schoolElement.data('schoolid') == schoolId) {
-                var $schoolRatingElement = $schoolElement.find(popupRatingHtmlClass);
-                var $schoolNameElement = $schoolElement.find(popupSchoolNameHtmlClass);
-                var schoolRating = $schoolRatingElement.data('schoolrating');
-
-                $schoolElement.hide();
+                $schoolElement.hide('slow');
                 $schoolElement.addClass('js-unselected');
-                $schoolElement.data('schoolid', '');
-                $schoolNameElement.text('');
-                $schoolRatingElement.data('schoolrating', '');
-                $schoolRatingElement.removeClass('i-24-new-ratings-' + schoolRating);
+                $schoolElement.removeClass('js-selected');
             }
         });
     };
