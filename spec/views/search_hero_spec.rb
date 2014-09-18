@@ -10,6 +10,7 @@ describe 'shared/_search_hero.html.erb' do
     allow(view).to receive(:sponsor) { nil }
     allow(view).to receive(:params) { { state: 'michigan', city: 'detroit' } }
     allow(view).to receive(:browse_links) { nil }
+    allow(view).to receive(:gs_legacy_url_encode) { |o| o }
   end
 
   context 'on a city page' do
