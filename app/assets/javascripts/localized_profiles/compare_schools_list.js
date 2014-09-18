@@ -5,12 +5,26 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
     var state = '';
 
     var addSchool = function(id, schoolsState, name, rating) {
+        var responseObject = {
+            success: true,
+            errorCode: null //"wrongState"|"alreadyPresent"|"tooManySchools"|"exception"
+        };
         if (isSchoolInListsState(schoolsState) === false) {
-            return false;
+            responseObject['success'] = false;
+            responseObject['errorCode'] = 'wrongState';
+            return responseObject;
         }
 
         if (listContainsSchoolId(id) === true) {
-            return false;
+            responseObject['success'] = false;
+            responseObject['errorCode'] = 'alreadyPresent';
+            return responseObject;
+        }
+
+        if (numberOfSchoolsInList() >= maxNumberOfSchools) {
+            responseObject['success'] = false;
+            responseObject['errorCode'] = 'tooManySchools';
+            return responseObject;
         }
 
         schools.push({
@@ -21,7 +35,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         });
 
         syncDataWithCookies();
-        return true;
+        return responseObject;
     };
 
     //checks to see if school is in same state as state variable. if state variable empty, it uses the schools state
@@ -43,9 +57,10 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
             if (schools[i]['id'] == parseInt(id)) {
                 schools.splice(i, 1);
                 syncDataWithCookies();
-                return false;
+                return true;
             }
         }
+        return false;
     };
 
     var getSchoolIds = function() {
@@ -57,12 +72,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
     };
 
     var listContainsSchoolId = function(id) {
-        for (var i = 0; i < schools.length; i++ ) {
-            if (schools[i]['id'] == parseInt(id)) {
-                return true;
-            }
-        }
-        return false;
+        return getSchoolById(id) != null;
     };
 
     var getState = function() {
@@ -79,7 +89,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
                 return schools[i];
             }
         }
-        return false;
+        return null;
     };
 
     //grabs data from cookies and stores into schools and state variable

@@ -195,7 +195,7 @@ GS.search.results = GS.search.results || (function() {
                     schoolsList.removeSchool(schoolId);
                     toggleGreyCheckMarkSchoolCompareButton(schoolId);
                 } else if (schoolsList.numberOfSchoolsInList() < maxNumberOfSchools) {
-                    var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating);
+                    var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success'];
                     if (schoolAdded === true) {
                         toggleGreenCheckmarkSchoolCompareButton(schoolId);
                     } else {
