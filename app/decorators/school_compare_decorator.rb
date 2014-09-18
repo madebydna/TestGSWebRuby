@@ -11,7 +11,13 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   include FitScoreConcerns
   include SubscriptionConcerns
 
-  NO_DATA_SYMBOL = '?'
+  NO_DATA_EXPLANATION = 'This school has not provided GreatSchools with information about this program/service. Contact the school directly to find out more.'
+  NO_DATA_SYMBOL = "<div class='pr js-compareNoDataWrapper'>
+                      <div class='pointer js-compareNoDataSymbol'>?</div>
+                      <div class='panel pa dn tal pal font-size-xs open-sans js-compareNoDataPopup'>
+                        #{NO_DATA_EXPLANATION}
+                      </div>
+                    </div>".html_safe
   NO_RATING_TEXT = 'NR'
   NO_ETHNICITY_SYMBOL = 'n/a'
 

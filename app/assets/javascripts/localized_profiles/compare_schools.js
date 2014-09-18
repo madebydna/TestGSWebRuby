@@ -15,6 +15,9 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var schoolWidth = 300;
     var currentSchool = 0; //school that is currently on the left most slot of the carousel. max values are 0-3
     var carouselSpeed = 500;
+    var noDataSymbol = '.js-compareNoDataSymbol';
+    var noDataPopupHtmlClass = '.js-compareNoDataPopup';
+    var noDataWrapper = 'js-compareNoDataWrapper';
 
     var adjustHeights = function (className) {
         var maxHeight = 0;
@@ -223,6 +226,48 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         );
     };
 
+    var noDataPopupOffset = function ($popup) {
+        var elementIndex = 0;
+        $popup.closest('tr').children('td').each( function (index, element) {
+            $(element).children().each( function () {
+                if ($(this).hasClass(noDataWrapper)) {
+                    elementIndex = index + 1;
+                }
+            });
+        });
+
+        var numberTableCells = $popup.closest('tr').children('td').length;
+
+        if (elementIndex == numberTableCells) {
+            return '0px';
+        }
+        else {
+            return '-120px';
+        }
+    };
+
+    var setNoDataPopupHandler = function() {
+        var closeMenuHandlerSet = false;
+
+        $(noDataSymbol).on(clickOrTouchType, function() {
+            var $popup = $(this).siblings(noDataPopupHtmlClass);
+            if ($popup.hasClass('dn')) {
+                var rightOffset = noDataPopupOffset($popup);
+                var cssOptions = {width: '150px', 'z-index': 1, right: rightOffset};
+                GS.popup.displayPopup($popup, cssOptions);
+            } else {
+                $popup.addClass('dn');
+            }
+
+            if (closeMenuHandlerSet === false) {
+                GS.popup.closeMenuHandler(noDataPopupHtmlClass);
+                closeMenuHandlerSet = true;
+            }
+        });
+        GS.popup.stopClickAndTouchstartEventPropogation($(noDataSymbol));
+        GS.popup.stopClickAndTouchstartEventPropogation($(noDataPopupHtmlClass));
+    };
+
     var init = function() {
         adjustSchoolResultsHeights();
         setAccordianHandlerForCategories();
@@ -231,6 +276,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         setRemoveSchoolHandler();
         colorPieChartLabels();
         setRemoveActiveStateHandler();
+        setNoDataPopupHandler();
     };
 
 
