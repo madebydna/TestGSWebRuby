@@ -100,6 +100,14 @@ module CompareSchoolsConcerns
         children: [
             { display_type: 'header' },
             {
+                display_type: 'buttons',
+                opt: {
+                    datapoints:[
+                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-envelop', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
+                    ]
+                }
+            },
+            {
                 display_type: 'category',
                 opt: {
                     subtitle: 'Quality',
