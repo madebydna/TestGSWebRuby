@@ -5,10 +5,11 @@
     <div class="row">
   <% else %>
     <div class="row mvl">
-    <hr>
+
   <% end %>
-    <div class='oh'>
-      <% unless important_events.nil? ||  important_events[:events].empty? %>
+  <% unless important_events.nil? ||  important_events[:events].empty? %>
+      <hr>
+      <div class='oh'>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
 
       <h4 class='bottom mtn'>Upcoming events</h4>
@@ -35,10 +36,13 @@
         </div>
       <% end %>
     </div>
-          <% end %>
+    <% end %>
 
     <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
-      <%= render 'event_announcements', announcement: announcement  %>
+      <%= render 'shared/event_announcements', announcement: announcement  %>
+    <% end %>
+    <% if controller.controller_name == 'states' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
+          <%= render 'shared/event_announcements', announcement: announcement  %>
     <% end %>
   </div>
   <% if defined?(community_page) %>

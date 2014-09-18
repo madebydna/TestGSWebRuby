@@ -30,6 +30,7 @@ class StatesController < ApplicationController
       @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
       @show_ads = CollectionConfig.show_ads(configs)
       @important_events = CollectionConfig.city_hub_important_events(configs)
+      @announcement = CollectionConfig.city_hub_announcement(configs)
 
       ad_setTargeting_through_gon
       set_omniture_data('GS:State:Home', 'Home,StateHome')
