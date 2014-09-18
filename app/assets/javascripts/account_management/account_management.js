@@ -23,7 +23,7 @@ GS.accountManagement.changePassword = (function(){
     var formData = $form.serialize();
     $(errorContainerSelector).hide();
 
-    $.post(action, 
+    $.post(action,
       formData
     ).done(function(response) {
       if(response['success'] === true){
