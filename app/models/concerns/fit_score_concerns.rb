@@ -5,6 +5,9 @@ module FitScoreConcerns
     attr_accessor :fit_score, :fit_score_breakdown, :max_fit_score
   end
 
+  STRONG_FIT_CUTOFF = 0.666
+  OK_FIT_CUTOFF = 0.333
+
   # Maps URL key/value pairs to the attribute that can answer the question
   # For example, "school_focus=science_tech" is contained in the attribute instructional_model
   # while "school_focus=career_tech" is contained in the attribute academic_focus
@@ -79,6 +82,18 @@ module FitScoreConcerns
     }.stringify_keys!
   }.stringify_keys!)
 
+  def strong_fit?
+    max_fit_score > 0 && (fit_score / max_fit_score.to_f) >= STRONG_FIT_CUTOFF
+  end
+
+  def ok_fit?
+    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) >= OK_FIT_CUTOFF && (fit_score / max_fit_score.to_f) < STRONG_FIT_CUTOFF
+  end
+
+  def weak_fit?
+    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
+  end
+
   # Increments fit score for each matching key/value pair from params
   def calculate_fit_score!(params)
     @fit_score = 0
@@ -104,6 +119,29 @@ module FitScoreConcerns
     end
   end
 
+  def sort_breakdown_by_match_status!
+    @fit_score_breakdown.sort! do |a, b|
+      if a[:match_status] == b[:match_status]
+        a[:filter] <=> b[:filter]
+      elsif a[:match_status] == :yes
+        -1
+      elsif b[:match_status] == :yes
+        1
+      elsif a[:match_status] == :no
+        -1
+      else
+        1
+      end
+    end unless @fit_score_breakdown.nil?
+  end
+
+  def update_breakdown_labels!(filter_display_map)
+    @fit_score_breakdown.each do |breakdown|
+      filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
+      breakdown[:filter] = filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
+    end unless @fit_score_breakdown.nil? || filter_display_map.nil?
+  end
+
   protected
 
   def matches_soft_filter?(param, value)
@@ -113,10 +151,15 @@ module FitScoreConcerns
     all_responses_for_filter = []
     [*filters].each do |filter|
       filter_values = []
-      if filter && respond_to?(filter) && !send(filter).nil?
-        filter_values = [*send(filter)]
-      elsif filter && respond_to?(:programs) && !programs.nil? && programs.key?(filter.to_s)
-        filter_values = programs[filter.to_s].keys
+      if filter
+        if respond_to?(:programs)
+          if !programs.nil? && programs.key?(filter.to_s)
+            filter_values = programs[filter.to_s].keys
+          end
+        elsif respond_to?(filter)
+          potential_values = try(filter)
+          filter_values = [*potential_values] unless potential_values.nil?
+        end
       end
       [*filter_value_map].each { |val| filter_values.each { |v| return true if v.match(val) } }
       all_responses_for_filter += filter_values

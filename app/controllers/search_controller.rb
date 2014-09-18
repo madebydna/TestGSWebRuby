@@ -171,6 +171,7 @@ class SearchController < ApplicationController
 
     results = search_method.call(search_options)
     calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     sort_by_fit(results[:results], sort) if is_fit_sort
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
@@ -397,7 +398,7 @@ class SearchController < ApplicationController
   end
 
   def soft_filters_params_hash(params_hash)
-    params = params_hash.select do |key|
+    @soft_filter_params ||= params_hash.select do |key|
       SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
     end
   end

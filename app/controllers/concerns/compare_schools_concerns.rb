@@ -72,11 +72,16 @@ module CompareSchoolsConcerns
   def decorated_schools
     decorated_schools = []
     cache_data = school_cache_data
+    filter_display_map = FilterBuilder.new.filter_display_map # for labeling fit score breakdowns
     db_schools = School.on_db(@state).where(id: @params_schools, active: true)
     db_schools.each do |db_school|
       if decorated_schools.size < 4
         decorated_school = SchoolCompareDecorator.new(db_school, context: cache_data[db_school.id.to_i])
-        decorated_school.calculate_fit_score!({})
+        decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
+        unless decorated_school.fit_score_breakdown.nil?
+          decorated_school.update_breakdown_labels! filter_display_map
+          decorated_school.sort_breakdown_by_match_status!
+        end
         decorated_schools << decorated_school
       end
     end
@@ -109,6 +114,13 @@ module CompareSchoolsConcerns
                         }
                     }
                 ]
+            },
+            {
+                display_type: 'fit',
+                opt: {
+                  subtitle: 'Fit criteria',
+                  key: :fit
+                }
             },
             {
                 display_type: 'category',
