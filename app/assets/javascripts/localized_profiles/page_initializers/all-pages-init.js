@@ -30,6 +30,26 @@ $(function() {
       $(this).siblings('.js-save-this-school-form').submit();
   });
 
+  $('.js-save-all-schools-button').on('click', function () {
+      var self = $(this);
+      var school_id = '';
+      var state = '';
+      var first = true;
+      var form =  self.siblings('.js-save-all-schools-form');
+      $.each($('.js-save-this-school-form'), function(){
+          if(!first){
+              school_id += ',';
+              state += ',';
+          }
+          first = false;
+          school_id += $(this).children('#favorite_school_school_id').val();
+          state += $(this).children('#favorite_school_state').val();
+      });
+      form.children('#favorite_school_school_id').val(school_id);
+      form.children('#favorite_school_state').val(state);
+      form.submit();
+  });
+
   $('.js-button-link').on('click', function() {
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
