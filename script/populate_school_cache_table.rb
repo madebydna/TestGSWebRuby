@@ -91,7 +91,9 @@ def self.active_record_to_hash(configuration_map, obj)
       rval_map[val] = obj.send(key)
     elsif key == :test_data_type_display_name
       # Hack until we get ratings into its own tiered class structure
-      rval_map[val] = obj.test_data_type.display_name
+      if obj.test_data_type
+        rval_map[val] = obj.test_data_type.display_name
+      end
     else
       Rails.logger.error "ERROR: Can't find attribute or method named #{key} in #{obj}"
     end
