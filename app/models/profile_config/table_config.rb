@@ -49,7 +49,7 @@ class TableConfig
     columns.each_with_index do |column, index|
       if hash[column['key'].to_sym]
         label = column['label']
-        value = hash[column['key'].to_sym]
+        unformatted_value = value = hash[column['key'].to_sym]
         if value.is_a? Array
           value.map { |value| format(column, value) }
         else
