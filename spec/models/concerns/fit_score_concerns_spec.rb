@@ -307,8 +307,8 @@ describe FitScoreConcerns do
       end
     end
 
-    context 'when there are regexp special characters in user values' do
-      describe 'properly escapes regexp special characters and doesnt raise an error' do
+    context 'properly escapes fit score values when there are regexp special characters and' do
+      describe 'doesnt raise an error' do
         describe 'for class_offerings equals' do
           expect_not_to_raise_error filter_key:'class_offerings', filter_value:'visual_media_arts]', model_key: :arts_visual
           expect_not_to_raise_error filter_key:'class_offerings', filter_value:'performance_arts[]', model_key: :arts_performing_written
@@ -316,6 +316,7 @@ describe FitScoreConcerns do
         end
       end
 
+      #matching values that have escaped values proves that regexp special characters are escaped
       describe 'returns true' do
         describe 'for class_offerings equals' do
           expect_matches_true filter_key:'arts_visual', filter_value:'visual_media_arts]',
@@ -324,9 +325,22 @@ describe FitScoreConcerns do
                               model_key: :arts_visual, model_value: %w(performance_arts[])
           expect_matches_true filter_key:'arts_visual', filter_value:'music[',
                               model_key: :arts_visual, model_value: %w(music[)
+          expect_matches_true filter_key:'arts_visual', filter_value:'/visual_media_arts/',
+                              model_key: :arts_visual, model_value: %w(/visual_media_arts/)
+          expect_matches_true filter_key:'arts_visual', filter_value:'performance_arts...',
+                              model_key: :arts_visual, model_value: %w(performance_arts...)
+          expect_matches_true filter_key:'arts_visual', filter_value:'^music?',
+                              model_key: :arts_visual, model_value: %w(^music?)
+          expect_matches_true filter_key:'arts_visual', filter_value:'{visual_media_arts}',
+                              model_key: :arts_visual, model_value: %w({visual_media_arts})
+          expect_matches_true filter_key:'arts_visual', filter_value:'performance_arts++',
+                              model_key: :arts_visual, model_value: %w(performance_arts++)
+          expect_matches_true filter_key:'arts_visual', filter_value:'mus|ic',
+                              model_key: :arts_visual, model_value: %w(mus|ic)
         end
       end
 
+      #returns nil in the normal case when they are not matched
       describe 'returns nil' do
         describe 'for class_offerings equals' do
           expect_matches_nil filter_key:'class_offerings', filter_value:'[visual_media_arts]', model_key: :arts_visual
