@@ -26,12 +26,15 @@ class TableConfig
     end
   end
 
-  def format(column, value)
+  def round_value(column, value)
     precision = column['precision']
     if precision.present? && value.respond_to?(:round)
       value = value.round precision
     end
+    value
+  end
 
+  def format(column, value)
     format = column['format']
     case format
       when 'percentage', 'percent'
@@ -43,18 +46,18 @@ class TableConfig
 
   def row_values(columns, hash)
 
-    columns.each do |column|
+    columns.each_with_index do |column, index|
       if hash[column['key'].to_sym]
         label = column['label']
-        value = hash[column['key'].to_sym]
-
+        unformatted_value = value = hash[column['key'].to_sym]
         if value.is_a? Array
           value.map { |value| format(column, value) }
         else
+          unformatted_value = value = round_value column, value
           value = format column, value
         end
 
-        yield label, value
+        yield label, value,unformatted_value
       else
         # TODO: clean up
         yield column['label'], column['default'] || 'N/A'

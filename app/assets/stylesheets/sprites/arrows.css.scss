@@ -1,6 +1,6 @@
 .iconx32g {
   display: inline-block;
-  background-image: image-url('icons/arrows-32x32.png');
+  background-image: asset_data_url('icons/arrows-32x32.png');
   width: 32px;
   height: 32px;
 }
@@ -16,7 +16,7 @@
 
 .i-arrow-24 {
   display: inline-block;
-  background-image: image-url('icons/arrows-24x24.png');
+  background-image: asset_data_url('icons/arrows-24x24.png');
   height: 24px;
   width: 24px;
 }

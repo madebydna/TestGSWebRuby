@@ -177,6 +177,87 @@ GS.search.results = GS.search.results || (function() {
         return GS.uri.Uri.getPath();
     };
 
+    var compareSchools = function() {
+        //max number defined in _compare_schools_popup_.html.erb
+        var schoolsList;
+        var popupBox;
+        var maxNumberOfSchools;
+
+        var setCompareSchoolButtonHandler = function() {
+            $('.js-searchResultsContainer').on('click', '.js-compareSchoolButton', function() {
+                var $school = $(this);
+                var schoolId = $school.data('schoolid');
+                var schoolName = $school.data('schoolname');
+                var schoolState = $school.data('schoolstate');
+                var schoolRating = $school.data('schoolrating');
+
+                if (schoolsList.listContainsSchoolId(schoolId) === true) {
+                    schoolsList.removeSchool(schoolId);
+                    toggleGreyCheckMarkSchoolCompareButton(schoolId);
+                } else if (schoolsList.numberOfSchoolsInList() < maxNumberOfSchools) {
+                    var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success'];
+                    if (schoolAdded === true) {
+                        toggleGreenCheckmarkSchoolCompareButton(schoolId);
+                    } else {
+                        //add alert for 'choose only schools from the same state' maybe
+                    }
+                }
+                popupBox.syncPopupBox();
+                popupBox.syncSchoolCount();
+            });
+        };
+
+        var toggleOnCompareSchoolsOnPageLoad = function() {
+            var ids = schoolsList.getSchoolIds();
+
+            for (var i = 0; i < ids.length; i++) {
+                toggleGreenCheckmarkSchoolCompareButton(ids[i])
+            }
+        };
+
+        var toggleGreenCheckmarkSchoolCompareButton = function(id) {
+            var $school = $('#js-compareSchool' + id);
+            //check to see if button is on page
+            if ($school.length > 0) {
+                $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
+                $school.addClass('btn-border-green')
+            }
+        };
+
+        var toggleGreyCheckMarkSchoolCompareButton = function(id) {
+            var $school = $('#js-compareSchool' + id);
+            //check to see if button is on page
+            if ($school.length > 0) {
+                $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
+                $school.removeClass('btn-border-green')
+            }
+        };
+
+        var setRemovePopupBoxSchoolsHandler = function() {
+            popupBox.setCompareSchoolsRemoveSchoolHandler(function(schoolId) {
+                toggleGreyCheckMarkSchoolCompareButton(schoolId);
+            });
+        };
+
+        var init = function() {
+            //schoolslist needs to initialize before popupbox, so popupbox can get the data
+            schoolsList = GS.compare.schoolsList;
+            popupBox = GS.compare.compareSchoolsPopup;
+            maxNumberOfSchools = $('.js-compareSchoolsPopup').data('max-num-of-compare-schools') || 4;
+            schoolsList.init(maxNumberOfSchools);
+            popupBox.init(schoolsList);
+            popupBox.setCompareSchoolsPopupHandler();
+            popupBox.syncSchoolCount();
+            setRemovePopupBoxSchoolsHandler();
+            setCompareSchoolButtonHandler();
+            toggleOnCompareSchoolsOnPageLoad();
+        };
+
+        return {
+            init: init
+        }
+    }();
+
     var init = function() {
         searchFiltersFormSubmissionHandler();
         searchFiltersFormSubmissionMobileHandler();
@@ -186,6 +267,7 @@ GS.search.results = GS.search.results || (function() {
         searchResultFitScoreTogglehandler();
         searchSortingSelectTagHandler();
         setSearchFilterMenuMobileOffsetFromTop();
+        compareSchools.init();
     };
 
     return {
@@ -194,8 +276,8 @@ GS.search.results = GS.search.results || (function() {
     };
 })();
 
-$(document).ready(function() {
-    if($('.js-submitSearchFiltersForm').length > 0){
-        GS.search.results.init();
-    }
-});
+if (gon.pagename == "SearchResultsPage") {
+   $(document).ready(function() {
+       GS.search.results.init();
+   });
+}

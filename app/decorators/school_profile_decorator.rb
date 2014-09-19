@@ -37,13 +37,13 @@ class SchoolProfileDecorator < Draper::Decorator
   end
 
   def uploaded_photo(size = 130)
-    media_hash = school_media_first_hash
-    return unless media_hash.present?
-    image_tag(
-      h.generate_img_path(size, media_hash),
-      class: 'thumbnail-border',
-      alt: "Photo provided by "+name+"."
-    )
+    if school_media_first_hash.present?
+      image_tag(
+        h.school_media_image_path(school.state, size, school_media_first_hash),
+        class: 'thumbnail-border',
+        alt: "Photo provided by "+name+"."
+      )
+    end
   end
 
   def street_view_photo(width = 130, height = 130)

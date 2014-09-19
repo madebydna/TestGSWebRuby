@@ -36,7 +36,7 @@ describe ReviewsCaching::ReviewsSnapshotCacher do
       allow_any_instance_of(ReviewsCaching::ReviewsSnapshotCacher).to receive(:most_recent_reviews).and_return(most_recent_reviews)
       expected = {
           avg_star_rating: review_snapshot.rating_averages.overall.avg_score,
-          num_ratings: review_snapshot.rating_averages.overall.total,
+          num_ratings: review_snapshot.rating_averages.overall.counter,
           num_reviews: review_snapshot.review_filter_totals.all,
           most_recent_reviews: most_recent_reviews,
           star_counts: review_snapshot.star_counts
@@ -50,10 +50,15 @@ describe ReviewsCaching::ReviewsSnapshotCacher do
 
     it 'builds the correct hash' do
 
-      allow_any_instance_of(School).to receive(:reviews).and_return(sample_reviews)
       allow_any_instance_of(ReviewsCaching::ReviewsSnapshotCacher).to receive(:school_reviews).and_return(sample_reviews)
 
       expect(cacher.most_recent_reviews).to eq(most_recent_reviews)
+    end
+
+    it 'gracefully skips schools without reviews' do
+      allow_any_instance_of(ReviewsCaching::ReviewsSnapshotCacher).to receive(:school_reviews).and_return([])
+
+      expect(cacher.most_recent_reviews).to eq([])
     end
   end
 

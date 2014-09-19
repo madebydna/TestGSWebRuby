@@ -5,6 +5,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
     var needsInit = true;
     GS.search.map = GS.search.map || {};
+    GS.search.mapMarkers = GS.search.mapMarkers || [];
 
   var init = function() {
 
@@ -128,7 +129,8 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   markerOptions = {
                       position: position,
                       map: GS.search.map,
-                      title: point.name
+                      title: point.name,
+                      schoolId: point.id
                   };
 
                   if (point['zIndex'] != undefined) {
@@ -184,6 +186,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                           }
                       })(marker, point));
                   }
+                  GS.search.mapMarkers.push(marker);
 
                   // Responsive map sizing and centering
                   var center;
@@ -205,7 +208,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
-              markup += '<div class="pbm notranslate"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
 
               markup += '<div class="col-xs-7 col-sm-8">';
@@ -287,9 +290,18 @@ GS.search.googleMap = GS.search.googleMap || (function() {
      return GS.search.map;
     };
 
+    var removeMapMarkerBySchoolId = function (schoolId) {
+        _(GS.search.mapMarkers).each( function (marker) {
+            if (schoolId == marker.schoolId) {
+                marker.setMap(null);
+            }
+        });
+    };
+
     return {
         init: init,
         getMap: getMap,
+        removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap
     }

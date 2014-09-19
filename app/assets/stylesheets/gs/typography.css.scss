@@ -22,7 +22,7 @@ h6, .h6 { @extend .open-sans_i; }
   border-radius: 3px;
 }
 
-.active-search-sort {
+.gs-active-link {
   color: #007299;
 }
 
@@ -54,6 +54,10 @@ p, a {
 
 .text_fff { color: #ffffff; }
 .text_000 { color: #000000; }
+.text_orange { color: #ff9369; }
+.text_purple { color: #826e92; }
+
+.text_font_large {font-size: 24px;}
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
@@ -103,6 +107,9 @@ p, a {
 .jumbo-header {
   font-size: 60px;
 }
+.jumbo-text {
+  font-size: 80px;
+}
 
 .default_rating_circle {
   width: 72px;
@@ -126,6 +133,10 @@ p, a {
 .bg-light-gray { background-color: $well-bg; }
 
 .tdn { text-decoration: none; }
+
+.fl_small {float: left}
+
+.mrm_small {margin-right: 10px;}
 
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
@@ -161,7 +172,13 @@ p, a {
 
 @media only screen and (max-width: 767px) {
   .jumbo-header {font-size: 32px}
+  .center_when_small {text-align: center}
+  .fl_small {float: none}
+  .text_font_large {font-size: 36px}
+  .mrm_small {margin-right: 0}
 }
+
+
 
 // Translate classes to hide some of googles' images and top gadget bar.
 .goog-te-banner-frame.skiptranslate {display: none !important;}

@@ -14,6 +14,8 @@ LocalizedProfiles::Application.routes.draw do
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
+  get '/gsr/account/', as: :manage_account, to: 'account_management#show'
+
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
@@ -23,7 +25,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
-  get '/gsr/school-comparison-tool/results.page', as: :compare_schools, to: 'compare_schools#show'
+  get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
@@ -108,11 +110,14 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
+  get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
+  get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
+  put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
   resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
-  resources :favorite_schools, except: [:destroy, :delete, :index], path: '/gsr/user/favorites'
+  resources :favorite_schools, except: [:delete, :index], path: '/gsr/user/favorites'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]

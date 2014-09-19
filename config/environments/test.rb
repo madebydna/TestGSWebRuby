@@ -44,6 +44,11 @@ LocalizedProfiles::Application.configure do
     trailing_slash: true
   }
 
+  config.action_controller.default_url_options = {
+    host: 'localhost',
+    trailing_slash: true
+  }
+
   # For setting up Devise.
   config.action_mailer.default_url_options = {
     # host: 'test.host'

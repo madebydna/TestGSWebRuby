@@ -4,7 +4,7 @@ class CitiesController < ApplicationController
   include AdvertisingHelper
 
   before_action :set_city_state
-  before_action :set_hub_params
+  before_action :set_hub
   before_action :set_login_redirect
   before_action :set_footer_cities
   before_action :write_meta_tags, except: [:partner]

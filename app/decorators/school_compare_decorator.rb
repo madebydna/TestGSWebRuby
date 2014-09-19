@@ -1,10 +1,25 @@
 class SchoolCompareDecorator < SchoolProfileDecorator
 
+  include ActionView::Helpers
+
   decorates :school
   delegate_all
 
-  NO_DATA_SYMBOL = '?'
+  attr_accessor :prepped_ratings
+  attr_accessor :prepped_ethnicities
+
+  include FitScoreConcerns
+  include SubscriptionConcerns
+
+  NO_DATA_EXPLANATION = 'This school has not provided GreatSchools with information about this program/service. Contact the school directly to find out more.'
+  NO_DATA_SYMBOL = "<div class='pr js-compareNoDataWrapper'>
+                      <div class='pointer js-compareNoDataSymbol'>?</div>
+                      <div class='panel pa dn tal pal font-size-xs open-sans js-compareNoDataPopup'>
+                        #{NO_DATA_EXPLANATION}
+                      </div>
+                    </div>".html_safe
   NO_RATING_TEXT = 'NR'
+  NO_ETHNICITY_SYMBOL = 'n/a'
 
   def cache_data
     # Draper special initialize key
@@ -19,14 +34,32 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def students_enrolled
     if valid_characteristic_cache(characteristics['Enrollment'])
-      number_with_delimiter(characteristics['Enrollment'].first['school_value'].to_i, delimiter: ',')
+      characteristics['Enrollment'].each do |enrollment|
+        if enrollment['grade'].nil?
+          return number_with_delimiter(enrollment['school_value'].to_i, delimiter: ',')
+        end
+      end
+      NO_DATA_SYMBOL
     else
       NO_DATA_SYMBOL
     end
   end
 
   def ethnicity_data
-    characteristics['Ethnicity'] || {}
+    characteristics['Ethnicity'] || []
+  end
+
+  def school_ethnicity(breakdown)
+    ethnicity_obj = prepped_ethnicities.find { |ethnicity| ethnicity['breakdown'] == breakdown  }
+    if ethnicity_obj && ethnicity_obj['school_value']
+      ethnicity_obj['school_value'].round.to_s + '%'
+    else
+      NO_ETHNICITY_SYMBOL
+    end
+  end
+
+  def ethnicity_label_icon
+    'fl square js-comparePieChartSquare'
   end
 
   def graduates_high_school
@@ -60,6 +93,18 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     end
   end
 
+  def school_page_url
+    h.school_url(school)
+  end
+
+  def zillow_formatted_url
+    h.zillow_url(school)
+  end
+
+  def follow_this_school
+    h.render 'shared/add_to_my_school_list_form', school: school, driver: 'Compare'
+  end
+
   ################################ Reviews ################################
 
   def reviews_snapshot
@@ -74,6 +119,10 @@ class SchoolCompareDecorator < SchoolProfileDecorator
     reviews_snapshot['num_reviews'] || 0
   end
 
+  def num_ratings
+    reviews_snapshot['num_ratings'] || 0
+  end
+
   ################################# Programs ##################################
 
   def programs
@@ -81,13 +130,14 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def transportation
-    case programs['transportation']
-      when 'none'
+    if programs['transportation']
+      if programs['transportation'].keys == ['none']
         'No'
-      when nil
-        NO_DATA_SYMBOL
       else
         'Yes'
+      end
+    else
+      NO_DATA_SYMBOL
     end
   end
 
@@ -100,8 +150,14 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def before_after_care(before_after)
-    if programs['before_after_care'] && programs['before_after_care'].keys.include?(before_after)
-      'Yes'
+    if programs['before_after_care']
+      if programs['before_after_care'].keys.include?(before_after)
+        'Yes'
+      elsif programs['before_after_care'].keys.include?('neither')
+        'No'
+      else
+        NO_DATA_SYMBOL
+      end
     else
       NO_DATA_SYMBOL
     end
@@ -125,40 +181,40 @@ class SchoolCompareDecorator < SchoolProfileDecorator
 
   def num_programs(*program_keys)
     count = 0
+    show_numeric = false
     program_keys.each do |program|
-      count += programs[program].keys.size if programs.key? program
+      if programs.key? program
+        keys = programs[program].keys - ['none']
+        count += keys.size
+        show_numeric = true
+      end
     end
-    count == 0 ? NO_DATA_SYMBOL : count
+    if show_numeric
+      count
+    else
+      NO_DATA_SYMBOL
+    end
   end
 
   ################################# Quality ##################################
 
   def ratings
-    cache_data['ratings'] || {}
+    cache_data['ratings'] || []
   end
 
   def great_schools_rating
-    school_rating_by_data_type_id(174)
+    school_rating_by_name('GreatSchools rating')
   end
 
-  def great_schools_rating_icon
-    rating = school_rating_by_data_type_id(174)
-    rating = 'nr' if rating == NO_RATING_TEXT
-    "<i class=\"iconx24-icons i-24-new-ratings-#{rating}\"></i>".html_safe
+  def great_schools_rating_icon(rating_name=nil)
+    rating = school_rating_by_name(rating_name).to_s.downcase
+    "<i class='iconx24-icons i-24-new-ratings-#{rating}'></i>".html_safe
   end
 
-  def test_scores_rating
-    school_rating_by_data_type_id(164)
-  end
-
-  def student_growth_rating
-    school_rating_by_data_type_id(165)
-  end
-
-  def school_rating_by_data_type_id(data_type_id)
-    overall_ratings_obj = ratings.find { |rating| rating['data_type_id'] == data_type_id  }
-    if overall_ratings_obj
-      overall_ratings_obj['school_value_float'].to_i
+  def school_rating_by_name(rating_name=nil)
+    ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
+    if rating_name && ratings_obj
+      ratings_obj['school_value_float'].to_i
     else
       NO_RATING_TEXT
     end

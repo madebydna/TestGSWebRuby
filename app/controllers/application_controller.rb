@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include SessionConcerns
   include UrlHelper
   include OmnitureConcerns
+  include HubConcerns
 
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
@@ -68,8 +69,12 @@ class ApplicationController < ActionController::Base
     state.gsub! '-', ' ' if state.length > 2
     state_abbreviation = States.abbreviation(state)
     state_abbreviation.downcase! if state_abbreviation.present?
-    params[:state] = state_abbreviation
     state_abbreviation
+  end
+
+  def city_param
+    return if params[:city].nil?
+    params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
   end
 
   def redirect_tab_urls
@@ -110,10 +115,9 @@ class ApplicationController < ActionController::Base
   # Finds school given request param schoolId
   def find_school
     school_id = (params[:schoolId] || params[:school_id]).to_i
-    state = params[:state]
 
     if school_id > 0
-      School.on_db(state.downcase.to_sym).find school_id
+      School.on_db(state_param.downcase.to_sym).find school_id
     else
       nil
     end
@@ -233,12 +237,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_hub_params(state=@state,city=@city)
-    @hub_params = {}
-    @hub_params[:state] = state[:long] if state[:long]
-    @hub_params[:city] = city if city
-  end
-
   def configs
     configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
     Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
@@ -336,7 +334,4 @@ class ApplicationController < ActionController::Base
     gon.ad_set_targeting = set_targeting
   end
 
-  def is_hub_school?(school=@school)
-    school && !school.try(:collection).nil?
-  end
 end

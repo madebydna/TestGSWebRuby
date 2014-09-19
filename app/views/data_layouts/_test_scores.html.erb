@@ -30,8 +30,8 @@
     <% end %>
     <% if @school.show_ads %>
       <% test_slot_name = 'Test_Scores'+(index+1).to_s %>
-      <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: test_slot_name.to_sym, view: :desktop  %>
-      <%= render 'layouts/ad_layer', page: ('School_'+@page_config.name).to_sym, slot: test_slot_name.to_sym, view: :mobile  %>
+      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: test_slot_name.to_sym, view: :desktop  %>
+      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: test_slot_name.to_sym, view: :mobile  %>
     <% end %>
   <% end %>
 <% end %>

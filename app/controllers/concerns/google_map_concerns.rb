@@ -11,7 +11,7 @@ module GoogleMapConcerns
         map_points[:zillowUrl] = zillow_url(school)
         school.latitude.nil? ? next : map_points[:lat] = school.latitude
         school.longitude.nil? ? next : map_points[:lng] = school.longitude
-        map_points[:numReviews] = school.review_count.nil? ? 0 : school.review_count
+        map_points[:numReviews] = (school.review_count.nil? || school.community_rating.nil?) ? 0 : school.review_count
         map_points[:zIndex] = -1 unless school.on_page
         map_points
       rescue NoMethodError => e

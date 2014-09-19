@@ -1,3 +1,7 @@
+<% unless defined?(show_grades_filter) %>
+  <% show_grades_filter = true %>
+<% end %>
+
 <div class="header-bg-color">
   <div class="ptl hidden-xs"></div>
   <div class="row ma limit-width-1200">
@@ -15,14 +19,16 @@
           <label class="dn js-translate-placeholder">Enter city, zip code, address or school name</label>
         </div>
 
-        <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
-          <select class="form-control input-lg font-size-small" id="js-searchGradeLevelFilter" name="grades">
-            <option value="">Select Grade</option>
-            <% @search_bar_display_map[:grades].each do |grades, display_name| %>
-                <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
-            <% end %>
-          </select>
-        </div>
+        <% if show_grades_filter %>
+          <div class='col-xs-6 col-sm-2 col-md-2 col-lg-2 plm prl mbm'>
+            <select class="form-control input-lg font-size-small" id="js-searchGradeLevelFilter" name="grades">
+              <option value="">Select Grade</option>
+              <% @search_bar_display_map[:grades].each do |grades, display_name| %>
+                  <option value=<%=grades.to_s%><%if @params_hash.include?('grades') && @params_hash['grades'] == grades.to_s%> selected<%end%>><%=display_name%></option>
+              <% end %>
+            </select>
+          </div>
+        <% end %>
 
         <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 phm mbm">
           <button type='submit' class=" pull-right btn btn-lg btn-primary">Search</button>

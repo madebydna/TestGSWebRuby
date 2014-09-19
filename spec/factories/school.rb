@@ -142,6 +142,12 @@ FactoryGirl.define do
           school.stub(:collections) { [collection] }
         end
       end
+
+      trait :with_levels do
+        level '9,10,11,12'
+        level_code 'h'
+      end
+
     end
 
     factory :school_with_params, class: School do

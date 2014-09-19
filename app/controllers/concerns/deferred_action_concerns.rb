@@ -3,7 +3,6 @@ module DeferredActionConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
-
   protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(
@@ -70,6 +69,7 @@ module DeferredActionConcerns
     return false if !logged_in? || current_user.provisional?
 
     add_favorite_school params
+    create_subscription params
 
     true
   end

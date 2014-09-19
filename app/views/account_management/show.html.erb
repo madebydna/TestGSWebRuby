@@ -1,0 +1,49 @@
+<%= render 'nav/topnav' %>
+
+<id id="navigation2" class="nav limit-width-1200">
+  <nav class="nav">
+    <ul class="pull-left">
+      <li>
+        <a href="javascript:void();">
+        <%= @current_user.first_name || @current_user.email if logged_in? %>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void();">Account settings</a>
+      </li>
+      <li>
+        <a href="javascript:void();"
+          data-toggle="collapse"
+          data-target=".js-change-password-form-container">Change password</a>
+      </li>
+    </ul>
+  </nav>
+</id>
+
+<div class="limit-width-1200 collapse mtl js-change-password-form-container">
+  <h2>Manage password</h2>
+  <%= render partial: 'shared/account_management/change_password_form' %>
+</div>
+
+<% if @school_to_favorite_school.present? %>
+  <div class="limit-width-1200 mtl">
+    <h2>My School List</h2>
+    <% # favorite_school is the object representing the row in favorite_school table %>
+    <% @school_to_favorite_school.each do |school, favorite_school| %>
+      <div class="js-favorite-school-<%= favorite_school.id %>">
+        <% decorated_school = MySchoolListDecorator.decorate(school) %>
+        <span class="fr prm">
+          <%= link_to('Remove', favorite_school_path(favorite_school),
+            {
+              class: "js-delete-favorite-school-#{favorite_school.id}",
+              method: 'delete',
+              remote: true
+            }
+          ) %>
+        </span>
+        <div class="clearfix"></div>
+        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,11 +1,12 @@
 <%= render partial: 'search/filter_toolbar_mobile' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
-<%= render 'nav/search_bar_guided_search'%>
+<%= render 'nav/search_bar_guided_search', locals: { show_grades_filter: true } %>
 <%= render 'filter_toolbar' %>
 
 <% if @schools.present? %>
     <%= render 'search/google_maps', schools: @map_schools %>
+    <%= render 'number_schools_found' %>
     <%= render 'sorting_toolbar' %>
     <%= render partial: 'search/search_results', schools: @schools%>
     <%= render partial: 'pagination_toolbar' %>

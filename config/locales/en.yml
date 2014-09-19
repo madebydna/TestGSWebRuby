@@ -13,6 +13,9 @@ en:
               blank: 'Please enter an email address.'
               taken: 'Sorry, but the email you chose has already been taken.'
               format: 'Please enter a valid email address.'
+            plain_text_password:
+              too_short: 'Your password must be between 6 and 14 characters.'
+              too_long: 'Your password must be between 6 and 14 characters.'
         school_rating:
           blank: "%{attribute} can't be blank."
           attributes:
@@ -30,6 +33,7 @@ en:
         format: 'Please enter a valid email address.'
         nonexistent: 'Sorry, we do not have an account with that email address.'
         provisional: 'Before logging in, you must verify your email by clicking the link in the email we sent you.'
+        provisional_resend_email: 'Before logging in, you must verify your email by clicking the link in the email we sent you. <a href="%{verification_email_url}">Click here</a> to resend the email.'
       password:
         invalid: 'The email or password you entered is invalid. Please try again or <a href="%{join_url}">create an account</a>.'
         invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
@@ -51,8 +55,10 @@ en:
       email_verified: 'Your email address has been verified. Welcome to GreatSchools!'
       created_via_facebook: 'Great, we''ve finished setting up your account! From now on you can log in using Facebook.'
       facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
+      password_changed: 'Your password has been changed.'
     my_school_list:
       school_added: "%{school_name} has been saved to your school list."
+      school_added_subscribed: "Great! We’ll send you timely updates about the schools you follow. You can download and save your list from your account."
     subscription:
       default:
         login_required: 'Please log in or register your email in order to receive updates.'

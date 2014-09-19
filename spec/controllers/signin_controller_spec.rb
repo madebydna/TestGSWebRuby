@@ -195,12 +195,29 @@ describe SigninController do
   describe '#authenticate' do
     let(:user) { instance_double(User) }
 
+    it 'should return an existing provisional user and error message to verify email' do
+      expect(User).to receive(:with_email).and_return(user)
+      allow(user).to receive(:provisional?).and_return(true)
+      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
+      expect(controller.send :authenticate).to eq([ user, 'Before logging in, you must verify your email by clicking the link in the email we sent you.' ])
+    end
+
     it 'should return an existing user if one exists and it matches given password' do
       expect(User).to receive(:with_email).and_return(user)
+      expect(user).to receive(:provisional?).and_return(false)
       expect(user).to receive(:password_is?).and_return(true)
       expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, nil ])
     end
+
+    it 'should return an existing user and error message if the passwords do not match' do
+      expect(User).to receive(:with_email).and_return(user)
+      expect(user).to receive(:provisional?).and_return(false)
+      expect(user).to receive(:password_is?).and_return(false)
+      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
+      expect(controller.send :authenticate).to eq([ user, "The email or password you entered is invalid. Please try again or <a href=\"http://localhost/join/\">create an account</a>." ])
+    end
+
   end
 
   describe '#facebook_connect' do

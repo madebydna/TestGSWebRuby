@@ -79,6 +79,25 @@ if(gon.pagename == 'signin/new'){
         });
 
 
+        //TODO do this using parsley.remote.js after updating parsley version.
+        $('#email').on('blur', function() {
+            $.ajax({
+            type: 'GET',
+            url: "/gsr/validations/email_provisional",
+            data: {email: $('.js-signin-form #email').val()},
+            dataType: 'json',
+            async: true
+        }).done(function (data) {
+
+            $('.js-signin-email-errors').empty();
+            $('.js-signin-email-errors').closest(".form-group").removeClass('has-error');
+            if(data.error_msg !== ''){
+              $('.js-signin-email-errors').closest(".form-group").addClass('has-error');
+              $('.js-signin-email-errors').append("<div class='parsley-error-list'><div class='required' style='display: block;'>"+data.error_msg+"</div></div>")
+            }
+          });
+        });
+
     });
 
 }

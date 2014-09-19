@@ -64,8 +64,7 @@ class SigninController < ApplicationController
       unless already_redirecting?
         city_hub_page = nil
         if cookies[:redirect_uri]
-          #Todo Remove encode_squere_brackets and URI.decode altogether. Regression test needed
-          city_hub_page = encode_square_brackets(URI.decode(cookies[:redirect_uri]))
+          city_hub_page = cookies[:redirect_uri]
           delete_cookie :redirect_uri
         end
         redirect_to (overview_page_for_last_school || city_hub_page || (should_attempt_login ? home_url : join_url))
@@ -116,8 +115,7 @@ class SigninController < ApplicationController
     unless already_redirecting?
       redirect_uri =nil
       if cookies[:redirect_uri]
-        #Todo Remove encode_squere_brackets and URI.decode altogether. Regression test needed
-        redirect_uri = encode_square_brackets(URI.decode(cookies[:redirect_uri]))
+        redirect_uri = cookies[:redirect_uri]
         delete_cookie :redirect_uri
       end
       redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
@@ -177,11 +175,9 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.password_is? params[:password]
-        # no op
-      elsif existing_user.provisional?
+      if existing_user.provisional?
         error = t('forms.errors.email.provisional')
-      else
+      elsif !(existing_user.password_is? params[:password])
         error = t('forms.errors.password.invalid', join_url: join_url).html_safe
       end
     else

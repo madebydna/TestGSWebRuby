@@ -10,14 +10,14 @@ class EspResponsesCaching::EspResponsesCacher < Cacher
 
   def build_hash_for_cache
     hash = {}
-    query_results.map do |data_set_and_value|
-      hash.deep_merge!(build_hash_for_data_set(data_set_and_value))
+    query_results.each do |data_set_and_value|
+      hash.deep_merge!(build_esp_response_hash(data_set_and_value))
     end
 
     hash
   end
 
-  def build_hash_for_data_set(esp_response)
+  def build_esp_response_hash(esp_response)
     {
         esp_response.response_key => {
             esp_response.response_value => {

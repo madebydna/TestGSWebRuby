@@ -1,0 +1,82 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+<% data = TableData.new data %>
+
+<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
+
+<a name="<%= category.code_name %>"></a>
+
+    <%= render "shared/section_header", category_placement:category_placement %>
+
+    <div class="row">
+      <% category_placement.table_config.columns_to_print(data).each do |column| %>
+          <% if column['display_type'] == :data_and_header %>
+              <div class="col-sm-5 col-xs-4 center_when_small" style="border-bottom: 2px solid #DDDDDD">
+                <% if column['icon_css_class'].present? %>
+                    <span class="iconx32-college_ready i-32-<%=column['icon_css_class']%> mrm_small"></span>
+                <% end %>
+                <span class="visible-xs font-size-xs"></span>
+                <span class="font-size-large vab"><%= column['label'] %></span>
+                </div>
+            <% else %>
+              <div class="col-sm-2 col-xs-4 phl">
+                </div>
+              <% end %>
+          <% end %>
+      </div>
+
+    <% columns_to_print = data_config.columns_to_print(data) %>
+
+    <% row_index=0 %>
+    <% data.rows.each do |hash| %>
+        <div class="row pvm">
+          <% col_index=0 %>
+          <% data_config.row_values(columns_to_print, hash) do |label, value, unformatted_value| %>
+              <% div_class="col-sm-5 col-xs-4 center_when_small" %>
+              <% if col_index == 1 %>
+                  <% div_class="col-sm-2 col-xs-4 tac phl" %>
+              <% end %>
+
+              <div class="<%= div_class%>">
+                <% if col_index != 1 %>
+                    <% human_width = 220*unformatted_value/100 %>
+                    <% human_width_grey = 220 - human_width %>
+                    <% human_width_grey_offset = human_width%22 %>
+
+                    <div class="clearfix">
+                      <% if col_index == 0 %>
+                          <span class="ptm mts fl_small mrl text_orange text_font_large open-sans_sb"><%= value.to_s if value.present?%></span>
+                          <span class='iconx22-human i-22-orange-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+
+                      <% elsif col_index == 2%>
+                          <span class="ptm mts fl_small mrl text_purple text_font_large open-sans_sb "><%= value.to_s if value.present?%></span>
+                          <span class='iconx22-human i-22-purple-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                      <% end %>
+                      <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
+                    </div>
+                <% else %>
+                    <div class="pts pbm"><%= value.to_s.upcase if value.present?%></div>
+                    <% if row_index != (data.rows.size-1 )%>
+                        <div class="iconx24-popular_icons i-24-arrow"></div>
+                    <% end %>
+                <% end %>
+
+                <% col_index = col_index + 1 %>
+                </div>
+          <% end %>
+
+        </div>
+        <% row_index = row_index + 1 %>
+
+    <% end %>
+
+
+
+<% end %>
+<br />
+<br />

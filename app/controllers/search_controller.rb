@@ -144,7 +144,9 @@ class SearchController < ApplicationController
     number_of_results = @results_offset + MAX_RESULTS_FOR_MAP
     number_of_results = (MAX_RESULTS_FOR_MAP * 2) if number_of_results > (MAX_RESULTS_FOR_MAP*2)
     search_options = {number_of_results: number_of_results, offset: offset}
+
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
+
     (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
     @sort_name = if sort.nil?
                    if search_by_location?
@@ -169,10 +171,12 @@ class SearchController < ApplicationController
 
     results = search_method.call(search_options)
     calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     sort_by_fit(results[:results], sort) if is_fit_sort
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
 
+    omniture_filter_list_values(filters, @params_hash)
   end
 
   def sort_by_fit(school_results, direction)
@@ -341,6 +345,8 @@ class SearchController < ApplicationController
     gon.omniture_evars ||= {}
     gon.omniture_evars['search_page_number'] = page_number if page_number
     gon.omniture_evars['search_page_type'] = search_type if search_type
+    gon.omniture_lists ||= {}
+    gon.omniture_lists['search_filters'] = @filter_values.join(',')
   end
 
   def ad_setTargeting_through_gon
@@ -353,11 +359,11 @@ class SearchController < ApplicationController
   end
 
   def calculate_fit_score(results, params_hash)
-    params = params_hash.select do |key|
-      SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
-    end
+
+    params = soft_filters_params_hash(params_hash)
+
     results.each do |result|
-      result.calculate_fit_score(params)
+      result.calculate_fit_score!(params)
     end
   end
 
@@ -390,4 +396,60 @@ class SearchController < ApplicationController
       }
     }
   end
+
+  def soft_filters_params_hash(params_hash)
+    @soft_filter_params ||= params_hash.select do |key|
+      SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
+    end
+  end
+
+  def omniture_soft_filters_hash(params_hash)
+    params = soft_filters_params_hash(params_hash)
+    omniture_filter_values_prepend(params)
+  end
+
+  def omniture_filter_values_prepend(params)
+
+    filters_hash = {
+        'boys_sports' => 'boys_',
+        'girls_sports' => 'girls_',
+        'beforeAfterCare' => 'care_',
+        'class_offerings' => 'class_',
+        'school_focus' => 'school_focus_'
+    }
+
+    if params
+      transformed_params = params.inject({}) do
+      |hash,(key, value)|
+        if filters_hash.include?(key)
+          hash[key] = [*value].collect { |e| filters_hash[key] + e}
+        else
+          hash[key] = value
+        end
+        hash
+      end
+      @filter_values += transformed_params.values.flatten
+    end
+  end
+
+  def omniture_hard_filter(filters, params_hash)
+    if filters
+      @filter_values += filters.values.flatten
+    end
+  end
+
+  def omniture_distance_filter(params_hash)
+    if params_hash['distance']
+      @filter_values << params_hash['distance'] + '_miles'
+    end
+  end
+
+  def omniture_filter_list_values(filters, params_hash)
+
+    @filter_values = []
+    omniture_soft_filters_hash(params_hash)
+    omniture_hard_filter(filters, params_hash)
+    omniture_distance_filter(params_hash)
+  end
+
 end

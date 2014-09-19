@@ -32,7 +32,7 @@ describe SchoolCache do
       end
 
       it 'should insert ratings for the school' do
-        system("rails runner script/populate_school_cache_table.rb ratings ca 1")
+        system("rails runner script/populate_school_cache_table.rb ca:ratings:1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
@@ -49,7 +49,7 @@ describe SchoolCache do
     context 'when a school does not have ratings data' do
 
       it 'should not insert ratings for the school' do
-        system("rails runner script/populate_school_cache_table.rb ratings ca 1")
+        system("rails runner script/populate_school_cache_table.rb ca:ratings:1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
@@ -63,7 +63,7 @@ describe SchoolCache do
       let!(:test_data_set) { FactoryGirl.create(:test_data_set, data_type_id: 2, display_target: 'ratings')}
 
       it 'should not insert ratings for the school' do
-        system("rails runner script/populate_school_cache_table.rb ratings ca 1")
+        system("rails runner script/populate_school_cache_table.rb ca:ratings:1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
@@ -104,7 +104,7 @@ describe SchoolCache do
       end
 
       it 'should insert test scores for the school' do
-        system("rails runner script/populate_school_cache_table.rb test_scores ca 1")
+        system("rails runner script/populate_school_cache_table.rb ca:test_scores:1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
@@ -140,7 +140,7 @@ describe SchoolCache do
       it 'should insert proficiency_band with the cached data' do
         test_data_set.proficiency_band_id = @proficiency_band.id
         test_data_set.save
-        system("rails runner script/populate_school_cache_table.rb test_scores ca 1")
+        system("rails runner script/populate_school_cache_table.rb ca:test_scores:1")
 
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 

@@ -6,4 +6,12 @@ FactoryGirl.define do
     value :value
     updated Time.now
   end
+
+  factory :cached_ratings, class: SchoolCache do
+    name 'ratings'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value :value
+    updated Time.now
+  end
 end

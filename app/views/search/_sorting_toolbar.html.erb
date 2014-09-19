@@ -1,23 +1,34 @@
 <div class="limit-width-1200 row phm pbl">
   <div class="col-xs-12 clearfix">
-    <%= render 'number_schools_found' %>
-    <div class="hidden-xs pts fr">
-      <span>Sort by:</span>
-      <span>
-        <% ['relevance','rating','distance','fit'].each do |sort_name| %>
-            <% next if sort_name == 'distance' && !search_by_location? %>
-            <% next if sort_name == 'relevance' && !search_by_name? %>
-            <% if @sort_name == sort_name %>
-                <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
-            <% else %>
-                <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.titleize%></a>
-            <% end %>
-        <% end %>
-      </span>
+    <div class="hidden-xs fl">
+      <div class="ptm">
+        <span>Sort by:</span>
+        <span>
+          <% ['relevance','rating','distance','fit'].each do |sort_name| %>
+              <% next if sort_name == 'distance' && !search_by_location? %>
+              <% next if sort_name == 'relevance' && !search_by_name? %>
+              <% if @sort_name == sort_name %>
+                  <span class="plm open-sans_sb gs-active-link"><%=sort_name.titleize%></span>
+              <% else %>
+                  <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.titleize%></a>
+              <% end %>
+          <% end %>
+        </span>
+      </div>
     </div>
+
+    <div class="hidden-xs fr">
+      <div class="pr js-compareSchoolsPopupContainer">
+        <button class="btn btn-lg btn-default js-compareSchoolsPopupButton">
+          Compare (<span class="js-compareSchoolsCount">0</span>/4)
+        </button>
+        <%= render 'search/compare_schools_popup' %>
+      </div>
+    </div>
+
   </div>
 
-  <div class="visible-xs col-xs-6 pbl ptl">
+  <div class="visible-xs col-xs-6 pbl ptm">
     <select class="form-control js-searchSortingSelectTag">
       <% sort_types = ['relevance','rating','distance','fit'] - [@sort_name] %>
       <option value="<%= @sort_name %>" selected>Sort by: <%= @sort_name.titleize %></option>

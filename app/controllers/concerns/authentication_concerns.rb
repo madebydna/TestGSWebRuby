@@ -177,6 +177,24 @@ module AuthenticationConcerns
     return user, error
   end
 
-  
+  def login_required
+    logged_in? && authorized? ? true : access_denied
+  end
+
+  def access_denied
+    respond_to do |accepts|
+      accepts.html do
+        if request.xhr?
+          store_location(request.referrer)
+          render(js: "window.location='#{signin_url}';", content_type: 'text/javascript')
+        else
+          flash_notice('You must sign in to access the page you were trying to reach')
+          store_location
+          redirect_to signin_path
+        end
+      end
+    end
+    false
+  end
 
 end

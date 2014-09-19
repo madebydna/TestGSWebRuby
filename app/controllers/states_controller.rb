@@ -2,17 +2,18 @@ class StatesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include AdvertisingHelper
+  include HubConcerns
 
-  before_filter :set_city_state
-  before_filter :set_hub_params
-  before_filter :set_login_redirect
-  before_filter :set_footer_cities
-  before_filter :write_meta_tags, only: [:show, :community]
+  before_action :set_city_state
+  before_action :set_hub
+  before_action :set_login_redirect
+  before_action :set_footer_cities
+  before_action :write_meta_tags, only: [:show, :community]
 
   def show
     hub_city_mapping = mapping
     if hub_city_mapping.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
+      state_home
     else
       collection_id = hub_city_mapping.collection_id
 
@@ -29,10 +30,16 @@ class StatesController < ApplicationController
       @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
       @show_ads = CollectionConfig.show_ads(configs)
       @important_events = CollectionConfig.city_hub_important_events(configs)
+      @announcement = CollectionConfig.city_hub_announcement(configs)
 
       ad_setTargeting_through_gon
       set_omniture_data('GS:State:Home', 'Home,StateHome')
     end
+  end
+
+  def state_home
+    @params_hash = parse_array_query_string(request.query_string)
+    render 'states/state_home'
   end
 
   def choosing_schools

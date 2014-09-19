@@ -1,14 +1,7 @@
-<% school_page_path = school_path(@school) %>
-<% school_reviews_page_path = school_page_path + 'reviews/' %>
-<% school_quality_page_path = school_page_path + 'quality/' %>
+<% school_page_path = school_url(@school) %>
 
 <div class="mam">
   <% #ToDo make own decorator and do not use draper %>
-  <% decorated_school = SchoolCompareDecorator.decorate(@school) %>
-  <div class="js-schoolName full-width"><%= link_to "#{@school.name}", school_page_path, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
-  <div class="ptm full-width"><%= decorated_school.decorated_school_type %> | <%= decorated_school.process_level %></div>
-  <div class="ptm full-width">
-    <span class="prs vam"><%= draw_stars_16 decorated_school.star_rating%></span>
-    <%= link_to pluralize(decorated_school.num_reviews, 'review', 'reviews'), school_reviews_page_path, class: 'font-size-small' %>
-  </div>
+  <div class="js-schoolName full-width notranslate"><%= link_to "#{@school.name}", school_page_path, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
+  <div class="ptm full-width js-gradeLevel"><%= @school.decorated_school_type %> | <%= @school.process_level %></div>
 </div>

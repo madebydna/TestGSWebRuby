@@ -1,4 +1,4 @@
-<% version_with_ad = false || params[:gs_nearbyschoolswithad] # temporary param for testing %>
+<% version_with_ad = @show_ads %>
 <% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
 <% if version_with_ad %>
   <% neighbor_sizes = [
@@ -26,18 +26,13 @@
     <% neighbor = neighbors[0] %>
     <%= div_tag(class: 'pbm', sizes: neighbor_sizes.first.first) do %>
       <div class="pam" style="width:100%;">
-        <div class="partner-carousel-image center-block" style="width:300px;">
-          <%= neighbor.link_to_overview do %>
-            <div class="ma oh ">
-                <%= neighbor.street_view_photo(300,250) %>
-            </div>
-          <% end %>
-        </div>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :desktop, show_ad_text: false  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :mobile, show_ad_text: false  %>
       </div>
     <% end %>
   <% end %>
-  <div class="limit-width-1200 clearfix pam">
-    <div class="clearfix mbm">
+  <div class="limit-width-1200 clearfix">
+    <div class="clearfix mbm plm">
       <hr />
       <div class="fl">
           <h2 class="mvn">Nearby schools</h2>

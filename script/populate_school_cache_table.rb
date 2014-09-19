@@ -89,6 +89,11 @@ def self.active_record_to_hash(configuration_map, obj)
       rval_map[val] = obj[key]
     elsif obj.respond_to?(key)
       rval_map[val] = obj.send(key)
+    elsif key == :test_data_type_display_name
+      # Hack until we get ratings into its own tiered class structure
+      if obj.test_data_type
+        rval_map[val] = obj.test_data_type.display_name
+      end
     else
       Rails.logger.error "ERROR: Can't find attribute or method named #{key} in #{obj}"
     end
@@ -107,10 +112,11 @@ def self.ratings_cache_for_school(school)
 
   if results_obj_array.present?
     config_map = {
-      :data_type_id => 'data_type_id',
-      :year => 'year',
-      :school_value_text => 'school_value_text',
-      :school_value_float => 'school_value_float'
+      data_type_id: 'data_type_id',
+      year: 'year',
+      school_value_text: 'school_value_text',
+      school_value_float: 'school_value_float',
+      test_data_type_display_name: 'name'
     }
     results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
     # Prune out empty data sets

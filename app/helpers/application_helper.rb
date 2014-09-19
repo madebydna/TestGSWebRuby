@@ -94,15 +94,16 @@ module ApplicationHelper
   end
 
   # This is used to include all the media assets for a school to the lightbox.
-  def include_lightbox_media (media_hash)
+  def include_lightbox_media (school)
+    media_hash = school.school_media
     r_str = ''
     if media_hash
       media_hash.each { | x  |
         if media_hash
-          r_str <<  '<a href="' + generate_img_path("500", x["hash"])  + '">' + "\n"
+          r_str <<  '<a href="' + school_media_image_path(school.state, "500", x["hash"])  + '">' + "\n"
           r_str <<  '<img '
-          r_str <<  'src="' + generate_img_path("130", x["hash"]) + '",' + "\n"
-          r_str <<  'data-big="'+  generate_img_path("500", x["hash"]) +'"'  + "\n"
+          r_str <<  'src="' + school_media_image_path(school.state, "130", x["hash"]) + '",' + "\n"
+          r_str <<  'data-big="'+  school_media_image_path(school.state, "500", x["hash"]) +'"'  + "\n"
           r_str <<  'data-title=""' + "\n"
           r_str <<  'data-description="" >'  + "\n"
           r_str <<  '</a>' + "\n"
@@ -190,7 +191,7 @@ module ApplicationHelper
     zillow << 'http://www.zillow.com/'
     zillow << States.abbreviation(school.state).upcase
     zillow << '-'+school.zipcode
-    zillow << '?cbpartner=GreatSchools&utm_source=GreatSchools&utm_medium=referral&utm_campaign='
+    zillow << '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign='
     zillow << (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
   end
 
@@ -202,7 +203,8 @@ module ApplicationHelper
             'details' => 'localdetails',
             'city_browse' => 'schoolsearch',
             'district_browse' => 'schoolsearch',
-            'search' => 'schoolsearch'
+            'search' => 'schoolsearch',
+            'show' => 'schoolsearch'
         }
 
   end
@@ -233,8 +235,8 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav(school, hub_params)
-    TopNav.new(school, hub_params, cookies)
+  def topnav(school, hub = nil)
+    TopNav.new(school, cookies, hub)
   end
 
   def search_by_location?

@@ -14,7 +14,7 @@ class SchoolProfileController < SchoolController
 
   before_action :ad_setTargeting_through_gon
   before_action :set_city_state
-  before_action :set_hub_params, if: :is_hub_school?
+  before_action :set_hub
   before_action :enable_ads
   before_action :set_breadcrumbs
   # after_filter :set_last_modified_date
@@ -37,6 +37,7 @@ class SchoolProfileController < SchoolController
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @ad_definition = Advertising.new
+    @ad_page_name = ad_page_name
     set_last_modified_date
   end
 
@@ -178,6 +179,10 @@ class SchoolProfileController < SchoolController
     helper_name << "#{action_name}_" if action_name != 'overview'
     helper_name << 'path'
     canonical_path = self.send helper_name.to_sym, @school
+  end
+
+  def ad_page_name
+    ('School_' + @page_config.name).to_sym
   end
   
 end

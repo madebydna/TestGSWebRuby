@@ -49,6 +49,12 @@ class Advertising
         mobile:{
           dimensions:[300,250]
         }
+      },
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
+          dimensions:[300,250]
+        }
       }
     }
 
@@ -109,6 +115,12 @@ class Advertising
         },
         mobile:{
           dimensions:[320,60]
+        }
+      },
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
+          dimensions:[300,250]
         }
       }
     }
@@ -192,6 +204,12 @@ class Advertising
         mobile:{
           dimensions:[300,250]
         }
+      },
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
+          dimensions:[300,250]
+        }
       }
     }
 
@@ -269,6 +287,12 @@ class Advertising
           dimensions:[728,90]
         },
         mobile:{
+          dimensions:[300,250]
+        }
+      },
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
           dimensions:[300,250]
         }
       }

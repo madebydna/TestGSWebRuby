@@ -1,18 +1,32 @@
-<% #ToDo Temporarily using Bootstrap, but will probably need to calculate by hand how many schools to show based on the screen width %>
 <div class="header-bg-color full-width">
-  <div class="full-width limit-width-1200 row">
-    <%lam = lambda do |configs| %>
-      <% [*configs].each do |config| %>
-        <%= render layout: "compare_schools/school_description_modules/#{config.display_type.to_s}", locals: {config: config} do %>
-          <% lam.call(config.children) %>
-        <% end %>
-      <% end %>
-    <% end %>
+  <div class="limit-width-1200 ptl hidden js-compareSchoolsCarouselNavigation clearfix">
+    <a class="pull-left pll js-compareSchoolsPrev"><div class="btn btn-default"><span class="carousel-navigation-arrows">&lsaquo;</span> Prev</div></a>
+    <a class="pull-right prl js-compareSchoolsNext"><div class="btn btn-default">Next <span class="carousel-navigation-arrows">&rsaquo;</span></div></a>
+  </div>
 
-    <% @schools.each_with_index do | school, index| %>
-      <% @school = school %>
-      <% @index = index %>
-      <% lam.call(@school_compare_config) %>
-    <% end %>
+  <div class="full-width" style="clear: both;">
+    <div class="limit-width-1200">
+      <div class='mha oh js-comparedSchoolsListContainer'>
+        <div class="js-comparedSchoolsList" style="width:1200px">
+          <%lam = lambda do |configs| %>
+            <% [*configs].each do |config| %>
+              <%= render layout: "compare_schools/school_description_modules/#{config.display_type.to_s}", locals: {config: config} do %>
+                <% lam.call(config.children) %>
+              <% end %>
+            <% end %>
+          <% end %>
+          <% @schools.each_with_index do | school, index| %>
+            <% @school = school %>
+            <% @index = index %>
+            <% lam.call(@school_compare_config) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="limit-width-1200 hidden js-compareSchoolsCarouselNavigation pbl clearfix">
+    <a class="pull-left pll js-compareSchoolsPrev"><div class="btn btn-default"><span class="carousel-navigation-arrows">&lsaquo;</span> Prev</div></a>
+    <a class="pull-right prl js-compareSchoolsNext"><div class="btn btn-default">Next <span class="carousel-navigation-arrows">&rsaquo;</span></div></a>
   </div>
 </div>
