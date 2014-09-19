@@ -14,72 +14,64 @@
 
     <%= render "shared/section_header", category_placement:category_placement %>
 
-    <table class="table table-striped no-more-tables">
-      <thead>
-      <tr>
+    <div class="row">
         <% category_placement.table_config.columns_to_print(data).each do |column| %>
             <% if column['display_type'] == :data_and_header %>
-                <th><%= column['label'] %>
-                  <% if column['icon_css_class'].present? %>
-                    <div style="width:60px; height: 55px;background-color: #000000"/>
-                  <% end %>
-                </th>
+                <div class="col-sm-5 col-xs-4 center_when_small" style="border-bottom: 2px solid #DDDDDD">
+                <% if column['icon_css_class'].present? %>
+                    <span class="iconx32-college_ready i-32-<%=column['icon_css_class']%> mrm_small"></span>
+                <% end %>
+                  <span class="visible-xs font-size-xs"></span>
+                  <span class="font-size-large vab"><%= column['label'] %></span>
+                </div>
             <% else %>
-                <th>&nbsp;</th>
+              <div class="col-sm-2 col-xs-4 phl">
+              </div>
             <% end %>
         <% end %>
-      </tr>
-      </thead>
-
-      <tbody>
-      <% columns_to_print = data_config.columns_to_print(data) %>
-
-
-      <% data.rows.each do |hash| %>
-          <%= hash[:icon_css_class] %>
-          <%= hash %>
-          <tr>
-            <% index=0 %>
-            <% data_config.row_values(columns_to_print, hash) do |label, value, icon_css_class| %>
-                <td data-title="<% label %>">
-
-                  <% if icon_css_class.present?%>
-                      <div style='width:60px; height: 55px;background-color: #000000'/>
-                  <% end %>
-                  <% if value.is_a? Array %>
-                      <% value.each do |val|%>
-                      <% if val.present?  %>
-                          <%= val.to_s %>
-                          <br/>
-                      <% end %>
-                      <% end %>
-                  <% else %>
-                    <%= value.to_s if value.present?%> <% index %>
-                   <% end %>
-                  <% if index > 0 %>
-                      <span class='iconx16-stars i-16-orange-star' style="width:<% hash[:school_value]%>px; background-repeat: repeat-x;"/>
-                  <% end %>
-                  <% index = index + 1 %>
-                </td>
-            <% end %>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-<% end %>
-
-<%= render partial: 'about_this_data',
-           locals: {
-                   unique_id: category_placement.id,
-                   descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
-           }
-%>
-
-<% if @page_config.root_placements_with_data.present? &&
-        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
-        (@school.footnotes_for_category category: category).present? %>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
-      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
     </div>
+
+    <% columns_to_print = data_config.columns_to_print(data) %>
+
+    <% data.rows.each do |hash| %>
+        <div class="row pvm">
+        <% index=0 %>
+        <% data_config.row_values(columns_to_print, hash) do |label, value, unformatted_value| %>
+            <% if index != 1 %>
+                <div class="col-sm-5 col-xs-4 center_when_small">
+            <% else %>
+                <div class="col-sm-2 col-xs-4 tac phl">
+            <% end %>
+
+
+            <% if index != 1 %>
+                <% human_width = 220*unformatted_value/100 %>
+                <% human_width_grey = 220 - human_width %>
+                <% human_width_grey_offset = human_width%22 %>
+
+                <div class="clearfix">
+                <% if index == 0 %>
+
+                      <span class="ptm mts fl_small mrl text_orange text_font_large open-sans_sb"><%= value.to_s if value.present?%></span>
+                      <span class='iconx22-human i-22-orange-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                <% elsif index == 2%>
+
+                      <span class="ptm mts fl_small mrl text_purple text_font_large open-sans_sb "><%= value.to_s if value.present?%></span>
+                      <span class='iconx22-human i-22-purple-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                <% end %>
+                <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
+                </div>
+            <% else %>
+                  <div class="pts pbm"><%= value.to_s.upcase if value.present?%></div>
+                   <div class="iconx24-popular_icons i-24-arrow"></div>
+            <% end %>
+            <% index = index + 1 %>
+            </div>
+        <% end %>
+        </div>
+    <% end %>
+
+
+
 <% end %>
+

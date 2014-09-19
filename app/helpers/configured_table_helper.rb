@@ -1,11 +1,7 @@
 module ConfiguredTableHelper
 
-  def td(label, value, icon_css_class=nil)
+  def td(label, value)
     output = "<td data-title=\"#{label}\">"
-
-    if icon_css_class.present?
-      output << "<div style='width:60px; height: 55px;background-color: #000000'/>"
-    end
 
     if value.is_a? Array
       value.each do |val|

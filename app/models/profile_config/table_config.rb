@@ -26,12 +26,15 @@ class TableConfig
     end
   end
 
-  def format(column, value)
+  def round_value(column, value)
     precision = column['precision']
     if precision.present? && value.respond_to?(:round)
       value = value.round precision
     end
+    value
+  end
 
+  def format(column, value)
     format = column['format']
     case format
       when 'percentage', 'percent'
@@ -50,15 +53,11 @@ class TableConfig
         if value.is_a? Array
           value.map { |value| format(column, value) }
         else
+          unformatted_value = value = round_value column, value
           value = format column, value
         end
 
-        #only display the image for the first
-        if index == 0 && hash[:icon_css_class].present?
-          yield label, value, hash[:icon_css_class]
-        else
-          yield label, value
-        end
+        yield label, value,unformatted_value
       else
         # TODO: clean up
         yield column['label'], column['default'] || 'N/A'
