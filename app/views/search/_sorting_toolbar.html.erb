@@ -8,7 +8,7 @@
               <% next if sort_name == 'distance' && !search_by_location? %>
               <% next if sort_name == 'relevance' && !search_by_name? %>
               <% if @sort_name == sort_name %>
-                  <span class="plm open-sans_sb active-search-sort"><%=sort_name.titleize%></span>
+                  <span class="plm open-sans_sb gs-active-link"><%=sort_name.titleize%></span>
               <% else %>
                   <a href="javascript:void(0)" class="plm" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.titleize%></a>
               <% end %>
