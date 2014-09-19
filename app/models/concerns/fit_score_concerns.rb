@@ -147,7 +147,7 @@ module FitScoreConcerns
   def matches_soft_filter?(param, value)
     # Default return value of SOFT_FILTER_FIELD_MAP and SOFT_FILTER_VALUE_MAP set to empty hash if no key found.
     filters = SOFT_FILTER_FIELD_MAP[param][value] || param
-    filter_value_map = SOFT_FILTER_VALUE_MAP[param][value] || /^#{value}$/
+    filter_value_map = SOFT_FILTER_VALUE_MAP[param][value] || /^#{Regexp.escape(value)}$/
     all_responses_for_filter = []
     [*filters].each do |filter|
       filter_values = []

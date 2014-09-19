@@ -42,6 +42,12 @@ def expect_matches_nil(options)
   end
 end
 
+def expect_not_to_raise_error(options)
+  it "#{options[:filter_value]}" do
+    expect { model.send('matches_soft_filter?', options[:filter_key], options[:filter_value]) }.not_to raise_error
+  end
+end
+
 def fit_score_model_assertions(options)
   it "sets max_fit to #{options[:max_fit]}" do
     expect(model.max_fit_score).to eq(options[:max_fit])
@@ -298,6 +304,44 @@ describe FitScoreConcerns do
       end
       describe 'for before_after_care equals' do
         expect_matches_nil filter_key:'before_after_care', filter_value:'before', model_key: :before_after_care
+      end
+    end
+
+    context 'when there are regexp special characters in user values' do
+      describe 'properly escapes regexp special characters and doesnt raise an error' do
+        describe 'for class_offerings equals' do
+          expect_not_to_raise_error filter_key:'class_offerings', filter_value:'visual_media_arts]', model_key: :arts_visual
+          expect_not_to_raise_error filter_key:'class_offerings', filter_value:'performance_arts[]', model_key: :arts_performing_written
+          expect_not_to_raise_error filter_key:'class_offerings', filter_value:'music[', model_key: :arts_music
+        end
+      end
+
+      describe 'returns true' do
+        describe 'for class_offerings equals' do
+          expect_matches_true filter_key:'arts_visual', filter_value:'visual_media_arts]',
+                              model_key: :arts_visual, model_value: %w(visual_media_arts])
+          expect_matches_true filter_key:'arts_visual', filter_value:'performance_arts[]',
+                              model_key: :arts_visual, model_value: %w(performance_arts[])
+          expect_matches_true filter_key:'arts_visual', filter_value:'music[',
+                              model_key: :arts_visual, model_value: %w(music[)
+        end
+      end
+
+      describe 'returns nil' do
+        describe 'for class_offerings equals' do
+          expect_matches_nil filter_key:'class_offerings', filter_value:'[visual_media_arts]', model_key: :arts_visual
+          expect_matches_nil filter_key:'class_offerings', filter_value:'/performance_arts/', model_key: :arts_performing_written
+          expect_matches_nil filter_key:'class_offerings', filter_value:'{music}', model_key: :arts_music
+        end
+        describe 'for school_focus equals' do
+          expect_matches_nil filter_key:'school_focus', filter_value:'college_focus...', model_key: :instructional_model
+        end
+        describe 'for boys_sports equals' do
+          expect_matches_nil filter_key:'boys_sports', filter_value:'^basketball?', model_key: :boys_sports
+        end
+        describe 'for before_after_care equals' do
+          expect_matches_nil filter_key:'before_after_care', filter_value:'before++', model_key: :before_after_care
+        end
       end
     end
   end
