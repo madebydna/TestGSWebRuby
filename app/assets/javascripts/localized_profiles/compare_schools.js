@@ -75,6 +75,8 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             } else {
                 hideNextPrevNavigation();
             }
+        } else {
+            hideNextPrevNavigation();
         }
     };
 
@@ -90,15 +92,11 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
     var showNextPrevNavigation = function() {
         hideNextPrevWhenAtBeginningOrEnd();
-        $(carouselNavigation).each(function() {
-            $(this).addClass('hidden-lg').removeClass('hidden');
-        });
+        $(carouselNavigation).show().removeClass('hidden');
     };
 
     var hideNextPrevNavigation = function() {
-        $(carouselNavigation).each(function() {
-            $(this).hide().removeClass('hidden-lg');
-        })
+        $(carouselNavigation).hide().addClass('hidden');
     };
 
     var hideNextPrevWhenAtBeginningOrEnd = function() {
@@ -108,15 +106,15 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         var endOfCarousel = (currentSchool + numberOfSchoolsToShow === numberOfSchools);
 
         if (beginningOfCarousel) {
-            $(prevSchoolButton).each(function() { $(this).addClass('hidden') })
+            $(prevSchoolButton).addClass('hidden');
         } else {
-            $(prevSchoolButton).each(function() { $(this).removeClass('hidden') })
+            $(prevSchoolButton).removeClass('hidden');
         }
 
         if (endOfCarousel) {
-            $(nextSchoolButton).each(function() { $(this).addClass('hidden') })
+            $(nextSchoolButton).addClass('hidden');
         } else {
-            $(nextSchoolButton).each(function() { $(this).removeClass('hidden') })
+            $(nextSchoolButton).removeClass('hidden');
         }
     };
 
