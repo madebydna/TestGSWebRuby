@@ -3,7 +3,7 @@ def all_cache_keys
 end
 
 def nightly_states
-  ['de']
+  ['de','in']
 end
 
 def usage
