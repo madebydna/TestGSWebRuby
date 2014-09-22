@@ -9,7 +9,7 @@ Array.prototype.contains = function(obj) {
 };
 
 GS.search = GS.search || {};
-GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
+GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr) {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
@@ -17,8 +17,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
+    var state = state_abbr || 'de';
 
-    var init = function(state) {
+    var init = function() {
         $('.js-findByLocationForm').submit(function() {
             var input = $(this).find(findByLocationSelector)[0];
             var valid = validateField(input, input['defaultValue']);
@@ -65,8 +66,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = schoolResultsSearchSelector;
-//                    ToDo Hard coded byName search to Delaware
-                    GS.uri.Uri.addHiddenFieldsToForm({state: 'DE'}, this);
+                    GS.uri.Uri.addHiddenFieldsToForm({state: state}, this);
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
@@ -212,10 +212,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             return remoteMatch.url == localMatch.url;
         },
         remote: {
-            url: '/gsr/search/suggest/school?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/school?query=%QUERY&state=' + state,
             filter: function(data) {
                 schools = $(GS.search.schoolSearchForm.schools)[0];
-                cacheList = schools.cacheList;
+                var cacheList = schools.cacheList;
                 for (var i = 0; i < data.length; i++) {
                     if (cacheList[data[i].url] == null) {
                         schools.add(data[i]);
@@ -237,10 +237,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         },
         sorter: autocompleteSort,
         remote: {
-            url: '/gsr/search/suggest/city?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/city?query=%QUERY&state=' + state,
             filter: function(data) {
                 cities = $(GS.search.schoolSearchForm.cities)[0];
-                cacheList = cities.cacheList;
+                var cacheList = cities.cacheList;
                 for (var i = 0; i < data.length; i++) {
                     if (cacheList[data[i].url] == null) {
                         cities.add(data[i]);
@@ -262,10 +262,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         },
         sorter: autocompleteSort,
         remote: {
-            url: '/gsr/search/suggest/district?query=%QUERY&state=Delaware',
+            url: '/gsr/search/suggest/district?query=%QUERY&state=' + state,
             filter: function(data) {
                 districts = $(GS.search.schoolSearchForm.districts)[0];
-                cacheList = districts.cacheList;
+                var cacheList = districts.cacheList;
                 for (var i = 0; i < data.length; i++) {
                     if (cacheList[data[i].url] == null) {
                         districts.add(data[i]);
@@ -290,7 +290,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             source: cities.ttAdapter(),
 
             templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{city_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{city_name}}, ' + state.toUpperCase() + '</strong></p></a>')
             }
         },
         {
@@ -298,7 +298,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'district_name',
             source: districts.ttAdapter(),
             templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, DE</strong></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, ' + state.toUpperCase() + '</strong></p></a>')
             }
         },
         {
@@ -306,7 +306,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             displayKey: 'school_name',
             source: schools.ttAdapter(),
             templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, DE</span></p></a>')
+                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, ' + state.toUpperCase() + '</span></p></a>')
             }
         })
         .on('typeahead:selected', function(event, suggestion, dataset) {
@@ -810,7 +810,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         showFiltersMenuOnLoad: showFiltersMenuOnLoad,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate
     };
-})();
+})(gon.state_abbr);
 
 $(document).ready(function() {
   GS.search.schoolSearchForm.init();

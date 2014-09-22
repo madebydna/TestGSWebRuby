@@ -52,6 +52,7 @@ class SearchController < ApplicationController
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
     render 'search_page'
   end
 
@@ -80,6 +81,7 @@ class SearchController < ApplicationController
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
     render 'search_page'
   end
 
@@ -106,6 +108,7 @@ class SearchController < ApplicationController
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
     gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
   end
 
   def by_name
@@ -126,6 +129,7 @@ class SearchController < ApplicationController
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
     render 'search_page'
   end
 
@@ -229,7 +233,7 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
+        school_url = "/#{gs_legacy_url_city_district_browse_encode(@state[:long])}/#{gs_legacy_url_city_district_browse_encode(school_search_result['city_name'])}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
         response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
