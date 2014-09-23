@@ -770,6 +770,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             geocodeResult['country'] != 'US') {
                             geocodeResult = null;
                         }
+                        if ( geocodeResult['state'] != state.toUpperCase()){
+                            geocodeResult = null;
+                        }
                         if (geocodeResult != null) {
                             GS_geocodeResults.push(geocodeResult);
                         }
