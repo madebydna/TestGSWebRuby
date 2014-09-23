@@ -1,0 +1,4 @@
+<% config.opt ||= {} %>
+<% config.opt[:datapoints] = @ratings_datapoints %>
+
+<%= render 'compare_schools/school_description_modules/line_data', config: config %>

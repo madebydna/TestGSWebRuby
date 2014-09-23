@@ -115,12 +115,7 @@ module CompareSchoolsConcerns
                 },
                 children: [
                     { display_type: 'label', opt: { label: 'Rating'} },
-                    {
-                        display_type: 'line_data',
-                        opt: {
-                            datapoints: @ratings_datapoints
-                        }
-                    }
+                    { display_type: 'quality/ratings' }
                 ]
             },
             {
@@ -176,10 +171,9 @@ module CompareSchoolsConcerns
                     { display_type: 'label', opt: { label: 'Student Diversity'} },
                     { display_type: 'details/compare_pie_chart' },
                     {
-                        display_type: 'line_data',
+                        display_type: 'details/ethnicities',
                         opt: {
-                            table_name: 'js-comparePieChartTable',
-                            datapoints: @ethnicity_datapoints
+                            table_name: 'js-comparePieChartTable'
                         }
                     }
                 ]
