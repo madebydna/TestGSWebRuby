@@ -77,6 +77,47 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             }
         });
 
+        try {
+            if (window.location.search && GS.uri.Uri.getFromQueryString("assignedSchool")) {
+                var lat = GS.uri.Uri.getFromQueryString("lat");
+                var lon = GS.uri.Uri.getFromQueryString("lon");
+                var grade = GS.uri.Uri.getFromQueryString("grades");
+                if (lat && lon) {
+                    var data = {lat: lat, lon: lon};
+                    if (grade) {
+                        if (grade == 'k' || grade == '1' || grade == '2' || grade == '3' || grade == '4' || grade == '5') {
+                            data.level = 'e';
+                        } else if (grade == '6' || grade == '7' || grade == '8') {
+                            data.level = 'm';
+                        } else if (grade == '9' || grade == '10' || grade == '11' || grade == '12') {
+                            data.level = 'h';
+                        }
+                    }
+                    jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
+                        if (data && data.results && data.results.length) {
+                            for (var x=0; x < data.results.length; x++) {
+                                var schoolWrapper = data.results[x];
+                                var level = 'elementary';
+                                if (schoolWrapper.level == 'm') {
+                                    level = 'middle';
+                                } else if (schoolWrapper.level == 'h') {
+                                    level = 'high';
+                                }
+                                if (schoolWrapper.schools && schoolWrapper.schools.length) {
+                                    var school = schoolWrapper.schools[0];
+                                    if (school.name) {
+                                        alert("We think your assigned " + level + " school is " + school.name);
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                }
+            }
+        } catch (e) {
+            // ignore. This is prototype code
+        }
     };
 
 
