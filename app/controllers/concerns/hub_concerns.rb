@@ -42,7 +42,7 @@ module HubConcerns
   end
 
   def determine_hub(school = @school)
-    current_hub = hub_matching_current_url || hub_matching_school(school)
+    current_hub =   hub_matching_school(school) ||hub_matching_current_url
     if current_hub.present?
       reset_hub_cookies(current_hub)
       return current_hub
