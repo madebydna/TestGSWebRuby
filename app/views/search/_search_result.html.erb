@@ -1,6 +1,9 @@
 <% school_page_url = school_url(school) %>
 <% school_reviews_page_url = school_page_url + 'reviews/' %>
 <% school_quality_page_url = school_page_url + 'quality/' %>
+<% if search_by_location? %>
+  <% distance = decorated_school.distance #converting to 2 decimal places %>
+<% end %>
 
 <div class="pam">
   <div class="row search-result-border prm bg-white">
@@ -34,7 +37,7 @@
               <div class="fl"><%= decorated_school.process_level %></div>
               <% if search_by_location? %>
                 <div class="visible-xs phm fl">|</div>
-                <div class="visible-xs fl"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+                <div class="visible-xs fl"><%= distance %> miles</div>
               <% end %>
             </div>
           </div>
@@ -46,7 +49,7 @@
             <!-- Distance -->
             <div class="hidden-xs col-sm-4 mtl mbm font-size-xs">
               <div class="iconx24-icons i-24-new-grey_map_pin ma db vam"></div>
-              <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
+              <span class="tac db"><%= distance %> miles</span>
             </div>
             <% end%>
             <!-- GS Rating -->
@@ -96,7 +99,7 @@
       <% end %>
       </div>
       <% if search_by_location? %>
-        <div class="fr"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+        <div class="fr"><%= distance %> miles</div>
       <% end %>
     </div>
   </div>

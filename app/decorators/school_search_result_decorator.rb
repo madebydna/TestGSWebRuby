@@ -2,6 +2,8 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
   #Might want to refactor this out of SchoolProfileDecorator
   #if some SchoolProfileDecoratorCode is unused
 
+  include NumberUtils
+
   #ToDo change to decorates :SchoolSearchResult when code is pushed
   decorates :school_search_result
   delegate_all
@@ -14,6 +16,10 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
     else
       'Private'
     end
+  end
+
+  def distance
+    faster_number_with_precision(school_search_result.distance, 2) #distance with precision of 2
   end
 
   def google_map_data_point
