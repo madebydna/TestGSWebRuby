@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/20140912-16x16_sprite.png");
+  background-image: asset_data_url("icons/140922-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -164,4 +164,7 @@
 
 .i-16-active-x-circle {
   background-position: -431px -32px;
+}
+.i-16-back-to-top {
+  background-position: -447px 0px;
 }

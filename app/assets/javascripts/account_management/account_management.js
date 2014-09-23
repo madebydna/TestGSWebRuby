@@ -42,9 +42,3 @@ GS.accountManagement.changePassword = (function(){
     init: init
   };
 })();
-
-if (gon.pagename == "Account management") {
-  $(function() {
-    GS.accountManagement.changePassword.init();
-  });
-}

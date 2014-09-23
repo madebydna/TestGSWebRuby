@@ -185,6 +185,26 @@ body { padding-top: 50px }
 
 .brm { border-radius: 10px; }
 
+.back-to-top {
+  position: fixed;
+  bottom: 2em;
+  right: 0px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: rgba(160, 160, 160, 0.80);
+  font-size: 16px;
+  padding: 1em;
+  display: none;
+  border-radius: 4px 0 0 4px;
+  z-index: 10;
+}
+
+.back-to-top:hover {
+  background-color: rgba(135, 135, 135, 1.00);
+  color: #CCCCCC;
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 990px) {
   .content-centered {
     margin-top: 0;
@@ -214,3 +234,4 @@ body { padding-top: 50px }
 .search-result-border:hover{
   border: 1px solid $brand-primary;
 }
+

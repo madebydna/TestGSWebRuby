@@ -853,16 +853,20 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     };
 })(gon.state_abbr);
 
-$(document).ready(function() {
-  GS.search.schoolSearchForm.init();
-  GS.search.schoolSearchForm.setupTabs();
-  GS.search.schoolSearchForm.cities.initialize();
-  GS.search.schoolSearchForm.cities.cacheList = {};
-  GS.search.schoolSearchForm.districts.initialize();
-  GS.search.schoolSearchForm.districts.cacheList = {};
-  GS.search.schoolSearchForm.schools.initialize();
-  GS.search.schoolSearchForm.schools.cacheList = {};
-  GS.search.schoolSearchForm.attachAutocomplete();
-  GS.search.schoolSearchForm.showFiltersMenuOnLoad();
-  GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
+GS.search.init = (function() {
+  var self=this;
+  if(typeof self.need_init==='undefined'){
+    self.need_init='search already initialized';
+    GS.search.schoolSearchForm.init();
+    GS.search.schoolSearchForm.setupTabs();
+    GS.search.schoolSearchForm.cities.initialize();
+    GS.search.schoolSearchForm.cities.cacheList = {};
+    GS.search.schoolSearchForm.districts.initialize();
+    GS.search.schoolSearchForm.districts.cacheList = {};
+    GS.search.schoolSearchForm.schools.initialize();
+    GS.search.schoolSearchForm.schools.cacheList = {};
+    GS.search.schoolSearchForm.attachAutocomplete();
+    GS.search.schoolSearchForm.showFiltersMenuOnLoad();
+    GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
+  }
 });
