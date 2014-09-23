@@ -105,8 +105,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                                 }
                                 if (schoolWrapper.schools && schoolWrapper.schools.length) {
                                     var school = schoolWrapper.schools[0];
-                                    if (school.name) {
-                                        alert("We think your assigned " + level + " school is " + school.name);
+                                    if (school.name && school.id) {
+                                        try {
+                                            GS.search.googleMap.setAssignedSchool(school.id, level);
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
                                     }
                                 }
                             }

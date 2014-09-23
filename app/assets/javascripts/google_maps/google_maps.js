@@ -208,6 +208,9 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
+              if (point.assignedLevel) {
+                  markup += '<div>We think this is your assigned ' + point.assignedLevel + ' school</div>';
+              }
               markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
 
@@ -298,12 +301,23 @@ GS.search.googleMap = GS.search.googleMap || (function() {
         });
     };
 
+    var setAssignedSchool = function (schoolId, level) {
+        if (gon.map_points) {
+            _(gon.map_points).each(function (point) {
+                if (point.id == schoolId) {
+                    point.assignedLevel = level;
+                }
+            });
+        }
+    };
+
     return {
         init: init,
         getMap: getMap,
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
-        initAndShowMap : initAndShowMap
+        initAndShowMap : initAndShowMap,
+        setAssignedSchool: setAssignedSchool
     }
 
 })();
