@@ -13,7 +13,7 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
   def build_hash_for_cache
     hash = {}
     query_results.each do |characteristic|
-      next if configured_characteristics_data_types.key?(characteristic.data_type_id) && !characteristic.data_set_with_values.has_config_entry?
+      next unless config_entry_test(characteristic)
       hash[characteristic.label] = [] unless hash.key? characteristic.label
       additional_data = build_hash_for_data_set(characteristic)
       hash[characteristic.label] << additional_data if additional_data
@@ -39,6 +39,16 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
 
   def data_keys
     [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average]
+  end
+
+  def config_entry_test(characteristic)
+    if configured_characteristics_data_types.key?(characteristic.data_type_id) &&
+        characteristic.breakdown_id &&
+        !characteristic.data_set_with_values.has_config_entry?
+      false
+    else
+      true
+    end
   end
 
 end
