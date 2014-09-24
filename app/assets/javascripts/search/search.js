@@ -678,7 +678,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
 
 GS.search.init = (function() {
   var self=this;
-  console.log("init search");
   if(typeof self.need_init==='undefined'){
     self.need_init='search already initialized';
     GS.search.schoolSearchForm.init();
