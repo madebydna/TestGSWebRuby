@@ -44,6 +44,14 @@ class TableConfig
     end
   end
 
+  # rounds and formats the value, based on how the given column is configured
+  def column_value(column, value)
+    if value.is_a?(Numeric)
+      value = round_value(column, value)
+    end
+    round_value(column, value)
+  end
+
   def row_values(columns, hash)
 
     columns.each_with_index do |column, index|

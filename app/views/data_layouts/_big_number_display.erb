@@ -20,7 +20,7 @@
       <%= div_tag(sizes: sizes ) do %>
         <% label = hash[columns_to_print.first['key'].to_sym] %>
         <% value = hash[columns_to_print.second['key'].to_sym] %>
-        <% value = data_config.format(columns_to_print[1], value) %>
+        <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
         <div class="tac">
           <span class="jumbo-text"><%= value %></span>
         </div>
@@ -29,7 +29,8 @@
           <% columns_to_print[2..-1].each do |column| %>
             <% key = column['key'].to_sym %>
             <% if hash.has_key?(key) %>
-              </br><%= column['label'] %>: <%= hash[key] %>
+              <% value = data_config.column_value(column, hash[key]) %>
+              </br><%= column['label'] %>: <%= value %>
             <% end %>
           <% end %>
         </p>
