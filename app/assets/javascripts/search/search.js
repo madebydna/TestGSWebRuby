@@ -860,10 +860,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     };
 })(gon.state_abbr);
 
-GS.search.init = (function() {
-  var self=this;
-  if(typeof self.need_init==='undefined'){
-    self.need_init='search already initialized';
+$(document).ready(function() {
     GS.search.schoolSearchForm.init();
     GS.search.schoolSearchForm.setupTabs();
     GS.search.schoolSearchForm.cities.initialize();
@@ -875,5 +872,4 @@ GS.search.init = (function() {
     GS.search.schoolSearchForm.attachAutocomplete();
     GS.search.schoolSearchForm.showFiltersMenuOnLoad();
     GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
-  }
 });
