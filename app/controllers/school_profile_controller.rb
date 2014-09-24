@@ -154,7 +154,7 @@ class SchoolProfileController < SchoolController
       set_targeting['type'] = format_ad_setTargeting(@school.type)  # private, public, charter
       set_targeting['zipcode'] = format_ad_setTargeting(@school.zipcode)
       set_targeting['district_id'] = format_ad_setTargeting(@school.district.present? ? @school.district.FIPScounty : "")
-      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
+      set_targeting['template'] = format_ad_setTargeting("SchoolProf")
 
       gon.ad_set_targeting = set_targeting
     end
