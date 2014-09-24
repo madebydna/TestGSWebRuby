@@ -32,9 +32,3 @@ GS.hubs.clearLocalUserCookies = function() {
     $.removeCookie(localUserCookieNames[i], opts);
   }
 }
-
-$(document).ready(function() {
-  $('.js-clear-local-cookies-link').each(function() {
-    $(this).click(GS.hubs.clearLocalUserCookies);
-  });
-});

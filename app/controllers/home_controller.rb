@@ -15,7 +15,7 @@ class HomeController < ApplicationController
       keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
 
     set_omniture_pagename
-
+    gon.pagename = "Homepage"
   end
 
   def set_omniture_pagename
