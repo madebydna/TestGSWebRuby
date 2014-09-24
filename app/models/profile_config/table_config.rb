@@ -38,7 +38,7 @@ class TableConfig
     format = column['format']
     case format
       when 'percentage', 'percent'
-        value = "#{value}%"
+        "#{value}%"
       else
         value
     end

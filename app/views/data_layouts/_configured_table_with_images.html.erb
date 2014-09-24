@@ -36,7 +36,7 @@
     <% data.rows.each do |hash| %>
         <div class="row pvm">
           <% col_index=0 %>
-          <% data_config.row_values(columns_to_print, hash) do |label, value, unformatted_value| %>
+          <% data_config.row_values(columns_to_print, hash) do |label, value, raw_value| %>
               <% div_class="col-sm-5 col-xs-4 center_when_small" %>
               <% if col_index == 1 %>
                   <% div_class="col-sm-2 col-xs-4 tac phl" %>
@@ -44,7 +44,9 @@
 
               <div class="<%= div_class%>">
                 <% if col_index != 1 %>
-                    <% human_width = 220*unformatted_value/100 %>
+
+                    <% raw_value = raw_value || 0 %>
+                    <% human_width =  220*raw_value/100%>
                     <% human_width_grey = 220 - human_width %>
                     <% human_width_grey_offset = human_width%22 %>
 
@@ -75,8 +77,21 @@
 
     <% end %>
 
-
-
 <% end %>
 <br />
 <br />
+
+<%= render partial: 'about_this_data',
+           locals: {
+                   unique_id: category_placement.id,
+                   descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+           }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+        (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+    </div>
+<% end %>
