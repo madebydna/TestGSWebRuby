@@ -212,9 +212,9 @@ class SchoolCompareDecorator < SchoolProfileDecorator
   end
 
   def school_rating_by_name(rating_name=nil)
-    ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
+    ratings_obj = prepped_ratings.find { |rating| rating.keys.first == rating_name  }
     if rating_name && ratings_obj
-      ratings_obj['school_value_float'].to_i
+      ratings_obj[rating_name]
     else
       NO_RATING_TEXT
     end
