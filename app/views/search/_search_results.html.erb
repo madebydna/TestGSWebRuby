@@ -2,6 +2,9 @@
   <div class="ptm hidden-xs"></div>
   <div class="row ptm pbm">
     <div class="full-width ">
+      <%= render 'assigned_school_result', level: 'Elementary' %>
+      <%= render 'assigned_school_result', level: 'Middle' %>
+      <%= render 'assigned_school_result', level: 'High' %>
       <% @schools.each do |school| %>
         <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
         <% @school = decorated_school %>

@@ -9,6 +9,151 @@ Array.prototype.contains = function(obj) {
 };
 
 GS.search = GS.search || {};
+
+GS.search.assignedSchools = GS.search.assignedSchools || (function() {
+    var shouldGetAssignedSchools = function() {
+        if (gon.pagename != 'SearchResultsPage') {
+            return false;
+        }
+
+        var pageNumber = GS.uri.Uri.getFromQueryString('page');
+        if (pageNumber && pageNumber != '1') {
+            return false;
+        }
+
+        var isSearchSpecificEnough = false;
+
+        // TODO: Replace this prototype logic with the real thing (tm)
+        if (GS.uri.Uri.getFromQueryString("assignedSchool")) {
+            isSearchSpecificEnough = true;
+        }
+        return isSearchSpecificEnough;
+    };
+
+    var getAssignedSchools = function() {
+        var lat = GS.uri.Uri.getFromQueryString("lat");
+        var lon = GS.uri.Uri.getFromQueryString("lon");
+        var grade = GS.uri.Uri.getFromQueryString("grades");
+        if (!lat || !lon) {
+            return;
+        }
+        var data = {lat: lat, lon: lon};
+        var gradeToLevelMap = {
+            'k': 'e', '1': 'e', '2': 'e', '3': 'e', '4': 'e', '5': 'e',
+            '6': 'm', '7': 'm', '8': 'm',
+            '9': 'h', '10': 'h', '11': 'h', '12': 'h'
+        };
+        if (grade && gradeToLevelMap[grade]) {
+            data.level = gradeToLevelMap[grade];
+        }
+        jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
+            if (data && data.results && data.results.length) {
+                for (var x=0; x < data.results.length; x++) {
+                    var schoolWrapper = data.results[x];
+                    if (schoolWrapper.schools && schoolWrapper.schools.length) {
+                        try {
+                            setAssignedSchool(schoolWrapper.level, schoolWrapper.schools[0]);
+                        } catch (e) {
+                            // on any error just ignore it and move on
+                        }
+                    } else {
+                        setNoAssignedSchools();
+                    }
+                }
+            }
+        });
+    };
+
+    var setAssignedSchool = function(levelCode, school) {
+        if (school.id) {
+            setAssignedSchoolInMap(levelCode, school.id);
+            setAssignedSchoolInList(levelCode, school);
+        }
+    };
+
+    var setAssignedSchoolInMap = function(levelCode, schoolId) {
+        var level = 'elementary';
+        if (levelCode == 'm') {
+            level = 'middle';
+        } else if (levelCode == 'h') {
+            level = 'high';
+        }
+        GS.search.googleMap.setAssignedSchool(schoolId, level);
+    };
+
+    var setAssignedSchoolInList = function(levelCode, school) {
+        var level = 'elementary';
+        if (levelCode == 'm') {
+            level = 'middle';
+        } else if (levelCode == 'h') {
+            level = 'high';
+        }
+        var listItemSelector = '#js-assigned-school-' + level;
+
+        var listItem = $(listItemSelector);
+
+        var distance = Math.round(school.distance * 100) / 100;
+        var gradeRange = school.gradeRange;
+        var name = school.name;
+        var numReviews = school.numReviews;
+        var parentRating = school.parentRating;
+        var gsRating = school.rating;
+        var type = school.schoolType;
+        var state = school.state;
+        var zip = school.address.zip;
+        if (type == 'public') {
+            type = 'public district';
+        }
+        type = type.charAt(0).toUpperCase() + type.slice(1);
+        var url = school.url;
+        var reviewsUrl = school.url + 'reviews/';
+        var qualityUrl = school.url + 'quality/';
+        var address = school.address.street1 + ' ' + school.address.cityStateZip;
+
+        listItem.find('.js-name').html(name).attr('href', url);
+        listItem.find('.js-address').html(address);
+        listItem.find('.js-type').html(type);
+        listItem.find('.js-grade-range').html(gradeRange);
+        listItem.find('.js-distance').html(distance + ' miles');
+        if (parentRating && parentRating > 0 && parentRating < 6) {
+            var orangeStar = listItem.find('.js-parent-rating-stars .i-16-orange-star');
+            var greyStar = listItem.find('.js-parent-rating-stars .i-16-grey-star');
+            orangeStar.removeClass('i-16-star-1').addClass('i-16-star-' + parentRating);
+            greyStar.removeClass('i-16-star-4').addClass('i-16-star-' + (5-parentRating));
+        } else {
+            listItem.find('.js-parent-rating-stars').hide();
+        }
+        if (numReviews) {
+            var reviewWord = ' review';
+            if (numReviews > 1) {
+                reviewWord = ' reviews';
+            }
+            listItem.find('.js-review-count').html(numReviews + reviewWord).attr('href', reviewsUrl);
+            listItem.find('.js-no-reviews').hide();
+        } else {
+            listItem.find('.js-review-count').hide();
+            listItem.find('.js-no-reviews').show();
+        }
+        if (gsRating && gsRating > 0 && gsRating < 11) {
+            var gsRatingLink = listItem.find('.js-gs-rating-link');
+            gsRatingLink.attr('href', qualityUrl).find('.iconx24-icons').removeClass('i-24-new-ratings-nr').addClass('i-24-new-ratings-' + gsRating);
+        }
+
+        listItem.find('.js-homes-for-sale').attr('href', 'http://www.zillow.com/' + state + '-' + zip + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch');
+
+        listItem.show('slow');
+    };
+
+    var setNoAssignedSchools = function() {
+        // TODO
+    };
+
+    return {
+        shouldGetAssignedSchools:shouldGetAssignedSchools,
+        getAssignedSchools: getAssignedSchools
+    };
+})();
+
 GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr) {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
@@ -78,52 +223,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         });
 
         try {
-            if (window.location.search && GS.uri.Uri.getFromQueryString("assignedSchool")) {
-                var lat = GS.uri.Uri.getFromQueryString("lat");
-                var lon = GS.uri.Uri.getFromQueryString("lon");
-                var grade = GS.uri.Uri.getFromQueryString("grades");
-                if (lat && lon) {
-                    var data = {lat: lat, lon: lon};
-                    if (grade) {
-                        if (grade == 'k' || grade == '1' || grade == '2' || grade == '3' || grade == '4' || grade == '5') {
-                            data.level = 'e';
-                        } else if (grade == '6' || grade == '7' || grade == '8') {
-                            data.level = 'm';
-                        } else if (grade == '9' || grade == '10' || grade == '11' || grade == '12') {
-                            data.level = 'h';
-                        }
-                    }
-                    jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
-                        if (data && data.results && data.results.length) {
-                            for (var x=0; x < data.results.length; x++) {
-                                var schoolWrapper = data.results[x];
-                                var level = 'elementary';
-                                if (schoolWrapper.level == 'm') {
-                                    level = 'middle';
-                                } else if (schoolWrapper.level == 'h') {
-                                    level = 'high';
-                                }
-                                if (schoolWrapper.schools && schoolWrapper.schools.length) {
-                                    var school = schoolWrapper.schools[0];
-                                    if (school.name && school.id) {
-                                        try {
-                                            GS.search.googleMap.setAssignedSchool(school.id, level);
-                                        } catch (e) {
-                                            console.log(e);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                }
+            if (GS.search.assignedSchools.shouldGetAssignedSchools()) {
+                GS.search.assignedSchools.getAssignedSchools();
             }
         } catch (e) {
             // ignore. This is prototype code
         }
     };
-
 
     var setupTabs = function() {
         $(locationSelector).click(function() {
