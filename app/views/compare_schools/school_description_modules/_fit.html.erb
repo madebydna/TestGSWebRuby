@@ -5,19 +5,11 @@
     <div class="pvm">
       <div class="tac" style="height: 24px">
         <% if @school.fit_score > 0 %>
-          <span class="vam iconx24-icons js-icon <%=(@school.strong_fit?) ? 'i-24-happy-face' : (@school.ok_fit?) ? 'i-24-smiling-face' : 'i-24-neutral-face'%>"></span>
+          <span class="vam js-icon <%= @school.fit_score_icon %>"></span>
         <% end %>
       </div>
       <div class="tac gray-dark mbm">
-        <span class="font-size-s"><%= if @school.strong_fit?
-                                        'Strong fit'
-                                      elsif @school.ok_fit?
-                                        'Ok fit'
-                                      elsif @school.fit_score == 0
-                                        'No matches'
-                                      else
-                                        'Low fit'
-                                      end %></span>
+        <span class="font-size-s"><%= @school.fit_score_text %></span>
       </div>
       <div class="phm">
         <table class="full-width <%= config.opt[:table_name] %>">

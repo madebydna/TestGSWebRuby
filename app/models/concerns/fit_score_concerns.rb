@@ -94,6 +94,32 @@ module FitScoreConcerns
     max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
   end
 
+  def has_fit?
+    fit_score && fit_score > 0
+  end
+
+  def fit_score_icon
+    if strong_fit?
+      'iconx24-icons i-24-happy-face'
+    elsif ok_fit?
+      'iconx24-icons i-24-smiling-face'
+    elsif weak_fit?
+      'iconx24-icons i-24-neutral-face'
+    end
+  end
+
+  def fit_score_text
+    if strong_fit?
+      'Strong fit'
+    elsif ok_fit?
+      'Ok fit'
+    elsif weak_fit?
+      'Weak fit'
+    else
+      'No matches'
+    end
+  end
+
   # Increments fit score for each matching key/value pair from params
   def calculate_fit_score!(params)
     @fit_score = 0
