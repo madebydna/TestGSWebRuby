@@ -12,11 +12,11 @@ module FavoriteSchoolsConcerns
         school_id = school_id.split(/,/)
         state = state.split(/,/)
       else
-        raise "state and school_id both need to be present to follow the school"
+        raise(ArgumentError, "state and school_id both need to be present to follow the school")
       end
 
       if school_id.count != state.count
-        raise "state and school_id mismatch school_ids count #{school_id.count} with state count #{state.count}"
+        raise(ArgumentError, "state and school_id mismatch school_ids count #{school_id.count} with state count #{state.count}")
       end
 
       school_id.each_with_index {|sch_id, index|
@@ -27,7 +27,7 @@ module FavoriteSchoolsConcerns
         end
 
         if school.nil?
-          raise "Could not find school for state #{state} and id #{school_id}"
+          raise(ArgumentError, "Could not find school for state #{state} and id #{school_id}")
         end
 
         unless current_user.favorited_school? school
@@ -40,7 +40,6 @@ module FavoriteSchoolsConcerns
       flash_notice t('actions.my_school_list.school_added_subscribed')
     rescue => e
       flash_error e.message
-      raise e
     end
   end
 

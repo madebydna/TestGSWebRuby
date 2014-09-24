@@ -20,7 +20,7 @@ module SubscriptionConcerns
 
 
         if school_id.count != state.count
-          raise "state and school_id mismatch school_ids count #{school_id.count} with state count #{state.count}"
+          raise(ArgumentError, "state and school_id mismatch school_ids count #{school_id.count} with state count #{state.count}")
         end
 
         school_id.each_with_index {|sch_id, index|
