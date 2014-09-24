@@ -204,6 +204,8 @@ describe SchoolCompareDecorator do
     context 'ratings' do
       before do
         allow(school).to receive(:ratings).and_return(ratings_hash)
+        instance_variable_set('@schools', [school])
+        prep_school_ratings!
       end
 
       context '#school_rating_by_name' do

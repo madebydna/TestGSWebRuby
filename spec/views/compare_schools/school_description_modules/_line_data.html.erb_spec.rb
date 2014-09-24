@@ -9,8 +9,10 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
       display_type: 'line_data',
       opt: {
           datapoints: [
-              {method: :school_rating_by_name, argument: 'Test scores rating', label: 'Test scores rating'},
-              {method: :school_rating_by_name, argument: 'Student growth rating', label: 'Student growth rating'},
+              {method: :students_enrolled, label: 'Students enrolled'},
+              {method: :transportation, label: 'Transportation'},
+              {method: :before_care, label: 'Before care'},
+              {method: :after_school, label: 'After school'}
           ]
       }
   }}
