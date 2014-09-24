@@ -17,7 +17,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
-    var state = state_abbr || 'de';
+    var state = state_abbr ;
 
     var init = function() {
         $('.js-findByLocationForm').submit(function() {
