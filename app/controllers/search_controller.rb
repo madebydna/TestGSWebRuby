@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   include MetaTagsHelper
   include ActionView::Helpers::TagHelper
   include PaginationConcerns
+  include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
 
@@ -14,7 +15,6 @@ class SearchController < ApplicationController
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
-  SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
   NUM_NEARBY_CITIES = 8
@@ -151,22 +151,13 @@ class SearchController < ApplicationController
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
 
-    (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
-    @sort_name = if sort.nil?
-                   if search_by_location?
-                     'distance'
-                   elsif search_by_name?
-                     'relevance'
-                   else
-                     'rating'
-                   end
-                 else
-                   sort.to_s.split('_').first
-                 end
+    sort = determine_sort!(@params_hash)
+    if sort
+      search_options.merge!({sort: sort})
+    end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
-    is_fit_sort = (sort == :fit_desc || sort == :fit_asc)
-    if is_fit_sort
+    if sorting_by_fit?
       search_options[:number_of_results] = MAX_RESULTS_FROM_SOLR
       search_options[:offset] = 0
     end
@@ -174,19 +165,13 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    calculate_fit_score(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
-    sort_by_fit(results[:results], sort) if is_fit_sort
+    sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
 
     omniture_filter_list_values(filters, @params_hash)
-  end
-
-  def sort_by_fit(school_results, direction)
-    # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
-    n = 0
-    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
   end
 
   def process_results(results, solr_offset)
@@ -333,10 +318,6 @@ class SearchController < ApplicationController
     filters
   end
 
-  def parse_sorts(params_hash)
-    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
-  end
-
   private
 
   def set_omniture_data_search_school(page_number, search_type, search_term, locale)
@@ -454,6 +435,10 @@ class SearchController < ApplicationController
     omniture_soft_filters_hash(params_hash)
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
+  end
+
+  def filtering_search?
+    @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
   end
 
 end
