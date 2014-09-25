@@ -284,14 +284,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         return false;
     };
 
-    var autocompleteSort = function(obj1, obj2) {
-        if (obj1.sort_order > obj2.sort_order)
-            return -1;
-        if (obj1.sort_order < obj2.sort_order)
-            return 1;
-        return 0;
-    };
-
     var submitByLocationSearch = function(geocodeCallbackFn) {
         var searchQuery = getSearchQuery();
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
@@ -355,79 +347,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
     };
 
-    var schools = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('school_name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 10,
-        dupDetector: function(remoteMatch, localMatch) {
-            return remoteMatch.url == localMatch.url;
-        },
-        remote: {
-            url: '/gsr/search/suggest/school?query=%QUERY&state=' + state,
-            filter: function(data) {
-                schools = $(GS.search.schoolSearchForm.schools)[0];
-                var cacheList = schools.cacheList;
-                for (var i = 0; i < data.length; i++) {
-                    if (cacheList[data[i].url] == null) {
-                        schools.add(data[i]);
-                        cacheList[data[i].url] = true;
-                    }
-                }
-                return data
-            },
-            rateLimitWait: 100
-        }
-    });
-
-    var cities = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('city_name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 5,
-        dupDetector: function(remoteMatch, localMatch) {
-            return remoteMatch.url == localMatch.url;
-        },
-        sorter: autocompleteSort,
-        remote: {
-            url: '/gsr/search/suggest/city?query=%QUERY&state=' + state,
-            filter: function(data) {
-                cities = $(GS.search.schoolSearchForm.cities)[0];
-                var cacheList = cities.cacheList;
-                for (var i = 0; i < data.length; i++) {
-                    if (cacheList[data[i].url] == null) {
-                        cities.add(data[i]);
-                        cacheList[data[i].url] = true;
-                    }
-                }
-                return data.sort(autocompleteSort);
-            },
-            rateLimitWait: 100
-        }
-    });
-
-    var districts = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('district_name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 5,
-        dupDetector: function(remoteMatch, localMatch) {
-            return remoteMatch.url == localMatch.url;
-        },
-        sorter: autocompleteSort,
-        remote: {
-            url: '/gsr/search/suggest/district?query=%QUERY&state=' + state,
-            filter: function(data) {
-                districts = $(GS.search.schoolSearchForm.districts)[0];
-                var cacheList = districts.cacheList;
-                for (var i = 0; i < data.length; i++) {
-                    if (cacheList[data[i].url] == null) {
-                        districts.add(data[i]);
-                        cacheList[data[i].url] = true;
-                    }
-                }
-                return data.sort(autocompleteSort);
-            },
-            rateLimitWait: 100
-        }
-    });
+    var schools = GS.search.autocomplete.initializeData({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY&state=' + state, sortFunction: false });
+    var cities = GS.search.autocomplete.initializeData({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY&state=' + state, displayLimit: 5 });
+    var districts = GS.search.autocomplete.initializeData({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY&state=' + state, displayLimit: 5 });
 
     var attachAutocomplete = function() {
         $('.typeahead').typeahead({
@@ -663,9 +585,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         submitByNameSearch: submitByNameSearch,
         getSearchQuery: getSearchQuery,
         gsGeocode: gsGeocode,
-        cities: cities,
-        districts: districts,
-        schools: schools,
         attachAutocomplete: attachAutocomplete,
         isAddress: isAddress,
         searchType: searchType,
@@ -682,12 +601,6 @@ GS.search.init = (function() {
     self.need_init='search already initialized';
     GS.search.schoolSearchForm.init();
     GS.search.schoolSearchForm.setupTabs();
-    GS.search.schoolSearchForm.cities.initialize();
-    GS.search.schoolSearchForm.cities.cacheList = {};
-    GS.search.schoolSearchForm.districts.initialize();
-    GS.search.schoolSearchForm.districts.cacheList = {};
-    GS.search.schoolSearchForm.schools.initialize();
-    GS.search.schoolSearchForm.schools.cacheList = {};
     GS.search.schoolSearchForm.attachAutocomplete();
     GS.search.schoolSearchForm.showFiltersMenuOnLoad();
     GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
