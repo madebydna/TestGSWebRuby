@@ -1,3 +1,4 @@
+<% @renderedFilters = render 'search/filter_form' #rendering and setting to variable to avoid rendering twice %>
 <%= render partial: 'search/filter_toolbar_mobile' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 

@@ -26,8 +26,7 @@
     <div class="dn zir-1 ptm prm pbm js-searchFiltersMenu">
       <div class="ptm panel panel-primary mbn">
         <div class="clearfix js-searchFiltersFormParent">
-          <!--ToDo perhaps there is a way to combine the desktop and mobile filters, so two sets do not have to be generated-->
-          <%= render 'search/filter_form' %>
+          <%= @renderedFilters %>
         </div>
         <div class="clearfix pal">
           <label class="fl">
