@@ -16,6 +16,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/account/', as: :manage_account, to: 'account_management#show'
 
+  get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
