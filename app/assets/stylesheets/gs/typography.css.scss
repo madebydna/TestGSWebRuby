@@ -134,7 +134,6 @@ p, a {
 
 .tdn { text-decoration: none; }
 
-.fl_small {float: left}
 
 .mrm_small {margin-right: 10px;}
 
@@ -173,7 +172,6 @@ p, a {
 @media only screen and (max-width: 767px) {
   .jumbo-header {font-size: 32px}
   .center_when_small {text-align: center}
-  .fl_small {float: none}
   .text_font_large {font-size: 36px}
   .mrm_small {margin-right: 0}
 }

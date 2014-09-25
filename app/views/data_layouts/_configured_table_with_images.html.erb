@@ -16,7 +16,7 @@
     <div class="row">
       <% category_placement.table_config.columns_to_print(data).each do |column| %>
           <% if column['display_type'] == :data_and_header %>
-              <div class="col-sm-5 col-xs-4 center_when_small" style="border-bottom: 2px solid #DDDDDD">
+              <div class="col-sm-5 col-xs-4 center_when_small tac">
                 <% if column['icon_css_class'].present? %>
                     <span class="iconx32-college_ready i-32-<%=column['icon_css_class']%> mrm_small"></span>
                 <% end %>
@@ -50,17 +50,22 @@
                     <% human_width_grey = 220 - human_width %>
                     <% human_width_grey_offset = human_width%22 %>
 
-                    <div class="clearfix">
-                      <% if col_index == 0 %>
-                          <span class="ptm mts fl_small mrl text_orange text_font_large open-sans_sb"><%= value.to_s if value.present?%></span>
-                          <span class='iconx22-human i-22-orange-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
 
+                    <div class="row">
+                      <% if col_index == 0 %>
+                          <% cell_color = 'orange'%>
                       <% elsif col_index == 2%>
-                          <span class="ptm mts fl_small mrl text_purple text_font_large open-sans_sb "><%= value.to_s if value.present?%></span>
-                          <span class='iconx22-human i-22-purple-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                          <% cell_color = 'purple'%>
                       <% end %>
-                      <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
+
+                      <div class="ptm mts text_<%=cell_color%> text_font_large open-sans_sb col-sm-3 tac"><%= value.to_s if value.present?%></div>
+                      <div class="clearfix col-sm-9">
+                        <span class='iconx22-human i-22-<%=cell_color%>-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                        <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
+                      </div>
+
                     </div>
+
                 <% else %>
                     <div class="pts pbm"><%= value.to_s.upcase if value.present?%></div>
                     <% if row_index != (data.rows.size-1 )%>
