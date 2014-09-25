@@ -8,6 +8,7 @@
     <% end %>
   </div>
   <span class="pointer font-size-xs ptl"><%= decorated_school.fit_score_text %></span>
+  <% unless decorated_school.has_fit? %><span class="pointer caret"></span><% end %>
 </div>
 <div class="panel pa dn js-fitScorePopup" style="z-index: 1; width: 200px;">
   <div class="pal">

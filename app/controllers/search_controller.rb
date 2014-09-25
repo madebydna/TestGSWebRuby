@@ -315,6 +315,7 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
+    @filtering_search = @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
     filters
   end
 
@@ -435,10 +436,6 @@ class SearchController < ApplicationController
     omniture_soft_filters_hash(params_hash)
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
-  end
-
-  def filtering_search?
-    @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
   end
 
 end

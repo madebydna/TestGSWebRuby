@@ -62,7 +62,9 @@
             </div>
             <!-- Fit score -->
             <div class="col-xs-6 col-sm-4 mtl mbs">
-              <%= render 'fit_score_icon_and_popup', school: school, decorated_school: decorated_school %>
+              <% if filtering_search? %>
+                  <%= render 'fit_score_icon_and_popup', school: school, decorated_school: decorated_school %>
+              <% end %>
             </div>
           </div>
         </div>
