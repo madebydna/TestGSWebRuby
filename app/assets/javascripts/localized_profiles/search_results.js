@@ -254,7 +254,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             },
                 {
                     name: 'cities', //for generated css class name. Ex tt-dataset-cities
-                    displayKey: 'city_name',
+                    displayKey: 'city_name', //key whose value will be displayed in input
                     source: cities.ttAdapter(),
                     templates: markup.cityResultsMarkup(state)
                 },

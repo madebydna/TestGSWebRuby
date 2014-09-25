@@ -4,16 +4,16 @@ GS.search.autocomplete = GS.search.autocomplete || {};
 GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
 
 //    var options = {
-//        defaultUrl: 'string', required
-//        tokenizedAttribute: 'string',  required
-//        filterDataFunction: 'function', optional
-//        replaceUrlFunction: 'function', optional callback to replace url dynamically
-//        dupDetectorFunction: 'function', optional
-//        rateLimitWait: 'int', optional
-//        displayLimit: 'int', optional
-//        sortFunction: 'function' optional
-//    }; options for initializeData
-    var init = function(options) {
+//        defaultUrl: string            required                      url that will get ajax request for data.
+//        tokenizedAttribute: string    required
+//        sortFunction: function        optional no default applied
+//        rateLimitWait: int            optional but default applied  delay from keystroke to autocomplete. ex 100ms
+//        displayLimit: int             optional but default applied  limit to how many results displayed
+//        filterDataFunction: function  optional but default applied  filter dataset after queried.
+//        dupDetectorFunction: function optional but default applied  duplicate detection and removal function
+//        replaceUrlFunction: function  optional callback to replace  url dynamically
+//    };
+    var init = function(options) { //options for init listed above
         var remote = {
             url: options['defaultUrl'],
             rateLimitWait: options['rateLimitWait'] || 100

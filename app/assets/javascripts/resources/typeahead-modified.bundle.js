@@ -1495,6 +1495,8 @@
             _onUpKeyed: function onUpKeyed() {
 //                ModifiedBehavior
                 var query = this.input.getQuery();
+                //create callback hook
+                //if calback exists then execute, else go with normal flow
                 if (GS.search.schoolSearchForm.isAddress(query)) {
                     this.dropdown.close();
                 } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
@@ -1545,7 +1547,6 @@
                     this._setLanguageDirection();
                 }
 
-//                ModifiedBehavior
 //                Previous Behavior
 //                this.input.clearHintIfInvalid();
 //                query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.empty();
