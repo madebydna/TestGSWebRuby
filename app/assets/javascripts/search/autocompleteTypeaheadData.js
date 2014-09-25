@@ -1,6 +1,7 @@
 GS.search = GS.search || {};
+GS.search.autocomplete = GS.search.autocomplete || {};
 
-GS.search.autocomplete = GS.search.autocomplete || (function() {
+GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
 
 //    var options = {
 //        defaultUrl: 'string', required
@@ -12,7 +13,7 @@ GS.search.autocomplete = GS.search.autocomplete || (function() {
 //        displayLimit: 'int', optional
 //        sortFunction: 'function' optional
 //    }; options for initializeData
-    var initializeData = function(options) {
+    var init = function(options) {
         var remote = {
             url: options['defaultUrl'],
             rateLimitWait: options['rateLimitWait'] || 100
@@ -39,6 +40,7 @@ GS.search.autocomplete = GS.search.autocomplete || (function() {
         }
 
         dataObject = new Bloodhound(bloodhoundOptions);
+        dataObject.tokenizedAttribute = options['tokenizedAttribute']; //for use later to set input value on display
         dataObject.initialize();
         return dataObject;
     };
@@ -75,6 +77,6 @@ GS.search.autocomplete = GS.search.autocomplete || (function() {
     };
 
     return {
-        initializeData: initializeData
+        init: init
     }
 })();

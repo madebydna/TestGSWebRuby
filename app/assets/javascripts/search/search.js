@@ -347,45 +347,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
     };
 
-    var schools = GS.search.autocomplete.initializeData({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY&state=' + state, sortFunction: false });
-    var cities = GS.search.autocomplete.initializeData({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY&state=' + state, displayLimit: 5 });
-    var districts = GS.search.autocomplete.initializeData({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY&state=' + state, displayLimit: 5 });
-
-    var attachAutocomplete = function() {
-        $('.typeahead').typeahead({
-            hint: true,
-            highlight: true,
-            minLength: 1
-        },
-        {
-            name: 'cities',
-            displayKey: 'city_name',
-            source: cities.ttAdapter(),
-
-            templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{city_name}}, ' + state.toUpperCase() + '</strong></p></a>')
-            }
-        },
-        {
-            name: 'districts',
-            displayKey: 'district_name',
-            source: districts.ttAdapter(),
-            templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, ' + state.toUpperCase() + '</strong></p></a>')
-            }
-        },
-        {
-            name: 'schools',
-            displayKey: 'school_name',
-            source: schools.ttAdapter(),
-            templates: {
-                suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, ' + state.toUpperCase() + '</span></p></a>')
-            }
-        })
-        .on('typeahead:selected', function(event, suggestion, dataset) {
-            GS.uri.Uri.goToPage(suggestion['url']);
-        })
-    };
 
     var isAddress = function (query) {
         var is_ad = false;
@@ -585,7 +546,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         submitByNameSearch: submitByNameSearch,
         getSearchQuery: getSearchQuery,
         gsGeocode: gsGeocode,
-        attachAutocomplete: attachAutocomplete,
         isAddress: isAddress,
         searchType: searchType,
         findByNameSelector: findByNameSelector,
@@ -601,7 +561,6 @@ GS.search.init = (function() {
     self.need_init='search already initialized';
     GS.search.schoolSearchForm.init();
     GS.search.schoolSearchForm.setupTabs();
-    GS.search.schoolSearchForm.attachAutocomplete();
     GS.search.schoolSearchForm.showFiltersMenuOnLoad();
     GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
   }
