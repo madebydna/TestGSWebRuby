@@ -196,3 +196,6 @@ gem "yui-compressor", "~> 0.12.0"
 group :profile do
   gem 'ruby-prof'
 end
+
+gem 'prawn'
+gem 'prawn-table', '~> 0.1.2'

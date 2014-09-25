@@ -147,6 +147,8 @@ LocalizedProfiles::Application.routes.draw do
       get 'guided-search', to: 'states#guided_search', as: :guided_search
       get 'events', to: 'states#events', as: :events
 
+
+
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'states#enrollment'
