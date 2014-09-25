@@ -275,6 +275,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             })
         };
 
+        var attachAutocompleteHandlers = function() {
+            var autocomplete = GS.search.autocomplete;
+            autocomplete.handlers.setOnUpKeyedCallback();
+            autocomplete.handlers.setOnQueryChangedCallback();
+            autocomplete.handlers.setOnDownKeyedCallback();
+        };
+
         var init = function() {
             //schoolslist needs to initialize before popupbox, so popupbox can get the data
             schoolsList = GS.compare.schoolsList;
@@ -288,6 +295,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             setCompareSchoolButtonHandler();
             toggleOnCompareSchoolsOnPageLoad();
             attachAutocomplete();
+            attachAutocompleteHandlers()
         };
 
         return {
