@@ -48,6 +48,9 @@ $(function() {
           school_id += $(this).children('#favorite_school_school_id').val();
           state += $(this).children('#favorite_school_state').val();
       });
+      if (school_id == '') {
+          return false;
+      }
       form.children('#favorite_school_school_id').val(school_id);
       form.children('#favorite_school_state').val(state);
       form.submit();

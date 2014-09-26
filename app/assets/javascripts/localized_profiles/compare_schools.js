@@ -194,6 +194,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             $(schoolDiv).remove();
             destroyCarousel();
             setupCarousel();
+            $('.js-save-all-schools-button').prop('disabled', $(comparedSchools).length === 0);
             GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
         });
     };
@@ -266,6 +267,10 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         GS.popup.stopClickAndTouchstartEventPropogation($(noDataPopupHtmlClass));
     };
 
+    var setDisabledOnSaveAll = function() {
+        $('.js-save-all-schools-button').prop('disabled', ($(comparedSchools).length === 0));
+    };
+
     var init = function() {
         adjustSchoolResultsHeights();
         setAccordianHandlerForCategories();
@@ -275,6 +280,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         colorPieChartLabels();
         setRemoveActiveStateHandler();
         setNoDataPopupHandler();
+        setDisabledOnSaveAll();
     };
 
 
