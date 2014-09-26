@@ -7,7 +7,7 @@ module CachedRatingsMethods
   end
 
   def overall_gs_rating
-    great_schools_rating
+    great_schools_rating.to_s.downcase
   end
 
   def great_schools_rating
