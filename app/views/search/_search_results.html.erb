@@ -4,6 +4,7 @@
     <div class="row ptm pbm">
       <div class="full-width ">
           <% if @by_location %>
+            <%= render 'assigned_school_not_valid' %>
             <%= render 'assigned_school_no_result' %>
             <%= render 'assigned_school_result', level: 'Elementary' %>
             <%= render 'assigned_school_result', level: 'Middle' %>

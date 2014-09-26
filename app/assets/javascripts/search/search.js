@@ -23,18 +23,19 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             return false;
         }
 
-        var isSearchSpecificEnough = false;
+        return true;
+    };
 
+    var isSearchSpecificEnough = function() {
         var locationType = GS.uri.Uri.getFromQueryString("locationType");
         if (locationType) {
             for (var x=0; x < validLocationTypes.length; x++) {
                 if (locationType.indexOf(validLocationTypes[x]) > -1) {
-                    isSearchSpecificEnough = true;
-                    break;
+                    return true
                 }
             }
         }
-        return isSearchSpecificEnough;
+        return false;
     };
 
     var getAssignedSchools = function(setAssignedSchoolCallbackFn) {
@@ -42,7 +43,8 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var lat = GS.uri.Uri.getFromQueryString("lat");
         var lon = GS.uri.Uri.getFromQueryString("lon");
         var grade = GS.uri.Uri.getFromQueryString("grades");
-        if (!lat || !lon) {
+        if (!lat || !lon || !isSearchSpecificEnough()) {
+            $('#js-assigned-school-not-valid').show('slow');
             return;
         }
         var data = {lat: lat, lon: lon};
