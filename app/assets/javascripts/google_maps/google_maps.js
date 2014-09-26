@@ -208,8 +208,10 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
-              if (point.assignedLevel) {
-                  markup += '<div>We think this is your assigned ' + point.assignedLevel + ' school</div>';
+              var assignedLevel = point.assignedLevel;
+              if (assignedLevel) {
+                  var assignedLevelText = /elementary/i.test(assignedLevel) ? mapPinElementarySchoolText() : /middle/i.test(assignedLevel) ? mapPinMiddleSchoolText() : mapPinHighSchoolText();
+                  markup += '<div>' + assignedLevelText + '</div>';
               }
               markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
@@ -217,17 +219,21 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<div class="col-xs-7 col-sm-8">';
               markup += '<div class="mrl">'; //address
               markup += '<div class="notranslate">' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
-              markup += '<div class="mts">' + point.schoolType + ' | ' + point.gradeRange + '</div>';
+
+              var schoolType = point.schoolType;
+              var stText = /charter/i.test(schoolType) ? mapPinSchoolTypeCharterText() : /private/i.test(schoolType) ? mapPinSchoolTypePrivateText() : mapPinSchoolTypePublicText();
+              markup += '<div class="mts">' + stText + ' | ' + '<span class="notranslate">' + point.gradeRange + '</span>' + '</div>';
+
               markup += '</div>';//address
               markup += '</div>'; //
               markup += '<div class="mts col-xs-5 col-sm-4 ">'; //sprites
-              markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-'
+              markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (parseInt(point.gsRating) > 0){
                   markup += + point.gsRating;
               } else {
                   markup += 'nr';
               }
-              markup += '"></span>Rating' +  '</div>'
+              markup += '"></span>' + mapPinRatingText() +  '</div>';
 
               if(point.fitScore > 0){
                   if (point.strongFit){
@@ -250,18 +256,18 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
                   markup += '<span class="mls mrm font-size-small">'+ point.numReviews;
                   if (point.numReviews != 1) {
-                      markup += ' reviews </span>';
+                      markup += ' ' + mapPinReviewsText() + ' </span>';
                   } else {
-                      markup += ' review </span>';
+                      markup += ' ' + mapPinReviewText() + ' </span>';
                   }//reviews link
                   markup += '</a>';//reviews link
               } else {
-                  markup += '<a href="' + point.reviewUrl + '">Rate this school now!</a>';
+                  markup += '<a href="' + point.reviewUrl + '">' + mapPinRateThisSchoolText() + '</a>';
               }
               markup += '</div>'; //stars
               markup += '<div class="fr">'; //zillow
               markup += '<a class="clearfix" href="' + point.zillowUrl + '" target="_blank">';
-              markup += '<div class="fl mrs pt1"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small">Homes for sale</div><div class="fl gray-dark visible-xs font-size-small">Homes</div>';
+              markup += '<div class="fl mrs pt1"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small">' + mapPinHomesForSaleText() + '</div><div class="fl gray-dark visible-xs font-size-small">Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
               markup += '</div>';
@@ -270,6 +276,18 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               infoWindowMarkup.innerHTML = markup;
               return infoWindowMarkup;
           };
+
+          var mapPinRatingText = function() { return $('.js-mapPinRatingText').text().trim() };
+          var mapPinReviewText = function() { return $('.js-mapPinReviewText').text().trim() };
+          var mapPinReviewsText = function() { return $('.js-mapPinReviewsText').text().trim() };
+          var mapPinRateThisSchoolText = function() { return $('.js-mapPinRateThisSchoolText').text().trim() };
+          var mapPinHomesForSaleText = function() { return $('.js-mapPinHomesForSaleText').text().trim() };
+          var mapPinSchoolTypePrivateText = function() { return $('.js-mapPinSchoolTypePrivateText').text().trim() };
+          var mapPinSchoolTypePublicText = function() { return $('.js-mapPinSchoolTypePublicText').text().trim() };
+          var mapPinSchoolTypeCharterText = function() { return $('.js-mapPinSchoolTypeCharterText').text().trim() };
+          var mapPinHighSchoolText = function() { return $('.js-mapPinHighSchoolText').text().trim() };
+          var mapPinMiddleSchoolText = function() { return $('.js-mapPinMiddleSchoolText').text().trim() };
+          var mapPinElementarySchoolText = function() { return $('.js-mapPinElementarySchoolText').text().trim() };
 
           initialize(points);
 
