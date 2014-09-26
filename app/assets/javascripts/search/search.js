@@ -56,15 +56,20 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         }
         jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
             if (data && data.results && data.results.length) {
+                var totalSchoolsFound = 0;
                 for (var x=0; x < data.results.length; x++) {
                     var schoolWrapper = data.results[x];
                     if (schoolWrapper.schools && schoolWrapper.schools.length) {
+                        totalSchoolsFound += schoolWrapper.schools.length;
                         try {
                             setAssignedSchoolCallbackFn(schoolWrapper.level, schoolWrapper.schools[0]);
                         } catch (e) {
                             // on any error just ignore it and move on
                         }
                     }
+                }
+                if (totalSchoolsFound == 0) {
+                    setNoAssignedSchools();
                 }
             } else if (data && data.results && data.results.length === 0) {
                 setNoAssignedSchools();
