@@ -286,6 +286,7 @@ class SearchController < ApplicationController
     end
     [map_start, map_end]
   end
+
   def parse_filters(params_hash)
     filters = {}
     if params_hash.include? 'st'
@@ -314,6 +315,11 @@ class SearchController < ApplicationController
       valid_grade_params = ['p','k', '1','2','3','4','5','6','7','8','9','10','11','12']
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
+    end
+    if hub_matching_current_url
+      filters[:collection_id] = @hub_matching_current_url.collection_id
+    elsif params_hash.include? 'collectionId'
+      filters[:collection_id] = params_hash['collectionId']
     end
     @filtering_search = @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
     filters

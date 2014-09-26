@@ -53,6 +53,32 @@ describe 'School Search Service' do
     it 'errors if not provided a city' do
       expect{SchoolSearchService.city_browse(state: 'de')}.to raise_error ArgumentError, 'City is required'
     end
+    it 'should have citykeyword' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:fq]).to include('+citykeyword:"indianapolis"')
+      end.and_return(empty_result)
+      SchoolSearchService.city_browse(state: 'in', city: 'indianapolis')
+    end
+    it 'should have school_database_state' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:fq]).to include('+school_database_state:"in"')
+      end.and_return(empty_result)
+      SchoolSearchService.city_browse(state: 'in', city: 'indianapolis')
+    end
+    describe 'when filtering by collection_id' do
+      it 'should have collection_id in filters' do
+        expect(SchoolSearchService).to receive(:get_results) do |options|
+          expect(options[:fq]).to include('+collection_id:3')
+        end.and_return(empty_result)
+        SchoolSearchService.city_browse(state: 'in', city: 'indianapolis', filters:{collection_id:3})
+      end
+      it 'should not have citykeyword in filters' do
+        expect(SchoolSearchService).to receive(:get_results) do |options|
+          expect(options[:fq]).not_to include('+citykeyword:"indianapolis"')
+        end.and_return(empty_result)
+        SchoolSearchService.city_browse(state: 'in', city: 'indianapolis', filters:{collection_id:3})
+      end
+    end
   end
 
   describe '.district_browse' do
@@ -79,6 +105,33 @@ describe 'School Search Service' do
     end
     it 'errors if not provided a district id' do
       expect{SchoolSearchService.district_browse(state: 'de')}.to raise_error ArgumentError, 'District id is required'
+    end
+
+    it 'should have school_district_id' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:fq]).to include('+school_district_id:"11"')
+      end.and_return(empty_result)
+      SchoolSearchService.district_browse(state: 'de', district_id: 11)
+    end
+    it 'should have school_database_state' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:fq]).to include('+school_database_state:"de"')
+      end.and_return(empty_result)
+      SchoolSearchService.district_browse(state: 'de', district_id: 11)
+    end
+    describe 'when filtering by collection_id' do
+      it 'should have collection_id in filters' do
+        expect(SchoolSearchService).to receive(:get_results) do |options|
+          expect(options[:fq]).to include('+collection_id:3')
+        end.and_return(empty_result)
+        SchoolSearchService.district_browse(state: 'de', district_id: 11, filters:{collection_id:3})
+      end
+      it 'should not have school_district_id in filters' do
+        expect(SchoolSearchService).to receive(:get_results) do |options|
+          expect(options[:fq]).not_to include('+school_district_id:"11"')
+        end.and_return(empty_result)
+        SchoolSearchService.district_browse(state: 'de', district_id: 11, filters:{collection_id:3})
+      end
     end
   end
 
@@ -114,6 +167,12 @@ describe 'School Search Service' do
         expect(options[:query]).to eq('+roy school')
       end.and_return(empty_result)
       SchoolSearchService.by_name(query: 'Roy School')
+    end
+    it 'filters by collection_id when asked' do
+      expect(SchoolSearchService).to receive(:get_results) do |options|
+        expect(options[:fq]).to include('+collection_id:3')
+      end.and_return(empty_result)
+      SchoolSearchService.by_name(state: 'de', query: 'school name', filters:{collection_id:3})
     end
   end
 
