@@ -1,5 +1,7 @@
 class PrawnPdf < Prawn::Document
   def initialize(canonical_url)
+
+    beginning = Time.now
     super()
 
     rect_edge_rounding = 10
@@ -293,7 +295,31 @@ class PrawnPdf < Prawn::Document
             horizontal_line 0, col_width, :at => cursor
           end
 
+          move_down 5
 
+          image_path_chess = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          image_path_score = "app/assets/images/pyoc/PYOC_Icons-06.png"
+
+          data = [[]]
+          # data = [[{:image => image_path_chess, :scale => 0.2}, {:image => image_path_chess, :scale => 0.2}, {:image => image_path_score, :scale => 0.1} ]]
+
+          sprite = 0
+          while sprite < 4
+            if sprite % 2 == 0
+              data[0].push({:image => image_path_chess, :scale => 0.2})
+            elsif sprite % 3 == 0
+              data[0].push({:image => image_path_score, :scale => 0.1})
+            else
+              data[0].push('')
+            end
+            sprite += 1
+          end
+          #
+          table(data, :column_widths => [20, 20, 20, 20, 20, 20, 20, 20],
+                :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
+            cells.borders = []
+            cells.style(:height => 10)
+          end
 
 
 
@@ -327,5 +353,6 @@ class PrawnPdf < Prawn::Document
       foo += 1
 
     end
+    puts "Time elapsed #{Time.now - beginning} seconds"
   end
 end
