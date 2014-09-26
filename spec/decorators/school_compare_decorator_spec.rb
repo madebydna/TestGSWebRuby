@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'decorators/concerns/grade_level_concerns_shared'
+require 'helpers/school_with_cache_helper'
 
 RSpec.configure do |c|
   c.include CompareSchoolsConcerns
 end
 
 describe SchoolCompareDecorator do
-  let(:school) { SchoolCompareDecorator.decorate(FactoryGirl.build(:school_search_result)) }
   let(:programs_counts_hash) {{
       'academic_focus' => { 'none' => {member_id: 5652558, source: 'osp', created: '2014-08-15T10:35:23.000-07:00'}},
       'boys_sports' => {
@@ -94,60 +94,63 @@ describe SchoolCompareDecorator do
        'name'=>'GreatSchools rating'}
   ]}
 
+  init_school_with_cache
+  let(:decorated_school) { SchoolCompareDecorator.new(school_with_cache) }
+
   describe 'programs' do
 
     context 'counting programs' do
       it 'should correctly count programs by excluding none from the counts' do
-        allow(school).to receive(:programs).and_return(programs_counts_hash)
-        expect(school.num_programs('academic_focus')).to eq(0)
-        expect(school.num_programs('boys_sports')).to eq(2)
+        allow(decorated_school.school_cache).to receive(:programs).and_return(programs_counts_hash)
+        expect(decorated_school.school_cache.num_programs('academic_focus')).to eq(0)
+        expect(decorated_school.school_cache.num_programs('boys_sports')).to eq(2)
       end
     end
 
     context 'before care and after school' do
 
       it 'should handle only after school correctly' do
-        allow(school).to receive(:programs).and_return(only_after_hash)
-        expect(school.before_care).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
-        expect(school.after_school).to eq('Yes')
+        allow(decorated_school.school_cache).to receive(:programs).and_return(only_after_hash)
+        expect(decorated_school.school_cache.before_care).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
+        expect(decorated_school.school_cache.after_school).to eq('Yes')
       end
       it 'should handle only before care correctly' do
-        allow(school).to receive(:programs).and_return(only_before_hash)
-        expect(school.after_school).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
-        expect(school.before_care).to eq('Yes')
+        allow(decorated_school.school_cache).to receive(:programs).and_return(only_before_hash)
+        expect(decorated_school.school_cache.after_school).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
+        expect(decorated_school.school_cache.before_care).to eq('Yes')
       end
       it 'should handle both correctly' do
-        allow(school).to receive(:programs).and_return(before_after_both_hash)
-        expect(school.before_care).to eq('Yes')
-        expect(school.after_school).to eq('Yes')
+        allow(decorated_school.school_cache).to receive(:programs).and_return(before_after_both_hash)
+        expect(decorated_school.school_cache.before_care).to eq('Yes')
+        expect(decorated_school.school_cache.after_school).to eq('Yes')
       end
       it 'should handle neither correctly' do
-        allow(school).to receive(:programs).and_return(before_after_neither_hash)
-        expect(school.before_care).to eq('No')
-        expect(school.after_school).to eq('No')
+        allow(decorated_school.school_cache).to receive(:programs).and_return(before_after_neither_hash)
+        expect(decorated_school.school_cache.before_care).to eq('No')
+        expect(decorated_school.school_cache.after_school).to eq('No')
       end
       it 'should handle missing data correctly' do
-        allow(school).to receive(:programs).and_return({})
-        expect(school.before_care).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
-        expect(school.after_school).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
+        allow(decorated_school.school_cache).to receive(:programs).and_return({})
+        expect(decorated_school.school_cache.before_care).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
+        expect(decorated_school.school_cache.after_school).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
       end
     end
 
     context 'transportation' do
 
      it 'should return No for none' do
-       allow(school).to receive(:programs).and_return(transportation_none_hash)
-       expect(school.transportation).to eq('No')
+       allow(decorated_school.school_cache).to receive(:programs).and_return(transportation_none_hash)
+       expect(decorated_school.school_cache.transportation).to eq('No')
      end
 
      it 'should return Yes for some even if none is one of the responses' do
-       allow(school).to receive(:programs).and_return(transportation_some_hash)
-       expect(school.transportation).to eq('Yes')
+       allow(decorated_school.school_cache).to receive(:programs).and_return(transportation_some_hash)
+       expect(decorated_school.school_cache.transportation).to eq('Yes')
      end
 
       it 'should return NO DATA SYMBOL when no data' do
-        allow(school).to receive(:programs).and_return({})
-        expect(school.transportation).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
+        allow(decorated_school.school_cache).to receive(:programs).and_return({})
+        expect(decorated_school.school_cache.transportation).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
       end
     end
   end
@@ -156,13 +159,13 @@ describe SchoolCompareDecorator do
 
     context 'enrollment' do
       it 'should only display enrollment with no grade value' do
-        allow(school).to receive(:characteristics).and_return(characteristics_hash)
-        expect(school.students_enrolled).to eq('4,700')
+        allow(decorated_school.school_cache).to receive(:characteristics).and_return(characteristics_hash)
+        expect(decorated_school.school_cache.students_enrolled).to eq('4,700')
       end
 
       it 'should dispaly NO DATA SYMBOL if there is no enrollment' do
-        allow(school).to receive(:characteristics).and_return({})
-        expect(school.students_enrolled).to eq(SchoolCompareDecorator::NO_DATA_SYMBOL)
+        allow(decorated_school.school_cache).to receive(:characteristics).and_return({})
+        expect(decorated_school.school_cache.students_enrolled).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
       end
     end
 
@@ -170,32 +173,32 @@ describe SchoolCompareDecorator do
 
       context 'icon' do
         it 'should have the icon method' do
-          expect(school).to respond_to(:ethnicity_label_icon)
+          expect(decorated_school).to respond_to(:ethnicity_label_icon)
         end
 
         it 'should have the square and js classes' do
-          expect(school.ethnicity_label_icon).to match('square')
-          expect(school.ethnicity_label_icon).to match('js-comparePieChartSquare')
+          expect(decorated_school.ethnicity_label_icon).to match('square')
+          expect(decorated_school.ethnicity_label_icon).to match('js-comparePieChartSquare')
         end
       end
 
       context '#school_ethnicity' do
         before do
-          allow(school).to receive(:ethnicity_data).and_return(ethnicity_data_hash)
-          instance_variable_set('@schools', [school])
+          allow(decorated_school.school_cache).to receive(:ethnicity_data).and_return(ethnicity_data_hash)
+          instance_variable_set('@schools', [decorated_school])
           prep_school_ethnicity_data!
         end
 
         it 'should display NO_ETHNICITY_SYMBOL where the school has no school_value' do
-          expect(school.school_ethnicity('No school value breakdown')).to eq(SchoolCompareDecorator::NO_ETHNICITY_SYMBOL)
+          expect(decorated_school.school_cache.school_ethnicity('No school value breakdown')).to eq(CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL)
         end
 
         it 'should display NO_ETHNICITY_SYMBOL where the school does not have that breakdown' do
-          expect(school.school_ethnicity('Random breakdown')).to eq(SchoolCompareDecorator::NO_ETHNICITY_SYMBOL)
+          expect(decorated_school.school_cache.school_ethnicity('Random breakdown')).to eq(CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL)
         end
 
         it 'should display the school\' value, rounded with a percent' do
-          expect(school.school_ethnicity('Schoolstate val brkdwn')).to eq('41%')
+          expect(decorated_school.school_cache.school_ethnicity('Schoolstate val brkdwn')).to eq('41%')
         end
       end
 
@@ -203,39 +206,37 @@ describe SchoolCompareDecorator do
 
     context 'ratings' do
       before do
-        allow(school).to receive(:ratings).and_return(ratings_hash)
-        instance_variable_set('@schools', [school])
+        allow(decorated_school.school_cache).to receive(:ratings).and_return(ratings_hash)
+        instance_variable_set('@schools', [decorated_school])
         prep_school_ratings!
       end
 
       context '#school_rating_by_name' do
 
         it 'should return NO_RATING_TEXT with no argument' do
-          expect(school.school_rating_by_name).to eq(SchoolCompareDecorator::NO_RATING_TEXT)
+          expect(decorated_school.school_cache.school_rating_by_name).to eq(CachedRatingsMethods::NO_RATING_TEXT)
         end
 
         it 'should return NO_RATING_TEXT with nil' do
-          expect(school.school_rating_by_name(nil)).to eq(SchoolCompareDecorator::NO_RATING_TEXT)
+          expect(decorated_school.school_cache.school_rating_by_name(nil)).to eq(CachedRatingsMethods::NO_RATING_TEXT)
         end
 
         it 'should return the rating as an integer if there is one' do
-          expect(school.school_rating_by_name('GreatSchools rating')).to eq(10)
-          expect(school.school_rating_by_name('GreatSchools rating').class).to eq(Fixnum)
+          expect(decorated_school.school_cache.school_rating_by_name('GreatSchools rating')).to eq(10)
+          expect(decorated_school.school_cache.school_rating_by_name('GreatSchools rating').class).to eq(Fixnum)
         end
       end
 
       context '#great_schools_rating_icon' do
 
         it 'should default to the NR symbol' do
-          expect(school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
-        end
-
-        it 'should return the NR symbol when there is no school value' do
-          expect(school.great_schools_rating_icon('Random rating')).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
+          allow(decorated_school.school_cache).to receive(:ratings).and_return({})
+          expect(decorated_school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
         end
 
         it 'should return the correct symbol when there is a rating' do
-          expect(school.great_schools_rating_icon('GreatSchools rating')).to eq("<i class='iconx24-icons i-24-new-ratings-10'></i>")
+          allow(decorated_school.school_cache).to receive(:great_schools_rating).and_return(10)
+          expect(decorated_school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-10'></i>")
         end
       end
 

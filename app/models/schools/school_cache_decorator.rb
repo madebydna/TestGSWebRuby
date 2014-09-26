@@ -26,8 +26,4 @@ class SchoolCacheDecorator
     @school.zipcode
   end
 
-  def fit_score
-    0
-  end
-
 end

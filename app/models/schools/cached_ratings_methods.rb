@@ -3,7 +3,7 @@ module CachedRatingsMethods
   NO_RATING_TEXT = 'NR'
 
   def ratings
-    cache_data['ratings'] || {}
+    cache_data['ratings'] || []
   end
 
   def overall_gs_rating
@@ -11,21 +11,21 @@ module CachedRatingsMethods
   end
 
   def great_schools_rating
-    school_rating_by_data_type_id(174)
+    school_rating_by_name('GreatSchools rating')
   end
 
   def test_scores_rating
-    school_rating_by_data_type_id(164)
+    school_rating_by_name('Test scores rating')
   end
 
   def student_growth_rating
-    school_rating_by_data_type_id(165)
+    school_rating_by_name('Student growth rating')
   end
 
-  def school_rating_by_data_type_id(data_type_id)
-    overall_ratings_obj = ratings.find { |rating| rating['data_type_id'] == data_type_id  }
-    if overall_ratings_obj
-      overall_ratings_obj['school_value_float'].to_i
+  def school_rating_by_name(rating_name=nil)
+    ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
+    if rating_name && ratings_obj
+      ratings_obj['school_value_float'].to_i
     else
       NO_RATING_TEXT
     end

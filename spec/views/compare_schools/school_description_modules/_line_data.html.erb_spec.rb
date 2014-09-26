@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../../helpers/school_with_cache_helper'
 
 RSpec.configure do |c|
   c.include CompareSchoolsConcerns
@@ -63,8 +64,9 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
   let(:icon_compare_config) { SchoolCompareConfig.new(icon_config) }
   let(:ethnicity_compare_config) { SchoolCompareConfig.new(ethnicity_config) }
 
-  let(:school) { FactoryGirl.build(:an_elementary_school) }
-  let(:decorated_school) { SchoolCompareDecorator.new(school) }
+  init_school_with_cache
+
+  let(:decorated_school) { SchoolCompareDecorator.new(school_with_cache) }
 
   before do
     assign(:school, decorated_school)
@@ -94,7 +96,7 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
 
   context 'when no ethnicity data are present' do
     before do
-      allow(decorated_school).to receive(:ethnicity_data).and_return([])
+      allow(decorated_school.school_cache).to receive(:ethnicity_data).and_return([])
       instance_variable_set('@schools', [decorated_school])
       prep_school_ethnicity_data!
       allow(view).to receive(:config) { ethnicity_compare_config }
@@ -104,14 +106,14 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
     it 'displays NO_ETHNICITY_SYMBOL for all breakdowns' do
       ethnicity_data.each do |ethnicity|
         breakdown = ethnicity['breakdown']
-        expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{SchoolCompareDecorator::NO_ETHNICITY_SYMBOL}"
+        expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL}"
       end
     end
   end
 
   context 'when ethnicity data is present' do
     before do
-      allow(decorated_school).to receive(:ethnicity_data).and_return(ethnicity_data)
+      allow(decorated_school.school_cache).to receive(:ethnicity_data).and_return(ethnicity_data)
       instance_variable_set('@schools', [decorated_school])
       prep_school_ethnicity_data!
       allow(view).to receive(:config) { ethnicity_compare_config }
@@ -121,8 +123,8 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
     it 'displays the breakdowns and values correctly' do
       ethnicity_data.each do |ethnicity|
         breakdown = ethnicity['breakdown']
-        value = ethnicity['school_value'] || SchoolCompareDecorator::NO_ETHNICITY_SYMBOL
-        value = "#{value.to_f.round}%" unless value == SchoolCompareDecorator::NO_ETHNICITY_SYMBOL
+        value = ethnicity['school_value'] || CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL
+        value = "#{value.to_f.round}%" unless value == CachedCharacteristicsMethods::NO_ETHNICITY_SYMBOL
         expect(rendered).to have_content "#{truncate(breakdown, length: 26)} #{value}"
       end
     end

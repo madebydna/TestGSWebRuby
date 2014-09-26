@@ -3,14 +3,14 @@ module CompareSchoolsConcerns
 
   protected
 
-  SCHOOL_CACHE_KEYS = %w(characteristics ratings test_scores esp_responses reviews_snapshot)
+  SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
   OVERALL_RATING_NAME = 'GreatSchools rating'
 
   def prep_school_ethnicity_data!
     all_breakdowns = []
     @ethnicity_datapoints = []
     @schools.each do |school|
-      school.ethnicity_data.each do |ethnicity|
+      school.school_cache.ethnicity_data.each do |ethnicity|
         if ethnicity.key? 'school_value'
           unless all_breakdowns.any? { |eth| eth == ethnicity['breakdown'] }
             all_breakdowns << ethnicity['breakdown']
@@ -21,7 +21,7 @@ module CompareSchoolsConcerns
     @schools.each do |school|
       school.prepped_ethnicities = []
       all_breakdowns.each do |breakdown|
-        school_ethnicity = school.ethnicity_data.find { |ethnicity| ethnicity['breakdown'] == breakdown }
+        school_ethnicity = school.school_cache.ethnicity_data.find { |ethnicity| ethnicity['breakdown'] == breakdown }
         school_value = if school_ethnicity
                          school_ethnicity['school_value']
                        else
@@ -43,23 +43,22 @@ module CompareSchoolsConcerns
     all_ratings = []
     @ratings_datapoints = []
     @schools.each do |school|
-      school.ratings.each do |rating|
+      school.school_cache.ratings.each do |rating|
         unless all_ratings.any? { |r| r == rating['name'] }
           all_ratings << rating['name']
         end
       end
     end
     @schools.each do |school|
-      school.prepped_ratings = []
       all_ratings.each do |rating_name|
-        school_rating = school.ratings.find{ |r| r['name'] == rating_name }
-        school_value = school_rating.nil? ? nil : school_rating['school_value_text'] || school_rating['school_value_float'].to_i
+        school_rating = school.school_cache.ratings.find{ |r| r['name'] == rating_name }
+        # TODO: figure out how to handle value text ratings
+        # school_value = school_rating.nil? ? nil : school_rating['school_value_text'] || school_rating['school_value_float'].to_i
         rating_id = school_rating.nil? ? nil : school_rating['data_type_id']
-        school.prepped_ratings << { rating_name => school_value }
 
         unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == rating_name }
           if rating_name == OVERALL_RATING_NAME
-            @ratings_datapoints << { method: :great_schools_rating_icon, argument: rating_name, label: rating_name, sort: rating_id}
+            @ratings_datapoints << { method: :great_schools_rating_icon, label: rating_name, sort: rating_id}
           else
             @ratings_datapoints << { method: :school_rating_by_name, argument: rating_name, label: rating_name, sort: rating_id}
           end
@@ -70,26 +69,35 @@ module CompareSchoolsConcerns
   end
 
   def decorated_schools
-    decorated_schools = []
-    cache_data = school_cache_data
-    filter_display_map = FilterBuilder.new.filter_display_map # for labeling fit score breakdowns
-    db_schools = School.on_db(@state).where(id: @params_schools, active: true)
-    db_schools.each do |db_school|
-      if decorated_schools.size < 4
-        decorated_school = SchoolCompareDecorator.new(db_school, context: cache_data[db_school.id.to_i])
-        decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
-        unless decorated_school.fit_score_breakdown.nil?
-          decorated_school.update_breakdown_labels! filter_display_map
-          decorated_school.sort_breakdown_by_match_status!
-        end
-        decorated_schools << decorated_school
-      end
-    end
-    decorated_schools
+    schools_with_data = schools_with_caches
+    prep_schools_for_compare!(schools_with_data)
   end
 
-  def school_cache_data
-    SchoolCache.for_schools_keys(SCHOOL_CACHE_KEYS,@params_schools,@state)
+  def schools_with_caches
+    db_schools = School.on_db(@state).where(id: @params_schools, active: true)
+    db_schools = db_schools[0..3]
+
+    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
+    db_schools.each do |db_school|
+      query = query.include_schools(db_school.state, db_school.id)
+    end
+    query_results = query.query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+    school_cache_results.decorate_schools(db_schools)
+  end
+
+  def prep_schools_for_compare!(decorated_schools)
+    filter_display_map = FilterBuilder.new.filter_display_map # for labeling fit score breakdowns
+    decorated_schools.map do |school|
+      decorated_school = SchoolCompareDecorator.decorate(school)
+      decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
+      unless decorated_school.fit_score_breakdown.nil?
+        decorated_school.update_breakdown_labels! filter_display_map
+        decorated_school.sort_breakdown_by_match_status!
+      end
+      decorated_school
+    end
   end
 
   def compare_schools_list_mapping

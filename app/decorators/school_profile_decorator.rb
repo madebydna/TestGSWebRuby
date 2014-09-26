@@ -3,6 +3,7 @@ class SchoolProfileDecorator < Draper::Decorator
   delegate_all
 
   include GradeLevelConcerns
+  include SchoolTypeConcerns
 
   def link_to_overview(*args, &blk)
     h.link_to h.school_path(school), *args, &blk
@@ -12,22 +13,16 @@ class SchoolProfileDecorator < Draper::Decorator
     school.type.gs_capitalize_first
   end
 
-  def decorated_school_type
-    if type == 'Charter'
-      'Public charter'
-    elsif type == 'Public'
-      'Public district'
-    else
-      'Private'
-    end
-  end
-
   def photo(width = 130, height = 130)
     uploaded_photo(height) || street_view_photo(width, height)
   end
 
   def city_state
     [city, state].join(', ')
+  end
+
+  def great_schools_rating
+    school_metadata[:overallRating].presence
   end
 
   def google_formatted_street_address

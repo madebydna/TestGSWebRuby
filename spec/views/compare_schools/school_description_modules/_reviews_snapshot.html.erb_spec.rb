@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../../helpers/school_with_cache_helper'
 
 describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb' do
   let(:reviews_snapshot) {{
@@ -38,8 +39,9 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
       'star_counts'=>[0, 0, 0, 0, 0, 0]
   }}
 
-  let(:school) { FactoryGirl.build(:an_elementary_school) }
-  let(:decorated_school) { SchoolCompareDecorator.new(school) }
+  init_school_with_cache
+
+  let(:decorated_school) { SchoolCompareDecorator.new(school_with_cache) }
   let(:school_path) { 'www.greatschools.org/state/city/55-school/' }
 
   before do
@@ -49,7 +51,7 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
 
   context 'when no snapshot is present' do
     before do
-      allow_any_instance_of(SchoolCompareDecorator).to receive(:reviews_snapshot).and_return({})
+      allow(decorated_school.school_cache).to receive(:reviews_snapshot).and_return({})
       render
     end
 
@@ -60,7 +62,7 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
 
   context 'when snapshot is present' do
     before do
-      allow_any_instance_of(SchoolCompareDecorator).to receive(:reviews_snapshot).and_return(reviews_snapshot)
+      allow(decorated_school.school_cache).to receive(:reviews_snapshot).and_return(reviews_snapshot)
       render
     end
 
@@ -77,7 +79,7 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
 
   context 'when there are no ratings' do
     before do
-      allow_any_instance_of(SchoolCompareDecorator).to receive(:reviews_snapshot).and_return(no_ratings_snapshot)
+      allow(decorated_school.school_cache).to receive(:reviews_snapshot).and_return(no_ratings_snapshot)
       render
     end
 

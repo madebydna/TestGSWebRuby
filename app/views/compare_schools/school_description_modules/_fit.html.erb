@@ -21,7 +21,7 @@
                 <% elsif breakdown[:match_status] == :no %>
                   X
                 <% else %>
-                  <%= SchoolCompareDecorator::NO_DATA_SYMBOL %>
+                  <%= render 'shared/no_data_symbol_and_popup' %>
                 <% end %>
               </td>
               <td class="tal <%= breakdown[:match_status] != :yes ? 'gray-dark' : '' %>">

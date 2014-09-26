@@ -178,9 +178,9 @@ module FitScoreConcerns
     [*filters].each do |filter|
       filter_values = []
       if filter
-        if respond_to?(:programs)
-          if !programs.nil? && programs.key?(filter.to_s)
-            filter_values = programs[filter.to_s].keys
+        if respond_to?(:school_cache)
+          if !school_cache.programs.nil? && school_cache.programs.key?(filter.to_s)
+            filter_values = school_cache.programs[filter.to_s].keys
           end
         elsif respond_to?(filter)
           potential_values = try(filter)
