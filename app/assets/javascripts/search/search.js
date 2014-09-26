@@ -11,6 +11,8 @@ Array.prototype.contains = function(obj) {
 GS.search = GS.search || {};
 
 GS.search.assignedSchools = GS.search.assignedSchools || (function() {
+    var validLocationTypes = ['street_address', 'route', 'intersection', 'premise', 'subpremise'];
+
     var shouldGetAssignedSchools = function() {
         if (gon.pagename != 'SearchResultsPage') {
             return false;
@@ -23,14 +25,20 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
 
         var isSearchSpecificEnough = false;
 
-        // TODO: Replace this prototype logic with the real thing (tm)
-        if (GS.uri.Uri.getFromQueryString("assignedSchool")) {
-            isSearchSpecificEnough = true;
+        var locationType = GS.uri.Uri.getFromQueryString("locationType");
+        if (locationType) {
+            for (var x=0; x < validLocationTypes.length; x++) {
+                if (locationType.indexOf(validLocationTypes[x]) > -1) {
+                    isSearchSpecificEnough = true;
+                    break;
+                }
+            }
         }
         return isSearchSpecificEnough;
     };
 
-    var getAssignedSchools = function() {
+    var getAssignedSchools = function(setAssignedSchoolCallbackFn) {
+        setAssignedSchoolCallbackFn = setAssignedSchoolCallbackFn || setAssignedSchool;
         var lat = GS.uri.Uri.getFromQueryString("lat");
         var lon = GS.uri.Uri.getFromQueryString("lon");
         var grade = GS.uri.Uri.getFromQueryString("grades");
@@ -52,14 +60,14 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
                     var schoolWrapper = data.results[x];
                     if (schoolWrapper.schools && schoolWrapper.schools.length) {
                         try {
-                            setAssignedSchool(schoolWrapper.level, schoolWrapper.schools[0]);
+                            setAssignedSchoolCallbackFn(schoolWrapper.level, schoolWrapper.schools[0]);
                         } catch (e) {
                             // on any error just ignore it and move on
                         }
-                    } else {
-                        setNoAssignedSchools();
                     }
                 }
+            } else if (data && data.results && data.results.length === 0) {
+                setNoAssignedSchools();
             }
         });
     };
@@ -145,7 +153,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     };
 
     var setNoAssignedSchools = function() {
-        // TODO
+        $('#js-assigned-school-no-result').show('slow');
     };
 
     return {
@@ -305,7 +313,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                     data['lon'] = geocodeResult['lon'];
                     data['zipCode'] = geocodeResult['zipCode'];
                     data['state'] = geocodeResult['state'];
-//                    data['locationType'] = geocodeResult['type'];
+                    data['locationType'] = geocodeResult['type'];
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
 //                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
