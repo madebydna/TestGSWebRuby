@@ -56,7 +56,7 @@ module HubConcerns
       @hub_matching_current_url
     else
       @hub_matching_current_url = (
-        HubCityMapping.for_city_and_state(city_param, @state[:short]) if state_param
+        HubCityMapping.for_city_and_state(city_param, @state[:short]) if @state
       )
     end
   end
