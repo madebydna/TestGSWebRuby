@@ -219,7 +219,7 @@ class School < ActiveRecord::Base
     end
 
     states_to_ids.each do |state, ids|
-      schools += self.on_db(state.to_sym).where(id: ids).to_a
+      schools += self.on_db(state.to_sym).where(id: ids, active: true).to_a
     end
 
     # Sort schools the way they were passed in
