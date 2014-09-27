@@ -23,8 +23,9 @@ class FilterBuilder
   end
 
   def run_db_callbacks(filter)
-    @callbacks.each do |callback|
-      return callback.call(filter) if callback.call(filter) #returns filter if callback matches conditional
+    @callbacks.each_with_index do |callback, i|
+      callback_value = callback.call(filter)
+      (@callbacks.delete_at(i) and return callback_value) if callback_value.present? #returns filter if callback matches conditional
     end
     false
   end
