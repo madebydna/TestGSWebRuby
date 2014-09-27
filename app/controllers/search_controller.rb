@@ -135,7 +135,6 @@ class SearchController < ApplicationController
 
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
-    setup_filter_display_map
 
     set_page_instance_variables # @results_offset @page_size @page_number
 
@@ -169,6 +168,7 @@ class SearchController < ApplicationController
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
+    setup_filter_display_map(@state ? @state[:short] : nil)
     set_up_localized_search_hub_params
 
     omniture_filter_list_values(filters, @params_hash)
@@ -359,10 +359,10 @@ class SearchController < ApplicationController
     end
   end
 
-  def setup_filter_display_map
+  def setup_filter_display_map(state_short)
     @search_bar_display_map = get_search_bar_display_map
 
-    filter_builder = FilterBuilder.new
+    filter_builder = FilterBuilder.new(state_short)
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
   end
