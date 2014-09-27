@@ -49,23 +49,45 @@ module CompareSchoolsConcerns
         end
       end
     end
+    ratings_labels = ratings_labels_from_config
     @schools.each do |school|
       all_ratings.each do |rating_name|
         school_rating = school.school_cache.ratings.find{ |r| r['name'] == rating_name }
-        # TODO: figure out how to handle value text ratings
-        # school_value = school_rating.nil? ? nil : school_rating['school_value_text'] || school_rating['school_value_float'].to_i
         rating_id = school_rating.nil? ? nil : school_rating['data_type_id']
+        label = ratings_labels[rating_id] ? ratings_labels[rating_id] : rating_name
 
-        unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == rating_name }
+        unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == label }
           if rating_name == OVERALL_RATING_NAME
-            @ratings_datapoints << { method: :great_schools_rating_icon, label: rating_name, sort: rating_id}
-          else
-            @ratings_datapoints << { method: :school_rating_by_name, argument: rating_name, label: rating_name, sort: rating_id}
+            @ratings_datapoints << { method: :great_schools_rating_icon, label: label, sort: rating_id}
+          elsif ratings_labels.keys.include? rating_id
+            @ratings_datapoints << { method: :school_rating_by_name, argument: rating_name, label: label, sort: rating_id}
           end
         end
       end
     end
     prep_ratings_display!
+  end
+
+  def ratings_labels_from_config
+    ratings_labels = {}
+    ratings_config = RatingsConfiguration.configuration_for_school(@state)
+    ratings_config.each do |rating_type, rating_type_hash|
+      if rating_type_hash.is_a?(Hash)
+        # Only show sub-ratings for GS ratings
+        rating_level = rating_type == 'gs_rating' ? 'rating_breakdowns' : 'overall'
+        rating_description = rating_type_hash[rating_level]
+        if rating_description.values.first.is_a?(Hash)
+          rating_description.values.each do |description|
+            if description['data_type_id']
+              ratings_labels[description['data_type_id']] = description['label']
+            end
+          end
+        elsif rating_description['data_type_id']
+          ratings_labels[rating_description['data_type_id']] = rating_description['label']
+        end
+      end
+    end
+    ratings_labels
   end
 
   def decorated_schools

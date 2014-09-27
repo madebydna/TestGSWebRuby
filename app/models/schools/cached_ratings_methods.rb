@@ -25,7 +25,13 @@ module CachedRatingsMethods
   def school_rating_by_name(rating_name=nil)
     ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
     if rating_name && ratings_obj
-      ratings_obj['school_value_float'].to_i
+      if ratings_obj['school_value_text']
+        ratings_obj['school_value_text']
+      elsif ratings_obj['school_value_float']
+        ratings_obj['school_value_float'].to_i
+      else
+        NO_RATING_TEXT
+      end
     else
       NO_RATING_TEXT
     end
