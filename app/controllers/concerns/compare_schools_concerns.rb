@@ -40,21 +40,13 @@ module CompareSchoolsConcerns
   end
 
   def prep_school_ratings!
-    all_ratings = []
     @ratings_datapoints = []
-    @schools.each do |school|
-      school.school_cache.ratings.each do |rating|
-        unless all_ratings.any? { |r| r == rating['name'] }
-          all_ratings << rating['name']
-        end
-      end
-    end
     ratings_labels = ratings_labels_from_config
     @schools.each do |school|
-      all_ratings.each do |rating_name|
-        school_rating = school.school_cache.ratings.find{ |r| r['name'] == rating_name }
-        rating_id = school_rating.nil? ? nil : school_rating['data_type_id']
-        label = ratings_labels[rating_id] ? ratings_labels[rating_id] : rating_name
+      school.school_cache.ratings.each do |rating|
+        rating_name = rating['name']
+        rating_id = rating['data_type_id']
+        label = ratings_labels[rating_id] || rating_name
 
         unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == label }
           if rating_name == OVERALL_RATING_NAME
