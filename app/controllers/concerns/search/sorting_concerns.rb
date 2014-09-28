@@ -13,7 +13,7 @@ module SortingConcerns
   end
 
   def active_sort_name(sort)
-    if sort.nil?
+    if sort.nil? || (sort.to_s.include?('fit') && !filtering_search?)
       if search_by_location?
         :distance
       elsif search_by_name?
