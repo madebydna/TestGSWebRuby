@@ -26,8 +26,9 @@
         <!--<% value = hash[columns_to_print.second['key'].to_sym] %>-->
         <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
         <% label = columns_to_print.second['label'] %>
-
-          <span class="jumbo-text open-sans_cb text_orange"><%= value %></span>
+        <% format = columns_to_print.second['format'] %>
+                <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %>
+                </span>
           <br /><%= label %>
 
 
@@ -35,9 +36,12 @@
             <% key = column['key'].to_sym %>
             <% if hash.has_key?(key) %>
               <% value = data_config.column_value(column, hash[key]) %>
+              <% format = column['format'] %>
                <div class="tac ptl">
-                   <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %></span>
+                   <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %><% if format == 'percentage' %>%<% end %>
+                   </span>
                    <br /><%= column['label'] %>
+
                </div>
             <% end %>
           <% end %>
