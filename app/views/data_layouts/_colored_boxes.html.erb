@@ -25,13 +25,13 @@
         <% counter = 0 %>
         <% match_data.each do |box| %>
 
-           <div class="col-sm-6 col-md-3 i-48-color-<%= box[:icon] %>" style="height:120px;">
+           <div class="col-sm-3 col-md-3 i-48-color-<%= box[:icon] %>" style="height:140px;">
               <div class="phl text_fff row pvm">
-                <div class="col-xs-3 tac"><span class="mtm iconx48 i-48-<%= box[:icon] %>"></span></div>
-                <div class="col-xs-9 tac">
-                    <span class="font-size-large"><%= box[:subject_count] %></span><br />
+                <div class="col-xs-4 tac"><span class="mtm iconx48 i-48-<%= box[:icon] %>"></span></div>
+                <div class="col-xs-8 tac">
+                    <span class="open-sans_sb font-size-block"><%= box[:subject_count] %></span><br />
                     <span class=""><%= box[:label] %></span><br />
-                    <span class="black"><span class="open-sans_i">including:</span> <%= box[:subject_random] %></span>
+                    <div class="black pts" style="line-height: 16px"><span class="open-sans_i" >including:</span> <%= box[:subject_random] %></div>
                 </div>
               </div>
            </div>
