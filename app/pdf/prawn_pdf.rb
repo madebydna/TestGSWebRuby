@@ -1,15 +1,16 @@
 class PrawnPdf < Prawn::Document
-  def initialize(canonical_url)
+  def initialize(print_pdf_url)
 
     beginning = Time.now
+    # super( :top_margin => 18,
+    #        :bottom_margin => 18)
     super()
 
     rect_edge_rounding = 10
     blue_line_stroke = 60, 100, 0, 0
-    grey = 3, 3, 3, 3
-    white_fill = 0, 0, 0, 0
+    grey = 0, 0, 0, 6
     black_fill = 100, 100, 100, 100
-    light_blue_fill = 15, 0, 0, 0 #elementary
+    school_profile_blue = 5, 1, 0, 0 #elementary
     middle_school_fill = 45, 0 ,10, 0
     high_school_fill = 10, 45, 0, 9
     prek_fill = 9, 5, 100, 5
@@ -23,29 +24,50 @@ class PrawnPdf < Prawn::Document
                 ]
 
 # todo make col_width and col_height relational to gutter
-    define_grid(:columns => 6, :rows => 11, :gutter => 20)
+
+    # move_down 20
+
+    define_grid(:columns => 6, :rows => 9, :gutter => 20)
 # grid.show_all
 # start_new_page
+
+    # header margin_box.top_left do
+    #   text "header" , :size => 25, :aligh => :center
+
+    # end
+
+    # start_new_page(:top_margin => 300)
+    # text 'header'
+
 
 
 
 # first column
 #     grid([1, 0], [3, 5]).show
-#     grid.show_all
-    i = 1
+    grid.show_all
+    i = 0
     count = 1
     foo = 0
 
     while i and count <= 4 and foo <= 4
 
+      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [270,740], :scale => 0.2
+      # draw_text page_number, :at => [270, 755], :size => 7
+      # text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      #          :at => [300, 755],
+      #          :width => 200,
+      #          :height => 10,
+      #          :size => 7,
+      #          :style => :italic
 
 
       grid([i, 0], [i+2, 5]).bounding_box do
+        move_down 18
         # grid([0, 0], [2, 1]).show
         grid([0, 0], [2, 1]).bounding_box do
           stroke_color blue_line_stroke
           if fake_data[foo][:grade_level] == 'e'
-            fill_color light_blue_fill
+            fill_color school_profile_blue
           elsif fake_data[foo][:grade_level] == 'm'
             fill_color middle_school_fill
           elsif fake_data[foo][:grade_level] == 'h'
@@ -53,8 +75,9 @@ class PrawnPdf < Prawn::Document
           else
             fill_color prek_fill
           end
-          fill_and_stroke_rounded_rectangle([0, cursor], col_width, 175, rect_edge_rounding)
+          fill_and_stroke_rounded_rectangle([0, cursor], col_width, 225, rect_edge_rounding)
           fill_color 100, 20, 20, 20
+          move_down 5
           text_box fake_data[foo][:school_name],
                    #
                    :at => [5, cursor],
@@ -71,11 +94,11 @@ class PrawnPdf < Prawn::Document
                    :height => 20,
                    :size => 7
 #
-          move_down 10
+          move_down 15
           stroke_color grey
           stroke_rounded_rectangle([20, cursor], 130, 30, rect_edge_rounding)
 
-          bounding_box([1, 130], :width => 0, :height => 0) do
+          bounding_box([1, cursor], :width => 0, :height => 0) do
             move_down 2
             image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.15
             move_down 15
@@ -116,7 +139,7 @@ class PrawnPdf < Prawn::Document
           data =[['123 address st'],
                  ['some state, CA 12345'],
                  ['Phone: 111-111-111'],
-                 [''],
+                 [' '],
                  ['School Hours:'],
                  ['0;00-0:00']]
 
@@ -163,7 +186,7 @@ class PrawnPdf < Prawn::Document
             cells.borders = []
             columns(2).font_style = :bold
 
-            cells.style(:height => 10)
+            cells.style(:height => 11)
           end
 
           move_down 5
@@ -198,13 +221,13 @@ class PrawnPdf < Prawn::Document
                 :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
-            cells.style(:height => 10)
+            cells.style(:height => 11)
           end
 
 
 
           else
-            fill_color light_blue_fill
+            fill_color school_profile_blue
             fill_rounded_rectangle([0, cursor], col_width, 95, 5)
             fill_color black_fill
             text_box "A whole other module",
@@ -325,24 +348,30 @@ class PrawnPdf < Prawn::Document
 
         end
 
-        move_down 5
-        stroke_color blue_line_stroke
-        stroke_horizontal_rule
+        # move_down 5
+        # stroke_color blue_line_stroke
+        # stroke_horizontal_rule
       end
 
       if count % 3 == 0
-        start_new_page
-        i = 1
+
+        # start_new_page(:bottom_margin => 20)
+        start_new_page()
+        grid.show_all
+        i = 0
+
       else
+
         i += 3
+        # grid.show_all
 
       end
 
 
-      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [130,15], :scale => 0.3
-      draw_text page_number, :at => [250, 0], :size => 7
+      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [180,-10], :scale => 0.2
+      draw_text page_number, :at => [270, -15], :size => 7
       text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-               :at => [300, 5],
+               :at => [300, -10],
                :width => 200,
                :height => 10,
                :size => 7,
