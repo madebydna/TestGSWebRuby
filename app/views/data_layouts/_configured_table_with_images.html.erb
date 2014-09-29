@@ -13,7 +13,7 @@
 
     <%= render "shared/section_header", category_placement:category_placement %>
 
-    <div class="row pbm_sm">
+    <div class="row pbm_sm open-sans_cb">
       <% category_placement.table_config.columns_to_print(data).each do |column| %>
           <% if column['display_type'] == :data_and_header %>
               <div class="col-sm-5 col-xs-4 center_when_small tac">
