@@ -17,23 +17,33 @@
     <% data.rows[0..3].each do |hash| %>
       <% size = 12 / data.rows[0..3].size %>
       <% sizes = { xs: 12, sm: size, md: size, lg: size } %>
-      <%= div_tag(sizes: sizes ) do %>
-        <% label = hash[columns_to_print.first['key'].to_sym] %>
-        <% value = hash[columns_to_print.second['key'].to_sym] %>
+      <%= div_tag(sizes: sizes, class:'ptm' ) do %>
+        <div class="ma" style="border:1px solid #CCCCCC; width:250px">
+
+        <% label_global = hash[columns_to_print.first['key'].to_sym] %>
+            <div class="pam"><%= label_global %></div>
+            <div class="tac pvl">
+        <!--<% value = hash[columns_to_print.second['key'].to_sym] %>-->
         <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
-        <div class="tac">
-          <span class="jumbo-text open-sans_cb"><%= value %></span>
-        </div>
-        <p class="tac">
-          <%= label %>
+        <% label = columns_to_print.second['label'] %>
+
+          <span class="jumbo-text open-sans_cb text_orange"><%= value %></span>
+          <br /><%= label %>
+
+
           <% columns_to_print[2..-1].each do |column| %>
             <% key = column['key'].to_sym %>
             <% if hash.has_key?(key) %>
               <% value = data_config.column_value(column, hash[key]) %>
-              </br><%= column['label'] %>: <%= value %>
+               <div class="tac ptl">
+                   <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %></span>
+                   <br /><%= column['label'] %>
+               </div>
             <% end %>
           <% end %>
-        </p>
+
+        </div>
+        </div>
       <% end %>
     <% end %>
   </div>
