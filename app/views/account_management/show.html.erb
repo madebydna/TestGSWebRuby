@@ -42,8 +42,14 @@
           ) %>
         </span>
         <div class="clearfix"></div>
-        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school %>
+        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school, account_page: true %>
       </div>
     <% end %>
   </div>
 <% end %>
+<div>
+    <span>HELLO</span>
+<form>
+    <input type="text" class="typeahead" />
+</form>
+</div>

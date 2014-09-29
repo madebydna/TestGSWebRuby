@@ -4,6 +4,9 @@
 <% if search_by_location? %>
   <% distance = decorated_school.distance #converting to 2 decimal places %>
 <% end %>
+<% unless defined? account_page %>
+    <% account_page = false %>
+<% end %>
 
 <div class="pam">
   <div class="row search-result-border prm bg-white">
@@ -68,24 +71,27 @@
             </div>
           </div>
         </div>
-        <!-- Homes for Sale -->
-        <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
-            <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
-                 id='js-compareSchool<%= "#{school.id}" %>'
-                 style="width:150px"
-                 data-schoolname="<%= school.name %>"
-                 data-schoolstate="<%= school.state.downcase %>"
-                 data-schoolid="<%= school.id %>"
-                 data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
-              <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
-              <div class="fl">Compare</div>
-            </button>
-            <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
-              <!--<div class="iconx24 i-24-home fl mrs"></div>-->
-              <div class="iconx16 i-16-home fl mrs"></div>
-              <div class="fl">Homes for sale</div>
-            <% end %>
-        </div>
+        <!-- do not show on account page -->
+        <% if account_page == false %>
+            <!-- Compare and Homes for Sale -->
+            <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
+                <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
+                     id='js-compareSchool<%= "#{school.id}" %>'
+                     style="width:150px"
+                     data-schoolname="<%= school.name %>"
+                     data-schoolstate="<%= school.state.downcase %>"
+                     data-schoolid="<%= school.id %>"
+                     data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
+                  <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
+                  <div class="fl">Compare</div>
+                </button>
+                <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
+                  <!--<div class="iconx24 i-24-home fl mrs"></div>-->
+                  <div class="iconx16 i-16-home fl mrs"></div>
+                  <div class="fl">Homes for sale</div>
+                <% end %>
+            </div>
+        <% end %>
       </div>
     </div>
 
