@@ -10,24 +10,22 @@ class FilterBuilder
 
   def build_filter_tree(filters)
     filters = {filter: filters} unless filters[:filters].nil?
-    array = []
-    filters.each do |key, filter|
-      if callback_filter = run_db_callbacks(filter)
-        callback_filter[:filters] = build_filter_tree(callback_filter[:filters]) unless callback_filter[:filters].nil?
-        array << Filter.new(callback_filter)
-      end
-      filter[:filters] = build_filter_tree(filter[:filters]) unless filter[:filters].nil?
-      array << Filter.new(filter)
-    end
-    array
+    filters.map do |key, filter|
+      build_filter(run_db_callbacks(filter))
+    end.compact
+  end
+
+  def build_filter(filter)
+    filter[:filters] = build_filter_tree(filter[:filters]) if filter[:filters].present?
+    Filter.new(filter) if filter.present?
   end
 
   def run_db_callbacks(filter)
     @callbacks.each_with_index do |callback, i|
       callback_value = callback.call(filter)
-      (@callbacks.delete_at(i) and return callback_value) if callback_value.present? #returns filter if callback matches conditional
+      (@callbacks.delete_at(i) and return callback_value) if callback_value
     end
-    false
+    filter
   end
 
   def build_callbacks(db_callbacks)
@@ -44,7 +42,7 @@ class FilterBuilder
         conditions.each do |condition|
           return false if filter[condition[:key].to_sym].to_s != condition[:match]
         end
-        callback[:new_filter] #add string decoding when we pull hashes from db
+        callback[:new_filter] #ToDo add string decoding when we pull hashes from db
       end
     end
   end
@@ -59,16 +57,20 @@ class FilterBuilder
 
   def indiana_db_callbacks
     [
-      {key: 'name,value', match: 'distance,25', new_filter: { label: '22 Miles', display_type: :select_box_value, name: :distance, value: 22 } },
+      # remove filter node
+      {key: 'name,value', match: 'distance,25', new_filter: {} },
+      # adding filter node
       {key: 'name,value', match: 'distance,60', new_filter:
         {
           display_type: :blank_container,
           filters: {
             fitler1: { label: '57 Miles', display_type: :select_box_value, name: :distance, value: 57 },
-            filter2: { label: '58 Miles', display_type: :select_box_value, name: :distance, value: 58 }
+            filter2: { label: '58 Miles', display_type: :select_box_value, name: :distance, value: 58 },
+            fitler3: { label: '60 Miles', display_type: :select_box_value, name: :distance, value: 60 },
           }
         }
       },
+      # modify filter node
       {key: 'name,value', match: 'class_offerings,mandarin', new_filter: { label: 'Japanese', unique_label: 'Japanese (class)', display_type: :basic_checkbox, name: :class_offerings, value: :japanese } },
     ]
   end
