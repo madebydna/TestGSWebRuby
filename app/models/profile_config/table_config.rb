@@ -31,7 +31,7 @@ class TableConfig
 
     @config['boxes'].inject([]) do |array, box|
       table_data.rows.each do |row|
-        if row[:key].match(box['key'])
+        if row[:key] == (box['key'])
           subject_count = row[:value].count
           subject_random = row[:value][rand(subject_count)]
           box_info = { :label => box['label'],
