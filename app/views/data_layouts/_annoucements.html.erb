@@ -1,6 +1,6 @@
 <% if @school.collection.present? && @school.collection.profile_banner.present? %>
     <% content = @school.collection.profile_banner %>
-    <div class="alert alert-success mtl"><p><span class="open-sans_b prm"><%= content["title"] %></span><%= content["content"] %>
+    <div class="alert alert-success mtl"><p><span class="open-sans_sb prm"><%= content["title"] %></span><%= content["content"] %>
         <% if hub_params.present? %>
             <%= link_to content["link_name"].html_safe, content["link_to"] %>
         <% end %>
