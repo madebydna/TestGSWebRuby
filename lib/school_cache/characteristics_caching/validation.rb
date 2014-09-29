@@ -1,5 +1,7 @@
 module CharacteristicsCaching::Validation
 
+  include SchoolDataValidation
+
   def validate!(characteristics)
     @characteristics = characteristics
 
@@ -15,8 +17,6 @@ module CharacteristicsCaching::Validation
   # Please give methods understandable names and logic with
   # comments when necessary. The goal is for a wide audience to
   # understand this business logic.
-
-  # TODO logging of why something was removed; logger class so we could change where it writes later if we want
 
   def validate_ethnicities!
     if @characteristics['Ethnicity']
@@ -34,6 +34,7 @@ module CharacteristicsCaching::Validation
     end
     if total_value < min_allowed || total_value > max_allowed
       @characteristics.except!('Ethnicity')
+      log_data_rejection(@state,@school.id,'Ethnicity',"Percent only added to #{total_value}")
     end
   end
 
