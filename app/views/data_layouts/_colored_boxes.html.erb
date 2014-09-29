@@ -1,0 +1,43 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% unless defined? no_title %>
+    <!--set defaults-->
+    <% no_title = false %>
+<% end %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+
+<% data = TableData.new data if !data.is_a? TableData %>
+<% match_data = data_config.match_data(data) %>
+
+<% if match_data.present? %>
+
+    <%= render layout:'col', locals:{ css_class:'pbl', category_placement: category_placement} do %>
+
+        <% if no_title == false %>
+            <a name="<%= category.code_name %>"></a>
+            <%= render "shared/section_header", category_placement:category_placement %>
+        <% end %>
+
+        <% counter = 0 %>
+        <% match_data.each do |box| %>
+
+           <div class="col-sm-6 col-md-3 i-48-color-<%= box[:icon] %>" style="height:120px;">
+              <div class="pam text_fff row mvm">
+                <div class="col-xs-3"><span class="mtm iconx48 i-48-<%= box[:icon] %>"></span></div>
+                <div class="col-xs-9 tac">
+                    <span class="font-size-large"><%= box[:subject_count] %></span><br />
+                    <span class=""><%= box[:label] %></span><br />
+                    <span class="black"><span class="open-sans_i">including:</span> <%= box[:subject_random] %></span>
+                </div>
+              </div>
+           </div>
+            <% counter = counter + 1 %>
+        <% end %>
+
+    <% end %>
+
+<% end %>
