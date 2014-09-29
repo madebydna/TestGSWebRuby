@@ -33,7 +33,7 @@
       <div class="js-favorite-school-<%= favorite_school.id %>">
         <% decorated_school = MySchoolListDecorator.decorate(school) %>
         <span class="fr prm">
-          <%= link_to('Remove', favorite_school_path(favorite_school),
+          <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
             {
               class: "js-delete-favorite-school-#{favorite_school.id}",
               method: 'delete',
