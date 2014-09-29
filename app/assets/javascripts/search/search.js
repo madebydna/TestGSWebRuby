@@ -123,7 +123,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var url = school.url;
         var reviewsUrl = school.url + 'reviews/';
         var qualityUrl = school.url + 'quality/';
-        var address = school.address.street1 + ' ' + school.address.cityStateZip;
+        var address = school.address.street1 + ', ' + school.address.cityStateZip;
 
         listItem.find('.js-name').html(name).attr('href', url);
         listItem.find('.js-address').html(address);
