@@ -135,7 +135,9 @@ p, a {
 .tdn { text-decoration: none; }
 
 
-.mrm_small {margin-right: 10px;}
+.mrm_sm {margin-right: 10px;}
+.mrl_lg {margin-right: 0px;}
+.pbm_sm {padding-bottom: 0px;}
 
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
@@ -167,15 +169,19 @@ p, a {
   .lar {
     text-align: right;
   }
+  .pbm_sm {padding-bottom: 10px;}
 }
 
 @media only screen and (max-width: 767px) {
   .jumbo-header {font-size: 32px}
   .center_when_small {text-align: center}
   .text_font_large {font-size: 36px}
-  .mrm_small {margin-right: 0}
+  .mrm_sm {margin-right: 0}
 }
 
+@media (min-width: 1200px) {
+  .mrl_large {margin-right: 15px}
+}
 
 
 // Translate classes to hide some of googles' images and top gadget bar.
