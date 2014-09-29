@@ -24,6 +24,7 @@ class AccountManagementController < ApplicationController
       my_school_list_schools = school_cache_results.decorate_schools(my_school_list_schools)
       @school_to_favorite_school = {}
       my_school_list_schools.each do |s|
+
         @school_to_favorite_school[s] = favorite_schools_map["#{s.state.downcase}#{s.id}"].first
       end
       @school_to_favorite_school

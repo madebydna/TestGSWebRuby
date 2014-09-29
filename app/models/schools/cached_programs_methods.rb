@@ -72,4 +72,32 @@ module CachedProgramsMethods
       NO_DATA_SYMBOL
     end
   end
+
+  def start_time
+    if programs['start_time']
+        programs['start_time'].keys.first
+    end
+  end
+
+  def end_time
+    if programs['end_time']
+      programs['end_time'].keys.first
+    end
+  end
+
+  def best_known_for
+    if programs['best_known_for']
+      programs['best_known_for'].keys.first
+    end
+  end
+
+  def deadline
+    if programs['application_deadline_date']
+      programs['application_deadline_date'].keys.first
+    elsif programs['application_deadline'] && !programs['application_deadline_date'] && programs['application_deadline'].keys.first=='yearround'
+       'Rolling deadline'
+    elsif programs['application_deadline'] && !programs['application_deadline_date'] && programs['application_deadline'].keys.first=='parents_contact'
+      'Contact school'
+    end
+  end
 end

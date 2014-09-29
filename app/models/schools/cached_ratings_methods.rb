@@ -22,6 +22,10 @@ module CachedRatingsMethods
     school_rating_by_name('Student growth rating')
   end
 
+  def college_readiness_rating
+    school_rating_by_name('College readiness rating')
+  end
+
   def school_rating_by_name(rating_name=nil)
     ratings_obj = ratings.find { |rating| rating['name'] == rating_name  }
     if rating_name && ratings_obj
