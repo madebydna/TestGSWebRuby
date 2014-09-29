@@ -29,7 +29,7 @@ describe 'Events Page' do
   end
 
   it 'shows all upcoming events' do
-    expect(page).to have_css '.iconx48', count: 3
+    expect(page).to have_css '.iconx48-cal', count: 3
     expect(page).to have_link 'Find out more', count: 3
   end
 end

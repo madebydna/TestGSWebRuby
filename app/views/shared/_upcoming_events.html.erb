@@ -23,7 +23,7 @@
       <% important_events[:max_important_event_to_display].times do |i| %>
         <% event = important_events[:events][i - 1] %>
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam upcoming-event">
-          <div class="pull-left iconx48 i-48-calender-month-<%= event[:date].month %>">
+          <div class="pull-left iconx48-cal i-48-calender-month-<%= event[:date].month %>">
             <div class="tac">
               <h4 class='mtl'><%= event[:date].day %></h4>
             </div>
