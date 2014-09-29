@@ -1,5 +1,7 @@
 class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Base
 
+  include CharacteristicsCaching::Validation
+
   CACHE_KEY = 'characteristics'
 
   def query_results
@@ -18,7 +20,7 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
       additional_data = build_hash_for_data_set(characteristic)
       hash[characteristic.label] << additional_data if additional_data
     end
-    hash
+    validate!(hash)
   end
 
   def build_hash_for_data_set(characteristic)
