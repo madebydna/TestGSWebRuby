@@ -7,7 +7,7 @@ class PrawnPdf < Prawn::Document
     super()
 
     rect_edge_rounding = 10
-    blue_line_stroke = 60, 100, 0, 0
+    blue_line_stroke = 70, 15, 0, 0
     grey = 0, 0, 0, 6
     black_fill = 100, 100, 100, 100
     school_profile_blue = 5, 1, 0, 0 #elementary
@@ -25,56 +25,38 @@ class PrawnPdf < Prawn::Document
 
 # todo make col_width and col_height relational to gutter
 
-    # move_down 20
 
     define_grid(:columns => 6, :rows => 9, :gutter => 20)
 # grid.show_all
 # start_new_page
 
-    # header margin_box.top_left do
-    #   text "header" , :size => 25, :aligh => :center
-
-    # end
-
-    # start_new_page(:top_margin => 300)
-    # text 'header'
-
-
-
-
 # first column
 #     grid([1, 0], [3, 5]).show
-    grid.show_all
+#     grid.show_all
     i = 0
     count = 1
     foo = 0
 
     while i and count <= 4 and foo <= 4
 
-      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [270,740], :scale => 0.2
-      # draw_text page_number, :at => [270, 755], :size => 7
-      # text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      #          :at => [300, 755],
-      #          :width => 200,
-      #          :height => 10,
-      #          :size => 7,
-      #          :style => :italic
 
+# header
+      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [270,740], :scale => 0.2
 
       grid([i, 0], [i+2, 5]).bounding_box do
         move_down 18
         # grid([0, 0], [2, 1]).show
         grid([0, 0], [2, 1]).bounding_box do
           stroke_color blue_line_stroke
-          if fake_data[foo][:grade_level] == 'e'
+          # if fake_data[foo][:grade_level] == 'e'
             fill_color school_profile_blue
-          elsif fake_data[foo][:grade_level] == 'm'
-            fill_color middle_school_fill
-          elsif fake_data[foo][:grade_level] == 'h'
-            fill_color high_school_fill
-          else
-            fill_color prek_fill
-          end
+          # elsif fake_data[foo][:grade_level] == 'm'
+          #   fill_color middle_school_fill
+          # elsif fake_data[foo][:grade_level] == 'h'
+          #   fill_color high_school_fill
+          # else
+          #   fill_color prek_fill
+          # end
           fill_and_stroke_rounded_rectangle([0, cursor], col_width, 225, rect_edge_rounding)
           fill_color 100, 20, 20, 20
           move_down 5
@@ -95,8 +77,9 @@ class PrawnPdf < Prawn::Document
                    :size => 7
 #
           move_down 15
-          stroke_color grey
-          stroke_rounded_rectangle([20, cursor], 130, 30, rect_edge_rounding)
+          # stroke_color grey
+          # stroke_rounded_rectangle([20, cursor], 130, 30, rect_edge_rounding)
+
 
           bounding_box([1, cursor], :width => 0, :height => 0) do
             move_down 2
@@ -111,9 +94,7 @@ class PrawnPdf < Prawn::Document
                      :style => :bold
 
           end
-#     #
 
-# image_path = "app/assets/images/pyoc/PYOC_Icons-06.png"
           data = [
               ['Test score rating', '3'],
               ['Student growth rating', '2'],
@@ -123,9 +104,30 @@ class PrawnPdf < Prawn::Document
                 :position => 55,
                 :cell_style => {size: 7, :padding => [0, 0, 1, 0], :text_color => "000000"}) do
             cells.borders = []
-            # row(0..1).columns(0..1).borders = [:bottom]
             columns(1).font_style = :bold
           end
+
+          move_down 5
+          stroke do
+            stroke_color grey
+            horizontal_line 0, col_width, :at => cursor
+          end
+
+          move_down 5
+          data = [
+              ['A', '3', 'C'],
+              ['Other score', 'Other score', 'Other score'],
+          ]
+          table(data, :column_widths => [53,53,53],
+                :position => 5,
+                :cell_style => {size:7, :padding => [0,0 ,0,0],:text_color => "000000"}) do
+            cells.borders = []
+            row(0).font_style = :bold
+            row(0).size = 11
+            row(0).padding = [0,0 ,5,10]
+
+          end
+
 
           bounding_box([1, 100], :width => 0, :height => 0) do
             move_down 10
@@ -167,7 +169,7 @@ class PrawnPdf < Prawn::Document
                    :at => [0, cursor],
                    :width => 75,
                    :height => 10,
-                   :size => 7.5,
+                   :size => 8,
                    :style => :bold
 
           move_down 10
@@ -182,18 +184,18 @@ class PrawnPdf < Prawn::Document
 
           table(data, :column_widths => [30, 100, 30],
                 :row_colors => ['ffffff', 'eeeeee'],
-                :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
+                :cell_style => {size: 8, :padding => [0, 0, 0, 5]}) do
             cells.borders = []
             columns(2).font_style = :bold
 
-            cells.style(:height => 11)
+            cells.style(:height => 13)
           end
 
-          move_down 5
+          move_down 10
 
           if i % 2 == 0
           fill_color grey
-          fill_rounded_rectangle([0, cursor], col_width, 95, 5)
+          fill_rounded_rectangle([0, cursor], col_width, 110, 5)
 
           move_down 5
           fill_color black_fill
@@ -203,7 +205,7 @@ class PrawnPdf < Prawn::Document
                    :at => [5, cursor],
                    :width => 75,
                    :height => 10,
-                   :size => 7.5,
+                   :size => 8,
                    :style => :bold
 
           move_down 10
@@ -218,10 +220,10 @@ class PrawnPdf < Prawn::Document
           ]
 
           table(data * 7, :column_widths => [130,30],
-                :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
+                :cell_style => {size: 8, :padding => [0, 0, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
-            cells.style(:height => 11)
+            cells.style(:height => 12)
           end
 
 
@@ -234,7 +236,7 @@ class PrawnPdf < Prawn::Document
                      :at => [5, cursor],
                      :width => 75,
                      :height => 10,
-                     :size => 7.5,
+                     :size => 8,
                      :style => :italic
 
             move_down 10
@@ -256,7 +258,7 @@ class PrawnPdf < Prawn::Document
                    :at => [0, cursor],
                    :width => 75,
                    :height => 10,
-                   :size => 7,
+                   :size => 8,
                    :style => :bold
           move_down 10
           stroke do
@@ -272,18 +274,18 @@ class PrawnPdf < Prawn::Document
 
           table(data * 8, :column_widths => [130,30],
                 :row_colors => ['ffffff', 'eeeeee'],
-                :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
+                :cell_style => {size: 8, :padding => [0, 0, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
-            cells.style(:height => 10)
+            cells.style(:height => 12)
           end
 
           move_down 10
           text_box 'Our grads go to?',
                    :at => [0, cursor],
                    :width => 75,
-                   :height => 10,
-                   :size => 7,
+                   :height => 12,
+                   :size => 8,
                    :style => :bold
           # move_down 10
           # stroke do
@@ -299,18 +301,17 @@ class PrawnPdf < Prawn::Document
 
           table(data * 3, :column_widths => [160],
                 # :row_colors => ['ffffff', 'eeeeee'],
-                :cell_style => {size: 7, :padding => [0, 0, 0, 0]}) do
+                :cell_style => {size: 8, :padding => [0, 0, 0, 0]}) do
             cells.borders = []
-            # columns(1).font_style = :bold
-            cells.style(:height => 10)
+            cells.style(:height => 11)
           end
 
-          move_down 5
+          move_down 10
           text_box 'Programs',
                    :at => [0, cursor],
                    :width => 75,
                    :height => 10,
-                   :size => 7,
+                   :size => 8,
                    :style => :bold
           move_down 10
           stroke do
@@ -324,28 +325,24 @@ class PrawnPdf < Prawn::Document
           image_path_score = "app/assets/images/pyoc/PYOC_Icons-06.png"
 
           data = [[]]
-          # data = [[{:image => image_path_chess, :scale => 0.2}, {:image => image_path_chess, :scale => 0.2}, {:image => image_path_score, :scale => 0.1} ]]
 
           sprite = 0
           while sprite < 4
             if sprite % 2 == 0
-              data[0].push({:image => image_path_chess, :scale => 0.2})
+              data[0].push({:image => image_path_chess, :scale => 0.3})
             elsif sprite % 3 == 0
-              data[0].push({:image => image_path_score, :scale => 0.1})
+              data[0].push({:image => image_path_score, :scale => 0.2})
             else
               data[0].push('')
             end
             sprite += 1
           end
           #
-          table(data, :column_widths => [20, 20, 20, 20, 20, 20, 20, 20],
-                :cell_style => {size: 7, :padding => [0, 0, 0, 5]}) do
+          table(data, :column_widths => [40, 40, 40, 40],
+                :cell_style => {:padding => [0, 0, 0, 0]}) do
             cells.borders = []
-            cells.style(:height => 10)
+            cells.style(:height => 20)
           end
-
-
-
         end
 
         # move_down 5
@@ -355,18 +352,11 @@ class PrawnPdf < Prawn::Document
 
       if count % 3 == 0
 
-        # start_new_page(:bottom_margin => 20)
         start_new_page()
-        grid.show_all
         i = 0
-
       else
-
         i += 3
-        # grid.show_all
-
       end
-
 
       image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [180,-10], :scale => 0.2
       draw_text page_number, :at => [270, -15], :size => 7
@@ -376,7 +366,6 @@ class PrawnPdf < Prawn::Document
                :height => 10,
                :size => 7,
                :style => :italic
-
 
       count += 1
       foo += 1
