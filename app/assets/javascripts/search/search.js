@@ -23,6 +23,10 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             return false;
         }
 
+        var grade = GS.uri.Uri.getFromQueryString("grades");
+        if (grade == 'p' || grade == 'pk') {
+            return false;
+        }
         return true;
     };
 
@@ -48,13 +52,13 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             return;
         }
         var data = {lat: lat, lon: lon};
-        var gradeToLevelMap = {
+        var validGradesMap = {
             'k': 'e', '1': 'e', '2': 'e', '3': 'e', '4': 'e', '5': 'e',
             '6': 'm', '7': 'm', '8': 'm',
             '9': 'h', '10': 'h', '11': 'h', '12': 'h'
         };
-        if (grade && gradeToLevelMap[grade]) {
-            data.level = gradeToLevelMap[grade];
+        if (grade && validGradesMap[grade]) {
+            data.grade = grade;
         }
         jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
             if (data && data.results && data.results.length) {
