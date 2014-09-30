@@ -168,8 +168,6 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var $existingSchoolPhoto = $('.js-schoolSearchResult[data-schoolId=' + schoolId + '][data-schoolState=' + state.toLowerCase() + '] .js-schoolPhoto').children();
         if ($existingSchoolPhoto.size() > 0) {
             listItem.find('.js-photo').html($existingSchoolPhoto.clone());
-        } else {
-            listItem.find('.js-photo').html('<div style="width:130px; height: 130px;"></div>');
         }
 
         listItem.show('slow');
