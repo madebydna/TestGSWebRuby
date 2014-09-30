@@ -4,11 +4,18 @@
         <span class="pointer vam js-icon <%= decorated_school.fit_score_icon %>"></span>
         <span class="pointer caret pa" style="top: 12px;"></span>
     <% else %>
-        <div class="mtl"></div>
+        <div class="mts"></div>
     <% end %>
   </div>
-  <span class="pointer font-size-xs ptl"><%= decorated_school.fit_score_text %></span>
-  <% unless decorated_school.has_fit? %><span class="pointer caret"></span><% end %>
+  <div class="hidden-xs pts"></div>
+  <% if decorated_school.has_fit? %>
+      <span class="pointer font-size-xs ma"><%= decorated_school.fit_score_text %></span>
+  <% else %>
+        <span class="pointer font-size-xs tac pts db" style="line-height: 1.3em">
+          No&nbsp;&nbsp;&nbsp;<br>matches
+          <span class="pointer caret pbm"></span>
+        </span>
+  <% end %>
 </div>
 <div class="panel pa dn js-fitScorePopup" style="z-index: 1; width: 200px;">
   <div class="pal">
