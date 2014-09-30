@@ -216,7 +216,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var toggleGreenCheckmarkSchoolCompareButton = function(id) {
-            var $school = $('#js-compareSchool' + id);
+            var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
                 $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
@@ -225,7 +225,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var toggleGreyCheckMarkSchoolCompareButton = function(id) {
-            var $school = $('#js-compareSchool' + id);
+            var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
                 $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');

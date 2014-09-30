@@ -109,6 +109,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
 
         var distance = Math.round(school.distance * 100) / 100;
         var gradeRange = school.gradeRange;
+        var schoolId = school.id;
         var name = school.name;
         var numReviews = school.numReviews;
         var parentRating = school.parentRating;
@@ -154,7 +155,22 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             gsRatingLink.attr('href', qualityUrl).find('.iconx24-icons').removeClass('i-24-new-ratings-nr').addClass('i-24-new-ratings-' + gsRating);
         }
 
+        var compareButton = listItem.find('.js-compareSchoolButton');
+        compareButton.attr('data-schoolid', schoolId);
+        compareButton.attr('data-schoolstate', state);
+        compareButton.attr('data-schoolname', name);
+        if (gsRating && gsRating > 0 && gsRating < 11) {
+            compareButton.attr('data-schoolrating', gsRating);
+        }
+
         listItem.find('.js-homes-for-sale').attr('href', 'http://www.zillow.com/' + state + '-' + zip + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch');
+
+        var $existingSchoolPhoto = $('.js-schoolSearchResult[data-schoolId=' + schoolId + '][data-schoolState=' + state.toLowerCase() + '] .js-schoolPhoto').children();
+        if ($existingSchoolPhoto.size() > 0) {
+            listItem.find('.js-photo').html($existingSchoolPhoto.clone());
+        } else {
+            listItem.find('.js-photo').html('<div style="width:130px; height: 130px;"></div>');
+        }
 
         listItem.show('slow');
     };
