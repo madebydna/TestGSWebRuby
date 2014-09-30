@@ -17,17 +17,17 @@ class PyocController <  ApplicationController
       PyocDecorator.decorate(school)
     end
 
-      # respond_to do |format|
-    #   format.html
-    #   format.pdf do
-    #     pdf = PrawnPdf.new(print_pdf_url)
-    #     send_data pdf.render, filename: 'hello',
-    #               type: 'application/pdf',
-    #               disposition: 'inline' #loads pdf directly in browser window
-    #   end
-    # end
+      respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = PyocPdf.new(@schools_decorated_with_cache_results)
+        send_data pdf.render, filename: 'hello',
+                  type: 'application/pdf',
+                  disposition: 'inline' #loads pdf directly in browser window
+      end
+    end
 
-    render 'pyoc/print_pdf'
+    # render 'pyoc/print_pdf'
 
   end
 
