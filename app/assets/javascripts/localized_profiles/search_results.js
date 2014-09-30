@@ -27,7 +27,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         var queryString = GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
 
         var getParam = GS.uri.Uri.getFromQueryString;
-        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
+        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString', 'locationType'];
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {
                 queryString += '&' + urlParamsToPreserve[i] + '=' + encodeURIComponent(getParam(urlParamsToPreserve[i]));
