@@ -40,29 +40,37 @@ module CompareSchoolsConcerns
   end
 
   def prep_school_ratings!
-    @ratings_datapoints = []
-    ratings_labels = ratings_labels_from_config
+    @great_schools_ratings = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME, sort: 1 }]
+    @non_great_schools_ratings = []
+    ratings_labels = ratings_labels_from_config(@state)
     @schools.each do |school|
-      school.school_cache.ratings.each do |rating|
-        rating_name = rating['name']
+      school.school_cache.all_great_schools_ratings.each do |rating|
         rating_id = rating['data_type_id']
-        label = ratings_labels[rating_id] || rating_name
-
-        unless @ratings_datapoints.any? { |datapoint| datapoint[:label] == label }
-          if rating_name == OVERALL_RATING_NAME
-            @ratings_datapoints << { method: :great_schools_rating_icon, label: label, sort: rating_id}
-          elsif ratings_labels.keys.include? rating_id
-            @ratings_datapoints << { method: :school_rating_by_name, argument: rating_name, label: label, sort: rating_id}
-          end
+        next unless ratings_labels.key?(rating_id)
+        rating_name = ratings_labels[rating_id]
+        school_rating = school.school_cache.school_rating_by_id(rating_id)
+        next if school_rating == CachedRatingsMethods::NO_RATING_TEXT
+        unless @great_schools_ratings.any? { |datapoint| datapoint[:label] == rating_name }
+          @great_schools_ratings << { method: :school_rating_by_id, argument: rating_id, label: rating_name, sort: rating_id }
+        end
+      end
+      school.school_cache.non_great_schools_ratings.each do |rating|
+        rating_id = rating['data_type_id']
+        next unless ratings_labels.key?(rating_id)
+        rating_name = ratings_labels[rating_id]
+        school_rating = school.school_cache.school_rating_by_id(rating_id)
+        next if school_rating == CachedRatingsMethods::NO_RATING_TEXT
+        unless @non_great_schools_ratings.any? { |datapoint| datapoint[:label] == rating_name }
+          @non_great_schools_ratings << { method: :school_rating_by_id, argument: rating_id, label: rating_name, sort: rating_id }
         end
       end
     end
     prep_ratings_display!
   end
 
-  def ratings_labels_from_config
+  def ratings_labels_from_config(state)
     ratings_labels = {}
-    ratings_config = RatingsConfiguration.configuration_for_school(@state)
+    ratings_config = RatingsConfiguration.configuration_for_school(state)
     ratings_config.each do |rating_type, rating_type_hash|
       if rating_type_hash.is_a?(Hash)
         # Only show sub-ratings for GS ratings
@@ -136,8 +144,8 @@ module CompareSchoolsConcerns
                     key: :quality
                 },
                 children: [
-                    { display_type: 'label', opt: { label: 'Rating'} },
-                    { display_type: 'quality/ratings' }
+                    { display_type: 'quality/ratings', opt: { ratings_type: 'GreatSchools Rating' } },
+                    { display_type: 'quality/ratings', opt: { ratings_type: 'Local Ratings' } },
                 ]
             },
             {
@@ -216,16 +224,18 @@ module CompareSchoolsConcerns
   end
 
   def prep_ratings_display!
-    overall_rating = @ratings_datapoints.find { |datapoint| datapoint[:label] == OVERALL_RATING_NAME }
-    if overall_rating
-      @ratings_datapoints -= [overall_rating]
-      @ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
-      @ratings_datapoints = [overall_rating] + @ratings_datapoints
-    elsif @ratings_datapoints.empty?
-      @ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}]
-    else
-      @ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
-      @ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}] + @ratings_datapoints
+    [@great_schools_ratings, @non_great_schools_ratings].each do |ratings_datapoints|
+      overall_rating = ratings_datapoints.find { |datapoint| datapoint[:label] == OVERALL_RATING_NAME }
+      if overall_rating
+        ratings_datapoints -= [overall_rating]
+        ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
+        ratings_datapoints = [overall_rating] + ratings_datapoints
+      elsif ratings_datapoints.empty?
+        ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}]
+      else
+        ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
+        ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}] + ratings_datapoints
+      end
     end
   end
 
