@@ -67,6 +67,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
+    get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
+    get '/college/', as: :college_articles
+    get '/STEM.topic?content=8021', as: :stem_article
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
