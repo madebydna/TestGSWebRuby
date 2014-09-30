@@ -1,6 +1,7 @@
 module CachedProgramsMethods
 
   NO_DATA_SYMBOL = '?'
+  NOT_APPLICABLE_SYMBOL ='N/A'
 
   def programs
     cache_data['esp_responses'] || {}
@@ -97,7 +98,73 @@ module CachedProgramsMethods
     elsif programs['application_deadline'] && !programs['application_deadline_date'] && programs['application_deadline'].keys.first=='yearround'
        'Rolling deadline'
     elsif programs['application_deadline'] && !programs['application_deadline_date'] && programs['application_deadline'].keys.first=='parents_contact'
-      'Contact school'
+       'Contact school'
+    elsif  !programs['application_deadline']
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def tuition
+    if programs['tuition_high'] && programs['tuition_low']
+      programs['tuition_low'].keys.first+'-'+programs['tuition_high'].keys.first
+    else
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def aid
+    if programs['financial_aid'] &&  !programs['financial_aid_type']
+       # Case when financial Aid is "no"
+      programs['financial_aid'].keys.first
+    elsif programs['financial_aid'] &&  programs['financial_aid_type']
+             # Case when financial Aid is student based or outside and not Tax Credit .Tax Credit id called a seperate data point Tax Scholarship
+             programs['financial_aid_type'].map do |key, value|
+               if key == 'outside' || key =='school_based'
+                  'I am here2'
+
+                 programs['financial_aid'].keys.first
+               end
+             end
+    elsif programs['financial_aid'] &&  programs['financial_aid_type']
+      puts 'I am here3'
+
+      # Case when financial Aid is student based or outside and not Tax Credit .Tax Credit id called a seperate data point Tax Scholarship
+      programs['financial_aid_type'].map do |key, value|
+        if key == 'tax_credits'
+          puts 'I am here4'
+
+          NOT_APPLICABLE_SYMBOL
+        end
+      end
+
+    elsif
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def voucher
+    if programs['students_vouchers']
+      programs['students_vouchers'].keys.first
+    else
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def early_childhood_programs
+    if programs['early_childhood_programs']
+      programs['early_childhood_programs'].keys.first
+    else
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def dress_code
+    if programs['dress_code'] &&  (programs['dress_code'].keys.first == 'dress_code' || programs['dress_code'].keys.first == 'uniform')
+          'Yes'
+    elsif  programs['dress_code'] &&  programs['dress_code'].keys.first == 'no_dress_code'
+          'No'
+    else
+    NOT_APPLICABLE_SYMBOL
     end
   end
 end
