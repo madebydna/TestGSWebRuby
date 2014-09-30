@@ -13,7 +13,7 @@
 
     <%= render "shared/section_header", category_placement:category_placement %>
 
-    <div class="row pbm_sm open-sans_cb">
+    <div class="row pbm_sm">
       <% category_placement.table_config.columns_to_print(data).each do |column| %>
           <% if column['display_type'] == :data_and_header %>
               <div class="col-sm-5 col-xs-4 center_when_small tac">
@@ -58,7 +58,7 @@
                           <% cell_color = 'purple'%>
                       <% end %>
 
-                      <div class="ptm mts text_<%=cell_color%> text_font_large open-sans_sb col-sm-3 tac"><%= value.to_s if value.present?%></div>
+                      <div class="ptm mts text_<%=cell_color%> text_font_large open-sans_cb col-sm-3 tac"><%= value.to_s if value.present?%></div>
                       <div class="clearfix col-sm-9">
                         <span class='iconx22-human i-22-<%=cell_color%>-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
                         <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
