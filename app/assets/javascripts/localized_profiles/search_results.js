@@ -23,11 +23,16 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
     };
 
+    var filtersQueryString = function($form) {
+        return GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+    };
+
     var buildQuery = function($form) {
-        var queryString = GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+        var queryString = filtersQueryString($form);
 
         var getParam = GS.uri.Uri.getFromQueryString;
-        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString', 'locationType'];
+        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'locationSearchString', 'locationType'];
+        if (shouldPreserveSortParam($form, getParam('sort'))) { urlParamsToPreserve.push('sort'); }
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {
                 queryString += '&' + urlParamsToPreserve[i] + '=' + encodeURIComponent(getParam(urlParamsToPreserve[i]));
@@ -39,6 +44,32 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         }
 
         return queryString
+    };
+
+    var softFiltersSelected = function ($form) {
+        var filters = filtersQueryString($form);
+        var filterObj = GS.uri.Uri.getQueryData(filters);
+        var softFilters = gon.soft_filter_keys;
+        for (var i = 0; i < softFilters.length; i++) {
+            var filter = softFilters[i];
+            var filterWithBrackets = [filter, filter+'%5B%5D', filter+'[]'];
+            for (var j = 0; j < filterWithBrackets.length; j++) {
+                var filterParam = filterWithBrackets[j];
+                if (_.contains(_.keys(filterObj), filterParam)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    var shouldPreserveSortParam = function ($form, sortParam) {
+        if (_.contains(sortParam, 'fit')) {
+            return softFiltersSelected($form);
+        }
+        else {
+            return true;
+        }
     };
 
     var searchFiltersMenuHandler = function() {

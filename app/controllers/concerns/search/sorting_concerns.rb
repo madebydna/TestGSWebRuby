@@ -13,7 +13,7 @@ module SortingConcerns
   end
 
   def active_sort_name(sort)
-    if sort.nil? || (sort.to_s.include?('fit') && !filtering_search?)
+    if sort.nil?
       if search_by_location?
         :distance
       elsif search_by_name?
@@ -50,7 +50,6 @@ module SortingConcerns
     n = 0
     school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
   end
-
 
   def parse_sorts(params_hash)
     params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])

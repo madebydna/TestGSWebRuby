@@ -51,8 +51,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
-    gon.pagename = "SearchResultsPage"
-    gon.state_abbr = @state[:short]
+    setup_search_gon_variables
     render 'search_page'
   end
 
@@ -80,8 +79,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
-    gon.pagename = "SearchResultsPage"
-    gon.state_abbr = @state[:short]
+    setup_search_gon_variables
     render 'search_page'
   end
 
@@ -107,8 +105,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
-    gon.pagename = "SearchResultsPage"
-    gon.state_abbr = @state[:short]
+    setup_search_gon_variables
   end
 
   def by_name
@@ -128,8 +125,7 @@ class SearchController < ApplicationController
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
-    gon.pagename = "SearchResultsPage"
-    gon.state_abbr = @state[:short]
+    setup_search_gon_variables
     render 'search_page'
   end
 
@@ -442,6 +438,12 @@ class SearchController < ApplicationController
     omniture_soft_filters_hash(params_hash)
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
+  end
+
+  def setup_search_gon_variables
+    gon.soft_filter_keys = SOFT_FILTER_KEYS
+    gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
   end
 
 end
