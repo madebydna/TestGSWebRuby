@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
+  has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
   has_many :esp_memberships, foreign_key: 'member_id'
   has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
