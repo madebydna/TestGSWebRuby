@@ -1,6 +1,7 @@
 <% school_page_url = school_url(school) %>
 <% school_reviews_page_url = school_page_url + 'reviews/' %>
 <% school_quality_page_url = school_page_url + 'quality/' %>
+<% school_provided_photo = decorated_school.uploaded_photo(130) %>
 <% if search_by_location? %>
   <% distance = decorated_school.distance #converting to 2 decimal places %>
 <% end %>
@@ -14,7 +15,11 @@
       <div class="row">
         <div class="col-xs-7 col-sm-5 col-md-6 clearfix">
           <div class="hidden-xs hidden-sm fl js-schoolPhoto">
-            <%= decorated_school.photo(130, 130) %>
+              <% if school_provided_photo %>
+                <%= school_provided_photo %>
+              <% else %>
+                <img src="<%= image_path('search/no-school-photo.png')%>" alt="No school photo available" class="thumbnail-border"/>
+              <% end %>
           </div>
           <div class="mll fl">
             <div class="ptm notranslate">
