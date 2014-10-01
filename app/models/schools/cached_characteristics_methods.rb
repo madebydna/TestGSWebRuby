@@ -73,7 +73,13 @@ module CachedCharacteristicsMethods
   def free_and_reduced_lunch
     style_school_value_as_percent('Students participating in free or reduced-price lunch program')
   end
-  protected
+
+  def formatted_ethnicity_data
+    characteristics['Ethnicity'].map { |eth|
+                          {eth['breakdown']=> eth['school_value'].round.to_s + '%'}
+    }.sort_by {|eth| -eth.values.first.to_i}
+  end
+  protected_method_defined?
 
   def valid_characteristic_cache(cache)
     if cache && cache.is_a?(Array)
@@ -82,6 +88,8 @@ module CachedCharacteristicsMethods
       false
     end
   end
+
+
 
 
 end
