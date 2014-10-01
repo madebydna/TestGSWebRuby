@@ -248,7 +248,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             });
         };
 
-        var toggleOnCompareSchoolsOnPageLoad = function() {
+        var toggleOnCompareSchools = function() {
             var ids = schoolsList.getSchoolIds();
 
             for (var i = 0; i < ids.length; i++) {
@@ -292,11 +292,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             popupBox.syncSchoolCount();
             setRemovePopupBoxSchoolsHandler();
             setCompareSchoolButtonHandler();
-            toggleOnCompareSchoolsOnPageLoad();
+            toggleOnCompareSchools();
         };
 
         return {
-            init: init
+            init: init,
+            toggleOnCompareSchools: toggleOnCompareSchools
         }
     }();
 
@@ -359,7 +360,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     return {
         init: init,
         sortBy: sortBy,
-        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler
+        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
+        toggleOnCompareSchools: compareSchools.toggleOnCompareSchools
     };
 })(gon.state_abbr);
 

@@ -169,6 +169,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         if (gsRating && gsRating > 0 && gsRating < 11) {
             compareButton.attr('data-schoolrating', gsRating);
         }
+        GS.search.results.toggleOnCompareSchools();
 
         $listItem.find('.js-homes-for-sale').attr('href', 'http://www.zillow.com/' + state + '-' + zip + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch');
 
