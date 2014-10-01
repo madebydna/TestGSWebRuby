@@ -134,15 +134,6 @@ module FitScoreConcerns
         @fit_score_breakdown << {category: key, filter: v, match: is_match, match_status: match_status}
       end
     end
-    @fit_score_breakdown.sort! do |a, b|
-      if a[:match] == b[:match]
-        a[:filter] <=> b[:filter]
-      elsif a[:match]
-        -1
-      else
-        1
-      end
-    end
   end
 
   def sort_breakdown_by_match_status!

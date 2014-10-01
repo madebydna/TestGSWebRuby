@@ -15,11 +15,11 @@
         <table class="full-width <%= config.opt[:table_name] %>">
           <% @school.fit_score_breakdown.each do |breakdown| %>
             <tr>
-              <td class="<%= breakdown[:match_status] != :yes ? 'pls' : ''%>" style="width: 30px">
+              <td style="width: 30px">
                 <% if breakdown[:match_status] == :yes %>
-                  <i class="vam iconx16 i-16-green-check"></i>
+                  <i class="iconx16 i-16-green-check"></i>
                 <% elsif breakdown[:match_status] == :no %>
-                  X
+                    <i class="iconx16 i-16-plain-x"></i>
                 <% else %>
                   <%= render 'shared/no_data_symbol_and_popup' %>
                 <% end %>

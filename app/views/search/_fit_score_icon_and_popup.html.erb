@@ -21,13 +21,15 @@
   <div class="pal">
     <% school.fit_score_breakdown.each do |fit_score_breakdown| %>
       <div class="font-size-xs">
-        <div class="<%= fit_score_breakdown[:match] ? '' : 'gray-dark'%>">
-          <% if fit_score_breakdown[:match] %>
-            <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+        <div class="<%= fit_score_breakdown[:match_status] == :yes ? '' : 'gray-dark'%>">
+          <% if fit_score_breakdown[:match_status] == :yes %>
+              <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+          <% elsif fit_score_breakdown[:match_status] == :no %>
+              <span class="vam iconx16 mrs js-icon i-16-plain-x"></span>
           <% else %>
-            <span class="prm">X</span>
-          <%end%>
-          <%=@filter_display_map[fit_score_breakdown[:category].to_sym][fit_score_breakdown[:filter].to_sym]%>
+              <span class="vam iconx16 mrs js-icon i-16-question-mark"></span>
+          <% end %>
+          <%=fit_score_breakdown[:filter]%>
         </div>
       </div>
     <% end %>

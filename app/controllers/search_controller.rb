@@ -160,11 +160,11 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    calculate_fit_score(results[:results], @params_hash) if filtering_search?
+    setup_filter_display_map(@state ? @state[:short] : nil)
+    setup_fit_scores(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
-    setup_filter_display_map(@state ? @state[:short] : nil)
     set_up_localized_search_hub_params
 
     omniture_filter_list_values(filters, @params_hash)
@@ -346,12 +346,16 @@ class SearchController < ApplicationController
     gon.ad_set_targeting = set_targeting
   end
 
-  def calculate_fit_score(results, params_hash)
+  def setup_fit_scores(results, params_hash)
 
     params = soft_filters_params_hash(params_hash)
 
     results.each do |result|
       result.calculate_fit_score!(params)
+      unless result.fit_score_breakdown.nil?
+        result.update_breakdown_labels! @filter_display_map
+        result.sort_breakdown_by_match_status!
+      end
     end
   end
 
