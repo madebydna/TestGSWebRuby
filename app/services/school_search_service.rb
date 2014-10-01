@@ -117,6 +117,7 @@ class SchoolSearchService
     add_level_codes(school_search_result, school_search_result['grade_level'])
     # convert KM to miles
     school_search_result['distance'] = school_search_result['distance'] / 1.6 if school_search_result['distance']
+    school_search_result['review_count'] = school_search_result['review_count_ruby']
     SchoolSearchResult.new school_search_result
   end
 
