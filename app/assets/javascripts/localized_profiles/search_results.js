@@ -92,10 +92,20 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
     };
 
-    var searchResultFitScoreTogglehandler = function() {
+    var searchResultFitScoreTogglehandler = function($optionalParentElement) {
         var closeMenuHandlerSet = false;
 
-        $('.js-searchResultDropdown').on(clickOrTouchType, function() {
+        var $searchResultDropdown;
+        var $fitScorePopup;
+        if ($optionalParentElement) {
+            $searchResultDropdown = $optionalParentElement.find('.js-searchResultDropdown');
+            $fitScorePopup = $optionalParentElement.find('.js-fitScorePopup');
+        } else {
+            $searchResultDropdown = $('.js-searchResultDropdown');
+            $fitScorePopup = $('.js-fitScorePopup');
+        }
+
+        $searchResultDropdown.on(clickOrTouchType, function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 var offset = getFitScorePopupOffset.call(this, popup);
@@ -108,8 +118,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                 closeMenuHandlerSet = true;
             }
         });
-        stopClickAndTouchstartEventPropogation($('.js-searchResultDropdown'));
-        stopClickAndTouchstartEventPropogation($('.js-fitScorePopup'));
+        stopClickAndTouchstartEventPropogation($searchResultDropdown);
+        stopClickAndTouchstartEventPropogation($fitScorePopup);
     };
 
     var getFitScorePopupOffset = function(popup) {
@@ -317,7 +327,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     return {
         init: init,
-        sortBy: sortBy
+        sortBy: sortBy,
+        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler
     };
 })(gon.state_abbr);
 

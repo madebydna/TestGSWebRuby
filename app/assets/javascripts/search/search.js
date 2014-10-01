@@ -109,7 +109,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         }
         var listItemSelector = '#js-assigned-school-' + level;
 
-        var listItem = $(listItemSelector);
+        var $listItem = $(listItemSelector);
 
         var distance = Math.round(school.distance * 100) / 100;
         var gradeRange = school.gradeRange;
@@ -122,44 +122,47 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var state = school.state;
         var zip = school.address.zip;
         if (type == 'public') {
-            type = 'public district';
+            type = 'Public district';
+        } else if (type == 'charter') {
+            type = 'Public charter';
+        } else {
+            type = type.charAt(0).toUpperCase() + type.slice(1);
         }
-        type = type.charAt(0).toUpperCase() + type.slice(1);
         var url = school.url;
         var reviewsUrl = school.url + 'reviews/';
         var qualityUrl = school.url + 'quality/';
         var address = school.address.street1 + ', ' + school.address.cityStateZip;
 
-        listItem.find('.js-name').html(name).attr('href', url);
-        listItem.find('.js-address').html(address);
-        listItem.find('.js-type').html(type);
-        listItem.find('.js-grade-range').html(gradeRange);
-        listItem.find('.js-distance').html(distance + ' miles');
+        $listItem.find('.js-name').html(name).attr('href', url);
+        $listItem.find('.js-address').html(address);
+        $listItem.find('.js-type').html(type);
+        $listItem.find('.js-grade-range').html(gradeRange);
+        $listItem.find('.js-distance').html(distance + ' miles');
         if (parentRating && parentRating > 0 && parentRating < 6) {
-            var orangeStar = listItem.find('.js-parent-rating-stars .i-16-orange-star');
-            var greyStar = listItem.find('.js-parent-rating-stars .i-16-grey-star');
+            var orangeStar = $listItem.find('.js-parent-rating-stars .i-16-orange-star');
+            var greyStar = $listItem.find('.js-parent-rating-stars .i-16-grey-star');
             orangeStar.removeClass('i-16-star-1').addClass('i-16-star-' + parentRating);
             greyStar.removeClass('i-16-star-4').addClass('i-16-star-' + (5-parentRating));
         } else {
-            listItem.find('.js-parent-rating-stars').hide();
+            $listItem.find('.js-parent-rating-stars').hide();
         }
         if (numReviews) {
             var reviewWord = ' review';
             if (numReviews > 1) {
                 reviewWord = ' reviews';
             }
-            listItem.find('.js-review-count').html(numReviews + reviewWord).attr('href', reviewsUrl);
-            listItem.find('.js-no-reviews').hide();
+            $listItem.find('.js-review-count').html(numReviews + reviewWord).attr('href', reviewsUrl);
+            $listItem.find('.js-no-reviews').hide();
         } else {
-            listItem.find('.js-review-count').hide();
-            listItem.find('.js-no-reviews').show();
+            $listItem.find('.js-review-count').hide();
+            $listItem.find('.js-no-reviews').show();
         }
         if (gsRating && gsRating > 0 && gsRating < 11) {
-            var gsRatingLink = listItem.find('.js-gs-rating-link');
+            var gsRatingLink = $listItem.find('.js-gs-rating-link');
             gsRatingLink.attr('href', qualityUrl).find('.iconx24-icons').removeClass('i-24-new-ratings-nr').addClass('i-24-new-ratings-' + gsRating);
         }
 
-        var compareButton = listItem.find('.js-compareSchoolButton');
+        var compareButton = $listItem.find('.js-compareSchoolButton');
         compareButton.attr('data-schoolid', schoolId);
         compareButton.attr('data-schoolstate', state);
         compareButton.attr('data-schoolname', name);
@@ -167,14 +170,22 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             compareButton.attr('data-schoolrating', gsRating);
         }
 
-        listItem.find('.js-homes-for-sale').attr('href', 'http://www.zillow.com/' + state + '-' + zip + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch');
+        $listItem.find('.js-homes-for-sale').attr('href', 'http://www.zillow.com/' + state + '-' + zip + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch');
 
-        var $existingSchoolPhoto = $('.js-schoolSearchResult[data-schoolId=' + schoolId + '][data-schoolState=' + state.toLowerCase() + '] .js-schoolPhoto').children();
+        var $existingSearchResult = $('.js-schoolSearchResult[data-schoolId=' + schoolId + '][data-schoolState=' + state.toLowerCase() + ']');
+
+        var $existingSchoolPhoto = $existingSearchResult.find('.js-schoolPhoto').children();
         if ($existingSchoolPhoto.size() > 0) {
-            listItem.find('.js-photo').html($existingSchoolPhoto.clone());
+            $listItem.find('.js-photo').html($existingSchoolPhoto.clone());
         }
 
-        listItem.show('slow');
+//        var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
+//        if ($existingFitScorePopup.size() > 0) {
+//            $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
+//            GS.search.results.searchResultFitScoreTogglehandler($listItem)
+//        }
+
+        $listItem.show('slow');
     };
 
     var setNoAssignedSchools = function() {
