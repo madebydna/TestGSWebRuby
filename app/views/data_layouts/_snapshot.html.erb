@@ -26,13 +26,18 @@
         <div class="mhm">
         <table class="table table-striped mbm">
           <% col_arr.each_with_index do |value_hash, index| %>
-            <tr>
               <% decorator = SnapshotDecorator.decorate(value_hash, context: { config: config, school: @school }) %>
+
+
               <% decorator.each do |object| %>
-                <td style="width:50%"><%= object.label %></td>
-                <td style="width:50%"><%= raw(decorator.get_link_to_or_value(@school, object.label, object.value)) %></td>
+                <% if object.value != 'no info' %>
+                    <tr>
+                        <td style="width:50%"><%= object.label %></td>
+                        <td style="width:50%"><%= raw(decorator.get_link_to_or_value(@school, object.label, object.value)) %></td>
+                    </tr>
+                <% end %>
               <% end %>
-            </tr>
+
           <% end %>
         </table>
         </div>
