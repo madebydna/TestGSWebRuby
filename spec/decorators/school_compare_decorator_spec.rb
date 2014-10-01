@@ -214,16 +214,16 @@ describe SchoolCompareDecorator do
       context '#school_rating_by_name' do
 
         it 'should return NO_RATING_TEXT with no argument' do
-          expect(decorated_school.school_cache.school_rating_by_name).to eq(CachedRatingsMethods::NO_RATING_TEXT)
+          expect(decorated_school.school_cache.school_rating_by_id).to eq(CachedRatingsMethods::NO_RATING_TEXT)
         end
 
         it 'should return NO_RATING_TEXT with nil' do
-          expect(decorated_school.school_cache.school_rating_by_name(nil)).to eq(CachedRatingsMethods::NO_RATING_TEXT)
+          expect(decorated_school.school_cache.school_rating_by_id(nil)).to eq(CachedRatingsMethods::NO_RATING_TEXT)
         end
 
         it 'should return the rating as an integer if there is one' do
-          expect(decorated_school.school_cache.school_rating_by_name('GreatSchools rating')).to eq(10)
-          expect(decorated_school.school_cache.school_rating_by_name('GreatSchools rating').class).to eq(Fixnum)
+          expect(decorated_school.school_cache.school_rating_by_id(174)).to eq(10)
+          expect(decorated_school.school_cache.school_rating_by_id(174).class).to eq(Fixnum)
         end
       end
 
