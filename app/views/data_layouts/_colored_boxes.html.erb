@@ -17,12 +17,11 @@
 
     <%= render layout:'col', locals:{ css_class:'pbl', category_placement: category_placement} do %>
 
-        <% if no_title == false %>
+        <% unless no_title %>
             <a name="<%= category.code_name %>"></a>
             <%= render "shared/section_header", category_placement:category_placement %>
         <% end %>
 
-        <% counter = 0 %>
         <% match_data.each do |box| %>
             <% none_case = false %>
            <% if box[:subject_count] == 1 && box[:subject_random].downcase == 'none' %>
@@ -40,7 +39,6 @@
                 </div>
               </div>
            </div>
-            <% counter = counter + 1 %>
         <% end %>
 
     <% end %>
