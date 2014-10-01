@@ -75,11 +75,14 @@ module CachedCharacteristicsMethods
   end
 
   def formatted_ethnicity_data
-    characteristics['Ethnicity'].map { |eth|
-                          {eth['breakdown']=> eth['school_value'].round.to_s + '%'}
-    }.sort_by {|eth| -eth.values.first.to_i}
+    ethnicity_data.map { |eth|
+                                     { eth['breakdown']=>  if eth['school_value']
+                                                             eth['school_value'].round.to_s + '%'
+                                                           else NO_ETHNICITY_SYMBOL
+                                                           end
+                                     }
+    }
   end
-  
   protected
 
   def valid_characteristic_cache(cache)
