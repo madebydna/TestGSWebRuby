@@ -1,4 +1,5 @@
-<% school_page_url = school.preschool? ? school_url(school) : (school.try(:profile_path) || school_path(school)) %>
+<% school_page_path = (school.try(:profile_path) || school_path(school)) %>
+<% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
 <% school_reviews_page_url = school_page_url + 'reviews/' %>
 <% school_quality_page_url = school_page_url + 'quality/' %>
 <% school_provided_photo = decorated_school.uploaded_photo(130) %>
