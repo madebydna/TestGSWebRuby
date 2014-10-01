@@ -16,6 +16,12 @@
           data-toggle="collapse"
           data-target=".js-change-password-form-container">Change password</a>
       </li>
+      <% if @current_user.provisional_or_approved_osp_user? || current_user.is_esp_superuser? %>
+          <li>
+            <%= link_to 'Edit school profile', osp_dashboard_url %>
+          </li>
+      <% end %>
+
     </ul>
   </nav>
 </id>
@@ -56,6 +62,7 @@
     <input type="hidden" class="js-chooserSchoolIds" name="schoolIds" value="" />
     <input type="hidden" name="appendChecklist" value="yes"/>
 </form>
+
 
 
 </div>
