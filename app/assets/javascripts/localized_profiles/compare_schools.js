@@ -196,6 +196,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             setupCarousel();
             $('.js-save-all-schools-button').prop('disabled', $(comparedSchools).length === 0);
             GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
+            GS.compare.schoolsList.removeSchool(schoolId);
         });
     };
 
@@ -281,6 +282,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         setRemoveActiveStateHandler();
         setNoDataPopupHandler();
         setDisabledOnSaveAll();
+        GS.compare.schoolsList.init(4);
     };
 
 
