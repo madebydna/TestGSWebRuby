@@ -152,7 +152,7 @@ module CachedProgramsMethods
 
   def early_childhood_programs
     if programs['early_childhood_programs']
-      programs['early_childhood_programs'].keys.first
+      programs['early_childhood_programs'].keys.first.capitalize
     else
       NOT_APPLICABLE_SYMBOL
     end
@@ -165,6 +165,22 @@ module CachedProgramsMethods
           'No'
     else
     NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def ell
+    if programs['ell_level']
+      programs['ell_level'].keys.first.capitalize
+    else
+      NOT_APPLICABLE_SYMBOL
+    end
+  end
+
+  def sped
+    if programs['spec_ed_level']
+      programs['spec_ed_level'].keys.first.capitalize
+    else
+      NOT_APPLICABLE_SYMBOL
     end
   end
 end

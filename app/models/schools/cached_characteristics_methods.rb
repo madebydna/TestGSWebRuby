@@ -70,6 +70,9 @@ module CachedCharacteristicsMethods
     end
   end
 
+  def free_and_reduced_lunch
+    style_school_value_as_percent('Students participating in free or reduced-price lunch program')
+  end
   protected
 
   def valid_characteristic_cache(cache)
@@ -79,4 +82,6 @@ module CachedCharacteristicsMethods
       false
     end
   end
+
+
 end
