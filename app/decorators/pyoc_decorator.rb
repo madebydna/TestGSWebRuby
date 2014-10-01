@@ -7,6 +7,7 @@ class PyocDecorator < Draper::Decorator
 
   include GradeLevelConcerns
   include SchoolTypeConcerns
+  include LevelCodeConcerns
 
 
 end

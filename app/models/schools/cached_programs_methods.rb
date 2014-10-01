@@ -183,4 +183,20 @@ module CachedProgramsMethods
       NOT_APPLICABLE_SYMBOL
     end
   end
+
+  def destination_school_1
+    if programs['destination_school_1']
+      programs['destination_school_1'].keys.first
+    end
+  end
+  def destination_school_2
+    if programs['destination_school_2']
+      programs['destination_school_2'].keys.first
+    end
+  end
+  def destination_school_3
+    if programs['destination_school_3']
+      programs['destination_school_3'].keys.first
+    end
+  end
 end
