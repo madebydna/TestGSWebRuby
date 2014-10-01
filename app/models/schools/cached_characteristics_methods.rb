@@ -79,7 +79,8 @@ module CachedCharacteristicsMethods
                           {eth['breakdown']=> eth['school_value'].round.to_s + '%'}
     }.sort_by {|eth| -eth.values.first.to_i}
   end
-  protected_method_defined?
+  
+  protected
 
   def valid_characteristic_cache(cache)
     if cache && cache.is_a?(Array)
