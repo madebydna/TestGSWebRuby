@@ -31,7 +31,7 @@
                 <div class="col-xs-8 tac">
                     <span class="open-sans_sb font-size-block"><%= box[:subject_count] %></span><br />
                     <span class=""><%= box[:label] %></span><br />
-                    <div class="black pts" style="line-height: 16px"><span class="open-sans_i" >including:</span> <%= box[:subject_random] %></div>
+                    <div class="black pts" style="line-height: 16px"><span class="open-sans_i" >including:</span> <%= box[:subject_random].gs_capitalize_first! %></div>
                 </div>
               </div>
            </div>
