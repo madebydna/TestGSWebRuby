@@ -8,6 +8,8 @@ class AccountManagementController < ApplicationController
   def show
     @page_name = 'Account management'
     gon.pagename = 'Account management'
+    gon.omniture_pagename = 'GS:Admin:MyAccount'
+
 
     favorite_schools = @current_user.favorite_schools
     favorite_schools_map = favorite_schools.group_by { |s| "#{s.state.downcase}#{s.school_id}"}
@@ -29,6 +31,11 @@ class AccountManagementController < ApplicationController
       end
       @school_to_favorite_school
     end
+    account_meta_tags
+  end
+  def account_meta_tags
+    set_meta_tags :title => "My account | GreatSchools",
+                :robots => "noindex"
   end
 
 
