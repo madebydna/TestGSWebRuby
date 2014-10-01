@@ -2,6 +2,7 @@ h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { @extend .open-sans_i; }
 
 .subtitle-lg { font-size: 24px}
+.subtitle-md { font-size: 20px}
 
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
@@ -150,6 +151,7 @@ p, a {
   h2 { font-size:22px; font-family: $headings-font-family-bold; }
   .best-known-for { font-size: 20px; }
   .subtitle-lg {font-size: 20px}
+  .subtitle-md {font-size: 16px}
 }
 
 @media (min-width: 990px) {
