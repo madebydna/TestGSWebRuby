@@ -312,8 +312,8 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    if hub_matching_current_url && @hub_matching_current_url.city
-      filters[:collection_id] = @hub_matching_current_url.collection_id
+    if hub_matching_current_url && hub_matching_current_url.city
+      filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
     end
