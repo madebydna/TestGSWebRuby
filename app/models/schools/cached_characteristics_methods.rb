@@ -75,13 +75,15 @@ module CachedCharacteristicsMethods
   end
 
   def formatted_ethnicity_data
-    ethnicity_data.map { |eth|
-                                     { eth['breakdown']=>  if eth['school_value']
-                                                             eth['school_value'].round.to_s + '%'
-                                                           else NO_ETHNICITY_SYMBOL
-                                                           end
-                                     }
-    }
+    formatted_eth_data = {}
+    ethnicity_data.each do |eth|
+      formatted_eth_data[eth['breakdown']] =  if eth['school_value']
+                                                eth['school_value'].round.to_s + '%'
+                                              else
+                                                NO_ETHNICITY_SYMBOL
+                                              end
+    end
+    formatted_eth_data
   end
   protected
 
