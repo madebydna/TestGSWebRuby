@@ -37,9 +37,15 @@ module HubConcerns
     @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
   end
 
+  #priorities preference set by city over state hub
   def has_guided_search?
-    (@state && @city && HubCityMapping.where(hasGuidedSearch: true, city: @city.name, state: @state[:short])).present? ||
-      (@state && HubCityMapping.where(hasGuidedSearch: true, city: nil, state: @state[:short])).present?
+    if @state
+      city_hub = @city ? HubCityMapping.where(city: @city.name, state: @state[:short]).first : nil
+      return city_hub.hasGuidedSearch if city_hub.present?
+      return HubCityMapping.where(hasGuidedSearch: true, city: nil, state: @state[:short]).present?
+    else
+      false
+    end
   end
 
   def set_hub(school = @school)
