@@ -110,7 +110,7 @@ module CompareSchoolsConcerns
   end
 
   def prep_schools_for_compare!(decorated_schools)
-    filter_display_map = FilterBuilder.new.filter_display_map # for labeling fit score breakdowns
+    filter_display_map = FilterBuilder.new(@state).filter_display_map # for labeling fit score breakdowns
     decorated_schools.map do |school|
       decorated_school = SchoolCompareDecorator.decorate(school)
       decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
