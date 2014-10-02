@@ -60,6 +60,8 @@ p, a {
 
 .text_font_large {font-size: 24px;}
 
+.uc { text-transform: uppercase; }
+
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
   h2{font-size:22px; font-family: $headings-font-family-bold}
@@ -85,8 +87,16 @@ p, a {
   color:$brand-primary;
 }
 
+.emphasis-color {
+  color: $emphasis-color;
+}
+
 .gray-dark {
   color: $gray-dark;
+}
+
+.gray-darker {
+  color: $gray-darker;
 }
 
 .gray-light {
@@ -138,6 +148,7 @@ p, a {
 
 .bg-white { background-color: #FFFFFF; }
 .bg-light-gray { background-color: $well-bg; }
+.bg-emphasis { background-color: $emphasis-color; }
 
 .tdn { text-decoration: none; }
 

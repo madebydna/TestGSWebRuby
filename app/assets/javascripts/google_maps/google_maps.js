@@ -210,8 +210,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               var markup = '<div>'; //school data
               var assignedLevel = point.assignedLevel;
               if (assignedLevel) {
-                  var assignedLevelText = /elementary/i.test(assignedLevel) ? mapPinElementarySchoolText() : /middle/i.test(assignedLevel) ? mapPinMiddleSchoolText() : mapPinHighSchoolText();
-                  markup += '<div class="notranslate">' + assignedLevelText + '</div>';
+                  markup += '<div class="mbs"><span class="notranslate font-size-small inverted-text bg-emphasis brs uc phm pvs">' + mapPinAssignedSchoolText() + '*</span></div>';
               }
               markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
@@ -285,9 +284,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var mapPinSchoolTypePrivateText = function() { return $('.js-mapPinSchoolTypePrivateText').text().trim() };
           var mapPinSchoolTypePublicText = function() { return $('.js-mapPinSchoolTypePublicText').text().trim() };
           var mapPinSchoolTypeCharterText = function() { return $('.js-mapPinSchoolTypeCharterText').text().trim() };
-          var mapPinHighSchoolText = function() { return $('.js-mapPinHighSchoolText').text().trim() };
-          var mapPinMiddleSchoolText = function() { return $('.js-mapPinMiddleSchoolText').text().trim() };
-          var mapPinElementarySchoolText = function() { return $('.js-mapPinElementarySchoolText').text().trim() };
+          var mapPinAssignedSchoolText = function() { return $('.js-mapPinAssignedSchoolText').text().trim() };
 
           initialize(points);
 
