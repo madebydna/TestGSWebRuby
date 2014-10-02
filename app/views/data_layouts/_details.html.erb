@@ -3,10 +3,10 @@
     <%= render "shared/section_header", category_placement:category_placement, link_text:'See all Details', link_to:'details' %>
         <div class="row">
             <% if @school.includes_level_code? (['e','m','h']) %>
-                <a href="details/#Programs">
+                <a href="#Programs">
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art], sprite: 'art' %></div>
                 </a>
-                <a href="details/#Extracurriculars">
+                <a href="#Extracurriculars">
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club], sprite: 'clubs' %></div>
                 </a>
                 <a href="details/#Extracurriculars">
