@@ -7,7 +7,7 @@ class SchoolSearchResult
                 :foreign_language, :girls_sports, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :name, :on_page, :overall_gs_rating,
                 :overall_gs_rating, :review_count, :school_media_first_hash, :state, :state_name, :street,
-                :transportation, :type, :zip, :zipcode, :profile_path
+                :transportation, :type, :zip, :zipcode, :profile_path, :students_vouchers
 
   def initialize(hash)
     @fit_score = 0

@@ -41,6 +41,9 @@ module FitScoreConcerns
       german: :foreign_language,
       spanish: :foreign_language,
       mandarin: :foreign_language
+    }.stringify_keys!,
+    enrollment: {
+      vouchers: :students_vouchers
     }.stringify_keys!
   }.stringify_keys!)
 
@@ -79,6 +82,9 @@ module FitScoreConcerns
       german: /^german$/,
       spanish: /^spanish$/,
       mandarin: /^mandarin$/
+    }.stringify_keys!,
+    enrollment: {
+      vouchers: /^yes$/
     }.stringify_keys!
   }.stringify_keys!)
 

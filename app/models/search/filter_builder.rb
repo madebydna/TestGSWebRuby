@@ -32,18 +32,14 @@ class FilterBuilder
     db_callbacks.map do |callback|
       keys = callback[:key].split(',')
       matches = callback[:match].split(',')
+      type = callback[:callback_type]
       conditions = []
 
       keys.each_with_index do |key, i|
         conditions << {key: key, match: matches[i]}
       end
 
-      lambda do |filter|
-        conditions.each do |condition|
-          return false if filter[condition[:key].to_sym].to_s != condition[:match]
-        end
-        callback[:new_filter] #ToDo add string decoding when we pull hashes from db
-      end
+      send("build_#{type}_callback".to_sym, conditions, callback[:new_filter])
     end
   end
 
@@ -55,23 +51,26 @@ class FilterBuilder
     end
   end
 
+  def build_add_callback(conditions, new_filter)
+    lambda do |filter|
+      conditions.each do |condition|
+        return false if filter[condition[:key].to_sym].to_s != condition[:match]
+      end
+      filter[:filters].present? ? (filter[:filters].merge!(new_filter) and filter) : new_filter #ToDo add string decoding when we pull hashes from db
+    end
+  end
+
   def indiana_db_callbacks
     [
-      # remove filter node
-      {key: 'name,value', match: 'distance,25', new_filter: {} },
-      # adding filter node
-      {key: 'name,value', match: 'distance,60', new_filter:
+      {key: 'name,display_type', match:'group3,filter_column_secondary', callback_type: 'add', new_filter:
         {
-          display_type: :blank_container,
-          filters: {
-            fitler1: { label: '57 Miles', display_type: :select_box_value, name: :distance, value: 57 },
-            filter2: { label: '58 Miles', display_type: :select_box_value, name: :distance, value: 58 },
-            fitler3: { label: '60 Miles', display_type: :select_box_value, name: :distance, value: 60 },
+          enrollment: {
+            label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
+              filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
+            }
           }
         }
-      },
-      # modify filter node
-      {key: 'name,value', match: 'class_offerings,mandarin', new_filter: { label: 'Japanese', unique_label: 'Japanese (class)', display_type: :basic_checkbox, name: :class_offerings, value: :japanese } },
+      }
     ]
   end
 
@@ -235,6 +234,7 @@ class FilterBuilder
         },
         group3: {
           display_type: :filter_column_secondary,
+          name: :group3,
           filters: {
             school_focus: {
               label: 'School Focus',
