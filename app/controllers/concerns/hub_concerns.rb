@@ -37,6 +37,11 @@ module HubConcerns
     @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
   end
 
+  def has_guided_search?
+    (@state && @city && HubCityMapping.where(hasGuidedSearch: true, city: @city.name, state: @state[:short])).present? ||
+      (@state && HubCityMapping.where(hasGuidedSearch: true, city: nil, state: @state[:short])).present?
+  end
+
   def set_hub(school = @school)
     @hub = determine_hub(school)
   end

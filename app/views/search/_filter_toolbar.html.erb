@@ -1,19 +1,18 @@
 <div class="visible-xs">
     <div class="btn-group row full-width mln js-mobileFiltersToolbar">
-        <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
         <% state = 'delaware' #ToDo set state to actual state %>
-        <button type="button" class="btn btn-primary nav-button nav-button-font <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
+        <button type="button" class="btn btn-primary nav-button nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
           <span class="iconx16 i-16-white-check-box vam"></span>
           Filters
         </button>
-        <% if show_guided_search %>
+        <% if @show_guided_search %>
           <a type="button" class="btn btn-primary col-xs-4 nav-button nav-button-left-border nav-button-font"
             href="<%= state_guided_search_path(state: state) %>">
             <span class="iconx16 i-16-white-info vam"></span>
             Guide Me
           </a>
         <%end %>
-        <button type="button" class="btn btn-primary nav-button nav-button-left-border nav-button-font <%= show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view">
+        <button type="button" class="btn btn-primary nav-button nav-button-left-border nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view">
           <span class="iconx16 i-16-white-map-view vam"></span>
           <span class="js-toggle-list-map-view-text">Map</span>
         </button>
@@ -42,7 +41,7 @@
 <div class="hidden-xs limit-width-1200 full-width row ptl prm plm">
   <div class="col-xs-5">
     <div class="pa" style="padding-left:150px">
-      <% if show_guided_search %>
+      <% if @show_guided_search %>
         <div class="iconx16 i-16-blue-info vam pull-left mas "></div>
         <div class="pull-left"><a class='toolbar-text open-sans_sb' href='<%= state_guided_search_path(state: state) %>'>Guide Me</a></div>
       <% end %>
