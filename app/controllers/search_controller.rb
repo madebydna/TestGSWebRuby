@@ -166,6 +166,7 @@ class SearchController < ApplicationController
     sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
+    @show_guided_search = has_guided_search?
 
     omniture_filter_list_values(filters, @params_hash)
   end
@@ -189,7 +190,6 @@ class SearchController < ApplicationController
     mapping_points_through_gon
     assign_sprite_files_though_gon
 
-    @show_guided_search = has_guided_search?
     set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
   end
 

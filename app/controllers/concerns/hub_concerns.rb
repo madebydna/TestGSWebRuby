@@ -39,6 +39,7 @@ module HubConcerns
 
   #priorities preference set by city over state hub
   def has_guided_search?
+    return @hub.hasGuidedSearch if @hub
     if @state
       city_hub = @city ? HubCityMapping.where(city: @city.name, state: @state[:short]).first : nil
       return city_hub.hasGuidedSearch if city_hub.present?
