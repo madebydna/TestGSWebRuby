@@ -164,7 +164,9 @@ module CachedProgramsMethods
     elsif  programs['dress_code'] &&  programs['dress_code'].keys.first == 'no_dress_code'
           'No'
     else
-    NOT_APPLICABLE_SYMBOL
+
+      NOT_APPLICABLE_SYMBOL
+
     end
   end
 
@@ -189,11 +191,13 @@ module CachedProgramsMethods
       programs['destination_school_1'].keys.first
     end
   end
+
   def destination_school_2
     if programs['destination_school_2']
       programs['destination_school_2'].keys.first
     end
   end
+
   def destination_school_3
     if programs['destination_school_3']
       programs['destination_school_3'].keys.first

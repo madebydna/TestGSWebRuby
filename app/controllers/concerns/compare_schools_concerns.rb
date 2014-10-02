@@ -40,55 +40,27 @@ module CompareSchoolsConcerns
   end
 
   def prep_school_ratings!
-    @great_schools_ratings = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME, sort: 1 }]
+    @great_schools_ratings = [OVERALL_RATING_NAME]
     @non_great_schools_ratings = []
-    ratings_labels = ratings_labels_from_config(@state)
     @schools.each do |school|
-      school.school_cache.all_great_schools_ratings.each do |rating|
-        rating_id = rating['data_type_id']
-        next unless ratings_labels.key?(rating_id)
-        rating_name = ratings_labels[rating_id]
-        school_rating = school.school_cache.school_rating_by_id(rating_id)
-        next if school_rating == CachedRatingsMethods::NO_RATING_TEXT
-        unless @great_schools_ratings.any? { |datapoint| datapoint[:label] == rating_name }
-          @great_schools_ratings << { method: :school_rating_by_id, argument: rating_id, label: rating_name, sort: rating_id }
-        end
-      end
-      school.school_cache.non_great_schools_ratings.each do |rating|
-        rating_id = rating['data_type_id']
-        next unless ratings_labels.key?(rating_id)
-        rating_name = ratings_labels[rating_id]
-        school_rating = school.school_cache.school_rating_by_id(rating_id)
-        next if school_rating == CachedRatingsMethods::NO_RATING_TEXT
-        unless @non_great_schools_ratings.any? { |datapoint| datapoint[:label] == rating_name }
-          @non_great_schools_ratings << { method: :school_rating_by_id, argument: rating_id, label: rating_name, sort: rating_id }
-        end
-      end
+      @great_schools_ratings += ratings_types(school.school_cache.formatted_greatschools_ratings)
+      @non_great_schools_ratings += ratings_types(school.school_cache.formatted_non_greatschools_ratings)
     end
-    prep_ratings_display!
+    @great_schools_ratings.uniq!
+    @non_great_schools_ratings.uniq!
   end
 
-  def ratings_labels_from_config(state)
-    ratings_labels = {}
-    ratings_config = RatingsConfiguration.configuration_for_school(state)
-    ratings_config.each do |rating_type, rating_type_hash|
-      if rating_type_hash.is_a?(Hash)
-        # Only show sub-ratings for GS ratings
-        rating_level = rating_type == 'gs_rating' ? 'rating_breakdowns' : 'overall'
-        rating_description = rating_type_hash[rating_level]
-        if rating_description.values.first.is_a?(Hash)
-          rating_description.values.each do |description|
-            if description['data_type_id']
-              ratings_labels[description['data_type_id']] = description['label']
-            end
-          end
-        elsif rating_description['data_type_id']
-          ratings_labels[rating_description['data_type_id']] = rating_description['label']
-        end
+  def ratings_types(formatted_ratings)
+    rating_types = []
+    formatted_ratings.each do |rating_name, rating_value|
+      next if rating_value == CachedRatingsMethods::NO_RATING_TEXT
+      unless rating_types.include? rating_name
+        rating_types << rating_name
       end
     end
-    ratings_labels
+    rating_types
   end
+
 
   def decorated_schools
     schools_with_data = schools_with_caches
@@ -151,8 +123,8 @@ module CompareSchoolsConcerns
             {
                 display_type: 'fit',
                 opt: {
-                  subtitle: 'Fit criteria',
-                  key: :fit
+                    subtitle: 'Fit criteria',
+                    key: :fit
                 }
             },
             {
@@ -212,31 +184,15 @@ module CompareSchoolsConcerns
                 display_type: 'buttons',
                 opt: {
                     datapoints:[
-                      {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix'},
-                      {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-envelop', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
-                      {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-home ', class: 'btn btn-default tal clearfix' ,target: '_blank'},
+                        {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix'},
+                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-envelop', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
+                        {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-home ', class: 'btn btn-default tal clearfix' ,target: '_blank'},
                     ]
                 }
             },
         ]
     }
 
-  end
-
-  def prep_ratings_display!
-    [@great_schools_ratings, @non_great_schools_ratings].each do |ratings_datapoints|
-      overall_rating = ratings_datapoints.find { |datapoint| datapoint[:label] == OVERALL_RATING_NAME }
-      if overall_rating
-        ratings_datapoints -= [overall_rating]
-        ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
-        ratings_datapoints = [overall_rating] + ratings_datapoints
-      elsif ratings_datapoints.empty?
-        ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}]
-      else
-        ratings_datapoints.sort_by! { |datapoint| datapoint[:sort] }
-        ratings_datapoints = [{ method: :great_schools_rating_icon, label: OVERALL_RATING_NAME}] + ratings_datapoints
-      end
-    end
   end
 
   def set_back_to_search_results_instance_variable

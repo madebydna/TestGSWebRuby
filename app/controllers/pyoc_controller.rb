@@ -3,7 +3,7 @@ class PyocController <  ApplicationController
   include GradeLevelConcerns
 
   def print_pdf
-    @school_list_for_pdf = School.for_states_and_ids(['de','wi'], [2,428])
+    @school_list_for_pdf = School.for_states_and_ids(['mi','wi'], [1273,428])
 
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
     @school_list_for_pdf.each do |school|
