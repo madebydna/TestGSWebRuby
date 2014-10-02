@@ -9,9 +9,9 @@ GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
 //        sortFunction: function        optional no default applied
 //        rateLimitWait: int            optional but default applied  delay from keystroke to autocomplete. ex 100ms
 //        displayLimit: int             optional but default applied  limit to how many results displayed
-//        filterDataFunction: function  optional but default applied  filter dataset after queried.
+//        getFilterDataFunction: function  optional but default applied  filter dataset after queried.
 //        dupDetectorFunction: function optional but default applied  duplicate detection and removal function
-//        replaceUrlFunction: function  optional callback to replace  url dynamically
+//        replaceUrlFunction: function  optional callback to          replace url dynamically right before ajax request
 //    };
     var init = function(options) { //options for init listed above
         var remote = {
@@ -20,14 +20,14 @@ GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
         };
         var dataObject = {};
         var getDataObject = function() { return dataObject }; //gets redefined at the end of the function so that we can pass the constructed object to the filter
-        options['filterDataFunction'] !== undefined ? remote.filter = options['filterDataFunction'](getDataObject) : remote.filter = filterDataFunction(getDataObject);
+        options['getFilterDataFunction'] !== undefined ? remote.filter = options['getFilterDataFunction'].call(this, getDataObject) : remote.filter = getFilterDataFunction(getDataObject);
         options['replaceUrlFunction'] !== undefined ? remote.replace = options['replaceUrlFunction'] : null;
 
         var bloodhoundOptions = {
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace(options['tokenizedAttribute']),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: options['displayLimit'] || 10,
-            dupDetector: options['dupDetectorFunction'] || dupDetectorFunction(),
+            dupDetector: options['dupDetectorFunction'] || dupDetectorFunction,
             remote: remote
         };
 
@@ -36,7 +36,7 @@ GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
         } else if (sortFromOpt !== undefined) {
             bloodhoundOptions.sorter = sortFromOpt;
         } else {
-            bloodhoundOptions.sorter = autocompleteSort();
+            bloodhoundOptions.sorter = autocompleteSort;
         }
 
         dataObject = new Bloodhound(bloodhoundOptions);
@@ -45,13 +45,11 @@ GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
         return dataObject;
     };
 
-    var dupDetectorFunction = function() {
-        return (function(remoteMatch, localMatch) {
-            return remoteMatch.url == localMatch.url;
-        })
+    var dupDetectorFunction = function(remoteMatch, localMatch) {
+        return remoteMatch.url == localMatch.url;
     };
 
-    var filterDataFunction = function(getDataObject) {
+    var getFilterDataFunction = function(getDataObject) {
         return (function(results) {
             var data = getDataObject();
             data.cacheList = data.cacheList || {};
@@ -66,14 +64,12 @@ GS.search.autocomplete.data = GS.search.autocomplete.data || (function() {
         })
     };
 
-    var autocompleteSort = function() {
-        return (function(obj1, obj2) {
-            if (obj1.sort_order > obj2.sort_order)
-                return -1;
-            if (obj1.sort_order < obj2.sort_order)
-                return 1;
-            return 0;
-        })
+    var autocompleteSort = function(obj1, obj2) {
+        if (obj1.sort_order > obj2.sort_order)
+            return -1;
+        if (obj1.sort_order < obj2.sort_order)
+            return 1;
+        return 0;
     };
 
     return {
