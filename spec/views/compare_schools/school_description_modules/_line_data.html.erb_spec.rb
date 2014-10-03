@@ -78,7 +78,7 @@ describe 'compare_schools/school_description_modules/_line_data.html.erb' do
 
       render
 
-      expect(rendered).to_not have_xpath("//i")
+      expect(rendered).to_not have_xpath("td/i")
     end
   end
 
