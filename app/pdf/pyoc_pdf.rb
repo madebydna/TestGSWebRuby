@@ -29,21 +29,39 @@ class PyocPdf < Prawn::Document
     schools_decorated_with_cache_results.each do |school|
 
 # header
-      fill_color blue_line
-      text_box "GRADES 9-12",
-               :at => [250, 735],
-               :width => col_width,
-               :height => 20,
-               :size => 8
-               # :style => :bold
-      stroke do
-        stroke_color blue_line
-        horizontal_line 0, 535, :at =>725
+#
+#       school_cache = school.school_cache
+
+      if school.is_high_school
+        fill_color blue_line
+        text_box "GRADES 9-12",
+                 :at => [250, 735],
+                 :width => col_width,
+                 :height => 20,
+                 :size => 8
+        # :style => :bold
+        stroke do
+          stroke_color blue_line
+          horizontal_line 0, 535, :at => 725
+        end
+      elsif school.is_k8
+        fill_color grey
+        text_box "GRADES PK-8",
+                 :at => [250, 735],
+                 :width => col_width,
+                 :height => 20,
+                 :size => 8
+        # :style => :bold
+        stroke do
+          stroke_color grey
+          horizontal_line 0, 535, :at => 725
+        end
       end
 
       grid([i, 0], [i+2, 5]).bounding_box do
         move_down 18
         # grid([0, 0], [2, 1]).show
+        school_cache = school.school_cache
         grid([0, 0], [2, 1]).bounding_box do
           # stroke_color blue_line
           fill_color school_profile_blue
@@ -70,60 +88,81 @@ class PyocPdf < Prawn::Document
 
           bounding_box([1, cursor], :width => 0, :height => 0) do
             move_down 2
-            # if school.school_cache.overall_gs_rating == '1'
-              image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
-            # elsif school.school_cache.overall_gs_rating == '2'
-            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
-            # elsif school.school_cache.overall_gs_rating == '3'
-            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
-            # else #for NR
-            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
-            # end
+            if school_cache.overall_gs_rating == '1'
+              image "app/assets/images/pyoc/overall_rating_1.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '2'
+              image "app/assets/images/pyoc/overall_rating_2.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '3'
+              image "app/assets/images/pyoc/overall_rating_3.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '4'
+              image "app/assets/images/pyoc/overall_rating_4.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '5'
+              image "app/assets/images/pyoc/overall_rating_5.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '6'
+              image "app/assets/images/pyoc/overall_rating_6.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '7'
+              image "app/assets/images/pyoc/overall_rating_7.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '8'
+              image "app/assets/images/pyoc/overall_rating_8.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '9'
+              image "app/assets/images/pyoc/overall_rating_9.png", :at => [15, cursor], :scale => 0.25
+            elsif school_cache.overall_gs_rating == '10'
+              image "app/assets/images/pyoc/overall_rating_10.png", :at => [15, cursor], :scale => 0.25
+            else
+              image "app/assets/images/pyoc/pre_k_pyoc.png", :at => [30, cursor], :scale => 0.25
+            end
 
-            move_down 15
+            move_down 25
             fill_color black
             text_box "Overall rating",
-                     :at => [30, cursor],
+                     :at => [17, cursor],
                      :width => 25,
                      :height => 25,
-                     :size => 5,
+                     :size => 6,
                      :style => :bold
 
           end
 
           data = [
-              ['Test score rating', school.school_cache.test_scores_rating],
-              ['Student growth rating', school.school_cache.student_growth_rating],
-              ['College readiness', school.school_cache.college_readiness_rating],
+              ['Test score rating', school_cache.test_scores_rating],
+              ['Student growth rating', school_cache.student_growth_rating],
+              ['College readiness', school_cache.college_readiness_rating],
           ]
           table(data, :column_widths => [80, 10],
                 :position => 55,
-                :cell_style => {size: 7, :padding => [0, 0, 1, 0], :text_color => black}) do
+                :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => black}) do
             cells.borders = []
             columns(1).font_style = :bold
           end
 
-          move_down 5
+          move_down 10
           stroke do
             stroke_color grey
             horizontal_line 5, (col_width - 5), :at => cursor
           end
 
           move_down 5
-          data = [
-              ['A', '3', 'C'],
-              ['Other score', 'Other score', 'Other score'],
-          ]
-          table(data, :column_widths => [53,53,53],
-                :position => 5,
-                :cell_style => {size:7, :padding => [0,0 ,0,0],:text_color => black}) do
-            cells.borders = []
-            row(0).font_style = :bold
-            row(0).size = 11
-            row(0).padding = [0,0 ,5,10]
+          data =[[], []]
 
+          other_ratings = school_cache.formatted_non_greatschools_ratings.to_a
+          if other_ratings == []
+            data << ['', '']
+          else
+            other_ratings.each do |i|
+              data[0] << i[1]
+              data[1] << i[0]
+            end
           end
 
+          table(data, :column_widths => [53, 53, 53],
+                :position => 5,
+                :cell_style => {size: 6, :padding => [0, 0, 0, 0], :text_color => black}) do
+            cells.borders = []
+            row(0).font_style = :bold
+            row(0).size = 7
+            row(0).padding = [0, 0, 5, 10]
+
+          end
 
           bounding_box([1, 100], :width => 0, :height => 0) do
             move_down 10
@@ -139,8 +178,10 @@ class PyocPdf < Prawn::Document
                  ["Phone: #{school.phone}"],
                  [' '],
                  ['School Hours:'],
-                 ["#{school.school_cache.start_time} - #{school.school_cache.end_time}"]
+                 [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a']
           ]
+
+          # require 'pry'; binding.pry;
 
           table(data,
                 :position => 60,
@@ -150,7 +191,7 @@ class PyocPdf < Prawn::Document
 
           move_down 10
           fill_color 100, 20, 20, 20
-          text_box "#{school.school_cache.best_known_for}",
+          text_box "#{school_cache.best_known_for}",
                    :at => [5, cursor],
                    :width => 155,
                    :height => 30,
@@ -158,8 +199,8 @@ class PyocPdf < Prawn::Document
                    :style => :italic
 
         end
-# # second column
-#     grid([1,2],[3,3]).show
+        # # second column
+        #     grid([1,2],[3,3]).show
         grid([0, 2], [2, 3]).bounding_box do
           fill_color black
           text_box "At a glance",
@@ -176,22 +217,29 @@ class PyocPdf < Prawn::Document
           end
 
           move_down 5
-          image_path = "app/assets/images/pyoc/PYOC_Icons-01.png"
-          data = [[{:image => image_path, :scale => 0.3}, 'School size', school.school_cache.students_enrolled],
-          # data = [[{:image => image_path, :scale => 0.2}, 'School size', "123"],
-                  [{:image => image_path, :scale => 0.3}, 'Transportation',
-                   school.school_cache.transportation == "Yes" || school.school_cache.transportation == "No" ? school.school_cache.transportation : "N/A"],
-                  [{:image => image_path, :scale => 0.3}, 'Before care',
-                   school.school_cache.before_care == "Yes" || school.school_cache.before_care == "No" ? school.school_cache.before_care : "N/A"],
-                  [{:image => image_path, :scale => 0.3}, 'After care',
-                   school.school_cache.after_school == "Yes" || school.school_cache.after_school == "No" ? school.school_cache.after_school : "N/A"],
-                  [{:image => image_path, :scale => 0.3}, 'Uniform/Dress code', school.school_cache.dress_code ],
-                  [{:image => image_path, :scale => 0.3}, 'Pre K', school.school_cache.early_childhood_programs]
+
+          image_path_school_size= "app/assets/images/pyoc/school_size_pyoc.png"
+          image_path_transportation= "app/assets/images/pyoc/transportation_pyoc.png"
+          image_path_before_care= "app/assets/images/pyoc/before_care_pyoc.png"
+          image_path_after_care= "app/assets/images/pyoc/after_care_pyoc.png"
+          image_path_uniform= "app/assets/images/pyoc/uniform_pyoc.png"
+          image_path_pre_k= "app/assets/images/pyoc/pre_k_pyoc.png"
+
+          data = [[{:image => image_path_school_size, :scale => 0.25}, 'School size', school_cache.students_enrolled],
+                  # data = [[{:image => image_path, :scale => 0.2}, 'School size', "123"],
+                  [{:image => image_path_transportation, :scale => 0.25}, 'Transportation',
+                   school_cache.transportation == "Yes" || school_cache.transportation == "No" ? school_cache.transportation : "n/a"],
+                  [{:image => image_path_before_care, :scale => 0.25}, 'Before care',
+                   school_cache.before_care == "Yes" || school_cache.before_care == "No" ? school_cache.before_care : "n/a"],
+                  [{:image => image_path_after_care, :scale => 0.25}, 'After care',
+                   school_cache.after_school == "Yes" || school_cache.after_school == "No" ? school_cache.after_school : "n/a"],
+                  [{:image => image_path_uniform, :scale => 0.25}, 'Uniform/Dress code', school_cache.dress_code],
+                  [{:image => image_path_pre_k, :scale => 0.25}, 'Pre K', school_cache.early_childhood_programs]
           ]
 
           table(data, :column_widths => [30, 100, 30],
                 :row_colors => [white, grey],
-                :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
+                :cell_style => {size: 8, :padding => [2, 5, 2, 5]}) do
             cells.borders = []
             columns(2).font_style = :bold
             column(2).align = :right
@@ -201,7 +249,6 @@ class PyocPdf < Prawn::Document
 
           move_down 10
 
-          # if i % 2 == 0
           fill_color grey
           fill_rounded_rectangle([0, cursor], col_width, 85, 5)
 
@@ -209,7 +256,7 @@ class PyocPdf < Prawn::Document
           fill_color black
 
 
-            text_box "Application",
+          text_box "Application",
                    :at => [5, cursor],
                    :width => 75,
                    :height => 10,
@@ -224,14 +271,14 @@ class PyocPdf < Prawn::Document
 
           move_down 5
           data = [
-              ['Deadlines', school.school_cache.deadline],
-              ['Tuition',  school.school_cache.tuition],
-              ['Financial aid', '000'],
-              ['Voucher accepted', school.school_cache.voucher],
-              ['Tax scholarship', '000'],
+              ['Deadlines', school_cache.deadline],
+              ['Tuition', school_cache.tuition],
+              ['Financial aid', school_cache.aid],
+              ['Voucher accepted', school_cache.voucher],
+              ['Tax scholarship', school_cache.tax_scholarship],
           ]
 
-          table(data, :column_widths => [110,50],
+          table(data, :column_widths => [110, 50],
                 :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
@@ -259,12 +306,12 @@ class PyocPdf < Prawn::Document
 
           move_down 5
 
-          ethnicity_data = school.school_cache.formatted_ethnicity_data.to_a
-          ethnicity_data << ['Free and reduced lunch',school.school_cache.free_and_reduced_lunch != "?" ? school.school_cache.free_and_reduced_lunch : "N/A"]
-          ethnicity_data.each_with_index do |eth,i|
+          ethnicity_data = school_cache.formatted_ethnicity_data.to_a
+          ethnicity_data << ['Free and reduced lunch', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
+          ethnicity_data.each_with_index do |i|
           end
 
-          table(ethnicity_data, :column_widths => [130,30],
+          table(ethnicity_data, :column_widths => [130, 30],
                 :row_colors => [white, grey],
                 :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
             cells.borders = []
@@ -283,9 +330,9 @@ class PyocPdf < Prawn::Document
 
           move_down 10
           data = [
-              [school.school_cache.destination_school_1 ? school.school_cache.destination_school_1.truncate(47) : "N/A"],
-              [school.school_cache.destination_school_2 ? school.school_cache.destination_school_2.truncate(47) : " "],
-              [school.school_cache.destination_school_3 ? school.school_cache.destination_school_3.truncate(47) : " "]
+              [school_cache.destination_school_1 ? school_cache.destination_school_1.truncate(47) : "n/a"],
+              [school_cache.destination_school_2 ? school_cache.destination_school_2.truncate(47) : " "],
+              [school_cache.destination_school_3 ? school_cache.destination_school_3.truncate(47) : " "]
 
           ]
 
@@ -298,7 +345,7 @@ class PyocPdf < Prawn::Document
           move_down 5
           data = [
               ['ELL offering:', 'SPED offering:'],
-              [school.school_cache.ell, school.school_cache.sped]
+              [school_cache.ell, school_cache.sped]
           ]
 
           table(data, :column_widths => [80, 80],
@@ -325,16 +372,16 @@ class PyocPdf < Prawn::Document
 
           move_down 5
 
-          image_path_world_languages = "app/assets/images/pyoc/PYOC_Icons-02.png"
-          image_path_clubs = "app/assets/images/pyoc/PYOC_Icons-02.png"
-          image_path_sports = "app/assets/images/pyoc/PYOC_Icons-02.png"
-          image_path_arts_and_music = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          image_path_world_languages = "app/assets/images/pyoc/world_languages.png"
+          image_path_clubs = "app/assets/images/pyoc/clubs.png"
+          image_path_sports = "app/assets/images/pyoc/sports.png"
+          image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
           no_program_data = "?"
 
-          data = [[school.school_cache.world_languages != no_program_data ? {:image => image_path_world_languages, :scale => 0.3} : " ",
-              school.school_cache.clubs != no_program_data ? {:image => image_path_clubs, :scale => 0.3} : " ",
-              school.school_cache.sports != no_program_data ? {:image => image_path_sports, :scale => 0.3} : " ",
-              school.school_cache.arts_and_music != no_program_data ? {:image => image_path_arts_and_music, :scale => 0.3} : " "]
+          data = [[school_cache.world_languages != no_program_data ? {:image => image_path_world_languages, :scale => 0.3} : " ",
+                   school_cache.clubs != no_program_data ? {:image => image_path_clubs, :scale => 0.3} : " ",
+                   school_cache.sports != no_program_data ? {:image => image_path_sports, :scale => 0.3} : " ",
+                   school_cache.arts_and_music != no_program_data ? {:image => image_path_visual_arts, :scale => 0.3} : " "]
           ]
 
           table(data, :column_widths => [20, 20, 20, 20],
@@ -361,7 +408,7 @@ class PyocPdf < Prawn::Document
         i += 3
       end
 
-      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [180,-10], :scale => 0.2
+      image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
       draw_text page_number, :at => [270, -15], :size => 7
       text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                :at => [300, -10],
