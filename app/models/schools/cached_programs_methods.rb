@@ -113,33 +113,34 @@ module CachedProgramsMethods
   end
 
   def aid
-    if programs['financial_aid'] &&  !programs['financial_aid_type']
-       # Case when financial Aid is "no"
-      programs['financial_aid'].keys.first
-    elsif programs['financial_aid'] &&  programs['financial_aid_type']
-             # Case when financial Aid is student based or outside and not Tax Credit .Tax Credit id called a seperate data point Tax Scholarship
-             programs['financial_aid_type'].map do |key, value|
-               if key == 'outside' || key =='school_based'
-                  'I am here2'
-
-                 programs['financial_aid'].keys.first
-               end
-             end
-    elsif programs['financial_aid'] &&  programs['financial_aid_type']
-      puts 'I am here3'
-
-      # Case when financial Aid is student based or outside and not Tax Credit .Tax Credit id called a seperate data point Tax Scholarship
-      programs['financial_aid_type'].map do |key, value|
-        if key == 'tax_credits'
-          puts 'I am here4'
-
-          NOT_APPLICABLE_SYMBOL
+    financial_id='No'
+    if !programs['financial_aid']
+      financial_id= NOT_APPLICABLE_SYMBOL
+    elsif  programs['financial_aid'] &&  programs['financial_aid_type']
+      programs['financial_aid_type'].each do |key|
+        if key != 'tax_credits'
+          financial_id='Yes'
         end
       end
 
-    elsif
-      NOT_APPLICABLE_SYMBOL
     end
+    financial_id
+  end
+
+  def tax_scholarship
+    tax_credit='No'
+    if !programs['financial_aid']
+      tax_credit= NOT_APPLICABLE_SYMBOL
+    elsif  programs['financial_aid'] &&  programs['financial_aid_type']
+      programs['financial_aid_type'].each do |key|
+        if key == 'tax_credits'
+          tax_credit='Yes'
+        end
+      end
+
+    end
+    tax_credit
+
   end
 
   def voucher
