@@ -1,7 +1,7 @@
 GS.search = GS.search || {};
 
 GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler || function(className) {
-    $(className).on('click', function() {
+    $('body').on('click', className, function() {
         $.cookie('showFiltersMenu', 'true', {path: '/'});
     });
 };
