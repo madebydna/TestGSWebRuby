@@ -2,19 +2,14 @@ class PyocPdf < Prawn::Document
   def initialize(schools_decorated_with_cache_results)
 
     beginning = Time.now
-    # super( :top_margin => 18,
-    #        :bottom_margin => 18)
     super()
 
     rect_edge_rounding = 10
-    blue_line_stroke = 70, 15, 0, 0
+    blue_line = 70, 15, 0, 0
     white = 0, 0, 0, 0
     grey = 0, 0, 0, 6
     black = 0, 0, 0, 100
-    school_profile_blue = 5, 1, 0, 0 #elementary
-    middle_school_fill = 45, 0 ,10, 0
-    high_school_fill = 10, 45, 0, 9
-    prek_fill = 9, 5, 100, 5
+    school_profile_blue = 5, 1, 0, 0
     col_width = 160
 
 # todo make col_width and col_height relational to gutter
@@ -31,28 +26,28 @@ class PyocPdf < Prawn::Document
     count = 1
     foo = 0
 
-    # while i and count <= 4 and foo <= 4
     schools_decorated_with_cache_results.each do |school|
-      puts school
 
 # header
-      image 'app/assets/images/pyoc/PYOC_Icons-05.png', :at => [270,740], :scale => 0.2
+      fill_color blue_line
+      text_box "GRADES 9-12",
+               :at => [250, 735],
+               :width => col_width,
+               :height => 20,
+               :size => 8
+               # :style => :bold
+      stroke do
+        stroke_color blue_line
+        horizontal_line 0, 535, :at =>725
+      end
 
       grid([i, 0], [i+2, 5]).bounding_box do
         move_down 18
         # grid([0, 0], [2, 1]).show
         grid([0, 0], [2, 1]).bounding_box do
-          stroke_color blue_line_stroke
-          # if fake_data[foo][:grade_level] == 'e'
-            fill_color school_profile_blue
-          # elsif fake_data[foo][:grade_level] == 'm'
-          #   fill_color middle_school_fill
-          # elsif fake_data[foo][:grade_level] == 'h'
-          #   fill_color high_school_fill
-          # else
-          #   fill_color prek_fill
-          # end
-          fill_and_stroke_rounded_rectangle([0, cursor], col_width, 225, rect_edge_rounding)
+          # stroke_color blue_line
+          fill_color school_profile_blue
+          fill_rounded_rectangle([0, cursor], col_width, 225, rect_edge_rounding)
           fill_color 100, 20, 20, 20
           move_down 5
           text_box school.name,
@@ -72,13 +67,19 @@ class PyocPdf < Prawn::Document
                    :size => 6
 #
           move_down 15
-          # stroke_color grey
-          # stroke_rounded_rectangle([20, cursor], 130, 30, rect_edge_rounding)
-
 
           bounding_box([1, cursor], :width => 0, :height => 0) do
             move_down 2
-            image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
+            # if school.school_cache.overall_gs_rating == '1'
+              image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
+            # elsif school.school_cache.overall_gs_rating == '2'
+            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
+            # elsif school.school_cache.overall_gs_rating == '3'
+            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
+            # else #for NR
+            #   image "app/assets/images/pyoc/PYOC_Icons-06.png", :at => [30, cursor], :scale => 0.2
+            # end
+
             move_down 15
             fill_color black
             text_box "Overall rating",
@@ -91,9 +92,9 @@ class PyocPdf < Prawn::Document
           end
 
           data = [
-              ['Test score rating', "#{school.school_cache.test_scores_rating}"],
-              ['Student growth rating', "#{school.school_cache.student_growth_rating}"],
-              ['College readiness', "#{school.school_cache.college_readiness_rating}"],
+              ['Test score rating', school.school_cache.test_scores_rating],
+              ['Student growth rating', school.school_cache.student_growth_rating],
+              ['College readiness', school.school_cache.college_readiness_rating],
           ]
           table(data, :column_widths => [80, 10],
                 :position => 55,
@@ -105,7 +106,7 @@ class PyocPdf < Prawn::Document
           move_down 5
           stroke do
             stroke_color grey
-            horizontal_line 1, (col_width - 1), :at => cursor
+            horizontal_line 5, (col_width - 5), :at => cursor
           end
 
           move_down 5
@@ -133,7 +134,7 @@ class PyocPdf < Prawn::Document
             end
           end
           move_down 5
-          data =[["#{school.street}"],
+          data =[[school.street],
                  ["#{school.city}, #{school.state} #{school.zipcode}"],
                  ["Phone: #{school.phone}"],
                  [' '],
@@ -170,21 +171,22 @@ class PyocPdf < Prawn::Document
 
           move_down 10
           stroke do
-            stroke_color blue_line_stroke
+            stroke_color blue_line
             horizontal_line 0, col_width, :at => cursor
           end
 
           move_down 5
           image_path = "app/assets/images/pyoc/PYOC_Icons-01.png"
-          data = [[{:image => image_path, :scale => 0.3}, 'School size', "#{school.school_cache.students_enrolled}"],
+          data = [[{:image => image_path, :scale => 0.3}, 'School size', school.school_cache.students_enrolled],
           # data = [[{:image => image_path, :scale => 0.2}, 'School size', "123"],
                   [{:image => image_path, :scale => 0.3}, 'Transportation',
-                   "#{school.school_cache.transportation}" == "Yes" || "#{school.school_cache.transportation}" == "No" ? "#{school.school_cache.transportation}" : "N/A"],
+                   school.school_cache.transportation == "Yes" || school.school_cache.transportation == "No" ? school.school_cache.transportation : "N/A"],
                   [{:image => image_path, :scale => 0.3}, 'Before care',
-                   "#{school.school_cache.before_care}" == "Yes" || "#{school.school_cache.before_care}" == "No" ? "#{school.school_cache.before_care}" : "N/A"],
-                  [{:image => image_path, :scale => 0.3}, 'After care', '000'],
-                  [{:image => image_path, :scale => 0.3}, 'Uniform/Dress code', '000'],
-                  [{:image => image_path, :scale => 0.3}, 'Pre K', '000']
+                   school.school_cache.before_care == "Yes" || school.school_cache.before_care == "No" ? school.school_cache.before_care : "N/A"],
+                  [{:image => image_path, :scale => 0.3}, 'After care',
+                   school.school_cache.after_school == "Yes" || school.school_cache.after_school == "No" ? school.school_cache.after_school : "N/A"],
+                  [{:image => image_path, :scale => 0.3}, 'Uniform/Dress code', school.school_cache.dress_code ],
+                  [{:image => image_path, :scale => 0.3}, 'Pre K', school.school_cache.early_childhood_programs]
           ]
 
           table(data, :column_widths => [30, 100, 30],
@@ -201,7 +203,7 @@ class PyocPdf < Prawn::Document
 
           # if i % 2 == 0
           fill_color grey
-          fill_rounded_rectangle([0, cursor], col_width, 110, 5)
+          fill_rounded_rectangle([0, cursor], col_width, 85, 5)
 
           move_down 5
           fill_color black
@@ -216,20 +218,18 @@ class PyocPdf < Prawn::Document
 
           move_down 10
           stroke do
-            stroke_color blue_line_stroke
-            horizontal_line 5, col_width, :at => cursor
+            stroke_color blue_line
+            horizontal_line 5, col_width - 5, :at => cursor
           end
 
           move_down 5
           data = [
-              ['Deadlines', "#{school.school_cache.deadline}"],
-              # ['Tuition',  "#{school_cache.tuition}"],
-              ['Financial aid', 'rolling'],
-              # ['Voucher accepted', " #{school.school_cache.voucher}"],
-              ['Tax scholarship', 'rolling'],
+              ['Deadlines', school.school_cache.deadline],
+              ['Tuition',  school.school_cache.tuition],
+              ['Financial aid', '000'],
+              ['Voucher accepted', school.school_cache.voucher],
+              ['Tax scholarship', '000'],
           ]
-
-          # require 'pry'; binding.pry;
 
           table(data, :column_widths => [110,50],
                 :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
@@ -238,28 +238,6 @@ class PyocPdf < Prawn::Document
             column(1).align = :right
             cells.style(:height => 12)
           end
-
-
-
-          # else
-          #   fill_color school_profile_blue
-          #   fill_rounded_rectangle([0, cursor], col_width, 95, 5)
-          #   fill_color black
-          #   text_box "A whole other module",
-          #            :at => [5, cursor],
-          #            :width => 75,
-          #            :height => 10,
-          #            :size => 8,
-          #            :style => :italic
-          #
-          #   move_down 10
-          #   stroke do
-          #     stroke_color blue_line_stroke
-          #     horizontal_line 5, col_width, :at => cursor
-          #   end
-
-          # end
-
         end
 
 #
@@ -270,59 +248,57 @@ class PyocPdf < Prawn::Document
           text_box "Diversity",
                    :at => [0, cursor],
                    :width => 75,
-                   :height => 10,
+                   :height => 11,
                    :size => 8,
                    :style => :bold
           move_down 10
           stroke do
-            stroke_color blue_line_stroke
+            stroke_color blue_line
             horizontal_line 0, col_width, :at => cursor
           end
 
           move_down 5
 
-          data = [
-              ['more infomation', '3%']
-          ]
+          ethnicity_data = school.school_cache.formatted_ethnicity_data.to_a
+          ethnicity_data << ['Free and reduced lunch',school.school_cache.free_and_reduced_lunch != "?" ? school.school_cache.free_and_reduced_lunch : "N/A"]
+          ethnicity_data.each_with_index do |eth,i|
+          end
 
-          table(data * 8, :column_widths => [130,30],
+          table(ethnicity_data, :column_widths => [130,30],
                 :row_colors => [white, grey],
                 :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
             column(1).align = :right
-            cells.style(:height => 12)
+            cells.style(:height => 11)
           end
 
           move_down 10
           text_box 'Our grads go to?',
                    :at => [0, cursor],
                    :width => 75,
-                   :height => 12,
+                   :height => 11,
                    :size => 8,
                    :style => :bold
-          # move_down 10
-          # stroke do
-          #   stroke_color blue_line_stroke
-          #   horizontal_line 0, col_width, :at => cursor
-          # end
 
           move_down 10
           data = [
-              # ['really awesome schools'],[''],['really awesome schools']
-              ['really awesome schools']
+              [school.school_cache.destination_school_1 ? school.school_cache.destination_school_1.truncate(47) : "N/A"],
+              [school.school_cache.destination_school_2 ? school.school_cache.destination_school_2.truncate(47) : " "],
+              [school.school_cache.destination_school_3 ? school.school_cache.destination_school_3.truncate(47) : " "]
+
           ]
 
-          table(data, :column_widths => [160],
-                :cell_style => {size: 8, :padding => [0, 0, 0, 0]}) do
+          table(data, :column_widths => [col_width],
+                :cell_style => {size: 7, :padding => [0, 0, 0, 0]}) do
             cells.borders = []
-            cells.style(:height => 11)
+            cells.style(:height => 10)
           end
 
-          move_down 10
+          move_down 5
           data = [
               ['ELL offering:', 'SPED offering:'],
-              ['Basic', 'Intensive']
+              [school.school_cache.ell, school.school_cache.sped]
           ]
 
           table(data, :column_widths => [80, 80],
@@ -343,37 +319,40 @@ class PyocPdf < Prawn::Document
                    :style => :bold
           move_down 10
           stroke do
-            stroke_color blue_line_stroke
+            stroke_color blue_line
             horizontal_line 0, col_width, :at => cursor
           end
 
           move_down 5
 
-          image_path_chess = "app/assets/images/pyoc/PYOC_Icons-02.png"
-          image_path_score = "app/assets/images/pyoc/PYOC_Icons-06.png"
+          image_path_world_languages = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          image_path_clubs = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          image_path_sports = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          image_path_arts_and_music = "app/assets/images/pyoc/PYOC_Icons-02.png"
+          no_program_data = "?"
 
-          data = [[]]
+          data = [[school.school_cache.world_languages != no_program_data ? {:image => image_path_world_languages, :scale => 0.3} : " ",
+              school.school_cache.clubs != no_program_data ? {:image => image_path_clubs, :scale => 0.3} : " ",
+              school.school_cache.sports != no_program_data ? {:image => image_path_sports, :scale => 0.3} : " ",
+              school.school_cache.arts_and_music != no_program_data ? {:image => image_path_arts_and_music, :scale => 0.3} : " "]
+          ]
 
-          sprite = 0
-          while sprite < 4
-            if sprite % 2 == 0
-              data[0].push({:image => image_path_chess, :scale => 0.3})
-            elsif sprite % 3 == 0
-              data[0].push({:image => image_path_score, :scale => 0.2})
-            else
-              data[0].push('')
-            end
-            sprite += 1
-          end
-          #
-          table(data, :column_widths => [40, 40, 40, 40],
+          table(data, :column_widths => [20, 20, 20, 20],
                 :cell_style => {:padding => [0, 0, 0, 0]}) do
             cells.borders = []
-            cells.style(:height => 20)
+            cells.style(:height => 16)
           end
         end
-      end
 
+        move_down 10
+        if count % 3 != 0
+          stroke do
+            stroke_color grey
+            horizontal_line 0, 535, :at => cursor
+          end
+        end
+
+      end
       if count % 3 == 0
 
         start_new_page()
