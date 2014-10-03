@@ -9,6 +9,7 @@ def configure_expectations(model_type, attrs)
       attrs.each { |k,v| allow(model).to receive(k).and_return(v) }
     end
     model.calculate_fit_score!(params)
+    model.sort_breakdown_by_match_status!
   end
 end
 
