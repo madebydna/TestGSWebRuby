@@ -1,3 +1,4 @@
+<% @renderedFilters = render 'search/filter_form' #rendering and setting to variable to avoid rendering twice %>
 <%= render partial: 'search/filter_toolbar_mobile' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 
@@ -10,6 +11,7 @@
     <%= render 'sorting_toolbar' %>
     <%= render partial: 'search/search_results', schools: @schools%>
     <%= render partial: 'pagination_toolbar' %>
+    <%= render partial: 'shared/maponics_disclaimer' %>
 <% else %>
     <%= render 'no_results' %>
 <% end %>

@@ -31,6 +31,7 @@ class StatesController < ApplicationController
       @show_ads = CollectionConfig.show_ads(configs)
       @important_events = CollectionConfig.city_hub_important_events(configs)
       @announcement = CollectionConfig.city_hub_announcement(configs)
+      gon.state_abbr = @state[:short]
 
       ad_setTargeting_through_gon
       set_omniture_data('GS:State:Home', 'Home,StateHome')
@@ -39,6 +40,8 @@ class StatesController < ApplicationController
 
   def state_home
     @params_hash = parse_array_query_string(request.query_string)
+    gon.state_abbr = @state[:short]
+
     render 'states/state_home'
   end
 
@@ -58,6 +61,8 @@ class StatesController < ApplicationController
         'Choosing a School' => nil
       }
       @canonical_url = state_choosing_schools_url(params[:state])
+      gon.state_abbr = @state[:short]
+
       set_omniture_data('GS:State:ChoosingSchools', 'Home,StateHome,ChoosingSchools',@state[:long].titleize)
       set_meta_tags title:       "Choosing a school in #{@state[:long].titleize}",
                     description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}",
@@ -82,6 +87,9 @@ class StatesController < ApplicationController
           'Events' =>nil
       }
       @canonical_url = state_events_url(params[:state])
+      gon.state_abbr = @state[:short]
+
+
       set_omniture_data('GS:State:Events', 'Home,StateHome,Events',@state[:long].titleize)
       set_meta_tags title:       "Education Events in  #{@state[:long].titleize}",
                     description: "Key #{@state[:long].titleize} dates and events to mark on your calendar",
@@ -102,6 +110,8 @@ class StatesController < ApplicationController
       @collection_id = hub_city_mapping.collection_id
       @canonical_url = state_guided_search_url(params[:state])
       @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
+      gon.state_abbr = @state[:short]
+
       set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search',@state[:long].titleize)
       set_meta_tags title:       "Your Personalized #{@state[:long].titleize} School Search | GreatSchools",
                     description: "#{@state[:long].titleize} school wizard, #{@state[:long].titleize} schools,
@@ -145,6 +155,8 @@ class StatesController < ApplicationController
       }
 
       @canonical_url = state_enrollment_url(params[:state])
+      gon.state_abbr = @state[:short]
+
       set_omniture_data('GS:State:Enrollment', 'Home,StateHome,Enrollment',@state[:long].titleize)
       set_meta_tags title:       "#{@state[:long].titleize} Schools Enrollment Information",
                     description: " Practical information including rules, deadlines and tips, for enrolling your child
@@ -178,6 +190,7 @@ class StatesController < ApplicationController
         'Education Community' => nil
       }
       @canonical_url = state_education_community_url(params[:state])
+      gon.state_abbr = @state[:short]
 
       render 'shared/community'
     end

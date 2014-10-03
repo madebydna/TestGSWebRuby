@@ -246,4 +246,8 @@ module ApplicationHelper
   def search_by_name?
     @by_name
   end
+
+  def filtering_search?
+    @filtering_search
+  end
 end

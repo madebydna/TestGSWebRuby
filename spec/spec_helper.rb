@@ -167,14 +167,14 @@ RSpec.configure do |config|
   ip_address = '127.0.0.1'
   # Capybara.default_host = "http://test.host:3000"
   # Capybara.app_host = "http://test.host:3000"
-  Capybara.default_host = "http://localhost:3000"
-  Capybara.app_host = "http://localhost:3000"
+  Capybara.default_host = "http://localhost:3001"
+  Capybara.app_host = "http://localhost:3001"
   Capybara.server_port = 3001
   Capybara.run_server = true
   ENV_GLOBAL['app_host'] = 'localhost'
   ENV_GLOBAL['gsweb_host'] = 'localhost'
-  ENV_GLOBAL['app_port'] = '3000'
-  ENV_GLOBAL['gsweb_port'] = '3000'
+  ENV_GLOBAL['app_port'] = '3001'
+  ENV_GLOBAL['gsweb_port'] = '3001'
 
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above

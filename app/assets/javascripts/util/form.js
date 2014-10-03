@@ -338,13 +338,19 @@ $(function() {
 
     });
 
+    var setShowFiltersCookieHandler = function() {
+        GS.search.setShowFiltersCookieHandler('.js-guided-search-submit'); //state hub browse city links
+    };
+
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
     GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;
     GS.forms.sportsToolTip = sportsToolTip;
+    GS.forms.setShowFiltersCookieHandler = setShowFiltersCookieHandler;
 });
 
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
     GS.forms.toggleButtonForSportsOnLoad();
     GS.forms.sportsToolTip();
+    GS.forms.setShowFiltersCookieHandler();
 });

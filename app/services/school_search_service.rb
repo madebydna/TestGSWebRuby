@@ -30,7 +30,7 @@ class SchoolSearchService
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
     filters = extract_filters(options)
-    filters << "+citykeyword:\"#{options[:city].downcase}\""
+    filters << "+citykeyword:\"#{options[:city].downcase}\"" if options[:city] # city can be deleted by extract_filters
     filters << "+school_database_state:\"#{options[:state].downcase}\""
     options.delete :city
     options.delete :state
@@ -50,7 +50,7 @@ class SchoolSearchService
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
     filters = extract_filters(options)
-    filters << "+school_district_id:\"#{options[:district_id]}\""
+    filters << "+school_district_id:\"#{options[:district_id]}\"" if options[:district_id] # district_id can be deleted by extract_filters
     filters << "+school_database_state:\"#{options[:state].downcase}\""
     options.delete :district_id
     options.delete :state
@@ -117,6 +117,7 @@ class SchoolSearchService
     add_level_codes(school_search_result, school_search_result['grade_level'])
     # convert KM to miles
     school_search_result['distance'] = school_search_result['distance'] / 1.6 if school_search_result['distance']
+    school_search_result['review_count'] = school_search_result['review_count_ruby']
     SchoolSearchResult.new school_search_result
   end
 
@@ -225,6 +226,11 @@ class SchoolSearchService
           end
         end
         filter_arr << "+grades:(#{normalized_grades.compact.join(' ')})" if normalized_grades.compact.size > 0
+      end
+      if filters.include?(:collection_id)
+        filter_arr << "+collection_id:#{filters[:collection_id]}"
+        hash.delete :city # collection replaces city in browse
+        hash.delete :district_id # collection replaces district in browse
       end
       hash.delete :filters
     end

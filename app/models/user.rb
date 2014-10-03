@@ -5,9 +5,12 @@ class User < ActiveRecord::Base
 
   has_one :user_profile
   has_many :subscriptions, foreign_key: 'member_id'
+  has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
-  has_many :esp_memberships, -> { where('active = 1') }, foreign_key: 'member_id'
+  has_many :esp_memberships, foreign_key: 'member_id'
   has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
+  has_many :member_roles, foreign_key: 'member_id'
+  has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -212,6 +215,14 @@ class User < ActiveRecord::Base
     memberships = self.esp_memberships
     memberships = memberships.for_school(school) if school
     memberships.any? { |membership| membership.approved? || membership.provisional? }
+  end
+
+  def is_esp_superuser?
+    has_role?(Role.esp_superuser)
+  end
+
+  def has_role?(role)
+    member_roles.present? && role.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end
 
   def reported_review?(review)

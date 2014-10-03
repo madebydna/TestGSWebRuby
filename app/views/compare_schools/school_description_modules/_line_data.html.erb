@@ -6,11 +6,16 @@
               <td style="width: 30px"><i class="<%= datapoint_config[:icon] %>"></i></td>
           <% end %>
           <td><%= truncate(datapoint_config[:label], length: 26) %></td>
-          <% if datapoint_config[:argument] %>
-              <td class="tac open-sans_sb" style="width: 40px"><%= @school.send(datapoint_config[:method], datapoint_config[:argument]) %></td>
-          <% else %>
-              <td class="tac open-sans_sb" style="width: 40px"><%= @school.send(datapoint_config[:method]) %></td>
-          <% end %>
+
+          <% method_caller = @school.respond_to?(datapoint_config[:method]) ? @school : @school.school_cache %>
+          <% value = if datapoint_config[:argument]
+                       method_caller.send(datapoint_config[:method], datapoint_config[:argument])
+                     else
+                       method_caller.send(datapoint_config[:method])
+                     end %>
+          <% value = value == CachedCharacteristicsMethods::NO_DATA_SYMBOL ? render('shared/no_data_symbol_and_popup') : value %>
+
+          <td class="tac open-sans_sb" style="width: 40px"><%= value %></td>
         </tr>
   <% end %>
   </table>

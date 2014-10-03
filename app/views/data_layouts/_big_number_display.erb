@@ -17,22 +17,37 @@
     <% data.rows[0..3].each do |hash| %>
       <% size = 12 / data.rows[0..3].size %>
       <% sizes = { xs: 12, sm: size, md: size, lg: size } %>
-      <%= div_tag(sizes: sizes ) do %>
-        <% label = hash[columns_to_print.first['key'].to_sym] %>
-        <% value = hash[columns_to_print.second['key'].to_sym] %>
-        <% value = data_config.format(columns_to_print[1], value) %>
-        <div class="tac">
-          <span class="jumbo-text"><%= value %></span>
-        </div>
-        <p class="tac">
-          <%= label %>
+      <%= div_tag(sizes: sizes, class:'ptm' ) do %>
+        <div class="ma" style="border:1px solid #CCCCCC; width:250px">
+
+        <% label_global = hash[columns_to_print.first['key'].to_sym] %>
+            <div class="pam mls open-sans_sb"><%= label_global %></div>
+            <div class="tac pvl">
+        <!--<% value = hash[columns_to_print.second['key'].to_sym] %>-->
+        <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
+        <% label = columns_to_print.second['label'] %>
+        <% format = columns_to_print.second['format'] %>
+                <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %>
+                </span>
+          <br /><%= label %>
+
+
           <% columns_to_print[2..-1].each do |column| %>
             <% key = column['key'].to_sym %>
             <% if hash.has_key?(key) %>
-              </br><%= column['label'] %>: <%= hash[key] %>
+              <% value = data_config.column_value(column, hash[key]) %>
+              <% format = column['format'] %>
+               <div class="tac ptl">
+                   <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %><% if format == 'percentage' %>%<% end %>
+                   </span>
+                   <br /><%= column['label'] %>
+
+               </div>
             <% end %>
           <% end %>
-        </p>
+
+        </div>
+        </div>
       <% end %>
     <% end %>
   </div>
@@ -44,5 +59,12 @@
     descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
   }
 %>
-</br>
+
+<% if @page_config.root_placements_with_data.present? &&
+        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+        (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+    </div>
+<% end %>
 </hr>

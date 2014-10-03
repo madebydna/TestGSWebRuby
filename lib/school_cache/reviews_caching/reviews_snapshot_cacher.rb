@@ -3,11 +3,11 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
   CACHE_KEY = 'reviews_snapshot'
 
   def school_reviews
-    school.reviews.load
+    @school_reviews ||= school.reviews.load
   end
 
   def review_snapshot
-    SchoolReviews.calc_review_data(school_reviews)
+    @review_snapshot ||= SchoolReviews.calc_review_data(school_reviews)
   end
 
   def build_hash_for_cache
@@ -31,8 +31,7 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
 
   def most_recent_reviews(num=2)
     reviews = []
-    num.times do |i|
-      review = school_reviews[i]
+    school_reviews[0..num].each do |review|
       if review
         review_blob = {
             comments: review.comments,
@@ -44,5 +43,5 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
       end
     end
     reviews
-    end
+  end
 end

@@ -3,11 +3,13 @@ require 'spec_helper'
 def configure_expectations(model_type, attrs)
   before do
     if :compare == model_type
-      allow(model).to receive(:programs).and_return(programs_map(attrs))
+      allow(model).to receive(:school_cache).and_return(SchoolCacheDecorator.new(model))
+      allow_any_instance_of(SchoolCacheDecorator).to receive(:programs).and_return(programs_map(attrs))
     else
       attrs.each { |k,v| allow(model).to receive(k).and_return(v) }
     end
     model.calculate_fit_score!(params)
+    model.sort_breakdown_by_match_status!
   end
 end
 

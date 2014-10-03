@@ -3,7 +3,9 @@
 <% end %>
 <%
   has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
-  sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]) }) : city_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]), city: params[:city] })
+  #  Samson change.  gs_legacy_url_encode is causing north-carolina state page to fail
+  #sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]) }) : city_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]), city: params[:city] })
+  sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: params[:state] }) : city_education_community_partner_path({ state: params[:state], city: params[:city] })
   bg_height =  '550px'
 %>
 
@@ -100,7 +102,7 @@
               <ul class='pln'>
                 <% browse_links.each do |link| %>
                     <li class='mvm'>
-                      <%= link_to link[:label], link[:link], class: 'sm-black-lg-white-text pvm' %>
+                      <%= link_to link[:label], link[:link], class: 'sm-black-lg-white-text pvm js-browseSchools' %>
                     </li>
                 <% end %>
               </ul>

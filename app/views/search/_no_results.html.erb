@@ -20,9 +20,8 @@
         <li>Make sure all words are spelled correctly.</li>
         <li>Try different or fewer keywords.</li>
         <li>Try more general keywords.</li>
-        <% show_guided_search = true #ToDo add a check for hub mapping to allow guided-search %>
         <% state = 'delaware' #ToDo set state to actual state %>
-        <% if show_guided_search %>
+        <% if @show_guided_search %>
             <li>Try our <div class="iconx16 i-16-blue-info vam "></div>
               <a class='toolbar-text ' href='<%= state_guided_search_path(state: state) %>'>Guide Me Search &#8594;</a>
               </li>

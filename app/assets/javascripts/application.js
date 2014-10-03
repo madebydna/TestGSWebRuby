@@ -19,9 +19,11 @@
 //= require_tree ./resources
 //= require_tree ./auth
 //= require_tree ./localized_profiles
+//= require_tree ./search
 //= require_tree ./guided_search
 //= require_tree ./google_maps
 //= require_tree ./account_management
+//= require_tree ./page_initializers
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;

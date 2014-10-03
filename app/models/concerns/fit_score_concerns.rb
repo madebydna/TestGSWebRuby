@@ -41,6 +41,9 @@ module FitScoreConcerns
       german: :foreign_language,
       spanish: :foreign_language,
       mandarin: :foreign_language
+    }.stringify_keys!,
+    enrollment: {
+      vouchers: :students_vouchers
     }.stringify_keys!
   }.stringify_keys!)
 
@@ -79,6 +82,9 @@ module FitScoreConcerns
       german: /^german$/,
       spanish: /^spanish$/,
       mandarin: /^mandarin$/
+    }.stringify_keys!,
+    enrollment: {
+      vouchers: /^yes$/
     }.stringify_keys!
   }.stringify_keys!)
 
@@ -94,6 +100,32 @@ module FitScoreConcerns
     max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
   end
 
+  def has_fit?
+    fit_score && fit_score > 0
+  end
+
+  def fit_score_icon
+    if strong_fit?
+      'iconx24-icons i-24-happy-face'
+    elsif ok_fit?
+      'iconx24-icons i-24-smiling-face'
+    elsif weak_fit?
+      'iconx24-icons i-24-neutral-face'
+    end
+  end
+
+  def fit_score_text
+    if strong_fit?
+      'Strong fit'
+    elsif ok_fit?
+      'Ok fit'
+    elsif weak_fit?
+      'Weak fit'
+    else
+      'No matches'
+    end
+  end
+
   # Increments fit score for each matching key/value pair from params
   def calculate_fit_score!(params)
     @fit_score = 0
@@ -106,15 +138,6 @@ module FitScoreConcerns
         match_status = (is_match ? :yes : (is_match.nil? ? :no_data : :no))
         @fit_score += 1 if is_match
         @fit_score_breakdown << {category: key, filter: v, match: is_match, match_status: match_status}
-      end
-    end
-    @fit_score_breakdown.sort! do |a, b|
-      if a[:match] == b[:match]
-        a[:filter] <=> b[:filter]
-      elsif a[:match]
-        -1
-      else
-        1
       end
     end
   end
@@ -152,9 +175,9 @@ module FitScoreConcerns
     [*filters].each do |filter|
       filter_values = []
       if filter
-        if respond_to?(:programs)
-          if !programs.nil? && programs.key?(filter.to_s)
-            filter_values = programs[filter.to_s].keys
+        if respond_to?(:school_cache)
+          if !school_cache.programs.nil? && school_cache.programs.key?(filter.to_s)
+            filter_values = school_cache.programs[filter.to_s].keys
           end
         elsif respond_to?(filter)
           potential_values = try(filter)

@@ -9,7 +9,7 @@ describe 'shared/_upcoming_events.html.erb' do
       allow(view).to receive(:params) { { city: 'detroit', state: 'michigan' } }
 
       render
-      expect(rendered).to_not have_selector('.row')
+      expect(rendered).to_not match('Upcoming Events')
     end
   end
 
@@ -44,11 +44,6 @@ describe 'shared/_upcoming_events.html.erb' do
     after(:each) { clean_dbs :gs_schooldb }
     let(:configs) { CollectionConfig.all }
     let(:important_events) { CollectionConfig.city_hub_important_events(configs) }
-
-    it 'does not render an hr tag' do
-      render
-      expect(rendered).to_not have_selector('hr')
-    end
 
     it 'renders surrounding community layouts' do
       render

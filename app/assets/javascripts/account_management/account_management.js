@@ -9,12 +9,18 @@ GS.accountManagement.changePassword = (function(){
 
   var init = function() {
     $(formSelector).on('submit', submitHandler);
+
+    $('.js-submitSchoolPYOC').on('click', submitPyocForm);
   };
 
   var showError = function(message) {
     $errorContainer = $(errorContainerSelector); 
     $errorContainer.show();
     $errorContainer.html(message);
+  };
+
+  var submitPyocForm = function() {
+
   };
 
   var submitHandler = function() {
@@ -43,8 +49,33 @@ GS.accountManagement.changePassword = (function(){
   };
 })();
 
-if (gon.pagename == "Account management") {
-  $(function() {
-    GS.accountManagement.changePassword.init();
-  });
-}
+GS.accountManagement.PYOC = (function(){
+  var init = function() {
+    $('.js-submitSchoolPYOC').on('click', submitPyocForm);
+  };
+
+  var submitPyocForm = function() {
+    var submitForm = $(".js-printSchoolChooserSubmit");
+    var state = [];
+    var schoolID = [];
+    var count = 0;
+    //    create lists
+    $('.js-schoolSearchResult').each(function() {
+      var $school = $(this);
+      var schoolId = $school.data('schoolid');
+      var schoolState = $school.data('schoolstate');
+      state.push(schoolState);
+      schoolID.push(schoolId);
+      count++;
+    });
+    if(count > 0){
+      submitForm.children('.js-chooserStates').val(state.join(','));
+      submitForm.children('.js-chooserSchoolIds').val(schoolID.join(','));
+      submitForm.submit();
+    }
+  };
+
+  return {
+    init: init
+  };
+})();

@@ -52,7 +52,8 @@
     &,
     &:hover,
     &:focus {
-      z-index: 2;
+//      GS: z-index was causing issues with popups
+//      z-index: 2;
       color: $pagination-active-color;
       background-color: $pagination-active-bg;
       border-color: $pagination-active-bg;

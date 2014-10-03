@@ -1,5 +1,12 @@
 GS.search = GS.search || {};
-GS.search.results = GS.search.results || (function() {
+
+GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler || function(className) {
+    $('body').on('click', className, function() {
+        $.cookie('showFiltersMenu', 'true', {path: '/'});
+    });
+};
+
+GS.search.results = GS.search.results || (function(state_abbr) {
 
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
@@ -23,11 +30,16 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
+    var filtersQueryString = function($form) {
+        return GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+    };
+
     var buildQuery = function($form) {
-        var queryString = GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+        var queryString = filtersQueryString($form);
 
         var getParam = GS.uri.Uri.getFromQueryString;
-        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'sort', 'locationSearchString'];
+        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'locationSearchString', 'locationType'];
+        if (shouldPreserveSortParam($form, getParam('sort'))) { urlParamsToPreserve.push('sort'); }
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {
                 queryString += '&' + urlParamsToPreserve[i] + '=' + encodeURIComponent(getParam(urlParamsToPreserve[i]));
@@ -39,6 +51,32 @@ GS.search.results = GS.search.results || (function() {
         }
 
         return queryString
+    };
+
+    var softFiltersSelected = function ($form) {
+        var filters = filtersQueryString($form);
+        var filterObj = GS.uri.Uri.getQueryData(filters);
+        var softFilters = gon.soft_filter_keys;
+        for (var i = 0; i < softFilters.length; i++) {
+            var filter = softFilters[i];
+            var filterWithBrackets = [filter, filter+'%5B%5D', filter+'[]'];
+            for (var j = 0; j < filterWithBrackets.length; j++) {
+                var filterParam = filterWithBrackets[j];
+                if (_.contains(_.keys(filterObj), filterParam)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    var shouldPreserveSortParam = function ($form, sortParam) {
+        if (_.contains(sortParam, 'fit')) {
+            return softFiltersSelected($form);
+        }
+        else {
+            return true;
+        }
     };
 
     var searchFiltersMenuHandler = function() {
@@ -92,10 +130,20 @@ GS.search.results = GS.search.results || (function() {
         });
     };
 
-    var searchResultFitScoreTogglehandler = function() {
+    var searchResultFitScoreTogglehandler = function($optionalParentElement) {
         var closeMenuHandlerSet = false;
 
-        $('.js-searchResultDropdown').on(clickOrTouchType, function() {
+        var $searchResultDropdown;
+        var $fitScorePopup;
+        if ($optionalParentElement) {
+            $searchResultDropdown = $optionalParentElement.find('.js-searchResultDropdown');
+            $fitScorePopup = $optionalParentElement.find('.js-fitScorePopup');
+        } else {
+            $searchResultDropdown = $('.js-searchResultDropdown');
+            $fitScorePopup = $('.js-fitScorePopup');
+        }
+
+        $searchResultDropdown.on(clickOrTouchType, function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 var offset = getFitScorePopupOffset.call(this, popup);
@@ -108,8 +156,8 @@ GS.search.results = GS.search.results || (function() {
                 closeMenuHandlerSet = true;
             }
         });
-        stopClickAndTouchstartEventPropogation($('.js-searchResultDropdown'));
-        stopClickAndTouchstartEventPropogation($('.js-fitScorePopup'));
+        stopClickAndTouchstartEventPropogation($searchResultDropdown);
+        stopClickAndTouchstartEventPropogation($fitScorePopup);
     };
 
     var getFitScorePopupOffset = function(popup) {
@@ -207,7 +255,7 @@ GS.search.results = GS.search.results || (function() {
             });
         };
 
-        var toggleOnCompareSchoolsOnPageLoad = function() {
+        var toggleOnCompareSchools = function() {
             var ids = schoolsList.getSchoolIds();
 
             for (var i = 0; i < ids.length; i++) {
@@ -216,7 +264,7 @@ GS.search.results = GS.search.results || (function() {
         };
 
         var toggleGreenCheckmarkSchoolCompareButton = function(id) {
-            var $school = $('#js-compareSchool' + id);
+            var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
                 $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
@@ -225,7 +273,7 @@ GS.search.results = GS.search.results || (function() {
         };
 
         var toggleGreyCheckMarkSchoolCompareButton = function(id) {
-            var $school = $('#js-compareSchool' + id);
+            var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
                 $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
@@ -239,6 +287,7 @@ GS.search.results = GS.search.results || (function() {
             });
         };
 
+
         var init = function() {
             //schoolslist needs to initialize before popupbox, so popupbox can get the data
             schoolsList = GS.compare.schoolsList;
@@ -250,13 +299,60 @@ GS.search.results = GS.search.results || (function() {
             popupBox.syncSchoolCount();
             setRemovePopupBoxSchoolsHandler();
             setCompareSchoolButtonHandler();
-            toggleOnCompareSchoolsOnPageLoad();
+            toggleOnCompareSchools();
         };
 
         return {
-            init: init
+            init: init,
+            toggleOnCompareSchools: toggleOnCompareSchools
         }
     }();
+
+    var attachAutocomplete = function () {
+        var state = typeof state_abbr === "string" ? state_abbr : 'de';
+        var autocomplete = GS.search.autocomplete;
+        var markup = autocomplete.display;
+        var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY&state=' + state, sortFunction: false });
+        var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY&state=' + state, displayLimit: 5 });
+        var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY&state=' + state, displayLimit: 5 });
+        $('.typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+            {
+                name: 'cities', //for generated css class name. Ex tt-dataset-cities
+                displayKey: 'city_name', //key whose value will be displayed in input
+                source: cities.ttAdapter(),
+                templates: markup.cityResultsMarkup(state)
+            },
+            {
+                name: 'districts',
+                displayKey: 'district_name',
+                source: districts.ttAdapter(),
+                templates: markup.districtResultsMarkup(state)
+            },
+            {
+                name: 'schools',
+                displayKey: 'school_name',
+                source: schools.ttAdapter(),
+                templates: markup.schoolResultsMarkup(state)
+            }
+        ).on('typeahead:selected', function (event, suggestion, dataset) {
+            GS.uri.Uri.goToPage(suggestion['url']);
+        })
+    };
+
+    var attachAutocompleteHandlers = function() {
+        var autocomplete = GS.search.autocomplete;
+        autocomplete.handlers.setOnUpKeyedCallback();
+        autocomplete.handlers.setOnQueryChangedCallback();
+        autocomplete.handlers.setOnDownKeyedCallback();
+    };
+
+    var setShowFiltersHandler = function() {
+        GS.search.setShowFiltersCookieHandler('.js-nearbyCity'); //nearby city links
+    };
 
     var init = function() {
         searchFiltersFormSubmissionHandler();
@@ -268,13 +364,18 @@ GS.search.results = GS.search.results || (function() {
         searchSortingSelectTagHandler();
         setSearchFilterMenuMobileOffsetFromTop();
         compareSchools.init();
+        attachAutocomplete();
+        attachAutocompleteHandlers();
+        setShowFiltersHandler()
     };
 
     return {
         init: init,
-        sortBy: sortBy
+        sortBy: sortBy,
+        searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
+        toggleOnCompareSchools: compareSchools.toggleOnCompareSchools
     };
-})();
+})(gon.state_abbr);
 
 if (gon.pagename == "SearchResultsPage") {
    $(document).ready(function() {

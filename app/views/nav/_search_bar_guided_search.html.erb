@@ -41,7 +41,7 @@
           <div class="fl mrl">Nearby Cities:</div>
             <% @nearby_cities.each_index do |x|
                 city = @nearby_cities[x] %>
-                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
+                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
             <% end %>
         </div>
     <% end %>

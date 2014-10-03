@@ -78,7 +78,7 @@ class BarCharts::BasicBarChart < Draper::Decorator
   end
 
   def bar_chart_tooltip_html(data_point_label, bar_label, value)
-    tooltip = "<div class='open-sans_b' style='width:100px;'>#{data_point_label}</div>#{bar_label}: #{value}"
+    tooltip = "<div class='open-sans_sb' style='width:100px;'>#{data_point_label}</div>#{bar_label}: #{value}"
     tooltip
   end
 

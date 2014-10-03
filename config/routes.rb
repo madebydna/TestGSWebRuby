@@ -16,6 +16,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/account/', as: :manage_account, to: 'account_management#show'
 
+  get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
@@ -47,6 +49,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
+    get '/about/gsFaq.page', as: :faq
     get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
@@ -65,6 +68,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
+    get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
+    get '/college/', as: :college_articles
+    get '/STEM.topic?content=8021', as: :stem_article
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
@@ -144,6 +150,8 @@ LocalizedProfiles::Application.routes.draw do
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
       get 'guided-search', to: 'states#guided_search', as: :guided_search
       get 'events', to: 'states#events', as: :events
+
+
 
       get 'enrollment', to: 'states#enrollment', as: :enrollment
       scope '/enrollment', as: :enrollment do

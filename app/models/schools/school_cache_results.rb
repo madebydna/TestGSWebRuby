@@ -38,10 +38,14 @@ class SchoolCacheResults
 
   def module_for_key(cache_key)
     case cache_key
-    when 'ratings'
-      CachedRatingsMethods
-    when 'characteristics'
-      # ...
+      when 'ratings'
+        CachedRatingsMethods
+      when 'characteristics'
+        CachedCharacteristicsMethods
+      when 'reviews_snapshot'
+        CachedReviewsSnapshotMethods
+      when 'esp_responses'
+        CachedProgramsMethods
     end
   end
 

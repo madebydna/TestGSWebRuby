@@ -1493,40 +1493,32 @@
                 this.input.resetInputValue();
             },
             _onUpKeyed: function onUpKeyed() {
-//                ModifiedBehavior
+//              ModifiedBehavior
                 var query = this.input.getQuery();
-                if (GS.search.schoolSearchForm.isAddress(query)) {
-                    this.dropdown.close();
-                } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-                    this.dropdown.update(query);
-                    this.dropdown.open();
+                var autocomplete = GS.search.autocomplete;
+
+                if (autocomplete.onUpKeyedCallback !== undefined) {
+                    autocomplete.onUpKeyedCallback.call(this, query)
                 } else {
-                    this.dropdown.moveCursorUp();
+//                    Default library Behavior
+//                    var query = this.input.getQuery();
+                    this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorUp();
                     this.dropdown.open();
                 }
-
-//                Previous Behavior
-//                var query = this.input.getQuery();
-//                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorUp();
-//                this.dropdown.open();
             },
             _onDownKeyed: function onDownKeyed() {
-//                ModifiedBehavior
+//              ModifiedBehavior
                 var query = this.input.getQuery();
-                if (GS.search.schoolSearchForm.isAddress(query)) {
-                    this.dropdown.close();
-                } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-                    this.dropdown.update(query);
-                    this.dropdown.open();
+                var autocomplete = GS.search.autocomplete;
+
+                if (autocomplete.onDownKeyedCallback !== undefined) {
+                    autocomplete.onDownKeyedCallback.call(this, query)
                 } else {
-                    this.dropdown.moveCursorDown();
+//                    Default library Behavior
+//                    var query = this.input.getQuery();
+                    this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorDown();
                     this.dropdown.open();
                 }
-
-//                Previous Behavior
-//                var query = this.input.getQuery();
-//                this.dropdown.isEmpty && query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.moveCursorDown();
-//                this.dropdown.open();
             },
             _onLeftKeyed: function onLeftKeyed() {
                 this.dir === "rtl" && this._autocomplete();
@@ -1536,21 +1528,17 @@
             },
             _onQueryChanged: function onQueryChanged(e, query) {
 //                ModifiedBehavior
-                this.input.clearHintIfInvalid();
-                if (GS.search.schoolSearchForm.isAddress(query) || query.length == 0 ) {
-                    this.dropdown.close();
-                } else if (query.length >= this.minLength) {
-                    this.dropdown.update(query);
+                var autocomplete = GS.search.autocomplete;
+
+                if (autocomplete.onQueryChangedCallback !== undefined) {
+                    autocomplete.onQueryChangedCallback.call(this, query)
+                } else {
+//                  Default library Behavior
+                    this.input.clearHintIfInvalid();
+                    query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.empty();
                     this.dropdown.open();
                     this._setLanguageDirection();
                 }
-
-//                ModifiedBehavior
-//                Previous Behavior
-//                this.input.clearHintIfInvalid();
-//                query.length >= this.minLength ? this.dropdown.update(query) : this.dropdown.empty();
-//                this.dropdown.open();
-//                this._setLanguageDirection();
             },
             _onWhitespaceChanged: function onWhitespaceChanged() {
                 this._updateHint();

@@ -67,15 +67,15 @@ class SnapshotDecorator < Draper::Decorator
       },
       'Before school' => {
         page: :details,
-        anchor: 'Programs'
+        anchor: 'Extracurriculars'
       },
       'After school' => {
         page: :details,
-        anchor: 'Programs'
+        anchor: 'Extracurriculars'
       },
       'Summer program' => {
         page: :details,
-        anchor: 'Programs'
+        anchor: 'Extracurriculars'
       }
     }
     if value.to_s == 'Yes' && hash[key].present?

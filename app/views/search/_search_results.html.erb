@@ -1,13 +1,24 @@
-<div class="full-width limit-width-1200 header-bg-color js-searchResultsContainer">
-  <div class="ptm hidden-xs"></div>
-  <div class="row ptm pbm">
-    <div class="full-width ">
-      <% @schools.each do |school| %>
-        <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
-        <% @school = decorated_school %>
-        <%= render 'search_result', school: school, decorated_school: decorated_school %>
-      <% end %>
+<div class="header-bg-color">
+  <div class="full-width limit-width-1200 js-searchResultsContainer">
+    <div class="ptm hidden-xs"></div>
+    <div class="row ptm pbm">
+      <div class="full-width ">
+          <% if @by_location %>
+            <%= render 'assigned_school_not_valid' %>
+            <%= render 'assigned_school_no_result' %>
+            <%= render 'assigned_school_result', level: 'Elementary' %>
+            <%= render 'assigned_school_result', level: 'Middle' %>
+            <%= render 'assigned_school_result', level: 'High' %>
+          <% elsif !@by_name %>
+            <%= render 'assigned_school_not_valid' %>
+          <% end %>
+        <% @schools.each do |school| %>
+            <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
+            <% @school = decorated_school %>
+            <%= render 'search_result', school: school, decorated_school: decorated_school %>
+        <% end %>
+      </div>
     </div>
+    <div class="pbm hidden-xs"></div>
   </div>
-  <div class="pbm hidden-xs"></div>
 </div>

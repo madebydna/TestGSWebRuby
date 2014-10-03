@@ -32,6 +32,8 @@ class CitiesController < ApplicationController
       @show_ads = CollectionConfig.show_ads(collection_configs)
       ad_setTargeting_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
+      gon.state_abbr = @state[:short]
+
     end
   end
 
@@ -50,6 +52,8 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+      gon.state_abbr = @state[:short]
+
       render 'shared/events'
     end
   end
@@ -74,6 +78,7 @@ class CitiesController < ApplicationController
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
+      gon.state_abbr = @state[:short]
 
       render 'shared/community'
     end
@@ -97,6 +102,8 @@ class CitiesController < ApplicationController
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
       set_omniture_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
+      gon.state_abbr = @state[:short]
+
     end
   end
 
@@ -117,6 +124,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
       set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+      gon.state_abbr = @state[:short]
 
       render 'shared/choosing_schools'
     end
@@ -143,6 +151,8 @@ class CitiesController < ApplicationController
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
       set_enrollment_omniture_data
+      gon.state_abbr = @state[:short]
+
       render 'shared/enrollment'
     end
   end
@@ -166,6 +176,7 @@ class CitiesController < ApplicationController
               'After school and summer programs' =>nil
             }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
+      gon.state_abbr = @state[:short]
 
     end
   end

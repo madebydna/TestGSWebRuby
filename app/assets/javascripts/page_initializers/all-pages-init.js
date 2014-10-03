@@ -16,6 +16,9 @@ GS.omniture = GS.omniture || function() {
 GS.track.setOmnitureData();
 
 $(function() {
+
+  GS.util.BackToTop.init();
+
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
   $('.js-send-me-updates-button-header').on('click', function () {
@@ -45,6 +48,9 @@ $(function() {
           school_id += $(this).children('#favorite_school_school_id').val();
           state += $(this).children('#favorite_school_state').val();
       });
+      if (school_id == '') {
+          return false;
+      }
       form.children('#favorite_school_school_id').val(school_id);
       form.children('#favorite_school_state').val(state);
       form.submit();

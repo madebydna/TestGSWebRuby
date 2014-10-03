@@ -1,14 +1,26 @@
-<% school_page_url = school_url(school) %>
+<% school_page_path = (school.try(:profile_path) || school_path(school)) %>
+<% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
 <% school_reviews_page_url = school_page_url + 'reviews/' %>
 <% school_quality_page_url = school_page_url + 'quality/' %>
+<% school_provided_photo = decorated_school.uploaded_photo(130) %>
+<% if search_by_location? %>
+  <% distance = decorated_school.distance #converting to 2 decimal places %>
+<% end %>
+<% unless defined? account_page %>
+    <% account_page = false %>
+<% end %>
 
-<div class="pam">
+<div class="pam js-schoolSearchResult" data-schoolId="<%=school.id%>" data-schoolState="<%=school.state%>">
   <div class="row search-result-border prm bg-white">
     <div class="col-xs-12">
       <div class="row">
         <div class="col-xs-7 col-sm-5 col-md-6 clearfix">
-          <div class="hidden-xs hidden-sm fl">
-            <%= decorated_school.photo(130, 130) %>
+          <div class="hidden-xs hidden-sm fl js-schoolPhoto">
+              <% if school_provided_photo %>
+                <%= school_provided_photo %>
+              <% else %>
+                <img src="<%= image_path('search/no-school-photo.png')%>" alt="No school photo available" class="thumbnail-border"/>
+              <% end %>
           </div>
           <div class="mll fl">
             <div class="ptm notranslate">
@@ -34,7 +46,7 @@
               <div class="fl"><%= decorated_school.process_level %></div>
               <% if search_by_location? %>
                 <div class="visible-xs phm fl">|</div>
-                <div class="visible-xs fl"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+                <div class="visible-xs fl"><%= distance %> miles</div>
               <% end %>
             </div>
           </div>
@@ -46,7 +58,7 @@
             <!-- Distance -->
             <div class="hidden-xs col-sm-4 mtl mbm font-size-xs">
               <div class="iconx24-icons i-24-new-grey_map_pin ma db vam"></div>
-              <span class="tac db"><%= number_with_precision(school.distance, precision:2)%> miles</span>
+              <span class="tac db"><%= distance %> miles</span>
             </div>
             <% end%>
             <!-- GS Rating -->
@@ -58,31 +70,34 @@
               <% end %>
             </div>
             <!-- Fit score -->
-            <div class="col-xs-6 col-sm-4 mtl mbs">
-            <% if school.fit_score > 0 %>
-              <%= render 'fit_score_icon_and_popup', school: school, decorated_school: decorated_school %>
-            <% end %>
+            <div class="col-xs-6 col-sm-4 mtl mbs js-schoolFitScore">
+              <% if filtering_search? %>
+                  <%= render 'fit_score_icon_and_popup', school: school, decorated_school: decorated_school %>
+              <% end %>
             </div>
           </div>
         </div>
-        <!-- Homes for Sale -->
-        <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
-            <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
-                 id='js-compareSchool<%= "#{school.id}" %>'
-                 style="width:150px"
-                 data-schoolname="<%= school.name %>"
-                 data-schoolstate="<%= school.state.downcase %>"
-                 data-schoolid="<%= school.id %>"
-                 data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
-              <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
-              <div class="fl">Compare</div>
-            </button>
-            <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
-              <!--<div class="iconx24 i-24-home fl mrs"></div>-->
-              <div class="iconx16 i-16-home fl mrs"></div>
-              <div class="fl">Homes for sale</div>
-            <% end %>
-        </div>
+        <!-- do not show on account page -->
+        <% if account_page == false %>
+            <!-- Compare and Homes for Sale -->
+            <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
+                <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
+                     id='js-compareSchool<%= "#{school.id}" %>'
+                     style="width:150px"
+                     data-schoolname="<%= school.name %>"
+                     data-schoolstate="<%= school.state.downcase %>"
+                     data-schoolid="<%= school.id %>"
+                     data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
+                  <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
+                  <div class="fl">Compare</div>
+                </button>
+                <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
+                  <!--<div class="iconx24 i-24-home fl mrs"></div>-->
+                  <div class="iconx16 i-16-home fl mrs"></div>
+                  <div class="fl">Homes for sale</div>
+                <% end %>
+            </div>
+        <% end %>
       </div>
     </div>
 
@@ -96,7 +111,7 @@
       <% end %>
       </div>
       <% if search_by_location? %>
-        <div class="fr"><%= number_with_precision(school.distance, precision:2)%> miles</div>
+        <div class="fr"><%= distance %> miles</div>
       <% end %>
     </div>
   </div>

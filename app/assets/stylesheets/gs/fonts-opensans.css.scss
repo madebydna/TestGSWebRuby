@@ -31,16 +31,16 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'opensans-bold';
-  src:  url('opensans-bold-webfont.eot?');
-  src:  local('?'),
-  asset-url('opensans-bold-webfont.woff') format('woff'),
-  asset-url('opensans-bold-webfont.ttf')  format('truetype'),
-  asset-url('opensans-bold-webfont.svg#opensans-bold') format('svg');
-  font-weight: 400;
-  font-style: normal;
-}
+//@font-face {
+//  font-family: 'opensans-bold';
+//  src:  url('opensans-bold-webfont.eot?');
+//  src:  local('?'),
+//  asset-url('opensans-bold-webfont.woff') format('woff'),
+//  asset-url('opensans-bold-webfont.ttf')  format('truetype'),
+//  asset-url('opensans-bold-webfont.svg#opensans-bold') format('svg');
+//  font-weight: 400;
+//  font-style: normal;
+//}
 
 .open-sans {
   font-family: 'opensans-regular';
@@ -60,8 +60,8 @@
   font-style: normal;
 }
 
-.open-sans_b {
-  font-family: 'opensans-bold';
-  font-weight: 400;
-  font-style: normal;
-}
+//.open-sans_b {
+//  font-family: 'opensans-bold';
+//  font-weight: 400;
+//  font-style: normal;
+//}

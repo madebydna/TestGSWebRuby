@@ -171,7 +171,7 @@ module MetaTagsHelper
   end
 
   def canonical_url_without_params(state_name, city_name)
-    search_city_browse_url(state_name, city_name).downcase[0..-2]
+    search_city_browse_url(state_name.gsub(' ', '-'), city_name).downcase[0..-2]
   end
 
   def search_city_browse_meta_tag_hash
@@ -223,7 +223,7 @@ module MetaTagsHelper
     end
     {
         title: 'GreatSchools.org Search',
-        canonical: (canonical_url ||= state_url(@state[:long])).downcase
+        canonical: (canonical_url ||= state_url(@state[:long].gsub(' ', '-'))).downcase
     }
   end
 
@@ -238,7 +238,7 @@ module MetaTagsHelper
     end
     {
         title: "GreatSchools.org Search: #{@params_hash['q']}",
-        canonical: (canonical_url ||= state_url(@state[:long])).downcase
+        canonical: (canonical_url ||= state_url(@state[:long].gsub(' ', '-'))).downcase
     }
   end
 end

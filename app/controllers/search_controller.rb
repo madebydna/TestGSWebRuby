@@ -3,6 +3,7 @@ class SearchController < ApplicationController
   include MetaTagsHelper
   include ActionView::Helpers::TagHelper
   include PaginationConcerns
+  include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
 
@@ -13,8 +14,7 @@ class SearchController < ApplicationController
   layout 'application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings']
-  SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
+  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings','enrollment']
   MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 200
   NUM_NEARBY_CITIES = 8
@@ -51,7 +51,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
-    gon.pagename = "SearchResultsPage"
+    setup_search_gon_variables
     render 'search_page'
   end
 
@@ -79,7 +79,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
-    gon.pagename = "SearchResultsPage"
+    setup_search_gon_variables
     render 'search_page'
   end
 
@@ -105,7 +105,7 @@ class SearchController < ApplicationController
 
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
-    gon.pagename = "SearchResultsPage"
+    setup_search_gon_variables
   end
 
   def by_name
@@ -125,13 +125,12 @@ class SearchController < ApplicationController
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
-    gon.pagename = "SearchResultsPage"
+    setup_search_gon_variables
     render 'search_page'
   end
 
   def setup_search_results!(search_method)
     @params_hash = parse_array_query_string(request.query_string)
-    setup_filter_display_map
 
     set_page_instance_variables # @results_offset @page_size @page_number
 
@@ -147,22 +146,13 @@ class SearchController < ApplicationController
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
 
-    (sort = parse_sorts(@params_hash).presence) and search_options.merge!({sort: sort})
-    @sort_name = if sort.nil?
-                   if search_by_location?
-                     'distance'
-                   elsif search_by_name?
-                     'relevance'
-                   else
-                     'rating'
-                   end
-                 else
-                   sort.to_s.split('_').first
-                 end
+    sort = determine_sort!(@params_hash)
+    if sort
+      search_options.merge!({sort: sort})
+    end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
-    is_fit_sort = (sort == :fit_desc || sort == :fit_asc)
-    if is_fit_sort
+    if sorting_by_fit?
       search_options[:number_of_results] = MAX_RESULTS_FROM_SOLR
       search_options[:offset] = 0
     end
@@ -170,19 +160,15 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    calculate_fit_score(results[:results], @params_hash) unless results.empty?
+    setup_filter_display_map(@state ? @state[:short] : nil)
+    setup_fit_scores(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
-    sort_by_fit(results[:results], sort) if is_fit_sort
+    sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
+    @show_guided_search = has_guided_search?
 
     omniture_filter_list_values(filters, @params_hash)
-  end
-
-  def sort_by_fit(school_results, direction)
-    # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
-    n = 0
-    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
   end
 
   def process_results(results, solr_offset)
@@ -229,7 +215,7 @@ class SearchController < ApplicationController
         end
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/Delaware/#{school_search_result['city_name']}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
+        school_url = "/#{gs_legacy_url_city_district_browse_encode(@state[:long])}/#{gs_legacy_url_city_district_browse_encode(school_search_result['city_name'])}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
         response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
@@ -297,6 +283,7 @@ class SearchController < ApplicationController
     end
     [map_start, map_end]
   end
+
   def parse_filters(params_hash)
     filters = {}
     if params_hash.include? 'st'
@@ -326,11 +313,13 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
+    if hub_matching_current_url && hub_matching_current_url.city
+      filters[:collection_id] = hub_matching_current_url.collection_id
+    elsif params_hash.include? 'collectionId'
+      filters[:collection_id] = params_hash['collectionId']
+    end
+    @filtering_search = @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
     filters
-  end
-
-  def parse_sorts(params_hash)
-    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
   end
 
   private
@@ -358,19 +347,23 @@ class SearchController < ApplicationController
     gon.ad_set_targeting = set_targeting
   end
 
-  def calculate_fit_score(results, params_hash)
+  def setup_fit_scores(results, params_hash)
 
     params = soft_filters_params_hash(params_hash)
 
     results.each do |result|
       result.calculate_fit_score!(params)
+      unless result.fit_score_breakdown.nil?
+        result.update_breakdown_labels! @filter_display_map
+        result.sort_breakdown_by_match_status!
+      end
     end
   end
 
-  def setup_filter_display_map
+  def setup_filter_display_map(state_short)
     @search_bar_display_map = get_search_bar_display_map
 
-    filter_builder = FilterBuilder.new
+    filter_builder = FilterBuilder.new(state_short)
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
   end
@@ -450,6 +443,12 @@ class SearchController < ApplicationController
     omniture_soft_filters_hash(params_hash)
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
+  end
+
+  def setup_search_gon_variables
+    gon.soft_filter_keys = SOFT_FILTER_KEYS
+    gon.pagename = "SearchResultsPage"
+    gon.state_abbr = @state[:short]
   end
 
 end
