@@ -569,9 +569,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     };
 
     var searchResultsDisplayed = function() {
-        return $('.js-searchResultsContainer').length > 0
+        return $('.js-numOfSchoolsFound').data('numOfSchoolsFound') > 0
     };
 
+    var setShowFiltersCookieHandler = function() {
+        GS.search.setShowFiltersCookieHandler('.js-browseSchools'); //state hub browse city links
+    };
 
     var checkGooglePlaceholderTranslate = function () {
         var placeholder = $('#js-schoolResultsSearch').attr('placeholder');
@@ -596,7 +599,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
         showFiltersMenuOnLoad: showFiltersMenuOnLoad,
-        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate
+        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
+        setShowFiltersCookieHandler: setShowFiltersCookieHandler
     };
 })(gon.state_abbr);
 
@@ -608,5 +612,6 @@ GS.search.init = (function() {
     GS.search.schoolSearchForm.setupTabs();
     GS.search.schoolSearchForm.showFiltersMenuOnLoad();
     GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
+    GS.search.schoolSearchForm.setShowFiltersCookieHandler();
   }
 });

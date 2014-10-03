@@ -1,4 +1,11 @@
 GS.search = GS.search || {};
+
+GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler || function(className) {
+    $(className).on('click', function() {
+        $.cookie('showFiltersMenu', 'true', {path: '/'});
+    });
+};
+
 GS.search.results = GS.search.results || (function(state_abbr) {
 
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
@@ -343,6 +350,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         autocomplete.handlers.setOnDownKeyedCallback();
     };
 
+    var setShowFiltersHandler = function() {
+        GS.search.setShowFiltersCookieHandler('.js-nearbyCity'); //nearby city links
+    };
+
     var init = function() {
         searchFiltersFormSubmissionHandler();
         searchFiltersFormSubmissionMobileHandler();
@@ -355,6 +366,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         compareSchools.init();
         attachAutocomplete();
         attachAutocompleteHandlers();
+        setShowFiltersHandler()
     };
 
     return {
