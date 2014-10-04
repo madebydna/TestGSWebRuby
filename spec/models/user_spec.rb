@@ -202,40 +202,6 @@ describe User do
         expect{ subject.reviews_for_school(nil) }.to raise_error
       end
     end
-
-    describe '#is_esp_superuser' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:esp_superuser_role )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:esp_superuser_role.id)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.is_esp_superuser?).to be_falsey
-      end
-
-
-      it 'should return true, since user has a super user member_role' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.is_esp_superuser?).to be_truthy
-      end
-    end
-
-    describe '#has_role' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:esp_superuser_role,id:1 )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:2)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-
-      it 'should return false, since the user role id does not match' do
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-    end
-
   end
 
 
