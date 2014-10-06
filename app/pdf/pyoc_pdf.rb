@@ -26,7 +26,8 @@ class PyocPdf < Prawn::Document
     count = 1
     foo = 0
 
-    schools_decorated_with_cache_results.each do |school|
+    schools_decorated_with_cache_results.each_with_index  do |school,index|
+      pp school.id
 
 # header
       fill_color blue_line
@@ -60,7 +61,7 @@ class PyocPdf < Prawn::Document
 
           move_down 40
           fill_color black
-          text_box " #{school.process_level} | #{school.decorated_school_type} | #{school.district.name}",
+          text_box " #{school.process_level} | #{school.decorated_school_type} | #{school.district != nil ? school.district.name : ' ' }",
                    :at => [5, cursor],
                    :width => col_width,
                    :height => 20,

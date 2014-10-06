@@ -1,7 +1,7 @@
 module CachedProgramsMethods
 
   NO_DATA_SYMBOL = '?'
-  NOT_APPLICABLE_SYMBOL ='N/A'
+  NOT_APPLICABLE_SYMBOL ='n/a'
 
   def programs
     cache_data['esp_responses'] || {}

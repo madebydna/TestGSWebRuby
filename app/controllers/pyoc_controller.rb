@@ -3,16 +3,20 @@ class PyocController <  ApplicationController
   include GradeLevelConcerns
 
   def print_pdf
-    @school_list_for_pdf = School.for_states_and_ids(['mi','wi', 'wi'], [1273,428, 1110])
+
+    @db_schools = School.on_db('wi').where(active: true)
+    @db_schools = @db_schools[0..5000]
+
+    # @school_list_for_pdf = School.for_states_and_ids(['in', 'in'], [428, 1110])
 
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
-    @school_list_for_pdf.each do |school|
+    @db_schools.each do |school|
       query = query.include_schools(school.state, school.id)
     end
     query_results = query.query
 
     @school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
-    @schools_with_cache_results= @school_cache_results.decorate_schools(@school_list_for_pdf)
+    @schools_with_cache_results= @school_cache_results.decorate_schools(@db_schools)
     @schools_decorated_with_cache_results = @schools_with_cache_results.map do |school|
       PyocDecorator.decorate(school)
     end
