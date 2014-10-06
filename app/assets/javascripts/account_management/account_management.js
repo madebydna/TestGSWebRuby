@@ -9,18 +9,12 @@ GS.accountManagement.changePassword = (function(){
 
   var init = function() {
     $(formSelector).on('submit', submitHandler);
-
-    $('.js-submitSchoolPYOC').on('click', submitPyocForm);
   };
 
   var showError = function(message) {
     $errorContainer = $(errorContainerSelector); 
     $errorContainer.show();
     $errorContainer.html(message);
-  };
-
-  var submitPyocForm = function() {
-
   };
 
   var submitHandler = function() {
