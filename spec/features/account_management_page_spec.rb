@@ -8,7 +8,7 @@ feature 'Account management page' do
   end
 
   after do
-    clean_models EspMembership, MemberRole, Role
+    clean_models :gs_schooldb,EspMembership, MemberRole, Role
   end
 
   feature 'requires user to be logged in' do
@@ -43,7 +43,6 @@ feature 'Account management page' do
       let!(:esp_superuser_role) {FactoryGirl.create(:esp_superuser_role )}
       let!(:member_role) {FactoryGirl.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)}
       scenario 'It displays link to edit osp' do
-        binding.pry
         expect(subject).to have_content('Edit school profile')
       end
     end
