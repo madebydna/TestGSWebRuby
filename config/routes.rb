@@ -87,9 +87,10 @@ LocalizedProfiles::Application.routes.draw do
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
-    scope '/style-guide/', as: :style_guide, to: :style_guide do
-      get '/index', to: 'style_guide#index'
-    end
+    get '/style-guide/*page', to: 'style_guide#index'
+    # scope '/style-guide/', as: :style_guide, to: :style_guide do
+    #   get '/index', to: 'style_guide#index'
+    # end
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
