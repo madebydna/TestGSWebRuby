@@ -3,11 +3,16 @@ class PyocController <  ApplicationController
   include GradeLevelConcerns
 
   def print_pdf
+    @db_schools = School.on_db(state_param.downcase.to_sym).where(active: true).order(name: :desc)
+    @db_schools = @db_schools[0..5]
 
-    @db_schools = School.on_db('wi').where(active: true)
-    @db_schools = @db_schools[0..5000]
-
-    #     @school_list_for_pdf = School.for_states_and_ids(['mi','wi', 'wi', 'wi', 'wi', 'in', 'wi'], [1273,2, 1110, 1030, 110, 428, 3573])
+    # @db_schools.each do |school|
+    #   if school.collection.present? && school.collection.id == params[:collection_id]
+    #     puts 'I am happy'
+    #
+    #     puts school.id
+    #   end
+    # end
 
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
     @db_schools.each do |school|
