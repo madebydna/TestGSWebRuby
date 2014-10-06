@@ -117,6 +117,16 @@ module HubConcerns
     end
   end
 
+  def hub_configs(collection_id)
+    configs_cache_key = "collection_configs-id:#{collection_id}"
+    Rails.cache.fetch(configs_cache_key,
+                      expires_in: CollectionConfig.hub_config_cache_time,
+                      race_condition_ttl: CollectionConfig.hub_config_cache_time) do
+      CollectionConfig.where(collection_id: collection_id).to_a
+    end
+  end
 
-
+  def hub_show_ads?
+    @hub ? CollectionConfig.show_ads(hub_configs(@hub.collection_id)) : false
+  end
 end

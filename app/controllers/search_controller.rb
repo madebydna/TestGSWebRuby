@@ -167,6 +167,7 @@ class SearchController < ApplicationController
     process_results(results, offset) unless results.empty?
     set_up_localized_search_hub_params
     @show_guided_search = has_guided_search?
+    @show_ads = hub_show_ads?
 
     omniture_filter_list_values(filters, @params_hash)
   end
