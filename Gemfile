@@ -21,6 +21,7 @@ gem 'devise'
 # No Rails 4:
 # gem 'db-charmer', '1.8.4', :require => 'db_charmer'
 gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails4'
+gem 'composite_primary_keys'
 
 # Adds support for reserved-word column names as model attributes. Useful when writing models for legacy schemas
 gem 'safe_attributes'
