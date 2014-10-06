@@ -24,10 +24,9 @@ class PyocPdf < Prawn::Document
 #     grid.show_all
     i = 0
     count = 1
-    foo = 0
 
     schools_decorated_with_cache_results.each_with_index  do |school,index|
-      pp school.id
+      puts school.id
 
 # header
 #
@@ -39,7 +38,7 @@ class PyocPdf < Prawn::Document
                  :at => [250, 735],
                  :width => col_width,
                  :height => 20,
-                 :size => 8
+                 :size => 9
         # :style => :bold
         stroke do
           stroke_color blue_line
@@ -51,7 +50,7 @@ class PyocPdf < Prawn::Document
                  :at => [250, 735],
                  :width => col_width,
                  :height => 20,
-                 :size => 8
+                 :size => 9
         # :style => :bold
         stroke do
           stroke_color grey
@@ -79,12 +78,12 @@ class PyocPdf < Prawn::Document
 
           move_down 40
           fill_color black
-          text_box " #{school.process_level} | #{school.decorated_school_type} | #{school.district != nil ? school.district.name : ' ' }",
+          text_box " #{school.process_level} | #{school.decorated_school_type} #{school.district != nil ? ' | '+school.district.name : ' ' }",
                    :at => [5, cursor],
                    :width => col_width,
                    :height => 20,
                    :size => 6
-#
+
           move_down 15
 
           bounding_box([1, cursor], :width => 0, :height => 0) do
@@ -226,7 +225,7 @@ class PyocPdf < Prawn::Document
           image_path_uniform= "app/assets/images/pyoc/uniform_pyoc.png"
           image_path_pre_k= "app/assets/images/pyoc/pre_k_pyoc.png"
 
-          data = [[{:image => image_path_school_size, :scale => 0.25}, 'School size', school_cache.students_enrolled],
+          data = [[{:image => image_path_school_size, :scale => 0.25}, 'School size', school_cache.students_enrolled != "?" ? school_cache.students_enrolled : 'n/a' ],
                   # data = [[{:image => image_path, :scale => 0.2}, 'School size', "123"],
                   [{:image => image_path_transportation, :scale => 0.25}, 'Transportation',
                    school_cache.transportation == "Yes" || school_cache.transportation == "No" ? school_cache.transportation : "n/a"],
@@ -402,12 +401,14 @@ class PyocPdf < Prawn::Document
 
       end
       if count % 3 == 0
-
+      # if schools_decorated_with_cache_results.peek
         start_new_page()
         i = 0
       else
         i += 3
       end
+
+      # require 'pry'; binding.pry;
 
       image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
       draw_text page_number, :at => [270, -15], :size => 7
@@ -419,7 +420,6 @@ class PyocPdf < Prawn::Document
                :style => :italic
 
       count += 1
-      foo += 1
 
     end
     puts "Time elapsed #{Time.now - beginning} seconds"
