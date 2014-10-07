@@ -15,7 +15,7 @@ class PyocController <  ApplicationController
       end
       end
     elsif state_param.present?
-      @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)    
+      @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)
     end
 
     # @school_list_for_pdf = School.for_states_and_ids(['mi','wi', 'wi', 'wi', 'wi', 'in', 'wi'], [1273,2, 1110, 1030, 110, 428, 3573])
