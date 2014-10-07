@@ -56,6 +56,10 @@ $(function() {
       form.submit();
   });
 
+  $('.js-clear-local-cookies-link').each(function() {
+    $(this).click(GS.hubs.clearLocalUserCookies);
+  });
+
   $('.js-button-link').on('click', function() {
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
