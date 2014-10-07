@@ -11,6 +11,7 @@ class PyocPdf < Prawn::Document
     black = 0, 0, 0, 100
     school_profile_blue = 5, 1, 0, 0
     col_width = 160
+    start_page_number = 5
 
 # todo make col_width and col_height relational to gutter
 
@@ -22,15 +23,14 @@ class PyocPdf < Prawn::Document
 # first column
 #     grid([1, 0], [3, 5]).show
 #     grid.show_all
-    i = 0
-    count = 1
+    position_on_page = 0
+    school_count_on_page = 1
 
-    schools_decorated_with_cache_results.each_with_index  do |school,index|
+    schools_decorated_with_cache_results.each_with_index  do |school|
+      # todo delete this when done
       puts school.id
 
 # header
-#
-#       school_cache = school.school_cache
 
       if school.is_high_school
         fill_color blue_line
@@ -58,7 +58,7 @@ class PyocPdf < Prawn::Document
         end
       end
 
-      grid([i, 0], [i+2, 5]).bounding_box do
+      grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
         move_down 18
         # grid([0, 0], [2, 1]).show
         school_cache = school.school_cache
@@ -71,14 +71,14 @@ class PyocPdf < Prawn::Document
           text_box school.name,
                    #
                    :at => [5, cursor],
-                   :width => col_width,
+                   :width => col_width - 5,
                    :height => 40,
                    :size => 10,
                    :style => :bold
 
           move_down 40
           fill_color black
-          text_box " #{school.process_level} | #{school.decorated_school_type} #{school.district != nil ? ' | '+school.district.name : ' ' }",
+          text_box " #{school.process_level} | #{school.decorated_school_type} #{school.district != nil ? ' | '+ school.district.name.truncate(32) : ' ' }",
                    :at => [5, cursor],
                    :width => col_width,
                    :height => 20,
@@ -109,7 +109,7 @@ class PyocPdf < Prawn::Document
             elsif school_cache.overall_gs_rating == '10'
               image "app/assets/images/pyoc/overall_rating_10.png", :at => [15, cursor], :scale => 0.25
             else
-              image "app/assets/images/pyoc/pre_k_pyoc.png", :at => [30, cursor], :scale => 0.25
+              image "app/assets/images/pyoc/overall_rating_nr.png", :at => [15, cursor], :scale => 0.25
             end
 
             move_down 25
@@ -166,7 +166,7 @@ class PyocPdf < Prawn::Document
 
           bounding_box([1, 100], :width => 0, :height => 0) do
             move_down 10
-            if i%2 == 0
+            if position_on_page%2 == 0
               image "app/assets/images/pyoc/PYOC_Icons-03.png", :at => [5, cursor], :scale => 0.2
             else
               image "app/assets/images/pyoc/PYOC_Icons-04.png", :at => [5, cursor], :scale => 0.2
@@ -278,7 +278,7 @@ class PyocPdf < Prawn::Document
               ['Tax scholarship', school_cache.tax_scholarship],
           ]
 
-          table(data, :column_widths => [110, 50],
+          table(data, :column_widths => [90, 70],
                 :cell_style => {size: 8, :padding => [0, 5, 0, 5]}) do
             cells.borders = []
             columns(1).font_style = :bold
@@ -307,9 +307,13 @@ class PyocPdf < Prawn::Document
           move_down 5
 
           ethnicity_data = school_cache.formatted_ethnicity_data.to_a
-          ethnicity_data << ['Free and reduced lunch', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
-          ethnicity_data.each_with_index do |i|
+
+          if ethnicity_data != []
+            ethnicity_data
+          else
+          ethnicity_data << ['No diversity data available', ' ']
           end
+          ethnicity_data << ['Free and reduced lunch', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
 
           table(ethnicity_data, :column_widths => [130, 30],
                 :row_colors => [white, grey],
@@ -392,7 +396,7 @@ class PyocPdf < Prawn::Document
         end
 
         move_down 10
-        if count % 3 != 0
+        if school_count_on_page % 3 != 0
           stroke do
             stroke_color grey
             horizontal_line 0, 535, :at => cursor
@@ -400,26 +404,28 @@ class PyocPdf < Prawn::Document
         end
 
       end
-      if count % 3 == 0
-      # if schools_decorated_with_cache_results.peek
-        start_new_page()
-        i = 0
+      if school_count_on_page % 3 == 0
+        # puts school.peek
+        start_new_page(:size => "LETTER")
+        # puts school_count_on_page
+        # puts school.name + 'weeee'
+        position_on_page = 0
+        school_count_on_page = 0
       else
-        i += 3
+        position_on_page += 3
+        # count += 1
       end
 
-      # require 'pry'; binding.pry;
-
       image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
-      draw_text page_number, :at => [270, -15], :size => 7
+      number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => start_page_number}
       text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-               :at => [300, -10],
+               :at => [300, -15],
                :width => 200,
                :height => 10,
                :size => 7,
                :style => :italic
 
-      count += 1
+      school_count_on_page += 1
 
     end
     puts "Time elapsed #{Time.now - beginning} seconds"

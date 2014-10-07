@@ -17,6 +17,9 @@ class PyocController <  ApplicationController
     #   end
     # end
 
+    # @school_list_for_pdf = School.for_states_and_ids(['mi','wi', 'wi', 'wi', 'wi', 'in', 'wi'], [1273,2, 1110, 1030, 110, 428, 3573])
+    # @db_schools = School.for_states_and_ids(['wi', 'wi', 'wi'], [217,219,2226])
+
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
     @db_schools.each do |school|
       query = query.include_schools(school.state, school.id)
