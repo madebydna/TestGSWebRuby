@@ -145,7 +145,7 @@ module CachedProgramsMethods
 
   def voucher
     if programs['students_vouchers']
-      programs['students_vouchers'].keys.first
+      programs['students_vouchers'].keys.first.capitalize
     else
       NOT_APPLICABLE_SYMBOL
     end
