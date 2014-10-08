@@ -14,7 +14,7 @@ LocalizedProfiles::Application.routes.draw do
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
-  get '/gsr/account/', as: :manage_account, to: 'account_management#show'
+  get '/account', as: :manage_account, to: 'account_management#show'
 
   get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
