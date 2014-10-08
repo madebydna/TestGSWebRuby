@@ -5,7 +5,7 @@
       <%= enrollment_module[type][:content].html_safe %>
       <% unless enrollment_module[type][:view_more].nil? %>
         <div class='oh'><%= enrollment_module[type][:view_more].html_safe %></div>
-        <a href='javascript:void(0)' class="js-view-more">View More »</a>
+        <a href='javascript:void(0)' class="js-view-more notranslate">View More »</a>
       <% end %>
     <% else %>
       <h3>Something went wrong while parsing enrollment module tab:<%= @tab[:key] %></h3>
