@@ -32,7 +32,9 @@ class PyocPdf < Prawn::Document
 # todo make $col_width and col_height relational to gutter
 
     define_grid(:columns => 6, :rows => 9, :gutter => 20)
-    
+
+    $position_on_page = 0
+
     schools_decorated_with_cache_results.each_with_index  do |school, index|
 
       if index % 3 == 0 and index != 0
@@ -64,8 +66,6 @@ class PyocPdf < Prawn::Document
       end
 
       draw_footer
-      index += 1
-
     end
     puts "Time elapsed #{Time.now - beginning} seconds"
   end
@@ -193,11 +193,7 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_gs_rating_image(rating)
-    gs_overall_rating_image = 'nr'
-    if '1,2,3,4,5,6,7,8,9,10'.include? rating
-      gs_overall_rating_image = rating
-    end
-    image "app/assets/images/pyoc/overall_rating_#{gs_overall_rating_image}.png", :at => [15, cursor], :scale => 0.25
+    image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => 0.25
   end
 
   def draw_overall_gs_rating(school_cache)
