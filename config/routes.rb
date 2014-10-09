@@ -32,6 +32,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
+  get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
 
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url

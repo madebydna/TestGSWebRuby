@@ -180,13 +180,28 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-photo').html($existingSchoolPhoto.clone());
         }
 
-//        var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
-//        if ($existingFitScorePopup.size() > 0) {
-//            $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
-//            GS.search.results.searchResultFitScoreTogglehandler($listItem)
-//        }
-
-        $listItem.show('slow');
+        var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
+        if ($existingFitScorePopup.size() > 0) {
+            $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
+            GS.search.results.searchResultFitScoreTogglehandler($listItem);
+            $listItem.show('slow');
+        } else {
+            jQuery.ajax({
+                type:'GET',
+                url:'/gsr/ajax/search/calculate_fit',
+                data:{
+                    state: school.state,
+                    id: school.id
+                },
+                dataType:'text',
+                async:true
+            }).done(function (html) {
+                $listItem.find('.js-fitScore').html(html);
+                GS.search.results.searchResultFitScoreTogglehandler($listItem);
+            }).always(function () {
+                $listItem.show('slow');
+            });
+        }
     };
 
     var setNoAssignedSchools = function() {
