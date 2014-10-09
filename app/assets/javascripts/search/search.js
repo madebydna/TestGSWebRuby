@@ -334,6 +334,25 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         return true;
     };
 
+    var STATE_NAME_MAP = {
+        "AK":"Alaska","AL":"Alabama","AR":"Arkansas","AZ":"Arizona",
+        "CA":"California","CO":"Colorado","CT":"Connecticut","DC":"District of Columbia",
+        "DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","IA":"Iowa",
+        "ID":"Idaho","IL":"Illinois","IN":"Indiana","KS":"Kansas","KY":"Kentucky",
+        "LA":"Louisiana","MA":"Massachusetts","MD":"Maryland","ME":"Maine","MI":"Michigan",
+        "MN":"Minnesota","MO":"Missouri","MS":"Mississippi","MT":"Montana",
+        "NC":"North Carolina","ND":"North Dakota","NE":"Nebraska","NH":"New Hampshire",
+        "NJ":"New Jersey","NM":"New Mexico","NV":"Nevada","NY":"New York",
+        "OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania",
+        "RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota",
+        "TN":"Tennessee","TX":"Texas","UT":"Utah","VA":"Virginia","VT":"Vermont",
+        "WA":"Washington","WI":"Wisconsin","WV":"West Virginia","WY":"Wyoming"
+    };
+
+    var getStateFullName = function(abbr) {
+        return STATE_NAME_MAP[abbr.toUpperCase()];
+    };
+
     var isTermState = function(term) {
         var stateTermList = new Array
                 ("AK","Alaska","AL","Alabama","AR","Arkansas","AZ","Arizona",
@@ -384,7 +403,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                     data['sortBy'] = 'DISTANCE';
                     (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
-                    alert("Location not found. Please enter a valid address, city, or ZIP.");
+                    if (state && getStateFullName(state)) {
+                        alert("Location not found in " + getStateFullName(state) + ". Please enter a valid address, city, or ZIP.");
+                    } else {
+                        alert("Location not found. Please enter a valid address, city, or ZIP.");
+                    }
                 }
             });
         } else {
@@ -505,7 +528,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     var gsGeocode = function(searchInput, callbackFunction) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
-            geocoder.geocode( { 'address': searchInput + ' US'}, function(results, status) {
+            var geocodeOptions = { 'address': searchInput + ' US'};
+            if (state != null) {
+                geocodeOptions['componentRestrictions'] = {'administrativeArea':  state.toUpperCase()};
+            }
+            geocoder.geocode(geocodeOptions, function (results, status) {
                 var GS_geocodeResults = new Array();
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {
@@ -541,8 +568,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             geocodeResult['country'] != 'US') {
                             geocodeResult = null;
                         }
-                        if ( geocodeResult != null &&  state !=null && geocodeResult['state'] != state.toUpperCase()){
-                            geocodeResult = null;
+                        if (geocodeResult['type'].contains('administrative_area_level_1')) {
+                            geocodeResult = null; // don't allow states to be returned
                         }
                         if (geocodeResult != null) {
                             GS_geocodeResults.push(geocodeResult);
