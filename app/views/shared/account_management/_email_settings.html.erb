@@ -1,5 +1,27 @@
-<div class="row limit-width-1200 collapse mtl js-email-settings">
-    <div class="col-xs-12">
-        I am email settings - don' mess wit' me.
-    </div>
+<div class="limit-width-1200 collapse mtl js-change-email-settings-container">
+  <h2>Email subscriptions</h2>
+  <% if @current_user.subscriptions.present? %>
+      <div class="limit-width-1200 mtl">
+        <% show_header=true %>
+        <% @current_user.subscriptions.each do |subscription| %>
+            <% decorator=NewsletterDecorator.decorate(subscription) %>
+            <div>
+              <% if show_header %>
+                  <%= decorator.name %><br/>
+                  <%= decorator.description %><br/>
+              <% end %>
+              <% if decorator.name == 'My School Stats'%>
+                  <% show_header=false %>
+              <% end %>
+              <% if decorator.school %>
+                  <%= decorator.school.name %><%= decorator.school.city %>,<%= decorator.school.state %><br/><br/>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+  <% else %>
+      You do not have any email subscriptions yet.
+  <% end %>
 </div>
+
+

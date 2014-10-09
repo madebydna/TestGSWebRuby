@@ -16,6 +16,11 @@
           data-toggle="collapse"
           data-target=".js-change-password-form-container">Change password</a>
       </li>
+      <li>
+        <a href="javascript:void();"
+           data-toggle="collapse"
+           data-target=".js-change-email-settings-container">Emails subscriptions</a>
+      </li>
       <% if @current_user.provisional_or_approved_osp_user? || current_user.is_esp_superuser? %>
           <li>
             <%= link_to 'Edit school profile', osp_dashboard_url %>
@@ -52,7 +57,6 @@
 <%= render partial: 'shared/account_management/change_password_form' %>
 <%= render partial: 'shared/account_management/email_settings' %>
 <%= render partial: 'search/saved_search' %>
-
 
 
 <% if @school_to_favorite_school.present? %>

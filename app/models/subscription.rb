@@ -1,5 +1,6 @@
 class Subscription < ActiveRecord::Base
   self.table_name = 'list_active'
+  default_scope { order('list') }
 
   db_magic :connection => :gs_schooldb
 
