@@ -217,7 +217,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
 
               markup += '<div class="col-xs-7 col-sm-8">';
               markup += '<div class="mrl">'; //address
-              markup += '<div class="notranslate">' + point.street + ',' + '<br/>' + point.city + ' ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              markup += '<div class="notranslate">' + point.street + '<br/>' + point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
 
               var schoolType = point.schoolType;
               var stText = /charter/i.test(schoolType) ? mapPinSchoolTypeCharterText() : /private/i.test(schoolType) ? mapPinSchoolTypePrivateText() : mapPinSchoolTypePublicText();
