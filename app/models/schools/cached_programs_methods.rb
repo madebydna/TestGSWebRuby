@@ -133,7 +133,7 @@ module CachedProgramsMethods
       tax_credit= NOT_APPLICABLE_SYMBOL
     elsif  programs['financial_aid'] &&  programs['financial_aid_type']
       programs['financial_aid_type'].each do |key|
-        if key == 'tax_credits'
+        if key == 'tax_credit' or  key == 'tax_credits'
           tax_credit='Yes'
         end
       end
