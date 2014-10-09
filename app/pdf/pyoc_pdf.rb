@@ -477,10 +477,10 @@ class PyocPdf < Prawn::Document
 
     move_down_small
 
-    data = [[school_cache.world_languages != $no_program_data ? {:image => $image_path_world_languages, :scale => 0.3} : " ",
-             school_cache.clubs != $no_program_data ? {:image => $image_path_clubs, :scale => 0.3} : " ",
-             school_cache.sports != $no_program_data ? {:image => $image_path_sports, :scale => 0.3} : " ",
-             school_cache.arts_and_music != $no_program_data ? {:image => $image_path_visual_arts, :scale => 0.3} : " "]
+    data = [[school_cache.world_languages != $no_program_data && school_cache.world_languages != 0 ? {:image => $image_path_world_languages, :scale => 0.3} : " ",
+             school_cache.clubs != $no_program_data && school_cache.clubs != 0 ? {:image => $image_path_clubs, :scale => 0.3} : " ",
+             school_cache.sports != $no_program_data &&  school_cache.sports !=0 ? {:image => $image_path_sports, :scale => 0.3} : " ",
+             school_cache.arts_and_music != $no_program_data  && school_cache.arts_and_music != 0 ? {:image => $image_path_visual_arts, :scale => 0.3} : " "]
     ]
 
     table(data, :column_widths => [20, 20, 20, 20],
