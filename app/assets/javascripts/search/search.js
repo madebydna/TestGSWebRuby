@@ -12,6 +12,7 @@ GS.search = GS.search || {};
 
 GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     var validLocationTypes = ['street_address', 'route', 'intersection', 'premise', 'subpremise'];
+    var _shouldCalculateFit = undefined;
 
     var shouldGetAssignedSchools = function() {
         if (gon.pagename != 'SearchResultsPage') {
@@ -180,28 +181,39 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-photo').html($existingSchoolPhoto.clone());
         }
 
-        var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
-        if ($existingFitScorePopup.size() > 0) {
-            $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
-            GS.search.results.searchResultFitScoreTogglehandler($listItem);
-            $listItem.show('slow');
-        } else {
-            jQuery.ajax({
-                type:'GET',
-                url:'/gsr/ajax/search/calculate_fit',
-                data:{
-                    state: school.state,
-                    id: school.id
-                },
-                dataType:'text',
-                async:true
-            }).done(function (html) {
-                $listItem.find('.js-fitScore').html(html);
+        if (shouldCalculateFit()) {
+            var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
+            if ($existingFitScorePopup.size() > 0) {
+                $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
                 GS.search.results.searchResultFitScoreTogglehandler($listItem);
-            }).always(function () {
                 $listItem.show('slow');
-            });
+            } else {
+                jQuery.ajax({
+                    type:'GET',
+                    url:'/gsr/ajax/search/calculate_fit',
+                    data:{
+                        state: school.state,
+                        id: school.id
+                    },
+                    dataType:'text',
+                    async:true
+                }).done(function (html) {
+                    $listItem.find('.js-fitScore').html(html);
+                    GS.search.results.searchResultFitScoreTogglehandler($listItem);
+                }).always(function () {
+                    $listItem.show('slow');
+                });
+            }
+        } else {
+            $listItem.show('slow');
         }
+    };
+
+    var shouldCalculateFit = function() {
+        if (_shouldCalculateFit === undefined) {
+            _shouldCalculateFit = $('.js-schoolFitScore').children().size() > 0;
+        }
+        return _shouldCalculateFit;
     };
 
     var setNoAssignedSchools = function() {

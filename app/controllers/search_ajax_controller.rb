@@ -7,6 +7,7 @@ class SearchAjaxController < ApplicationController
   SCHOOL_CACHE_KEYS = %w(esp_responses)
 
   def calculate_school_fit
+    return unless session[:soft_filter_params] && session[:soft_filter_params].size > 0
     state = get_state
     id = get_id
     unless state.nil? || id.nil?

@@ -9,6 +9,7 @@ describe SearchAjaxController do
 
     it 'Will retrieve and decorate a school' do
       allow(School).to receive(:find_by_state_and_id).with(:ca, 1).and_return school1
+      expect(controller).to receive(:session).twice.and_return({soft_filter_params:{'boys_sports' => 'basketball'}})
       expect(controller).to receive(:decorate_school).and_return school1
       expect(controller).to receive(:calculate_fit_score).and_return school1
       controller.send(:calculate_school_fit)
