@@ -1,0 +1,42 @@
+<% if @school_to_favorite_school.present? %>
+    <div class="ptl"></div>
+    <div class="bg-light-gray mvl">
+        <div class="row limit-width-1200 ">
+            <div class="col-xs-12">
+                <div class="clearfix mam">
+                    <div class="fl"><h2 class="mvn">My School List</h2></div>
+                    <div class="fr"><button class="btn btn-primary js-submitSchoolPYOC" type="button">Download Your Schools</button></div>
+                </div>
+                <% # favorite_school is the object representing the row in favorite_school table %>
+                <% @school_to_favorite_school.each do |school, favorite_school| %>
+                    <div class="js-favorite-school-<%= favorite_school.id %>">
+                        <% decorated_school = MySchoolListDecorator.decorate(school) %>
+                        <span class="fr prm">
+          <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
+                      {
+                              class: "js-delete-favorite-school-#{favorite_school.id}",
+                              method: 'DELETE',
+                              remote: true
+                      }
+              ) %>
+        </span>
+                        <div class="clearfix"></div>
+
+                        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school, account_page: true %>
+                    </div>
+
+
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <form class="js-printSchoolChooserSubmit" method="POST" action="/my-school-list.pdf" target="_blank">
+        <input type="hidden" class="js-chooserStates" name="states" value="" />
+        <input type="hidden" class="js-chooserSchoolIds" name="schoolIds" value="" />
+        <input type="hidden" name="appendChecklist" value="yes"/>
+    </form>
+
+
+
+    </div>
+<% end %>
