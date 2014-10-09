@@ -117,7 +117,7 @@ module CachedProgramsMethods
     if !programs['financial_aid']
       financial_id= NOT_APPLICABLE_SYMBOL
     elsif  programs['financial_aid'] &&  programs['financial_aid_type']
-      programs['financial_aid_type'].each do |key|
+      programs['financial_aid_type'].each do |key,value|
         if key != 'tax_credits'
           financial_id='Yes'
         end
@@ -132,8 +132,8 @@ module CachedProgramsMethods
     if !programs['financial_aid']
       tax_credit= NOT_APPLICABLE_SYMBOL
     elsif  programs['financial_aid'] &&  programs['financial_aid_type']
-      programs['financial_aid_type'].each do |key|
-        if key == 'tax_credit' or  key == 'tax_credits'
+      programs['financial_aid_type'].each do |key , value|
+        if key == 'tax_credits'
           tax_credit='Yes'
         end
       end
