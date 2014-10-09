@@ -26,15 +26,44 @@
   </nav>
 </id>
 
-<div class="limit-width-1200 collapse mtl js-change-password-form-container">
-  <h2>Manage password</h2>
-  <%= render partial: 'shared/account_management/change_password_form' %>
+
+<div class="bg-light-gray mvl">
+    <div class="row limit-width-1200 ">
+        <div class="col-xs-12 clearfix">
+            <div class="fl font-size-large mam"><%= @current_user.first_name || @current_user.email if logged_in? %></div>
+            <div class="topnav-float mam">
+                <button class="btn btn-primary btn-sm"
+                        data-toggle="collapse"
+                        data-target=".js-toggleAccountManageNav"
+                    ><span class="iconx16 mrm"></span>Manage Account</button>
+                <div class="pa collapse js-toggleAccountManageNav" style="right:10px; top:50px">
+                    <a  data-toggle="collapse"
+                        data-target=".js-email-settings"
+                        >email settings</a>
+                    <a data-toggle="collapse"
+                       data-target=".js-change-password-form-container"
+                       >change password</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<%= render partial: 'shared/account_management/change_password_form' %>
+<%= render partial: 'shared/account_management/email_settings' %>
+<%= render partial: 'search/saved_search' %>
+
+
+
 <% if @school_to_favorite_school.present? %>
-  <div class="limit-width-1200 mtl">
-    <h2>My School List</h2>
-      <button class="btn btn-primary js-submitSchoolPYOC" type="button">Download Your Schools</button>
+    <div class="ptl"></div>
+    <div class="bg-light-gray mvl">
+        <div class="row limit-width-1200 ">
+            <div class="col-xs-12">
+                <div class="clearfix mam">
+                    <div class="fl"><h2 class="mvn">My School List</h2></div>
+                    <div class="fr"><button class="btn btn-primary js-submitSchoolPYOC" type="button">Download Your Schools</button></div>
+                </div>
     <% # favorite_school is the object representing the row in favorite_school table %>
     <% @school_to_favorite_school.each do |school, favorite_school| %>
       <div class="js-favorite-school-<%= favorite_school.id %>">
@@ -56,6 +85,8 @@
 
     <% end %>
   </div>
+</div>
+</div>
 <% end %>
 <form class="js-printSchoolChooserSubmit" method="POST" action="/my-school-list.pdf" target="_blank">
     <input type="hidden" class="js-chooserStates" name="states" value="" />
