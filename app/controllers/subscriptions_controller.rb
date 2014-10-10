@@ -29,7 +29,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
 
     if @current_user.subscriptions.any? {|s| s.id == @subscription.id}
-      # success = !!@subscription.destroy
+      success = !!@subscription.destroy
       if success
         message = 'You have successfully unsubscribed.'
       else
@@ -40,7 +40,7 @@ class SubscriptionsController < ApplicationController
     end
 
     @result = {
-      success: true,
+      success: success,
       message: message
     }
 
