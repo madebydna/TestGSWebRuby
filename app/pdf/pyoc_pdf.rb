@@ -157,11 +157,9 @@ class PyocPdf < Prawn::Document
 
       bounding_box([1, 100], :width => 0, :height => 0) do
         move_down 15
-        if $position_on_page%2 == 0
-          image "app/assets/images/pyoc/PYOC_Icons-03.png", :at => [5, cursor], :scale => 0.2
-        else
-          image "app/assets/images/pyoc/PYOC_Icons-04.png", :at => [5, cursor], :scale => 0.2
-        end
+
+        draw_map_icon(school)
+
       end
 
       move_down_medium
@@ -231,9 +229,8 @@ class PyocPdf < Prawn::Document
   def other_state_rating_abbreviation(rating_name)
     rating_abbr = { 'Excellent Schools Detroit Rating' => 'ESD Rating',
                     'Great Start to Quality preschool rating' => 'Preschool Rating'
-    }
+                  }
     rating_abbr[rating_name]
-
    end
 
   def other_state_ratings(school_cache)
@@ -244,7 +241,6 @@ class PyocPdf < Prawn::Document
       data << ['', '']
     else
       other_ratings.each do |i|
-        # require 'pry'; binding.pry;
         if other_state_rating_abbreviation(i[0])
           data[0] << i[1]
           data[1] << other_state_rating_abbreviation(i[0])
@@ -262,6 +258,12 @@ class PyocPdf < Prawn::Document
       row(0).font_style = :bold
       row(0).size = 7
       row(0).padding = [0, 0, 5, 10]
+    end
+  end
+
+  def draw_map_icon(school)
+    if school.which_icon.present? && school.which_icon != 'N/A'
+      image school.which_icon, :at => [15, cursor], :scale => 0.2
     end
   end
 
@@ -284,7 +286,7 @@ class PyocPdf < Prawn::Document
     fill_color 100, 20, 20, 20
     text_box "#{school_cache.best_known_for}",
              :at => [5, cursor],
-             :width => 155,
+             :width => $col_width - 5,
              :height => 30,
              :size => 7,
              :style => :italic
