@@ -528,9 +528,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     var gsGeocode = function(searchInput, callbackFunction) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
-            var geocodeOptions = { 'address': searchInput + ' US'};
+            var geocodeOptions = { 'address': searchInput};
             if (state != null) {
                 geocodeOptions['componentRestrictions'] = {'administrativeArea':  state.toUpperCase()};
+            } else {
+                geocodeOptions['componentRestrictions'] = {'country':  'US'};
             }
             geocoder.geocode(geocodeOptions, function (results, status) {
                 var GS_geocodeResults = new Array();
@@ -567,9 +569,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             'country' in geocodeResult)||
                             geocodeResult['country'] != 'US') {
                             geocodeResult = null;
-                        }
-                        if (geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
+                        } else if ('type' in geocodeResult && geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
                             geocodeResult = null; // don't allow states to be returned
+                        } else if (state != null && geocodeResult['state'].toUpperCase() != state.toUpperCase()) {
+                            geocodeResult = null; // don't allow results outside of state
                         }
                         if (geocodeResult != null) {
                             GS_geocodeResults.push(geocodeResult);
