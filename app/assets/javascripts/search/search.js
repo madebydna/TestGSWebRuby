@@ -568,7 +568,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             geocodeResult['country'] != 'US') {
                             geocodeResult = null;
                         }
-                        if (geocodeResult['type'].contains('administrative_area_level_1')) {
+                        if (geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
                             geocodeResult = null; // don't allow states to be returned
                         }
                         if (geocodeResult != null) {
