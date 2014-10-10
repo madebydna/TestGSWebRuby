@@ -25,7 +25,7 @@ end
 def expect_matches_true(options)
   it "#{options[:filter_value]} if #{options[:model_key].to_s}=#{options[:model_value]}" do
     allow(model).to receive(options[:model_key]).and_return(options[:model_value])
-    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_truthy
+    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to eq(:yes)
   end
 end
 
@@ -33,14 +33,14 @@ end
 def expect_matches_false(options)
   it "#{options[:filter_value]} if #{options[:model_key].to_s} is #{options[:model_value]}" do
     allow(model).to receive(options[:model_key]).and_return(options[:model_value])
-    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_falsey
+    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to eq(:no)
   end
 end
 
 #visual_media_arts if arts_visual is not defined
 def expect_matches_nil(options)
   it "#{options[:filter_value]} if #{options[:model_key].to_s} is not defined" do
-    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to be_nil
+    expect(model.send('matches_soft_filter?', options[:filter_key], options[:filter_value])).to eq(:no_data)
   end
 end
 
@@ -76,13 +76,6 @@ def fit_score_model_assertions(options)
         it "sets filter to #{expected_breakdown[:filter]}" do
           expect(actual_breakdown[:filter]).to eq(expected_breakdown[:filter])
         end
-        it "sets match to #{expected_breakdown[:match]}" do
-          if expected_breakdown[:match]
-            expect(actual_breakdown[:match]).to be_truthy
-          else
-            expect(actual_breakdown[:match]).to be_falsey
-          end
-        end
         it "sets match_status to #{expected_breakdown[:match_status].to_s}" do
           expect(actual_breakdown[:match_status]).to eq(expected_breakdown[:match_status])
         end
@@ -109,6 +102,39 @@ describe FitScoreConcerns do
     end
     [:search, :compare].each do |model_type|
       describe "on a school in #{model_type}" do
+        describe 'when vouchers are specified' do
+          let (:params) {{'enrollment'=>'vouchers'}}
+          describe 'it checks students_vouchers for private schools, matching on yes' do
+            before {allow(model).to receive(:type).and_return 'private'}
+            configure_expectations model_type, students_vouchers: 'yes'
+            fit_score_model_assertions max_fit:1, fit:1,
+              breakdown: [{category:'enrollment',filter:'vouchers',match_status: :yes}]
+          end
+          describe 'it checks students_vouchers for private schools, returning no for any value not yes' do
+            before {allow(model).to receive(:type).and_return 'private'}
+            configure_expectations model_type, students_vouchers: 'no'
+            fit_score_model_assertions max_fit:1, fit:0,
+              breakdown: [{category:'enrollment',filter:'vouchers',match_status: :no}]
+          end
+          describe 'it checks students_vouchers for private schools, returning no_data when not defined' do
+            before {allow(model).to receive(:type).and_return 'private'}
+            configure_expectations model_type, something_else: 'no'
+            fit_score_model_assertions max_fit:1, fit:0,
+              breakdown: [{category:'enrollment',filter:'vouchers',match_status: :no_data}]
+          end
+          describe 'it returns not_applicable for charter schools' do
+            before {allow(model).to receive(:type).and_return 'charter'}
+            configure_expectations model_type, students_vouchers: 'no'
+            fit_score_model_assertions max_fit:1, fit:0,
+              breakdown: [{category:'enrollment',filter:'vouchers',match_status: :not_applicable}]
+          end
+          describe 'it returns not_applicable for public schools' do
+            before {allow(model).to receive(:type).and_return 'public'}
+            configure_expectations model_type, students_vouchers: 'no'
+            fit_score_model_assertions max_fit:1, fit:0,
+              breakdown: [{category:'enrollment',filter:'vouchers',match_status: :not_applicable}]
+          end
+        end
         describe 'when basketball is specified' do
           let (:params) {{'boys_sports'=>'basketball'}}
           describe 'and it is there among others' do
@@ -274,8 +300,6 @@ describe FitScoreConcerns do
       describe 'for boys_sports equals' do
         expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
                              model_key: :boys_sports, model_value: ['none']
-        expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
-                             model_key: :girls_sports, model_value: ['basketball']
         expect_matches_false filter_key:'boys_sports', filter_value:'basketball',
                              model_key: :boys_sports, model_value: %w(baseball football)
       end
