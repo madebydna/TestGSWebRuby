@@ -32,6 +32,7 @@ describe SavedSearchConcerns do
     it 'should call redirect_back_or_default' do
       allow(controller).to receive(:create_saved_search)
       allow(controller).to receive(:cookies).and_return({})
+      allow(controller).to receive(:flash).and_return('')
       allow(controller).to receive(:flash_notice)
       expect(controller).to receive(:redirect_back_or_default)
       controller.handle_html(saved_search_params)
@@ -42,7 +43,10 @@ describe SavedSearchConcerns do
       expect(controller).to receive(:flash_error)
       controller.handle_html(saved_search_params)
     end
-    context 'when the search successfully saved' do
+    context 'when the search successfully saved and is not a provisional user' do
+      before do
+        allow(controller).to receive(:flash).and_return('')
+      end
       it 'should render a flash notice' do
         allow(controller).to receive(:create_saved_search)
         allow(controller).to receive(:cookies).and_return({})
