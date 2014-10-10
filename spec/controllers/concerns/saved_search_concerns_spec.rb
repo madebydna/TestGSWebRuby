@@ -24,12 +24,65 @@ describe SavedSearchConcerns do
   after(:each) { clean_models :gs_schooldb, SavedSearch, User }
   after(:all) { Object.send :remove_const, :FakeController }
 
+  describe '#handle_html' do
+    before do
+      allow(controller).to receive(:redirect_back_or_default)
+      allow(controller).to receive(:redirect_path)
+    end
+    it 'should call redirect_back_or_default' do
+      allow(controller).to receive(:create_saved_search)
+      allow(controller).to receive(:cookies).and_return({})
+      allow(controller).to receive(:flash_notice)
+      expect(controller).to receive(:redirect_back_or_default)
+      controller.handle_html(saved_search_params)
+    end
+    it 'should render a flash error when it failed to save a search' do
+      allow(controller).to receive(:create_saved_search).and_return(Exception.new)
+      allow(controller).to receive(:flash_error)
+      expect(controller).to receive(:flash_error)
+      controller.handle_html(saved_search_params)
+    end
+    context 'when the search successfully saved' do
+      it 'should render a flash notice' do
+        allow(controller).to receive(:create_saved_search)
+        allow(controller).to receive(:cookies).and_return({})
+        allow(controller).to receive(:flash_notice)
+        expect(controller).to receive(:flash_notice)
+        controller.handle_html(saved_search_params)
+      end
+      it 'should set a saved_search = success cookie' do
+        allow(controller).to receive(:create_saved_search)
+        allow(controller).to receive(:cookies).and_return({})
+        allow(controller).to receive(:flash_notice)
+        expect(controller).to receive(:cookies)
+        controller.handle_html(saved_search_params)
+      end
+    end
+  end
+
+  describe '#handle_json' do
+    it 'should render a json response when save is successful' do
+      allow(controller).to receive(:create_saved_search)
+      allow(controller).to receive(:render)
+      expect(controller).to receive(:render).with( { json: {} } )
+      controller.handle_json(saved_search_params)
+    end
+    it 'should render a json response with an error when the save failed' do
+      allow(controller).to receive(:create_saved_search).and_return(Exception.new)
+      allow(controller).to receive(:render)
+      expect(controller).to receive(:render).with( { json: hash_including(error: anything) } )
+      controller.handle_json(saved_search_params)
+    end
+
+  end
+
   describe '#create_saved_search' do
     it 'should save a search into the database' do
       expect(SavedSearch.count).to eq 0
       controller.send(:create_saved_search, saved_search_params.deep_dup)
       expect(SavedSearch.count).to eq 1
     end
+
     context 'when there is an already existing search with the same search name in the database' do
       before do
         user.saved_searches.create!(saved_search_params)
@@ -56,5 +109,14 @@ describe SavedSearchConcerns do
         expect(SavedSearch.last.name).to eq("#{saved_search_params.deep_dup[:name]}(3)")
       end
     end
+
+    [:name, :search_string, :num_results].each do |field|
+      it "should raise an exception if #{field.to_s} is blank" do
+        expect(
+          controller.send(:create_saved_search, saved_search_params.deep_dup.merge({field => ''}) )
+        ).to be_an_instance_of(ActiveRecord::RecordInvalid)
+      end
+    end
   end
+
 end

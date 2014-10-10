@@ -168,6 +168,13 @@
   border: #cccccc solid 1px;
 }
 
+.save-search-popup {
+  z-index: 1;
+  width: 450px;
+  left: -284px; //left is to prevent panel from going off screen.
+  border: #cccccc solid 1px;
+}
+
 .compare-schools-popup-school {
   width: 140px;
   border-radius: 4px;

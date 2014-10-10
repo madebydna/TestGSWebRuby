@@ -3,14 +3,16 @@ class SavedSearchController < ApplicationController
   include SavedSearchConcerns
 
   def attempt_saved_search
-
     if logged_in?
-      create_saved_search saved_search_params
-      redirect_path.nil? ? redirect_back_or_default : redirect_back_or_default(redirect_path)
+      request.xhr? ? handle_json(saved_search_params) : handle_html(saved_search_params)
     else
       save_deferred_action :saved_search_deferred, saved_search_params
       flash_notice 'log in required'
-      redirect_to join_url
+      if request.xhr?
+        render json: { redirect: join_url }
+      else
+        redirect_to join_url
+      end
     end
   end
 
@@ -25,7 +27,7 @@ class SavedSearchController < ApplicationController
     options = [:state, :url].inject({}) do | hash, param|
       hash.merge!({param => params[param]}) if params[param]; hash
     end
-    saved_search_params[:options] = options if options.present?
+    saved_search_params[:options] = options.to_json if options.present?
     saved_search_params
   end
 

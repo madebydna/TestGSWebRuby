@@ -354,6 +354,84 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         GS.search.setShowFiltersCookieHandler('.js-nearbyCity'); //nearby city links
     };
 
+    var setSavedSearchOpenPopupHandler = function() {
+        $(".js-savedSearchPopupButton").on('click', function() {
+            var $popup = $('.js-savedSearchPopup');
+            $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
+        });
+    };
+
+    var setSavedSearchSubmitHandler = function() {
+        $('.js-savedSearchSubmitButton').on('click', function() {
+            attemptSaveSearch();
+        })
+    };
+
+    var savedSearchParams = function() {
+        params = {
+            search_name: $('.js-savedSearchText').val(),
+            search_string: $('#js-schoolResultsSearch').val(),
+            num_results: $('.js-numOfSchoolsFound').data('num-of-schools-found'),
+            url: GS.uri.Uri.getHref()
+        };
+        return state_abbr !== undefined ? _.assign(params, {state: state_abbr}) : params
+    };
+
+    var attemptSaveSearch = function() {
+        params = savedSearchParams();
+        if (params['search_name'] === '') {
+            alert('Please name your search');
+        } else {
+            saveSearch(params);
+        }
+    };
+
+    var saveSearch = function(params) {
+
+        var $deferred = $.post( '/gsr/saved_search', params);
+
+        $deferred.done(function(response) {
+            var error = response['error'];
+            var redirect = response['redirect'];
+
+            if (typeof error === 'string' && error !== '' ) {
+                alert(error);
+            } else {
+                disableSavedSearch();
+                changeSavedSearchText();
+            }
+
+            if (redirect !== undefined) {
+                GS.uri.Uri.goToPage(redirect)
+            }
+        });
+
+        $deferred.fail(function(response){
+            alert('Sorry but wen\'t wrong. Please try again later');
+        });
+    };
+
+    var disableSavedSearch = function() {
+        $('.js-savedSearchText').text('');
+        $('.js-savedSearchPopup').hide();
+        $(".js-savedSearchPopupButton").off();
+        $(".js-savedSearchSubmitButton").off()
+    };
+
+    var changeSavedSearchText = function() {
+        $('.js-savedSearchPopupButtonText').fadeOut(200, function() {
+            $(this).text('Saved!').fadeIn(200);
+        });
+    };
+
+    var disableSavedSearchOnLoad = function() {
+        if ($.cookie('saved_search') === 'success') {
+            disableSavedSearch();
+            changeSavedSearchText();
+            $.removeCookie("saved_search", { path: '/' });
+        }
+    };
+
     var init = function() {
         searchFiltersFormSubmissionHandler();
         searchFiltersFormSubmissionMobileHandler();
@@ -366,7 +444,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         compareSchools.init();
         attachAutocomplete();
         attachAutocompleteHandlers();
-        setShowFiltersHandler()
+        setShowFiltersHandler();
+        setSavedSearchSubmitHandler();
+        setSavedSearchOpenPopupHandler();
+        disableSavedSearchOnLoad();
     };
 
     return {

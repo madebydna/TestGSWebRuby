@@ -27,6 +27,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  post '/gsr/saved_search', as: :saved_search, to: 'saved_search#attempt_saved_search'
+
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'

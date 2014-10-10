@@ -52,9 +52,15 @@ describe SavedSearchController do
         expect(controller.send(:saved_search_params)).to have_key(:options)
       end
 
+      it 'should return a hash with the options key in the hash as serialized JSON' do
+        options = controller.send(:saved_search_params)[:options]
+        expect(JSON.parse(options)).to be_an_instance_of(Hash)
+      end
+
       optional_params.each do |param|
         it "should return an options hash with the #{param} key if #{param} is present in params" do
-          expect(controller.send(:saved_search_params)[:options]).to have_key(param)
+          options = controller.send(:saved_search_params)[:options]
+          expect(JSON.parse(options)).to have_key(param.to_s)
         end
       end
     end
@@ -70,22 +76,24 @@ describe SavedSearchController do
 
   describe '#attempt_saved_search' do
     context 'if the user is logged in' do
+      let(:success) { {success: 'Save successful!'} }
+      let(:error) { {error: 'Error!'} }
       before do
         allow(controller).to receive(:logged_in?).and_return(true)
-        allow(controller).to receive(:create_saved_search)
         allow(controller).to receive(:saved_search_params)
-        allow(controller).to receive(:redirect_back_or_default)
-        allow(controller).to receive(:redirect_path)
       end
 
-      it 'should call the create_saved_search method' do
-        expect(controller).to receive(:create_saved_search)
-        controller.send(:attempt_saved_search)
+      it 'should call the handle_json method when the request is ajax' do
+        allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(true)
+        allow(controller).to receive(:handle_json)
+        expect(controller).to receive(:handle_json)
+        controller.attempt_saved_search
       end
-
-      it 'should call the redirect_back_or_default_method' do
-        expect(controller).to receive(:redirect_back_or_default)
-        controller.send(:attempt_saved_search)
+      it 'should call the handle_html method when the request is html' do
+        allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(false)
+        allow(controller).to receive(:handle_html)
+        expect(controller).to receive(:handle_html)
+        controller.attempt_saved_search
       end
     end
 
@@ -99,20 +107,25 @@ describe SavedSearchController do
         allow(controller).to receive(:flash_notice)
         allow(controller).to receive(:redirect_to)
         allow(controller).to receive(:join_url).and_return(join_url)
-
       end
       it 'should call the saved_deferred action method with :saved_search_deferred' do
         expect(controller).to receive(:save_deferred_action).with(:saved_search_deferred, saved_search_params)
-        controller.send(:attempt_saved_search)
+        controller.attempt_saved_search
       end
 
       it 'should call the flash notice method' do
         expect(controller).to receive(:flash_notice)
-        controller.send(:attempt_saved_search)
+        controller.attempt_saved_search
       end
-      it 'should call the redirect_to method with join_url' do
+      it 'should call the redirect_to method with join_url when its not an ajax request' do
+        allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(false)
         expect(controller).to receive(:redirect_to).with(join_url)
-        controller.send(:attempt_saved_search)
+        controller.attempt_saved_search
+      end
+      it 'should call the render method with json arguments when its an ajax request' do
+        allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(true)
+        expect(controller).to receive(:render).with( {json: hash_including(redirect: join_url)})
+        controller.attempt_saved_search
       end
     end
   end

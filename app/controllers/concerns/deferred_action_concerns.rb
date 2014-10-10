@@ -87,7 +87,7 @@ module DeferredActionConcerns
   def saved_search_deferred(params)
     return false if !logged_in?
 
-    create_saved_search params
+    handle_html params
 
     true
   end
