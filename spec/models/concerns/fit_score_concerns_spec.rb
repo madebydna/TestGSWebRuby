@@ -125,13 +125,13 @@ describe FitScoreConcerns do
           describe 'it returns not_applicable for charter schools' do
             before {allow(model).to receive(:type).and_return 'charter'}
             configure_expectations model_type, students_vouchers: 'no'
-            fit_score_model_assertions max_fit:1, fit:0,
+            fit_score_model_assertions max_fit:1, fit:1,
               breakdown: [{category:'enrollment',filter:'vouchers',match_status: :not_applicable}]
           end
           describe 'it returns not_applicable for public schools' do
             before {allow(model).to receive(:type).and_return 'public'}
             configure_expectations model_type, students_vouchers: 'no'
-            fit_score_model_assertions max_fit:1, fit:0,
+            fit_score_model_assertions max_fit:1, fit:1,
               breakdown: [{category:'enrollment',filter:'vouchers',match_status: :not_applicable}]
           end
         end

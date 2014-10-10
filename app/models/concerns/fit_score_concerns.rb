@@ -131,19 +131,18 @@ module FitScoreConcerns
     @fit_score = 0
     @fit_score_breakdown = []
     @max_fit_score = 0
-    @max_fit_for_ratio = 0
     @fit_ratio = 0
     params.each do |key, value|
       [*value].each do |v|
         @max_fit_score += 1
         match_status = matches_soft_filter?(key, v)
-        @max_fit_for_ratio += 1 unless match_status == :not_applicable
-        @fit_score += 1 if match_status == :yes
+        # not_applicable counts as a match for the purposes of sorting
+        @fit_score += 1 if match_status == :yes || match_status == :not_applicable
         @fit_score_breakdown << {category: key, filter: v, match_status: match_status}
       end
     end
-    if @max_fit_for_ratio > 0
-      @fit_ratio = @fit_score / @max_fit_for_ratio.to_f
+    if @max_fit_score > 0
+      @fit_ratio = @fit_score / @max_fit_score.to_f
     end
   end
 

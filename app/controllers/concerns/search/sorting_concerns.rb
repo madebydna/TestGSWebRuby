@@ -48,7 +48,7 @@ module SortingConcerns
   def sort_by_fit(school_results, direction)
     # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
     n = 0
-    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_score : (0-x.fit_score)), n]}
+    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_ratio : (0-x.fit_ratio)), n]}
   end
 
   def parse_sorts(params_hash)
