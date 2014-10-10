@@ -379,10 +379,19 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var attemptSaveSearch = function() {
         params = savedSearchParams();
-        if (params['search_name'] === '') {
-            alert('Please name your search');
-        } else {
+        if (saveSearchValid(params) === true) {
             saveSearch(params);
+        }
+    };
+
+    var saveSearchValid = function(params) {
+        $popup = $('.js-savedSearchPopup');
+        if (params['search_name'] === '') {
+            $popup.find('.js-savedSearchFormGroup').addClass('has-error');
+            $popup.find('.js-savedSearchErrorMessage').show('');
+            return false
+        } else {
+            return true
         }
     };
 
@@ -395,14 +404,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var redirect = response['redirect'];
 
             if (typeof error === 'string' && error !== '' ) {
-                alert(error);
+                alert(error);                     //error
+            } else if (redirect != undefined) {
+                GS.uri.Uri.goToPage(redirect);    //redirect
             } else {
-                disableSavedSearch();
+                disableSavedSearch();             //success
                 changeSavedSearchText();
-            }
-
-            if (redirect !== undefined) {
-                GS.uri.Uri.goToPage(redirect)
             }
         });
 

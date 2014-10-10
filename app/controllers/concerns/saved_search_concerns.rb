@@ -13,10 +13,8 @@ module SavedSearchConcerns
     if (create_saved_search params).is_a?(Exception)
       flash_error 'We are sorry but something went wrong'
     else
-      if flash.empty?
-        cookies[:saved_search] = 'success'
-        flash_notice 'You have successfully saved your search!'
-      end
+      cookies[:saved_search] = 'success'
+      flash_notice 'You have successfully saved your search!' if flash.empty?
     end
     redirect_path.nil? ? redirect_back_or_default : redirect_back_or_default(redirect_path)
   end
