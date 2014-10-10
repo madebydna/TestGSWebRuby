@@ -103,6 +103,34 @@ class FilterBuilder
         group1: {
           display_type: :filter_column_primary,
           filters: {
+            grade: {
+              label: 'Grade Level',
+              display_type: :title,
+              name: :grades,
+              filters: {
+                select_box: {
+                  display_type: :select_box,
+                  name: :grades,
+                  filters: {
+                     :default => {label: 'Select Grade', display_type: :select_box_value, name: :grades, value: nil},
+                     :p => {label: 'Pre-School', display_type: :select_box_value, name: :grades, value: :p},
+                     :k => {label: 'Kindergarten', display_type: :select_box_value, name: :grades, value: :k},
+                     1 => {label: '1st Grade', display_type: :select_box_value, name: :grades, value: 1},
+                     2 => {label: '2nd Grade', display_type: :select_box_value, name: :grades, value: 2},
+                     3 => {label: '3rd Grade', display_type: :select_box_value, name: :grades, value: 3},
+                     4 => {label: '4th Grade', display_type: :select_box_value, name: :grades, value: 4},
+                     5 => {label: '5th Grade', display_type: :select_box_value, name: :grades, value: 5},
+                     6 => {label: '6th Grade', display_type: :select_box_value, name: :grades, value: 6},
+                     7 => {label: '7th Grade', display_type: :select_box_value, name: :grades, value: 7},
+                     8 => {label: '8th Grade', display_type: :select_box_value, name: :grades, value: 8},
+                     9 => {label: '9th Grade', display_type: :select_box_value, name: :grades, value: 9},
+                     10 => {label: '10th Grade', display_type: :select_box_value, name: :grades, value: 10},
+                     11 => {label: '11th Grade', display_type: :select_box_value, name: :grades, value: 11},
+                     12 => {label: '12the Grade', display_type: :select_box_value, name: :grades, value: 12},
+                  }
+                }
+              }
+            },
             distance: {
               label: 'Show schools within',
               display_type: :title,

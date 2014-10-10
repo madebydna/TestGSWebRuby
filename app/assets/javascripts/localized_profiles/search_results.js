@@ -31,14 +31,14 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var filtersQueryString = function($form) {
-        return GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box'));
+        return GS.uri.Uri.getQueryStringFromFormElements($form.find('input, .js-distance-select-box, .js-grades-select-box'));
     };
 
     var buildQuery = function($form) {
         var queryString = filtersQueryString($form);
 
         var getParam = GS.uri.Uri.getFromQueryString;
-        var urlParamsToPreserve = ['lat', 'lon', 'grades', 'q', 'locationSearchString', 'locationType'];
+        var urlParamsToPreserve = ['lat', 'lon', 'q', 'locationSearchString', 'locationType'];
         if (shouldPreserveSortParam($form, getParam('sort'))) { urlParamsToPreserve.push('sort'); }
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {

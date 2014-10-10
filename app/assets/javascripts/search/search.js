@@ -264,15 +264,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};
-                var gradeLevelFilter = $('#js-searchGradeLevelFilter');
-                if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
-                    searchOptions['grades'] = gradeLevelFilter.val();
-                }
 
                 if (input.value == $(schoolResultsSearchSelector).data('prev-search')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
-                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
-                    params = GS.uri.Uri.removeFromQueryString(params, 'page');
+                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
                     GS.uri.Uri.goToPage(url);
@@ -431,10 +426,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         }
         searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
-        var gradeLevelFilter = $('#js-searchGradeLevelFilter');
-        if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
-            searchOptions['grades'] = gradeLevelFilter.val();
-        }
 
         // Not setting a timeout breaks back button
         setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
