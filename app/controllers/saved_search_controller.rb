@@ -9,9 +9,9 @@ class SavedSearchController < ApplicationController
       save_deferred_action :saved_search_deferred, saved_search_params
       flash_notice 'log in required'
       if request.xhr?
-        render json: { redirect: join_url }
+        render json: { redirect: signin_url }
       else
-        redirect_to join_url
+        redirect_to signin_url
       end
     end
   end

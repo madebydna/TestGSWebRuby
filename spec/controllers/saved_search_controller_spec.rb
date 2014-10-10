@@ -99,14 +99,14 @@ describe SavedSearchController do
 
     context 'if the user is not logged in' do
       let(:saved_search_params) { { search_name: 'MySearch for Johnny' } }
-      let(:join_url) { '/join' }
+      let(:signin_url) { '/gsr/login' }
       before do
         allow(controller).to receive(:logged_in?).and_return(false)
         allow(controller).to receive(:saved_deferred_action)
         allow(controller).to receive(:saved_search_params).and_return(saved_search_params)
         allow(controller).to receive(:flash_notice)
         allow(controller).to receive(:redirect_to)
-        allow(controller).to receive(:join_url).and_return(join_url)
+        allow(controller).to receive(:signin_url).and_return(signin_url)
       end
       it 'should call the saved_deferred action method with :saved_search_deferred' do
         expect(controller).to receive(:save_deferred_action).with(:saved_search_deferred, saved_search_params)
@@ -117,14 +117,14 @@ describe SavedSearchController do
         expect(controller).to receive(:flash_notice)
         controller.attempt_saved_search
       end
-      it 'should call the redirect_to method with join_url when its not an ajax request' do
+      it 'should call the redirect_to method with signin_url when its not an ajax request' do
         allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(false)
-        expect(controller).to receive(:redirect_to).with(join_url)
+        expect(controller).to receive(:redirect_to).with(signin_url)
         controller.attempt_saved_search
       end
       it 'should call the render method with json arguments when its an ajax request' do
         allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(true)
-        expect(controller).to receive(:render).with( {json: hash_including(redirect: join_url)})
+        expect(controller).to receive(:render).with( {json: hash_including(redirect: signin_url)})
         controller.attempt_saved_search
       end
     end
