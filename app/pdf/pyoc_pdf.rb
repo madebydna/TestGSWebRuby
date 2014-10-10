@@ -156,7 +156,7 @@ class PyocPdf < Prawn::Document
       other_state_ratings(school_cache)
 
       bounding_box([1, 100], :width => 0, :height => 0) do
-        move_down_medium
+        move_down 15
         if $position_on_page%2 == 0
           image "app/assets/images/pyoc/PYOC_Icons-03.png", :at => [5, cursor], :scale => 0.2
         else
@@ -164,10 +164,10 @@ class PyocPdf < Prawn::Document
         end
       end
 
-      move_down_small
+      move_down_medium
       draw_address(school, school_cache)
 
-      move_down_medium
+      move_down_small
       draw_best_known_for(school_cache)
 
     end
@@ -228,6 +228,14 @@ class PyocPdf < Prawn::Document
     end
   end
 
+  def other_state_rating_abbreviation(rating_name)
+    rating_abbr = { 'Excellent Schools Detroit Rating' => 'ESD Rating',
+                    'Great Start to Quality preschool rating' => 'Preschool Rating'
+    }
+    rating_abbr[rating_name]
+
+   end
+
   def other_state_ratings(school_cache)
     data =[[], []]
 
@@ -236,8 +244,14 @@ class PyocPdf < Prawn::Document
       data << ['', '']
     else
       other_ratings.each do |i|
-        data[0] << i[1]
-        data[1] << i[0]
+        # require 'pry'; binding.pry;
+        if other_state_rating_abbreviation(i[0])
+          data[0] << i[1]
+          data[1] << other_state_rating_abbreviation(i[0])
+        else
+          data[0] << i[1]
+          data[1] << i[0]
+        end
       end
     end
 
@@ -306,7 +320,6 @@ class PyocPdf < Prawn::Document
     move_down_small
 
     data = [[{:image => $image_path_school_size, :scale => 0.25}, 'School size', school_cache.students_enrolled != "?" ? school_cache.students_enrolled : 'n/a' ],
-            # data = [[{:image => image_path, :scale => 0.2}, 'School size', "123"],
             [{:image => $image_path_transportation, :scale => 0.25}, 'Transportation',
              school_cache.transportation == "Yes" || school_cache.transportation == "No" ? school_cache.transportation : "n/a"],
             [{:image => $image_path_before_care, :scale => 0.25}, 'Before care',
