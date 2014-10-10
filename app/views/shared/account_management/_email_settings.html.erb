@@ -5,7 +5,7 @@
         <% show_header=true %>
         <% @current_user.subscriptions.each do |subscription| %>
             <% decorator=NewsletterDecorator.decorate(subscription) %>
-            <div>
+            <div class="js-subscription-<%= subscription.id  %>" >
               <% if show_header %>
                   <%= decorator.name %><br/>
                   <%= decorator.description %><br/>
@@ -16,6 +16,16 @@
               <% if decorator.school %>
                   <%= decorator.school.name %><%= decorator.school.city %>,<%= decorator.school.state %><br/><br/>
               <% end %>
+
+              <span class="fr prm">
+          <%= link_to('remove', subscription_path(subscription.id),
+                      {
+                              class: "js-delete-subscription-#{subscription.id}",
+                              method: 'DELETE',
+                              remote: true
+                      }
+              ) %>
+        </span>
             </div>
         <% end %>
       </div>
