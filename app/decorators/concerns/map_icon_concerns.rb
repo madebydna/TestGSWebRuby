@@ -22,7 +22,7 @@ module MapIconConcerns
       '53233' => icon_path + 'Mke_map_4.png',
       '53202' => icon_path + 'Mke_map_4.png',
       '53203' => icon_path + 'Mke_map_4.png',
-      '53214' => icon_path + 'Mke_map_4.png',
+      '53214' => icon_path + 'Mke_map_5.png',
       '53227' => icon_path + 'Mke_map_5.png',
       '53219' => icon_path + 'Mke_map_5.png',
       '53228' => icon_path + 'Mke_map_5.png',
