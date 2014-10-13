@@ -41,6 +41,7 @@ class StatesController < ApplicationController
   def state_home
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
+    gon.pagename = "State_Home_Standard"
 
     render 'states/state_home'
   end
