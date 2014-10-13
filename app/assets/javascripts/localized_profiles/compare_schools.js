@@ -226,7 +226,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         );
     };
 
-    var noDataPopupOffset = function ($popup) {
+    var noDataPopupCSS = function ($popup) {
         var elementIndex = 0;
         $popup.closest('tr').children('td').each( function (index, element) {
             $(element).children().each( function () {
@@ -239,33 +239,11 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         var numberTableCells = $popup.closest('tr').children('td').length;
 
         if (elementIndex == numberTableCells) {
-            return '0px';
+            return {width: '150px', 'z-index': 1, right:'0px'};
         }
         else {
-            return '-120px';
+            return {width: '150px', 'z-index': 1, right:'-120px'};
         }
-    };
-
-    var setNoDataPopupHandler = function() {
-        var closeMenuHandlerSet = false;
-
-        $(noDataSymbol).on(clickOrTouchType, function() {
-            var $popup = $(this).siblings(noDataPopupHtmlClass);
-            if ($popup.hasClass('dn')) {
-                var rightOffset = noDataPopupOffset($popup);
-                var cssOptions = {width: '150px', 'z-index': 1, right: rightOffset};
-                GS.popup.displayPopup($popup, cssOptions);
-            } else {
-                $popup.addClass('dn');
-            }
-
-            if (closeMenuHandlerSet === false) {
-                GS.popup.closeMenuHandler(noDataPopupHtmlClass);
-                closeMenuHandlerSet = true;
-            }
-        });
-        GS.popup.stopClickAndTouchstartEventPropogation($(noDataSymbol));
-        GS.popup.stopClickAndTouchstartEventPropogation($(noDataPopupHtmlClass));
     };
 
     var setDisabledOnSaveAll = function() {
@@ -280,7 +258,8 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         setRemoveSchoolHandler();
         colorPieChartLabels();
         setRemoveActiveStateHandler();
-        setNoDataPopupHandler();
+        GS.popup.setPopupHandler(noDataPopupCSS,noDataSymbol,noDataPopupHtmlClass);
+        GS.popup.setPopupHandler();
         setDisabledOnSaveAll();
         GS.compare.schoolsList.init(4);
     };

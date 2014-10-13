@@ -5,7 +5,7 @@
           <% if datapoint_config[:icon] %>
               <td style="width: 30px"><i class="<%= datapoint_config[:icon] %>"></i></td>
           <% end %>
-          <td><%= truncate(datapoint_config[:label], length: 26) %></td>
+          <td><%= truncate_with_popup(datapoint_config[:label], length: 26) %></td>
 
           <% method_caller = @school.respond_to?(datapoint_config[:method]) ? @school : @school.school_cache %>
           <% value = if datapoint_config[:argument]

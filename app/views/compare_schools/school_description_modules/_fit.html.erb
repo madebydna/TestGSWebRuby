@@ -27,7 +27,7 @@
                 <% end %>
               </td>
               <td class="tal <%= breakdown[:match_status] != :yes ? 'gray-dark' : '' %>">
-                  <%= truncate(breakdown[:filter], length: 26)%>
+                  <%= truncate_with_popup(breakdown[:filter], length: 26)%>
               </td>
             </tr>
           <% end %>

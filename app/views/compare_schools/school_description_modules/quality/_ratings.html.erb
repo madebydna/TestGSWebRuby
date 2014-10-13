@@ -19,7 +19,7 @@
   <table class="full-width">
     <% ratings_types.each do |label| %>
         <tr>
-          <td><%= truncate(label, length: 26) %></td>
+          <td><%= truncate_with_popup(label, length: 26) %></td>
           <% value = label == 'GreatSchools rating' ? @school.great_schools_rating_icon : datapoints[label] %>
           <td class="tac open-sans_sb" style="width: 40px"><%= value %></td>
         </tr>
