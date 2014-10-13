@@ -3,7 +3,7 @@
   <% if @current_user.subscriptions.present? %>
       <div class="limit-width-1200 mtl">
         <% @current_user.subscriptions.group_by(&:list).each do |list,subscriptions| %>
-            <hr class="mtl"/>
+            <hr class="mtxl"/>
 
             <% if Subscription.is_grouped?(list)%>
 
