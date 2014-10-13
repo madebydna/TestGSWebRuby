@@ -43,14 +43,14 @@ describe User do
       end
 
       it 'defaults expires to nil when no expiration set' do
-        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', nil, true)
+        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats','A description', nil, true)
         allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
         subscription = user.new_subscription(:mystat)
         expect(subscription.expires).to be_nil
       end
 
       it 'should perform expiration date math correctly' do
-        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats', 1.year, true)
+        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats','A description', 1.year, true)
 
         allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
 
