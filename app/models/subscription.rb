@@ -22,7 +22,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.is_grouped?(list)
-    if list=='mystat'
+    if list=='mystat' || list=='mystat_private'
       true
     else
       false
