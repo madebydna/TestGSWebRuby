@@ -2,7 +2,7 @@ module FitScoreConcerns
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :fit_score, :fit_score_breakdown, :max_fit_score, :max_fit_for_ratio, :fit_ratio
+    attr_accessor :fit_score, :fit_score_breakdown, :max_fit_score, :fit_ratio
   end
 
   STRONG_FIT_CUTOFF = 0.666

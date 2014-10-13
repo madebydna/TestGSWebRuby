@@ -12,7 +12,6 @@ class SchoolSearchResult
   def initialize(hash)
     @fit_score = 0
     @max_fit_score = 0
-    @max_fit_for_ratio = 0
     @fit_ratio = 0
     @fit_score_breakdown = []
     @attributes = hash
