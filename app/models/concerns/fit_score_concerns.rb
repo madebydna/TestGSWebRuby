@@ -75,9 +75,9 @@ module FitScoreConcerns
   }.stringify_keys!,
     class_offerings: {
       ap: /^AP_courses$/,
-      performance_arts: /^(?!none)\w+/,
-      visual_media_arts: /^(?!none)\w+/,
-      music: /^(?!none)\w+/,
+      performance_arts: /^(?!none)\w+/i,
+      visual_media_arts: /^(?!none)\w+/i,
+      music: /^(?!none)\w+/i,
       french: /^french$/,
       german: /^german$/,
       spanish: /^spanish$/,

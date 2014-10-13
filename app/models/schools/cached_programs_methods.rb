@@ -62,7 +62,7 @@ module CachedProgramsMethods
     show_numeric = false
     program_keys.each do |program|
       if programs.key? program
-        keys = programs[program].keys - ['none']
+        keys = programs[program].keys - ['none'] - ['None']
         count += keys.size
         show_numeric = true
       end

@@ -296,14 +296,17 @@ describe FitScoreConcerns do
     describe 'returns :no' do
       describe ' for class_offerings equals' do
         expect_matches_false filter_key:'class_offerings', filter_value:'visual_media_arts',
-                                                                       model_key: :arts_visual,
-            model_value: ['none']
+                             model_key: :arts_visual, model_value: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'visual_media_arts',
+                             model_key: :arts_visual, model_value: ['None']
         expect_matches_false filter_key:'class_offerings', filter_value:'performance_arts',
-                                                                       model_key: :arts_performing_written,
-            model_value: ['none']
+                             model_key: :arts_performing_written, model_value: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'performance_arts',
+                             model_key: :arts_performing_written, model_value: ['None']
         expect_matches_false filter_key:'class_offerings', filter_value:'music',
-                                                                       model_key: :arts_music,
-            model_value: ['none']
+                             model_key: :arts_music, model_value: ['none']
+        expect_matches_false filter_key:'class_offerings', filter_value:'music',
+                             model_key: :arts_music, model_value: ['None']
       end
       describe 'for school_focus equals' do
         expect_matches_false filter_key:'school_focus', filter_value:'arts',
