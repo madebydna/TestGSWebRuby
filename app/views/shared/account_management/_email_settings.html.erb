@@ -13,9 +13,11 @@
                 <% subscriptions.each do |subscription| %>
                     <% decorated_subscription = NewsletterDecorator.decorate(subscription) %>
                     <div class="js-subscription-<%= subscription.id  %>" >
-                      <div class="open-sans_sb mtm">
-                        <%= decorated_subscription.school.name %><%= decorated_subscription.school.city %>,<%= decorated_subscription.school.state %>
-                      </div>
+                      <% if decorated_subscription.school && decorated_subscription.school.city && decorated_subscription.school.state %>
+                          <div class="open-sans_sb mtm">
+                            <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
+                          </div>
+                      <% end %>
                       <div class="mlm mtm">
                         <%= link_to('Unsubscribe', subscription_path(subscription.id),
                                     {
