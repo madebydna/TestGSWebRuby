@@ -10,9 +10,9 @@ class Subscription < ActiveRecord::Base
   SUBSCRIPTIONS = {
     mystat: SubscriptionProduct.new('mystat', 'My School Stats',
                                     "Track your child's school stats - from test scores to teacher quality.", nil, true),
-    mystat_unverified: SubscriptionProduct.new('mystat_unverified', 'My School Stats',
+    mystat_unverified: SubscriptionProduct.new('mystat_unverified', 'My School Stats - email unverified',
                                             "Track your child's school stats - from test scores to teacher quality.", nil, true),
-    mystat_private: SubscriptionProduct.new('mystat_private', 'My School Stats',
+    mystat_private: SubscriptionProduct.new('mystat_private', 'My School Stats - private schools',
                                             "Track your child's school stats - from test scores to teacher quality.", nil, true),
     greatnews: SubscriptionProduct.new('greatnews', 'Weekly newsletter',
                                        "The tips and tools you need to make smart choices about your child's education.", nil, true),
