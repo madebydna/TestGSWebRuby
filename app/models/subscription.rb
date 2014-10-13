@@ -21,4 +21,12 @@ class Subscription < ActiveRecord::Base
     (list.is_a?(String) || list.is_a?(Symbol))? SUBSCRIPTIONS.include?(list.to_sym) : nil
   end
 
+  def self.is_grouped?(list)
+    if list=='mystat'
+      true
+    else
+      false
+    end
+  end
+
 end

@@ -4,7 +4,11 @@ class NewsletterDecorator < Draper::Decorator
   delegate_all
 
   def name
-    Subscription.subscription_product(list).long_name
+    if list== 'greatnews'
+      'Weekly newsletter'
+    else
+      Subscription.subscription_product(list).long_name
+    end
   end
 
   def school

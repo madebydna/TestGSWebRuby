@@ -3,21 +3,9 @@
   <% if @current_user.subscriptions.present? %>
       <div class="limit-width-1200 mtl">
         <% @current_user.subscriptions.group_by(&:list).each do |list,subscriptions| %>
-            <% if subscriptions.size == 1%>
-                <% decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
-                <div class="js-subscription-<%= subscriptions.first.id  %>" >
-                  <%= decorated_subscription.name %><br/>
-                  <%= decorated_subscription.description %><br/> <br/>
-                  <div>
-                    <%= link_to('Unsubscribe', subscription_path(subscriptions.first.id),
-                                  {
-                                          method: 'DELETE',
-                                          remote: true
-                                  }
-                        ) %>
-                  </div>
-                </div>
-            <% else %>
+
+            <% if Subscription.is_grouped?(list)%>
+
                 <% first_decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
                 <%= first_decorated_subscription.name %><br/>
                 <%= first_decorated_subscription.description %><br/> <br/>
@@ -29,15 +17,29 @@
                       </div>
                       <div>
                         <%= link_to('Unsubscribe', subscription_path(subscription.id),
-                                      {
-                                              method: 'DELETE',
-                                              remote: true
-                                      }
+                                    {
+                                            method: 'DELETE',
+                                            remote: true
+                                    }
                             ) %>
                       </div>
                     </div>
                     <br/>
                 <% end %>
+            <% else %>
+                <% decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
+                <div class="js-subscription-<%= subscriptions.first.id  %>" >
+                  <%= decorated_subscription.name %><br/>
+                  <%= decorated_subscription.description %><br/> <br/>
+                  <div>
+                    <%= link_to('Unsubscribe', subscription_path(subscriptions.first.id),
+                                {
+                                        method: 'DELETE',
+                                        remote: true
+                                }
+                        ) %>
+                  </div>
+                </div>
             <% end %>
             <br/>
             <br/>
