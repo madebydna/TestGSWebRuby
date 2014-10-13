@@ -1,6 +1,17 @@
 var GS = GS || {}
 GS.accountManagement = GS.accountManagement || {}
 
+GS.accountManagement.schoolListRemovedSchool = (function(school_id){
+  var css_selector = ".js-favorite-school-"+school_id;
+  $(css_selector).slideUp();
+  var numOfVisibleRows = $('.js-schoolSearchResult').parent().filter(function() {
+    return $(this).css('display') !== 'none';
+  }).length;
+  if(numOfVisibleRows == 1){
+    $(".js-submitSchoolPYOC").prop("disabled",true);
+  }
+});
+
 GS.accountManagement.changePassword = (function(){
   var contentSelector = ".js-change-password-form-content";
   var formSelector = ".js-change-password-form";
