@@ -187,6 +187,14 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
     };
 
+    var removeSchoolFromURL = function(schoolId) {
+        var currentQuery = GS.uri.Uri.getQueryData();
+        var currentSchoolIds = currentQuery['school_ids'];
+        currentSchoolIds = currentSchoolIds.replace(schoolId,'').replace(/^,|,$/,'').replace(',,',',');
+        var newUri = '/compare?school_ids=' + currentSchoolIds + '&state=' + currentQuery.state;
+        History.pushState(null, gon.pageTitle, newUri);
+    };
+
     var removeSchool = function() {
         var schoolDiv = $(this).parent('div'+comparedSchools);
         var schoolId = schoolDiv.data('school-id');
@@ -197,6 +205,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             $('.js-save-all-schools-button').prop('disabled', $(comparedSchools).length === 0);
             GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
             GS.compare.schoolsList.removeSchool(schoolId);
+            removeSchoolFromURL(schoolId);
         });
     };
 

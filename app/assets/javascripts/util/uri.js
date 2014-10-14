@@ -149,6 +149,16 @@ GS.uri.Uri.removeFromQueryString = function(queryString, key) {
     return queryString;
 };
 
+GS.uri.Uri.getQueryStringFromURL = function () {
+    var index = window.location.href.indexOf('?');
+    if(index === -1) {
+        return "";
+    }
+    else {
+        return window.location.href.slice(index + 1);
+    }
+};
+
 /**
  * Converts URL's querystring into a hash
  * Now works with queryStrings that contain multiple key=value pairs with the same key
@@ -160,13 +170,7 @@ GS.uri.Uri.getQueryData = function(queryString) {
         queryString = queryString.substring(1);
     }
     else {
-        var index = window.location.href.indexOf('?');
-        if(index === -1) {
-            queryString = "";
-        }
-        else {
-            queryString = window.location.href.slice(index + 1);
-        }
+        queryString = GS.uri.Uri.getQueryStringFromURL();
     }
 
     var hashes = queryString.split('&');

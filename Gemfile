@@ -48,6 +48,9 @@ gem 'lodash-rails'
 # for passing vars from ruby rails to javascript
 gem 'gon'
 
+# Wiselinks gives us History.js for changing browser URLs
+gem 'wiselinks'
+
 gem 'mini_fb'
 
 # Uses the materialized path pattern to implement a tree on a model

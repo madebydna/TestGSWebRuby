@@ -14,6 +14,7 @@
 //= require jquery.cookie.js
 //= require jquery_ujs
 //= require lodash
+//= require wiselinks
 //= require_self
 //= require_tree ./util
 //= require_tree ./resources
