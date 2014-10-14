@@ -4,11 +4,11 @@
 
 <% state = StateHomeDecorator.decorate(@state) %>
 
-<div class="row limit-width-1200">
+<div class="phm limit-width-1200">
   <h1><%= state.name %> Schools</h1>
 </div>
 
-<div class="row limit-width-1200">
+<div class="phm limit-width-1200 ">
   <p>
     GreatSchools has profiles for more than 
     <%= state.approximate_schools_in_state %> public, public charter, 
@@ -18,9 +18,9 @@
   </p>
 </div>
 
-<div class="row limit-width-1200">
+<div class="row  limit-width-1200">
   <div class="col-xs-12 tac">
-      <h2>Get started finding schools in...</h2>
+      <h2 class="phm">Get started finding schools in...</h2>
   </div>
   <% state.short_cities_list.first[0..3].each_with_index do |city, index| %>
     <%= div_tag sizes: { xs: 6, sm: 3, md: 3, lg: 3 } do %>
@@ -30,9 +30,12 @@
 </div>
 
 <% column_sizes = { xs: 6, sm: 3, md: 3, lg: 3 } %>
-<div class="row limit-width-1200">
-  <h2>All <%= state.name %> cities <a onclick="$('.toggle-cities').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_cities %> cities' ? 'See fewer' : 'See all <%= state.number_of_cities %> cities'; });">See all <%= state.number_of_cities %> cities</a></h2>
-  <div class="toggle-cities pbxl clearfix">
+<div class="row phm limit-width-1200">
+  <div class="clearfix mtl">
+    <div class="fl mrl"><h2 class="mvn">All <%= state.name %> cities</h2></div>
+    <div class="fl ptm"><a class="" onclick="$('.toggle-cities').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_cities %> cities' ? 'See fewer' : 'See all <%= state.number_of_cities %> cities'; });">See all <%= state.number_of_cities %> cities</a></div>
+  </div>
+  <div class="toggle-cities pbxl ptl clearfix">
     <% state.short_cities_list.each do |column_of_cities| %>
       <%= div_tag sizes: column_sizes do %>
         <% column_of_cities.each do |city| %>
@@ -41,7 +44,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="toggle-cities dn pbxl clearfix">
+  <div class="toggle-cities dn pbxl ptl clearfix">
     <% state.expanded_cities_list.each do |column_of_cities| %>
       <%= div_tag sizes: column_sizes do %>
         <% column_of_cities.each do |city| %>
@@ -54,9 +57,13 @@
 
 <% column_sizes = { xs: 6, sm: 3, md: 3, lg: 3 } %>
 <div class="row bg-light-gray ">
-    <div class="limit-width-1200 ptl">
-      <h2><%= state.name %> school districts <a onclick="$('.toggle-districts').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_districts %> districts' ? 'See fewer' : 'See all <%= state.number_of_districts %> districts'; });">See all <%= state.number_of_districts %> districts</a></h2>
-      <div class="toggle-districts pbxl clearfix">
+    <div class="limit-width-1200 ptl phm">
+    <div class="clearfix mtl">
+        <div class="fl mrl"><h2 class="mvn"><%= state.name %> school districts</h2></div>
+        <div class="fl ptm"><a onclick="$('.toggle-districts').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_districts %> districts' ? 'See fewer' : 'See all <%= state.number_of_districts %> districts'; });">See all <%= state.number_of_districts %> districts</a></div>
+    </div>
+      <!--<h2><%= state.name %> school districts <a onclick="$('.toggle-districts').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_districts %> districts' ? 'See fewer' : 'See all <%= state.number_of_districts %> districts'; });">See all <%= state.number_of_districts %> districts</a></h2>-->
+      <div class="toggle-districts pbxl ptl clearfix">
         <% state.short_districts_list.each do |column_of_districts| %>
           <%= div_tag sizes: column_sizes do %>
             <% column_of_districts.each do |city| %>
@@ -65,7 +72,7 @@
           <% end %>
         <% end %>
       </div>
-      <div class="toggle-districts dn pbxl clearfix">
+      <div class="toggle-districts dn pbxl ptl clearfix">
         <% state.expanded_districts_list.each do |column_of_districts| %>
           <%= div_tag sizes: column_sizes do %>
             <% column_of_districts.each do |city| %>

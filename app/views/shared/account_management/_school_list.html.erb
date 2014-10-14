@@ -12,14 +12,14 @@
                     <div class="js-favorite-school-<%= favorite_school.id %>">
                         <% decorated_school = MySchoolListDecorator.decorate(school) %>
                         <span class="fr prm">
-          <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
-                      {
-                              class: "js-delete-favorite-school-#{favorite_school.id}",
-                              method: 'DELETE',
-                              remote: true
-                      }
-              ) %>
-        </span>
+                          <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
+                                      {
+                                              class: "js-delete-favorite-school-#{favorite_school.id}",
+                                              method: 'DELETE',
+                                              remote: true
+                                      }
+                              ) %>
+                        </span>
                         <div class="clearfix"></div>
 
                         <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school, account_page: true %>
