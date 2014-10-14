@@ -8,7 +8,7 @@ class PyocController <  ApplicationController
     @db_schools = School.for_states_and_ids([state_param,state_param, state_param], [params[:id1],params[:id2], params[:id3]])
     elsif state_param.present? && params[:collection_id].present? && params[:school_batch].present?
     @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)
-    @db_schools = @db_schools[0..50000]
+    @db_schools = @db_schools[0..5]
     @db_schools.each do |school|
       if !(school.collection.present? && school.collection.id == params[:collection_id].to_i)
         @db_schools -= Array[school]
@@ -16,6 +16,8 @@ class PyocController <  ApplicationController
       end
     elsif state_param.present?
       @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)
+      @db_schools = @db_schools[0..5]
+
     end
 
 
