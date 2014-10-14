@@ -84,3 +84,52 @@ GS.accountManagement.PYOC = (function(){
     init: init
   };
 })();
+
+GS.accountManagement.savedSearch = (function(){
+  var init = function() {
+    setDeleteSavedSearchHandler();
+  };
+
+  var setDeleteSavedSearchHandler = function() {
+    $('.js-savedSearches').on('click', '.js-savedSearchDelete', function() {
+      deleteSavedSearch.call(this);
+      return false;
+    });
+  };
+
+  var deleteSavedSearch = function() {
+    $self = $(this);
+    var id = $self.data('id');
+
+    if ( id !== undefined && typeof id == 'number' ) {
+
+      $deferred = $.ajax({
+        url: '/gsr/ajax/saved_search/' + id,
+        type: 'DELETE'
+      });
+
+      $deferred.done(function(response) {
+        var error = response['error'];
+        if (typeof error === 'string' && error !== '' ) {
+          alert(response['error']);
+        } else {
+          $self.parents('.js-savedSearch').fadeOut(500, function() { $(this).remove(); })
+        }
+      });
+
+      $deferred.fail(function(response){
+        alert('Sorry but wen\'t wrong. Please try again later');
+      });
+    }
+  };
+
+  return {
+    init: init
+  }
+})();
+
+if (gon.pagename === 'Account management') {
+  $(document).ready(function () {
+      GS.accountManagement.savedSearch.init();
+  });
+}

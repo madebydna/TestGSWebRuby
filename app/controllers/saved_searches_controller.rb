@@ -1,22 +1,39 @@
-class SavedSearchController < ApplicationController
+class SavedSearchesController < ApplicationController
   include DeferredActionConcerns
-  include SavedSearchConcerns
+  include SavedSearchesConcerns
 
-  def attempt_saved_search
+  def create
     if logged_in?
       request.xhr? ? handle_json(saved_search_params) : handle_html(saved_search_params)
     else
       save_deferred_action :saved_search_deferred, saved_search_params
-      flash_notice 'log in required'
-      if request.xhr?
-        render json: { redirect: signin_url }
-      else
-        redirect_to signin_url
+      redirect_to_login
+    end
+  end
+
+  def destroy
+    if logged_in?
+      begin
+        current_user.saved_searches.destroy(params[:id])
+        render json: { }
+      rescue
+        render json: { error: 'We are sorry but something went wrong. Please Try again Later' }
       end
+    else
+      redirect_to_login
     end
   end
 
   protected
+
+  def redirect_to_login
+    flash_notice 'log in required'
+    if request.xhr?
+      render json: { redirect: signin_url }
+    else
+      redirect_to signin_url
+    end
+  end
 
   def saved_search_params
     saved_search_params = {}

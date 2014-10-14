@@ -397,7 +397,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var saveSearch = function(params) {
 
-        var $deferred = $.post( '/gsr/saved_search', params);
+        var $deferred = $.post( '/gsr/ajax/saved_search', params);
 
         $deferred.done(function(response) {
             var error = response['error'];

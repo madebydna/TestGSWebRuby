@@ -34,10 +34,17 @@ class AccountManagementController < ApplicationController
       @school_to_favorite_school
     end
     account_meta_tags
+    set_saved_searches_instance_variables
   end
 
   def account_meta_tags
     set_meta_tags :title => "My account | GreatSchools",
                 :robots => "noindex"
+  end
+
+  protected
+
+  def set_saved_searches_instance_variables
+    @saved_searches = current_user.saved_searches.all #Is using all ok here? maybe we should impose limit
   end
 end

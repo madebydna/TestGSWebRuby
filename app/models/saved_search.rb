@@ -9,6 +9,6 @@ class SavedSearch < ActiveRecord::Base
   validates_presence_of :name, :member_id, :search_string, :num_results
   validates_numericality_of :member_id, :num_results
 
-  scope :num_of_prev_searches_named, ->(name) { where("name REGEXP ?" , "^#{name}$|^#{name}[(][0-9]+[)]$").count }
+  scope :searches_named, ->(name) { where("name REGEXP ?" , "^#{name}$|^#{name}[(][0-9]+[)]$") }
 
 end

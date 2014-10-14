@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SavedSearchConcerns do
+describe SavedSearchesConcerns do
   let(:controller) { FakeController.new }
   let(:user) {FactoryGirl.create(:user)}
   let(:saved_search_params) do
@@ -17,7 +17,7 @@ describe SavedSearchConcerns do
 
   before(:all) do
     class FakeController
-      include SavedSearchConcerns
+      include SavedSearchesConcerns
     end
   end
   before(:each) { allow(controller).to receive(:current_user).and_return(user)}

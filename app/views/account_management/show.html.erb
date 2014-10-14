@@ -4,7 +4,11 @@
 <%= render partial: 'shared/account_management/change_password_form' %>
 <%= render partial: 'shared/account_management/email_settings' %>
 <%= render partial: 'shared/account_management/osp_module' %>
+
+<% if @saved_searches.present? %>
 <%= render partial: 'search/saved_search' %>
+<% end %>
+
 <%= render partial: 'shared/account_management/school_list' %>
 
 <%= render partial: 'nav/short_footer' %>

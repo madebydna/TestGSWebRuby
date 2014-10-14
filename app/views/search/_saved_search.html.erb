@@ -1,5 +1,15 @@
-<div class="row limit-width-1200 mvl dn">
-    <div class="col-xs-12">
-        I am saved search - don' mess wit' me.
+<div class="row limit-width-1200 mvl js-savedSearches">
+  <div class="col-xs-12 phm">
+    <h2>My saved searches</h2>
+  </div>
+  <% @saved_searches.each do |saved_search| %>
+  <div class="col-xs-12 col-md-6 js-savedSearch">
+    <div class="hbs mhm mvs oh">
+      <div class="pull-left"><%= link_to saved_search.name, JSON.parse(saved_search.options)['url'] %></div>
+      <div class="pull-right">
+        <a class='js-savedSearchDelete' href="#" data-id="<%= saved_search.id %>">delete</a>
+      </div>
     </div>
+  </div>
+  <% end %>
 </div>
