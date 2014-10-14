@@ -1,4 +1,8 @@
+# coding: utf-8
+
+
 class PyocPdf < Prawn::Document
+
 
   $rect_edge_rounding = 10
   $blue_line = 70, 15, 0, 0
@@ -23,6 +27,8 @@ class PyocPdf < Prawn::Document
   $image_path_sports = "app/assets/images/pyoc/sports.png"
   $image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   $no_program_data = "?"
+
+  # $spanish = true
 
   def initialize(schools_decorated_with_cache_results)
 
@@ -142,7 +148,8 @@ class PyocPdf < Prawn::Document
       move_down 15
 
       draw_overall_gs_rating(school_cache)
-      draw_other_gs_ratings_table(school_cache)
+      draw_other_gs_ratings_table(school_cache, spanish = false)
+      # draw_other_gs_ratings_table(school_cache)
 
       move_down_medium
 
@@ -155,25 +162,38 @@ class PyocPdf < Prawn::Document
 
       other_state_ratings(school_cache)
 
-      bounding_box([1, 100], :width => 0, :height => 0) do
+      move_down 15
+      draw_address(school)
+
+      map_icon = draw_map_icon(school)
+      if map_icon != 'N/A'
+        bounding_box([1, 70], :width => 0, :height => 0) do
+          move_down 15
+
+          image map_icon, :at => [15, cursor], :scale => 0.2
+        end
+
         move_down 15
 
-        draw_map_icon(school)
+        draw_school_hours(school_cache, 60)
 
+
+        move_down_small
+        draw_best_known_for(school_cache, 60)
+
+      else
+        move_down_small
+        draw_school_hours(school_cache, 15)
+
+        move_down_small
+        draw_best_known_for(school_cache, 15)
       end
-
-      move_down_medium
-      draw_address(school, school_cache)
-
-      move_down_small
-      draw_best_known_for(school_cache)
 
     end
   end
 
   def draw_name_grade_type_and_district(school, school_cache)
     text_box school.name,
-             #
              :at => [5, cursor],
              :width => $col_width - 5,
              :height => 40,
@@ -212,18 +232,33 @@ class PyocPdf < Prawn::Document
     end
   end
 
-  def draw_other_gs_ratings_table(school_cache)
-    data = [
-        ['Test score rating', school_cache.test_scores_rating],
-        ['Student growth rating', school_cache.student_growth_rating],
-        ['College readiness', school_cache.college_readiness_rating],
-    ]
+  def draw_other_gs_ratings_table(school_cache, spanish)
+    data = get_gs_rating_info(school_cache, spanish)
     table(data, :column_widths => [80, 10],
           :position => 55,
           :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => $black}) do
       cells.borders = []
       columns(1).font_style = :bold
+      column(1).align = :right
     end
+  end
+
+  def get_gs_rating_info(school_cache, spanish)
+    if spanish
+      data = [
+          ['Puntuación de examenes', school_cache.test_scores_rating],
+          ['Crecimiento', school_cache.student_growth_rating],
+          ['Preparacion universitaria', school_cache.college_readiness_rating],
+      ]
+
+    else
+      data = [
+          ['Test score rating', school_cache.test_scores_rating],
+          ['Student growth rating', school_cache.student_growth_rating],
+          ['College readiness', school_cache.college_readiness_rating],
+      ]
+    end
+    data
   end
 
   def other_state_rating_abbreviation(rating_name)
@@ -263,31 +298,46 @@ class PyocPdf < Prawn::Document
 
   def draw_map_icon(school)
     if school.which_icon.present? && school.which_icon != 'N/A'
-      image school.which_icon, :at => [15, cursor], :scale => 0.2
+      map_icon = school.which_icon
+    else
+      map_icon = 'N/A'
     end
   end
 
-  def draw_address(school, school_cache)
+  def draw_address(school)
     data =[[school.street],
            ["#{school.city}, #{school.state} #{school.zipcode}"],
            ["Phone: #{school.phone}"],
-           [' '],
-           ['School Hours:'],
-           [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a']
     ]
+
+
     table(data,
-          :position => 60,
+          :position => 15,
+          :cell_style => {size: 7, :padding => [0, 0, 1, 0], :text_color => $black}) do
+      cells.borders = []
+    end
+
+  end
+
+  def draw_school_hours(school_cache, x_position)
+    data = [
+        ['School Hours:'],
+        [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a']
+    ]
+
+    table(data,
+          :position => x_position,
           :cell_style => {size: 7, :padding => [0, 0, 1, 0], :text_color => $black}) do
       cells.borders = []
     end
   end
 
-  def draw_best_known_for(school_cache)
+  def draw_best_known_for(school_cache, x_position)
     fill_color 100, 20, 20, 20
     text_box "#{school_cache.best_known_for}",
-             :at => [5, cursor],
-             :width => $col_width - 5,
-             :height => 30,
+             :at => [x_position, cursor],
+             :width => 95,
+             :height => 50,
              :size => 7,
              :style => :italic
   end
@@ -507,4 +557,3 @@ class PyocPdf < Prawn::Document
 
 
 end
-
