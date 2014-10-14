@@ -23,7 +23,7 @@
       <h2 class="phm">Get started finding schools in...</h2>
   </div>
   <% state.short_cities_list.first[0..3].each_with_index do |city, index| %>
-    <%= div_tag sizes: { xs: 6, sm: 3, md: 3, lg: 3 } do %>
+    <%= div_tag sizes: { xs: 12, sm: 6, md: 3, lg: 3 } do %>
       <div class="state_bg_<%= index+1 %>"><div class="pam"><%= link_to(city.name.upcase, city_path(city_params(@state[:long], city.name)), class: 'text_fff font-size-block') %></div></div>
     <% end %>
   <% end %>
