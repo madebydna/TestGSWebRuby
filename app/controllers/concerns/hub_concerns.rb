@@ -1,102 +1,83 @@
 module HubConcerns 
-
   extend ActiveSupport::Concern
-  
+
+  protected
+
+  def set_hub(school = @school)
+    return @hub if @hub
+    if @by_location || @by_name # pull from search results if on search
+      first_school_result_is_in_hub? # memoizes hub into @hub
+    elsif school # pull from school directly if on a school page
+      hub_matching_school(school)
+    end
+    hub_matching_current_url unless @hub # fall back on URL if above fail
+    #recently_visited_hub unless @hub # fall back on cookies if above fail
+    reset_hub_cookies(@hub) if @hub
+    @hub
+  end
+
+  def has_guided_search?
+    set_hub
+    @hub ? @hub.hasGuidedSearch : false
+  end
+
+  def hub_configs(collection_id)
+    unless collection_id
+      set_hub
+      collection_id = @hub.collection_id
+    end
+    return nil unless collection_id
+    configs_cache_key = "collection_configs-id:#{collection_id}"
+    Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time,
+        race_condition_ttl: CollectionConfig.hub_config_cache_time) do
+      CollectionConfig.where(collection_id: collection_id).to_a
+    end
+  end
+
+  def hub_show_ads?
+    set_hub
+    @hub ? CollectionConfig.show_ads(hub_configs(@hub.collection_id)) : false
+  end
+
   private
-
-  def set_up_localized_search_hub_params
-    if local_search?
-      set_hub(@first_school)
-    end
-  end
-
-  def local_search?
-    if search_by_location? || search_by_name?
-      first_school_result_is_in_hub?
-    else
-      hub_city_state? || hub_state?
-    end
-  end
 
   def first_school_result_is_in_hub?
     if @schools.present?
-      @first_school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
-      is_hub_school?(@first_school)
-    end
-  end
-
-  def is_hub_school?(school=@school)
-    school && !school.try(:collection).nil?
-  end
-
-  def hub_city_state?
-    @city && @state && HubCityMapping.where(active: 1, city: @city.name, state: @state[:short]).present?
-  end
-
-  def hub_state?
-    @state && HubCityMapping.where(active: 1, city: nil, state: @state[:short]).present?
-  end
-
-  #priorities preference set by city over state hub
-  def has_guided_search?
-    return @hub.hasGuidedSearch if @hub
-    if @state
-      city_hub = @city ? HubCityMapping.where(city: @city.name, state: @state[:short]).first : nil
-      return city_hub.hasGuidedSearch if city_hub.present?
-      return HubCityMapping.where(hasGuidedSearch: true, city: nil, state: @state[:short]).present?
-    else
-      false
-    end
-  end
-
-  def set_hub(school = @school)
-    @hub = determine_hub(school)
-  end
-
-  def determine_hub(school = @school)
-    current_hub =   hub_matching_school(school) ||hub_matching_current_url
-    if current_hub.present?
-      reset_hub_cookies(current_hub)
-      return current_hub
-    else
-      return recently_visited_hub
+      first_school = School.on_db(@schools.first.database_state.first).find(@schools.first.id)
+      @hub = hub_matching_school(first_school)
+      @hub.present?
     end
   end
 
   def hub_matching_current_url
-    if defined?(@hub_matching_current_url)
-      @hub_matching_current_url
-    else
-      @hub_matching_current_url = (
-        HubCityMapping.for_city_and_state(city_param, @state[:short]) if @state
-      )
-    end
+    @hub ||= (
+      if @state
+        city_name = if @city
+                      @city.respond_to?(:name) ? @city.name : @city
+                    else
+                      nil
+                    end
+        HubCityMapping.for_city_and_state city_name, @state[:short]
+      end
+    )
   end
 
   def hub_matching_school(school)
-    if defined?(@hub_matching_school)
-      @hub_matching_school
-    else
-      @hub_matching_school ||= (
-        if school && school.collection
-          school.collection.hub_city_mapping
-        end
-      )
-    end
+    @hub ||= (
+      if school && school.collection
+        school.collection.hub_city_mapping
+      end
+    )
   end
 
   def recently_visited_hub
-    if defined?(@recently_visited_hub)
-      @recently_visited_hub
-    else
-      @recently_visited_hub ||= (
-        hub_city = read_cookie_value(:hubCity)
-        hub_state = read_cookie_value(:hubState)
-        if hub_city && hub_state
-          HubCityMapping.for_city_and_state(hub_city, hub_state)
-        end
-      )
-    end
+    @hub ||= (
+      hub_city_cookie = read_cookie_value(:hubCity)
+      hub_state_cookie = read_cookie_value(:hubState)
+      if hub_state_cookie # state is required, city is optional
+        HubCityMapping.for_city_and_state(hub_city_cookie, hub_state_cookie)
+      end
+    )
   end
 
   def reset_hub_cookies(hub_city_mapping)
@@ -115,18 +96,5 @@ module HubConcerns
         write_cookie(tuple[0], tuple[1]) if tuple[1]
       end
     end
-  end
-
-  def hub_configs(collection_id)
-    configs_cache_key = "collection_configs-id:#{collection_id}"
-    Rails.cache.fetch(configs_cache_key,
-                      expires_in: CollectionConfig.hub_config_cache_time,
-                      race_condition_ttl: CollectionConfig.hub_config_cache_time) do
-      CollectionConfig.where(collection_id: collection_id).to_a
-    end
-  end
-
-  def hub_show_ads?
-    @hub ? CollectionConfig.show_ads(hub_configs(@hub.collection_id)) : false
   end
 end

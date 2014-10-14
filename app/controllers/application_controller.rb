@@ -237,6 +237,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # TODO: Marked for deletion. Please use HubConcerns instead
   def configs
     configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
     Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do

@@ -165,7 +165,7 @@ class SearchController < ApplicationController
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
-    set_up_localized_search_hub_params
+    set_hub # must come after @schools is defined in process_results
     @show_guided_search = has_guided_search?
     @show_ads = hub_show_ads?
 

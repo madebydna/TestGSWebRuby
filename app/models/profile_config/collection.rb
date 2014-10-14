@@ -43,6 +43,7 @@ class Collection
   end
 
   def self.find(id)
+    return nil if id.nil?
     hub_city_mapping = HubCityMapping.for_collection_id(id)
     if hub_city_mapping
       Collection.from_hub_city_mapping hub_city_mapping
