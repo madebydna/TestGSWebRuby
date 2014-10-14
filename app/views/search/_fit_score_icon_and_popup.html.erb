@@ -27,9 +27,9 @@
           <% elsif fit_score_breakdown[:match_status] == :no %>
               <span class="vam iconx16 mrs js-icon i-16-plain-x"></span>
           <% elsif fit_score_breakdown[:match_status] == :no_data %>
-              <span class="vam iconx16 mrs js-icon i-16-plain-x"></span>
+              <span class="vam iconx16 mrs js-icon i-16-question-mark"></span>
           <% else %>
-              <span class="vam mrs">N/A</span>
+              <span class="vam iconx16 mrs js-icon i-16-not-applicable"></span>
           <% end %>
           <%=fit_score_breakdown[:filter]%>
         </div>

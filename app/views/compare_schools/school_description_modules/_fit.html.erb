@@ -23,7 +23,7 @@
                 <% elsif breakdown[:match_status] == :no_data %>
                     <%= render 'shared/no_data_symbol_and_popup' %>
                 <% else %>
-                    <i>N/A</i>
+                    <i class="iconx16 i-16-not-applicable"></i>
                 <% end %>
               </td>
               <td class="tal <%= breakdown[:match_status] != :yes ? 'gray-dark' : '' %>">
