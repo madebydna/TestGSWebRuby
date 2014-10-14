@@ -18,6 +18,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var noDataSymbol = '.js-compareNoDataSymbol';
     var noDataPopupHtmlClass = '.js-compareNoDataPopup';
     var noDataWrapper = 'js-compareNoDataWrapper';
+    var isHistoryAPIAvailable = (typeof(window.History) !== 'undefined' && typeof(window.history.pushState) !== 'undefined');
 
     var adjustHeights = function (className) {
         var maxHeight = 0;
@@ -191,8 +192,15 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         var currentQuery = GS.uri.Uri.getQueryData();
         var currentSchoolIds = currentQuery['school_ids'];
         currentSchoolIds = currentSchoolIds.replace(schoolId,'').replace(/^,|,$/,'').replace(',,',',');
-        var newUri = '/compare?school_ids=' + currentSchoolIds + '&state=' + currentQuery.state;
-        History.pushState(null, gon.pageTitle, newUri);
+        currentQuery['school_ids'] = currentSchoolIds;
+        var newQuery = GS.uri.Uri.getQueryStringFromObject(currentQuery);
+        if (isHistoryAPIAvailable) {
+            History.replaceState(null, gon.pageTitle, newQuery);
+        }
+        else {
+            var path = GS.uri.Uri.getPath();
+            GS.uri.Uri.goToPage(path + newQuery);
+        }
     };
 
     var removeSchool = function() {
