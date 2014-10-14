@@ -45,6 +45,6 @@ class AccountManagementController < ApplicationController
   protected
 
   def set_saved_searches_instance_variables
-    @saved_searches = current_user.saved_searches.all #Is using all ok here? maybe we should impose limit
+    @saved_searches = current_user.saved_searches.limit(50).all 
   end
 end
