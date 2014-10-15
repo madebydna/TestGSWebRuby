@@ -9,6 +9,7 @@ class SearchController < ApplicationController
 
   #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
+  before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
 
   layout 'application'
