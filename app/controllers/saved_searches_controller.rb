@@ -16,8 +16,12 @@ class SavedSearchesController < ApplicationController
       begin
         current_user.saved_searches.destroy(params[:id])
         render json: { }
-      rescue
-        render json: { error: 'We are sorry but something went wrong. Please Try again Later' }
+      rescue => e
+        if e.is_a?(ActiveRecord::RecordNotFound)
+          render json: { }
+        else
+          render json: { error: 'We are sorry but something went wrong. Please Try again Later' }
+        end
       end
     else
       redirect_to_login

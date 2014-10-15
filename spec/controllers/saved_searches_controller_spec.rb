@@ -189,5 +189,13 @@ describe SavedSearchesController do
 
       controller.send(:destroy)
     end
+    it 'should render an empty json hash if there is no record to delete' do
+      allow(controller).to receive(:logged_in?).and_return(true)
+      allow(controller).to receive(:params).and_return({id: 2})
+      controller.send(:create_saved_search, saved_search_params.deep_dup)
+
+      expect(controller).to receive(:render).with( { json: hash_not_including( { error: anything } ) } )
+      controller.send(:destroy)
+    end
   end
 end
