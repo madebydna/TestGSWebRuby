@@ -4,12 +4,11 @@ class FilterBuilder
 
   def initialize(state = '')
     @callbacks = build_callbacks(get_callbacks_from_db(state))
-    @filters = build_filter_tree(get_filters)[0]
+    @filters = build_filter_tree({filter: get_filters})[0]
     @filter_display_map = @filters.build_map
   end
 
   def build_filter_tree(filters)
-    filters = {filter: filters} unless filters[:filters].nil?
     filters.map do |key, filter|
       build_filter(run_db_callbacks(filter))
     end.compact
@@ -21,30 +20,29 @@ class FilterBuilder
   end
 
   def run_db_callbacks(filter)
-    @callbacks.each_with_index do |callback, i|
-      callback_value = callback.call(filter)
-      (@callbacks.delete_at(i) and return callback_value) if callback_value
+    begin
+      @callbacks.each_with_index do |callback, i|
+        callback_value = callback.call(filter)
+        (@callbacks.delete_at(i) and return callback_value) if callback_value
+      end
+    rescue e
+      puts e
+      puts 'Additional custom filters not applied'
+      puts 'Callbacks removed'
+      @callbacks = []
+    else
+      filter
     end
-    filter
   end
 
   def build_callbacks(db_callbacks)
     db_callbacks.map do |callback|
-      keys = callback[:key].split(',')
-      matches = callback[:match].split(',')
-      type = callback[:callback_type]
-      conditions = []
-
-      keys.each_with_index do |key, i|
-        conditions << {key: key, match: matches[i]}
-      end
-
-      send("build_#{type}_callback".to_sym, conditions, callback[:new_filter])
-    end
+      try("build_#{callback[:callback_type]}_callback".to_sym, callback[:conditions], callback[:options])
+    end.compact
   end
 
   def get_callbacks_from_db(state)
-    if state.casecmp('in').zero?
+    if state.downcase == 'in'
       indiana_db_callbacks
     else
       []
@@ -62,7 +60,7 @@ class FilterBuilder
 
   def indiana_db_callbacks
     [
-      {key: 'name,display_type', match:'group3,filter_column_secondary', callback_type: 'add', new_filter:
+      {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'add', options:
         {
           enrollment: {
             label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
