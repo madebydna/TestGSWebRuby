@@ -19,6 +19,14 @@ $(function() {
 
   GS.util.BackToTop.init();
 
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=178930405559082";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
   $('.js-send-me-updates-button-header').on('click', function () {
