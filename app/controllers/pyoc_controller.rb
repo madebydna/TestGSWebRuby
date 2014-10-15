@@ -43,27 +43,10 @@ class PyocController <  ApplicationController
       respond_to do |format|
       format.html
       format.pdf do
-        if params[:is_k8].present?
-          pdf = PyocPdf.new(@schools_decorated_with_cache_results,true,false)
-          send_data pdf.render, filename: 'hello',
-                    type: 'application/pdf',
-                    disposition: 'inline' #loads pdf directly in browser window
-        elsif params[:is_high_school].present?
-
-          pdf = PyocPdf.new(@schools_decorated_with_cache_results,false,true)
-          send_data pdf.render, filename: 'hello',
-                    type: 'application/pdf',
-                    disposition: 'inline' #loads pdf directly in browser window
-
-        else
-          pdf = PyocPdf.new(@schools_decorated_with_cache_results,false,false)
-          send_data pdf.render, filename: 'hello',
-                    type: 'application/pdf',
-                    disposition: 'inline' #loads pdf directly in browser window
-
-        end
-
-
+        pdf = PyocPdf.new(@schools_decorated_with_cache_results,params[:is_k8].present?,params[:is_high_school].present?)
+        send_data pdf.render, filename:Time.now.strftime("%m%d%Y")+'_pyoc',
+                  type: 'application/pdf',
+                  disposition: 'inline' #loads pdf directly in browser window
       end
       end
 
