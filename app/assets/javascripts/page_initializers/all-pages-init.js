@@ -29,10 +29,15 @@ $(function() {
   $.ajaxSetup({ cache: true });
   $.getScript('//connect.facebook.net/en_US/all.js', function(){
     FB.init({
-      appId: '178930405559082'
+      appId: '178930405559082',
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
     });
-
+    GS.facebook.init();
   });
+
+
 
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
