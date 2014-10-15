@@ -167,9 +167,9 @@ module FitScoreConcerns
 
   def sort_order_lookup(match_status)
     return 1 if match_status == :yes
-    return 2 if match_status == :not_applicable
-    return 3 if match_status == :no
-    return 4 if match_status == :no_data
+    return 2 if match_status == :no
+    return 3 if match_status == :no_data
+    return 4 if match_status == :not_applicable
     5
   end
 
