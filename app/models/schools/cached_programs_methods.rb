@@ -28,17 +28,15 @@ module CachedProgramsMethods
   end
 
   def before_after_care(before_after)
-    if programs['before_after_care']
-      if programs['before_after_care'].keys.include?(before_after)
-        'Yes'
-      elsif programs['before_after_care'].keys.include?('neither')
-        'No'
-      else
-        NO_DATA_SYMBOL
+    before_after_care = programs['before_after_care']
+    if before_after_care
+      if before_after_care.key?(before_after)
+        return 'Yes'
+      elsif before_after_care.key?('neither')
+        return 'No'
       end
-    else
-      NO_DATA_SYMBOL
     end
+    NO_DATA_SYMBOL
   end
 
   def sports
@@ -57,13 +55,13 @@ module CachedProgramsMethods
     num_programs('arts_music','arts_media','arts_performing_written','arts_visual')
   end
 
-  def num_programs(*program_keys)
+  def num_programs(*program_names)
     count = 0
     show_numeric = false
-    program_keys.each do |program|
-      if programs.key? program
-        keys = programs[program].keys - ['none'] - ['None']
-        count += keys.size
+    program_names.each do |name|
+      if programs.key? name
+        values = programs[name].keys - ['none'] - ['None']
+        count += values.size
         show_numeric = true
       end
     end

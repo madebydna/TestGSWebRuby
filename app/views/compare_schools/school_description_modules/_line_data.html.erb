@@ -13,7 +13,7 @@
                      else
                        method_caller.send(datapoint_config[:method])
                      end %>
-          <% value = value == CachedCharacteristicsMethods::NO_DATA_SYMBOL ? render('shared/no_data_symbol_and_popup') : value %>
+          <% value = render('shared/no_data_symbol_and_popup') if value == CachedCharacteristicsMethods::NO_DATA_SYMBOL %>
 
           <td class="tac open-sans_sb" style="width: 40px"><%= value %></td>
         </tr>
