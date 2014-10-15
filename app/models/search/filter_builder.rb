@@ -26,10 +26,8 @@ class FilterBuilder
         (@callbacks.delete_at(i) and return callback_value) if callback_value
       end
     rescue e
-      puts e
-      puts 'Additional custom filters not applied'
-      puts 'Callbacks removed'
-      @callbacks = []
+      Rails.logger.warn "Error: #{e}. Additional Custom Filter Not applied"
+      @callbacks = [] #delete callbacks
     else
       filter
     end
