@@ -359,12 +359,24 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var $popup = $('.js-savedSearchPopup');
             $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
         });
+
+        $('html').on(GS.util.clickOrTouchType, function () {
+            $('.js-savedSearchPopup').hide();
+        });
+        GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopup'));
+        GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopupButton'));
     };
 
     var setSavedSearchSubmitHandler = function() {
         $('.js-savedSearchSubmitButton').on('click', function() {
             attemptSaveSearch();
         })
+    };
+
+    var setSavedSearchClosePopupHandler = function() {
+        $(".js-savedSearchClosePopup").on('click', function() {
+            $('.js-savedSearchPopup').hide();
+        });
     };
 
     var savedSearchParams = function() {
@@ -454,6 +466,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         setShowFiltersHandler();
         setSavedSearchSubmitHandler();
         setSavedSearchOpenPopupHandler();
+        setSavedSearchClosePopupHandler();
         disableSavedSearchOnLoad();
     };
 
