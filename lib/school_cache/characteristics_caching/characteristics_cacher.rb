@@ -44,6 +44,10 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
   end
 
   def config_entry_test(characteristic)
+    # The point of this method is to check if a value is configured
+    # We accept all data types that have no configuration (default is to show)
+    # We reject datasets that have a configured data type, but aren't configured
+    # For instance, the grade or breakdown_id are wrong
     if configured_characteristics_data_types.key?(characteristic.data_type_id) &&
         characteristic.breakdown_id &&
         !characteristic.data_set_with_values.has_config_entry?
