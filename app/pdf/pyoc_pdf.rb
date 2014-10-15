@@ -10,8 +10,6 @@ class PyocPdf < Prawn::Document
   Black = 0, 0, 0, 100
   School_profile_blue = 5, 1, 0, 0
   Col_width = 160
-  Start_page_number = 5
-  @position_on_page = 0
 
   Image_path_school_size= "app/assets/images/pyoc/school_size_pyoc.png"
   Image_path_transportation= "app/assets/images/pyoc/transportation_pyoc.png"
@@ -26,36 +24,35 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch)
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,get_page_number_start)
 
-    beginning = Time.now
+    start_time = Time.now
     super()
 
 # todo make Col_width and col_height relational to gutter
 
     define_grid(:columns => 6, :rows => 9, :gutter => 20)
 
-    @position_on_page = 0
+    position_on_page = 0
 
     schools_decorated_with_cache_results.each_with_index  do |school, index|
 
       if index % 3 == 0 and index != 0
         start_new_page(:size => "LETTER")
-        @position_on_page = 0
+        position_on_page = 0
       end
 
       if index % 3 != 0
-        @position_on_page += 3
+        position_on_page += 3
       end
 
-      # todo delete this when done
-      puts school.id
+      Rails.logger.info "#{self.class} - Generating PYOC PDF for #{school.id}"
 
       draw_header(is_k8_batch,is_high_school_batch)
 
       school_cache = school.school_cache
 
-      grid([@position_on_page, 0], [@position_on_page+2, 5]).bounding_box do
+      grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
         move_down 18
         draw_first_column(school, school_cache)
         draw_second_column(school_cache)
@@ -65,9 +62,12 @@ class PyocPdf < Prawn::Document
         draw_grey_line(index)
       end
 
-      draw_footer
+      draw_footer(get_page_number_start)
     end
-    puts "Time elapsed #{Time.now - beginning} seconds for PYOC generator"
+    end_time =Time.now - start_time
+
+    Rails.logger.info  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
+
   end
 
   def move_down_small
@@ -107,9 +107,9 @@ class PyocPdf < Prawn::Document
 
   end
 
-  def draw_footer
+  def draw_footer(get_page_number_start)
     image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
-    number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => Start_page_number}
+    number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => get_page_number_start}
     text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
              :at => [300, -15],
              :width => 200,

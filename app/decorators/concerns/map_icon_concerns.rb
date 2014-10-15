@@ -38,6 +38,6 @@ module MapIconConcerns
   }
 
   def which_icon
-    Zipcode_to_icon_mapping[zipcode].present? ? map_icon = Zipcode_to_icon_mapping[zipcode] : map_icon ='N/A'
+    Zipcode_to_icon_mapping[zipcode].present? ?  Zipcode_to_icon_mapping[zipcode] :'N/A'
   end
 end

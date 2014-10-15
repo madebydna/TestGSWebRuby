@@ -43,7 +43,7 @@ class PyocController <  ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = PyocPdf.new(@schools_decorated_with_cache_results,params[:is_k8].present?,params[:is_high_school].present?)
+        pdf = PyocPdf.new(@schools_decorated_with_cache_results,params[:is_k8].present?,params[:is_high_school].present?,get_page_number_start)
         send_data pdf.render, filename:Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
                   disposition: 'inline' #loads pdf directly in browser window
@@ -73,6 +73,14 @@ class PyocController <  ApplicationController
       true
     else
       false
+    end
+  end
+
+  def get_page_number_start
+    if params[:page_number_start].present?
+      params[:page_number_start].to_i
+    else
+      1
     end
   end
 end
