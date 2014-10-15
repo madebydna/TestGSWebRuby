@@ -95,6 +95,9 @@ gem 'savon', '~> 2.6.0'
 # Required by savon gem
 gem 'rubyntlm', '~> 0.4.0'
 
+gem 'prawn'
+gem 'prawn-table', '~> 0.1.2'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
@@ -173,6 +176,8 @@ group :development, :test do
   gem 'yard'
 
   gem 'launchy'
+
+  gem 'pdf-reader'
 end
 
 # gem 'sass-rails',   '~> 3.2.3'
@@ -200,5 +205,4 @@ group :profile do
   gem 'ruby-prof'
 end
 
-gem 'prawn'
-gem 'prawn-table', '~> 0.1.2'
+

@@ -21,6 +21,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (4.1.1)
       actionpack (= 4.1.1)
       actionview (= 4.1.1)
@@ -48,6 +49,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.6)
+    afm (0.2.2)
     akami (1.2.2)
       gyoku (>= 0.4.0)
       nokogiri
@@ -180,6 +182,7 @@ GEM
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
     has_scope (0.5.1)
+    hashery (2.1.1)
     hashie (2.1.1)
     hike (1.2.3)
     http-cookie (1.0.2)
@@ -257,6 +260,12 @@ GEM
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     pdf-core (0.2.5)
+    pdf-reader (1.3.3)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.0)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     polyglot (0.3.5)
     powerpack (0.0.9)
     prawn (1.2.1)
@@ -365,6 +374,7 @@ GEM
     ruby-hmac (0.4.0)
     ruby-prof (0.15.1)
     ruby-progressbar (1.5.1)
+    ruby-rc4 (0.1.5)
     ruby_gntp (0.3.4)
     rubyntlm (0.4.0)
     rubyzip (1.1.3)
@@ -505,6 +515,7 @@ DEPENDENCIES
   mysql2 (= 0.3.13)
   nokogiri (= 1.6.1)
   paper_trail
+  pdf-reader
   prawn
   prawn-table (~> 0.1.2)
   protected_attributes
