@@ -30,7 +30,7 @@ class PyocPdf < Prawn::Document
 
   # $spanish = true
 
-  def initialize(schools_decorated_with_cache_results)
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch)
 
     beginning = Time.now
     super()
@@ -55,7 +55,7 @@ class PyocPdf < Prawn::Document
       # todo delete this when done
       puts school.id
 
-      draw_header(school)
+      draw_header(is_k8_batch,is_high_school_batch)
 
       school_cache = school.school_cache
 
@@ -84,8 +84,8 @@ class PyocPdf < Prawn::Document
     move_down 10
   end
   
-  def draw_header(school)
-    if school.is_high_school
+  def draw_header(is_k8_batch,is_high_school_batch)
+    if is_high_school_batch
       fill_color $blue_line
       text_box "GRADES 9-12",
                :at => [250, 735],
@@ -97,7 +97,7 @@ class PyocPdf < Prawn::Document
         stroke_color $blue_line
         horizontal_line 0, 535, :at => 725
       end
-    elsif school.is_k8
+    elsif is_k8_batch
       fill_color $grey
       text_box "GRADES PK-8",
                :at => [250, 735],
