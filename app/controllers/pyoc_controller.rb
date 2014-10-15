@@ -4,15 +4,15 @@ class PyocController <  ApplicationController
 
   def print_pdf
     if state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
-    @db_schools = School.for_states_and_ids([state_param,state_param, state_param], [params[:id1],params[:id2], params[:id3]])
+      @db_schools = School.for_states_and_ids([state_param,state_param, state_param], [params[:id1],params[:id2], params[:id3]])
     elsif state_param.present? && params[:collection_id].present? && params[:is_high_school].present?
-    @db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
-    @db_schools = []
-    @db_schools_full.each do |school|
-      if school.collection.present? && school.collection.id == params[:collection_id].to_i  && is_high_school(school)
-        @db_schools.push(school)
+      @db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
+      @db_schools = []
+      @db_schools_full.each do |school|
+        if school.collection.present? && school.collection.id == params[:collection_id].to_i  && is_high_school(school)
+          @db_schools.push(school)
+        end
       end
-    end
     elsif state_param.present? && params[:collection_id].present? && params[:is_k8].present?
       @db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
       @db_schools = []
@@ -40,7 +40,7 @@ class PyocController <  ApplicationController
       PyocDecorator.decorate(school)
     end
 
-      respond_to do |format|
+    respond_to do |format|
       format.html
       format.pdf do
         pdf = PyocPdf.new(@schools_decorated_with_cache_results,params[:is_k8].present?,params[:is_high_school].present?)
@@ -48,8 +48,7 @@ class PyocController <  ApplicationController
                   type: 'application/pdf',
                   disposition: 'inline' #loads pdf directly in browser window
       end
-      end
-
+    end
 
 
     # render 'pyoc/print_pdf'
