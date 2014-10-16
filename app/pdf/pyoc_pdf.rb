@@ -8,7 +8,8 @@ class PyocPdf < Prawn::Document
   White = 0, 0, 0, 0
   Grey = 0, 0, 0, 6
   Black = 0, 0, 0, 100
-  School_profile_blue = 5, 1, 0, 0
+  Dark_blue = 100, 20, 20, 20
+  Light_blue= 5, 1, 0, 0
   Col_width = 160
 
   Image_path_school_size= "app/assets/images/pyoc/school_size_pyoc.png"
@@ -25,7 +26,6 @@ class PyocPdf < Prawn::Document
   No_program_data = "?"
 
   def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,get_page_number_start)
-
     start_time = Time.now
     super()
 
@@ -54,7 +54,7 @@ class PyocPdf < Prawn::Document
 
       grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
         move_down 18
-        draw_first_column(school, school_cache)
+        draw_first_column(school, school_cache, is_k8_batch)
         draw_second_column(school_cache)
         draw_third_column(school_cache)
 
@@ -65,9 +65,7 @@ class PyocPdf < Prawn::Document
       draw_footer(get_page_number_start)
     end
     end_time =Time.now - start_time
-
     Rails.logger.info  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
-
   end
 
   def move_down_small
@@ -78,6 +76,10 @@ class PyocPdf < Prawn::Document
     move_down 10
   end
 
+  def move_down_15
+    move_down 15
+  end
+
   def draw_header(is_k8_batch,is_high_school_batch)
     if is_high_school_batch
       fill_color Blue_line
@@ -86,7 +88,6 @@ class PyocPdf < Prawn::Document
                :width => Col_width,
                :height => 20,
                :size => 9
-      # :style => :bold
       stroke do
         stroke_color Blue_line
         horizontal_line 0, 535, :at => 725
@@ -98,7 +99,6 @@ class PyocPdf < Prawn::Document
                :width => Col_width,
                :height => 20,
                :size => 9
-      # :style => :bold
       stroke do
         stroke_color Grey
         horizontal_line 0, 535, :at => 725
@@ -129,17 +129,16 @@ class PyocPdf < Prawn::Document
 
 # first column
 
-  def draw_first_column(school, school_cache)
+  def draw_first_column(school, school_cache, is_k8_batch)
     grid([0, 0], [2, 1]).bounding_box do
-      # blue rectangle
-      fill_color School_profile_blue
+      fill_color is_k8_batch.present? ? Grey : Light_blue
       fill_rounded_rectangle([0, cursor], Col_width, 225, Rect_edge_rounding)
-      fill_color 100, 20, 20, 20
+      fill_color Dark_blue
       move_down_small
 
       draw_name_grade_type_and_district(school, school_cache)
 
-      move_down 15
+      move_down_15
 
       draw_overall_gs_rating(school_cache)
       draw_other_gs_ratings_table(school_cache, spanish = false)
@@ -155,18 +154,18 @@ class PyocPdf < Prawn::Document
 
       other_state_ratings(school_cache)
 
-      move_down 15
+      move_down_15
       draw_address(school)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
         bounding_box([1, 70], :width => 0, :height => 0) do
-          move_down 15
+          move_down_15
 
           image map_icon, :at => [15, cursor], :scale => 0.2
         end
 
-        move_down 15
+        move_down_15
 
         draw_school_hours(school_cache, 60)
 
