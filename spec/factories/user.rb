@@ -41,6 +41,18 @@ FactoryGirl.define do
       end
     end
 
+    #usage let!(:user) {FactoryGirl.create(:verified_user,:with_role,:role_id=>8 )}
+    trait :with_subscriptions do
+      ignore do
+        list 'greatnews'
+        number_of_subscriptions 1
+      end
+
+      after(:create) do |user, evaluator|
+        FactoryGirl.create_list(:subscription,evaluator.number_of_subscriptions, list: evaluator.list,member_id:user.id)
+      end
+    end
+
   end
 
 end
