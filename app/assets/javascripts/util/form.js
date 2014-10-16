@@ -66,7 +66,7 @@ $(function() {
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
     if (gon.pagename === 'GS:GuidedSchoolSearch') {
-        FastClick.attach(document.body);
+//        FastClick.attach(document.body);
     }
 
     $('.js-gs-radio').on(clickOrTouchType,function(){

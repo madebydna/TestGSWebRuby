@@ -452,7 +452,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var setFastClickHandler = function() {
-        FastClick.attach(document.body);
+//        FastClick.attach(document.body);
     };
 
     var init = function() {
