@@ -1,7 +1,6 @@
 GS.compare = GS.compare || {};
 
 GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () {
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolsList;
     var popupHtmlClass = '.js-compareSchoolsPopup';
     var popupButtonHtmlClass = '.js-compareSchoolsPopupButton';
@@ -100,7 +99,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
 
     var setCompareSchoolsPopupHandler = function(offsetFunction) {
         var $poupButton = $(popupButtonHtmlClass);
-        $poupButton.on(clickOrTouchType, function() {
+        $poupButton.on('click', function() {
             if (schoolsList.numberOfSchoolsInList() > 0) {
                 var $popup = $(this).siblings(popupHtmlClass);
                 var $container = $(popupContainerHtmlClass);
@@ -113,7 +112,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
             }
         });
 
-        $('html').on(GS.util.clickOrTouchType, function () {
+        $('html').on('click', function () {
             $(popupHtmlClass).hide();
         });
         GS.popup.stopClickAndTouchstartEventPropogation($(popupHtmlClass));

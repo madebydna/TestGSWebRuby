@@ -8,8 +8,6 @@ GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler ||
 
 GS.search.results = GS.search.results || (function(state_abbr) {
 
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
-
     var searchFiltersFormSubmissionHandler = function() {
         var $button = $('.js-submitSearchFiltersForm');
         var $form = $('.js-searchFiltersFormParent').find('.js-searchFiltersForm');
@@ -80,7 +78,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var searchFiltersMenuHandler = function() {
-        $(".js-searchFiltersDropdown").on(clickOrTouchType, function() {
+        $(".js-searchFiltersDropdown").on('click', function() {
             var menu = $('.js-searchFiltersMenu');
             menu.css('display') == 'none' ? menu.show() : menu.hide();
             $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
@@ -102,7 +100,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var searchFilterMenuMobileHandler = function() {
-        $(".js-searchFiltersDropdownMobile").on(clickOrTouchType, function() {
+        $(".js-searchFiltersDropdownMobile").on('click', function() {
             $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
     };
@@ -125,7 +123,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
 
     var closeMenuHandler = function() {
-        $('html').on(clickOrTouchType, function () {
+        $('html').on('click', function () {
             $('.js-fitScorePopup').hide();
         });
     };
@@ -143,7 +141,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $fitScorePopup = $('.js-fitScorePopup');
         }
 
-        $searchResultDropdown.on(clickOrTouchType, function() {
+        $searchResultDropdown.on('click', function() {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 var offset = getFitScorePopupOffset.call(this, popup);
@@ -360,7 +358,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
         });
 
-        $('html').on(GS.util.clickOrTouchType, function () {
+        $('html').on('click', function () {
             $('.js-savedSearchPopup').hide();
         });
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopup'));
@@ -451,12 +449,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         }
     };
 
+    //needs to be before click handlers
     var setFastClickHandler = function() {
         FastClick.attach(document.body);
     };
 
     var init = function() {
-        setFastClickHandler(); //needs to be ahead of other handlers
+        setFastClickHandler(); //needs to be ahead of click handlers
         searchFiltersFormSubmissionHandler();
         searchFiltersFormSubmissionMobileHandler();
         toggleAdvancedFiltersMenuHandler();

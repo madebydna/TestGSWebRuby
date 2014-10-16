@@ -9,7 +9,6 @@ if (gon.pagename == "SearchResultsPage") {
         var elemListViewToggle = $('.js-search-list-view');
         var elemMapViewToggle = $('.js-search-map-view');
         var elemMapViewMobileToggle = $('.js-search-toggle-map-view');
-        var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
         var addActiveToggleStateFor = function (toggleType) {
             if (toggleType == 'list') {
@@ -68,7 +67,7 @@ if (gon.pagename == "SearchResultsPage") {
         };
 
 
-        elemListViewToggle.on(clickOrTouchType, hideMapView);
+        elemListViewToggle.on('click', hideMapView);
         elemListViewToggle.hover(
             function () {
                 addActiveToggleStateFor('list')
@@ -79,7 +78,7 @@ if (gon.pagename == "SearchResultsPage") {
                 }
             }
         );
-        elemMapViewToggle.on(clickOrTouchType, showMapView);
+        elemMapViewToggle.on('click', showMapView);
         elemMapViewToggle.hover(
             function () {
                 addActiveToggleStateFor('map')

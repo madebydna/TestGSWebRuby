@@ -11,7 +11,6 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var prevSchoolButton = '.js-compareSchoolsPrev';
     var nextSchoolButton = '.js-compareSchoolsNext';
     var numberOfSchools = $(comparedSchools).length || 1;
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolWidth = 300;
     var currentSchool = 0; //school that is currently on the left most slot of the carousel. max values are 0-3
     var carouselSpeed = 500;

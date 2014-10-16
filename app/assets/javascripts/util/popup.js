@@ -2,11 +2,10 @@ GS.popup = (function(_) {
     var defaultPopupWrapper   = '.js-popupWrapper';
     var defaultPopupActivator = '.js-popupActivator';
     var defaultPopupBody      = '.js-popupBody';
-    var clickOrTouchType      = GS.util.clickOrTouchType || 'click';
 
     var closeMenuHandler = function(popupClass) {
         popupClass = popupClass || defaultPopupWrapper;
-        $('html').on(GS.util.clickOrTouchType, function () {
+        $('html').on('click', function () {
             $(popupClass).addClass('dn');
         });
     };
@@ -26,7 +25,7 @@ GS.popup = (function(_) {
         popupActivator = popupActivator || defaultPopupActivator;
         popupBody = popupBody || defaultPopupBody;
 
-        $(popupActivator).on(clickOrTouchType, function() {
+        $(popupActivator).on('click', function() {
             var $popup = $(this).siblings(popupBody);
             if ($popup.hasClass('dn')) {
                 var cssOptions = cssOptionsFunction($popup);
