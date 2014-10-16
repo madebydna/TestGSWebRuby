@@ -451,7 +451,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         }
     };
 
+    var setFastClickHandler = function() {
+        FastClick.attach(document.body);
+    };
+
     var init = function() {
+        setFastClickHandler(); //needs to be ahead of other handlers
         searchFiltersFormSubmissionHandler();
         searchFiltersFormSubmissionMobileHandler();
         toggleAdvancedFiltersMenuHandler();

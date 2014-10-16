@@ -65,6 +65,10 @@ $(function() {
 
     var clickOrTouchType = GS.util.clickOrTouchType || 'click';
 
+    if (gon.pagename === 'GS:GuidedSchoolSearch') {
+        FastClick.attach(document.body);
+    }
+
     $('.js-gs-radio').on(clickOrTouchType,function(){
         var self = $(this);
         var hidden_field = self.parent().siblings(".js-gs-radio-value");
@@ -126,6 +130,7 @@ $(function() {
     });
 
     $('.js-gs-checkbox-search').on('click',function(){
+//    $('.js-searchFiltersForm').on('click', '.js-gs-checkbox-search',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");

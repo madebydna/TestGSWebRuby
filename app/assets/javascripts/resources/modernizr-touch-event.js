@@ -235,7 +235,8 @@ GS.util = GS.util || {};
 
 GS.util.clickOrTouchType = function() {
     if (Modernizr.touch) {
-        return 'touchstart';
+//        return 'touchend';
+        return 'click';
     } else {
         return 'click';
     }
