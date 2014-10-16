@@ -19,17 +19,35 @@
 # To use the kill switch:
 #   script/stop_queue_daemon.sh
 
-def abbrevs
-  @abbrevs ||= States.abbreviations ### 1. ###
+def all_census_data_types
+  @all_census_data_type_names ||= Hash[CensusDataType.all.map { |cdt| [cdt.description, cdt.id] }]
 end
 
-def print_first_school_of_random_state
-  state = abbrevs.sample
-  school = School.on_db(state.to_sym).where(active: true).first ### 3. ###
-  puts "Using #{state}"
-  puts 'First school:'
-  puts "\t\t#{school.id}"
-  puts "\t\t#{school.name}"
+def census_data_type?(datatype)
+  all_census_data_types.key? datatype
+end
+
+def process_data_as_census(update_blob)
+  # data_type_id = all_census_data_types[]
+  puts __method__
+end
+
+def process_data_as_osp(update_blob)
+  puts __method__
+end
+
+def print_all_unprocessed_updates
+  updates = UpdateQueue.todo
+  updates.each do |update|
+    update_blob = JSON.parse(update.update_blob)
+    puts update_blob
+    data_types = update_blob.keys
+    data_types.each do |data_type|
+      puts data_type
+      census_or_osp = census_data_type?(data_type) ? :census : :osp
+      send('process_data_as_' + census_or_osp.to_s, update_blob[data_type])
+    end
+  end
 end
 
 def log_pid
@@ -40,8 +58,10 @@ end
 
 log_pid ### 2. ###
 
+UpdateQueue.seed_sample_data!
+
 loop do
-  print_first_school_of_random_state
-  Rails.logger.error 'You shall not pass!' ### 4. ###
+  print_all_unprocessed_updates
+  # Rails.logger.error 'You shall not pass!' ### 4. ###
   sleep 2 ### 5. ###
 end
