@@ -253,7 +253,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
                   markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
-                  markup += '<span class="mls mrm font-size-small notranslate">'+ point.numReviews;
+                  markup += '<span class="mls font-size-small notranslate">'+ point.numReviews;
                   if (point.numReviews != 1) {
                       markup += ' ' + mapPinReviewsText() + ' </span>';
                   } else {
