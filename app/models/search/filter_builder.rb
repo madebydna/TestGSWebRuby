@@ -40,9 +40,10 @@ class FilterBuilder
   end
 
   def get_callbacks_from_db(state)
-    if state.downcase == 'in'
-      indiana_db_callbacks
-    else
+    if state.is_a?(String)
+      if state.downcase == 'in'
+        return indiana_db_callbacks
+      end
       []
     end
   end
