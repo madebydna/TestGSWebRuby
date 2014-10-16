@@ -198,17 +198,8 @@ class PyocPdf < Prawn::Document
 
     # to handle detroit ungraded level
     level = format_level_ungraded(school)
-    if school.district != nil
-      level.include? '& UG' ? truncated_district = ' | ' + truncate_district(school, 25) : truncated_district =  ' | '+ truncate_district(school, 32)
-    else
-      truncated_district = ' '
-    end
+    which_district_truncation(school, level)
 
-    text_box "#{level} | #{school.decorated_school_type} #{truncated_district}",
-             :at => [5, cursor],
-             :width => Col_width - 10,
-             :height => 20,
-             :size => 6
   end
 
   def format_level_ungraded(school)
@@ -223,6 +214,24 @@ class PyocPdf < Prawn::Document
     if school.district != nil
       truncated_district = school.district.name.truncate(char_length)
     end
+  end
+
+  def which_district_truncation(school, level)
+    if school.district != nil
+      if level.include? '& UG'
+        truncated_district = ' | ' + truncate_district(school, 25)
+      else
+        truncated_district = ' | ' + truncate_district(school, 32)
+      end
+    else
+      truncated_district = ' '
+    end
+
+    text_box "#{level} | #{school.decorated_school_type} #{truncated_district}",
+             :at => [5, cursor],
+             :width => Col_width - 10,
+             :height => 20,
+             :size => 6
   end
 
   def draw_gs_rating_image(rating)
