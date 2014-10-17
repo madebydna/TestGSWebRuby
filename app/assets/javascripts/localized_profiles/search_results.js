@@ -228,6 +228,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         var schoolsList;
         var popupBox;
         var maxNumberOfSchools;
+        var minNumberOfSchools;
 
         var setCompareSchoolButtonHandler = function() {
             $('.js-searchResultsContainer').on('click', '.js-compareSchoolButton', function() {
@@ -239,11 +240,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
                 if (schoolsList.listContainsSchoolId(schoolId) === true) {
                     schoolsList.removeSchool(schoolId);
-                    toggleGreyCheckMarkSchoolCompareButton(schoolId);
+                    unselectCompareSchool(schoolId);
                 } else if (schoolsList.numberOfSchoolsInList() < maxNumberOfSchools) {
                     var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success'];
                     if (schoolAdded === true) {
-                        toggleGreenCheckmarkSchoolCompareButton(schoolId);
+                        selectCompareSchool(schoolId);
                     } else {
                         //add alert for 'choose only schools from the same state' maybe
                     }
@@ -257,42 +258,77 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var ids = schoolsList.getSchoolIds();
 
             for (var i = 0; i < ids.length; i++) {
-                toggleGreenCheckmarkSchoolCompareButton(ids[i])
+                selectCompareSchool(ids[i])
             }
         };
 
-        var toggleGreenCheckmarkSchoolCompareButton = function(id) {
+        var selectCompareSchool = function(id) {
             var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
-                $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
-                $school.addClass('btn-border-green')
+                selectCompareSchoolButton($school);
+
+                var $schoolText = $school.siblings('.js-compareSchoolsText');
+                $schoolText.addClass('js-buttonSelected');
+                syncCompareSchoolsText();
+                $schoolText.show()
             }
         };
 
-        var toggleGreyCheckMarkSchoolCompareButton = function(id) {
+        var selectCompareSchoolButton = function($school) {
+            $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
+            $school.addClass('btn-border-green');
+            $school.find('.js-compareSchoolsButtonText').text('');
+            $school.css('width', '0px').css('padding-left', '8px');
+        };
+
+        var unselectCompareSchool = function(id) {
             var $school = $('.js-compareSchoolButton[data-schoolid=' + id + ']');
             //check to see if button is on page
             if ($school.length > 0) {
-                $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
-                $school.removeClass('btn-border-green')
+                unselectCompareSchoolButton($school);
+
+                var $schoolText = $school.siblings('.js-compareSchoolsText');
+                $schoolText.hide();
+                $schoolText.removeClass('js-buttonSelected');
+                syncCompareSchoolsText();
             }
+        };
+
+        var unselectCompareSchoolButton = function($school) {
+            $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
+            $school.removeClass('btn-border-green');
+            $school.find('.js-compareSchoolsButtonText').text('Compare');
+            $school.css('width', '150px').css('padding-left', '20px');
+        };
+
+        var syncCompareSchoolsText = function() {
+            $('.js-compareSchoolsText.js-buttonSelected').each(function() {
+                var $self = $(this);
+                if (schoolsList.numberOfSchoolsInList() >= minNumberOfSchools) {
+                    $self.find('.js-compareSchoolsSelectMoreSchoolsText').hide();
+                    $self.find('.js-compareSchoolsSubmit').show();
+                } else {
+                    $self.find('.js-compareSchoolsSubmit').hide();
+                    $self.find('.js-compareSchoolsSelectMoreSchoolsText').show();
+                }
+            });
         };
 
         var setRemovePopupBoxSchoolsHandler = function() {
             popupBox.setCompareSchoolsRemoveSchoolHandler(function(schoolId) {
-                toggleGreyCheckMarkSchoolCompareButton(schoolId);
+                unselectCompareSchool(schoolId);
             });
         };
-
 
         var init = function() {
             //schoolslist needs to initialize before popupbox, so popupbox can get the data
             schoolsList = GS.compare.schoolsList;
             popupBox = GS.compare.compareSchoolsPopup;
+            minNumberOfSchools = $('.js-compareSchoolsPopup').data('min-num-of-compare-schools') || 2;
             maxNumberOfSchools = $('.js-compareSchoolsPopup').data('max-num-of-compare-schools') || 4;
             schoolsList.init(maxNumberOfSchools);
-            popupBox.init(schoolsList);
+            popupBox.init(schoolsList, minNumberOfSchools);
             popupBox.setCompareSchoolsPopupHandler();
             popupBox.syncSchoolCount();
             setRemovePopupBoxSchoolsHandler();

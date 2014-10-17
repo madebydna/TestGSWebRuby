@@ -2,6 +2,7 @@ GS.compare = GS.compare || {};
 
 GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () {
     var schoolsList;
+    var minNumberOfSchools;
     var popupHtmlClass = '.js-compareSchoolsPopup';
     var popupButtonHtmlClass = '.js-compareSchoolsPopupButton';
     var popupSchoolHtmlClass = '.js-compareSchoolsPopupSchool';
@@ -141,7 +142,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         var numOfSchools = schoolsList.numberOfSchoolsInList();
         var $schoolCountElement = $(schoolCountHtmlClass);
         $schoolCountElement.text(numOfSchools);
-        numOfSchools > 0 ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
+        numOfSchools >= minNumberOfSchools ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
     };
 
     var setCompareSchoolsRemoveSchoolHandler = function(removeSchoolHandlerFunction) {
@@ -195,8 +196,9 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         }
     };
 
-    var init = function(schoolsListObject) {
+    var init = function(schoolsListObject, minNumOfSchools) {
         schoolsList = schoolsListObject;
+        minNumberOfSchools = minNumOfSchools;
         setCompareSchoolsRemoveSchoolHoverHandler();
         setCompareSchoolsSubmitHandler();
         syncPopupBox();

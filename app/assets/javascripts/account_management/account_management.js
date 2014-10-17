@@ -127,9 +127,3 @@ GS.accountManagement.savedSearch = (function(){
     init: init
   }
 })();
-
-if (gon.pagename === 'Account management') {
-  $(document).ready(function () {
-      GS.accountManagement.savedSearch.init();
-  });
-}

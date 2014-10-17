@@ -79,24 +79,32 @@
         </div>
         <!-- do not show on account page -->
         <% if account_page == false %>
-            <!-- Compare and Homes for Sale -->
-            <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
-                <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
-                     id='js-compareSchool<%= "#{school.id}" %>'
-                     style="width:150px"
-                     data-schoolname="<%= school.name %>"
-                     data-schoolstate="<%= school.state.downcase %>"
-                     data-schoolid="<%= school.id %>"
-                     data-schoolrating="<%= school.overall_gs_rating || 'nr' %>">
-                  <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
-                  <div class="fl">Compare</div>
-                </button>
-                <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
-                  <!--<div class="iconx24 i-24-home fl mrs"></div>-->
-                  <div class="iconx16 i-16-home fl mrs"></div>
-                  <div class="fl">Homes for sale</div>
-                <% end %>
+          <!-- Compare and Homes for Sale -->
+          <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
+            <div class="dib" style="width:150px;">
+              <button class="btn btn-default clearfix mbm db pull-left js-compareSchoolButton"
+                id='js-compareSchool<%= "#{school.id}" %>'
+                style="width:150px"
+                data-schoolname="<%= school.name %>"
+                data-schoolstate="<%= school.state.downcase %>"
+                data-schoolid="<%= school.id %>"
+                data-schoolrating="<%= school.overall_gs_rating || 'nr' %>"
+              >
+                <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
+                <div class="fl js-compareSchoolsButtonText">Compare</div>
+              </button>
+              <div class="js-compareSchoolsText pull-left db dn pts pls">
+                <span class='pointer js-compareSchoolsSubmit brand-primary dn'>Compare now</span>
+                <span class='js-compareSchoolsSelectMoreSchoolsText dn'>Select more</span>
+                (<span class="js-compareSchoolsCount">0</span>/4)
+              </div>
             </div>
+            <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
+              <!--<div class="iconx24 i-24-home fl mrs"></div>-->
+              <div class="iconx16 i-16-home fl mrs"></div>
+              <div class="fl">Homes for sale</div>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>
