@@ -22,6 +22,30 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def destroy
+    success = false
+    message = ''
+
+    @subscription = Subscription.find(params[:id]) if params[:id]
+
+    if @subscription && @current_user.subscriptions.any? {|s| s.id == @subscription.id}
+      success = !!@subscription.destroy!
+
+      if success
+        message = 'You have successfully unsubscribed.'
+      else
+        message = 'A problem occurred when unsubscribing. Please try again later.'
+      end
+    else
+      message = 'You are not subscribed to the newsletter.'
+    end
+
+    @result = {
+      success: success,
+      message: message
+    }
+  end
+
   protected
 
   def attempt_sign_up(subscription_params, error_message, redirect_path = nil)

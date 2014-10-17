@@ -12,6 +12,7 @@ GS.search = GS.search || {};
 
 GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     var validLocationTypes = ['street_address', 'route', 'intersection', 'premise', 'subpremise'];
+    var _shouldCalculateFit = undefined;
 
     var shouldGetAssignedSchools = function() {
         if (gon.pagename != 'SearchResultsPage') {
@@ -180,13 +181,39 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-photo').html($existingSchoolPhoto.clone());
         }
 
-//        var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
-//        if ($existingFitScorePopup.size() > 0) {
-//            $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
-//            GS.search.results.searchResultFitScoreTogglehandler($listItem)
-//        }
+        if (shouldCalculateFit()) {
+            var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
+            if ($existingFitScorePopup.size() > 0) {
+                $listItem.find('.js-fitScore').html($existingFitScorePopup.clone());
+                GS.search.results.searchResultFitScoreTogglehandler($listItem);
+                $listItem.show('slow');
+            } else {
+                jQuery.ajax({
+                    type:'GET',
+                    url:'/gsr/ajax/search/calculate_fit',
+                    data:{
+                        state: school.state,
+                        id: school.id
+                    },
+                    dataType:'text',
+                    async:true
+                }).done(function (html) {
+                    $listItem.find('.js-fitScore').html(html);
+                    GS.search.results.searchResultFitScoreTogglehandler($listItem);
+                }).always(function () {
+                    $listItem.show('slow');
+                });
+            }
+        } else {
+            $listItem.show('slow');
+        }
+    };
 
-        $listItem.show('slow');
+    var shouldCalculateFit = function() {
+        if (_shouldCalculateFit === undefined) {
+            _shouldCalculateFit = $('.js-schoolFitScore').children().size() > 0;
+        }
+        return _shouldCalculateFit;
     };
 
     var setNoAssignedSchools = function() {
@@ -237,15 +264,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};
-                var gradeLevelFilter = $('#js-searchGradeLevelFilter');
-                if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
-                    searchOptions['grades'] = gradeLevelFilter.val();
-                }
 
                 if (input.value == $(schoolResultsSearchSelector).data('prev-search')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
-                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'grades');
-                    params = GS.uri.Uri.removeFromQueryString(params, 'page');
+                    var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
                     GS.uri.Uri.goToPage(url);
@@ -307,6 +329,25 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         return true;
     };
 
+    var STATE_NAME_MAP = {
+        "AK":"Alaska","AL":"Alabama","AR":"Arkansas","AZ":"Arizona",
+        "CA":"California","CO":"Colorado","CT":"Connecticut","DC":"District of Columbia",
+        "DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawaii","IA":"Iowa",
+        "ID":"Idaho","IL":"Illinois","IN":"Indiana","KS":"Kansas","KY":"Kentucky",
+        "LA":"Louisiana","MA":"Massachusetts","MD":"Maryland","ME":"Maine","MI":"Michigan",
+        "MN":"Minnesota","MO":"Missouri","MS":"Mississippi","MT":"Montana",
+        "NC":"North Carolina","ND":"North Dakota","NE":"Nebraska","NH":"New Hampshire",
+        "NJ":"New Jersey","NM":"New Mexico","NV":"Nevada","NY":"New York",
+        "OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania",
+        "RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota",
+        "TN":"Tennessee","TX":"Texas","UT":"Utah","VA":"Virginia","VT":"Vermont",
+        "WA":"Washington","WI":"Wisconsin","WV":"West Virginia","WY":"Wyoming"
+    };
+
+    var getStateFullName = function(abbr) {
+        return STATE_NAME_MAP[abbr.toUpperCase()];
+    };
+
     var isTermState = function(term) {
         var stateTermList = new Array
                 ("AK","Alaska","AL","Alabama","AR","Arkansas","AZ","Arizona",
@@ -357,7 +398,11 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                     data['sortBy'] = 'DISTANCE';
                     (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
-                    alert("Location not found. Please enter a valid address, city, or ZIP.");
+                    if (state && getStateFullName(state)) {
+                        alert("Location not found in " + getStateFullName(state) + ". Please enter a valid address, city, or ZIP.");
+                    } else {
+                        alert("Location not found. Please enter a valid address, city, or ZIP.");
+                    }
                 }
             });
         } else {
@@ -381,10 +426,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         }
         searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
-        var gradeLevelFilter = $('#js-searchGradeLevelFilter');
-        if (gradeLevelFilter.length > 0 && gradeLevelFilter.val() != '') {
-            searchOptions['grades'] = gradeLevelFilter.val();
-        }
 
         // Not setting a timeout breaks back button
         setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
@@ -478,7 +519,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     var gsGeocode = function(searchInput, callbackFunction) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
-            geocoder.geocode( { 'address': searchInput + ' US'}, function(results, status) {
+            var geocodeOptions = { 'address': searchInput};
+            if (state != null) {
+                geocodeOptions['componentRestrictions'] = {'administrativeArea':  state.toUpperCase()};
+            } else {
+                geocodeOptions['componentRestrictions'] = {'country':  'US'};
+            }
+            geocoder.geocode(geocodeOptions, function (results, status) {
                 var GS_geocodeResults = new Array();
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {
@@ -513,9 +560,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             'country' in geocodeResult)||
                             geocodeResult['country'] != 'US') {
                             geocodeResult = null;
-                        }
-                        if ( geocodeResult != null &&  state !=null && geocodeResult['state'] != state.toUpperCase()){
-                            geocodeResult = null;
+                        } else if ('type' in geocodeResult && geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
+                            geocodeResult = null; // don't allow states to be returned
+                        } else if (state != null && geocodeResult['state'].toUpperCase() != state.toUpperCase()) {
+                            geocodeResult = null; // don't allow results outside of state
                         }
                         if (geocodeResult != null) {
                             GS_geocodeResults.push(geocodeResult);

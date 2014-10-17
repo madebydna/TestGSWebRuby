@@ -63,9 +63,12 @@ GS.forms.updateFormVisualElements = function() {
 
 $(function() {
 
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
+    //needs to be ahead of click handlers
+    if (gon.pagename === 'GS:GuidedSchoolSearch') {
+        FastClick.attach(document.body);
+    }
 
-    $('.js-gs-radio').on(clickOrTouchType,function(){
+    $('.js-gs-radio').on('click',function(){
         var self = $(this);
         var hidden_field = self.parent().siblings(".js-gs-radio-value");
         var gs_radio = self.data('gs-radio');
@@ -106,7 +109,7 @@ $(function() {
 
     });
 
-    $(".js-gs-checkbox").on(clickOrTouchType, function(){
+    $(".js-gs-checkbox").on('click', function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -126,6 +129,7 @@ $(function() {
     });
 
     $('.js-gs-checkbox-search').on('click',function(){
+//    $('.js-searchFiltersForm').on('click', '.js-gs-checkbox-search',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -150,7 +154,7 @@ $(function() {
        toggleCheckboxForCollapsibleBox(checkbox, children);
     });
 
-    $('.js-sportsIconButton').on(clickOrTouchType, function(){
+    $('.js-sportsIconButton').on('click', function(){
         var self = $(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.children(".js-value");
@@ -169,7 +173,7 @@ $(function() {
         }
     });
 
-    $('.js-searchFiltersForm').on(clickOrTouchType, '.js-sports-gender', function() {
+    $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
         var self = $(this);
         var sibling = self.siblings('.js-sports-gender');
         var gs_gender = self.data('gs-gender');
@@ -302,7 +306,7 @@ $(function() {
         $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
     };
 
-    $('.js-guidedSearchSportsIconsButton').on(clickOrTouchType, function(){
+    $('.js-guidedSearchSportsIconsButton').on('click', function(){
         var self = $(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.children(".js-value");
@@ -320,7 +324,7 @@ $(function() {
         }
     });
 
-    $('.js-guidedSearch').on(clickOrTouchType, '.js-sports-gender', function() {
+    $('.js-guidedSearch').on('click', '.js-sports-gender', function() {
         var self = $(this);
 
         if (!self.hasClass('btn-bg-green')) {

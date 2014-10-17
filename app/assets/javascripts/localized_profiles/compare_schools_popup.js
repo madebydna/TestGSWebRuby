@@ -1,9 +1,10 @@
 GS.compare = GS.compare || {};
 
 GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () {
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolsList;
+    var minNumberOfSchools;
     var popupHtmlClass = '.js-compareSchoolsPopup';
+    var popupButtonHtmlClass = '.js-compareSchoolsPopupButton';
     var popupSchoolHtmlClass = '.js-compareSchoolsPopupSchool';
     var popupSchoolSelectedHtmlClass = '.js-compareSchoolsPopupSchool.js-selected';
     var popupSchoolUnselectedHtmlClass = '.js-compareSchoolsPopupSchool.js-unselected';
@@ -98,7 +99,8 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     };
 
     var setCompareSchoolsPopupHandler = function(offsetFunction) {
-        $('.js-compareSchoolsPopupButton').on(clickOrTouchType, function() {
+        var $poupButton = $(popupButtonHtmlClass);
+        $poupButton.on('click', function() {
             if (schoolsList.numberOfSchoolsInList() > 0) {
                 var $popup = $(this).siblings(popupHtmlClass);
                 var $container = $(popupContainerHtmlClass);
@@ -110,6 +112,12 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
                 }
             }
         });
+
+        $('html').on('click', function () {
+            $(popupHtmlClass).hide();
+        });
+        GS.popup.stopClickAndTouchstartEventPropogation($(popupHtmlClass));
+        GS.popup.stopClickAndTouchstartEventPropogation($poupButton);
     };
 
     var getPopupOffset = function($container, $popup) {
@@ -134,7 +142,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         var numOfSchools = schoolsList.numberOfSchoolsInList();
         var $schoolCountElement = $(schoolCountHtmlClass);
         $schoolCountElement.text(numOfSchools);
-        numOfSchools > 0 ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
+        numOfSchools >= minNumberOfSchools ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
     };
 
     var setCompareSchoolsRemoveSchoolHandler = function(removeSchoolHandlerFunction) {
@@ -188,8 +196,9 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         }
     };
 
-    var init = function(schoolsListObject) {
+    var init = function(schoolsListObject, minNumOfSchools) {
         schoolsList = schoolsListObject;
+        minNumberOfSchools = minNumOfSchools;
         setCompareSchoolsRemoveSchoolHoverHandler();
         setCompareSchoolsSubmitHandler();
         syncPopupBox();

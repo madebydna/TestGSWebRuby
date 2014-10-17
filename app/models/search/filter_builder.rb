@@ -4,12 +4,11 @@ class FilterBuilder
 
   def initialize(state = '')
     @callbacks = build_callbacks(get_callbacks_from_db(state))
-    @filters = build_filter_tree(get_filters)[0]
+    @filters = build_filter_tree({filter: get_filters})[0]
     @filter_display_map = @filters.build_map
   end
 
   def build_filter_tree(filters)
-    filters = {filter: filters} unless filters[:filters].nil?
     filters.map do |key, filter|
       build_filter(run_db_callbacks(filter))
     end.compact
@@ -21,32 +20,30 @@ class FilterBuilder
   end
 
   def run_db_callbacks(filter)
-    @callbacks.each_with_index do |callback, i|
-      callback_value = callback.call(filter)
-      (@callbacks.delete_at(i) and return callback_value) if callback_value
+    begin
+      @callbacks.each_with_index do |callback, i|
+        callback_value = callback.call(filter)
+        (@callbacks.delete_at(i) and return callback_value) if callback_value
+      end
+    rescue e
+      Rails.logger.warn "Error: #{e}. Additional Custom Filter Not applied"
+      @callbacks = [] #delete callbacks
+    else
+      filter
     end
-    filter
   end
 
   def build_callbacks(db_callbacks)
     db_callbacks.map do |callback|
-      keys = callback[:key].split(',')
-      matches = callback[:match].split(',')
-      type = callback[:callback_type]
-      conditions = []
-
-      keys.each_with_index do |key, i|
-        conditions << {key: key, match: matches[i]}
-      end
-
-      send("build_#{type}_callback".to_sym, conditions, callback[:new_filter])
-    end
+      try("build_#{callback[:callback_type]}_callback".to_sym, callback[:conditions], callback[:options])
+    end.compact
   end
 
   def get_callbacks_from_db(state)
-    if state.casecmp('in').zero?
-      indiana_db_callbacks
-    else
+    if state.is_a?(String)
+      if state.downcase == 'in'
+        return indiana_db_callbacks
+      end
       []
     end
   end
@@ -62,7 +59,7 @@ class FilterBuilder
 
   def indiana_db_callbacks
     [
-      {key: 'name,display_type', match:'group3,filter_column_secondary', callback_type: 'add', new_filter:
+      {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'add', options:
         {
           enrollment: {
             label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
@@ -103,6 +100,34 @@ class FilterBuilder
         group1: {
           display_type: :filter_column_primary,
           filters: {
+            grade: {
+              label: 'Grade Level',
+              display_type: :title,
+              name: :grades,
+              filters: {
+                select_box: {
+                  display_type: :select_box,
+                  name: :grades,
+                  filters: {
+                     :default => {label: 'Select Grade', display_type: :select_box_value, name: :grades, value: nil},
+                     :p => {label: 'Pre-School', display_type: :select_box_value, name: :grades, value: :p},
+                     :k => {label: 'Kindergarten', display_type: :select_box_value, name: :grades, value: :k},
+                     1 => {label: '1st Grade', display_type: :select_box_value, name: :grades, value: 1},
+                     2 => {label: '2nd Grade', display_type: :select_box_value, name: :grades, value: 2},
+                     3 => {label: '3rd Grade', display_type: :select_box_value, name: :grades, value: 3},
+                     4 => {label: '4th Grade', display_type: :select_box_value, name: :grades, value: 4},
+                     5 => {label: '5th Grade', display_type: :select_box_value, name: :grades, value: 5},
+                     6 => {label: '6th Grade', display_type: :select_box_value, name: :grades, value: 6},
+                     7 => {label: '7th Grade', display_type: :select_box_value, name: :grades, value: 7},
+                     8 => {label: '8th Grade', display_type: :select_box_value, name: :grades, value: 8},
+                     9 => {label: '9th Grade', display_type: :select_box_value, name: :grades, value: 9},
+                     10 => {label: '10th Grade', display_type: :select_box_value, name: :grades, value: 10},
+                     11 => {label: '11th Grade', display_type: :select_box_value, name: :grades, value: 11},
+                     12 => {label: '12the Grade', display_type: :select_box_value, name: :grades, value: 12},
+                  }
+                }
+              }
+            },
             distance: {
               label: 'Show schools within',
               display_type: :title,

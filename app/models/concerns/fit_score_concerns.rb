@@ -2,7 +2,7 @@ module FitScoreConcerns
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :fit_score, :fit_score_breakdown, :max_fit_score
+    attr_accessor :fit_score, :fit_score_breakdown, :max_fit_score, :fit_ratio
   end
 
   STRONG_FIT_CUTOFF = 0.666
@@ -75,29 +75,29 @@ module FitScoreConcerns
   }.stringify_keys!,
     class_offerings: {
       ap: /^AP_courses$/,
-      performance_arts: /^(?!none)\w+/,
-      visual_media_arts: /^(?!none)\w+/,
-      music: /^(?!none)\w+/,
+      performance_arts: /^(?!none)\w+/i,
+      visual_media_arts: /^(?!none)\w+/i,
+      music: /^(?!none)\w+/i,
       french: /^french$/,
       german: /^german$/,
       spanish: /^spanish$/,
       mandarin: /^mandarin$/
     }.stringify_keys!,
     enrollment: {
-      vouchers: /^yes$/
+      vouchers: {type: 'private', regex: /^yes$/}
     }.stringify_keys!
   }.stringify_keys!)
 
   def strong_fit?
-    max_fit_score > 0 && (fit_score / max_fit_score.to_f) >= STRONG_FIT_CUTOFF
+    fit_ratio && fit_ratio >= STRONG_FIT_CUTOFF
   end
 
   def ok_fit?
-    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) >= OK_FIT_CUTOFF && (fit_score / max_fit_score.to_f) < STRONG_FIT_CUTOFF
+    fit_ratio && fit_ratio >= OK_FIT_CUTOFF && fit_ratio < STRONG_FIT_CUTOFF
   end
 
   def weak_fit?
-    max_fit_score > 0 && fit_score > 0 && (fit_score / max_fit_score.to_f) < OK_FIT_CUTOFF
+    fit_ratio && fit_ratio > 0 && fit_ratio < OK_FIT_CUTOFF
   end
 
   def has_fit?
@@ -131,41 +131,47 @@ module FitScoreConcerns
     @fit_score = 0
     @fit_score_breakdown = []
     @max_fit_score = 0
+    @fit_ratio = 0
     params.each do |key, value|
       [*value].each do |v|
         @max_fit_score += 1
-        is_match = matches_soft_filter?(key, v)
-        match_status = (is_match ? :yes : (is_match.nil? ? :no_data : :no))
-        @fit_score += 1 if is_match
-        @fit_score_breakdown << {category: key, filter: v, match: is_match, match_status: match_status}
+        match_status = matches_soft_filter?(key, v)
+        # not_applicable counts as a match for the purposes of sorting
+        @fit_score += 1 if match_status == :yes || match_status == :not_applicable
+        @fit_score_breakdown << {category: key, filter: v, match_status: match_status}
       end
+    end
+    if @max_fit_score > 0
+      @fit_ratio = @fit_score / @max_fit_score.to_f
     end
   end
 
   def sort_breakdown_by_match_status!
-    @fit_score_breakdown.sort! do |a, b|
+    fit_score_breakdown.sort! do |a, b|
       if a[:match_status] == b[:match_status]
         a[:filter] <=> b[:filter]
-      elsif a[:match_status] == :yes
-        -1
-      elsif b[:match_status] == :yes
-        1
-      elsif a[:match_status] == :no
-        -1
       else
-        1
+        sort_order_lookup(a[:match_status]) <=> sort_order_lookup(b[:match_status])
       end
-    end unless @fit_score_breakdown.nil?
+    end unless fit_score_breakdown.nil?
   end
 
   def update_breakdown_labels!(filter_display_map)
-    @fit_score_breakdown.each do |breakdown|
+    fit_score_breakdown.each do |breakdown|
       filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
       breakdown[:filter] = filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
-    end unless @fit_score_breakdown.nil? || filter_display_map.nil?
+    end unless fit_score_breakdown.nil? || filter_display_map.nil?
   end
 
   protected
+
+  def sort_order_lookup(match_status)
+    return 1 if match_status == :yes
+    return 2 if match_status == :no
+    return 3 if match_status == :no_data
+    return 4 if match_status == :not_applicable
+    5
+  end
 
   def matches_soft_filter?(param, value)
     # Default return value of SOFT_FILTER_FIELD_MAP and SOFT_FILTER_VALUE_MAP set to empty hash if no key found.
@@ -184,11 +190,17 @@ module FitScoreConcerns
           filter_values = [*potential_values] unless potential_values.nil?
         end
       end
-      [*filter_value_map].each { |val| filter_values.each { |v| return true if v.match(val) } }
+      regex = filter_value_map
+      if filter_value_map.is_a?(Hash)
+        regex = filter_value_map[:regex]
+        if filter_value_map[:type]
+          return :not_applicable if type.downcase != filter_value_map[:type].downcase
+        end
+      end
+      [*regex].each { |val| filter_values.each { |v| return :yes if v.match(val) } }
       all_responses_for_filter += filter_values
     end
-    return nil if all_responses_for_filter.empty?
-    false
+    all_responses_for_filter.empty? ? :no_data : :no
   end
 
 end

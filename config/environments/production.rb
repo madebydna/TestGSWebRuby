@@ -73,7 +73,7 @@ LocalizedProfiles::Application.configure do
   config.logger = ActiveSupport::Logger.new('/var/log/gswebruby/production.log')
 
   # Use a different cache store in production
-   config.cache_store = :memory_store, { size: 128.megabytes }
+  config.cache_store = :memory_store, { size: 128.megabytes }
   # Shomi Arora -Dont Cache so QA can test quickly
   # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server

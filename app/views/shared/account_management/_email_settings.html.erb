@@ -1,0 +1,55 @@
+<div class="limit-width-1200 collapse mtl js-email-settings phm">
+  <h2>Email subscriptions</h2>
+  <% if @current_user.subscriptions.present? %>
+      <div class="limit-width-1200 mtl">
+        <% @current_user.subscriptions.group_by(&:list).each do |list,subscriptions| %>
+            <hr class="mtxl"/>
+
+            <% if Subscription.is_grouped?(list)%>
+
+                <% first_decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
+                <h3><%= first_decorated_subscription.name %></h3>
+                <%= first_decorated_subscription.description %>
+                <% subscriptions.each do |subscription| %>
+                    <% decorated_subscription = NewsletterDecorator.decorate(subscription) %>
+                    <div class="js-subscription-<%= subscription.id  %>" >
+                      <% if decorated_subscription.school && decorated_subscription.school.city && decorated_subscription.school.state %>
+                          <div class="open-sans_sb mtm">
+                            <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
+                          </div>
+                      <% end %>
+                      <div class="mlm mtm">
+                        <%= link_to('Unsubscribe', subscription_path(subscription.id),
+                                    {
+                                            method: 'DELETE',
+                                            remote: true
+                                    }
+                            ) %>
+                      </div>
+                    </div>
+                    <br/>
+                <% end %>
+            <% else %>
+                <% decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
+                <div class="js-subscription-<%= subscriptions.first.id  %>" >
+                  <h3><%= decorated_subscription.name %></h3>
+                  <%= decorated_subscription.description %>
+                  <div class="mll mtm">
+                    <%= link_to('Unsubscribe', subscription_path(subscriptions.first.id),
+                                {
+                                        method: 'DELETE',
+                                        remote: true
+                                }
+                        ) %>
+                  </div>
+                </div>
+            <% end %>
+
+        <% end %>
+      </div>
+  <% else %>
+      You do not have any email subscriptions yet.
+  <% end %>
+</div>
+
+

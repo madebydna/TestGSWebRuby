@@ -32,12 +32,14 @@ class SnapshotDataReader < SchoolProfileDataReader
             #to an array and read the first value.
             value = Array(data_for_source[key]).first
           end
-          snapshot_results << {
-            key => {
-              school_value: value,
-              label: label
+          if value != 'no info'
+            snapshot_results << {
+              key => {
+                school_value: value,
+                label: label
+              }
             }
-          }
+          end
         end
       end
     end

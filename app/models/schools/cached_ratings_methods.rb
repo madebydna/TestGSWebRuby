@@ -28,18 +28,17 @@ module CachedRatingsMethods
   end
 
   def school_rating_by_id(rating_id=nil)
-    ratings_obj = ratings.find { |rating| rating['data_type_id'] == rating_id }
-    if rating_id && ratings_obj
-      if ratings_obj['school_value_text']
-        ratings_obj['school_value_text']
-      elsif ratings_obj['school_value_float']
-        ratings_obj['school_value_float'].to_i
-      else
-        NO_RATING_TEXT
+    if rating_id
+      ratings_obj = ratings.find { |rating| rating['data_type_id'] == rating_id }
+      if ratings_obj
+        if ratings_obj['school_value_text']
+          return ratings_obj['school_value_text']
+        elsif ratings_obj['school_value_float']
+          return ratings_obj['school_value_float'].to_i
+        end
       end
-    else
-      NO_RATING_TEXT
     end
+    NO_RATING_TEXT
   end
 
   def displayed_ratings

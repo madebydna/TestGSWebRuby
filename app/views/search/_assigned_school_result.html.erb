@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-xs-7 col-sm-5 col-md-6 clearfix">
                     <div class="fl hidden-xs hidden-sm js-photo">
-                        <img src="<%= image_path('search/no-school-photo.png')%>" alt="No school photo available"/>
+                        <img class="thumbnail-border" src="<%= image_path('search/no-school-photo.png')%>" alt="No school photo available"/>
                     </div>
                     <div class="mll fl">
                         <div class="ptm notranslate">
@@ -62,19 +62,27 @@
                 </div>
                 <!-- TODO: Homes for Sale / Compare-->
                 <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
-                    <button class="btn btn-default clearfix mbm db fr js-compareSchoolButton"
-                            style="width:150px"
-                            data-schoolname=""
-                            data-schoolstate=""
-                            data-schoolid=""
-                            data-schoolrating="nr">
-                        <div class="iconx16 i-16-gray-check-bigger fl mrs"></div>
-                        <div class="fl">Compare</div>
-                    </button>
+                    <div class="btn btn-default clearfix mbm db pull-left js-compareSchoolButton"
+                         style="width:150px"
+                         data-schoolname=""
+                         data-schoolstate=""
+                         data-schoolid=""
+                         data-schoolrating="nr">
+                    >
+                      <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
+                      <div class="fl js-compareSchoolsButtonText">Compare</div>
+                    </div>
+                    <div class="js-compareSchoolsText pull-left db dn pts pls">
+                      <span class='pointer js-compareSchoolsSubmit brand-primary dn font-size-small'>Compare now</span>
+                      <span class='js-compareSchoolsSelectMoreSchoolsText dn font-size-small'>Select more</span>
+                      (<span class="js-compareSchoolsCount">0</span>/4)
+                    </div>
+
                     <a class="btn btn-default clearfix mts db fr js-homes-for-sale" style="width: 150px;" target="_blank">
                         <div class="iconx16 i-16-home fl mrs"></div>
                         <div class="fl">Homes for sale</div>
                     </a>
+
                 </div>
 
             </div>

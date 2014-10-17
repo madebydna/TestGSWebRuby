@@ -1,0 +1,15 @@
+<div class="row limit-width-1200 mvl js-savedSearches">
+  <div class="col-xs-12 mhm">
+    <h2>My saved searches</h2>
+  </div>
+  <% @saved_searches.each do |saved_search| %>
+  <div class="col-xs-12 col-md-6 js-savedSearch">
+    <div class="hbs mhm mvs oh">
+      <div class="pull-left"><%= link_to saved_search.name, JSON.parse(saved_search.options)['url'] %></div>
+      <div class="pull-right">
+        <span class="mls vam iconx16 i-16-blue-x-circle pointer js-savedSearchDelete" data-id="<%= saved_search.id %>"></span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

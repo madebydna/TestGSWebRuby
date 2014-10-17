@@ -3,6 +3,8 @@ class SigninController < ApplicationController
 
   protect_from_forgery
 
+  skip_before_filter :verify_authenticity_token, :only => [:destroy]
+
   layout 'application'
   public
 

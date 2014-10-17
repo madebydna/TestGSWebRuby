@@ -12,7 +12,13 @@
           <% elsif !@by_name %>
             <%= render 'assigned_school_not_valid' %>
           <% end %>
-        <% @schools.each do |school| %>
+        <%= render 'compare_schools_error_message' %>
+        <% ad_counter = 0 %>
+        <% @schools.each_with_index do |school, search_result_counter| %>
+            <% if @show_ads && [2, 7, 12].include?(search_result_counter) %>
+              <%= render 'search_result_ad', ad_counter: ad_counter %>
+              <% ad_counter += 1 %>
+            <% end %>
             <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
             <% @school = decorated_school %>
             <%= render 'search_result', school: school, decorated_school: decorated_school %>

@@ -74,7 +74,7 @@ class CitiesController < ApplicationController
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
-        @city.titleize => city_path(@state[:long], @city),
+        @city.titleize => city_path(params[:state], params[:city]),
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
@@ -223,7 +223,7 @@ class CitiesController < ApplicationController
     end
 
     def parse_partners(partners)
-      partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
+      partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(params[:state], params[:city]))  }
       partners
     end
 

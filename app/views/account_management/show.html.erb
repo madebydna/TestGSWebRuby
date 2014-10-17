@@ -1,68 +1,14 @@
 <%= render 'nav/topnav' %>
 
-<id id="navigation2" class="nav limit-width-1200">
-  <nav class="nav">
-    <ul class="pull-left">
-      <li>
-        <a href="javascript:void();">
-        <%= @current_user.first_name || @current_user.email if logged_in? %>
-        </a>
-      </li>
-      <li>
-        <a href="javascript:void();">Account settings</a>
-      </li>
-      <li>
-        <a href="javascript:void();"
-          data-toggle="collapse"
-          data-target=".js-change-password-form-container">Change password</a>
-      </li>
-      <% if @current_user.provisional_or_approved_osp_user? || current_user.is_esp_superuser? %>
-          <li>
-            <%= link_to 'Edit school profile', osp_dashboard_url %>
-          </li>
-      <% end %>
+<%= render partial: 'shared/account_management/nav' %>
+<%= render partial: 'shared/account_management/change_password_form' %>
+<%= render partial: 'shared/account_management/email_settings' %>
+<%= render partial: 'shared/account_management/osp_module' %>
 
-    </ul>
-  </nav>
-</id>
-
-<div class="limit-width-1200 collapse mtl js-change-password-form-container">
-  <h2>Manage password</h2>
-  <%= render partial: 'shared/account_management/change_password_form' %>
-</div>
-
-<% if @school_to_favorite_school.present? %>
-  <div class="limit-width-1200 mtl">
-    <h2>My School List</h2>
-      <button class="btn btn-primary js-submitSchoolPYOC" type="button">Download Your Schools</button>
-    <% # favorite_school is the object representing the row in favorite_school table %>
-    <% @school_to_favorite_school.each do |school, favorite_school| %>
-      <div class="js-favorite-school-<%= favorite_school.id %>">
-        <% decorated_school = MySchoolListDecorator.decorate(school) %>
-        <span class="fr prm">
-          <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
-            {
-              class: "js-delete-favorite-school-#{favorite_school.id}",
-              method: 'delete',
-              remote: true
-            }
-          ) %>
-        </span>
-        <div class="clearfix"></div>
-
-        <%= render 'search/search_result', school: decorated_school.school, decorated_school: decorated_school, account_page: true %>
-      </div>
-
-
-    <% end %>
-  </div>
+<% if @saved_searches.present? %>
+<%= render partial: 'search/saved_search' %>
 <% end %>
-<form class="js-printSchoolChooserSubmit" method="POST" action="/my-school-list.pdf" target="_blank">
-    <input type="hidden" class="js-chooserStates" name="states" value="" />
-    <input type="hidden" class="js-chooserSchoolIds" name="schoolIds" value="" />
-    <input type="hidden" name="appendChecklist" value="yes"/>
-</form>
 
+<%= render partial: 'shared/account_management/school_list' %>
 
-
-</div>
+<%= render partial: 'nav/short_footer' %>

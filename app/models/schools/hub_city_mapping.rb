@@ -37,7 +37,7 @@ class HubCityMapping < ActiveRecord::Base
     unless state.is_a?(String)
       raise ArgumentError('State must be non-nill and String')
     end
-    mappings_matching_state = HubCityMapping.where(state: state)
+    mappings_matching_state = HubCityMapping.where(state: state, active:true)
     match = mappings_matching_state.find do |mapping|
       (mapping.city || '').downcase == (city || '').downcase
     end

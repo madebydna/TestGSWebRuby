@@ -1,6 +1,17 @@
 var GS = GS || {}
 GS.accountManagement = GS.accountManagement || {}
 
+GS.accountManagement.schoolListRemovedSchool = (function(school_id){
+  var css_selector = ".js-favorite-school-"+school_id;
+  $(css_selector).slideUp();
+  var numOfVisibleRows = $('.js-schoolSearchResult').parent().filter(function() {
+    return $(this).css('display') !== 'none';
+  }).length;
+  if(numOfVisibleRows == 1){
+    $(".js-submitSchoolPYOC").prop("disabled",true);
+  }
+});
+
 GS.accountManagement.changePassword = (function(){
   var contentSelector = ".js-change-password-form-content";
   var formSelector = ".js-change-password-form";
@@ -9,18 +20,12 @@ GS.accountManagement.changePassword = (function(){
 
   var init = function() {
     $(formSelector).on('submit', submitHandler);
-
-    $('.js-submitSchoolPYOC').on('click', submitPyocForm);
   };
 
   var showError = function(message) {
     $errorContainer = $(errorContainerSelector); 
     $errorContainer.show();
     $errorContainer.html(message);
-  };
-
-  var submitPyocForm = function() {
-
   };
 
   var submitHandler = function() {
@@ -78,4 +83,47 @@ GS.accountManagement.PYOC = (function(){
   return {
     init: init
   };
+})();
+
+GS.accountManagement.savedSearch = (function(){
+  var init = function() {
+    setDeleteSavedSearchHandler();
+  };
+
+  var setDeleteSavedSearchHandler = function() {
+    $('.js-savedSearches').on('click', '.js-savedSearchDelete', function() {
+      deleteSavedSearch.call(this);
+      return false;
+    });
+  };
+
+  var deleteSavedSearch = function() {
+    $self = $(this);
+    var id = $self.data('id');
+
+    if ( id !== undefined && typeof id == 'number' ) {
+
+      $deferred = $.ajax({
+        url: '/gsr/ajax/saved_search/' + id,
+        type: 'DELETE'
+      });
+
+      $deferred.done(function(response) {
+        var error = response['error'];
+        if (typeof error === 'string' && error !== '' ) {
+          alert(response['error']);
+        } else {
+          $self.parents('.js-savedSearch').fadeOut(500, function() { $(this).remove(); })
+        }
+      });
+
+      $deferred.fail(function(response){
+        alert('Sorry but wen\'t wrong. Please try again later');
+      });
+    }
+  };
+
+  return {
+    init: init
+  }
 })();

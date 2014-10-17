@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/141001-16x16_icons.png");
+  background-image: asset_data_url("icons/141014-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -165,12 +165,23 @@
 .i-16-active-x-circle {
   background-position: -432px -32px;
 }
+
 .i-16-back-to-top {
   background-position: -448px 0px;
 }
+
 .i-16-plain-x {
   background-position: -464px 0px;
 }
+
 .i-16-question-mark {
   background-position: -480px 0px;
+}
+
+.i-16-gear {
+  background-position: -496px 0px;
+}
+
+.i-16-not-applicable {
+  background-position: -512px 0px;
 }

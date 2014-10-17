@@ -27,10 +27,8 @@ module CachedCharacteristicsMethods
           return characteristic['school_value']
         end
       end
-      NO_DATA_SYMBOL
-    else
-      NO_DATA_SYMBOL
     end
+    NO_DATA_SYMBOL
   end
 
   def ethnicity_data
@@ -63,11 +61,10 @@ module CachedCharacteristicsMethods
     if valid_characteristic_cache(characteristics[data_name])
       value = characteristics[data_name].first['school_value'].to_i
       if value
-        "#{value.round(0)}%"
+        return "#{value.round(0)}%"
       end
-    else
-      NO_DATA_SYMBOL
     end
+    NO_DATA_SYMBOL
   end
 
   def free_and_reduced_lunch

@@ -41,7 +41,10 @@ class StatesController < ApplicationController
   def state_home
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
-
+    @ad_page_name = :State_Home_Standard
+    gon.pagename = @ad_page_name
+    @show_ads = true
+    ad_setTargeting_through_gon
     render 'states/state_home'
   end
 
@@ -203,7 +206,7 @@ class StatesController < ApplicationController
       set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
       set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation
-      set_targeting['editorial'] = format_ad_setTargeting('Find a School')
+      set_targeting['editorial'] = format_ad_setTargeting('FindaSchoo')
       set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
 
       gon.ad_set_targeting = set_targeting

@@ -3,7 +3,7 @@ module DeferredActionConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
-  include SavedSearchConcerns
+  include SavedSearchesConcerns
   protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(
@@ -87,7 +87,7 @@ module DeferredActionConcerns
   def saved_search_deferred(params)
     return false if !logged_in?
 
-    create_saved_search params
+    handle_html params
 
     true
   end

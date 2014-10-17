@@ -1,0 +1,10 @@
+<% if @current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? %>
+    <div class="row limit-width-1200 mvl mhm">
+        <div class="col-xs-12">
+
+            <div class="tac"><%= image_tag 'account_management/school_icon.png', alt:'Official School Profile' %></div>
+            <div class="pbm tac font-size-large">Keep your school profiles up to date</div>
+            <div class="tac"><a href="<%= osp_dashboard_url %>" class="ptm"><button class="btn btn-primary">Edit School Profile</button></a></div>
+        </div>
+    </div>
+<% end %>

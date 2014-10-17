@@ -11,13 +11,13 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     var prevSchoolButton = '.js-compareSchoolsPrev';
     var nextSchoolButton = '.js-compareSchoolsNext';
     var numberOfSchools = $(comparedSchools).length || 1;
-    var clickOrTouchType = GS.util.clickOrTouchType || 'click';
     var schoolWidth = 300;
     var currentSchool = 0; //school that is currently on the left most slot of the carousel. max values are 0-3
     var carouselSpeed = 500;
     var noDataSymbol = '.js-compareNoDataSymbol';
     var noDataPopupHtmlClass = '.js-compareNoDataPopup';
     var noDataWrapper = 'js-compareNoDataWrapper';
+    var isHistoryAPIAvailable = (typeof(window.History) !== 'undefined' && typeof(window.history.pushState) !== 'undefined');
 
     var adjustHeights = function (className) {
         var maxHeight = 0;
@@ -187,6 +187,21 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         $comparedSchoolsList.css({transform: "translate(" + value + "px,0px)"});
     };
 
+    var removeSchoolFromURL = function(schoolId) {
+        var currentQuery = GS.uri.Uri.getQueryData();
+        var currentSchoolIds = currentQuery['school_ids'];
+        currentSchoolIds = currentSchoolIds.replace(schoolId,'').replace(/^,|,$/,'').replace(',,',',');
+        currentQuery['school_ids'] = currentSchoolIds;
+        var newQuery = GS.uri.Uri.getQueryStringFromObject(currentQuery);
+        if (isHistoryAPIAvailable) {
+            History.replaceState(null, gon.pageTitle, newQuery);
+        }
+        else {
+            var path = GS.uri.Uri.getPath();
+            GS.uri.Uri.goToPage(path + newQuery);
+        }
+    };
+
     var removeSchool = function() {
         var schoolDiv = $(this).parent('div'+comparedSchools);
         var schoolId = schoolDiv.data('school-id');
@@ -197,6 +212,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             $('.js-save-all-schools-button').prop('disabled', $(comparedSchools).length === 0);
             GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
             GS.compare.schoolsList.removeSchool(schoolId);
+            removeSchoolFromURL(schoolId);
         });
     };
 
@@ -226,7 +242,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         );
     };
 
-    var noDataPopupOffset = function ($popup) {
+    var noDataPopupCSS = function ($popup) {
         var elementIndex = 0;
         $popup.closest('tr').children('td').each( function (index, element) {
             $(element).children().each( function () {
@@ -239,33 +255,11 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         var numberTableCells = $popup.closest('tr').children('td').length;
 
         if (elementIndex == numberTableCells) {
-            return '0px';
+            return {width: '150px', 'z-index': 1, right:'0px'};
         }
         else {
-            return '-120px';
+            return {width: '150px', 'z-index': 1, right:'-120px'};
         }
-    };
-
-    var setNoDataPopupHandler = function() {
-        var closeMenuHandlerSet = false;
-
-        $(noDataSymbol).on(clickOrTouchType, function() {
-            var $popup = $(this).siblings(noDataPopupHtmlClass);
-            if ($popup.hasClass('dn')) {
-                var rightOffset = noDataPopupOffset($popup);
-                var cssOptions = {width: '150px', 'z-index': 1, right: rightOffset};
-                GS.popup.displayPopup($popup, cssOptions);
-            } else {
-                $popup.addClass('dn');
-            }
-
-            if (closeMenuHandlerSet === false) {
-                GS.popup.closeMenuHandler(noDataPopupHtmlClass);
-                closeMenuHandlerSet = true;
-            }
-        });
-        GS.popup.stopClickAndTouchstartEventPropogation($(noDataSymbol));
-        GS.popup.stopClickAndTouchstartEventPropogation($(noDataPopupHtmlClass));
     };
 
     var setDisabledOnSaveAll = function() {
@@ -280,7 +274,8 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         setRemoveSchoolHandler();
         colorPieChartLabels();
         setRemoveActiveStateHandler();
-        setNoDataPopupHandler();
+        GS.popup.setPopupHandler(noDataPopupCSS,noDataSymbol,noDataPopupHtmlClass);
+        GS.popup.setPopupHandler();
         setDisabledOnSaveAll();
         GS.compare.schoolsList.init(4);
     };

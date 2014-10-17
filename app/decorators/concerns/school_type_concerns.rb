@@ -1,11 +1,10 @@
 module SchoolTypeConcerns
   def decorated_school_type
-    if type.to_s.downcase == 'charter'
-      'Public charter'
-    elsif type.to_s.downcase == 'public'
-      'Public district'
-    else
-      'Private'
-    end
+    school_types_map = {
+        charter: 'Public charter',
+        public: 'Public district',
+        private: 'Private'
+    }
+    school_types_map[type.to_s.downcase.to_sym]
   end
 end

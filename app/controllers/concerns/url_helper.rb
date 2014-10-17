@@ -20,6 +20,11 @@ module UrlHelper
     param.downcase.gsub('-', '_').gsub(' ', '-').gsub('.', '')
   end
 
+  def gs_legacy_url_city_encode(param)
+    return nil if param.nil?
+    param.downcase.gsub(' ', '-').gsub('.', '')
+  end
+
   def gs_legacy_url_city_district_browse_encode(param)
     return nil if param.nil?
     param.downcase.gsub('-', '_').gsub(' ', '-')

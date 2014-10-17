@@ -10,12 +10,14 @@ class CompareSchoolsController < ApplicationController
 
 
     gon.pagename = 'CompareSchoolsPage'
+    page_title = 'Compare Schools'
+    gon.pageTitle = page_title
 
     prepare_schools
     prepare_map
     set_back_to_search_results_instance_variable
 
-    set_meta_tags title:'Compare Schools',
+    set_meta_tags title: page_title,
                   description:'Compare schools to find the right school for your family',
                   keywords:'Compare schools, school comparison',
                   robots: 'noindex'

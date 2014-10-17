@@ -1,5 +1,5 @@
 $(function() {
-  if (!gon.pagename.empty && gon.pagename.indexOf("GS:State") >= 0) {
+  if (gon.pagename && gon.pagename.indexOf("GS:State") >= 0) {
     GS.search.init();
   }
 });

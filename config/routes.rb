@@ -14,7 +14,7 @@ LocalizedProfiles::Application.routes.draw do
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
-  get '/gsr/account/', as: :manage_account, to: 'account_management#show'
+  get '/account', as: :manage_account, to: 'account_management#show'
 
   get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
@@ -27,11 +27,14 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
+
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
+  get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
 
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -87,9 +90,8 @@ LocalizedProfiles::Application.routes.draw do
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
-    scope '/style-guide/', as: :style_guide, to: :style_guide do
-      get '/index', to: 'style_guide#index'
-    end
+    get '/style-guide/*page', to: 'style_guide#index'
+    get '/style-guide/', to: 'style_guide#index'
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
@@ -121,9 +123,9 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
-  resources :subscriptions, except: [:destroy, :delete, :index], path: '/gsr/user/subscriptions'
+  resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
-  resources :favorite_schools, except: [:delete, :index], path: '/gsr/user/favorites'
+  resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]

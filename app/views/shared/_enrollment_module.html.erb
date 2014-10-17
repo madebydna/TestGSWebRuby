@@ -5,7 +5,7 @@
       <%= enrollment_module[type][:content].html_safe %>
       <% unless enrollment_module[type][:view_more].nil? %>
         <div class='oh'><%= enrollment_module[type][:view_more].html_safe %></div>
-        <a href='javascript:void(0)' class="js-view-more">View More »</a>
+        <a href='javascript:void(0)' class="js-view-more notranslate">View More »</a>
       <% end %>
     <% else %>
       <h3>Something went wrong while parsing enrollment module tab:<%= @tab[:key] %></h3>
@@ -14,7 +14,7 @@
 
   <div class="col-sm-4 col-lg-4 mbm pll">
     <% unless tab.seek(:results, type, :count) == 0 or tab.seek(:results, type, :count).nil? %>
-      <a href="<%= city_path(state[:long], city) + tab[:results][type][:path] %>" style='text-decoration: none;'>
+      <a href="<%= city_path(state[:long],  params[:city]) + tab[:results][type][:path] %>" style='text-decoration: none;'>
         <%= "Browse #{collection_nickname} #{type} #{tab[:display_name].downcase}" %>
         <span class='inverted-text brm dark-blue-bg phm'><%= tab[:results][type][:count] %></span>
       </a>

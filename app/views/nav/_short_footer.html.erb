@@ -1,20 +1,12 @@
 <div class="row invert-colors">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
-        <div class="limit-width-1200 open-sans">
-            <div class="clearfix ptl">
-                <div class="fl prl"><h4 class="mtn">Translate this web page</h4></div>
-                <div class="fl" id="google_translate_element"></div>
-
-                    <script type="text/javascript">
-                        function googleTranslateElementInit() {
-                            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,de,en,es,fr,hi,ht,it,ko,pl,pt,ru,tl,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-                        }
-                    </script>
-                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-            </div>
-            <hr />
-            <%= render 'shared/gs_address_and_copyright' %>
-        </div>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
+    <div class="limit-width-1200 open-sans">
+      <div class="clearfix ptl">
+        <%= render 'shared/google_translate_selector' %>
+      </div>
+      <hr />
+      <%= render 'shared/gs_address_and_copyright' %>
     </div>
+  </div>
 </div>
 <div class="gs_ad_slot visible-lg visible-md" id="adCustom_Welcome_Ad" data-ad-size="[1, 1]" style="width: 0px" data-dfp="Custom_Welcome_Ad"></div>

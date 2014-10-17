@@ -20,12 +20,14 @@
                   <i class="iconx16 i-16-green-check"></i>
                 <% elsif breakdown[:match_status] == :no %>
                     <i class="iconx16 i-16-plain-x"></i>
+                <% elsif breakdown[:match_status] == :no_data %>
+                    <%= render 'shared/no_data_symbol_and_popup' %>
                 <% else %>
-                  <%= render 'shared/no_data_symbol_and_popup' %>
+                    <i class="iconx16 i-16-not-applicable"></i>
                 <% end %>
               </td>
               <td class="tal <%= breakdown[:match_status] != :yes ? 'gray-dark' : '' %>">
-                  <%= truncate(breakdown[:filter], length: 26)%>
+                  <%= truncate_with_popup(breakdown[:filter], length: 26)%>
               </td>
             </tr>
           <% end %>

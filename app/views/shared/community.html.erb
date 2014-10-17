@@ -1,9 +1,6 @@
 <%= render 'nav/topnav' %>
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
-<% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>
-  <%= render 'shared/upcoming_events', important_events: @important_events, community_page: true %>
-<% end %>
 
 <div class="limit-width-1200 mbl">
   <div class="row">
