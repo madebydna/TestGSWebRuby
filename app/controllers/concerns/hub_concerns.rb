@@ -54,6 +54,8 @@ module HubConcerns
       if @state
         city_name = if @city
                       @city.respond_to?(:name) ? @city.name : @city
+                    elsif city_param
+                      city_param
                     else
                       nil
                     end
