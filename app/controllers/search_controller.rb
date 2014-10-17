@@ -215,10 +215,11 @@ class SearchController < ApplicationController
         HashUtils.split_keys school_search_result, 'city' do |value|
           {'city_name'=>value}
         end
+        school_state_name = States.abbreviation_hash[school_search_result['state'].downcase]
         #s = School.new
         #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/#{gs_legacy_url_city_district_browse_encode(@state[:long])}/#{gs_legacy_url_city_district_browse_encode(school_search_result['city_name'])}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
-        response_objects << {:school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
+        school_url = "/#{gs_legacy_url_city_district_browse_encode(school_state_name)}/#{gs_legacy_url_city_district_browse_encode(school_search_result['city_name'])}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
+        response_objects << {:state => school_search_result['state'].upcase, :school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
       end
     end
     render json:response_objects
@@ -234,9 +235,12 @@ class SearchController < ApplicationController
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
       results['response']['docs'].each do |city_search_result|
         output_city = {}
+        city_state = city_search_result['city_state'][0].upcase
+        city_state_name = States.abbreviation_hash[city_state.downcase]
         output_city[:city_name] = city_search_result['city_sortable_name']
-        output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{city_search_result['city_sortable_name'].downcase}/schools")
+        output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{city_state_name}/#{city_search_result['city_sortable_name'].downcase}/schools")
         output_city[:sort_order] = city_search_result['city_number_of_schools']
+        output_city[:state] = city_state
 
         response_objects << output_city
       end
@@ -255,9 +259,12 @@ class SearchController < ApplicationController
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
       results['response']['docs'].each do |district_search_result|
         output_district = {}
+        district_state = district_search_result['state'].upcase
+        district_state_name = States.abbreviation_hash[district_state.downcase]
         output_district[:district_name] = district_search_result['district_sortable_name']
         output_district[:sort_order] = district_search_result['district_number_of_schools']
-        output_district[:url] = gs_legacy_url_city_district_browse_encode("/#{@state[:long]}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
+        output_district[:url] = gs_legacy_url_city_district_browse_encode("/#{district_state_name}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
+        output_district[:state] = district_state
 
         response_objects << output_district
       end
