@@ -34,9 +34,13 @@ class FilterBuilder
   end
 
   def build_callbacks(db_callbacks)
-    db_callbacks.map do |callback|
-      try("build_#{callback[:callback_type]}_callback".to_sym, callback[:conditions], callback[:options])
-    end.compact
+    if db_callbacks
+      db_callbacks.map do |callback|
+        try("build_#{callback[:callback_type]}_callback".to_sym, callback[:conditions], callback[:options])
+      end.compact
+    else
+      []
+    end
   end
 
   def get_callbacks_from_db(state)
