@@ -18,8 +18,6 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
-  get '/gsr/state/home', to: 'states#show'
-
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
       constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
