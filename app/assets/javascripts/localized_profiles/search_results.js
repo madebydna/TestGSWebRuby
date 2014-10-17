@@ -235,6 +235,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $('.js-searchResultsContainer').on('click', '.js-compareSchoolButton', function() {
                 if (allowCompareSchoolsSelect === true ) {
                     allowCompareSchoolsSelect = false; //prevent user from double clicking for animation purposes
+                    var numOfSchoolsInList = schoolsList.numberOfSchoolsInList();
+
                     var $school = $(this);
                     var schoolId = $school.data('schoolid');
                     var schoolName = $school.data('schoolname');
@@ -244,13 +246,22 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                     if (schoolsList.listContainsSchoolId(schoolId) === true) {
                         schoolsList.removeSchool(schoolId);
                         unselectCompareSchool(schoolId);
-                    } else if (schoolsList.numberOfSchoolsInList() < maxNumberOfSchools) {
+                    } else if (numOfSchoolsInList < maxNumberOfSchools) {
                         var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success'];
                         if (schoolAdded === true) {
                             selectCompareSchool(schoolId);
-                        } else {
-                            //add alert for 'choose only schools from the same state' maybe
                         }
+                    } else if (numOfSchoolsInList >= maxNumberOfSchools) {
+                        var errorMessage = $('.js-compareSchoolsErrorMessage');
+                        var errorMessageClone = errorMessage.clone(true);
+                        var that = this;
+
+                        errorMessage.hide('slow', function() {
+                            $(this).remove();
+                            $(that).parents('.js-schoolSearchResult').before(errorMessageClone);
+                            errorMessageClone.show('slow');
+                            allowCompareSchoolsSelect = true;
+                        });
                     }
                     popupBox.syncPopupBox();
                     popupBox.syncSchoolCount();

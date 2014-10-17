@@ -12,6 +12,7 @@
           <% elsif !@by_name %>
             <%= render 'assigned_school_not_valid' %>
           <% end %>
+        <%= render 'compare_schools_error_message' %>
         <% ad_counter = 0 %>
         <% @schools.each_with_index do |school, search_result_counter| %>
             <% if @show_ads && [2, 7, 12].include?(search_result_counter) %>
