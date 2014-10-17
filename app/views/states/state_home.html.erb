@@ -19,6 +19,13 @@
 </div>
 
 <div class="row  limit-width-1200">
+    <% if @show_ads %>
+        <div class="mtl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :mobile  %>
+        </div>
+    <% end %>
+
   <div class="col-xs-12 tac">
       <h2 class="phm">Get started finding schools in...</h2>
   </div>
@@ -37,13 +44,25 @@
     <div class="fl ptm"><a class="" onclick="$('.toggle-cities').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_cities %> cities' ? 'See fewer' : 'See all <%= state.number_of_cities %> cities'; });">See all <%= state.number_of_cities %> cities</a></div>
   </div>
   <div class="toggle-cities pbxl ptl clearfix">
-    <% state.short_cities_list.each do |column_of_cities| %>
-      <%= div_tag sizes: column_sizes do %>
-        <% column_of_cities.each do |city| %>
-          <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
-        <% end %>
-      <% end %>
-    <% end %>
+      <div class="col-sm-12 col-md-8 col-lg-9">
+          <div class="row">
+            <% state.short_cities_list.each do |column_of_cities| %>
+              <%= div_tag sizes: column_sizes do %>
+                <% column_of_cities.each do |city| %>
+                  <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3">
+          <% if @show_ads %>
+              <div>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :desktop  %>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :mobile  %>
+              </div>
+          <% end %>
+      </div>
   </div>
   <div class="toggle-cities dn pbxl ptl clearfix">
     <% state.expanded_cities_list.each do |column_of_cities| %>
@@ -85,6 +104,12 @@
         <% end %>
       </div>
     </div>
+    <% if @show_ads %>
+        <div class="pvl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :mobile  %>
+        </div>
+    <% end %>
 </div>
 <% end %>
 

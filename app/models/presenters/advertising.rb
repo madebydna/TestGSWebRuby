@@ -350,6 +350,32 @@ class Advertising
           dimensions:[300,250]
         }
       },
+    },
+    @ad_slots[:State_Home_Standard] = {
+      Content_Top_Text: {
+        name: "Content_Top_Text",
+        desktop:{
+          dimensions:[728,60]
+        },
+        mobile:{
+          dimensions:[320,60]
+        }
+      },
+      Content_Top: {
+        name: "Content_Top",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
+      Footer: {
+        name: "Footer",
+        desktop:{
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
+        }
+      },
     }
 
     def get_width(page, slot, view)
