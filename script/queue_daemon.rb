@@ -4,7 +4,7 @@ def census_data_type?(datatype)
   CensusLoading::Base.census_data_types.key? datatype
 end
 
-def determine_class(data_type)
+def determine_loading_class(data_type)
   if census_data_type?(data_type)
     CensusLoading::Loader
   elsif data_type == 'newsletter'
@@ -30,7 +30,7 @@ def process_unprocessed_updates
       end
       data_types = update_blob.keys
       data_types.each do |data_type|
-        klass = determine_class(data_type)
+        klass = determine_loading_class(data_type)
         loader = klass.new(data_type, update_blob[data_type], @scheduled_update.source)
         loader.load!
       end

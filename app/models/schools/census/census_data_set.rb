@@ -2,7 +2,6 @@ class CensusDataSet < ActiveRecord::Base
   self.table_name = 'census_data_set'
   self.inheritance_column = nil
 
-  include ReadOnlyRecord
   include StateSharding
   include LookupDataPreloading
 
