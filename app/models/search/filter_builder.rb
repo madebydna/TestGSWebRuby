@@ -123,7 +123,7 @@ class FilterBuilder
                      9 => {label: '9th Grade', display_type: :select_box_value, name: :grades, value: 9},
                      10 => {label: '10th Grade', display_type: :select_box_value, name: :grades, value: 10},
                      11 => {label: '11th Grade', display_type: :select_box_value, name: :grades, value: 11},
-                     12 => {label: '12the Grade', display_type: :select_box_value, name: :grades, value: 12},
+                     12 => {label: '12th Grade', display_type: :select_box_value, name: :grades, value: 12},
                   }
                 }
               }
