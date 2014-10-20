@@ -51,6 +51,7 @@ gem 'gon'
 # Wiselinks gives us History.js for changing browser URLs
 gem 'wiselinks'
 
+# We forked this gem because the master branch is flawed
 gem 'rest_client', git: 'https://github.com/mseltzer/rest_client.git'
 
 gem 'mini_fb'
