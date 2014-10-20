@@ -258,7 +258,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
                         errorMessage.hide('slow', function() {
                             $(this).remove();
-                            $(that).parents('.js-schoolSearchResultCompareErrorMessage').before(errorMessageClone);
+                            $(that).parents('.js-schoolSearchResult').before(errorMessageClone);
                             errorMessageClone.show('slow');
                             allowCompareSchoolsSelect = true;
                         });
