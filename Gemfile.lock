@@ -18,13 +18,6 @@ GIT
       rails_admin
       sass-rails
 
-GIT
-  remote: https://github.com/mseltzer/rest_client.git
-  revision: 06bc382667a9da9010975e475dcb8a1f38c29bfc
-  specs:
-    rest_client (1.7.3)
-      netrc (~> 0.7.7)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -346,6 +339,8 @@ GEM
     remotipart (1.2.1)
     request_store (1.0.5)
     require_all (1.3.2)
+    rest_client (1.7.3)
+      netrc (~> 0.7.7)
     rsolr (1.0.10)
       builder (>= 2.1.2)
     rspec (3.0.0.rc1)
@@ -533,7 +528,6 @@ DEPENDENCIES
   rails_admin_nestable!
   rails_best_practices
   request_store (~> 1.0.3)
-  rest_client!
   rsolr
   rspec (~> 3.0.0.beta2)
   rspec-rails (~> 3.0.0.beta2)
