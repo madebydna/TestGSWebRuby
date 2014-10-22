@@ -15,8 +15,6 @@ class ApplicationController < ActionController::Base
   before_action :track_ab_version_in_omniture
   before_action :set_global_ad_targeting_through_gon
 
-  after_filter :disconnect_connection_pools
-
   protected
 
   rescue_from Exception, :with => :exception_handler
@@ -34,20 +32,6 @@ class ApplicationController < ActionController::Base
     url
   end
   ApplicationController.send :public, :url_for
-
-  def disconnect_connection_pools
-    return unless @school.present? && request.env['rack_after_reply.callbacks']
-    request.env['rack_after_reply.callbacks'] << lambda do
-      ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool|
-        if pool.connections.present? &&
-          ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" )
-          pool.disconnect!
-        end
-      end
-    end
-  end
 
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
