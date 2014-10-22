@@ -7,6 +7,7 @@ class PyocPdf < Prawn::Document
   White = 0, 0, 0, 0
   Grey = 0, 0, 0, 6
   Black = 0, 0, 0, 100
+  Dark_grey = 0, 0, 0, 51
   School_profile_blue = 5, 1, 0, 0
   Col_width = 160
 
@@ -23,8 +24,8 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,get_page_number_start)
-
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,get_page_number_start,is_spanish)
+    # require 'pry'; binding.pry;
     start_time = Time.now
     super()
 
@@ -47,26 +48,75 @@ class PyocPdf < Prawn::Document
 
       puts "#{self.class} - Generating PYOC PDF for School ID - #{school.id} ,State #{school.state} "
 
-      draw_header(is_k8_batch,is_high_school_batch, is_spanish = true)
+      draw_header(is_k8_batch,is_high_school_batch, is_spanish)
 
       school_cache = school.school_cache
 
       grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
         move_down 18
-        draw_first_column(school, school_cache)
-        draw_second_column(school_cache)
-        draw_third_column(school_cache, school)
+        draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch, is_spanish)
+        draw_second_column(school_cache, is_spanish)
+        draw_third_column(school_cache, school, is_spanish)
 
         move_down_medium
         draw_grey_line(index)
       end
+
 
       draw_footer(get_page_number_start)
     end
     end_time =Time.now - start_time
 
     puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
+    above_avg = []
+    avg = []
+    below_avg = ['1']
+    schools_decorated_with_cache_results.each do |school|
+      school_cache = school
+      if school.school_cache.overall_gs_rating == '8' || school.school_cache.overall_gs_rating =='9' || school.school_cache.overall_gs_rating =='10'
+        above_avg.push(school_cache.name)
+      end
+    end
+    # draw_columns(above_avg, below_avg)
 
+
+
+  end
+
+  def draw_columns(above_avg, below_avg)
+
+    # above_foo = ['Lorem ipsum dolor sit amet', 'consectetur adipiscing elit.', 'Suspendisse dignissim dui sit', 'amet aliquam pellentesque.', 'Suspendisse a nibh ut mi', 'imperdiet pulvinar.']
+
+    # avg = []
+    # below_avg = []
+    # columns potpie
+
+    # if school_cache.overall_gs_rating >= 8
+    #   above_avg.push(school_cache.name)
+    # end
+
+
+    start_new_page
+    column_box([0, cursor], :columns => 3, :width => bounds.width) do
+
+      if above_avg.any?
+        fill_color Blue_line
+        text 'Above average', :size => 14
+        fill_color Dark_grey
+        above_avg.each do |string|
+          text string, :size => 8
+        end
+      end
+      if below_avg.any?
+        fill_color Blue_line
+        text 'Below Average', :size => 14
+        fill_color Dark_grey
+        below_avg.each do |string|
+          text string, :size => 8
+        end
+      end
+
+    end
   end
 
   def move_down_small
@@ -79,7 +129,7 @@ class PyocPdf < Prawn::Document
 
   def draw_header(is_k8_batch,is_high_school_batch, is_spanish)
 
-    grade = is_spanish.present? ? 'GRADO' : 'GRADE'
+    grade = is_spanish == true ? 'GRADO' : 'GRADE'
 
     if is_high_school_batch
       fill_color Blue_line
@@ -93,14 +143,14 @@ class PyocPdf < Prawn::Document
         horizontal_line 0, 535, :at => 725
       end
     elsif is_k8_batch
-      fill_color Grey
+      fill_color Dark_grey
       text_box grade + " PK-8",
                :at => [250, 735],
                :width => Col_width,
                :height => 20,
                :size => 9
       stroke do
-        stroke_color Grey
+        stroke_color Header_grey
         horizontal_line 0, 535, :at => 725
       end
     end
@@ -129,20 +179,24 @@ class PyocPdf < Prawn::Document
 
 # first column
 
-  def draw_first_column(school, school_cache)
+  def draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch, is_spanish)
     grid([0, 0], [2, 1]).bounding_box do
       # blue rectangle
-      fill_color School_profile_blue
+      if is_high_school_batch
+        fill_color School_profile_blue
+      elsif is_k8_batch
+        fill_color Grey
+      end
       fill_rounded_rectangle([0, cursor], Col_width, 225, Rect_edge_rounding)
       fill_color 100, 20, 20, 20
       move_down_small
 
-      draw_name_grade_type_and_district(school, school_cache, is_spanish = true)
+      draw_name_grade_type_and_district(school, school_cache, is_spanish)
 
       move_down 15
 
-      draw_overall_gs_rating(school_cache, is_spanish = true)
-      draw_other_gs_ratings_table(school_cache, spanish = false)
+      draw_overall_gs_rating(school_cache, is_spanish)
+      draw_other_gs_ratings_table(school_cache, is_spanish)
 
       move_down_medium
 
@@ -156,7 +210,7 @@ class PyocPdf < Prawn::Document
       other_state_ratings(school_cache)
 
       move_down 15
-      draw_address(school, is_spanish = true)
+      draw_address(school, is_spanish)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
@@ -168,7 +222,7 @@ class PyocPdf < Prawn::Document
 
         move_down 15
 
-        draw_school_hours(school_cache, 60, is_spanish = true)
+        draw_school_hours(school_cache, 60, is_spanish)
 
 
         move_down_small
@@ -176,7 +230,7 @@ class PyocPdf < Prawn::Document
 
       else
         move_down_small
-        draw_school_hours(school_cache, 15, is_spanish = true)
+        draw_school_hours(school_cache, 15, is_spanish)
 
         move_down_small
         draw_best_known_for(school_cache, 15)
@@ -248,7 +302,7 @@ class PyocPdf < Prawn::Document
 
       move_down 25
       fill_color Black
-      text_box is_spanish.present? ? "Calificación general" : "Overall rating",
+      text_box is_spanish == true ? "Calificación general" : "Overall rating",
                :at => [17, cursor],
                :width => 25,
                # :width => 40,
@@ -260,7 +314,7 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_other_gs_ratings_table(school_cache, is_spanish)
-    data = get_gs_rating_info(school_cache, is_spanish = true)
+    data = get_gs_rating_info(school_cache, is_spanish)
     table(data, :column_widths => [80, 10],
           :position => 55,
           :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => Black}) do
@@ -272,9 +326,9 @@ class PyocPdf < Prawn::Document
 
   def get_gs_rating_info(school_cache, is_spanish)
       data = [
-          ["#{is_spanish.present? ? 'Puntuación de examenes' : 'Test score rating'}", school_cache.test_scores_rating],
-          ["#{is_spanish.present? ? 'Crecimiento' : 'Student growth rating'}", school_cache.student_growth_rating],
-          ["#{is_spanish.present? ? 'Preparacion universitaria' : 'College readiness'}", school_cache.college_readiness_rating],
+          ["#{is_spanish == true ? 'Puntuación de examenes' : 'Test score rating'}", school_cache.test_scores_rating],
+          ["#{is_spanish == true ? 'Crecimiento' : 'Student growth rating'}", school_cache.student_growth_rating],
+          ["#{is_spanish == true ? 'Preparacion universitaria' : 'College readiness'}", school_cache.college_readiness_rating],
       ]
   end
 
@@ -324,7 +378,7 @@ class PyocPdf < Prawn::Document
   def draw_address(school, is_spanish)
     data =[[school.street],
            ["#{school.city}, #{school.state} #{school.zipcode}"],
-           ["#{is_spanish.present? ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
+           ["#{is_spanish == true ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
     ]
 
 
@@ -338,7 +392,7 @@ class PyocPdf < Prawn::Document
 
   def draw_school_hours(school_cache, x_position, is_spanish)
     data = [
-        ["#{is_spanish.present? ? 'Horario' : 'School Hours:'}"],
+        ["#{is_spanish == true ? 'Horario' : 'School Hours:'}"],
         [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a']
     ]
 
@@ -351,29 +405,29 @@ class PyocPdf < Prawn::Document
 
   def draw_best_known_for(school_cache, x_position)
     fill_color 100, 20, 20, 20
-    text_box "#{school_cache.best_known_for}",
+    text_box "#{school_cache.best_known_for.truncate(75)}",
              :at => [x_position, cursor],
-             :width => 95,
-             :height => 50,
+             :width => 135,
+             :height => 20,
              :size => 7,
              :style => :italic
   end
 
 # second column
 
-  def draw_second_column(school_cache)
+  def draw_second_column(school_cache, is_spanish)
     grid([0, 2], [2, 3]).bounding_box do
-      draw_at_a_glance_table(school_cache, is_spanish = true)
+      draw_at_a_glance_table(school_cache, is_spanish)
 
       move_down_medium
 
-      draw_application_table(school_cache, is_spanish = true)
+      draw_application_table(school_cache, is_spanish)
     end
   end
 
   def draw_at_a_glance_table(school_cache, is_spanish)
     fill_color Black
-    text_box is_spanish.present? ? "Estadísticas de escuela" : "At a glance",
+    text_box is_spanish == true ? "Estadísticas de escuela" : "At a glance",
              :at => [0, cursor],
              :width => 100,
              # :width => 75,
@@ -389,12 +443,12 @@ class PyocPdf < Prawn::Document
 
     move_down_small
 
-    which_school_size = is_spanish.present? ? 'Tamaño de la escuela' : 'School size'
-    which_transportation = is_spanish.present? ? 'Transporte' : 'Transportation'
-    which_before_care = is_spanish.present? ? 'Cuidado antes de clases' : 'Before care'
-    which_after_care = is_spanish.present? ? 'Cuidado despues de clases' : 'After care'
-    which_uniform = is_spanish.present? ? 'Vestimenta' : 'Uniform/Dress code'
-    which_pre_k = is_spanish.present? ? 'Preescolar' : 'Pre K'
+    which_school_size = is_spanish == true ? 'Tamaño de la escuela' : 'School size'
+    which_transportation = is_spanish == true ? 'Transporte' : 'Transportation'
+    which_before_care = is_spanish == true ? 'Cuidado antes de clases' : 'Before care'
+    which_after_care = is_spanish == true ? 'Cuidado despues de clases' : 'After care'
+    which_uniform = is_spanish == true ? 'Vestimenta' : 'Uniform/Dress code'
+    which_pre_k = is_spanish == true ? 'Preescolar' : 'Pre K'
 
 
         data = [[{:image => Image_path_school_size, :scale => 0.25}, which_school_size, school_cache.students_enrolled != "?" ? school_cache.students_enrolled : 'n/a' ],
@@ -426,7 +480,7 @@ class PyocPdf < Prawn::Document
     move_down_small
 
     fill_color Black
-    text_box is_spanish.present? ? 'Aplicación' : "Application",
+    text_box is_spanish == true ? 'Aplicación' : "Application",
              :at => [5, cursor],
              :width => 75,
              :height => 10,
@@ -441,11 +495,11 @@ class PyocPdf < Prawn::Document
 
     move_down_small
     data = [
-        [is_spanish.present? ? 'Fecha limite' : 'Deadline', school_cache.deadline],
-        [is_spanish.present? ? 'Costo de Matrícula' : 'Tuition', school_cache.tuition],
-        [is_spanish.present? ? 'Ayuda financiera' : 'Financial aid', school_cache.aid],
-        [is_spanish.present? ? 'Vales validos' : 'Voucher accepted', school_cache.voucher],
-        [is_spanish.present? ? 'Impuesto beca' : 'Tax scholarship', school_cache.tax_scholarship],
+        [is_spanish == true ? 'Fecha limite' : 'Deadline', school_cache.deadline],
+        [is_spanish == true ? 'Costo de Matrícula' : 'Tuition', school_cache.tuition],
+        [is_spanish == true ? 'Ayuda financiera' : 'Financial aid', school_cache.aid],
+        [is_spanish == true ? 'Vales validos' : 'Voucher accepted', school_cache.voucher],
+        [is_spanish == true ? 'Impuesto beca' : 'Tax scholarship', school_cache.tax_scholarship],
     ]
 
     table(data, :column_widths => [90, 70],
@@ -459,29 +513,29 @@ class PyocPdf < Prawn::Document
 
 # third column
 
-  def draw_third_column(school_cache, school)
+  def draw_third_column(school_cache, school, is_spanish)
     grid([0, 4], [2, 5]).bounding_box do
 
-      draw_diversity_table(school_cache, school, is_spanish = true)
+      draw_diversity_table(school_cache, school, is_spanish)
 
       move_down_medium
 
-      draw_grads_go_to_table(school_cache, is_spanish = true)
+      draw_grads_go_to_table(school_cache, is_spanish)
 
       move_down_small
 
-      draw_ell_and_sped_table(school_cache, is_spanish = true)
+      draw_ell_and_sped_table(school_cache, is_spanish)
 
       move_down_medium
 
-      draw_programs_table(school_cache, is_spanish = true)
+      draw_programs_table(school_cache, is_spanish)
 
     end
   end
 
   def draw_diversity_table(school_cache, school, is_spanish)
     fill_color Black
-    text_box is_spanish.present? ? 'Diversidad' : 'Diversity',
+    text_box is_spanish == true ? 'Diversidad' : 'Diversity',
              :at => [0, cursor],
              :width => 75,
              :height => 11,
@@ -498,14 +552,14 @@ class PyocPdf < Prawn::Document
     ethnicity_data = school_cache.formatted_ethnicity_data.to_a
 
     if ethnicity_data != []
-      if is_spanish
+      if is_spanish == true
         data = school_cache.formatted_ethnicity_data
         ethnicity_data = school.which_ethnicity_key_mapping(data)
       else
         ethnicity_data
       end
     else
-      if is_spanish
+      if is_spanish is_spanish == true
         ethnicity_data << ['No hay datos', ' ']
       else
         ethnicity_data << ['No diversity data available', ' ']
@@ -513,7 +567,7 @@ class PyocPdf < Prawn::Document
 
     end
 
-    if is_spanish
+    if is_spanish == true
     ethnicity_data << ['Almuerzo gratis oa precio reducido', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
     else
       ethnicity_data << ['Free and reduced lunch', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
@@ -529,7 +583,7 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_grads_go_to_table(school_cache, is_spanish)
-    text_box is_spanish.present? ? 'Estudiantes graduado asisten a?' : 'Our grads go to?',
+    text_box is_spanish == true ? 'Estudiantes graduado asisten a?' : 'Our grads go to?',
              :at => [0, cursor],
              # :width => 75,
              :width => Col_width,
@@ -553,8 +607,8 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_ell_and_sped_table(school_cache, is_spanish)
-    which_ell = is_spanish.present? ? 'Servicios ELL:' : 'ELL offering:'
-    which_sped = is_spanish.present? ? 'Educación Especial:' : 'SPED offering:'
+    which_ell = is_spanish == true ? 'Servicios ELL:' : 'ELL offering:'
+    which_sped = is_spanish == true ? 'Educación Especial:' : 'SPED offering:'
 
         data = [
         [ which_ell, which_sped],
@@ -572,7 +626,7 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_programs_table(school_cache, is_spanish)
-    text_box is_spanish.present? ? 'Programas' : 'Programs',
+    text_box is_spanish == true ? 'Programas' : 'Programs',
              :at => [0, cursor],
              :width => 75,
              :height => 10,

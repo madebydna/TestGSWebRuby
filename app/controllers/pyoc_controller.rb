@@ -2,6 +2,7 @@ class PyocController <  ApplicationController
   SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
 
 
+
   def print_pdf
     db_schools=find_schools_to_be_printed
 
@@ -32,7 +33,7 @@ class PyocController <  ApplicationController
   def find_schools_to_be_printed
     if state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
       db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
-    end
+      end
   end
 
   def prep_data_for_pdf(db_schools)
@@ -53,8 +54,9 @@ class PyocController <  ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?, get_page_number_start)
-        send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
+           pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?, get_page_number_start,params[:is_spanish].present? ? true : false)
+
+           send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
                   disposition: 'inline' #loads pdf directly in browser window
       end
