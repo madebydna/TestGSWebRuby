@@ -14,7 +14,10 @@
 <% if esp_enrollment.application_deadline.present? %>
     <!-- GET state and school type -->
     <% supporting_text = 'Applications Due' %>
-    <% if @school.state.downcase == 'de' && (@school.type.downcase == 'charter' || @school.type.downcase == 'charter') %>
+    STATE:<%= @school.state.downcase %>
+    TYPE:<%= @school.type.downcase %>
+
+    <% if @school.state.downcase == 'de' && (@school.type.downcase == 'charter' || @school.type.downcase == 'public') %>
         <% supporting_text = 'Applications due for most schools. See the choice admission policy for details.' %>
     <% end %>
     <% enrollment_array << (render 'shared/icon_text',sprite: 'application', supporting_text: supporting_text,
