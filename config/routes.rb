@@ -31,6 +31,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
+
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
@@ -77,7 +78,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/schools/cities/:state_long/:state_short', as: :city_list
     get '/schools/districts/:state_long/:state_short', as: :district_list
-    get '/:state_long/:city/:district', as: :district_home
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
