@@ -10,14 +10,11 @@ rails runner script/generate_pyoc_pdf wi:2:is_k8:9
 end
 def find_school_to_be_printed(state,collection_id,high_school_or_k8)
   if state.present? && collection_id.present? && high_school_or_k8.present?  && high_school_or_k8=='is_high_school'
-    puts 'I am here 1'
     db_schools_full = School.on_db(state).where(active: true).order(name: :asc)
     @db_schools = []
     db_schools_full.each do |school|
       # puts school.collection.id
-      puts 'I am here 11'
       if school.collection.present? && school.collection.id == collection_id.to_i && PyocController.new.is_high_school(school)
-        puts 'I am here 111'
         @db_schools.push(school)
       end
     end
@@ -30,7 +27,6 @@ def find_school_to_be_printed(state,collection_id,high_school_or_k8)
       end
     end
   elsif state.present? && !collection_id.present?
-    puts 'I am here 3'
     @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)
 
   end
