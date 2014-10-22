@@ -41,7 +41,9 @@
 <div class="row phm limit-width-1200">
   <div class="clearfix mtl">
     <div class="fl mrl"><h2 class="mvn">All <%= state.name %> cities</h2></div>
-    <div class="fl ptm"><a class="" onclick="$('.toggle-cities').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_cities %> cities' ? 'See fewer' : 'See all <%= state.number_of_cities %> cities'; });">See all <%= state.number_of_cities %> cities</a></div>
+    <div class="fl ptm">
+      <%= link_to("See all #{state.number_of_cities} cities", city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+    </div>
   </div>
   <div class="toggle-cities pbxl ptl clearfix">
       <div class="col-sm-12 col-md-8 col-lg-9">
@@ -64,15 +66,6 @@
           <% end %>
       </div>
   </div>
-  <div class="toggle-cities dn pbxl ptl clearfix">
-    <% state.expanded_cities_list.each do |column_of_cities| %>
-      <%= div_tag sizes: column_sizes do %>
-        <% column_of_cities.each do |city| %>
-          <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
 </div>
 <% end %>
 
@@ -82,23 +75,16 @@
     <div class="limit-width-1200 ptl phm">
     <div class="clearfix mtl">
         <div class="fl mrl"><h2 class="mvn"><%= state.name %> school districts</h2></div>
-        <div class="fl ptm"><a onclick="$('.toggle-districts').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_districts %> districts' ? 'See fewer' : 'See all <%= state.number_of_districts %> districts'; });">See all <%= state.number_of_districts %> districts</a></div>
+      <div class="fl ptm">
+        <%= link_to("See all #{state.number_of_districts} districts", district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+      </div>
     </div>
-      <!--<h2><%= state.name %> school districts <a onclick="$('.toggle-districts').slideToggle(); $(this).text(function(i, text){return text === 'See all <%= state.number_of_districts %> districts' ? 'See fewer' : 'See all <%= state.number_of_districts %> districts'; });">See all <%= state.number_of_districts %> districts</a></h2>-->
       <div class="toggle-districts pbxl ptl clearfix">
         <% state.short_districts_list.each do |column_of_districts| %>
           <%= div_tag sizes: column_sizes do %>
-            <% column_of_districts.each do |city| %>
-              <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="toggle-districts dn pbxl ptl clearfix">
-        <% state.expanded_districts_list.each do |column_of_districts| %>
-          <%= div_tag sizes: column_sizes do %>
-            <% column_of_districts.each do |city| %>
-              <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
+            <% column_of_districts.each do |district| %>
+                    <%= district %>
+              <%= link_to(district.name, district_home_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(district.city), gs_legacy_url_encode(district.name))) %></br>
             <% end %>
           <% end %>
         <% end %>
