@@ -83,7 +83,6 @@
         <% state.short_districts_list.each do |column_of_districts| %>
           <%= div_tag sizes: column_sizes do %>
             <% column_of_districts.each do |district| %>
-                    <%= district %>
               <%= link_to(district.name, district_home_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(district.city), gs_legacy_url_encode(district.name))) %></br>
             <% end %>
           <% end %>
