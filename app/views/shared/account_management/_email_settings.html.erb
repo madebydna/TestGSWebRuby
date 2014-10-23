@@ -21,13 +21,14 @@
                       <div class="mlm mtm">
                         <%= link_to('Unsubscribe', subscription_path(subscription.id),
                                     {
-                                            method: 'DELETE',
-                                            remote: true
+                                            class: "js-delete-subscription-#{subscription.id}",
+                                            :data => { :params_local => {"id" => subscription.id} }
                                     }
                             ) %>
                       </div>
+                        <br/>
                     </div>
-                    <br/>
+
                 <% end %>
             <% else %>
                 <% decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>

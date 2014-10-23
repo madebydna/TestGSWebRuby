@@ -15,8 +15,7 @@
                           <%= link_to(raw('remove <span class="mls vam iconx16 i-16-blue-x-circle"></span>'), favorite_school_path(favorite_school),
                                       {
                                               class: "js-delete-favorite-school-#{favorite_school.id}",
-                                              method: 'DELETE',
-                                              remote: true
+                                              :data => { :params_local => {"id" => favorite_school.id} }
                                       }
                               ) %>
                         </span>
