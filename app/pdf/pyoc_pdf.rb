@@ -617,7 +617,7 @@ class PyocPdf < Prawn::Document
     end
 
     if is_spanish
-    ethnicity_data << ['Almuerzo gratis oa precio reducido', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
+    ethnicity_data << ['Almuerzo gratis o precio reducido', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
     else
       ethnicity_data << ['Free and reduced lunch', school_cache.free_and_reduced_lunch != "?" ? school_cache.free_and_reduced_lunch : "n/a"]
     end
