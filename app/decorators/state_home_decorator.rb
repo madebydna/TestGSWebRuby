@@ -30,7 +30,7 @@ class StateHomeDecorator < Draper::Decorator
 
   def districts_list
     @districts_list ||= Array(District.on_db(abbreviation.to_sym).where(active: true).
-      order('name asc').limit(NUMBER_OF_CITIES_IN_SHORT_LIST)).in_groups(NUMBER_OF_COLUMNS_OF_DISTRICTS, false)
+      order('num_schools desc').limit(NUMBER_OF_CITIES_IN_SHORT_LIST)).in_groups(NUMBER_OF_COLUMNS_OF_DISTRICTS, false)
   end
 
 end
