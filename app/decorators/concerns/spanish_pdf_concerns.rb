@@ -10,13 +10,22 @@ module SpanishPdfConcerns
   }
 
   English_to_spanish_diversity_mapping = {
-      'White, not Hispanic' => 'Caucásico/Blanco',
-      'Hispanic' => 'Hispano/Latino',
-      'Native Hawaiian or Other Pacific Islander' => 'Nativo Hawaiiano',
-      'Multiracial' => 'De raza multiple/otro',
-      'Black, not Hispanic' => 'Afroamericano/Negro',
+      'African-American' => 'Afroamericano/Negro',
+      'American Indian' => 'Amerindio/Nativo Americano',
+      'American Indian/Alaskan Native' => 'Amerindio/Nativo Americano',
       'Asian' => 'Asiático',
-      'American Indian/Alaskan Native' => 'Amerindio/Nativo Americano'
+      'Asian/Pacific Islander' => 'Asiático',
+      'Black' => 'Afroamericano/Negro',
+      'Black, not Hispanic' => 'Afroamericano/Negro',
+      'Hispanic' => 'Hispano/Latino',
+      'Multiracial' => 'De raza multiple/otro',
+      'Native American or Native' => 'Amerindio/Nativo Americano',
+      'Native Hawaiian' => 'Nativo Hawaiiano',
+      'Native Hawaiian or Pacific Islander' => 'Nativo Hawaiiano',
+      'Native Hawaiian or Other Pacific Islander' => 'Nativo Hawaiiano',
+      'White' => 'Caucásico/Blanco',
+      'White, not Hispanic' => 'Caucásico/Blanco'
+
   }
 
   English_to_spanish_ell_sped_mapping = {

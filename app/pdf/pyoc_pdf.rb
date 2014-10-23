@@ -72,52 +72,71 @@ class PyocPdf < Prawn::Document
     puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
     above_avg = []
     avg = []
-    below_avg = ['1']
+    below_avg = []
+
+    above_avg_ratings = '8, 9, 10'
+    avg_ratings = '7, 6, 5, 4'
+    below_avg_ratings = '3, 2, 1'
     schools_decorated_with_cache_results.each do |school|
       school_cache = school
-      if school.school_cache.overall_gs_rating == '8' || school.school_cache.overall_gs_rating =='9' || school.school_cache.overall_gs_rating =='10'
+      if above_avg_ratings.include? school.school_cache.overall_gs_rating
         above_avg.push(school_cache.name)
       end
+      if avg_ratings.include? school.school_cache.overall_gs_rating
+        avg.push(school_cache.name)
+        end
+      if below_avg_ratings.include? school.school_cache.overall_gs_rating
+        below_avg.push(school_cache.name)
+      end
     end
-    # draw_columns(above_avg, below_avg)
 
-
-
+    # draw_index_columns(above_avg, avg, below_avg)
+    # draw_map_icons_index_columns(school.zipcode)
   end
 
-  def draw_columns(above_avg, below_avg)
+  def draw_index_columns(above_avg, avg ,below_avg)
 
-    # avg = []
-    # below_avg = []
-    # columns potpie
+    start_new_page(:size => "LETTER") #todo: don't need this once index is moved to own controller
+    fill_color Dark_blue
+    text_box 'SCHOOLS BY PERFORMANCE',
+             :at => [Col_width/2, cursor],
+             :height => 25,
+             :size => 24,
+             :style => :bold
 
-    # if school_cache.overall_gs_rating >= 8
-    #   above_avg.push(school_cache.name)
-    # end
+    move_down 30
+    stroke do
+      stroke_color Dark_blue
+      horizontal_line 5, 540, :at => cursor
+    end
 
+    move_down 25
 
-    start_new_page
     column_box([0, cursor], :columns => 3, :width => bounds.width) do
 
-      if above_avg.any?
-        fill_color Dark_blue
-        text 'Above average', :size => 14
-        fill_color Dark_grey
-        above_avg.each do |string|
-          text string, :size => 8
-        end
-      end
-      if below_avg.any?
-        fill_color Dark_blue
-        text 'Below Average', :size => 14
-        fill_color Dark_grey
-        below_avg.each do |string|
-          text string, :size => 8
-        end
-      end
-
+      which_ratings_index(above_avg, 'Above average')
+      move_down_small
+      which_ratings_index(avg, 'Average')
+      move_down_small
+      which_ratings_index(below_avg, 'Below average')
     end
   end
+
+  def which_ratings_index(array, rating_name)
+    if array.any?
+      fill_color Dark_blue
+      text rating_name , :size => 14
+      fill_color Dark_grey
+      array.each do |string|
+        text string, :size => 8
+      end
+    end
+  end
+
+  # def draw_map_icons_index_columns(school_cache.zipcode)
+  #   puts school.which_icon(school_cache.zipcode)
+
+  # end
 
   def move_down_small
     move_down 5
@@ -380,9 +399,6 @@ class PyocPdf < Prawn::Document
       row(0).size = 7
       row(0).padding = [0, 0, 5, 10]
       row(1).padding = [0, 5, 0, 0]
-      # if is_spanish
-      #   column(2).padding = [0, 0, 0, 10]
-      # end
     end
   end
 
@@ -616,7 +632,7 @@ class PyocPdf < Prawn::Document
   end
 
   def draw_grads_go_to_table(school_cache)
-    text_box is_spanish ? 'Estudiantes graduado asisten a?' : 'Our grads go to?',
+    text_box is_spanish ? 'Estudiantes graduado asisten?' : 'Our grads go to?',
              :at => [0, cursor],
              # :width => 75,
              :width => Col_width,
