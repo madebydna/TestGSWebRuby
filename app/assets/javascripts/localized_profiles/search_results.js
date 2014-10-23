@@ -253,13 +253,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                         }
                     } else if (numOfSchoolsInList >= maxNumberOfSchools) {
                         var errorMessage = $('.js-compareSchoolsErrorMessage');
-                        var errorMessageClone = errorMessage.clone(true);
                         var that = this;
 
                         errorMessage.hide('slow', function() {
-                            $(this).remove();
-                            $(that).parents('.js-schoolSearchResultCompareErrorMessage').before(errorMessageClone);
-                            errorMessageClone.show('slow');
+                            $(that).parents('.js-schoolSearchResultCompareErrorMessage').before(errorMessage);
+                            errorMessage.show('slow');
                             allowCompareSchoolsSelect = true;
                         });
                     }
