@@ -3,12 +3,12 @@ class PyocPdf < Prawn::Document
 
 
   Rect_edge_rounding = 10
-  Blue_line = 70, 15, 0, 0
+  Dark_blue = 70, 15, 0, 0
   White = 0, 0, 0, 0
   Grey = 0, 0, 0, 6
   Black = 0, 0, 0, 100
   Dark_grey = 0, 0, 0, 51
-  School_profile_blue = 5, 1, 0, 0
+  Light_blue = 5, 1, 0, 0
   Col_width = 170
 
   Image_path_school_size= "app/assets/images/pyoc/school_size_pyoc.png"
@@ -100,7 +100,7 @@ class PyocPdf < Prawn::Document
     column_box([0, cursor], :columns => 3, :width => bounds.width) do
 
       if above_avg.any?
-        fill_color Blue_line
+        fill_color Dark_blue
         text 'Above average', :size => 14
         fill_color Dark_grey
         above_avg.each do |string|
@@ -108,7 +108,7 @@ class PyocPdf < Prawn::Document
         end
       end
       if below_avg.any?
-        fill_color Blue_line
+        fill_color Dark_blue
         text 'Below Average', :size => 14
         fill_color Dark_grey
         below_avg.each do |string|
@@ -132,14 +132,14 @@ class PyocPdf < Prawn::Document
     grade = is_spanish ? 'GRADO' : 'GRADE'
 
     if is_high_school_batch
-      fill_color Blue_line
+      fill_color Dark_blue
       text_box grade + " 9-12",
                :at => [250, 735],
                :width => Col_width,
                :height => 20,
                :size => 9
       stroke do
-        stroke_color Blue_line
+        stroke_color Dark_blue
         horizontal_line 0, 540, :at => 725
       end
     elsif is_k8_batch
@@ -150,7 +150,7 @@ class PyocPdf < Prawn::Document
                :height => 20,
                :size => 9
       stroke do
-        stroke_color Header_grey
+        stroke_color Dark_grey
         horizontal_line 0, 540, :at => 725
       end
     end
@@ -183,7 +183,7 @@ class PyocPdf < Prawn::Document
     grid([0, 0], [2, 1]).bounding_box do
       # blue rectangle
       if is_high_school_batch
-        fill_color School_profile_blue
+        fill_color Light_blue
       elsif is_k8_batch
         fill_color Grey
       end
@@ -273,9 +273,9 @@ class PyocPdf < Prawn::Document
   def which_district_truncation(school, level)
     if school.district != nil
       if level.include? '& UG'
-        truncated_district = '| ' + truncate_district(school, 25)
+        truncated_district = '| ' + truncate_district(school, 27)
       else
-        truncated_district = '| ' + truncate_district(school, 32)
+        truncated_district = '| ' + truncate_district(school, 36)
       end
     else
       truncated_district = ' '
@@ -424,7 +424,7 @@ class PyocPdf < Prawn::Document
 
   def draw_best_known_for(school_cache, school, x_position)
     fill_color 100, 20, 20, 20
-    text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(75) : school_cache.best_known_for}",
+    text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
              :at => [x_position, cursor],
              :width => school.which_icon.present? && school.which_icon != 'N/A'?  95 : 135,
              :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
@@ -455,7 +455,7 @@ class PyocPdf < Prawn::Document
 
     move_down_medium
     stroke do
-      stroke_color Blue_line
+      stroke_color Dark_blue
       horizontal_line 0, Col_width, :at => cursor
     end
 
@@ -515,7 +515,7 @@ class PyocPdf < Prawn::Document
 
     move_down_medium
     stroke do
-      stroke_color Blue_line
+      stroke_color Dark_blue
       horizontal_line 5, Col_width - 5, :at => cursor
     end
 
@@ -576,7 +576,7 @@ class PyocPdf < Prawn::Document
              :style => :bold
     move_down_medium
     stroke do
-      stroke_color Blue_line
+      stroke_color Dark_blue
       horizontal_line 0, Col_width, :at => cursor
     end
 
@@ -670,7 +670,7 @@ class PyocPdf < Prawn::Document
              :style => :bold
     move_down_medium
     stroke do
-      stroke_color Blue_line
+      stroke_color Dark_blue
       horizontal_line 0, Col_width, :at => cursor
     end
 
