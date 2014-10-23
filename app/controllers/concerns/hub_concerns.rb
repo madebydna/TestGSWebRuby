@@ -5,12 +5,12 @@ module HubConcerns
 
   def set_hub(school = @school)
     return @hub if @hub
-    if @by_location || @by_name # pull from search results if on search
+    if @by_name # pull from search results if on by name search
       first_school_result_is_in_hub? # memoizes hub into @hub
     elsif school # pull from school directly if on a school page
       hub_matching_school(school)
     end
-    hub_matching_current_url unless @hub # fall back on URL if above fail
+    hub_matching_current_url unless @hub # fall back on URL if above fail (e.g. search by location or browse)
     #recently_visited_hub unless @hub # fall back on cookies if above fail
     reset_hub_cookies(@hub) if @hub
     @hub
