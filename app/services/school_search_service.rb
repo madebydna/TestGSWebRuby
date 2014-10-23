@@ -107,7 +107,6 @@ class SchoolSearchService
     school_search_result.entries.each do |key, value|
       school_search_result[key[7..-1]] = value if key.start_with? 'school_' # strip the preceding 'school_' from keys
     end
-    school_search_result.delete_if { |key| key.start_with?('school_') || KEYS_TO_DELETE.include?(key) }
     school_search_result['zipcode'] = school_search_result['zip']
     school_search_result['level'] = school_search_result['grades']
     school_search_result['enrollment'] = school_search_result['size'] if school_search_result.include? 'size'

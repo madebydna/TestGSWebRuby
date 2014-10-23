@@ -147,9 +147,9 @@ class SearchController < ApplicationController
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
 
-    sort = determine_sort!(@params_hash)
-    if sort
-      search_options.merge!({sort: sort})
+    @sort_type = determine_sort!(@params_hash)
+    if @sort_type
+      search_options.merge!({type: @sort_type})
     end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
@@ -162,9 +162,9 @@ class SearchController < ApplicationController
 
     results = search_method.call(search_options)
     setup_filter_display_map(@state ? @state[:short] : nil)
-    setup_fit_scores(results[:results], @params_hash) if filtering_search?
+    # setup_fit_scores(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
-    sort_by_fit(results[:results], sort) if sorting_by_fit?
+    # sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_hub # must come after @schools is defined in process_results
     @show_guided_search = has_guided_search?
@@ -176,7 +176,23 @@ class SearchController < ApplicationController
   def process_results(results, solr_offset)
     @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
+
     school_results = results[:results] || []
+    relative_offset = @results_offset - solr_offset
+
+    #when not sorting by fit, only applying fit scores to 25 schools on page. (previously it was up to 200 schools)
+    if sorting_by_fit? && filtering_search?
+      setup_fit_scores(school_results, @params_hash)
+      sort_by_fit(school_results, @sort_type)
+      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+    else
+      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      setup_fit_scores(@schools, @params_hash) if filtering_search?
+    end
+
+    (map_start, map_end) = calculate_map_range solr_offset
+    @map_schools = school_results[map_start .. map_end]
+
     @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
