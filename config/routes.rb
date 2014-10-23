@@ -78,9 +78,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/schools/cities/:state_long/:state_short', as: :city_list
     get '/schools/districts/:state_long/:state_short', as: :district_list
-    get '/:state_long/:city/:district', as: :district_home, constraints: {
-      district: !/^(\d+)-(.+)$/,
-    }
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
