@@ -51,10 +51,17 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
     var setCarouselHandler = function() {
         setupCarousel();
+        var windowWidth = $(window).width();
 
-        $(window).resize(function() {
-            destroyCarousel();
-            setupCarousel();
+        $(window).resize(function(e) {
+            //resize event sometimes gets called on resize events for mobile even if the size is the same
+            //this code checks the current window size and if its the same as before it does nothing
+            var winWidth = $(window).width();
+            if (winWidth != windowWidth) {
+                destroyCarousel();
+                setupCarousel();
+                windowWidth = winWidth;
+            }
         });
     };
 
