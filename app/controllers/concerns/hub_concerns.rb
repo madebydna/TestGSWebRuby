@@ -36,7 +36,10 @@ module HubConcerns
 
   def hub_show_ads?
     set_hub
-    @hub ? CollectionConfig.show_ads(hub_configs(@hub.collection_id)) : false
+    if @hub
+      return CollectionConfig.show_ads(hub_configs(@hub.collection_id))
+    end
+    true
   end
 
   private

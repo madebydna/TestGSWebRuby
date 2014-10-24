@@ -1,0 +1,31 @@
+<% if @show_ads %>
+    <% ad_counter ||= 0 %>
+    <% if desktop_slots && desktop_slots[ad_counter] %>
+        <% ad_slot = desktop_slots[ad_counter] %>
+
+        <div width="100%">
+          <% if  ad_slot.is_a?(Hash) %>
+              <%= render 'search_result_ad', ad_slot: ad_slot, view_type: :desktop %>
+          <% elsif  ad_slot.is_a?(Array) && ad_slot.size == 2 %>
+              <% ad_slots = ad_slot %>
+              <div class="clearfix limit-width-900">
+                <% ad_slots.each_with_index do |ad_slot, i| %>
+                    <% float_type = i == 0 ? 'fl' : 'fr' %>
+                    <%= render 'search_result_ad', klass: "#{float_type}", ad_slot: ad_slot, view_type: :desktop %>
+                <% end %>
+              </div>
+          <% end %>
+        </div>
+
+    <% end %>
+
+    <% if mobile_slots && mobile_slots[ad_counter] %>
+        <% ad_slot = mobile_slots[ad_counter] %>
+
+        <div width="100%">
+          <%= render 'search_result_ad', ad_slot: ad_slot, view_type: :mobile %>
+        </div>
+
+        <%= render partial: '/shared/advertising_word' %>
+    <% end %>
+<% end %>

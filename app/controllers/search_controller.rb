@@ -6,11 +6,13 @@ class SearchController < ApplicationController
   include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
+  include SearchAdsConcerns
 
   #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
+  before_action :set_search_ad_slots_instance_variables
 
   layout 'application'
 
@@ -200,6 +202,15 @@ class SearchController < ApplicationController
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
     @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+
+    if params[:limit]
+      if params[:limit].to_i > 0
+        @schools = @schools[0..(params[:limit].to_i - 1)]
+      else
+        @schools = []
+      end
+    end
+
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 

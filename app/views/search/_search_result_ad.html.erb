@@ -1,21 +1,13 @@
-<%
-   desktopSlots = [
-       {name:'Responsive_School_Reviews_Review1_728x90',  dimensions: [728, 90]},
-       {name:'Responsive_School_Reviews_Review2_300x250', dimensions: [300, 250]},
-       {name:'Responsive_School_Reviews_Review3_728x90',  dimensions: [728, 90]}
-   ]
-   mobileSlots = [
-       {name:'Responsive_School_Reviews_Mobile_Review1_320x50',  dimensions: [320, 50]},
-       {name:'Responsive_School_Reviews_Mobile_Review2_300x250', dimensions: [300, 250]},
-       {name:'Responsive_School_Reviews_Mobile_Review3_320x50',  dimensions: [320, 50]}
-   ]
-%>
-<% if ad_counter < desktopSlots.size %>
-  <div width="100%">
-      <% ad_slot = desktopSlots[ad_counter] %>
-      <div class="gs_ad_slot ma visible-lg visible-md" id="ad_desktop_<%=ad_slot[:name]%>" data-ad-size="<%=ad_slot[:dimensions]%>" style="width: <%= ad_slot[:dimensions][0] %>px;" data-dfp="<%= ad_slot[:name] %>"></div>
-      <% ad_slot = mobileSlots[ad_counter] %>
-      <div class="gs_ad_slot ma visible-sm visible-xs" id="ad_mobile_<%=ad_slot[:name]%>" data-ad-size="<%=ad_slot[:dimensions]%>" style="width: <%= ad_slot[:dimensions][0] %>px;" data-dfp="<%= ad_slot[:name] %>"></div>
-  </div>
-  <%= render partial: '/shared/advertising_word' %>
-<% end %>
+<% klass ||= '' %>
+<% classes = if view_type == :desktop
+               'visible-md visible-lg ' + klass
+             elsif view_type == :mobile
+               'visible-xs visible-sm ' + klass
+             end %>
+
+<div class        = "gs_ad_slot ma <%= classes %>"
+     id           = "ad_<%= view_type %>_<%= ad_slot[:name] %>"
+     data-ad-size = "<%= ad_slot[:dimensions] %>"
+     style        = "width: <%= ad_slot[:dimensions][0] %>px;"
+     data-dfp     = "<%= ad_slot[:name] %>">
+</div>
