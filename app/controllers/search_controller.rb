@@ -98,7 +98,7 @@ class SearchController < ApplicationController
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
-      @normalized_address = params_hash['normalizedAddress'][0..75]
+      @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end

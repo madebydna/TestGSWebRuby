@@ -36,7 +36,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         var queryString = filtersQueryString($form);
 
         var getParam = GS.uri.Uri.getFromQueryString;
-        var urlParamsToPreserve = ['lat', 'lon', 'q', 'locationSearchString', 'locationType'];
+        var urlParamsToPreserve = ['lat', 'lon', 'q', 'locationSearchString', 'locationType', 'normalizedAddress'];
         if (shouldPreserveSortParam($form, getParam('sort'))) { urlParamsToPreserve.push('sort'); }
         for (var i = 0; i < urlParamsToPreserve.length; i++) {
             if (getParam(urlParamsToPreserve[i]) != undefined) {
