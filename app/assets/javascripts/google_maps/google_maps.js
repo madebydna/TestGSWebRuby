@@ -58,6 +58,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
                   scrollwheel: false,
                   draggable: isdraggable,
                   zoom: 12,
+                  maxZoom: 19,
                   styles: [
                       {
                           "featureType": "road.highway",
@@ -203,6 +204,11 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               }
               if (!bounds.isEmpty()) {
                   GS.search.map.setCenter(bounds.getCenter(), GS.search.map.fitBounds(bounds));
+                  google.maps.event.addListenerOnce(GS.search.map, 'bounds_changed', function() {
+                      GS.search.map.setOptions({maxZoom:null});
+                  });
+              } else {
+                  GS.search.map.setOptions({maxZoom:null});
               }
           };
           var getInfoWindowMarkup = function (point) {
