@@ -152,7 +152,7 @@ class SearchController < ApplicationController
 
     @sort_type = determine_sort!(@params_hash)
     if @sort_type
-      search_options.merge!({type: @sort_type})
+      search_options.merge!({sort: @sort_type})
     end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
