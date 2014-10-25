@@ -7,8 +7,33 @@ GS.profile.ui = GS.profile.ui || (function() {
 
     };
 
+    var isProfilePage = function() {
+        return ['Overview','Quality','Details','Reviews'].indexOf(gon.pagename) >= 0
+    };
+
+    var showBackToCompareLink = function () {
+        var state = GS.stateAbbreviationFromUrl();
+        var schoolId = GS.schoolIdFromUrl();
+        GS.compare.schoolsList.init();
+        if (state === GS.compare.schoolsList.getState()) {
+            if (GS.compare.schoolsList.listContainsSchoolId(schoolId)) {
+                var backToCompare = $('.js-backToCompare');
+                backToCompare.attr('href', GS.compare.schoolsList.buildCompareURL());
+                backToCompare.removeClass('dn');
+            }
+        }
+    };
+
     return {
-        updateWithUserData: updateWithUserData
+        updateWithUserData: updateWithUserData,
+        isProfilePage: isProfilePage,
+        showBackToCompareLink: showBackToCompareLink
     }
 
-});
+})();
+
+if (GS.profile.ui.isProfilePage()) {
+    $(document).ready(function () {
+        GS.profile.ui.showBackToCompareLink();
+    });
+}

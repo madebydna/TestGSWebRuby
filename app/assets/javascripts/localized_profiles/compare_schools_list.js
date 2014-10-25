@@ -50,6 +50,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
 
     var syncDataWithCookies = function() {
         $.cookie('compareSchools', JSON.stringify(schools), {path:'/'});
+//        GS.localStorage.setItem('compareSchools', schools);
     };
 
     var removeSchool = function(id) {
@@ -106,6 +107,12 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         }
     };
 
+    var buildCompareURL = function() {
+        var schoolIds = getSchoolIds().join();
+        var state = getState();
+        return '/compare?state=' + state + '&school_ids=' + schoolIds;
+    };
+
     //
     var init = function(maxNumOfSchools) {
         maxNumberOfSchools = maxNumOfSchools;
@@ -120,7 +127,8 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         getSchoolById: getSchoolById,
         listContainsSchoolId: listContainsSchoolId,
         getState: getState,
-        getSchoolIds: getSchoolIds
+        getSchoolIds: getSchoolIds,
+        buildCompareURL: buildCompareURL
     }
 
 })();
