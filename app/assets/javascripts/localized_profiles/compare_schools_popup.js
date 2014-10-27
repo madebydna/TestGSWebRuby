@@ -24,7 +24,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         var popupIds = getCompareSchoolsPopupIds();
 
         //hide popup if there are not schools to show
-        if (schoolIdsFromList.length === 0) {
+        if (schoolIdsFromList.length < minNumberOfSchools) {
             $(popupHtmlClass).hide();
         }
 
@@ -101,7 +101,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     var setCompareSchoolsPopupHandler = function(offsetFunction) {
         var $poupButton = $(popupButtonHtmlClass);
         $poupButton.on('click', function() {
-            if (schoolsList.numberOfSchoolsInList() > 0) {
+            if (schoolsList.numberOfSchoolsInList() >= minNumberOfSchools) {
                 var $popup = $(this).siblings(popupHtmlClass);
                 var $container = $(popupContainerHtmlClass);
                 if ($popup.css('display') === 'none') {
