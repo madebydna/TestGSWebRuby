@@ -49,6 +49,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/partnerOpportunities.page', as: :partners
     get '/about/pressRoom.page', as: :media_room
     get '/about/linkToUs.page', as: :widgets_and_tools
+    get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
