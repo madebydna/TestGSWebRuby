@@ -1,12 +1,12 @@
-<% school = defined?(school) ? school : Struct.new(:state,:name,:id,:overall_gs_rating).new('',nil,nil,nil) %>
+<% s = defined?(school) ? school : Struct.new(:state,:name,:id,:overall_gs_rating).new('',nil,nil,nil) %>
 <div class="dib" style="width:150px;">
   <div class="btn btn-default clearfix mbm db pull-left js-compareSchoolButton"
-    id='js-compareSchool<%= "#{school.id}" %>'
+    id='js-compareSchool<%= "#{s.id}" %>'
     style="width:150px"
-    data-schoolname="<%= school.name %>"
-    data-schoolstate="<%= school.state.downcase %>"
-    data-schoolid="<%= school.id %>"
-    data-schoolrating="<%= school.overall_gs_rating || 'nr' %>"
+    data-schoolname="<%= s.name %>"
+    data-schoolstate="<%= s.state.downcase %>"
+    data-schoolid="<%= s.id %>"
+    data-schoolrating="<%= s.overall_gs_rating || 'nr' %>"
   >
     <div class="iconx16 i-16-gray-check-bigger fl mrs "></div>
     <div class="fl js-compareSchoolsButtonText">Compare</div>
