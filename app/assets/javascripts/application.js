@@ -25,6 +25,7 @@
 //= require_tree ./google_maps
 //= require_tree ./account_management
 //= require_tree ./page_initializers
+//= require_tree ./ads
 
 Function.prototype.gs_bind = function(obj) {
     var method = this;
