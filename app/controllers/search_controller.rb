@@ -486,6 +486,7 @@ class SearchController < ApplicationController
     gon.soft_filter_keys = SOFT_FILTER_KEYS
     gon.pagename = "SearchResultsPage"
     gon.state_abbr = @state[:short]
+    gon.show_ads = @show_ads
   end
 
 end

@@ -662,7 +662,4 @@ GS.search.init = (function() {
     GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
     GS.search.schoolSearchForm.setShowFiltersCookieHandler();
   }
-    jQuery(function() {
-        GS.ad.interstitial.attachInterstitial();
-    })
 });

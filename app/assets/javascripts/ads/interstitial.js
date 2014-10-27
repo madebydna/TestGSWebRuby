@@ -47,7 +47,7 @@ GS.ad.interstitial = (function() {
     }
 
     function isExcludedLink(link) {
-        return link.className.match(/noInterstitial/) ||
+        return link.className.match(/noInterstitial/) || link.className.match(/js-no_ad/) ||
             (link.href && (link.href.match(/javascript/) || link.href.indexOf(window.location.href + "#") > -1)) ||
             (link.getAttribute("onclick") && link.getAttribute("onclick").toString().match(/window.open/));
     }
