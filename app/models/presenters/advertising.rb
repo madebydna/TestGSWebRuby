@@ -350,7 +350,8 @@ class Advertising
           dimensions:[300,250]
         }
       },
-    },
+    }
+
     @ad_slots[:State_Home_Standard] = {
       Content_Top_Text: {
         name: "Content_Top_Text",
