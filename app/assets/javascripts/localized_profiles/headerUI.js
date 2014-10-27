@@ -12,14 +12,16 @@ GS.profile.ui = GS.profile.ui || (function() {
     };
 
     var showBackToCompareLink = function () {
-        var state = GS.stateAbbreviationFromUrl();
-        var schoolId = GS.schoolIdFromUrl();
-        GS.compare.schoolsList.init();
-        if (state === GS.compare.schoolsList.getState()) {
-            if (GS.compare.schoolsList.listContainsSchoolId(schoolId)) {
-                var backToCompare = $('.js-backToCompare');
-                backToCompare.attr('href', GS.compare.schoolsList.buildCompareURL());
-                backToCompare.removeClass('dn');
+        if (GS.localStorage.getItem('comparingSchools')) {
+            var state = GS.stateAbbreviationFromUrl();
+            var schoolId = GS.schoolIdFromUrl();
+            GS.compare.schoolsList.init();
+            if (state === GS.compare.schoolsList.getState()) {
+                if (GS.compare.schoolsList.listContainsSchoolId(schoolId)) {
+                    var backToCompare = $('.js-backToCompare');
+                    backToCompare.attr('href', GS.compare.schoolsList.buildCompareURL());
+                    backToCompare.removeClass('dn');
+                }
             }
         }
     };

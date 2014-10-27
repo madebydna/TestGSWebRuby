@@ -2,16 +2,22 @@ GS.localStorage = (function(_) {
     var namespace = 'GS.';
     var enabled = !!window.localStorage;
 
-    var setItem = function(key,value) {
+    var setItem = function(key, value, daysToKeep) {
         if (!enabled) {
             return false;
         }
-        if (typeof value === "object") {
-            value = JSON.stringify(value);
+
+        var expirationDate = new Date();
+        if (daysToKeep > 0) {
+            expirationDate = expirationDate.setDate(expirationDate.getDate() + daysToKeep);
+        } else {
+            expirationDate = false;
         }
 
+        value = {value: value, expirationDate: expirationDate};
+
         try {
-            localStorage.setItem(namespace + key,value);
+            localStorage.setItem(namespace + key, JSON.stringify(value));
         } catch (err) {
             return false;
         }
@@ -30,6 +36,12 @@ GS.localStorage = (function(_) {
 
         if (value[0] === '{' || value[0] === '[') {
             value = JSON.parse(value);
+            if (value.expirationDate && new Date(value.expirationDate) < new Date()) {
+                removeItem(key);
+                return null;
+            } else {
+                return value.value;
+            }
         }
 
         return value;

@@ -5,6 +5,7 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
     var state = '';
 
     var addSchool = function(id, schoolsState, name, rating) {
+        GS.compare.schoolsList.removeComparingSchoolsFlag();
         var responseObject = {
             success: true,
             errorCode: null //"wrongState"|"alreadyPresent"|"tooManySchools"|"exception"
@@ -50,10 +51,10 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
 
     var syncDataWithCookies = function() {
         $.cookie('compareSchools', JSON.stringify(schools), {path:'/'});
-//        GS.localStorage.setItem('compareSchools', schools);
     };
 
     var removeSchool = function(id) {
+        GS.compare.schoolsList.removeComparingSchoolsFlag();
         for (var i = 0; i < schools.length; i++ ) {
             if (schools[i]['id'] == parseInt(id)) {
                 schools.splice(i, 1);
@@ -107,10 +108,31 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         }
     };
 
-    var buildCompareURL = function() {
+    var buildCompareURL = function(searchURL) {
         var schoolIds = getSchoolIds().join();
         var state = getState();
-        return '/compare?state=' + state + '&school_ids=' + schoolIds;
+        var url = '/compare?state=' + state + '&school_ids=' + schoolIds;
+
+        if (searchURL) {
+            url = url + '&search_url=' + searchURL;
+            GS.localStorage.setItem('searchURL', searchURL, 3);
+        } else if (GS.localStorage.getItem('searchURL')) {
+            url = url + '&search_url=' + GS.localStorage.getItem('searchURL');
+        }
+
+        return url;
+    };
+
+    var setComparingSchoolsFlag = function () {
+        if (gon.pagename != GS.compare.compareSchoolsPage.pageName) {
+            GS.localStorage.setItem('comparingSchools', true, 3);
+        }
+    };
+
+    var removeComparingSchoolsFlag = function () {
+        if (gon.pagename != GS.compare.compareSchoolsPage.pageName) {
+            GS.localStorage.removeItem('comparingSchools', 3);
+        }
     };
 
     //
@@ -128,7 +150,9 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         listContainsSchoolId: listContainsSchoolId,
         getState: getState,
         getSchoolIds: getSchoolIds,
-        buildCompareURL: buildCompareURL
+        buildCompareURL: buildCompareURL,
+        setComparingSchoolsFlag: setComparingSchoolsFlag,
+        removeComparingSchoolsFlag: removeComparingSchoolsFlag
     }
 
 })();

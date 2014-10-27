@@ -175,8 +175,8 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
             var searchUrl = encodeURIComponent(GS.uri.Uri.getPath() + location.search);
 
             if (ids.length > 0 && state.length > 0) {
-                var url = GS.compare.schoolsList.buildCompareURL() +
-                    '&search_url=' + searchUrl;
+                var url = GS.compare.schoolsList.buildCompareURL(searchUrl);
+                GS.compare.schoolsList.setComparingSchoolsFlag();
                 GS.uri.Uri.goToPage(url);
             }
         });
