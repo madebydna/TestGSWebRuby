@@ -433,7 +433,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
 
         $deferred.fail(function(response){
-            alert('Sorry but wen\'t wrong. Please try again later');
+            alert('We are sorry but something went wrong. Please Try again Later');
         });
     };
 
