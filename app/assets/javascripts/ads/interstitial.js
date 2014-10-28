@@ -21,6 +21,13 @@ GS.ad.interstitial = (function() {
         return href;
     }
 
+    function attachInterstitial(adSlot) {
+        // mobile can opt out of interstitial by using visible-xs on a div with class js-disableInterstitial
+        if (gon && gon.show_ads && $('.js-disableInterstitial:visible').size() == 0) {
+            doInterstitial(adSlot);
+        }
+    }
+
     function doInterstitial(adSlot) {
         if (document.cookie.length == 0) return;
         var interstitial = readCookie('gs_interstitial');
@@ -53,6 +60,6 @@ GS.ad.interstitial = (function() {
     }
 
     return {
-        attachInterstitial: doInterstitial
+        attachInterstitial: attachInterstitial
     }
 })();
