@@ -6,5 +6,5 @@
 <% #  per_page:      number of items to fetch per page %>
 <% #  remote:        data-remote %>
 <% if !current_page.last? %>
-  <%= link_to url, :rel => 'next', :type => 'button', :class => 'btn font-size-block' do %>Next &gt;<% end %>
+  <%= link_to url, :rel => 'next', :type => 'button', :class => 'btn font-size-block js-no_ad' do %>Next &gt;<% end %>
 <% end %>
