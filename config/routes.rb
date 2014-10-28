@@ -16,7 +16,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/account', as: :manage_account, to: 'account_management#show'
 
-  get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+  #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
@@ -96,6 +96,8 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/style-guide/*page', to: 'style_guide#index'
     get '/style-guide/', to: 'style_guide#index'
+    get '/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do

@@ -1,4 +1,4 @@
-class PyocController <  ApplicationController
+class Admin::PyocController <  ApplicationController
   SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
 
 
