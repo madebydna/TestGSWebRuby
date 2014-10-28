@@ -15,6 +15,9 @@ class StateHomeDecorator < Draper::Decorator
   end
 
   def name
+    if state_hash[:short].downcase == 'dc'
+      return 'Washington DC'
+    end
     state_hash[:long].gs_capitalize_words
   end
 
