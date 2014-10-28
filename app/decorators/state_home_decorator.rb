@@ -15,7 +15,7 @@ class StateHomeDecorator < Draper::Decorator
   end
 
   def name
-    state_hash[:long].gs_capitalize_first
+    state_hash[:long].gs_capitalize_words
   end
 
   def approximate_schools_in_state
