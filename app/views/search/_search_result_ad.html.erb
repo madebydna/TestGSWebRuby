@@ -4,11 +4,13 @@
              elsif view_type == :mobile
                'visible-xs visible-sm ' + klass
              end %>
-
-<div class        = "gs_ad_slot ma <%= classes %>"
-     id           = "ad_<%= view_type %>_<%= ad_slot[:name] %>"
-     data-ad-size = "<%= ad_slot[:dimensions] %>"
-     style        = "width: <%= ad_slot[:dimensions][0] %>px;"
-     data-dfp     = "<%= ad_slot[:name] %>">
+<div class="<%= classes %>">
+  <div class        = "gs_ad_slot ma"
+       id           = "ad_<%= view_type %>_<%= ad_slot[:name] %>"
+       data-ad-size = "<%= ad_slot[:dimensions] %>"
+       style        = "width: <%= ad_slot[:dimensions][0] %>px;"
+       data-dfp     = "<%= ad_slot[:name] %>">
+  </div>
+  <%= render partial: '/shared/advertising_word' %>
 </div>
 <%= render partial: '/shared/advertising_word' %>
