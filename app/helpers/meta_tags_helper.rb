@@ -59,25 +59,33 @@ module MetaTagsHelper
     "Choose a #{@city} school, Choosing #{@city} schools, school choice #{@city}, #{@city} school choice tips, #{@city} school choice steps"
   end
 
+  def state_long_name_with_caps
+    state_name = @state[:long].gs_capitalize_words;
+    if @state[:short] == 'dc'
+      state_name = "Washington DC";
+    end
+    state_name
+  end
+
   def states_show_title
-    "#{@state[:long].gs_capitalize_words} Schools - #{@state[:long].gs_capitalize_words} State School Ratings - Public and Private"
+    "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
   end
 
   def states_show_description
-    "#{@state[:long].gs_capitalize_words} school information: Test scores, school parent reviews and more. Plus, get expert advice to help find the right school for your child."
+    "#{state_long_name_with_caps} school information: Test scores, school parent reviews and more. Plus, get expert advice to help find the right school for your child."
   end
 
   def states_show_keywords
     [
-      "#{@state[:long].gs_capitalize_words} Schools",
-      "#{@state[:long].gs_capitalize_words} Public Schools",
-      "#{@state[:long].gs_capitalize_words} School Ratings",
-      "Best #{@state[:long].gs_capitalize_words} Schools",
+      "#{state_long_name_with_caps} Schools",
+      "#{state_long_name_with_caps} Public Schools",
+      "#{state_long_name_with_caps} School Ratings",
+      "Best #{state_long_name_with_caps} Schools",
       "#{@state[:short].upcase} Schools",
       "#{@state[:short].upcase} Public Schools",
       "#{@state[:short].upcase} School Ratings",
       "Best #{@state[:short].upcase} Schools",
-      "Private Schools In #{@state[:long].gs_capitalize_words}"
+      "Private Schools In #{state_long_name_with_caps}"
     ]
   end
 
