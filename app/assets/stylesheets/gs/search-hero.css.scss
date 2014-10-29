@@ -21,6 +21,10 @@
 }
 
 .lg-search-bar {
+  width: 350px;
+}
+
+.search-bar-home {
   width: 600px;
 }
 
@@ -123,6 +127,10 @@
   }
 
   .lg-search-bar {
+    width: 70%;
+    height: 40px;
+  }
+  .search-bar-home {
     width: 90%;
     height: 40px;
   }
@@ -136,6 +144,9 @@
 
 @media only screen and (max-width: 768px) {
   .lg-search-bar {
+    height: 38px;
+  }
+  .search-bar-home {
     height: 38px;
   }
   .state-hub-search-button {
