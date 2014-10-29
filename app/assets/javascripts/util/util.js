@@ -105,9 +105,8 @@ GS.util.deleteAjaxCall = function(obj, hash) {
         callback($self, data, params_local);
       },
       function (data) {
-        callback_error($self, data, params_local)
+        callback_error($self, data, params_local);
       }
-
     );
   }
 };

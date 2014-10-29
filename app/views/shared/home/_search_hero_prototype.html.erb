@@ -1,36 +1,38 @@
 <% content_for :javascript_includes do %>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>-->
 <% end %>
 
 <div class="proto-image-bg-scale grey-bg proto_hero_size">
     <div class="img-container is-scaled"><!--not empty--></div>
 
     <div class="limit-width-1200">
-        <div class="content-centered">
+        <!--<div class="content-centered">-->
             <div class="row tac clearfix">
                 <div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                        <div class="oa mbl">
+                        <div class="oa mbl content-centered">
                           <h1 class="inverted-text jumbo-header" style="text-shadow: 1px 1px #999999;">Welcome to GreatSchools</h1>
                           <div class='inverted-text subtitle-lg' style="text-shadow: 1px 1px #999999;">Your community resource to find and share information about schools</div>
                         </div>
                       <% location_placeholder = 'Zip code, city or address' %>
-
-                        <div class="location-search mtl">
-                          <form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">
-                            <input type="text" name="locationSearchString"
-                                   id="js-findByLocationBox" class='search-text lg-search-bar mrm'
-                                   onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
-                                   onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
-                                   placeholder="<%= location_placeholder %>"
-                                   value="<%= location_placeholder %>"/>
-                            <button class="state-hub-search-button">Search</button>
-                          </form>
+                        <div class="lg-search-bar ma">
+                        <%= render partial: 'nav/search_form' %>
                         </div>
+                        <!--<div class="location-search mtl">-->
+                          <!--<form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">-->
+                            <!--<input type="text" name="locationSearchString"-->
+                                   <!--id="js-findByLocationBox" class='search-text lg-search-bar mrm typeahead'-->
+                                   <!--onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"-->
+                                   <!--onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"-->
+                                   <!--placeholder="<%= location_placeholder %>"-->
+                                   <!--value="<%= location_placeholder %>"/>-->
+                            <!--<button class="state-hub-search-button">Search</button>-->
+                          <!--</form>-->
+                        <!--</div>-->
                     </div>
                 </div>
-            </div>
+            <!--</div>-->
         </div>
     </div>
 </div>

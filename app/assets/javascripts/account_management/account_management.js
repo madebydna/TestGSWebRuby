@@ -92,7 +92,7 @@ GS.accountManagement.savedSearch = (function(){
 
   var setDeleteSavedSearchHandler = function() {
     $('.js-savedSearches').on('click', '.js-savedSearchDelete', function() {
-      var hash = {}
+      var hash = {};
       var $self = $(this);
       var id = $self.data('id');
       hash.callback = GS.accountManagement.savedSearch.deleteSuccessful;
@@ -108,7 +108,7 @@ GS.accountManagement.savedSearch = (function(){
   };
 
   var deleteFailure = function(obj, data, params){
-    obj.parents('.js-savedSearch').append("<span style='color:#AA0000'>Currently we are not able to remove the Saved Search from your list.  Please try again later.</span>")
+    obj.parents('.js-savedSearch').append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are not able to remove the saved search from your list.  Please try again later.</div>");
   };
 
   return {
@@ -125,9 +125,8 @@ GS.accountManagement.mySchoolList = (function(){
 
   var setDeleteMySchoolListHandler = function() {
     $("a[class^=js-delete-favorite-school-]").on('click', function(){
-      var hash = {}
+      var hash = {};
       var $self = $(this);
-      var id = $self.data('id');
       hash.callback = GS.accountManagement.mySchoolList.deleteSuccessful;
       hash.callback_error = GS.accountManagement.mySchoolList.deleteFailure;
       hash.href = $self.attr('href');
@@ -137,7 +136,6 @@ GS.accountManagement.mySchoolList = (function(){
   };
 
   var deleteSuccessful = function(obj, data, params){
-    console.log("params:"+params);
     var css_selector = ".js-favorite-school-"+params.id;
     $(css_selector).slideUp();
     var numOfVisibleRows = $('.js-schoolSearchResult').parent().filter(function() {
@@ -149,7 +147,7 @@ GS.accountManagement.mySchoolList = (function(){
   };
 
   var deleteFailure = function(obj, data, params){
-    obj.append("<span style='color:#AA0000'>Currently we are not able to remove the Saved Search from your list.  Please try again later.</span>")
+    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to remove this school from your school list.  Please try again later.</div>");
   };
 
   return {
@@ -166,7 +164,7 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
 
   var setDeleteNewsFeedUnsubscribeHandler = function() {
     $("a[class^=js-delete-subscription-]").on('click', function(){
-      var hash = {}
+      var hash = {};
       var $self = $(this);
       var id = $self.data('id');
       hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
@@ -183,7 +181,7 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
   };
 
   var deleteFailure = function(obj, data, params){
-    obj.append("<span style='color:#AA0000'>Currently we are not able to remove the Saved Search from your list.  Please try again later.</span>")
+    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to remove the you from this email list.  Please try again later.</div>");
   };
 
   return {

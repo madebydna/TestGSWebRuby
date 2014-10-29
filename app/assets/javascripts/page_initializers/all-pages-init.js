@@ -19,14 +19,12 @@ $(function() {
 
   GS.util.BackToTop.init();
 
-//  (function(d, s, id) {
-//    var js, fjs = d.getElementsByTagName(s)[0];
-//    if (d.getElementById(id)) return;
-//    js = d.createElement(s); js.id = id;
-//    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=178930405559082";
-//    fjs.parentNode.insertBefore(js, fjs);
-//  }(document, 'script', 'facebook-jssdk'));
   $.ajaxSetup({ cache: true });
+
+  $.getScript('//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=', function(){
+    // TODO add execute list -- Keith
+  });
+
   $.getScript('//connect.facebook.net/en_US/all.js', function(){
     FB.init({
       appId: '178930405559082',
