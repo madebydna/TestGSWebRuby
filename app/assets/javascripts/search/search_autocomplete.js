@@ -9,12 +9,12 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
     };
 
     var attachAutocomplete = function (state_abbr) {
-        var state = typeof state_abbr === "string" ? state_abbr : 'de';
+        var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
         var autocomplete = GS.search.autocomplete;
         var markup = autocomplete.display;
-        var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY&state=' + state, sortFunction: false });
-        var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY&state=' + state, displayLimit: 5 });
-        var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY&state=' + state, displayLimit: 5 });
+        var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
+        var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY' + state_query, displayLimit: 5 });
+        var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY' + state_query, displayLimit: 5 });
         $('.typeahead').typeahead({
             hint: true,
             highlight: true,
@@ -24,19 +24,19 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
                 name: 'cities', //for generated css class name. Ex tt-dataset-cities
                 displayKey: 'city_name', //key whose value will be displayed in input
                 source: cities.ttAdapter(),
-                templates: markup.cityResultsMarkup(state)
+                templates: markup.cityResultsMarkup()
             },
             {
                 name: 'districts',
                 displayKey: 'district_name',
                 source: districts.ttAdapter(),
-                templates: markup.districtResultsMarkup(state)
+                templates: markup.districtResultsMarkup()
             },
             {
                 name: 'schools',
                 displayKey: 'school_name',
                 source: schools.ttAdapter(),
-                templates: markup.schoolResultsMarkup(state)
+                templates: markup.schoolResultsMarkup()
             }
         ).on('typeahead:selected', function (event, suggestion, dataset) {
             GS.uri.Uri.goToPage(suggestion['url']);

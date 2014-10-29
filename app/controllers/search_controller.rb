@@ -224,12 +224,17 @@ class SearchController < ApplicationController
   end
 
   def suggest_school_by_name
+
     set_city_state
     #For now the javascript will add in a state and rails will set a @state, but in the future we may want to not require a state
     #TODO Account for not having access to state variable
     solr = Solr.new
 
-    results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    if @state && @state[:short].present?
+      results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.school_name_suggest(:query=>params[:query].downcase)
+    end
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
@@ -256,8 +261,12 @@ class SearchController < ApplicationController
   def suggest_city_by_name
     set_city_state
     solr = Solr.new
+    if @state[:short] != ''
+      results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.city_name_suggest(:query=>params[:query].downcase)
+    end
 
-    results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
@@ -281,7 +290,14 @@ class SearchController < ApplicationController
     set_city_state
     solr = Solr.new
 
-    results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    if @state[:short] != ''
+      results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.district_name_suggest(:query=>params[:query].downcase)
+    end
+
+
+
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
