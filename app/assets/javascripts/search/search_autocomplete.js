@@ -40,14 +40,59 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
             }
         ).on('typeahead:selected', function (event, suggestion, dataset) {
             GS.uri.Uri.goToPage(suggestion['url']);
-        })
+        });
     };
 
     var attachAutocompleteHandlers = function() {
-        var autocomplete = GS.search.autocomplete;
-        autocomplete.handlers.setOnUpKeyedCallback();
-        autocomplete.handlers.setOnQueryChangedCallback();
-        autocomplete.handlers.setOnDownKeyedCallback();
+        setOnUpKeyedCallbackForSearch();
+        setOnQueryChangedCallbackForSearch();
+        setOnDownKeyedCallbackForSearch();
+    };
+
+    var setOnUpKeyedCallbackForSearch = function() {
+        var isAddress = GS.search.schoolSearchForm.isAddress;
+        GS.search.autocomplete.handlers.setOnUpKeyedCallback(function(query) {
+
+            if (isAddress(query)) {
+                this.dropdown.close();
+            } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
+                this.dropdown.update(query);
+                this.dropdown.open();
+            } else {
+                this.dropdown.moveCursorUp();
+                this.dropdown.open();
+            }
+        });
+    };
+
+    var setOnDownKeyedCallbackForSearch = function() {
+        var isAddress = GS.search.schoolSearchForm.isAddress;
+        GS.search.autocomplete.handlers.setOnDownKeyedCallback(function(query) {
+            if (isAddress(query)) {
+                this.dropdown.close();
+            } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
+                this.dropdown.update(query);
+                this.dropdown.open();
+            } else {
+                this.dropdown.moveCursorDown();
+                this.dropdown.open();
+            }
+        });
+    };
+
+    var setOnQueryChangedCallbackForSearch = function() {
+        var isAddress = GS.search.schoolSearchForm.isAddress;
+        GS.search.autocomplete.handlers.setOnQueryChangedCallback(function(query) {
+
+            this.input.clearHintIfInvalid();
+            if (isAddress(query) || query.length == 0) {
+                this.dropdown.close();
+            } else if (query.length >= this.minLength) {
+                this.dropdown.update(query);
+                this.dropdown.open();
+                this._setLanguageDirection();
+            }
+        });
     };
 
     return {
