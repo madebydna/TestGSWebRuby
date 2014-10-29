@@ -6,16 +6,30 @@
 
 <%= form_tag("/admin/gsr/choose-pyoc", method: "get") do %>
 
-       <%= label_tag(:state, "State") %>
-       <%= text_field_tag(:state, value = params[:state], options = {:size => "1"})%><br>
+        <%= label_tag(:state, "State") %>
+        <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br>
 
-      <%= label_tag(:collection_id, "Collection ID") %>
-      <%= text_field_tag(:collection_id,params[:collection_id], options = {:size => "2"})%></br>
+        <%= label_tag(:collection_id, "Collection ID") %>
+        <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2})%></br>
+
         <%= check_box_tag(:is_k8,1,params[:is_k8]) %>
         <%= label_tag(:is_k8, "Is K8 Batch") %></br>
+
         <%= check_box_tag(:is_high_school,1, params[:is_high_school] ) %>
         <%= label_tag(:is_high_school, "Is high school batch") %></br>
-        <%= submit_tag("FindSchools") %>
+
+        <%= label_tag(:added_schools, "Schools To be Added") %>
+        <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br>
+
+        <%= label_tag(:removed_schools, "Schools To be Removed") %>
+        <%= text_field_tag(:removed_schools, value = params[:removed_schools], options = {:size => "100",:maxlength => "800"})%><br>
+
+
+      <%= submit_tag("FindSchools") %>
+<!--
+      <%= button_tag "Reset", type: :reset %>
+-->
+
 
 <% end %>
 
@@ -39,7 +53,7 @@
           <td>  <%= school.state %></td>
           <td>  <%= school.name %></td>
           <td>  <%= school.id %></td>
-          <td>  <%= school.collection.id %></td>
+          <td>  <% if  school.collection.present?%><%= school.collection.id %> <% else%> None<% end %></td>
           <td>  <%= school.level_code.to_s%></td>
         </tr>
     <% end %>

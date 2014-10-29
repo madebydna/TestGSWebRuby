@@ -20,16 +20,6 @@ class Admin::PyocController <  ApplicationController
 
   def choose
     find_schools_to_be_printed
-
-
-    #
-    # if (db_schools.present?)
-    #   schools_decorated_with_cache_results=prep_data_for_pdf(db_schools)
-    #   generate_pdf(schools_decorated_with_cache_results)
-    # else
-    #   generate_empty_pdf
-    # end
-    # rails runner script/generate_pyoc_pdf.rb wi 2 is_high_school 9 1
     render 'pyoc/print_pdf'
 
   end
@@ -74,6 +64,19 @@ class Admin::PyocController <  ApplicationController
     elsif   state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
             @db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
 
+    end
+
+    # Add schools
+    if params[:added_schools].present?  && params[:added_schools].length > 0
+      schools_to_be_added = params[:added_schools].split(/, /)
+      binding.pry
+      @db_schools += School.on_db(state_param).where(id: schools_to_be_added).all
+    end
+
+    # Remove schools
+    if params[:removed_schools].present?  && params[:removed_schools].length > 0
+      schools_to_be_removed = params[:removed_schools].split(/, /)
+      @db_schools -= School.on_db(state_param).where(id: schools_to_be_removed).all
     end
 
 
