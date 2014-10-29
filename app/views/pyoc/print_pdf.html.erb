@@ -7,14 +7,14 @@
 <%= form_tag("/admin/gsr/choose-pyoc", method: "get") do %>
 
        <%= label_tag(:state, "State") %>
-       <%= text_field_tag(:state, value = nil, options = {:size => "1"})%><br>
+       <%= text_field_tag(:state, value = params[:state], options = {:size => "1"})%><br>
 
       <%= label_tag(:collection_id, "Collection ID") %>
-      <%= text_field_tag(:collection_id,value = nil, options = {:size => "2"})%></br>
-        <%= check_box_tag(:is_k8) %>
+      <%= text_field_tag(:collection_id,params[:collection_id], options = {:size => "2"})%></br>
+        <%= check_box_tag(:is_k8,1,params[:is_k8]) %>
         <%= label_tag(:is_k8, "Is K8 Batch") %></br>
-        <%= check_box_tag(:is_high_school) %>
-        <%= label_tag(:is_high_school, "I high school batch") %></br>
+        <%= check_box_tag(:is_high_school,1, params[:is_high_school] ) %>
+        <%= label_tag(:is_high_school, "Is high school batch") %></br>
         <%= submit_tag("FindSchools") %>
 
 <% end %>
@@ -45,7 +45,7 @@
     <% end %>
   </table>
   <% else%>
-      <h3>Use the Collection Id Mapping to get the colletcion ID agianst the state/City</h3>
+      <h3>Use the Collection Id Mapping to get the collection ID against the state/City</h3>
 
       <table>
         <tr>
