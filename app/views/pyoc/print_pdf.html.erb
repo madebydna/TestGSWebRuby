@@ -1,4 +1,26 @@
 <div class="row limit-width-1200">
-  I am test
+  <h1>Total Schools <%= @db_schools.length%></h1>
+  <% category_placement = 0 %>
+  <table>
+    <tr>
+      <th> LineNo </th>
+      <th> State  </th>
+      <th> Name  </th>
+      <th> SchoolId   </th>
+      <th> CollectionID    </th>
+      <th> LevelCode   </th>
+    </tr>
+
+    <% @db_schools.each do |school| %>
+        <tr>
+          <td>  <%= category_placement=category_placement+1 %></td>
+          <td>  <%= school.state %></td>
+          <td>  <%= school.name %></td>
+          <td>  <%= school.id %></td>
+          <td>  <%= school.collection.id %></td>
+          <td>  <%= school.level_code.to_s%></td>
+        </tr>
+    <% end %>
+  </table>
 
 </div>

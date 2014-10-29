@@ -96,7 +96,9 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/style-guide/*page', to: 'style_guide#index'
     get '/style-guide/', to: 'style_guide#index'
-    get '/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+    get '/pyoc', to: 'pyoc#print_pdf'
+    get '/choose-pyoc', to: 'pyoc#choose'
+
 
 
     scope ':state', constraints: { state: States.any_state_name_regex } do

@@ -12,11 +12,27 @@ class Admin::PyocController <  ApplicationController
     else
       generate_empty_pdf
     end
-
+    # rails runner script/generate_pyoc_pdf.rb wi 2 is_high_school 9 1
     # render 'pyoc/print_pdf'
 
   end
 
+
+  def choose
+    find_schools_to_be_printed
+
+
+    #
+    # if (db_schools.present?)
+    #   schools_decorated_with_cache_results=prep_data_for_pdf(db_schools)
+    #   generate_pdf(schools_decorated_with_cache_results)
+    # else
+    #   generate_empty_pdf
+    # end
+    # rails runner script/generate_pyoc_pdf.rb wi 2 is_high_school 9 1
+    render 'pyoc/print_pdf'
+
+  end
   def generate_empty_pdf
     respond_to do |format|
       format.html
@@ -25,15 +41,42 @@ class Admin::PyocController <  ApplicationController
         pdf.text "Invalid Request Parameters"
         send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
-                  disposition: 'inline' #loads pdf directly in browser window
+                  disposition: 'attachment' #loads pdf directly in browser window
       end
     end
   end
 
   def find_schools_to_be_printed
-    if state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
-      db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
+    if state_param.present? && params[:collection_id].present? && params[:is_high_school].present?
+      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
+      @db_schools = []
+      db_schools_full.each do |school|
+        if school.collection.present? && school.collection.id == params[:collection_id].to_i && is_high_school(school)
+          @db_schools.push(school)
+        end
       end
+    elsif state_param.present? && params[:collection_id].present? && params[:is_k8].present?
+      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
+      @db_schools = []
+      db_schools_full.each do |school|
+        if school.collection.present? && school.collection.id == params[:collection_id].to_i && is_k8(school)
+          @db_schools.push(school)
+        end
+      end
+    elsif state_param.present? && params[:collection_id].present? &&  !params[:is_k8].present? &&  !params[:is_high_school].present?
+      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
+      @db_schools = []
+      db_schools_full.each do |school|
+        if school.collection.present? && school.collection.id == params[:collection_id].to_i
+          @db_schools.push(school)
+        end
+      end
+    elsif   state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
+            @db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
+
+    end
+
+
   end
 
   def prep_data_for_pdf(db_schools)
@@ -59,7 +102,7 @@ class Admin::PyocController <  ApplicationController
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
-                  disposition: 'inline' #loads pdf directly in browser window
+                  disposition: 'attachment' #loads pdf directly in browser window
       end
     end
   end
