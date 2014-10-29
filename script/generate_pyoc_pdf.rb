@@ -16,7 +16,7 @@ def find_school_to_be_printed(state,collection_id,high_school_or_k8)
     @db_schools = []
     db_schools_full.each do |school|
       # puts school.collection.id
-      if school.collection.present? && school.collection.id == collection_id.to_i && PyocController.new.is_high_school(school)
+      if school.collection.present? && school.collection.id == collection_id.to_i && Admin::PyocController.new.is_high_school(school)
         @db_schools.push(school)
       end
     end
@@ -24,12 +24,12 @@ def find_school_to_be_printed(state,collection_id,high_school_or_k8)
     db_schools_full = School.on_db(state).where(active: true).order(name: :asc)
     @db_schools = []
     db_schools_full.each do |school|
-      if school.collection.present? && school.collection.id == collection_id.to_i && PyocController.new.is_k8(school)
+      if school.collection.present? && school.collection.id == collection_id.to_i && Admin::PyocController.new.is_k8(school)
         @db_schools.push(school)
       end
     end
   elsif state.present? && !collection_id.present?
-    @db_schools = School.on_db(state_param).where(active: true).order(name: :asc)
+    @db_schools = School.on_db(state).where(active: true).order(name: :asc)
 
   end
 end
@@ -51,7 +51,7 @@ end
 find_school_to_be_printed(@state,@collection_id,@high_school_or_k8)
 
 
-@schools_decorated_with_cache_results=PyocController.new.prep_data_for_pdf(@db_schools)
+@schools_decorated_with_cache_results=Admin::PyocController.new.prep_data_for_pdf(@db_schools)
 
 
 pdf = PyocPdf.new(@schools_decorated_with_cache_results, @high_school_or_k8=='is_k8'? true :false , @high_school_or_k8=='is_high_school'?true:false, @page_start,@is_spanish.present? ? true : false)
