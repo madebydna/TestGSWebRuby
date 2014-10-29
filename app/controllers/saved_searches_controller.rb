@@ -20,7 +20,7 @@ class SavedSearchesController < ApplicationController
         if e.is_a?(ActiveRecord::RecordNotFound)
           render json: { }
         else
-          render json: { error: 'We are sorry but something went wrong. Please Try again Later' }
+          render json: { error: 'We are sorry but something went wrong. Please try again later' }
         end
       end
     else
