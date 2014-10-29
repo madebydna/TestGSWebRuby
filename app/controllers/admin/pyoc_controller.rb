@@ -68,14 +68,14 @@ class Admin::PyocController <  ApplicationController
 
     # Add schools
     if params[:added_schools].present?  && params[:added_schools].length > 0
-      schools_to_be_added = params[:added_schools].split(/, /)
-      binding.pry
+      schools_to_be_added = params[:added_schools].split(',')
+      # binding.pry
       @db_schools += School.on_db(state_param).where(id: schools_to_be_added).all
     end
 
     # Remove schools
     if params[:removed_schools].present?  && params[:removed_schools].length > 0
-      schools_to_be_removed = params[:removed_schools].split(/, /)
+      schools_to_be_removed = params[:removed_schools].split(',')
       @db_schools -= School.on_db(state_param).where(id: schools_to_be_removed).all
     end
 
