@@ -18,83 +18,6 @@
         <%= submit_tag("FindSchools") %>
 
 <% end %>
-  <div class="row limit-width-1200">
-    <h3>Use the Collection Id Mapping to get the colletcion ID agianst the state/City</h3>
-
-    <table>
-      <tr>
-        <th class="tac"> State </th>
-        <th class="tac"> City  </th>
-        <th class="tac"> CollectionID    </th>
-      </tr>
-      <tr>
-        <td class="tac">MI</td>
-        <td class="tac">Detroit</td>
-        <td class="tac">1</td>
-      </tr>
-      <tr>
-        <td class="tac">WI</td>
-        <td class="tac">Milwaukee</td>
-        <td class="tac">2</td>
-      </tr>
-      <tr>
-        <td class="tac">IN</td>
-        <td class="tac">Indianapolis</td>
-        <td class="tac">3</td>
-      </tr>
-      <tr>
-      <td class="tac">CA</td>
-      <td class="tac">Oakland</td>
-      <td class="tac">4</td>
-      </tr>
-      <tr>
-        <td class="tac">CA</td>
-        <td class="tac">San Francisco</td>
-        <td class="tac">5</td>
-      </tr>
-      <tr>
-        <td class="tac">IN</td>
-        <td class="tac"></td>
-        <td class="tac">6</td>
-      </tr>
-      <tr>
-        <td class="tac">NC</td>
-        <td class="tac"></td>
-        <td class="tac">7</td>
-      </tr>
-      <tr>
-        <td class="tac">OH</td>
-        <td class="tac"></td>
-        <td class="tac">8</td>
-      </tr>
-      <tr>
-        <td class="tac">DE</td>
-        <td class="tac"></td>
-        <td class="tac">9</td>
-      </tr>
-      <tr>
-        <td class="tac">GA</td>
-        <td class="tac">Atlanta</td>
-        <td class="tac">10</td>
-      </tr>
-      <tr>
-        <td class="tac">GA</td>
-        <td class="tac"></td>
-        <td class="tac">11</td>
-      </tr>
-      <tr>
-        <td class="tac">OK</td>
-        <td class="tac">Oklahoma City</td>
-        <td class="tac">12</td>
-      </tr>
-      <tr>
-        <td class="tac">OK</td>
-        <td class="tac"></td>
-        <td class="tac">13</td>
-      </tr>
-    </table>
-  </div>
-</div>
 
 <div class="row limit-width-1200">
   <%if  @db_schools.present?%><h1>Total Schools <%= @db_schools.length%></h1>
@@ -121,5 +44,81 @@
         </tr>
     <% end %>
   </table>
+  <% else%>
+      <h3>Use the Collection Id Mapping to get the colletcion ID agianst the state/City</h3>
+
+      <table>
+        <tr>
+          <th class="tac"> State </th>
+          <th class="tac"> City  </th>
+          <th class="tac"> CollectionID    </th>
+        </tr>
+        <tr>
+          <td class="tac">MI</td>
+          <td class="tac">Detroit</td>
+          <td class="tac">1</td>
+        </tr>
+        <tr>
+          <td class="tac">WI</td>
+          <td class="tac">Milwaukee</td>
+          <td class="tac">2</td>
+        </tr>
+        <tr>
+          <td class="tac">IN</td>
+          <td class="tac">Indianapolis</td>
+          <td class="tac">3</td>
+        </tr>
+        <tr>
+          <td class="tac">CA</td>
+          <td class="tac">Oakland</td>
+          <td class="tac">4</td>
+        </tr>
+        <tr>
+          <td class="tac">CA</td>
+          <td class="tac">San Francisco</td>
+          <td class="tac">5</td>
+        </tr>
+        <tr>
+          <td class="tac">IN</td>
+          <td class="tac"></td>
+          <td class="tac">6</td>
+        </tr>
+        <tr>
+          <td class="tac">NC</td>
+          <td class="tac"></td>
+          <td class="tac">7</td>
+        </tr>
+        <tr>
+          <td class="tac">OH</td>
+          <td class="tac"></td>
+          <td class="tac">8</td>
+        </tr>
+        <tr>
+          <td class="tac">DE</td>
+          <td class="tac"></td>
+          <td class="tac">9</td>
+        </tr>
+        <tr>
+          <td class="tac">GA</td>
+          <td class="tac">Atlanta</td>
+          <td class="tac">10</td>
+        </tr>
+        <tr>
+          <td class="tac">GA</td>
+          <td class="tac"></td>
+          <td class="tac">11</td>
+        </tr>
+        <tr>
+          <td class="tac">OK</td>
+          <td class="tac">Oklahoma City</td>
+          <td class="tac">12</td>
+        </tr>
+        <tr>
+          <td class="tac">OK</td>
+          <td class="tac"></td>
+          <td class="tac">13</td>
+        </tr>
+      </table>
+      </div>
   <% end%>
 </div>
