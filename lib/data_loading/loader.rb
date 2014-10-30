@@ -9,7 +9,8 @@ class Loader
   end
 
   def self.census_data_type?(datatype)
-    CensusLoading::Base.census_data_types.key? datatype
+    # TODO make this case insensitive
+    CensusLoading::Base.census_data_types.any? { |cdt| datatype.casecmp(cdt) == 0 }
   end
 
   def self.determine_loading_class(data_type)

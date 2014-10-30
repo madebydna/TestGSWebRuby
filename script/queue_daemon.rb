@@ -6,8 +6,8 @@ class QueueDaemon
 
   def run!
     # This is just for testing
-    UpdateQueue.destroy_all
-    UpdateQueue.seed_sample_data!
+    # UpdateQueue.destroy_all
+    # UpdateQueue.seed_sample_data!
 
     puts 'Starting loops'
     loop do
@@ -18,7 +18,7 @@ class QueueDaemon
 
   def process_unprocessed_updates
     begin
-      updates = UpdateQueue.where(status: UNPROCESSED_STATUS)
+      updates = UpdateQueue.where(status: UNPROCESSED_STATUS).limit(100)
     rescue
       raise 'Could not find UpdateQueue table'
     end
