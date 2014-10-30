@@ -21,9 +21,9 @@ $(function() {
 
   $.ajaxSetup({ cache: true });
 
-  $.getScript('//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=', function(){
-    // TODO add execute list -- Keith
-  });
+//  $.getScript('//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=', function(){
+//    // TODO add execute list -- Keith
+//  });
 
   $.getScript('//connect.facebook.net/en_US/all.js', function(){
     FB.init({
