@@ -64,7 +64,6 @@
       <th> State  </th>
       <th> School Name  </th>
       <th> SchoolId   </th>
-      <th> CollectionID    </th>
       <th> LevelCode   </th>
     </tr>
 
@@ -74,7 +73,6 @@
           <td>  <%= school.state %></td>
           <td>  <%= school.name %></td>
           <td>  <%= school.id %></td>
-          <td>  <% if  school.collection.present?%><%= school.collection.id %> <% else%> None<% end %></td>
           <td>  <%= school.level_code.to_s%></td>
         </tr>
     <% end %>

@@ -37,50 +37,41 @@ class Admin::PyocController <  ApplicationController
   end
 
   def find_schools_to_be_printed
+
     if state_param.present? && params[:collection_id].present? && params[:is_high_school].present?
-      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
-      @db_schools = []
-      db_schools_full.each do |school|
-        if school.collection.present? && school.collection.id == params[:collection_id].to_i && is_high_school(school)
-          @db_schools.push(school)
-        end
-      end
-    elsif state_param.present? && params[:collection_id].present? && params[:is_k8].present?
-      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
-      @db_schools = []
-      db_schools_full.each do |school|
-        if school.collection.present? && school.collection.id == params[:collection_id].to_i && is_k8(school)
-          @db_schools.push(school)
-        end
-      end
-    elsif state_param.present? && params[:collection_id].present? &&  !params[:is_k8].present? &&  !params[:is_high_school].present?
-      db_schools_full = School.on_db(state_param).where(active: true).order(name: :asc)
-      @db_schools = []
-      db_schools_full.each do |school|
-        if school.collection.present? && school.collection.id == params[:collection_id].to_i
-          @db_schools.push(school)
-        end
-      end
-    elsif   state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
-            @db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
+        @db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc)
+        @db_schools.select!(&:includes_highschool?)
 
-    end
+      elsif state_param.present? && params[:collection_id].present? && params[:is_k8].present?
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
+        @db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc)
+        @db_schools.select!(&:pk8?)
 
-    # Add schools
-    if params[:added_schools].present?  && params[:added_schools].length > 0
-      schools_to_be_added = params[:added_schools].split(',')
-      # binding.pry
-      @db_schools += School.on_db(state_param).where(id: schools_to_be_added).all
-    end
+      elsif state_param.present? && params[:collection_id].present? &&  !params[:is_k8].present? &&  !params[:is_high_school].present?
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
+        @db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc)
 
-    # Remove schools
-    if params[:removed_schools].present?  && params[:removed_schools].length > 0
-      schools_to_be_removed = params[:removed_schools].split(',')
-      @db_schools -= School.on_db(state_param).where(id: schools_to_be_removed).all
+      elsif   state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
+        @db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
+
+      end
+
+      # Add schools
+      if params[:added_schools].present?  && params[:added_schools].length > 0
+        schools_to_be_added = params[:added_schools].split(',')
+        @db_schools += School.on_db(state_param).where(id: schools_to_be_added).all
+      end
+
+      # Remove schools
+      if params[:removed_schools].present?  && params[:removed_schools].length > 0
+        schools_to_be_removed = params[:removed_schools].split(',')
+        @db_schools -= School.on_db(state_param).where(id: schools_to_be_removed).all
+      end
     end
 
 
-  end
+
 
   def prep_data_for_pdf(db_schools)
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
@@ -110,23 +101,9 @@ class Admin::PyocController <  ApplicationController
     end
   end
 
-  def is_k8(school)
-    level_code_string=school.level_code.to_s
-    if   level_code_string.include? "m" or level_code_string.include? "e" or level_code_string.include? "p"
-      true
-    else
-      false
-    end
-  end
 
-  def is_high_school(school)
-    level_code_string=school.level_code.to_s
-    if  level_code_string.include? "h"
-      true
-    else
-      false
-    end
-  end
+
+
 
   def get_page_number_start
     if params[:page_number_start].present?
@@ -135,4 +112,6 @@ class Admin::PyocController <  ApplicationController
       1
     end
   end
+
+
 end

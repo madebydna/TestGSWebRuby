@@ -22,6 +22,8 @@ class School < ActiveRecord::Base
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
+  scope :active, -> { where(active: true) }
+
   self.inheritance_column = nil
 
   def self.find_by_state_and_id(state, id)
@@ -247,6 +249,13 @@ class School < ActiveRecord::Base
 
   def community_rating
     calculate_review_data.seek('rating_averages','overall','avg_score')
+  end
+  def pk8?
+    includes_level_code?.include?("m") || includes_level_code?.include?("e") || includes_level_code?.include?("p")
+  end
+
+  def k8?
+    includes_level_code?.include?("m") || includes_level_code?.include?("e")
   end
 
 end
