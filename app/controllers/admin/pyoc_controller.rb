@@ -101,7 +101,7 @@ class Admin::PyocController <  ApplicationController
       format.html
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,
-                             get_page_number_start,params[:is_spanish].present? ? true : false)
+                             get_page_number_start,params[:language].present?  && params[:language] == 'spanish'? true : false)
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
