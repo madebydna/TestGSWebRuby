@@ -7,11 +7,12 @@
   <% end %>
 </div>
 
-<div class="row">
-
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ptl mtl plm">
-        <hr />
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
+<% if @show_ads %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ptl mtl plm">
+            <hr />
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
+        </div>
     </div>
-</div>
+<% end %>
