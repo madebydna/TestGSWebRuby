@@ -60,7 +60,7 @@ class CensusDataType < ActiveRecord::Base
   end
 
   def value_type
-    if %w(num pct mon)
+    if %w(num pct mon).include?(type)
       :value_float
     else
       :value_text
