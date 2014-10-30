@@ -258,9 +258,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         });
 
         $('.js-schoolResultsSearchForm').submit(function() {
+
             var input = $(this).find(schoolResultsSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
-            isAddress(input.value);
+          // forcing location search on home page button click.  Select will do direct linking.
+            if($(this).find('.js-forceLocationSearch')){
+              GS.search.schoolSearchForm.searchType = 'byLocation';
+            }
+            else{
+              isAddress(input.value);
+            }
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};

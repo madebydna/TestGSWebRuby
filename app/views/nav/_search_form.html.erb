@@ -1,3 +1,7 @@
+<% unless defined?(searchClass) %>
+    <% searchClass = '' %>
+<% end %>
+
 <div class="row ptm">
     <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
         <div class="col-xs-9 plm prm mbm">
@@ -6,7 +10,7 @@
                     value="<%= @search_term %>"
                     data-prev-search="<%= @search_term || '' %>"
                     id="js-schoolResultsSearch"
-                    class='typeahead search-text full-width pam'
+                    class='typeahead search-text full-width pam <%= searchClass %>'
                     placeholder="Enter city, zip code, address or school name">
 
             <label class="dn js-translate-placeholder">Enter city, zip code, address or school name</label>

@@ -17,7 +17,8 @@
                         </div>
                       <% location_placeholder = 'Zip code, city or address' %>
                         <div class="search-bar-home ma">
-                        <%= render partial: 'nav/search_form' %>
+                            <% partial_params = {searchClass: 'js-forceLocationSearch'}%>
+                        <%= render partial: 'nav/search_form', locals: partial_params %>
                         </div>
                         <!--<div class="location-search mtl">-->
                           <!--<form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">-->
