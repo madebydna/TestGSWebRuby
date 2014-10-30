@@ -17,6 +17,14 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def sorted_category_data(collections = nil)
+    category_data(collections).sort_by do |cd|
+      position = cd.sort_order
+      position = 1 if position.nil?
+      position
+    end
+  end
+
   def has_data?(school, options = {})
     options[:category] = self
     return true if source.blank?
