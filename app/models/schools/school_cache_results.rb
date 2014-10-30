@@ -46,6 +46,8 @@ class SchoolCacheResults
         CachedReviewsSnapshotMethods
       when 'esp_responses'
         CachedProgramsMethods
+      when 'progress_bar'
+        CachedProgressBarMethods
     end
   end
 
