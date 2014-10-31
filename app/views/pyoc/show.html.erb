@@ -46,15 +46,26 @@
       <%= text_field_tag(:page_number_start, value = params[:page_number_start], options = {:size => "3",:maxlength =>20})%><br>
 
 
-      <%= submit_tag("FindSchools") %>
-<!--
-      <%= button_tag "Reset", type: :reset %>
--->
-
-
+      <%= submit_tag("FindSchools") %><br/>
 <% end %>
+  <div class="row limit-width-1200 tac">
 
-<div class="row limit-width-1200">
+    <%= form_tag("/admin/gsr/pyoc.pdf", method: "get") do %>
+        <%= hidden_field_tag "state", params[:state]%>
+        <%= hidden_field_tag "collection_id", params[:collection_id]%>
+        <%= hidden_field_tag "is_k8", params[:is_k8]%>
+        <%= hidden_field_tag "is_high_school", params[:is_high_school]%>
+        <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
+        <%= hidden_field_tag "added_schools", params[:added_schools]%>
+        <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+        <%= hidden_field_tag "language", params[:language]%>
+
+        Ready to generate PDF ? <%= submit_tag("Generate PDF") %>
+
+  <% end %>
+</div>
+
+  <div class="row limit-width-1200">
   <%if  @db_schools.present?%><h1>Total Schools <%= @db_schools.length%></h1>
 
   <% school_index = 0 %>

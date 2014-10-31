@@ -20,9 +20,11 @@ class Admin::PyocController <  ApplicationController
 
   def choose
     @db_schools = find_schools_to_be_printed
-    render 'pyoc/print_pdf'
+    render 'pyoc/show'
 
   end
+
+
   def generate_empty_pdf
     respond_to do |format|
       format.html
