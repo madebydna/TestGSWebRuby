@@ -9,7 +9,7 @@ class PyocDecorator < Draper::Decorator
   include SchoolTypeConcerns
   include LevelCodeConcerns
   include MapIconConcerns
-  include SpanishPdfConcerns
+  include PdfConcerns
 
 
 end

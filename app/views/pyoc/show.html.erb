@@ -43,7 +43,7 @@
 
 
       <%= label_tag(:page_number_start, "Page Number Start",:class => "brand-primary") %>
-      <%= text_field_tag(:page_number_start, value = params[:page_number_start], options = {:size => "3",:maxlength =>20})%><br>
+      <%= text_field_tag(:page_number_start, value = (params[:page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br>
 
 
       <%= submit_tag("FindSchools",:class => "btn btn-primary") %><br/>

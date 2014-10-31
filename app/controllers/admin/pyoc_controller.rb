@@ -4,17 +4,14 @@ class Admin::PyocController <  ApplicationController
 
 
   def print_pdf
-
     @db_schools = find_schools_to_be_printed
+    @db_schools =@db_schools[0..20]
     if (@db_schools.present?)
     schools_decorated_with_cache_results=prep_data_for_pdf(@db_schools)
     generate_pdf(schools_decorated_with_cache_results)
     else
       generate_empty_pdf
     end
-    # rails runner script/generate_pyoc_pdf.rb wi 2 is_high_school 9 1
-    # render 'pyoc/print_pdf'
-
   end
 
 
@@ -101,24 +98,12 @@ class Admin::PyocController <  ApplicationController
       format.html
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,
-                             get_page_number_start,params[:language].present?  && params[:language] == 'spanish'? true : false)
+                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false)
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc',
                   type: 'application/pdf',
                   disposition: 'inline' #loads pdf directly in browser window
       end
-    end
-  end
-
-
-
-
-
-  def get_page_number_start
-    if params[:page_number_start].present?
-      params[:page_number_start].to_i
-    else
-      1
     end
   end
 

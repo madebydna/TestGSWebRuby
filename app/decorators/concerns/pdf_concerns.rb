@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-module SpanishPdfConcerns
+module PdfConcerns
 
   English_to_spanish_school_type_mapping = {
       'Private' => 'Privada',
