@@ -251,11 +251,11 @@ class School < ActiveRecord::Base
     calculate_review_data.seek('rating_averages','overall','avg_score')
   end
   def pk8?
-    includes_level_code?.include?("m") || includes_level_code?.include?("e") || includes_level_code?.include?("p")
+    includes_level_code?(%w[p e m])
   end
 
   def k8?
-    includes_level_code?.include?("m") || includes_level_code?.include?("e")
+    includes_level_code?(%w[e m])
   end
 
   def progress_bar_hash
