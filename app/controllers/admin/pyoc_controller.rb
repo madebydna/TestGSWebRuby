@@ -42,24 +42,26 @@ class Admin::PyocController <  ApplicationController
     db_schools = []
 
     # binding.pry;
-    if state_param.present? && params[:collection_id].present? && params[:is_high_school].present? && params[:is_high_school].length >0
+    if state_param.present? && params[:collection_id].present? && params[:collection_id].length>0 && params[:is_high_school].present? && params[:is_high_school].length >0
         school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
         db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc).to_a
         db_schools.select!(&:includes_highschool?)
 
-    elsif state_param.present? && params[:collection_id].present? && params[:is_k8].present? && params[:is_k8].length>0
+    elsif state_param.present? && params[:collection_id].present? && params[:collection_id].length>0  && params[:is_k8].present? && params[:is_k8].length>0
         school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
         db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc).to_a
         db_schools.select!(&:pk8?)
 
 
-    elsif state_param.present? && params[:collection_id].present? &&  !params[:is_k8].present?   &&  !params[:is_high_school].present?
+    elsif state_param.present? && params[:collection_id].present? &&  params[:collection_id].length>0  && !params[:is_k8].present?   &&  !params[:is_high_school].present?
         school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
         db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc)
 
+    elsif   state_param.present? && params[:collection_id].length ==0
+      db_schools = School.on_db(state_param).active.order(name: :asc)
     elsif   state_param.present? && (params[:id1].present? || params[:id2].present? || params[:id3].present? || params[:id4].present?)
       db_schools = School.for_states_and_ids([state_param, state_param, state_param,state_param], [params[:id1], params[:id2], params[:id3],params[:id4]])
-      end
+    end
 
       # Add schools
       if params[:added_schools].present?  && params[:added_schools].length > 0
