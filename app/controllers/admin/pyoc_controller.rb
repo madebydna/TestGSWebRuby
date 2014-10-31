@@ -58,9 +58,9 @@ class Admin::PyocController <  ApplicationController
         school_ids = SchoolMetadata.school_ids_for_collection_ids(state_param, params[:collection_id])
         @db_schools = School.on_db(state_param).active.where(id: school_ids).order(name: :asc)
 
-    elsif   state_param.present? && (params[:id1].present? || params[:id1].present? || params[:id1].present?)
+    elsif   state_param.present? && (params[:id1].present? || params[:id2].present? || params[:id3].present? || params[:id4].present?)
       puts '44'
-        @db_schools = School.for_states_and_ids([state_param, state_param, state_param], [params[:id1], params[:id2], params[:id3]])
+        @db_schools = School.for_states_and_ids([state_param, state_param, state_param,state_param], [params[:id1], params[:id2], params[:id3],params[:id4]])
 
       end
 
