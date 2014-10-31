@@ -258,4 +258,15 @@ class School < ActiveRecord::Base
     includes_level_code?.include?("m") || includes_level_code?.include?("e")
   end
 
+  def progress_bar_hash
+    @progress_bar ||= (
+    query_results = SchoolCacheQuery.new.include_cache_keys('progress_bar').include_schools(state, id).query
+
+    school_cache_results = SchoolCacheResults.new('progress_bar', query_results)
+
+    decorated_school_cache_results = school_cache_results.decorate_schools(Array(self))
+    decorated_school_cache_results.first.progress_bar
+    )
+  end
+
 end
