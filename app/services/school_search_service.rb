@@ -3,8 +3,8 @@ class SchoolSearchService
   @@solr = Solr.new
 
   KEYS_TO_DELETE = ['contentKey', 'document_type', 'schooldistrict_autosuggest', 'autosuggest', 'name_ordered', 'citykeyword']
-  DEFAULT_BROWSE_OPTIONS = {sort: 'overall_gs_rating desc', rows: 25, query: '*', fq: ['+document_type:school']}
-  DEFAULT_BY_LOCATION_OPTIONS = {sort: 'distance asc', rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
+  DEFAULT_BROWSE_OPTIONS = {rows: 25, query: '*', fq: ['+document_type:school']}
+  DEFAULT_BY_LOCATION_OPTIONS = {rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
   DEFAULT_BY_NAME_OPTIONS = {rows: 25, fq: ['+document_type:school'], qt: 'school-search'}
   PARAMETER_TO_SOLR_MAPPING = {
       number_of_results: :rows,
@@ -107,7 +107,6 @@ class SchoolSearchService
     school_search_result.entries.each do |key, value|
       school_search_result[key[7..-1]] = value if key.start_with? 'school_' # strip the preceding 'school_' from keys
     end
-    school_search_result.delete_if { |key| key.start_with?('school_') || KEYS_TO_DELETE.include?(key) }
     school_search_result['zipcode'] = school_search_result['zip']
     school_search_result['level'] = school_search_result['grades']
     school_search_result['enrollment'] = school_search_result['size'] if school_search_result.include? 'size'

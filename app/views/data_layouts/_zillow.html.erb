@@ -1,7 +1,18 @@
 <% category_placement #  %>
 
-<div id="js-zillow">
+<div id="js-zillow ">
   <%= render layout: 'school_profile/col', locals:{ css_class:'', category_placement: category_placement} do %>
   <%= render "shared/section_header", category_placement: category_placement %>
   <%= render 'data_layouts/zillow_content', data: data %>
+  <% end %>
+</div>
+
+<% if @show_ads %>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ptl mtl plm">
+            <hr />
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
+        </div>
+    </div>
 <% end %>

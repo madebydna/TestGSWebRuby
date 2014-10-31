@@ -4,9 +4,9 @@
       <%= pluralize(@total_results,'school', 'schools') + ' found' %>
       <% if @by_location %>
           <% if @radius %>
-              within <%= pluralize(@radius, 'mile', 'miles') %> of <%= @search_term %>
+              within <%= pluralize(@radius, 'mile', 'miles') %> of <%= @normalized_address %>
           <% else %>
-              near <%= @search_term %>
+              near <%= @normalized_address %>
           <% end %>
       <% elsif @district %>
           in <%= @district.name %>

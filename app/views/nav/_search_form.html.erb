@@ -1,0 +1,27 @@
+<% unless defined?(searchClass) %>
+    <% searchClass = '' %>
+<% end %>
+
+<div class="row ptm">
+    <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
+        <div class="col-xs-9 plm prm mbm">
+            <input  type="text"
+                    name="locationSearchString"
+                    value="<%= @search_term %>"
+                    data-prev-search="<%= @search_term || '' %>"
+                    id="js-schoolResultsSearch"
+                    class='typeahead search-text full-width pam <%= searchClass %>'
+                    placeholder="Enter city, zip code, address or school name">
+
+            <label class="dn js-translate-placeholder">Enter city, zip code, address or school name</label>
+        </div>
+
+        <div class="hidden-xs col-sm-3 phm mbm">
+            <button type='submit' class=" pull-right btn btn-lg btn-primary">Search</button>
+        </div>
+
+        <div class="visible-xs col-xs-3 phm mbm">
+            <button type='submit' class=" pull-right btn btn-primary" style="height: 46px;"><span class="iconx24-icons i-24-search-white"></span></button>
+        </div>
+    </form>
+</div>

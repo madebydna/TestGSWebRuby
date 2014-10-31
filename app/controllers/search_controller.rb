@@ -6,18 +6,20 @@ class SearchController < ApplicationController
   include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
+  include SearchAdsConcerns
 
   #Todo move before filters to methods
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
+  before_action :set_search_ad_slots_instance_variables
 
   layout 'application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings','enrollment']
   MAX_RESULTS_FROM_SOLR = 2000
-  MAX_RESULTS_FOR_MAP = 200
+  MAX_RESULTS_FOR_MAP = 100
   NUM_NEARBY_CITIES = 8
 
   def search
@@ -98,7 +100,8 @@ class SearchController < ApplicationController
       @radius = params_hash['distance'].presence || 5
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
-      @search_term=params_hash['locationSearchString']
+      @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
+      @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
 
@@ -147,9 +150,9 @@ class SearchController < ApplicationController
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
 
-    sort = determine_sort!(@params_hash)
-    if sort
-      search_options.merge!({sort: sort})
+    @sort_type = determine_sort!(@params_hash)
+    if @sort_type
+      search_options.merge!({sort: @sort_type})
     end
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
@@ -162,9 +165,9 @@ class SearchController < ApplicationController
 
     results = search_method.call(search_options)
     setup_filter_display_map(@state ? @state[:short] : nil)
-    setup_fit_scores(results[:results], @params_hash) if filtering_search?
+    # setup_fit_scores(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
-    sort_by_fit(results[:results], sort) if sorting_by_fit?
+    # sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_hub # must come after @schools is defined in process_results
     @show_guided_search = has_guided_search?
@@ -176,13 +179,38 @@ class SearchController < ApplicationController
   def process_results(results, solr_offset)
     @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
+
     school_results = results[:results] || []
+    relative_offset = @results_offset - solr_offset
+
+    #when not sorting by fit, only applying fit scores to 25 schools on page. (previously it was up to 200 schools)
+    if sorting_by_fit? && filtering_search?
+      setup_fit_scores(school_results, @params_hash)
+      sort_by_fit(school_results, @sort_type)
+      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+    else
+      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      setup_fit_scores(@schools, @params_hash) if filtering_search?
+    end
+
+    (map_start, map_end) = calculate_map_range solr_offset
+    @map_schools = school_results[map_start .. map_end]
+
     @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
     @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+
+    if params[:limit]
+      if params[:limit].to_i > 0
+        @schools = @schools[0..(params[:limit].to_i - 1)]
+      else
+        @schools = []
+      end
+    end
+
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
 
@@ -196,12 +224,17 @@ class SearchController < ApplicationController
   end
 
   def suggest_school_by_name
+
     set_city_state
     #For now the javascript will add in a state and rails will set a @state, but in the future we may want to not require a state
     #TODO Account for not having access to state variable
     solr = Solr.new
 
-    results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    if @state && @state[:short].present?
+      results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.school_name_suggest(:query=>params[:query].downcase)
+    end
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
@@ -228,8 +261,12 @@ class SearchController < ApplicationController
   def suggest_city_by_name
     set_city_state
     solr = Solr.new
+    if @state[:short] != ''
+      results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.city_name_suggest(:query=>params[:query].downcase)
+    end
 
-    results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
@@ -253,7 +290,14 @@ class SearchController < ApplicationController
     set_city_state
     solr = Solr.new
 
-    results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    if @state[:short] != ''
+      results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
+    else
+      results = solr.district_name_suggest(:query=>params[:query].downcase)
+    end
+
+
+
 
     response_objects = []
     unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
@@ -458,6 +502,7 @@ class SearchController < ApplicationController
     gon.soft_filter_keys = SOFT_FILTER_KEYS
     gon.pagename = "SearchResultsPage"
     gon.state_abbr = @state[:short]
+    gon.show_ads = @show_ads
   end
 
 end

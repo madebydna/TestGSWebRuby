@@ -90,7 +90,7 @@ module CachedRatingsMethods
   def formatted_ratings(rating_type=nil)
     formatted_ratings = {}
     ratings_labels = displayed_ratings
-    ratings_labels = ratings_labels[rating_type] if rating_type
+    ratings_labels = rating_type ? ratings_labels[rating_type] : displayed_ratings
     ratings_labels.each do |rating_id , rating_label|
       school_rating = school_rating_by_id(rating_id)
       formatted_ratings[rating_label] = school_rating

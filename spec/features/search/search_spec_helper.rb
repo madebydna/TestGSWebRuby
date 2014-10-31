@@ -53,4 +53,48 @@ module SearchSpecHelper
     end
     nearby_cities
   end
+
+  def ads_and_search_results_divs
+    ads_and_schools = []
+    search_container = page.find(:css, '.js-responsiveSearchPage')
+    search_container.all('div').each do |search_div|
+      if search_div[:class]
+        if search_div[:class].include?('js-schoolSearchResult') || search_div[:class].include?('gs_ad_slot')
+          ads_and_schools << search_div
+        end
+      end
+    end
+    ads_and_schools
+  end
+
+  def create_slots_list(num_search_results)
+    slots = []
+    slots << header_ad_slots[:desktop].first
+    slots << header_ad_slots[:mobile].first
+    ads_index = 0
+    while num_search_results > 0
+      4.times do
+        if num_search_results > 0
+          slots << {}
+          num_search_results -= 1
+        end
+      end
+      if num_search_results > 0
+        [:desktop, :mobile].each do |view_type|
+          ad_slot = results_ad_slots[view_type][ads_index]
+          if ad_slot
+            if ad_slot.is_a?(Array)
+              ad_slot.each { |a| slots << a }
+            else
+              slots << ad_slot
+            end
+          end
+        end
+        ads_index += 1
+      end
+    end
+    slots << footer_ad_slots[:desktop].first
+    slots << footer_ad_slots[:mobile].first
+    slots
+  end
 end

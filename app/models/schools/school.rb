@@ -22,6 +22,8 @@ class School < ActiveRecord::Base
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
+  scope :active, -> { where(active: true) }
+
   self.inheritance_column = nil
 
   def self.find_by_state_and_id(state, id)
@@ -247,6 +249,24 @@ class School < ActiveRecord::Base
 
   def community_rating
     calculate_review_data.seek('rating_averages','overall','avg_score')
+  end
+  def pk8?
+    includes_level_code?(%w[p e m])
+  end
+
+  def k8?
+    includes_level_code?(%w[e m])
+  end
+
+  def progress_bar_hash
+    @progress_bar ||= (
+    query_results = SchoolCacheQuery.new.include_cache_keys('progress_bar').include_schools(state, id).query
+
+    school_cache_results = SchoolCacheResults.new('progress_bar', query_results)
+
+    decorated_school_cache_results = school_cache_results.decorate_schools(Array(self))
+    decorated_school_cache_results.first.progress_bar
+    )
   end
 
 end

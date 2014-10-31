@@ -1,4 +1,157 @@
-<div class="row limit-width-1200">
-  I am test
 
+
+
+
+<div class="row limit-width-1200">
+
+<%= form_tag("/admin/gsr/choose-pyoc", method: "get") do %>
+
+        <%= label_tag(:state, "State") %>
+        <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br>
+
+        <%= label_tag(:collection_id, "Collection ID") %>
+        <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2})%></br>
+
+        <%= check_box_tag(:is_k8,1,params[:is_k8]) %>
+        <%= label_tag(:is_k8, "Is K8 Batch") %></br>
+
+        <%= check_box_tag(:is_high_school,1, params[:is_high_school] ) %>
+        <%= label_tag(:is_high_school, "Is high school batch") %></br>
+
+        <%= label_tag(:added_schools, "Schools To be Added") %>
+        <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br>
+
+        <%= label_tag(:removed_schools, "Schools To be Removed") %>
+        <%= text_field_tag(:removed_schools, value = params[:removed_schools], options = {:size => "100",:maxlength => "800"})%><br>
+
+       <%= label_tag ("Language:" )%>&nbsp;
+       <%if params[:language].present? && params[:language] =="spanish" %>
+          <%= radio_button_tag(:language, "spanish", :checked => true) %>
+       <% else %>
+          <%= radio_button_tag(:language, "spanish") %>
+
+       <% end %>
+      <%= label_tag(:language_spanish, "Spanish") %>
+
+      <% if (params[:language].present? && params[:language] =="english") ||(!params[:language].present?) %>
+          <%= radio_button_tag(:language, "spanish", :checked => true) %>
+      <% else %>
+          <%= radio_button_tag(:language, "english") %>
+
+      <% end %>
+      <%= label_tag(:language_english, "English") %></br>
+
+
+      <%= label_tag(:page_number_start, "Page Number Start") %>
+      <%= text_field_tag(:page_number_start, value = params[:page_number_start], options = {:size => "3",:maxlength =>20})%><br>
+
+
+      <%= submit_tag("FindSchools") %>
+<!--
+      <%= button_tag "Reset", type: :reset %>
+-->
+
+
+<% end %>
+
+<div class="row limit-width-1200">
+  <%if  @db_schools.present?%><h1>Total Schools <%= @db_schools.length%></h1>
+
+  <% school_index = 0 %>
+  <table>
+    <tr>
+      <th> LineNo </th>
+      <th> State  </th>
+      <th> School Name  </th>
+      <th> SchoolId   </th>
+      <th> LevelCode   </th>
+    </tr>
+
+    <% @db_schools.each do |school| %>
+        <tr>
+          <td>  <%= school_index=school_index+1 %></td>
+          <td>  <%= school.state %></td>
+          <td>  <%= school.name %></td>
+          <td>  <%= school.id %></td>
+          <td>  <%= school.level_code.to_s%></td>
+        </tr>
+    <% end %>
+  </table>
+  <% else%>
+      <h3>Use the Collection Id Mapping to get the collection ID against the state/City</h3>
+
+      <table>
+        <tr>
+          <th class="tac"> State </th>
+          <th class="tac"> City  </th>
+          <th class="tac"> CollectionID    </th>
+        </tr>
+        <tr>
+          <td class="tac">MI</td>
+          <td class="tac">Detroit</td>
+          <td class="tac">1</td>
+        </tr>
+        <tr>
+          <td class="tac">WI</td>
+          <td class="tac">Milwaukee</td>
+          <td class="tac">2</td>
+        </tr>
+        <tr>
+          <td class="tac">IN</td>
+          <td class="tac">Indianapolis</td>
+          <td class="tac">3</td>
+        </tr>
+        <tr>
+          <td class="tac">CA</td>
+          <td class="tac">Oakland</td>
+          <td class="tac">4</td>
+        </tr>
+        <tr>
+          <td class="tac">CA</td>
+          <td class="tac">San Francisco</td>
+          <td class="tac">5</td>
+        </tr>
+        <tr>
+          <td class="tac">IN</td>
+          <td class="tac"></td>
+          <td class="tac">6</td>
+        </tr>
+        <tr>
+          <td class="tac">OH</td>
+          <td class="tac"></td>
+          <td class="tac">7</td>
+        </tr>
+        <tr>
+          <td class="tac">NC</td>
+          <td class="tac"></td>
+          <td class="tac">8</td>
+        </tr>
+        <tr>
+          <td class="tac">DE</td>
+          <td class="tac"></td>
+          <td class="tac">9</td>
+        </tr>
+        <tr>
+          <td class="tac">GA</td>
+          <td class="tac">Atlanta</td>
+          <td class="tac">10</td>
+        </tr>
+        <tr>
+          <td class="tac">GA</td>
+          <td class="tac"></td>
+          <td class="tac">11</td>
+        </tr>
+        <tr>
+          <td class="tac">OK</td>
+          <td class="tac">Oklahoma City</td>
+          <td class="tac">12</td>
+        </tr>
+        <tr>
+          <td class="tac">OK</td>
+          <td class="tac"></td>
+          <td class="tac">13</td>
+        </tr>
+      </table>
+      </div>
+  <% end%>
 </div>

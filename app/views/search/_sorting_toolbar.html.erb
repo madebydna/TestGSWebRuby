@@ -1,6 +1,8 @@
 <div class="limit-width-1200 row phm pbl">
   <div class="col-xs-12 clearfix">
     <div class="hidden-xs fl">
+
+      <% #Sorts for Desktop %>
       <div class="ptm">
         <span>Sort by:</span>
         <div class="btn-group">
@@ -15,7 +17,20 @@
       </div>
     </div>
 
+    <% #Sorts For Mobile %>
+    <div class="visible-xs pull-left pbl ptm" style="width:150px;">
+      <select class="form-control js-searchSortingSelectTag">
+        <% sort_types = @relevant_sort_types - [@active_sort] %>
+        <option value="<%= @active_sort %>" selected>Sort by: <%= @active_sort.to_s.titleize %></option>
+        <% sort_types.each do |sort_name| %>
+            <% next if sort_name == 'distance' && !search_by_location? %>
+            <% next if sort_name == 'relevance' && !search_by_name? %>
+            <option value="<%=sort_name%>"><%=sort_name.to_s.titleize%></option>
+        <% end %>
+      </select>
+    </div>
 
+    <% #Save Search For Desktop %>
     <div class="hidden-xs fr mll">
       <div class="pr">
         <button class="btn btn-lg btn-primary js-savedSearchPopupButton" style="line-height: 1.5em;">
@@ -25,28 +40,20 @@
       </div>
     </div>
 
-    <div class="hidden-xs fr">
+    <% #Compare %>
+    <div class="fr">
       <div class="pr js-compareSchoolsPopupContainer">
-        <button class="btn btn-lg btn-default js-compareSchoolsPopupButton">
-          Compare (<span class="js-compareSchoolsCount">0</span>/4)
+        <% #Compare Button For Desktop %>
+        <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton">
+          Compare <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
+        </button>
+        <% #Compare Button For Mobile %>
+        <div class="visible-xs shim-2"></div>
+        <button class="btn btn-default mtm visible-xs js-compareSchoolsPopupButton">
+          Compare <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
         </button>
         <%= render 'search/compare_schools_popup' %>
       </div>
     </div>
-
-
   </div>
-
-  <div class="visible-xs col-xs-6 pbl ptm">
-    <select class="form-control js-searchSortingSelectTag">
-      <% sort_types = @relevant_sort_types - [@active_sort] %>
-      <option value="<%= @active_sort %>" selected>Sort by: <%= @active_sort.to_s.titleize %></option>
-      <% sort_types.each do |sort_name| %>
-          <% next if sort_name == 'distance' && !search_by_location? %>
-          <% next if sort_name == 'relevance' && !search_by_name? %>
-          <option value="<%=sort_name%>"><%=sort_name.to_s.titleize%></option>
-      <% end %>
-    </select>
-  </div>
-
 </div>

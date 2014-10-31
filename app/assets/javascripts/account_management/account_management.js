@@ -92,38 +92,102 @@ GS.accountManagement.savedSearch = (function(){
 
   var setDeleteSavedSearchHandler = function() {
     $('.js-savedSearches').on('click', '.js-savedSearchDelete', function() {
-      deleteSavedSearch.call(this);
+      var hash = {};
+      var $self = $(this);
+      var id = $self.data('id');
+      hash.callback = GS.accountManagement.savedSearch.deleteSuccessful;
+      hash.callback_error = GS.accountManagement.savedSearch.deleteFailure;
+      hash.href = '/gsr/ajax/saved_search/' + id
+      GS.util.deleteAjaxCall($self, hash);
       return false;
     });
   };
 
-  var deleteSavedSearch = function() {
-    $self = $(this);
-    var id = $self.data('id');
+  var deleteSuccessful = function(obj, data, params){
+    obj.parents('.js-savedSearch').fadeOut(500, function() { $(this).remove(); })
+  };
 
-    if ( id !== undefined && typeof id == 'number' ) {
-
-      $deferred = $.ajax({
-        url: '/gsr/ajax/saved_search/' + id,
-        type: 'DELETE'
-      });
-
-      $deferred.done(function(response) {
-        var error = response['error'];
-        if (typeof error === 'string' && error !== '' ) {
-          alert(response['error']);
-        } else {
-          $self.parents('.js-savedSearch').fadeOut(500, function() { $(this).remove(); })
-        }
-      });
-
-      $deferred.fail(function(response){
-        alert('Sorry but wen\'t wrong. Please try again later');
-      });
-    }
+  var deleteFailure = function(obj, data, params){
+    obj.parents('.js-savedSearch').append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are not able to remove the saved search from your list.  Please try again later.</div>");
   };
 
   return {
-    init: init
+    init: init,
+    deleteSuccessful: deleteSuccessful,
+    deleteFailure: deleteFailure
   }
 })();
+
+GS.accountManagement.mySchoolList = (function(){
+  var init = function() {
+    setDeleteMySchoolListHandler();
+  };
+
+  var setDeleteMySchoolListHandler = function() {
+    $("a[class^=js-delete-favorite-school-]").on('click', function(){
+      var hash = {};
+      var $self = $(this);
+      hash.callback = GS.accountManagement.mySchoolList.deleteSuccessful;
+      hash.callback_error = GS.accountManagement.mySchoolList.deleteFailure;
+      hash.href = $self.attr('href');
+      GS.util.deleteAjaxCall($self, hash);
+      return false;
+    });
+  };
+
+  var deleteSuccessful = function(obj, data, params){
+    var css_selector = ".js-favorite-school-"+params.id;
+    $(css_selector).slideUp();
+    var numOfVisibleRows = $('.js-schoolSearchResult').parent().filter(function() {
+      return $(this).css('display') !== 'none';
+    }).length;
+    if(numOfVisibleRows == 1){
+      $(".js-submitSchoolPYOC").prop("disabled",true);
+    }
+  };
+
+  var deleteFailure = function(obj, data, params){
+    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to remove this school from your school list.  Please try again later.</div>");
+  };
+
+  return {
+    init: init,
+    deleteSuccessful: deleteSuccessful,
+    deleteFailure: deleteFailure
+  }
+})();
+
+GS.accountManagement.newsFeedUnsubscribe = (function(){
+  var init = function() {
+    setDeleteNewsFeedUnsubscribeHandler();
+  };
+
+  var setDeleteNewsFeedUnsubscribeHandler = function() {
+    $("a[class^=js-delete-subscription-]").on('click', function(){
+      var hash = {};
+      var $self = $(this);
+      var id = $self.data('id');
+      hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
+      hash.callback_error = GS.accountManagement.newsFeedUnsubscribe.deleteFailure;
+      hash.href = $self.attr('href');
+      GS.util.deleteAjaxCall($self, hash);
+      return false;
+    });
+  };
+
+  var deleteSuccessful = function(obj, data, params){
+    var css_selector = ".js-subscription-"+params.id;
+    $(css_selector).slideUp();
+  };
+
+  var deleteFailure = function(obj, data, params){
+    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to remove the you from this email list.  Please try again later.</div>");
+  };
+
+  return {
+    init: init,
+    deleteSuccessful: deleteSuccessful,
+    deleteFailure: deleteFailure
+  }
+})();
+

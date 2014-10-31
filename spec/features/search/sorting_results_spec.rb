@@ -60,7 +60,7 @@ describe 'Sorting search results' do
 
       it "should display #{sorts_text}" do
         expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
-        expect(page.find(active_button)).to have_content('Distance')
+        expect(page.find(active_button)).to have_content('Rating')
       end
     end
 

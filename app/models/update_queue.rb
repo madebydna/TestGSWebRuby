@@ -54,12 +54,14 @@ class UpdateQueue < ActiveRecord::Base
                         entity_type: :school,
                         entity_id: 12,
                         entity_state: 'AK',
+                        member_id: 2,
                         value: 'swimming'
                     },
                     {
                         entity_type: :school,
                         entity_id: 12,
-                        entity_state: 'AL',
+                        member_id: 2,
+                        entity_state: 'AK',
                         value: 'basketball'
                     }
                 ]

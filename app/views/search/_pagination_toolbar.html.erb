@@ -1,16 +1,17 @@
-<div class="limit-width-1200 full-width ptm hidden-xs">
-  <div class="ptm"></div>
-  <div align='right' class="prm">
-    <% unless @total_results < 1 || @results_offset > @total_results%>
-      <span>Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>
-    <% end %>
-    <div>
-      <%= paginate @pagination, theme: 'great_schools', window: @window_size, outer_window: 1, params: @params_hash %>
-      <% #view file located in /views/kaminari/great_schools %>
+<div class="header-bg-color">
+    <div class="limit-width-1200 full-width hidden-xs">
+      <div align='right' class="prm pbm">
+        <% unless @total_results < 1 || @results_offset > @total_results%>
+          <span>Schools <%=@results_offset+1%> to <%= [@results_offset+@page_size,@total_results].min %> of <%= @total_results %></span><br>
+        <% end %>
+        <div>
+          <%= paginate @pagination, theme: 'great_schools', window: @window_size, outer_window: 1, params: @params_hash %>
+          <% #view file located in /views/kaminari/great_schools %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="visible-xs">
-  <%= paginate @pagination, theme: 'search_xs', params: @params_hash %>
-  <% #view file located in /views/kaminari/search_xs %>
+    <div class="visible-xs">
+      <%= paginate @pagination, theme: 'search_xs', params: @params_hash %>
+      <% #view file located in /views/kaminari/search_xs %>
+    </div>
 </div>

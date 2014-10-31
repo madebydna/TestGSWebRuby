@@ -1,5 +1,6 @@
 GS.compare= GS.compare || {};
 GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
+    var pageName = 'CompareSchoolsPage';
     var comparedSchools = '.js-comparedSchool';
     var comparedSchoolsList = '.js-comparedSchoolsList';
     var removeComparedSchool = '.js-removeComparedSchool';
@@ -51,10 +52,17 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
     var setCarouselHandler = function() {
         setupCarousel();
+        var windowWidth = $(window).width();
 
-        $(window).resize(function() {
-            destroyCarousel();
-            setupCarousel();
+        $(window).resize(function(e) {
+            //resize event sometimes gets called on resize events for mobile even if the size is the same
+            //this code checks the current window size and if its the same as before it does nothing
+            var winWidth = $(window).width();
+            if (winWidth != windowWidth) {
+                destroyCarousel();
+                setupCarousel();
+                windowWidth = winWidth;
+            }
         });
     };
 
@@ -282,11 +290,12 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
 
     return {
+        pageName: pageName,
         init: init
     };
 })();
 
-if (gon.pagename == "CompareSchoolsPage") {
+if (gon.pagename == GS.compare.compareSchoolsPage.pageName) {
     $(document).ready(function () {
         GS.compare.compareSchoolsPage.init();
     });

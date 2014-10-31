@@ -5,7 +5,7 @@ class SavedSearch < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'member_id'
 
-  validates_length_of :name, maximum: 50
+  validates_length_of :name, maximum: 255
   validates_presence_of :name, :member_id, :search_string, :num_results
   validates_numericality_of :member_id, :num_results
 

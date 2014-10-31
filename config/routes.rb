@@ -16,7 +16,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/account', as: :manage_account, to: 'account_management#show'
 
-  get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
+  #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
@@ -30,6 +30,7 @@ LocalizedProfiles::Application.routes.draw do
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
+
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
@@ -48,6 +49,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/partnerOpportunities.page', as: :partners
     get '/about/pressRoom.page', as: :media_room
     get '/about/linkToUs.page', as: :widgets_and_tools
+    get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
@@ -75,6 +77,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/college/', as: :college_articles
     get '/STEM.topic?content=8021', as: :stem_article
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    get '/schools/cities/:state_long/:state_short', as: :city_list
+    get '/schools/districts/:state_long/:state_short', as: :district_list
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
@@ -92,6 +96,10 @@ LocalizedProfiles::Application.routes.draw do
 
     get '/style-guide/*page', to: 'style_guide#index'
     get '/style-guide/', to: 'style_guide#index'
+    get '/pyoc', to: 'pyoc#print_pdf'
+    get '/choose-pyoc', to: 'pyoc#choose'
+
+
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do

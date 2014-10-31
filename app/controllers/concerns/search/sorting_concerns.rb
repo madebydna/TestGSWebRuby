@@ -3,7 +3,7 @@ module SortingConcerns
 
   protected
 
-  SORT_TYPES = ['rating_asc', 'rating_desc', 'fit_asc', 'fit_desc', 'distance_asc', 'distance_desc', 'name_asc', 'name_desc']
+  SORT_TYPES = ['rating_desc', 'fit_desc', 'distance_asc']
 
   def determine_sort!(params_hash=params)
     params_sort = parse_sorts(params_hash).presence
@@ -13,16 +13,12 @@ module SortingConcerns
   end
 
   def active_sort_name(sort)
-    if sort.nil?
-      if search_by_location?
-        :distance
-      elsif search_by_name?
-        :relevance
-      else
-        :rating
-      end
-    else
+    if sort
       sort.to_s.split('_').first.to_sym
+    else
+      # By name sorting is just solr's default, aka. there is no sort
+      # For display, we call this relevance
+      :relevance
     end
   end
 
@@ -52,6 +48,15 @@ module SortingConcerns
   end
 
   def parse_sorts(params_hash)
-    params_hash['sort'].to_sym if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
+    if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
+      params_hash['sort'].to_sym
+    else
+      # No sort param, so use the default sort for this search type
+      if search_by_name?
+        nil
+      else
+        :rating_desc
+      end
+    end
   end
 end

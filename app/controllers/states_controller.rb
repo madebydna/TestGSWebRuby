@@ -9,6 +9,7 @@ class StatesController < ApplicationController
   before_action :set_login_redirect
   before_action :set_footer_cities
   before_action :write_meta_tags, only: [:show, :community]
+  before_action :set_state_home_omniture_data, only: [:show]
 
   def show
     hub_city_mapping = mapping
@@ -34,7 +35,7 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
 
       ad_setTargeting_through_gon
-      set_omniture_data('GS:State:Home', 'Home,StateHome')
+
     end
   end
 
@@ -42,8 +43,8 @@ class StatesController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
     @ad_page_name = :State_Home_Standard
-    gon.pagename = @ad_page_name
     @show_ads = true
+    gon.show_ads = @show_ads
     ad_setTargeting_through_gon
     render 'states/state_home'
   end
@@ -232,4 +233,8 @@ class StatesController < ApplicationController
 
       set_omniture_data(page_name, page_hier, @state[:long].titleize)
     end
+
+  def set_state_home_omniture_data
+    set_omniture_data('GS:State:Home', 'Home,StateHome')
+  end
 end

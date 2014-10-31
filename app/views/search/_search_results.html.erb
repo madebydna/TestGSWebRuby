@@ -13,18 +13,19 @@
             <%= render 'assigned_school_not_valid' %>
           <% end %>
         <%= render 'compare_schools_error_message' %>
+        <%= render 'search_ad_section', desktop_slots: @header_ad_slots[:desktop], mobile_slots: @header_ad_slots[:mobile] %>
         <% ad_counter = 0 %>
         <% @schools.each_with_index do |school, search_result_counter| %>
-            <% if @show_ads && [2, 7, 12].include?(search_result_counter) %>
-              <%= render 'search_result_ad', ad_counter: ad_counter %>
+            <% if [4, 8, 12, 16, 20].include?(search_result_counter) %>
+              <%= render 'search_ad_section',  desktop_slots: @results_ad_slots[:desktop], ad_counter: ad_counter, mobile_slots: @results_ad_slots[:mobile] %>
               <% ad_counter += 1 %>
             <% end %>
             <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
             <% @school = decorated_school %>
             <%= render 'search_result', school: school, decorated_school: decorated_school %>
         <% end %>
+        <%= render 'search_ad_section', desktop_slots: @footer_ad_slots[:desktop], mobile_slots: @footer_ad_slots[:mobile] %>
       </div>
     </div>
-    <div class="pbm hidden-xs"></div>
   </div>
 </div>

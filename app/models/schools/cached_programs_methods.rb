@@ -32,7 +32,7 @@ module CachedProgramsMethods
     if before_after_care
       if before_after_care.key?(before_after)
         return 'Yes'
-      elsif before_after_care.key?('neither')
+      else
         return 'No'
       end
     end

@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot']
+  ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar']
 end
 
 def nightly_states
@@ -146,6 +146,11 @@ end
 def self.reviews_snapshot_cache_for_school(school)
   esp_response_cacher = ReviewsCaching::ReviewsSnapshotCacher.new(school)
   esp_response_cacher.cache
+end
+
+def self.progress_bar_cache_for_school(school)
+  progress_bar_cacher = ProgressBarCaching::ProgressBarCacher.new(school)
+  progress_bar_cacher.cache
 end
 
 parsed_arguments.each do |args|

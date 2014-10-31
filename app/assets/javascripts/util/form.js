@@ -243,11 +243,7 @@ $(function() {
         }
         GS.search.schoolSearchForm.findByNameSelector = '#js-guidedQueryString';
         GS.search.schoolSearchForm.findByLocationSelector = '#js-guidedQueryString';
-        if (GS.search.schoolSearchForm.isAddress(GS.search.schoolSearchForm.getSearchQuery())) {
-            return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
-        } else {
-            return GS.search.schoolSearchForm.submitByNameSearch.call(this, getSelectedFilterValues());
-        }
+        return GS.search.schoolSearchForm.submitByLocationSearch.call(this, guidedGeocodeCallbackFn);
     });
 
     var addToArray = function(hash, key, value) {

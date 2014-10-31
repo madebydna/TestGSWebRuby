@@ -130,16 +130,6 @@ module CompareSchoolsConcerns
             {
                 display_type: 'category',
                 opt: {
-                    subtitle: 'Reviews',
-                    key: :reviews
-                },
-                children: [
-                    {display_type: 'reviews_snapshot'}
-                ]
-            },
-            {
-                display_type: 'category',
-                opt: {
                     subtitle: 'Details',
                     key: :details
                 },
@@ -178,6 +168,16 @@ module CompareSchoolsConcerns
                             table_name: 'js-comparePieChartTable'
                         }
                     }
+                ]
+            },
+            {
+                display_type: 'category',
+                opt: {
+                    subtitle: 'Reviews',
+                    key: :reviews
+                },
+                children: [
+                    {display_type: 'reviews_snapshot'}
                 ]
             },
             {

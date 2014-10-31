@@ -1,50 +1,20 @@
 GS.search = GS.search || {};
 GS.search.autocomplete = GS.search.autocomplete || {};
 
+//Hooks into the Autocomplete library for various events
+//EX. onUpKeyedCallback will execute when the users key is finished clicking
 GS.search.autocomplete.handlers = GS.search.autocomplete.handlers || (function() {
 
-    var setOnUpKeyedCallback = function() {
-        var isAddress = GS.search.schoolSearchForm.isAddress;
-        GS.search.autocomplete.onUpKeyedCallback = function(query) {
-            if (isAddress(query)) {
-                this.dropdown.close();
-            } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-                this.dropdown.update(query);
-                this.dropdown.open();
-            } else {
-                this.dropdown.moveCursorUp();
-                this.dropdown.open();
-            }
-        }
+    var setOnUpKeyedCallback = function(callback) {
+        GS.search.autocomplete.onUpKeyedCallback = callback;
     };
 
-    var setOnDownKeyedCallback = function() {
-        var isAddress = GS.search.schoolSearchForm.isAddress;
-        GS.search.autocomplete.onDownKeyedCallback = function(query) {
-            if (isAddress(query)) {
-                this.dropdown.close();
-            } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-                this.dropdown.update(query);
-                this.dropdown.open();
-            } else {
-                this.dropdown.moveCursorDown();
-                this.dropdown.open();
-            }
-        }
+    var setOnDownKeyedCallback = function(callback) {
+        GS.search.autocomplete.onDownKeyedCallback = callback;
     };
 
-    var setOnQueryChangedCallback = function() {
-        var isAddress = GS.search.schoolSearchForm.isAddress;
-        GS.search.autocomplete.onQueryChangedCallback = function(query) {
-            this.input.clearHintIfInvalid();
-            if (isAddress(query) || query.length == 0 ) {
-                this.dropdown.close();
-            } else if (query.length >= this.minLength) {
-                this.dropdown.update(query);
-                this.dropdown.open();
-                this._setLanguageDirection();
-            }
-        }
+    var setOnQueryChangedCallback = function(callback) {
+        GS.search.autocomplete.onQueryChangedCallback = callback;
     };
 
     return {

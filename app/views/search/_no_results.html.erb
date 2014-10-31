@@ -7,6 +7,7 @@
   </div>
 </div>
 <div class="header-bg-color pvl">
+  <%= render 'search_ad_section', desktop_slots: @header_ad_slots[:desktop], mobile_slots: @header_ad_slots[:mobile] %>
   <div class="limit-width-1200 bg-white partner-carousel-image">
     <div class="pvl pll">
       <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
@@ -28,5 +29,8 @@
         <% end %>
       </ul>
     </div>
+  </div>
+  <div class="mtl mbm ptm">
+    <%= render 'search_ad_section', desktop_slots: @footer_ad_slots[:desktop], mobile_slots: @footer_ad_slots[:mobile] %>
   </div>
 </div>

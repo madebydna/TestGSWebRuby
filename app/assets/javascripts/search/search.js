@@ -258,9 +258,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         });
 
         $('.js-schoolResultsSearchForm').submit(function() {
+
             var input = $(this).find(schoolResultsSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
-            isAddress(input.value);
+          // forcing location search on home page button click.  Select will do direct linking.
+            if($(this).find('.js-forceLocationSearch')){
+              GS.search.schoolSearchForm.searchType = 'byLocation';
+            }
+            else{
+              isAddress(input.value);
+            }
             var searchType = GS.search.schoolSearchForm.searchType;
             if (valid) {
                 var searchOptions = {};
@@ -530,10 +537,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {
                         var geocodeResult = new Array();
-                        geocodeResult['lat'] = results[x].geometry.location.lat();
-                        geocodeResult['lon'] = results[x].geometry.location.lng();
-                        geocodeResult['normalizedAddress'] = formatNormalizedAddress(results[x].formatted_address);
-                        geocodeResult['type'] = results[x].types.join();
+                        geocodeResult['lat'] = results[x].geometry.location.lat().toFixed(7);
+                        geocodeResult['lon'] = results[x].geometry.location.lng().toFixed(7);
+                        geocodeResult['normalizedAddress'] = formatNormalizedAddress(results[x].formatted_address).substring(0, 75);
+                        geocodeResult['type'] = results[x].types.join().substring(0, 50);
                         if (results[x].partial_match) {
                             geocodeResult['partial_match'] = true;
                         } else {
@@ -541,16 +548,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                         }
                         for (var i = 0; i < results[x].address_components.length; i++) {
                             if (results[x].address_components[i].types.contains('administrative_area_level_1')) {
-                                geocodeResult['state'] = results[x].address_components[i].short_name;
+                                geocodeResult['state'] = results[x].address_components[i].short_name.substring(0, 30);
                             }
                             if (results[x].address_components[i].types.contains('country')) {
-                                geocodeResult['country'] = results[x].address_components[i].short_name;
+                                geocodeResult['country'] = results[x].address_components[i].short_name.substring(0, 20);
                             }
                             if (results[x].address_components[i].types.contains('postal_code')) {
-                                geocodeResult['zipCode'] = results[x].address_components[i].short_name;
+                                geocodeResult['zipCode'] = results[x].address_components[i].short_name.substring(0, 15);
                             }
                             if (results[x].address_components[i].types.contains('locality')) {
-                                geocodeResult['city'] = results[x].address_components[i].long_name;
+                                geocodeResult['city'] = results[x].address_components[i].long_name.substring(0, 50);
                             }
                         }
                         // http://stackoverflow.com/questions/1098040/checking-if-an-associative-array-key-exists-in-javascript

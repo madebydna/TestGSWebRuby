@@ -30,6 +30,18 @@
 </div>
 
 <%= render 'partners', partners: @partners %>
+
+<div class="clearfix limit-width-1200">
+    <div style="width:300px" class="ma">
+    <div class="fl pal">
+        <%= link_to("Browse all cities", city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+    </div>
+    <div class="fl pal">
+        <%= link_to("Browse all districts", district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+    </div>
+    </div>
+</div>
+
 <% if @show_ads %>
     <div class="mvl">
         <%= render 'layouts/ad_layer', page: ('State_Home').to_sym, slot: :Footer, view: :desktop  %>

@@ -15,4 +15,10 @@ class SchoolMetadata < ActiveRecord::Base
       end
     end
   end
+
+
+  def self.school_ids_for_collection_ids(state,collection_id)
+    results = self.on_db(state.to_sym).where(meta_key: 'collection_id', meta_value: collection_id.to_i)
+    results.map(&:school_id)
+  end
 end

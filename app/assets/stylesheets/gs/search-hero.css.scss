@@ -24,6 +24,10 @@
   width: 350px;
 }
 
+.search-bar-home {
+  width: 600px;
+}
+
 .clear-cookies-link {
   color: #ddd;
   clear: left;
@@ -126,6 +130,10 @@
     width: 70%;
     height: 40px;
   }
+  .search-bar-home {
+    width: 90%;
+    height: 40px;
+  }
 
   .state-hub-search-button {
     width: 22%;
@@ -136,6 +144,9 @@
 
 @media only screen and (max-width: 768px) {
   .lg-search-bar {
+    height: 38px;
+  }
+  .search-bar-home {
     height: 38px;
   }
   .state-hub-search-button {
@@ -163,7 +174,7 @@
 //Compare Schools Popup
 .compare-schools-popup {
   z-index: 1;
-  width: 360px;
+  width: 320px;
   left:-188px; //left is to prevent panel from going off screen.
   border: #cccccc solid 1px;
 }
@@ -210,6 +221,7 @@
 .tt-suggestion {
   padding: 4px 20px;
   font-size: 18px;
+  text-align: left;
 //  line-height: 24px;
 
   .tt-suggestion-link {
