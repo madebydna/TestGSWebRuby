@@ -218,7 +218,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
             destroyCarousel();
             setupCarousel();
             $('.js-save-all-schools-button').prop('disabled', $(comparedSchools).length === 0);
-            GS.search.googleMap.removeMapMarkerBySchoolId(schoolId);
+            GS.googleMap.removeMapMarkerBySchoolId(schoolId);
             GS.compare.schoolsList.removeSchool(schoolId);
             removeSchoolFromURL(schoolId);
         });
@@ -274,6 +274,12 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         $('.js-save-all-schools-button').prop('disabled', ($(comparedSchools).length === 0));
     };
 
+    var initMap = function () {
+        var elemMapCanvas = $('#js-map-canvas');
+        GS.googleMap.setHeightForMap(219);
+        elemMapCanvas.show('fast', GS.googleMap.initAndShowMap);
+    };
+
     var init = function() {
         adjustSchoolResultsHeights();
         setAccordianHandlerForCategories();
@@ -291,12 +297,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
     return {
         pageName: pageName,
-        init: init
+        init: init,
+        initMap: initMap
     };
 })();
-
-if (gon.pagename == GS.compare.compareSchoolsPage.pageName) {
-    $(document).ready(function () {
-        GS.compare.compareSchoolsPage.init();
-    });
-}

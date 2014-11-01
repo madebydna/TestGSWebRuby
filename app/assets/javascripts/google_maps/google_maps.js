@@ -1,8 +1,8 @@
-GS.search = GS.search || {};
 GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
 GS.window.sizing.width = GS.window.sizing.width || {};
-GS.search.googleMap = GS.search.googleMap || (function() {
+GS.googleMap = GS.googleMap || (function() {
 
+    var getScriptCallbacks = [];
     var needsInit = true;
     GS.search.map = GS.search.map || {};
     GS.search.mapMarkers = GS.search.mapMarkers || [];
@@ -332,13 +332,25 @@ GS.search.googleMap = GS.search.googleMap || (function() {
         }
     };
 
+    var addToGetScriptCallback = function (func) {
+        getScriptCallbacks.push(func);
+    };
+
+    var ajaxInitCallbacks = function () {
+      while (getScriptCallbacks.length > 0) {
+        (getScriptCallbacks.shift())();
+      }
+    };
+
     return {
         init: init,
         getMap: getMap,
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
-        setAssignedSchool: setAssignedSchool
+        setAssignedSchool: setAssignedSchool,
+        addToGetScriptCallback: addToGetScriptCallback,
+        ajaxInitCallbacks: ajaxInitCallbacks
     }
 
 })();

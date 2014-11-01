@@ -98,7 +98,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         } else if (levelCode == 'h') {
             level = 'high';
         }
-        GS.search.googleMap.setAssignedSchool(schoolId, level);
+        GS.googleMap.setAssignedSchool(schoolId, level);
     };
 
     var setAssignedSchoolInList = function(levelCode, school) {
