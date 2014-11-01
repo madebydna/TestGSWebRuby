@@ -21,12 +21,6 @@ module SavedSearchesConcerns
 
   def create_saved_search(saved_search_attrs)
     begin
-      name = saved_search_attrs[:name]
-      searches_with_same_name = current_user.saved_searches.searches_named(name)
-      if searches_with_same_name.count > 0
-        last_searches_number = /\((\d*)\)$/.match(searches_with_same_name.last.name)
-        saved_search_attrs[:name] = "#{name}(#{last_searches_number.present? ? last_searches_number[1].to_i + 1 : 1})"
-      end
       current_user.saved_searches.create!(saved_search_attrs)
     rescue Exception => e
       e
