@@ -250,4 +250,12 @@ module ApplicationHelper
   def filtering_search?
     @filtering_search
   end
+
+  def guided_search_path(hub)
+    if hub.city
+      "/#{States.state_name(hub.state)}/#{hub.city.to_s.downcase}/guided-search"
+    else
+      "/#{States.state_name(hub.state)}/guided-search"
+    end
+  end
 end

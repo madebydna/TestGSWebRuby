@@ -29,7 +29,7 @@
           <% if has_sponsor %>
             <div class='tac sponsor-bar  mbl'>
               <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
-              <% if sponsor[:sponsor_page_visible] %>
+              <% if @hub.has_partner_page? %>
                 <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
               <% else %>
                 <%= image_tag sponsor[:path], alt: 'sponsor logo' %>

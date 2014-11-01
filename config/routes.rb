@@ -185,6 +185,8 @@ LocalizedProfiles::Application.routes.draw do
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
       get 'enrollment', to: 'cities#enrollment', as: :enrollment
       get 'schools', to: 'error#page_not_found', as: :browse
+      get 'guided-search', to: 'cities#guided_search', as: :guided_search
+
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'cities#enrollment'
       end
