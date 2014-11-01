@@ -150,7 +150,10 @@ class SearchController < ApplicationController
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
 
-    @sort_type = determine_sort!(@params_hash)
+    @sort_type = parse_sorts(@params_hash).presence
+    @active_sort = active_sort_name(@sort_type)
+    @relevant_sort_types = sort_types
+
     if @sort_type
       search_options.merge!({sort: @sort_type})
     end
@@ -186,7 +189,7 @@ class SearchController < ApplicationController
     #when not sorting by fit, only applying fit scores to 25 schools on page. (previously it was up to 200 schools)
     if sorting_by_fit? && filtering_search?
       setup_fit_scores(school_results, @params_hash)
-      sort_by_fit(school_results, @sort_type)
+      sort_by_fit(school_results)
       @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
     else
       @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
