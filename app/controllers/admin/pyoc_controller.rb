@@ -14,7 +14,7 @@ class Admin::PyocController <  ApplicationController
         params[:id2],
         params[:id3],
         params[:id4])
-    @db_schools =@db_schools[0..20]
+    # @db_schools =@db_schools[0..20]
     if (@db_schools.present?)
     schools_decorated_with_cache_results=prep_data_for_pdf(@db_schools)
     generate_pdf(schools_decorated_with_cache_results)
