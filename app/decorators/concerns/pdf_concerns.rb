@@ -2,6 +2,46 @@
 
 module PdfConcerns
 
+  SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
+
+
+  icon_path = 'app/assets/images/pyoc/map_icons/'
+
+  Zipcode_to_icon_mapping = {
+      '53110' => icon_path + 'Mke_map_6.png',
+      '53129' => icon_path + 'Mke_map_5.png',
+      '53130' => icon_path + 'Mke_map_5.png',
+      '53202' => icon_path + 'Mke_map_4.png',
+      '53203' => icon_path + 'Mke_map_4.png',
+      '53204' => icon_path + 'Mke_map_6.png',
+      '53205' => icon_path + 'Mke_map_4.png',
+      '53206' => icon_path + 'Mke_map_4.png',
+      '53207' => icon_path + 'Mke_map_6.png',
+      '53208' => icon_path + 'Mke_map_3.png',
+      '53209' => icon_path + 'Mke_map_2.png',
+      '53210' => icon_path + 'Mke_map_3.png',
+      '53211' => icon_path + 'Mke_map_4.png',
+      '53212' => icon_path + 'Mke_map_4.png',
+      '53213' => icon_path + 'Mke_map_3.png',
+      '53214' => icon_path + 'Mke_map_5.png',
+      '53215' => icon_path + 'Mke_map_6.png',
+      '53216' => icon_path + 'Mke_map_3.png',
+      '53217' => icon_path + 'Mke_map_2.png',
+      '53218' => icon_path + 'Mke_map_1.png',
+      '53219' => icon_path + 'Mke_map_5.png',
+      '53220' => icon_path + 'Mke_map_5.png',
+      '53221' => icon_path + 'Mke_map_6.png',
+      '53222' => icon_path + 'Mke_map_3.png',
+      '53223' => icon_path + 'Mke_map_1.png',
+      '53224' => icon_path + 'Mke_map_1.png',
+      '53225' => icon_path + 'Mke_map_1.png',
+      '53226' => icon_path + 'Mke_map_3.png',
+      '53227' => icon_path + 'Mke_map_5.png',
+      '53228' => icon_path + 'Mke_map_5.png',
+      '53233' => icon_path + 'Mke_map_4.png',
+      '53235' => icon_path + 'Mke_map_6.png',
+  }
+
   English_to_spanish_school_type_mapping = {
       'Private' => 'Privada',
       'Public district' => 'Pública',
@@ -72,4 +112,64 @@ module PdfConcerns
   def which_rating_mapping(data)
     English_to_spanish_ratings_mapping[data]
   end
+
+  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4)
+    db_schools = []
+
+    # binding.pry;
+    if state.present? && collection_id.present? && collection_id>0 && is_high_school
+      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+      db_schools.select!(&:includes_highschool?)
+
+    elsif state.present? && collection_id.present? && collection_id>0  && is_k8
+      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+      db_schools.select!(&:pk8?)
+
+
+    elsif state.present? && collection_id.present? &&  collection_id>0  && !is_k8  &&  !is_high_school
+      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc)
+
+    elsif   state.present? &&  collection_id==0
+      db_schools = School.on_db(state).active.order(name: :asc)
+    elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
+      db_schools = School.for_states_and_ids([state, state, state,state], [school_id1, school_id2, school_id3, school_id4])
+    end
+
+    # Add schools
+    if added_schools.present?
+      schools_to_be_added = added_schools.split(',')
+      db_schools += School.on_db(state).where(id: schools_to_be_added).all
+      db_schools.sort! { |a,b| a.name <=> b.name }
+    end
+
+    # Remove schools
+    if removed_schools.present?
+      schools_to_be_removed = removed_schools.split(',')
+      db_schools -= School.on_db(state).where(id: schools_to_be_removed).all
+      db_schools.sort! { |a,b| a.name <=> b.name }
+    end
+    db_schools
+  end
+
+
+  def prep_data_for_pdf(db_schools)
+    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
+    db_schools.each do |school|
+      query = query.include_schools(school.state, school.id)
+    end
+    query_results = query.query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+    schools_with_cache_results= school_cache_results.decorate_schools(db_schools)
+    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
+      PyocDecorator.decorate(school)
+    end
+  end
+  def which_icon
+    Zipcode_to_icon_mapping[zipcode].present? ?  Zipcode_to_icon_mapping[zipcode] :'N/A'
+  end
+
 end
