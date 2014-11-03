@@ -1,5 +1,7 @@
 class CensusLoading::Loader < CensusLoading::Base
 
+  CACHE_KEY = 'characteristics'
+
   # TODO handle census_description, census_data_set_file
   # Best ordering: first create data sets, then gs_schooldb.census_* rows, then value row
   # TODO break out data set code into module
@@ -13,6 +15,9 @@ class CensusLoading::Loader < CensusLoading::Base
       next if update.blank?
 
       census_update = CensusLoading::Update.new(census_data_type, update)
+
+      # Raises school not found exception if one doesn't exist with that ID
+      school = School.on_db(census_update.shard).find(census_update.entity_id)
 
       data_set = CensusDataSet
           .on_db(census_update.shard)
@@ -36,6 +41,7 @@ class CensusLoading::Loader < CensusLoading::Base
       # )
 
       validate_census_value!(value_row, data_set, census_update)
+      Cacher.create_cache(school, CACHE_KEY)
     end
   end
 

@@ -57,116 +57,21 @@ parsed_arguments = parse_arguments
 
 usage unless parsed_arguments
 
-
-def self.create_cache(school, cache_key)
-  if school.active?
-    begin
-      action = "#{cache_key}_cache_for_school"
-      self.send action, school
-    rescue => error
-      Rails.logger.error "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
-                             "\nException : #{error.message}."
-    end
-  else
-    Rails.logger.error "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
-                           "\nSchool is inactive."
-  end
-end
-
-# Uses configuration_map to map attributes/methods in obj_array to keys in a hash
-def self.map_object_array_to_hash_array(configuration_map, obj_array)
-  rval = []
-  obj_array.each do |obj|
-    rval << active_record_to_hash(configuration_map, obj)
-  end
-  rval
-end
-
-def self.active_record_to_hash(configuration_map, obj)
-  rval_map = {}
-  configuration_map.each do |key, val|
-    if obj.attributes.include?(key.to_s)
-      rval_map[val] = obj[key]
-    elsif obj.respond_to?(key)
-      rval_map[val] = obj.send(key)
-    elsif key == :test_data_type_display_name
-      # Hack until we get ratings into its own tiered class structure
-      if obj.test_data_type
-        rval_map[val] = obj.test_data_type.display_name
-      end
-    else
-      Rails.logger.error "ERROR: Can't find attribute or method named #{key} in #{obj}"
-    end
-  end
-  rval_map
-end
-
-def self.test_description_for(data_type_id,state)
-  @@test_descriptions["#{data_type_id}#{state}"]
-end
-
-
-def self.ratings_cache_for_school(school)
-  results_obj_array = TestDataSet.ratings_for_school(school)
-  school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name: 'ratings')
-
-  if results_obj_array.present?
-    config_map = {
-      data_type_id: 'data_type_id',
-      year: 'year',
-      school_value_text: 'school_value_text',
-      school_value_float: 'school_value_float',
-      test_data_type_display_name: 'name'
-    }
-    results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
-    # Prune out empty data sets
-    results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
-    school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
-  elsif school_cache && school_cache.id.present?
-    SchoolCache.destroy(school_cache.id)
-  end
-end
-
-
-def self.test_scores_cache_for_school(school)
-  test_scores_cacher = TestScoresCaching::BreakdownsCacher.new(school)
-  test_scores_cacher.cache
-end
-
-def self.characteristics_cache_for_school(school)
-  characteristics_cacher = CharacteristicsCaching::CharacteristicsCacher.new(school)
-  characteristics_cacher.cache
-end
-
-def self.esp_responses_cache_for_school(school)
-  esp_response_cacher = EspResponsesCaching::EspResponsesCacher.new(school)
-  esp_response_cacher.cache
-end
-
-def self.reviews_snapshot_cache_for_school(school)
-  esp_response_cacher = ReviewsCaching::ReviewsSnapshotCacher.new(school)
-  esp_response_cacher.cache
-end
-
-def self.progress_bar_cache_for_school(school)
-  progress_bar_cacher = ProgressBarCaching::ProgressBarCacher.new(school)
-  progress_bar_cacher.cache
-end
-
 parsed_arguments.each do |args|
   states = args[:states]
   cache_keys = args[:cache_keys]
   school_ids = args[:school_ids]
   states.each do |state|
+    # Remove the next line to have all mean all states again
     next if ARGV[0] == 'all' && !nightly_states.include?(state)
     cache_keys.each do |cache_key|
       if school_ids
         School.on_db(state.downcase.to_sym).where(id: school_ids).each do |school|
-          create_cache(school, cache_key)
+          Cacher.create_cache(school, cache_key)
         end
       else
         School.on_db(state.downcase.to_sym).all.each do |school|
-          create_cache(school, cache_key)
+          Cacher.create_cache(school, cache_key)
         end
       end
     end
