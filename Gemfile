@@ -98,6 +98,8 @@ gem 'rubyntlm', '~> 0.4.0'
 gem 'prawn'
 gem 'prawn-table', '~> 0.1.2'
 
+gem 'rest_client', '1.8.1'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
