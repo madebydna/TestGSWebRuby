@@ -70,25 +70,25 @@ class PyocPdf < Prawn::Document
     end_time =Time.now - start_time
 
     puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
-    above_avg = []
-    avg = []
-    below_avg = []
-
-    above_avg_ratings = '8, 9, 10'
-    avg_ratings = '7, 6, 5, 4'
-    below_avg_ratings = '3, 2, 1'
-    schools_decorated_with_cache_results.each do |school|
-      school_cache = school
-      if above_avg_ratings.include? school.school_cache.overall_gs_rating
-        above_avg.push(school_cache.name)
-      end
-      if avg_ratings.include? school.school_cache.overall_gs_rating
-        avg.push(school_cache.name)
-        end
-      if below_avg_ratings.include? school.school_cache.overall_gs_rating
-        below_avg.push(school_cache.name)
-      end
-    end
+    # above_avg = []
+    # avg = []
+    # below_avg = []
+    #
+    # above_avg_ratings = '8, 9, 10'
+    # avg_ratings = '7, 6, 5, 4'
+    # below_avg_ratings = '3, 2, 1'
+    # schools_decorated_with_cache_results.each do |school|
+    #   school_cache = school
+    #   if above_avg_ratings.include? school.school_cache.overall_gs_rating
+    #     above_avg.push(school_cache.name)
+    #   end
+    #   if avg_ratings.include? school.school_cache.overall_gs_rating
+    #     avg.push(school_cache.name)
+    #     end
+    #   if below_avg_ratings.include? school.school_cache.overall_gs_rating
+    #     below_avg.push(school_cache.name)
+    #   end
+    # end
 
     # draw_index_columns(above_avg, avg, below_avg)
     # draw_map_icons_index_columns(school.zipcode)

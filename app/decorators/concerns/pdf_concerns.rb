@@ -134,9 +134,10 @@ module PdfConcerns
       school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
       db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
 
-    elsif   state.present? &&  collection_id==0
+    elsif   state.present? &&  collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
       db_schools = School.on_db(state).active.order(name: :asc).to_a
     elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
+      puts 'me here'
       db_schools = School.for_states_and_ids([state, state, state,state], [school_id1, school_id2, school_id3, school_id4])
     end
 

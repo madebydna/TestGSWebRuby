@@ -11,10 +11,10 @@ class Admin::PyocController <  ApplicationController
         params[:is_pk8].to_bool,
         params[:added_schools],
         params[:removed_schools],
-        params[:id1],
-        params[:id2],
-        params[:id3],
-        params[:id4])
+        params[:id1].to_i,
+        params[:id2].to_i,
+        params[:id3].to_i,
+        params[:id4].to_i)
     # @db_schools =@db_schools[0..20]
     if (@db_schools.present?)
     schools_decorated_with_cache_results=prep_data_for_pdf(@db_schools)
@@ -34,10 +34,10 @@ class Admin::PyocController <  ApplicationController
         params[:is_pk8].to_bool,
         params[:added_schools],
         params[:removed_schools],
-        params[:id1],
-        params[:id2],
-        params[:id3],
-        params[:id4])
+        params[:id1].to_i,
+        params[:id2].to_i,
+        params[:id3].to_i,
+        params[:id4].to_i)
     set_meta_tags title:       "Choosing schools for Print your own chooser",
                   description: "Choosing schools for Print your own chooser",
                   keywords:    "Choosing schools for Print your own chooser"
@@ -66,7 +66,6 @@ class Admin::PyocController <  ApplicationController
 
   def generate_pdf(schools_decorated_with_cache_results)
     respond_to do |format|
-      format.html
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,params[:is_pk8].present?,
                              params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false)
