@@ -301,16 +301,16 @@ class PyocPdf < Prawn::Document
   end
 
   def which_district_truncation(school, level)
-    if school.district != nil
-      if level.include? '& UG'
-        truncated_district = '| ' + truncate_district(school, 27)
-      else
-        truncated_district = '| ' + truncate_district(school, 36)
-      end
-    else
-      truncated_district = ' '
-    end
-
+    # if school.district != nil
+    #   if level.include? '& UG'
+    #     truncated_district = '| ' + truncate_district(school, 27)
+    #   else
+    #     truncated_district = '| ' + truncate_district(school, 36)
+    #   end
+    # else
+    #   truncated_district = ' '
+    # end
+    truncated_district = ' '
    school_type = school.which_school_type
 
     text_box "#{level} | #{is_spanish ? school_type : school.decorated_school_type} #{truncated_district}",
