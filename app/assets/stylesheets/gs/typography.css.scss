@@ -230,3 +230,8 @@ body { top: 0px !important; }
 .state_bg_2 { background-color: #E97F6D }
 .state_bg_3 { background-color: #A192AD }
 .state_bg_4 { background-color: #C9DA7A }
+
+//fix for typeahead transparency
+.tt-hint {
+  opacity:1;
+}
