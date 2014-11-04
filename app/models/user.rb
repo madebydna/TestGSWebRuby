@@ -222,7 +222,7 @@ class User < ActiveRecord::Base
   end
 
   def has_role?(role)
-    member_roles.present? && role.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
+    member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end
 
   def reported_review?(review)
