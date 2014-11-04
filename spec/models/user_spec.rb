@@ -204,7 +204,7 @@ describe User do
     end
 
     describe '#is_esp_superuser' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:esp_superuser_role )}
+      let!(:esp_superuser_role) {FactoryGirl.build(:role )}
       let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:esp_superuser_role.id)}
 
       it 'should return false, since the user has no member_roles' do
@@ -222,7 +222,8 @@ describe User do
     end
 
     describe '#has_role' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:esp_superuser_role,id:1 )}
+      let!(:esp_superuser_role) {FactoryGirl.build(:role,id:1 )}
+      let!(:some_role) {FactoryGirl.build(:role,id:2 )}
       let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:2)}
 
       it 'should return false, since the user has no member_roles' do
@@ -233,6 +234,11 @@ describe User do
       it 'should return false, since the user role id does not match' do
         allow(user).to receive(:member_roles).and_return(member_roles)
         expect(user.has_role?(esp_superuser_role)).to be_falsey
+      end
+
+      it 'should return true' do
+        allow(user).to receive(:member_roles).and_return(member_roles)
+        expect(user.has_role?(some_role)).to be_truthy
       end
     end
 

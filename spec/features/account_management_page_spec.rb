@@ -40,12 +40,13 @@ feature 'Account management page' do
     end
 
     context 'when user is osp super user' do
-      let!(:esp_superuser_role) {FactoryGirl.create(:esp_superuser_role )}
+      let!(:esp_superuser_role) {FactoryGirl.create(:role )}
       let!(:member_role) {FactoryGirl.create(:member_role,member_id: user.id,role_id:esp_superuser_role.id)}
       scenario 'It displays link to edit osp' do
         expect(subject).to have_content('Edit School Profile')
       end
     end
+
 
     context 'When user has subscriptions' do
       let!(:osp_subscription) {FactoryGirl.create(:subscription,list: 'osp',member_id: user.id)}
