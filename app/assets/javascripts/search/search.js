@@ -220,7 +220,18 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         $('#js-assigned-school-no-result').show('slow');
     };
 
+    var init = function () {
+        try {
+            if (GS.search.assignedSchools.shouldGetAssignedSchools()) {
+                GS.search.assignedSchools.getAssignedSchools();
+            }
+        } catch (e) {
+            // ignore. This is prototype code
+        }
+    };
+
     return {
+        init: init,
         shouldGetAssignedSchools:shouldGetAssignedSchools,
         getAssignedSchools: getAssignedSchools
     };
@@ -296,13 +307,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             }
         });
 
-        try {
-            if (GS.search.assignedSchools.shouldGetAssignedSchools()) {
-                GS.search.assignedSchools.getAssignedSchools();
-            }
-        } catch (e) {
-            // ignore. This is prototype code
-        }
+        GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
     };
 
     var setupTabs = function() {
@@ -658,15 +663,3 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         setShowFiltersCookieHandler: setShowFiltersCookieHandler
     };
 })(gon.state_abbr);
-
-GS.search.init = (function() {
-  var self=this;
-  if(typeof self.need_init==='undefined'){
-    self.need_init='search already initialized';
-    GS.search.schoolSearchForm.init();
-    GS.search.schoolSearchForm.setupTabs();
-    GS.search.schoolSearchForm.showFiltersMenuOnLoad();
-    GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
-    GS.search.schoolSearchForm.setShowFiltersCookieHandler();
-  }
-});

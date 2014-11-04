@@ -240,6 +240,7 @@ class FilterBuilder
                         track: {label: 'Track', unique_label: 'Track (boys)', display_type: :sports_values, name: :boys_sports, value: :track},
                         basketball: {label: 'Basketball', unique_label: 'Basketball (boys)', display_type: :sports_values, name: :boys_sports, value: :basketball},
                         football: {label: 'Football', unique_label: 'Football (boys)', display_type: :sports_values, name: :boys_sports, value: :football},
+                        volleyball: {label: 'Volleyball', unique_label: 'Volleyball (girls)', display_type: :sports_values, name: :girls_sports, value: :volleyball},
                         baseball: {label: 'Baseball', unique_label: 'Baseball (boys)', display_type: :sports_values, name: :boys_sports, value: :baseball}
                       }
                     },

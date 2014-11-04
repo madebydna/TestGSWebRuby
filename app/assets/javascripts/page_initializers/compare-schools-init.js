@@ -1,6 +1,6 @@
 $(function() {
     if (gon.pagename == GS.compare.compareSchoolsPage.pageName) {
         GS.compare.compareSchoolsPage.init();
-        GS.googleMap.addToGetScriptCallback(GS.compare.compareSchoolsPage.initMap);
+        GS.googleMap.addToInitDependencyCallbacks(GS.util.wrapFunction(GS.compare.compareSchoolsPage.initMap, this, []));
     }
 });

@@ -332,7 +332,7 @@ GS.googleMap = GS.googleMap || (function() {
         }
     };
 
-    var addToGetScriptCallback = function (func) {
+    var addToInitDependencyCallbacks = function (func) {
         getScriptCallbacks.push(func);
     };
 
@@ -349,7 +349,7 @@ GS.googleMap = GS.googleMap || (function() {
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
         setAssignedSchool: setAssignedSchool,
-        addToGetScriptCallback: addToGetScriptCallback,
+        addToInitDependencyCallbacks: addToInitDependencyCallbacks,
         ajaxInitCallbacks: ajaxInitCallbacks
     }
 
