@@ -195,14 +195,14 @@ describe SigninController do
   describe '#authenticate' do
     let(:user) { instance_double(User) }
 
-    it 'should return an existing provisional user and error message to verify email' do
+    it 'should return an existing provisional user and error message to verify email if the email is provisional' do
       expect(User).to receive(:with_email).and_return(user)
       allow(user).to receive(:provisional?).and_return(true)
       expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
       expect(controller.send :authenticate).to eq([ user, 'Before logging in, you must verify your email by clicking the link in the email we sent you.' ])
     end
 
-    it 'should return an existing user if one exists and it matches given password' do
+    it 'should return an existing user if one exists and it matches given password and no error message.' do
       expect(User).to receive(:with_email).and_return(user)
       expect(user).to receive(:provisional?).and_return(false)
       expect(user).to receive(:password_is?).and_return(true)

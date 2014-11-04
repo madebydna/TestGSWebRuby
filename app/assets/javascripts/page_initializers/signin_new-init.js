@@ -88,13 +88,16 @@ if(gon.pagename == 'signin/new'){
             dataType: 'json',
             async: true
         }).done(function (data) {
+              var $emailErrorsElem = $('.js-signin-email-errors');
+              var $emailFormGroup = $emailErrorsElem.closest('.form-group');
 
-            $('.js-signin-email-errors').empty();
-            $('.js-signin-email-errors').closest(".form-group").removeClass('has-error');
-            if(data.error_msg !== ''){
-              $('.js-signin-email-errors').closest(".form-group").addClass('has-error');
-              $('.js-signin-email-errors').append("<div class='parsley-error-list'><div class='required' style='display: block;'>"+data.error_msg+"</div></div>")
-            }
+              $emailErrorsElem.empty();
+              $emailFormGroup.removeClass('has-error');
+              if (data.error_msg && data.error_msg !== '') {
+                $emailFormGroup.addClass('has-error');
+                $emailErrorsElem.append("<div class='parsley-error-list'><div class='required' style='display: block;'>"+data.error_msg+"</div></div>");
+              }
+
           });
         });
 
