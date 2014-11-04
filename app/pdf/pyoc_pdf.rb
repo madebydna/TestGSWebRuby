@@ -24,7 +24,7 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,get_page_number_start,is_spanish)
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,is_pk8_batch,get_page_number_start,is_spanish)
     @is_spanish=is_spanish
     start_time = Time.now
     super()
@@ -50,13 +50,13 @@ class PyocPdf < Prawn::Document
 
       puts "#{self.class} - Generating PYOC PDF for School ID - #{school.id} ,State #{school.state} "
 
-      draw_header(is_k8_batch,is_high_school_batch)
+      draw_header(is_k8_batch,is_high_school_batch,is_pk8_batch)
 
       school_cache = school.school_cache
 
       grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
         move_down 18
-        draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch)
+        draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch,is_pk8_batch)
         draw_second_column(school_cache, school)
         draw_third_column(school_cache, school)
 
@@ -146,7 +146,7 @@ class PyocPdf < Prawn::Document
     move_down 10
   end
 
-  def draw_header(is_k8_batch,is_high_school_batch)
+  def draw_header(is_k8_batch,is_high_school_batch,is_pk8_batch)
 
     grade = is_spanish ? 'GRADO' : 'GRADE'
 
@@ -161,7 +161,7 @@ class PyocPdf < Prawn::Document
         stroke_color Dark_blue
         horizontal_line 0, 540, :at => 725
       end
-    elsif is_k8_batch
+    elsif is_pk8_batch
       fill_color Dark_grey
       text_box grade + " PK-8",
                :at => [250, 735],
@@ -172,7 +172,18 @@ class PyocPdf < Prawn::Document
         stroke_color Dark_grey
         horizontal_line 0, 540, :at => 725
       end
+    elsif is_k8_batch
+    fill_color Dark_grey
+    text_box grade + " K-8",
+             :at => [250, 735],
+             :width => Col_width,
+             :height => 20,
+             :size => 9
+    stroke do
+      stroke_color Dark_grey
+      horizontal_line 0, 540, :at => 725
     end
+  end
 
   end
 
@@ -198,12 +209,12 @@ class PyocPdf < Prawn::Document
 
 # first column
 
-  def draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch)
+  def draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch,is_pk8_batch)
     grid([0, 0], [2, 1]).bounding_box do
       # blue rectangle
       if is_high_school_batch
         fill_color Light_blue
-      elsif is_k8_batch
+      elsif is_k8_batch || is_pk8_batch
         fill_color Grey
       end
       fill_rounded_rectangle([0, cursor], Col_width, 225, Rect_edge_rounding)

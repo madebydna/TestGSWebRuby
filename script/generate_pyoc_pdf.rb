@@ -4,7 +4,7 @@ include PdfConcerns
 
   def generate_pdf
 
-        db_schools = find_schools_to_be_printed('wi',2,nil,1,nil,nil,nil,nil,nil,nil)
+        db_schools = find_schools_to_be_printed('wi',2,nil,1,nil,nil,nil,nil,nil,nil,nil)
 
 
 

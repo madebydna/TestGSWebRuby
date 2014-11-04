@@ -10,13 +10,15 @@
         <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br>
 
         <%= label_tag(:collection_id, "Collection ID",:class => "brand-primary") %>
-        <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2})%></br>
+        <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2, :required => true})%></br>
 
         <%= check_box_tag(:is_k8,1,params[:is_k8]) %>
         <%= label_tag(:is_k8, "Is K8 Batch",:class => "brand-primary") %></br>
+      <%= check_box_tag(:is_pk8,1,params[:is_pk8]) %>
+      <%= label_tag(:is_pk8, "Is PK8 Batch",:class => "brand-primary") %></br>
 
         <%= check_box_tag(:is_high_school,1, params[:is_high_school] ) %>
-        <%= label_tag(:is_high_school, "Is high school batch",:class => "brand-primary") %></br>
+        <%= label_tag(:is_high_school, "Is High School Batch",:class => "brand-primary") %></br>
 
         <%= label_tag(:added_schools, "Schools To be Added",:class => "brand-primary") %>
         <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br>
@@ -34,7 +36,7 @@
       <%= label_tag(:language_spanish, "Spanish") %>
 
       <% if (params[:language].present? && params[:language] =="english") ||(!params[:language].present?) %>
-          <%= radio_button_tag(:language, "spanish", :checked => true) %>
+          <%= radio_button_tag(:language, "english", :checked => true) %>
       <% else %>
           <%= radio_button_tag(:language, "english") %>
 
@@ -55,6 +57,7 @@
         <%= hidden_field_tag "state", params[:state]%>
         <%= hidden_field_tag "collection_id", params[:collection_id]%>
         <%= hidden_field_tag "is_k8", params[:is_k8]%>
+        <%= hidden_field_tag "is_pk8", params[:is_pk8]%>
         <%= hidden_field_tag "is_high_school", params[:is_high_school]%>
         <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
         <%= hidden_field_tag "added_schools", params[:added_schools]%>

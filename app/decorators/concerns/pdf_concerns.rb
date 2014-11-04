@@ -113,7 +113,7 @@ module PdfConcerns
     English_to_spanish_ratings_mapping[data]
   end
 
-  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4)
+  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4)
     db_schools = []
 
     # binding.pry;
@@ -122,13 +122,15 @@ module PdfConcerns
       db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
       db_schools.select!(&:includes_highschool?)
 
-    elsif state.present? && collection_id.present? && collection_id>0  && is_k8
+    elsif state.present? && collection_id.present? && collection_id>0  && is_pk8
       school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
       db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
       db_schools.select!(&:pk8?)
-
-
-    elsif state.present? && collection_id.present? &&  collection_id>0  && !is_k8  &&  !is_high_school
+    elsif state.present? && collection_id.present? && collection_id>0  && is_k8
+      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+      db_schools.select!(&:k8?)
+    elsif state.present? && collection_id.present? &&  collection_id>0  && !is_k8  &&  !is_high_school  &&  !is_pk8
       school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
       db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
 
