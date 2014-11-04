@@ -33,8 +33,6 @@ class PyocPdf < Prawn::Document
 
     define_grid(:columns => 6, :rows => 9, :gutter => 15)
 
-    # grid.show_all
-
     position_on_page = 0
 
     schools_decorated_with_cache_results.each_with_index  do |school, index|
@@ -146,8 +144,15 @@ class PyocPdf < Prawn::Document
     move_down 10
   end
 
-  def draw_header(is_k8_batch,is_high_school_batch,is_pk8_batch)
+  def move_down_large
+    move_down 20
+  end
 
+  def move_down_15
+    move_down 15
+  end
+
+  def draw_header(is_k8_batch,is_high_school_batch,is_pk8_batch)
     grade = is_spanish ? 'GRADO' : 'GRADE'
 
     if is_high_school_batch
@@ -223,7 +228,7 @@ class PyocPdf < Prawn::Document
 
       draw_name_grade_type_and_district(school, school_cache)
 
-      move_down 15
+      move_down_15
 
       draw_overall_gs_rating(school_cache)
       draw_other_gs_ratings_table(school_cache)
@@ -237,20 +242,29 @@ class PyocPdf < Prawn::Document
 
       move_down_small
 
-      other_state_ratings(school_cache, school)
+      other_ratings = school_cache.formatted_non_greatschools_ratings.to_a
 
-      move_down 15
+      if other_ratings  == []
+        move_down_medium
+      else
+        other_state_ratings(school_cache, school)
+        move_down_small
+      end
+
       draw_address(school)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
         bounding_box([1, 70], :width => 0, :height => 0) do
-          move_down_medium
-
+          if other_ratings  == []
+            move_down_small
+          else
+            move_down_large
+          end
           image map_icon, :at => [15, cursor], :scale => 0.2
         end
 
-        move_down 15
+        move_down_15
 
         draw_school_hours(school_cache, 60)
 

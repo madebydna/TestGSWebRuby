@@ -8,6 +8,46 @@ module PdfConcerns
   icon_path = 'app/assets/images/pyoc/map_icons/'
 
   Zipcode_to_icon_mapping = {
+
+      '46077' => icon_path + 'Indy_map_1.png',
+      '46107' => icon_path + 'Indy_map_4.png',
+      '46113' => icon_path + 'Indy_map_3.png',
+      '46163' => icon_path + 'Indy_map_4.png',
+      '46201' => icon_path + 'Indy_map_2.png',
+      '46202' => icon_path + 'Indy_map_1.png',
+      '46203' => icon_path + 'Indy_map_4.png',
+      '46204' => icon_path + 'Indy_map_1.png',
+      '46205' => icon_path + 'Indy_map_2.png',
+      '46208' => icon_path + 'Indy_map_1.png',
+      '46214' => icon_path + 'Indy_map_1.png',
+      '46216' => icon_path + 'Indy_map_2.png',
+      '46217' => icon_path + 'Indy_map_3.png',
+      '46218' => icon_path + 'Indy_map_2.png',
+      '46219' => icon_path + 'Indy_map_2.png',
+      '46220' => icon_path + 'Indy_map_2.png',
+      '46221' => icon_path + 'Indy_map_3.png',
+      '46222' => icon_path + 'Indy_map_1.png',
+      '46224' => icon_path + 'Indy_map_1.png',
+      '46225' => icon_path + 'Indy_map_3.png',
+      '46226' => icon_path + 'Indy_map_2.png',
+      '46227' => icon_path + 'Indy_map_4.png',
+      '46228' => icon_path + 'Indy_map_1.png',
+      '46229' => icon_path + 'Indy_map_2.png',
+      '46231' => icon_path + 'Indy_map_3.png',
+      '46234' => icon_path + 'Indy_map_1.png',
+      '46235' => icon_path + 'Indy_map_2.png',
+      '46236' => icon_path + 'Indy_map_2.png',
+      '46237' => icon_path + 'Indy_map_4.png',
+      '46239' => icon_path + 'Indy_map_4.png',
+      '46240' => icon_path + 'Indy_map_2.png',
+      '46241' => icon_path + 'Indy_map_3.png',
+      '46250' => icon_path + 'Indy_map_2.png',
+      '46254' => icon_path + 'Indy_map_1.png',
+      '46256' => icon_path + 'Indy_map_2.png',
+      '46259' => icon_path + 'Indy_map_4.png',
+      '46260' => icon_path + 'Indy_map_1.png',
+      '46268' => icon_path + 'Indy_map_1.png',
+      '46278' => icon_path + 'Indy_map_1.png',
       '53110' => icon_path + 'Mke_map_6.png',
       '53129' => icon_path + 'Mke_map_5.png',
       '53130' => icon_path + 'Mke_map_5.png',
@@ -84,7 +124,8 @@ module PdfConcerns
   English_to_spanish_ratings_mapping = {
       'Excellent Schools Detroit Rating' => 'Calificación ESD',
       'State Rating' => 'Calificación Estado',
-      'Great Start to Quality preschool rating' => 'Calificación prescolar'
+      'Great Start to Quality preschool rating' => 'Calificación prescolar',
+      'QRIS Preschool rating' => 'Calificación prescolar'
   }
 
   def which_school_type
