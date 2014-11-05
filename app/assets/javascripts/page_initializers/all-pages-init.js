@@ -21,7 +21,7 @@ $(function() {
 
   $.ajaxSetup({ cache: true });
 
-  // Since very page is going to need a search bar at some point we ensure that its
+  // Since every page is going to need a search bar at some point we ensure that its
   // geo-coding init function is part of our Google Maps callback
   GS.googleMap.addToInitDependencyCallbacks(GS.util.wrapFunction(GS.search.schoolSearchForm.init, this, []));
   var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';

@@ -334,6 +334,7 @@ GS.googleMap = GS.googleMap || (function() {
 
     var addToInitDependencyCallbacks = function (func) {
         getScriptCallbacks.push(func);
+        getScriptCallbacks = _.uniq(getScriptCallbacks);
     };
 
     var ajaxInitCallbacks = function () {
