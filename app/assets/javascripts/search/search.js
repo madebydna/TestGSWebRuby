@@ -279,15 +279,19 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             else{
               isAddress(input.value);
             }
+
             var searchType = GS.search.schoolSearchForm.searchType;
-            try {
-                if (typeof google.maps === 'undefined') {
-                    // do something
-                    searchType = 'byName';
-                    state = state || 'ca';
-                }
-            } catch (e) {
-                // try catch because if google isn't defined, google.maps throws an exception
+            // PT-903. We are now loading Google Maps API asynchronously.
+            // If it does not come back by the time someone searches:
+            // we wait 200ms, look again, and default to byName search if it still has not loaded.
+            // byName searches require a state, so we default to California if there is no state.
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                setTimeout( function() {
+                    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                        searchType = 'byName';
+                        state = state || 'ca';
+                    }
+                }, 200);
             }
 
             if (valid) {
