@@ -419,7 +419,11 @@ class SearchController < ApplicationController
   def setup_filter_display_map(state_short)
     @search_bar_display_map = get_search_bar_display_map
 
-    filter_builder = FilterBuilder.new(state_short)
+    filter_builder = Rails.cache.fetch("filter_builder-#{state_short}", expires_in: 24.hours, race_condition_ttl: 10) do
+      Rails.logger.debug("Generating FilterBuilder")
+      FilterBuilder.new(state_short)
+    end
+
     @filter_display_map = filter_builder.filter_display_map
     @filters = filter_builder.filters
   end
