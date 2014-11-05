@@ -395,7 +395,7 @@ class PyocPdf < Prawn::Document
       if is_spanish
         other_ratings.each do |i|
           if school.which_rating_mapping(i[0]).present?
-            data[0] << i[1]
+            data[0] << (school.which_rating_mapping(i[1]).nil? ? 'NR' : school.which_rating_mapping(i[1]))
             data[1] << school.which_rating_mapping(i[0])
           else
             data[0] << i[1]

@@ -125,7 +125,12 @@ module PdfConcerns
       'Excellent Schools Detroit Rating' => 'Calificación ESD',
       'State Rating' => 'Calificación Estado',
       'Great Start to Quality preschool rating' => 'Calificación prescolar',
-      'QRIS Preschool rating' => 'Calificación prescolar'
+      'QRIS Preschool rating' => 'Calificación prescolar',
+      'Level 0' => 'Nivel 0',
+      'Level 1' => 'Nivel 1',
+      'Level 2' => 'Nivel 2',
+      'Level 3' => 'Nivel 3',
+      'Level 4' => 'Nivel 4',
   }
 
   def which_school_type
