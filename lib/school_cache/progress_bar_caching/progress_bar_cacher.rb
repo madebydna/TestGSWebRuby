@@ -14,7 +14,7 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     @school_media_count ||= school.school_media_first_hash
   end
 
-  def osp_data_present?
+  def osp_data
     osp_keys = %w[arts_visual
     arts_performing_written
     arts_music
@@ -33,15 +33,17 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     parent_involvement_other
     facilities]
 
-    #We dont care about the answers, hence using the .group for response_keys
     @osp_data ||= EspResponse.on_db(school.shard).where(school_id: school.id, response_key: [osp_keys]).active
+  end
 
+
+  def osp_data_present?
     rval = false
 
-    if @osp_data.present?
+    if osp_data.present?
 
       #convert into a hash data structure
-      osp_keys_in_school = @osp_data.group_by(&:response_key)
+      osp_keys_in_school = osp_data.group_by(&:response_key)
 
       rval = check_osp_keys_by_groups(osp_keys_in_school.keys)
     end
