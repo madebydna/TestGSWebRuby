@@ -280,6 +280,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
               isAddress(input.value);
             }
             var searchType = GS.search.schoolSearchForm.searchType;
+            try {
+                if (typeof google.maps === 'undefined') {
+                    // do something
+                    searchType = 'byName';
+                    state = state || 'ca';
+                }
+            } catch (e) {
+                // try catch because if google isn't defined, google.maps throws an exception
+            }
+
             if (valid) {
                 var searchOptions = {};
 
