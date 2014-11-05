@@ -361,7 +361,7 @@ class PyocPdf < Prawn::Document
 
   def draw_other_gs_ratings_table(school_cache)
     data = get_gs_rating_info(school_cache)
-    table(data, :column_widths => [80, 10],
+    table(data, :column_widths => [80, 20],
           :position => 55,
           :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => Black}) do
       cells.borders = []
