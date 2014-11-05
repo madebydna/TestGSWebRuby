@@ -87,6 +87,13 @@ describe SavedSearchesConcerns do
       expect(SavedSearch.count).to eq 1
     end
 
+    it 'should not return an array of errors if the search was saved into the database' do
+      expect(SavedSearch.count).to eq 0
+      errors = controller.send(:create_saved_search, saved_search_params.deep_dup)
+      expect(SavedSearch.count).to eq 1
+      expect(errors.count).to equal 0
+    end
+
     context 'when there is an already existing search with the same search name in the database' do
       before do
         user.saved_searches.create!(saved_search_params)
@@ -115,10 +122,10 @@ describe SavedSearchesConcerns do
     end
 
     [:name, :search_string, :num_results].each do |field|
-      it "should raise an exception if #{field.to_s} is blank" do
+      it "should return an array with an error if #{field.to_s} is blank" do
         expect(
-          controller.send(:create_saved_search, saved_search_params.deep_dup.merge({field => ''}) )
-        ).to be_an_instance_of(ActiveRecord::RecordInvalid)
+          controller.send(:create_saved_search, saved_search_params.deep_dup.merge({field => ''}) ).count
+        ).to_not equal 0
       end
     end
   end

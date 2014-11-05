@@ -387,7 +387,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var savedSearchParams = function() {
-        params = {
+        var params = {
             search_name: $('.js-savedSearchText').val(),
             search_string: $('#js-schoolResultsSearch').val(),
             num_results: $('.js-numOfSchoolsFound').data('num-of-schools-found'),
@@ -397,17 +397,15 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var attemptSaveSearch = function() {
-        params = savedSearchParams();
+        var params = savedSearchParams();
         if (saveSearchValid(params) === true) {
             saveSearch(params);
         }
     };
 
     var saveSearchValid = function(params) {
-        $popup = $('.js-savedSearchPopup');
         if (params['search_name'] === '') {
-            $popup.find('.js-savedSearchFormGroup').addClass('has-error');
-            $popup.find('.js-savedSearchErrorMessage').show('');
+            displaySaveSearchValidationError('Please name your search');
             return false
         } else {
             return true
@@ -423,7 +421,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var redirect = response['redirect'];
 
             if (typeof error === 'string' && error !== '' ) {
-                alert(error);                     //error
+                displaySaveSearchFailedSaveError(error);   //error
             } else if (redirect != undefined) {
                 GS.uri.Uri.goToPage(redirect);    //redirect
             } else {
@@ -433,8 +431,36 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
 
         $deferred.fail(function(response){
-            alert('We are sorry but something went wrong. Please Try again Later');
+            displaySaveSearchFailedSaveError('Currently we are unable to save your search. Please try again later'); //error
         });
+    };
+
+    var displaySaveSearchValidationError = function(errorMessage) {
+        var $popup = $('.js-savedSearchPopup');
+        $popup.find('.js-savedSearchFormGroup').addClass('has-error');
+        $popup.find('.js-savedSearchErrorMessage').text(errorMessage).show('');
+    };
+
+    var displaySaveSearchFailedSaveError = function(errorMessage) {
+        var $markup = $(getErrorMarkupFullWidth(errorMessage));
+        $('.js-savedSearchPopup').parents('.js-sortingToolbar').before($markup);
+        $markup.show();
+    };
+
+    var getErrorMarkupFullWidth = function(errorMessage) {
+
+        if (typeof errorMessage === 'string') {
+            return '<div class="limit-width-1200 dn mvm">' +
+                       '<div class="alert-dismissable alert alert-danger oh">' +
+                           '<div class="pull-left mts" style="width: 90%;">' +
+                               '<div>' +
+                                   errorMessage +
+                               '</div>' +
+                           '</div>' +
+                           '<button class="close mtm" type="button" data-dismiss="alert" aria-hidden="true">×</button>' +
+                       '</div>' +
+                   '</div>'
+        }
     };
 
     var disableSavedSearch = function() {

@@ -1,17 +1,20 @@
 module SavedSearchesConcerns
   extend ActiveSupport::Concern
+  ERROR_MESSAGE = 'Currently we are unable to save your search. Please try again later'
 
   def handle_json(saved_search_attrs)
-    if (create_saved_search saved_search_attrs).is_a?(Exception)
-      render json: { error: 'We are sorry but something went wrong. Please try again later' }
+    errors = create_saved_search(saved_search_attrs)
+    if errors.present?
+      render json: { error: ERROR_MESSAGE }
     else
       render json: { }
     end
   end
 
   def handle_html(saved_search_attrs)
-    if (create_saved_search saved_search_attrs).is_a?(Exception)
-      flash_error 'We are sorry but something went wrong. Please try again later'
+    errors = create_saved_search(saved_search_attrs)
+    if errors.present?
+      flash_error ERROR_MESSAGE
     else
       cookies[:saved_search] = 'success'
       flash_notice 'You have successfully saved your search!' if flash.empty?
@@ -20,10 +23,6 @@ module SavedSearchesConcerns
   end
 
   def create_saved_search(saved_search_attrs)
-    begin
-      current_user.saved_searches.create!(saved_search_attrs)
-    rescue Exception => e
-      e
-    end
+    current_user.saved_searches.create(saved_search_attrs).errors.full_messages
   end
 end

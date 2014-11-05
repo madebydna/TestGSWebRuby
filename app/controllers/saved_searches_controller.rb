@@ -20,7 +20,7 @@ class SavedSearchesController < ApplicationController
         if e.is_a?(ActiveRecord::RecordNotFound)
           render json: { }
         else
-          render json: { error: 'We are sorry but something went wrong. Please try again later' }
+          render json: { error: ERROR_MESSAGE }
         end
       end
     else
@@ -33,9 +33,9 @@ class SavedSearchesController < ApplicationController
   def redirect_to_login
     flash_notice 'log in required'
     if request.xhr?
-      render json: { redirect: signin_url }
+      render json: { redirect: signin_path }
     else
-      redirect_to signin_url
+      redirect_to signin_path
     end
   end
 

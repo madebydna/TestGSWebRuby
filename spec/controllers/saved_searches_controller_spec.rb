@@ -116,11 +116,11 @@ describe SavedSearchesController do
   end
 
   describe '#redirect_to_login' do
-    let(:signin_url) { '/gsr/login' }
+    let(:signin_path) { '/gsr/login' }
     before do
       allow(controller).to receive(:flash_notice)
       allow(controller).to receive(:redirect_to)
-      allow(controller).to receive(:signin_url).and_return(signin_url)
+      allow(controller).to receive(:signin_path).and_return(signin_path)
     end
 
     it 'should call the flash notice method' do
@@ -128,15 +128,15 @@ describe SavedSearchesController do
       controller.send(:redirect_to_login)
     end
 
-    it 'should call the redirect_to method with signin_url when its not an ajax request' do
+    it 'should call the redirect_to method with signin_path when its not an ajax request' do
       allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(false)
-      expect(controller).to receive(:redirect_to).with(signin_url)
+      expect(controller).to receive(:redirect_to).with(signin_path)
       controller.send(:redirect_to_login)
     end
 
     it 'should call the render method with json arguments when its an ajax request' do
       allow_any_instance_of(ActionController::TestRequest).to receive(:xhr?).and_return(true)
-      expect(controller).to receive(:render).with( {json: hash_including(redirect: signin_url)})
+      expect(controller).to receive(:render).with( {json: hash_including(redirect: signin_path)})
       controller.send(:redirect_to_login)
     end
   end

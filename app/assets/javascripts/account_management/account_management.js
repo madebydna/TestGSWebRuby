@@ -97,7 +97,7 @@ GS.accountManagement.savedSearch = (function(){
       var id = $self.data('id');
       hash.callback = GS.accountManagement.savedSearch.deleteSuccessful;
       hash.callback_error = GS.accountManagement.savedSearch.deleteFailure;
-      hash.href = '/gsr/ajax/saved_search/' + id
+      hash.href = '/gsr/ajax/saved_search/' + id;
       GS.util.deleteAjaxCall($self, hash);
       return false;
     });
