@@ -15,43 +15,72 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
   end
 
   def osp_data_present?
-
     osp_keys = %w[arts_visual
     arts_performing_written
     arts_music
     arts_media
     foreign_language
+    foreign_language_other
     before_after_care
     transportation
+    transportation_other
     girls_sports
+    girls_sports_other
     boys_sports
+    boys_sports_other
     staff_resources
     parent_involvement
+    parent_involvement_other
     facilities]
 
-    osp_keys_with_other_value = %w[foreign_language transportation girls_sports boys_sports parent_involvement]
-
-    keys_for_query = osp_keys + osp_keys_with_other_value.collect { |key| key+'other' }
-
     #We dont care about the answers, hence using the .group for response_keys
-    @osp_data ||= EspResponse.on_db(school.shard).where(school_id: school.id, response_key: [keys_for_query]).active.group(:response_key)
+    @osp_data ||= EspResponse.on_db(school.shard).where(school_id: school.id, response_key: [osp_keys]).active
 
-    #convert into a hash data structure
-    osp_keys_in_school = @osp_data.group_by(&:response_key)
+    rval = false
 
-    missing_keys = []
-    osp_keys.each do |key|
-      if key.in?(osp_keys_with_other_value) &&
-        !(osp_keys_in_school.has_key?(key) ||
-          osp_keys_in_school.has_key?("#{key}_other"))
+    if @osp_data.present?
 
-        missing_keys << key
-      elsif !osp_keys_in_school.has_key?(key)
-        missing_keys << key
+      #convert into a hash data structure
+      osp_keys_in_school = @osp_data.group_by(&:response_key)
+
+      rval = check_osp_keys_by_groups(osp_keys_in_school.keys)
+    end
+
+    rval
+  end
+
+  def check_osp_keys_by_groups(osp_keys_in_school)
+    osp_keys_by_group = { :arts_visual => :arts,
+           :arts_performing_written => :arts,
+           :arts_music => :arts,
+           :arts_media => :arts,
+           :foreign_language => :foreign_language,
+           :foreign_language_other => :foreign_language,
+           :before_after_care => :before_after_care,
+           :transportation => :transportation,
+           :transportation_other => :transportation,
+           :girls_sports => :girls_sports,
+           :girls_sports_other => :girls_sports,
+           :boys_sports => :boys_sports,
+           :boys_sports_other => :boys_sports,
+           :staff_resources => :staff_resources,
+           :parent_involvement => :parent_involvement,
+           :parent_involvement_other => :parent_involvement,
+           :facilities => :facilities
+    }
+
+    unique_keys = [:arts, :foreign_language, :before_after_care, :transportation, :girls_sports, :boys_sports,
+                   :staff_resources, :parent_involvement, :facilities ]
+
+    unique_osp_keys_in_school = []
+
+    osp_keys_in_school.each do |key|
+      if osp_keys_by_group.has_key?(key.to_sym)
+        unique_osp_keys_in_school << osp_keys_by_group[key.to_sym]
       end
     end
 
-    missing_keys.empty?
+    unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.sort == unique_keys.sort : false
   end
 
   def calculate_completeness_score
