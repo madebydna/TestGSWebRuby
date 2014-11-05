@@ -391,7 +391,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             search_name: $('.js-savedSearchText').val(),
             search_string: $('#js-schoolResultsSearch').val(),
             num_results: $('.js-numOfSchoolsFound').data('num-of-schools-found'),
-            url: GS.uri.Uri.getHref()
+            url: GS.uri.Uri.getPath() + location.search
         };
         return state_abbr !== undefined ? _.assign(params, {state: state_abbr}) : params
     };
