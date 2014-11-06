@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'shared/_upcoming_events.html.erb' do
   before { allow(view).to receive(:gs_legacy_url_encode) { |input| input } }
+  before { allow(view).to receive(:gs_legacy_url_city_encode) { |input| input } }
 
   context 'without events' do
     it 'hides the section' do
