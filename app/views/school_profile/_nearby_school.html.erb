@@ -1,25 +1,25 @@
   <div style="width:100%;" class="pam">
     <div class="center-block partner-carousel-image" style="">
-      <%= neighbor.link_to_overview do %>
+      <%= school.link_to_overview do %>
         <div class="ma oh hidden-xs center-block">
-            <%= neighbor.street_view_photo(450,170) %>
+            <%= school.street_view_photo(450,170) %>
         </div>
         <div class="pam link-darkgray">
           <div class="clearfix">
             <div class="fl prm">
-              <% rating = neighbor.great_schools_rating %>
+              <% rating = school.great_schools_rating %>
               <% if rating.present? && rating.to_i > 0 %>
-                <span class="vam iconx24-ratings i-24-ratings-<%= neighbor.great_schools_rating %>"></span>
+                <span class="vam iconx24-ratings i-24-ratings-<%= school.great_schools_rating %>"></span>
               <% end %>
             </div>
             <div class="fl" style="width: 80%;">
               <span class="open-sans_sb notranslate">
-                <%= neighbor.name %>
+                <%= school.name %>
               </span>
               <br/>
-              <span class="notranslate"><%= neighbor.city_state %></span>
+              <span class="notranslate"><%= school.city_state %></span>
               <br/>
-              <%= neighbor.type %> | <%= neighbor.process_level %>
+              <%= school.type %> | <%= school.process_level %>
             </div>
           </div>
         </div>

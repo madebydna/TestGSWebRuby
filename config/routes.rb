@@ -207,7 +207,7 @@ LocalizedProfiles::Application.routes.draw do
       # to just 404 by default. route helper will be city_district_path(...)
       # NOTE: this must come last in the city scope, because it will match
       # Anything after the cty name
-      get '/:district', to: 'error#page_not_found', as: :district, constraints: lambda{ |request|
+      get '/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
         district = request.params[:district]
         # district can't = preschools and must start with letter
         return district != 'preschools' && district.match(/^[a-zA-Z].*$/)

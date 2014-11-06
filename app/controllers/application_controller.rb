@@ -78,6 +78,11 @@ class ApplicationController < ActionController::Base
     params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
   end
 
+  def district_param
+    return if params[:district].nil?
+    params[:district].gsub(/\-/, ' ').gsub(/\_/, '-')
+  end
+
   def redirect_tab_urls
     if params[:tab] == 'reviews'
       redirect_to path_w_query_string 'tab', 'reviews'

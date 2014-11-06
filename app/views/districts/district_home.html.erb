@@ -1,0 +1,116 @@
+<%= render 'nav/topnav' %>
+
+<% district = DistrictHomeDecorator.decorate(@district) %>
+
+<style>
+  .border-left {
+    margin-left: 0;
+    padding-left: 10px;
+    border-left: 1px solid #999;
+  }
+</style>
+
+<div class="phm limit-width-1200">
+  <h1 style="color:#20AEDC;"><%= district.name %></h1>
+
+  <div class="row">
+    <% grade_range_row_content = [] %>
+
+    <% # This allows you to capture html into an array without using strings %>
+    <% grade_range_row_content << capture do %>
+      <span>Grades</span> <span class=""><%= district.grade_range %></span>
+    <% end %>
+
+    <% grade_range_row_content << capture do %>
+      <span>Schools</span> <span class=""><%= district.number_of_schools_in_district %></span>
+    <% end %>
+
+    <% grade_range_row_content.each_with_index do |content, index| %>
+      <% css_class = "prm fl" %>
+      <% css_class << " border-left" if index > 0 %>
+      <div class="fl <%= css_class %>">
+        <%= content.html_safe %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 prm ptm">
+      <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
+        <div class="fl pal tac text_fff" style="width:130px;height:120px;background-color:#F0AC31;">
+          <span class="jumbo-text">4</span><br/> out of 10
+        </div>
+        <div class="fl pal tal">
+          <span style="font-size:150%;">GreatSchools</span><br/>
+          <span style="font-size:180%;">District rating</span>
+        </div>
+      </div>
+      <div class="row">
+        This district's rating is based on its schools' test results.
+        <br/>
+        <br/>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <%= district.street %><br/>
+          <%= district.city_state_zip %>
+        </div>
+        <div class="col-lg-6">
+          Phone: <%= district.phone %><br/>
+          <%= district.website_link %> 
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 prm ptm">
+      <%= district.boilerplate %>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 ptm">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+     consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+     cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+     proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+  </div>
+
+
+  <div class="row pll prm pbl mtl" style="background-color:#F3F8FB;">
+    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
+      <h4>Browse schools <%= district.name  %></h4><br/>
+      <% %w[e m h].each_with_index do |level, index| %>
+        <% css_class = "prm fl" %>
+        <% css_class << " border-left" if index > 0 %>
+        <div class="<%= css_class %>">
+          <%= district.school_browse_link(level) %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 ptl tac">
+      <%= district.school_browse_link do %>
+        <button class="btn btn-primary mtm">View all schools</button>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    MAP
+  </div>
+
+  <%= render 'data_layouts/zillow_content', data: @zillow_data %>
+  </br>
+
+  <%= render partial: 'cities/join_our_community' %>
+  <%= 
+    render(
+      partial: 'shared/horizontal_school_boxes', 
+      locals: { 
+        title: "Top rated #{@district.name} schools",
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+      }
+    )
+  %>
+
+</div>
+
+<%= render 'shared/state_footer', state: @state %>
