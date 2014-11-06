@@ -16,7 +16,9 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/account', as: :manage_account, to: 'account_management#show'
 
-  get '/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
+  # get '/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
+
+  get '/gsr/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
