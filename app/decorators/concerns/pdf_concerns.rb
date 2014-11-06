@@ -133,6 +133,25 @@ module PdfConcerns
       'Level 4' => 'Nivel 4',
   }
 
+  Collection_id_to_footer_mapping = {
+      1 => 'Detroit School Guide 2015-2016',
+      2 => 'Milwaukee School Guide 2015-2016',
+      3 => 'Indianapolis School Guide 2015-2016'
+
+  }
+
+  Collection_id_to_footer_mapping_spanish = {
+      1 => 'Listado de Escuelas de Detroit 2015-2016',
+      2 => 'Listado de Escuelas de Milwaukee 2015-2016',
+      3 => 'Listado de Escuelas de Indianapolis 2015-2016'
+  }
+
+  Collection_is_landing_page_mapping = {
+      1 => 'www.greatschoolsdetroit.org',
+      2 => 'www.greatschoolsmilwaukee.org',
+      3 => 'www.greatschoolsindianapolis.org'
+  }
+
   def which_school_type
     English_to_spanish_school_type_mapping[decorated_school_type]
   end
@@ -216,8 +235,22 @@ module PdfConcerns
       PyocDecorator.decorate(school)
     end
   end
+
   def which_icon
     Zipcode_to_icon_mapping[zipcode].present? ?  Zipcode_to_icon_mapping[zipcode] :'N/A'
+  end
+
+  def which_footer(collection_id, is_spanish)
+
+    if is_spanish == true
+      Collection_id_to_footer_mapping_spanish[collection_id].nil? ? 'Listado de Escuelas' : Collection_id_to_footer_mapping_spanish[collection_id]
+    else
+      Collection_id_to_footer_mapping[collection_id].nil? ? 'School Guide' : Collection_id_to_footer_mapping[collection_id]
+    end
+  end
+
+  def which_landing_page(collection_id)
+    Collection_is_landing_page_mapping[collection_id].nil? ? 'www.greatschools.org' : Collection_is_landing_page_mapping[collection_id]
   end
 
 end

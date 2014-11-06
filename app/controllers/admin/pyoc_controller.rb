@@ -67,7 +67,8 @@ class Admin::PyocController <  ApplicationController
     respond_to do |format|
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,params[:is_pk8].present?,
-                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false)
+                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false,params[:collection_id].present? ? params[:collection_id].to_i: nil)
+
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc.pdf',
                   type: 'application/pdf',
