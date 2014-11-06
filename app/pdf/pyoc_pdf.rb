@@ -24,7 +24,7 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,is_pk8_batch,get_page_number_start,is_spanish, is_location_index,is_performance_index,get_location_index_start)
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,is_pk8_batch,get_page_number_start,is_spanish, collection_id, is_location_index,is_performance_index,get_location_index_start)
     @is_spanish=is_spanish
     super()
     # binding.pry;
@@ -37,40 +37,40 @@ class PyocPdf < Prawn::Document
             generate_location_index(schools_decorated_with_cache_results,get_location_index_start)
     else
       start_time = Time.now
-      generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+      generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
       end_time =Time.now - start_time
       puts  "#{self.class} - Time taken to generate the Schools PDF #{end_time}seconds"
 
     end
-    # above_avg = []
-    # avg = []
-    # below_avg = []
-    #
-    # above_avg_ratings = '8, 9, 10'
-    # avg_ratings = '7, 6, 5, 4'
-    # below_avg_ratings = '3, 2, 1'
-    # schools_decorated_with_cache_results.each do |school|
-    #   school_cache = school
-    #   if above_avg_ratings.include? school.school_cache.overall_gs_rating
-    #     above_avg.push(school_cache.name)
-    #   end
-    #   if avg_ratings.include? school.school_cache.overall_gs_rating
-    #     avg.push(school_cache.name)
-    #     end
-    #   if below_avg_ratings.include? school.school_cache.overall_gs_rating
-    #     below_avg.push(school_cache.name)
-    #   end
-    # end
 
-    # draw_index_columns(above_avg, avg, below_avg)
-    # draw_map_icons_index_columns(school.zipcode)
   end
 
   def generate_location_index(schools_decorated_with_cache_results,get_location_index_start)
+    above_avg = []
+    avg = []
+    below_avg = []
+
+    above_avg_ratings = '8, 9, 10'
+    avg_ratings = '7, 6, 5, 4'
+    below_avg_ratings = '3, 2, 1'
+    schools_decorated_with_cache_results.each do |school|
+      school_cache = school
+      if above_avg_ratings.include? school.school_cache.overall_gs_rating
+        above_avg.push(school_cache.name)
+      end
+      if avg_ratings.include? school.school_cache.overall_gs_rating
+        avg.push(school_cache.name)
+      end
+      if below_avg_ratings.include? school.school_cache.overall_gs_rating
+        below_avg.push(school_cache.name)
+      end
+    end
+
+    draw_index_columns(above_avg, avg, below_avg)
 
   end
 
-  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     define_grid(:columns => 6, :rows => 9, :gutter => 15)
 
     position_on_page = 0
@@ -109,7 +109,6 @@ class PyocPdf < Prawn::Document
 
   def draw_index_columns(above_avg, avg ,below_avg)
 
-    start_new_page(:size => "LETTER") #todo: don't need this once index is moved to own controller
     fill_color Dark_blue
     text_box 'SCHOOLS BY PERFORMANCE',
              :at => [Col_width/2, cursor],
