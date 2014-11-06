@@ -29,42 +29,7 @@ class PyocPdf < Prawn::Document
     start_time = Time.now
     super()
 
-# todo make Col_width and col_height relational to gutter
-
-    define_grid(:columns => 6, :rows => 9, :gutter => 15)
-
-    position_on_page = 0
-
-    schools_decorated_with_cache_results.each_with_index  do |school, index|
-
-      if index % 3 == 0 and index != 0
-        start_new_page(:size => "LETTER")
-        position_on_page = 0
-      end
-
-      if index % 3 != 0
-        position_on_page += 3
-      end
-
-      puts "#{self.class} - Generating PYOC PDF for School ID - #{school.id} ,State #{school.state} "
-
-      draw_header(is_k8_batch,is_high_school_batch,is_pk8_batch)
-
-      school_cache = school.school_cache
-
-      grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
-        move_down 18
-        draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch,is_pk8_batch)
-        draw_second_column(school_cache, school)
-        draw_third_column(school_cache, school)
-
-        move_down_small
-        draw_grey_line(index)
-      end
-
-
-      draw_footer(get_page_number_start)
-    end
+    generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
     end_time =Time.now - start_time
 
     puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
@@ -90,6 +55,43 @@ class PyocPdf < Prawn::Document
 
     # draw_index_columns(above_avg, avg, below_avg)
     # draw_map_icons_index_columns(school.zipcode)
+  end
+
+  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+    define_grid(:columns => 6, :rows => 9, :gutter => 15)
+
+    position_on_page = 0
+
+    schools_decorated_with_cache_results.each_with_index do |school, index|
+
+      if index % 3 == 0 and index != 0
+        start_new_page(:size => "LETTER")
+        position_on_page = 0
+      end
+
+      if index % 3 != 0
+        position_on_page += 3
+      end
+
+      puts "#{self.class} - Generating PYOC PDF for School ID - #{school.id} ,State #{school.state} "
+
+      draw_header(is_k8_batch, is_high_school_batch, is_pk8_batch)
+
+      school_cache = school.school_cache
+
+      grid([position_on_page, 0], [position_on_page+2, 5]).bounding_box do
+        move_down 18
+        draw_first_column(school, school_cache, is_high_school_batch, is_k8_batch, is_pk8_batch)
+        draw_second_column(school_cache, school)
+        draw_third_column(school_cache, school)
+
+        move_down_small
+        draw_grey_line(index)
+      end
+
+
+      draw_footer(get_page_number_start)
+    end
   end
 
   def draw_index_columns(above_avg, avg ,below_avg)

@@ -48,7 +48,6 @@ class Admin::PyocController <  ApplicationController
 
   def generate_empty_pdf
     respond_to do |format|
-      format.html
       format.pdf do
         pdf = Prawn::Document.new
         pdf.text "Invalid Request Parameters"
