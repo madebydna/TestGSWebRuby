@@ -5,7 +5,6 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
 
   var init = function(state_abbr) {
     attachAutocomplete(state_abbr);
-    attachAutocompleteHandlers();
   };
 
   var attachAutocomplete = function (state_abbr) {
@@ -25,60 +24,8 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
         templates: markup.schoolResultsMarkup()
       }
     ).on('typeahead:selected', function (event, suggestion, dataset) {
-        GS.uri.Uri.goToPage(suggestion['url']);
+        GS.uri.Uri.goToPage(suggestion['url']+"/reviews/write/");
       });
-  };
-
-  var attachAutocompleteHandlers = function() {
-    setOnUpKeyedCallbackForSearch();
-    setOnQueryChangedCallbackForSearch();
-    setOnDownKeyedCallbackForSearch();
-  };
-
-  var setOnUpKeyedCallbackForSearch = function() {
-    var isAddress = GS.search.schoolSearchForm.isAddress;
-    GS.search.autocomplete.handlers.setOnUpKeyedCallback(function(query) {
-
-      if (isAddress(query)) {
-        this.dropdown.close();
-      } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-        this.dropdown.update(query);
-        this.dropdown.open();
-      } else {
-        this.dropdown.moveCursorUp();
-        this.dropdown.open();
-      }
-    });
-  };
-
-  var setOnDownKeyedCallbackForSearch = function() {
-    var isAddress = GS.search.schoolSearchForm.isAddress;
-    GS.search.autocomplete.handlers.setOnDownKeyedCallback(function(query) {
-      if (isAddress(query)) {
-        this.dropdown.close();
-      } else if (this.dropdown.isEmpty && query.length >= this.minLength) {
-        this.dropdown.update(query);
-        this.dropdown.open();
-      } else {
-        this.dropdown.moveCursorDown();
-        this.dropdown.open();
-      }
-    });
-  };
-
-  var setOnQueryChangedCallbackForSearch = function() {
-    var isAddress = GS.search.schoolSearchForm.isAddress;
-    GS.search.autocomplete.handlers.setOnQueryChangedCallback(function(query) {
-
-      this.input.clearHintIfInvalid();
-      if (isAddress(query) || query.length == 0) {
-        this.dropdown.close();
-      } else if (query.length >= this.minLength) {
-        this.dropdown.update(query);
-        this.dropdown.open();
-        this._setLanguageDirection();
-      }
-    });
   };
 
   return {
