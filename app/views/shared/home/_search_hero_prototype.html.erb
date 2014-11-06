@@ -1,4 +1,4 @@
-<div class="grey-bg proto-image-bg-scale  proto_hero_size">
+<div class="grey-bg pr">
     <div class="proto-image-bg-scale proto_hero_size oh">
         <div class="img-container is-scaled oh"><!--not empty--></div>
     </div>
@@ -12,22 +12,10 @@
                           <h1 class="inverted-text jumbo-header" style="text-shadow: 1px 1px #999999;">Welcome to GreatSchools</h1>
                           <div class='inverted-text subtitle-lg' style="text-shadow: 1px 1px #999999;">Your community resource to find and share information about schools</div>
                         </div>
-                      <% location_placeholder = 'Zip code, city or address' %>
                         <div class="search-bar-home ma ptl">
                             <% partial_params = {searchClass: 'js-forceLocationSearch'}%>
                         <%= render partial: 'nav/search_form', locals: partial_params %>
                         </div>
-                        <!--<div class="location-search mtl">-->
-                          <!--<form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">-->
-                            <!--<input type="text" name="locationSearchString"-->
-                                   <!--id="js-findByLocationBox" class='search-text lg-search-bar mrm typeahead'-->
-                                   <!--onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"-->
-                                   <!--onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"-->
-                                   <!--placeholder="<%= location_placeholder %>"-->
-                                   <!--value="<%= location_placeholder %>"/>-->
-                            <!--<button class="state-hub-search-button">Search</button>-->
-                          <!--</form>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
