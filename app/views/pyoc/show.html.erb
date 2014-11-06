@@ -88,13 +88,14 @@
           <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success mtl") do %>
               <%= hidden_field_tag "state", params[:state]%>
               <%= hidden_field_tag "collection_id", params[:collection_id]%>
-              <%= hidden_field_tag "is_k8", params[:is_k8]%>
-              <%= hidden_field_tag "is_pk8", params[:is_pk8]%>
-              <%= hidden_field_tag "is_high_school", params[:is_high_school]%>
-              <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
+              <%= hidden_field_tag "language", params[:language]%>
               <%= hidden_field_tag "added_schools", params[:added_schools]%>
               <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
-              <%= hidden_field_tag "language", params[:language]%>
+
+              <%= label_tag(:location_index_page_number_start, " Location Index  Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:location_index_page_number_start, value = (params[:location_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br>
+              <%= hidden_field_tag "is_location_index",1%>
+
 
               Ready to generate Location Index PDF ? <%= submit_tag("Generate Location Index PDF", :class => "btn btn-primary") %>
 

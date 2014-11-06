@@ -24,15 +24,24 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,is_pk8_batch,get_page_number_start,is_spanish, collection_id)
+  def initialize(schools_decorated_with_cache_results,is_k8_batch,is_high_school_batch,is_pk8_batch,get_page_number_start,is_spanish, is_location_index,is_performance_index,get_location_index_start)
     @is_spanish=is_spanish
-    start_time = Time.now
     super()
+    # binding.pry;
 
-    generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results,collection_id)
-    end_time =Time.now - start_time
 
-    puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
+
+    if is_location_index
+             generate_location_index(schools_decorated_with_cache_results,get_location_index_start)
+    elsif is_performance_index
+            generate_location_index(schools_decorated_with_cache_results,get_location_index_start)
+    else
+      start_time = Time.now
+      generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+      end_time =Time.now - start_time
+      puts  "#{self.class} - Time taken to generate the Schools PDF #{end_time}seconds"
+
+    end
     # above_avg = []
     # avg = []
     # below_avg = []
@@ -57,7 +66,11 @@ class PyocPdf < Prawn::Document
     # draw_map_icons_index_columns(school.zipcode)
   end
 
-  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
+  def generate_location_index(schools_decorated_with_cache_results,get_location_index_start)
+
+  end
+
+  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
     define_grid(:columns => 6, :rows => 9, :gutter => 15)
 
     position_on_page = 0
@@ -90,7 +103,7 @@ class PyocPdf < Prawn::Document
       end
 
 
-      draw_footer(get_page_number_start, school, collection_id)
+      draw_footer(get_page_number_start)
     end
   end
 
@@ -194,25 +207,15 @@ class PyocPdf < Prawn::Document
 
   end
 
-  def draw_footer(get_page_number_start, school, collection_id)
+  def draw_footer(get_page_number_start)
     image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
     number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => get_page_number_start}
-    text_box school.which_footer(collection_id , is_spanish),
+    text_box 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
              :at => [300, -15],
-             :width => is_spanish ? 150 : 110,
+             :width => 200,
              :height => 10,
-             :size => 6,
+             :size => 7,
              :style => :italic
-
-    fill_color Dark_blue
-    text_box school.which_landing_page(collection_id),
-             :at => is_spanish ? [440, -15] : [410, -15],
-             :width => 150,
-             :height => 10,
-             :size => 6,
-             :style => :italic
-
-    fill_color Black
   end
 
   def draw_grey_line(index)

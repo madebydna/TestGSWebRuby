@@ -14,7 +14,10 @@ class Admin::PyocController <  ApplicationController
         params[:id1].to_i,
         params[:id2].to_i,
         params[:id3].to_i,
-        params[:id4].to_i)
+        params[:id4].to_i,
+        params[:is_location_index].to_i,
+        params[:is_performance_index].to_i
+    )
     # @db_schools =@db_schools[0..20]
     if (@db_schools.present?)
     schools_decorated_with_cache_results=prep_data_for_pdf(@db_schools)
@@ -37,7 +40,10 @@ class Admin::PyocController <  ApplicationController
         params[:id1].to_i,
         params[:id2].to_i,
         params[:id3].to_i,
-        params[:id4].to_i)
+        params[:id4].to_i,
+        params[:is_location_index].to_i,
+        params[:is_performance_index].to_i
+       )
     set_meta_tags title:       "Choosing schools for Print your own chooser",
                   description: "Choosing schools for Print your own chooser",
                   keywords:    "Choosing schools for Print your own chooser"
@@ -67,8 +73,8 @@ class Admin::PyocController <  ApplicationController
     respond_to do |format|
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,params[:is_pk8].present?,
-                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false,params[:collection_id].present? ? params[:collection_id].to_i: nil)
-
+                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false ,
+                             params[:is_location_index].present? , params[:is_performance_index].present? ,params[:location_index_page_number_start])
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc.pdf',
                   type: 'application/pdf',

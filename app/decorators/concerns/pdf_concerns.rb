@@ -178,7 +178,7 @@ module PdfConcerns
     English_to_spanish_ratings_mapping[data]
   end
 
-  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4)
+  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4,is_location_index,is_performance_index)
     db_schools = []
 
     # binding.pry;
