@@ -29,7 +29,7 @@ class PyocPdf < Prawn::Document
     start_time = Time.now
     super()
 
-    generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+    generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results,collection_id)
     end_time =Time.now - start_time
 
     puts  "#{self.class} - Time taken to generate the PDF #{end_time}seconds"
@@ -57,7 +57,7 @@ class PyocPdf < Prawn::Document
     # draw_map_icons_index_columns(school.zipcode)
   end
 
-  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results)
+  def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     define_grid(:columns => 6, :rows => 9, :gutter => 15)
 
     position_on_page = 0
