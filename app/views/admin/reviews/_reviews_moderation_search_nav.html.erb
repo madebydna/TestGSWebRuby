@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <%= form_tag moderation_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
+        <legend>Find a school by state & ID</legend>
+        <div class="form-group">
+          <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase), class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= number_field_tag 'school_id', nil, class: 'form-control', placeholder: 'School ID' %>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit" style="margin-left: 40px">Search</button>
+    <% end %>
+  </div>
+
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <%= form_tag moderation_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
+        <legend>Find a email</legend>
+        <div class="form-group">
+          <div class="controls">
+            <input type="text" id="email" name="email" placeholder="email">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit" style="margin-left: 40px">Search</button>
+    <% end %>
+  </div>
+</div>
