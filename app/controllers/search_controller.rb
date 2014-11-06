@@ -264,7 +264,7 @@ class SearchController < ApplicationController
   def suggest_city_by_name
     set_city_state
     solr = Solr.new
-    if @state[:short] != ''
+    if @state && @state[:short].present?
       results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
     else
       results = solr.city_name_suggest(:query=>params[:query].downcase)
@@ -293,7 +293,7 @@ class SearchController < ApplicationController
     set_city_state
     solr = Solr.new
 
-    if @state[:short] != ''
+    if @state && @state[:short].present?
       results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
     else
       results = solr.district_name_suggest(:query=>params[:query].downcase)
