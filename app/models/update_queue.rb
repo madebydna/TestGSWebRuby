@@ -12,6 +12,7 @@ class UpdateQueue < ActiveRecord::Base
             update_blob: {
                 Enrollment: [
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 23,
                         entity_state: 'AK',
@@ -20,6 +21,7 @@ class UpdateQueue < ActiveRecord::Base
                 ],
                 Ethnicity: [
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 23,
                         entity_state: 'AK',
@@ -27,6 +29,7 @@ class UpdateQueue < ActiveRecord::Base
                         value: 66
                     },
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 23,
                         entity_state: 'AK',
@@ -41,6 +44,7 @@ class UpdateQueue < ActiveRecord::Base
             update_blob: {
                 Enrollment: [
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 12,
                         entity_state: 'AK',
@@ -51,6 +55,7 @@ class UpdateQueue < ActiveRecord::Base
                 ],
                 boys_sports: [
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 12,
                         entity_state: 'AK',
@@ -58,6 +63,7 @@ class UpdateQueue < ActiveRecord::Base
                         value: 'swimming'
                     },
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 12,
                         member_id: 2,
@@ -76,6 +82,7 @@ class UpdateQueue < ActiveRecord::Base
             update_blob: {
                 Enrollment: [
                     {
+                        action: :disable,
                         entity_type: :school,
                         entity_id: 12,
                         entity_state: 'AK',

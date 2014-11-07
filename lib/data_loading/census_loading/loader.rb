@@ -19,30 +19,83 @@ class CensusLoading::Loader < CensusLoading::Base
       # Raises school not found exception if one doesn't exist with that ID
       school = School.on_db(census_update.shard).find(census_update.entity_id)
 
-      data_set = CensusDataSet
-          .on_db(census_update.shard)
-          .where(census_update.data_set_attributes)
-          .first_or_initialize
-      # data_set.on_db(census_update.shard).update_attributes(active: 1)
+      if census_update.action == 'disable'
+        disable!(census_update)
+      # If we choose to support delete later, we can uncomment this and then create the delete method below
+      # elsif census_update.action == 'delete'
+      #   delete!(census_update)
+      else
+        insert_into!(census_update)
+      end
 
-      validate_census_data_set!(data_set, census_update)
+      # Cacher.create_cache(school, CACHE_KEY)
+    end
+  end
 
-      value_row = census_update.value_class
+  def insert_into!(census_update)
+
+    data_set = CensusDataSet
+      .on_db(census_update.shard)
+      .where(census_update.data_set_attributes)
+      .first_or_initialize
+    data_set.on_db(census_update.shard).update_attributes(active: 1)
+
+    # validate_census_data_set!(data_set, census_update)
+
+    value_row = census_update.value_class
+      .on_db(census_update.shard)
+      .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
+      .first_or_initialize
+
+    value_row.on_db(census_update.shard).update_attributes(
+      active: 1,
+      value_text: census_update.value_type == :value_text ? census_update.value : nil,
+      value_float: census_update.value_type == :value_float ? census_update.value : nil,
+      modified: Time.now,
+      modifiedBy: "Queue daemon. Source: #{source}"
+    )
+
+    # validate_census_value!(value_row, data_set, census_update)
+
+  end
+
+  def disable!(census_update)
+
+    data_sets = CensusDataSet
+      .on_db(census_update.shard)
+      .where(census_update.data_set_attributes)
+      .where(active: 1)
+
+    if data_sets.present?
+      data_sets.each do | data_set |
+        data_set.on_db(census_update.shard).update_attributes(active: 0)
+
+        value_rows = census_update.value_class
           .on_db(census_update.shard)
           .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
-          .first_or_initialize
 
-      # value_row.on_db(census_update.shard).update_attributes(
-      #     active: 1,
-      #     value_text: census_update.value_type == :value_text ? census_update.value : nil,
-      #     value_float: census_update.value_type == :value_float ? census_update.value : nil,
-      #     modified: Time.now,
-      #     modifiedBy: "Queue daemon. Source: #{source}"
-      # )
-
-      validate_census_value!(value_row, data_set, census_update)
-      Cacher.create_cache(school, CACHE_KEY)
+        value_rows.each do | value_row |
+          value_row.on_db(census_update.shard).update_attributes(active: 1)
+        end
+      end
     end
+
+  end
+
+  def delete!(census_update)
+
+    # db_charmer below does not support deletes at least in its current form. Will have to write straight sql for delete action
+    # data_set = CensusDataSet
+    #   .on_db(census_update.shard)
+    #   .where(census_update.data_set_attributes).first
+    #
+    # census_update.value_class
+    #   .on_db(census_update.shard)
+    #   .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
+    #   .destroy
+    #
+    # data_set.destroy
+
   end
 
   def validate_census_data_set!(data_set, census_update)
