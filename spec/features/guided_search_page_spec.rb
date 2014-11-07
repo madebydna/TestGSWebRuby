@@ -10,19 +10,17 @@ feature 'Guided Search Page' do
   after(:each) { clean_dbs :gs_schooldb }
   feature 'on a state guided Search page' do
     before(:each) do
-      setup(6, 'Indiana')
-      FactoryGirl.create(:hub_city_mapping, city: nil, state: 'in', collection_id: 6)
-      visit '/indiana/guided-search'
+      setup(9, 'Delaware')
+      FactoryGirl.create(:hub_city_mapping, city: nil, state: 'de', collection_id: 9, hasGuidedSearch: true)
+      visit '/delaware/guided-search'
     end
 
     it 'includes a basic page layout with nav bar ' do
       # Header
       expect(page).to have_selector('.navbar')
-      # Page Does not have Footer
-      expect(page).to_not have_selector('.js-city-list')
     end
     it 'includes Help me find a school title module on page' do
-      expect(page).to have_selector( 'h3','Help me find a School')
+      expect(page).to have_selector( 'h3', 'Discover schools that match your needs')
 
     end
     it 'includes guided search navigation options' do
