@@ -80,9 +80,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var searchFiltersMenuHandler = function() {
         $(".js-searchFiltersDropdown").on('click', function() {
             var menu = $('.js-searchFiltersMenu');
+            GS.popup.closeOtherPopups();
             menu.css('display') == 'none' ? menu.show() : menu.hide();
-            $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
         });
+        GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
@@ -103,10 +104,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
             $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
+        GS.popup.registerCloseHandler(hideFilterMenuMobile);
     };
 
     var showFilterMenuMobile = function() {
-        $('.js-searchFiltersMenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
+        GS.popup.closeOtherPopups();
         $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
     };
     var hideFilterMenuMobile = function() {
@@ -124,8 +126,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var closeMenuHandler = function() {
         $('html').on('click', function () {
-            $('.js-fitScorePopup').hide();
+            closeFitScorePopup();
         });
+    };
+
+    var closeFitScorePopup = function() {
+        $('.js-fitScorePopup').hide();
     };
 
     var searchResultFitScoreTogglehandler = function($optionalParentElement) {
@@ -145,11 +151,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 var offset = getFitScorePopupOffset.call(this, popup);
+                GS.popup.closeOtherPopups();
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
             }
             if (closeMenuHandlerSet === false) {
+                GS.popup.registerCloseHandler(closeFitScorePopup);
                 closeMenuHandler();
                 closeMenuHandlerSet = true;
             }
@@ -363,13 +371,16 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var setSavedSearchOpenPopupHandler = function() {
         $(".js-savedSearchPopupButton").on('click', function() {
+            GS.popup.closeOtherPopups();
             var $popup = $('.js-savedSearchPopup');
             $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
         });
 
-        $('html').on('click', function () {
+        var closeHandler = function () {
             $('.js-savedSearchPopup').hide();
-        });
+        };
+        GS.popup.registerCloseHandler(closeHandler);
+        $('html').on('click', closeHandler);
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopup'));
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopupButton'));
     };

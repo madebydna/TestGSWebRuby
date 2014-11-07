@@ -113,9 +113,12 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
             }
         });
 
-        $('html').on('click', function () {
+        var closeHandler = function () {
             $(popupHtmlClass).hide();
-        });
+        };
+        GS.popup.registerCloseHandler(closeHandler);
+
+        $('html').on('click', closeHandler);
         GS.popup.stopClickAndTouchstartEventPropogation($(popupHtmlClass));
         GS.popup.stopClickAndTouchstartEventPropogation($poupButton);
     };
@@ -134,6 +137,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
     };
 
     var displayPopup = function($popup, offset) {
+        GS.popup.closeOtherPopups();
         $popup.css('left', '-' + offset + 'px');
         $popup.show();
     };
