@@ -36,7 +36,7 @@ class PyocPdf < Prawn::Document
       draw_footer(get_location_index_start, collection_id)
 
       fill_color Dark_blue
-      text_box 'SCHOOLS BY PERFORMANCE',
+      text_box is_spanish ? 'LAS ESCUELAS MÁS VALORADAS' : 'SCHOOLS BY PERFORMANCE',
                :at => [Col_width/2, cursor],
                :height => 25,
                :size => 24,
@@ -52,13 +52,13 @@ class PyocPdf < Prawn::Document
     column_box([0, cursor], reflow_margins: true, :columns => 3, :width => bounds.width) do
 
     above_avg_overall_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'overall_gs_rating')
-    draw_index_columns(above_avg_overall_rating, 'Above average overall rating')
+    draw_index_columns(above_avg_overall_rating, is_spanish ? 'Por encima del promedio - calificación general' : 'Above average overall rating')
     above_avg_test_score_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'test_score_rating')
-    draw_index_columns(above_avg_test_score_rating, 'Above average test score rating')
+    draw_index_columns(above_avg_test_score_rating, is_spanish ? 'Por encima del promedio - calificación de examenes' :  'Above average test score rating')
     above_avg_growth_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'student_growth_rating')
-    draw_index_columns(above_avg_growth_rating, 'Above average growth rating')
+    draw_index_columns(above_avg_growth_rating, is_spanish ? 'Por encima del promedio - calificación de crecimiento' : 'Above average growth rating')
     above_avg_college_readiness = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'college_readiness_rating')
-    draw_index_columns(above_avg_college_readiness, 'Above average college readiness rating')
+    draw_index_columns(above_avg_college_readiness, is_spanish ? 'Por encima del promedio - calificación universitaria' : 'Above average college readiness rating')
     end
 
     fill_color Black
