@@ -634,7 +634,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     };
 
     var showFiltersMenuOnLoad = function() {
-        if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
+        var externalSearch = (document.referrer &&
+            (document.referrer.indexOf('search/search.page') == -1 && document.referrer.indexOf('/schools/') == -1));
+        if(externalSearch || $.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
             if ($(document).width() > GS.window.sizing.maxMobileWidth && searchResultsDisplayed() ) {
                 $('.js-searchFiltersMenu').show();
             }
