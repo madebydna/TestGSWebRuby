@@ -461,23 +461,23 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var displaySaveSearchFailedSaveError = function(errorMessage) {
-        var $markup = $(getErrorMarkupFullWidth(errorMessage));
-        $('.js-savedSearchPopup').parents('.js-sortingToolbar').before($markup);
-        $markup.show();
+        var errorCSSClass = 'js-saveSearchFailedSaveError';
+
+        if ($('.' + errorCSSClass).length === 0) {
+            var $markup = $(getErrorMarkupFullWidth(errorMessage, errorCSSClass));
+            $('.js-savedSearchPopup').parents('.js-sortingToolbar').before($markup);
+        }
     };
 
-    var getErrorMarkupFullWidth = function(errorMessage) {
-
+    var getErrorMarkupFullWidth = function(errorMessage, errorCSSClass) {
         if (typeof errorMessage === 'string') {
-            return '<div class="limit-width-1200 dn mvm">' +
-                       '<div class="alert-dismissable alert alert-danger oh">' +
-                           '<div class="pull-left mts" style="width: 90%;">' +
-                               '<div>' +
-                                   errorMessage +
-                               '</div>' +
+            return '<div class="' + (errorCSSClass || '') + ' limit-width-1200 alert-dismissable alert alert-danger oh mbl">' +
+                       '<div class="pull-left mts" style="width: 90%;">' +
+                           '<div>' +
+                               errorMessage +
                            '</div>' +
-                           '<button class="close mtm" type="button" data-dismiss="alert" aria-hidden="true">×</button>' +
                        '</div>' +
+                       '<button class="close mtm" type="button" data-dismiss="alert" aria-hidden="true">×</button>' +
                    '</div>'
         }
     };
