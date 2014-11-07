@@ -21,8 +21,8 @@ describe 'Education Community Page' do
   end
 
   describe 'upcoming events module' do
-    it 'shows 2 upcoming events' do
-      expect(page).to have_css '.upcoming-event', count: 2
+    it 'does not show upcoming events' do
+      expect(page).to_not have_css '.upcoming-event'
     end
   end
 

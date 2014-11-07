@@ -23,6 +23,7 @@ shared_examples_for 'a controller that can save a favorite school' do
 
     it 'should fail gracefully if school not found' do
       pending 'TODO: Flash error in controller instead of raise error'
+      fail
       expect(user).to_not receive(:add_favorite_school!)
       expect(controller).to receive :flash_error
       controller.send :add_favorite_school, {}
@@ -57,8 +58,8 @@ shared_examples_for 'a controller that can save a favorite school' do
 
       after(:each) do
         controller.send :add_favorite_school,
-                        state: school.state.to_s+','+school2.state.to_s,
-                        school_id: school.id.to_s+','+school2.id.to_s
+                        state: "#{school.state} #{school2.state}",
+                        school_id: "#{school.id} #{school2.id}"
       end
 
       it 'should set omniture data' do
