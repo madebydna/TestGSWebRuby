@@ -80,8 +80,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var searchFiltersMenuHandler = function() {
         $(".js-searchFiltersDropdown").on('click', function() {
             var menu = $('.js-searchFiltersMenu');
-            GS.popup.closeOtherPopups();
-            menu.css('display') == 'none' ? menu.show() : menu.hide();
+            if (menu.css('display') == 'none') {
+                GS.popup.closeOtherPopups();
+                menu.show();
+            } else {
+                menu.hide();
+            }
         });
         GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
     };
@@ -371,9 +375,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var setSavedSearchOpenPopupHandler = function() {
         $(".js-savedSearchPopupButton").on('click', function() {
-            GS.popup.closeOtherPopups();
             var $popup = $('.js-savedSearchPopup');
-            $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
+            if ($popup.css('display') == 'none') {
+                GS.popup.closeOtherPopups();
+                $popup.show();
+            } else {
+                $popup.hide();
+            }
         });
 
         var closeHandler = function () {
