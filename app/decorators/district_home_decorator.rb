@@ -33,7 +33,7 @@ class DistrictHomeDecorator < Draper::Decorator
     (
       district.boilerplate_object || 
       district.state_level_boilerplate_object
-    ).boilerplate
+    ).try(:boilerplate)
   end
 
   def school_browse_url(query_param_hash = nil)
