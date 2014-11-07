@@ -253,4 +253,26 @@ module PdfConcerns
     Collection_is_landing_page_mapping[collection_id].nil? ? 'www.greatschools.org' : Collection_is_landing_page_mapping[collection_id]
   end
 
+  def find_above_avg_schools_for_index(schools_decorated_with_cache_results, rating_type)
+    above_avg = []
+    above_avg_ratings = '8, 9, 10'
+    schools_decorated_with_cache_results.each do |school|
+      school_cache = school
+      # if (above_avg_ratings.include? school.school_cache.overall_gs_rating && rating_type == 'overall_gs_rating')
+      if  rating_type == 'overall_gs_rating' and above_avg_ratings.include? (school.school_cache.overall_gs_rating)
+        above_avg.push(school_cache.name)
+      end
+      if rating_type == 'test_score_rating' and above_avg_ratings.include? (school.school_cache.test_scores_rating.to_s)
+        above_avg.push(school_cache.name)
+      end
+      if rating_type == 'student_growth_rating' and above_avg_ratings.include? (school.school_cache.student_growth_rating.to_s)
+        above_avg.push(school_cache.name)
+      end
+      if rating_type == 'college_readiness_rating' and above_avg_ratings.include? (school.school_cache.college_readiness_rating.to_s)
+        above_avg.push(school_cache.name)
+      end
+    end
+    above_avg
+  end
+
 end
