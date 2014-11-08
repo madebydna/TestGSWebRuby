@@ -12,10 +12,10 @@ module SearchAdsConcerns
   def header_ad_slots
     {
         desktop: [
-            {name:'Responsive_Search_Results1_728x90',  dimensions: [728, 90]},
+            {name:'Content_Top'}
         ],
         mobile: [
-            {name:'Responsive_Mobile_Search_Results1_320x50',  dimensions: [320, 50]},
+            {name:'Content_Top'},
         ]
     }
   end
@@ -23,10 +23,10 @@ module SearchAdsConcerns
   def footer_ad_slots
     {
         desktop: [
-            {name:'Responsive_Search_Results5_728x90',  dimensions: [728, 90]}
+            {name:'Footer'}
         ],
         mobile: [
-            {name:'Responsive_Mobile_Search_Results4_320x50',  dimensions: [320, 50]}
+            {name:'Footer'}
         ]
     }
   end
@@ -34,21 +34,21 @@ module SearchAdsConcerns
   def results_ad_slots
     {
         desktop: [
-            {name:'Responsive_Search_Results2_728x90', dimensions: [728, 90]},
-            {name:'Responsive_Search_Results_Text_728x60',  dimensions: [728, 60]},
+            {name:'After4'},
+            {name:'After8_Text'},
             [
-                {name:'Responsive_Search_Results1_300x250',  dimensions: [300, 250]},
-                {name:'Responsive_Search_Results2_300x250',  dimensions: [300, 250]}
+                {name:'After12_Left'},
+                {name:'After12_Right'}
             ],
-            {name:'Responsive_Search_Results3_728x90',  dimensions: [728, 90]},
-            {name:'Responsive_Search_Results4_728x90',  dimensions: [728, 90]}
+            {name:'After16'},
+            {name:'After20'}
         ],
         mobile: [
-            {name:'Responsive_Mobile_Search_Results1_300x250', dimensions: [300, 250]},
-            {name:'Responsive_Mobile_Search_Results_Text_320x60',  dimensions: [320, 60]},
-            {name:'Responsive_Mobile_Search_Results2_320x50',  dimensions: [320, 50]},
-            {name:'Responsive_Mobile_Search_Results2_300x250',  dimensions: [320, 250]},
-            {name:'Responsive_Mobile_Search_Results3_320x50',  dimensions: [320, 50]}
+            {name:'After4'},
+            {name:'After8_Text'},
+            {name:'After12'},
+            {name:'After16'},
+            {name:'After20'}
         ]
     }
   end

@@ -176,6 +176,7 @@ class SearchController < ApplicationController
     set_hub # must come after @schools is defined in process_results
     @show_guided_search = has_guided_search?
     @show_ads = hub_show_ads?
+    @ad_definition = Advertising.new
 
     omniture_filter_list_values(filters, @params_hash)
   end

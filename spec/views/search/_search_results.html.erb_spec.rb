@@ -6,39 +6,40 @@ describe 'search/_search_results.html.erb' do
 
   let(:header_ad_slots) {{
       desktop: [
-          {name:'Responsive_Search_Results1_728x90',  dimensions: [728, 90]},
+          {name:'Responsive_Search_Content_Top_728x90'}
       ],
       mobile: [
-          {name:'Responsive_Mobile_Search_Results1_320x50',  dimensions: [320, 50]},
+          {name:'Responsive_Mobile_Search_Content_Top_320x50'},
       ]
   }}
 
+
   let(:footer_ad_slots) {{
       desktop: [
-          {name:'Responsive_Search_Results5_728x90',  dimensions: [728, 90]}
+          {name:'Responsive_Search_Footer_728x90'}
       ],
       mobile: [
-          {name:'Responsive_Mobile_Search_Results4_320x50',  dimensions: [320, 50]}
+          {name:'Responsive_Mobile_Search_Footer_320x50'}
       ]
   }}
 
   let(:results_ad_slots) {{
       desktop: [
-          {name:'Responsive_Search_Results2_728x90', dimensions: [728, 90]},
-          {name:'Responsive_Search_Results_Text_728x60',  dimensions: [728, 60]},
+          {name:'Responsive_Search_After4_728x90'},
+          {name:'Responsive_Search_After8_Text_728x60'},
           [
-              {name:'Responsive_Search_Results1_300x250',  dimensions: [300, 250]},
-              {name:'Responsive_Search_Results2_300x250',  dimensions: [300, 250]}
+              {name:'Responsive_Search_After12_Left_300x250'},
+              {name:'Responsive_Search_After12_Right_300x250'}
           ],
-          {name:'Responsive_Search_Results3_728x90',  dimensions: [728, 90]},
-          {name:'Responsive_Search_Results4_728x90',  dimensions: [728, 90]}
+          {name:'Responsive_Search_After16_728x90'},
+          {name:'Responsive_Search_After20_728x90'}
       ],
       mobile: [
-          {name:'Responsive_Mobile_Search_Results1_300x250', dimensions: [300, 250]},
-          {name:'Responsive_Mobile_Search_Results_Text_320x60',  dimensions: [320, 60]},
-          {name:'Responsive_Mobile_Search_Results2_320x50',  dimensions: [320, 50]},
-          {name:'Responsive_Mobile_Search_Results2_300x250',  dimensions: [320, 250]},
-          {name:'Responsive_Mobile_Search_Results3_320x50',  dimensions: [320, 50]}
+          {name:'Responsive_Mobile_Search_After4_320x250'},
+          {name:'Responsive_Mobile_Search_After8_Text_320x60'},
+          {name:'Responsive_Mobile_Search_After12_320x50'},
+          {name:'Responsive_Mobile_Search_After16_320x50'},
+          {name:'Responsive_Mobile_Search_After20_320x50'}
       ]
   }}
 
@@ -55,8 +56,8 @@ describe 'search/_search_results.html.erb' do
           slots = create_slots_list(num_results)
           slots.each_with_index do |slot, index|
             next unless slot[:name]
-            desktop_or_mobile = slot[:name].include?('Mobile') ? 'mobile' : 'desktop'
-            expect(ads_and_search_results_divs[index][:id]).to eq("ad_#{desktop_or_mobile}_#{slot[:name]}")
+            desktop_or_mobile = slot[:name].include?('Mobile') ? 'Mobile_' : ''
+            expect(ads_and_search_results_divs[index]['data-dfp']).to eq(slot[:name])
           end
         end
       end

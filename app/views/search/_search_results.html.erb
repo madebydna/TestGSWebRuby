@@ -13,10 +13,14 @@
             <%= render 'assigned_school_not_valid' %>
           <% end %>
         <%= render 'compare_schools_error_message' %>
-        <%= render 'search_ad_section', desktop_slots: @header_ad_slots[:desktop], mobile_slots: @header_ad_slots[:mobile] %>
+        <% if @show_ads %>
+            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym, view: :desktop %>=
+            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym,  view: :mobile %>
+        <% end %>
         <% ad_counter = 0 %>
         <% @schools.each_with_index do |school, search_result_counter| %>
             <% if [4, 8, 12, 16, 20].include?(search_result_counter) %>
+
               <%= render 'search_ad_section',  desktop_slots: @results_ad_slots[:desktop], ad_counter: ad_counter, mobile_slots: @results_ad_slots[:mobile] %>
               <% ad_counter += 1 %>
             <% end %>
@@ -24,7 +28,10 @@
             <% @school = decorated_school %>
             <%= render 'search_result', school: school, decorated_school: decorated_school %>
         <% end %>
-        <%= render 'search_ad_section', desktop_slots: @footer_ad_slots[:desktop], mobile_slots: @footer_ad_slots[:mobile] %>
+        <% if @show_ads %>
+            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Footer'.to_sym, view: :desktop %>
+            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Footer'.to_sym,  view: :mobile %>
+        <% end %>
       </div>
     </div>
   </div>
