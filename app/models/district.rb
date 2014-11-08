@@ -16,4 +16,13 @@ class District < ActiveRecord::Base
     @state_level_boilerplate_object ||= DistrictStateLevelBoilerplate.find_for_district(self).first
   end
 
+  def nearby_districts
+    nearby_district_objects = NearbyDistrict.where(
+      district_state: self.state.downcase,
+      district_id: self.id
+    )
+    neighbor_ids = nearby_district_objects.map(&:neighbor_id)
+    District.on_db(state.downcase.to_sym).where(id: neighbor_ids)
+  end
+
 end

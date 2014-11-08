@@ -8,6 +8,10 @@ class DistrictHomeDecorator < Draper::Decorator
     district.name
   end
 
+  def rating
+    '?'
+  end
+
   def number_of_schools_in_district
     real_count = School.on_db(district.state.downcase.to_sym).
       where(district_id: district.id, active: true).
@@ -19,6 +23,20 @@ class DistrictHomeDecorator < Draper::Decorator
   def city_state_zip
     if city.present? && zipcode.present?
       "#{city}, #{state} #{zipcode}"
+    end
+  end
+
+  def district_home_link(text = name)
+    district_params = h.district_params_from_district(district)
+    url = h.city_district_url(district_params)
+    if url.present?
+      h.link_to(text, url)
+    end
+  end
+
+  def city_state
+    if city.present?
+      "#{city}, #{state}"
     end
   end
 

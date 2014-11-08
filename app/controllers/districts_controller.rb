@@ -3,6 +3,7 @@ class DistrictsController < ApplicationController
   include MetaTagsHelper
   include AdvertisingHelper
   include HubConcerns
+  include GoogleMapConcerns
 
   before_action :set_city_state
   before_action :set_hub
@@ -10,13 +11,44 @@ class DistrictsController < ApplicationController
   before_action :write_meta_tags
 
   def show
+    gon.pagename = 'DistrictHome'
     @ad_page_name = :State_Home_Standard # TODO verify name to use
     @district = District.find_by_state_and_name(state_param, district_param)
-    @top_schools = School.on_db(@district.state.downcase.to_sym).all.take(5)
+
+    @nearby_districts = @district.nearby_districts
+
+    @top_schools = top_schools(@district)
     @params_hash = parse_array_query_string(request.query_string)
     @show_ads = false
     ad_setTargeting_through_gon
+    prepare_map
     render 'districts/district_home'
+  end
+
+  def top_schools(district)
+    district_schools = School.on_db(district.state.downcase.to_sym).
+      where(district_id: district.id).
+      all
+
+    school_metadata = SchoolMetadata.on_db(district.state.downcase.to_sym).
+      where(
+        school_id: district_schools.map(&:id),
+        meta_key: 'overallRating'
+      ).to_a
+
+    school_metadata.sort_by! do |metadata|
+      metadata.meta_value.to_i
+    end
+    school_metadata.reverse!
+
+    top_school_ids = school_metadata.take(10).map(&:school_id)
+    district_schools.select { |school| top_school_ids.include? school.id }
+  end
+
+  def prepare_map
+    @map_schools = @top_schools
+    mapping_points_through_gon_from_db
+    assign_sprite_files_though_gon
   end
 
   def districts_show_title
