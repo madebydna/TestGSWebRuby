@@ -9,6 +9,7 @@ class SearchController < ApplicationController
   include SearchAdsConcerns
 
   #Todo move before filters to methods
+  before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
@@ -227,95 +228,28 @@ class SearchController < ApplicationController
   end
 
   def suggest_school_by_name
-
     set_city_state
-    #For now the javascript will add in a state and rails will set a @state, but in the future we may want to not require a state
-    #TODO Account for not having access to state variable
-    solr = Solr.new
 
-    if @state && @state[:short].present?
-      results = solr.school_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
-    else
-      results = solr.school_name_suggest(:query=>params[:query].downcase)
-    end
+    state_abbr = @state[:short] if @state && @state[:short].present?
+    response_objects = SearchSuggestSchool.new.search(count: 20, state: state_abbr, query: params[:query])
 
-    response_objects = []
-    unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
-      results['response']['docs'].each do |school_search_result|
-        HashUtils.split_keys school_search_result, 'school_id' do |value|
-          {'id'=>value}
-        end
-        HashUtils.split_keys school_search_result, 'school_name' do |value|
-          {'name'=>value}
-        end
-        HashUtils.split_keys school_search_result, 'city' do |value|
-          {'city_name'=>value}
-        end
-        school_state_name = States.abbreviation_hash[school_search_result['state'].downcase]
-        #s = School.new
-        #s.initialize_from_hash school_search_result #(hash_to_hash(config_hash, school_search_result))
-        school_url = "/#{gs_legacy_url_city_district_browse_encode(school_state_name)}/#{gs_legacy_url_city_district_browse_encode(school_search_result['city_name'])}/#{school_search_result['id'].to_s+'-'+gs_legacy_url_encode(school_search_result['name'])}"
-        response_objects << {:state => school_search_result['state'].upcase, :school_name => school_search_result['name'], :id => school_search_result['id'], :city_name => school_search_result['city_name'], :url => school_url}#school_path(s)}
-      end
-    end
     render json:response_objects
   end
 
   def suggest_city_by_name
     set_city_state
-    solr = Solr.new
-    if @state && @state[:short].present?
-      results = solr.city_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
-    else
-      results = solr.city_name_suggest(:query=>params[:query].downcase)
-    end
 
-
-    response_objects = []
-    unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
-      results['response']['docs'].each do |city_search_result|
-        output_city = {}
-        city_state = city_search_result['city_state'][0].upcase
-        city_state_name = States.abbreviation_hash[city_state.downcase]
-        output_city[:city_name] = city_search_result['city_sortable_name']
-        output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{city_state_name}/#{city_search_result['city_sortable_name'].downcase}/schools")
-        output_city[:sort_order] = city_search_result['city_number_of_schools']
-        output_city[:state] = city_state
-
-        response_objects << output_city
-      end
-    end
+    state_abbr = @state[:short] if @state && @state[:short].present?
+    response_objects = SearchSuggestCity.new.search(count: 10, state: state_abbr, query: params[:query])
 
     render json:response_objects
   end
 
   def suggest_district_by_name
     set_city_state
-    solr = Solr.new
 
-    if @state && @state[:short].present?
-      results = solr.district_name_suggest(:state=>@state[:short], :query=>params[:query].downcase)
-    else
-      results = solr.district_name_suggest(:query=>params[:query].downcase)
-    end
-
-
-
-
-    response_objects = []
-    unless results.empty? or results['response'].empty? or results['response']['docs'].empty?
-      results['response']['docs'].each do |district_search_result|
-        output_district = {}
-        district_state = district_search_result['state'].upcase
-        district_state_name = States.abbreviation_hash[district_state.downcase]
-        output_district[:district_name] = district_search_result['district_sortable_name']
-        output_district[:sort_order] = district_search_result['district_number_of_schools']
-        output_district[:url] = gs_legacy_url_city_district_browse_encode("/#{district_state_name}/#{district_search_result['city'].downcase}/#{district_search_result['district_sortable_name'].downcase}/schools")
-        output_district[:state] = district_state
-
-        response_objects << output_district
-      end
-    end
+    state_abbr = @state[:short] if @state && @state[:short].present?
+    response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
 
     render json:response_objects
   end
