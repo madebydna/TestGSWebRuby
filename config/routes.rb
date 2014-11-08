@@ -152,6 +152,12 @@ LocalizedProfiles::Application.routes.draw do
       school_name: /.+/
   }
 
+  get '/gsr/:state/:city/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
+    district = request.params[:district]
+    # district can't = preschools and must start with letter
+    return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
+  }
+
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join
     get '/gsr/login', :to => 'signin#new', :as => :signin
