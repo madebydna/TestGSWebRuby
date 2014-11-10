@@ -17,12 +17,14 @@ class District < ActiveRecord::Base
   end
 
   def nearby_districts
-    nearby_district_objects = NearbyDistrict.where(
-      district_state: self.state.downcase,
-      district_id: self.id
-    )
+    nearby_district_objects = 
+      NearbyDistrict.where(
+        district_state: self.state.downcase,
+        district_id: self.id
+      ).order('distance asc')
     neighbor_ids = nearby_district_objects.map(&:neighbor_id)
-    District.on_db(state.downcase.to_sym).where(id: neighbor_ids)
+    districts = District.on_db(state.downcase.to_sym).where(id: neighbor_ids)
+    districts.sort_by { |d, value| neighbor_ids.index(d.id) }
   end
 
 end
