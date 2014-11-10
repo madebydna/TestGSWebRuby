@@ -1,8 +1,10 @@
 .hub-hero-image {
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
+  width: 200%;
   background-size: 50% 100%;
+  position: absolute;
+  left: -50%;
 }
 
 .hub-hero-bg {
@@ -11,6 +13,17 @@
   width: 940px;
   margin: auto;
   padding: 35px;
+}
+
+.hub_hero_size {height: 550px}
+
+.absolute-center-hub {
+  margin: auto;position: absolute;top: 90px; left: 0; bottom: 0; right: 0;
+}
+
+@media (max-width:990px) {
+  .absolute-center-hub {margin: auto;position: relative;top: 0; left: 0; bottom: 0; right: 0; }
+  //  .hub_hero_size {height: 350px}
 }
 
 .sponsor-bar {

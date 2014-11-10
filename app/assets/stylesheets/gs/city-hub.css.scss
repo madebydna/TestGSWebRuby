@@ -1,13 +1,6 @@
 .image-bg-scale {
   width: 100%;
   position: relative;
-  overflow: hidden;
-
-  > div:nth-of-type(1), > div:nth-of-type(2) { // sins
-    position: absolute;
-    left: -50%;
-    width: 200%;
-  }
 }
 
 .partner-carousel-image {
@@ -46,3 +39,4 @@ hr.brand-bar {
     }
   }
 }
+
