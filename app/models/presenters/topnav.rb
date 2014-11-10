@@ -6,12 +6,11 @@ class TopNav
   def initialize(school, cookies, hub = nil)
     @school = school
     @cookies = cookies
-    @hub = hub 
-    @hub = nil
+    @hub = hub
   end
 
   def hub_state
-    if @hub && false
+    if @hub
       @hub.state
     else
       read_cookie_value(:hubState)
@@ -28,7 +27,7 @@ class TopNav
   end
 
   def hub_city
-    if @hub && false
+    if @hub
       @hub.city
     else
       read_cookie_value(:hubCity)
