@@ -8,7 +8,7 @@ class SearchSuggestCity < SearchSuggester
   def process_result(city_search_result)
     output_city = {}
     city_state = city_search_result['city_state'][0].upcase
-    city_state_name = States.abbreviation_hash[city_search_result['city_state'][0]]
+    city_state_name = States.abbreviation_hash[city_search_result['city_state'][0].downcase]
     output_city[:city_name] = city_search_result['city_sortable_name']
     output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{city_state_name}/#{city_search_result['city_sortable_name'].downcase}/schools")
     output_city[:sort_order] = city_search_result['city_number_of_schools']
