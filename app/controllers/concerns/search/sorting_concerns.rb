@@ -38,13 +38,14 @@ module SortingConcerns
   end
 
   def parse_sorts(params_hash)
-    sort_types = Hash.new(DEFAULT_SORT).merge(
+    default_sort = search_by_name? ? nil : DEFAULT_SORT # The default by_name sort is no sort
+    sort_types = Hash.new(default_sort).merge(
         {
             rating_desc: :rating_desc,
             fit_desc: :fit_desc,
             distance_asc: :distance_asc
         }.stringify_keys
     )
-    sort_types[params_hash['sort']] unless search_by_name? # By name's default sort is no sort
+    sort_types[params_hash['sort']]
   end
 end
