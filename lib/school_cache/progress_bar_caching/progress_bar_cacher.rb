@@ -6,12 +6,36 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     calculate_completeness_score
   end
 
+  def calculate_completeness_score
+    school_media_score = school_media.present? ? 1 : 0
+    reviews_score = school_reviews_count >= 10 ? 1 : 0
+    osp_score = osp_data_present? ? 1 : 0
+
+    {school_media_completeness_score: school_media_score, reviews_completeness_score: reviews_score, osp_completeness_score: osp_score,
+     total_completeness_score:school_media_score+reviews_score+osp_score }
+  end
+
   def school_reviews_count
     @school_reviews_count ||= school.review_count
   end
 
   def school_media
     @school_media_count ||= school.school_media_first_hash
+  end
+
+  def osp_data_present?
+    rval = false
+
+    if osp_data.present?
+
+      #convert into a hash data structure
+      osp_keys_in_school = osp_data.group_by(&:response_key)
+
+      #check if all the keys we are looking for are present.
+      rval = check_osp_keys_by_groups(osp_keys_in_school.keys)
+    end
+
+    rval
   end
 
   def osp_data
@@ -36,22 +60,10 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     @osp_data ||= EspResponse.on_db(school.shard).where(school_id: school.id, response_key: [osp_keys]).active
   end
 
-
-  def osp_data_present?
-    rval = false
-
-    if osp_data.present?
-
-      #convert into a hash data structure
-      osp_keys_in_school = osp_data.group_by(&:response_key)
-
-      rval = check_osp_keys_by_groups(osp_keys_in_school.keys)
-    end
-
-    rval
-  end
-
   def check_osp_keys_by_groups(osp_keys_in_school)
+
+    #used to help with grouping of keys. For example, we are looking for responses for either arts_visual
+    #or arts_performing_written or arts_music or arts_media. This map helps with that.
     osp_keys_by_group = { :arts_visual => :arts,
            :arts_performing_written => :arts,
            :arts_music => :arts,
@@ -85,14 +97,7 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.sort == unique_keys.sort : false
   end
 
-  def calculate_completeness_score
-    school_media_score = school_media.present? ? 1 : 0
-    reviews_score = school_reviews_count >= 10 ? 1 : 0
-    osp_score = osp_data_present? ? 1 : 0
 
-    {school_media_completeness_score: school_media_score, reviews_completeness_score: reviews_score, osp_completeness_score: osp_score,
-     total_completeness_score:school_media_score+reviews_score+osp_score }
-  end
 
 
 end
