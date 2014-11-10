@@ -16,4 +16,8 @@ class SearchSuggestDistrict < SearchSuggester
 
     output_district
   end
+
+  def default_sort
+    'district_sortable_name asc,district_number_of_schools desc'
+  end
 end

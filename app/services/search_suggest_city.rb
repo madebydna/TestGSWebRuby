@@ -16,4 +16,8 @@ class SearchSuggestCity < SearchSuggester
 
     output_city
   end
+
+  def default_sort
+    'city_sortable_name asc,city_number_of_schools desc'
+  end
 end

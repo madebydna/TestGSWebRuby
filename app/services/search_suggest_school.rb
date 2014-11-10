@@ -16,4 +16,8 @@ class SearchSuggestSchool < SearchSuggester
         :url => school_url
     }
   end
+
+  def default_sort
+    'school_sortable_name asc,school_size desc'
+  end
 end
