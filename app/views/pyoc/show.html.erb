@@ -1,26 +1,26 @@
-<div class="row limit-width-1200">
+<div class="row limit-width-1200 pll">
 
     <%= form_tag("/admin/gsr/choose-pyoc", method: "get") do %>
 
             <%= label_tag(:state, "State" ,:class => "brand-primary") %>
-            <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br>
+            <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br/>
 
             <%= label_tag(:collection_id, "Collection ID",:class => "brand-primary") %>
-            <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2, :required => true})%></br>
+            <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2, :required => true})%><br/>
 
             <%= check_box_tag(:is_k8,1,params[:is_k8]) %>
-            <%= label_tag(:is_k8, "Is K8 Batch",:class => "brand-primary") %></br>
-          <%= check_box_tag(:is_pk8,1,params[:is_pk8]) %>
-          <%= label_tag(:is_pk8, "Is PK8 Batch",:class => "brand-primary") %></br>
+            <%= label_tag(:is_k8, "Is K8 Batch",:class => "brand-primary") %><br/>
+            <%= check_box_tag(:is_pk8,1,params[:is_pk8]) %>
+            <%= label_tag(:is_pk8, "Is PK8 Batch",:class => "brand-primary") %><br/>
 
             <%= check_box_tag(:is_high_school,1, params[:is_high_school] ) %>
-            <%= label_tag(:is_high_school, "Is High School Batch",:class => "brand-primary") %></br>
+            <%= label_tag(:is_high_school, "Is High School Batch",:class => "brand-primary") %><br/>
 
             <%= label_tag(:added_schools, "Schools To be Added",:class => "brand-primary") %>
-            <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br>
+            <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br/>
 
             <%= label_tag(:removed_schools, "Schools To be Removed",:class => "brand-primary") %>
-            <%= text_field_tag(:removed_schools, value = params[:removed_schools], options = {:size => "100",:maxlength => "800"})%><br>
+            <%= text_field_tag(:removed_schools, value = params[:removed_schools], options = {:size => "100",:maxlength => "800"})%><br/>
 
            <%= label_tag "Language:", nil,:class =>"brand-primary"%>&nbsp;
            <%if params[:language].present? && params[:language] =="spanish" %>
@@ -44,14 +44,14 @@
           <%= text_field_tag(:page_number_start, value = (params[:page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br>
 
 
-          <%= submit_tag("FindSchools",:class => "btn btn-primary") %><br/>
+          <%= submit_tag("FindSchools",:class => "btn btn-primary") %><br/><br/>
     <% end %>
       <%if  @db_schools.present?%>
       <div class="row limit-width-1200 tac">
 
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success mtl") do %>
+        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
             <%= hidden_field_tag "state", params[:state]%>
             <%= hidden_field_tag "collection_id", params[:collection_id]%>
             <%= hidden_field_tag "is_k8", params[:is_k8]%>
@@ -63,29 +63,32 @@
             <%= hidden_field_tag "language", params[:language]%>
 
 
-            Ready to generate Schools PDF ? <%= submit_tag("Generate Schools PDF", :class => "btn btn-primary") %><% end%></div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl">
+            Ready to generate Schools PDF ?
+             <%= submit_tag("Generate Schools PDF", :class => "btn btn-primary") %><% end%></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
 
-        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success mtl") do %>
-                <%= hidden_field_tag "state", params[:state]%>
-                <%= hidden_field_tag "collection_id", params[:collection_id]%>
-                <%= hidden_field_tag "is_k8", params[:is_k8]%>
-                <%= hidden_field_tag "is_pk8", params[:is_pk8]%>
-                <%= hidden_field_tag "is_high_school", params[:is_high_school]%>
-                <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
-                <%= hidden_field_tag "added_schools", params[:added_schools]%>
-                <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
-                <%= hidden_field_tag "language", params[:language]%>
+        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
+              <%= hidden_field_tag "state", params[:state]%>
+              <%= hidden_field_tag "collection_id", params[:collection_id]%>
+              <%= hidden_field_tag "language", params[:language]%>
+              <%= hidden_field_tag "added_schools", params[:added_schools]%>
+              <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
 
-                Ready to generate Performance Index PDF ? <%= submit_tag("Generate Performance Index PDF", :class => "btn btn-primary") %>
+              <%= label_tag(:location_index_page_number_start, " Performance Index  Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:performance_index_page_number_start, value = (params[:performance_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
+              <%= hidden_field_tag "is_performance_index",1%>
 
-      <% end %>
+
+              Ready to generate Performance Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
+              <%= submit_tag("Generate Performance Index PDF", :class => "btn btn-primary") %>
+
+        <% end %>
           </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
 
-          <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success mtl") do %>
+          <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
               <%= hidden_field_tag "state", params[:state]%>
               <%= hidden_field_tag "collection_id", params[:collection_id]%>
               <%= hidden_field_tag "language", params[:language]%>
@@ -93,11 +96,12 @@
               <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
 
               <%= label_tag(:location_index_page_number_start, " Location Index  Page Number Start",:class => "brand-primary") %>
-              <%= text_field_tag(:location_index_page_number_start, value = (params[:location_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br>
+              <%= text_field_tag(:location_index_page_number_start, value = (params[:location_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
               <%= hidden_field_tag "is_location_index",1%>
 
 
-              Ready to generate Location Index PDF ? <%= submit_tag("Generate Location Index PDF", :class => "btn btn-primary") %>
+              Ready to generate Location Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
+              <%= submit_tag("Generate Location Index PDF", :class => "btn btn-primary") %>
 
           <% end %>
         </div>

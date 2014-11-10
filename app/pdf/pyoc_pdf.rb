@@ -26,14 +26,13 @@ class PyocPdf < Prawn::Document
   Image_path_visual_arts = "app/assets/images/pyoc/visual_arts.png"
   No_program_data = "?"
 
-  def initialize(schools_decorated_with_cache_results, is_k8_batch, is_high_school_batch, is_pk8_batch, get_page_number_start, is_spanish, collection_id, is_location_index, is_performance_index, get_location_index_start)
+  def initialize(schools_decorated_with_cache_results, is_k8_batch, is_high_school_batch, is_pk8_batch, get_page_number_start, is_spanish, collection_id, is_location_index, is_performance_index,location_index_page_number_start,performance_index_page_number_start)
     @is_spanish=is_spanish
     super()
-
     # todo need to change the name to get_performance_index_start
-    if is_location_index
+    if is_performance_index
 
-      draw_footer(get_location_index_start, collection_id)
+      draw_footer(performance_index_page_number_start, collection_id)
 
       fill_color Dark_blue
       text_box is_spanish ? 'LAS ESCUELAS MÁS VALORADAS' : 'SCHOOLS BY PERFORMANCE',
@@ -62,11 +61,11 @@ class PyocPdf < Prawn::Document
     end
 
     fill_color Black
-    draw_footer(get_location_index_start, collection_id)
-    elsif is_performance_index
-    above_avg_overall_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results)
-    draw_index_columns(above_avg_overall_rating)
-  else
+    draw_footer(performance_index_page_number_start, collection_id)
+    elsif is_location_index
+      draw_footer(performance_index_page_number_start, collection_id)
+
+    else
     start_time = Time.now
     generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     end_time =Time.now - start_time
