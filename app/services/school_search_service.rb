@@ -104,19 +104,12 @@ class SchoolSearchService
   protected
 
   def self.parse_school_document(school_search_result)
-    school_search_result.entries.each do |key, value|
-      school_search_result[key[7..-1]] = value if key.start_with? 'school_' # strip the preceding 'school_' from keys
-    end
-    school_search_result['zipcode'] = school_search_result['zip']
-    school_search_result['level'] = school_search_result['grades']
-    school_search_result['enrollment'] = school_search_result['size'] if school_search_result.include? 'size'
     school_search_result['state'] = get_state_abbreviation(school_search_result)
     school_search_result['state_name'] = States.state_name(school_search_result['state'])
     school_search_result['school_media_first_hash'] = ((photo = school_search_result['small_size_photos'].presence) ? photo[0].match(/\/(\w*)-/)[1] : nil)
-    add_level_codes(school_search_result, school_search_result['grade_level'])
+    add_level_codes(school_search_result, school_search_result['school_grade_level'])
     # convert KM to miles
     school_search_result['distance'] = school_search_result['distance'] / 1.6 if school_search_result['distance']
-    school_search_result['review_count'] = school_search_result['review_count_ruby']
     SchoolSearchResult.new school_search_result
   end
 
@@ -164,8 +157,8 @@ class SchoolSearchService
   end
 
   def self.get_state_abbreviation(hash)
-    if hash.include? 'database_state'
-      return hash['database_state'].select {|v| v.length == 2 && States.abbreviation_hash.include?(v)}[0]
+    if hash.include? 'school_database_state'
+      return hash['school_database_state'].select {|v| v.length == 2 && States.abbreviation_hash.include?(v)}[0]
     end
     return nil
   end

@@ -258,7 +258,7 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '<div class="clearfix">';
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
-                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
+                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
                   markup += '<span class="mls font-size-small notranslate">'+ point.numReviews;
                   if (point.numReviews != 1) {
                       markup += ' ' + mapPinReviewsText() + ' </span>';
@@ -291,6 +291,7 @@ GS.googleMap = GS.googleMap || (function() {
           var mapPinSchoolTypePublicText = function() { return $('.js-mapPinSchoolTypePublicText').text().trim() };
           var mapPinSchoolTypeCharterText = function() { return $('.js-mapPinSchoolTypeCharterText').text().trim() };
           var mapPinAssignedSchoolText = function() { return $('.js-mapPinAssignedSchoolText').text().trim() };
+          var mapPinCommunityStars = function(rating) { return $('.js-mapPinCommunityStars-' + rating).html() };
 
           initialize(points);
 

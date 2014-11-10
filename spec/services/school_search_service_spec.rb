@@ -210,9 +210,9 @@ describe 'School Search Service' do
   end
 
   describe '.get_state_abbreviation' do
-    let(:sample_result) { {'database_state' => ['de', 'delaware']} }
-    let(:out_of_order_result) { {'database_state' => ['maine', 'me']} }
-    let(:invalid_result) { {'database_state' => ['roynation', 'ro']} }
+    let(:sample_result) { {'school_database_state' => ['de', 'delaware']} }
+    let(:out_of_order_result) { {'school_database_state' => ['maine', 'me']} }
+    let(:invalid_result) { {'school_database_state' => ['roynation', 'ro']} }
     it 'should handle nil gracefully' do
       expect(SchoolSearchService.get_state_abbreviation({})).to be_nil
     end

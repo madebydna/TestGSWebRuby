@@ -9,6 +9,9 @@
     <div class="js-mapPinSchoolTypePublicText">Public district</div>
     <div class="js-mapPinSchoolTypeCharterText">Public charter</div>
     <div class="js-mapPinAssignedSchoolText">Assigned school</div>
+    <% (1..5).each do |rating| %>
+      <div class="js-mapPinCommunityStars-<%=rating%>"><%= draw_stars_16 rating %></div>
+    <% end %>
   </div>
 
   <div class="mtl hidden-xs"></div>
