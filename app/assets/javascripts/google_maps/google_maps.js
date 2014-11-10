@@ -2,7 +2,7 @@ GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
 GS.window.sizing.width = GS.window.sizing.width || {};
 GS.googleMap = GS.googleMap || (function() {
 
-    var getScriptCallbacks = [];
+    var ajaxInitCallbacks = [];
     var needsInit = true;
     GS.search.map = GS.search.map || {};
     GS.search.mapMarkers = GS.search.mapMarkers || [];
@@ -334,13 +334,13 @@ GS.googleMap = GS.googleMap || (function() {
     };
 
     var addToInitDependencyCallbacks = function (func) {
-        getScriptCallbacks.push(func);
-        getScriptCallbacks = _.uniq(getScriptCallbacks);
+        ajaxInitCallbacks.push(func);
+        ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
     };
 
-    var ajaxInitCallbacks = function () {
-      while (getScriptCallbacks.length > 0) {
-        (getScriptCallbacks.shift())();
+    var applyAjaxInitCallbacks = function () {
+      while (ajaxInitCallbacks.length > 0) {
+        (ajaxInitCallbacks.shift())();
       }
     };
 
@@ -352,7 +352,7 @@ GS.googleMap = GS.googleMap || (function() {
         initAndShowMap : initAndShowMap,
         setAssignedSchool: setAssignedSchool,
         addToInitDependencyCallbacks: addToInitDependencyCallbacks,
-        ajaxInitCallbacks: ajaxInitCallbacks
+        applyAjaxInitCallbacks: applyAjaxInitCallbacks
     }
 
 })();
