@@ -6,7 +6,7 @@ class SchoolSearchResult
                 :boys_sports, :city, :community_rating, :database_state, :distance, :dress_code, :enrollment,
                 :foreign_language, :girls_sports, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :name, :on_page, :overall_gs_rating,
-                :overall_gs_rating, :review_count, :school_media_first_hash, :state, :state_name, :street,
+                :review_count, :school_media_first_hash, :state, :state_name, :street,
                 :transportation, :type, :zip, :zipcode, :profile_path, :students_vouchers
 
   def initialize(hash)
@@ -38,7 +38,6 @@ class SchoolSearchResult
     @longitude = hash['school_longitude']
     @name = hash['school_name']
     @on_page = hash['on_page']
-    @overall_gs_rating = hash['overall_gs_rating']
     @overall_gs_rating = hash['overall_gs_rating']
     @profile_path = hash['school_profile_path']
     @review_count = hash['school_review_count_ruby']
