@@ -22,14 +22,19 @@ class DistrictsController < ApplicationController
 
     @top_schools = top_schools(@district, 4)
     @params_hash = parse_array_query_string(request.query_string)
-    @show_ads = false
+    @show_ads = hub_show_ads?
     ad_setTargeting_through_gon
     prepare_map
-    set_omniture_data_search_school
+    set_omniture_data
     render 'districts/district_home'
   end
 
   private
+
+  def require_district
+    @district = District.find_by_state_and_name(state_param, district_param)
+    render 'error/page_not_found', layout: 'error', status: 404 if @district.nil?
+  end
 
   def redirect_to_canonical_url
     # Add a tailing slash to the request path, only if one doesn't already exist.
@@ -47,7 +52,7 @@ class DistrictsController < ApplicationController
     city_district_path(district_params_from_district(@district))
   end
 
-  def set_omniture_data_search_school
+  def set_omniture_data
     gon.omniture_sprops = {}
     gon.omniture_pagename = "GS:District:Home"
     gon.omniture_hier1 = "District,District Home,#{@district.name}"
@@ -56,37 +61,13 @@ class DistrictsController < ApplicationController
   end
 
   def top_schools(district, count = 10)
-    district_schools_by_rating_desc(district).take(count)
-  end
-
-  def district_schools_by_rating_desc(district)
-    @district_schools_by_rating_desc ||= (
-      district_schools = School.on_db(district.state.downcase.to_sym).
-        where(district_id: district.id).
-        all
-
-      school_metadata = SchoolMetadata.on_db(district.state.downcase.to_sym).
-        where(
-          school_id: district_schools.map(&:id),
-          meta_key: 'overallRating'
-        ).to_a
-
-      school_metadata.sort_by! { |metadata| metadata.meta_value.to_i }
-      school_metadata.reverse!
-      top_school_ids = school_metadata.map(&:school_id)
-      district_schools.select { |school| top_school_ids.include? school.id }
-    )
+    district.schools_by_rating_desc.take(count)
   end
 
   def prepare_map
-    @map_schools = district_schools_by_rating_desc(@district)
+    @map_schools = @district.schools_by_rating_desc
     mapping_points_through_gon_from_db
     assign_sprite_files_though_gon
-  end
-
-  def require_district
-    @district = District.find_by_state_and_name(state_param, district_param)
-    render 'error/page_not_found', layout: 'error', status: 404 if @district.nil?
   end
 
   def ad_setTargeting_through_gon

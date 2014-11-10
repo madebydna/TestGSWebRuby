@@ -345,6 +345,24 @@ class Advertising
       },
     }
 
+    @ad_slots[:District_Home] = {
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
+      Footer: {
+        name: "Footer",
+        desktop:{
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
+        }
+      },
+    }
+
     # State Home Page Ads
     @ad_slots[:Homepage] = {
       Choosing_Content: {

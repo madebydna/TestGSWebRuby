@@ -65,10 +65,14 @@
       <%= district.boilerplate %>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4 ptm">
-    AD
+      <% if @show_ads %>
+        <div>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :mobile  %>
+        </div>
+      <% end %>
     </div>
   </div>
-
 
   <div class="row pll prm pbl mtl" style="background-color:#F3F8FB;">
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
@@ -93,6 +97,12 @@
       <%= render partial: 'google_map' %>
     </div>
   </div>
+  <% if @show_ads %>
+    <div>
+      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :desktop  %>
+      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :mobile  %>
+    </div>
+  <% end %>
 
   <div class="row pal">
     <div class="col-lg-9 col-md-9 col-sm-9 prl">

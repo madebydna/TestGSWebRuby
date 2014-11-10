@@ -36,4 +36,23 @@ class District < ActiveRecord::Base
     )
   end
 
+  def schools_by_rating_desc
+    @district_schools_by_rating_desc ||= (
+      schools = School.on_db(state.downcase.to_sym).
+        where(district_id: id).
+        all
+
+      school_metadata = SchoolMetadata.on_db(state.downcase.to_sym).
+        where(
+          school_id: schools.map(&:id),
+          meta_key: 'overallRating'
+        ).to_a
+
+      school_metadata.sort_by! { |metadata| metadata.meta_value.to_i }
+      school_metadata.reverse!
+      top_school_ids = school_metadata.map(&:school_id)
+      schools.select { |school| top_school_ids.include? school.id }
+    )
+  end
+
 end
