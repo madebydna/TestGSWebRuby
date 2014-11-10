@@ -27,4 +27,13 @@ class District < ActiveRecord::Base
     districts.sort_by { |d, value| neighbor_ids.index(d.id) }
   end
 
+  # Returns numeric value or nil
+  # Memoizes its result
+  def rating
+    @rating ||= (
+      district_rating_object = DistrictRating.for_district(self)
+      district_rating_object.present? ? district_rating_object.rating : nil
+    )
+  end
+
 end
