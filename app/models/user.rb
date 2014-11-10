@@ -109,6 +109,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_password?
+    encrypted_password.present?
+  end
+
   def encrypt_plain_text_password
     if password.present? && id.present?
       encrypted_pw = encrypt_password(password)

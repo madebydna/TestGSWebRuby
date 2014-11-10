@@ -59,7 +59,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
-    get '/community/forgotPassword.page', as: :forgot_password
+    # get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
     get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
@@ -157,6 +157,9 @@ LocalizedProfiles::Application.routes.draw do
     # district can't = preschools and must start with letter
     return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
   }
+
+  get '/community/forgotPassword', :to => 'forgot_password#show', :as => 'forgot_password'
+  post '/community/forgotPassword/send_email', :to => 'forgot_password#send_forgot_password_email', :as => 'send_forgot_password_email'
 
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join

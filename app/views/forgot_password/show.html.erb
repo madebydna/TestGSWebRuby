@@ -1,0 +1,37 @@
+<%= render 'nav/topnav' %>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<form class="form-horizontal input-xlarge js-send-forgot-password-email"
+      action="<%= send_forgot_password_email_path %>"
+      method="post"
+      data-parsley-namespace="data-parsley-"
+>
+  <fieldset>
+    <div class="form-group">
+      <div class="controls">
+        <label class="control-label" for="email">Email</label>
+        <input type="text" id="email" name="email" placeholder="" class=""
+         data-parsley-required="true"
+         data-parsley-type="email"
+         data-parsley-required-message="Please enter an email address."
+         data-parsley-type-email-message="Please enter a valid email address."
+         data-parsley-error-container=".js-send-forgot-password-email-errors">
+        <p class="js-send-forgot-password-email-errors help-block"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="controls">
+        <button class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+</div>
+
+  </fieldset>
+</form>
