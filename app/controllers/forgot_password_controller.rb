@@ -15,7 +15,7 @@ class ForgotPasswordController < ApplicationController
       return
     elsif user
       ResetPasswordEmail.deliver_to_user(user,reset_password_url)
-      flash_notice "An email has been sent to #{user.email} with instructions for selecting a new password."
+      flash_notice "Great! Just click on the link in the email we sent to #{user.email} to continue resetting your password."
     end
     redirect_to signin_url
   end
