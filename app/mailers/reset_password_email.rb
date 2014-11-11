@@ -10,7 +10,10 @@ class ResetPasswordEmail < AbstractExactTargetMailer
 
   def self.deliver_to_user(user,reset_password_url)
     exact_target_email_attributes = {
-      RESET_LINK: reset_password_url+'?id='+CGI.escape(user.auth_token)
+      RESET_LINK: reset_password_url+
+                    '?id='+CGI.escape(user.auth_token)+
+                    '&s_cid=eml_passwordreset'
+
     }
     deliver(user.email, exact_target_email_attributes)
   end

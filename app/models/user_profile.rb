@@ -4,4 +4,13 @@ class UserProfile < ActiveRecord::Base
 
   belongs_to :user
 
+  attr_accessible :active
+
+  def active
+    read_attribute(:active) == "\x01" ? true : false
+  end
+  def active?
+    active == true
+  end
+
 end

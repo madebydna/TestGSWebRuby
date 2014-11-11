@@ -2,6 +2,8 @@ class ForgotPasswordController < ApplicationController
 
   def show
     gon.pagename = 'Forgot Password'
+    set_omniture_data
+    set_forgot_password_meta_tags
   end
 
   def send_reset_password_email
@@ -13,7 +15,7 @@ class ForgotPasswordController < ApplicationController
       return
     elsif user
       ResetPasswordEmail.deliver_to_user(user,reset_password_url)
-      flash_error "An email has been sent to #{user.email} with instructions for selecting a new password."
+      flash_notice "An email has been sent to #{user.email} with instructions for selecting a new password."
     end
     redirect_to signin_url
   end
@@ -26,18 +28,18 @@ class ForgotPasswordController < ApplicationController
     if email_param.present?
       user = User.find_by_email(email_param)
       if !email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
-        error_msg = "Please enter a valid email address."
+        error_msg = 'Please enter a valid email address.'
       elsif user.nil?
-        error_msg = ("User does not exist.Please register here <a href=#{join_url}></a>").html_safe
+        error_msg = ("There is no account associated with that email address. Would you like to <a href=#{join_url}>join GreatSchools</a>?").html_safe
       elsif user.provisional?
-        error_msg = t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url).html_safe
+        error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
       elsif !user.has_password?
-        error_msg = ("You have an email address on file,but still need to create an account.Please register here <a href=#{join_url}></a>").html_safe
-      # elsif user.deactived?
-      #   error_msg = "User is deactivated".html_safe
+        error_msg = ("You have an email address on file,but still need to create a free account with GreatSchools.<a href=#{join_url}>Join</a>").html_safe
+      elsif !user.is_profile_active?
+        error_msg = ("The account associated with that email address has been disabled.Please contact us.").html_safe
       end
     else
-       error_msg = "Please enter an email address."
+       error_msg = 'Please enter an email address.'
     end
 
     return user, error_msg
@@ -54,6 +56,15 @@ class ForgotPasswordController < ApplicationController
         redirect_to signin_url
       end
     end
+  end
+
+  def set_forgot_password_meta_tags
+    set_meta_tags :title => "Forgot your password - GreatSchools"
+  end
+
+  def set_omniture_data
+    gon.omniture_pagename = 'GS:Admin:ForgotPassword'
+    gon.omniture_hier1 = 'Account,Registration,Forgot Password Entry'
   end
 
 end

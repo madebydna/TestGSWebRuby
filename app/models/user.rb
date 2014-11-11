@@ -233,6 +233,11 @@ class User < ActiveRecord::Base
     self.reported_reviews.map(&:reported_entity_id).include? review.id
   end
 
+  def is_profile_active?
+    profile = UserProfile.where(member_id: id).first
+    profile.present? && profile.active?
+  end
+
   private
 
   def encrypted_password=(encrypted_password)
@@ -274,6 +279,5 @@ class User < ActiveRecord::Base
   def set_defaults
     self.time_added = Time.now
   end
-
 
 end
