@@ -4,16 +4,17 @@ class ForgotPasswordController < ApplicationController
     gon.pagename = 'Forgot Password'
   end
 
-  def send_forgot_password_email
+  def send_reset_password_email
     user, err_msg = validate_user
 
     if err_msg.present?
       flash_error err_msg
+      redirect_to forgot_password_url
     elsif user
       ResetPasswordEmail.deliver_to_user(user,reset_password_url)
       flash_error "An email has been sent to #{user.email} with instructions for selecting a new password."
     end
-    redirect_to forgot_password_url
+    redirect_to signin_url
   end
 
   def validate_user
@@ -41,21 +42,17 @@ class ForgotPasswordController < ApplicationController
     return user, error_msg
   end
 
-  def reset_password
+  def allow_reset_password
     hash = params[:id]
     if hash.present?
-      user_id = hash[24..-1]
-      user = User.find(user_id)
-      if user && user.auth_token == hash
-        puts "can log in--------"
-
+      login_from_hash(hash)
+      if logged_in?
+        redirect_to manage_account_url(:anchor => 'change-password')
+      else
+        log.error("Error while allowing reset password for hash: #{hash}")
+        redirect_to signin_url
       end
-
     end
   end
-
-
-
-
 
 end

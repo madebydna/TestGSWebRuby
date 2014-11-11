@@ -12,6 +12,7 @@ module AuthenticationConcerns
   # authentication stuff, cookie setting / reading, etc
 
   COMMUNITY_COOKIE_MAX_AGE = 2.years
+  MD5_HASH_LENGTH = 24
 
   def remember_user
     set_auth_cookie
@@ -195,6 +196,21 @@ module AuthenticationConcerns
       end
     end
     false
+  end
+
+  def login_from_hash(hash)
+    begin
+      user_id = hash[MD5_HASH_LENGTH..-1]
+      user = User.find(user_id)
+      if user && user.auth_token == hash
+        log_user_in(user)
+      end
+    rescue
+      if logged_in?
+        log_user_out
+      end
+      log.error("Error while attempting to log in user with hash: #{hash}")
+    end
   end
 
 end

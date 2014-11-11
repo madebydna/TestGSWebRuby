@@ -7,11 +7,12 @@
 <br/>
 <br/>
 
-<form class="form-horizontal input-xlarge js-send-forgot-password-email"
-      action="<%= send_forgot_password_email_path %>"
+<form class="form-horizontal input-xlarge js-send-reset-password-email"
+      action="<%= send_reset_password_email_path %>"
       method="post"
       data-parsley-namespace="data-parsley-"
 >
+  <%= token_tag form_authenticity_token %>
   <fieldset>
     <div class="form-group">
       <div class="controls">
@@ -21,8 +22,8 @@
          data-parsley-type="email"
          data-parsley-required-message="Please enter an email address."
          data-parsley-type-email-message="Please enter a valid email address."
-         data-parsley-error-container=".js-send-forgot-password-email-errors">
-        <p class="js-send-forgot-password-email-errors help-block"></p>
+         data-parsley-error-container=".js-send-reset-password-email-errors">
+        <p class="js-send-reset-password-email-errors help-block"></p>
       </div>
     </div>
 

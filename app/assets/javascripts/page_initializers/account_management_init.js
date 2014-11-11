@@ -6,12 +6,13 @@ if(gon.pagename == "Account management"){
     GS.accountManagement.mySchoolList.init();
     GS.accountManagement.newsFeedUnsubscribe.init();
 
-//    this stops quick clicking on the remove button as it is gone after first click
-//    $("a[class^=js-delete-favorite-school-]").on('click', function(){
-//      var $self = $(this);
-//      $self.hide();
-//      GS.util.deleteAjaxCall($self);
-//      return false;
-//    });
+    var url_hash = window.location.hash;
+    if(url_hash !== ''){
+      var hash = url_hash.substring(url_hash.indexOf("#")+1);
+      if(hash === 'change-password'){
+        GS.accountManagement.changePassword.showChangePasswordForm();
+      }
+    }
+
   });
 }

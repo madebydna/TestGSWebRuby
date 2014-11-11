@@ -49,8 +49,13 @@ GS.accountManagement.changePassword = (function(){
     return false;
   };
 
+  var showChangePasswordForm = function(){
+    $('.js-change-password-form-container').toggle();
+  }
+
   return {
-    init: init
+    init: init,
+    showChangePasswordForm: showChangePasswordForm
   };
 })();
 

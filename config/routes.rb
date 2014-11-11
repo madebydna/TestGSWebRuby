@@ -158,8 +158,9 @@ LocalizedProfiles::Application.routes.draw do
     return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
   }
 
-  get '/community/forgotPassword', :to => 'forgot_password#show', :as => 'forgot_password'
-  post '/community/forgotPassword/send_email', :to => 'forgot_password#send_forgot_password_email', :as => 'send_forgot_password_email'
+  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#allow_reset_password'
+  get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
+  post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
 
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join
