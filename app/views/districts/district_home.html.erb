@@ -72,7 +72,7 @@
 
   <div class="row pll prm pbl mtl" style="background-color:#F3F8FB;">
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
-      <h4>Browse schools <%= district.name  %></h4><br/>
+      <h4>Browse schools in <%= district.name  %></h4><br/>
       <% %w[e m h].each_with_index do |level, index| %>
         <% css_class = "prm fl" %>
         <% css_class << " border-left" if index > 0 %>
@@ -101,7 +101,7 @@
         <% @nearby_districts.each do |district| %>
           <% district = DistrictHomeDecorator.decorate(district) %>
           <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
-            <div class="fl prl font-size-large" style="height:30px">
+            <div class="fl prs font-size-large" style="height:30px">
               <% # district.rating %>
             </div>
             <div>
@@ -120,7 +120,7 @@
 
   </br>
 
-  <%= render partial: 'cities/join_our_community' %>
+  <%= render partial: 'shared/home/email_signup' %>
   <%= 
     render(
       partial: 'shared/horizontal_school_boxes', 

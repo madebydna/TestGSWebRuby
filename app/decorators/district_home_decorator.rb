@@ -10,7 +10,8 @@ class DistrictHomeDecorator < Draper::Decorator
 
   def number_of_schools_in_district
     real_count = School.on_db(district.state.downcase.to_sym).
-      where(district_id: district.id, active: true).
+      active
+      where(district_id: district.id)
       count
   end
 
