@@ -10,6 +10,7 @@ class ForgotPasswordController < ApplicationController
     if err_msg.present?
       flash_error err_msg
       redirect_to forgot_password_url
+      return
     elsif user
       ResetPasswordEmail.deliver_to_user(user,reset_password_url)
       flash_error "An email has been sent to #{user.email} with instructions for selecting a new password."
