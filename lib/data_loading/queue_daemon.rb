@@ -30,6 +30,7 @@ class QueueDaemon
           raise 'Invalid JSON in update_blob'
         end
         update_blob.each do |data_type, data_update|
+          next if data_update.blank?
           klass = Loader.determine_loading_class(data_type)
           loader = klass.new(data_type, data_update, scheduled_update.source)
           loader.load!
@@ -42,6 +43,3 @@ class QueueDaemon
     end
   end
 end
-
-daemon = QueueDaemon.new
-daemon.run!

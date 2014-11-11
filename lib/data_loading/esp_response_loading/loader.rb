@@ -7,7 +7,6 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       next if update.blank?
 
       esp_response_update = EspResponseLoading::Update.new(data_type, update, source)
-      insert_into!(esp_response_update)
 
       if esp_response_update.action == 'disable'
         disable!(esp_response_update)
