@@ -79,6 +79,13 @@ $(function() {
   });
 
   $('.js-button-link').on('click', function() {
+    // if google tracking has a value send to google on button click
+    var google_tracking_type = $(this).data('google-tracking-type');
+    var google_tracking_value = $(this).data('google-tracking-value');
+    if(google_tracking_type){
+      ga('send', 'event', 'button', 'click', google_tracking_type, google_tracking_value);
+    }
+
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
     if(use_new_window == true) {
