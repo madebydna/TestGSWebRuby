@@ -258,7 +258,7 @@ module PdfConcerns
 
   def find_above_avg_schools_for_index(schools_decorated_with_cache_results, rating_type)
     above_avg = []
-    above_avg_ratings = '8, 9, 10'
+    above_avg_ratings = ['8', '9', '10']
     schools_decorated_with_cache_results.each do |school|
       school_cache = school
       if  rating_type == 'overall_gs_rating' and above_avg_ratings.include? (school.school_cache.overall_gs_rating)
