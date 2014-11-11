@@ -2,58 +2,71 @@
 <%= render "shared/section_header", category_placement:category_placement %>
 
 
+
 <% if @school.progress_bar_hash.present? %>
 
+    <% progress_bar_percent_hash = [ 15, 50, 75, 90 ] %>
+    <% progress_bar_text_hash = [ 'BASIC', 'INTERMEDIATE', 'ADVANCED', 'HONOR ROLL' ] %>
+    <% score = @school.progress_bar_hash["total_completeness_score"] %>
 
-    <% case @school.progress_bar_hash["total_completeness_score"]
-       when 0 %><% progress_bar_width = 20 %><% progress_bar_text = 'BASIC' %>
-    <% when 1 %><% progress_bar_width = 40 %><% progress_bar_text = 'INTERMEDIATE' %>
-    <% when 2 %><% progress_bar_width = 60 %><% progress_bar_text = 'ADVANCED' %>
-    <% when 3 %><% progress_bar_width = 90 %><% progress_bar_text = 'HONOR ROLL' %>
-    <% end %>
-
-      <div class="row">
-
-        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 progress progress-striped">
-          <div class="progress-bar" style="width: <%=progress_bar_width%>%;"></div>
+    <div class="row mtl">
+        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 progress progress-striped mbs">
+            <div class="progress-bar phm" style="width: <%= progress_bar_percent_hash[score] %>%;"></div>
         </div>
-      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 tac font-size-xl open-sans_sb"><%= progress_bar_text_hash[score] %></div>
+        <div class="col-md-12 tac mbm">
+            <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small">Learn More &raquo;</a></div>
+            <div class="dn tal well ma pal" style="max-width: 600px;">
+                <p>Want to improve this school’s profile? You can!</p>
+                <p>All schools on GreatSchools begin with BASIC completeness,
+                    which includes important information like contact details and test scores.
+                    It’s up to the school community to take the next steps.
+                    As a parent or community member, you can share what you know with other families
+                    by writing a review or answering a few questions about what the school offers.
+                    As a school leader, you can upload photos, describe school programs,
+                    and more with an Official school profile.</p>
+                <p>The completeness meter moves to INTERMEDIATE, then ADVANCED, and finally HONOR ROLL
+                    as you complete the following: 10 or more reviews, at least 1 photo,
+                    and 9 program questions parents find helpful.</p>
+            </div>
+        </div>
+        <div class="col-md-12 tac text_green font-size-block mtl">Want to improve this school's profile?</div>
+    </div>
 
         <div class="row">
-          <div class="col-md-12 tac font-size-block"><%= progress_bar_text %></div>
-          <div class="col-md-12 tac">Want to improve this school's profile?</div>
-        </div>
 
-        <div class="row">
-
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <div class="tac"><h3>For parents</h3></div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mtl">
+            <div class="tac font-size-xl">for Parents</div>
 
             <div class="tac">
-              <button type="button" data-link-value="<%= osp_form_url(school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-primary js-button-link ">
-                Fill out your school programs
+
+              <button type="button" data-google-tracking-type="Review" data-google-tracking-value="<%= score %>"  data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-default js-button-link  mas" onclick="GS.omniture.track_reviews('Overview');">
+                  <span class="iconx24-icons i-24-write-review vam mrm"></span>Write a review
               </button>
-              <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary js-button-link " onclick="GS.omniture.track_reviews('Overview');">
-                Share your story
+                <button type="button" data-google-tracking-type="USP" data-google-tracking-value="<%= score %>" data-link-value="<%= osp_form_url(school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link  mas">
+                    <span class="iconx24-icons i-24-answer-questions vam mrm"></span>Answer questions
+                </button>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mtl">
+            <div class="tac font-size-xl">for Schools</div>
+
+            <div class="tac">
+              <button type="button" data-google-tracking-type="Photos" data-google-tracking-value="<%= score %>"  data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link mas">
+                <span class="iconx24-icons i-24-upload-photos vam mrm"></span>Upload photos
+              </button>
+              <button type="button" data-google-tracking-type="OSP" data-google-tracking-value="<%= score %>"  data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link mas">
+                  <span class="iconx24-icons i-24-answer-questions vam mrm"></span>Answer questions
               </button>
             </div>
           </div>
 
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <div class="tac"><h3>For Schools</h3></div>
-
-            <div class="tac">
-              <button type="button" data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-primary js-button-link ">
-                Upload photos
-              </button>
-              <button type="button" data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-primary js-button-link ">
-                Fill out your school programs
-              </button>
-            </div>
-          </div>
-
         </div>
-
+<div class="mbl">&nbsp;</div>
 
 
 <% end %>

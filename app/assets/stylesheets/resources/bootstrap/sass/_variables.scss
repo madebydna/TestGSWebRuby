@@ -33,6 +33,7 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 $brand-info:            #5bc0de !default;
 
+
 /////////////MS
 $brand-primary:                #26ABE2;
 $brand-primary-darker:         #204362;
@@ -44,6 +45,7 @@ $brand-primary-lighter4:       lighten($brand-primary, 92%); // #EBF5F9
 $brand-primary-lighter5:       lighten($brand-primary, 95%); // #F5FAFC
 
 $blue-dark:                    #0D6A99;
+$green-light: #69b684 !default;
 
 
 // Scaffolding
@@ -83,6 +85,7 @@ $font-size-large:         ceil($font-size-base * 1.285) !default; // ~18px
 $font-size-xs:            ceil($font-size-base * 0.714) !default; // ~10px
 $font-size-small:         ceil($font-size-base * 0.857) !default; // ~12px
 $font-size-block:         ceil($font-size-base * 1.5) !default; // ~21px
+$font-size-xl:            ceil($font-size-base * 1.714) !default; // ~21px
 
 $font-size-h1:            floor($font-size-base * 2.286) !default; // ~32px
 $font-size-h2:            floor($font-size-base * 1.86) !default; // ~26px
@@ -548,7 +551,7 @@ $alert-danger-border:         $state-danger-border !default;
 $progress-bg:                 #f5f5f5 !default;
 $progress-bar-color:          #fff !default;
 
-$progress-bar-bg:             $brand-primary !default;
+$progress-bar-bg:             $green-light;
 $progress-bar-success-bg:     $brand-success !default;
 $progress-bar-warning-bg:     $brand-warning !default;
 $progress-bar-danger-bg:      $brand-danger !default;
