@@ -7,7 +7,7 @@ module PdfConcerns
 
   # icon_path = 'app/assets/images/pyoc/map_icons/'
 
-  Zipcode_to_icon_mapping = {
+  ZIPCODE_TO_ICON_MAPPING = {
 
       '46077' => 'Indy_map_1.png',
       '46107' => 'Indy_map_4.png',
@@ -82,14 +82,14 @@ module PdfConcerns
       '53235' =>  'Mke_map_6.png',
   }
 
-  English_to_spanish_school_type_mapping = {
+  ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING = {
       'Private' => 'Privada',
       'Public district' => 'Pública',
       'Public charter' => 'Charter Pública'
 
   }
 
-  English_to_spanish_diversity_mapping = {
+  ENGLISH_TO_SPANISH_DIVERSITY_MAPPING = {
       'African-American' => 'Afroamericano/Negro',
       'American Indian' => 'Amerindio/Nativo Americano',
       'American Indian/Alaskan Native' => 'Amerindio/Nativo Americano',
@@ -108,7 +108,7 @@ module PdfConcerns
 
   }
 
-  English_to_spanish_ell_sped_mapping = {
+  ENGLISH_TO_SPANISH_ELL_SPED_MAPPING = {
       'None' => 'Ninguno',
       'Basic' => 'Básicos',
       'Moderate' => 'Moderado',
@@ -116,12 +116,12 @@ module PdfConcerns
   }
 
 
-  English_to_spanish_deadline_mapping = {
+  ENGLISH_TO_SPANISH_DEADLINE_MAPPING = {
       'Contact school' => 'Contacta la escuela',
       'Rolling deadline' => 'Abierta todo el año'
   }
 
-  English_to_spanish_ratings_mapping = {
+  ENGLISH_TO_SPANISH_RATINGS_MAPPING = {
       'Excellent Schools Detroit Rating' => 'Calificación ESD',
       'State Rating' => 'Calificación Estado',
       'Great Start to Quality preschool rating' => 'Calificación prescolar',
@@ -133,51 +133,51 @@ module PdfConcerns
       'Level 4' => 'Nivel 4',
   }
 
-  Collection_id_to_footer_mapping = {
+  COLLECTION_ID_TO_FOOTER_MAPPING = {
       1 => 'Detroit School Guide 2015-2016',
       2 => 'Milwaukee School Guide 2015-2016',
       3 => 'Indianapolis School Guide 2015-2016'
 
   }
 
-  Collection_id_to_footer_mapping_spanish = {
+  COLLECTION_ID_TO_FOOTER_MAPPING_SPANISH = {
       1 => 'Listado de Escuelas de Detroit 2015-2016',
       2 => 'Listado de Escuelas de Milwaukee 2015-2016',
       3 => 'Listado de Escuelas de Indianapolis 2015-2016'
   }
 
-  Collection_is_landing_page_mapping = {
+  COLLECTION_ID_LANDING_PAGE_MAPPING = {
       1 => 'www.greatschoolsdetroit.org',
       2 => 'www.greatschoolsmilwaukee.org',
       3 => 'www.greatschoolsindianapolis.org'
   }
 
-  Map_icon_to_school_name_mapping = {'no_map_icon' => []}
+  # Map_icon_to_school_name_mapping = {'no_map_icon' => []}
 
   def which_school_type
-    English_to_spanish_school_type_mapping[decorated_school_type]
+    ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING[decorated_school_type]
   end
 
   def which_ethnicity_key_mapping(data)
     ethnicity_data = data.map do |k, v|
-      [English_to_spanish_diversity_mapping[k], v]
+      [ENGLISH_TO_SPANISH_DIVERSITY_MAPPING[k], v]
     end
   end
 
   def which_ell_mapping
-    English_to_spanish_ell_sped_mapping[school_cache.ell]
+    ENGLISH_TO_SPANISH_ELL_SPED_MAPPING[school_cache.ell]
   end
 
   def which_sped_mapping
-    English_to_spanish_ell_sped_mapping[school_cache.sped]
+    ENGLISH_TO_SPANISH_ELL_SPED_MAPPING[school_cache.sped]
   end
 
   def which_deadline_mapping
-    English_to_spanish_deadline_mapping[school_cache.deadline]
+    ENGLISH_TO_SPANISH_DEADLINE_MAPPING[school_cache.deadline]
   end
 
   def which_rating_mapping(data)
-    English_to_spanish_ratings_mapping[data]
+    ENGLISH_TO_SPANISH_RATINGS_MAPPING[data]
   end
 
   def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4,is_location_index,is_performance_index)
@@ -240,20 +240,20 @@ module PdfConcerns
 
   def which_icon
     icon_path = 'app/assets/images/pyoc/map_icons/'
-    Zipcode_to_icon_mapping[zipcode].present? ?  icon_path + Zipcode_to_icon_mapping[zipcode] :'N/A'
+    ZIPCODE_TO_ICON_MAPPING[zipcode].present? ?  icon_path + ZIPCODE_TO_ICON_MAPPING[zipcode] :'N/A'
   end
 
   def which_footer(collection_id, is_spanish)
 
-    if is_spanish == true
-      Collection_id_to_footer_mapping_spanish[collection_id].nil? ? 'Listado de Escuelas' : Collection_id_to_footer_mapping_spanish[collection_id]
+    if is_spanish
+      COLLECTION_ID_TO_FOOTER_MAPPING_SPANISH[collection_id].nil? ? 'Listado de Escuelas' : COLLECTION_ID_TO_FOOTER_MAPPING_SPANISH[collection_id]
     else
-      Collection_id_to_footer_mapping[collection_id].nil? ? 'School Guide' : Collection_id_to_footer_mapping[collection_id]
+      COLLECTION_ID_TO_FOOTER_MAPPING[collection_id].nil? ? 'School Guide' : COLLECTION_ID_TO_FOOTER_MAPPING[collection_id]
     end
   end
 
   def which_landing_page(collection_id)
-    Collection_is_landing_page_mapping[collection_id].nil? ? 'www.greatschools.org' : Collection_is_landing_page_mapping[collection_id]
+    COLLECTION_ID_LANDING_PAGE_MAPPING[collection_id].nil? ? 'www.greatschools.org' : COLLECTION_ID_LANDING_PAGE_MAPPING[collection_id]
   end
 
   def find_above_avg_schools_for_index(schools_decorated_with_cache_results, rating_type)
@@ -261,16 +261,16 @@ module PdfConcerns
     above_avg_ratings = ['8', '9', '10']
     schools_decorated_with_cache_results.each do |school|
       school_cache = school
-      if  rating_type == 'overall_gs_rating' and above_avg_ratings.include? (school.school_cache.overall_gs_rating)
+      if  rating_type == 'overall_gs_rating' && above_avg_ratings.include?(school.school_cache.overall_gs_rating)
         above_avg.push(school_cache.name)
       end
-      if rating_type == 'test_score_rating' and above_avg_ratings.include? (school.school_cache.test_scores_rating.to_s)
+      if rating_type == 'test_score_rating' && above_avg_ratings.include?(school.school_cache.test_scores_rating.to_s)
         above_avg.push(school_cache.name)
       end
-      if rating_type == 'student_growth_rating' and above_avg_ratings.include? (school.school_cache.student_growth_rating.to_s)
+      if rating_type == 'student_growth_rating' && above_avg_ratings.include?(school.school_cache.student_growth_rating.to_s)
         above_avg.push(school_cache.name)
       end
-      if rating_type == 'college_readiness_rating' and above_avg_ratings.include? (school.school_cache.college_readiness_rating.to_s)
+      if rating_type == 'college_readiness_rating' && above_avg_ratings.include?(school.school_cache.college_readiness_rating.to_s)
         above_avg.push(school_cache.name)
       end
     end
@@ -279,21 +279,22 @@ module PdfConcerns
 
   def find_schools_by_location_for_index(schools_decorated_with_cache_results)
 
-    school_names = []
+    map_icon_to_school_name_mapping = {'no_map_icon' => []}
+
     schools_decorated_with_cache_results.each do |school|
       school_cache = school
 
-      zipcode_mapping = Zipcode_to_icon_mapping[school_cache.zipcode]
+      zipcode_mapping = ZIPCODE_TO_ICON_MAPPING[school_cache.zipcode]
 
-      if Map_icon_to_school_name_mapping.has_key? zipcode_mapping
-        Map_icon_to_school_name_mapping[zipcode_mapping] << school.name
-      elsif  Map_icon_to_school_name_mapping[zipcode_mapping].nil?
-        Map_icon_to_school_name_mapping['no_map_icon'] << school.name
+      if map_icon_to_school_name_mapping.has_key? zipcode_mapping
+        map_icon_to_school_name_mapping[zipcode_mapping] << school.name
+      elsif  zipcode_mapping.nil?
+        map_icon_to_school_name_mapping['no_map_icon'] << school.name
       else
-        Map_icon_to_school_name_mapping[zipcode_mapping] = school_names.push(school.name)
+        map_icon_to_school_name_mapping[zipcode_mapping] = [].push(school.name)
       end
     end
 
-    puts Map_icon_to_school_name_mapping
+    map_icon_to_school_name_mapping
   end
 end

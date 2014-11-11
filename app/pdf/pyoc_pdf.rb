@@ -30,12 +30,8 @@ class PyocPdf < Prawn::Document
     @is_spanish=is_spanish
     super()
 
-    # fill_color Black
-
-    # todo need to change the name to get_performance_index_start
     if is_performance_index
 
-      draw_footer(performance_index_page_number_start, collection_id)
       fill_color Dark_blue
       text_box is_spanish ? 'Las escuelas más valoradas' : 'Top rated schools',
                # :at => [5, cursor],
@@ -55,30 +51,56 @@ class PyocPdf < Prawn::Document
 
     column_box([0, cursor], reflow_margins: true, :columns => 3, :width => bounds.width) do
 
-      # find_schools_by_location_for_index(schools_decorated_with_cache_results)
-
     above_avg_overall_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'overall_gs_rating')
-    draw_index_columns(above_avg_overall_rating, is_spanish ? 'Por encima del promedio - calificación general' : 'Above average overall rating')
+    draw_performance_index_columns(above_avg_overall_rating, is_spanish ? 'Por encima del promedio - calificación general' : 'Above average overall rating')
     above_avg_test_score_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'test_score_rating')
-    draw_index_columns(above_avg_test_score_rating, is_spanish ? 'Por encima del promedio - calificación de examenes' :  'Above average test score rating')
+    draw_performance_index_columns(above_avg_test_score_rating, is_spanish ? 'Por encima del promedio - calificación de examenes' :  'Above average test score rating')
     above_avg_growth_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'student_growth_rating')
-    draw_index_columns(above_avg_growth_rating, is_spanish ? 'Por encima del promedio - calificación de crecimiento' : 'Above average growth rating')
+    draw_performance_index_columns(above_avg_growth_rating, is_spanish ? 'Por encima del promedio - calificación de crecimiento' : 'Above average growth rating')
     above_avg_college_readiness = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'college_readiness_rating')
-    draw_index_columns(above_avg_college_readiness, is_spanish ? 'Por encima del promedio - calificación universitaria' : 'Above average college readiness rating')
+    draw_performance_index_columns(above_avg_college_readiness, is_spanish ? 'Por encima del promedio - calificación universitaria' : 'Above average college readiness rating')
     end
 
-    fill_color Black
-    draw_footer(performance_index_page_number_start, collection_id)
+      number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => performance_index_page_number_start, :color => Black}
+      page_count.times do |i|
+        go_to_page(i+1)
+        draw_footer(collection_id)
+      end
 
-   elsif is_location_index
-     # draw_footer(get_location_index_start, collection_id)
-     # Map_icon_to_school_name_mapping = find_schools_by_location_for_index(schools_decorated_with_cache_results)
-     # baz = Map_icon_to_school_name_mapping[school.zipcode]
+    elsif is_location_index
 
-     # draw_index_columns(baz, 'foo')
+      fill_color Dark_blue
+      text_box is_spanish ? 'Escuelas por ubicación' : 'Schools by location',
+               # :at => [5, cursor],
+               :width => 545,
+               :height => 25,
+               :size => 24,
+               :style => :bold,
+               :align => :center
 
 
-     fill_color Black
+      move_down 30
+      stroke do
+        stroke_color Dark_blue
+        horizontal_line 5, 540, :at => cursor
+      end
+      move_down 25
+
+      column_box([0, cursor], reflow_margins: true, :columns => 3, :width => bounds.width)  do
+
+        map_icon_to_school_name_mapping = find_schools_by_location_for_index(schools_decorated_with_cache_results)
+        map_icon_to_school_name_mapping.each do |key, value|
+          draw_location_index_columns(value, key)
+        end
+      end
+
+      number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => location_index_page_number_start, :color => Black}
+      page_count.times do |i|
+        go_to_page(i+1)
+        fill_color Black
+        draw_footer(collection_id)
+      end
+
     else
     start_time = Time.now
     generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
@@ -122,32 +144,52 @@ def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batc
       draw_grey_line(index)
     end
 
-
-    draw_footer(get_page_number_start, collection_id)
+    number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => get_page_number_start, :color => Black}
+    page_count.times do |i|
+      go_to_page(i+1)
+      draw_footer(collection_id)
+    end
   end
 end
 
-def draw_index_columns(above_avg_schools, rating_name)
+def draw_performance_index_columns(above_avg_schools, rating_name)
 
     which_ratings_index(above_avg_schools, rating_name)
     move_down_medium
 end
 
-def which_ratings_index(array, rating_name)
-  if array.any?
-    fill_color Dark_blue
-    text rating_name, :size => 12
+def draw_location_index_columns(school_names, map_icon_name)
+  which_map_icon_index(school_names, map_icon_name)
+  move_down_medium
+end
+
+def which_map_icon_index(school_names, map_icon_name)
+
+  if school_names.any?
+    if map_icon_name == 'no_map_icon'
+      fill_color Dark_blue
+      text is_spanish ? 'No está en la región del mapa' : 'Not in region map', :size => 12
+    else
+      image 'app/assets/images/pyoc/map_icons/' + map_icon_name, :scale => 0.2
+      move_down_small
+    end
     fill_color Dark_grey
-    array.each do |string|
+    school_names.each do |string|
       text string, :size => 8
     end
   end
 end
 
-# def draw_map_icons_index_columns(school_cache.zipcode)
-#   puts school.which_icon(school_cache.zipcode)
-
-# end
+def which_ratings_index(school_names, rating_name)
+  if school_names.any?
+    fill_color Dark_blue
+    text rating_name, :size => 12
+    fill_color Dark_grey
+    school_names.each do |string|
+      text string, :size => 8
+    end
+  end
+end
 
 def move_down_small
   move_down 5
@@ -205,9 +247,8 @@ def draw_header(is_k8_batch, is_high_school_batch, is_pk8_batch)
 
 end
 
-def draw_footer(get_page_number_start, collection_id)
+def draw_footer(collection_id)
   image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
-  number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => get_page_number_start}
   text_box which_footer(collection_id , is_spanish),
            :at => [300, -15],
            :width => is_spanish ? 150 : 115,
@@ -223,7 +264,6 @@ def draw_footer(get_page_number_start, collection_id)
            :size => 6,
            :style => :italic
 
-  fill_color Black
 end
 
 def draw_grey_line(index)
@@ -338,15 +378,6 @@ def truncate_district(school, char_length)
 end
 
 def which_district_truncation(school, level)
-  # if school.district != nil
-  #   if level.include? '& UG'
-  #     truncated_district = '| ' + truncate_district(school, 27)
-  #   else
-  #     truncated_district = '| ' + truncate_district(school, 36)
-  #   end
-  # else
-  #   truncated_district = ' '
-  # end
   truncated_district = ' '
   school_type = school.which_school_type
 
