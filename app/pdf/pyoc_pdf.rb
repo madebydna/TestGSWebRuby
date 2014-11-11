@@ -37,11 +37,13 @@ class PyocPdf < Prawn::Document
 
       draw_footer(performance_index_page_number_start, collection_id)
       fill_color Dark_blue
-      text_box is_spanish ? 'LAS ESCUELAS MÁS VALORADAS' : 'SCHOOLS BY PERFORMANCE',
-               :at => [Col_width/2, cursor],
+      text_box is_spanish ? 'Las escuelas más valoradas' : 'Top rated schools',
+               # :at => [5, cursor],
+               :width => 545,
                :height => 25,
                :size => 24,
-               :style => :bold
+               :style => :bold,
+               :align => :center
 
 
       move_down 30
