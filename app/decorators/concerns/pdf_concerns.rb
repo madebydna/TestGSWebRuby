@@ -5,81 +5,81 @@ module PdfConcerns
   SCHOOL_CACHE_KEYS = %w(characteristics ratings esp_responses reviews_snapshot)
 
 
-  icon_path = 'app/assets/images/pyoc/map_icons/'
+  # icon_path = 'app/assets/images/pyoc/map_icons/'
 
   Zipcode_to_icon_mapping = {
 
-      '46077' => icon_path + 'Indy_map_1.png',
-      '46107' => icon_path + 'Indy_map_4.png',
-      '46113' => icon_path + 'Indy_map_3.png',
-      '46163' => icon_path + 'Indy_map_4.png',
-      '46201' => icon_path + 'Indy_map_2.png',
-      '46202' => icon_path + 'Indy_map_1.png',
-      '46203' => icon_path + 'Indy_map_4.png',
-      '46204' => icon_path + 'Indy_map_1.png',
-      '46205' => icon_path + 'Indy_map_2.png',
-      '46208' => icon_path + 'Indy_map_1.png',
-      '46214' => icon_path + 'Indy_map_1.png',
-      '46216' => icon_path + 'Indy_map_2.png',
-      '46217' => icon_path + 'Indy_map_3.png',
-      '46218' => icon_path + 'Indy_map_2.png',
-      '46219' => icon_path + 'Indy_map_2.png',
-      '46220' => icon_path + 'Indy_map_2.png',
-      '46221' => icon_path + 'Indy_map_3.png',
-      '46222' => icon_path + 'Indy_map_1.png',
-      '46224' => icon_path + 'Indy_map_1.png',
-      '46225' => icon_path + 'Indy_map_3.png',
-      '46226' => icon_path + 'Indy_map_2.png',
-      '46227' => icon_path + 'Indy_map_4.png',
-      '46228' => icon_path + 'Indy_map_1.png',
-      '46229' => icon_path + 'Indy_map_2.png',
-      '46231' => icon_path + 'Indy_map_3.png',
-      '46234' => icon_path + 'Indy_map_1.png',
-      '46235' => icon_path + 'Indy_map_2.png',
-      '46236' => icon_path + 'Indy_map_2.png',
-      '46237' => icon_path + 'Indy_map_4.png',
-      '46239' => icon_path + 'Indy_map_4.png',
-      '46240' => icon_path + 'Indy_map_2.png',
-      '46241' => icon_path + 'Indy_map_3.png',
-      '46250' => icon_path + 'Indy_map_2.png',
-      '46254' => icon_path + 'Indy_map_1.png',
-      '46256' => icon_path + 'Indy_map_2.png',
-      '46259' => icon_path + 'Indy_map_4.png',
-      '46260' => icon_path + 'Indy_map_1.png',
-      '46268' => icon_path + 'Indy_map_1.png',
-      '46278' => icon_path + 'Indy_map_1.png',
-      '53110' => icon_path + 'Mke_map_6.png',
-      '53129' => icon_path + 'Mke_map_5.png',
-      '53130' => icon_path + 'Mke_map_5.png',
-      '53202' => icon_path + 'Mke_map_4.png',
-      '53203' => icon_path + 'Mke_map_4.png',
-      '53204' => icon_path + 'Mke_map_6.png',
-      '53205' => icon_path + 'Mke_map_4.png',
-      '53206' => icon_path + 'Mke_map_4.png',
-      '53207' => icon_path + 'Mke_map_6.png',
-      '53208' => icon_path + 'Mke_map_3.png',
-      '53209' => icon_path + 'Mke_map_2.png',
-      '53210' => icon_path + 'Mke_map_3.png',
-      '53211' => icon_path + 'Mke_map_4.png',
-      '53212' => icon_path + 'Mke_map_4.png',
-      '53213' => icon_path + 'Mke_map_3.png',
-      '53214' => icon_path + 'Mke_map_5.png',
-      '53215' => icon_path + 'Mke_map_6.png',
-      '53216' => icon_path + 'Mke_map_3.png',
-      '53217' => icon_path + 'Mke_map_2.png',
-      '53218' => icon_path + 'Mke_map_1.png',
-      '53219' => icon_path + 'Mke_map_5.png',
-      '53220' => icon_path + 'Mke_map_5.png',
-      '53221' => icon_path + 'Mke_map_6.png',
-      '53222' => icon_path + 'Mke_map_3.png',
-      '53223' => icon_path + 'Mke_map_1.png',
-      '53224' => icon_path + 'Mke_map_1.png',
-      '53225' => icon_path + 'Mke_map_1.png',
-      '53226' => icon_path + 'Mke_map_3.png',
-      '53227' => icon_path + 'Mke_map_5.png',
-      '53228' => icon_path + 'Mke_map_5.png',
-      '53233' => icon_path + 'Mke_map_4.png',
-      '53235' => icon_path + 'Mke_map_6.png',
+      '46077' => 'Indy_map_1.png',
+      '46107' => 'Indy_map_4.png',
+      '46113' =>  'Indy_map_3.png',
+      '46163' =>  'Indy_map_4.png',
+      '46201' =>  'Indy_map_2.png',
+      '46202' =>  'Indy_map_1.png',
+      '46203' =>  'Indy_map_4.png',
+      '46204' =>  'Indy_map_1.png',
+      '46205' =>  'Indy_map_2.png',
+      '46208' =>  'Indy_map_1.png',
+      '46214' =>  'Indy_map_1.png',
+      '46216' =>  'Indy_map_2.png',
+      '46217' =>  'Indy_map_3.png',
+      '46218' =>  'Indy_map_2.png',
+      '46219' =>  'Indy_map_2.png',
+      '46220' =>  'Indy_map_2.png',
+      '46221' =>  'Indy_map_3.png',
+      '46222' =>  'Indy_map_1.png',
+      '46224' =>  'Indy_map_1.png',
+      '46225' =>  'Indy_map_3.png',
+      '46226' =>  'Indy_map_2.png',
+      '46227' =>  'Indy_map_4.png',
+      '46228' =>  'Indy_map_1.png',
+      '46229' =>  'Indy_map_2.png',
+      '46231' =>  'Indy_map_3.png',
+      '46234' =>  'Indy_map_1.png',
+      '46235' =>  'Indy_map_2.png',
+      '46236' =>  'Indy_map_2.png',
+      '46237' =>  'Indy_map_4.png',
+      '46239' =>  'Indy_map_4.png',
+      '46240' =>  'Indy_map_2.png',
+      '46241' =>  'Indy_map_3.png',
+      '46250' =>  'Indy_map_2.png',
+      '46254' =>  'Indy_map_1.png',
+      '46256' =>  'Indy_map_2.png',
+      '46259' =>  'Indy_map_4.png',
+      '46260' =>  'Indy_map_1.png',
+      '46268' =>  'Indy_map_1.png',
+      '46278' =>  'Indy_map_1.png',
+      '53110' =>  'Mke_map_6.png',
+      '53129' =>  'Mke_map_5.png',
+      '53130' =>  'Mke_map_5.png',
+      '53202' =>  'Mke_map_4.png',
+      '53203' =>  'Mke_map_4.png',
+      '53204' =>  'Mke_map_6.png',
+      '53205' =>  'Mke_map_4.png',
+      '53206' =>  'Mke_map_4.png',
+      '53207' =>  'Mke_map_6.png',
+      '53208' =>  'Mke_map_3.png',
+      '53209' =>  'Mke_map_2.png',
+      '53210' =>  'Mke_map_3.png',
+      '53211' =>  'Mke_map_4.png',
+      '53212' =>  'Mke_map_4.png',
+      '53213' =>  'Mke_map_3.png',
+      '53214' =>  'Mke_map_5.png',
+      '53215' =>  'Mke_map_6.png',
+      '53216' =>  'Mke_map_3.png',
+      '53217' =>  'Mke_map_2.png',
+      '53218' =>  'Mke_map_1.png',
+      '53219' =>  'Mke_map_5.png',
+      '53220' =>  'Mke_map_5.png',
+      '53221' =>  'Mke_map_6.png',
+      '53222' =>  'Mke_map_3.png',
+      '53223' =>  'Mke_map_1.png',
+      '53224' =>  'Mke_map_1.png',
+      '53225' =>  'Mke_map_1.png',
+      '53226' =>  'Mke_map_3.png',
+      '53227' =>  'Mke_map_5.png',
+      '53228' =>  'Mke_map_5.png',
+      '53233' =>  'Mke_map_4.png',
+      '53235' =>  'Mke_map_6.png',
   }
 
   English_to_spanish_school_type_mapping = {
@@ -151,6 +151,8 @@ module PdfConcerns
       2 => 'www.greatschoolsmilwaukee.org',
       3 => 'www.greatschoolsindianapolis.org'
   }
+
+  Map_icon_to_school_name_mapping = {'no_map_icon' => []}
 
   def which_school_type
     English_to_spanish_school_type_mapping[decorated_school_type]
@@ -237,7 +239,8 @@ module PdfConcerns
   end
 
   def which_icon
-    Zipcode_to_icon_mapping[zipcode].present? ?  Zipcode_to_icon_mapping[zipcode] :'N/A'
+    icon_path = 'app/assets/images/pyoc/map_icons/'
+    Zipcode_to_icon_mapping[zipcode].present? ?  icon_path + Zipcode_to_icon_mapping[zipcode] :'N/A'
   end
 
   def which_footer(collection_id, is_spanish)
@@ -258,7 +261,6 @@ module PdfConcerns
     above_avg_ratings = '8, 9, 10'
     schools_decorated_with_cache_results.each do |school|
       school_cache = school
-      # if (above_avg_ratings.include? school.school_cache.overall_gs_rating && rating_type == 'overall_gs_rating')
       if  rating_type == 'overall_gs_rating' and above_avg_ratings.include? (school.school_cache.overall_gs_rating)
         above_avg.push(school_cache.name)
       end
@@ -275,4 +277,23 @@ module PdfConcerns
     above_avg
   end
 
+  def find_schools_by_location_for_index(schools_decorated_with_cache_results)
+
+    school_names = []
+    schools_decorated_with_cache_results.each do |school|
+      school_cache = school
+
+      zipcode_mapping = Zipcode_to_icon_mapping[school_cache.zipcode]
+
+      if Map_icon_to_school_name_mapping.has_key? zipcode_mapping
+        Map_icon_to_school_name_mapping[zipcode_mapping] << school.name
+      elsif  Map_icon_to_school_name_mapping[zipcode_mapping].nil?
+        Map_icon_to_school_name_mapping['no_map_icon'] << school.name
+      else
+        Map_icon_to_school_name_mapping[zipcode_mapping] = school_names.push(school.name)
+      end
+    end
+
+    puts Map_icon_to_school_name_mapping
+  end
 end

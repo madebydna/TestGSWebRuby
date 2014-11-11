@@ -29,17 +29,20 @@ class PyocPdf < Prawn::Document
   def initialize(schools_decorated_with_cache_results, is_k8_batch, is_high_school_batch, is_pk8_batch, get_page_number_start, is_spanish, collection_id, is_location_index, is_performance_index,location_index_page_number_start,performance_index_page_number_start)
     @is_spanish=is_spanish
     super()
+
+    # fill_color Black
+
     # todo need to change the name to get_performance_index_start
     if is_performance_index
 
       draw_footer(performance_index_page_number_start, collection_id)
-
       fill_color Dark_blue
       text_box is_spanish ? 'LAS ESCUELAS MÁS VALORADAS' : 'SCHOOLS BY PERFORMANCE',
                :at => [Col_width/2, cursor],
                :height => 25,
                :size => 24,
                :style => :bold
+
 
       move_down 30
       stroke do
@@ -49,6 +52,8 @@ class PyocPdf < Prawn::Document
       move_down 25
 
     column_box([0, cursor], reflow_margins: true, :columns => 3, :width => bounds.width) do
+
+      # find_schools_by_location_for_index(schools_decorated_with_cache_results)
 
     above_avg_overall_rating = find_above_avg_schools_for_index(schools_decorated_with_cache_results, 'overall_gs_rating')
     draw_index_columns(above_avg_overall_rating, is_spanish ? 'Por encima del promedio - calificación general' : 'Above average overall rating')
@@ -62,16 +67,24 @@ class PyocPdf < Prawn::Document
 
     fill_color Black
     draw_footer(performance_index_page_number_start, collection_id)
-    elsif is_location_index
-      draw_footer(performance_index_page_number_start, collection_id)
 
+   elsif is_location_index
+     # draw_footer(get_location_index_start, collection_id)
+     # Map_icon_to_school_name_mapping = find_schools_by_location_for_index(schools_decorated_with_cache_results)
+     # baz = Map_icon_to_school_name_mapping[school.zipcode]
+
+     # draw_index_columns(baz, 'foo')
+
+
+     fill_color Black
     else
     start_time = Time.now
     generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     end_time =Time.now - start_time
     puts "#{self.class} - Time taken to generate the Schools PDF #{end_time}seconds"
+   end
 
-  end
+
 
 end
 
