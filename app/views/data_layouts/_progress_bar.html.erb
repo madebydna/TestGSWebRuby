@@ -2,7 +2,7 @@
     <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
     <%= render "shared/section_header", category_placement:category_placement %>
 
-    <% progress_bar_percent_hash = [ 15, 50, 75, 90 ] %>
+    <% progress_bar_percent_hash = [ 15, 50, 75, 97 ] %>
     <% progress_bar_text_hash = [ 'BASIC', 'INTERMEDIATE', 'ADVANCED', 'HONOR ROLL' ] %>
     <% score = @school.progress_bar_hash["total_completeness_score"] %>
 
