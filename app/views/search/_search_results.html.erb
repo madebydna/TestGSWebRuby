@@ -14,15 +14,31 @@
           <% end %>
         <%= render 'compare_schools_error_message' %>
         <% if @show_ads %>
-            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym, view: :desktop %>=
+            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym, view: :desktop %>
             <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym,  view: :mobile %>
         <% end %>
         <% ad_counter = 0 %>
         <% @schools.each_with_index do |school, search_result_counter| %>
-            <% if [4, 8, 12, 16, 20].include?(search_result_counter) %>
-
-              <%= render 'search_ad_section',  desktop_slots: @results_ad_slots[:desktop], ad_counter: ad_counter, mobile_slots: @results_ad_slots[:mobile] %>
-              <% ad_counter += 1 %>
+            <% if @show_ads %>
+                <% if [4, 16, 20].include?(search_result_counter) %>
+                    <% slot_name = "After"+ search_result_counter.to_s %>
+                    <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: slot_name.to_sym, view: :desktop %>
+                    <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: slot_name.to_sym, view: :mobile %>
+                <% elsif search_result_counter == 8 %>
+                    <% slot_name = "After"+ search_result_counter.to_s + "_Text" %>
+                    <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: slot_name.to_sym, view: :desktop %>
+                    <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: slot_name.to_sym, view: :mobile %>
+                <% elsif search_result_counter == 12 %>
+                    <div class="clearfix limit-width-900"">
+                        <div class="fl">
+                            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: "After12_Left".to_sym, view: :desktop %>
+                        </div>
+                        <div class="fr">
+                            <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: "After12_Right".to_sym, view: :desktop %>
+                        </div>
+                    </div>
+                    <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: "After12".to_sym, view: :mobile %>
+                <% end %>
             <% end %>
             <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
             <% @school = decorated_school %>

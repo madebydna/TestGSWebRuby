@@ -6,14 +6,12 @@ class SearchController < ApplicationController
   include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
-  include SearchAdsConcerns
 
   #Todo move before filters to methods
   before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
-  before_action :set_search_ad_slots_instance_variables
 
   layout 'application'
 
