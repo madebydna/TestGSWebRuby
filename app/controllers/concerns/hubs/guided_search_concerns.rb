@@ -28,7 +28,11 @@ module GuidedSearchConcerns
         render 'shared/guided_search'
       end
     else
-      render 'error/page_not_found', layout: 'error', status: 404
+      if @city
+        redirect_to city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
+      else
+        redirect_to state_url(gs_legacy_url_encode(@state[:long]))
+      end
     end
   end
 
