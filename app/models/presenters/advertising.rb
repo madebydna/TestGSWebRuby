@@ -352,6 +352,21 @@ class Advertising
           dimensions:[300,250]
         }
       },
+      Content_Top: {
+        name: "Content_Top",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
+      Text: {
+        name: "Text",
+        desktop:{
+          dimensions:[728,60]
+        },
+        mobile:{
+          dimensions:[320,60]
+        }
+      },
       Footer: {
         name: "Footer",
         desktop:{
