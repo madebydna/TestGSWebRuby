@@ -25,8 +25,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how
   attr_accessor :updating_password, :plain_text_password
 
-  scope :where_password_not_nil, ->(email) { where(email: email).where.not(password: nil) }
-
   SECRET = 23088
   PROVISIONAL_PREFIX = 'provisional:'
 

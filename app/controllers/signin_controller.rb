@@ -173,14 +173,14 @@ class SigninController < ApplicationController
   end
 
   def authenticate
-    # existing_user = User.with_email params[:email]
-    # existing_user = User.where(email: params[:email]).where.not(password: nil).first
-    existing_user = User.where_password_not_nil(params[:email]).first
+    existing_user = User.with_email params[:email]
     error = nil
 
     if existing_user
       if existing_user.provisional?
         error = t('forms.errors.email.provisional')
+      elsif !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+        error = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
       elsif !(existing_user.password_is? params[:password])
         error = t('forms.errors.password.invalid', join_url: join_url).html_safe
       end

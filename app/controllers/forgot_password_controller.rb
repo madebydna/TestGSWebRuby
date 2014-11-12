@@ -34,8 +34,8 @@ class ForgotPasswordController < ApplicationController
       elsif user.provisional?
         verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
         error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
-      elsif !user.has_password?
-        error_msg = ("You have an email address on file, but still need to create a free account with GreatSchools. <a href=#{join_url}>Join today.</a>").html_safe
+      elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+        error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
       elsif !user.is_profile_active?
         error_msg = ("The account associated with that email address has been disabled. Please contact us.").html_safe
       end

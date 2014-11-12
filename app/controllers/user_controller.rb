@@ -18,14 +18,15 @@ class UserController < ApplicationController
     result = ''
     email = params[:email]
 
-    if email.present?
-      # Users without passwords (signed up via newsletter) are not considered users, so we don't count those accounts
-      user = User.where_password_not_nil(email)
-    end
+    user = User.find_by_email(email) if email.present?
 
-    if user && user.provisional?
-      verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
-      result = t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url).html_safe
+    if user
+      if user.provisional?
+        verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
+        result = t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url).html_safe
+      elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+        result = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+      end
     end
 
     render json: {'error_msg' => result}
