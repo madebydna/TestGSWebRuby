@@ -94,7 +94,7 @@ class DistrictHomeDecorator < Draper::Decorator
     }
     
     district_params = {}
-    district_params[:levelCodes] = level_code if level_code.present?
+    district_params[:gradeLevels] = level_code if level_code.present?
 
     url = school_browse_url(district_params)
 
