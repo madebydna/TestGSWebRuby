@@ -43,9 +43,11 @@
               <button type="button" data-google-tracking-type="Review" data-google-tracking-value="<%= score %>"  data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-default js-button-link  mas" onclick="GS.omniture.track_reviews('Overview');">
                   <span class="iconx24-icons i-24-write-review vam mrm"></span>Write a review
               </button>
+              <% if !@school.preschool? %>
                 <button type="button" data-google-tracking-type="USP" data-google-tracking-value="<%= score %>" data-link-value="<%= osp_form_url(school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link  mas">
                     <span class="iconx24-icons i-24-answer-questions vam mrm"></span>Answer questions
                 </button>
+              <% end %>
             </div>
           </div>
 
