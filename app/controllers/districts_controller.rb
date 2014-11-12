@@ -14,7 +14,7 @@ class DistrictsController < ApplicationController
 
   def show
     gon.pagename = 'DistrictHome'
-    @ad_page_name = :State_Home_Standard # TODO verify name to use
+    @ad_page_name = :District_Home # TODO verify name to use
     @district = District.find_by_state_and_name(state_param, district_param)
 
     @nearby_districts = @district.nearby_districts

@@ -1,0 +1,20 @@
+$poor-rating-color: #C8604F;
+$neutral-rating-color: #FFB724;
+$good-rating-color: #66AC71;
+$nr-rating-color: #999999;
+
+.rating-background-1, .rating-background-2, .rating-background-3 {
+  background-color: $poor-rating-color;
+}
+
+.rating-background-4, .rating-background-5, .rating-background-6, .rating-background-7 {
+  background-color: $neutral-rating-color;
+}
+
+.rating-background-8, .rating-background-9, .rating-background-10 {
+  background-color: $good-rating-color;
+}
+
+.rating-background-NR {
+  background-color: $nr-rating-color;
+}
