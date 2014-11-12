@@ -5,14 +5,14 @@
 <% state = StateHomeDecorator.decorate(@state) %>
 
 <div class="phm limit-width-1200">
-  <h1><%= state.name %> Schools</h1>
+  <h1><span class="notranslate"><%= state.name %></span> Schools</h1>
 </div>
 
 <div class="phm limit-width-1200 ">
   <p>
     GreatSchools has profiles for more than 
     <%= state.approximate_schools_in_state %> public, public charter, 
-    and private schools in <%= state.name %>. As you search for schools that 
+    and private schools in <span class="notranslate"><%= state.name %></span>. As you search for schools that
     fit your family, you’ll find information on academic performance, 
     extracurricular programs, school culture, and more.
   </p>
@@ -40,12 +40,12 @@
 <% column_sizes = { xs: 6, sm: 3, md: 3, lg: 3 } %>
 <div class="row phm limit-width-1200">
   <div class="clearfix mtl">
-    <div class="fl mrl"><h2 class="mvn"><%= state.name %> cities</h2></div>
+    <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> cities</h2></div>
     <div class="fl ptm">
       <%= link_to("See all cities", city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
     </div>
   </div>
-  <div class="toggle-cities pbxl ptl clearfix">
+  <div class="toggle-cities pbxl ptl clearfix notranslate">
       <div class="col-sm-12 col-md-8 col-lg-9">
           <div class="row pbl mbl">
             <% state.cities_list.each do |column_of_cities| %>
@@ -74,12 +74,12 @@
 <div class="row bg-light-gray ">
     <div class="limit-width-1200 ptl phm">
     <div class="clearfix mtl">
-        <div class="fl mrl"><h2 class="mvn"><%= state.name %> school districts</h2></div>
+        <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> school districts</h2></div>
       <div class="fl ptm">
         <%= link_to("See all districts", district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
       </div>
     </div>
-      <div class="toggle-districts pbxl ptl clearfix">
+      <div class="toggle-districts pbxl ptl clearfix notranslate">
         <% state.districts_list.each do |column_of_districts| %>
           <%= div_tag sizes: column_sizes do %>
             <% column_of_districts.each do |district| %>
