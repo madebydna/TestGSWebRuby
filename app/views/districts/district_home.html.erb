@@ -1,5 +1,4 @@
 <%= render 'nav/topnav' %>
-
 <% district = DistrictHomeDecorator.decorate(@district) %>
 
 <style>
@@ -37,10 +36,16 @@
   <% # Row contains rating, boilerplate text (description of district), %>
   <% # and an advertisement %>
   <div class="row">
-    <% second_column_sizes = "col-lg-4 col-md-4 col-sm-4" %>
-    <% second_column_sizes = "col-lg-8 col-md-8 col-sm-8" unless @show_ads %>
+    <% if @show_ads %>
+      <% first_column_sizes = "col-lg-4 col-md-5 col-sm-12 col-xs-12" %>
+      <% second_column_sizes = "col-lg-4 col-md-3 col-sm-12 col-xs-12" %>
+      <% third_column_sizes = "col-lg-4 col-md-4 col-sm-12 col-xs-12" %>
+    <% else %>
+      <% first_column_sizes = "col-lg-4 col-md-6 col-sm-6 col-xs-12" %>
+      <% second_column_sizes = "col-lg-8 col-md-6 col-sm-6 col-xs-12" %>
+    <% end %>
 
-    <div class="col-lg-4 col-md-4 col-sm-4 prm ptm">
+    <div class="<%= first_column_sizes %> prm ptm">
       <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
         <%= district.square_rating(class: 'fl') %>        
         <div class="fl pal tal">
@@ -51,8 +56,6 @@
       <div class="row">
         This district's rating is based on its schools' test results.
         <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
-        <br/>
-        <br/>
       </div>
       <div class="row">
         <div class="col-lg-6">
@@ -69,7 +72,7 @@
       <%= district.boilerplate %>
     </div>
     <% if @show_ads %>
-      <div class="col-lg-4 col-md-4 col-sm-4 ptm">
+      <div class="<%= third_column_sizes %> ptm">
         <div>
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :desktop  %>
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :mobile  %>
@@ -115,24 +118,33 @@
 
   <% # Row nearby districts and Zillow module %>
   <div class="row pal">
-    <div class="col-lg-9 col-md-9 col-sm-9 prl">
-      <div class="pam" style="background-color:#F5F5F5">
-        <h3 class="plm"><%= "No " if @nearby_districts.empty? %>Nearby districts</h3>
-        <% @nearby_districts.each do |district| %>
-          <% district = DistrictHomeDecorator.decorate(district) %>
-          <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
-            <div class="fl prs font-size-large" style="height:30px">
-              <% # district.rating %>
+    <% if @nearby_districts.present? %>
+      <% first_column_sizes = "col-lg-9 col-md-9 col-sm-9" %>
+      <% second_column_sizes = "col-lg-3 col-md-3 col-sm-3" %>
+    <% else %>
+      <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
+    <% end %>
+
+    <% if @nearby_districts.present? %>
+      <div class="<%= first_column_sizes %> prl">
+        <div class="pam" style="background-color:#F5F5F5">
+          <h3 class="plm">Nearby districts</h3>
+          <% @nearby_districts.each do |district| %>
+            <% district = DistrictHomeDecorator.decorate(district) %>
+            <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
+              <div class="fl prs font-size-large" style="height:30px">
+                <% # district.rating %>
+              </div>
+              <div>
+                <%= district.district_home_link %></br>
+                <%= district.city_state %> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
+              </div>
             </div>
-            <div>
-              <%= district.district_home_link %></br>
-              <%= district.city_state %> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 pll">
+    <% end %>
+    <div class="<%= second_column_sizes %> pll">
       <h3>Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>
     </div>
