@@ -60,7 +60,8 @@ class ForgotPasswordController < ApplicationController
   end
 
   def set_forgot_password_meta_tags
-    set_meta_tags :title => "Forgot your password - GreatSchools"
+    set_meta_tags :title => "Forgot your password - GreatSchools",
+                  :robots => "noindex"
   end
 
   def set_omniture_data
