@@ -173,7 +173,9 @@ class SigninController < ApplicationController
   end
 
   def authenticate
-    existing_user = User.with_email params[:email]
+    # existing_user = User.with_email params[:email]
+    # existing_user = User.where(email: params[:email]).where.not(password: nil).first
+    existing_user = User.where_password_not_nil(params[:email]).first
     error = nil
 
     if existing_user

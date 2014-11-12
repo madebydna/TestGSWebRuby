@@ -121,7 +121,10 @@ module AuthenticationConcerns
       email_options[:password] = password
     end
 
-    user = User.new
+    # If user exists modify existing info (password, etc..) otherwise create a new user
+    # Addresses bug where users with no passwords (signed up via newsletter) could not create an account
+    # This lets them register with the email/user they used for the newsletter
+    user = User.where(email: options[:email], password: nil).first_or_initialize
     user.update_attributes options
     user.password = password
 

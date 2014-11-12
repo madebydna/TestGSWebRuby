@@ -4,10 +4,13 @@ class UserController < ApplicationController
 
   def email_available
     email = params[:email]
-    result = ! User.exists?(email: email)
+    user = User.where(email: email).first
+    is_available = user.nil? || !user.has_password?
+    #Allowing users to take email addresses with no password per PT-898
+    #Addresses bug where users with no passwords (signed up via newsletter) could not create an account
 
     respond_to do |format|
-      format.js { render json: result }
+      format.js { render json: is_available }
     end
   end
 
@@ -16,7 +19,8 @@ class UserController < ApplicationController
     email = params[:email]
 
     if email.present?
-      user = User.find_by_email email
+      # Users without passwords (signed up via newsletter) are not considered users, so we don't count those accounts
+      user = User.where_password_not_nil(email)
     end
 
     if user && user.provisional?
