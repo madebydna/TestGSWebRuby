@@ -94,10 +94,7 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
       end
     end
 
-    unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.sort == unique_keys.sort : false
+    unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.uniq().sort == unique_keys.sort : false
   end
-
-
-
 
 end
