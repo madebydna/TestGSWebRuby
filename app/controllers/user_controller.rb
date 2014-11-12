@@ -44,12 +44,6 @@ class UserController < ApplicationController
   def change_password
     response = { success: false }
 
-    unless @current_user.password_is?(params[:current_password])
-      response[:message] = 'Your current password is not correct'
-      render json: response
-      return
-    end
-
     if params[:new_password] != params[:confirm_password]
       response[:message] = 'The passwords do not match'
       render json: response

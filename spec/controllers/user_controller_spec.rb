@@ -37,13 +37,6 @@ describe UserController do
       before do
         controller.instance_variable_set(:@current_user, user)
       end
-      
-      it 'should validate the user\'s current password' do
-        xhr :post, :change_password, current_password: 'sldkfjsf', new_password: 'foo', confirm_password: 'bar'
-        json_response = JSON.parse(response.body)
-        expect(json_response['success']).to be_falsey
-        expect(json_response['message']).to include('current password')
-      end
 
       it 'should make sure the password and confirmed password match' do
         xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'bar'
