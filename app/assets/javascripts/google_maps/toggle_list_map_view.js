@@ -109,7 +109,8 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
     };
 
     return {
-        init: init
+        init: init,
+        hideMapView: hideMapView
     };
 
 })();
