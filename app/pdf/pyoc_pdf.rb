@@ -568,7 +568,7 @@ def draw_at_a_glance_table(school_cache)
   which_before_care = is_spanish ? 'Cuidado antes de clases' : 'Before care'
   which_after_care = is_spanish ? 'Cuidado despues de clases' : 'After care'
   which_uniform = is_spanish ? 'Vestimenta' : 'Uniform/Dress code'
-  which_pre_k = is_spanish ? 'Preescolar' : 'Pre K'
+  which_pre_k = is_spanish ? 'Preescolar' : 'PreK'
 
   data = [[{:image => Image_path_school_size, :scale => 0.25}, which_school_size, school_cache.students_enrolled != "?" ? school_cache.students_enrolled : 'n/a'],
           [{:image => Image_path_transportation, :scale => 0.25}, which_transportation, yes_si_no_mapping(school_cache.transportation)],
@@ -718,7 +718,7 @@ def draw_diversity_table(school_cache, school)
 end
 
 def draw_grads_go_to_table(school_cache)
-  text_box is_spanish ? 'Estudiantes graduado asisten?' : 'Our grads go to?',
+  text_box is_spanish ? 'Estudiantes graduado asisten?' : 'Our grads typically go to:',
            :at => [0, cursor],
            # :width => 75,
            :width => Col_width,
