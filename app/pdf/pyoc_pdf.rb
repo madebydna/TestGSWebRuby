@@ -379,6 +379,17 @@ end
 
 def which_district_truncation(school, level)
   truncated_district = ' '
+  if school.district != nil
+    if level.include? '& UG'
+      truncated_district = '| ' + truncate_district(school, 27)
+    else
+      truncated_district = '| ' + truncate_district(school, 36)
+    end
+  else
+    truncated_district = ' '
+  end
+
+
   school_type = school.which_school_type
 
   text_box "#{level} | #{is_spanish ? school_type : school.decorated_school_type} #{truncated_district}",
