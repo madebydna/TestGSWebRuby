@@ -59,10 +59,10 @@ describe UserController do
         user = FactoryGirl.build(:verified_user, email: email_address, password: nil)
         user.save(validate: false)
 
-        expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password message')
+        expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
         xhr :post, :email_provisional_validation, email: email_address
         expect(response.body).to_not eq(no_error_response)
-        expect(response.body).to eq({'error_msg' => 'account without password message'}.to_json)
+        expect(response.body).to eq({'error_msg' => 'account without password error message'}.to_json)
       end
     end
 
