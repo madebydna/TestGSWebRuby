@@ -39,8 +39,8 @@ class District < ActiveRecord::Base
   def schools_by_rating_desc
     @district_schools_by_rating_desc ||= (
       schools = School.on_db(state.downcase.to_sym).
-        where(district_id: id).
-        all
+        active.
+        where(district_id: id)
 
       school_metadata = SchoolMetadata.on_db(state.downcase.to_sym).
         where(
