@@ -61,11 +61,7 @@ class PyocPdf < Prawn::Document
     draw_performance_index_columns(above_avg_college_readiness, is_spanish ? 'Por encima del promedio - calificación universitaria' : 'Above average college readiness rating')
     end
 
-      number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => performance_index_page_number_start, :color => Black}
-      page_count.times do |i|
-        go_to_page(i+1)
-        draw_footer(collection_id)
-      end
+    draw_all_footer(performance_index_page_number_start, collection_id)
 
     elsif is_location_index
 
@@ -94,12 +90,7 @@ class PyocPdf < Prawn::Document
         end
       end
 
-      number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => location_index_page_number_start, :color => Black}
-      page_count.times do |i|
-        go_to_page(i+1)
-        fill_color Black
-        draw_footer(collection_id)
-      end
+      draw_all_footer(location_index_page_number_start, collection_id)
 
     else
     start_time = Time.now
@@ -143,13 +134,9 @@ def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batc
       move_down_small
       draw_grey_line(index)
     end
-
-    number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => get_page_number_start, :color => Black}
-    page_count.times do |i|
-      go_to_page(i+1)
-      draw_footer(collection_id)
-    end
   end
+
+  draw_all_footer(get_page_number_start, collection_id)
 end
 
 def draw_performance_index_columns(above_avg_schools, rating_name)
@@ -247,7 +234,16 @@ def draw_header(is_k8_batch, is_high_school_batch, is_pk8_batch)
 
 end
 
-def draw_footer(collection_id)
+def draw_all_footer(page_number_start, collection_id)
+  #number_pages method can just be called once and will write to all pages.
+  number_pages '<page>', {:at => [270, -15], :size => 7, :start_count_at => page_number_start, :color => Black}
+  page_count.times do |i|
+    go_to_page(i+1)
+    draw_logo_and_url_on_footer(collection_id)
+  end
+end
+
+def draw_logo_and_url_on_footer(collection_id)
   image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
   text_box which_footer(collection_id , is_spanish),
            :at => [300, -15],
@@ -378,7 +374,6 @@ def truncate_district(school, char_length)
 end
 
 def which_district_truncation(school, level)
-  # truncated_district = ' '
   if school.district != nil
     if level.include? '& UG'
       truncated_district = '| ' + truncate_district(school, 27)
