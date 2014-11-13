@@ -26,18 +26,20 @@ class ForgotPasswordController < ApplicationController
 
     email_param = params[:email]
     if email_param.present?
-      user = User.find_by_email(email_param)
       if !email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
         error_msg = 'Please enter a valid email address.'
-      elsif user.nil?
-        error_msg = ("There is no account associated with that email address. Would you like to <a href=#{join_url}>join GreatSchools</a>?").html_safe
-      elsif user.provisional?
-        verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
-        error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
-      elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-        error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
-      elsif !user.is_profile_active?
-        error_msg = ("The account associated with that email address has been disabled. Please contact us.").html_safe
+      else
+        user = User.find_by_email(email_param)
+        if user.nil?
+          error_msg = ("There is no account associated with that email address. Would you like to <a href=#{join_url}>join GreatSchools</a>?").html_safe
+        elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+          error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+        elsif user.provisional?
+          verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
+          error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
+        elsif !user.is_profile_active?
+          error_msg = ("The account associated with that email address has been disabled. Please contact us.").html_safe
+        end
       end
     else
        error_msg = 'Please enter an email address.'
