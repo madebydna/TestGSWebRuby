@@ -32,9 +32,11 @@ en:
         blank: 'Please enter an email address.'
         format: 'Please enter a valid email address.'
         nonexistent: 'Sorry, we do not have an account with that email address.'
+        nonexistent_join: 'There is no account associated with that email address. Would you like to <a href="%{join_path}">join GreatSchools</a>?'
         provisional: 'Before logging in, you must verify your email by clicking the link in the email we sent you.'
         provisional_resend_email: 'Before logging in, you must verify your email by clicking the link in the email we sent you. <a href="%{verification_email_url}">Click here</a> to resend the email.'
         account_without_password: 'We have your email address on file, but you still need to create a free account with GreatSchools. <a href="%{join_path}">Join now</a>'
+        de_activated: 'The account associated with that email address has been disabled. Please contact us.'
       password:
         invalid: 'The email or password you entered is invalid. Please try again or <a href="%{join_url}">create an account</a>.'
         invalid_try_facebook: 'Try logging in with Facebook. GreatSchools doesn''t have an account matching that password, but you might be accidentally using your Facebook credentials.'
@@ -57,6 +59,8 @@ en:
       created_via_facebook: 'Great, we''ve finished setting up your account! From now on you can log in using Facebook.'
       facebook_linked: 'We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!'
       password_changed: 'Your password has been changed.'
+    forgot_password:
+      email_sent: 'Great! Just click on the link in the email we sent to %{email} to continue resetting your password.'
     my_school_list:
       school_added: "%{school_name} has been saved to your school list."
       school_added_subscribed: "Great! We’ll send you timely updates about the schools you follow. You can download and save your list from your account."

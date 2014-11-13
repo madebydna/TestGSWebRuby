@@ -205,7 +205,7 @@ module AuthenticationConcerns
     begin
       user_id = hash[MD5_HASH_LENGTH..-1]
       user = User.find(user_id)
-      if user && user.has_password? && user.auth_token == hash
+      if user && user.has_password? && user.email_verified? && user.auth_token == hash
         log_user_in(user)
       end
     rescue

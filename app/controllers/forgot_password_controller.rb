@@ -15,7 +15,7 @@ class ForgotPasswordController < ApplicationController
       return
     elsif user
       ResetPasswordEmail.deliver_to_user(user,reset_password_url)
-      flash_notice "Great! Just click on the link in the email we sent to #{user.email} to continue resetting your password."
+      flash_notice t('actions.forgot_password.email_sent', email: user.email).html_safe
     end
     redirect_to signin_url
   end
@@ -27,22 +27,22 @@ class ForgotPasswordController < ApplicationController
     email_param = params[:email]
     if email_param.present?
       if !email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
-        error_msg = 'Please enter a valid email address.'
+        error_msg = t('forms.errors.email.format')
       else
         user = User.find_by_email(email_param)
         if user.nil?
-          error_msg = ("There is no account associated with that email address. Would you like to <a href=#{join_url}>join GreatSchools</a>?").html_safe
+          error_msg = t('forms.errors.email.nonexistent_join', join_path: join_path).html_safe
         elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
           error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
         elsif user.provisional?
           verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
           error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
         elsif !user.is_profile_active?
-          error_msg = ("The account associated with that email address has been disabled. Please contact us.").html_safe
+          error_msg = t('forms.errors.email.de_activated').html_safe
         end
       end
     else
-       error_msg = 'Please enter an email address.'
+       error_msg = t('forms.errors.email.blank')
     end
 
     return user, error_msg
