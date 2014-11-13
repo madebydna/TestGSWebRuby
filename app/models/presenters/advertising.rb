@@ -447,7 +447,7 @@ class Advertising
             dimensions:[728,90]
           },
           mobile:{
-            dimensions:[320,250]
+            dimensions:[300,250]
           }
       },
       After8_Text: {
@@ -483,7 +483,7 @@ class Advertising
               dimensions:[728,90]
           },
           mobile:{
-              dimensions:[320,50]
+              dimensions:[300,250]
           }
       },
       After20: {
