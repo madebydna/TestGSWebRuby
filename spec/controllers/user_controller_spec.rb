@@ -3,17 +3,69 @@ require 'spec_helper'
 describe UserController do
 
   describe '#email_available' do
+    let(:email_address) { 'blah@host.com'}
+    after do
+      clean_models User
+    end
+
     it 'should return true if email doesn\'t exist' do
-      expect(User).to receive(:exists?).and_return false
-      xhr :post, :email_available, email: 'blah@host.com'
+      xhr :post, :email_available, email: email_address
       expect(response.body).to eq 'true'
     end
 
-    it 'should return false if email already exists' do
-      expect(User).to receive(:exists?).and_return true
-      xhr :post, :email_available, email: 'blah@host.com'
+    it 'should return true if email exists and doesnt have a password' do
+      user = FactoryGirl.build(:user, email: email_address, password: nil)
+      user.save(validate: false)
+      xhr :post, :email_available, email: email_address
+      expect(response.body).to eq 'true'
+    end
+
+    it 'should return false if email exists and has a password' do
+      FactoryGirl.create(:new_user, email: email_address)
+      xhr :post, :email_available, email: email_address
       expect(response.body).to eq 'false'
     end
+  end
+
+  describe '#email_provisional_validation' do
+    let(:email_address) { 'blah@host.com'}
+    let(:no_error_response) { {'error_msg' => ''}.to_json }
+
+    context 'when an email does not exist' do
+      it 'should not return an error message' do
+        xhr :post, :email_provisional_validation, email: email_address
+        expect(response.body).to eq(no_error_response)
+      end
+    end
+
+    context 'when an email exists' do
+      after do
+        clean_models User
+      end
+
+      it 'should not return an error message if the account is not provisional and has a password' do
+        FactoryGirl.create(:verified_user, email: email_address)
+        xhr :post, :email_provisional_validation, email: email_address
+        expect(response.body).to eq(no_error_response)
+      end
+      it 'should return an error message if the account is provisional' do
+        FactoryGirl.create(:new_user, email: email_address)
+        expect(controller).to receive(:t).with('forms.errors.email.provisional_resend_email', anything).and_return('provisional resend error message')
+        xhr :post, :email_provisional_validation, email: email_address
+        expect(response.body).to_not eq(no_error_response)
+        expect(response.body).to eq({'error_msg' => 'provisional resend error message'}.to_json)
+      end
+      it 'should return an error message if the account does not have a password' do
+        user = FactoryGirl.build(:verified_user, email: email_address, password: nil)
+        user.save(validate: false)
+
+        expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password message')
+        xhr :post, :email_provisional_validation, email: email_address
+        expect(response.body).to_not eq(no_error_response)
+        expect(response.body).to eq({'error_msg' => 'account without password message'}.to_json)
+      end
+    end
+
   end
 
   describe '#send_verification_email' do
