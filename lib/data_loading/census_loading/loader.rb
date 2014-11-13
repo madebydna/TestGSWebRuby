@@ -7,7 +7,6 @@ class CensusLoading::Loader < CensusLoading::Base
   # TODO break out data set code into module
 
   def load!
-    puts self.class
 
     census_data_type = census_data_types[data_type]
 
@@ -28,7 +27,7 @@ class CensusLoading::Loader < CensusLoading::Base
         insert_into!(census_update)
       end
 
-      # Cacher.create_cache(school, CACHE_KEY)
+      Cacher.create_cache(school, CACHE_KEY)
     end
   end
 

@@ -1,12 +1,15 @@
 class EspResponseLoading::Loader < EspResponseLoading::Base
 
+  CACHE_KEY = 'esp_responses'
+
   def load!
-    puts self.class
 
     updates.each do |update|
       next if update.blank?
 
       esp_response_update = EspResponseLoading::Update.new(data_type, update, source)
+
+      school = School.on_db(esp_response_update.shard).find(esp_response_update.entity_id)
 
       if esp_response_update.action == 'disable'
         disable!(esp_response_update)
@@ -16,6 +19,8 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       else
         insert_into!(esp_response_update)
       end
+      Cacher.create_cache(school, CACHE_KEY)
+
     end
   end
 

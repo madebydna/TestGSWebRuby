@@ -55,12 +55,28 @@ class Cacher
     }[key.to_s.to_sym]
   end
 
+  def self.cacher_dependencies_for(key)
+    {
+
+        esp_responses:    [ProgressBarCaching::ProgressBarCacher]
+
+    }[key.to_s.to_sym]
+  end
+
+  def self.create_cache_for_dependencies(school, cache_key)
+    dependent_cache_klasses = cacher_dependencies_for(cache_key)
+    return unless dependent_cache_klasses
+    cachers = dependent_cache_klasses.map { |cache_klass| cache_klass.new(school) }
+    cachers.each {|cacher| cacher.cache}
+  end
+
   def self.create_cache(school, cache_key)
     begin
       if cache_key != 'ratings'
         cacher_class = cacher_for(cache_key)
         cacher = cacher_class.new(school)
         cacher.cache
+        create_cache_for_dependencies(school, cache_key)
       else
         ratings_cache_for_school(school)
       end
