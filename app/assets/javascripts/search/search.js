@@ -320,7 +320,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                 return false;
             }
         });
-
+        GS.search.schoolSearchForm.placeholderMobile();
         GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
     };
 
@@ -663,6 +663,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         }
     };
 
+    var placeholderMobile = function () {
+        if ($(window).width() < 481) {
+            $('.js-mobile-placeholder').html('City, zip, address or school');
+        }
+        else {
+            $('.js-mobile-placeholder').html('Enter city, zip code, address or school name');
+        }
+    };
+
+
     return {
         init:init,
         setupTabs: setupTabs,
@@ -675,6 +685,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
         showFiltersMenuOnLoad: showFiltersMenuOnLoad,
+        placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler
     };
