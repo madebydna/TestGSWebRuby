@@ -51,10 +51,19 @@ class District < ActiveRecord::Base
       school_metadata.sort_by! { |metadata| metadata.meta_value.to_i }
       school_metadata.reverse!
       sorted_top_school_ids = school_metadata.map(&:school_id)
-      schools.sort_by do |s|
-        # If the school doesn't exist in the top_school_ids array,
-        # then sort it to the end
-        (sorted_top_school_ids.index(s)) || 1
+
+      # If the school doesn't exist in the top_school_ids array,
+      # then sort it to the end
+      schools.sort do |s1, s2|
+        if sorted_top_school_ids.index(s1.id) == sorted_top_school_ids.index(s2.id)
+          0
+        elsif sorted_top_school_ids.index(s1.id).nil?
+          1
+        elsif sorted_top_school_ids.index(s2.id).nil?
+          -1
+        else
+          (sorted_top_school_ids.index(s1.id) <=> sorted_top_school_ids.index(s2.id))
+        end
       end
     )
   end
