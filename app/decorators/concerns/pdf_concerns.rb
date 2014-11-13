@@ -198,22 +198,17 @@ module PdfConcerns
     # binding.pry;
     if state.present?
         if collection_id.present? && collection_id>0 && is_high_school
-        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:includes_highschool?)
 
       elsif collection_id.present? && collection_id>0 && is_pk8
-        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:pk8?)
       elsif  collection_id.present? && collection_id>0 && is_k8
-        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:k8?)
       elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8
-        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
-
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
       elsif   collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
         db_schools = School.on_db(state).active.order(name: :asc).to_a
       elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)

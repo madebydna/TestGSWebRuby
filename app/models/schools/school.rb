@@ -201,6 +201,8 @@ class School < ActiveRecord::Base
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
+
+
   def self.for_states_and_ids(states, ids)
     raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
     raise ArgumentError, 'Number of states and school IDs provided must be equal' unless states.size == ids.size
@@ -268,5 +270,14 @@ class School < ActiveRecord::Base
     decorated_school_cache_results.first.progress_bar
     )
   end
+
+  def self.for_collection_ordered_by_name(state,collection_id)
+    raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
+    school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+    db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+  end
+
+
+
 
 end
