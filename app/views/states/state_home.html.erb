@@ -37,7 +37,7 @@
 </div>
 
 <% cache("cities_in_state_#{@state[:short]}") do%>
-<% column_sizes = { xs: 6, sm: 3, md: 3, lg: 3 } %>
+<% column_sizes = { xs: 12, sm: 3, md: 3, lg: 3 } %>
 <div class="row phm limit-width-1200">
   <div class="clearfix mtl">
     <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> cities</h2></div>
@@ -70,7 +70,7 @@
 <% end %>
 
 <% cache("districts_in_state_#{@state[:short]}") do%>
-<% column_sizes = { xs: 6, sm: 3, md: 3, lg: 3 } %>
+<% column_sizes = { xs: 12, sm: 3, md: 3, lg: 3 } %>
 <div class="row bg-light-gray ">
     <div class="limit-width-1200 ptl phm">
     <div class="clearfix mtl">
