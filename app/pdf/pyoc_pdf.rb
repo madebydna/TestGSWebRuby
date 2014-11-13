@@ -378,12 +378,12 @@ def truncate_district(school, char_length)
 end
 
 def which_district_truncation(school, level)
-  truncated_district = ' '
+  # truncated_district = ' '
   if school.district != nil
     if level.include? '& UG'
       truncated_district = '| ' + truncate_district(school, 27)
     else
-      truncated_district = '| ' + truncate_district(school, 36)
+      truncated_district = '| ' + truncate_district(school, 34)
     end
   else
     truncated_district = ' '
