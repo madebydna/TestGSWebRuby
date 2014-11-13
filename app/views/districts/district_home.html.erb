@@ -157,7 +157,7 @@
     render(
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
-        title: "Top rated #{@district.name} schools",
+        title: "Top rated schools in #{@district.name}",
         schools: SchoolProfileDecorator.decorate_collection(@top_schools)
       }
     )
