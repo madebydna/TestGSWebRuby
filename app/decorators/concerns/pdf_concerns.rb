@@ -180,45 +180,59 @@ module PdfConcerns
     ENGLISH_TO_SPANISH_RATINGS_MAPPING[data]
   end
 
-  def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4,is_location_index,is_performance_index)
+  # def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4,is_location_index,is_performance_index)
+  def find_schools_to_be_printed(state,opts = {})
+    collection_id = opts[:collection_id]
+    is_high_school = opts[:is_high_school]
+    is_k8 = opts[:is_k8]
+    is_pk8 = opts[:is_pk8]
+    added_schools = opts[:added_schools]
+    removed_schools = opts[:removed_schools]
+    school_id1 = opts[:school_id1]
+    school_id2 = opts[:school_id2]
+    school_id3 = opts[:school_id3]
+    school_id4 = opts[:school_id4]
+
     db_schools = []
 
     # binding.pry;
-    if state.present? && collection_id.present? && collection_id>0 && is_high_school
-      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
-      db_schools.select!(&:includes_highschool?)
+    if state.present?
+        if collection_id.present? && collection_id>0 && is_high_school
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools.select!(&:includes_highschool?)
 
-    elsif state.present? && collection_id.present? && collection_id>0  && is_pk8
-      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
-      db_schools.select!(&:pk8?)
-    elsif state.present? && collection_id.present? && collection_id>0  && is_k8
-      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
-      db_schools.select!(&:k8?)
-    elsif state.present? && collection_id.present? &&  collection_id>0  && !is_k8  &&  !is_high_school  &&  !is_pk8
-      school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-      db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+      elsif collection_id.present? && collection_id>0 && is_pk8
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools.select!(&:pk8?)
+      elsif  collection_id.present? && collection_id>0 && is_k8
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+        db_schools.select!(&:k8?)
+      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8
+        school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+        db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
 
-    elsif   state.present? &&  collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
-      db_schools = School.on_db(state).active.order(name: :asc).to_a
-    elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
-      db_schools = School.for_states_and_ids([state, state, state,state], [school_id1, school_id2, school_id3, school_id4])
-    end
+      elsif   collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
+        db_schools = School.on_db(state).active.order(name: :asc).to_a
+      elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
+        db_schools = School.for_states_and_ids([state, state, state, state], [school_id1, school_id2, school_id3, school_id4])
+      end
 
-    # Add schools
-    if added_schools.present?
-      schools_to_be_added = added_schools.split(',')
-      db_schools += School.on_db(state).where(id: schools_to_be_added).all
-      db_schools.sort! { |a,b| a.name <=> b.name }
-    end
+      # Add schools
+      if added_schools.present?
+        schools_to_be_added = added_schools.split(',')
+        db_schools += School.on_db(state).where(id: schools_to_be_added).all
+        db_schools.sort! { |a, b| a.name <=> b.name }
+      end
 
-    # Remove schools
-    if removed_schools.present?
-      schools_to_be_removed = removed_schools.split(',')
-      db_schools -= School.on_db(state).where(id: schools_to_be_removed).all
-      db_schools.sort! { |a,b| a.name <=> b.name }
+      # Remove schools
+      if removed_schools.present?
+        schools_to_be_removed = removed_schools.split(',')
+        db_schools -= School.on_db(state).where(id: schools_to_be_removed).all
+        db_schools.sort! { |a, b| a.name <=> b.name }
+      end
     end
     db_schools
   end

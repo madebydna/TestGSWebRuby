@@ -4,19 +4,17 @@ class Admin::PyocController <  ApplicationController
 
   def print_pdf
     @db_schools = find_schools_to_be_printed(
-        state_param,
-        params[:collection_id].to_i,
-        params[:is_high_school].to_bool,
-        params[:is_k8].to_bool,
-        params[:is_pk8].to_bool,
-        params[:added_schools],
-        params[:removed_schools],
-        params[:id1].to_i,
-        params[:id2].to_i,
-        params[:id3].to_i,
-        params[:id4].to_i,
-        params[:is_location_index].to_i,
-        params[:is_performance_index].to_i
+        state_param,{
+        :collection_id=>params[:collection_id].to_i,
+        :is_high_school=>params[:is_high_school].to_bool,
+        :is_k8=>params[:is_k8].to_bool,
+        :is_pk8=>params[:is_pk8].to_bool,
+        :added_schools=>params[:added_schools],
+        :removed_schools=>params[:removed_schools],
+        :id1=>params[:id1].to_i,
+        :id2=>params[:id2].to_i,
+        :id3=>params[:id3].to_i,
+        :id4=>params[:id4].to_i}
     )
     # @db_schools =@db_schools[0..20]
     if (@db_schools.present?)
@@ -30,19 +28,17 @@ class Admin::PyocController <  ApplicationController
 
   def choose
     @db_schools = find_schools_to_be_printed(
-        state_param,
-        params[:collection_id].to_i,
-        params[:is_high_school].to_bool,
-        params[:is_k8].to_bool,
-        params[:is_pk8].to_bool,
-        params[:added_schools],
-        params[:removed_schools],
-        params[:id1].to_i,
-        params[:id2].to_i,
-        params[:id3].to_i,
-        params[:id4].to_i,
-        params[:is_location_index].to_i,
-        params[:is_performance_index].to_i
+        state_param,{
+        :collection_id=>params[:collection_id].to_i,
+        :is_high_school=>params[:is_high_school].to_bool,
+        :is_k8=>params[:is_k8].to_bool,
+        :is_pk8=>params[:is_pk8].to_bool,
+        :added_schools=>params[:added_schools],
+        :removed_schools=>params[:removed_schools],
+        :id1=>params[:id1].to_i,
+        :id2=>params[:id2].to_i,
+        :id3=>params[:id3].to_i,
+        :id4=>params[:id4].to_i}
        )
     set_meta_tags title:       "Choosing schools for Print your own chooser",
                   description: "Choosing schools for Print your own chooser",

@@ -39,11 +39,6 @@
           <% end %>
           <%= label_tag(:language_english, "English") %></br>
 
-
-          <%= label_tag(:page_number_start, "Page Number Start",:class => "brand-primary") %>
-          <%= text_field_tag(:page_number_start, value = (params[:page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br>
-
-
           <%= submit_tag("FindSchools",:class => "btn btn-primary") %><br/><br/>
     <% end %>
       <%if  @db_schools.present?%>
@@ -57,13 +52,15 @@
             <%= hidden_field_tag "is_k8", params[:is_k8]%>
             <%= hidden_field_tag "is_pk8", params[:is_pk8]%>
             <%= hidden_field_tag "is_high_school", params[:is_high_school]%>
-            <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
             <%= hidden_field_tag "added_schools", params[:added_schools]%>
             <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
             <%= hidden_field_tag "language", params[:language]%>
 
+              <%= label_tag(:page_number_start, "School PDF Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:page_number_start, value = (params[:page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
 
-            Ready to generate Schools PDF ?
+
+              Ready to generate Schools PDF ?
              <%= submit_tag("Generate Schools PDF", :class => "btn btn-primary") %><% end%></div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
