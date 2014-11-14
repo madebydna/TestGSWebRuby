@@ -98,7 +98,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         } else if (levelCode == 'h') {
             level = 'high';
         }
-        GS.search.googleMap.setAssignedSchool(schoolId, level);
+        GS.googleMap.setAssignedSchool(schoolId, level);
     };
 
     var setAssignedSchoolInList = function(levelCode, school) {
@@ -220,7 +220,18 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         $('#js-assigned-school-no-result').show('slow');
     };
 
+    var init = function () {
+        try {
+            if (GS.search.assignedSchools.shouldGetAssignedSchools()) {
+                GS.search.assignedSchools.getAssignedSchools();
+            }
+        } catch (e) {
+            // ignore. This is prototype code
+        }
+    };
+
     return {
+        init: init,
         shouldGetAssignedSchools:shouldGetAssignedSchools,
         getAssignedSchools: getAssignedSchools
     };
@@ -268,7 +279,21 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
             else{
               isAddress(input.value);
             }
+
             var searchType = GS.search.schoolSearchForm.searchType;
+            // PT-903. We are now loading Google Maps API asynchronously.
+            // If it does not come back by the time someone searches:
+            // we wait 200ms, look again, and default to byName search if it still has not loaded.
+            // byName searches require a state, so we default to California if there is no state.
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                setTimeout( function() {
+                    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                        searchType = 'byName';
+                        state = state || 'ca';
+                    }
+                }, 200);
+            }
+
             if (valid) {
                 var searchOptions = {};
 
@@ -295,14 +320,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                 return false;
             }
         });
-
-        try {
-            if (GS.search.assignedSchools.shouldGetAssignedSchools()) {
-                GS.search.assignedSchools.getAssignedSchools();
-            }
-        } catch (e) {
-            // ignore. This is prototype code
-        }
+        GS.search.schoolSearchForm.placeholderMobile();
+        GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
     };
 
     var setupTabs = function() {
@@ -615,7 +634,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     };
 
     var showFiltersMenuOnLoad = function() {
-        if($.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
+        var externalSearch = (document.referrer &&
+            (document.referrer.indexOf('search/search.page') == -1 && document.referrer.indexOf('/schools/') == -1));
+        if(externalSearch || $.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
             if ($(document).width() > GS.window.sizing.maxMobileWidth && searchResultsDisplayed() ) {
                 $('.js-searchFiltersMenu').show();
             }
@@ -642,6 +663,16 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         }
     };
 
+    var placeholderMobile = function () {
+        if ($(window).width() < 481) {
+            $('.js-mobile-placeholder').html('City, zip, address or school');
+        }
+        else {
+            $('.js-mobile-placeholder').html('Enter city, zip code, address or school name');
+        }
+    };
+
+
     return {
         init:init,
         setupTabs: setupTabs,
@@ -654,19 +685,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
         showFiltersMenuOnLoad: showFiltersMenuOnLoad,
+        placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler
     };
 })(gon.state_abbr);
-
-GS.search.init = (function() {
-  var self=this;
-  if(typeof self.need_init==='undefined'){
-    self.need_init='search already initialized';
-    GS.search.schoolSearchForm.init();
-    GS.search.schoolSearchForm.setupTabs();
-    GS.search.schoolSearchForm.showFiltersMenuOnLoad();
-    GS.search.schoolSearchForm.checkGooglePlaceholderTranslate();
-    GS.search.schoolSearchForm.setShowFiltersCookieHandler();
-  }
-});

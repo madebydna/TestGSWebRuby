@@ -1,13 +1,12 @@
 <div class="visible-xs">
     <div class="btn-group row full-width mln js-mobileFiltersToolbar">
-        <% state = 'delaware' #ToDo set state to actual state %>
         <button type="button" class="btn btn-primary nav-button nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
           <span class="iconx16 i-16-white-check-box vam"></span>
           Filters
         </button>
         <% if @show_guided_search %>
           <a type="button" class="btn btn-primary col-xs-4 nav-button nav-button-left-border nav-button-font"
-            href="<%= state_guided_search_path(state: state) %>">
+            href="<%= guided_search_path(@hub) %>">
             <span class="iconx16 i-16-white-info vam"></span>
             Guide Me
           </a>
@@ -43,7 +42,7 @@
     <div class="pa" style="padding-left:150px">
       <% if @show_guided_search %>
         <div class="iconx16 i-16-blue-info vam pull-left mas "></div>
-        <div class="pull-left"><a class='toolbar-text open-sans_sb' href='<%= state_guided_search_path(state: state) %>'>Guide Me</a></div>
+        <div class="pull-left"><a class='toolbar-text open-sans_sb' href='<%= guided_search_path(@hub) %>'>Guide Me</a></div>
       <% end %>
     </div>
   </div>

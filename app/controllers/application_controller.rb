@@ -78,6 +78,11 @@ class ApplicationController < ActionController::Base
     params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
   end
 
+  def district_param
+    return if params[:district].nil?
+    params[:district].gsub(/\-/, ' ').gsub(/\_/, '-')
+  end
+
   def redirect_tab_urls
     if params[:tab] == 'reviews'
       redirect_to path_w_query_string 'tab', 'reviews'
@@ -235,14 +240,6 @@ class ApplicationController < ActionController::Base
       city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
       city = City.find_by_state_and_name(@state[:short], city) || return
       @city = city
-    end
-  end
-
-  # TODO: Marked for deletion. Please use HubConcerns instead
-  def configs
-    configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-    Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
-      CollectionConfig.where(collection_id: mapping.collection_id).to_a
     end
   end
 

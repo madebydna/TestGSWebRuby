@@ -345,6 +345,39 @@ class Advertising
       },
     }
 
+    @ad_slots[:District_Home] = {
+      Nearby_Schools: {
+        name: "Nearby_Schools",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
+      Content_Top: {
+        name: "Content_Top",
+        desktop:{
+          dimensions:[300,250]
+        }
+      },
+      Text: {
+        name: "Text",
+        desktop:{
+          dimensions:[728,60]
+        },
+        mobile:{
+          dimensions:[320,60]
+        }
+      },
+      Footer: {
+        name: "Footer",
+        desktop:{
+          dimensions:[728,90]
+        },
+        mobile:{
+          dimensions:[320,50]
+        }
+      },
+    }
+
     # State Home Page Ads
     @ad_slots[:Homepage] = {
       Choosing_Content: {
@@ -386,6 +419,82 @@ class Advertising
           dimensions:[320,50]
         }
       },
+    }
+
+    # Search Result Ads
+    @ad_slots[:Search] = {
+      Content_Top: {
+        name: "Content_Top",
+        desktop:{
+          dimensions:[728,90]
+        },
+        mobile:{
+            dimensions:[320,50]
+        }
+      },
+      Footer: {
+          name: "Footer",
+          desktop:{
+            dimensions:[728,90]
+          },
+          mobile:{
+            dimensions:[320,50]
+          }
+      },
+      After4: {
+          name: "After4",
+          desktop:{
+            dimensions:[728,90]
+          },
+          mobile:{
+            dimensions:[300,250]
+          }
+      },
+      After8_Text: {
+          name: "After8_Text",
+          desktop:{
+            dimensions:[728,60]
+          },
+          mobile:{
+            dimensions:[320,60]
+          }
+      },
+      After12_Left: {
+          name: "After12_Left",
+          desktop:{
+              dimensions:[300,250]
+          }
+      },
+      After12_Right: {
+          name: "After12_Right",
+          desktop:{
+              dimensions:[300,250]
+          }
+      },
+      After12: {
+          name: "After12",
+          mobile:{
+            dimensions:[320,50]
+          }
+      },
+      After16: {
+          name: "After16",
+          desktop:{
+              dimensions:[728,90]
+          },
+          mobile:{
+              dimensions:[300,250]
+          }
+      },
+      After20: {
+          name: "After20",
+          desktop:{
+              dimensions:[728,90]
+          },
+          mobile:{
+              dimensions:[320,50]
+          }
+      }
     }
 
     def get_width(page, slot, view)

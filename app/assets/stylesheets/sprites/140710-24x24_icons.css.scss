@@ -4,7 +4,7 @@
 
 .iconx24-icons {
   display: inline-block;
-  background-image: asset_data_url("icons/141010-24x24_sprite.png");
+  background-image: asset_data_url("icons/141110-24x24_sprite.png");
   width: 24px;
   height: 24px;
 }
@@ -137,4 +137,16 @@
 
 .i-24-search-white {
   background-position: -624px 0px
+}
+
+.i-24-write-review {
+  background-position: -648px 0px
+}
+
+.i-24-answer-questions {
+  background-position: -672px 0px
+}
+
+.i-24-upload-photos {
+  background-position: -696px 0px
 }

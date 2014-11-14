@@ -1,115 +1,53 @@
-<% content_for :javascript_includes do %>
-  <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;sensor=false&amp;signature=OXbNRPWooYBwVYP50cQjzvgBk1k="></script>-->
-<% end %>
 <%
   has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
   #  Samson change.  gs_legacy_url_encode is causing north-carolina state page to fail
   #sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]) }) : city_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]), city: params[:city] })
   sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: params[:state] }) : city_education_community_partner_path({ state: params[:state], city: params[:city] })
-  bg_height =  '550px'
 %>
 
-<% content_for :stylesheet_includes do %>
-  <style>
-    .image-bg-scale { height: <%= bg_height  %>; }
-  </style>
-<% end %>
+<% school_breakdown_klass = has_sponsor ? 'school-breakdown-sponsored' : 'school-breakdown' %>
 
-<div class="image-bg-scale">
-  <div class="hidden-lg hidden-md hidden-sm">
-    <div class='hub-hero-image' style="background-image: url('<%= image_path(hero_image_mobile) %>'); height: <%= bg_height %>;"></div>
-  </div>
-
-  <div class="hidden-xs">
-    <div class='hub-hero-image' style="background-image: url('<%= image_path(hero_image) %>'); height: <%= bg_height %>;"></div>
+<div class="pr">
+  <div class="hub-image-bg-scale hub_hero_size oh">
+    <div class="img-container is-scaled"><!--not empty--></div>
   </div>
   <div class="limit-width-1200">
-    <div class="content-centered">
-      <div class="hub-hero-bg oh tal clearfix">
-          <% if has_sponsor %>
+    <div class="absolute-center-hub">
+      <div class="hub-hero-bg tal clearfix">
+        <% if has_sponsor %>
             <div class='tac sponsor-bar  mbl'>
               <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
-              <% if sponsor[:sponsor_page_visible] %>
-                <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
+              <% if @hub.has_partner_page? %>
+                  <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
               <% else %>
-                <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
+                  <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
               <% end %>
             </div>
-          <% end %>
-
-          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-            <div class='oa'>
-              <div class="pull-left">
-                <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
-                <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
-              </div>
-            </div>
-
-            <div class="search-type-toggle mtm mbl clearfix">
-              <div class='pull-left selected mrl'>
-                <div class='search-hero-sprite location-icon'></div>
-                <span>By location</span>
-              </div>
-              <div class='pull-left mlm'>
-                <div class='search-hero-sprite home-icon'></div>
-                <span>By name</span>
-              </div>
-            </div>
-
-            <div class="location-search">
-              <% location_placeholder = defined?(state_page) ? 'Zip code, city or address' : 'Zip code or address' %>
-
-              <form name="findByLocationForm" class="js-findByLocationForm mbl" action="/search/search.page" method="get">
-                <input type="text" name="locationSearchString"
-                  id="js-findByLocationBox" class='search-text lg-search-bar pull-left mrm'
-                  onfocus="GS.textSwitch(this, '', '<%= location_placeholder %>');"
-                  onblur="GS.textSwitch(this, '<%= location_placeholder %>', '');"
-                  placeholder="<%= location_placeholder %>"
-                  value="<%= location_placeholder %>"/>
-                <button class="state-hub-search-button">Search</button>
-              </form>
-              <a  href="/" class="pull-left mbl clear-cookies-link js-clear-local-cookies-link mtl">
-                  Not in <%= collection_nickname %>?
-              </a>
-            </div>
-
-            <div class="name-search dn">
-              <% name_placeholder = defined?(state_page) ? 'School name or district' : 'School name' %>
-
-              <form name='searchBySchoolNameForm' class='js-findByNameForm mbl' action="/search/search.page" method='get'>
-                <input type="hidden" name='search_type' value='1'>
-                <input  type="text" id='js-findByNameBox' class='search-text lg-search-bar pull-left mrm'
-                        name='q' placeholder="<%= name_placeholder %>"
-                        onfocus="GS.textSwitch(this, '', '<%= name_placeholder %>');"
-                        onblur="GS.textSwitch(this, '<%= name_placeholder %>', '');"
-                        placeholder='<%= name_placeholder %>'
-                        value="<%= name_placeholder %>"/>
-                <% unless defined?(state_page) %>
-                  <input type="hidden" name="collectionId" id="js-collectionId" value="<%= collection_id %>"/>
-                <% end %>
-                <input type="hidden" name="state" id="js-state" value="<%= state[:short] %>"/>
-                <button class="state-hub-search-button">Search</button>
-              </form>
-              <a  href="/" class="pull-left mbl clear-cookies-link mtl">
-                  Not in <%= collection_nickname %>?
-              </a>
+        <% end %>
+        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 ptm pts">
+          <div class='oa'>
+            <div class="pull-left">
+              <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
+              <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
             </div>
           </div>
-
-          <% unless  browse_links.nil? %>
-            <div class="school-breakdown pln col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <h4 class='pbs mvn brand-secondary'>Browse schools</h4>
-              <ul class='pln'>
-                <% browse_links.each do |link| %>
-                    <li class='mvm'>
-                      <%= link_to link[:label], link[:link], class: 'sm-black-lg-white-text pvm js-browseSchools' %>
-                    </li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
+          <!--<div class="search-type-toggle mtm mbl clearfix">-->
+            <!--&lt;!&ndash;Toggle bar for optimizely guide by info option for Delaware&ndash;&gt;-->
+          <!--</div>-->
+          <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
+            <%= render partial: 'nav/search_form' %>
+          </div>
+          <a  href="/" class="pull-left mbl clear-cookies-link mtl">
+            Not in <%= collection_nickname %>?
+          </a>
         </div>
+        <% unless  browse_links.nil? %>
+            <%= render 'shared/browse_schools_list', browse_links: browse_links, school_breakdown_klass: school_breakdown_klass%>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
+<% unless  browse_links.nil? %>
+    <%= render 'shared/browse_schools_list', browse_links: browse_links, school_breakdown_klass: school_breakdown_klass, mobile: true%>
+<% end %>

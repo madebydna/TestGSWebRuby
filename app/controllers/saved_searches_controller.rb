@@ -20,7 +20,7 @@ class SavedSearchesController < ApplicationController
         if e.is_a?(ActiveRecord::RecordNotFound)
           render json: { }
         else
-          render json: { error: 'We are sorry but something went wrong. Please try again later' }
+          render json: { error: ERROR_MESSAGE }
         end
       end
     else
@@ -33,17 +33,19 @@ class SavedSearchesController < ApplicationController
   def redirect_to_login
     flash_notice 'log in required'
     if request.xhr?
-      render json: { redirect: signin_url }
+      render json: { redirect: signin_path }
     else
-      redirect_to signin_url
+      redirect_to signin_path
     end
   end
 
   def saved_search_params
+    return false unless params[:search_name].present? && params[:search_string].present? && params[:num_results].present?
+
     saved_search_params = {}
-    saved_search_params[:name] = params[:search_name] || (return false)
-    saved_search_params[:search_string] = params[:search_string] || (return false)
-    saved_search_params[:num_results] = params[:num_results] || (return false)
+    saved_search_params[:name] = params[:search_name]
+    saved_search_params[:search_string] = params[:search_string]
+    saved_search_params[:num_results] = params[:num_results]
 
     options = [:state, :url].inject({}) do | hash, param|
       hash.merge!({param => params[param]}) if params[param]; hash

@@ -21,9 +21,9 @@ $(function() {
 
   $.ajaxSetup({ cache: true });
 
-//  $.getScript('//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=', function(){
-//    // TODO add execute list -- Keith
-//  });
+  var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
+  var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
+  $.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
   $.getScript('//connect.facebook.net/en_US/all.js', function(){
     FB.init({
@@ -79,6 +79,13 @@ $(function() {
   });
 
   $('.js-button-link').on('click', function() {
+    // if google tracking has a value send to google on button click
+    var google_tracking_type = $(this).data('google-tracking-type');
+    var google_tracking_value = $(this).data('google-tracking-value');
+    if(google_tracking_type){
+      ga('send', 'event', 'button', 'click', google_tracking_type, google_tracking_value);
+    }
+
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
     if(use_new_window == true) {

@@ -4,13 +4,7 @@ module SortingConcerns
   protected
 
   SORT_TYPES = ['rating_desc', 'fit_desc', 'distance_asc']
-
-  def determine_sort!(params_hash=params)
-    params_sort = parse_sorts(params_hash).presence
-    @active_sort = active_sort_name(params_sort)
-    @relevant_sort_types = sort_types
-    params_sort
-  end
+  DEFAULT_SORT = :rating_desc
 
   def active_sort_name(sort)
     if sort
@@ -30,33 +24,28 @@ module SortingConcerns
             else
               [:rating]
             end
-    if filtering_search?
-      sorts + [:fit]
-    else
-      sorts
-    end
+    filtering_search? ?  sorts + [:fit] : sorts
   end
 
   def sorting_by_fit?
     @active_sort == :fit
   end
 
-  def sort_by_fit(school_results, direction)
+  def sort_by_fit(school_results)
     # Stable sort. See https://groups.google.com/d/msg/comp.lang.ruby/JcDGbaFHifI/2gKpc9FQbCoJ
     n = 0
-    school_results.sort_by! {|x| n += 1; [((direction == :fit_asc) ? x.fit_ratio : (0-x.fit_ratio)), n]}
+    school_results.sort_by! {|x| n += 1; [0-x.fit_ratio, n]}
   end
 
   def parse_sorts(params_hash)
-    if params_hash.include?('sort') && !params_hash['sort'].instance_of?(Array) && SORT_TYPES.include?(params_hash['sort'])
-      params_hash['sort'].to_sym
-    else
-      # No sort param, so use the default sort for this search type
-      if search_by_name?
-        nil
-      else
-        :rating_desc
-      end
-    end
+    default_sort = search_by_name? ? nil : DEFAULT_SORT # The default by_name sort is no sort
+    sort_types = Hash.new(default_sort).merge(
+        {
+            rating_desc: :rating_desc,
+            fit_desc: :fit_desc,
+            distance_asc: :distance_asc
+        }.stringify_keys
+    )
+    sort_types[params_hash['sort']]
   end
 end

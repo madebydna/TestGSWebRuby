@@ -2,15 +2,35 @@ GS.popup = (function(_) {
     var defaultPopupWrapper   = '.js-popupWrapper';
     var defaultPopupActivator = '.js-popupActivator';
     var defaultPopupBody      = '.js-popupBody';
+    var popupCloseHandlers = [];
+
+    var registerCloseHandler = function(closeHandler) {
+        popupCloseHandlers.push(closeHandler);
+    };
+
+    var closeOtherPopups = function() {
+        for (var i=0; i < popupCloseHandlers.length; i++) {
+            try {
+                var rval = popupCloseHandlers[i]();
+                if (rval === false) {
+                    return false;
+                }
+            } catch (e) {}
+        }
+        return true;
+    };
 
     var closeMenuHandler = function(popupClass) {
         popupClass = popupClass || defaultPopupWrapper;
-        $('html').on('click', function () {
+        var closeHandler = function() {
             $(popupClass).addClass('dn');
-        });
+        };
+        registerCloseHandler(closeHandler);
+        $('html').on('click', closeHandler);
     };
 
     var displayPopup = function($popup, cssOptions) {
+        closeOtherPopups();
         $popup.css(cssOptions);
         $popup.removeClass('dn');
     };
@@ -47,7 +67,9 @@ GS.popup = (function(_) {
         closeMenuHandler: closeMenuHandler,
         displayPopup: displayPopup,
         stopClickAndTouchstartEventPropogation: stopClickAndTouchstartEventPropogation,
-        setPopupHandler: setPopupHandler
+        setPopupHandler: setPopupHandler,
+        registerCloseHandler: registerCloseHandler,
+        closeOtherPopups: closeOtherPopups
     }
 
 })(_);

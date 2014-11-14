@@ -3,6 +3,7 @@ class StatesController < ApplicationController
   include MetaTagsHelper
   include AdvertisingHelper
   include HubConcerns
+  include GuidedSearchConcerns
 
   before_action :set_city_state
   before_action :set_hub
@@ -12,16 +13,15 @@ class StatesController < ApplicationController
   before_action :set_state_home_omniture_data, only: [:show]
 
   def show
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       state_home
     else
-      collection_id = hub_city_mapping.collection_id
+      collection_id = @hub.collection_id
+      configs = hub_configs(collection_id)
 
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
-      @sponsor[:sponsor_page_visible] = mapping.has_partner_page? if @sponsor
       @browse_links = CollectionConfig.browse_links(configs)
       @partners = CollectionConfig.state_partners(configs)
       @choose_school = CollectionConfig.state_choose_school(configs)
@@ -50,11 +50,12 @@ class StatesController < ApplicationController
   end
 
   def choosing_schools
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
+      @collection_id = @hub.collection_id
+      configs = hub_configs(@collection_id)
+
       set_meta_tags title: "Choosing a school in #{@state[:long].titleize}"
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = CollectionConfig.city_hub_important_events(configs)
@@ -78,12 +79,11 @@ class StatesController < ApplicationController
   end
 
   def events
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
@@ -107,34 +107,15 @@ class StatesController < ApplicationController
   end
 
   def guided_search
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
-    else
-      @collection_id = hub_city_mapping.collection_id
-      @canonical_url = state_guided_search_url(params[:state])
-      @guided_search_tab=['get_started','child_care','dress_code','school_focus','class_offerings']
-      gon.state_abbr = @state[:short]
-
-      set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search',@state[:long].titleize)
-      set_meta_tags title:       "Your Personalized #{@state[:long].titleize} School Search | GreatSchools",
-                    description: "#{@state[:long].titleize} school wizard, #{@state[:long].titleize} schools,
-                                  #{@state[:short].upcase} schools, #{@state[:short].upcase} school guided search",
-                    keywords:    "Use this 5-step guide to discover #{@state[:long].titleize} schools that match your
-                                 child\'s unique needs and preferences including programs and extracurriculars, school
-                                 focus areas, transportation, and daily schedules."
-
-      render 'shared/guided_search'
-    end
+    render_guided_search
   end
 
   def enrollment
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      configs = CollectionConfig.where(collection_id: @collection_id)
+      @collection_id = @hub.collection_id
+      configs = hub_configs(@collection_id)
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @events = nil # stub
 
@@ -176,12 +157,11 @@ class StatesController < ApplicationController
   end
 
   def community
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
 
       set_community_tab(collection_configs)
       set_community_omniture_data
@@ -215,12 +195,6 @@ class StatesController < ApplicationController
   end
 
   private
-    def mapping
-      hub_city_mapping_key = "hub_city_mapping-city:#{@state[:long]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
-        HubCityMapping.where(active: 1, city: nil, state: @state[:short]).first
-      end
-    end
 
     def set_community_omniture_data
       if @tab == 'Community' || @show_tabs == false

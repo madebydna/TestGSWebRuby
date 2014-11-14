@@ -15,9 +15,7 @@ class Solr
   def school_name_suggest(options)
     params = parse_params(options)
     params[:fq] << '+document_type:school'
-    query = options[:query]
-    query.gsub! ' ', '\ '
-    params[:q] = "+school_name_untokenized:#{query}*"
+    params[:q] = "+school_name_untokenized:#{options[:query]}*"
 
     @connection.get 'select/', params: params
   end
@@ -25,9 +23,7 @@ class Solr
   def city_name_suggest(options)
     params = parse_city_params(options)
     params[:fq] << '+document_type:city'
-    query = options[:query]
-    query.gsub! ' ', '\ '
-    params[:q] = "+city_name_untokenized:#{query}*"
+    params[:q] = "+city_name_untokenized:#{options[:query]}*"
 
     @connection.get 'select/', params: params
   end
@@ -36,9 +32,7 @@ class Solr
     params = parse_district_params(options)
     params[:fq] << '+document_type:district'
     params[:fq] << '+district_charter_only:false'
-    query = options[:query]
-    query.gsub! ' ', '\ '
-    params[:q] = "+district_name_untokenized:#{query}*"
+    params[:q] = "+district_name_untokenized:#{options[:query]}*"
 
     @connection.get 'select/', params: params
   end

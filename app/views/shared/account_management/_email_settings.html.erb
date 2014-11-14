@@ -38,8 +38,8 @@
                   <div class="mll mtm">
                     <%= link_to('Unsubscribe', subscription_path(subscriptions.first.id),
                                 {
-                                        method: 'DELETE',
-                                        remote: true
+                                        class: "js-delete-subscription-#{subscriptions.first.id}",
+                                        :data => { :params_local => {"id" => subscriptions.first.id} }
                                 }
                         ) %>
                   </div>

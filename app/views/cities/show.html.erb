@@ -2,13 +2,13 @@
   <%= javascript_include_tag "cycle/jquery.cycle2.js" %>
   <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
   <%= javascript_include_tag "cycle/carousel_init.js" %>
-  <script>
-    $(document).ready(function() {
-      GS.track.setOmnitureData();
-      GS.util.setupImages({ selector: '.js-choose-a-school-img', desktopImage: '<%= image_path('hubs/choose_a_school.png')%>',loadMobile: false});
-
-    });
-  </script>
+    <script>
+        $(function() {
+            GS.track.setOmnitureData();
+            GS.util.setupImages({ selector: '.js-choose-a-school-img', desktopImage: '<%= image_path('hubs/choose_a_school.png')%>',loadMobile: false});
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path(@hero_image)%>', mobileImage: '<%= image_path(@hero_image_mobile)%>', classes:'scaling' });
+        });
+    </script>
 <% end %>
 
 <%= render 'nav/topnav', hub_params: @hub_params %>

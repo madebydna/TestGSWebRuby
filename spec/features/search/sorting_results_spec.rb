@@ -8,77 +8,91 @@ describe 'Sorting search results' do
   let(:active_button) {'button.js_sort-button.active'}
 
   ['fit', 'no fit'].each do |fit|
-    has_fit = fit == 'fit'
-    query_string = has_fit ? 'transportation%5B%5D=public_transit' : ''
-    context "city browse with #{fit}" do
+    ['rating sort', 'no rating sort'].each do |rating_sort|
+      has_fit = fit == 'fit'
+      has_rating_sort = rating_sort == 'rating sort'
+      query_string = has_fit ? 'transportation%5B%5D=public_transit' : ''
+      rating_sort_query_string = has_rating_sort ? 'sort=rating_desc&' : ''
+      query_string = rating_sort_query_string + query_string
+      context "city browse with #{fit}" do
 
-      before do
-        set_up_city_browse('de','dover', query_string)
+        before do
+          set_up_city_browse('de','dover', query_string)
+        end
+
+        sorts = %w(Rating)
+        if has_fit
+          sorts += ['Fit']
+        end
+        sorts_text = "#{sorts.join(' ')}"
+
+        it "should display #{sorts_text}" do
+          expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
+          expect(page.find(active_button)).to have_content('Rating')
+        end
       end
 
-      sorts = %w(Rating)
-      if has_fit
-        sorts += ['Fit']
-      end
-      sorts_text = "#{sorts.join(' ')}"
+      context "district browse with #{fit} and #{rating_sort}" do
 
-      it "should display #{sorts_text}" do
-        expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
-        expect(page.find(active_button)).to have_content('Rating')
-      end
-    end
+        before do
+          set_up_district_browse('de','Appoquinimink School District','Appoquinimink', query_string)
+        end
 
-    context "district browse with #{fit}" do
+        sorts = %w(Rating)
+        if has_fit
+          sorts += ['Fit']
+        end
+        sorts_text = "#{sorts.join(' ')}"
 
-      before do
-        set_up_district_browse('de','Appoquinimink School District','Appoquinimink', query_string)
-      end
+        default_sort = 'Rating'
+        active_sort = has_rating_sort ? 'Rating' : default_sort
 
-      sorts = %w(Rating)
-      if has_fit
-        sorts += ['Fit']
-      end
-      sorts_text = "#{sorts.join(' ')}"
-
-      it "should display #{sorts_text}" do
-        expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
-        expect(page.find(active_button)).to have_content('Rating')
-      end
-    end
-
-    context "by location search with #{fit}" do
-
-      before do
-        set_up_by_location_search('100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326, query_string)
+        it "should display #{sorts_text}" do
+          expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
+          expect(page.find(active_button)).to have_content(active_sort)
+        end
       end
 
-      sorts = %w(Distance Rating)
-      if has_fit
-        sorts += ['Fit']
+      context "by location search with #{fit} and #{rating_sort}" do
+
+        before do
+          set_up_by_location_search('100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326, query_string)
+        end
+
+        sorts = %w(Distance Rating)
+        if has_fit
+          sorts += ['Fit']
+        end
+        sorts_text = "#{sorts.join(' ')}"
+
+        default_sort = 'Rating'
+        active_sort = has_rating_sort ? 'Rating' : default_sort
+
+        it "should display #{sorts_text}" do
+          expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
+          expect(page.find(active_button)).to have_content(active_sort)
+        end
       end
-      sorts_text = "#{sorts.join(' ')}"
 
-      it "should display #{sorts_text}" do
-        expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
-        expect(page.find(active_button)).to have_content('Rating')
-      end
-    end
+      context "by name search with #{fit} and #{rating_sort}" do
 
-    context "by name search with #{fit}" do
+        before do
+          set_up_by_name_search('dover elementary', 'DE', query_string)
+        end
 
-      before do
-        set_up_by_name_search('dover elementary', 'DE', query_string)
-      end
+        sorts = %w(Relevance Rating)
+        if has_fit
+          sorts += ['Fit']
+        end
+        sorts_text = "#{sorts.join(' ')}"
 
-      sorts = %w(Relevance Rating)
-      if has_fit
-        sorts += ['Fit']
-      end
-      sorts_text = "#{sorts.join(' ')}"
+        default_sort = 'Relevance'
+        active_sort = has_rating_sort ? 'Rating' : default_sort
 
-      it "should display #{sorts_text}" do
-        expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
-        expect(page.find(active_button)).to have_content('Relevance')
+        it "should display #{sorts_text}" do
+          expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
+          expect(page.find(active_button)).to have_content(active_sort)
+        end
       end
     end
   end

@@ -30,6 +30,14 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).find id rescue nil
   end
 
+  def self.within_district(district)
+    on_db(district.shard).active.where(district_id: district.id)
+  end
+
+  def self.within_city(state_abbreviation, city_name)
+    on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name)
+  end
+
   def census_data_for_data_types(data_types = [])
     CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
   end
@@ -61,6 +69,27 @@ class School < ActiveRecord::Base
       collection.nickname
     else
       city
+    end
+  end
+
+  def self.preload_school_metadata!(schools)
+    return unless schools.present?
+
+    if schools.map(&:state).uniq.size > 1
+      raise ArgumentError('Does not yet support multiple states')
+    end
+
+    school_to_id_map = schools.each_with_object({}) do |school, hash|
+      hash[school.id] = school
+    end
+
+    metadata_hash = Hashie::Mash.new
+    school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
+    school_metadatas.each do |metadata|
+      school = school_to_id_map[metadata.school_id]
+      metadata_hash = school.instance_variable_get(:@school_metadata) || Hashie::Mash.new
+      metadata_hash[metadata.meta_key] = metadata.meta_value
+      school.instance_variable_set(:@school_metadata, metadata_hash)
     end
   end
 
@@ -201,6 +230,8 @@ class School < ActiveRecord::Base
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
+
+
   def self.for_states_and_ids(states, ids)
     raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
     raise ArgumentError, 'Number of states and school IDs provided must be equal' unless states.size == ids.size
@@ -255,7 +286,7 @@ class School < ActiveRecord::Base
   end
 
   def k8?
-    includes_level_code?(%w[e m])
+    includes_level_code?(%w[e m])  &&  !includes_level_code?('p')
   end
 
   def progress_bar_hash
@@ -268,5 +299,14 @@ class School < ActiveRecord::Base
     decorated_school_cache_results.first.progress_bar
     )
   end
+
+  def self.for_collection_ordered_by_name(state,collection_id)
+    raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
+    school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+    db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+  end
+
+
+
 
 end

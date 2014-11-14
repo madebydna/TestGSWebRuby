@@ -6,7 +6,7 @@ class CensusLoading::Update
   attr_accessor :breakdown, :breakdown_id, :data_set_attributes, :data_type, :data_type_id,
                 :entity_id, :entity_id_type, :entity_state, :entity_type, :grade, :shard,
                 :state, :subject, :subject_id, :update_blob, :value, :value_class,
-                :value_record_attributes, :value_type, :year
+                :value_record_attributes, :value_type, :year, :action
 
   def initialize(data_type, update_blob)
     @data_type = data_type

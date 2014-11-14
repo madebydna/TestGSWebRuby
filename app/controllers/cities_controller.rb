@@ -2,25 +2,27 @@ class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include AdvertisingHelper
+  include GuidedSearchConcerns
+  include GoogleMapConcerns
 
   before_action :set_city_state
   before_action :set_hub
   before_action :set_login_redirect
   before_action :set_footer_cities
-  before_action :write_meta_tags, except: [:partner]
+  before_action :write_meta_tags, except: [:partner, :guided_search]
 
   def show
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    return city_home if params[:prototype]
+
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
 
-      @collection_id = mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
       @browse_links = CollectionConfig.browse_links(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sponsor = CollectionConfig.sponsor(collection_configs)
-      @sponsor[:sponsor_page_visible] = mapping.has_partner_page? if @sponsor
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.city_featured_articles(collection_configs)
@@ -37,13 +39,33 @@ class CitiesController < ApplicationController
     end
   end
 
+  def city_home
+    gon.pagename = 'DistrictHome'
+    @city_object = City.where(name: @city).first
+    @top_schools = top_schools(@city_object, 4)
+    prepare_map
+    @districts = District.on_db(@city_object.state.downcase.to_sym).where(city: @city_object.name)
+
+    render 'city_home'
+  end
+
+  def top_schools(city, count = 10)
+    city.schools_by_rating_desc.take(count)
+  end
+
+  def prepare_map
+    @map_schools = @city_object.schools_by_rating_desc
+    mapping_points_through_gon_from_db
+    assign_sprite_files_though_gon
+  end
+
   def events
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
@@ -59,12 +81,11 @@ class CitiesController < ApplicationController
   end
 
   def community
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
 
       set_community_tab(collection_configs)
       set_community_omniture_data
@@ -85,14 +106,15 @@ class CitiesController < ApplicationController
   end
 
   def partner
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @partner = CollectionConfig.partner(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @partner = CollectionConfig.partner(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Partner' => nil
@@ -109,15 +131,17 @@ class CitiesController < ApplicationController
 
 
   def choosing_schools
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
-      @step3_links = CollectionConfig.choosing_page_links(configs)
-      @step3_search_links = CollectionConfig.choosing_page_search_links(configs)
+
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
+      @step3_links = CollectionConfig.choosing_page_links(collection_configs)
+      @step3_search_links = CollectionConfig.choosing_page_search_links(collection_configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Choosing a School' => nil
@@ -131,18 +155,19 @@ class CitiesController < ApplicationController
   end
 
   def enrollment
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
-      @subheading = CollectionConfig.enrollment_subheading(configs)
-      @enrollment_module = CollectionConfig.enrollment_module(configs, @tab[:key])
-      @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
-      @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
+      @subheading = CollectionConfig.enrollment_subheading(collection_configs)
+      @enrollment_module = CollectionConfig.enrollment_module(collection_configs, @tab[:key])
+      @tips = CollectionConfig.enrollment_tips(collection_configs, @tab[:key])
+      @key_dates = CollectionConfig.key_dates(collection_configs, @tab[:key])
 
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
@@ -158,18 +183,19 @@ class CitiesController < ApplicationController
   end
 
   def programs
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @important_events = CollectionConfig.city_hub_important_events(configs)
-      @heading = CollectionConfig.programs_heading(configs)
-      @intro = CollectionConfig.programs_intro(configs)
-      @sponsor = CollectionConfig.programs_sponsor(configs)
-      @partners = CollectionConfig.programs_partners(configs)
-      @articles = CollectionConfig.programs_articles(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
+      @heading = CollectionConfig.programs_heading(collection_configs)
+      @intro = CollectionConfig.programs_intro(collection_configs)
+      @sponsor = CollectionConfig.programs_sponsor(collection_configs)
+      @partners = CollectionConfig.programs_partners(collection_configs)
+      @articles = CollectionConfig.programs_articles(collection_configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
       @breadcrumbs = {
               @city.titleize => city_path(params[:state], params[:city]) ,
@@ -179,6 +205,10 @@ class CitiesController < ApplicationController
       gon.state_abbr = @state[:short]
 
     end
+  end
+
+  def guided_search
+    render_guided_search
   end
 
   private
@@ -206,20 +236,6 @@ class CitiesController < ApplicationController
       end
 
       set_omniture_data(page_name, page_hier, @city.titleize)
-    end
-
-    def mapping
-      hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
-        HubCityMapping.where(city: @city, state: @state[:short], active: 1).first
-      end
-    end
-
-    def configs
-      configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-      Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
-        CollectionConfig.where(collection_id: mapping.collection_id).to_a
-      end
     end
 
     def parse_partners(partners)

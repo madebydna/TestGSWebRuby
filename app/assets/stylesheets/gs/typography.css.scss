@@ -12,6 +12,7 @@ h6, .h6 { @extend .open-sans_i; }
 .font-size-small {font-size: $font-size-small}
 .font-size-large {font-size: $font-size-large}
 .font-size-block {font-size: $font-size-block}
+.font-size-xl {font-size: $font-size-xl}
 
 
 .search-text {
@@ -57,7 +58,9 @@ p, a {
 .text_000 { color: #000000; }
 .text_orange { color: #ff9369; }
 .text_purple { color: #826e92; }
+.text_green {color: $green_light; }
 
+// text_font_large is deprecated
 .text_font_large {font-size: 24px;}
 
 .uc { text-transform: uppercase; }
@@ -231,6 +234,11 @@ body { top: 0px !important; }
 .state_bg_3 { background-color: #A192AD }
 .state_bg_4 { background-color: #C9DA7A }
 
+//fix for typeahead transparency
 .tt-hint {
   opacity:1;
+}
+
+.ts{
+  text-shadow: 1px 1px #999999;
 }

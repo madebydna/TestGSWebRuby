@@ -80,9 +80,14 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var searchFiltersMenuHandler = function() {
         $(".js-searchFiltersDropdown").on('click', function() {
             var menu = $('.js-searchFiltersMenu');
-            menu.css('display') == 'none' ? menu.show() : menu.hide();
-            $('.js-searchFiltersMenuMobile').animate({left: '-300px'});
+            if (menu.css('display') == 'none') {
+                GS.popup.closeOtherPopups();
+                menu.show();
+            } else {
+                menu.hide();
+            }
         });
+        GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
     };
 
     var toggleAdvancedFiltersMenuHandler = function() {
@@ -103,10 +108,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
             $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
         });
+        GS.popup.registerCloseHandler(hideFilterMenuMobile);
     };
 
     var showFilterMenuMobile = function() {
-        $('.js-searchFiltersMenu').hide(); //hides desktop menu of screen is resized to mobile and menu is still open
+        GS.popup.closeOtherPopups();
         $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
     };
     var hideFilterMenuMobile = function() {
@@ -124,8 +130,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var closeMenuHandler = function() {
         $('html').on('click', function () {
-            $('.js-fitScorePopup').hide();
+            closeFitScorePopup();
         });
+    };
+
+    var closeFitScorePopup = function() {
+        $('.js-fitScorePopup').hide();
     };
 
     var searchResultFitScoreTogglehandler = function($optionalParentElement) {
@@ -145,11 +155,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var popup = $(this).siblings('.js-fitScorePopup');
             if (popup.css('display') === 'none') {
                 var offset = getFitScorePopupOffset.call(this, popup);
+                GS.popup.closeOtherPopups();
                 displayFitScorePopup(popup, offset);
             } else {
                 popup.hide()
             }
             if (closeMenuHandlerSet === false) {
+                GS.popup.registerCloseHandler(closeFitScorePopup);
                 closeMenuHandler();
                 closeMenuHandlerSet = true;
             }
@@ -364,12 +376,19 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var setSavedSearchOpenPopupHandler = function() {
         $(".js-savedSearchPopupButton").on('click', function() {
             var $popup = $('.js-savedSearchPopup');
-            $popup.css('display') == 'none' ? $popup.show() : $popup.hide();
+            if ($popup.css('display') == 'none') {
+                GS.popup.closeOtherPopups();
+                $popup.show();
+            } else {
+                $popup.hide();
+            }
         });
 
-        $('html').on('click', function () {
+        var closeHandler = function () {
             $('.js-savedSearchPopup').hide();
-        });
+        };
+        GS.popup.registerCloseHandler(closeHandler);
+        $('html').on('click', closeHandler);
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopup'));
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopupButton'));
     };
@@ -387,27 +406,25 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var savedSearchParams = function() {
-        params = {
+        var params = {
             search_name: $('.js-savedSearchText').val(),
             search_string: $('#js-schoolResultsSearch').val(),
             num_results: $('.js-numOfSchoolsFound').data('num-of-schools-found'),
-            url: GS.uri.Uri.getHref()
+            url: GS.uri.Uri.getPath() + location.search
         };
         return state_abbr !== undefined ? _.assign(params, {state: state_abbr}) : params
     };
 
     var attemptSaveSearch = function() {
-        params = savedSearchParams();
+        var params = savedSearchParams();
         if (saveSearchValid(params) === true) {
             saveSearch(params);
         }
     };
 
     var saveSearchValid = function(params) {
-        $popup = $('.js-savedSearchPopup');
         if (params['search_name'] === '') {
-            $popup.find('.js-savedSearchFormGroup').addClass('has-error');
-            $popup.find('.js-savedSearchErrorMessage').show('');
+            displaySaveSearchValidationError('Please name your search');
             return false
         } else {
             return true
@@ -423,7 +440,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var redirect = response['redirect'];
 
             if (typeof error === 'string' && error !== '' ) {
-                alert(error);                     //error
+                displaySaveSearchFailedSaveError(error);   //error
             } else if (redirect != undefined) {
                 GS.uri.Uri.goToPage(redirect);    //redirect
             } else {
@@ -433,8 +450,36 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
 
         $deferred.fail(function(response){
-            alert('We are sorry but something went wrong. Please Try again Later');
+            displaySaveSearchFailedSaveError('Currently we are unable to save your search. Please try again later'); //error
         });
+    };
+
+    var displaySaveSearchValidationError = function(errorMessage) {
+        var $popup = $('.js-savedSearchPopup');
+        $popup.find('.js-savedSearchFormGroup').addClass('has-error');
+        $popup.find('.js-savedSearchErrorMessage').text(errorMessage).show('');
+    };
+
+    var displaySaveSearchFailedSaveError = function(errorMessage) {
+        var errorCSSClass = 'js-saveSearchFailedSaveError';
+
+        if ($('.' + errorCSSClass).length === 0) {
+            var $markup = $(getErrorMarkupFullWidth(errorMessage, errorCSSClass));
+            $('.js-savedSearchPopup').parents('.js-sortingToolbar').before($markup);
+        }
+    };
+
+    var getErrorMarkupFullWidth = function(errorMessage, errorCSSClass) {
+        if (typeof errorMessage === 'string') {
+            return '<div class="' + (errorCSSClass || '') + ' limit-width-1200 alert-dismissable alert alert-danger oh mbl">' +
+                       '<div class="pull-left mts" style="width: 90%;">' +
+                           '<div>' +
+                               errorMessage +
+                           '</div>' +
+                       '</div>' +
+                       '<button class="close mtm" type="button" data-dismiss="alert" aria-hidden="true">×</button>' +
+                   '</div>'
+        }
     };
 
     var disableSavedSearch = function() {

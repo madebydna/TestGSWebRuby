@@ -1,8 +1,8 @@
-GS.search = GS.search || {};
 GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
 GS.window.sizing.width = GS.window.sizing.width || {};
-GS.search.googleMap = GS.search.googleMap || (function() {
+GS.googleMap = GS.googleMap || (function() {
 
+    var ajaxInitCallbacks = [];
     var needsInit = true;
     GS.search.map = GS.search.map || {};
     GS.search.mapMarkers = GS.search.mapMarkers || [];
@@ -258,7 +258,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
               markup += '<div class="clearfix">';
               markup += '<div class="fl mrs">'; //stars
               if (point.numReviews > 0) {
-                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ point.communityRatingStars+ '</span>';
+                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
                   markup += '<span class="mls font-size-small notranslate">'+ point.numReviews;
                   if (point.numReviews != 1) {
                       markup += ' ' + mapPinReviewsText() + ' </span>';
@@ -291,6 +291,7 @@ GS.search.googleMap = GS.search.googleMap || (function() {
           var mapPinSchoolTypePublicText = function() { return $('.js-mapPinSchoolTypePublicText').text().trim() };
           var mapPinSchoolTypeCharterText = function() { return $('.js-mapPinSchoolTypeCharterText').text().trim() };
           var mapPinAssignedSchoolText = function() { return $('.js-mapPinAssignedSchoolText').text().trim() };
+          var mapPinCommunityStars = function(rating) { return $('.js-mapPinCommunityStars-' + rating).html() };
 
           initialize(points);
 
@@ -332,13 +333,26 @@ GS.search.googleMap = GS.search.googleMap || (function() {
         }
     };
 
+    var addToInitDependencyCallbacks = function (func) {
+        ajaxInitCallbacks.push(func);
+        ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
+    };
+
+    var applyAjaxInitCallbacks = function () {
+      while (ajaxInitCallbacks.length > 0) {
+        (ajaxInitCallbacks.shift())();
+      }
+    };
+
     return {
         init: init,
         getMap: getMap,
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
-        setAssignedSchool: setAssignedSchool
+        setAssignedSchool: setAssignedSchool,
+        addToInitDependencyCallbacks: addToInitDependencyCallbacks,
+        applyAjaxInitCallbacks: applyAjaxInitCallbacks
     }
 
 })();

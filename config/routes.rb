@@ -7,14 +7,18 @@ LocalizedProfiles::Application.routes.draw do
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
 
-  root 'home#prototype'
-  get ENV_GLOBAL['home_path'], as: :home, to: 'home#prototype'
+  root 'home#show'
+  get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
   # This route ("/gsr/home/") is REQUIRED by Apache as long as we are running Tomcat
-  get '/gsr/home', as: :home_prototype, to: 'home#prototype'
+  get '/gsr/home', as: :home_show, to: 'home#show'
   # Route for Search Prototype
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
+
+  # get '/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
+
+  get '/gsr/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
@@ -55,7 +59,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
-    get '/community/forgotPassword.page', as: :forgot_password
+    # get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
     get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
@@ -148,6 +152,16 @@ LocalizedProfiles::Application.routes.draw do
       school_name: /.+/
   }
 
+  get '/gsr/:state/:city/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
+    district = request.params[:district]
+    # district can't = preschools and must start with letter
+    return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
+  }
+
+  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#allow_reset_password'
+  get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
+  post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
+
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join
     get '/gsr/login', :to => 'signin#new', :as => :signin
@@ -185,6 +199,8 @@ LocalizedProfiles::Application.routes.draw do
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
       get 'enrollment', to: 'cities#enrollment', as: :enrollment
       get 'schools', to: 'error#page_not_found', as: :browse
+      get 'guided-search', to: 'cities#guided_search', as: :guided_search
+
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'cities#enrollment'
       end
@@ -201,7 +217,7 @@ LocalizedProfiles::Application.routes.draw do
       # to just 404 by default. route helper will be city_district_path(...)
       # NOTE: this must come last in the city scope, because it will match
       # Anything after the cty name
-      get '/:district', to: 'error#page_not_found', as: :district, constraints: lambda{ |request|
+      get '/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
         district = request.params[:district]
         # district can't = preschools and must start with letter
         return district != 'preschools' && district.match(/^[a-zA-Z].*$/)

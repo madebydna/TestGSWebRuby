@@ -187,12 +187,7 @@ module ApplicationHelper
   
   def zillow_url(school)
     # test that values needed are populated
-    zillow = ''
-    zillow << 'http://www.zillow.com/'
-    zillow << States.abbreviation(school.state).upcase
-    zillow << '-'+school.zipcode
-    zillow << '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign='
-    zillow << (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
+    "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
   end
 
   def zillow_tracking_hash
@@ -249,5 +244,13 @@ module ApplicationHelper
 
   def filtering_search?
     @filtering_search
+  end
+
+  def guided_search_path(hub)
+    if hub.city
+      "/#{States.state_name(hub.state)}/#{hub.city.to_s.downcase}/guided-search"
+    else
+      "/#{States.state_name(hub.state)}/guided-search"
+    end
   end
 end

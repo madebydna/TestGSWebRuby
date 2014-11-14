@@ -1,13 +1,13 @@
-<% #Need this script tag to still get the google map javascript object. The object is needed to issue by location search %>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw="></script>
-
 <div class="limit-width-1200 row phm ptm pbl">
   <div class="col-xs-12 clearfix">
     <%= render 'number_schools_found' %>
   </div>
 </div>
 <div class="header-bg-color pvl">
-  <%= render 'search_ad_section', desktop_slots: @header_ad_slots[:desktop], mobile_slots: @header_ad_slots[:mobile] %>
+  <% if @show_ads %>
+      <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym, view: :desktop %>
+      <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym,  view: :mobile %>
+  <% end %>
   <div class="limit-width-1200 bg-white partner-carousel-image">
     <div class="pvl pll">
       <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
@@ -31,6 +31,9 @@
     </div>
   </div>
   <div class="mtl mbm ptm">
-    <%= render 'search_ad_section', desktop_slots: @footer_ad_slots[:desktop], mobile_slots: @footer_ad_slots[:mobile] %>
+    <% if @show_ads %>
+        <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Footer'.to_sym, view: :desktop %>
+        <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Footer'.to_sym,  view: :mobile %>
+    <% end %>
   </div>
 </div>

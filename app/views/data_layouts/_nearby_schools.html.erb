@@ -1,60 +1,9 @@
-<% version_with_ad = @show_ads %>
-<% neighbors = NearbySchoolDecorator.decorate_collection(@school.neighbors) %>
-<% if version_with_ad %>
-  <% neighbor_sizes = [
-    [
-      { xs: 12, sm: 8, md: 8, lg: 4 },
-      { xs: 12, sm: 4, md: 4, lg: 2 },
-      { xs: 12, sm: 4, md: 4, lg: 2 },
-      { xs: 12, sm: 4, md: 4, lg: 2 },
-      { xs: 12, sm: 4, md: 4, lg: 2 }
-    ]
-  ] %>
-<% else %>
-  <% neighbor_sizes = [
-    [
-      { xs: 12, sm: 3, md: 3, lg: 3 },
-      { xs: 12, sm: 3, md: 3, lg: 3 },
-      { xs: 12, sm: 3, md: 3, lg: 3 },
-      { xs: 12, sm: 3, md: 3, lg: 3 }
-    ]
-  ] %>
-<% end %>
-
-<% if neighbors.size >= 4 %>
-  <% ad_content = capture do %>
-    <% neighbor = neighbors[0] %>
-    <%= div_tag(class: 'pbm', sizes: neighbor_sizes.first.first) do %>
-      <div class="pam" style="width:100%;">
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :desktop, show_ad_text: false  %>
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :mobile, show_ad_text: false  %>
-      </div>
-    <% end %>
-  <% end %>
-  <div class="limit-width-1200 clearfix">
-    <div class="clearfix mbm plm">
-      <hr />
-      <div class="fl">
-          <h2 class="mvn">Nearby schools</h2>
-      </div>
-    </div>
-    <% neighbor_index = 0 %>
-    <% neighbor_sizes.each_with_index do |column_sizes, row| %>
-      <div class="row mtl">
-        <% column_sizes.each_with_index do |sizes, column| %>
-          <% if version_with_ad && row == 0 && column == 0 %>
-            <%= ad_content %>
-          <% else %>
-            <% neighbor = neighbors[neighbor_index] %>
-            <% neighbor_index += 1 %>
-            <% css_class = 'pbm ' %>
-            <%= div_tag(class: css_class, sizes: sizes) do %>
-              <%= render partial: 'school_profile/nearby_school',
-                locals: { neighbor: neighbor } %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+<%= 
+  render(
+    partial: 'shared/horizontal_school_boxes', 
+    locals: { 
+      title: "Nearby schools",
+      schools: NearbySchoolDecorator.decorate_collection(@school.neighbors)
+    }
+  )
+%>

@@ -1,27 +1,9 @@
-.hub-hero-image {
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  background-size: 50% 100%;
-}
-
-.hub-hero-bg {
-  background: rgba(0, 0, 0, 0.62);
-  border-radius: 3px;
-  width: 940px;
-  margin: auto;
-  padding: 35px;
-}
 
 .sponsor-bar {
   top: 58px;
   right: 0;
   left: 0;
   z-index: 1;
-}
-
-.lg-search-bar {
-  width: 350px;
 }
 
 .search-bar-home {
@@ -35,12 +17,6 @@
 
 .clear-cookies-link:hover {
   color: #fff;
-}
-
-.school-breakdown {
-  ul {
-    list-style-type: none;
-  }
 }
 
 .search-type-toggle {
@@ -76,24 +52,7 @@
   }
 }
 
-.state-hub-search-button {
-  height: 47px;
-  background: $brand-primary;
-  color: white;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  padding: 0px 20px;
-}
-
-
 @media only screen and (max-width: 990px) {
-  .hub-hero-bg {
-    width: 100%;
-    height: auto;
-    margin-top: 0;
-    border-radius: none;
-  }
   .search-hero-heading {
     h4 {
       margin-top: 20px;
@@ -110,42 +69,14 @@
     margin-bottom: 15px;
   }
 
-  .school-breakdown {
-    background: white;
-    padding: 20px 20px 0 20px;
-    margin-left: -35px;
-    margin-bottom: -35px;
-    overflow: hidden;
-    width: 150%;
-    h4 {
-      color: black;
-    }
-
-    button {
-      color: $blue-dark;
-    }
-  }
-
-  .lg-search-bar {
-    width: 70%;
-    height: 40px;
-  }
   .search-bar-home {
     width: 90%;
     height: 40px;
   }
 
-  .state-hub-search-button {
-    width: 22%;
-    height: 41px;
-    padding: 0;
-  }
 }
 
-@media only screen and (max-width: 768px) {
-  .lg-search-bar {
-    height: 38px;
-  }
+@media only screen and (max-width: 768px) and (min-width: 481px) {
   .search-bar-home {
     height: 38px;
   }
@@ -153,7 +84,6 @@
     height: 39px;
   }
 }
-
 
 @media only screen and (max-width: 480px) {
   .sponsor-bar {
@@ -293,3 +223,110 @@
 .tt-suggestion p {
   margin: 0;
 }
+
+// State and City Hub //
+
+.hub_hero_size {height: 550px}
+
+.hub-hero-bg {
+  background: rgba(0, 0, 0, 0.62);
+  border-radius: 3px;
+  width: 940px;
+  margin: auto;
+  padding: 35px;
+  min-height: 350px;
+}
+
+.absolute-center-hub {
+  margin: auto; position: absolute; top: 60px; left: 0; bottom: 0; right: 0;
+}
+
+@media (max-width:990px) {
+  .absolute-center-hub {
+    margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+  }
+}
+
+// Hub image for State and City //
+
+.absolute-center {margin: auto;position: absolute;top: 0; left: 0; bottom: 0; right: 0; }
+
+.proto_hero_size {height: 500px}
+
+.hub-image-bg-scale {
+  width: 100%;
+  position: relative;
+  //  overflow: hidden;
+
+  .img-container {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    min-height: 550px;
+
+    img.scaling {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      min-width: 50%;
+      min-height: 550px;
+    }
+  }
+}
+
+.school-breakdown, .school-breakdown-sponsored {
+  ul {
+    list-style-type: none;
+  }
+}
+
+@media only screen and (max-width: 990px) {
+
+  .hub-hero-bg {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    border-radius: none;
+  }
+  .school-breakdown, .school-breakdown-sponsored {
+    background: white;
+    padding: 20px 0 0 25px;
+    h4 {
+      color: black;
+    }
+
+    button {
+      color: $blue-dark;
+    }
+  }
+
+  .school-breakdown {
+    margin-top: -200px;
+  }
+  .school-breakdown-sponsored {
+    margin-top: -130px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .school-breakdown {
+    margin-top: -220px;
+  }
+  .school-breakdown-sponsored {
+    margin-top: -180px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .hub-hero-bg {
+    padding: 35px 15px;
+  }
+  .school-breakdown-sponsored {
+    margin-top: -200px;
+  }
+}
+
+

@@ -1,0 +1,177 @@
+<%= render 'nav/topnav' %>
+<% district = DistrictHomeDecorator.decorate(@district) %>
+
+<style>
+  .border-left {
+    margin-left: 0;
+    padding-left: 10px;
+    border-left: 1px solid #999;
+  }
+</style>
+
+<div class="limit-width-1200">
+
+  <div class="phm row">
+    <h1 style="color:#20AEDC;"><%= district.name %></h1>
+    <% grade_range_row_content = [] %>
+
+    <% # This allows you to capture html into an array without using strings %>
+    <% grade_range_row_content << capture do %>
+      <span>Grades</span> <span class=""><%= district.grade_range %></span>
+    <% end %>
+
+    <% grade_range_row_content << capture do %>
+      <span>Schools</span> <span class=""><%= district.number_of_schools_in_district %></span>
+    <% end %>
+
+    <% grade_range_row_content.each_with_index do |content, index| %>
+      <% css_class = "prm fl" %>
+      <% css_class << " border-left" if index > 0 %>
+      <div class="fl <%= css_class %>">
+        <%= content.html_safe %>
+      </div>
+    <% end %>
+  </div>
+
+  <% # Row contains rating, boilerplate text (description of district), %>
+  <% # and an advertisement %>
+  <div class="phm row">
+    <% if @show_ads %>
+      <% first_column_sizes = "col-lg-4 col-md-5 col-sm-12 col-xs-12" %>
+      <% second_column_sizes = "col-lg-4 col-md-3 col-sm-12 col-xs-12" %>
+      <% third_column_sizes = "col-lg-4 col-md-4 col-sm-12 col-xs-12" %>
+    <% else %>
+      <% first_column_sizes = "col-lg-4 col-md-6 col-sm-6 col-xs-12" %>
+      <% second_column_sizes = "col-lg-8 col-md-6 col-sm-6 col-xs-12" %>
+    <% end %>
+
+    <div class="<%= first_column_sizes %> prm ptm">
+      <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
+        <%= district.square_rating(class: 'fl') %>        
+        <div class="fl pal tal">
+          <span style="font-size:150%;">GreatSchools</span><br/>
+          <span style="font-size:180%;">District rating</span>
+        </div>
+      </div>
+      <div class="row">
+        This district's rating is based on its schools' test results.
+        <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 prl">
+          <%= district.street %><br/>
+          <%= district.city_state_zip %>
+        </div>
+        <div class="col-lg-6">
+          Phone: <%= district.phone %><br/>
+          <%= district.website_link %> 
+        </div>
+      </div>
+    </div>
+    <div class="<%= second_column_sizes %> prm ptm">
+      <%= district.boilerplate %>
+    </div>
+    <% if @show_ads %>
+      <div class="<%= third_column_sizes %> ptm">
+        <div>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :mobile  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+  <% # Row contains links / buttons to browse schools by level %>
+  <div class="row phm pbl mtl" style="background-color:#F3F8FB;">
+    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
+      <h4>Browse schools in <%= district.name  %></h4><br/>
+      <% %w[e m h].each_with_index do |level, index| %>
+        <% css_class = "prm fl" %>
+        <% css_class << " border-left" if index > 0 %>
+        <div class="<%= css_class %>">
+          <%= district.school_browse_link(level) %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 ptl tac">
+      <%= district.school_browse_link do %>
+        <button class="btn btn-primary mtm">View all schools</button>
+      <% end %>
+    </div>
+  </div>
+
+
+  <% # Row contains map %>
+  <div class="row ptm">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <%= render partial: 'google_map' %>
+    </div>
+  </div>
+
+  <div class="row ptm">
+    <div class="col-xs-12">
+      <% if @show_ads %>
+        <div>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% # Row nearby districts and Zillow module %>
+  <div class="row ptm">
+    <% if @nearby_districts.present? %>
+      <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6" %>
+      <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6" %>
+    <% else %>
+      <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
+    <% end %>
+
+    <% if @nearby_districts.present? %>
+      <div class="<%= first_column_sizes %>">
+        <div class="pvm" style="background-color:#F5F5F5">
+          <h3 class="plm">Nearby districts</h3>
+          <% @nearby_districts.each do |district| %>
+            <% district = DistrictHomeDecorator.decorate(district) %>
+            <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
+              <div class="fl prs font-size-large" style="height:30px">
+                <% # district.rating %>
+              </div>
+              <div>
+                <%= district.district_home_link %></br>
+                <%= district.city_state %> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="<%= second_column_sizes %> ma ptm">
+      <h3 class="ma" style="width:300px">Nearby homes for sale</h3>
+      <%= render 'data_layouts/zillow_content', data: @zillow_data %>
+    </div>
+  </div>
+
+  </br>
+
+  <div class="phm row">
+    <div class="col-xs-12">
+      <%= render partial: 'shared/home/email_signup' %>
+    </div>
+  </div>
+
+  <%= 
+    render(
+      partial: 'shared/horizontal_school_boxes', 
+      locals: { 
+        title: "Top rated schools in #{@district.name}",
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+      }
+    )
+  %>
+
+</div>
+
+<%= render 'shared/state_footer', state: @state %>

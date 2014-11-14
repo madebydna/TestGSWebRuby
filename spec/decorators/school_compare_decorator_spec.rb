@@ -111,12 +111,12 @@ describe SchoolCompareDecorator do
 
       it 'should handle only after school correctly' do
         allow(decorated_school.school_cache).to receive(:programs).and_return(only_after_hash)
-        expect(decorated_school.school_cache.before_care).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
+        expect(decorated_school.school_cache.before_care).to eq('No')
         expect(decorated_school.school_cache.after_school).to eq('Yes')
       end
       it 'should handle only before care correctly' do
         allow(decorated_school.school_cache).to receive(:programs).and_return(only_before_hash)
-        expect(decorated_school.school_cache.after_school).to eq(CachedCharacteristicsMethods::NO_DATA_SYMBOL)
+        expect(decorated_school.school_cache.after_school).to eq('No')
         expect(decorated_school.school_cache.before_care).to eq('Yes')
       end
       it 'should handle both correctly' do

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'home/prototype.html.erb' do
+describe 'home/show.html.erb' do
 
-  before { visit home_prototype_path }
+  before { visit home_show_path }
 
   describe 'RoR home page' do
     it_behaves_like 'page with ads', number_of_ads: 2
