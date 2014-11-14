@@ -3,6 +3,7 @@ class CitiesController < ApplicationController
   include MetaTagsHelper
   include AdvertisingHelper
   include GuidedSearchConcerns
+  include GoogleMapConcerns
 
   before_action :set_city_state
   before_action :set_hub
@@ -11,6 +12,8 @@ class CitiesController < ApplicationController
   before_action :write_meta_tags, except: [:partner, :guided_search]
 
   def show
+    return city_home if params[:prototype]
+
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -34,6 +37,26 @@ class CitiesController < ApplicationController
       gon.state_abbr = @state[:short]
 
     end
+  end
+
+  def city_home
+    gon.pagename = 'DistrictHome'
+    @city_object = City.where(name: @city).first
+    @top_schools = top_schools(@city_object, 4)
+    prepare_map
+    @districts = District.on_db(@city_object.state.downcase.to_sym).where(city: @city_object.name)
+
+    render 'city_home'
+  end
+
+  def top_schools(city, count = 10)
+    city.schools_by_rating_desc.take(count)
+  end
+
+  def prepare_map
+    @map_schools = @city_object.schools_by_rating_desc
+    mapping_points_through_gon_from_db
+    assign_sprite_files_though_gon
   end
 
   def events

@@ -34,6 +34,10 @@ class School < ActiveRecord::Base
     on_db(district.shard).active.where(district_id: district.id)
   end
 
+  def self.within_city(state_abbreviation, city_name)
+    on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name)
+  end
+
   def census_data_for_data_types(data_types = [])
     CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
   end
