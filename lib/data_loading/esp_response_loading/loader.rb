@@ -47,12 +47,13 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       .where(esp_response_update.attributes)
       .first_or_initialize
 
-    value_row.on_db(esp_response_update.shard).update_attributes(
-      active: 1,
-      created: Time.now,
-      esp_source: esp_response_update.source,
-      member_id: esp_response_update.member_id
-    )
+    validate_esp_response!(value_row, esp_response_update)
+    # value_row.on_db(esp_response_update.shard).update_attributes(
+    #   active: 1,
+    #   created: Time.now,
+    #   esp_source: esp_response_update.source,
+    #   member_id: esp_response_update.member_id
+    # )
 
   end
 
@@ -64,7 +65,8 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
 
     if value_row.present?
       value_row.each do | row |
-        row.on_db(esp_response_update.shard).update_attributes(active: 0)
+        validate_esp_response!(row, esp_response_update)
+        # row.on_db(esp_response_update.shard).update_attributes(active: 0)
       end
     end
   end

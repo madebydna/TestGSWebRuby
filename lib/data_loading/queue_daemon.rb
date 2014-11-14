@@ -9,7 +9,7 @@ class QueueDaemon
     # UpdateQueue.destroy_all
     # UpdateQueue.seed_sample_data!
 
-    puts 'Starting loops'
+    puts 'Starting the update queue daemon.'
     loop do
       process_unprocessed_updates
       sleep 2
@@ -22,23 +22,26 @@ class QueueDaemon
     rescue
       raise 'Could not find UpdateQueue table'
     end
+    sig_int = SignalHandler.new('INT')
     updates.each do |scheduled_update|
-      begin
+      sig_int.dont_interrupt do
         begin
-          update_blob = JSON.parse(scheduled_update.update_blob)
-        rescue
-          raise 'Invalid JSON in update_blob'
+          begin
+            update_blob = JSON.parse(scheduled_update.update_blob)
+          rescue
+            raise 'Invalid JSON in update_blob'
+          end
+          update_blob.each do |data_type, data_update|
+            next if data_update.blank?
+            klass = Loader.determine_loading_class(data_type)
+            loader = klass.new(data_type, data_update, scheduled_update.source)
+            loader.load!
+          end
+          scheduled_update.update_attributes(status: SUCCESS_STATUS)
+        rescue Exception => e
+          puts e.message
+          scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message)
         end
-        update_blob.each do |data_type, data_update|
-          next if data_update.blank?
-          klass = Loader.determine_loading_class(data_type)
-          loader = klass.new(data_type, data_update, scheduled_update.source)
-          loader.load!
-        end
-        scheduled_update.update_attributes(status: SUCCESS_STATUS)
-      rescue Exception => e
-        puts e.message
-        scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message)
       end
     end
   end

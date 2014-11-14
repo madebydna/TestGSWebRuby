@@ -37,24 +37,23 @@ class CensusLoading::Loader < CensusLoading::Base
       .on_db(census_update.shard)
       .where(census_update.data_set_attributes)
       .first_or_initialize
-    data_set.on_db(census_update.shard).update_attributes(active: 1)
 
-    # validate_census_data_set!(data_set, census_update)
+    validate_census_data_set!(data_set, census_update)
+    # data_set.on_db(census_update.shard).update_attributes(active: 1)
 
     value_row = census_update.value_class
       .on_db(census_update.shard)
       .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
       .first_or_initialize
 
-    value_row.on_db(census_update.shard).update_attributes(
-      active: 1,
-      value_text: census_update.value_type == :value_text ? census_update.value : nil,
-      value_float: census_update.value_type == :value_float ? census_update.value : nil,
-      modified: Time.now,
-      modifiedBy: "Queue daemon. Source: #{source}"
-    )
-
-    # validate_census_value!(value_row, data_set, census_update)
+    validate_census_value!(value_row, data_set, census_update)
+    # value_row.on_db(census_update.shard).update_attributes(
+    #   active: 1,
+    #   value_text: census_update.value_type == :value_text ? census_update.value : nil,
+    #   value_float: census_update.value_type == :value_float ? census_update.value : nil,
+    #   modified: Time.now,
+    #   modifiedBy: "Queue daemon. Source: #{source}"
+    # )
 
   end
 
@@ -67,14 +66,15 @@ class CensusLoading::Loader < CensusLoading::Base
 
     if data_sets.present?
       data_sets.each do | data_set |
-        data_set.on_db(census_update.shard).update_attributes(active: 0)
+        validate_census_data_set!(data_set, census_update)
 
         value_rows = census_update.value_class
           .on_db(census_update.shard)
           .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
 
         value_rows.each do | value_row |
-          value_row.on_db(census_update.shard).update_attributes(active: 1)
+          validate_census_value!(value_row, data_set, census_update)
+          # value_row.on_db(census_update.shard).update_attributes(active: 1)
         end
       end
     end
