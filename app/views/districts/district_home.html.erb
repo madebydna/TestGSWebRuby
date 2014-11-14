@@ -9,10 +9,10 @@
   }
 </style>
 
-<div class="phm limit-width-1200">
-  <h1 style="color:#20AEDC;"><%= district.name %></h1>
+<div class="limit-width-1200">
 
-  <div class="row">
+  <div class="phm row">
+    <h1 style="color:#20AEDC;"><%= district.name %></h1>
     <% grade_range_row_content = [] %>
 
     <% # This allows you to capture html into an array without using strings %>
@@ -35,7 +35,7 @@
 
   <% # Row contains rating, boilerplate text (description of district), %>
   <% # and an advertisement %>
-  <div class="row">
+  <div class="phm row">
     <% if @show_ads %>
       <% first_column_sizes = "col-lg-4 col-md-5 col-sm-12 col-xs-12" %>
       <% second_column_sizes = "col-lg-4 col-md-3 col-sm-12 col-xs-12" %>
@@ -83,7 +83,7 @@
 
 
   <% # Row contains links / buttons to browse schools by level %>
-  <div class="row pll prm pbl mtl" style="background-color:#F3F8FB;">
+  <div class="row phm pbl mtl" style="background-color:#F3F8FB;">
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
       <h4>Browse schools in <%= district.name  %></h4><br/>
       <% %w[e m h].each_with_index do |level, index| %>
@@ -131,7 +131,7 @@
 
     <% if @nearby_districts.present? %>
       <div class="<%= first_column_sizes %>">
-        <div class="pam" style="background-color:#F5F5F5">
+        <div class="pvm" style="background-color:#F5F5F5">
           <h3 class="plm">Nearby districts</h3>
           <% @nearby_districts.each do |district| %>
             <% district = DistrictHomeDecorator.decorate(district) %>
@@ -148,15 +148,20 @@
         </div>
       </div>
     <% end %>
-    <div class="<%= second_column_sizes %> pll ma ptm">
-      <h3>Nearby homes for sale</h3>
+    <div class="<%= second_column_sizes %> ma ptm">
+      <h3 class="ma" style="width:300px">Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>
     </div>
   </div>
 
   </br>
 
-  <%= render partial: 'shared/home/email_signup' %>
+  <div class="phm row">
+    <div class="col-xs-12">
+      <%= render partial: 'shared/home/email_signup' %>
+    </div>
+  </div>
+
   <%= 
     render(
       partial: 'shared/horizontal_school_boxes', 
