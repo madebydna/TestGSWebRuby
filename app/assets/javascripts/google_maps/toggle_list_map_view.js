@@ -98,7 +98,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
             }
         });
 
-        if ($(elemMapCanvas).length > 0) {
+        if ($(elemMapCanvas).length > 0 && window.gon.hideGoogleMapForABTest === undefined) {
             if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
                 hideMapView();
             }
@@ -110,7 +110,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
     return {
         init: init,
-        hideMapView: hideMapView
+        showMapView: showMapView
     };
 
 })();
