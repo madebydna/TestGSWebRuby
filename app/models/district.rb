@@ -8,6 +8,11 @@ class District < ActiveRecord::Base
     District.on_db(state).where(name: name).first rescue nil
   end
 
+  def self.find_by_state_and_ids(state, ids = [])
+    District.on_db(state.downcase.to_sym).
+      where(id: ids)
+  end
+
   def boilerplate_object
     @boilerplate_object ||= DistrictBoilerplate.find_for_district(self).first
   end
@@ -18,13 +23,11 @@ class District < ActiveRecord::Base
 
   def nearby_districts
     nearby_district_objects = 
-      NearbyDistrict.where(
-        district_state: self.state.downcase,
-        district_id: self.id
-      ).order('distance asc')
+      NearbyDistrict.find_by_district(self).sorted_by_distance
+
     neighbor_ids = nearby_district_objects.map(&:neighbor_id)
-    districts = District.on_db(state.downcase.to_sym).where(id: neighbor_ids)
-    districts.sort_by { |d, value| neighbor_ids.index(d.id) }
+    districts = District.find_by_state_and_ids(state, neighbor_ids)
+    districts.sort_by { |d| neighbor_ids.index(d.id) }
   end
 
   # Returns numeric value or nil
@@ -38,31 +41,21 @@ class District < ActiveRecord::Base
 
   def schools_by_rating_desc
     @district_schools_by_rating_desc ||= (
-      schools = School.on_db(state.downcase.to_sym).
-        active.
-        where(district_id: id)
+      schools = School.within_district(self)
 
-      school_metadata = SchoolMetadata.on_db(state.downcase.to_sym).
-        where(
-          school_id: schools.map(&:id),
-          meta_key: 'overallRating'
-        ).to_a
-
-      school_metadata.sort_by! { |metadata| metadata.meta_value.to_i }
-      school_metadata.reverse!
-      sorted_top_school_ids = school_metadata.map(&:school_id)
+      School.preload_school_metadata!(schools)
 
       # If the school doesn't exist in the top_school_ids array,
       # then sort it to the end
       schools.sort do |s1, s2|
-        if sorted_top_school_ids.index(s1.id) == sorted_top_school_ids.index(s2.id)
+        if s1.great_schools_rating == s2.great_schools_rating
           0
-        elsif sorted_top_school_ids.index(s1.id).nil?
+        elsif s1.great_schools_rating.nil?
           1
-        elsif sorted_top_school_ids.index(s2.id).nil?
+        elsif s2.great_schools_rating.nil?
           -1
         else
-          (sorted_top_school_ids.index(s1.id) <=> sorted_top_school_ids.index(s2.id))
+          s2.great_schools_rating.to_i <=> s1.great_schools_rating.to_i
         end
       end
     )

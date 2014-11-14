@@ -30,6 +30,10 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).find id rescue nil
   end
 
+  def self.within_district(district)
+    on_db(district.shard).active.where(district_id: district.id)
+  end
+
   def census_data_for_data_types(data_types = [])
     CensusDataSet.on_db(state.downcase.to_sym).by_data_types(state, data_types)
   end
@@ -61,6 +65,27 @@ class School < ActiveRecord::Base
       collection.nickname
     else
       city
+    end
+  end
+
+  def self.preload_school_metadata!(schools)
+    return unless schools.present?
+
+    if schools.map(&:state).uniq.size > 1
+      raise ArgumentError('Does not yet support multiple states')
+    end
+
+    school_to_id_map = schools.each_with_object({}) do |school, hash|
+      hash[school.id] = school
+    end
+
+    metadata_hash = Hashie::Mash.new
+    school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
+    school_metadatas.each do |metadata|
+      school = school_to_id_map[metadata.school_id]
+      metadata_hash = school.instance_variable_get(:@school_metadata) || Hashie::Mash.new
+      metadata_hash[metadata.meta_key] = metadata.meta_value
+      school.instance_variable_set(:@school_metadata, metadata_hash)
     end
   end
 

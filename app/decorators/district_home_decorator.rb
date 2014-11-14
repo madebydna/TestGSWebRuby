@@ -65,7 +65,7 @@ class DistrictHomeDecorator < Draper::Decorator
   def website_link
     url = district.home_page_url
     if url.present?
-      h.link_to('District website', url)
+      h.link_to('District website', url, target: '_blank')
     end
   end
 

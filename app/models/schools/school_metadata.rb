@@ -21,4 +21,5 @@ class SchoolMetadata < ActiveRecord::Base
     results = self.on_db(state.to_sym).where(meta_key: 'collection_id', meta_value: collection_id.to_i)
     results.map(&:school_id)
   end
+
 end

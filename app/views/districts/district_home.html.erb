@@ -58,7 +58,7 @@
         <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
       </div>
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 prl">
           <%= district.street %><br/>
           <%= district.city_state_zip %>
         </div>
@@ -108,25 +108,29 @@
       <%= render partial: 'google_map' %>
     </div>
   </div>
-  <% if @show_ads %>
-    <div>
-      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
-      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
-    </div>
-  <% end %>
 
+  <div class="row ptm">
+    <div class="col-xs-12">
+      <% if @show_ads %>
+        <div>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
   <% # Row nearby districts and Zillow module %>
-  <div class="row pal">
+  <div class="row ptm">
     <% if @nearby_districts.present? %>
-      <% first_column_sizes = "col-lg-9 col-md-9 col-sm-9" %>
-      <% second_column_sizes = "col-lg-3 col-md-3 col-sm-3" %>
+      <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6" %>
+      <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6" %>
     <% else %>
       <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
     <% end %>
 
     <% if @nearby_districts.present? %>
-      <div class="<%= first_column_sizes %> prl">
+      <div class="<%= first_column_sizes %>">
         <div class="pam" style="background-color:#F5F5F5">
           <h3 class="plm">Nearby districts</h3>
           <% @nearby_districts.each do |district| %>
@@ -144,7 +148,7 @@
         </div>
       </div>
     <% end %>
-    <div class="<%= second_column_sizes %> pll">
+    <div class="<%= second_column_sizes %> pll ma ptm">
       <h3>Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>
     </div>
