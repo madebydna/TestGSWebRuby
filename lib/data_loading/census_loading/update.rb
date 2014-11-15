@@ -15,10 +15,9 @@ class CensusLoading::Update
     @update_blob.each do |key, value|
       instance_variable_set("@#{key}", value)
     end
+    validate_update
 
     parse_attributes!
-
-    validate_update
   end
 
   def parse_attributes!

@@ -28,8 +28,8 @@ class QueueDaemon
         begin
           begin
             update_blob = JSON.parse(scheduled_update.update_blob)
-          rescue
-            raise 'Invalid JSON in update_blob'
+          rescue Exception => e
+            raise "Error parsing the JSON for this update. Error message: #{e.message}"
           end
           update_blob.each do |data_type, data_update|
             next if data_update.blank?
@@ -39,7 +39,6 @@ class QueueDaemon
           end
           scheduled_update.update_attributes(status: SUCCESS_STATUS)
         rescue Exception => e
-          puts e.message
           scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message)
         end
       end
