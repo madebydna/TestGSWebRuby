@@ -683,7 +683,7 @@ module WritePdfConcerns
     column_box([0, cursor], reflow_margins: true, :columns => 3, :width => bounds.width) do
 
       map_icon_to_school_name_mapping = find_schools_by_location_for_index(schools_decorated_with_cache_results)
-      map_icon_to_school_name_mapping.each do |key, value|
+      map_icon_to_school_name_mapping.sort.map do |key, value|
         draw_location_index_columns(value, key)
       end
     end
