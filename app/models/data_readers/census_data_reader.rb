@@ -56,9 +56,7 @@ class CensusDataReader < SchoolProfileDataReader
 
       results_hash = {}
 
-      category_datas = category.sorted_category_data
-
-      category_datas.each do |cd|
+      category.category_datas.each do |cd|
         data_for_data_type = all_data.select do |data_type, data|
           cd.response_key == data_type_id_for_data_type_label(data_type) ||
           cd.response_key.to_s.match(/#{data_type_id_for_data_type_label(data_type)}/i)

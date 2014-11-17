@@ -7,21 +7,13 @@ class Category < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Category'
   has_many :categories, :foreign_key => 'parent_id'
   has_many :response_values, :foreign_key => 'category_id'
-  has_many :category_datas
+  has_many :category_datas, -> { order('category_id, sort_order ASC') }
 
   def category_data(collections = nil)
     category_datas.select do |category_data| 
       category_data.collection.nil? ||
       collections.blank? ||
       collections.map(&:id).include?(self.category_datas.first.collection.id)
-    end
-  end
-
-  def sorted_category_data(collections = nil)
-    category_data(collections).sort_by do |cd|
-      position = cd.sort_order
-      position = 1 if position.nil?
-      position
     end
   end
 
