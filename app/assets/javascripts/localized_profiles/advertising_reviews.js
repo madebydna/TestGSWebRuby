@@ -14,9 +14,9 @@ GS.reviewsAd.reviewSlotsArr = [
   {name:'Responsive_School_Reviews_Review3_728x90', dimensions: [728, 90]}
 ];
 GS.reviewsAd.reviewSlotsMobileArr = [
-  {name:'Responsive_School_Reviews_Mobile_Review1_320x50', dimensions: [320, 50]},
-  {name:'Responsive_School_Reviews_Mobile_Review2_300x250', dimensions: [300, 250]},
-  {name:'Responsive_School_Reviews_Mobile_Review3_320x50', dimensions: [320, 50]}
+  {name:'Responsive_Mobile_School_Reviews_Review1_320x50', dimensions: [320, 50]},
+  {name:'Responsive_Mobile_School_Reviews_Review2_300x250', dimensions: [300, 250]},
+  {name:'Responsive_Mobile_School_Reviews_Review3_320x50', dimensions: [320, 50]}
 ];
 
 GS.reviewsAd.reviewSlotCount = GS.reviewsAd.reviewSlotsArr.length;
