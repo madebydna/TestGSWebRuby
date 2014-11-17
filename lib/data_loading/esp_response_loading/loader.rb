@@ -48,6 +48,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       .first_or_initialize
 
     validate_esp_response!(value_row, esp_response_update)
+    # TODO Uncomment the following lines when ready to have this write to the database
     # value_row.on_db(esp_response_update.shard).update_attributes(
     #   active: 1,
     #   created: Time.now,
@@ -66,6 +67,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     if value_row.present?
       value_row.each do | row |
         validate_esp_response!(row, esp_response_update)
+        # TODO Uncomment the following lines when ready to have this write to the database
         # row.on_db(esp_response_update.shard).update_attributes(active: 0)
       end
     end

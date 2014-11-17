@@ -39,6 +39,7 @@ class CensusLoading::Loader < CensusLoading::Base
       .first_or_initialize
 
     validate_census_data_set!(data_set, census_update)
+    # TODO Uncomment the following lines when ready to have this write to the database
     # data_set.on_db(census_update.shard).update_attributes(active: 1)
 
     value_row = census_update.value_class
@@ -47,6 +48,7 @@ class CensusLoading::Loader < CensusLoading::Base
       .first_or_initialize
 
     validate_census_value!(value_row, data_set, census_update)
+    # TODO Uncomment the following lines when ready to have this write to the database
     # value_row.on_db(census_update.shard).update_attributes(
     #   active: 1,
     #   value_text: census_update.value_type == :value_text ? census_update.value : nil,
@@ -74,6 +76,7 @@ class CensusLoading::Loader < CensusLoading::Base
 
         value_rows.each do | value_row |
           validate_census_value!(value_row, data_set, census_update)
+          # TODO Uncomment the following lines when ready to have this write to the database
           # value_row.on_db(census_update.shard).update_attributes(active: 1)
         end
       end
