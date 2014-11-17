@@ -190,10 +190,10 @@ module PdfConcerns
     is_pk8 = opts[:is_pk8]
     added_schools = opts[:added_schools]
     removed_schools = opts[:removed_schools]
-    school_id1 = opts[:school_id1]
-    school_id2 = opts[:school_id2]
-    school_id3 = opts[:school_id3]
-    school_id4 = opts[:school_id4]
+    school_id1 = opts[:id1]
+    school_id2 = opts[:id2]
+    school_id3 = opts[:id3]
+    school_id4 = opts[:id4]
 
     db_schools = []
 
