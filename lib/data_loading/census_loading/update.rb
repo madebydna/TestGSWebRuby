@@ -27,7 +27,7 @@ class CensusLoading::Update
 
     @value_type = data_type.value_type
 
-    @data_set_attributes = data_set_attributes
+    @data_set_attributes = data_set_attributes unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
 
     @value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
   end
@@ -51,7 +51,7 @@ class CensusLoading::Update
       raise 'Non-state level updates must have an entity_id specified'
     end
     if value.blank?
-      raise 'Every census update must have a value'
+      raise 'Every census update must have a value' unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
     end
   end
 end

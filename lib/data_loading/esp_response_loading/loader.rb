@@ -11,11 +11,13 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
 
       school = School.on_db(esp_response_update.shard).find(esp_response_update.entity_id)
 
-      if esp_response_update.action == 'disable'
+      if esp_response_update.action == ACTION_DISABLE
         disable!(esp_response_update)
       # If we choose to support delete later, we can uncomment this and then create the delete method below
       # elsif esp_response_update.action == 'delete'
       #   delete!(esp_response_update)
+      elsif esp_response_update.action == ACTION_BUILD_CACHE
+        # do nothing
       else
         insert_into!(esp_response_update)
       end

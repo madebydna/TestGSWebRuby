@@ -33,8 +33,10 @@ class EspResponseLoading::Update
   def validate_update
     raise 'Every esp response update must have an entity_state specified' if entity_state.blank?
     raise 'Every esp response update must have a data_type specified' if data_type.blank?
-    raise 'Every esp response update must have an value specified' if value.blank?
-    raise 'Every esp response update must have a member_id specified' if member_id.blank?
     raise 'Every esp response update must have a entity_id specified' if entity_id.blank?
+    unless action == EspResponseLoading::Loader::ACTION_BUILD_CACHE
+      raise 'Every esp response update must have an value specified' if value.blank?
+      raise 'Every esp response update must have a member_id specified' if member_id.blank?
+    end
   end
 end

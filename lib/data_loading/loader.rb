@@ -2,6 +2,9 @@ class Loader
 
   attr_accessor :data_type, :updates, :source
 
+  ACTION_DISABLE = 'disable'
+  ACTION_BUILD_CACHE = 'build_cache'
+
   def initialize(data_type, updates, source)
     @data_type = data_type
     @updates = updates
