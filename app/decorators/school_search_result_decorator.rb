@@ -33,7 +33,7 @@ class SchoolSearchResultDecorator < SchoolProfileDecorator
         zipcode: zipcode,
         schoolType: decorated_school_type,
         preschool: preschool?,
-        gradeRange: process_level,
+        gradeRange: grade_range || process_level,
         fitScore: fit_score,
         maxFitScore: max_fit_score,
         gsRating: overall_gs_rating || 0,
