@@ -15,11 +15,17 @@ class Loader
     CensusLoading::Base.census_data_types.keys.any? { |cdt| datatype.casecmp(cdt) == 0 }
   end
 
+  def self.esp_data_type?(datatype)
+    datatype == 'osp'
+  end
+
   def self.determine_loading_class(data_type)
     if census_data_type?(data_type)
       CensusLoading::Loader
     elsif data_type == 'newsletter'
       # ... just an example of how to extend
+    elsif esp_data_type?(data_type)
+      EspResponseLoading::Loader
     else
       EspResponseLoading::Loader
     end
