@@ -3,7 +3,8 @@ class Admin::PyocController <  ApplicationController
   include PdfConcerns
 
   def print_pdf
-    @db_schools = find_schools_to_be_printed(
+
+@db_schools = find_schools_to_be_printed(
         state_param,{
         :collection_id=>params[:collection_id].to_i,
         :is_high_school=>params[:batch] == 'is_high_school',
@@ -11,6 +12,7 @@ class Admin::PyocController <  ApplicationController
         :is_pk8=>params[:batch] == 'is_pk8' ,
         :added_schools=>params[:added_schools],
         :removed_schools=>params[:removed_schools],
+        :grade_level_for_index=>params[:grade_level_for_index],
         :id1=>params[:id1].to_i,
         :id2=>params[:id2].to_i,
         :id3=>params[:id3].to_i,

@@ -21,10 +21,9 @@
 
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
-        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
+        <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
             <%= hidden_field_tag "state", params[:state]%>
             <%= hidden_field_tag "collection_id", params[:collection_id]%>
-              <%= label_tag "Batch:", nil,:class =>"brand-primary"%>&nbsp;
               <%= label_tag "Batch:", nil,:class =>"brand-primary"%>&nbsp;
               <% if (params[:batch].present? && params[:batch] =="is_k8")%>
                   <%= radio_button_tag(:batch, "is_k8", :checked => true) %>
@@ -69,11 +68,12 @@
               <%= label_tag(:language_english, "English") %></br>
 
               Ready to generate Schools PDF ?
-             <%= submit_tag("Generate Schools PDF", :class => "btn btn-primary") %><% end%></div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+             <%= submit_tag("Generate Final List of Schools in Chooser", :class => "btn btn-primary") %><% end%></div>
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
 
-        <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
+        <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
               <%= hidden_field_tag "state", params[:state]%>
               <%= hidden_field_tag "collection_id", params[:collection_id]%>
               <%= hidden_field_tag "added_schools", params[:added_schools]%>
@@ -99,16 +99,18 @@
 
               <% end %>
               <%= label_tag(:language_english, "English") %></br>
+              <%= label_tag(:grade_level_for_index_label, "Grade Level") %>
 
+              <%= select_tag("grade_level_for_index", options_for_select([['Primary', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
               Ready to generate Performance Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
-              <%= submit_tag("Generate Performance Index PDF", :class => "btn btn-primary") %>
+              <%= submit_tag("Generate Final List of Schools Performance Indx", :class => "btn btn-primary") %>
 
         <% end %>
           </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
 
-          <%= form_tag("/admin/gsr/pyoc.pdf", method: "get", class: "alert alert-success") do %>
+          <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
               <%= hidden_field_tag "state", params[:state]%>
               <%= hidden_field_tag "collection_id", params[:collection_id]%>
               <%= hidden_field_tag "added_schools", params[:added_schools]%>
@@ -136,7 +138,7 @@
               <%= label_tag(:language_english, "English") %></br>
 
               Ready to generate Location Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
-              <%= submit_tag("Generate Location Index PDF", :class => "btn btn-primary") %>
+              <%= submit_tag("Generate Final List of Schools Location Indx", :class => "btn btn-primary") %>
 
           <% end %>
         </div>

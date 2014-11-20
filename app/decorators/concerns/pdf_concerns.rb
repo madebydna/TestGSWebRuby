@@ -194,6 +194,7 @@ module PdfConcerns
     school_id2 = opts[:id2]
     school_id3 = opts[:id3]
     school_id4 = opts[:id4]
+    grade_level_for_index=opts[:grade_level_for_index]
 
     db_schools = []
 
@@ -209,8 +210,12 @@ module PdfConcerns
       elsif  collection_id.present? && collection_id>0 && is_k8
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:k8?)
-      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8
+      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8 & !grade_level_for_index
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
+      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8 & grade_level_for_index
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
+        # db_schools.select!(&:includes_level_code?('%w[e m]'))
+
       elsif   collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
         db_schools = School.on_db(state).active.order(name: :asc).to_a
       elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
