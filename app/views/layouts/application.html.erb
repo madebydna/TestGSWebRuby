@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
 
@@ -9,6 +9,7 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= yield :javascript_includes %>
   <%= csrf_meta_tags %>
+    <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
 
     <meta name="google-translate-customization" content="f2de2b2d5878217a-6b29fa5c63ed04fa-g4b85244d931270bb-10" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
