@@ -8,6 +8,10 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
         attachAutocompleteHandlers();
     };
 
+    var detachAutocomplete = function() {
+        $('.typeahead').typeahead('destroy');
+    };
+
     var attachAutocomplete = function (state_abbr) {
         var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
         var autocomplete = GS.search.autocomplete;
@@ -96,6 +100,7 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
     };
 
     return {
-        init: init
+        init: init,
+        detachAutocomplete: detachAutocomplete
     }
 })();

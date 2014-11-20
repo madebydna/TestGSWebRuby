@@ -7,6 +7,7 @@ GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler ||
 };
 
 GS.search.results = GS.search.results || (function(state_abbr) {
+    var stateSwitchDropdown = '.js-changeSearchStateDropdown';
 
     var searchFiltersFormSubmissionHandler = function() {
         var $button = $('.js-submitSearchFiltersForm');
@@ -514,6 +515,14 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         FastClick.attach(document.body);
     };
 
+    var setStatePickerHandler = function() {
+        $(stateSwitchDropdown).on('click', function() {
+            GS.search.stateAbbreviation = 'ca';
+            GS.search.autocomplete.searchAutocomplete.detachAutocomplete();
+            GS.search.autocomplete.searchAutocomplete.init(GS.search.stateAbbreviation);
+        });
+    };
+
     var init = function() {
         setFastClickHandler(); //needs to be ahead of click handlers
         searchFiltersFormSubmissionHandler();
@@ -532,6 +541,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         setSavedSearchClosePopupHandler();
         disableSavedSearchOnLoad();
         showOrHideAdvancedFiltersToggle();
+        setStatePickerHandler();
     };
 
     return {

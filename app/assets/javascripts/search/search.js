@@ -10,7 +10,9 @@ Array.prototype.contains = function(obj) {
 
 GS.search = GS.search || {};
 
-GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr) {
+GS.search.stateAbbreviation = gon.state_abbr;
+
+GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
@@ -18,7 +20,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
-    var state = state_abbr ;
 
     var init = function() {
         $('.js-findByLocationForm').submit(function() {
@@ -62,7 +63,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                 setTimeout( function() {
                     if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
                         searchType = 'byName';
-                        state = state || 'ca';
+                        GS.search.stateAbbreviation = GS.search.stateAbbreviation || 'ca';
                     }
                 }, 200);
             }
@@ -83,7 +84,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = schoolResultsSearchSelector;
-                    GS.uri.Uri.addHiddenFieldsToForm({state: state}, this);
+                    GS.uri.Uri.addHiddenFieldsToForm({state: GS.search.stateAbbreviation}, this);
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
@@ -197,8 +198,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                     data['sortBy'] = 'DISTANCE';
                     (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
-                    if (state && getStateFullName(state)) {
-                        alert("Location not found in " + getStateFullName(state) + ". Please enter a valid address, city, or ZIP.");
+                    if (GS.search.stateAbbreviation && getStateFullName(GS.search.stateAbbreviation)) {
+                        alert("Location not found in " + getStateFullName(GS.search.stateAbbreviation) + ". Please enter a valid address, city, or ZIP.");
                     } else {
                         alert("Location not found. Please enter a valid address, city, or ZIP.");
                     }
@@ -319,8 +320,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
             var geocodeOptions = { 'address': searchInput};
-            if (state != null) {
-                geocodeOptions['componentRestrictions'] = {'administrativeArea':  state.toUpperCase()};
+            if (GS.search.stateAbbreviation != null) {
+                geocodeOptions['componentRestrictions'] = {'administrativeArea':  GS.search.stateAbbreviation.toUpperCase()};
             } else {
                 geocodeOptions['componentRestrictions'] = {'country':  'US'};
             }
@@ -361,7 +362,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                             geocodeResult = null;
                         } else if ('type' in geocodeResult && geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
                             geocodeResult = null; // don't allow states to be returned
-                        } else if (state != null && geocodeResult['state'].toUpperCase() != state.toUpperCase()) {
+                        } else if (GS.search.stateAbbreviation != null && geocodeResult['state'].toUpperCase() != GS.search.stateAbbreviation.toUpperCase()) {
                             geocodeResult = null; // don't allow results outside of state
                         }
                         if (geocodeResult != null) {
@@ -511,4 +512,4 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
         updateFilterState: updateFilterState
     };
-})(gon.state_abbr);
+})();
