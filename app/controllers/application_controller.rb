@@ -256,7 +256,7 @@ class ApplicationController < ActionController::Base
     gon.pagename = page_name
     gon.omniture_pagename = page_name
     gon.omniture_hier1 = page_hier
-    gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+    gon.omniture_sprops['localPageName'] = gon.omniture_pagename if @hub.present?
     gon.omniture_sprops['locale'] = locale
     gon.omniture_channel = @state[:short].try(:upcase)
   end
