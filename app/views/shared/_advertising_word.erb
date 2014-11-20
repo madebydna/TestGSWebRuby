@@ -2,8 +2,10 @@
     <!--set defaults-->
     <% visible_for = "" %>
 <% end %>
-<div class="<%= visible_for %>" width="100%">
-    <div class="advertisement-text ma">
-        ADVERTISEMENT
+<% if @advertising_enabled %>
+    <div class="<%= visible_for %>" width="100%">
+        <div class="advertisement-text ma">
+            ADVERTISEMENT
+        </div>
     </div>
-</div>
+<% end %>

@@ -331,6 +331,16 @@ class ApplicationController < ActionController::Base
       set_targeting['Responsive_Group'] = 'Test'
     end
     gon.ad_set_targeting = set_targeting
+
+    @advertising_enabled = true
+    # equivalent to saying disable advertising if property is not nil and false
+    unless ENV_GLOBAL['advertising_enabled'].nil? || ENV_GLOBAL['advertising_enabled'] == true
+      @advertising_enabled = false
+    end
+    if @advertising_enabled # if env disables ads, don't bother checking property table
+      @advertising_enabled = PropertyConfig.advertising_enabled?
+    end
+    gon.advertising_enabled = @advertising_enabled
   end
 
 end
