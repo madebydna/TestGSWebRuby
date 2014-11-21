@@ -11,5 +11,6 @@ $(function() {
         initMap, this, []
       )
     );
+    GS.ad.interstitial.attachInterstitial();
   }
 });
