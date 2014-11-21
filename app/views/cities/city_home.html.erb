@@ -86,7 +86,7 @@
         <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
     <% end %>
 
-    <%= render partial: 'shared/districts_module', locals: {title: "Largest districts in #{city.name}",
+    <%= render partial: 'shared/districts_module', locals: {title: "Largest Districts in #{city.name}",
                                                             column_size: first_column_sizes, districts: @districts}%>
 
     <div class="<%= second_column_sizes %> pll ma ptm">
