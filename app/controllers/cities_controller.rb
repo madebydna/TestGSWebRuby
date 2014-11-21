@@ -2,6 +2,7 @@ class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include AdvertisingHelper
+  include ApplicationHelper
   include GuidedSearchConcerns
   include GoogleMapConcerns
 
@@ -40,22 +41,32 @@ class CitiesController < ApplicationController
   end
 
   def city_home
-    gon.pagename = 'DistrictHome'
+    gon.pagename = 'CityHome'
     @city_object = City.where(name: @city).first
-    @top_schools = top_schools(@city_object, 4)
+    @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
     @districts = District.on_db(@city_object.state.downcase.to_sym).where(city: @city_object.name)
 
     render 'city_home'
   end
 
-  def top_schools(city, count = 10)
-    city.schools_by_rating_desc.take(count)
+  def all_schools_by_rating_desc(city, count=0)
+    @all_schools_in_city_by_rating_desc ||= city.schools_by_rating_desc
+    count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
   end
 
+
   def prepare_map
-    @map_schools = @city_object.schools_by_rating_desc
-    mapping_points_through_gon_from_db
+    all_schools = all_schools_by_rating_desc(@city_object)
+    if all_schools.present?
+      top_schools_for_map_pins = all_schools.take(10)
+      mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
+
+      if all_schools.size > 10
+        all_other_schools_for_map = all_schools[11..-1]
+        mapping_points_through_gon_from_db(all_other_schools_for_map,on_page: false)
+      end
+    end
     assign_sprite_files_though_gon
   end
 
