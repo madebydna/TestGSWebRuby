@@ -42,6 +42,7 @@ class SearchController < ApplicationController
   #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
     set_login_redirect
+    @city_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
@@ -59,6 +60,7 @@ class SearchController < ApplicationController
 
   def district_browse
     set_login_redirect
+    @district_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     district_name = params[:district_name]
@@ -302,7 +304,7 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    if hub_matching_current_url && hub_matching_current_url.city
+    if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
