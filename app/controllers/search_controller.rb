@@ -356,7 +356,7 @@ class SearchController < ApplicationController
 
     filter_builder = Rails.cache.fetch("filter_builder-#{state_short}", expires_in: 24.hours, race_condition_ttl: 10) do
       Rails.logger.debug("Generating FilterBuilder")
-      FilterBuilder.new(state_short)
+      FilterBuilder.new(@state[:short], @city.name)
     end
 
     @filter_display_map = filter_builder.filter_display_map

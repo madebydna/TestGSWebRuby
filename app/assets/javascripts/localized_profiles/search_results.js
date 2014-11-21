@@ -104,6 +104,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         });
     };
 
+    var showOrHideAdvancedFiltersToggle = function() {
+        if ($('.secondaryFiltersColumn').length == 0) {
+            $(".js-advancedFilters").addClass('dn');
+        }
+    };
+
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
             $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
@@ -525,6 +531,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         setSavedSearchOpenPopupHandler();
         setSavedSearchClosePopupHandler();
         disableSavedSearchOnLoad();
+        showOrHideAdvancedFiltersToggle();
     };
 
     return {

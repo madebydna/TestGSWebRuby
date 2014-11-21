@@ -2,10 +2,15 @@
 class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
-  def initialize(state = '')
-    @callbacks = build_callbacks(get_callbacks_from_db(state))
-    @filters = build_filter_tree({filter: get_filters})[0]
+  def initialize(state = '', city = '')
+    @filters = build_filter_tree_for_location(state, city)
     @filter_display_map = @filters.build_map
+  end
+
+  def build_filter_tree_for_location(state, city)
+    @callbacks = build_callbacks(get_callbacks_for_location(state, city))
+    base_filters = base_filter_set_for(state, city)
+    build_filter_tree({filter: base_filters})[0]
   end
 
   def build_filter_tree(filters)
@@ -43,13 +48,21 @@ class FilterBuilder
     end
   end
 
-  def get_callbacks_from_db(state)
-    if state.is_a?(String)
-      if state.downcase == 'in'
-        return indiana_db_callbacks
-      end
-      []
-    end
+  def get_callbacks_for_location(state, city)
+    city_callbacks[state][city] || state_callbacks[state]
+  end
+
+  def state_callbacks
+    Hash.new([]).merge(
+        {
+            in: indiana_db_callbacks,
+            de: []
+        }
+    ).stringify_keys
+  end
+
+  def city_callbacks
+    Hash.new{ |h,k| h[k] = {} }
   end
 
   def build_add_callback(conditions, new_filter)
@@ -75,7 +88,95 @@ class FilterBuilder
     ]
   end
 
-  def get_filters
+  def include_advanced_filters?(state, city)
+    state_callbacks.key?(state) || city_callbacks[state].key?(city)
+  end
+
+  def base_filter_set_for(state, city)
+    if include_advanced_filters?(state, city)
+      default_advanced_filters
+    else
+      default_simple_filters
+    end
+  end
+
+  def default_simple_filters
+    {
+        display_type: :blank_container,
+        filters: {
+            group1: {
+                display_type: :filter_column_primary,
+                filters: {
+                    grade: {
+                        label: 'Grade Level',
+                        display_type: :title,
+                        name: :grades,
+                        filters: {
+                            select_box: {
+                                display_type: :select_box,
+                                name: :grades,
+                                filters: {
+                                    :default => {label: 'Select Grade', display_type: :select_box_value, name: :grades, value: nil},
+                                    :p => {label: 'Pre-School', display_type: :select_box_value, name: :grades, value: :p},
+                                    :k => {label: 'Kindergarten', display_type: :select_box_value, name: :grades, value: :k},
+                                    1 => {label: '1st Grade', display_type: :select_box_value, name: :grades, value: 1},
+                                    2 => {label: '2nd Grade', display_type: :select_box_value, name: :grades, value: 2},
+                                    3 => {label: '3rd Grade', display_type: :select_box_value, name: :grades, value: 3},
+                                    4 => {label: '4th Grade', display_type: :select_box_value, name: :grades, value: 4},
+                                    5 => {label: '5th Grade', display_type: :select_box_value, name: :grades, value: 5},
+                                    6 => {label: '6th Grade', display_type: :select_box_value, name: :grades, value: 6},
+                                    7 => {label: '7th Grade', display_type: :select_box_value, name: :grades, value: 7},
+                                    8 => {label: '8th Grade', display_type: :select_box_value, name: :grades, value: 8},
+                                    9 => {label: '9th Grade', display_type: :select_box_value, name: :grades, value: 9},
+                                    10 => {label: '10th Grade', display_type: :select_box_value, name: :grades, value: 10},
+                                    11 => {label: '11th Grade', display_type: :select_box_value, name: :grades, value: 11},
+                                    12 => {label: '12th Grade', display_type: :select_box_value, name: :grades, value: 12},
+                                }
+                            }
+                        }
+                    },
+                    distance: {
+                        label: 'Show schools within',
+                        display_type: :title,
+                        name: :distance,
+                        filters: {
+                            select_box: {
+                                display_type: :select_box,
+                                name: :distance,
+                                filters: {
+                                    :default => {label: 'Select Miles', display_type: :select_box_value, name: :distance, value: nil},
+                                    1 => {label: '1 Mile', display_type: :select_box_value, name: :distance, value: 1},
+                                    2 => {label: '2 Miles', display_type: :select_box_value, name: :distance, value: 2},
+                                    3 => {label: '3 Miles', display_type: :select_box_value, name: :distance, value: 3},
+                                    4 => {label: '4 Miles', display_type: :select_box_value, name: :distance, value: 4},
+                                    5 => {label: '5 Miles', display_type: :select_box_value, name: :distance, value: 5},
+                                    10 => {label: '10 Miles', display_type: :select_box_value, name: :distance, value: 10},
+                                    15 => {label: '15 Miles', display_type: :select_box_value, name: :distance, value: 15},
+                                    20 => {label: '20 Miles', display_type: :select_box_value, name: :distance, value: 20},
+                                    25 => {label: '25 Miles', display_type: :select_box_value, name: :distance, value: 25},
+                                    30 => {label: '30 Miles', display_type: :select_box_value, name: :distance, value: 30},
+                                    60 => {label: '60 Miles', display_type: :select_box_value, name: :distance, value: 60}
+                                }
+                            }
+                        }
+                    },
+                    st: {
+                        label: 'School Type',
+                        display_type: :title,
+                        name: :st,
+                        filters: {
+                            public: {label: 'Public district schools', display_type: :basic_checkbox, name: :st, value: :public},
+                            charter: {label: 'Public charter schools', display_type: :basic_checkbox, name: :st, value: :charter},
+                            private: {label: 'Private schools', display_type: :basic_checkbox, name: :st, value: :private}
+                        }
+                    }
+                }
+            }
+        }
+    }
+  end
+
+  def default_advanced_filters
     #see mock for display types: https://jira.greatschools.org/secure/attachment/67270/GS_Filters_Delaware_Open_Filters_070914.jpg
 
     ### EXAMPLE ###
