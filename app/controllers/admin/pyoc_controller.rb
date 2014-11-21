@@ -37,6 +37,7 @@ class Admin::PyocController <  ApplicationController
         :is_pk8=>params[:batch] == 'is_pk8' ,
         :added_schools=>params[:added_schools],
         :removed_schools=>params[:removed_schools],
+        :grade_level_for_index=>params[:grade_level_for_index],
         :id1=>params[:id1].to_i,
         :id2=>params[:id2].to_i,
         :id3=>params[:id3].to_i,

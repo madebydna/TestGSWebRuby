@@ -214,8 +214,15 @@ module PdfConcerns
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
       elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8 & grade_level_for_index
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
-        # db_schools.select!(&:includes_level_code?('%w[e m]'))
-
+        if grade_level_for_index.present? && grade_level_for_index.is_a?(Array)
+          db_schools.select! do |school|
+            school.includes_level_code?(grade_level_for_index)
+          end
+        elsif grade_level_for_index.present? && !grade_level_for_index.is_a?(Array)
+          db_schools.select! do |school|
+            school.includes_level_code?(grade_level_for_index.split(" "))
+          end
+        end
       elsif   collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
         db_schools = School.on_db(state).active.order(name: :asc).to_a
       elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
