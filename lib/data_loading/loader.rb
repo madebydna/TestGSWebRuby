@@ -12,11 +12,11 @@ class Loader
   end
 
   def self.census_data_type?(datatype)
-    CensusLoading::Base.census_data_types.keys.any? { |cdt| datatype.casecmp(cdt) == 0 }
+    CensusLoading::Base.census_data_types.keys.any? { |cdt| datatype.casecmp(cdt) == 0 } || datatype.to_s.downcase == 'census'
   end
 
   def self.esp_data_type?(datatype)
-    datatype == 'osp'
+    datatype.to_s.downcase == 'osp'
   end
 
   def self.determine_loading_class(data_type)
