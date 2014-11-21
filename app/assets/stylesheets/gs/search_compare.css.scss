@@ -1,0 +1,38 @@
+//Search Menu
+
+.search-filters-menu-mobile {
+  left: -300px;
+  z-index: 10;
+}
+
+//Compare Schools Popups
+.compare-schools-popup {
+  z-index: 1;
+  width: 320px;
+  left:-188px; //left is to prevent panel from going off screen.
+  border: #cccccc solid 1px;
+}
+
+.save-search-popup {
+  z-index: 1;
+  width: 450px;
+  left: -284px; //left is to prevent panel from going off screen.
+  border: #cccccc solid 1px;
+}
+
+.compare-schools-popup-school {
+  width: 140px;
+  border-radius: 4px;
+  border: 1.5px solid #d3d3d3;
+}
+
+.compare-schools-popup-school-header {
+  height: 45px;
+}
+
+//Compare Schools Page
+
+.carousel-navigation-arrows {
+  font-size: 14px;
+}
+
