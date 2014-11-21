@@ -29,7 +29,7 @@
               <div class="hidden-xs font-size-small"><%="#{school.street}, #{school.city}, #{school.state.upcase} #{school.zip}"%></div>
               <div class="clearfix visible-xs font-size-small">
                 <div class="prs fl "><%= decorated_school.decorated_school_type %></div>
-                <div class="fl"><%= decorated_school.grade_range || decorated_school.process_level %></div>
+                <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
               </div>
             </div>
             <div class="font-size-small mvm clearfix ptm hidden-xs">
@@ -43,7 +43,7 @@
               </div>
               <div class="phm fl">|</div>
               <div class="prs fl"><%= decorated_school.decorated_school_type %></div>
-              <div class="fl"><%= decorated_school.grade_range || decorated_school.process_level %></div>
+              <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
               <% if search_by_location? %>
                 <div class="visible-xs phm fl">|</div>
                 <div class="visible-xs fl"><%= distance %> miles</div>
