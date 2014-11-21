@@ -45,7 +45,7 @@ class CitiesController < ApplicationController
     @city_object = City.where(name: @city).first
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
-    @districts = District.on_db(@city_object.state.downcase.to_sym).where(city: @city_object.name)
+    @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
 
     render 'city_home'
   end

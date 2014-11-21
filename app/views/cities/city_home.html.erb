@@ -77,6 +77,24 @@
   %>
 
 
+  <% # Row nearby city and Zillow module %>
+  <div class="row ptm">
+    <% if @districts.present? %>
+        <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6" %>
+        <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6" %>
+    <% else %>
+        <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
+    <% end %>
+
+    <%= render partial: 'shared/districts_module', locals: {title: "Largest districts in #{city.name}",
+                                                            column_size: first_column_sizes, districts: @districts}%>
+
+    <div class="<%= second_column_sizes %> pll ma ptm">
+      <h3>Nearby homes for sale</h3>
+      <%= render 'data_layouts/zillow_content', data: @zillow_data %>
+    </div>
+  </div>
+
   <% # Row contains map %>
   <% # TODO: move map partial to a shared folder %>
   <div class="row ptm">
@@ -99,39 +117,6 @@
 
 
 
-  <% # Row nearby city and Zillow module %>
-  <div class="row ptm">
-    <% if @districts.present? %>
-      <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6" %>
-      <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6" %>
-    <% else %>
-      <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
-    <% end %>
-
-    <% if @districts.present? %>
-      <div class="<%= first_column_sizes %>">
-        <div class="pam" style="background-color:#F5F5F5">
-          <h3 class="plm">Districts in <%= city.name %></h3>
-          <% @districts.each do |d| %>
-            <% district = DistrictHomeDecorator.decorate(d) %>
-            <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
-              <div class="fl prs font-size-large" style="height:30px">
-                <% # district.rating %>
-              </div>
-              <div>
-                <%= district.district_home_link %></br>
-                <%= district.city_state %> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="<%= second_column_sizes %> pll ma ptm">
-      <h3>Nearby homes for sale</h3>
-      <%= render 'data_layouts/zillow_content', data: @zillow_data %>
-    </div>
-  </div>
 
   </br>
 
