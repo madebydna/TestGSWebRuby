@@ -3,6 +3,8 @@ class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
   def initialize(state = '', city = '')
+    state = state.to_s.downcase
+    city = city.to_s.downcase
     @filters = build_filter_tree_for_location(state, city)
     @filter_display_map = @filters.build_map
   end
@@ -62,7 +64,13 @@ class FilterBuilder
   end
 
   def city_callbacks
-    Hash.new{ |h,k| h[k] = {} }
+    Hash.new{ |h,k| h[k] = {} }.merge(
+        {
+            mi: {
+                detroit: indiana_db_callbacks
+            }.stringify_keys
+        }
+    ).stringify_keys
   end
 
   def build_add_callback(conditions, new_filter)
