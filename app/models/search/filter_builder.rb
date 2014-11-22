@@ -57,20 +57,20 @@ class FilterBuilder
   def state_callbacks
     Hash.new([]).merge(
         {
-            'in' => indiana_db_callbacks,
-            'de' => []
+            in: indiana_db_callbacks,
+            de: []
         }
-    )
+    ).stringify_keys!
   end
 
   def city_callbacks
     Hash.new{ |h,k| h[k] = {} }.merge(
         {
-            'mi' => {
+            mi: {
                 detroit: indiana_db_callbacks
-            }.stringify_keys
+            }.stringify_keys!
         }
-    )
+    ).stringify_keys!
   end
 
   def build_add_callback(conditions, new_filter)
