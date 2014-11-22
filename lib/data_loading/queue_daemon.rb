@@ -37,7 +37,7 @@ class QueueDaemon
             loader = klass.new(data_type, data_update, scheduled_update.source)
             loader.load!
           end
-          scheduled_update.update_attributes(status: SUCCESS_STATUS)
+          scheduled_update.update_attributes(status: SUCCESS_STATUS, update: Time.now)
         rescue Exception => e
           scheduled_update.update_attributes(status: FAILURE_STATUS, notes: e.message)
         end
