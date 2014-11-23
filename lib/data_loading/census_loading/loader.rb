@@ -8,7 +8,7 @@ class CensusLoading::Loader < CensusLoading::Base
 
   def load!
 
-    census_data_type = census_data_types[data_type]
+    census_data_type = census_data_type_from_name(data_type)
 
     updates.each do |update|
       next if update.blank?

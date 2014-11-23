@@ -23,4 +23,8 @@ class CensusLoading::Base < Loader
     @@census_data_ethnicities
   end
 
+  def census_data_type_from_name(data_type_name)
+    census_data_types.find { |dt| dt[0].casecmp(data_type_name) == 0 }[1]
+  end
+
 end
