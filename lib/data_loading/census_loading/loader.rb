@@ -18,18 +18,21 @@ class CensusLoading::Loader < CensusLoading::Base
       # Raises school not found exception if one doesn't exist with that ID
       school = School.on_db(census_update.shard).find(census_update.entity_id)
 
-      if census_update.action == ACTION_DISABLE
-        disable!(census_update)
-      # If we choose to support delete later, we can uncomment this and then create the delete method below
-      # elsif census_update.action == 'delete'
-      #   delete!(census_update)
-      elsif census_update.action == ACTION_BUILD_CACHE
-        # do nothing
-      else
-        insert_into!(census_update)
+      begin
+        if census_update.action == ACTION_DISABLE
+          disable!(census_update)
+          # If we choose to support delete later, we can uncomment this and then create the delete method below
+          # elsif census_update.action == 'delete'
+          #   delete!(census_update)
+        elsif census_update.action == ACTION_BUILD_CACHE
+          # do nothing
+        else
+          insert_into!(census_update)
+        end
+      rescue Exception => e
+        Cacher.create_cache(school, CACHE_KEY)
+        raise e.message
       end
-
-      Cacher.create_cache(school, CACHE_KEY)
     end
   end
 

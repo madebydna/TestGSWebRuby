@@ -11,18 +11,21 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
 
       school = School.on_db(esp_response_update.shard).find(esp_response_update.entity_id)
 
-      if esp_response_update.action == ACTION_DISABLE
-        disable!(esp_response_update)
-      # If we choose to support delete later, we can uncomment this and then create the delete method below
-      # elsif esp_response_update.action == 'delete'
-      #   delete!(esp_response_update)
-      elsif esp_response_update.action == ACTION_BUILD_CACHE
-        # do nothing
-      else
-        insert_into!(esp_response_update)
+      begin
+        if esp_response_update.action == ACTION_DISABLE
+          disable!(esp_response_update)
+          # If we choose to support delete later, we can uncomment this and then create the delete method below
+          # elsif esp_response_update.action == 'delete'
+          #   delete!(esp_response_update)
+        elsif esp_response_update.action == ACTION_BUILD_CACHE
+          # do nothing
+        else
+          insert_into!(esp_response_update)
+        end
+      rescue Exception => e
+        Cacher.create_cache(school, CACHE_KEY)
+        raise e.message
       end
-      Cacher.create_cache(school, CACHE_KEY)
-
     end
   end
 
@@ -39,6 +42,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     errors << "The member_id column does not match. Values - Java: #{value_row.member_id} Ruby:#{esp_response_update.member_id}" unless value_row.member_id.to_s == esp_response_update.member_id.to_s
 
     raise errors.unshift("SCHOOL ##{value_row.school_id} ESP Response").join("\n") if errors.present?
+    raise 'blerg'
 
   end
 
