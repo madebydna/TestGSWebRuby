@@ -144,6 +144,17 @@ $(function() {
         }
     });
 
+    // force checked state. Requires 'this' to be the label.js-gs-checkbox-search
+    var checkFancyCheckbox = function() {
+        var self = $(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.siblings(".js-gs-checkbox-value");
+        var gs_checkBox= self.data('gs-checkbox-value');
+        var gs_checkBoxCategory= self.data('gs-checkbox-name');
+        checkbox.removeClass('i-grey-unchecked-box').addClass('i-16-blue-check-box');
+        hidden_field.val(gs_checkBox).attr("name", gs_checkBoxCategory);
+    };
+
     $('.js-gs-checkbox-search-dropdown').on('click',function(){
        var self=$(this);
        var checkbox = self.children(".js-icon");
@@ -172,6 +183,19 @@ $(function() {
             hidden_field.removeAttr("value").removeAttr("name");
         }
     });
+
+    // force checked state, requires 'this' to be the div.js-sportsIconButton
+    var checkSportsIcon = function() {
+        var self = $(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.children(".js-value");
+        var gs_checkBox= self.data('gs-checkbox-value');
+        var gs_checkBoxCategory= self.data('gs-checkbox-category');
+        var gs_iconLabel = self.data('gs-checkbox-icon-label');
+        checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
+        self.removeClass('btn-default').addClass('btn-primary');
+        hidden_field.val(gs_checkBox).attr("name", gs_checkBoxCategory);
+    };
 
     $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
         var self = $(this);
@@ -346,6 +370,8 @@ $(function() {
     GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;
     GS.forms.sportsToolTip = sportsToolTip;
     GS.forms.setShowFiltersCookieHandler = setShowFiltersCookieHandler;
+    GS.forms.checkFancyCheckbox = checkFancyCheckbox;
+    GS.forms.checkSportsIcon = checkSportsIcon;
 });
 
 $(document).ready(function() {

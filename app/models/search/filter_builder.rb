@@ -3,10 +3,22 @@ class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
   def initialize(state = '', city = '')
-    state = state.to_s.downcase
-    city = city.to_s.downcase
-    @filters = build_filter_tree_for_location(state, city)
+    @state = state.to_s.downcase
+    @city = city.to_s.downcase
+    @filters = build_filter_tree_for_location(@state, @city)
     @filter_display_map = @filters.build_map
+  end
+
+  def cache_key
+    cache_key = "search/filter_form-"
+    if city_callbacks[@state].key?(@city)
+      cache_key += "#{@state}-#{@city}"
+    elsif state_callbacks.key?(@state)
+      cache_key += "#{@state}"
+    else
+      cache_key += 'national'
+    end
+    cache_key
   end
 
   def build_filter_tree_for_location(state, city)

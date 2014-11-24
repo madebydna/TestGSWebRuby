@@ -417,6 +417,50 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         $.cookie('showFiltersMenu', 'false', {path:'/'});
     };
 
+    var updateFilterState = function() {
+        var queryData = GS.uri.Uri.getQueryData();
+        if (queryData) {
+            var $form = $('form.js-searchFiltersForm');
+            for (var filterName in queryData) {
+                if (queryData.hasOwnProperty(filterName)){
+                    var inputName = normalizeInputName(filterName);
+                    var filterValue = queryData[filterName];
+                    if (typeof filterValue === 'object' && filterValue.length) {
+                        for (var x=filterValue.length-1; x >= 0; x--) {
+                            // currently, filters with multi-values can't be represented by selects
+                            lookForFormElementToUpdate($form, inputName, filterValue[x], {includeSelect:false});
+                        }
+                    } else {
+                        lookForFormElementToUpdate($form, inputName, filterValue, {includeSelect:true});
+                    }
+                }
+            }
+            // update parent elements who have had children modified (i.e. sports gender icon and check box groups)
+            GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
+            GS.forms.toggleButtonForSportsOnLoad();
+        }
+    };
+
+    // Remove [] (which is optional) to simplify later selectors
+    var normalizeInputName = function(inputName) {
+        inputName = inputName.replace('%5B%5D', '');
+        inputName = inputName.replace('[]', '');
+        return inputName;
+    };
+
+    var lookForFormElementToUpdate = function($form, name, value, options) {
+        if (options && options['includeSelect']) {
+            $form.find('select[name=' + name + ']').val(value);
+        }
+        // ^= means startsWith
+        $form.find('.js-gs-checkbox-search[data-gs-checkbox-name^="' + name + '"]').
+            filter('[data-gs-checkbox-value=' + value + ']').
+            each(GS.forms.checkFancyCheckbox);
+        $form.find('.js-sportsIconButton[data-gs-checkbox-category^="' + name + '"]').
+            filter('[data-gs-checkbox-value=' + value + ']').
+            each(GS.forms.checkSportsIcon);
+    };
+
     var searchResultsDisplayed = function() {
         return $('.js-numOfSchoolsFound').data('numOfSchoolsFound') > 0
     };
@@ -460,6 +504,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
         showFiltersMenuOnLoad: showFiltersMenuOnLoad,
         placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
-        setShowFiltersCookieHandler: setShowFiltersCookieHandler
+        setShowFiltersCookieHandler: setShowFiltersCookieHandler,
+        updateFilterState: updateFilterState
     };
 })(gon.state_abbr);

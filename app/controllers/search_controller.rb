@@ -354,19 +354,19 @@ class SearchController < ApplicationController
   def setup_filter_display_map(state_short)
     @search_bar_display_map = get_search_bar_display_map
 
-    filter_builder = Rails.cache.fetch("filter_builder-#{state_short}", expires_in: 24.hours, race_condition_ttl: 10) do
-      Rails.logger.debug("Generating FilterBuilder")
-      city_name = if @city
-                    @city.name
-                  elsif params[:city]
-                    params[:city]
-                  else
-                    ''
-                  end
-      FilterBuilder.new(@state[:short], city_name)
-    end
+    city_name = if @city
+                  @city.name
+                elsif params[:city]
+                  params[:city]
+                else
+                  ''
+                end
+    filter_builder = FilterBuilder.new(@state[:short], city_name)
 
     @filter_display_map = filter_builder.filter_display_map
+    # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
+    # so we have to add that logic to the cache key here.
+    @filter_cache_key = filter_builder.cache_key + (@by_location ? '-distance' : '-no_distance')
     @filters = filter_builder.filters
   end
 
