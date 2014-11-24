@@ -425,13 +425,17 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
                 if (queryData.hasOwnProperty(filterName)){
                     var inputName = normalizeInputName(filterName);
                     var filterValue = queryData[filterName];
-                    if (typeof filterValue === 'object' && filterValue.length) {
-                        for (var x=filterValue.length-1; x >= 0; x--) {
-                            // currently, filters with multi-values can't be represented by selects
-                            lookForFormElementToUpdate($form, inputName, filterValue[x], {includeSelect:false});
+                    try {
+                        if (typeof filterValue === 'object' && filterValue.length) {
+                            for (var x=filterValue.length-1; x >= 0; x--) {
+                                // currently, filters with multi-values can't be represented by selects
+                                lookForFormElementToUpdate($form, inputName, filterValue[x], {includeSelect:false});
+                            }
+                        } else {
+                            lookForFormElementToUpdate($form, inputName, filterValue, {includeSelect:true});
                         }
-                    } else {
-                        lookForFormElementToUpdate($form, inputName, filterValue, {includeSelect:true});
+                    } catch (e) {
+                        // continue
                     }
                 }
             }
@@ -450,14 +454,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function(state_abbr)
 
     var lookForFormElementToUpdate = function($form, name, value, options) {
         if (options && options['includeSelect']) {
-            $form.find('select[name=' + name + ']').val(value);
+            $form.find('select[name="' + name + '"]').val(value);
         }
         // ^= means startsWith
         $form.find('.js-gs-checkbox-search[data-gs-checkbox-name^="' + name + '"]').
-            filter('[data-gs-checkbox-value=' + value + ']').
+            filter('[data-gs-checkbox-value="' + value + '"]').
             each(GS.forms.checkFancyCheckbox);
         $form.find('.js-sportsIconButton[data-gs-checkbox-category^="' + name + '"]').
-            filter('[data-gs-checkbox-value=' + value + ']').
+            filter('[data-gs-checkbox-value="' + value + '"]').
             each(GS.forms.checkSportsIcon);
     };
 
