@@ -46,8 +46,11 @@
         </div>
         <% if @hub.has_guided_search? %>
             <div class="vam black-guided-search-bar inverted-text fl pvm pa b-none l-none">
-                <span class="font-size-medium pl35-or-25">
-                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-medium">Guide Me</span></a>
+                <span class="hidden-xs font-size-large pl35">
+                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-large">Guide Me</span></a>
+                </span>
+                  <span class="visible-xs font-size-small pl25">
+                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-small">Guide Me</span></a>
                 </span>
             </div>
         <% end %>
