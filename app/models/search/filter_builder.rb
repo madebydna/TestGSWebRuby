@@ -78,9 +78,10 @@ class FilterBuilder
   def city_callbacks
     Hash.new{ |h,k| h[k] = {} }.merge(
         {
-            mi: {
-                detroit: indiana_db_callbacks
-            }.stringify_keys!
+            # Example for adding a city configuration
+            # mi: {
+            #     detroit: indiana_db_callbacks
+            # }.stringify_keys!
         }
     ).stringify_keys!
   end
