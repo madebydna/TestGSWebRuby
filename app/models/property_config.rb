@@ -7,6 +7,17 @@ class PropertyConfig < ActiveRecord::Base
     pc_sweepstakes.present? ? pc_sweepstakes.first.value == 'true' : false
   end
 
+  def self.facebook_comments?(state)
+    property = PropertyConfig.where(quay: 'facebook_comments')
+    fc_arr = property.first.value.split(',') if property.present?
+    if fc_arr.present?
+      fc_arr.select!{ |item| item.upcase == state.upcase || item.upcase == 'ALL' }
+      fc_arr.present?
+    else
+      false
+    end
+  end
+
   def self.force_review_moderation?
     Rails.cache.fetch('PropertyConfig/force_review_moderation', expires_in: 2.minutes) do
       property = PropertyConfig.where(quay: 'force_review_moderation')
