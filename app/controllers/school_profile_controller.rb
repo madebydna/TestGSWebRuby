@@ -37,6 +37,7 @@ class SchoolProfileController < SchoolController
     gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
+    @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
     set_last_modified_date

@@ -343,4 +343,14 @@ class ApplicationController < ActionController::Base
     gon.advertising_enabled = @advertising_enabled
   end
 
+  def property_state_on?(state_list_str, current_state)
+    state_arr = state_list_str.split(',') if state_list_str.present?
+    if state_arr.present?
+      state_arr.select!{ |state| state.upcase == current_state.upcase || state.upcase == 'ALL' }
+      state_arr.present?
+    else
+      false
+    end
+  end
+
 end

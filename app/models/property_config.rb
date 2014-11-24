@@ -7,14 +7,11 @@ class PropertyConfig < ActiveRecord::Base
     pc_sweepstakes.present? ? pc_sweepstakes.first.value == 'true' : false
   end
 
-  def self.facebook_comments?(state)
-    property = PropertyConfig.where(quay: 'facebook_comments')
-    fc_arr = property.first.value.split(',') if property.present?
-    if fc_arr.present?
-      fc_arr.select!{ |item| item.upcase == state.upcase || item.upcase == 'ALL' }
-      fc_arr.present?
-    else
-      false
+  def self.get_property(quay)
+    cache_key = 'PropertyConfig/' + quay
+    Rails.cache.fetch(cache_key, expires_in: 2.minutes) do
+      property = PropertyConfig.where(quay: quay)
+      property.present? ? property.first.value : ''
     end
   end
 
