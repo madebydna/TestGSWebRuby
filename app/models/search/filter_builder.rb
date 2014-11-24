@@ -2,9 +2,10 @@
 class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
-  def initialize(state = '', city = '')
+  def initialize(state = '', city = '', force_simple_filters = false)
     @state = state.to_s.downcase
     @city = city.to_s.downcase
+    @force_simple_filters = force_simple_filters
     @filters = build_filter_tree_for_location(@state, @city)
     @filter_display_map = @filters.build_map
   end
@@ -114,7 +115,7 @@ class FilterBuilder
   end
 
   def base_filter_set_for(state, city)
-    if include_advanced_filters?(state, city)
+    if include_advanced_filters?(state, city) && !@force_simple_filters
       default_advanced_filters
     else
       default_simple_filters

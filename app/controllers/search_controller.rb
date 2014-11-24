@@ -361,7 +361,7 @@ class SearchController < ApplicationController
                 else
                   ''
                 end
-    filter_builder = FilterBuilder.new(@state[:short], city_name)
+    filter_builder = FilterBuilder.new(@state[:short], city_name, @by_name)
 
     @filter_display_map = filter_builder.filter_display_map
     # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
