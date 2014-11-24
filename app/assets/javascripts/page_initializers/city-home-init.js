@@ -1,5 +1,5 @@
 $(function() {
-  if (gon.pagename == 'CityHome') {
+  if (gon.pagename == 'GS:City:Home') {
     var initMap = function() {
       var elemMapCanvas = $('#js-map-canvas');
       GS.googleMap.setHeightForMap(300);
