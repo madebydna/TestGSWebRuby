@@ -58,7 +58,9 @@ class CitiesController < ApplicationController
       "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
       "#{@city.titleize} Private Schools"
 
-    title = "#{@city.titleize} Schools - #{@city.titleize} #{@state[:long].titleize} School Ratings - Public and Private"
+    state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
+
+    title = "#{@city.titleize} Schools - #{state_text}School Ratings - Public and Private"
 
     set_meta_tags keywords: keywords,
                   description: description,
