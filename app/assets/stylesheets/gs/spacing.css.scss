@@ -80,6 +80,10 @@ body { padding-top: 50px }
 .pb1 {padding-top:1px}
 .pb2 {padding-top:2px}
 
+.pa35 {padding: 35px}
+.pb35 {padding-bottom:  35px}
+//use in media query for less that 480
+.pl35-or-25 {padding-left: 35px}
 .pt-1 { padding-top: 1% }
 
 .mv6 {margin-top: 6px;
@@ -142,6 +146,9 @@ body { padding-top: 50px }
 .vab { vertical-align: bottom; }
 
 .wsnw { white-space: nowrap; }
+
+.b-none {bottom: 0;}
+.l-none {left: 0}
 
 .pa { position: absolute; }
 .pf { position: fixed; }
@@ -219,6 +226,8 @@ body { padding-top: 50px }
   .content-centered {
     margin-top: 0;
   }
+//remove bottom padding from browse schools module
+  .pb35 {padding-bottom: 0}
 }
 
 @media only screen and (max-width: 768px) {
@@ -231,6 +240,7 @@ body { padding-top: 50px }
   .mobile-clearfix {
     @include clearfix();
   }
+  .pl35-or-25 {padding-left: 25px}
 }
 
 @media only screen and (min-width:480px) {

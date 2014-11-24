@@ -19,6 +19,8 @@ class CitiesController < ApplicationController
       render 'error/page_not_found', layout: 'error', status: 404
     else
 
+      @hub.has_guided_search?
+
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
       @browse_links = CollectionConfig.browse_links(collection_configs)

@@ -24,6 +24,10 @@ class HubCityMapping < ActiveRecord::Base
     (self.hasPartnerPage || hasStatePartnerPage) ? 'y' : nil
   end
 
+  def has_guided_search?
+    self.hasGuidedSearch ? 'y' : nil
+  end
+
   def self.for_collection_id(collection_id)
     Rails.cache.fetch("hub_city_mapping/for_collection_id-#{collection_id}", expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
       where(collection_id: collection_id, active: true).first

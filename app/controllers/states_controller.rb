@@ -19,6 +19,8 @@ class StatesController < ApplicationController
       collection_id = @hub.collection_id
       configs = hub_configs(collection_id)
 
+      @hub.has_guided_search?
+
       @collection_nickname = CollectionConfig.collection_nickname(configs)
       @content_modules = CollectionConfig.content_modules(configs)
       @sponsor = CollectionConfig.sponsor(configs, :state)
