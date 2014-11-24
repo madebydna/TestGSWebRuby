@@ -49,6 +49,20 @@ class CitiesController < ApplicationController
     @show_ads = true
     gon.show_ads = @show_ads
     ad_setTargeting_through_gon
+    set_omniture_data('GS:City:Home', 'Home,CityHome')
+
+    description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
+      "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
+
+    keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
+      "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
+      "#{@city.titleize} Private Schools"
+
+    title = "#{@city.titleize} Schools - #{@city.titleize} #{@state[:long].titleize} School Ratings - Public and Private"
+
+    set_meta_tags keywords: keywords,
+                  description: description,
+                  title: title
 
     render 'city_home'
   end
