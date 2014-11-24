@@ -86,6 +86,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
+    get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
