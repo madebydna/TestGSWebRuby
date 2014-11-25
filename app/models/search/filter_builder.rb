@@ -119,9 +119,9 @@ class FilterBuilder
             callback_type: 'add',
             options:
                 {
-                    school_college_going_rate: {
-                        label: 'College Readiness', display_type: :title, name: :school_college_going_rate, filters: {
-                            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :school_college_going_rate, value: '70_TO_100' }
+                    cgr: {
+                        label: 'College Readiness', display_type: :title, name: :cgr, filters: {
+                            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
                         }
                     }
                 }

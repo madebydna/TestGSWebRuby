@@ -304,8 +304,8 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    if params_hash.include? 'school_college_going_rate'
-      filters[:school_college_going_rate] = params_hash['school_college_going_rate'].gsub('_',' ')
+    if params_hash.include? 'cgr'
+      filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ')
     end
     if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
