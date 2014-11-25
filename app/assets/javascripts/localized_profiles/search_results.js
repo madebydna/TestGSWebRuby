@@ -254,35 +254,82 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $('.js-searchResultsContainer').on('click', '.js-compareSchoolButton', function() {
                 if (allowCompareSchoolsSelect === true ) {
                     allowCompareSchoolsSelect = false; //prevent user from double clicking for animation purposes
-                    var numOfSchoolsInList = schoolsList.numberOfSchoolsInList();
 
                     var $school = $(this);
                     var schoolId = $school.data('schoolid');
                     var schoolName = $school.data('schoolname');
                     var schoolState = $school.data('schoolstate');
                     var schoolRating = $school.data('schoolrating');
+                    removeCompareErrorMessages();
 
                     if (schoolsList.listContainsSchoolId(schoolId) === true) {
                         schoolsList.removeSchool(schoolId);
                         unselectCompareSchool(schoolId);
-                    } else if (numOfSchoolsInList < maxNumberOfSchools) {
-                        var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success'];
-                        if (schoolAdded === true) {
-                            selectCompareSchool(schoolId);
-                        }
-                    } else if (numOfSchoolsInList >= maxNumberOfSchools) {
-                        var errorMessage = $('.js-compareSchoolsErrorMessage');
+                    } else if (schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating)['success']) {
+                        selectCompareSchool(schoolId);
+                    }
+                    else {
+                        var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating);
+                        var errorMessage = $('.js-compareSchoolsErrorMessage').clone();
                         var that = this;
+                        var errorCode = schoolAdded['errorCode']
+                        var state = schoolAdded['data']
+                        var errorMessageText = getCompareErrorMessageText(errorCode, state);
+                        var errorKlass = 'js-' + errorCode + 'CompareError'
 
-                        errorMessage.hide('slow', function() {
+                        errorMessage.addClass(errorKlass)
+
+                        if (noErrorMessageForCompareButton(that, errorKlass)) {
+                            errorMessage.find('.js-compareSchoolErrorText').html(errorMessageText);
                             $(that).parents('.js-schoolSearchResultCompareErrorMessage').before(errorMessage);
                             errorMessage.show('slow');
-                            allowCompareSchoolsSelect = true;
-                        });
+                        }
+                        allowCompareSchoolsSelect = true;
                     }
+                    popupBox.setCompareSchoolsSubmitHandler();
                     popupBox.syncPopupBox();
                     popupBox.syncSchoolCount();
                 }
+            });
+        };
+
+        var noErrorMessageForCompareButton = function (compare_button, errorKlass) {
+           return $(compare_button).parents('.js-schoolSearchResultCompareErrorMessage').prev(errorKlass).length == 0
+        }
+
+        var removeCompareErrorMessages = function () {
+            var wrongStateErrors = $('.js-wrongStateCompareError');
+            var tooManySchoolsPresentErrors =  $('.js-tooManySchoolsCompareError')
+            wrongStateErrors.remove();
+            tooManySchoolsPresentErrors.remove();
+        }
+
+        var getCompareErrorMessageText = function (error_code, state) {
+            if (error_code === 'wrongState') {
+                var longState = GS.states.name(state);
+                var capitalLongState = longState.charAt(0).toUpperCase() + longState.slice(1);
+                var wrongStateText = '<strong>' + 'You&#39re currently comparing schools in&nbsp' + capitalLongState + '</strong>' +
+                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspcompare schools now&nbsp' +
+                    '</a>' + 'or' +
+                    '<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">' + '&nbspclear schools&nbsp' +
+                    '</a>' + '<strong>' +
+                    '&nbspto compare in this location.' + '</strong>';
+                return wrongStateText;
+            }
+            else if (error_code === 'tooManySchools') {
+                var tooManySchoolsText = '<strong>' + 'You&#39ve already selected 4 schools to compare.&nbsp' + '</strong>' +
+                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspCompare schools.' + '</a>';
+                return tooManySchoolsText;
+            }
+        };
+
+        var setCompareRemoveAllSchoolsHandler = function () {
+            $('.js-searchResultsContainer').on('click', '.js-clearSchoolsSubmit', function() {
+                schoolsList.clearAllSchools();
+                schoolsList.setCompareListState(gon.state_abbr);
+                popupBox.syncPopupBox();
+                popupBox.syncSchoolCount();
+                removeCompareErrorMessages();
             });
         };
 
@@ -368,6 +415,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             setRemovePopupBoxSchoolsHandler();
             setCompareSchoolButtonHandler();
             toggleOnCompareSchools();
+            setCompareRemoveAllSchoolsHandler();
         };
 
         return {

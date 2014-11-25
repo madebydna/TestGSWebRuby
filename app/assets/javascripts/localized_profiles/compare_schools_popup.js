@@ -212,6 +212,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         syncPopupBox: syncPopupBox,
         setCompareSchoolsRemoveSchoolHandler: setCompareSchoolsRemoveSchoolHandler,
         setCompareSchoolsPopupHandler: setCompareSchoolsPopupHandler,
+        setCompareSchoolsSubmitHandler: setCompareSchoolsSubmitHandler,
         syncSchoolCount: syncSchoolCount,
         setJqueryElementClasses: setJqueryElementClasses //optional
     }
