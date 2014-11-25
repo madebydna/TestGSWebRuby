@@ -7,7 +7,7 @@ GS.search.setShowFiltersCookieHandler = GS.search.setShowFiltersCookieHandler ||
 };
 
 GS.search.results = GS.search.results || (function(state_abbr) {
-    var stateSwitchDropdown = '.js-changeSearchStateDropdown';
+    var stateSwitchLink = '.js-changeSearchState';
 
     var searchFiltersFormSubmissionHandler = function() {
         var $button = $('.js-submitSearchFiltersForm');
@@ -516,10 +516,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var setStatePickerHandler = function() {
-        $(stateSwitchDropdown).on('click', function() {
-            GS.search.stateAbbreviation = 'ca';
+        $(stateSwitchLink).on('click', function() {
+            GS.search.stateAbbreviation = $(this).data().abbreviation;
             GS.search.autocomplete.searchAutocomplete.detachAutocomplete();
             GS.search.autocomplete.searchAutocomplete.init(GS.search.stateAbbreviation);
+            $('.js-currentLocationText').html($(this).text());
         });
     };
 

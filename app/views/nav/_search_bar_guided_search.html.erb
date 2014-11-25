@@ -4,8 +4,7 @@
     <div class="row ptm">
       <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
         <div class="col-md-2 col-lg-2 plm">
-          <span class="open-sans_sb"><%= @state[:long].titleize %></span>
-          <p><a class="pointer js-changeSearchStateDropdown js-noInterstitial">Change location</a></p>
+          <%= render 'search/change_location' %>
         </div>
         <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
           <input  type="text"
