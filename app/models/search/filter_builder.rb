@@ -79,10 +79,9 @@ class FilterBuilder
   def city_callbacks
     Hash.new{ |h,k| h[k] = {} }.merge(
         {
-            # Example for adding a city configuration
-            # mi: {
-            #     detroit: indiana_db_callbacks
-            # }.stringify_keys!
+            mi: {
+                detroit: detroit_mi_callbacks
+            }.stringify_keys!
         }
     ).stringify_keys!
   end
@@ -107,6 +106,26 @@ class FilterBuilder
           }
         }
       }
+    ]
+  end
+
+  def detroit_mi_callbacks
+    [
+        {
+            conditions:
+                [
+                    {key: 'name', match: 'st'},
+                ],
+            callback_type: 'add',
+            options:
+                {
+                    school_college_going_rate: {
+                        label: 'College Readiness', display_type: :title, name: :school_college_going_rate, filters: {
+                            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :school_college_going_rate, value: '70_TO_100' }
+                        }
+                    }
+                }
+        }
     ]
   end
 

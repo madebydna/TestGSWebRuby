@@ -29,8 +29,8 @@ class SchoolSearchService
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
-    filters = extract_filters(options)
-    filters << "+citykeyword:\"#{options[:city].downcase}\"" if options[:city] # city can be deleted by extract_filters
+    filters = extract_hard_filters(options)
+    filters << "+citykeyword:\"#{options[:city].downcase}\"" if options[:city] # city can be deleted by extract_hard_filters
     filters << "+school_database_state:\"#{options[:state].downcase}\""
     options.delete :city
     options.delete :state
@@ -49,8 +49,8 @@ class SchoolSearchService
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
-    filters = extract_filters(options)
-    filters << "+school_district_id:\"#{options[:district_id]}\"" if options[:district_id] # district_id can be deleted by extract_filters
+    filters = extract_hard_filters(options)
+    filters << "+school_district_id:\"#{options[:district_id]}\"" if options[:district_id] # district_id can be deleted by extract_hard_filters
     filters << "+school_database_state:\"#{options[:state].downcase}\""
     options.delete :district_id
     options.delete :state
@@ -68,7 +68,7 @@ class SchoolSearchService
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
-    filters = extract_filters(options)
+    filters = extract_hard_filters(options)
     filters << "+school_database_state:\"#{options[:state].downcase}\"" if options[:state]
     options.delete :city
     options.delete :state
@@ -87,7 +87,7 @@ class SchoolSearchService
     options = options_param.deep_dup
     rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
     remap_sort(options)
-    filters = extract_filters(options)
+    filters = extract_hard_filters(options)
     filters << "+school_database_state:\"#{options[:state].downcase}\"" if options[:state]
     options.delete :state
     param_options = DEFAULT_BY_NAME_OPTIONS.merge(options)
@@ -194,7 +194,7 @@ class SchoolSearchService
     remap_value(hash, :sort, SORT_VALUE_MAP)
   end
 
-  def self.extract_filters(hash)
+  def self.extract_hard_filters(hash)
     filter_arr = []
     if hash.include? :filters
       filters = hash[:filters]
@@ -223,6 +223,9 @@ class SchoolSearchService
         filter_arr << "+collection_id:#{filters[:collection_id]}"
         hash.delete :city # collection replaces city in browse
         hash.delete :district_id # collection replaces district in browse
+      end
+      if filters.include?(:school_college_going_rate)
+        filter_arr << "+school_college_going_rate:[#{filters[:school_college_going_rate]}]" if filters[:school_college_going_rate] == '70 TO 100'
       end
       hash.delete :filters
     end
