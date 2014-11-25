@@ -90,6 +90,14 @@ body { padding-top: 50px }
 .mv6 {margin-top: 6px;
       margin-bottom: 6px;
 }
+
+// Padding for mobile
+@media (max-width: 480px) {
+  .m-pa15 {
+    padding: 15px;
+  }
+}
+
 //default module padding
 .dvp {padding-top: 60px; padding-bottom: 60px}
 
@@ -290,5 +298,3 @@ hr.brand-bar {
   height: 2px;
   background: $brand-secondary;
 }
-
-
