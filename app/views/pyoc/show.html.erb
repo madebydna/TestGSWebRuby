@@ -79,8 +79,8 @@
               <%= hidden_field_tag "added_schools", params[:added_schools]%>
               <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
               <%= label_tag(:grade_level_for_index_label, "Grade Level") %>
-              <%= select_tag("grade_level_for_index", options_for_select([['Primary', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
-              <%= label_tag(:performanc_index_page_number_start, " Performance Index  Page Number Start",:class => "brand-primary") %>
+              <%= select_tag("grade_level_for_index", options_for_select([['Preschool', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
+              <%= label_tag(:performance_index_page_number_start, " Performance Index  Page Number Start",:class => "brand-primary") %>
               <%= text_field_tag(:performance_index_page_number_start, value = (params[:performance_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
 
               <%= label_tag "Language:", nil,:class =>"brand-primary"%>&nbsp;
@@ -113,7 +113,7 @@
               <%= hidden_field_tag "added_schools", params[:added_schools]%>
               <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
               <%= label_tag(:grade_level_for_index_label, "Grade Level") %>
-              <%= select_tag("grade_level_for_index", options_for_select([['Primary', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
+              <%= select_tag("grade_level_for_index", options_for_select([['Preschool', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
               <%= label_tag(:location_index_page_number_start, " Location Index  Page Number Start",:class => "brand-primary") %>
               <%= text_field_tag(:location_index_page_number_start, value = (params[:location_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
 
@@ -162,7 +162,7 @@
                     <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
                     <%= hidden_field_tag "is_performance_index",1%>
                     <%= hidden_field_tag "language", params[:language]%>
-                    <%= hidden_field_tag "performanc_index_page_number_start", params[:performanc_index_page_number_start]%>
+                    <%= hidden_field_tag "performance_index_page_number_start", params[:performance_index_page_number_start]%>
                     <%= hidden_field_tag "grade_level_for_index", params[:grade_level_for_index]%>
 
 
@@ -177,7 +177,9 @@
                     <%= hidden_field_tag "added_schools", params[:added_schools]%>
                     <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
                     <%= hidden_field_tag "is_location_index",1%>
-
+                    <%= hidden_field_tag "language", params[:language]%>
+                    <%= hidden_field_tag "location_index_page_number_start", params[:location_index_page_number_start]%>
+                    <%= hidden_field_tag "grade_level_for_index", params[:grade_level_for_index]%>
                     <%= submit_tag("Generate Location Index PDF",:class => "btn btn-primary") %><br/><br/>
 
                 <% end %>
