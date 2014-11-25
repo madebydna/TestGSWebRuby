@@ -43,6 +43,7 @@ module GoogleMapConcerns
         map_points[:city] = decorated_school.city
         map_points[:state] = decorated_school.state
         map_points[:zillowUrl] = zillow_url(school)
+        map_points[:zipcode] = decorated_school.zipcode
         map_points[:gradeRange] = decorated_school.grade_range
         map_points[:schoolType] = decorated_school.school_type
         map_points[:numReviews] = (decorated_school.review_count.nil? || decorated_school.community_rating.nil?) ? 0 : decorated_school.review_count

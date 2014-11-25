@@ -10,7 +10,7 @@
 </style>
 
 <div class="phm limit-width-1200">
-  <h1><%= city.name %></h1>
+  <h1 class="notranslate"><%= city.name %></h1>
 
 
   <% # Row contains rating, boilerplate text (description of city), %>
@@ -39,7 +39,7 @@
       <% # Row contains links / buttons to browse schools by level %>
       <div class="row pll prm pbl mtl" style="background-color:#F3F8FB;">
         <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
-          <h4>Browse schools in <%= city.name  %></h4><br/>
+          <h4>Browse schools in <span class="notranslate"><%= city.name  %></span></h4><br/>
           <% %w[e m h].each_with_index do |level, index| %>
             <% css_class = "prm fl" %>
             <% css_class << " border-left" if index > 0 %>
@@ -96,7 +96,7 @@
         <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
     <% end %>
 
-    <%= render partial: 'shared/districts_module', locals: {title: "Largest Districts in #{city.name}",
+    <%= render partial: 'shared/districts_module', locals: {title: "Largest Districts in <span class='notranslate'>#{city.name}</span>",
                                                             column_size: first_column_sizes, districts: @districts}%>
 
     <div class="<%= second_column_sizes %> pll ma ptm">
