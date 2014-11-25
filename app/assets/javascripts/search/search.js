@@ -455,7 +455,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var lookForFormElementToUpdate = function($form, name, value, options) {
         if (options && options['includeSelect']) {
-            $form.find('select[name="' + name + '"]').val(value);
+            var $aSelect = $form.find('select[name="' + name + '"]');
+            if ($aSelect.length > 0) {
+                $aSelect.val(value);
+                if ($aSelect.val() === null) {
+                    $aSelect.val(''); // return to default value if value is unknown
+                }
+                return true; // found something to update so exit early
+            }
         }
         // ^= means startsWith
         $form.find('.js-gs-checkbox-search[data-gs-checkbox-name^="' + name + '"]').
