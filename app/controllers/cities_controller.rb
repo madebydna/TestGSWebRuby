@@ -44,7 +44,6 @@ class CitiesController < ApplicationController
 
   def city_home
     gon.pagename = 'GS:City:Home'
-    # @city_object = City.where(name: @city, state: @state[:short]).first
     @city_object = City.where(name: @city, state: @state[:short]).first
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
