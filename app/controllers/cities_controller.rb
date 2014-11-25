@@ -10,7 +10,7 @@ class CitiesController < ApplicationController
   before_action :set_hub
   before_action :set_login_redirect
   before_action :set_footer_cities
-  before_action :write_meta_tags, except: [:partner, :guided_search]
+  before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
     return city_home if params[:prototype]
