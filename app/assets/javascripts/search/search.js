@@ -71,7 +71,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (valid) {
                 var searchOptions = {};
 
-                if (input.value == $(schoolResultsSearchSelector).data('prev-search')) {
+                if (input.value == $(schoolResultsSearchSelector).data('prev-search') && GS.search.stateAbbreviation == $(schoolResultsSearchSelector).data('state')) {
                     $.cookie('showFiltersMenu', 'true', {path: '/'});
                     var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
