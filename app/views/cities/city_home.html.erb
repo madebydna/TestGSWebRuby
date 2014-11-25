@@ -70,7 +70,7 @@
     render(
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
-        title: "Top rated schools in #{city.name}",
+        title: "Top rated schools in <span class='notranslate'>#{city.name}</span>",
         schools: SchoolProfileDecorator.decorate_collection(@top_schools)
       }
     )
