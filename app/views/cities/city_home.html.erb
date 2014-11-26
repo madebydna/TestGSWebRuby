@@ -1,14 +1,6 @@
 <%= render 'nav/topnav' %>
 <% city = CityHomeDecorator.decorate(@city_object) %>
 
-<style>
-  .border-left {
-    margin-left: 0;
-    padding-left: 10px;
-    border-left: 1px solid #999;
-  }
-</style>
-
 <div class="phm limit-width-1200">
   <h1 class="notranslate"><%= city.name %></h1>
 

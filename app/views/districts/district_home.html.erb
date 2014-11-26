@@ -12,7 +12,7 @@
 <div class="limit-width-1200">
 
   <div class="phm row">
-    <h1 class="dark-grey" style="color:#20AEDC;"><%= district.name %></h1>
+    <h1 class="dark-grey notranslate" style="color:#20AEDC;"><%= district.name %></h1>
     <% grade_range_row_content = [] %>
 
     <% # This allows you to capture html into an array without using strings %>
@@ -49,7 +49,7 @@
       <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
         <%= district.square_rating(class: 'fl') %>        
         <div class="fl pal tal">
-          <span class="font-size-block">GreatSchools</span><br/>
+          <span class="font-size-block notranslate">GreatSchools</span><br/>
           <span class="font-size-xl">District rating</span>
         </div>
       </div>
@@ -85,7 +85,7 @@
   <% # Row contains links / buttons to browse schools by level %>
   <div class="row phm pbl mtl bg-primary-light">
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
-      <h4>Browse schools in <%= district.name  %></h4><br/>
+      <h4>Browse schools in <span class="notranslate"><%= district.name  %></span></h4><br/>
       <% %w[e m h].each_with_index do |level, index| %>
         <% css_class = "prm fl" %>
         <% css_class << " border-left" if index > 0 %>
