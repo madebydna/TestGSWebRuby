@@ -22,10 +22,10 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
         else
           insert_into!(esp_response_update)
         end
-        Cacher.create_cache(school, CACHE_KEY)
       rescue Exception => e
-        Cacher.create_cache(school, CACHE_KEY)
         raise e.message
+      ensure
+        Cacher.create_cache(school, CACHE_KEY)
       end
     end
   end
