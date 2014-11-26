@@ -12,7 +12,10 @@ class FilterBuilder
 
   def cache_key
     cache_key = "search/filter_form-"
-    if city_callbacks[@state].key?(@city)
+    if @force_simple_filters
+      cache_key += 'national'
+      return cache_key
+    elsif city_callbacks[@state].key?(@city)
       cache_key += "#{@state}-#{@city}"
     elsif state_callbacks.key?(@state)
       cache_key += "#{@state}"

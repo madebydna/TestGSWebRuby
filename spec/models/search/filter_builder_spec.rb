@@ -15,8 +15,8 @@ describe FilterBuilder do
 
   end
 
-  describe '#get_filters' do
-    let(:filters_hash) { filter_builder.get_filters}
+  describe '#default_advanced_filters' do
+    let(:filters_hash) { filter_builder.default_advanced_filters}
 
     it 'should return a well-formed hash' do
       expect(filters_hash[:display_type]).to eq(:blank_container)
@@ -56,6 +56,15 @@ describe FilterBuilder do
       end
     end
 
+  end
+
+  describe '#cache_key' do
+    context 'forcing simple filters' do
+      let (:force_simple_filter_builder) { FilterBuilder.new('', '', true) }
+      it 'should return the national key' do
+        expect(force_simple_filter_builder.cache_key).to eq('search/filter_form-national')
+      end
+    end
   end
 
 end
