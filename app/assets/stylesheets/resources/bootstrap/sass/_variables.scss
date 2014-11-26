@@ -39,10 +39,7 @@ $brand-primary:                #26ABE2;
 $brand-primary-darker:         #204362;
 $brand-primary-dark:           #007299;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
-$brand-primary-lighter2:       lighten($brand-primary, 60%); // #99CDE0
-$brand-primary-lighter3:       lighten($brand-primary, 80%); // #CCE6F0
-$brand-primary-lighter4:       lighten($brand-primary, 92%); // #EBF5F9
-$brand-primary-lighter5:       lighten($brand-primary, 95%); // #F5FAFC
+$brand-primary-lighter:       lighten($brand-primary, 47%); // #F5FAFC
 
 $blue-dark:                    #0D6A99;
 $green-light: #69b684 !default;

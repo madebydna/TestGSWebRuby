@@ -13,10 +13,8 @@ class CitiesController < ApplicationController
   before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
-    return city_home if params[:prototype]
-
     if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
+      city_home
     else
 
       @hub.has_guided_search?
