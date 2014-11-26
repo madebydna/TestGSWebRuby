@@ -1,6 +1,7 @@
 class SchoolRating < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   include UrlHelper
+  include UpdateQueueConcerns
 
   db_magic :connection => :surveys
 
@@ -52,6 +53,9 @@ class SchoolRating < ActiveRecord::Base
   before_save :set_processed_date_if_published
   after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
+  after_save do
+    log_review_changed(state, school_id, member_id)
+  end
 
   def self.cache_time
     LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
