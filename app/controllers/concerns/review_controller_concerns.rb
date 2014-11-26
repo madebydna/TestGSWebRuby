@@ -1,6 +1,7 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
   include ApplicationHelper
+  include UpdateQueueConcerns
 
   protected
 
@@ -12,7 +13,9 @@ module ReviewControllerConcerns
       review = review_from_params(review_params)
       review.user = current_user
 
-      unless review.save
+      if review.save
+        log_review_changed(review_params[:state], review_params[:school_id], current_user.id)
+      else
         # safe even if no errors
         error = review.errors.full_messages.first
         review = nil
@@ -37,7 +40,9 @@ module ReviewControllerConcerns
       if existing_review
         review_from_params = review_from_params(review_params)
         review_from_params.user = current_user
-        unless existing_review.update_attributes(review_from_params.attributes)
+        if existing_review.update_attributes(review_from_params.attributes)
+          log_review_changed(review_params[:state], review_params[:school_id], current_user.id)
+        else
           # safe even if no errors
           error = existing_review.errors.full_messages.first
           existing_review = nil

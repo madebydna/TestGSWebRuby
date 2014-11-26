@@ -24,6 +24,8 @@ class Loader
       CensusLoading::Loader
     elsif data_type == 'newsletter'
       # ... just an example of how to extend
+    elsif data_type == 'school_reviews'
+      ReviewLoading::Loader
     elsif esp_data_type?(data_type)
       EspResponseLoading::Loader
     else
