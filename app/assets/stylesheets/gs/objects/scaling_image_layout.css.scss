@@ -22,18 +22,22 @@
   }
 }
 
-.image-scaling-height {
+.image-scaling-height, .image-scaling-height-sponsored {
   height: 550px;
 }
 
 @media (max-width: 1200px) {
-   .image-scaling-height {
+   .image-scaling-height, .image-scaling-height-sponsored {
     height: 500px;
   }
 }
 
 @media (max-width: 991px) {
   .image-scaling-height {
+    height: 335px;
+  }
+
+  .image-scaling-height-sponsored {
     height: 375px;
   }
 }

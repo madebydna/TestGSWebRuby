@@ -5,16 +5,16 @@
    sponsor_path = defined?(state_page) ? state_education_community_partner_path({state: params[:state]}) : city_education_community_partner_path({state: params[:state], city: params[:city]})
 %>
 
-
+<% has_sponsor_text = has_sponsor ? '-sponsored' : '' %>
 
 <div class="pr">
-  <div class="image-bg-scale image-scaling-height oh">
+  <div class="image-bg-scale image-scaling-height<%= has_sponsor_text %> oh">
     <div class="img-container is-scaled"><!--not empty--></div>
   </div>
   <div class="limit-width-1200">
     <div class="absolute-center">
       <div class="gray-search-container tal clearfix pr">
-        <div class="pa35 m-pa15">
+        <div class="gray-search-container-padding">
           <% if has_sponsor %>
               <div class='tac sponsor-bar  mbl'>
                 <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>

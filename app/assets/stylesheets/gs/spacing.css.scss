@@ -80,7 +80,6 @@ body { padding-top: 50px }
 .pb1 {padding-top:1px}
 .pb2 {padding-top:2px}
 
-.pa35 {padding: 35px}
 .pb35 {padding-bottom:  35px}
 //use in media query for less that 480
 .pl35 {padding-left: 35px}
@@ -89,13 +88,6 @@ body { padding-top: 50px }
 
 .mv6 {margin-top: 6px;
       margin-bottom: 6px;
-}
-
-// Padding for mobile
-@media (max-width: 480px) {
-  .m-pa15 {
-    padding: 15px;
-  }
 }
 
 //default module padding

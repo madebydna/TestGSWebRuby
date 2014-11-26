@@ -33,6 +33,10 @@
   margin: 60px auto auto auto;
 }
 
+.gray-search-container-padding {
+  padding: 35px;
+}
+
 .sponsor-bar {
   top: 58px;
   right: 0;
@@ -54,10 +58,6 @@
     border-radius: none;
   }
 
-  .image-scaling-height {
-    height: 375px;
-  }
-
   .school-breakdown {
     background: white;
     padding: 20px 0 0 25px;
@@ -69,4 +69,10 @@
       color: $blue-dark;
     }
   }
+}
+
+  @media (max-width: 480px) {
+    .gray-search-container-padding {
+      padding: 35px 15px 35px 15px;
+    }
 }
