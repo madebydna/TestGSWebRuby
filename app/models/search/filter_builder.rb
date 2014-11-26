@@ -2,6 +2,9 @@
 class FilterBuilder
   attr_accessor :filters, :filter_display_map
 
+  # Watch out!
+  # If you change FilterBuilder's behavior, ensure that you don't need to change cache_key. Ask, if you don't know.
+
   def initialize(state = '', city = '', force_simple_filters = false)
     @state = state.to_s.downcase
     @city = city.to_s.downcase
