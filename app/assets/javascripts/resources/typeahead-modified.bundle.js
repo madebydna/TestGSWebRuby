@@ -1460,11 +1460,14 @@
             },
             _onFocused: function onFocused() {
                 this.isActivated = true;
+// Modified drop down empty command to fix typeahead compatability bug with FastClick
+// the modification empties the drop down dataset on clicking the search bar instead of of clicking off of the search bar
+// https://github.com/lime/typeahead.js/commit/7b90fc71e4b59a16f5f07b942fff1c0c91d18397
+                this.dropdown.empty();
                 this.dropdown.open();
             },
             _onBlurred: function onBlurred() {
                 this.isActivated = false;
-                this.dropdown.empty();
                 this.dropdown.close();
             },
             _onEnterKeyed: function onEnterKeyed(type, $e) {
