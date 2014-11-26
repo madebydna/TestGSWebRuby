@@ -10,13 +10,8 @@ class CityHomeDecorator < Draper::Decorator
     city.name
   end
 
-  def rating
-    #@rating ||= city.rating || NOT_RATED_VALUE
-    NOT_RATED_VALUE
-  end
-
-  def square_rating(options = {})
-    default_container_class = " pal tac text_fff rating-background-#{rating}"
+  def square_rating(rating, options = {})
+    default_container_class = " pal tac text_fff rating-background-#{rating.to_s}"
     container_style = 'width:130px;height:120px;'
 
     h.content_tag(:div,
@@ -25,7 +20,7 @@ class CityHomeDecorator < Draper::Decorator
     ) do
       rating_text_class = (rating == NOT_RATED_VALUE)? 'jumbo-text-sub' : 'jumbo-text'
       content = ''
-      content << h.content_tag(:span, class: rating_text_class) { rating.to_s } 
+      content << h.content_tag(:span, class: rating_text_class) { rating.to_s }
       if rating != NOT_RATED_VALUE
         content << h.tag(:br)
         content << 'out of 10' if rating != NOT_RATED_VALUE
