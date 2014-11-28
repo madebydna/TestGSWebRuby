@@ -3,14 +3,16 @@ class Admin::PyocController <  ApplicationController
   include PdfConcerns
 
   def print_pdf
-    @db_schools = find_schools_to_be_printed(
+
+@db_schools = find_schools_to_be_printed(
         state_param,{
         :collection_id=>params[:collection_id].to_i,
-        :is_high_school=>params[:is_high_school].to_bool,
-        :is_k8=>params[:is_k8].to_bool,
-        :is_pk8=>params[:is_pk8].to_bool,
+        :is_high_school=>params[:batch] == 'is_high_school',
+        :is_k8=>params[:batch] == 'is_k8',
+        :is_pk8=>params[:batch] == 'is_pk8' ,
         :added_schools=>params[:added_schools],
         :removed_schools=>params[:removed_schools],
+        :grade_level_for_index=>params[:grade_level_for_index],
         :id1=>params[:id1].to_i,
         :id2=>params[:id2].to_i,
         :id3=>params[:id3].to_i,
@@ -30,11 +32,12 @@ class Admin::PyocController <  ApplicationController
     @db_schools = find_schools_to_be_printed(
         state_param,{
         :collection_id=>params[:collection_id].to_i,
-        :is_high_school=>params[:is_high_school].to_bool,
-        :is_k8=>params[:is_k8].to_bool,
-        :is_pk8=>params[:is_pk8].to_bool,
+        :is_high_school=>params[:batch] == 'is_high_school',
+        :is_k8=>params[:batch] == 'is_k8',
+        :is_pk8=>params[:batch] == 'is_pk8' ,
         :added_schools=>params[:added_schools],
         :removed_schools=>params[:removed_schools],
+        :grade_level_for_index=>params[:grade_level_for_index],
         :id1=>params[:id1].to_i,
         :id2=>params[:id2].to_i,
         :id3=>params[:id3].to_i,
@@ -68,7 +71,7 @@ class Admin::PyocController <  ApplicationController
   def generate_pdf(schools_decorated_with_cache_results)
     respond_to do |format|
       format.pdf do
-           pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:is_k8].present?, params[:is_high_school].present?,params[:is_pk8].present?,
+           pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:batch] == 'is_k8' ?true :false, params[:batch] == 'is_high_school' ?true :false,params[:batch] == 'is_pk8' ?true :false,
                              params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false , params[:collection_id].present? ? params[:collection_id].to_i: nil,
                              params[:is_location_index].present? , params[:is_performance_index].present? ,params[:location_index_page_number_start],params[:performance_index_page_number_start])
 

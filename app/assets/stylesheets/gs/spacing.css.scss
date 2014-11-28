@@ -80,11 +80,16 @@ body { padding-top: 50px }
 .pb1 {padding-top:1px}
 .pb2 {padding-top:2px}
 
+.pb35 {padding-bottom:  35px}
+//use in media query for less that 480
+.pl35 {padding-left: 35px}
+.pl25 {padding-left: 25px}
 .pt-1 { padding-top: 1% }
 
 .mv6 {margin-top: 6px;
       margin-bottom: 6px;
 }
+
 //default module padding
 .dvp {padding-top: 60px; padding-bottom: 60px}
 
@@ -143,6 +148,9 @@ body { padding-top: 50px }
 
 .wsnw { white-space: nowrap; }
 
+.b-none {bottom: 0;}
+.l-none {left: 0}
+
 .pa { position: absolute; }
 .pf { position: fixed; }
 .pr { position: relative; }
@@ -159,6 +167,7 @@ body { padding-top: 50px }
 .hvs { border-right: 1px #CCCCCC solid; }
 .hbs { border-bottom: 1px #CCCCCC solid; }
 .h24 { height:24px }
+.h30 {height:30px}
 
 .oh { overflow: hidden; }
 .oa { overflow: auto; }
@@ -187,6 +196,9 @@ body { padding-top: 50px }
   max-width: 100%;
 }
 
+.mh-500 {
+  min-height: 500px;
+}
 .brm { border-radius: 10px; }
 
 .brs { border-radius: $border-radius-small; }
@@ -215,6 +227,8 @@ body { padding-top: 50px }
   .content-centered {
     margin-top: 0;
   }
+//remove bottom padding from browse schools module
+  .pb35 {padding-bottom: 0}
 }
 
 @media only screen and (max-width: 768px) {
@@ -227,16 +241,39 @@ body { padding-top: 50px }
   .mobile-clearfix {
     @include clearfix();
   }
+//  .pl35-or-25 {padding-left: 25px}
 }
 
 @media only screen and (min-width:480px) {
   .rating-header-h24 { height:24px; }
 }
 
+@media (min-width:1200px){
+  .plm-mobile {padding-left: 10px}
+  .mobile_img {width: 300px; height: 178px;}
+}
+
+// Hub or City Hub Upcoming Event Mobile Spacing
+
+@media only screen and (max-width: 650px) {
+  .upcoming-event {
+    clear: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .community-partner-row div {
+    clear: left;
+  }
+}
+
+//Lines and Borders
+
 .search-result-border {
   border: 1px solid #e6e6e6;
   border-radius: 4px;
 }
+
 .search-result-border.emphasis-border {
   border-color: $emphasis-color;
 }
@@ -244,3 +281,12 @@ body { padding-top: 50px }
   border: 1px solid $brand-primary;
 }
 
+.gray-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+hr.brand-bar {
+  height: 2px;
+  background: $brand-secondary;
+}

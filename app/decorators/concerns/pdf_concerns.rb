@@ -11,75 +11,75 @@ module PdfConcerns
 
       '46077' => 'Indy_map_1.png',
       '46107' => 'Indy_map_4.png',
-      '46113' =>  'Indy_map_3.png',
-      '46163' =>  'Indy_map_4.png',
-      '46201' =>  'Indy_map_2.png',
-      '46202' =>  'Indy_map_1.png',
-      '46203' =>  'Indy_map_4.png',
-      '46204' =>  'Indy_map_1.png',
-      '46205' =>  'Indy_map_2.png',
-      '46208' =>  'Indy_map_1.png',
-      '46214' =>  'Indy_map_1.png',
-      '46216' =>  'Indy_map_2.png',
-      '46217' =>  'Indy_map_3.png',
-      '46218' =>  'Indy_map_2.png',
-      '46219' =>  'Indy_map_2.png',
-      '46220' =>  'Indy_map_2.png',
-      '46221' =>  'Indy_map_3.png',
-      '46222' =>  'Indy_map_1.png',
-      '46224' =>  'Indy_map_1.png',
-      '46225' =>  'Indy_map_3.png',
-      '46226' =>  'Indy_map_2.png',
-      '46227' =>  'Indy_map_4.png',
-      '46228' =>  'Indy_map_1.png',
-      '46229' =>  'Indy_map_2.png',
-      '46231' =>  'Indy_map_3.png',
-      '46234' =>  'Indy_map_1.png',
-      '46235' =>  'Indy_map_2.png',
-      '46236' =>  'Indy_map_2.png',
-      '46237' =>  'Indy_map_4.png',
-      '46239' =>  'Indy_map_4.png',
-      '46240' =>  'Indy_map_2.png',
-      '46241' =>  'Indy_map_3.png',
-      '46250' =>  'Indy_map_2.png',
-      '46254' =>  'Indy_map_1.png',
-      '46256' =>  'Indy_map_2.png',
-      '46259' =>  'Indy_map_4.png',
-      '46260' =>  'Indy_map_1.png',
-      '46268' =>  'Indy_map_1.png',
-      '46278' =>  'Indy_map_1.png',
-      '53110' =>  'Mke_map_6.png',
-      '53129' =>  'Mke_map_5.png',
-      '53130' =>  'Mke_map_5.png',
-      '53202' =>  'Mke_map_4.png',
-      '53203' =>  'Mke_map_4.png',
-      '53204' =>  'Mke_map_6.png',
-      '53205' =>  'Mke_map_4.png',
-      '53206' =>  'Mke_map_4.png',
-      '53207' =>  'Mke_map_6.png',
-      '53208' =>  'Mke_map_3.png',
-      '53209' =>  'Mke_map_2.png',
-      '53210' =>  'Mke_map_3.png',
-      '53211' =>  'Mke_map_4.png',
-      '53212' =>  'Mke_map_4.png',
-      '53213' =>  'Mke_map_3.png',
-      '53214' =>  'Mke_map_5.png',
-      '53215' =>  'Mke_map_6.png',
-      '53216' =>  'Mke_map_3.png',
-      '53217' =>  'Mke_map_2.png',
-      '53218' =>  'Mke_map_1.png',
-      '53219' =>  'Mke_map_5.png',
-      '53220' =>  'Mke_map_5.png',
-      '53221' =>  'Mke_map_6.png',
-      '53222' =>  'Mke_map_3.png',
-      '53223' =>  'Mke_map_1.png',
-      '53224' =>  'Mke_map_1.png',
-      '53225' =>  'Mke_map_1.png',
-      '53226' =>  'Mke_map_3.png',
-      '53227' =>  'Mke_map_5.png',
-      '53228' =>  'Mke_map_5.png',
-      '53233' =>  'Mke_map_4.png',
-      '53235' =>  'Mke_map_6.png',
+      '46113' => 'Indy_map_3.png',
+      '46163' => 'Indy_map_4.png',
+      '46201' => 'Indy_map_2.png',
+      '46202' => 'Indy_map_1.png',
+      '46203' => 'Indy_map_4.png',
+      '46204' => 'Indy_map_1.png',
+      '46205' => 'Indy_map_2.png',
+      '46208' => 'Indy_map_1.png',
+      '46214' => 'Indy_map_1.png',
+      '46216' => 'Indy_map_2.png',
+      '46217' => 'Indy_map_3.png',
+      '46218' => 'Indy_map_2.png',
+      '46219' => 'Indy_map_2.png',
+      '46220' => 'Indy_map_2.png',
+      '46221' => 'Indy_map_3.png',
+      '46222' => 'Indy_map_1.png',
+      '46224' => 'Indy_map_1.png',
+      '46225' => 'Indy_map_3.png',
+      '46226' => 'Indy_map_2.png',
+      '46227' => 'Indy_map_4.png',
+      '46228' => 'Indy_map_1.png',
+      '46229' => 'Indy_map_2.png',
+      '46231' => 'Indy_map_3.png',
+      '46234' => 'Indy_map_1.png',
+      '46235' => 'Indy_map_2.png',
+      '46236' => 'Indy_map_2.png',
+      '46237' => 'Indy_map_4.png',
+      '46239' => 'Indy_map_4.png',
+      '46240' => 'Indy_map_2.png',
+      '46241' => 'Indy_map_3.png',
+      '46250' => 'Indy_map_2.png',
+      '46254' => 'Indy_map_1.png',
+      '46256' => 'Indy_map_2.png',
+      '46259' => 'Indy_map_4.png',
+      '46260' => 'Indy_map_1.png',
+      '46268' => 'Indy_map_1.png',
+      '46278' => 'Indy_map_1.png',
+      '53110' => 'Mke_map_6.png',
+      '53129' => 'Mke_map_5.png',
+      '53130' => 'Mke_map_5.png',
+      '53202' => 'Mke_map_4.png',
+      '53203' => 'Mke_map_4.png',
+      '53204' => 'Mke_map_6.png',
+      '53205' => 'Mke_map_4.png',
+      '53206' => 'Mke_map_4.png',
+      '53207' => 'Mke_map_6.png',
+      '53208' => 'Mke_map_3.png',
+      '53209' => 'Mke_map_2.png',
+      '53210' => 'Mke_map_3.png',
+      '53211' => 'Mke_map_4.png',
+      '53212' => 'Mke_map_4.png',
+      '53213' => 'Mke_map_3.png',
+      '53214' => 'Mke_map_5.png',
+      '53215' => 'Mke_map_6.png',
+      '53216' => 'Mke_map_3.png',
+      '53217' => 'Mke_map_2.png',
+      '53218' => 'Mke_map_1.png',
+      '53219' => 'Mke_map_5.png',
+      '53220' => 'Mke_map_5.png',
+      '53221' => 'Mke_map_6.png',
+      '53222' => 'Mke_map_3.png',
+      '53223' => 'Mke_map_1.png',
+      '53224' => 'Mke_map_1.png',
+      '53225' => 'Mke_map_1.png',
+      '53226' => 'Mke_map_3.png',
+      '53227' => 'Mke_map_5.png',
+      '53228' => 'Mke_map_5.png',
+      '53233' => 'Mke_map_4.png',
+      '53235' => 'Mke_map_6.png',
   }
 
   ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING = {
@@ -100,6 +100,7 @@ module PdfConcerns
       'Hispanic' => 'Hispano/Latino',
       'Multiracial' => 'De raza multiple/otro',
       'Native American or Native' => 'Amerindio/Nativo Americano',
+      'Native American or Native Alaskan' => 'Amerindio/Nativo Americano',
       'Native Hawaiian' => 'Nativo Hawaiiano',
       'Native Hawaiian or Pacific Islander' => 'Nativo Hawaiiano',
       'Native Hawaiian or Other Pacific Islander' => 'Nativo Hawaiiano',
@@ -118,7 +119,8 @@ module PdfConcerns
 
   ENGLISH_TO_SPANISH_DEADLINE_MAPPING = {
       'Contact school' => 'Contacta la escuela',
-      'Rolling deadline' => 'Abierta todo el año'
+      'Rolling deadline' => 'Abierta todo el año',
+      'n/a' => 'n/a'
   }
 
   ENGLISH_TO_SPANISH_RATINGS_MAPPING = {
@@ -181,23 +183,24 @@ module PdfConcerns
   end
 
   # def find_schools_to_be_printed(state,collection_id,is_high_school,is_k8,is_pk8,added_schools,removed_schools,school_id1,school_id2,school_id3,school_id4,is_location_index,is_performance_index)
-  def find_schools_to_be_printed(state,opts = {})
+  def find_schools_to_be_printed(state, opts = {})
     collection_id = opts[:collection_id]
     is_high_school = opts[:is_high_school]
     is_k8 = opts[:is_k8]
     is_pk8 = opts[:is_pk8]
     added_schools = opts[:added_schools]
     removed_schools = opts[:removed_schools]
-    school_id1 = opts[:school_id1]
-    school_id2 = opts[:school_id2]
-    school_id3 = opts[:school_id3]
-    school_id4 = opts[:school_id4]
+    school_id1 = opts[:id1]
+    school_id2 = opts[:id2]
+    school_id3 = opts[:id3]
+    school_id4 = opts[:id4]
+    grade_level_for_index=opts[:grade_level_for_index]
 
     db_schools = []
 
     # binding.pry;
     if state.present?
-        if collection_id.present? && collection_id>0 && is_high_school
+      if collection_id.present? && collection_id>0 && is_high_school
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:includes_highschool?)
 
@@ -207,8 +210,19 @@ module PdfConcerns
       elsif  collection_id.present? && collection_id>0 && is_k8
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
         db_schools.select!(&:k8?)
-      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8
+      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8 & !grade_level_for_index
         db_schools = School.for_collection_ordered_by_name(state, collection_id)
+      elsif collection_id.present? && collection_id>0 && !is_k8 && !is_high_school && !is_pk8 & grade_level_for_index
+        db_schools = School.for_collection_ordered_by_name(state, collection_id)
+        if grade_level_for_index.present? && grade_level_for_index.is_a?(Array)
+          db_schools.select! do |school|
+            school.includes_level_code?(grade_level_for_index)
+          end
+        elsif grade_level_for_index.present? && !grade_level_for_index.is_a?(Array)
+          db_schools.select! do |school|
+            school.includes_level_code?(grade_level_for_index.split(" "))
+          end
+        end
       elsif   collection_id==0 && (!school_id1.present? || !school_id2.present? || !school_id3.present? || !school_id4.present?)
         db_schools = School.on_db(state).active.order(name: :asc).to_a
       elsif   state.present? && (school_id1.present? || school_id2.present? || school_id3.present? || school_id4.present?)
@@ -249,7 +263,7 @@ module PdfConcerns
 
   def which_icon
     icon_path = 'app/assets/images/pyoc/map_icons/'
-    ZIPCODE_TO_ICON_MAPPING[zipcode].present? ?  icon_path + ZIPCODE_TO_ICON_MAPPING[zipcode] :'N/A'
+    ZIPCODE_TO_ICON_MAPPING[zipcode].present? ? icon_path + ZIPCODE_TO_ICON_MAPPING[zipcode] : 'N/A'
   end
 
   def which_footer(collection_id, is_spanish)

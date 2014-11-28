@@ -1,53 +1,63 @@
 <%
-  has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
-  #  Samson change.  gs_legacy_url_encode is causing north-carolina state page to fail
-  #sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]) }) : city_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]), city: params[:city] })
-  sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: params[:state] }) : city_education_community_partner_path({ state: params[:state], city: params[:city] })
+   has_sponsor = !sponsor.nil? && !sponsor[:text].nil? && !sponsor[:path].nil?
+   #  Samson change.  gs_legacy_url_encode is causing north-carolina state page to fail
+   #sponsor_path = defined?(state_page) ? state_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]) }) : city_education_community_partner_path({ state: gs_legacy_url_encode(params[:state]), city: params[:city] })
+   sponsor_path = defined?(state_page) ? state_education_community_partner_path({state: params[:state]}) : city_education_community_partner_path({state: params[:state], city: params[:city]})
 %>
 
-<% school_breakdown_klass = has_sponsor ? 'school-breakdown-sponsored' : 'school-breakdown' %>
+<% has_sponsor_text = has_sponsor ? '-sponsored' : '' %>
 
 <div class="pr">
-  <div class="hub-image-bg-scale hub_hero_size oh">
+  <div class="image-bg-scale image-scaling-height<%= has_sponsor_text %> oh">
     <div class="img-container is-scaled"><!--not empty--></div>
   </div>
   <div class="limit-width-1200">
-    <div class="absolute-center-hub">
-      <div class="hub-hero-bg tal clearfix">
-        <% if has_sponsor %>
-            <div class='tac sponsor-bar  mbl'>
-              <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
-              <% if @hub.has_partner_page? %>
-                  <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
-              <% else %>
-                  <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
-              <% end %>
+    <div class="absolute-center">
+      <div class="gray-search-container tal clearfix pr">
+        <div class="gray-search-container-padding">
+          <% if has_sponsor %>
+              <div class='tac sponsor-bar  mbl'>
+                <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
+                <% if @hub.has_partner_page? %>
+                    <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
+                <% else %>
+                    <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
+                <% end %>
+              </div>
+          <% end %>
+          <div class="col-md-8 col-sm-10 col-xs-12 ptm pts">
+            <div class='oa'>
+              <div class="pull-left">
+                <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
+
+                <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
+              </div>
             </div>
-        <% end %>
-        <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 ptm pts">
-          <div class='oa'>
-            <div class="pull-left">
-              <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
-              <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
+            <div class="col-md-11 col-sm-12">
+              <%= render partial: 'nav/search_form' %>
             </div>
+            <a href="/" class="inverted-text fl mbl mtl">
+              Not in <%= collection_nickname %>?
+            </a>
           </div>
-          <!--<div class="search-type-toggle mtm mbl clearfix">-->
-            <!--&lt;!&ndash;Toggle bar for optimizely guide by info option for Delaware&ndash;&gt;-->
-          <!--</div>-->
-          <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12">
-            <%= render partial: 'nav/search_form' %>
-          </div>
-          <a  href="/" class="pull-left mbl clear-cookies-link mtl">
-            Not in <%= collection_nickname %>?
-          </a>
+          <% unless  browse_links.nil? %>
+              <%= render 'shared/browse_schools_list', browse_links: browse_links %>
+          <% end %>
         </div>
-        <% unless  browse_links.nil? %>
-            <%= render 'shared/browse_schools_list', browse_links: browse_links, school_breakdown_klass: school_breakdown_klass%>
+        <% if @hub.has_guided_search? %>
+            <div class="vam black-guided-search-bar inverted-text fl pvm pa b-none l-none">
+                <span class="hidden-xs font-size-large pl35">
+                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-large">Guide Me</span></a>
+                </span>
+                  <span class="visible-xs font-size-small pl25">
+                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-small">Guide Me</span></a>
+                </span>
+            </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
 <% unless  browse_links.nil? %>
-    <%= render 'shared/browse_schools_list', browse_links: browse_links, school_breakdown_klass: school_breakdown_klass, mobile: true%>
+    <%= render 'shared/browse_schools_list', browse_links: browse_links, mobile: true %>
 <% end %>

@@ -3,11 +3,15 @@
   <div class="row ma limit-width-1200">
     <div class="row ptm">
       <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-        <div class="col-xs-9 col-sm-10 plm prm mbm">
+        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
+          <%= render 'search/change_location' %>
+        </div>
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term %>"
                   data-prev-search="<%= @search_term || '' %>"
+                  data-state="<%= @state[:short] %>"
                   id="js-schoolResultsSearch"
                   class='typeahead search-text full-width pam'
                   placeholder="">

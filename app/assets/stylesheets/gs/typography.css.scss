@@ -110,6 +110,10 @@ p, a {
   background-color: $blue-dark;
 }
 
+.dark-gray-bg {
+  background: #3d3d3d;
+}
+
 .inverted-text {
   color: white;
 }
@@ -151,7 +155,10 @@ p, a {
 
 .bg-white { background-color: #FFFFFF; }
 .bg-light-gray { background-color: $well-bg; }
+.bg-medium-gray {background-color: #E5E5E5}
 .bg-emphasis { background-color: $emphasis-color; }
+.bg-dark-teal { background-color: #006589;}
+.bg-primary-light { background-color: $brand-primary-lighter; }
 
 .tdn { text-decoration: none; }
 
@@ -234,11 +241,17 @@ body { top: 0px !important; }
 .state_bg_3 { background-color: #A192AD }
 .state_bg_4 { background-color: #C9DA7A }
 
-//fix for typeahead transparency
-.tt-hint {
-  opacity:1;
-}
-
 .ts{
   text-shadow: 1px 1px #999999;
 }
+
+//Guided Search
+
+.black-guided-search-bar {
+  background: #000000;
+  width: 100%;
+  height: 45px;
+//  margin: auto;
+}
+
+//@media ()

@@ -4,7 +4,7 @@ class SchoolSearchResult
 
   attr_accessor :academic_focus, :arts_media, :arts_music, :arts_performing_written, :arts_visual, :before_after_care,
                 :boys_sports, :city, :community_rating, :database_state, :distance, :dress_code, :enrollment,
-                :foreign_language, :girls_sports, :id, :immersion_language, :instructional_model,
+                :foreign_language, :girls_sports, :grade_range, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :name, :on_page, :overall_gs_rating,
                 :review_count, :school_media_first_hash, :state, :state_name, :street,
                 :transportation, :type, :zip, :zipcode, :profile_path, :students_vouchers
@@ -29,6 +29,7 @@ class SchoolSearchResult
     @enrollment = hash['school_size']
     @foreign_language = hash['foreign_language']
     @girls_sports = hash['girls_sports']
+    @grade_range = hash['school_grade_range']
     @id = hash['school_id']
     @immersion_language = hash['immersion_language']
     @instructional_model = hash['instructional_model']

@@ -14,6 +14,7 @@ class SchoolProfileController < SchoolController
 
   before_action :ad_setTargeting_through_gon
   before_action :set_city_state
+  before_action :facebook_comments_permalink
   before_action :set_hub
   before_action :enable_ads
   before_action :set_breadcrumbs
@@ -36,6 +37,7 @@ class SchoolProfileController < SchoolController
     gon.review_count = @school_reviews_all.count();
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
+    @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
     set_last_modified_date
@@ -184,5 +186,15 @@ class SchoolProfileController < SchoolController
   def ad_page_name
     ('School_' + @page_config.name).to_sym
   end
-  
+
+  def facebook_comments_permalink
+    uri = URI(request.original_url)
+    host = uri.host
+    host = "www.greatschools.org" if uri.host == "pk.greatschools.org"
+    port = (uri.port != 80 && uri.port.present?) ? ':'+uri.port.to_s : ''
+    domain = "http://" + host + port + "/"
+
+    @facebook_comments_permalink = domain+ @state[:long].downcase + "/city-name/"+ @school.id.to_s + "-school-name/"+@page_config.name.downcase
+  end
+
 end

@@ -16,7 +16,7 @@ class DistrictHomeDecorator < Draper::Decorator
 
   def square_rating(options = {})
     default_container_class = " pal tac text_fff rating-background-#{rating}"
-    container_style = 'width:130px;height:120px;'
+    container_style = 'width:120px;height:120px;'
 
     h.content_tag(:div,
       class: options.fetch(:class, '') + default_container_class,

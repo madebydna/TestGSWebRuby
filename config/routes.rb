@@ -65,7 +65,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
     get '/special-education.topic?content=1541', as: :learning_difficulties
     get '/parenting.topic?content=1539', as: :health_and_behavior
-    get '/find-schools/', as: :find_schools
     get '/school/parentReview.page', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
@@ -86,6 +85,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
+    get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do

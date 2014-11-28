@@ -256,7 +256,7 @@ class ApplicationController < ActionController::Base
     gon.pagename = page_name
     gon.omniture_pagename = page_name
     gon.omniture_hier1 = page_hier
-    gon.omniture_sprops['localPageName'] = gon.omniture_pagename
+    gon.omniture_sprops['localPageName'] = gon.omniture_pagename if @hub.present?
     gon.omniture_sprops['locale'] = locale
     gon.omniture_channel = @state[:short].try(:upcase)
   end
@@ -331,6 +331,26 @@ class ApplicationController < ActionController::Base
       set_targeting['Responsive_Group'] = 'Test'
     end
     gon.ad_set_targeting = set_targeting
+
+    @advertising_enabled = true
+    # equivalent to saying disable advertising if property is not nil and false
+    unless ENV_GLOBAL['advertising_enabled'].nil? || ENV_GLOBAL['advertising_enabled'] == true
+      @advertising_enabled = false
+    end
+    if @advertising_enabled # if env disables ads, don't bother checking property table
+      @advertising_enabled = PropertyConfig.advertising_enabled?
+    end
+    gon.advertising_enabled = @advertising_enabled
+  end
+
+  def property_state_on?(state_list_str, current_state)
+    state_arr = state_list_str.split(',') if state_list_str.present?
+    if state_arr.present?
+      state_arr.select!{ |state| state.upcase == current_state.upcase || state.upcase == 'ALL' }
+      state_arr.present?
+    else
+      false
+    end
   end
 
 end

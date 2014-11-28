@@ -19,5 +19,12 @@ describe Loader do
         expect(Loader.determine_loading_class('random data type name')).to eq(EspResponseLoading::Loader)
       end
     end
+
+    context 'with the string "osp"' do
+
+      it 'should return EspResponseLoading::Loader' do
+        expect(Loader.determine_loading_class('osp')).to eq(EspResponseLoading::Loader)
+      end
+    end
   end
 end

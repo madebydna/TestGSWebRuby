@@ -1,0 +1,45 @@
+.absolute-center {margin: auto;position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+
+
+.image-bg-scale {
+  width: 100%;
+  position: relative;
+
+  .img-container {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+
+    img.scaling {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      min-width: 50%;
+    }
+  }
+}
+
+.image-scaling-height, .image-scaling-height-sponsored {
+  height: 550px;
+}
+
+@media (max-width: 1200px) {
+   .image-scaling-height, .image-scaling-height-sponsored {
+    height: 500px;
+  }
+}
+
+@media (max-width: 991px) {
+  .image-scaling-height {
+    height: 335px;
+  }
+
+  .image-scaling-height-sponsored {
+    height: 375px;
+  }
+}
+
+

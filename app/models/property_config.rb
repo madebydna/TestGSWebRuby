@@ -7,10 +7,25 @@ class PropertyConfig < ActiveRecord::Base
     pc_sweepstakes.present? ? pc_sweepstakes.first.value == 'true' : false
   end
 
+  def self.get_property(quay)
+    cache_key = 'PropertyConfig/' + quay
+    Rails.cache.fetch(cache_key, expires_in: 2.minutes) do
+      property = PropertyConfig.where(quay: quay)
+      property.present? ? property.first.value : ''
+    end
+  end
+
   def self.force_review_moderation?
     Rails.cache.fetch('PropertyConfig/force_review_moderation', expires_in: 2.minutes) do
       property = PropertyConfig.where(quay: 'force_review_moderation')
       property.present? ? property.first.value == 'true' : false
+    end
+  end
+
+  def self.advertising_enabled?
+    Rails.cache.fetch('PropertyConfig/advertising_enabled', expires_in: 2.minutes) do
+      property = PropertyConfig.where(quay: 'advertisingEnabled')
+      property.nil? ? true : property.first.value == 'true'
     end
   end
 end

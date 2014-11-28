@@ -61,4 +61,8 @@ class District < ActiveRecord::Base
     )
   end
 
+  def self.by_number_of_schools_desc(state,city)
+    District.on_db(state.downcase.to_sym).where(city: city.name).order(num_schools: :desc)
+  end
+
 end

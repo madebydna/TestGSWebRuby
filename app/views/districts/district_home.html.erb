@@ -12,7 +12,7 @@
 <div class="limit-width-1200">
 
   <div class="phm row">
-    <h1 style="color:#20AEDC;"><%= district.name %></h1>
+    <h1 class="dark-grey notranslate" style="color:#20AEDC;"><%= district.name %></h1>
     <% grade_range_row_content = [] %>
 
     <% # This allows you to capture html into an array without using strings %>
@@ -49,8 +49,8 @@
       <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
         <%= district.square_rating(class: 'fl') %>        
         <div class="fl pal tal">
-          <span style="font-size:150%;">GreatSchools</span><br/>
-          <span style="font-size:180%;">District rating</span>
+          <span class="font-size-block notranslate">GreatSchools</span><br/>
+          <span class="font-size-xl">District rating</span>
         </div>
       </div>
       <div class="row">
@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="<%= second_column_sizes %> prm ptm">
-      <%= district.boilerplate %>
+      <%= district.boilerplate.html_safe %>
     </div>
     <% if @show_ads %>
       <div class="<%= third_column_sizes %> ptm">
@@ -83,9 +83,9 @@
 
 
   <% # Row contains links / buttons to browse schools by level %>
-  <div class="row phm pbl mtl" style="background-color:#F3F8FB;">
+  <div class="row phm pbl mtl bg-primary-light">
     <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 clearfix">
-      <h4>Browse schools in <%= district.name  %></h4><br/>
+      <h4>Browse schools in <span class="notranslate"><%= district.name  %></span></h4><br/>
       <% %w[e m h].each_with_index do |level, index| %>
         <% css_class = "prm fl" %>
         <% css_class << " border-left" if index > 0 %>
@@ -129,25 +129,10 @@
       <% second_column_sizes = "col-lg-12 col-md-12 col-sm-12" %>
     <% end %>
 
-    <% if @nearby_districts.present? %>
-      <div class="<%= first_column_sizes %>">
-        <div class="pvm" style="background-color:#F5F5F5">
-          <h3 class="plm">Nearby districts</h3>
-          <% @nearby_districts.each do |district| %>
-            <% district = DistrictHomeDecorator.decorate(district) %>
-            <div class="search-result-border mam pam clearfix" style="background-color:#FFF">
-              <div class="fl prs font-size-large" style="height:30px">
-                <% # district.rating %>
-              </div>
-              <div>
-                <%= district.district_home_link %></br>
-                <%= district.city_state %> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+    <%= render partial: 'shared/districts_module', locals: {title: "Nearby districts",
+                                                            column_size: first_column_sizes, districts: @nearby_districts}%>
+
+
     <div class="<%= second_column_sizes %> ma ptm">
       <h3 class="ma" style="width:300px">Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>

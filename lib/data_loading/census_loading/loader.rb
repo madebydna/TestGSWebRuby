@@ -8,7 +8,7 @@ class CensusLoading::Loader < CensusLoading::Base
 
   def load!
 
-    census_data_type = census_data_types[data_type]
+    census_data_type = census_data_type_from_name(data_type)
 
     updates.each do |update|
       next if update.blank?
@@ -18,16 +18,22 @@ class CensusLoading::Loader < CensusLoading::Base
       # Raises school not found exception if one doesn't exist with that ID
       school = School.on_db(census_update.shard).find(census_update.entity_id)
 
-      if census_update.action == 'disable'
-        disable!(census_update)
-      # If we choose to support delete later, we can uncomment this and then create the delete method below
-      # elsif census_update.action == 'delete'
-      #   delete!(census_update)
-      else
-        insert_into!(census_update)
+      begin
+        if census_update.action == ACTION_DISABLE
+          disable!(census_update)
+          # If we choose to support delete later, we can uncomment this and then create the delete method below
+          # elsif census_update.action == 'delete'
+          #   delete!(census_update)
+        elsif census_update.action == ACTION_BUILD_CACHE
+          # do nothing
+        else
+          insert_into!(census_update)
+        end
+      rescue Exception => e
+        raise e.message
+      ensure
+        Cacher.create_cache(school, CACHE_KEY)
       end
-
-      Cacher.create_cache(school, CACHE_KEY)
     end
   end
 
@@ -39,6 +45,7 @@ class CensusLoading::Loader < CensusLoading::Base
       .first_or_initialize
 
     validate_census_data_set!(data_set, census_update)
+    # TODO Uncomment the following lines when ready to have this write to the database
     # data_set.on_db(census_update.shard).update_attributes(active: 1)
 
     value_row = census_update.value_class
@@ -47,6 +54,7 @@ class CensusLoading::Loader < CensusLoading::Base
       .first_or_initialize
 
     validate_census_value!(value_row, data_set, census_update)
+    # TODO Uncomment the following lines when ready to have this write to the database
     # value_row.on_db(census_update.shard).update_attributes(
     #   active: 1,
     #   value_text: census_update.value_type == :value_text ? census_update.value : nil,
@@ -74,6 +82,7 @@ class CensusLoading::Loader < CensusLoading::Base
 
         value_rows.each do | value_row |
           validate_census_value!(value_row, data_set, census_update)
+          # TODO Uncomment the following lines when ready to have this write to the database
           # value_row.on_db(census_update.shard).update_attributes(active: 1)
         end
       end
@@ -104,11 +113,11 @@ class CensusLoading::Loader < CensusLoading::Base
 
     errors << "The active column does not match. Values - Java: #{data_set.active} Ruby: 1" unless [1, true].include? data_set.active # [1, true] because ActiveRecord returns either
 
-    errors << "The year column does not match. Values - Java: #{data_set.year} Ruby:#{census_update.data_set_attributes[:year]}" unless data_set.year == census_update.data_set_attributes[:year]
-    errors << "The grade column does not match. Values - Java: #{data_set.grade} Ruby:#{census_update.data_set_attributes[:grade]}" unless data_set.grade == census_update.data_set_attributes[:grade]
-    errors << "The data_type_id column does not match. Values - Java: #{data_set.data_type_id} Ruby:#{census_update.data_set_attributes[:data_type_id]}" unless data_set.data_type_id == census_update.data_set_attributes[:data_type_id]
-    errors << "The breakdown_id column does not match. Values - Java: #{data_set.breakdown_id} Ruby:#{census_update.data_set_attributes[:breakdown_id]}" unless data_set.breakdown_id == census_update.data_set_attributes[:breakdown_id]
-    errors << "The subject_id column does not match. Values - Java: #{data_set.subject_id} Ruby:#{census_update.data_set_attributes[:subject_id]}" unless data_set.subject_id == census_update.data_set_attributes[:subject_id]
+    errors << "The year column does not match. Values - Java: #{data_set.year} Ruby:#{census_update.data_set_attributes[:year]}" unless data_set.year.to_s == census_update.data_set_attributes[:year].to_s
+    errors << "The grade column does not match. Values - Java: #{data_set.grade} Ruby:#{census_update.data_set_attributes[:grade]}" unless data_set.grade.to_s == census_update.data_set_attributes[:grade].to_s
+    errors << "The data_type_id column does not match. Values - Java: #{data_set.data_type_id} Ruby:#{census_update.data_set_attributes[:data_type_id]}" unless data_set.data_type_id.to_s == census_update.data_set_attributes[:data_type_id].to_s
+    errors << "The breakdown_id column does not match. Values - Java: #{data_set.breakdown_id} Ruby:#{census_update.data_set_attributes[:breakdown_id]}" unless data_set.breakdown_id.to_s == census_update.data_set_attributes[:breakdown_id].to_s
+    errors << "The subject_id column does not match. Values - Java: #{data_set.subject_id} Ruby:#{census_update.data_set_attributes[:subject_id]}" unless data_set.subject_id.to_s == census_update.data_set_attributes[:subject_id].to_s
 
     raise errors.unshift("Census Data Set ##{data_set.id}").join("\n") if errors.present?
   end
@@ -119,14 +128,14 @@ class CensusLoading::Loader < CensusLoading::Base
     raise "Value row does not exist" unless value_row.id.present?
 
     errors << "The active column does not match. Values - Java: #{value_row.active} Ruby: 1" unless [1, true].include? value_row.active # [1, true] because ActiveRecord returns either
-    errors << "The school_id column does not match. Values - Java: #{value_row.school_id} Ruby:#{census_update.entity_id}" unless value_row.school_id == census_update.entity_id
+    errors << "The school_id column does not match. Values - Java: #{value_row.school_id} Ruby:#{census_update.entity_id}" unless value_row.school_id.to_s == census_update.entity_id.to_s
 
-    update_value_text =  census_update.value_type == :value_text ? census_update.value : nil
-    update_value_float =  census_update.value_type == :value_float ? census_update.value : nil
-    errors << "The value_text column does not match. Values - Java: #{value_row.value_text} Ruby:#{update_value_text}" unless value_row.value_text == update_value_text
-    errors << "The value_float column does not match. Values - Java: #{value_row.value_float} Ruby:#{update_value_float}" unless value_row.value_float == update_value_float
+    update_value_text =  census_update.value_type == :value_text ? census_update.value.to_s : nil
+    update_value_float =  census_update.value_type == :value_float ? census_update.value.to_f : nil
+    errors << "The value_text column does not match. Values - Java: #{value_row.value_text} Ruby:#{update_value_text}" unless value_row.value_text.to_s == update_value_text.to_s
+    errors << "The value_float column does not match. Values - Java: #{value_row.value_float} Ruby:#{update_value_float}" unless value_row.value_float.to_s == update_value_float.to_s
 
-    errors << "The data_set_id column does not match. Values - Java: #{value_row.data_set_id} Ruby:#{data_set.id}" unless value_row.data_set_id == data_set.id
+    errors << "The data_set_id column does not match. Values - Java: #{value_row.data_set_id} Ruby:#{data_set.id}" unless value_row.data_set_id.to_s == data_set.id.to_s
 
     raise errors.unshift("#{census_update.entity_type} ##{value_row.school_id} Census Value").join("\n") if errors.present?
   end

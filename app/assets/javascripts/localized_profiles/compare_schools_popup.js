@@ -23,8 +23,9 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         var schoolIdsFromList = schoolsList.getSchoolIds();
         var popupIds = getCompareSchoolsPopupIds();
 
-        //hide popup if there are not schools to show
+        //hide popup if there are not schools to show and set compareListState to current page's state
         if (schoolIdsFromList.length === 0) {
+            schoolsList.setCompareListState(gon.state_abbr);
             $(popupHtmlClass).hide();
         }
 
@@ -212,6 +213,7 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         syncPopupBox: syncPopupBox,
         setCompareSchoolsRemoveSchoolHandler: setCompareSchoolsRemoveSchoolHandler,
         setCompareSchoolsPopupHandler: setCompareSchoolsPopupHandler,
+        setCompareSchoolsSubmitHandler: setCompareSchoolsSubmitHandler,
         syncSchoolCount: syncSchoolCount,
         setJqueryElementClasses: setJqueryElementClasses //optional
     }

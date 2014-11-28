@@ -15,10 +15,9 @@ class CensusLoading::Update
     @update_blob.each do |key, value|
       instance_variable_set("@#{key}", value)
     end
+    validate_update
 
     parse_attributes!
-
-    validate_update
   end
 
   def parse_attributes!
@@ -26,11 +25,11 @@ class CensusLoading::Update
     @entity_type = entity_type.to_s.downcase.to_sym
     @entity_id_type = "#{entity_type.downcase}_id".to_sym
 
-    @value_type = data_type.value_type
-
-    @data_set_attributes = data_set_attributes
-
-    @value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
+    unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
+      @value_type = data_type.value_type
+      @data_set_attributes = data_set_attributes
+      @value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
+    end
   end
 
   def data_set_attributes
@@ -51,8 +50,8 @@ class CensusLoading::Update
     if entity_id.blank? && entity_type != :state
       raise 'Non-state level updates must have an entity_id specified'
     end
-    if value.blank?
-      raise 'Every census update must have a value'
+    if value.nil?
+      raise 'Every census update must have a value' unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
     end
   end
 end

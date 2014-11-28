@@ -35,8 +35,7 @@ class CompareSchoolsController < ApplicationController
   end
 
   def prepare_map
-    @map_schools = @schools
-    mapping_points_through_gon_from_db
+    mapping_points_through_gon_from_db(@schools)
     assign_sprite_files_though_gon
   end
 

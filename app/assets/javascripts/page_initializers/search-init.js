@@ -1,5 +1,6 @@
 $(function() {
     if (gon.pagename == "SearchResultsPage") {
+        GS.search.schoolSearchForm.updateFilterState();
         GS.search.schoolSearchForm.setShowFiltersCookieHandler();
         GS.search.schoolSearchForm.showFiltersMenuOnLoad();
         GS.search.assignedSchools.init();

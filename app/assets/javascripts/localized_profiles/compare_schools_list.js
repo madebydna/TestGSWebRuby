@@ -8,11 +8,13 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         GS.compare.schoolsList.removeComparingSchoolsFlag();
         var responseObject = {
             success: true,
-            errorCode: null //"wrongState"|"alreadyPresent"|"tooManySchools"|"exception"
+            errorCode: null, //"wrongState"|"alreadyPresent"|"tooManySchools"|"exception"
+            data: null
         };
         if (isSchoolInListsState(schoolsState) === false) {
             responseObject['success'] = false;
             responseObject['errorCode'] = 'wrongState';
+            responseObject['data'] = state;
             return responseObject;
         }
 
@@ -135,6 +137,15 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         }
     };
 
+    var clearAllSchools  = function() {
+        schools = [];
+        syncDataWithCookies();
+    };
+
+    var setCompareListState = function (schoolsState) {
+        state = schoolsState.toLocaleLowerCase();
+    };
+
     //
     var init = function(maxNumOfSchools) {
         maxNumberOfSchools = maxNumOfSchools;
@@ -152,7 +163,9 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
         getSchoolIds: getSchoolIds,
         buildCompareURL: buildCompareURL,
         setComparingSchoolsFlag: setComparingSchoolsFlag,
-        removeComparingSchoolsFlag: removeComparingSchoolsFlag
+        removeComparingSchoolsFlag: removeComparingSchoolsFlag,
+        setCompareListState: setCompareListState,
+        clearAllSchools: clearAllSchools
     }
 
 })();

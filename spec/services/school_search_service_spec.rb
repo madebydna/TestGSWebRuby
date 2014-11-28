@@ -260,14 +260,14 @@ describe 'School Search Service' do
     end
   end
 
-  describe '.extract_filters' do
+  describe '.extract_hard_filters' do
     describe 'handles school type' do
       @valid_school_types = [:public, :charter, :private]
       (1..3).each do |i|
         @valid_school_types.combination(i) do |st|
           it "#{st.join(',')}" do
             filter_hash = {filters: {school_type: st}}
-            expect(SchoolSearchService.extract_filters(filter_hash)).to include("+school_type:(#{st.join(' ')})")
+            expect(SchoolSearchService.extract_hard_filters(filter_hash)).to include("+school_type:(#{st.join(' ')})")
           end
         end
       end
@@ -275,15 +275,15 @@ describe 'School Search Service' do
       let (:invalid_school_types) { {filters: {school_type: [:district, :montessori] }} }
       let (:invalid_and_valid) { {filters: {school_type: [:district, :public, :montessori] }} }
       it 'invalid mixed with valid' do
-        rval = SchoolSearchService.extract_filters invalid_and_valid
+        rval = SchoolSearchService.extract_hard_filters invalid_and_valid
         expect(rval).to include('+school_type:(public)')
       end
       it 'invalid' do
-        rval = SchoolSearchService.extract_filters invalid_school_types
+        rval = SchoolSearchService.extract_hard_filters invalid_school_types
         expect(rval).not_to include('+school_type:()')
       end
       it 'when empty' do
-        rval = SchoolSearchService.extract_filters no_school_types
+        rval = SchoolSearchService.extract_hard_filters no_school_types
         expect(rval).not_to include('+school_type:()')
       end
     end
@@ -294,7 +294,7 @@ describe 'School Search Service' do
           it "#{lc.join(',')}" do
             lc_space_separated = lc.collect {|fullname| fullname[0]}.join(' ')
             filter_hash = {filters: {level_code: lc}}
-            expect(SchoolSearchService.extract_filters(filter_hash)).to include("+school_grade_level:(#{lc_space_separated})")
+            expect(SchoolSearchService.extract_hard_filters(filter_hash)).to include("+school_grade_level:(#{lc_space_separated})")
           end
         end
       end
@@ -302,15 +302,15 @@ describe 'School Search Service' do
       let (:invalid_and_valid) { {filters: {level_code: [:morning, :elementary, :afternoon, :middle] }} }
       let (:no_level_codes) { {filters: {level_code: [] }} }
       it 'invalid mixed with valid' do
-        rval = SchoolSearchService.extract_filters invalid_and_valid
+        rval = SchoolSearchService.extract_hard_filters invalid_and_valid
         expect(rval).to include('+school_grade_level:(e m)')
       end
       it 'invalid' do
-        rval = SchoolSearchService.extract_filters invalid_level_codes
+        rval = SchoolSearchService.extract_hard_filters invalid_level_codes
         expect(rval).not_to include('+school_grade_level:()')
       end
       it 'when empty' do
-        rval = SchoolSearchService.extract_filters no_level_codes
+        rval = SchoolSearchService.extract_hard_filters no_level_codes
         expect(rval).not_to include('+school_grade_level:()')
       end
     end
@@ -324,36 +324,54 @@ describe 'School Search Service' do
       let (:invalid_and_valid) { {filters: {grades: [:first, :second, :grade_3, :preschool, :grade_4] }} }
       let (:no_grades) { {filters: {grades: [] }} }
       it 'first grade' do
-        rval = SchoolSearchService.extract_filters first_grade
+        rval = SchoolSearchService.extract_hard_filters first_grade
         expect(rval).to include('+grades:(1)')
       end
       it 'preschool' do
-        rval = SchoolSearchService.extract_filters preschool
+        rval = SchoolSearchService.extract_hard_filters preschool
         expect(rval).to include('+grades:(PK)')
       end
       it 'kindergarten' do
-        rval = SchoolSearchService.extract_filters kindergarten
+        rval = SchoolSearchService.extract_hard_filters kindergarten
         expect(rval).to include('+grades:(KG)')
       end
       it 'high school' do
-        rval = SchoolSearchService.extract_filters high_school
+        rval = SchoolSearchService.extract_hard_filters high_school
         expect(rval).to include('+grades:(9 10 11 12)')
       end
       it 'non-contiguous range' do
-        rval = SchoolSearchService.extract_filters non_contiguous_range
+        rval = SchoolSearchService.extract_hard_filters non_contiguous_range
         expect(rval).to include('+grades:(KG 1 2 3 7 8 11 12)')
       end
       it 'invalid grades' do
-        rval = SchoolSearchService.extract_filters invalid_grades
+        rval = SchoolSearchService.extract_hard_filters invalid_grades
         expect(rval).not_to include('+grades:()')
       end
       it 'invalid grades mixed with valid' do
-        rval = SchoolSearchService.extract_filters invalid_and_valid
+        rval = SchoolSearchService.extract_hard_filters invalid_and_valid
         expect(rval).to include('+grades:(3 4)')
       end
       it 'when empty' do
-        rval = SchoolSearchService.extract_filters no_grades
+        rval = SchoolSearchService.extract_hard_filters no_grades
         expect(rval).not_to include('+grades:()')
+      end
+    end
+    describe 'handles school_college_going_rate' do
+      valid_college_going_rate = '70 TO 100'
+      it 'accepts the valid college going rate value' do
+        filter_hash = {filters: {school_college_going_rate: valid_college_going_rate}}
+        expect(SchoolSearchService.extract_hard_filters(filter_hash)).to include("+school_college_going_rate:[#{valid_college_going_rate}]")
+      end
+
+      let (:invalid_college_going_rate) { {filters: {school_college_going_rate: :blue }} }
+      let (:no_college_going_rate) { {filters: {}} }
+      it 'rejects invalid rates' do
+        rval = SchoolSearchService.extract_hard_filters invalid_college_going_rate
+        expect(rval).to_not include('+school_college_going_rate:[blue]')
+      end
+      it 'rejects empty values' do
+        rval = SchoolSearchService.extract_hard_filters no_college_going_rate
+        expect(rval).to_not include('+school_college_going_rate:')
       end
     end
   end

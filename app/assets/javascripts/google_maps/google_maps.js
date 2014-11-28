@@ -6,6 +6,7 @@ GS.googleMap = GS.googleMap || (function() {
     var needsInit = true;
     GS.search.map = GS.search.map || {};
     GS.search.mapMarkers = GS.search.mapMarkers || [];
+    var additionalZoom = 0;
 
   var init = function() {
 
@@ -205,6 +206,9 @@ GS.googleMap = GS.googleMap || (function() {
               if (!bounds.isEmpty()) {
                   GS.search.map.setCenter(bounds.getCenter(), GS.search.map.fitBounds(bounds));
                   google.maps.event.addListenerOnce(GS.search.map, 'bounds_changed', function() {
+                      if (additionalZoom !== 0) {
+                        GS.search.map.setZoom(GS.search.map.getZoom() + additionalZoom);
+                      }
                       GS.search.map.setOptions({maxZoom:null});
                   });
               } else {
@@ -344,6 +348,10 @@ GS.googleMap = GS.googleMap || (function() {
       }
     };
 
+    var setAdditionalZoom = function (addition) {
+      additionalZoom = addition;
+    };
+
     return {
         init: init,
         getMap: getMap,
@@ -352,7 +360,8 @@ GS.googleMap = GS.googleMap || (function() {
         initAndShowMap : initAndShowMap,
         setAssignedSchool: setAssignedSchool,
         addToInitDependencyCallbacks: addToInitDependencyCallbacks,
-        applyAjaxInitCallbacks: applyAjaxInitCallbacks
+        applyAjaxInitCallbacks: applyAjaxInitCallbacks,
+        setAdditionalZoom: setAdditionalZoom
     }
 
 })();

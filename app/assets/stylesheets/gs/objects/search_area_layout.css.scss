@@ -1,0 +1,78 @@
+.search-bar-home {
+  width: 600px;
+}
+
+@media only screen and (max-width: 990px) {
+  .search-bar-home {
+    width: 90%;
+    height: 40px;
+  }
+}
+
+@media only screen and (max-width: 768px) and (min-width: 481px) {
+  .search-bar-home {
+    height: 38px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .sponsor-bar {
+    padding-top: 0;
+    img {
+      width: 25%;
+    }
+  }
+}
+
+// Hub and City Layout Specific //
+
+.gray-search-container {
+  background: rgba(0, 0, 0, 0.62);
+  border-radius: 3px;
+  width: 940px;
+  margin: 60px auto auto auto;
+}
+
+.gray-search-container-padding {
+  padding: 35px;
+}
+
+.sponsor-bar {
+  top: 58px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.school-breakdown {
+  ul {
+    list-style-type: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .gray-search-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    border-radius: none;
+  }
+
+  .school-breakdown {
+    background: white;
+    padding: 20px 0 0 25px;
+    h4 {
+      color: black;
+    }
+
+    button {
+      color: $blue-dark;
+    }
+  }
+}
+
+  @media (max-width: 480px) {
+    .gray-search-container-padding {
+      padding: 35px 15px 35px 15px;
+    }
+}

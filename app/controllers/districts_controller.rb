@@ -66,7 +66,7 @@ class DistrictsController < ApplicationController
 
   def prepare_map
     @map_schools = @district.schools_by_rating_desc
-    mapping_points_through_gon_from_db
+    mapping_points_through_gon_from_db(@map_schools)
     assign_sprite_files_though_gon
   end
 

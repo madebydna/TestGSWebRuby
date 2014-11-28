@@ -1,0 +1,18 @@
+<% if districts.present? %>
+    <div class="<%= column_size %>">
+      <div class="pam bg-light-gray">
+        <h3 class="plm"><%= title.html_safe %></h3>
+        <% districts.each do |d| %>
+            <% district = DistrictHomeDecorator.decorate(d) %>
+            <div class="search-result-border mam pam clearfix bg-white" >
+              <div class="fl prs font-size-large h30">
+              </div>
+              <div>
+                <span class="notranslate"><%= district.district_home_link %></span></br>
+                <span class="notranslate"><%= district.city_state %></span> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+<% end %>

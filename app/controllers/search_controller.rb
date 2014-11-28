@@ -42,6 +42,7 @@ class SearchController < ApplicationController
   #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
     set_login_redirect
+    @city_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
@@ -59,6 +60,7 @@ class SearchController < ApplicationController
 
   def district_browse
     set_login_redirect
+    @district_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     district_name = params[:district_name]
@@ -302,7 +304,10 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    if hub_matching_current_url && hub_matching_current_url.city
+    if params_hash.include?('cgr') && params_hash['cgr'] == '70_TO_100'
+      filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ')
+    end
+    if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
@@ -352,12 +357,19 @@ class SearchController < ApplicationController
   def setup_filter_display_map(state_short)
     @search_bar_display_map = get_search_bar_display_map
 
-    filter_builder = Rails.cache.fetch("filter_builder-#{state_short}", expires_in: 24.hours, race_condition_ttl: 10) do
-      Rails.logger.debug("Generating FilterBuilder")
-      FilterBuilder.new(state_short)
-    end
+    city_name = if @city
+                  @city.name
+                elsif params[:city]
+                  params[:city]
+                else
+                  ''
+                end
+    filter_builder = FilterBuilder.new(@state[:short], city_name, @by_name)
 
     @filter_display_map = filter_builder.filter_display_map
+    # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
+    # so we have to add that logic to the cache key here.
+    @filter_cache_key = filter_builder.cache_key + (@by_location ? '-distance' : '-no_distance')
     @filters = filter_builder.filters
   end
 

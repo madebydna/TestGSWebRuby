@@ -1,6 +1,7 @@
 module ReviewControllerConcerns
   extend ActiveSupport::Concern
   include ApplicationHelper
+  include UpdateQueueConcerns
 
   protected
 

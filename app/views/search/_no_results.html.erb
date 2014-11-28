@@ -8,7 +8,7 @@
       <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym, view: :desktop %>
       <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Content_Top'.to_sym,  view: :mobile %>
   <% end %>
-  <div class="limit-width-1200 bg-white partner-carousel-image">
+  <div class="limit-width-1200 bg-white gray-border">
     <div class="pvl pll">
       <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
       <% if @suggested_query.present? %>

@@ -2,6 +2,7 @@ class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include AdvertisingHelper
+  include ApplicationHelper
   include GuidedSearchConcerns
   include GoogleMapConcerns
 
@@ -9,14 +10,14 @@ class CitiesController < ApplicationController
   before_action :set_hub
   before_action :set_login_redirect
   before_action :set_footer_cities
-  before_action :write_meta_tags, except: [:partner, :guided_search]
+  before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
-    return city_home if params[:prototype]
-
     if @hub.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
+      city_home
     else
+
+      @hub.has_guided_search?
 
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
@@ -40,22 +41,52 @@ class CitiesController < ApplicationController
   end
 
   def city_home
-    gon.pagename = 'DistrictHome'
-    @city_object = City.where(name: @city).first
-    @top_schools = top_schools(@city_object, 4)
+    gon.pagename = 'GS:City:Home'
+    @city_object = City.where(name: @city, state: @state[:short]).first
+    @city_rating = CityRating.get_rating(@state[:short], @city)
+    @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
-    @districts = District.on_db(@city_object.state.downcase.to_sym).where(city: @city_object.name)
+    @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
+    @show_ads = true
+    gon.show_ads = @show_ads
+    ad_setTargeting_through_gon
+    set_omniture_data('GS:City:Home', 'Home,CityHome')
+
+    description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
+      "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
+
+    keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
+      "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
+      "#{@city.titleize} Private Schools"
+
+    state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
+
+    title = "#{@city.titleize} Schools - #{state_text}School Ratings - Public and Private"
+
+    set_meta_tags keywords: keywords,
+                  description: description,
+                  title: title
 
     render 'city_home'
   end
 
-  def top_schools(city, count = 10)
-    city.schools_by_rating_desc.take(count)
+  def all_schools_by_rating_desc(city, count=0)
+    @all_schools_in_city_by_rating_desc ||= city.schools_by_rating_desc
+    count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
   end
 
+
   def prepare_map
-    @map_schools = @city_object.schools_by_rating_desc
-    mapping_points_through_gon_from_db
+    all_schools = all_schools_by_rating_desc(@city_object)
+    if all_schools.present?
+      top_schools_for_map_pins = all_schools.take(10)
+      mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
+
+      if all_schools.size > 10
+        all_other_schools_for_map = all_schools[11..-1]
+        mapping_points_through_gon_from_db(all_other_schools_for_map,on_page: false)
+      end
+    end
     assign_sprite_files_though_gon
   end
 
