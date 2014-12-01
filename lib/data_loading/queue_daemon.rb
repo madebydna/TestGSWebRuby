@@ -12,13 +12,13 @@ class QueueDaemon
     puts 'Starting the update queue daemon.'
     loop do
       process_unprocessed_updates
-      sleep 2
+      sleep ENV_GLOBAL['queue_daemon_sleep_time']
     end
   end
 
   def process_unprocessed_updates
     begin
-      updates = UpdateQueue.where(status: UNPROCESSED_STATUS).limit(100)
+      updates = UpdateQueue.where(status: UNPROCESSED_STATUS).limit(ENV_GLOBAL['queue_daemon_updates_limit'])
     rescue
       raise 'Could not find UpdateQueue table'
     end
