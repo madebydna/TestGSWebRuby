@@ -9,7 +9,7 @@ class FilterBuilder
     @state = state.to_s.downcase
     @city = city.to_s.downcase
     @force_simple_filters = force_simple_filters
-    @filters = build_filter_tree_for_location(@state, @city)
+    @filters = build_filter_tree_for(@state, @city)
     @filter_display_map = @filters.build_map
   end
 
@@ -28,7 +28,7 @@ class FilterBuilder
     cache_key
   end
 
-  def build_filter_tree_for_location(state, city)
+  def build_filter_tree_for(state, city)
     @callbacks = build_callbacks(get_callbacks_for_location(state, city))
     base_filters = base_filter_set_for(state, city)
     build_filter_tree({filter: base_filters})[0]
