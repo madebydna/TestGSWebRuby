@@ -45,7 +45,7 @@ class StatesController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
     @ad_page_name = :State_Home_Standard
-    @show_ads = true
+    @show_ads = true && PropertyConfig.advertising_enabled?
     gon.show_ads = @show_ads
     ad_setTargeting_through_gon
     render 'states/state_home'

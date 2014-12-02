@@ -163,7 +163,7 @@ class SchoolProfileController < SchoolController
   end
 
   def enable_ads
-    @show_ads = @school.show_ads
+    @show_ads = @school.show_ads && PropertyConfig.advertising_enabled?
   end
 
   def set_breadcrumbs

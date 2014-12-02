@@ -47,7 +47,7 @@ class CitiesController < ApplicationController
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
-    @show_ads = true
+    @show_ads = true && PropertyConfig.advertising_enabled?
     gon.show_ads = @show_ads
     ad_setTargeting_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome')

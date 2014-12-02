@@ -22,7 +22,7 @@ class DistrictsController < ApplicationController
 
     @top_schools = top_schools(@district, 4)
     @params_hash = parse_array_query_string(request.query_string)
-    @show_ads = hub_show_ads?
+    @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
     ad_setTargeting_through_gon
     prepare_map
     set_omniture_data
