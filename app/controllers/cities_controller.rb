@@ -13,10 +13,9 @@ class CitiesController < ApplicationController
   before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
-    if @hub.nil?
+    if @hub.nil?  || hub_matching_current_url[:city].nil?
       city_home
     else
-
       @hub.has_guided_search?
 
       @collection_id = @hub.collection_id
@@ -32,7 +31,7 @@ class CitiesController < ApplicationController
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
-      @show_ads = CollectionConfig.show_ads(collection_configs)
+      @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
       ad_setTargeting_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
       gon.state_abbr = @state[:short]
@@ -41,13 +40,20 @@ class CitiesController < ApplicationController
   end
 
   def city_home
+    @show_ads = true;
+    if @hub.present?
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+      @show_ads = CollectionConfig.show_ads(collection_configs)
+    end
+
     gon.pagename = 'GS:City:Home'
     @city_object = City.where(name: @city, state: @state[:short]).first
     @city_rating = CityRating.get_rating(@state[:short], @city)
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
-    @show_ads = true && PropertyConfig.advertising_enabled?
+    @show_ads = @show_ads && PropertyConfig.advertising_enabled?
     gon.show_ads = @show_ads
     ad_setTargeting_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
