@@ -26,6 +26,8 @@ class Loader
       # ... just an example of how to extend
     elsif data_type == 'school_reviews'
       ReviewLoading::Loader
+    elsif data_type == 'school_media'
+      SchoolMediaLoading::Loader
     elsif esp_data_type?(data_type)
       EspResponseLoading::Loader
     else

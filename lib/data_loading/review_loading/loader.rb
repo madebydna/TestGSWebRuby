@@ -6,7 +6,7 @@ class ReviewLoading::Loader < ReviewLoading::Base
     updates.each do |update|
       next if update.blank?
 
-      review_update = ReviewLoading::Update.new(data_type, update, source)
+      review_update = ReviewLoading::Update.new(data_type, update)
 
       school = School.on_db(review_update.entity_state.to_s.downcase.to_sym).find(review_update.entity_id)
 
