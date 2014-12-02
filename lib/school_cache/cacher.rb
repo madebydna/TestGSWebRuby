@@ -58,7 +58,8 @@ class Cacher
   def self.cacher_dependencies_for(key)
     {
 
-        #esp_responses:    [ProgressBarCaching::ProgressBarCacher] # need this dependency off until we're ready to launch progress bar nationwide with realtime updates
+        esp_responses:    [ProgressBarCaching::ProgressBarCacher],
+        reviews_snapshot:    [ProgressBarCaching::ProgressBarCacher]
 
     }[key.to_s.to_sym]
   end
