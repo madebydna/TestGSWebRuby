@@ -34,16 +34,10 @@ class HubCityMapping < ActiveRecord::Base
     end
   end
 
-  def self.for_city_and_state(city = nil, state = nil)
-    unless city.is_a?(String) || city.nil?
-      raise ArgumentError('City must either be nil or a String')
-    end
-    unless state.is_a?(String)
-      raise ArgumentError('State must be non-nill and String')
-    end
+  def self.for_city_and_state(city, state)
     mappings_matching_state = HubCityMapping.where(state: state, active:true)
     match = mappings_matching_state.find do |mapping|
-      (mapping.city || '').downcase == (city || '').downcase
+      (mapping.city || '').to_s.downcase == (city || '').to_s.downcase
     end
     match ||= mappings_matching_state.find { |mapping| mapping.city.nil? }
   end
