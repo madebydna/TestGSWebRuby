@@ -47,15 +47,31 @@
     <table class="table table-striped" id="flagged_reviews_table">
         <thead>
         <tr>
+            <td>Review</td>
             <td>Status</td>
             <td>School</td>
-            <td>Reason</td>
+            <td>State</td>
+            <td>Reviewer</td>
+            <td>Total reports</td>
+            <td>Auto Flagged</td>
+            <td>User Flagged</td>
             <td>Case opened on</td>
         </tr>
         </thead>
         <tbody>
         <% @reported_reviews.each do |review| %>
+            <% is_auto_flagged = false %>
+            <% is_user_flagged = false %>
+            <%  review.reported_entities.each do |reported_entity| %>
+                <% if reported_entity.reporter_id == -1 %>
+                    <% is_auto_flagged = true %>
+                <% else %>
+                    <% is_user_flagged = true %>
+                <% end %>
+            <% end %>
+
             <tr>
+                <td><%= truncate(review.review_text, length: 20) %></td>
                 <td>
                     <%= review.status %>
                 </td>
@@ -68,10 +84,16 @@
                     <% end %>
                 </td>
                 <td>
-                    <%= review.reported_entities.first.reason if review.reported_entities.any? %>
+                  <%= review.school.state if review.school%>
                 </td>
+                <td><%= review.user.email%></td>
                 <td>
-                    <%= review.reported_entities.first.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
+                    <%= review.reported_entities.size if review.reported_entities.any? %>
+                </td>
+                <td><%= is_auto_flagged == false ? '' : 'Y' %></td>
+                <td><%= is_user_flagged == false ? '' : 'Y' %></td>
+                <td>
+                    <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
                 </td>
             </tr>
         <% end %>

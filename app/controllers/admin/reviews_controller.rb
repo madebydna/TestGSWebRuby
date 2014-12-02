@@ -138,7 +138,7 @@ unexpected error: #{e}."
     if @school
       reviews = @school.school_ratings.ever_flagged
     else
-      reviews = SchoolRating.where(status: %w[p d r a]).flagged
+      reviews = SchoolRating.where(status: %w[p d r a]).flagged.group(:reported_entity_id)
     end
 
     reviews.order('posted desc')
