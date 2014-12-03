@@ -71,9 +71,22 @@ class Admin::PyocController <  ApplicationController
   def generate_pdf(schools_decorated_with_cache_results)
     respond_to do |format|
       format.pdf do
-           pdf = PyocPdf.new(schools_decorated_with_cache_results, params[:batch] == 'is_k8' ?true :false, params[:batch] == 'is_high_school' ?true :false,params[:batch] == 'is_pk8' ?true :false,
-                             params[:page_number_start],params[:language].present?  && params[:language] == 'spanish'? true : false , params[:collection_id].present? ? params[:collection_id].to_i: nil,
-                             params[:is_location_index].present? , params[:is_performance_index].present? ,params[:location_index_page_number_start],params[:performance_index_page_number_start])
+           pdf = PyocPdf.new(schools_decorated_with_cache_results,
+                             {
+                             :is_k8_batch => params[:batch] == 'is_k8' ?true :false,
+                             :is_high_school_batch => params[:batch] == 'is_high_school' ?true :false,
+                             :is_pk8_batch => params[:batch] == 'is_pk8' ?true :false,
+                             :get_page_number_start => params[:page_number_start],
+                             :is_spanish => params[:language].present?  && params[:language] == 'spanish'? true : false ,
+                             :collection_id => params[:collection_id].present? ? params[:collection_id].to_i: nil,
+                             :is_location_index => params[:is_location_index].present? ,
+                             :is_performance_index => params[:is_performance_index].present? ,
+                             :location_index_page_number_start =>params[:location_index_page_number_start],
+                             :performance_index_page_number_start => params[:performance_index_page_number_start]
+                            }
+
+           )
+
 
            send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc.pdf',
                   disposition: 'inline' #loads pdf directly in browser window
