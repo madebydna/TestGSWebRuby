@@ -5,7 +5,6 @@
 
 
 <div class="row limit-width-1200">
-    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
         <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
         <%= render 'data_layouts/nearby_schools' %>

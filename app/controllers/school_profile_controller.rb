@@ -169,9 +169,9 @@ class SchoolProfileController < SchoolController
   def set_breadcrumbs
     school = SchoolProfileDecorator.decorate(@school)
     @breadcrumbs = {
-      'Home' => home_url,
       school.state_breadcrumb_text => state_url(state_params(school.state)),
-      school.city_breadcrumb_text => city_url(city_params(school.state, school.city))
+      school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
+      'School Profile' => nil
     }
   end
 

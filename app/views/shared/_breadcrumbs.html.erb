@@ -5,10 +5,10 @@
   <div class="row mtm pls gs_set-z-1">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 font-size-small">
       <% breadcrumbs.each_with_index do |(text, url), index| %>
-        <%= '/' if index > 0 %>
+        <%= ' / ' if index > 0 %>
         <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
           <% if url.nil? %>
-            <span itemprop="title"><%= text %></span>
+            <span itemprop="title" class="gray-dark"><%= text %></span>
           <% else %>
             <%= link_to url, itemprop:'url', style: 'font-size: 14px;' do %>
                 <span itemprop="title"><%= text %></span>
