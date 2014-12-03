@@ -168,7 +168,7 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    setup_filter_display_map(@state ? @state[:short] : nil)
+    setup_filter_display_map
     # setup_fit_scores(results[:results], @params_hash) if filtering_search?
     session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
     # sort_by_fit(results[:results], sort) if sorting_by_fit?
@@ -354,9 +354,7 @@ class SearchController < ApplicationController
     end
   end
 
-  def setup_filter_display_map(state_short)
-    @search_bar_display_map = get_search_bar_display_map
-
+  def setup_filter_display_map
     city_name = if @city
                   @city.name
                 elsif params[:city]
@@ -371,28 +369,6 @@ class SearchController < ApplicationController
     # so we have to add that logic to the cache key here.
     @filters = filter_builder.filters
     @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
-  end
-
-  #ToDo: Refactor into method into FilterBuilder to add into the filter_map
-  def get_search_bar_display_map
-    {
-      grades: {
-        :p => 'Pre-School',
-        :k => 'Kindergarten',
-        1 => '1st Grade',
-        2 => '2nd Grade',
-        3 => '3rd Grade',
-        4 => '4th Grade',
-        5 => '5th Grade',
-        6 => '6th Grade',
-        7 => '7th Grade',
-        8 => '8th Grade',
-        9 => '9th Grade',
-        10 => '10th Grade',
-        11 => '11th Grade',
-        12 => '12th Grade'
-      }
-    }
   end
 
   def soft_filters_params_hash(params_hash)

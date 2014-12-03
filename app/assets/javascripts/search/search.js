@@ -430,10 +430,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         if (typeof filterValue === 'object' && filterValue.length) {
                             for (var x=filterValue.length-1; x >= 0; x--) {
                                 // currently, filters with multi-values can't be represented by selects
-                                lookForFormElementToUpdate($form, inputName, filterValue[x], {includeSelect:false});
+                                updateFormElement($form, inputName, filterValue[x], {includeSelect:false});
                             }
                         } else {
-                            lookForFormElementToUpdate($form, inputName, filterValue, {includeSelect:true});
+                            updateFormElement($form, inputName, filterValue, {includeSelect:true});
                         }
                     } catch (e) {
                         // continue
@@ -453,7 +453,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return inputName;
     };
 
-    var lookForFormElementToUpdate = function($form, name, value, options) {
+    var updateFormElement = function($form, name, value, options) {
         if (options && options['includeSelect']) {
             var $aSelect = $form.find('select[name="' + name + '"]');
             if ($aSelect.length > 0) {
