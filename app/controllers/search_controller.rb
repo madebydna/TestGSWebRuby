@@ -369,8 +369,8 @@ class SearchController < ApplicationController
     @filter_display_map = filter_builder.filter_display_map
     # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
     # so we have to add that logic to the cache key here.
-    @filter_cache_key = filter_builder.cache_key + (@by_location ? '-distance' : '-no_distance')
     @filters = filter_builder.filters
+    @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
   end
 
   #ToDo: Refactor into method into FilterBuilder to add into the filter_map

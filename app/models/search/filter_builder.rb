@@ -13,23 +13,8 @@ class FilterBuilder
     @filter_display_map = @filters.build_map
   end
 
-  def cache_key
-    cache_key = "search/filter_form-"
-    if @force_simple_filters
-      cache_key += 'national'
-      return cache_key
-    elsif city_callbacks[@state].key?(@city)
-      cache_key += "#{@state}-#{@city}"
-    elsif state_callbacks.key?(@state)
-      cache_key += "#{@state}"
-    else
-      cache_key += 'national'
-    end
-    cache_key
-  end
-
   def build_filter_tree_for(state, city)
-    @callbacks = build_callbacks(get_callbacks_for_location(state, city))
+    @callbacks = @force_simple_filters ? [] : build_callbacks(get_callbacks_for_location(state, city))
     base_filters = base_filter_set_for(state, city)
     build_filter_tree({filter: base_filters})[0]
   end
@@ -101,8 +86,23 @@ class FilterBuilder
     end
   end
 
+  def build_cache_key_callback(_, options)
+    lambda do |filter|
+      return false unless filter.has_key?(:cache_key)
+      filter[:cache_key] = "#{options[:value]}_v#{options[:version] || '1'}"
+      filter
+    end
+  end
+
   def indiana_db_callbacks
     [
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'vouchers',
+          version: 1
+        }
+      },
       {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'add', options:
         {
           enrollment: {
@@ -117,6 +117,13 @@ class FilterBuilder
 
   def detroit_mi_callbacks
     [
+        {
+          callback_type: 'cache_key',
+          options: {
+            value: 'college_readiness',
+            version: 1
+          }
+        },
         {
             conditions:
                 [
@@ -149,6 +156,7 @@ class FilterBuilder
 
   def default_simple_filters
     {
+        cache_key: 'simple_v1',
         display_type: :blank_container,
         filters: {
             group1: {
@@ -230,6 +238,7 @@ class FilterBuilder
   def default_advanced_filters
     #see mock for display types: https://jira.greatschools.org/secure/attachment/67270/GS_Filters_Delaware_Open_Filters_070914.jpg
     {
+      cache_key: 'advanced_v1',
       display_type: :blank_container,
       filters: {
         group1: {
