@@ -667,6 +667,12 @@
             },
             ttAdapter: function ttAdapter() {
                 return _.bind(this.get, this);
+            },
+//  ModifiedBehavior - binds the Bloodhound Clear function to the Dataset initialized by Typeahead
+//  unable to clear Bloodhound from Typeahead without Modification
+//  https://github.com/twitter/typeahead.js/issues/647
+            ttAdapterClear: function ttAdapterClear() {
+                return _.bind(this.clear, this);
             }
         });
         return Bloodhound;
@@ -1110,6 +1116,9 @@
             this.query = null;
             this.highlight = !!o.highlight;
             this.name = o.name || _.getUniqueId();
+//          ModifiedBehavior - adapt the Bloodhound Clear method to the dataSet in order to clear
+//          Bloodhound data when user clears input
+            this.clearBloodhound = o.clearBloodhound;
             this.source = o.source;
             this.displayFn = getDisplayFn(o.display || o.displayKey);
             this.templates = getTemplates(o.templates, this.displayFn);

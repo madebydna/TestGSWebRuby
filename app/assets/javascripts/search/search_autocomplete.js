@@ -12,6 +12,14 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
         $('.typeahead').typeahead('destroy');
     };
 
+//
+    var cleardataSetBloodhounds = function (dataSets) {
+        for (var i = 0; i < dataSets.length; i++) {
+            var dataSet = dataSets[i];
+            dataSet.clearBloodhound();
+        }
+    }
+
     var attachAutocomplete = function (state_abbr) {
         var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
         var autocomplete = GS.search.autocomplete;
@@ -28,18 +36,21 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
                 name: 'cities', //for generated css class name. Ex tt-dataset-cities
                 displayKey: 'city_name', //key whose value will be displayed in input
                 source: cities.ttAdapter(),
+                clearBloodhound: cities.ttAdapterClear(), //initialized Bloodhound clear method
                 templates: markup.cityResultsMarkup()
             },
             {
                 name: 'districts',
                 displayKey: 'district_name',
                 source: districts.ttAdapter(),
+                clearBloodhound: districts.ttAdapterClear(),
                 templates: markup.districtResultsMarkup()
             },
             {
                 name: 'schools',
                 displayKey: 'school_name',
                 source: schools.ttAdapter(),
+                clearBloodhound: schools.ttAdapterClear(),
                 templates: markup.schoolResultsMarkup()
             }
         ).on('typeahead:selected', function (event, suggestion, dataset) {
@@ -90,6 +101,9 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
 
             this.input.clearHintIfInvalid();
             if (isAddress(query) || query.length == 0) {
+                var dataSets = this.dropdown.datasets;
+                cleardataSetBloodhounds(dataSets);
+                this.dropdown.empty();
                 this.dropdown.close();
             } else if (query.length >= this.minLength) {
                 this.dropdown.update(query);
