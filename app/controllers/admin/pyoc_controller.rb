@@ -73,9 +73,9 @@ class Admin::PyocController <  ApplicationController
       format.pdf do
            pdf = PyocPdf.new(schools_decorated_with_cache_results,
                              {
-                             :is_k8_batch => params[:batch] == 'is_k8' ?true :false,
-                             :is_high_school_batch => params[:batch] == 'is_high_school' ?true :false,
-                             :is_pk8_batch => params[:batch] == 'is_pk8' ?true :false,
+                             :is_k8_batch => params[:batch] == 'is_k8',
+                             :is_high_school_batch => params[:batch] == 'is_high_school',
+                             :is_pk8_batch => params[:batch] == 'is_pk8',
                              :get_page_number_start => params[:page_number_start],
                              :is_spanish => params[:language].present?  && params[:language] == 'spanish'? true : false ,
                              :collection_id => params[:collection_id].present? ? params[:collection_id].to_i: nil,
