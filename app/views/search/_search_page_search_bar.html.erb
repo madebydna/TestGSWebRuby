@@ -3,7 +3,10 @@
   <div class="row ma limit-width-1200">
     <div class="row ptm">
       <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-        <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 prm mbm">
+        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
+          <%= render 'search/change_location' %>
+        </div>
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term %>"
@@ -29,15 +32,15 @@
     <% if @nearby_cities && @nearby_cities.size > 0 %>
         <div class="row phm ptm pbl hidden-xs">
           <div class="fl mrl">Nearby Cities:</div>
-            <% @nearby_cities.each_index do |x|
-                city = @nearby_cities[x] %>
-                <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
-            <% end %>
+          <% @nearby_cities.each_index do |x|
+            city = @nearby_cities[x] %>
+              <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
+          <% end %>
         </div>
     <% end %>
     <!--<div class="row pbl plm prm">-->
-      <!--<div class="col-sm-12 col-md-6 hidden-xs"><span>Additional Information:</span> How enrollment works in Delaware</div>-->
-      <!--<div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>-->
+    <!--<div class="col-sm-12 col-md-6 hidden-xs"><span>Additional Information:</span> How enrollment works in Delaware</div>-->
+    <!--<div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>-->
     <!--</div>-->
 
   </div>
