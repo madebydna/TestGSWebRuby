@@ -33,5 +33,16 @@ describe SearchSuggestSchool do
       expect(result[:city_name]).to eq('Oakland')
       expect(result[:url]).to eq('/california/city/1-school')
     end
+    context 'PK subdomains' do
+      it 'prepends for preschools' do
+        sample_prek_result = sample_result.merge('school_grade_level' => %w(p preschool))
+        result = subject.process_result(sample_prek_result)
+        expect(result[:url]).to eq("http://#{ENV_GLOBAL['app_pk_host']}/path")
+      end
+      it 'does not prepend for non-preschools' do
+        result = subject.process_result(sample_result)
+        expect(result[:url]).to_not eq("http://#{ENV_GLOBAL['app_pk_host']}/path")
+      end
+    end
   end
 end
