@@ -11,6 +11,8 @@ class Admin::ReviewsController < ApplicationController
     @reviews_to_process = self.unprocessed_reviews
     @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
+    gon.pagename = 'Reviews moderation'
+
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
 
@@ -139,7 +141,7 @@ unexpected error: #{e}."
       reviews = SchoolRating.where(status: %w[p d r a]).flagged
     end
 
-    reviews.order('posted desc').page(params[:flagged_reviews_page]).per(25)
+    reviews.order('posted desc')
   end
 
   def self.load_reported_entities_onto_reviews(reviews, reported_entities)

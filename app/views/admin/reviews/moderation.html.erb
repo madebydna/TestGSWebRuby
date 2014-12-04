@@ -44,7 +44,7 @@
 
     <h3>Flagged reviews</h3>
 
-    <table class="table table-striped">
+    <table class="table table-striped" id="flagged_reviews_table">
         <thead>
         <tr>
             <td>Status</td>
@@ -78,8 +78,6 @@
         </tbody>
 
     </table>
-
-    Flagged reviews: <%= paginate @reported_reviews, param_name: :flagged_reviews_page %>
 
     <br/><br/>
 
