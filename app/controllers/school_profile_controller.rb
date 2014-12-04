@@ -194,7 +194,8 @@ class SchoolProfileController < SchoolController
     port = (uri.port != 80 && uri.port.present?) ? ':'+uri.port.to_s : ''
     domain = "http://" + host + port + "/"
 
-    @facebook_comments_permalink = domain+ @state[:long].downcase + "/city-name/"+ @school.id.to_s + "-school-name/"+@page_config.name.downcase
+    @facebook_comments_permalink = domain+ @state[:long].downcase.gsub(' ', '-') + "/city-name/"+ @school.id.to_s +
+        "-school-name/"+@page_config.name.downcase
   end
 
 end
