@@ -1,18 +1,29 @@
-<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
+<% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
+<% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
+<% school_reviews = @school.reviews %>
 
-<% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.review_filter_totals.all.present? %>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
-      <% review_count = @school_reviews_global.rating_averages.overall.counter %>
-      <% if review_count == 0 && @school_reviews_global.review_filter_totals.all != 0 %>
-        <% review_count = @school_reviews_global.review_filter_totals.all %>
-      <% end %>
-      <% review_total_count = ((review_count == 1)? 'See ' + review_count.to_s + ' Review': 'See all ' + review_count.to_s + ' Reviews') %>
-      <%= render "shared/section_header", category_placement:category_placement, link_text: review_total_count, link_to:'reviews' %>
+<span class="mrs link-darkgray">Community rating:</span>
+<% if average_score > 0  %>
+    <span class="mt2 vam">
+        <%= draw_stars_16 average_score %>
+    </span>
+<% else %>
+    <span class="mt2 vam">
+      <a href="<%=school_review_form_path(@school)%>"><%= draw_stars_16 0 %></a>
+    </span>
+<% end %>
 
-      <div class="js_reviewsList">
-        <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews_all %>
-      </div>
-    </div>
-  </div>
+<% if school_reviews.present? %>
+    "<%=  truncate(school_reviews.first.comments,:length => 40) %>"
+<% else %>
+    <div>Help others find their GreatSchool!</div>
+    <div>Rate and review this schools now!</div>
+<% end %>
+
+<% if ratings_count > 0 %>
+    <span> <%= pluralize ratings_count, 'Reviews' %></span>
+<% else %>
+    <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary mtm js-button-link">
+      Write a review
+    </button>
 <% end %>
