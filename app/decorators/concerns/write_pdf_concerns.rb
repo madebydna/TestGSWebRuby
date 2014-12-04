@@ -39,7 +39,7 @@ module WritePdfConcerns
     schools_decorated_with_cache_results.each_with_index do |school, index|
 
       if index % 3 == 0 and index != 0
-        start_new_page(:size => "LETTER")
+        start_new_page()
         position_on_page = 0
       end
 
@@ -92,35 +92,35 @@ module WritePdfConcerns
     if is_high_school_batch
       fill_color DARK_BLUE
       text_box grade + " 9-12",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_BLUE
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     elsif is_pk8_batch
       fill_color DARK_GREY
       text_box grade + " PK-8",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_GREY
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     elsif is_k8_batch
       fill_color DARK_GREY
       text_box grade + " K-8",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_GREY
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     end
 

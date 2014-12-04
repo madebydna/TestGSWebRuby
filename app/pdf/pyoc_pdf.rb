@@ -21,7 +21,7 @@ class PyocPdf < Prawn::Document
 
 
     @is_spanish=is_spanish
-    super()
+    super(:page_size => [621, 801])
 
     if is_performance_index
 
