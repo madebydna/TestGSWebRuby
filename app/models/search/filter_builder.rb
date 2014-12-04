@@ -61,7 +61,7 @@ class FilterBuilder
   def state_callbacks
     Hash.new([]).merge(
         {
-            in: indiana_db_callbacks,
+            in: add_vouchers_callbacks,
             de: []
         }
     ).stringify_keys!
@@ -72,17 +72,45 @@ class FilterBuilder
         {
             mi: {
                 detroit: detroit_mi_callbacks
+            }.stringify_keys!,
+            wi: {
+                milwaukee: add_vouchers_callbacks
             }.stringify_keys!
         }
     ).stringify_keys!
   end
 
-  def build_add_callback(conditions, new_filter)
+  def build_append_to_children_callback(conditions, new_filter)
     lambda do |filter|
       conditions.each do |condition|
         return false if filter[condition[:key].to_sym].to_s != condition[:match]
       end
       filter[:filters].present? ? (filter[:filters].merge!(new_filter) and filter) : new_filter #ToDo add string decoding when we pull hashes from db
+    end
+  end
+
+  def build_insert_after_callback(conditions, new_filter)
+    lambda do |filter|
+      if filter[:filters].present?
+        matching_index = -1
+        filter[:filters].each_with_index do |(_, child_filter), index|
+          all_conditions_match = true
+          conditions.each do |condition|
+            all_conditions_match &&= (child_filter[condition[:key].to_sym].to_s == condition[:match])
+          end
+          matching_index = index if all_conditions_match
+        end
+        return false if matching_index == -1
+        hash_as_array = filter[:filters].to_a
+        new_filter.each do |k,v|
+          hash_as_array.insert(matching_index+1, [k, v])
+          matching_index += 1
+        end
+        filter[:filters] = Hash[ hash_as_array ]
+        filter
+      else
+        false
+      end
     end
   end
 
@@ -94,7 +122,7 @@ class FilterBuilder
     end
   end
 
-  def indiana_db_callbacks
+  def add_vouchers_callbacks
     [
       {
         callback_type: 'cache_key',
@@ -103,7 +131,7 @@ class FilterBuilder
           version: 1
         }
       },
-      {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'add', options:
+      {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
         {
           enrollment: {
             label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
@@ -121,15 +149,15 @@ class FilterBuilder
           callback_type: 'cache_key',
           options: {
             value: 'college_readiness',
-            version: 1
+            version: 2
           }
         },
         {
             conditions:
                 [
-                    {key: 'name', match: 'st'},
+                    {key: 'name', match: 'st'}, {key: 'display_type', match: 'title'}
                 ],
-            callback_type: 'add',
+            callback_type: 'insert_after',
             options:
                 {
                     cgr: {

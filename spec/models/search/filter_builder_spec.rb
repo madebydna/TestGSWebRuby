@@ -1,6 +1,26 @@
 require 'spec_helper'
 require_relative 'filter_builder_spec_helper'
 
+def assert_filter_structure(filter_map, index)
+  it "should have panel #{index+1}" do
+    expect(filters.filters.length).to be > index
+  end
+  context "panel #{index+1}" do
+    filter_map[:contains].each do |filter_name|
+      it "should contain #{filter_name}" do
+        filter_names = filters.filters[index].filters.collect {|f| [*f.name]}.flatten
+        expect(filter_names).to include(filter_name)
+      end
+    end
+    filter_map[:does_not_contain].each do |filter_name|
+      it "should not contain #{filter_name}" do
+        filter_names = filters.filters[index].filters.collect {|f| [*f.name]}.flatten
+        expect(filter_names).to_not include(filter_name)
+      end
+    end
+  end
+end
+
 describe FilterBuilder do
   include FilterBuilderSpecHelper
 
@@ -171,45 +191,169 @@ describe FilterBuilder do
     end
   end
 
+  describe '#filters_with_callbacks' do
+    context 'in Delaware' do
+      let (:filters) { FilterBuilder.new('DE', nil, false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
+        },
+          {panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
+        },
+          {panel: 3,
+          contains: [:school_focus],
+          does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
+    context 'in Indiana' do
+      let (:filters) { FilterBuilder.new('IN', nil, false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          does_not_contain: [:cgr]
+        },
+        { panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:school_focus, :enrollment],
+          does_not_contain: []
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
+    context 'in Michigan' do
+      let (:filters) { FilterBuilder.new('MI', nil, false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st],
+          does_not_contain: [:cgr, :transportation, :beforeAfterCare]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+      it 'does not have panel 2 or 3' do
+        expect(filters.filters.length).to eq(1)
+      end
+    end
+    context 'in Detroit, MI' do
+      let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :cgr, :transportation, :beforeAfterCare],
+          does_not_contain: []
+        },
+        { panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:school_focus],
+          does_not_contain: [:enrollment]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
+    context 'in Wisconsin' do
+      let (:filters) { FilterBuilder.new('WI', nil, false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st],
+          does_not_contain: [:cgr, :transportation, :beforeAfterCare]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+      it 'does not have panel 2 or 3' do
+        expect(filters.filters.length).to eq(1)
+      end
+    end
+    context 'in Milwaukee, WI' do
+      let (:filters) { FilterBuilder.new('WI', 'Milwaukee', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          does_not_contain: [:cgr]
+        },
+        { panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:school_focus, :enrollment],
+          does_not_contain: [:class_offerings]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
+
+  end
+
   describe '#cache_key' do
     context 'in any non-Local region of the country' do
       let (:cache_key) { FilterBuilder.new('', '', false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('', '', true).filters.cache_key }
       it 'should represent a simple filter configuration if forced' do
-        expect(forced_simple).to eq('simple_v1')
+        expect(forced_simple).to start_with('simple')
       end
       it 'should represent a simple filter configuration even if not forced' do
-        expect(cache_key).to eq('simple_v1')
+        expect(cache_key).to start_with('simple')
       end
     end
     context 'in Delaware' do
       let (:de_cache_key) { FilterBuilder.new('de', nil, false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('de', nil, true).filters.cache_key }
       it 'should represent a default advanced filter configuration' do
-        expect(de_cache_key).to eq('advanced_v1')
+        expect(de_cache_key).to start_with('advanced')
       end
       it 'should represent a simple configuration if forced' do
-        expect(forced_simple).to eq('simple_v1')
+        expect(forced_simple).to start_with('simple')
       end
     end
     context 'in Indiana' do
       let (:in_cache_key) { FilterBuilder.new('in', nil, false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('in', nil, true).filters.cache_key }
+      context 'in Indianapolis' do
+        let (:indy_cache_key) { FilterBuilder.new('in', 'Indianapolis', false).filters.cache_key }
+        it 'should represent a vouchers configuration' do
+          expect(indy_cache_key).to start_with('vouchers')
+        end
+      end
       it 'should represent a vouchers configuration' do
-        expect(in_cache_key).to eq('vouchers_v1')
+        expect(in_cache_key).to start_with('vouchers')
       end
       it 'should represent a simple configuration if forced' do
-        expect(forced_simple).to eq('simple_v1')
+        expect(forced_simple).to start_with('simple')
       end
     end
-    context 'in Detroit, MI' do
-      let (:detroit_cache_key) { FilterBuilder.new('mi', 'Detroit', false).filters.cache_key }
-      let (:forced_simple) { FilterBuilder.new('mi', 'Detroit', true).filters.cache_key }
-      it 'should represent a college readiness configuration' do
-        expect(detroit_cache_key).to eq('college_readiness_v1')
+    context 'in Michigan' do
+      let (:mi_cache_key) { FilterBuilder.new('mi', nil, false).filters.cache_key }
+      context 'in Detroit' do
+        let (:detroit_cache_key) { FilterBuilder.new('mi', 'Detroit', false).filters.cache_key }
+        let (:forced_simple) { FilterBuilder.new('mi', 'Detroit', true).filters.cache_key }
+        it 'should represent a college readiness configuration' do
+          expect(detroit_cache_key).to start_with('college_readiness')
+        end
+        it 'should represent a simple configuration if forced' do
+          expect(forced_simple).to start_with('simple')
+        end
       end
-      it 'should represent a simple configuration if forced' do
-        expect(forced_simple).to eq('simple_v1')
+      it 'should represent a simple configuration' do
+        expect(mi_cache_key).to start_with('simple')
+      end
+    end
+    context 'in Wisconsin' do
+      let (:wi_cache_key) { FilterBuilder.new('wi', nil, false).filters.cache_key }
+      context 'in Milwaukee' do
+        let (:mke_cache_key) { FilterBuilder.new('wi', 'Milwaukee', false).filters.cache_key }
+        let (:forced_simple) { FilterBuilder.new('wi', 'Milwaukee', true).filters.cache_key }
+        it 'should represent a vouchers configuration' do
+          expect(mke_cache_key).to start_with('vouchers')
+        end
+        it 'should represent a simple configuration if forced' do
+          expect(forced_simple).to start_with('simple')
+        end
+      end
+      it 'should represent a simple configuration' do
+        expect(wi_cache_key).to start_with('simple')
       end
     end
   end
