@@ -3,12 +3,93 @@
 <% begin %>
   <% children = @page_config.category_placement_children_with_data category_placement %>
   <% if children.any? && category_placement.title.present? %>
-    <% partial_collection_markup = render partial: 'category_placement', collection: children, as: :category_placement %>
-    <% if partial_collection_markup.present? %>
-      <div class="row phs">
-        <%= partial_collection_markup %>
+
+    <!-- Need to make decision on layout based on number of elements and whether ads are on -->
+    <!-- The First two elements should always be reviews and ratings -->
+    <!-- Third element 'details' will only show up when there is content -->
+    <!-- Fourth element 'best known for' will only show up when there is content -->
+
+    <!--if there is an ad then layout is fixed. Lines: two items which are always there, then one and one-->
+
+    <!--if no ad then there are 2 possible layouts-->
+    <!--no details and/or no best known for then the two items stretch across the first line and are centered-->
+    <!--otherwise 3 across-->
+
+    <% details_on_page = false %>
+
+    <% children.each { |cp| %>
+      <% category_placement2 = CategoryPlacementPresenter.new(cp, @page_config, self) %>
+      <% if category_placement2.title["Details"] %>
+        <% data = category_placement2.h.category_placement_data(@page_config, cp) %>
+        <% if data.present? %>
+          <% details_on_page = data[:data_show] %>
+        <% end %>
+      <% end %>
+    <% } %>
+
+    <div class="row ptl mtl">
+      <% if @show_ads %>
+        <div class="col-xs-12 col-md-8">
+          <div class="row">
+      <% end %>
+    <% children.each_with_index { |cp, index |  %>
+
+      <% category_placement_content = render partial: 'category_placement', locals: {category_placement: cp,
+                 details_layout: details_on_page,
+                 show_ads: @show_ads } %>
+      <% if index == 0 %>
+        <% if !details_on_page && !@show_ads %>
+            <div class="col-md-offset-2 col-xs-12 col-sm-6 col-md-4">
+              <%= category_placement_content %>
+            </div>
+        <% else %>
+          <div class="col-xs-12 col-sm-6">
+            <%= category_placement_content %>
+          </div>
+        <% end %>
+      <% end %>
+      <% if index == 1 %>
+        <% if !details_on_page && !@show_ads %>
+          <div class="col-xs-12 col-sm-6 col-md-4">
+            <%= category_placement_content %>
+          </div>
+        <% else %>
+          <div class="col-xs-12 col-sm-6">
+            <%= category_placement_content %>
+          </div>
+        <% end %>
+      <% end %>
+      <% if index == 2 %>
+        <% if details_on_page && !@show_ads %>
+          <div class="col-xs-12 col-sm-12 col-md-4">
+            <%= category_placement_content %>
+          </div>
+        <% else %>
+          <div class="col-xs-12">
+            <%= category_placement_content %>
+          </div>
+        <% end %>
+      <% end %>
+      <% if index == 3 %>
+        <div class="col-xs-12">
+          <%= category_placement_content %>
+        </div>
+      <% end %>
+    <% } %>
+      <% if @show_ads %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-4 tac">
+          ADVERTISEMENT
+        </div>
+      <% end %>
       </div>
-    <% end %>
+
+    <% #if partial_collection_markup.present? %>
+      <div class="row phs">
+        <% #= partial_collection_markup %>
+      </div>
+    <% #end %>
   <% end %>
 
 <% rescue => e %>
