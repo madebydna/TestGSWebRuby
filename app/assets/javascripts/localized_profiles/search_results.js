@@ -272,12 +272,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                         var schoolAdded = schoolsList.addSchool(schoolId, schoolState, schoolName, schoolRating);
                         var errorMessage = $('.js-compareSchoolsErrorMessage').clone();
                         var that = this;
-                        var errorCode = schoolAdded['errorCode']
-                        var state = schoolAdded['data']
+                        var errorCode = schoolAdded['errorCode'];
+                        var state = schoolAdded['data'];
                         var errorMessageText = getCompareErrorMessageText(errorCode, state);
-                        var errorKlass = 'js-' + errorCode + 'CompareError'
+                        var errorKlass = 'js-' + errorCode + 'CompareError';
 
-                        errorMessage.addClass(errorKlass)
+                        errorMessage.addClass(errorKlass);
 
                         if (noErrorMessageForCompareButton(that, errorKlass)) {
                             errorMessage.find('.js-compareSchoolErrorText').html(errorMessageText);
@@ -313,7 +313,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                     '</a>' + 'or' +
                     '<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">' + '&nbspclear schools&nbsp' +
                     '</a>' + '<strong>' +
-                    '&nbspto compare in this location.' + '</strong>';
+                    'to compare in this location.' + '</strong>';
                 return wrongStateText;
             }
             else if (error_code === 'tooManySchools') {
