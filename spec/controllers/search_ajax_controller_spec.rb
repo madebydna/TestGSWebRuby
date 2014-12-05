@@ -35,6 +35,19 @@ describe SearchAjaxController do
     end
   end
 
+  describe '#get_city' do
+    it 'Returns downcased city for a defined city parameter' do
+      ['Indianapolis', 'Oakland', 'Dover'].each do |c|
+        allow(controller).to receive(:params).and_return(city:c)
+        expect(controller.send(:get_city)).to eq(c.downcase)
+      end
+    end
+    it 'Returns nil if parameter is not defined' do
+      allow(controller).to receive(:params).and_return({})
+      expect(controller.send(:get_city)).to be_nil
+    end
+  end
+
   describe '#get_id' do
     it 'Handles positive integers' do
       [1, 15, 94875].each do |id|

@@ -9,12 +9,13 @@ class SearchAjaxController < ApplicationController
   def calculate_school_fit
     return unless session[:soft_filter_params] && session[:soft_filter_params].size > 0
     state = get_state
+    city = get_city
     id = get_id
     unless state.nil? || id.nil?
       school = School.find_by_state_and_id(state, id)
       if school.active?
         school = decorate_school school
-        @school = calculate_fit_score school
+        @school = calculate_fit_score(school, state, city)
       end
     end
   end
@@ -25,6 +26,11 @@ class SearchAjaxController < ApplicationController
     state_str_dirty = params[:state] || ''
     state_str = state_str_dirty.downcase
     States.abbreviations.include?(state_str) ? state_str.to_sym : nil
+  end
+
+  def get_city
+    city_str = params[:city]
+    !city_str.nil? ? city_str.downcase : nil
   end
 
   def get_id
@@ -41,9 +47,9 @@ class SearchAjaxController < ApplicationController
     school_cache_results.decorate_schools([school]).first
   end
 
-  def calculate_fit_score(school)
+  def calculate_fit_score(school, state='', city='')
     school.send(:extend, FitScoreConcerns)
-    filter_display_map = FilterBuilder.new(school.state).filter_display_map # for labeling fit score breakdowns
+    filter_display_map = FilterBuilder.new(state, city).filter_display_map # for labeling fit score breakdowns
     decorated_school = SchoolCompareDecorator.decorate(school)
     decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
     unless decorated_school.fit_score_breakdown.nil?

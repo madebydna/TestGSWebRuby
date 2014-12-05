@@ -444,6 +444,13 @@ class SearchController < ApplicationController
     gon.pagename = "SearchResultsPage"
     gon.state_abbr = @state[:short]
     gon.show_ads = @show_ads
+    gon.city_name = if @city
+                  @city.name
+                elsif params[:city]
+                  params[:city]
+                else
+                  ''
+                end
   end
 
 end
