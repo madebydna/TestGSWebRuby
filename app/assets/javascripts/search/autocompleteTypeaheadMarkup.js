@@ -21,10 +21,17 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
         }
     };
 
+    var cityChooserMarkup = function() {
+        return {
+            suggestion: Handlebars.compile('<a class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">My school is in</span> <strong>{{city_name}}, {{state}}</strong></p></a>')
+        }
+    };
+
     return {
         schoolResultsMarkup: schoolResultsMarkup,
         districtResultsMarkup: districtResultsMarkup,
-        cityResultsMarkup: cityResultsMarkup
+        cityResultsMarkup: cityResultsMarkup,
+        cityChooserMarkup: cityChooserMarkup
     }
 
 })();

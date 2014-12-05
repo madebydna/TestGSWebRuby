@@ -5,6 +5,10 @@ if(gon.pagename == "Account management"){
     GS.accountManagement.savedSearch.init();
     GS.accountManagement.mySchoolList.init();
     GS.accountManagement.newsFeedUnsubscribe.init();
+    GS.search.autocomplete.cityAutocomplete.init();
+    GS.search.autocomplete.cityAutocomplete.setUserAccountStatePickerHandler();
+
+      
 
     var url_hash = window.location.hash;
     if(url_hash !== ''){

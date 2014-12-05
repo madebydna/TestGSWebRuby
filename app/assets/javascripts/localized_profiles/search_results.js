@@ -597,7 +597,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         init: init,
         sortBy: sortBy,
         searchResultFitScoreTogglehandler: searchResultFitScoreTogglehandler,
-        toggleOnCompareSchools: compareSchools.toggleOnCompareSchools
+        toggleOnCompareSchools: compareSchools.toggleOnCompareSchools,
+        setStatePickerHandler: setStatePickerHandler
     };
 })(gon.state_abbr);
 
