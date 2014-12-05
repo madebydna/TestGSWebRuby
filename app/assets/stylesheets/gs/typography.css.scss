@@ -94,6 +94,10 @@ p, a {
   color: $emphasis-color;
 }
 
+.neutral-color {
+  color: $neutral-color;
+}
+
 .gray-dark {
   color: $gray-dark;
 }
@@ -157,6 +161,7 @@ p, a {
 .bg-light-gray { background-color: $well-bg; }
 .bg-medium-gray {background-color: #E5E5E5}
 .bg-emphasis { background-color: $emphasis-color; }
+.bg-neutral { background-color: $neutral-color; }
 .bg-dark-teal { background-color: #006589;}
 .bg-primary-light { background-color: $brand-primary-lighter; }
 

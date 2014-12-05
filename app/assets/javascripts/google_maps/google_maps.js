@@ -220,7 +220,7 @@ GS.googleMap = GS.googleMap || (function() {
               var markup = '<div>'; //school data
               var assignedLevel = point.assignedLevel;
               if (assignedLevel) {
-                  markup += '<div class="mbs"><span class="notranslate font-size-small inverted-text bg-emphasis brs uc phm pvs">' + mapPinAssignedSchoolText() + '*</span></div>';
+                  markup += '<div class="mbs"><span class="notranslate font-size-small inverted-text bg-neutral brs uc phm pvs">' + mapPinAssignedSchoolText() + '*</span></div>';
               }
               markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
               markup += '<div class="row">'; //row
