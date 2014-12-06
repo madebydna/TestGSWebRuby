@@ -286,7 +286,8 @@
         }
     }();
     var Transport = function() {
-        var pendingRequestsCount = 0, pendingRequests = {}, maxPendingRequests = 6, requestCache = new LruCache(10);
+        // ModifiedBehavior increase maxSize from 10 to 30
+        var pendingRequestsCount = 0, pendingRequests = {}, maxPendingRequests = 6, requestCache = new LruCache(30);
         function Transport(o) {
             o = o || {};
             this._send = o.transport ? callbackToDeferred(o.transport) : $.ajax;
@@ -296,7 +297,8 @@
             maxPendingRequests = num;
         };
         Transport.resetCache = function clearCache() {
-            requestCache = new LruCache(10);
+            // ModifiedBehavior increase maxSize from 10 to 30
+            requestCache = new LruCache(30);
         };
         _.mixin(Transport.prototype, {
             _get: function(url, o, cb) {
