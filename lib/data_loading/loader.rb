@@ -4,6 +4,7 @@ class Loader
 
   ACTION_DISABLE = 'disable'
   ACTION_BUILD_CACHE = 'build_cache'
+  ACTION_NO_CACHE_BUILD = 'no_cache_rebuild'
 
   def initialize(data_type, updates, source)
     @data_type = data_type
