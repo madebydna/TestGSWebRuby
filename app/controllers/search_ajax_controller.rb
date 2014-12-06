@@ -48,11 +48,10 @@ class SearchAjaxController < ApplicationController
   end
 
   def calculate_fit_score(school, state='', city='')
-    school.send(:extend, FitScoreConcerns)
-    filter_display_map = FilterBuilder.new(state, city).filter_display_map # for labeling fit score breakdowns
     decorated_school = SchoolCompareDecorator.decorate(school)
     decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})
     unless decorated_school.fit_score_breakdown.nil?
+      filter_display_map = FilterBuilder.new(state, city).filter_display_map # for labeling fit score breakdowns
       decorated_school.update_breakdown_labels! filter_display_map
       decorated_school.sort_breakdown_by_match_status!
     end
