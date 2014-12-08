@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :track_ab_version_in_omniture
   before_action :set_global_ad_targeting_through_gon
   before_action :check_for_java_hover_cookie
-  before_action :write_locale_session , :expect =>[:authenticate_user]
+  before_action :write_locale_session
 
   after_filter :disconnect_connection_pools
 
@@ -364,8 +364,6 @@ class ApplicationController < ActionController::Base
   end
 
   def write_locale_session
-    # session.delete(:state_locale)
-    # session.delete(:city_locale)
     [:state_locale, :city_locale].each { |k| session.delete(k) }
     if state_param.present?
       session[:state_locale] = state_param

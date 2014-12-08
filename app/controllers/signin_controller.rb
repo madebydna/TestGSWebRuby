@@ -4,6 +4,7 @@ class SigninController < ApplicationController
   protect_from_forgery
 
   skip_before_filter :verify_authenticity_token, :only => [:destroy]
+  skip_before_action :write_locale_session
 
   layout 'application'
   public
@@ -196,12 +197,17 @@ class SigninController < ApplicationController
     user, error = register_user(false, {
       email: params[:email]
     })
+
+    hub_city_cookie = read_cookie_value(:hubCity)
+    hub_state_cookie = read_cookie_value(:hubState)
     if session[:state_locale].present?
-      pp 'state_locale'+session[:state_locale]
+        pp 'state_locale: '+session[:state_locale]
+        pp session[:city_locale].present? ? 'city_locale: '+ session[:city_locale] : 'city_locale: none'
+    elsif !session[:state_locale].present? && hub_state_cookie.present?
+        pp 'state_locale: '+ hub_state_cookie
+        pp 'city_locale: '+hub_city_cookie
     end
-    if session[:city_locale].present?
-      pp 'city_locale'+session[:city_locale]
-    end
+
     if user && error.nil?
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
