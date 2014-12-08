@@ -201,11 +201,11 @@ class SigninController < ApplicationController
     hub_city_cookie = read_cookie_value(:hubCity)
     hub_state_cookie = read_cookie_value(:hubState)
     if session[:state_locale].present?
-        pp 'state_locale: '+session[:state_locale]
-        pp session[:city_locale].present? ? 'city_locale: '+ session[:city_locale] : 'city_locale: none'
+      puts 'state_locale: '+session[:state_locale]
+      puts session[:city_locale].present? ? 'city_locale: '+ session[:city_locale] : 'city_locale: none'
     elsif !session[:state_locale].present? && hub_state_cookie.present?
-        pp 'state_locale: '+ hub_state_cookie
-        pp 'city_locale: '+hub_city_cookie
+      puts 'state_locale: '+ hub_state_cookie
+      puts 'city_locale: '+hub_city_cookie
     end
 
     if user && error.nil?
