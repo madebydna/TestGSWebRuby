@@ -94,6 +94,15 @@ describe SavedSearchesConcerns do
       expect(errors.count).to equal 0
     end
 
+    it 'should save a search with the name ??' do
+      # Cuz, you know, why not? PT-919
+      question_mark_search_params = saved_search_params.deep_dup
+      question_mark_search_params[:name] = '??'
+      expect(SavedSearch.count).to eq 0
+      controller.send(:create_saved_search, question_mark_search_params)
+      expect(SavedSearch.count).to eq 1
+    end
+
     context 'when there is an already existing search with the same search name in the database' do
       before do
         user.saved_searches.create!(saved_search_params)

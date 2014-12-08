@@ -5,12 +5,37 @@ class Admin::ReviewsController < ApplicationController
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
     end
 
+    moderate_by_user
+
     @reported_reviews = self.flagged_reviews
     @reviews_to_process = self.unprocessed_reviews
     @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
+    gon.pagename = 'Reviews moderation'
+
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
+
+  def moderate_by_user
+    if params[:email].present?
+      user = User.find_by_email(params[:email])
+      if user
+        #reviews by the user and the flags on those reviews.
+        @reviews_by_user = find_reviews_by_user(user)
+        flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
+        Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
+
+        #reviews that are flagged by the user.
+        flagged_by_user = find_reviews_reported_by_user(user)
+        if flagged_by_user.present?
+          @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
+          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
+        end
+      end
+      render '_reviews_for_email'
+    end
+  end
+
 
   def update
     review = SchoolRating.find(params[:id]) rescue nil
@@ -113,10 +138,10 @@ unexpected error: #{e}."
     if @school
       reviews = @school.school_ratings.ever_flagged
     else
-      reviews = SchoolRating.where(status: %w[p d r a]).flagged
+      reviews = SchoolRating.where(status: %w[p d r a]).flagged.group(:reported_entity_id)
     end
 
-    reviews.order('posted desc').page(params[:flagged_reviews_page]).per(25)
+    reviews.order('posted desc')
   end
 
   def self.load_reported_entities_onto_reviews(reviews, reported_entities)
@@ -140,6 +165,18 @@ unexpected error: #{e}."
     else
       ReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
     end
+  end
+
+  def find_reviews_by_user(user)
+    SchoolRating.belonging_to(user)
+  end
+
+  def find_reviews_reported_by_user(user)
+    ReportedEntity.where(reporter_id: user.id,reported_entity_type: "schoolReview")
+  end
+
+  def find_reviews_by_ids(review_ids)
+    SchoolRating.where(id: review_ids)
   end
 
 end

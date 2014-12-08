@@ -1,40 +1,37 @@
-<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
-<% if @school.gs_rating != 'nr' %>
-  <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
-    <% ratings_array = [] %>
+<% gs_rating = @school.gs_rating %>
+<% if gs_rating %>
+    <%=  render "shared/rating/gs_rating", rating:gs_rating, supporting_text:'GreatSchools rating' %>
+<% else %>
+    <%=  render "shared/rating/gs_rating", rating:'nr', supporting_text:'GreatSchools rating' %>
+<% end %>
 
-    <% if @school.gs_rating  %>
-      <%  ratings_array << (render "shared/rating/gs_rating", rating:@school.gs_rating, supporting_text:'GreatSchools rating') %>
+<% state_rating = @school.state_rating %>
+<% if state_rating  %>
+    <%= render state_partial(@school.state), page:'overview', rating: state_rating%>
+    <div>State rating</div>
+<% end %>
+
+<% local_rating = @school.local_rating %>
+<% if local_rating  %>
+    <% rating = local_rating  %>
+    <% rating.gsub!("+", "plus") %>
+    <% icon_to_use = 'iconx72-ESD-ratings' %>
+    <% icon_to_choose = 'i-72-ratings-' %>
+    <span class="<%= icon_to_use %> <%= icon_to_choose + rating %>"></span>
+    <div>Local rating</div>
+<% end %>
+
+<% if @school.preK_star_rating %>
+    <% rating_type = '' %>
+    <% rating_star = @school.preK_star_rating %>
+    <% if rating_star == 0 %>
+        <% rating_type = '-outline' %>
+        <% rating_star = '1' %>
     <% end %>
-    <!-- Begin detroit hub layout -->
-    <% if @school.local_rating  %>
-      <%  ratings_array << (render "shared/rating/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating, supporting_text:'ESD rating') %>
-    <% end %>
-    <% if @school.state_rating  %>
-      <% if @school.state == 'CA' %>
-        <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'API score') %>
-      <% else %>
-        <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'State rating') %>
-      <% end %>
-    <% end %>
-    <% if @school.preK_star_rating  %>
       <% if @school.state == 'MI' %>
-        <% ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+          <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
       <% else %>
-        <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+          <%= render state_partial(@school.state), page:'overview', rating: @school.preK_star_rating %>
       <% end %>
-    <% end %>
-    <!-- End detroit hub layout -->
-
-    <% if !ratings_array.empty? %>
-
-      <%= render "shared/section_header", category_placement:category_placement, link_text:'See all Quality', link_to:'quality', subtitle:'These ratings help make it easier to find and compare schools.' %>
-      <a href="quality#Ratings">
-        <div class="row">
-          <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
-        </div>
-      </a>
-    <% end %>
-  <% end %>
-
+    <div>preK rating</div>
 <% end %>

@@ -25,7 +25,9 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        unless census_update.action == ACTION_NO_CACHE_BUILD
+          Cacher.create_cache(school, CACHE_KEY)
+        end
       end
     end
   end

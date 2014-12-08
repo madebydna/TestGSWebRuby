@@ -54,18 +54,15 @@ class Admin::PyocController <  ApplicationController
   def generate_empty_pdf
     respond_to do |format|
       format.pdf do
-        pdf = Prawn::Document.new
+        pdf = Prawn::Document.new(:page_size => [621, 801])
         pdf.text "Invalid Request Parameters"
         send_data pdf.render, filename: Time.now.strftime("%m%d%Y")+'_pyoc.pdf',
+
                   type: 'application/pdf',
                   disposition: 'inline' #loads pdf directly in browser window
       end
     end
   end
-
-
-
-
 
 
   def generate_pdf(schools_decorated_with_cache_results)

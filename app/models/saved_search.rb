@@ -11,7 +11,7 @@ class SavedSearch < ActiveRecord::Base
 
   before_save :process_name!
 
-  scope :searches_named, ->(name) { where("name REGEXP ?" , "^#{name}$|^#{name}[(][0-9]+[)]$") }
+  scope :searches_named, ->(name) { where("name = '#{name}' or name like '#{name}%(%)'") }
 
   def process_name!
     searches_with_same_name = user.saved_searches.searches_named(self.name)

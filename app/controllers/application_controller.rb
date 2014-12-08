@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :set_global_ad_targeting_through_gon
+  before_action :check_for_java_hover_cookie
   before_action :write_locale_session , :expect =>[:authenticate_user]
 
   after_filter :disconnect_connection_pools
@@ -343,6 +344,14 @@ class ApplicationController < ActionController::Base
     end
     gon.advertising_enabled = @advertising_enabled
   end
+
+  #//////////////////////////////////////////////
+  #
+  # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)
+  #   returns true is state is part of list or if all is present in list
+  #   returns false if state is not found and all is not in list
+  #
+  #//////////////////////////////////////////////
 
   def property_state_on?(state_list_str, current_state)
     state_arr = state_list_str.split(',') if state_list_str.present?

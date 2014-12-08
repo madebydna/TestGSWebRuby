@@ -90,8 +90,8 @@
     <%= render partial: 'shared/districts_module', locals: {title: "Largest Districts in <span class='notranslate'>#{city.name}</span>",
                                                             column_size: first_column_sizes, districts: @districts}%>
 
-    <div class="<%= second_column_sizes %> pll ma ptm">
-      <h3>Nearby homes for sale</h3>
+    <div class="<%= second_column_sizes %>  ma ptm">
+      <h3 class="tac">Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>
     </div>
   </div>

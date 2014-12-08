@@ -5,7 +5,9 @@
             <div style="padding-top: 18px; color:#000000"><%= rating %></div>
         </div>
 
-        <div class="ptm link-darkgray"><%= supporting_text %></div>
+        <% if local_assigns[:supporting_text].present? %>
+            <div class="ptm link-darkgray"><%= supporting_text %></div>
+        <% end %>
     </div>
 <% else %>
     <div class="tac" style="width: 72px; height: 58px; background-color: <%= color_hash[rating] %>">

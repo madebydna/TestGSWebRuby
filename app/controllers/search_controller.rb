@@ -17,14 +17,14 @@ class SearchController < ApplicationController
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings','enrollment']
-  MAX_RESULTS_FROM_SOLR = 2000
   MAX_RESULTS_FOR_MAP = 100
   NUM_NEARBY_CITIES = 8
+  MAX_RESULTS_FOR_FIT = 300
 
   def search
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
-      render 'search_page'
+      render 'search_page' unless bail_on_fit?
     elsif params.include?(:city) && params.include?(:district_name)
       self.district_browse
     elsif params.include?(:city)
@@ -55,7 +55,7 @@ class SearchController < ApplicationController
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     setup_search_gon_variables
-    render 'search_page'
+    render 'search_page' unless bail_on_fit?
   end
 
   def district_browse
@@ -84,7 +84,7 @@ class SearchController < ApplicationController
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     setup_search_gon_variables
-    render 'search_page'
+    render 'search_page' unless bail_on_fit?
   end
 
   def by_location
@@ -131,7 +131,7 @@ class SearchController < ApplicationController
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     setup_search_gon_variables
-    render 'search_page'
+    render 'search_page' unless bail_on_fit?
   end
 
   def setup_search_results!(search_method)
@@ -153,7 +153,6 @@ class SearchController < ApplicationController
 
     @sort_type = parse_sorts(@params_hash).presence
     @active_sort = active_sort_name(@sort_type)
-    @relevant_sort_types = sort_types
 
     if @sort_type
       search_options.merge!({sort: @sort_type})
@@ -161,7 +160,7 @@ class SearchController < ApplicationController
 
     # To sort by fit, we need all the schools matching the search. So override offset and num results here
     if sorting_by_fit?
-      search_options[:number_of_results] = MAX_RESULTS_FROM_SOLR
+      search_options[:number_of_results] = MAX_RESULTS_FOR_FIT
       search_options[:offset] = 0
     end
 
@@ -177,6 +176,7 @@ class SearchController < ApplicationController
     @show_guided_search = has_guided_search?
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
     @ad_definition = Advertising.new
+    @relevant_sort_types = sort_types(hide_fit?)
 
     omniture_filter_list_values(filters, @params_hash)
   end
@@ -189,7 +189,7 @@ class SearchController < ApplicationController
     relative_offset = @results_offset - solr_offset
 
     #when not sorting by fit, only applying fit scores to 25 schools on page. (previously it was up to 200 schools)
-    if sorting_by_fit? && filtering_search?
+    if sorting_by_fit? && filtering_search? && !hide_fit?
       setup_fit_scores(school_results, @params_hash)
       sort_by_fit(school_results)
       @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
@@ -256,6 +256,19 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def bail_on_fit?
+    if sorting_by_fit? && hide_fit?
+      redirect_to path_w_query_string 'sort', nil
+      true
+    else
+      false
+    end
+  end
+
+  def hide_fit?
+    @total_results > MAX_RESULTS_FOR_FIT
+  end
 
   def calculate_map_range(solr_offset)
     # solr_offset is used to convert from an absolute range to a relative range.
@@ -431,6 +444,13 @@ class SearchController < ApplicationController
     gon.pagename = "SearchResultsPage"
     gon.state_abbr = @state[:short]
     gon.show_ads = @show_ads
+    gon.city_name = if @city
+                  @city.name
+                elsif params[:city]
+                  params[:city]
+                else
+                  ''
+                end
   end
 
 end

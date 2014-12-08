@@ -7,6 +7,10 @@ gem 'mysql2', '0.3.13'
 gem 'jquery-rails'
 gem 'jquery-cookie-rails'
 
+group :assets do
+  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+end
+
 gem 'rails_admin'
 
 # We added this to rails-admin, as a way to edit json inline

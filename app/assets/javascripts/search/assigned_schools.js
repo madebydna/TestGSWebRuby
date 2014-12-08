@@ -182,7 +182,8 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
                     type:'GET',
                     url:'/gsr/ajax/search/calculate_fit',
                     data:{
-                        state: school.state,
+                        state: gon.state_abbr,
+                        city: gon.city_name,
                         id: school.id
                     },
                     dataType:'text',
