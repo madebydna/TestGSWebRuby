@@ -375,4 +375,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_for_java_hover_cookie
+    java_hover_cookie_name = :site_pref
+    java_hover_cookie_value = cookies[java_hover_cookie_name]
+    if java_hover_cookie_value && java_hover_cookie_value.include?('subscriptionEmailValidated')
+      flash_notice ("Your subscription has been confirmed. Thank you! You'll begin receiving newsletters from us shortly.")
+      delete_cookie(java_hover_cookie_name)
+    end
+  end
+
 end
