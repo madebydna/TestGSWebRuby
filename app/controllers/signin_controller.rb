@@ -196,7 +196,12 @@ class SigninController < ApplicationController
     user, error = register_user(false, {
       email: params[:email]
     })
-
+    if session[:state_locale].present?
+      pp 'state_locale'+session[:state_locale]
+    end
+    if session[:city_locale].present?
+      pp 'city_locale'+session[:city_locale]
+    end
     if user && error.nil?
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end

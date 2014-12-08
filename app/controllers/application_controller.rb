@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :set_global_ad_targeting_through_gon
+  before_action :write_locale_session , :expect =>[:authenticate_user]
 
   after_filter :disconnect_connection_pools
 
@@ -350,6 +351,18 @@ class ApplicationController < ActionController::Base
       state_arr.present?
     else
       false
+    end
+  end
+
+  def write_locale_session
+    # session.delete(:state_locale)
+    # session.delete(:city_locale)
+    [:state_locale, :city_locale].each { |k| session.delete(k) }
+    if state_param.present?
+      session[:state_locale] = state_param
+    end
+    if city_param.present?
+      session[:city_locale] = city_param
     end
   end
 

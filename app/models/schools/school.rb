@@ -286,7 +286,7 @@ class School < ActiveRecord::Base
   end
 
   def k8?
-    includes_level_code?(%w[e m])  &&  !includes_level_code?('p')
+    includes_level_code?(%w[e m])  &&  !preschool?
   end
 
   def progress_bar_hash
