@@ -68,10 +68,11 @@ GS.reviews = GS.reviews || function($) {
         $("body").on("click", ".js_reviewHelpfulButton", function(){
           // disable button
 
-          $(this).prop("disabled",true);
+          //$(this).prop("disabled",true);
           var review_id = $(this).data( "review_id" );
+          var helpful_id = $(this).data( "helpful_id" );
           if($.isNumeric(review_id)){
-            helpfulReviewAjax(review_id, $(this));
+            helpfulReviewAjax(review_id, helpful_id, $(this));
           }
         });
 
@@ -175,25 +176,41 @@ GS.reviews = GS.reviews || function($) {
         }
     };
 
-    var helpfulReviewAjax = function(reviewId, obj) {
+    var helpfulReviewAjax = function(reviewId, helpful_id, obj) {
       jQuery.ajax({
         type:'GET',
         url:"/gsr/ajax/create_helpful_review",
         data:{
-          review_id: reviewId
+          review_id: reviewId,
+          helpful_id: helpful_id
         },
         dataType: "json",
         async:true
       }).done(function (data) {
         var count = data[reviewId];
+        var helpful_id = data['helpful_id'];
+
+        obj.data('helpful_id', helpful_id);
+        var current_button_str = obj.html();
+        var button_string = 'Thank you!';
+        var people_string = 'people';
+
         if(count == 1){
-          obj.html('Thank you!');
-          obj.siblings("span").replaceWith(count + ' person found this helpful');
+          people_string = 'person';
         }
-        else{
-          obj.html('Thank you!');
-          obj.siblings("span").replaceWith(count + ' people found this helpful');
+
+        if(current_button_str == button_string){
+          button_string = "Helpful?";
         }
+
+        var reponse_str = count + ' '+ people_string +' found this helpful';
+        if (isNaN(count)) {
+          reponse_str = '';
+        }
+
+        obj.html(button_string);
+        obj.siblings("span").html(reponse_str);
+
       }.gs_bind(this));
     };
 
