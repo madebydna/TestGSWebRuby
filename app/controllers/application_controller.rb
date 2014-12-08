@@ -344,6 +344,14 @@ class ApplicationController < ActionController::Base
     gon.advertising_enabled = @advertising_enabled
   end
 
+  #//////////////////////////////////////////////
+  #
+  # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)
+  #   returns true is state is part of list or if all is present in list
+  #   returns false if state is not found and all is not in list
+  #
+  #//////////////////////////////////////////////
+
   def property_state_on?(state_list_str, current_state)
     state_arr = state_list_str.split(',') if state_list_str.present?
     if state_arr.present?
