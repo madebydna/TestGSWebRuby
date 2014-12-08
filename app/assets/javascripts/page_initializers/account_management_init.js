@@ -6,6 +6,7 @@ if(gon.pagename == "Account management"){
     GS.accountManagement.mySchoolList.init();
     GS.accountManagement.newsFeedUnsubscribe.init();
     GS.search.autocomplete.cityAutocomplete.init();
+    GS.accountManagement.slideToggleSection.init();
     GS.search.autocomplete.cityAutocomplete.setUserAccountStatePickerHandler();
 
       
