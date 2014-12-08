@@ -80,14 +80,14 @@ class School < ActiveRecord::Base
     end
 
     school_to_id_map = schools.each_with_object({}) do |school, hash|
+      school.instance_variable_set(:@school_metadata, Hashie::Mash.new)
       hash[school.id] = school
     end
 
-    metadata_hash = Hashie::Mash.new
     school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
     school_metadatas.each do |metadata|
       school = school_to_id_map[metadata.school_id]
-      metadata_hash = school.instance_variable_get(:@school_metadata) || Hashie::Mash.new
+      metadata_hash = school.instance_variable_get(:@school_metadata)
       metadata_hash[metadata.meta_key] = metadata.meta_value
       school.instance_variable_set(:@school_metadata, metadata_hash)
     end

@@ -143,6 +143,21 @@ FactoryGirl.define do
         end
       end
 
+      trait :with_gs_rating do
+        ignore do
+          gs_rating 4 #default
+        end
+
+        after(:create) do |school, evaluator|
+          FactoryGirl.create(
+            :school_metadata,
+            school_id: school.id,
+            meta_key: 'overallRating',
+            meta_value: evaluator.gs_rating
+          )
+        end
+      end
+
       trait :with_levels do
         level '9,10,11,12'
         level_code 'h'

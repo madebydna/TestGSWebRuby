@@ -1,6 +1,11 @@
 require 'spec_helper'
-
 describe School do
+
+  after do
+    clean_models School
+  end
+
+  after(:each) { clean_dbs :ca }
 
   describe '#held?' do
     let(:school) { FactoryGirl.build(:school) }
@@ -41,5 +46,25 @@ describe School do
         expect(school.great_schools_rating).to be_nil
       end
     end
+  end
+
+  describe '#preload_school_metadata' do
+    let(:school_with_gs_ratings) { FactoryGirl.create(:school,:with_gs_rating,gs_rating: 3 ) }
+    let(:school_with_no_ratings) { FactoryGirl.create(:the_friendship_preschool,id: 3) }
+    let(:all_schools) {Array(school_with_gs_ratings) + Array(school_with_no_ratings)}
+
+    it 'should not query the database since the ratings were preloaded' do
+      School.preload_school_metadata!(all_schools)
+      expect(SchoolMetadata).to_not receive(:on_db)
+      school_with_gs_ratings.great_schools_rating
+      school_with_no_ratings.great_schools_rating
+    end
+
+    it 'should query the database for the ratings' do
+      expect(SchoolMetadata).to receive(:on_db).at_least(:twice).and_call_original
+      expect(school_with_gs_ratings.great_schools_rating).to eq('3')
+      expect(school_with_no_ratings.great_schools_rating).to be_nil
+    end
+
   end
 end
