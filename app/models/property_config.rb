@@ -7,11 +7,11 @@ class PropertyConfig < ActiveRecord::Base
     pc_sweepstakes.present? ? pc_sweepstakes.first.value == 'true' : false
   end
 
-  def self.get_property(quay)
+  def self.get_property(quay, fail_return_val = '')
     cache_key = 'PropertyConfig/' + quay
     Rails.cache.fetch(cache_key, expires_in: 2.minutes) do
-      property = PropertyConfig.where(quay: quay)
-      property.present? ? property.first.value : ''
+      property = PropertyConfig.where(quay: quay).order("id DESC")
+      property.present? ? property.first.value : fail_return_val
     end
   end
 
