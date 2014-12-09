@@ -6,7 +6,7 @@ module WritePdfConcerns
   DARK_BLUE = 70, 15, 0, 0
   WHITE = 0, 0, 0, 0
   GREY = 0, 0, 0, 6
-  BLACK = 0, 0, 0, 100
+  BLACK = 0, 0, 0, 91
   DARK_GREY = 0, 0, 0, 51
   LIGHT_BLUE = 5, 1, 0, 0
   COL_WIDTH = 170
@@ -128,7 +128,7 @@ module WritePdfConcerns
 
   def draw_all_footer(page_number_start, collection_id)
     #number_pages method can just be called once and will write to all pages.
-    number_pages '<page>', {:at => [270, -15], :size => FONT_SIZE_7, :start_count_at => page_number_start, :color => BLACK}
+    number_pages '<page>', {:at => [278, -7], :size => FONT_SIZE_7, :start_count_at => page_number_start, :color => BLACK}
     page_count.times do |i|
       go_to_page(i+1)
       draw_logo_and_url_on_footer(collection_id)
@@ -136,9 +136,9 @@ module WritePdfConcerns
   end
 
   def draw_logo_and_url_on_footer(collection_id)
-    image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
+    image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
     text_box which_footer(collection_id, is_spanish),
-             :at => [300, -15],
+             :at => [308, -7],
              :width => is_spanish ? 150 : 115,
              :height => 10,
              :size => 6,
@@ -146,7 +146,7 @@ module WritePdfConcerns
 
     fill_color DARK_BLUE
     text_box which_landing_page(collection_id),
-             :at => is_spanish ? [440, -15] : [420, -15],
+             :at => is_spanish ? [440, -7] : [420, -7],
              :width => 150,
              :height => 10,
              :size => 6,
