@@ -37,8 +37,8 @@
       <% category_placement_content = render partial: 'category_placement', locals: {category_placement: cp,
                  details_layout: details_on_page,
                  show_ads: @show_ads } %>
-      <% if index == 0 %>
-        <% if !details_on_page && !@show_ads %>
+        <% if index == 0 %>
+          <% if !details_on_page && !@show_ads %>
             <div class="col-md-offset-2 col-xs-12 col-sm-6 col-md-4">
               <%= category_placement_content %>
             </div>
@@ -53,11 +53,7 @@
         <% end %>
       <% end %>
       <% if index == 1 %>
-        <% if !details_on_page && !@show_ads %>
-          <div class="col-xs-12 col-sm-6 col-md-4">
-            <%= category_placement_content %>
-          </div>
-        <% elsif details_on_page && !@show_ads %>
+        <% if !@show_ads %>
           <div class="col-xs-12 col-sm-6 col-md-4">
             <%= category_placement_content %>
           </div>
@@ -88,7 +84,11 @@
           </div>
         </div>
         <div class="col-xs-12 col-md-4 tac">
-          ADVERTISEMENT
+
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :desktop  %>
+
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :mobile  %>
+
         </div>
       <% end %>
       </div>
