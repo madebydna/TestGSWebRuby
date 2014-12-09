@@ -189,18 +189,22 @@ GS.reviews = GS.reviews || function($) {
       }).done(function (data) {
         var count = data[reviewId];
         var helpful_id = data['helpful_id'];
-
         obj.data('helpful_id', helpful_id);
-        var current_button_str = obj.html();
-        var button_string = 'Thank you!';
-        var people_string = 'people';
 
-        if(count == 1){
-          people_string = 'person';
+        var icon_object = obj.find(".iconx16");
+        var button_icon_off = 'i-16-gray-thumbs-up';
+        var button_icon_on = 'i-16-white-thumbs-up';
+        var button_bg_color_class = 'bg-brand-primary';
+
+        if(icon_object.hasClass(button_icon_on)){
+          var button_icon_off = 'i-16-white-thumbs-up';
+          var button_icon_on = 'i-16-gray-thumbs-up';
+          var button_bg_color_class = '';
         }
 
-        if(current_button_str == button_string){
-          button_string = "Helpful?";
+        var people_string = 'people';
+        if(count == 1){
+          people_string = 'person';
         }
 
         var reponse_str = count + ' '+ people_string +' found this helpful';
@@ -208,7 +212,11 @@ GS.reviews = GS.reviews || function($) {
           reponse_str = '';
         }
 
-        obj.html(button_string);
+        // change button state
+        icon_object.removeClass(button_icon_off);
+        obj.removeClass('bg-brand-primary');
+        icon_object.addClass(button_icon_on);
+        obj.addClass(button_bg_color_class);
         obj.siblings("span").html(reponse_str);
 
       }.gs_bind(this));
