@@ -128,7 +128,7 @@ module WritePdfConcerns
 
   def draw_all_footer(page_number_start, collection_id)
     #number_pages method can just be called once and will write to all pages.
-    number_pages '<page>', {:at => [278, -7], :size => FONT_SIZE_7, :start_count_at => page_number_start, :color => BLACK}
+    number_pages '<page>', {:at => [278, -7], :size => FONT_SIZE_8, :start_count_at => page_number_start, :color => BLACK}
     page_count.times do |i|
       go_to_page(i+1)
       draw_logo_and_url_on_footer(collection_id)
@@ -141,8 +141,7 @@ module WritePdfConcerns
              :at => [308, -7],
              :width => is_spanish ? 150 : 115,
              :height => 10,
-             :size => 6,
-             :style => :italic
+             :size => 6
 
     fill_color DARK_BLUE
     text_box which_landing_page(collection_id),
