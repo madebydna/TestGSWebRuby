@@ -1,13 +1,13 @@
 
 <% city = CityHomeDecorator.decorate(@city_object) %>
 
-<div class="phm limit-width-1200">
+<div class="limit-width-1200">
   <h1 class="notranslate"><%= city.name %></h1>
 
 
   <% # Row contains rating, boilerplate text (description of city), %>
   <% # and an advertisement %>
-  <div class="row">
+  <div class="row phm">
     <% if @show_ads %>
       <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6 col-xs-12" %>
       <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6 col-xs-12" %>
@@ -62,12 +62,20 @@
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
         title: "Top rated schools in <span class='notranslate'>#{city.name}</span>",
-        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools),
+        ad_no_show: true
       }
     )
   %>
 
+  <% if @show_ads %>
 
+      <div class="pvl">
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+      </div>
+
+  <% end %>
 
   <% # Row contains map %>
   <% # TODO: move map partial to a shared folder %>
@@ -96,12 +104,12 @@
     </div>
   </div>
 
-  <div class="row ptm">
+  <div class="row ptl mtl">
     <div class="col-xs-12">
       <% if @show_ads %>
         <div>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :mobile  %>
         </div>
       <% end %>
     </div>

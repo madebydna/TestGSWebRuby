@@ -48,6 +48,7 @@ class CitiesController < ApplicationController
     end
 
     gon.pagename = 'GS:City:Home'
+    @ad_page_name = 'City_Page'.to_sym
     @city_object = City.where(name: @city, state: @state[:short]).first
     @city_rating = CityRating.get_rating(@state[:short], @city)
     @top_schools = all_schools_by_rating_desc(@city_object,4)

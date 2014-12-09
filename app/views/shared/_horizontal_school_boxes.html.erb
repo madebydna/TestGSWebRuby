@@ -1,6 +1,11 @@
 <% title # require title %>
 <% schools # require list of schools to display info for %>
+<% unless defined?(ad_no_show) %>
+  <% ad_no_show = false %>
+<% end %>
+
 <% version_with_ad = @show_ads %>
+<% version_with_ad = false if ad_no_show %>
 
 <% if version_with_ad %>
   <% column_sizes = [

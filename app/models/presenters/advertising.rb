@@ -496,6 +496,32 @@ class Advertising
           }
       }
     }
+    @ad_slots[:City_Page] = {
+        Content_Top: {
+            name: "Content_Top",
+            desktop:{
+                dimensions:[300,250]
+            }
+        },
+        Text: {
+            name: "Text",
+            desktop:{
+                dimensions:[728,60]
+            },
+            mobile:{
+                dimensions:[320,60]
+            }
+        },
+        Footer: {
+            name: "Footer",
+            desktop:{
+                dimensions:[728,90]
+            },
+            mobile:{
+                dimensions:[320,50]
+            }
+        },
+    }
 
     def get_width(page, slot, view)
       ret_value = 0
