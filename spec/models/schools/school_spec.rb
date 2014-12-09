@@ -2,7 +2,7 @@ require 'spec_helper'
 describe School do
 
   after do
-    clean_models School
+    clean_models School,SchoolMetadata
   end
 
   after(:each) { clean_dbs :ca }
@@ -53,17 +53,25 @@ describe School do
     let(:school_with_no_ratings) { FactoryGirl.create(:the_friendship_preschool,id: 3) }
     let(:all_schools) {Array(school_with_gs_ratings) + Array(school_with_no_ratings)}
 
-    it 'should not query the database since the ratings were preloaded' do
+    it 'should set rating if a school has rating else an empty hash.' do
       School.preload_school_metadata!(all_schools)
-      expect(SchoolMetadata).to_not receive(:on_db)
-      school_with_gs_ratings.great_schools_rating
-      school_with_no_ratings.great_schools_rating
+      expect(all_schools.first.instance_variable_get(:@school_metadata)).to eq(Hashie::Mash.new(:overallRating => "3"))
+      expect(all_schools.last.instance_variable_get(:@school_metadata)).to eq(Hashie::Mash.new())
     end
 
-    it 'should query the database for the ratings' do
-      expect(SchoolMetadata).to receive(:on_db).at_least(:twice).and_call_original
-      expect(school_with_gs_ratings.great_schools_rating).to eq('3')
-      expect(school_with_no_ratings.great_schools_rating).to be_nil
+    context 'when school_metadata is preloaded' do
+      it 'should not query the database for rating' do
+        School.preload_school_metadata!(all_schools)
+        expect(SchoolMetadata).to_not receive(:by_school_id)
+        school_with_gs_ratings.great_schools_rating
+        school_with_no_ratings.great_schools_rating
+      end
+
+      it 'should query the database for the ratings' do
+        expect(SchoolMetadata).to receive(:by_school_id).exactly(2).times.and_call_original
+        expect(school_with_gs_ratings.great_schools_rating).to eq('3')
+        expect(school_with_no_ratings.great_schools_rating).to be_nil
+      end
     end
 
   end

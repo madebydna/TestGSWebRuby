@@ -97,7 +97,7 @@ class School < ActiveRecord::Base
   def school_metadata
     @school_metadata ||= (
       metadata_hash = Hashie::Mash.new()
-      school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
+      school_metadatas = SchoolMetadata.by_school_id(shard,id)
       school_metadatas.each do |metadata|
         metadata_hash[metadata.meta_key] = metadata.meta_value
       end
