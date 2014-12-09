@@ -1,6 +1,7 @@
 class SchoolMediaLoading::Loader < SchoolMediaLoading::Base
 
   CACHE_KEY = 'progress_bar'
+  DATA_TYPE = :school_media
 
   def load!
     updates.each do |update|
@@ -17,7 +18,7 @@ class SchoolMediaLoading::Loader < SchoolMediaLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        Cacher.create_caches_for_data_type(school, DATA_TYPE)
       end
     end
   end

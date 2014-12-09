@@ -29,4 +29,8 @@ class EspResponsesCaching::EspResponsesCacher < Cacher
     }
   end
 
+  def self.listens_to?(data_type)
+    :esp_response == data_type
+  end
+
 end

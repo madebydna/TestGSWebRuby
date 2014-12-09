@@ -44,4 +44,8 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
     end
     reviews
   end
+
+  def self.listens_to?(data_type)
+    :school_reviews == data_type
+  end
 end

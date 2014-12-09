@@ -97,4 +97,8 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.uniq().sort == unique_keys.sort : false
   end
 
+  def self.listens_to?(data_type)
+    [:school_reviews, :esp_response, :school_media].include? data_type
+  end
+
 end

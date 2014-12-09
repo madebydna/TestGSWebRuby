@@ -1,6 +1,7 @@
 class ReviewLoading::Loader < ReviewLoading::Base
 
   CACHE_KEY = 'reviews_snapshot'
+  DATA_TYPE = 'school_reviews'
 
   def load!
     updates.each do |update|
@@ -17,7 +18,7 @@ class ReviewLoading::Loader < ReviewLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        Cacher.create_caches_for_data_type(school, DATA_TYPE)
       end
     end
   end

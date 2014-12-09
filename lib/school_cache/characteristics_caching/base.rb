@@ -22,4 +22,7 @@ class CharacteristicsCaching::Base < Cacher
     @@characteristics_data_breakdowns
   end
 
+  def self.listens_to?(data_type)
+    :census == data_type
+  end
 end

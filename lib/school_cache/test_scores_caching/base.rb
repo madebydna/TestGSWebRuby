@@ -28,4 +28,7 @@ class TestScoresCaching::Base < Cacher
     @@test_data_subjects
   end
 
+  def self.listens_to?(data_type)
+    :test_scores == data_type
+  end
 end
