@@ -35,3 +35,8 @@
 <div class="row">
   <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
 </div>
+
+<div class="row">
+    <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-6 tac fl"><%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores") %></div>
+    <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-6 tac clearfix"><%= link_to 'Ratings', school_quality_url(@school, anchor:"Ratings") %></div>
+</div>
