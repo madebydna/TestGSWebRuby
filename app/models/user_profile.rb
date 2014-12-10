@@ -1,7 +1,6 @@
 class UserProfile < ActiveRecord::Base
   self.table_name = 'user_profile'
   db_magic :connection => :gs_schooldb
-  attr_accessible :city, :state
 
 
   belongs_to :user

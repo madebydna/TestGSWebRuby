@@ -201,14 +201,17 @@ class SigninController < ApplicationController
     hub_city_cookie = read_cookie_value(:hubCity)
     hub_state_cookie = read_cookie_value(:hubState)
     if session[:state_locale].present?
-      puts 'state_locale: '+session[:state_locale]
-      puts session[:city_locale].present? ? 'city_locale: '+ session[:city_locale] : 'city_locale: none'
+      state_locale = session[:state_locale]
+      city_locale  =  session[:city_locale]
     elsif !session[:state_locale].present? && hub_state_cookie.present?
-      puts 'state_locale: '+ hub_state_cookie
-      puts 'city_locale: '+hub_city_cookie
+      state_locale = hub_state_cookie
+      city_locale = hub_city_cookie
     end
 
     if user && error.nil?
+      user_profile = UserProfile.where(member_id: user.id).first
+      user_profile.update_locale_info(state_locale,city_locale)
+
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 
