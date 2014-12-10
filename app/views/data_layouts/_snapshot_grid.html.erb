@@ -14,7 +14,7 @@
     <!--if no ad then there are 2 possible layouts-->
     <!--no details and/or no best known for then the two items stretch across the first line and are centered-->
     <!--otherwise 3 across-->
-
+    <% preschool_only = @school.preschool? %>
     <% details_on_page = false %>
     <% best_known_for_on_page = false %>
 
@@ -49,11 +49,11 @@
 
         <% case index %>
          <% when 0 %>
-            <% if !details_on_page && !@show_ads %>
+            <% if preschool_only && !@show_ads %>
               <div class="col-md-offset-2 col-xs-12 col-sm-6 col-md-4">
                 <%= category_placement_content %>
               </div>
-            <% elsif details_on_page && !@show_ads %>
+            <% elsif !preschool_only && !@show_ads %>
               <div class="col-xs-12 col-sm-6 col-md-4">
                 <%= category_placement_content %>
               </div>
@@ -63,11 +63,11 @@
               </div>
             <% end %>
           <% when 1 %>
-            <% if details_on_page && !@show_ads %>
+            <% if !preschool_only && !@show_ads %>
               <div class="col-xs-12 col-sm-6 col-md-4 vdl vdr">
                 <%= category_placement_content %>
               </div>
-            <% elsif !details_on_page && !@show_ads %>
+            <% elsif preschool_only && !@show_ads %>
               <div class="col-xs-12 col-sm-6 col-md-4 vdl">
                 <%= category_placement_content %>
               </div>
@@ -77,11 +77,11 @@
               </div>
             <% end %>
           <% when 2 %>
-            <% if details_on_page && !@show_ads %>
+            <% if !preschool_only && !@show_ads %>
               <div class="col-xs-12 col-sm-12 col-md-4">
                 <%= category_placement_content %>
               </div>
-            <% elsif details_on_page %>
+            <% elsif !preschool_only %>
               </div>
               <div class="row">
               <div class="col-xs-12">
