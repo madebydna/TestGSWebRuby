@@ -32,7 +32,7 @@
               <% end %>
             </td>
             <td>
-              <% if review.reported_entities.any?%>
+              <% if review.reported_entities.present?%>
                   <%= review.reported_entities.first.reason %>
               <% end %>
             </td>
@@ -76,7 +76,7 @@
               <% end %>
             </td>
             <td>
-              <% if review.reported_entities.any?%>
+              <% if review.reported_entities..present?%>
                   <%= review.reported_entities.first.reason %>
               <% end %>
             </td>
