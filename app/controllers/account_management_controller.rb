@@ -9,6 +9,13 @@ class AccountManagementController < ApplicationController
     @page_name = 'Account management'
     gon.pagename = 'Account management'
     gon.omniture_pagename = 'GS:Admin:MyAccount'
+    # binding.pry;
+    # @state_locale = UserProfile.where(member_id: @current_user.id).first.city
+    # @city_locale  = UserProfile.where(member_id: @current_user.id).first.state
+    #
+    # @user_profile = UserProfile.where(member_id: @current_user.id).first
+    # @user_profile.update_locale_info('d','gfjfgjf')
+
 
     favorite_schools = @current_user.favorite_schools
     favorite_schools_map = favorite_schools.group_by { |s| "#{s.state.downcase}#{s.school_id}"}
