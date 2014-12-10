@@ -15,6 +15,7 @@ module WritePdfConcerns
   FONT_SIZE_8 = 8
   FONT_SIZE_9 = 9
 
+
   IMAGE_PATH_SCHOOL_SIZE= "app/assets/images/pyoc/school_size_pyoc.png"
   IMAGE_PATH_TRANSPORTATION= "app/assets/images/pyoc/transportation_pyoc.png"
   IMAGE_PATH_BEFORE_CARE= "app/assets/images/pyoc/before_care_pyoc.png"
@@ -128,7 +129,7 @@ module WritePdfConcerns
 
   def draw_all_footer(page_number_start, collection_id)
     #number_pages method can just be called once and will write to all pages.
-    number_pages '<page>', {:at => [278, -7], :size => FONT_SIZE_8, :start_count_at => page_number_start, :color => BLACK}
+    number_pages '<page>', {:at => [278, -7], :size => 12, :start_count_at => page_number_start, :color => DARK_BLUE}
     page_count.times do |i|
       go_to_page(i+1)
       draw_logo_and_url_on_footer(collection_id)
@@ -136,19 +137,23 @@ module WritePdfConcerns
   end
 
   def draw_logo_and_url_on_footer(collection_id)
-    image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
+    # image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
+    fill_color BLACK
     text_box which_footer(collection_id, is_spanish),
-             :at => [308, -7],
-             :width => is_spanish ? 150 : 115,
+             :at => [58, -7],
+             # :width => is_spanish ? 150 : 115,
+             :width => 190,
              :height => 10,
-             :size => 6
+             :size => FONT_SIZE_9,
+             :align => :right
 
     fill_color DARK_BLUE
     text_box which_landing_page(collection_id),
-             :at => is_spanish ? [440, -7] : [420, -7],
+             # :at => is_spanish ? [440, -7] : [420, -7],
+             :at => [313, -7],
              :width => 150,
              :height => 10,
-             :size => 6,
+             :size => FONT_SIZE_9,
              :style => :italic
 
   end
@@ -201,33 +206,36 @@ module WritePdfConcerns
         move_down_small
       end
 
+      move_down_small
       draw_address(school)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
         bounding_box([1, 70], :width => 0, :height => 0) do
           if other_ratings == []
-            move_down_small
+            # move_down_small
+            move_down_medium
           else
             move_down_large
           end
           image map_icon, :at => [15, cursor], :scale => 0.2
         end
 
-        move_down_15
+        # move_down_15
+        move_down_large
 
         draw_school_hours(school_cache, 60)
 
 
-        move_down_small
-        draw_best_known_for(school_cache, school, 60)
+        # move_down_small
+        # draw_best_known_for(school_cache, school, 60)
 
       else
         move_down_small
         draw_school_hours(school_cache, 15)
 
-        move_down_small
-        draw_best_known_for(school_cache, school, 15)
+        # move_down_small
+        # draw_best_known_for(school_cache, school, 15)
       end
 
     end
@@ -417,11 +425,18 @@ module WritePdfConcerns
 
   def draw_best_known_for(school_cache, school, x_position)
     fill_color 100, 20, 20, 20
-    text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
+    # text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
+    #          :at => [x_position, cursor],
+    #          :width => school.which_icon.present? && school.which_icon != 'N/A' ? 95 : 135,
+    #          :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
+    #          :size => FONT_SIZE_7,
+    #          :style => :italic
+
+    text_box "#{school_cache.best_known_for.present? ? '"' + school_cache.best_known_for.truncate(81) + '"' : ''}",
              :at => [x_position, cursor],
-             :width => school.which_icon.present? && school.which_icon != 'N/A' ? 95 : 135,
+             :width => COL_WIDTH - 5,
              :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
-             :size => FONT_SIZE_7,
+             :size => FONT_SIZE_8,
              :style => :italic
   end
 
@@ -434,6 +449,10 @@ module WritePdfConcerns
       move_down_medium
 
       draw_application_table(school_cache, school)
+
+      move_down 15
+      # draw_best_known_for(school_cache, school, 15)
+      draw_best_known_for(school_cache, school, 5)
     end
   end
 
