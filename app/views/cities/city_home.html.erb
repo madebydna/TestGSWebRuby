@@ -2,7 +2,7 @@
 <% city = CityHomeDecorator.decorate(@city_object) %>
 
 <div class="limit-width-1200">
-  <h1 class="notranslate"><%= city.name %></h1>
+  <h1 class="notranslate"><%= city.name %> Schools</h1>
 
 
   <% # Row contains rating, boilerplate text (description of city), %>
@@ -26,6 +26,10 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        This city's rating is based on its schools' test results.
+        <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
       </div>
 
       <% # Row contains links / buttons to browse schools by level %>

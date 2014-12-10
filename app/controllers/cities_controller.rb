@@ -40,6 +40,14 @@ class CitiesController < ApplicationController
   end
 
   def city_home
+    gon.pagename = 'GS:City:Home'
+    @ad_page_name = 'City_Page'.to_sym
+    @city_object = City.where(name: @city, state: @state[:short]).first
+
+    if @city_object.blank? && @state.present?
+      return redirect_to state_url
+    end
+
     @show_ads = true;
     if @hub.present?
       @collection_id = @hub.collection_id
@@ -47,9 +55,6 @@ class CitiesController < ApplicationController
       @show_ads = CollectionConfig.show_ads(collection_configs)
     end
 
-    gon.pagename = 'GS:City:Home'
-    @ad_page_name = 'City_Page'.to_sym
-    @city_object = City.where(name: @city, state: @state[:short]).first
     @city_rating = CityRating.get_rating(@state[:short], @city)
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     prepare_map

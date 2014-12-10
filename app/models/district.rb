@@ -4,6 +4,8 @@ class District < ActiveRecord::Base
   attr_accessible :FIPScounty, :active, :charter_only, :city, :county, :created, :fax, :home_page_url, :lat, :level, :level_code, :lon, :mail_city, :mail_street, :mail_zipcode, :manual_edit_by, :manual_edit_date, :modified, :modifiedBy, :name, :nces_code, :notes, :num_schools, :phone, :state, :state_id, :street, :street_line_2, :type_detail, :zipcentroid, :zipcode
   has_many :schools
 
+  scope :active, -> { where(active: true) }
+
   def self.find_by_state_and_name(state, name)
     District.on_db(state).where(name: name).first rescue nil
   end
@@ -62,7 +64,7 @@ class District < ActiveRecord::Base
   end
 
   def self.by_number_of_schools_desc(state,city)
-    District.on_db(state.downcase.to_sym).where(city: city.name).order(num_schools: :desc)
+    District.on_db(state.downcase.to_sym).active.where(city: city.name).order(num_schools: :desc)
   end
 
 end
