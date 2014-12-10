@@ -72,13 +72,13 @@ class CitiesController < ApplicationController
   def prepare_map
     all_schools = all_schools_by_rating_desc(@city_object)
     if all_schools.present?
-      top_schools_for_map_pins = all_schools.take(10)
-      mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
+      # top_schools_for_map_pins = all_schools.take(5)
+      # mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
 
-      if all_schools.size > 10
-        all_other_schools_for_map = all_schools[11..-1]
-        mapping_points_through_gon_from_db(all_other_schools_for_map,on_page: false)
-      end
+      # if all_schools.size > 10
+      #   all_other_schools_for_map = all_schools
+        mapping_points_through_gon_from_db(all_schools,on_page: false)
+      # end
     end
     assign_sprite_files_though_gon
   end
