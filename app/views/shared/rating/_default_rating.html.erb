@@ -10,7 +10,9 @@
             </div>
 
         <% end %>
-        <div class="ptl link-darkgray"><%= supporting_text %></div>
+        <% if local_assigns[:supporting_text]%>
+          <div class="ptl link-darkgray"><%= supporting_text %></div>
+        <% end %>
     </div>
 <% elsif rating.to_s.length < 3 %>
     <div class="default_rating_circle tac">
