@@ -208,9 +208,9 @@ GS.reviews = GS.reviews || function($) {
           people_string = 'person';
         }
 
-        var reponse_str = count + ' '+ people_string +' found this helpful';
+        var response_str = count + ' '+ people_string +' found this helpful';
         if (isNaN(count)) {
-          reponse_str = '';
+          response_str = '';
         }
 
         // change button state
@@ -218,7 +218,7 @@ GS.reviews = GS.reviews || function($) {
         obj.removeClass('bg-brand-primary');
         icon_object.addClass(button_icon_on);
         obj.addClass(button_bg_color_class);
-        obj.siblings("span").html(reponse_str);
+        obj.siblings("span").html(response_str);
         obj.enable();
 
       }.gs_bind(this));
