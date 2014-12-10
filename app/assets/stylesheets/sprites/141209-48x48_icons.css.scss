@@ -1,0 +1,43 @@
+/* **************** SPRITE ***************** */
+
+.iconx48 {
+  display: inline-block;
+  background-image: asset_data_url("icons/141209-48x48_icons.png");
+  width: 48px;
+  height: 48px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-48-art {
+  background-position: -432px 0;
+}
+
+.i-48-clubs {
+  background-position: -480px 0px;
+}
+
+.i-48-sports {
+  background-position: -528px 0px;
+}
+
+.i-48-language {
+  background-position: -576px 0px;
+}
+
+
+.i-48-art-grey {
+  background-position: -432px -48px;
+}
+
+.i-48-clubs-grey {
+  background-position: -480px -48px;
+}
+
+.i-48-sports-grey {
+  background-position: -528px -48px;
+}
+
+.i-48-language-grey {
+  background-position: -576px -48px;
+}
