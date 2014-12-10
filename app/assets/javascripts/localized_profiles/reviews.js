@@ -177,6 +177,7 @@ GS.reviews = GS.reviews || function($) {
     };
 
     var helpfulReviewAjax = function(reviewId, helpful_id, obj) {
+      obj.disable();
       jQuery.ajax({
         type:'GET',
         url:"/gsr/ajax/create_helpful_review",
@@ -218,6 +219,7 @@ GS.reviews = GS.reviews || function($) {
         icon_object.addClass(button_icon_on);
         obj.addClass(button_bg_color_class);
         obj.siblings("span").html(reponse_str);
+        obj.enable();
 
       }.gs_bind(this));
     };
