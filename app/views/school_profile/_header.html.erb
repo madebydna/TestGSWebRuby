@@ -5,15 +5,12 @@
 <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
 
 <div class="header-bg-color ">
-
-  <div class="limit-width-1200 ptm pll">
-      <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
-  </div>
-
     <div class="row pal limit-width-1200 open-sans">
-
-      <div class="clearfix">
-        <a class="dn fl pbm js-backToCompare">&laquo; Back to compare</a>
+      <div >
+        <a class="dn  js-backToCompare">&laquo; Back to compare<div class="pbm"></div></a>
+      </div>
+      <div class="pbl">
+        <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs, top_margin: 'mtn' %>
       </div>
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">

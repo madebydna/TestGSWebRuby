@@ -1,8 +1,10 @@
 <% breadcrumbs # An +Array+ of +Hash+es, each +Hash+ containing a breadcrumb text and url %>
-
+<% unless defined?(top_margin) %>
+  <% top_margin = 'mtm' %>
+<% end %>
 <!-- for school ---- home / state / city / district (if appropriate)-->
 <% unless breadcrumbs.nil? || breadcrumbs.empty? %>
-  <div class="row mtm pls gs_set-z-1">
+  <div class="row <%= top_margin %> pls gs_set-z-1">
     <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
       <% breadcrumbs.each_with_index do |(text, url), index| %>
         <%= ' / ' if index > 0 %>
