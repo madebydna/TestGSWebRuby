@@ -292,3 +292,27 @@ hr.brand-bar {
   height: 2px;
   background: $brand-secondary;
 }
+
+// vertical divider - used on overview
+.vdl{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-left: 1px solid #DDDDDD;
+}
+
+.vdr{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-right: 1px solid #DDDDDD;
+}
+
+@media (max-width:990px){
+  .vdr{
+    border-right: none;
+  }
+}
+@media (max-width:768px){
+  .vdl{
+    border-left: none;
+  }
+}
