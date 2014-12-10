@@ -74,15 +74,13 @@ class Cacher
   end
 
   def self.registered_cachers
-    @registered_cachers ||= (
-      registered_cachers = []
-      registered_cachers << TestScoresCaching::BreakdownsCacher
-      registered_cachers << CharacteristicsCaching::CharacteristicsCacher
-      registered_cachers << EspResponsesCaching::EspResponsesCacher
-      registered_cachers << ReviewsCaching::ReviewsSnapshotCacher
-      registered_cachers << ProgressBarCaching::ProgressBarCacher
-      registered_cachers
-    )
+    @registered_cachers ||= [
+      TestScoresCaching::BreakdownsCacher,
+      CharacteristicsCaching::CharacteristicsCacher,
+      EspResponsesCaching::EspResponsesCacher,
+      ReviewsCaching::ReviewsSnapshotCacher,
+      ProgressBarCaching::ProgressBarCacher
+    ]
   end
 
   def self.create_caches_for_data_type(school, data_type)
