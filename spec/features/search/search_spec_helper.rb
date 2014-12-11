@@ -6,8 +6,13 @@ module SearchSpecHelper
   def set_up_city_browse(state_abbrev,city_name,query_string=nil)
     state_name = States.state_name(state_abbrev)
     city = find_and_allow_city(state_abbrev,city_name)
+    set_up_property_table
     yield if block_given?
     visit "/#{state_name}/#{city.name.downcase.gsub(/ /,'-')}/schools?#{query_string}"
+  end
+
+  def set_up_property_table
+    allow(PropertyConfig).to receive(:where).and_return nil
   end
 
   def set_up_district_browse(state_abbrev,district_name,city_name='whatever',query_string=nil)
