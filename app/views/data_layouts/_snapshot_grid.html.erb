@@ -34,11 +34,11 @@
     <% } %>
 
     <% if @show_ads %>
-      <div class="row pvl mvl ">
+      <div class="row pvl mvl phm">
         <div class="col-xs-12 col-md-8">
           <div class="row ">
     <% else %>
-      <div class="row pvl mvl ">
+      <div class="row pvl mvl phm">
     <% end %>
 
     <% children.each_with_index { |cp, index |  %>
@@ -64,27 +64,27 @@
             <% end %>
           <% when 1 %>
             <% if !preschool_only && !@show_ads %>
-              <div class="col-xs-12 col-sm-6 col-md-4 vdl vdr">
+              <div class="col-xs-12 col-sm-6 col-md-4 vdl vdr hdp">
                 <%= category_placement_content %>
               </div>
             <% elsif preschool_only && !@show_ads %>
-              <div class="col-xs-12 col-sm-6 col-md-4 vdl">
+              <div class="col-xs-12 col-sm-6 col-md-4 vdl hdp">
                 <%= category_placement_content %>
               </div>
             <% else %>
-              <div class="col-xs-12 col-sm-6 vdl">
+              <div class="col-xs-12 col-sm-6 vdl hdp">
                 <%= category_placement_content %>
               </div>
             <% end %>
           <% when 2 %>
             <% if !preschool_only && !@show_ads %>
-              <div class="col-xs-12 col-sm-12 col-md-4">
+              <div class="col-xs-12 col-sm-12 col-md-4 hdp">
                 <%= category_placement_content %>
               </div>
             <% elsif !preschool_only %>
               </div>
               <div class="row">
-              <div class="col-xs-12">
+              <div class="col-xs-12 hdp">
                 <%= category_placement_content %>
               </div>
             <% end %>
@@ -92,7 +92,7 @@
             <% if best_known_for_on_page %>
           </div>
           <div class="row">
-              <div class="col-xs-12">
+              <div class="col-xs-12 hdp">
                 <%= category_placement_content %>
               </div>
             <% end %>
@@ -103,7 +103,9 @@
         </div>
         <div class="col-xs-12 col-md-4">
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :desktop  %>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :mobile  %>
+          <div class="ptxl visible-xs">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :mobile  %>
+          </div>
         </div>
       <% end %>
       </div>

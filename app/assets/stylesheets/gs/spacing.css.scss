@@ -306,6 +306,7 @@ hr.brand-bar {
   border-right: 1px solid #DDDDDD;
 }
 
+
 @media (max-width:990px){
   .vdr{
     border-right: none;
@@ -314,5 +315,10 @@ hr.brand-bar {
 @media (max-width:768px){
   .vdl{
     border-left: none;
+  }
+  .hdp{
+    border-top: 1px solid #DDDDDD;
+    padding-top: 30px;
+    margin-top: 20px;
   }
 }
