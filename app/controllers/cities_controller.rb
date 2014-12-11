@@ -57,7 +57,6 @@ class CitiesController < ApplicationController
 
     @city_rating = CityRating.get_rating(@state[:short], @city)
     @top_schools = all_schools_by_rating_desc(@city_object,4)
-    prepare_map
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
     @show_ads = @show_ads && PropertyConfig.advertising_enabled?
     gon.show_ads = @show_ads
@@ -73,20 +72,6 @@ class CitiesController < ApplicationController
     count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
   end
 
-
-  def prepare_map
-    all_schools = all_schools_by_rating_desc(@city_object)
-    if all_schools.present?
-      # top_schools_for_map_pins = all_schools.take(5)
-      # mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
-
-      # if all_schools.size > 10
-      #   all_other_schools_for_map = all_schools
-        mapping_points_through_gon_from_db(all_schools,on_page: false)
-      # end
-    end
-    assign_sprite_files_though_gon
-  end
 
   def events
     if @hub.nil?
