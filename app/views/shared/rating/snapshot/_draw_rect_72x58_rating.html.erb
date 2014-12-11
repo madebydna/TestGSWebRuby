@@ -1,13 +1,7 @@
 <% color_hash = {"Green" => "#009900", "Lime" => "#99FF66", "Yellow" => "#FFFF00", "Orange" => "#FF9900", "Red" => "#FF3300"} %>
-<% if page == 'overview' %>
-    <div class="tac pal">
+<div class="tac pal">
+        <div><%= supporting_text %></div>
         <div class="ma" style="margin-bottom:7px;margin-top: 7px; width: 72px; height: 58px; background-color: <%= color_hash[rating] %>">
             <div style="padding-top: 18px; color:#000000"><%= rating %></div>
         </div>
-
-    </div>
-<% else %>
-    <div class="tac" style="width: 72px; height: 58px; background-color: <%= color_hash[rating] %>">
-        <div class="black" style="padding-top:18px;" ><%= rating %></div>
-    </div>
-<% end %>
+</div>

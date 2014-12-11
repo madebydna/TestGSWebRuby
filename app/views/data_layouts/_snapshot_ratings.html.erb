@@ -11,25 +11,28 @@
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>
-    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating) %>
+    <% rating_text = (@school.state == 'CA' ? 'API score' : 'State rating') %>
+    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
 <% end %>
 
 <% local_rating = @school.local_rating %>
 <% if local_rating %>
-        <% ratings_array << (render "shared/rating/snapshot/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating) %>
+       <% rating_text = ('ESD rating') %>
+        <% ratings_array << (render "shared/rating/snapshot/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating,supporting_text: rating_text) %>
 <% end %>
 
 <% if @school.preK_star_rating %>
+        <% rating_text = 'Preschool rating' %>
     <% if @school.state == 'MI' %>
-        <% ratings_array << ( render "shared/rating/snapshot/detroit_blue_star", rating:@school.preK_star_rating) %>
+        <% ratings_array << ( render "shared/rating/snapshot/detroit_blue_star", rating:@school.preK_star_rating, supporting_text: rating_text) %>
     <% else %>
-        <% ratings_array << ( render rating_partial_for_snapshot(@school.state), page:'overview', rating:@school.preK_star_rating) %>
+        <% ratings_array << ( render rating_partial_for_snapshot(@school.state), page:'overview', rating:@school.preK_star_rating, supporting_text: rating_text) %>
     <% end %>
 <% end %>
 
 <% if ratings_array.present?%>
-    <div class="col-xs-12 tac ptl mts">
-      <%= raw render_array_horizontally ratings_array, {"xs"=> 6,"sm"=> 4,"md"=> 4,"lg"=> 3} %>
+    <div class="row">
+      <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
     </div>
 <% end %>
 
