@@ -25,18 +25,19 @@
 <% end %>
 
 <% if @school.preK_star_rating %>
-        <% ratings_text_array << 'Preschool rating' %>
     <% if @school.state == 'MI' %>
-        <% ratings_array << ( render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating) %>
+        <% ratings_array << ( render "shared/rating/detroit_blue_star",
+                                     rating:@school.preK_star_rating,
+                                     padding: '',
+                                     title:'Preschool rating') %>
     <% else %>
-        <% ratings_array << ( render state_partial(@school.state), page:'overview', rating:@school.preK_star_rating) %>
+      <% ratings_array << (render "shared/rating/snapshot_ratings_state", state_rating: @school.preK_star_rating) %>
     <% end %>
 <% end %>
 
 <% if ratings_array.present?%>
-
     <div class="col-xs-12 tac ptl mts">
-      <%= raw render_array_horizontally ratings_array, {"xs"=> 6,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
+      <%= raw render_array_horizontally ratings_array, {"xs"=> 6,"sm"=> 4,"md"=> 4,"lg"=> 3} %>
     </div>
 <% end %>
 
