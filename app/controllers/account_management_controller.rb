@@ -10,11 +10,12 @@ class AccountManagementController < ApplicationController
     gon.pagename = 'Account management'
     gon.omniture_pagename = 'GS:Admin:MyAccount'
     # binding.pry;
-    # @state_locale = UserProfile.where(member_id: @current_user.id).first.city
-    # @city_locale  = UserProfile.where(member_id: @current_user.id).first.state
-    #
-    # @user_profile = UserProfile.where(member_id: @current_user.id).first
-    # @user_profile.update_locale_info('d','gfjfgjf')
+    # @state_locale = @current_user.user_profile.state
+    # @city_locale  = @current_user.user_profile.city
+    # unless   @current_user.user_profile.update_and_save_locale_info('TT','Testing')
+    #   Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
+    # end
+
 
 
     favorite_schools = @current_user.favorite_schools
