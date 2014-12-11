@@ -2,7 +2,6 @@ class DistrictsController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include AdvertisingHelper
-  include ApplicationHelper
   include HubConcerns
   include GoogleMapConcerns
 
@@ -66,16 +65,8 @@ class DistrictsController < ApplicationController
   end
 
   def prepare_map
-    all_schools = @district.schools_by_rating_desc
-    if all_schools.present?
-      top_schools_for_map_pins = all_schools.take(10)
-      mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
-
-      if all_schools.size > 10
-        all_other_schools_for_map = all_schools[11..-1]
-        mapping_points_through_gon_from_db(all_other_schools_for_map,on_page: false)
-      end
-    end
+    @map_schools = @district.schools_by_rating_desc
+    mapping_points_through_gon_from_db(@map_schools)
     assign_sprite_files_though_gon
   end
 

@@ -5,7 +5,6 @@ $(function() {
       GS.googleMap.setHeightForMap(300);
       elemMapCanvas.show('fast', GS.googleMap.initAndShowMap);
     };
-    GS.googleMap.setAdditionalZoom(2);
     GS.googleMap.addToInitDependencyCallbacks(
       GS.util.wrapFunction(
         initMap, this, []
