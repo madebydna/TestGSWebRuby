@@ -1,0 +1,22 @@
+<% if page == 'overview' %>
+    <div class="tac pal">
+        <% if rating.to_s.length < 3 %>
+            <div class="default_rating_circle ma">
+                <div class="ptm text_000"><%= rating %></div>
+            </div>
+        <% else %>
+            <div class="tac ptm">
+                <span class="pam link-darkgray open-sans_sb default_rating_rect"><%= rating %></span>
+            </div>
+
+        <% end %>
+    </div>
+<% elsif rating.to_s.length < 3 %>
+    <div class="default_rating_circle tac">
+        <div class="ptm text_000"><%= rating %></div>
+    </div>
+<% else %>
+    <div class="tal ptm">
+        <span class="pam open-sans_sb default_rating_rect small"><%= rating %></span>
+    </div>
+<% end %>

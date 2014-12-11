@@ -11,27 +11,19 @@
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>
-    <% ratings_array << (render "shared/rating/snapshot_ratings_state", state_rating: state_rating) %>
+    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating) %>
 <% end %>
 
 <% local_rating = @school.local_rating %>
 <% if local_rating %>
-        <% ratings_array << (render "shared/rating/variable_icon_rating",
-                                    icon_to_use:'iconx72-ESD-ratings',
-                                    icon_to_choose:'i-72-ratings-',
-                                    rating:@school.local_rating,
-                                    padding: '',
-                                    title:'ESD rating') %>
+        <% ratings_array << (render "shared/rating/snapshot/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating) %>
 <% end %>
 
 <% if @school.preK_star_rating %>
     <% if @school.state == 'MI' %>
-        <% ratings_array << ( render "shared/rating/detroit_blue_star",
-                                     rating:@school.preK_star_rating,
-                                     padding: '',
-                                     title:'Preschool rating') %>
+        <% ratings_array << ( render "shared/rating/snapshot/detroit_blue_star", rating:@school.preK_star_rating) %>
     <% else %>
-      <% ratings_array << (render "shared/rating/snapshot_ratings_state", state_rating: @school.preK_star_rating) %>
+        <% ratings_array << ( render rating_partial_for_snapshot(@school.state), page:'overview', rating:@school.preK_star_rating) %>
     <% end %>
 <% end %>
 

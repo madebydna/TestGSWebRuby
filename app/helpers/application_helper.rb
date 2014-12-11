@@ -124,6 +124,16 @@ module ApplicationHelper
     return_partial
   end
 
+  def rating_partial_for_snapshot ( state )
+    case state
+    when "MI"
+      return_partial = "shared/rating/snapshot/draw_rect_72x58_rating"
+    else
+      return_partial = "shared/rating/snapshot/default_rating"
+    end
+    return_partial
+  end
+
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
   # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string
   def capitalize_if_string(object)
