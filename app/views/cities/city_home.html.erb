@@ -47,13 +47,13 @@
           <div class="clearfix">
             <div class="prl mrm pvm fl">
               <!-- Hack, sorry about this. Using array in the link_to param list is the right way, but java search pages cannot handle this. -->
-              <%= link_to 'Public schools', search_city_browse_path+'?st=public&st=charter'  %>
+              <%= link_to 'Public schools', search_city_browse_path(:state => @state[:long].downcase.gsub(' ','-'))+'?st=public&st=charter'  %>
             </div>
             <div class="prl mrm pvm fl">
-              <%= link_to 'Private schools', search_city_browse_path(:st => 'private') %>
+              <%= link_to 'Private schools', search_city_browse_path(:st => 'private',:state => @state[:long].downcase.gsub(' ','-')) %>
             </div>
             <div class="prl mrm pvm fl">
-              <%= link_to 'Charter schools', search_city_browse_path(:st => 'charter') %>
+              <%= link_to 'Charter schools', search_city_browse_path(:st => 'charter',:state => @state[:long].downcase.gsub(' ','-')) %>
             </div>
           </div>
         </div>
