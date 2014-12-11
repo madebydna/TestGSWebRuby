@@ -13,7 +13,9 @@ module UpdateQueueConcerns
             entity_state: state_abbr,
             member_id: member_id
           }]
-        }.to_json
+        }.to_json,
+        created: Time.now,
+        updated: Time.now
       }
       UpdateQueue.create!(update_attrs)
     rescue Exception => e
