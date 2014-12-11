@@ -1,7 +1,18 @@
-<div class="tac pal">
-    <% rating.gsub!("+", "plus") %>
-    <div style="margin-bottom:7px;margin-top: 7px; "><span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span><br /></div>
-    <% if local_assigns[:supporting_text] %>
-      <div class="ptm link-darkgray"><%= supporting_text %></div>
-    <% end %>
+<% unless defined?(padding) %>
+  <% padding = 'pal' %>
+<% end %>
+<% unless defined?(title) %>
+  <% title = '' %>
+<% end %>
+
+<div class="tac <%= padding %>">
+  <% if title != '' %>
+    <div class="link-darkgray"><%= title %><br /></div>
+  <% end %>
+  <% rating.gsub!("+", "plus") %>
+  <div style="margin-bottom:7px;margin-top: 5px; "><span class="<%= icon_to_use %> <%= icon_to_choose+rating
+  %>"></span><br /></div>
+  <% if local_assigns[:supporting_text] %>
+    <div class="ptm link-darkgray"><%= supporting_text %></div>
+  <% end %>
 </div>
