@@ -75,6 +75,14 @@ class ApplicationController < ActionController::Base
     state_abbreviation
   end
 
+  def state_param_safe
+    state = (params[:state] || '').dup
+    state.gsub! '-', ' ' if state.length > 2
+    state_abbreviation = States.abbreviation(state)
+    state_abbreviation.downcase! if state_abbreviation.present?
+    state_abbreviation
+  end
+
   def city_param
     return if params[:city].nil?
     params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
@@ -365,8 +373,8 @@ class ApplicationController < ActionController::Base
 
   def write_locale_session
     [:state_locale, :city_locale].each { |k| session.delete(k) }
-    if state_param.present?
-      session[:state_locale] = state_param
+    if state_param_safe.present?
+      session[:state_locale] = state_param_safe
     end
     if city_param.present?
       session[:city_locale] = city_param
