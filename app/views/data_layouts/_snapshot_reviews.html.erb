@@ -4,7 +4,7 @@
 
 
 <div class="tac" style="height:300px;">
-<%= link_to school_reviews_url(@school) do %><div class="link-darkgray font-size-medium  row tac">Community rating</div><% end %>
+<%= link_to school_reviews_url(@school) do %><div class="link-darkgray tac pbl">Community rating</div><% end %>
 
 <div class="row tac mtm">
   <% if average_score > 0  %>
@@ -17,18 +17,21 @@
 </div>
 
 
-<div class="row tac mtxl">
+<div class="tac mtxl ptl">
+
   <% if school_reviews.present? &&  school_reviews.first.comments.present? %>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <%= link_to school_reviews_url(@school) do %>
-          <div class="gray-dark font-size-medium">"<%=  truncate(school_reviews.first.comments,:length => 40) %>"</div>
+          <div class="gray-dark font-size-large">"<%=  truncate(school_reviews.first.comments,:length => 40) %>"</div>
       <% end %>
+    </div>
   <% else %>
       <div>Help others find their GreatSchool!</div>
       <div>Rate and review this schools now!</div>
   <% end %>
 </div>
 
-<div class="row tac pa full-width" style="bottom: 20px;">
+<div class="tac pa full-width" style="bottom: 20px;">
 <% if ratings_count > 0 %>
       <% reviews_count_text = pluralize ratings_count, 'Review' %>
       <%= link_to reviews_count_text, school_reviews_url(@school)%>
