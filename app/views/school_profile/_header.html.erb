@@ -26,70 +26,7 @@
                             <h1 class="mtn pts"><%= @school.name %></h1>
                         <% end %>
                     </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 clearfix">
-                        <% if !@school.preschool? %>
-                            <%= link_to school_quality_url(@school, anchor:"Ratings") do %>
-                                <div class="fl prl open-sans rating-header-h24">
-                                    <span class="mrs link-darkgray">GreatSchools rating:</span>
-                                    <span class="vam iconx24-icons i-24-new-ratings-<%= @school.gs_rating %>"></span>
 
-                                </div>
-                            <% end %>
-                        <% end %>
-                        <% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.rating_averages.overall.avg_score > 0 %>
-                            <%= link_to school_reviews_url(@school) do %>
-                                <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link-darkgray">Community rating:</span>
-                                    <span class="mt2 vam">
-                                        <%= draw_stars_16 @school_reviews_global.rating_averages.overall.avg_score %>
-                                    </span>
-                                </div>
-                            <% end %>
-                        <% end %>
-                        <% if @school.local_rating  %>
-                            <%= link_to school_quality_url(@school, anchor:"Ratings") do %>
-                                <div class="fl prl open-sans pt2 rating-header-h24">
-                                    <span class="mrs link-darkgray">Excellent Schools Detroit rating:</span>
-                                    <span class="open-sans_sb">
-                                        <%= (@school.local_rating == 'NG')? 'No Grade' : @school.local_rating %>
-                                    </span>
-                                </div>
-                            <% end %>
-                        <% end %>
-                        <% if @school.state_rating  %>
-                          <% if @school.state == 'CA' %>
-                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"API score" %>
-                          <% else %>
-                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.state_rating, rating_label:"State rating" %>
-                          <% end %>
-                        <% end %>
-                        <% if @school.pcsb_rating  %>
-                            <%= render "shared/rating/header_standard", school:@school, rating_value:@school.pcsb_rating, rating_label:"PMF rating" %>
-                        <% end %>
-                        <% prek_star_rating = @school.preK_star_rating.to_i %>
-                        <% if prek_star_rating > 0 %>
-                            <% prek_star_rating_text = 'star' %>
-                            <% if prek_star_rating == 0 %>
-                                <% prek_star_rating_text = 'licensed' %>
-                                <% prek_star_rating = '' %>
-                            <% elsif prek_star_rating > 1 %>
-                                <% prek_star_rating_text = 'stars' %>
-                            <% end %>
-                            <%= link_to school_quality_url(@school, anchor:"Rating") do %>
-                                <div class="fl prl open-sans pt2 h24">
-                                    <span class="mrs link-darkgray">Preschool rating:</span>
-                                    <span class="open-sans_sb"><%= prek_star_rating %> <%= prek_star_rating_text  %></span>
-                                </div>
-                            <% end %>
-                        <% elsif @school.preK_star_rating.present? && @school.preK_star_rating != '0' %>
-                          <%= link_to school_quality_url(@school, anchor:"Rating") do %>
-                              <div class="fl prl open-sans pt2 h24">
-                                <span class="mrs link-darkgray">Preschool rating:</span>
-                                <span class="open-sans_sb"><%= @school.preK_star_rating %></span>
-                              </div>
-                            <% end %>
-                        <% end %>
-                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
                            school_profile_decorator.process_level,
@@ -114,6 +51,9 @@
                              <% end %>
                         <% end %>
                     </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                    <!-- Students enrolled, Before care, After care   -->
+                  </div>
                 </div>
             </div>
         </div>

@@ -1,8 +1,12 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
 <% gs_rating = @school.gs_rating || 'nr' %>
-<div class="link-darkgray row tac">GreatSchools rating</div>
-<div class="row"><%= render "shared/rating/gs_rating", rating:gs_rating %></div>
+<div class="row pr" style="height: 300px;">
+  <div class="col-xs-12 tac">
+    <div class="link-darkgray pbs">GreatSchools rating<br /></div>
+    <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
+
+
 
 <% ratings_text_array = [] %>
 <% ratings_array = [] %>
@@ -36,8 +40,11 @@
       <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
     </div>
 <% end %>
+  </div>
 
-<div class="row">
-    <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-6 tac fl"><%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores") %></div>
-    <div class=" col-xs-12 col-sm-6 col-md-6 col-lg-6 tac clearfix"><%= link_to 'Ratings', school_quality_url(@school, anchor:"Ratings") %></div>
+<div class="tac pa full-width"  style="bottom: 20px;" >
+    <%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores") %>&nbsp;|&nbsp;
+    <%= link_to 'Ratings', school_quality_url(@school, anchor:"Ratings") %>
+</div>
+
 </div>
