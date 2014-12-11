@@ -161,8 +161,8 @@ module WritePdfConcerns
   def draw_grey_line(index)
     if index % 3 != 2
       stroke do
-        stroke_color GREY
-        horizontal_line 0, 540, :at => cursor
+        stroke_color DARK_GREY
+        horizontal_line 0, 546, :at => cursor
       end
     end
   end
@@ -190,13 +190,6 @@ module WritePdfConcerns
 
       move_down_medium
 
-      stroke do
-        stroke_color GREY
-        horizontal_line 5, (COL_WIDTH - 5), :at => cursor
-      end
-
-      move_down_small
-
       other_ratings = school_cache.formatted_non_greatschools_ratings.to_a
 
       if other_ratings == []
@@ -206,36 +199,28 @@ module WritePdfConcerns
         move_down_small
       end
 
-      move_down_small
+      move_down_medium
       draw_address(school)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
         bounding_box([1, 70], :width => 0, :height => 0) do
           if other_ratings == []
-            # move_down_small
-            move_down_medium
+            move_down_small
           else
             move_down_large
           end
           image map_icon, :at => [15, cursor], :scale => 0.2
         end
 
-        # move_down_15
         move_down_large
 
         draw_school_hours(school_cache, 60)
-
-
-        # move_down_small
-        # draw_best_known_for(school_cache, school, 60)
 
       else
         move_down_small
         draw_school_hours(school_cache, 15)
 
-        # move_down_small
-        # draw_best_known_for(school_cache, school, 15)
       end
 
     end
