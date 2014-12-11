@@ -2,23 +2,23 @@
 <% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
 <% school_reviews = @school.reviews %>
 
-<%= link_to school_reviews_url(@school) do %><div class="link-darkgray row tac">Community rating</div><% end %>
+<%= link_to school_reviews_url(@school) do %><div class="link-darkgray font-size-medium  row tac">Community rating</div><% end %>
 
 <div class="row tac mtm">
   <% if average_score > 0  %>
       <%= link_to school_reviews_url(@school) do %>
-        <%= draw_stars_16 average_score %>
+        <%= draw_stars_24 average_score %>
       <% end %>
   <% else %>
-      <a href="<%=school_review_form_path(@school)%>"><%= draw_stars_16 0 %></a>
+      <a href="<%=school_review_form_path(@school)%>"><%= draw_stars_24 0 %></a>
   <% end %>
 </div>
 
 
 <div class="row tac mtxl">
-  <% if school_reviews.present? %>
+  <% if school_reviews.present? &&  school_reviews.first.comments.present? %>
       <%= link_to school_reviews_url(@school) do %>
-          <div class="link-darkgray "><%=  truncate(school_reviews.first.comments,:length => 40) %>"</div>
+          <div class="gray-dark font-size-medium">"<%=  truncate(school_reviews.first.comments,:length => 40) %>"</div>
       <% end %>
   <% else %>
       <div>Help others find their GreatSchool!</div>
