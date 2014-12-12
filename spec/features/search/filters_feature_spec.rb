@@ -31,7 +31,6 @@ feature 'Search filters submission', js: true do
           end
 
           it 'should alter the url' do
-            subject
             param = encode_square_brackets("#{name}=#{value}")
             expect(current_url).to include(param)
           end
@@ -67,7 +66,6 @@ feature 'Search filters submission', js: true do
           end
 
           it 'should alter the url' do
-            subject
             param = encode_square_brackets("#{name}=#{value}")
             expect(current_url).to include(param)
           end
