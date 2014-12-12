@@ -102,4 +102,20 @@ module SearchSpecHelper
     slots << footer_ad_slots[:mobile].first
     slots
   end
+
+  def filters_checkbox_xpath(name, value)
+    "//label[@data-gs-checkbox-name='#{name}'][@data-gs-checkbox-value='#{value}']/span"
+  end
+
+  def open_full_filter_dialog
+    page.all(:css, '.js-advancedFilters').last.click
+  end
+
+  def checkbox_accordian(filter_type)
+    page.all(:css, 'label.js-gs-checkbox-search-dropdown').find { |e| e.text == filter_type }
+  end
+
+  def submit_filters
+    find(:css, '.js-submitSearchFiltersForm').click
+  end
 end
