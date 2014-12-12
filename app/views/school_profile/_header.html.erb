@@ -52,7 +52,18 @@
                         <% end %>
                     </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                    <!-- Students enrolled, Before care, After care   -->
+                    <% if @school.cache_results.present? %>
+                        <% if @school.cache_results.students_enrolled.present? %>
+                            <div class="fl prm ">Students enrolled: <strong><%= @school.cache_results.students_enrolled %></strong></div>
+                        <% end %>
+                        <% if @school.cache_results.before_care.present? && @school.cache_results.before_care != '?' %>
+                            <div class="fl prm ">Before care: <strong><%= @school.cache_results.before_care %></strong></div>
+                        <% end %>
+                        <% if @school.cache_results.after_school.present? && @school.cache_results.after_school != '?'%>
+                            <div class="fl prm ">After care: <strong><%= @school.cache_results.after_school %></strong></div>
+                        <% end %>
+                    <% end %>
+
                   </div>
                 </div>
             </div>

@@ -300,6 +300,21 @@ class School < ActiveRecord::Base
     )
   end
 
+  #TODO this is temporary. Need to change how cache is used across profile pages for a school.
+  #TODO Also make just 1 query that includes progress_bar above as well.
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
+
+  def cache_results
+
+    @school_cache_results ||= (query_results = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS).include_schools(state, id).query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+
+    school_cache_results.decorate_schools(Array(self)).first
+    )
+  end
+
+
   def self.for_collection_ordered_by_name(state,collection_id)
     raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
     school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
