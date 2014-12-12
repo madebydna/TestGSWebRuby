@@ -1,10 +1,10 @@
 <%= render 'shared/qualaroo' %>
-<%= render 'nav/topnav' %>
+
 <%= render 'school_profile/header', school: @school %>
 <%= render 'school_profile/profile_nav', school: @school, page_name: :details %>
 
 <div class="row limit-width-1200">
-    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+
     <% root_placements = @page_config.root_placements_with_data %>
     <% root_placements_w_data = @page_config.root_placements_with_profile_data %>
     <% if root_placements_w_data.empty? %>

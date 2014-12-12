@@ -80,14 +80,14 @@ class School < ActiveRecord::Base
     end
 
     school_to_id_map = schools.each_with_object({}) do |school, hash|
+      school.instance_variable_set(:@school_metadata, Hashie::Mash.new)
       hash[school.id] = school
     end
 
-    metadata_hash = Hashie::Mash.new
     school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
     school_metadatas.each do |metadata|
       school = school_to_id_map[metadata.school_id]
-      metadata_hash = school.instance_variable_get(:@school_metadata) || Hashie::Mash.new
+      metadata_hash = school.instance_variable_get(:@school_metadata)
       metadata_hash[metadata.meta_key] = metadata.meta_value
       school.instance_variable_set(:@school_metadata, metadata_hash)
     end
@@ -97,7 +97,7 @@ class School < ActiveRecord::Base
   def school_metadata
     @school_metadata ||= (
       metadata_hash = Hashie::Mash.new()
-      school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
+      school_metadatas = SchoolMetadata.by_school_id(shard,id)
       school_metadatas.each do |metadata|
         metadata_hash[metadata.meta_key] = metadata.meta_value
       end
@@ -286,7 +286,7 @@ class School < ActiveRecord::Base
   end
 
   def k8?
-    includes_level_code?(%w[e m])  &&  !includes_level_code?('p')
+    includes_level_code?(%w[e m])  &&  !preschool?
   end
 
   def progress_bar_hash
@@ -299,6 +299,21 @@ class School < ActiveRecord::Base
     decorated_school_cache_results.first.progress_bar
     )
   end
+
+  #TODO this is temporary. Need to change how cache is used across profile pages for a school.
+  #TODO Also make just 1 query that includes progress_bar above as well.
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
+
+  def cache_results
+
+    @school_cache_results ||= (query_results = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS).include_schools(state, id).query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+
+    school_cache_results.decorate_schools(Array(self)).first
+    )
+  end
+
 
   def self.for_collection_ordered_by_name(state,collection_id)
     raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?

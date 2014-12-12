@@ -299,4 +299,52 @@ describe ApplicationController do
       controller.send(:adapt_flash_messages_from_java)
     end
   end
+
+  describe '#path_w_query_string' do
+    context 'from school profile' do
+      let (:profile_url) { 'http://www.greatschools.org/california/alameda/1-Alameda-High-School/' }
+      it 'handles reviews tab with no params' do
+        allow(request).to receive(:original_url).and_return profile_url
+        expect(controller.send(:path_w_query_string, 'tab', 'reviews')).to eq profile_url + 'reviews/'
+      end
+      it 'handles reviews tab with some params' do
+        allow(request).to receive(:original_url).and_return profile_url + '?a=b&c=d'
+        expect(controller.send(:path_w_query_string, 'tab', 'reviews')).to eq profile_url + 'reviews/?a=b&c=d'
+      end
+      it 'handles reviews tab with some params stripping tab' do
+        allow(request).to receive(:original_url).and_return profile_url + '?a=b&c=d&tab=reviews'
+        expect(controller.send(:path_w_query_string, 'tab', 'reviews')).to eq profile_url + 'reviews/?a=b&c=d'
+      end
+    end
+    context 'from city browse' do
+      let (:search_url) { 'http://www.greatschools.org/california/alameda/schools/' }
+      it 'handles search browse' do
+        allow(request).to receive(:original_url).and_return search_url
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq search_url
+      end
+      it 'handles search browse with common params' do
+        allow(request).to receive(:original_url).and_return search_url + '?grades=k&page=2&st=public'
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq search_url + '?grades=k&page=2&st=public'
+      end
+      it 'handles search browse with common params and sort' do
+        allow(request).to receive(:original_url).and_return search_url + '?grades=k&page=2&sort=fit_desc&st=public'
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq search_url + '?grades=k&page=2&st=public'
+      end
+    end
+    context 'from search by location' do
+      let (:search_url) { 'http://www.greatschools.org/search.page?distance=15&lat=123&locationSearchString=94111&lon=456' }
+      it 'handles search browse' do
+        allow(request).to receive(:original_url).and_return search_url
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq search_url
+      end
+      it 'handles search browse with common params' do
+        allow(request).to receive(:original_url).and_return search_url + '&grades=k&page=2&st=public'
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq 'http://www.greatschools.org/search.page?distance=15&grades=k&lat=123&locationSearchString=94111&lon=456&page=2&st=public'
+      end
+      it 'handles search browse with common params and sort' do
+        allow(request).to receive(:original_url).and_return search_url + '&grades=k&page=2&st=public&sort=fit_desc'
+        expect(controller.send(:path_w_query_string, 'sort', nil)).to eq 'http://www.greatschools.org/search.page?distance=15&grades=k&lat=123&locationSearchString=94111&lon=456&page=2&st=public'
+      end
+    end
+  end
 end

@@ -32,7 +32,7 @@
   <%= yield :head %>
 </head>
 <body class="open-sans">
-
+<%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render :partial => 'shared/top_notification_bar' %>
 
 <div class="dn">

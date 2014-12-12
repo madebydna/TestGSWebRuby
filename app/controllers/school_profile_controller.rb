@@ -163,15 +163,15 @@ class SchoolProfileController < SchoolController
   end
 
   def enable_ads
-    @show_ads = @school.show_ads
+    @show_ads = @school.show_ads && PropertyConfig.advertising_enabled?
   end
 
   def set_breadcrumbs
     school = SchoolProfileDecorator.decorate(@school)
     @breadcrumbs = {
-      'Home' => home_url,
       school.state_breadcrumb_text => state_url(state_params(school.state)),
-      school.city_breadcrumb_text => city_url(city_params(school.state, school.city))
+      school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
+      'School Profile' => nil
     }
   end
 
@@ -194,7 +194,8 @@ class SchoolProfileController < SchoolController
     port = (uri.port != 80 && uri.port.present?) ? ':'+uri.port.to_s : ''
     domain = "http://" + host + port + "/"
 
-    @facebook_comments_permalink = domain+ @state[:long].downcase + "/city-name/"+ @school.id.to_s + "-school-name/"+@page_config.name.downcase
+    @facebook_comments_permalink = domain+ @state[:long].downcase.gsub(' ', '-') + "/city-name/"+ @school.id.to_s +
+        "-school-name/"+@page_config.name.downcase
   end
 
 end

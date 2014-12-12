@@ -1,4 +1,4 @@
-<%= render 'nav/topnav' %>
+
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>

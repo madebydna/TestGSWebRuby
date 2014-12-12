@@ -68,10 +68,11 @@ GS.reviews = GS.reviews || function($) {
         $("body").on("click", ".js_reviewHelpfulButton", function(){
           // disable button
 
-          $(this).prop("disabled",true);
+          //$(this).prop("disabled",true);
           var review_id = $(this).data( "review_id" );
+          var helpful_id = $(this).data( "helpful_id" );
           if($.isNumeric(review_id)){
-            helpfulReviewAjax(review_id, $(this));
+            helpfulReviewAjax(review_id, helpful_id, $(this));
           }
         });
 
@@ -175,25 +176,51 @@ GS.reviews = GS.reviews || function($) {
         }
     };
 
-    var helpfulReviewAjax = function(reviewId, obj) {
+    var helpfulReviewAjax = function(reviewId, helpful_id, obj) {
+      obj.prop("disabled",true);
       jQuery.ajax({
         type:'GET',
         url:"/gsr/ajax/create_helpful_review",
         data:{
-          review_id: reviewId
+          review_id: reviewId,
+          helpful_id: helpful_id
         },
         dataType: "json",
         async:true
       }).done(function (data) {
         var count = data[reviewId];
+        var helpful_id = data['helpful_id'];
+        obj.data('helpful_id', helpful_id);
+
+        var icon_object = obj.find(".iconx16");
+        var button_icon_off = 'i-16-gray-thumbs-up';
+        var button_icon_on = 'i-16-white-thumbs-up';
+        var button_bg_color_class = 'bg-brand-primary';
+
+        if(icon_object.hasClass(button_icon_on)){
+          var button_icon_off = 'i-16-white-thumbs-up';
+          var button_icon_on = 'i-16-gray-thumbs-up';
+          var button_bg_color_class = '';
+        }
+
+        var people_string = 'people';
         if(count == 1){
-          obj.html('Thank you!');
-          obj.siblings("span").replaceWith(count + ' person found this helpful');
+          people_string = 'person';
         }
-        else{
-          obj.html('Thank you!');
-          obj.siblings("span").replaceWith(count + ' people found this helpful');
+
+        var response_str = count + ' '+ people_string +' found this helpful';
+        if (isNaN(count)) {
+          response_str = '';
         }
+
+        // change button state
+        icon_object.removeClass(button_icon_off);
+        obj.removeClass('bg-brand-primary');
+        icon_object.addClass(button_icon_on);
+        obj.addClass(button_bg_color_class);
+        obj.siblings("span").html(response_str);
+        obj.prop("disabled",false);
+
       }.gs_bind(this));
     };
 

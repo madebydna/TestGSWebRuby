@@ -16,7 +16,7 @@ module SortingConcerns
     end
   end
 
-  def sort_types
+  def sort_types(hide_fit)
     sorts = if search_by_location?
               [:distance, :rating]
             elsif search_by_name?
@@ -24,7 +24,8 @@ module SortingConcerns
             else
               [:rating]
             end
-    filtering_search? ?  sorts + [:fit] : sorts
+
+    (filtering_search? && !hide_fit) ? sorts + [:fit] : sorts
   end
 
   def sorting_by_fit?

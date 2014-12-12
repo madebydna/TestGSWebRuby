@@ -1,0 +1,66 @@
+
+  <% if !@school.preschool? %>
+    <div class="row">
+      <!-- Hack for Safari on IOS  -- using ad page name -->
+      <% append_page = "" %>
+      <% if @ad_page_name != :School_Details %>
+          <% append_page = "details/" %>
+      <% end %>
+    <% details_v2_hidden = "" %>
+    <% if !@show_ads %>
+      <% details_v2_hidden = "hidden-lg hidden-md" %>
+      <div class="hidden-sm hidden-xs" style="height: 300px;">
+      <%= link_to school_details_url(@school, anchor:"Programs") do %>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><%= render "shared/icon_content_snapshot",
+                                                                    data_local: data[:art],
+                                                                    sprite: 'art'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><%= render "shared/icon_content_snapshot",
+                                                                    data_local: data[:club],
+                                                                    sprite: 'clubs'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><%= render "shared/icon_content_snapshot", data_local:
+                                                                                                      data[:sport], sprite: 'sports'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Programs") do %>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><%= render "shared/icon_content_snapshot", data_local:
+                                                                                                      data[:lang], sprite: 'language'  %></div>
+      <% end %>
+        <div class="tac pa full-width"  style="bottom: 20px;" >
+          <%= link_to 'Programs', school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
+          <%= link_to 'Students', school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
+          <%= link_to 'Teachers', school_details_url(@school, anchor:"Teachers") %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="<%= details_v2_hidden %> mtl ">
+      <%= link_to school_details_url(@school, anchor:"Programs") do %>
+        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"><%= render "shared/icon_content_snapshot",
+                                                                    data_local: data[:art],
+                                                                    sprite: 'art'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"><%= render "shared/icon_content_snapshot", data_local:
+                                                                                                      data[:club], sprite: 'clubs'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"><%= render "shared/icon_content_snapshot", data_local:
+                                                                                                      data[:sport], sprite: 'sports'  %></div>
+      <% end %>
+      <%= link_to school_details_url(@school, anchor:"Programs") do %>
+        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"><%= render "shared/icon_content_snapshot", data_local:
+                                                                                                      data[:lang], sprite: 'language'  %></div>
+      <% end %>
+    </div>
+
+</div>
+
+<div class="tac mbl <%= details_v2_hidden %>">
+  <%= link_to 'Programs', school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
+  <%= link_to 'Students', school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
+  <%= link_to 'Teachers', school_details_url(@school, anchor:"Teachers") %>
+</div>
+  <% end %>

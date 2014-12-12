@@ -1,0 +1,90 @@
+<%= render 'nav/topnav' %>
+<%= render 'reviews_moderation_search_nav' %>
+
+<h3>Reviews by User</h3>
+
+<table class="table table-striped" style="margin-bottom: 0px">
+  <thead>
+  <tr>
+    <td>Review</td>
+    <td>Status</td>
+    <td>School</td>
+    <td>Reason if review is flagged</td>
+    <td>Case opened on</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @reviews_by_user %>
+      <% @reviews_by_user.each do |review| %>
+          <tr>
+            <td>
+              <%= truncate(review.review_text, length: 30) %>
+            </td>
+            <td>
+              <%= review.status %>
+            </td>
+            <td>
+              <% if review.school %>
+                  <% school = review.school %>
+                  <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+              <% else %>
+                  School not found
+              <% end %>
+            </td>
+            <td>
+              <% if review.reported_entities.present?%>
+                  <%= review.reported_entities.first.reason %>
+              <% end %>
+            </td>
+            <td>
+              <%= review.posted.strftime '%B %d, %Y' %>
+            </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<h3>Reviews flagged by User</h3>
+
+<table class="table table-striped" style="margin-bottom: 0px">
+  <thead>
+  <tr>
+    <td>Review</td>
+    <td>Status</td>
+    <td>School</td>
+    <td>Reason</td>
+    <td>Case opened on</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @reviews_reported_by_user %>
+      <% @reviews_reported_by_user.each do |review| %>
+          <tr>
+            <td>
+              <%= truncate(review.review_text, length: 20) %>
+            </td>
+            <td>
+              <%= review.status %>
+            </td>
+            <td>
+              <% if review.school %>
+                  <% school = review.school %>
+                  <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+              <% else %>
+                  School not found
+              <% end %>
+            </td>
+            <td>
+              <% if review.reported_entities..present?%>
+                  <%= review.reported_entities.first.reason %>
+              <% end %>
+            </td>
+            <td>
+              <%= review.posted.strftime '%B %d, %Y' %>
+            </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

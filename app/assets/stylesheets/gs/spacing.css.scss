@@ -86,6 +86,8 @@ body { padding-top: 50px }
 .pl25 {padding-left: 25px}
 .pt-1 { padding-top: 1% }
 
+.mt3 {margin-top: 3px;}
+
 .mv6 {margin-top: 6px;
       margin-bottom: 6px;
 }
@@ -275,7 +277,7 @@ body { padding-top: 50px }
 }
 
 .search-result-border.emphasis-border {
-  border-color: $emphasis-color;
+  border-color: $neutral-color;
 }
 .search-result-border:hover{
   border: 1px solid $brand-primary;
@@ -289,4 +291,34 @@ body { padding-top: 50px }
 hr.brand-bar {
   height: 2px;
   background: $brand-secondary;
+}
+
+// vertical divider - used on overview
+.vdl{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-left: 1px solid #DDDDDD;
+}
+
+.vdr{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-right: 1px solid #DDDDDD;
+}
+
+
+@media (max-width:990px){
+  .vdr{
+    border-right: none;
+  }
+}
+@media (max-width:768px){
+  .vdl{
+    border-left: none;
+  }
+  .hdp{
+    border-top: 1px solid #DDDDDD;
+    padding-top: 30px;
+    margin-top: 20px;
+  }
 }

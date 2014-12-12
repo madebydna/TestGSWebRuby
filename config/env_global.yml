@@ -25,3 +25,8 @@ exacttarget_api_key: API_86987
 exacttarget_api_secret: welcome@1
 exacttarget_wsdl: https://webservice.exacttarget.com/etframework.wsdl
 connection_pooling_enabled: false
+
+# Configs for scripts
+queue_daemon_sleep_time: 1 # in seconds
+queue_daemon_updates_limit: 100
+# End configs for scripts

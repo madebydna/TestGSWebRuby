@@ -13,10 +13,9 @@ class CitiesController < ApplicationController
   before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
-    if @hub.nil?
+    if @hub.nil?  || hub_matching_current_url[:city].nil?
       city_home
     else
-
       @hub.has_guided_search?
 
       @collection_id = @hub.collection_id
@@ -32,7 +31,7 @@ class CitiesController < ApplicationController
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
       @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
-      @show_ads = CollectionConfig.show_ads(collection_configs)
+      @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
       ad_setTargeting_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
       gon.state_abbr = @state[:short]
@@ -42,30 +41,28 @@ class CitiesController < ApplicationController
 
   def city_home
     gon.pagename = 'GS:City:Home'
+    @ad_page_name = 'City_Page'.to_sym
     @city_object = City.where(name: @city, state: @state[:short]).first
+
+    if @city_object.blank? && @state.present?
+      return redirect_to state_url
+    end
+
+    @show_ads = true;
+    if @hub.present?
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+      @show_ads = CollectionConfig.show_ads(collection_configs)
+    end
+
     @city_rating = CityRating.get_rating(@state[:short], @city)
     @top_schools = all_schools_by_rating_desc(@city_object,4)
-    prepare_map
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
-    @show_ads = true
+    @show_ads = @show_ads && PropertyConfig.advertising_enabled?
     gon.show_ads = @show_ads
     ad_setTargeting_through_gon
-    set_omniture_data('GS:City:Home', 'Home,CityHome')
-
-    description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
-      "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
-
-    keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
-      "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
-      "#{@city.titleize} Private Schools"
-
-    state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
-
-    title = "#{@city.titleize} Schools - #{state_text}School Ratings - Public and Private"
-
-    set_meta_tags keywords: keywords,
-                  description: description,
-                  title: title
+    set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
+    set_city_home_metadata
 
     render 'city_home'
   end
@@ -75,20 +72,6 @@ class CitiesController < ApplicationController
     count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
   end
 
-
-  def prepare_map
-    all_schools = all_schools_by_rating_desc(@city_object)
-    if all_schools.present?
-      top_schools_for_map_pins = all_schools.take(10)
-      mapping_points_through_gon_from_db(top_schools_for_map_pins,on_page: true,show_bubble: true )
-
-      if all_schools.size > 10
-        all_other_schools_for_map = all_schools[11..-1]
-        mapping_points_through_gon_from_db(all_other_schools_for_map,on_page: false)
-      end
-    end
-    assign_sprite_files_though_gon
-  end
 
   def events
     if @hub.nil?
@@ -243,6 +226,24 @@ class CitiesController < ApplicationController
   end
 
   private
+
+    def set_city_home_metadata
+      description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
+        "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
+
+      keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
+        "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
+        "#{@city.titleize} Private Schools"
+
+      state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
+      additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
+
+      title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+
+      set_meta_tags keywords: keywords,
+                    description: description,
+                    title: title
+    end
 
 
     def set_enrollment_omniture_data

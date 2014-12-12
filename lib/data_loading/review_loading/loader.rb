@@ -1,12 +1,13 @@
 class ReviewLoading::Loader < ReviewLoading::Base
 
   CACHE_KEY = 'reviews_snapshot'
+  DATA_TYPE = 'school_reviews'
 
   def load!
     updates.each do |update|
       next if update.blank?
 
-      review_update = ReviewLoading::Update.new(data_type, update, source)
+      review_update = ReviewLoading::Update.new(data_type, update)
 
       school = School.on_db(review_update.entity_state.to_s.downcase.to_sym).find(review_update.entity_id)
 
@@ -17,7 +18,7 @@ class ReviewLoading::Loader < ReviewLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        Cacher.create_caches_for_data_type(school, DATA_TYPE)
       end
     end
   end

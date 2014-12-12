@@ -1,6 +1,7 @@
 class CensusLoading::Loader < CensusLoading::Base
 
   CACHE_KEY = 'characteristics'
+  DATA_TYPE = :census
 
   # TODO handle census_description, census_data_set_file
   # Best ordering: first create data sets, then gs_schooldb.census_* rows, then value row
@@ -32,7 +33,9 @@ class CensusLoading::Loader < CensusLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        unless census_update.action == ACTION_NO_CACHE_BUILD
+          Cacher.create_caches_for_data_type(school, DATA_TYPE)
+        end
       end
     end
   end

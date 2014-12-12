@@ -1,13 +1,13 @@
-<%= render 'nav/topnav' %>
+
 <% city = CityHomeDecorator.decorate(@city_object) %>
 
-<div class="phm limit-width-1200">
-  <h1 class="notranslate"><%= city.name %></h1>
+<div class="limit-width-1200">
+  <h1 class="notranslate"><%= city.name %> Schools</h1>
 
 
   <% # Row contains rating, boilerplate text (description of city), %>
   <% # and an advertisement %>
-  <div class="row">
+  <div class="row phm">
     <% if @show_ads %>
       <% first_column_sizes = "col-lg-8 col-md-7 col-sm-6 col-xs-12" %>
       <% second_column_sizes = "col-lg-4 col-md-5 col-sm-6 col-xs-12" %>
@@ -27,18 +27,37 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        This city's rating is based on its schools' test results.
+        <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
+      </div>
 
       <% # Row contains links / buttons to browse schools by level %>
       <div class="row pll prm pbl mtl bg-primary-light">
         <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12 clearfix">
           <h4>Browse schools in <span class="notranslate"><%= city.name  %></span></h4>
+          <div class="clearfix">
           <% %w[e m h].each_with_index do |level, index| %>
             <% css_class = "prl mrm pvm fl" %>
             <div class="<%= css_class %>">
               <%= city.school_browse_link(level) %>
             </div>
           <% end %>
+          </div>
+          <div class="clearfix">
+            <div class="prl mrm pvm fl">
+              <!-- Hack, sorry about this. Using array in the link_to param list is the right way, but java search pages cannot handle this. -->
+              <%= link_to 'Public schools', search_city_browse_path(:state => @state[:long].downcase.gsub(' ','-'))+'?st=public&st=charter'  %>
+            </div>
+            <div class="prl mrm pvm fl">
+              <%= link_to 'Private schools', search_city_browse_path(:st => 'private',:state => @state[:long].downcase.gsub(' ','-')) %>
+            </div>
+            <div class="prl mrm pvm fl">
+              <%= link_to 'Charter schools', search_city_browse_path(:st => 'charter',:state => @state[:long].downcase.gsub(' ','-')) %>
+            </div>
+          </div>
         </div>
+
         <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 ptm tac">
           <%= city.school_browse_link do %>
             <button class="btn btn-primary mtm mrm fr">View all schools</button>
@@ -62,21 +81,20 @@
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
         title: "Top rated schools in <span class='notranslate'>#{city.name}</span>",
-        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools),
+        ad_no_show: true
       }
     )
   %>
 
+  <% if @show_ads %>
 
+      <div class="pvl">
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+      </div>
 
-  <% # Row contains map %>
-  <% # TODO: move map partial to a shared folder %>
-  <div class="row ptm">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <%= render partial: 'cities/google_map' %>
-    </div>
-  </div>
-
+  <% end %>
 
   <% # Row nearby city and Zillow module %>
   <div class="row ptm">
@@ -90,18 +108,18 @@
     <%= render partial: 'shared/districts_module', locals: {title: "Largest Districts in <span class='notranslate'>#{city.name}</span>",
                                                             column_size: first_column_sizes, districts: @districts}%>
 
-    <div class="<%= second_column_sizes %> pll ma ptm">
-      <h3>Nearby homes for sale</h3>
+    <div class="<%= second_column_sizes %>  ma ptm">
+      <h3 class="tac">Nearby homes for sale</h3>
       <%= render 'data_layouts/zillow_content', data: @zillow_data %>
     </div>
   </div>
 
-  <div class="row ptm">
+  <div class="row ptl mtl">
     <div class="col-xs-12">
       <% if @show_ads %>
         <div>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :desktop  %>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Text, view: :mobile  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :mobile  %>
         </div>
       <% end %>
     </div>

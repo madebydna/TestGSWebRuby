@@ -21,6 +21,7 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
         name: 'schools',
         displayKey: 'school_name',
         source: schools.ttAdapter(),
+        clearBloodhound: schools.ttAdapterClear(),
         templates: markup.schoolResultsMarkup()
       }
     ).on('typeahead:selected', function (event, suggestion, dataset) {

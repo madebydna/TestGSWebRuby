@@ -4,6 +4,7 @@ class SigninController < ApplicationController
   protect_from_forgery
 
   skip_before_filter :verify_authenticity_token, :only => [:destroy]
+  skip_before_action :write_locale_session
 
   layout 'application'
   public
@@ -197,7 +198,20 @@ class SigninController < ApplicationController
       email: params[:email]
     })
 
+    hub_city_cookie = read_cookie_value(:hubCity)
+    hub_state_cookie = read_cookie_value(:hubState)
+    if session[:state_locale].present?
+      state_locale = session[:state_locale]
+      city_locale  =  session[:city_locale]
+    elsif !session[:state_locale].present? && hub_state_cookie.present?
+      state_locale = hub_state_cookie
+      city_locale = hub_city_cookie
+    end
     if user && error.nil?
+      unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
+        Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
+      end
+
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 

@@ -27,6 +27,8 @@ class CensusLoading::Update
 
     unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
       @value_type = data_type.value_type
+      @subject_id = nil if @subject_id == 'null'
+      @breakdown_id = nil if @breakdown_id == 'null'
       @data_set_attributes = data_set_attributes
       @value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
     end
@@ -36,7 +38,7 @@ class CensusLoading::Update
     @data_set_attributes ||=
         {
                     year: year.to_i, # Defaults to 0
-                   grade: grade.nil? ? nil : grade.to_s,
+                   grade: grade.blank? ? nil : grade.to_s,
               subject_id: convert_subject_to_id(subject) || subject_id,
             breakdown_id: convert_breakdown_to_id(breakdown) || breakdown_id,
             data_type_id: data_type.id

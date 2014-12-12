@@ -6,7 +6,7 @@ module WritePdfConcerns
   DARK_BLUE = 70, 15, 0, 0
   WHITE = 0, 0, 0, 0
   GREY = 0, 0, 0, 6
-  BLACK = 0, 0, 0, 100
+  BLACK = 0, 0, 0, 91
   DARK_GREY = 0, 0, 0, 51
   LIGHT_BLUE = 5, 1, 0, 0
   COL_WIDTH = 170
@@ -14,6 +14,7 @@ module WritePdfConcerns
   FONT_SIZE_7 = 7
   FONT_SIZE_8 = 8
   FONT_SIZE_9 = 9
+
 
   IMAGE_PATH_SCHOOL_SIZE= "app/assets/images/pyoc/school_size_pyoc.png"
   IMAGE_PATH_TRANSPORTATION= "app/assets/images/pyoc/transportation_pyoc.png"
@@ -39,7 +40,7 @@ module WritePdfConcerns
     schools_decorated_with_cache_results.each_with_index do |school, index|
 
       if index % 3 == 0 and index != 0
-        start_new_page(:size => "LETTER")
+        start_new_page()
         position_on_page = 0
       end
 
@@ -92,35 +93,35 @@ module WritePdfConcerns
     if is_high_school_batch
       fill_color DARK_BLUE
       text_box grade + " 9-12",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_BLUE
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     elsif is_pk8_batch
       fill_color DARK_GREY
       text_box grade + " PK-8",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_GREY
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     elsif is_k8_batch
       fill_color DARK_GREY
       text_box grade + " K-8",
-               :at => [250, 735],
+               :at => [250, 745],
                :width => COL_WIDTH,
                :height => 20,
                :size => FONT_SIZE_9
       stroke do
         stroke_color DARK_GREY
-        horizontal_line 0, 540, :at => 725
+        horizontal_line 0, 546, :at => 735
       end
     end
 
@@ -128,7 +129,7 @@ module WritePdfConcerns
 
   def draw_all_footer(page_number_start, collection_id)
     #number_pages method can just be called once and will write to all pages.
-    number_pages '<page>', {:at => [270, -15], :size => FONT_SIZE_7, :start_count_at => page_number_start, :color => BLACK}
+    number_pages '<page>', {:at => [278, -7], :size => 12, :start_count_at => page_number_start, :color => DARK_BLUE}
     page_count.times do |i|
       go_to_page(i+1)
       draw_logo_and_url_on_footer(collection_id)
@@ -136,20 +137,23 @@ module WritePdfConcerns
   end
 
   def draw_logo_and_url_on_footer(collection_id)
-    image 'app/assets/images/pyoc/GS_logo-21.png', :at => [180, -10], :scale => 0.2
+    # image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
+    fill_color BLACK
     text_box which_footer(collection_id, is_spanish),
-             :at => [300, -15],
-             :width => is_spanish ? 150 : 115,
+             :at => [58, -7],
+             # :width => is_spanish ? 150 : 115,
+             :width => 190,
              :height => 10,
-             :size => 6,
-             :style => :italic
+             :size => FONT_SIZE_9,
+             :align => :right
 
     fill_color DARK_BLUE
     text_box which_landing_page(collection_id),
-             :at => is_spanish ? [440, -15] : [420, -15],
+             # :at => is_spanish ? [440, -7] : [420, -7],
+             :at => [313, -7],
              :width => 150,
              :height => 10,
-             :size => 6,
+             :size => FONT_SIZE_9,
              :style => :italic
 
   end
@@ -157,8 +161,8 @@ module WritePdfConcerns
   def draw_grey_line(index)
     if index % 3 != 2
       stroke do
-        stroke_color GREY
-        horizontal_line 0, 540, :at => cursor
+        stroke_color DARK_GREY
+        horizontal_line 0, 546, :at => cursor
       end
     end
   end
@@ -186,13 +190,6 @@ module WritePdfConcerns
 
       move_down_medium
 
-      stroke do
-        stroke_color GREY
-        horizontal_line 5, (COL_WIDTH - 5), :at => cursor
-      end
-
-      move_down_small
-
       other_ratings = school_cache.formatted_non_greatschools_ratings.to_a
 
       if other_ratings == []
@@ -202,6 +199,7 @@ module WritePdfConcerns
         move_down_small
       end
 
+      move_down_medium
       draw_address(school)
 
       map_icon = draw_map_icon(school)
@@ -215,20 +213,14 @@ module WritePdfConcerns
           image map_icon, :at => [15, cursor], :scale => 0.2
         end
 
-        move_down_15
+        move_down_large
 
         draw_school_hours(school_cache, 60)
-
-
-        move_down_small
-        draw_best_known_for(school_cache, school, 60)
 
       else
         move_down_small
         draw_school_hours(school_cache, 15)
 
-        move_down_small
-        draw_best_known_for(school_cache, school, 15)
       end
 
     end
@@ -418,11 +410,18 @@ module WritePdfConcerns
 
   def draw_best_known_for(school_cache, school, x_position)
     fill_color 100, 20, 20, 20
-    text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
+    # text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
+    #          :at => [x_position, cursor],
+    #          :width => school.which_icon.present? && school.which_icon != 'N/A' ? 95 : 135,
+    #          :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
+    #          :size => FONT_SIZE_7,
+    #          :style => :italic
+
+    text_box "#{school_cache.best_known_for.present? ? '"' + school_cache.best_known_for.truncate(81) + '"' : ''}",
              :at => [x_position, cursor],
-             :width => school.which_icon.present? && school.which_icon != 'N/A' ? 95 : 135,
+             :width => COL_WIDTH - 5,
              :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
-             :size => FONT_SIZE_7,
+             :size => FONT_SIZE_8,
              :style => :italic
   end
 
@@ -435,6 +434,10 @@ module WritePdfConcerns
       move_down_medium
 
       draw_application_table(school_cache, school)
+
+      move_down 15
+      # draw_best_known_for(school_cache, school, 15)
+      draw_best_known_for(school_cache, school, 5)
     end
   end
 

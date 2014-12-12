@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  has_one :user_profile
+  has_one :user_profile, foreign_key: 'member_id'
   has_many :subscriptions, foreign_key: 'member_id'
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'

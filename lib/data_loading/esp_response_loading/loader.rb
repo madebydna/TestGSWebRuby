@@ -1,6 +1,7 @@
 class EspResponseLoading::Loader < EspResponseLoading::Base
 
   CACHE_KEY = 'esp_responses'
+  DATA_TYPE = :esp_response
 
   def load!
 
@@ -25,7 +26,9 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       rescue Exception => e
         raise e.message
       ensure
-        Cacher.create_cache(school, CACHE_KEY)
+        unless esp_response_update.action == ACTION_NO_CACHE_BUILD
+          Cacher.create_caches_for_data_type(school, DATA_TYPE)
+        end
       end
     end
   end

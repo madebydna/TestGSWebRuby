@@ -22,4 +22,8 @@ class SchoolMetadata < ActiveRecord::Base
     results.map(&:school_id)
   end
 
+  def self.by_school_id(state,school_id)
+    SchoolMetadata.on_db(state).where(school_id: school_id)
+  end
+
 end

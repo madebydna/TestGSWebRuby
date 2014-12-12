@@ -69,6 +69,9 @@ describe 'Solr' do
       allow(Solr).to receive(:get_optional_words).and_return(['district', 'high', 'school'])
       expect(Solr.require_non_optional_words('Federer District High School')).to eq('+Federer District High School')
     end
+    it "treats both 'and' and '&' as optional" do
+      expect(Solr.require_non_optional_words('School for Arts & Humanities and Sciences')).to eq('School +for +Arts & +Humanities and +Sciences')
+    end
   end
 
   describe '#get_optional_words' do

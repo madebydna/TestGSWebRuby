@@ -1,7 +1,7 @@
 class Solr
 
   LUCENE_SPECIAL_CHARACTERS = %w|\\ + - ! ( ) { } [ ] ^ " ~ * ? :|
-  OPTIONAL_TERMS = %w|n s e w ave avenu avenue care charter city citi county counti dai day district east ed elementary elementry elementari fort ft grade height heights high hill ht hts isd intermediate intermediat junior k kindergarten magnet middle middl montessori north nurseri nursery point port pr pre prek pre-k pre k pre-kindergarten preschool primary primar pt school schools road senior south street west and or of|
+  OPTIONAL_TERMS = %w|n s e w ave avenu avenue care charter city citi county counti dai day district east ed elementary elementry elementari fort ft grade height heights high hill ht hts isd intermediate intermediat junior k kindergarten magnet middle middl montessori north nurseri nursery point port pr pre prek pre-k pre k pre-kindergarten preschool primary primar pt school schools road senior south street west and & or of|
 
   def initialize(options = {})
     if options[:state_short].present? && options[:collection_id].present?

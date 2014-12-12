@@ -2,6 +2,14 @@ class Cacher
 
   attr_accessor :school
 
+  # Known data types:
+  # :census
+  # :test_scores
+  # :ratings
+  # :school_reviews
+  # :school_media
+  # :esp_response
+
   def initialize(school)
     @school = school
   end
@@ -55,19 +63,44 @@ class Cacher
     }[key.to_s.to_sym]
   end
 
-  def self.cacher_dependencies_for(key)
-    {
-
-        #esp_responses:    [ProgressBarCaching::ProgressBarCacher] # need this dependency off until we're ready to launch progress bar nationwide with realtime updates
-
-    }[key.to_s.to_sym]
+  # Should return true if param is a data type cacher depends on. See top of class for known data type symbols
+  def self.listens_to?(_)
+    raise NotImplementedError
   end
 
-  def self.create_cache_for_dependencies(school, cache_key)
-    dependent_cache_klasses = cacher_dependencies_for(cache_key)
-    return unless dependent_cache_klasses
-    cachers = dependent_cache_klasses.map { |cache_klass| cache_klass.new(school) }
-    cachers.each {|cacher| cacher.cache}
+  def self.cachers_for_data_type(data_type)
+    data_type_sym = data_type.to_s.to_sym
+    registered_cachers.select {|cacher| cacher.listens_to? data_type_sym }
+  end
+
+  def self.registered_cachers
+    @registered_cachers ||= [
+      TestScoresCaching::BreakdownsCacher,
+      CharacteristicsCaching::CharacteristicsCacher,
+      EspResponsesCaching::EspResponsesCacher,
+      ReviewsCaching::ReviewsSnapshotCacher,
+      ProgressBarCaching::ProgressBarCacher
+    ]
+  end
+
+  def self.create_caches_for_data_type(school, data_type)
+    if data_type != :ratings
+      cachers_for_data_type(data_type).each do |cacher_class|
+        begin
+          cacher_class.new(school).cache
+        rescue => error
+          Rails.logger.error "ERROR: populating school cache #{cacher_class} for school id: #{school.id} in state: #{school.state}." +
+                                 "\nException : #{error.message}."
+        end
+      end
+    else
+      begin
+        ratings_cache_for_school(school)
+      rescue => error
+        Rails.logger.error "ERROR: populating school cache ratings for school id: #{school.id} in state: #{school.state}." +
+                               "\nException : #{error.message}."
+      end
+    end
   end
 
   def self.create_cache(school, cache_key)
@@ -76,7 +109,6 @@ class Cacher
         cacher_class = cacher_for(cache_key)
         cacher = cacher_class.new(school)
         cacher.cache
-        create_cache_for_dependencies(school, cache_key)
       else
         ratings_cache_for_school(school)
       end

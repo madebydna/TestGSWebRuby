@@ -1,7 +1,7 @@
 #ToDo Tests Needed
 class Filter
 
-  attr_accessor :label, :unique_label, :name, :value, :display_type, :filters, :sort_order, :has_children
+  attr_accessor :label, :unique_label, :name, :value, :display_type, :filters, :sort_order, :has_children, :cache_key
 
   def initialize(attributes)
     @label = attributes[:label]
@@ -16,6 +16,7 @@ class Filter
     @name = attributes[:name] #only required for actual filters
     @sort_order = attributes[:sort_order] #for sorting the tree to have filters displayed in order
     @has_children = attributes[:filters].present?
+    @cache_key = attributes[:cache_key]
   end
 
   def build_map #returns map for search result fit score map

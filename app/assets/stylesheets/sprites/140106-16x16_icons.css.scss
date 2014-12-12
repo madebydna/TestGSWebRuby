@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/141014-16x16_sprite.png");
+  background-image: asset_data_url("icons/141209-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -112,6 +112,10 @@
 
 .i-16-gray-thumbs-up {
   background-position: -272px 0px;
+}
+
+.i-16-white-thumbs-up {
+  background-position: -272px -16px;
 }
 
 .i-16-blue-students-enrolled {

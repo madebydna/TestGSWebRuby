@@ -6,8 +6,13 @@ module SearchSpecHelper
   def set_up_city_browse(state_abbrev,city_name,query_string=nil)
     state_name = States.state_name(state_abbrev)
     city = find_and_allow_city(state_abbrev,city_name)
+    set_up_property_table
     yield if block_given?
     visit "/#{state_name}/#{city.name.downcase.gsub(/ /,'-')}/schools?#{query_string}"
+  end
+
+  def set_up_property_table
+    allow(PropertyConfig).to receive(:where).and_return nil
   end
 
   def set_up_district_browse(state_abbrev,district_name,city_name='whatever',query_string=nil)
@@ -96,5 +101,21 @@ module SearchSpecHelper
     slots << footer_ad_slots[:desktop].first
     slots << footer_ad_slots[:mobile].first
     slots
+  end
+
+  def filters_checkbox_xpath(name, value)
+    "//label[@data-gs-checkbox-name='#{name}'][@data-gs-checkbox-value='#{value}']/span"
+  end
+
+  def open_full_filter_dialog
+    page.all(:css, '.js-advancedFilters').last.click
+  end
+
+  def checkbox_accordian(filter_type)
+    page.all(:css, 'label.js-gs-checkbox-search-dropdown').find { |e| e.text == filter_type }
+  end
+
+  def submit_filters
+    find(:css, '.js-submitSearchFiltersForm').click
   end
 end

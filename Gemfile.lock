@@ -8,6 +8,14 @@ GIT
       activesupport
 
 GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: d0f07e9aded9de30a2ca796d8036b332b41645dc
+  specs:
+    jquery-datatables-rails (3.0.0)
+      jquery-rails
+      sass-rails
+
+GIT
   remote: https://github.com/gs-samson/rails_admin_nestable.git
   revision: 84a5912c8c721c29c0eff0cf7d412b892c185f5f
   specs:
@@ -504,6 +512,7 @@ DEPENDENCIES
   has_scope
   hashie
   jquery-cookie-rails
+  jquery-datatables-rails!
   jquery-rails
   konacha
   launchy

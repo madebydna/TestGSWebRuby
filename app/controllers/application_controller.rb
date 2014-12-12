@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :set_global_ad_targeting_through_gon
+  before_action :check_for_java_hover_cookie
+  before_action :write_locale_session
 
   after_filter :disconnect_connection_pools
 
@@ -67,6 +69,14 @@ class ApplicationController < ActionController::Base
 
   def state_param
     state = params[:state] || ''
+    state.gsub! '-', ' ' if state.length > 2
+    state_abbreviation = States.abbreviation(state)
+    state_abbreviation.downcase! if state_abbreviation.present?
+    state_abbreviation
+  end
+
+  def state_param_safe
+    state = (params[:state] || '').dup
     state.gsub! '-', ' ' if state.length > 2
     state_abbreviation = States.abbreviation(state)
     state_abbreviation.downcase! if state_abbreviation.present?
@@ -343,6 +353,14 @@ class ApplicationController < ActionController::Base
     gon.advertising_enabled = @advertising_enabled
   end
 
+  #//////////////////////////////////////////////
+  #
+  # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)
+  #   returns true is state is part of list or if all is present in list
+  #   returns false if state is not found and all is not in list
+  #
+  #//////////////////////////////////////////////
+
   def property_state_on?(state_list_str, current_state)
     state_arr = state_list_str.split(',') if state_list_str.present?
     if state_arr.present?
@@ -350,6 +368,25 @@ class ApplicationController < ActionController::Base
       state_arr.present?
     else
       false
+    end
+  end
+
+  def write_locale_session
+    [:state_locale, :city_locale].each { |k| session.delete(k) }
+    if state_param_safe.present?
+      session[:state_locale] = state_param_safe
+    end
+    if city_param.present?
+      session[:city_locale] = city_param
+    end
+  end
+
+  def check_for_java_hover_cookie
+    java_hover_cookie_name = :site_pref
+    java_hover_cookie_value = cookies[java_hover_cookie_name]
+    if java_hover_cookie_value && java_hover_cookie_value.include?('subscriptionEmailValidated')
+      flash_notice ("Your subscription has been confirmed. Thank you! You'll begin receiving newsletters from us shortly.")
+      delete_cookie(java_hover_cookie_name)
     end
   end
 
