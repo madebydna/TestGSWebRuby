@@ -3,7 +3,6 @@
 <% begin %>
   <% children = @page_config.category_placement_children_with_data category_placement %>
   <% if children.any? && category_placement.title.present? %>
-
     <!-- Need to make decision on layout based on number of elements and whether ads are on -->
     <!-- The First two elements should always be reviews and ratings -->
     <!-- Third element 'details' will only show up when there is content -->
@@ -42,7 +41,6 @@
     <% end %>
 
     <% children.each_with_index { |cp, index |  %>
-
       <% category_placement_content = render partial: 'category_placement', locals: {category_placement: cp,
                  details_layout: details_on_page,
                  show_ads: @show_ads } %>
