@@ -3,8 +3,10 @@
 <% gs_rating = @school.gs_rating || 'nr' %>
 <div class="row pr" style="height: 300px;">
   <div class="col-xs-12 tac">
-    <div class="link-darkgray pbs">GreatSchools rating<br /></div>
-    <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
+    <a href="quality#Ratings" >
+      <div class="link-darkgray pbs">GreatSchools rating<br /></div>
+      <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
+    </a>
   </div>
 
 <% ratings_array = [] %>
@@ -32,7 +34,9 @@
 
 <% if ratings_array.present?%>
     <div class="col-xs-12 tac ptl mts">
-      <%= raw render_array_horizontally ratings_array, {"xs"=> 4,"sm"=> 4,"md"=> 4,"lg"=> 4} %>
+      <a href="quality#Ratings" >
+        <%= raw render_array_horizontally ratings_array, {"xs"=> 4,"sm"=> 4,"md"=> 4,"lg"=> 4} %>
+      </a>
     </div>
 <% end %>
 
