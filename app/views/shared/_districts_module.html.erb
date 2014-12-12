@@ -9,7 +9,7 @@
               </div>
               <div>
                 <span class="notranslate"><%= district.district_home_link %></span></br>
-                <span class="notranslate"><%= district.city_state %></span> | <%= pluralize(district.number_of_schools_in_district, 'school', 'schools') %>
+                <span class="notranslate"><%= district.city_state %></span> | <%= pluralize(district.num_schools, 'school', 'schools') %>
               </div>
             </div>
         <% end %>
