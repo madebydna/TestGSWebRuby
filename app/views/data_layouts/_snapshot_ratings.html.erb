@@ -31,7 +31,7 @@
 <% end %>
 
 <% if ratings_array.present?%>
-    <div class="row">
+    <div class="col-xs-12 tac ptl mts">
       <%= raw render_array_horizontally ratings_array, {"xs"=> 4,"sm"=> 4,"md"=> 4,"lg"=> 4} %>
     </div>
 <% end %>
