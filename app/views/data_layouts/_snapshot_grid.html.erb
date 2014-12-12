@@ -14,23 +14,7 @@
     <!--no details and/or no best known for then the two items stretch across the first line and are centered-->
     <!--otherwise 3 across-->
     <% preschool_only = @school.preschool? %>
-    <% details_on_page = false %>
-    <% best_known_for_on_page = false %>
 
-    <% children.each { |cp| %>
-      <% category_placement2 = CategoryPlacementPresenter.new(cp, @page_config, self) %>
-      <% if category_placement2.title["Details"] %>
-        <% data = category_placement2.h.category_placement_data(@page_config, cp) %>
-        <% if data.present? %>
-          <% details_on_page = data[:data_show] %>
-        <% end %>
-      <% elsif category_placement2.title["Known"]%>
-        <% data = category_placement2.h.category_placement_data(@page_config, cp) %>
-        <% if data.present? %>
-          <% best_known_for_on_page = data[:data_show] %>
-        <% end %>
-      <% end %>
-    <% } %>
 
     <% if @show_ads %>
       <div class="row pvl mvl phm">
@@ -41,9 +25,7 @@
     <% end %>
 
     <% children.each_with_index { |cp, index |  %>
-      <% category_placement_content = render partial: 'category_placement', locals: {category_placement: cp,
-                 details_layout: details_on_page,
-                 show_ads: @show_ads } %>
+      <% category_placement_content = render partial: 'category_placement', locals: {category_placement: cp} %>
 
         <% case index %>
          <% when 0 %>

@@ -22,7 +22,8 @@
   <% if school_reviews.present? &&  school_reviews.first.comments.present? %>
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <%= link_to school_reviews_url(@school) do %>
-          <div class="gray-dark font-size-large">"<%=  truncate(school_reviews.first.comments,:length => 40) %>"</div>
+          <div class="gray-dark font-size-large">"<%=  truncate(school_reviews.first.comments,:length => 45,
+                                                                separator: ' ') %>"</div>
       <% end %>
     </div>
   <% else %>
