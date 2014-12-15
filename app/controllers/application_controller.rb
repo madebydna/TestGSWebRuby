@@ -105,8 +105,8 @@ class ApplicationController < ActionController::Base
 
   def path_w_query_string (do_not_append, page_name)
     url = Addressable::URI.parse(request.original_url)
-    url.path = url.path + page_name + '/'
-    url.query_values = url.query_values.except(do_not_append)
+    url.path = url.path + page_name + '/' unless page_name.nil?
+    url.query_values = url.query_values.except(do_not_append) if url.query_values.present?
     url.query_values = nil unless url.query_values.present?
     url.to_s
   end
