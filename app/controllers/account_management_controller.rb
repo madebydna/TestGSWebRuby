@@ -9,13 +9,15 @@ class AccountManagementController < ApplicationController
     @page_name = 'Account management'
     gon.pagename = 'Account management'
     gon.omniture_pagename = 'GS:Admin:MyAccount'
-    # binding.pry;
-    @state_locale = @current_user.user_profile.state
-    @city_locale  = @current_user.user_profile.city
-    # unless   @current_user.user_profile.update_and_save_locale_info('TT','Testing')
-    #   Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
-    # end
+    state_locale = @current_user.user_profile.state
+    if state_locale.present?
+    @state_locale = {
+        long: States.state_name(state_locale.downcase.gsub(/\-/, ' ')),
+        short: States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
+    }
 
+    end
+    @city_locale  = @current_user.user_profile.city
 
 
     favorite_schools = @current_user.favorite_schools
@@ -53,6 +55,8 @@ class AccountManagementController < ApplicationController
   protected
 
   def set_saved_searches_instance_variables
-    @saved_searches = current_user.saved_searches.limit(50).all 
+    @saved_searches = current_user.saved_searches.limit(50).all
   end
+
+
 end

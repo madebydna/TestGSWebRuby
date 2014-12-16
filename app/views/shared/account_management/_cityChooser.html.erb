@@ -1,12 +1,23 @@
 <div class="container">
   <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
-    <%= render 'search/change_location' %>
+    <%= render 'search/change_location', choose_state: @state_locale.present? ? @state_locale[:long].titleize : nil %>
   </div>
   <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
+    <% if @city_locale.present?%>
     <input  type="text"
-            id="js-schoolResultsSearch"
+            name= "userCity"
+            id="js-userCity"
+            class='typeahead search-text full-width pam'
+            value= <%= @city_locale %>>
+     <% else %>
+    <input
+            type="text"
+            name= "userCity"
+            id="js-userCity"
             class='typeahead search-text full-width pam'
             placeholder="choose your city, yo">
+     <% end %>
+
 
     <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
   </div>

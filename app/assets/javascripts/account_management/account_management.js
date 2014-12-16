@@ -191,20 +191,6 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
     obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to remove the you from this email list.  Please try again later.</div>");
   };
 
-
-  var slideToggleSections = function(){
-      $('.js-header-slide-toggle').on('click', function(){
-          $(this).parent().siblings('div:first');
-//    if($(this).parent().siblings('div:eq(2)')){
-          $('.js-header-slide-toggle').parent().siblings().slideToggle('fast');
-//    }
-//    else{
-//      $(this).parent().siblings('div:first');
-//    }
-      });
-  }
-
-
   return {
     init: init,
     deleteSuccessful: deleteSuccessful,
@@ -215,16 +201,19 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
 GS.accountManagement.slideToggleSection = (function(){
     var init = function() {
         slideToggleSections();
+
     };
 
-    var slideToggleSections = function(){
+    var slideToggleSections = function () {
 
-        $('.js-header-slide-toggle').on('click', function(){
+        $('.js-header-slide-toggle').on('click', function () {
             var openSection = $(this).siblings('div:first');
+            var child = $(this).find('.iconx24-icons');
+            child.toggleClass('i-24-close-arrow-head i-24-open-arrow-head');
+
             openSection.slideToggle();
         });
     }
-
 
     return {
         init: init

@@ -26,8 +26,16 @@ GS.search.autocomplete.cityAutocomplete = GS.search.autocomplete.cityAutocomplet
                 templates: markup.cityChooserMarkup()
             }
         ).on('typeahead:selected', function (event, suggestion, dataset) {
-//                TODO put where to save the data
-                    console.log('I clicked on a city with a school');
+                    $.ajax({
+                        type: 'GET',
+                        url: "/gsr/user/save_city_state",
+                        data: {user: gon.current_user,city: $('#js-userCity').val(), state: state_abbr},
+                        dataType: 'json',
+                        async: true
+                    }).done(function (data) {
+                        console.log(data.error_msgs);
+
+                    });
         });
     };
 

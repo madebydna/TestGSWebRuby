@@ -5,19 +5,17 @@
           <div class="fl font-size-large mam">
             Personalized Profile
           </div>
-          <span class="fr iconx24-icons i-24-grey-down-arrow mtm"></span>
+          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
         </div>
       </div>
     </div>
     <div class="row limit-width-1200 ">
-        <div class="mvl">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed sodales urna. Pellentesque auctor eleifend
-          dictum. Aenean et massa eu nulla elementum feugiat. Nunc lobortis, enim vel fringilla suscipit, risus dolor
-          consequat justo, sit amet consectetur mi magna ac diam. Vestibulum nec magna vel elit dictum fringilla at et leo.
-        </div>
+        <!--<div class="mvl">-->
+       <!---->
+        <!--</div>-->
         <div>
         <div class="open-sans_sb pbl">
-        School Location
+        My Location
         </div>
         <%= render 'shared/account_management/cityChooser' %>
         </div>
@@ -31,7 +29,7 @@
           <div class="fl font-size-large mam">
            My School List
           </div>
-          <span class="fr iconx24-icons i-24-grey-down-arrow mtm"></span>
+          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
         </div>
       </div>
     </div>
@@ -45,7 +43,7 @@
           <div class="fl font-size-large mam">
             Subscriptions
           </div>
-          <span class="fr iconx24-icons i-24-grey-down-arrow mtm"></span>
+          <span class="fr iconx24-icons i-24-open-arrow-head mtm"></span>
         </div>
       </div>
     </div>
@@ -59,9 +57,26 @@
           <div class="fl font-size-large mam">
             Change Passwords
           </div>
-          <span class="fr iconx24-icons i-24-grey-down-arrow mtm"></span>
+          <span class="fr iconx24-icons i-24-open-arrow-head mtm"></span>
         </div>
       </div>
     </div>
     <%= render partial: 'shared/account_management/change_password_form' %>
   </div>
+
+  <div class="">
+    <div class="bg-light-gray mvl js-header-slide-toggle">
+      <div class="row limit-width-1200 ">
+        <div class="col-xs-12 clearfix phm">
+          <div class="fl font-size-large mam">
+           Edit School Profile
+          </div>
+          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
+        </div>
+      </div>
+    </div>
+    <%= render partial: 'shared/account_management/osp_module' %>
+  </div>
+
+
+
