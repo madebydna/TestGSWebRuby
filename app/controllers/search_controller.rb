@@ -20,8 +20,14 @@ class SearchController < ApplicationController
   MAX_RESULTS_FOR_MAP = 100
   NUM_NEARBY_CITIES = 8
   MAX_RESULTS_FOR_FIT = 300
+  MAX_RADIUS = 60
+  MIN_RADIUS = 1
 
   def search
+    @state = {
+        long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
+        short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+    } if params_hash['state']
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
       render 'search_page' unless bail_on_fit?
@@ -92,13 +98,12 @@ class SearchController < ApplicationController
     city = nil
     @by_location = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
-      @state = {
-          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
-          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
-      } if params_hash['state']
       @lat = params_hash['lat']
       @lon = params_hash['lon']
       @radius = params_hash['distance'].presence || 5
+      @radius = Integer(@radius) rescue @radius = 5
+      @radius = MAX_RADIUS if @radius > MAX_RADIUS
+      @radius = MIN_RADIUS if @radius < MIN_RADIUS
       search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
       search_options.merge!({state: @state[:short]}) if @state
       @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
@@ -117,10 +122,6 @@ class SearchController < ApplicationController
     set_login_redirect
     @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
-      @state = {
-          long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
-          short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
-      } if params_hash['state']
       @query_string = params_hash['q']
       search_options.merge!({query: @query_string})
       search_options.merge!({state: @state[:short]}) if @state
@@ -135,6 +136,7 @@ class SearchController < ApplicationController
   end
 
   def setup_search_results!(search_method)
+    setup_filter_display_map
     @params_hash = parse_array_query_string(request.query_string)
 
     set_page_instance_variables # @results_offset @page_size @page_number
@@ -167,9 +169,7 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
-    setup_filter_display_map
-    # setup_fit_scores(results[:results], @params_hash) if filtering_search?
-    session[:soft_filter_params] = soft_filters_params_hash(@params_hash)
+    session[:soft_filter_params] = soft_filters_params_hash
     # sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_hub # must come after @schools is defined in process_results
@@ -290,7 +290,7 @@ class SearchController < ApplicationController
 
   def parse_filters(params_hash)
     filters = {}
-    if params_hash.include? 'st'
+    if should_apply_filter? :st
       st_params = params_hash['st']
       st_params = [st_params] unless st_params.instance_of?(Array)
       school_types = []
@@ -309,7 +309,7 @@ class SearchController < ApplicationController
       level_codes << :high if lc_params.include? 'h'
       filters[:level_code] = level_codes unless level_codes.empty? || level_codes.length == 4
     end
-    if params_hash.include? 'grades'
+    if should_apply_filter? :grades
       grades_params = params_hash['grades']
       grades_params = [grades_params] unless grades_params.instance_of?(Array)
       grades = []
@@ -317,19 +317,28 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
-    if params_hash.include?('cgr') && params_hash['cgr'] == '70_TO_100'
-      filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ')
+    if should_apply_filter?(:cgr)
+      valid_cgr_values = ['70_TO_100']
+      filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
     end
     if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
     end
-    @filtering_search = @params_hash.keys.any? { |param| SOFT_FILTER_KEYS.include? param }
+    @filtering_search = !soft_filters_params_hash.empty?
     filters
   end
 
   private
+
+  def params_hash
+    @params_hash ||= parse_array_query_string(request.query_string)
+  end
+
+  def should_apply_filter?(filter)
+    params_hash.include?(filter.to_s) && @filter_display_map.keys.include?(filter)
+  end
 
   def set_omniture_data_search_school(page_number, search_type, search_term, locale)
     gon.omniture_pagename = "GS:SchoolSearchResults"
@@ -356,7 +365,7 @@ class SearchController < ApplicationController
 
   def setup_fit_scores(results, params_hash)
 
-    params = soft_filters_params_hash(params_hash)
+    params = soft_filters_params_hash
 
     results.each do |result|
       result.calculate_fit_score!(params)
@@ -384,14 +393,14 @@ class SearchController < ApplicationController
     @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
   end
 
-  def soft_filters_params_hash(params_hash)
+  def soft_filters_params_hash
     @soft_filter_params ||= params_hash.select do |key|
-      SOFT_FILTER_KEYS.include?(key) && params_hash[key].present?
+      SOFT_FILTER_KEYS.include?(key) && @filter_display_map.keys.include?(key.to_sym)
     end
   end
 
-  def omniture_soft_filters_hash(params_hash)
-    params = soft_filters_params_hash(params_hash)
+  def omniture_soft_filters_hash
+    params = soft_filters_params_hash
     omniture_filter_values_prepend(params)
   end
 
@@ -434,7 +443,7 @@ class SearchController < ApplicationController
   def omniture_filter_list_values(filters, params_hash)
 
     @filter_values = []
-    omniture_soft_filters_hash(params_hash)
+    omniture_soft_filters_hash
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
   end
