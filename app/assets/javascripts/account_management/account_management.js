@@ -208,8 +208,8 @@ GS.accountManagement.slideToggleSection = (function(){
 
         $('.js-header-slide-toggle').on('click', function () {
             var openSection = $(this).siblings('div:first');
-            var child = $(this).find('.iconx24-icons');
-            child.toggleClass('i-24-close-arrow-head i-24-open-arrow-head');
+            var child = $(this).find('.iconx32-college_ready');
+            child.toggleClass('i-32-close-arrow-head i-32-open-arrow-head');
 
             openSection.slideToggle();
         });

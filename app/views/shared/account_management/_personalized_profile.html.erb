@@ -1,18 +1,18 @@
-  <div class="">
+  <div class=limit-width-1200>
     <div class="bg-light-gray mvl js-header-slide-toggle">
-      <div class="row limit-width-1200 ">
+      <div class="row">
         <div class="col-xs-12 clearfix phm">
-          <div class="fl font-size-large mam">
+          <div class="fl pointer font-size-large mam">
             Personalized Profile
           </div>
-          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
+          <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
         </div>
       </div>
     </div>
     <div class="row limit-width-1200 ">
-        <!--<div class="mvl">-->
-       <!---->
-        <!--</div>-->
+        <div class="mvl">
+          Tell us a little more about yourself so we can send you updates about your community and the topics you're interested in.
+        </div>
         <div>
         <div class="open-sans_sb pbl">
         My Location
@@ -22,61 +22,63 @@
     </div>
   </div>
 
-  <div class="">
+  <div class="limit-width-1200">
     <div class="bg-light-gray mvl js-header-slide-toggle">
-      <div class="row limit-width-1200 ">
+      <div class="row">
         <div class="col-xs-12 clearfix phm">
-          <div class="fl font-size-large mam">
+          <div class="fl pointer font-size-large mam">
            My School List
           </div>
-          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
+          <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
         </div>
       </div>
     </div>
     <%= render partial: 'shared/account_management/school_list' %>
   </div>
 
-  <div class="">
+  <div class="limit-width-1200">
     <div class="bg-light-gray mvl js-header-slide-toggle">
-      <div class="row limit-width-1200 ">
+      <div class="row">
         <div class="col-xs-12 clearfix phm">
-          <div class="fl font-size-large mam">
+          <div class="fl pointer font-size-large mam">
             Subscriptions
           </div>
-          <span class="fr iconx24-icons i-24-open-arrow-head mtm"></span>
+          <span class="fr iconx32-college_ready i-32-open-arrow-head pointer mtm"></span>
         </div>
       </div>
     </div>
     <%= render partial: 'shared/account_management/email_settings' %>
   </div>
 
-  <div class="">
+  <div class="limit-width-1200">
     <div class="bg-light-gray mvl js-header-slide-toggle">
-      <div class="row limit-width-1200 ">
+      <div class="row">
         <div class="col-xs-12 clearfix phm">
-          <div class="fl font-size-large mam">
+          <div class="fl pointer font-size-large mam">
             Change Passwords
           </div>
-          <span class="fr iconx24-icons i-24-open-arrow-head mtm"></span>
+          <span class="fr iconx32-college_ready i-32-open-arrow-head pointer mtm"></span>
         </div>
       </div>
     </div>
     <%= render partial: 'shared/account_management/change_password_form' %>
   </div>
 
-  <div class="">
+<% if @current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? %>
+  <div class="limit-width-1200">
     <div class="bg-light-gray mvl js-header-slide-toggle">
-      <div class="row limit-width-1200 ">
+      <div class="row">
         <div class="col-xs-12 clearfix phm">
-          <div class="fl font-size-large mam">
+          <div class="fl pointer font-size-large mam">
            Edit School Profile
           </div>
-          <span class="fr iconx24-icons i-24-close-arrow-head mtm"></span>
+          <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
         </div>
       </div>
     </div>
     <%= render partial: 'shared/account_management/osp_module' %>
   </div>
+<% end %>
 
 
 
