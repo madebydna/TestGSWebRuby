@@ -467,7 +467,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             num_results: $('.js-numOfSchoolsFound').data('num-of-schools-found'),
             url: GS.uri.Uri.getPath() + location.search
         };
-        return state_abbr !== undefined ? _.assign(params, {state: state_abbr}) : params
+        return state_abbr !== undefined ? _.assign(params, {state: state_abbr , city : gon.city_name}) : params
     };
 
     var attemptSaveSearch = function() {

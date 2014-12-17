@@ -46,7 +46,7 @@ class SavedSearchesController < ApplicationController
     saved_search_params[:name] = params[:search_name]
     saved_search_params[:search_string] = params[:search_string]
     saved_search_params[:num_results] = params[:num_results]
-
+    saved_search_params[:city] = params[:city]
     options = [:state, :url].inject({}) do | hash, param|
       hash.merge!({param => params[param]}) if params[param]; hash
     end
