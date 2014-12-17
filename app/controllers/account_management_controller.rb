@@ -15,6 +15,7 @@ class AccountManagementController < ApplicationController
         long: States.state_name(state_locale.downcase.gsub(/\-/, ' ')),
         short: States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
     }
+    gon.state_locale_abbr = States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
 
     end
     @city_locale  = @current_user.user_profile.city
