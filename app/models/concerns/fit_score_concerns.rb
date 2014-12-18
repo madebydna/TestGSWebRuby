@@ -158,8 +158,7 @@ module FitScoreConcerns
 
   def update_breakdown_labels!(filter_display_map)
     fit_score_breakdown.each do |breakdown|
-      filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
-      breakdown[:filter] = filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym]
+      breakdown[:filter] = filter_display_map[breakdown[:category].to_sym][breakdown[:filter].to_sym] unless filter_display_map[breakdown[:category].to_sym].nil?
     end unless fit_score_breakdown.nil? || filter_display_map.nil?
   end
 
