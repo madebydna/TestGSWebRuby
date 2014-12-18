@@ -82,7 +82,24 @@ module CompareSchoolsConcerns
   end
 
   def prep_schools_for_compare!(decorated_schools)
-    filter_display_map = FilterBuilder.new(@state).filter_display_map # for labeling fit score breakdowns
+    soft_filters_config = session[:soft_filter_config]
+    state = @state
+    city = nil
+    force_simple = false
+    if soft_filters_config
+      state = soft_filters_config[:state] if soft_filters_config.include?(:state)
+      if state != @state
+        # Uh-oh! Something is wrong. Our filter config is for a different state
+        # Let's clear out the fit score stuff so we don't encounter weirdness
+        state = @state
+        session[:soft_filter_params] = {}
+        session[:soft_filter_config] = {}
+      else
+        city = soft_filters_config[:city]
+        force_simple = soft_filters_config[:force_simple]
+      end
+    end
+    filter_display_map = FilterBuilder.new(state, city, force_simple).filter_display_map # for labeling fit score breakdowns
     decorated_schools.map do |school|
       decorated_school = SchoolCompareDecorator.decorate(school)
       decorated_school.calculate_fit_score!(session[:soft_filter_params] || {})

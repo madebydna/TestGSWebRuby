@@ -377,6 +377,8 @@ class SearchController < ApplicationController
                 end
     filter_builder = FilterBuilder.new(@state[:short], city_name, @by_name)
 
+    session[:soft_filter_config] = {state: @state[:short], city: city_name, force_simple: @by_name}
+
     @filter_display_map = filter_builder.filter_display_map
     # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
     # so we have to add that logic to the cache key here.
