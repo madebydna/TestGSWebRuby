@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../../features/search/search_spec_helper'
 
-describe 'search/_search_results.html.erb' do
+describe 'search/_search_results.html.erb', js: true do
   include SearchSpecHelper
 
   let(:header_ad_slots) {{
@@ -78,6 +78,19 @@ describe 'search/_search_results.html.erb' do
           expect(page.find(:css, '.js-responsiveSearchPage')).to_not have_selector('.gs_ad_slot')
         end
       end
+    end
+  end
+
+  context 'ad targeting' do
+
+    before do
+      set_up_city_browse('mi','Grand Rapids')
+    end
+
+    it 'should include the state and city' do
+      ad_targeting = page.evaluate_script('gon.ad_set_targeting')
+      expect(ad_targeting['City']).to eq('GrandRapid') # Remove spaces and truncate at 10 characters
+      expect(ad_targeting['State']).to eq('mi')
     end
   end
 end
