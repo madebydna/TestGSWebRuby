@@ -60,10 +60,10 @@
                             <div class="fl prm ">Students enrolled: <strong><%= students_enrolled %></strong></div>
                         <% end %>
                         <% if before_care.present? && before_care != '?' %>
-                            <div class="fl prm ">
+                            <div class="fl prm">
                               <% if before_care.downcase == 'yes'%>
                                   <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
-                                      Before care: <strong><%= before_care %></strong>
+                                      <span class="link-darkgray">Before care: <strong><%= before_care %></strong></span>
                                   <% end %>
                               <% else %>
                                   Before care: <strong><%= before_care %></strong>
@@ -71,10 +71,10 @@
                             </div>
                         <% end %>
                         <% if after_school.present? && after_school != '?'%>
-                            <div class="fl prm ">
+                            <div class="fl prm">
                               <% if after_school.downcase == 'yes'%>
                                   <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
-                                      After care: <strong><%= after_school %></strong>
+                                      <span class="link-darkgray">After care: <strong><%= after_school %></strong></span>
                                   <% end %>
                               <% else %>
                                   After care: <strong><%= after_school %></strong>
