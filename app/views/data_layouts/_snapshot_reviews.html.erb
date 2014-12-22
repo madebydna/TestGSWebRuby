@@ -27,8 +27,10 @@
       <% end %>
     </div>
   <% else %>
-      <div>Help others find their GreatSchool!</div>
-      <div>Rate and review this school now!</div>
+      <%= link_to school_review_form_path(@school) do %>
+          <div class="link-darkgray">Help others find their GreatSchool!</div>
+          <div class="link-darkgray">Rate and review this school now!</div>
+      <% end %>
   <% end %>
 </div>
 
