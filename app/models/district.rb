@@ -7,12 +7,12 @@ class District < ActiveRecord::Base
   scope :active, -> { where(active: true) }
 
   def self.find_by_state_and_name(state, name)
-    District.on_db(state).where(name: name).first rescue nil
+    District.on_db(state).where(name: name).active.first rescue nil
   end
 
   def self.find_by_state_and_ids(state, ids = [])
     District.on_db(state.downcase.to_sym).
-      where(id: ids)
+      where(id: ids).active
   end
 
   def boilerplate_object

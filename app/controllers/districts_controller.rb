@@ -15,7 +15,6 @@ class DistrictsController < ApplicationController
   def show
     gon.pagename = 'DistrictHome'
     @ad_page_name = :District_Home # TODO verify name to use
-    @district = District.find_by_state_and_name(state_param, district_param)
 
     @nearby_districts = @district.nearby_districts
     @canonical_url = city_district_url(district_params_from_district(@district))
@@ -33,7 +32,7 @@ class DistrictsController < ApplicationController
 
   def require_district
     @district = District.find_by_state_and_name(state_param, district_param)
-    render 'error/page_not_found', layout: 'error', status: 404 if @district.nil?
+    return redirect_to city_url if @district.nil?
   end
 
   def redirect_to_canonical_url
