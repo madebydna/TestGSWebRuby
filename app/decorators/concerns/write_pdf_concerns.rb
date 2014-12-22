@@ -546,7 +546,7 @@ module WritePdfConcerns
 
       move_down_medium
 
-      draw_grads_go_to_table(school_cache)
+      draw_grads_go_to_table(school_cache,school)
 
       move_down_small
 
@@ -608,7 +608,7 @@ module WritePdfConcerns
     end
   end
 
-  def draw_grads_go_to_table(school_cache)
+  def draw_grads_go_to_table(school_cache,school)
     text_box is_spanish ? 'Estudiantes graduado asisten?' : 'Our grads typically go to:',
              :at => [0, cursor],
              # :width => 75,
@@ -618,12 +618,22 @@ module WritePdfConcerns
              :style => :bold
 
     move_down_medium
+    if school.includes_highschool?
+
     data = [
-        [school_cache.destination_school_1 ? school_cache.destination_school_1.truncate(47) : "n/a"],
-        [school_cache.destination_school_2 ? school_cache.destination_school_2.truncate(47) : " "],
-        [school_cache.destination_school_3 ? school_cache.destination_school_3.truncate(47) : " "]
+        [school_cache.college_destination_1 ? school_cache.college_destination_1.truncate(47) : "n/a"],
+        [school_cache.college_destination_2 ? school_cache.college_destination_2.truncate(47) : " "],
+        [school_cache.college_destination_3 ? school_cache.college_destination_3.truncate(47) : " "]
 
     ]
+    else
+      data = [
+          [school_cache.destination_school_1 ? school_cache.destination_school_1.truncate(47) : "n/a"],
+          [school_cache.destination_school_2 ? school_cache.destination_school_2.truncate(47) : " "],
+          [school_cache.destination_school_3 ? school_cache.destination_school_3.truncate(47) : " "]
+
+      ]
+    end
 
     table(data, :column_widths => [COL_WIDTH],
           :cell_style => {size: 7, :padding => [0, 0, 0, 0]}) do
