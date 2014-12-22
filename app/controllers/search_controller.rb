@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
+  include AdvertisingHelper
 
   #Todo move before filters to methods
   before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
@@ -350,6 +351,8 @@ class SearchController < ApplicationController
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['template'] = 'search' # use this for page name - configured_page_name
+    set_targeting['City'] = format_ad_setTargeting(@city.name) if @city && @city.respond_to?(:name) # truncated at 10 characters after removing spaces
+    set_targeting['State'] = format_ad_setTargeting(@state[:short]) # abbreviation
 
     gon.ad_set_targeting = set_targeting
   end
