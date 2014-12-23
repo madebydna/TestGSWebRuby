@@ -342,6 +342,7 @@ module WritePdfConcerns
   def other_state_rating_abbreviation(rating_name)
     rating_abbr = {'Excellent Schools Detroit Rating' => 'ESD Rating',
                    'Great Start to Quality preschool rating' => 'Preschool Rating',
+                   'QRIS Preschool rating' => 'Preschool Rating'
 
     }
     rating_abbr[rating_name]
