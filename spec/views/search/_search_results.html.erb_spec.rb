@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../../features/search/search_spec_helper'
 
-describe 'search/_search_results.html.erb', js: true do
+describe 'search/_search_results.html.erb' do
   include SearchSpecHelper
 
   let(:header_ad_slots) {{
@@ -81,7 +81,7 @@ describe 'search/_search_results.html.erb', js: true do
     end
   end
 
-  context 'ad targeting' do
+  context 'ad targeting', js: true do
 
     before do
       set_up_city_browse('mi','Grand Rapids')
