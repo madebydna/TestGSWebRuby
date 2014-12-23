@@ -140,7 +140,6 @@ class SearchController < ApplicationController
 
     set_page_instance_variables # @results_offset @page_size @page_number
 
-    ad_setTargeting_through_gon
 
     # calculate offset and number of results such that we'll definitely have 200 map pins to display
     # To guarantee this in a simple way I fetch a total of 400 results centered around the page to be displayed
@@ -166,6 +165,8 @@ class SearchController < ApplicationController
     end
 
     yield search_options, @params_hash if block_given?
+
+    ad_setTargeting_through_gon
 
     results = search_method.call(search_options)
     setup_filter_display_map
@@ -351,8 +352,13 @@ class SearchController < ApplicationController
     set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
     set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     set_targeting['template'] = 'search' # use this for page name - configured_page_name
-    set_targeting['City'] = format_ad_setTargeting(@city.name) if @city && @city.respond_to?(:name) # truncated at 10 characters after removing spaces
-    set_targeting['State'] = format_ad_setTargeting(@state[:short]) # abbreviation
+    targeted_city = if @city && @city.respond_to?(:name)
+                      @city.name
+                    elsif params[:city]
+                      params[:city]
+                    end
+    set_targeting['City'] = format_ad_setTargeting(targeted_city) if targeted_city
+    set_targeting['State'] = format_ad_setTargeting(@state[:short]) if @state
 
     gon.ad_set_targeting = set_targeting
   end
