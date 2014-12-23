@@ -45,7 +45,7 @@
     <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Flagged &nbsp;&nbsp;
   </div>
   <div>
-    <strong><%= pluralize @reviews.count, 'review' %></strong> displayed
+    <strong><%= pluralize @reviews.size, 'review' %></strong> displayed
       <%= link_to('Show all',
                   admin_school_moderate_path(
                     state: school_params(@school)[:state],
