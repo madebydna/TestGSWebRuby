@@ -14,6 +14,7 @@ module WritePdfConcerns
   FONT_SIZE_7 = 7
   FONT_SIZE_8 = 8
   FONT_SIZE_9 = 9
+  FONT_SIZE_10 = 10
 
 
   IMAGE_PATH_SCHOOL_SIZE= "app/assets/images/pyoc/school_size_pyoc.png"
@@ -30,6 +31,7 @@ module WritePdfConcerns
   NO_PROGRAM_DATA = "?"
 
   IMAGE_SCALE_25 = 0.25
+  IMAGE_SCALE_30 = 0.27
 
   def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     start_time = Time.now
@@ -196,15 +198,11 @@ module WritePdfConcerns
         move_down_medium
       else
         other_state_ratings(school_cache, school)
-        move_down_small
       end
-
-      move_down_medium
-      draw_address(school)
 
       map_icon = draw_map_icon(school)
       if map_icon != 'N/A'
-        bounding_box([1, 70], :width => 0, :height => 0) do
+        bounding_box([1, 95], :width => 0, :height => 0) do
           if other_ratings == []
             move_down_small
           else
@@ -215,13 +213,16 @@ module WritePdfConcerns
 
         move_down_large
 
-        draw_school_hours(school_cache, 60)
+        draw_school_hours(school_cache, school, 60)
 
       else
-        move_down_small
-        draw_school_hours(school_cache, 15)
+        move_down_medium
+        draw_school_hours(school_cache, school, 15)
 
       end
+
+      move_down_medium
+      draw_address(school)
 
     end
   end
@@ -279,6 +280,7 @@ module WritePdfConcerns
   end
 
   def draw_gs_rating_image(rating)
+    # image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
     image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
   end
 
@@ -312,6 +314,14 @@ module WritePdfConcerns
       cells.borders = []
       columns(1).font_style = :bold
       column(1).align = :right
+
+      # table(data, :column_widths => [90, 20],
+      #       :position => 55,
+      #       :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
+      #   cells.borders = []
+      #   # columns(1).font_style = :bold
+      #   column(1).padding = [0, 0, 0, 0]
+      #   column(1).align = :right
     end
   end
 
@@ -321,11 +331,18 @@ module WritePdfConcerns
         ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", school_cache.student_growth_rating],
         ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", school_cache.college_readiness_rating],
     ]
+
+    # data = [
+    #     ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    #     ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    #     ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    # ]
   end
 
   def other_state_rating_abbreviation(rating_name)
     rating_abbr = {'Excellent Schools Detroit Rating' => 'ESD Rating',
-                   'Great Start to Quality preschool rating' => 'Preschool Rating'
+                   'Great Start to Quality preschool rating' => 'Preschool Rating',
+
     }
     rating_abbr[rating_name]
   end
@@ -361,13 +378,16 @@ module WritePdfConcerns
 
     end
 
-    table(data, :column_widths => [56, 56, 56],
-          :position => 5,
+    table(data, :column_widths => is_spanish ? [57, 57, 57] : [49, 51, 49],
+          :position => is_spanish ? 11 : 17,
           :cell_style => {size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
       cells.borders = []
       row(0).font_style = :bold
-      row(0).size = 7
+      row(0).size = FONT_SIZE_10
       row(0).padding = [0, 0, 5, 10]
+      row(0).align = :left
+      row(1).align = :left
+      row(1).height = 12
       row(1).padding = [0, 5, 0, 0]
     end
   end
@@ -383,7 +403,7 @@ module WritePdfConcerns
   def draw_address(school)
     data =[[school.street],
            ["#{school.city}, #{school.state} #{school.zipcode}"],
-           ["#{is_spanish ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
+           # ["#{is_spanish ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
     ]
 
 
@@ -395,10 +415,11 @@ module WritePdfConcerns
 
   end
 
-  def draw_school_hours(school_cache, x_position)
+  def draw_school_hours(school_cache,school, x_position)
     data = [
-        ["#{is_spanish ? 'Horario' : 'School Hours:'}"],
-        [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a']
+        ["#{is_spanish ? 'Horario:' : 'School Hours:'}"],
+        [school_cache.start_time && school_cache.start_time ? "#{school_cache.start_time} - #{school_cache.end_time}" : 'n/a'],
+        ["#{is_spanish ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"]
     ]
 
     table(data,
@@ -410,13 +431,6 @@ module WritePdfConcerns
 
   def draw_best_known_for(school_cache, school, x_position)
     fill_color 100, 20, 20, 20
-    # text_box "#{school_cache.best_known_for.present? ? school_cache.best_known_for.truncate(79) : school_cache.best_known_for}",
-    #          :at => [x_position, cursor],
-    #          :width => school.which_icon.present? && school.which_icon != 'N/A' ? 95 : 135,
-    #          :height => school.which_icon.present? && school.which_icon != 'N/A' ? 50 : 20,
-    #          :size => FONT_SIZE_7,
-    #          :style => :italic
-
     text_box "#{school_cache.best_known_for.present? ? '"' + school_cache.best_known_for.truncate(81) + '"' : ''}",
              :at => [x_position, cursor],
              :width => COL_WIDTH - 5,
