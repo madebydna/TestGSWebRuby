@@ -23,6 +23,7 @@ module SavedSearchesConcerns
   end
 
   def create_saved_search(saved_search_attrs)
+    saved_search_attrs.except!(:city)
     current_user.saved_searches.create(saved_search_attrs).errors.full_messages
   end
 end
