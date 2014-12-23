@@ -35,10 +35,10 @@ describe 'search/_search_results.html.erb' do
           {name:'Responsive_Search_After20_728x90'}
       ],
       mobile: [
-          {name:'Responsive_Mobile_Search_After4_320x250'},
+          {name:'Responsive_Mobile_Search_After4_300x250'},
           {name:'Responsive_Mobile_Search_After8_Text_320x60'},
           {name:'Responsive_Mobile_Search_After12_320x50'},
-          {name:'Responsive_Mobile_Search_After16_320x50'},
+          {name:'Responsive_Mobile_Search_After16_300x250'},
           {name:'Responsive_Mobile_Search_After20_320x50'}
       ]
   }}
