@@ -81,16 +81,58 @@ describe 'search/_search_results.html.erb' do
     end
   end
 
-  context 'ad targeting', js: true do
+  describe 'ad targeting', js: true do
 
-    before do
-      set_up_city_browse('mi','Grand Rapids')
+    context 'city browse' do
+
+      before do
+        set_up_city_browse('mi','Grand Rapids')
+      end
+
+      it 'should target the state and city' do
+        ad_targeting = page.evaluate_script('gon.ad_set_targeting')
+        expect(ad_targeting['City']).to eq('GrandRapid') # Remove spaces and truncate at 10 characters
+        expect(ad_targeting['State']).to eq('mi')
+      end
     end
 
-    it 'should include the state and city' do
-      ad_targeting = page.evaluate_script('gon.ad_set_targeting')
-      expect(ad_targeting['City']).to eq('GrandRapid') # Remove spaces and truncate at 10 characters
-      expect(ad_targeting['State']).to eq('mi')
+    context 'district browse' do
+
+      before do
+        set_up_district_browse('de','Appoquinimink School District','Appoquinimink')
+      end
+
+      it 'should target the state and city' do
+        ad_targeting = page.evaluate_script('gon.ad_set_targeting')
+        expect(ad_targeting['City']).to eq('Appoquinim') # Remove spaces and truncate at 10 characters
+        expect(ad_targeting['State']).to eq('de')
+      end
+    end
+
+    context 'by name' do
+
+      before do
+        set_up_by_name_search('dover elementary', 'DE')
+      end
+
+      it 'should target the state' do
+        ad_targeting = page.evaluate_script('gon.ad_set_targeting')
+        expect(ad_targeting['City']).to be_nil
+        expect(ad_targeting['State']).to eq('de')
+      end
+    end
+
+    context 'by location' do
+
+      before do
+        set_up_by_location_search('100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326)
+      end
+
+      it 'should target the state and city' do
+        ad_targeting = page.evaluate_script('gon.ad_set_targeting')
+        expect(ad_targeting['City']).to eq('Wilmington') # Remove spaces and truncate at 10 characters
+        expect(ad_targeting['State']).to eq('de')
+      end
     end
   end
 end

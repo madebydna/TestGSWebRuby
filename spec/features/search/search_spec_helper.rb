@@ -22,6 +22,7 @@ module SearchSpecHelper
     district = District.new(name: district_name, state: state_abbrev, city: city_name, lat: 47, lon: 47)
     district.id = 47;
     allow(District).to receive(:where).and_return([district])
+    set_up_property_table
     yield if block_given?
     visit "/#{state_name}/#{city.name.downcase.gsub(/ /,'-')}/#{district.name.downcase.gsub(/ /,'-')}/schools?#{query_string}"
   end
@@ -29,13 +30,15 @@ module SearchSpecHelper
   def set_up_by_location_search(street_address='100 North Dupont Road', city='Wilmington', zipcode=19807,state='DE',lat=39.752831,lon=-75.588326,query_string=nil)
     school = School.new(name: 'Keith Elementary', state: state, city: city, lat: lat, lon: lon)
     allow(School).to receive(:find).and_return(school)
+    set_up_property_table
     yield if block_given?
-    visit "/search/search.page?state=#{state}&lat=#{lat}&lon=#{lon}&#{query_string}"
+    visit "/search/search.page?state=#{state}&lat=#{lat}&lon=#{lon}&city=#{city}&#{query_string}"
   end
 
   def set_up_by_name_search(school_name='dover elementary',state='DE',query_string=nil)
     school = School.new(name: 'Keith Elementary', state: state)
     allow(School).to receive(:find).and_return(school)
+    set_up_property_table
     yield if block_given?
     encoded_school_name = URI.encode(school_name)
     visit "/search/search.page?state=#{state}&q=#{encoded_school_name}&#{query_string}"
