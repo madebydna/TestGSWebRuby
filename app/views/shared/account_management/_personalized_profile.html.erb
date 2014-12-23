@@ -22,6 +22,22 @@
     </div>
   </div>
 
+  <% if @saved_searches.present? %>
+      <div class="limit-width-1200">
+        <div class="bg-light-gray mvl js-header-slide-toggle">
+          <div class="row">
+            <div class="col-xs-12 clearfix phm">
+              <div class="fl pointer font-size-large mam">
+                My Saved Searches
+              </div>
+              <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
+            </div>
+          </div>
+        </div>
+        <%= render partial: 'search/saved_search' %>
+      </div>
+  <% end %>
+
   <div class="limit-width-1200">
     <div class="bg-light-gray mvl js-header-slide-toggle">
       <div class="row">
@@ -79,6 +95,8 @@
     <%= render partial: 'shared/account_management/osp_module' %>
   </div>
 <% end %>
+
+
 
 
 
