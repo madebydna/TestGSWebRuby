@@ -31,7 +31,6 @@ module WritePdfConcerns
   NO_PROGRAM_DATA = "?"
 
   IMAGE_SCALE_25 = 0.25
-  IMAGE_SCALE_30 = 0.27
 
   def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     start_time = Time.now
@@ -280,8 +279,11 @@ module WritePdfConcerns
   end
 
   def draw_gs_rating_image(rating)
-    # image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
     image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
+  end
+
+  def draw_other_gs_rating_image(test_scores_rating)
+     {:image => "app/assets/images/pyoc/overall_rating_small_#{test_scores_rating}.png",  :scale => 0.16}
   end
 
   def is_spanish
@@ -308,35 +310,25 @@ module WritePdfConcerns
 
   def draw_other_gs_ratings_table(school_cache)
     data = get_gs_rating_info(school_cache)
-    table(data, :column_widths => [80, 20],
-          :position => 55,
-          :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
-      cells.borders = []
-      columns(1).font_style = :bold
-      column(1).align = :right
 
-      # table(data, :column_widths => [90, 20],
-      #       :position => 55,
-      #       :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
-      #   cells.borders = []
-      #   # columns(1).font_style = :bold
-      #   column(1).padding = [0, 0, 0, 0]
-      #   column(1).align = :right
+
+      table(data, :column_widths => [90, 20],
+            :position => 55,
+            :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
+        cells.borders = []
+        # columns(1).font_style = :bold
+        column(1).padding = [0, 0, 0, 0]
+        column(1).align = :right
     end
   end
 
   def get_gs_rating_info(school_cache)
-    data = [
-        ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", school_cache.test_scores_rating],
-        ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", school_cache.student_growth_rating],
-        ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", school_cache.college_readiness_rating],
-    ]
 
-    # data = [
-    #     ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
-    #     ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
-    #     ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
-    # ]
+    data = [
+        ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", draw_other_gs_rating_image(school_cache.test_scores_rating)],
+        ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", draw_other_gs_rating_image(school_cache.student_growth_rating)],
+        ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", draw_other_gs_rating_image(school_cache.college_readiness_rating)],
+    ]
   end
 
   def other_state_rating_abbreviation(rating_name)
