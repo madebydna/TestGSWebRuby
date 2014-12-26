@@ -22,7 +22,7 @@ class CensusLoading::Update
 
   def parse_attributes!
     @shard = entity_state.to_s.downcase.to_sym
-    @entity_type = entity_type.to_s.downcase.to_sym
+    self.entity_type = self.entity_type.to_s.downcase.to_sym
     @entity_id_type = "#{entity_type.downcase}_id".to_sym
 
     unless action == CensusLoading::Loader::ACTION_BUILD_CACHE

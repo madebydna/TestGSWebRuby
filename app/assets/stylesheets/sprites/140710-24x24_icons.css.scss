@@ -4,7 +4,7 @@
 
 .iconx24-icons {
   display: inline-block;
-  background-image: asset_data_url("icons/141110-24x24_sprite.png");
+  background-image: asset_data_url("icons/140512-24x24_sprite.png");
   width: 24px;
   height: 24px;
 }
@@ -135,6 +135,10 @@
   background-position: -528px 24px
 }
 
+.i-24-grey-down-arrow {
+  background-position: -600px 0px
+}
+
 .i-24-search-white {
   background-position: -624px 0px
 }
@@ -153,4 +157,12 @@
 
 .i-24-guide-me {
   background-position: -720px 0px
+}
+
+.i-24-close-arrow-head {
+  background-position: -744px 0px;
+}
+
+.i-24-open-arrow-head {
+  background-position: -744px 24px;
 }

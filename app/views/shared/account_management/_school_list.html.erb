@@ -1,10 +1,10 @@
 <% if @school_to_favorite_school.present? %>
-    <div class="ptl"></div>
-    <div class="bg-light-gray mvl">
+    <!--<div class="ptl"></div>-->
+    <!--<div class="bg-light-gray mvl">-->
         <div class="row limit-width-1200 mhm ma">
             <div class="col-xs-12">
                 <div class="clearfix mam">
-                    <div class="fl mrl"><h2 class="mvn">My School List</h2></div>
+                    <!--<div class="fl mrl"><h2 class="mvn">My School List</h2></div>-->
                     <div class="fr"><button class="btn btn-primary js-submitSchoolPYOC" type="button">Download Your Schools</button></div>
                 </div>
                 <% # favorite_school is the object representing the row in favorite_school table %>
@@ -28,7 +28,7 @@
                 <% end %>
             </div>
         </div>
-    </div>
+    <!--</div>-->
     <form class="js-printSchoolChooserSubmit" method="POST" action="/my-school-list.pdf" target="_blank">
         <input type="hidden" class="js-chooserStates" name="states" value="" />
         <input type="hidden" class="js-chooserSchoolIds" name="schoolIds" value="" />
@@ -37,5 +37,27 @@
 
 
 
+    <!--</div>-->
+<% else %>
+
+    <div>
+      <div class="row limit-width-1200 mhm ma">
+        <div class="col-xs-12 tac">
+          <div class="pvl">
+            <%= image_tag(image_path('account_management/empty_my_school_list.png')) %>
+          </div>
+          <div class="open-sans_sb pbl">
+            You are not following any schools yet.
+          </div>
+          <div class="pbl">
+            Follow school to save them here and we'll update you when there are new reviews, test scores, or
+            GreatSchools ratings
+            for that school.
+          </div>
+          <%= link_to home_url, class: "btn btn-primary" do %>
+              Search for a school
+          <% end %>
+        </div>
+      </div>
     </div>
 <% end %>

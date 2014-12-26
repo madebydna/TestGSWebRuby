@@ -202,4 +202,23 @@ module CachedProgramsMethods
       programs['destination_school_3'].keys.first
     end
   end
+
+
+  def college_destination_1
+    if programs['college_destination_1']
+      programs['college_destination_1'].keys.first
+    end
+  end
+
+  def college_destination_2
+    if programs['college_destination_2']
+      programs['college_destination_2'].keys.first
+    end
+  end
+
+  def college_destination_3
+    if programs['college_destination_3']
+      programs['college_destination_3'].keys.first
+    end
+  end
 end

@@ -7,6 +7,7 @@ class Admin::SchoolsController < ApplicationController
   has_scope :disabled, :type => :boolean
   has_scope :reported, :type => :boolean
   has_scope :held, :type => :boolean
+  has_scope :flagged, :type => :boolean
 
   def moderate
     @held_school = @school.held_school
@@ -17,6 +18,7 @@ class Admin::SchoolsController < ApplicationController
     else
       @reviews = school_reviews
       @reviews = apply_scopes(@reviews)
+      @reviews.to_a.uniq!(&:id)
     end
 
     reported_entities = @reported_entities = ReportedEntity.

@@ -53,14 +53,33 @@
                     </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                     <% if @school.cache_results.present? %>
-                        <% if @school.cache_results.students_enrolled.present? && @school.cache_results.students_enrolled != '?' %>
-                            <div class="fl prm ">Students enrolled: <strong><%= @school.cache_results.students_enrolled %></strong></div>
+                        <% students_enrolled = @school.cache_results.students_enrolled %>
+                        <% before_care = @school.cache_results.before_care %>
+                        <% after_school = @school.cache_results.after_school %>
+                        <% if students_enrolled.present? && students_enrolled != '?' %>
+                            <div class="fl prm ">Students enrolled: <strong><%= students_enrolled %></strong></div>
                         <% end %>
-                        <% if @school.cache_results.before_care.present? && @school.cache_results.before_care != '?' %>
-                            <div class="fl prm ">Before care: <strong><%= @school.cache_results.before_care %></strong></div>
+                        <% if before_care.present? && before_care != '?' %>
+                            <div class="fl prm">
+                              <% if before_care.downcase == 'yes'%>
+                                  <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+                                      <span class="link-darkgray">Before care: <strong><%= before_care %></strong></span>
+                                  <% end %>
+                              <% else %>
+                                  Before care: <strong><%= before_care %></strong>
+                              <% end %>
+                            </div>
                         <% end %>
-                        <% if @school.cache_results.after_school.present? && @school.cache_results.after_school != '?'%>
-                            <div class="fl prm ">After care: <strong><%= @school.cache_results.after_school %></strong></div>
+                        <% if after_school.present? && after_school != '?'%>
+                            <div class="fl prm">
+                              <% if after_school.downcase == 'yes'%>
+                                  <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+                                      <span class="link-darkgray">After care: <strong><%= after_school %></strong></span>
+                                  <% end %>
+                              <% else %>
+                                  After care: <strong><%= after_school %></strong>
+                              <% end %>
+                            </div>
                         <% end %>
                     <% end %>
 

@@ -134,6 +134,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
+  get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
   put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'

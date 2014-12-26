@@ -162,6 +162,8 @@ GS.accountManagement.mySchoolList = (function(){
   }
 })();
 
+
+
 GS.accountManagement.newsFeedUnsubscribe = (function(){
   var init = function() {
     setDeleteNewsFeedUnsubscribeHandler();
@@ -194,5 +196,27 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
     deleteSuccessful: deleteSuccessful,
     deleteFailure: deleteFailure
   }
+})();
+
+GS.accountManagement.slideToggleSection = (function(){
+    var init = function() {
+        slideToggleSections();
+
+    };
+
+    var slideToggleSections = function () {
+
+        $('.js-header-slide-toggle').on('click', function () {
+            var openSection = $(this).siblings('div:first');
+            var child = $(this).find('.iconx32-college_ready');
+            child.toggleClass('i-32-close-arrow-head i-32-open-arrow-head');
+
+            openSection.slideToggle();
+        });
+    }
+
+    return {
+        init: init
+    }
 })();
 
