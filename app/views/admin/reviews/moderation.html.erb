@@ -86,7 +86,7 @@
                 <td>
                   <%= review.school.state if review.school%>
                 </td>
-                <td><%= review.user.email%></td>
+                <td><%= review.user%></td>
                 <td>
                     <%= review.reported_entities.size if review.reported_entities.any? %>
                 </td>
