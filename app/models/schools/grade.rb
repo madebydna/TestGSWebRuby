@@ -57,12 +57,12 @@ class Grade
     Grade.new(20, "UG", ["ungraded"])
     Grade.new(21, "AE")
     # values for "All", "Alle",etc grades are used to sort test scores.
-    Grade.new(14, "All")
-    Grade.new(15, "Alle")
-    Grade.new(16, "Allem")
-    Grade.new(16, "Allm")
-    Grade.new(17, "Allmh")
-    Grade.new(18, "Allh")
+    Grade.new(-7, "All")
+    Grade.new(-6, "Alle")
+    Grade.new(-5, "Allem")
+    Grade.new(-4, "Allm")
+    Grade.new(-3, "Allmh")
+    Grade.new(-2, "Allh")
   end
 
   def self.initialize_level_code_lookup

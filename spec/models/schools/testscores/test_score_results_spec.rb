@@ -157,6 +157,68 @@ describe TestScoreResults do
                   }
                 }
               },
+              'All' => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'Algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
+                    },
+                    'Algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
+                    }
+                  }
+                }
+              },
+              'Alle' => {
+                label: 'a grade label',
+                level_code: {
+                  'h' => {
+                    'Algebra 2' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
+                    },
+                    'Algebra 1' => {
+                      2010 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      },
+                      2011 => {
+                        number_students_tested: 100,
+                        score: '10',
+                        state_average: '20'
+                      }
+                    }
+                  }
+                }
+              },
               1 => {
                 label: 'a grade label',
                 level_code: {
@@ -210,8 +272,10 @@ describe TestScoreResults do
     it 'should sort grades in ascending order' do
       #grades should be sorted in ascending order.
       sorted_test_scores = subject.sort_test_scores(test_scores_hash)
-      expect(sorted_test_scores.values[0][:All][:grades].keys[0]).to eq(1)
-      expect(sorted_test_scores.values[0][:All][:grades].keys[1]).to eq(2)
+      expect(sorted_test_scores.values[0][:All][:grades].keys[0]).to eq('All')
+      expect(sorted_test_scores.values[0][:All][:grades].keys[1]).to eq('Alle')
+      expect(sorted_test_scores.values[0][:All][:grades].keys[2]).to eq(1)
+      expect(sorted_test_scores.values[0][:All][:grades].keys[3]).to eq(2)
     end
 
     it 'should sort subjects in ascending order' do
