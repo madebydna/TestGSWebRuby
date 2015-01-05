@@ -31,6 +31,7 @@ module WritePdfConcerns
   NO_PROGRAM_DATA = "?"
 
   IMAGE_SCALE_25 = 0.25
+  IMAGE_SCALE_30 = 0.27
 
   def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     start_time = Time.now
@@ -138,6 +139,7 @@ module WritePdfConcerns
   end
 
   def draw_logo_and_url_on_footer(collection_id)
+    # image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
     fill_color BLACK
     text_box which_footer(collection_id, is_spanish),
              :at => [58, -7],
@@ -278,11 +280,8 @@ module WritePdfConcerns
   end
 
   def draw_gs_rating_image(rating)
+    # image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
     image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
-  end
-
-  def draw_other_gs_rating_image(test_scores_rating)
-     {:image => "app/assets/images/pyoc/overall_rating_small_#{test_scores_rating}.png",  :scale => 0.16}
   end
 
   def is_spanish
@@ -298,36 +297,46 @@ module WritePdfConcerns
       move_down 25
       fill_color BLACK
       text_box is_spanish ? "Calificación general" : "Overall rating",
-               :at => [is_spanish ? 10 : 13, cursor],
+               :at => [is_spanish ? 10 : 17, cursor],
                :width => is_spanish ? 35 : 25,
                :height => 25,
                :size => 6,
-               :style => :bold,
-               :align => :center
+               :style => :bold
 
     end
   end
 
   def draw_other_gs_ratings_table(school_cache)
     data = get_gs_rating_info(school_cache)
+    table(data, :column_widths => [80, 20],
+          :position => 55,
+          :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
+      cells.borders = []
+      columns(1).font_style = :bold
+      column(1).align = :right
 
-
-      table(data, :column_widths => [90, 20],
-            :position => 55,
-            :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
-        cells.borders = []
-        column(1).padding = [0, 0, 0, 0]
-        column(1).align = :right
+      # table(data, :column_widths => [90, 20],
+      #       :position => 55,
+      #       :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
+      #   cells.borders = []
+      #   # columns(1).font_style = :bold
+      #   column(1).padding = [0, 0, 0, 0]
+      #   column(1).align = :right
     end
   end
 
   def get_gs_rating_info(school_cache)
-
     data = [
-        ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", draw_other_gs_rating_image(school_cache.test_scores_rating)],
-        ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", draw_other_gs_rating_image(school_cache.student_growth_rating)],
-        ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", draw_other_gs_rating_image(school_cache.college_readiness_rating)],
+        ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", school_cache.test_scores_rating],
+        ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", school_cache.student_growth_rating],
+        ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", school_cache.college_readiness_rating],
     ]
+
+    # data = [
+    #     ["#{is_spanish ? 'Puntuación de examenes' : 'Test score rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    #     ["#{is_spanish ? 'Crecimiento' : 'Student growth rating'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    #     ["#{is_spanish ? 'Preparacion universitaria' : 'College readiness'}", {:image => IMAGE_PATH_BEFORE_CARE, :scale => IMAGE_SCALE_30}],
+    # ]
   end
 
   def other_state_rating_abbreviation(rating_name)
@@ -348,20 +357,21 @@ module WritePdfConcerns
     else
       if is_spanish
         other_ratings.each do |i|
-          if school.which_rating_mapping(i[0]).present?
+          if  school.which_rating_mapping(i[0]).present? && ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << (school.which_rating_mapping(i[1]).nil? ? 'NR' : school.which_rating_mapping(i[1]))
             data[1] << school.which_rating_mapping(i[0])
-          else
+          elsif !school.which_rating_mapping(i[0]).present? &&  ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << i[1]
             data[1] << i[0]
           end
         end
       else
         other_ratings.each do |i|
-          if other_state_rating_abbreviation(i[0])
+          # binding.pry;
+          if  ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool")) &&  other_state_rating_abbreviation(i[0])
             data[0] << i[1]
             data[1] << other_state_rating_abbreviation(i[0])
-          else
+          elsif ((i[0].downcase.include? "preschool" and school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << i[1]
             data[1] << i[0]
           end
@@ -369,14 +379,18 @@ module WritePdfConcerns
       end
 
     end
-          table(data, :column_widths => is_spanish ? [56, 56, 56] : [50, 50, 50],
-          :position => 7,
-          :cell_style => {:align => :center, size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
+
+    table(data, :column_widths => is_spanish ? [57, 57, 57] : [49, 51, 49],
+          :position => is_spanish ? 11 : 17,
+          :cell_style => {size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
       cells.borders = []
       row(0).font_style = :bold
       row(0).size = FONT_SIZE_10
-      row(0).padding = [0, 0, 5, 0]
+      row(0).padding = [0, 0, 5, 10]
+      row(0).align = :left
+      row(1).align = :left
       row(1).height = 12
+      row(1).padding = [0, 5, 0, 0]
     end
   end
 
@@ -391,6 +405,7 @@ module WritePdfConcerns
   def draw_address(school)
     data =[[school.street],
            ["#{school.city}, #{school.state} #{school.zipcode}"],
+           # ["#{is_spanish ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
     ]
 
 
@@ -437,6 +452,7 @@ module WritePdfConcerns
       draw_application_table(school_cache, school)
 
       move_down 15
+      # draw_best_known_for(school_cache, school, 15)
       draw_best_known_for(school_cache, school, 5)
     end
   end
@@ -711,6 +727,7 @@ module WritePdfConcerns
              :size => 24,
              :style => :bold,
              :align => :center
+    # :align => :nil
 
 
     move_down 30
