@@ -80,16 +80,19 @@ class UserController < ApplicationController
   end
 
   def update_user_city_state
+    binding.pry;
     result = ''
-    state_locale = params[:state]
-    city_locale = params[:city]
+    state_locale =   States.abbreviation(params[:userState])
+    city_locale = params[:userCity]
 
     user = User.find_by_id(@current_user[:id])
-    unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
-      result = "User profile failed to update state and city locale info  for user #{user.email} "
+    if state_locale.present? && city_locale.present?
+        unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
+          result = "User profile failed to update state and city locale info  for user #{user.email} "
+        end
     end
 
-    render json: {'error_msg' => result}
+    redirect_to manage_account_url
   end
 
 end
