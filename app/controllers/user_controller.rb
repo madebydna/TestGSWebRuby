@@ -80,7 +80,7 @@ class UserController < ApplicationController
   end
 
   def update_user_city_state
-    binding.pry;
+    # binding.pry;
     result = ''
     state_locale =   States.abbreviation(params[:userState])
     city_locale = params[:userCity]
