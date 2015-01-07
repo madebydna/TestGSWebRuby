@@ -243,6 +243,7 @@ body { padding-top: 50px }
   .mobile-clearfix {
     @include clearfix();
   }
+  .prn-mobile {padding-right: 0}
 //  .pl35-or-25 {padding-left: 25px}
 }
 
