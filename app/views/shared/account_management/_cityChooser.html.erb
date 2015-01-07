@@ -4,11 +4,13 @@
 
   <div class="container">
     <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+      <div class="mbs open-sans_sb">State</div>
       <%= render 'shared/account_management/change_location', choose_state: @state_locale.present? ? @state_locale[:long].titleize : nil %>
     </div>
     <input name="userState" type="hidden" value="">
 
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 prm mbm prn-mobile">
+      <div class="mbs open-sans_sb">City</div>
       <% if @city_locale.present? %>
           <input type="text"
                  name="userCity"
@@ -30,7 +32,7 @@
 
       <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
     </div>
-    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ptl mts">
       <input class="btn btn-lg btn-primary pam full-width mbl" name="commit" type="submit" value="Submit">
 
     </div>
