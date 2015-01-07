@@ -1,10 +1,25 @@
+<%= javascript_tag do %>
+    $(function() {
+        $('.js_badge').on('click', function(){
+            $('#js_badges_description').slideToggle('fast');
+            if($('#js_badges_toggle').html() == 'Close'){
+                $('#js_badges_toggle').html('Learn More &raquo;');
+            }
+            else{
+                $('#js_badges_toggle').html('Close');
+            }
+        });
+    });
+<% end %>
 <% if @school.cache_results.OECD_data.present? %>
     <%= render "shared/section_header", category_placement:category_placement %>
+    <div class="col-md-12 tac mbm"><a href="javascript:void(0)" class="js_badge"><span class="badgesx48 i-48-global_competitiveness_badge"></span></a></div>
+    <div class="col-md-12 tac mbm"><a href="javascript:void(0)" class="js_badge link-darkgray">Global Competitiveness</a></div>
+    <div class="col-md-12 tac mbm"><a href="javascript:void(0)" class="js_badge link-darkgray font-size-small">with America Achieves</a></div>
     <div class="col-md-12 tac mbm">
-      <div class="row"><span class="badgesx48 i-48-global_competitiveness_badge"></span><br /></div>
-      <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small">Learn More &raquo;</a></div>
-      <div class="dn tal well ma pal" style="max-width: 600px;">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id justo efficitur diam vulputate ultrices. Donec id turpis id elit auctor vulputate. Vivamus rhoncus mauris tellus, ut ullamcorper dui rutrum eget. Morbi lorem velit, condimentum nec rutrum at, pretium at turpis. Vestibulum lobortis turpis sapien, nec eleifend velit accumsan ut. Fusce imperdiet dignissim turpis vitae tempor. Nulla facilisi. </p>
+      <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small" id="js_badges_toggle">Learn More &raquo;</a></div>
+      <div class="dn tal well ma pal" style="max-width: 600px;" id="js_badges_description">
+        <p>This school has chosen to compare itself with the highest-performing schools in the world, so that it can improve the instruction it provides to prepare students for a global future.  <%= link_to 'Read More &raquo;'.html_safe, oecd_landing_path %></p>
       </div>
     </div>
 <% end %>
