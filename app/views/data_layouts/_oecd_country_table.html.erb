@@ -1,0 +1,58 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+<% data = TableData.new data %>
+
+<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
+
+  <a name="<%= category.code_name %>"></a>
+
+  <%= render "shared/section_header", category_placement:category_placement %>
+
+  <table class="table table-striped no-more-tables">
+    <thead>
+    <tr>
+      <% category_placement.table_config.columns_to_print(data).each do |column| %>
+        <% if column['display_type'] == :data_and_header %>
+          <th><%= column['label'] %></th>
+        <% else %>
+          <th>&nbsp;</th>
+        <% end %>
+      <% end %>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% columns_to_print = data_config.columns_to_print(data) %>
+
+    <% data.rows.each do |hash| %>
+      <tr>
+        <% data_config.row_values(columns_to_print, hash) do |label, value| %>
+          <%= td label, value %>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<% end %>
+
+<%= render partial: 'about_this_data',
+           locals: {
+               unique_id: category_placement.id,
+               descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+           }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+    @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+    (@school.footnotes_for_category category: category).present? %>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+    <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+  </div>
+<% end %>
