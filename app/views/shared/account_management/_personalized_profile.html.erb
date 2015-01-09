@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-xs-12 clearfix phm">
         <div class="fl pointer font-size-large mam">
-          Personalized Profile
+          My Profile
         </div>
         <span class="fr iconx32-college_ready i-32-open-arrow-head pointer mtm"></span>
 
@@ -28,8 +28,9 @@
   </div>
   <div class="row limit-width-1200 pam">
     <div class="mbl">
-      Tell us a little more about yourself so we can send you updates about your community and the topics you're
-      interested in.
+      Tell us a little more about yourself so we can send you updates about your community. This information will not
+      be displayed publicly on the site.
+
     </div>
     <div class="open-sans_sb pbl">
       Hometown
@@ -37,7 +38,7 @@
     <% if  @state_locale.present? && @city_locale.present? %>
         <div class="js-hometown-chosen">
           <div class="fl">
-            <%= @state_locale[:long].titleize %>, <%= @city_locale %>
+            <%= @city_locale %>, <%= @state_locale[:long].titleize %>
           </div>
           <div class="fl mll">
             <a class="font-size-small pointer js-change-hometown-link">change</a>
@@ -104,7 +105,7 @@
     <div class="row">
       <div class="col-xs-12 clearfix phm">
         <div class="fl pointer font-size-large mam">
-          Change Passwords
+          Change Password
         </div>
         <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
       </div>
