@@ -20,9 +20,11 @@
         <div class="ma" style="border:1px solid #CCCCCC; width:250px">
 
           <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
-          <% label = columns_to_print.second['label'] %>
+          <% label =  columns_to_print.second['label'] %>
           <% format = columns_to_print.second['format'] %>
-            <div class="pam mls open-sans_sb"><%= hash[:label] %></div>
+            <div class="pam mls open-sans_sb"><%= hash[:subject] ? "This school's "+hash[:subject].downcase+"
+            score" :
+                                                  hash[:label] %></div>
             <div class="tac pvl">
                 <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %>
                 </span>
