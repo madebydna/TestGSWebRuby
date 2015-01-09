@@ -22,28 +22,28 @@
           <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
           <% label =  columns_to_print.second['label'] %>
           <% format = columns_to_print.second['format'] %>
-            <div class="pam mls open-sans_sb"><%= hash[columns_to_print.first['key'].to_sym] %></div>
-            <div class="tac pvl">
-              <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %></span>
-              <br />
-              <%= label %>
+          <div class="pam mls open-sans_sb">This school's <%= hash[:subject].downcase %> score</div>
+          <div class="tac pvl">
+                <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %></span>
+            <br />
+            <%= label %>
 
 
-          <% columns_to_print[2..-1].each do |column| %>
-            <% key = column['key'].to_sym %>
-            <% if hash.has_key?(key) %>
-              <% value = data_config.column_value(column, hash[key]) %>
-              <% format = column['format'] %>
-               <div class="tac ptl">
+            <% columns_to_print[2..-1].each do |column| %>
+              <% key = column['key'].to_sym %>
+              <% if hash.has_key?(key) %>
+                <% value = data_config.column_value(column, hash[key]) %>
+                <% format = column['format'] %>
+                <div class="tac ptl">
                    <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %><% if format == 'percentage' %>%<% end %>
                    </span>
-                   <br /><%= column['label'] %>
+                  <br /><%= column['label'] %>
 
-               </div>
+                </div>
+              <% end %>
             <% end %>
-          <% end %>
 
-        </div>
+          </div>
         </div>
       <% end %>
     <% end %>
@@ -51,17 +51,17 @@
 <% end %>
 
 <%= render partial: 'about_this_data',
-  locals: {
-    unique_id: category_placement.id,
-    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
-  }
+           locals: {
+               unique_id: category_placement.id,
+               descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+           }
 %>
 
 <% if @page_config.root_placements_with_data.present? &&
-        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
-        (@school.footnotes_for_category category: category).present? %>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
-      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
-    </div>
+    @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+    (@school.footnotes_for_category category: category).present? %>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+    <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+  </div>
 <% end %>
 </hr>
