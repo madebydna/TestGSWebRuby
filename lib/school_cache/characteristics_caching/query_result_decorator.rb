@@ -28,6 +28,10 @@ class CharacteristicsCaching::QueryResultDecorator
     data_set_with_values.school_value
   end
 
+  def district_average
+    data_set_with_values.district_value
+  end
+
   def state_average
     data_set_with_values.state_value
   end

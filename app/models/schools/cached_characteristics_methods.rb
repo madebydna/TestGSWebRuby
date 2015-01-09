@@ -35,6 +35,9 @@ module CachedCharacteristicsMethods
     characteristics['Ethnicity'] || []
   end
 
+  def OECD_data
+    characteristics['OECD PISA Test for Schools'] || []
+  end
 
   def school_ethnicity(breakdown)
     ethnicity_obj = ethnicity_data.find { |ethnicity| ethnicity['breakdown'] == breakdown  }

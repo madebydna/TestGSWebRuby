@@ -50,7 +50,7 @@ describe School do
 
   describe '#preload_school_metadata' do
     let(:school_with_gs_ratings) { FactoryGirl.create(:school,:with_gs_rating,gs_rating: 3 ) }
-    let(:school_with_no_ratings) { FactoryGirl.create(:the_friendship_preschool,id: 3) }
+    let(:school_with_no_ratings) { FactoryGirl.create(:the_friendship_preschool) }
     let(:all_schools) {Array(school_with_gs_ratings) + Array(school_with_no_ratings)}
 
     it 'should set rating if a school has rating else an empty hash.' do
@@ -75,4 +75,17 @@ describe School do
     end
 
   end
+
+  describe '#cache_results' do
+    let(:school) { FactoryGirl.create(:school) }
+
+    it 'should query the school cache only once.' do
+      expect_any_instance_of(SchoolCacheQuery).to receive(:query).once.and_call_original
+      5.times do
+        school.cache_results
+      end
+    end
+
+  end
+
 end

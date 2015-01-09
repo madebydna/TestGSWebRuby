@@ -138,7 +138,6 @@ module WritePdfConcerns
   end
 
   def draw_logo_and_url_on_footer(collection_id)
-    # image 'app/assets/images/pyoc/GS_logo-21.png', :at => [188, -2], :scale => 0.2
     fill_color BLACK
     text_box which_footer(collection_id, is_spanish),
              :at => [58, -7],
@@ -299,11 +298,12 @@ module WritePdfConcerns
       move_down 25
       fill_color BLACK
       text_box is_spanish ? "Calificación general" : "Overall rating",
-               :at => [is_spanish ? 10 : 17, cursor],
+               :at => [is_spanish ? 10 : 13, cursor],
                :width => is_spanish ? 35 : 25,
                :height => 25,
                :size => 6,
-               :style => :bold
+               :style => :bold,
+               :align => :center
 
     end
   end
@@ -316,7 +316,6 @@ module WritePdfConcerns
             :position => 55,
             :cell_style => {size: 7, :height => 12, :padding => [0, 0, 1, 0], :text_color => BLACK}) do
         cells.borders = []
-        # columns(1).font_style = :bold
         column(1).padding = [0, 0, 0, 0]
         column(1).align = :right
     end
@@ -349,20 +348,20 @@ module WritePdfConcerns
     else
       if is_spanish
         other_ratings.each do |i|
-          if school.which_rating_mapping(i[0]).present?
+          if school.which_rating_mapping(i[0]).present? && ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << (school.which_rating_mapping(i[1]).nil? ? 'NR' : school.which_rating_mapping(i[1]))
             data[1] << school.which_rating_mapping(i[0])
-          else
+          elsif !school.which_rating_mapping(i[0]).present? &&  ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << i[1]
             data[1] << i[0]
           end
         end
       else
         other_ratings.each do |i|
-          if other_state_rating_abbreviation(i[0])
+          if  ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool")) &&  other_state_rating_abbreviation(i[0])
             data[0] << i[1]
             data[1] << other_state_rating_abbreviation(i[0])
-          else
+          elsif ((i[0].downcase.include? "preschool" and school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << i[1]
             data[1] << i[0]
           end
@@ -370,18 +369,14 @@ module WritePdfConcerns
       end
 
     end
-
-    table(data, :column_widths => is_spanish ? [57, 57, 57] : [49, 51, 49],
-          :position => is_spanish ? 11 : 17,
-          :cell_style => {size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
+          table(data, :column_widths => is_spanish ? [56, 56, 56] : [50, 50, 50],
+          :position => 7,
+          :cell_style => {:align => :center, size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
       cells.borders = []
       row(0).font_style = :bold
       row(0).size = FONT_SIZE_10
-      row(0).padding = [0, 0, 5, 10]
-      row(0).align = :left
-      row(1).align = :left
+      row(0).padding = [0, 0, 5, 0]
       row(1).height = 12
-      row(1).padding = [0, 5, 0, 0]
     end
   end
 
@@ -396,7 +391,6 @@ module WritePdfConcerns
   def draw_address(school)
     data =[[school.street],
            ["#{school.city}, #{school.state} #{school.zipcode}"],
-           # ["#{is_spanish ? 'Teléfono: ' : 'Phone: ' }" + "#{school.phone}"],
     ]
 
 
@@ -443,7 +437,6 @@ module WritePdfConcerns
       draw_application_table(school_cache, school)
 
       move_down 15
-      # draw_best_known_for(school_cache, school, 15)
       draw_best_known_for(school_cache, school, 5)
     end
   end
@@ -718,7 +711,6 @@ module WritePdfConcerns
              :size => 24,
              :style => :bold,
              :align => :center
-    # :align => :nil
 
 
     move_down 30

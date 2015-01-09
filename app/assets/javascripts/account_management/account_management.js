@@ -220,3 +220,21 @@ GS.accountManagement.slideToggleSection = (function(){
     }
 })();
 
+GS.accountManagement.displayHometownChooser = (function(){
+    var init = function(){
+        displayHometownChoosers();
+    };
+
+    var displayHometownChoosers = function() {
+
+        $('.js-change-hometown-link').on('click', function () {
+            $('.js-hometown-chooser-display').removeClass('dn');
+            $('.js-hometown-chosen').addClass('dn');
+        });
+    }
+    return {
+        init: init
+    }
+})();
+
+

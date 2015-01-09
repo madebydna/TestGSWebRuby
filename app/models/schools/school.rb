@@ -289,20 +289,7 @@ class School < ActiveRecord::Base
     includes_level_code?(%w[e m])  &&  !preschool?
   end
 
-  def progress_bar_hash
-    @progress_bar ||= (
-    query_results = SchoolCacheQuery.new.include_cache_keys('progress_bar').include_schools(state, id).query
-
-    school_cache_results = SchoolCacheResults.new('progress_bar', query_results)
-
-    decorated_school_cache_results = school_cache_results.decorate_schools(Array(self))
-    decorated_school_cache_results.first.progress_bar
-    )
-  end
-
-  #TODO this is temporary. Need to change how cache is used across profile pages for a school.
-  #TODO Also make just 1 query that includes progress_bar above as well.
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar)
 
   def cache_results
 

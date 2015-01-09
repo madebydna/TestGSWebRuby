@@ -12,6 +12,7 @@ class UserProfile < ActiveRecord::Base
   end
 
   def update_and_save_locale_info(state,city)
+
     self.city = city
     self.state = state
     self.save

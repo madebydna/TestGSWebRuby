@@ -1,25 +1,40 @@
-<div class="container">
-  <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
-    <%= render 'search/change_location', choose_state: @state_locale.present? ? @state_locale[:long].titleize : nil %>
-  </div>
-  <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
-    <% if @city_locale.present?%>
-    <input  type="text"
-            name= "userCity"
-            id="js-userCity"
-            class='typeahead search-text full-width pam'
-            value= "<%= @city_locale %>">
-     <% else %>
-    <input
-            type="text"
-            name= "userCity"
-            id="js-userCity"
-            class='typeahead search-text full-width pam'
-            placeholder="Enter you city">
-     <% end %>
+<form accept-charset="UTF-8" action="/gsr/user/save_city_state" method="get">
+  <div style="display:none"><input name="utf8" type="hidden" value="✓"></div>
 
 
-    <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
+  <div class="container">
+    <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+      <div class="mbs open-sans_sb">State</div>
+      <%= render 'shared/account_management/change_location', choose_state: @state_locale.present? ? @state_locale[:long].titleize : nil %>
+    </div>
+    <input name="userState" type="hidden" value="">
+
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 prm mbm prn-mobile">
+      <div class="mbs open-sans_sb">City</div>
+      <% if @city_locale.present? %>
+          <input type="text"
+                 name="userCity"
+                 id="js-userCity"
+                 class='typeahead search-text full-width pam'
+                 placeholder="Enter your city"
+                 required="required"
+                 value="<%= @city_locale %>">
+      <% else %>
+          <input
+          type="text"
+          name="userCity"
+          id="js-userCity"
+          class='typeahead search-text full-width pam'
+          required="required"
+          placeholder="Enter your city">
+      <% end %>
+
+
+      <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
+    </div>
+    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ptl mts">
+      <input class="btn btn-lg btn-primary pam full-width mbl" name="commit" type="submit" value="Submit">
+
+    </div>
   </div>
-</div>
-</div>
+</form>

@@ -11,10 +11,15 @@
         IP Address: <%= review.ip || 'n/a' %>
         <br/>
         <% if review.user %>
-            Email: <%= review.user.email %>
+          <% email = review.user.email %>
+          <% username = review.user.user_profile.screen_name if review.user.user_profile.present? %>
         <% else %>
-            Email: n/a
+          <% email = 'n/a' %>
+          <% username = 'n/a' %>
         <% end %>
+        Email: <%= email %>
+        <br/>
+        Username: <%= username %>
         <br/>
 
         Submitted on: <%= review.posted.strftime('%B %d, %Y') %>
