@@ -17,6 +17,7 @@ class CensusDataCountryValue < ActiveRecord::Base
           :subject_name => subject.test_data_subject.name,
           :scores => get_scores_as_array(country_scores, index)}
     end
+    final_hash
   end
 
   def self.get_scores_as_array(country_scores, index)

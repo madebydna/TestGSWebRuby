@@ -1,3 +1,23 @@
+<% if @school.cache_results.OECD_data.present? %>
+  <% oecd_data = @school.cache_results.OECD_data %>
+  <% country_data = CensusDataCountryValue.get_country_scores_by_subject %>
+  <% countries_to_display = ['Shanghai-China', 'Korea', 'Finland', 'Canada', 'Singapore','Japan','Poland','Germany',
+                             'United Kingdom','Portugal','Mexico','Brazil', 'Australia', 'New Zealand'] %>
+  <% country_data_in_use = '' %>
+  <% country_data.each do | country_subjects | %>
+    <% if country_subjects[:subject_name] == category_placement.title %>
+      <% country_data_in_use = country_subjects[:scores] %>
+
+    <% end %>
+  <% end %>
+  <% school_score = '' %>
+  <% oecd_data.each do | oecd_data_subject | %>
+    <% if oecd_data_subject["subject"] == category_placement.title %>
+      <% school_score = oecd_data_subject["school_value"] %>
+    <% end %>
+  <% end %>
+
+
 <% data # A +Hash+ containing data for this table to display %>
 <% category_placement # The +CategoryPlacement+ that this table is for %>
 <% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
@@ -15,27 +35,27 @@
   <%= render "shared/section_header", category_placement:category_placement %>
 
   <table class="table table-striped no-more-tables">
-    <thead>
-    <tr>
-      <% category_placement.table_config.columns_to_print(data).each do |column| %>
-        <% if column['display_type'] == :data_and_header %>
-          <th><%= column['label'] %></th>
-        <% else %>
-          <th>&nbsp;</th>
-        <% end %>
-      <% end %>
-    </tr>
-    </thead>
+    <thead><th>Country</th><th>Score</th></thead>
 
     <tbody>
-    <% columns_to_print = data_config.columns_to_print(data) %>
+    <% #columns_to_print = data_config.columns_to_print(data) %>
+<% first_time = true %>
+    <% country_data_in_use.each do | country_and_scores | %>
 
-    <% data.rows.each do |hash| %>
+      <% if countries_to_display.include? country_and_scores[:country_name] %>
+
+      <% if country_and_scores[:country_score] < school_score && first_time == true %>
+          <% first_time = false %>
+          <tr>
+            <td class="open-sans_sb font-size-medium">This school</td>
+            <td class="open-sans_sb font-size-medium"><%= school_score %></td>
+          </tr>
+      <% end %>
       <tr>
-        <% data_config.row_values(columns_to_print, hash) do |label, value| %>
-          <%= td label, value %>
-        <% end %>
+          <%= td country_and_scores[:country_name], country_and_scores[:country_name] %>
+          <%= td country_and_scores[:country_score], country_and_scores[:country_score] %>
       </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>
@@ -55,4 +75,5 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
     <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
   </div>
+<% end %>
 <% end %>
