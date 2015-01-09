@@ -57,6 +57,7 @@ class CensusDataReader < SchoolProfileDataReader
       results_hash = {}
 
       category.category_datas.each do |cd|
+        # Filter by data type
         data_for_data_type = all_data.select do |data_type, data|
           cd.response_key == data_type_id_for_data_type_label(data_type) ||
           cd.response_key.to_s.match(/#{data_type_id_for_data_type_label(data_type)}/i)
@@ -64,7 +65,8 @@ class CensusDataReader < SchoolProfileDataReader
 
         next if data_for_data_type.values.empty?
 
-        data_for_data_type.values.first.select! do |data|
+        # Filter by subject
+        data_for_data_type.values.first.clone.select! do |data|
           (
             cd.subject_id == data[:subject] ||
             cd.subject_id == convert_subject_to_id(data[:subject])
@@ -74,9 +76,14 @@ class CensusDataReader < SchoolProfileDataReader
         data_for_data_type.values.first.each do |data_set_hash|
           next if data_set_hash.nil?
 
-          # Add human-readable labels
-          data_set_hash[:label] = cd.computed_label.gs_capitalize_first
-          data_set_hash[:description] = cd.computed_description(school.state)
+          if (cd.subject_id == data_set_hash[:subject] ||
+            cd.subject_id == convert_subject_to_id(data_set_hash[:subject]))
+
+            # Add human-readable labels
+            data_set_hash[:label] = cd.computed_label.gs_capitalize_first
+            data_set_hash[:description] = cd.computed_description(school.state)
+
+            end
         end
 
         results_hash.merge!(data_for_data_type)

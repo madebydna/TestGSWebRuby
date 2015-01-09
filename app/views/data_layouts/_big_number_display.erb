@@ -6,7 +6,6 @@
 <%= debug data if params[:debug] %>
 
 
-
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
   <% data = TableData.new data if !data.is_a? TableData %>
   <a name="<%= category.code_name %>"></a>
@@ -20,13 +19,11 @@
       <%= div_tag(sizes: sizes, class:'ptm' ) do %>
         <div class="ma" style="border:1px solid #CCCCCC; width:250px">
 
-        <% label_global = hash[columns_to_print.first['key'].to_sym] %>
-            <div class="pam mls open-sans_sb"><%= label_global %></div>
+          <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
+          <% label = columns_to_print.second['label'] %>
+          <% format = columns_to_print.second['format'] %>
+            <div class="pam mls open-sans_sb"><%= hash[:label] %></div>
             <div class="tac pvl">
-        <!--<% value = hash[columns_to_print.second['key'].to_sym] %>-->
-        <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
-        <% label = columns_to_print.second['label'] %>
-        <% format = columns_to_print.second['format'] %>
                 <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %>
                 </span>
           <br /><%= label %>
