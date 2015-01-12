@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../../features/search/search_spec_helper'
 
-describe 'search/_search_results.html.erb' do
+describe 'search/_search_results.html.erb', js: true do
   include SearchSpecHelper
 
   let(:header_ad_slots) {{
