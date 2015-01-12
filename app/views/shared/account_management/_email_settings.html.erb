@@ -1,4 +1,6 @@
-<div class="limit-width-1200 collapse js-email-settings phm">
+<!--TODO uncomment this div-->
+<!--<div class="limit-width-1200 collapse js-email-settings phm">-->
+<div class="limit-width-1200  js-email-settings phm">
   <h2>Email subscriptions</h2>
   <% if @current_user.subscriptions.present? %>
       <div class="limit-width-1200 mtl">
@@ -12,36 +14,58 @@
                 <%= first_decorated_subscription.description %>
                 <% subscriptions.each do |subscription| %>
                     <% decorated_subscription = NewsletterDecorator.decorate(subscription) %>
+
                     <div class="js-subscription-<%= subscription.id  %>" >
                       <% if decorated_subscription.school && decorated_subscription.school.city && decorated_subscription.school.state %>
                           <div class="open-sans_sb mtm">
                             <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
                           </div>
                       <% end %>
-                      <div class="mlm mtm">
-                        <%= link_to('Unsubscribe', subscription_path(subscription.id),
-                                    {
-                                            class: "js-delete-subscription-#{subscription.id}",
-                                            :data => { :params_local => {"id" => subscription.id} }
-                                    }
-                            ) %>
+                      <div class="">
+                        <div class="fl mtn">
+                          <%= check_box_tag 'name1', 'some_id', is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}", :data => { :params_local => {"id" => subscriptions.first.id}} %>
+                        </div>
+                        <!--<label>-->
+                          <!--<input type="checkbox"> Unsubscribe-->
+                        <!--</label>-->
+                      </div>
+                      <div class="mlm">
+                        <div class="mlm">
+                            <!--<= link_to('Unsubscribe', '#',-->
+                                    <!--class:"js-link js-delete-subscription-#{subscription.id}",-->
+                                    <!--:data => { :params_local => {"id" => subscription.id}}-->
+                                <!--)%>-->
+
+                            <a class="js-link js-delete-subscription-<%= subscriptions.first.id%>" data-change="Subscribe" data="<%={ :params_local => {"id" => subscription.id}}%>">
+                              Unsubscribe
+                            </a>
+                        </div>
+                        <!--<=% link_to('Unsubscribe', subscription_path(subscription.id),-->
+                                            <!--class: "js-delete-subscription-#{subscription.id}",-->
+                                            <!--:data => { :params_local => {"id" => subscription.id} }-->
+                            <!--) %>-->
                       </div>
                         <br/>
                     </div>
+
 
                 <% end %>
             <% else %>
                 <% decorated_subscription = NewsletterDecorator.decorate(subscriptions.first) %>
                 <div class="js-subscription-<%= subscriptions.first.id  %>" >
+                  <div class="fl mtn prm">
+                    <%= check_box_tag 'name1', 'some_id', is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}", :data => { :params_local => {"id" => subscriptions.first.id}} %>
+                  </div>
                   <h3><%= decorated_subscription.name %></h3>
                   <%= decorated_subscription.description %>
                   <div class="mll mtm">
-                    <%= link_to('Unsubscribe', subscription_path(subscriptions.first.id),
-                                {
-                                        class: "js-delete-subscription-#{subscriptions.first.id}",
-                                        :data => { :params_local => {"id" => subscriptions.first.id} }
-                                }
-                        ) %>
+                    <a class="js-link" data-change="">Unsubscribe</a>
+                    <!--<= link_to('Unsubscribe', subscription_path(subscriptions.first.id),-->
+                                <!--{-->
+                                        <!--class: "js-delete-subscription-#{subscriptions.first.id}",-->
+                                        <!--:data => { :params_local => {"id" => subscriptions.first.id} }-->
+                                <!--}-->
+                        <!--) %>-->
                   </div>
                 </div>
             <% end %>

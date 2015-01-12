@@ -9,6 +9,7 @@ if(gon.pagename == "Account management"){
     GS.accountManagement.slideToggleSection.init();
     GS.accountManagement.displayHometownChooser.init();
     GS.search.autocomplete.cityAutocomplete.setUserAccountStatePickerHandler();
+    GS.accountManagement.changeLinkText.init();
 
       
 
