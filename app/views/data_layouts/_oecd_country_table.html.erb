@@ -2,7 +2,8 @@
   <% oecd_data = @school.cache_results.OECD_data %>
   <% country_data = CensusDataCountryValue.get_country_scores_by_subject %>
   <% countries_to_display = ['Shanghai-China', 'Korea', 'Finland', 'Canada', 'Singapore','Japan','Poland','Germany',
-                             'United Kingdom','Portugal','Mexico','Brazil', 'Australia', 'New Zealand'] %>
+                             'United Kingdom','Portugal','Mexico','Brazil', 'Australia', 'New Zealand',
+                             'United States of America'] %>
   <% country_data_in_use = '' %>
   <% country_data.each do | country_subjects | %>
     <% if country_subjects[:subject_name] == category_placement.title %>
