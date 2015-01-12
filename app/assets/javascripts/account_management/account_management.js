@@ -237,24 +237,6 @@ GS.accountManagement.displayHometownChooser = (function(){
     }
 })();
 
-GS.accountManagement.changeLinkText = (function(){
-    var init = function(){
-        changeLinkText();
-    };
 
-    var changeLinkText = function() {
-
-        $('.js-link').on('click', function(){
-//            var currentLinkState = $(this).html();
-//            var changeLinkState = $(this).attr('data-change');
-//            $(this).text() === currentLinkState ? $(this).text(changeLinkState) : $(this).text(currentLinkState);
-            $(this).text() ===  'Unsubscribe'? $(this).text('Subscribe') : $(this).text('Unsubscribe');
-//            $(this).text() === "Unsubscribe" ? $(this).find('.js-add-subscription').removeClass('js-add-subscription-#{subscriptions.first.id}').addClass("js-delete-subscription-#{subscriptions.first.id}") : $(this).find('.js-delete-subscription').addClass("js-add-subscription-#{subscriptions.first.id}");
-        });
-    }
-    return {
-        init: init
-    }
-})();
 
 
