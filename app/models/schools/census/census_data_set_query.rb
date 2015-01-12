@@ -73,7 +73,7 @@ class CensusDataSetQuery
   end
 
   def data_sets
-    @data_sets ||= @relation.to_a
+    @data_sets ||= @relation.present? ? @relation.to_a : nil
   end
 
   def data_set_ids
