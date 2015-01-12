@@ -65,31 +65,38 @@ class CensusDataReader < SchoolProfileDataReader
 
         next if data_for_data_type.values.empty?
 
-        # Filter by subject
-        data_for_data_type.values.first.clone.select! do |data|
-          (
-            cd.subject_id == data[:subject] ||
-            cd.subject_id == convert_subject_to_id(data[:subject])
-          )
+        data_for_data_type.each_pair do |data_type,data|
+          data_for_data_type[data_type] = data.deep_dup
         end
+
+      # Filter by subject
+      data_for_data_type.values.first.select! do |data|
+        (
+        cd.subject_id == data[:subject] ||
+          cd.subject_id == convert_subject_to_id(data[:subject])
+        )
+      end
 
         data_for_data_type.values.first.each do |data_set_hash|
           next if data_set_hash.nil?
 
-          if (cd.subject_id == data_set_hash[:subject] ||
-            cd.subject_id == convert_subject_to_id(data_set_hash[:subject]))
-
             # Add human-readable labels
             data_set_hash[:label] = cd.computed_label.gs_capitalize_first
             data_set_hash[:description] = cd.computed_description(school.state)
-
-            end
         end
 
-        results_hash.merge!(data_for_data_type)
+        data_for_data_type.each_pair do |data_type,value|
+
+          if results_hash.has_key?(data_type) && value.is_a?(Array)
+            results_hash[data_type] += value
+          else
+            results_hash[data_type] = value
+          end
+        end
+
       end
 
-     results_hash 
+     results_hash
     )
   end
 
