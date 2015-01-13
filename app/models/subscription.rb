@@ -19,7 +19,9 @@ class Subscription < ActiveRecord::Base
     sponsor: SubscriptionProduct.new('sponsor', 'Partner offers',
                                      'Receive valuable offers and information from GreatSchools partners.', nil, true),
     osp_partner_promos: SubscriptionProduct.new('osp_partner_promos', 'Weekly newsletter',
-                                       'Relevant, occasional offers and special promotions from carefully chosen partners.', nil, false)
+                                       'Relevant, occasional offers and special promotions from carefully chosen partners.', nil, false),
+    osp: SubscriptionProduct.new('osp', 'School official alerts',
+                                                'Receive tips and updates about new features that help you make the best use of your GreatSchools school profile.', nil, false)
   }
 
   def self.subscription_product(list)

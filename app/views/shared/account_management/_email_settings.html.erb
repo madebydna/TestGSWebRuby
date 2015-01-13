@@ -1,7 +1,6 @@
 <!--TODO uncomment this div-->
 <!--<div class="limit-width-1200 collapse js-email-settings phm">-->
 <div class="limit-width-1200  js-email-settings phm" xmlns="http://www.w3.org/1999/html">
-  <!--<h2>Email subscriptions</h2>-->
   <% if @current_user.subscriptions.present? %>
       <div class="limit-width-1200 mtl">
         <% @current_user.subscriptions.group_by(&:list).each do |list, subscriptions| %>
@@ -45,7 +44,8 @@
                         <%= check_box_tag 'name1', 'some_id', is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}", :data => {:params_local => {"id" => subscriptions.first.id}} %>
                       </div>
                       <h3><%= decorated_subscription.name %></h3>
-                    </label>
+                      </label>
+
 
                     <div>
                       <%= decorated_subscription.description %>
