@@ -1,6 +1,4 @@
-<!--TODO uncomment this div-->
-<!--<div class="limit-width-1200 collapse js-email-settings phm">-->
-<div class="limit-width-1200  js-email-settings phm" xmlns="http://www.w3.org/1999/html">
+<div class="limit-width-1200  collapse js-email-settings phm" xmlns="http://www.w3.org/1999/html">
   <% if @current_user.subscriptions.present? %>
       <div class="limit-width-1200 mtl">
         <% @current_user.subscriptions.group_by(&:list).each do |list, subscriptions| %>
