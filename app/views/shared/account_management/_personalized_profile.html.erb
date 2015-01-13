@@ -37,20 +37,20 @@
     </div>
     <% if  @state_locale.present? && @city_locale.present? %>
         <div class="js-hometown-chosen">
-          <div class="fl">
-            <%= @city_locale %>, <%= @state_locale[:long].titleize %>
-            <!--<= @city_locale.titleize %>, <= @state_locale[:long].titleize %>-->
+          <div class="fl notranslate">
+            <!--<= @city_locale %>, <= @state_locale[:long].titleize %>-->
+            <%= @city_locale.titleize %>, <%= @state_locale[:long].titleize %>
           </div>
           <div class="fl mll">
             <a class="font-size-small pointer js-change-hometown-link">change</a>
           </div>
         </div>
-        <div class="fl js-hometown-chooser-display dn">
+        <div class="fl js-hometown-chooser-display dn notranslate">
           <%= render 'shared/account_management/cityChooser' %>
         </div>
     <% else %>
 
-        <div class="fl js-hometown-chooser-display">
+        <div class="fl js-hometown-chooser-display notranslate">
           <%= render 'shared/account_management/cityChooser' %>
         </div>
     <% end %>
