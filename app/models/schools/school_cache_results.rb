@@ -48,6 +48,8 @@ class SchoolCacheResults
         CachedProgramsMethods
       when 'progress_bar'
         CachedProgressBarMethods
+      when 'test_scores'
+        CachedTestScoresMethods
     end
   end
 
