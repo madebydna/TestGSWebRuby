@@ -16,7 +16,7 @@
                             <div class="open-sans_sb mtm">
                               <label class="pointer notranslate">
                                 <div class="fl mtn prm">
-                                  <%= check_box_tag 'name1', "/gsr/user/subscriptions/#{subscriptions.first.id}/", is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}", :data => {:params_local => {"id" => subscriptions.first.id}} %>
+                                  <%= check_box_tag 'name1', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id}} %>
                                 </div>
                                 <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>
                                 , <%= decorated_subscription.school.state %>
@@ -24,13 +24,6 @@
                             </div>
 
                         <% end %>
-                        <!--<div class="mlm">-->
-                        <!--<=% link_to('Unsubscribe', subscription_path(subscription.id),-->
-                        <!--class: "js-delete-subscription-#{subscription.id}",-->
-                        <!--:data => { :params_local => {"id" => subscription.id} }-->
-                        <!--) %>-->
-                        <!--</div>-->
-                        <!--<br/>-->
                       </div>
 
                   <% end %>
@@ -47,12 +40,6 @@
 
                     <div>
                       <%= decorated_subscription.description %>
-                      <!--<= link_to('Unsubscribe', subscription_path(subscriptions.first.id),-->
-                      <!--{-->
-                      <!--class: "js-delete-subscription-#{subscriptions.first.id}",-->
-                      <!--:data => { :params_local => {"id" => subscriptions.first.id} }-->
-                      <!--}-->
-                      <!--) %>-->
                     </div>
                   </div>
               <% end %>

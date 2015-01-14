@@ -177,13 +177,15 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
       hash.callback_error = GS.accountManagement.newsFeedUnsubscribe.deleteFailure;
       hash.href = $self.val();
       GS.util.deleteAjaxCall($self, hash);
-      return false;
+//      return true;
+        return false;
+
     });
   };
 
   var deleteSuccessful = function(obj, data, params){
-    var css_selector = ".js-subscription-"+params.id;
-    $(css_selector).slideUp();
+    var css_selector = ".js-delete-subscription-"+params.id;
+    $(css_selector).attr('checked', false);
   };
 
   var deleteFailure = function(obj, data, params){
