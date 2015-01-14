@@ -370,7 +370,7 @@ module WritePdfConcerns
 
     end
           table(data, :column_widths => is_spanish ? [56, 56, 56] : [50, 50, 50],
-          :position => 7,
+          :position => 1,
           :cell_style => {:align => :center, size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
       cells.borders = []
       row(0).font_style = :bold
