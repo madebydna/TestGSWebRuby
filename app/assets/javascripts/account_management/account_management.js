@@ -170,13 +170,12 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
   };
 
   var setDeleteNewsFeedUnsubscribeHandler = function() {
-    $("a[class^=js-delete-subscription-]").on('click', function(){
+    $("input[class^=js-delete-subscription-]").on('click', function(){
       var hash = {};
       var $self = $(this);
-      var id = $self.data('id');
       hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
       hash.callback_error = GS.accountManagement.newsFeedUnsubscribe.deleteFailure;
-      hash.href = $self.attr('href');
+      hash.href = $self.val();
       GS.util.deleteAjaxCall($self, hash);
       return false;
     });
