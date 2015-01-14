@@ -32,11 +32,14 @@
                   <div class="js-subscription-<%= subscriptions.first.id %>">
                     <label class="db pointer">
                       <div class="fl mtn prm">
-                        <%= check_box_tag 'name1', "/gsr/user/subscriptions/#{subscriptions.first.id}/", is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}", :data => {:params_local => {"id" => subscriptions.first.id}} %>
+                        <%= check_box_tag "#{subscriptions.first.list}", "/gsr/user/subscriptions/#{subscriptions.first.id}/", is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}",
+                                                                                                                                                    :data => {:params_local => {"id"  => subscriptions.first.id ,
+                                                                                                                                                                                "name" => subscriptions.first.list}} %>
+
                       </div>
                       <h3><%= decorated_subscription.name %></h3>
                       </label>
-
+                    <%= subscriptions.first.list %>
 
                     <div>
                       <%= decorated_subscription.description %>

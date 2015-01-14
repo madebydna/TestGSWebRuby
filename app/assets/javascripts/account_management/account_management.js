@@ -186,6 +186,8 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
   var deleteSuccessful = function(obj, data, params){
     var css_selector = ".js-delete-subscription-"+params.id;
     $(css_selector).attr('checked', false);
+    $(css_selector).addClass("js-add-subscription-"+params.name);
+    $(css_selector).removeClass("js-delete-subscription-"+params.id);
   };
 
   var deleteFailure = function(obj, data, params){
