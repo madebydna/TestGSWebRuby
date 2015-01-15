@@ -349,7 +349,7 @@ module WritePdfConcerns
       if is_spanish
         other_ratings.each do |i|
           if school.which_rating_mapping(i[0]).present? && ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
-            data[0] << (school.which_rating_mapping(i[1]).nil? ? 'NR' : school.which_rating_mapping(i[1]))
+            data[0] << i[1]
             data[1] << school.which_rating_mapping(i[0])
           elsif !school.which_rating_mapping(i[0]).present? &&  ((i[0].downcase.include? "preschool"  and  school.includes_preschool?)|| (!i[0].downcase.include? "preschool"))
             data[0] << i[1]
