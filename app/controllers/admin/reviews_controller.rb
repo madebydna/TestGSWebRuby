@@ -41,6 +41,7 @@ class Admin::ReviewsController < ApplicationController
     review = SchoolRating.find(params[:id]) rescue nil
 
     if review
+      review.moderated = true
       if review.update_attributes(params[:school_rating])
         flash_notice 'Review updated.'
       else
