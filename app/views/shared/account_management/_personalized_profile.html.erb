@@ -38,23 +38,24 @@
     <% if  @state_locale.present? && @city_locale.present? %>
         <div class="js-hometown-chosen">
           <div class="fl notranslate">
-            <!--<= @city_locale %>, <= @state_locale[:long].titleize %>-->
             <%= @city_locale.titleize %>, <%= @state_locale[:long].titleize %>
           </div>
           <div class="fl mll">
             <a class="font-size-small pointer js-change-hometown-link">change</a>
           </div>
         </div>
-        <div class="fl js-hometown-chooser-display dn notranslate">
+        <div class="fl js-hometown-chooser-display dn">
           <%= render 'shared/account_management/cityChooser' %>
         </div>
     <% else %>
 
-        <div class="fl js-hometown-chooser-display notranslate">
+        <div class="fl js-hometown-chooser-display">
           <%= render 'shared/account_management/cityChooser' %>
         </div>
     <% end %>
   </div>
+  <!--<= render 'shared/account_management/grade_level_selector'%>-->
+
 </div>
 
 <% if @saved_searches.present? %>
