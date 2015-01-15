@@ -25,7 +25,7 @@ class PropertyConfig < ActiveRecord::Base
   def self.advertising_enabled?
     Rails.cache.fetch('PropertyConfig/advertising_enabled', expires_in: 2.minutes) do
       property = PropertyConfig.where(quay: 'advertisingEnabled')
-      property.nil? ? true : property.first.value == 'true'
+      property.present? ? property.first.value == 'true' : true
     end
   end
 end
