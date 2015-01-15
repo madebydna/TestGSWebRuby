@@ -17,21 +17,37 @@ class Admin::ReviewsController < ApplicationController
   end
 
   def moderate_by_user
-    if params[:email].present?
-      user = User.find_by_email(params[:email])
-      if user
-        #reviews by the user and the flags on those reviews.
-        @reviews_by_user = find_reviews_by_user(user)
+
+    search_string = params[:review_moderation_search_string]
+
+    if search_string.present?
+      search_string.strip!
+
+      #TODO refactor the if and else to be more DRY
+
+      if (search_string).match(/[a-zA-z]/)
+        user = User.find_by_email(search_string)
+        if user
+          #reviews by the user and the flags on those reviews.
+          @reviews_by_user = find_reviews_by_user(user)
+          flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
+          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
+
+          #reviews that are flagged by the user.
+          flagged_by_user = find_reviews_reported_by_user(user)
+          if flagged_by_user.present?
+            @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
+            Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
+          end
+        end
+
+      else
+        @reviews_by_user = SchoolRating.by_ip(search_string)
         flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
         Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
 
-        #reviews that are flagged by the user.
-        flagged_by_user = find_reviews_reported_by_user(user)
-        if flagged_by_user.present?
-          @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
-          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
-        end
       end
+
       render '_reviews_for_email'
     end
   end

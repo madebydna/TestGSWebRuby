@@ -277,6 +277,10 @@ class SchoolRating < ActiveRecord::Base
     end
   end
 
+  def self.by_ip(ips)
+    SchoolRating.where(ip: ips)
+  end
+
   private
 
   def comments_word_count
