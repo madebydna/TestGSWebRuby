@@ -4,7 +4,8 @@ class QueueDaemon
   SUCCESS_STATUS = 'done'
   FAILURE_STATUS = 'failed'
   UPDATE_LIMIT_DEFAULT = 100
-  # UPDATE_ORDER_DEFAULT = [1,2,3,4,5]
+  #1 is the highest priority and 5 is the lowest. updates will get processed in order of highest to lowest
+  UPDATE_ORDER_DEFAULT = [1,2,3,4,5]
 
   def run!
     # This is just for testing
@@ -49,28 +50,32 @@ class QueueDaemon
 
   def get_updates
     begin
-      todo, limit = unprocessed_status, update_limit
-
-      #1 is the highest priority and 5 is the lowest. updates will get processed in order of highest to lowest
-      UpdateQueue.find_by_sql(<<-eos
-        (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = 1 LIMIT #{limit})
-        UNION ALL
-        (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = 2 LIMIT #{limit})
-        UNION ALL
-        (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = 3 LIMIT #{limit})
-        UNION ALL
-        (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = 4 LIMIT #{limit})
-        UNION ALL
-        (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = 5 LIMIT #{limit})
-
-        LIMIT #{limit}
-
-        eos
-      )
+      UpdateQueue.find_by_sql(updates_query)
     rescue
       raise 'Could Not Retrieve Updates'
     end
   end
+
+  def updates_query
+    todo, limit, order = unprocessed_status, update_limit, update_order
+
+    query = order.inject('') do |q, order_number|
+      q << "(SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = #{order_number} ORDER BY `created` ASC LIMIT #{limit}) UNION ALL"
+    end
+
+    query << <<-eos
+      (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` NOT IN (#{order.join(',')}) ORDER BY `priority`, `created` ASC LIMIT #{limit})
+      LIMIT #{limit}
+    eos
+  end
+  # An Example Query from updates_query
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 1 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 2 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 3 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 4 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 5 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` NOT IN (1,2,3,4,5) ORDER BY `priority`, `created` ASC LIMIT 100)
+  # LIMIT 100
 
   def unprocessed_status
     ActiveRecord::Base.sanitize(UNPROCESSED_STATUS)
@@ -80,13 +85,13 @@ class QueueDaemon
     ENV_GLOBAL['queue_daemon_updates_limit'].to_i
   end
 
-  # def update_order
-  #   order = ENV_GLOBAL['queue_daemon_update_order']
-  #   if order.is_a? Array
-  #     order.each { |order_number| return UPDATE_ORDER_DEFAULT unless order_number.is_a? Fixnum }
-  #   else
-  #     UPDATE_ORDER_DEFAULT
-  #   end
-  # end
+  def update_order
+    order = ENV_GLOBAL['queue_daemon_update_order']
+    if order.is_a? Array
+      order.each { |order_number| return UPDATE_ORDER_DEFAULT unless order_number.is_a? Fixnum }
+    else
+      UPDATE_ORDER_DEFAULT
+    end
+  end
 
 end

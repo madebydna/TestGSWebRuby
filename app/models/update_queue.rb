@@ -1,7 +1,7 @@
 class UpdateQueue < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'update_queue'
-  attr_accessible :source, :status, :update_blob, :notes, :updated
+  attr_accessible :source, :status, :update_blob, :notes, :updated, :priority
 
   scope :todo, -> { where(status: 'todo') }
 
