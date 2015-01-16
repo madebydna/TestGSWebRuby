@@ -29,4 +29,10 @@ connection_pooling_enabled: false
 # Configs for scripts
 queue_daemon_sleep_time: 1 # in seconds
 queue_daemon_updates_limit: 100
+#queue_daemon_update_order:
+#  - 1
+#  - 2
+#  - 3
+#  - 4
+#  - 5
 # End configs for scripts
