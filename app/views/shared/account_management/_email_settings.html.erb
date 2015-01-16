@@ -18,8 +18,7 @@
                                 <div class="fl mtn prm">
                                   <%= check_box_tag 'name1', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id}} %>
                                 </div>
-                                <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>
-                                , <%= decorated_subscription.school.state %>
+                                <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
                               </label>
                             </div>
 
