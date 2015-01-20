@@ -38,19 +38,134 @@
                       </div>
                       <h3><%= decorated_subscription.name %></h3>
                       </label>
-                    <%= subscriptions.first.list %>
-
                     <div>
                       <%= decorated_subscription.description %>
                     </div>
                   </div>
               <% end %>
+
+
+              <% if !current_user.has_signedup?('greatnews') %>
+
+                  <div class="js-subscription">
+                    <label class="db pointer">
+                      <div class="fl mtn prm">
+                        <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
+                                          :data => {:params_local => {  "name" => "greatnews"}} %>
+
+
+                      </div>
+                      <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
+                    </label>
+
+                    <div>
+                      <%= Subscription.subscription_product("greatnews").description  %>
+
+                    </div>
+                  </div>
+
+              <% end %>
+
+
+
+              <% if !current_user.has_signedup?('sponsor') %>
+
+                  <div class="js-subscription">
+                    <label class="db pointer">
+                      <div class="fl mtn prm">
+                        <%= check_box_tag "sponsor", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
+                                          :data => {:params_local => {  "name" => "sponsor"}} %>
+
+
+                      </div>
+                      <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
+                    </label>
+
+                    <div>
+                      <%= Subscription.subscription_product("sponsor").description  %>
+
+                    </div>
+                  </div>
+
+              <% end %>
+
+
+              <% if !current_user.has_signedup?('mystat') &&  !current_user.has_signedup?('mystat_private') && !current_user.has_signedup?('mystat_unverified')%>
+
+                  <div class="js-subscription">
+
+                      <h3> My School Stats</h3>
+
+
+                    <div>
+                      Follow schools to save them here and we'll update you when there are new reviews, test scores, or GreatSchools ratings.
+
+                    </div>
+                  </div>
+
+              <% end %>
+
+
+
             </div>
         <% end %>
       </div>
   <% else %>
-      You do not have any email subscriptions yet.
-  <% end %>
+
+          <div class="js-subscription">
+            <label class="db pointer">
+              <div class="fl mtn prm">
+                <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
+                                  :data => {:params_local => {  "name" => "greatnews"}} %>
+
+
+              </div>
+              <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
+            </label>
+
+            <div>
+              <%= Subscription.subscription_product("greatnews").description  %>
+
+            </div>
+          </div>
+
+
+
+
+
+          <div class="js-subscription">
+            <label class="db pointer">
+              <div class="fl mtn prm">
+                <%= check_box_tag "greatnews", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
+                                  :data => {:params_local => {  "name" => "sponsor"}} %>
+
+
+              </div>
+              <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
+            </label>
+
+            <div>
+              <%= Subscription.subscription_product("sponsor").description  %>
+
+            </div>
+          </div>
+
+
+
+
+          <div class="js-subscription">
+
+            <h3> My School Stats</h3>
+
+
+            <div>
+              Follow schools to save them here and we'll update you when there are new reviews, test scores, or GreatSchools ratings.
+
+            </div>
+          </div>
+
+
+<% end %>
 </div>
 
 

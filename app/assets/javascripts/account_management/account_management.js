@@ -240,6 +240,58 @@ GS.accountManagement.displayHometownChooser = (function(){
     }
 })();
 
+GS.accountManagement.newsFeedSubscribe= (function(){
+    var init = function() {
+        setAddNewsFeedSubscribeHandler();
+    };
+
+    var setAddNewsFeedSubscribeHandler = function() {
+        $("input[class^=js-add-subscription-]").on('click', function(){
+            var hash = {};
+            var $self = $(this);
+            hash.callback = GS.accountManagement.newsFeedSubscribe.addSuccessful;
+            hash.callback_error = GS.accountManagement.newsFeedSubscribe.addFailure;
+            var list = $self.attr("name");
+            if (list !== undefined) {
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "/gsr/user/account_subscriptions/",
+                        data: {list: list},
+                        dataType: 'json',
+                        async: true
+                    }).done(function (data) {
+                        var css_selector = ".js-add-subscription-"+data[list];
+                        $(css_selector).attr('checked', true);
+                        $(css_selector).removeClass("js-add-subscription-"+data[list]);
+//                        $(css_selector).removeClass("js-delete-subscription-"+params.id);
+                    });
+            }
+              return true;
+//            return false;
+
+        });
+    };
+
+    var addSuccessful = function(obj, data, params){
+        var css_selector = ".js-delete-subscription-"+params.id;
+        $(css_selector).attr('checked', false);
+        $(css_selector).addClass("js-add-subscription-"+params.name);
+        $(css_selector).removeClass("js-delete-subscription-"+params.id);
+    };
+
+    var addFailure = function(obj, data, params){
+        obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
+    };
+
+    return {
+        init: init,
+        addSuccessful: addSuccessful,
+        addFailure: addFailure
+    }
+})();
+
+
 
 
 

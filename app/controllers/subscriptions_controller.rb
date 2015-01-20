@@ -22,6 +22,15 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def create_subscription_from_account_page
+    list = params[:list]
+    binding.pry;
+    unless current_user.has_subscription?(list)
+      current_user.add_subscription!(list)
+    end
+    redirect_to manage_account_url
+  end
+
   def destroy
     success = false
     message = ''

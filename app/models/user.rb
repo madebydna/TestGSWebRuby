@@ -210,6 +210,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_signedup?(list)
+    subscriptions.any? do |subscription|
+      subscription.list == list
+    end
+  end
+
   def favorited_school?(school)
     favorite_schools.any? { |favorite| favorite.school_id == school.id && favorite.state == school.state }
   end
