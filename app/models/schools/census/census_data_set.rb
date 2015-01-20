@@ -8,7 +8,6 @@ class CensusDataSet < ActiveRecord::Base
   attr_accessor :census_description, :census_data_config_entry
 
   has_many :census_data_school_values, class_name: 'CensusDataSchoolValue', foreign_key: 'data_set_id'
-  # has_many :census_data_country_values, class_name: 'CensusDataCountryValue', foreign_key: 'data_set_id'
   belongs_to :test_data_subject, class_name: 'TestDataSubject', foreign_key: 'subject_id'
 
   has_many :census_data_district_values, class_name: 'CensusDataDistrictValue', foreign_key: 'data_set_id'
