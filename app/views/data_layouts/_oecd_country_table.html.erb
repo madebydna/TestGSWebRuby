@@ -49,12 +49,12 @@
           <% first_time = false %>
           <tr>
             <td class="open-sans_sb font-size-medium">This school</td>
-            <td class="open-sans_sb font-size-medium"><%= school_score %></td>
+            <td class="open-sans_sb font-size-medium"><%= school_score.round %></td>
           </tr>
       <% end %>
       <tr>
           <%= td country_and_scores[:country_name], country_and_scores[:country_name] %>
-          <%= td country_and_scores[:country_score], country_and_scores[:country_score] %>
+          <%= td country_and_scores[:country_score].round, country_and_scores[:country_score].round %>
       </tr>
     <% end %>
     <% end %>
