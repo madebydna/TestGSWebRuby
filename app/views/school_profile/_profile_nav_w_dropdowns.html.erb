@@ -37,12 +37,12 @@
         <%= link_to 'Quality', school_quality_path(school), data: {'hover'=> 'dropdown'} %>
         <div class="dropdown-menu" style="<%= nav_default_on_hash[:quality] %>">
           <ul  class="limit-width-1200 tac">
-            <li style="width: 22%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Ratings" style="">Ratings</a></li>
-            <li style="width: 22%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Test_scores"
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Ratings" style="">Ratings</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Test_scores"
                                        style="">Test scores</a></li>
-            <li style="width: 22%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Student_growth"
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Student_growth"
                                        style="">Student growth</a></li>
-            <li style="width: 22%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Climate" style="">Climate</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Climate" style="">Climate</a></li>
           </ul>
         </div>
       </li>
