@@ -82,7 +82,7 @@ class QueueDaemon
   end
 
   def update_limit
-    ENV_GLOBAL['queue_daemon_updates_limit'].to_i
+    ENV_GLOBAL['queue_daemon_updates_limit'].to_i || UPDATE_LIMIT_DEFAULT
   end
 
   def update_order
