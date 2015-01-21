@@ -263,7 +263,10 @@ GS.accountManagement.newsFeedSubscribe= (function(){
                     var css_selector = ".js-add-subscription-"+data['list'];
                     $(css_selector).addClass("js-delete-subscription-"+data['subscription_id']);
                     $(css_selector).val('/gsr/user/subscriptions/'+data['subscription_id']);
-                    $(css_selector).data('params-remote' , 140);
+//                    $(css_selector).data("params-local",123);
+                    $(css_selector).data("params-local", { "name": data['list'], "id" : data['subscription_id'] } );
+                    alert($(css_selector).data('params-local'));
+
                     $(css_selector).removeClass("js-add-subscription-"+data['list']);
                 });
             }

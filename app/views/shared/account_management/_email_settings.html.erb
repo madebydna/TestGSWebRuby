@@ -16,7 +16,8 @@
                             <div class="open-sans_sb mtm">
                               <label class="pointer notranslate">
                                 <div class="fl mtn prm">
-                                  <%= check_box_tag 'name1', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id}} %>
+                                  <%= check_box_tag 'mystat', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id ,"name" => subscription.list}} %>
+
                                 </div>
                                 <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
                               </label>
