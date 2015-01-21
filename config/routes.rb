@@ -40,7 +40,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
-  get '/gsr/user/account_subscriptions/:list', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
+  get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
 
 
 # Routes within this scope are pages not handled by Rails.

@@ -170,7 +170,8 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
   };
 
   var setDeleteNewsFeedUnsubscribeHandler = function() {
-    $("input[class^=js-delete-subscription-]").on('click', function(){
+      $(".js-email-settings").on('click','input[class^=js-delete-subscription-]', function(){
+          alert('delete');
       var hash = {};
       var $self = $(this);
       hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
@@ -185,7 +186,7 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
 
   var deleteSuccessful = function(obj, data, params){
     var css_selector = ".js-delete-subscription-"+params.id;
-    $(css_selector).attr('checked', false);
+//    $(css_selector).attr('checked', false);
     $(css_selector).addClass("js-add-subscription-"+params.name);
     $(css_selector).removeClass("js-delete-subscription-"+params.id);
   };
@@ -246,11 +247,10 @@ GS.accountManagement.newsFeedSubscribe= (function(){
     };
 
     var setAddNewsFeedSubscribeHandler = function() {
-        $("input[class^=js-add-subscription-]").on('click', function(){
-            var hash = {};
+        $(".js-email-settings").on('click','input[class^=js-add-subscription-]', function(){
+            alert('add');
+
             var $self = $(this);
-            hash.callback = GS.accountManagement.newsFeedSubscribe.addSuccessful;
-            hash.callback_error = GS.accountManagement.newsFeedSubscribe.addFailure;
             var list = $self.attr("name");
             if (list !== undefined) {
 
@@ -261,33 +261,18 @@ GS.accountManagement.newsFeedSubscribe= (function(){
                     dataType: 'json',
                     async: true
                 }).done(function (data) {
-                    var css_selector = ".js-add-subscription-"+data[list];
-                    $(css_selector).attr('checked', true);
-                    $(css_selector).removeClass("js-add-subscription-"+data[list]);
-//                        $(css_selector).removeClass("js-delete-subscription-"+params.id);
+                    var css_selector = ".js-add-subscription-"+data['list'];
+                    $(css_selector).removeClass("js-add-subscription-"+data['list']);
+                    $(css_selector).addClass("js-delete-subscription-"+data['list']);
                 });
             }
             return true;
-            //return false;
-
         });
     };
 
-    var addSuccessful = function(obj, data, params){
-        var css_selector = ".js-delete-subscription-"+params.id;
-        $(css_selector).attr('checked', false);
-        $(css_selector).addClass("js-add-subscription-"+params.name);
-        $(css_selector).removeClass("js-delete-subscription-"+params.id);
-    };
-
-    var addFailure = function(obj, data, params){
-        obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
-    };
 
     return {
-        init: init,
-        addSuccessful: addSuccessful,
-        addFailure: addFailure
+        init: init
     }
 })();
 

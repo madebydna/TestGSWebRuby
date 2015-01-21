@@ -24,11 +24,12 @@ class SubscriptionsController < ApplicationController
 
   def create_subscription_from_account_page
     list = params[:list]
-    binding.pry;
-    unless current_user.has_subscription?(list)
-      current_user.add_subscription!(list)
+    unless @current_user.has_subscription?(list)
+      @current_user.add_subscription!(list)
+      result = "User profile failed to update subscription info  for user #{@current_user.email} "
+
     end
-    redirect_to manage_account_url
+    render json: {'error_msg' => result, 'list' => list}
   end
 
   def destroy
