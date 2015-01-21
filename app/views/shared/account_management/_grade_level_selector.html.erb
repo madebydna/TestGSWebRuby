@@ -3,7 +3,7 @@
     What grade levels are you interested in?
   </div>
 
-  <div class="clearfix js-123">
+  <div class="clearfix js-select-grade-level">
     <% @display_grade_level_array.each do |grade| %>
         <% is_checked = false %>
         <% @selected_grade_level.each do |student_grade_level| %>
@@ -13,16 +13,25 @@
             <% end %>
 
         <% end %>
-        <% if is_checked == true%>
-        <label class="fl prl font-size-medium">
-          <%= check_box_tag grade, grade, is_checked, class: "js-delete-grade-level-" + grade %>
-          <%= grade != 'k' ? grade.to_i.ordinalize : grade %>
-        </label>
+        <% if is_checked == true %>
+            <label class="fl prl font-size-large">
+              <%= check_box_tag grade, grade, is_checked, class: "js-delete-grade-level-" + grade %>
+              <% if grade != 'k' && grade != 'pk' %>
+                  <%= grade.to_i.ordinalize %>
+              <% else %>
+                  <%= grade.upcase %>
+              <% end %>
+
+            </label>
         <% else %>
 
-            <label class="fl prl font-size-medium">
+            <label class="fl prl font-size-large">
               <%= check_box_tag grade, grade, is_checked, class: "js-add-grade-level-" + grade %>
-              <%= grade != 'k' ? grade.to_i.ordinalize : grade %>
+              <% if grade != 'k' && grade != 'pk' %>
+                  <%= grade.to_i.ordinalize %>
+              <% else %>
+                  <%= grade.upcase %>
+              <% end %>
             </label>
         <% end %>
     <% end %>

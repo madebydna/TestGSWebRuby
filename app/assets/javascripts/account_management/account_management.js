@@ -297,7 +297,7 @@ GS.accountManagement.addGradeLevel= (function(){
     };
 
     var addGradeLevelHandler = function() {
-        $(".js-123").on('click', 'input[class^=js-add-grade-level-]', function(){
+        $(".js-select-grade-level").on('click', 'input[class^=js-add-grade-level-]', function(){
             var hash = {};
             var $self = $(this);
             var gradeValue = $self.attr("name");
@@ -313,7 +313,6 @@ GS.accountManagement.addGradeLevel= (function(){
                     var css_selector = ".js-add-grade-level-"+data['grade_level'];
 
                     $(css_selector).addClass("js-delete-grade-level-"+data['grade_level']);
-                    //$(css_selector).prop('checked', true);
                     $(css_selector).removeClass("js-add-grade-level-"+data['grade_level']);
 
                 });
@@ -335,9 +334,7 @@ GS.accountManagement.deleteGradeLevel= (function(){
     };
 
     var deleteGradeLevelHandler = function() {
-        $(".js-123").on('click','input[class^=js-delete-grade-level-]', function(){
-            //alert(2);
-            //var hash = {};
+        $(".js-select-grade-level").on('click','input[class^=js-delete-grade-level-]', function(){
             var $self = $(this);
             var gradeValue = $self.attr("name");
             if (gradeValue !== undefined) {
@@ -352,7 +349,6 @@ GS.accountManagement.deleteGradeLevel= (function(){
                     var css_selector = ".js-delete-grade-level-"+data['grade_level'];
 
                     $(css_selector).addClass("js-add-grade-level-"+data['grade_level']);
-                    //$(css_selector).prop('checked', false);
                     $(css_selector).removeClass("js-delete-grade-level-"+data['grade_level']);
 
                 });

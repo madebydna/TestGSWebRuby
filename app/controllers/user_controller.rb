@@ -97,7 +97,6 @@ class UserController < ApplicationController
   def update_user_grade_selection
     user = User.find_by_id(@current_user[:id])
     grade_level = params[:grade]
-    # require 'pry'; binding.pry;
 
 
     if grade_level.present?
