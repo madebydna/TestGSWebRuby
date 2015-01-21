@@ -254,21 +254,21 @@ GS.accountManagement.newsFeedSubscribe= (function(){
             var list = $self.attr("name");
             if (list !== undefined) {
 
-                    $.ajax({
-                        type: 'GET',
-                        url: "/gsr/user/account_subscriptions/",
-                        data: {list: list},
-                        dataType: 'json',
-                        async: true
-                    }).done(function (data) {
-                        var css_selector = ".js-add-subscription-"+data[list];
-                        $(css_selector).attr('checked', true);
-                        $(css_selector).removeClass("js-add-subscription-"+data[list]);
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/account_subscriptions/",
+                    data: {list: list},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-add-subscription-"+data[list];
+                    $(css_selector).attr('checked', true);
+                    $(css_selector).removeClass("js-add-subscription-"+data[list]);
 //                        $(css_selector).removeClass("js-delete-subscription-"+params.id);
-                    });
+                });
             }
-              return true;
-//            return false;
+            return true;
+            //return false;
 
         });
     };
@@ -288,6 +288,106 @@ GS.accountManagement.newsFeedSubscribe= (function(){
         init: init,
         addSuccessful: addSuccessful,
         addFailure: addFailure
+    }
+})();
+
+GS.accountManagement.addGradeLevel= (function(){
+    var init = function() {
+        addGradeLevelHandler();
+    };
+
+    var addGradeLevelHandler = function() {
+        $("input[class^=js-add-grade-level-]").on('click', function(){
+            var hash = {};
+            var $self = $(this);
+            var gradeValue = $self.attr("name");
+            if (gradeValue !== undefined) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/save_grade_selection",
+                    data: {grade: gradeValue},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-add-grade-level-"+data['grade_level'];
+
+                    $(css_selector).addClass("js-delete-grade-level-"+data['grade_level']);
+                    $(css_selector).prop('checked', true);
+                    $(css_selector).removeClass("js-add-grade-level-"+data['grade_level']);
+
+                });
+            }
+            return false;
+
+        });
+    };
+
+    //var addSuccessful = function(obj, data, params){
+    //    var css_selector = ".js-delete-subscription-"+params.id;
+    //    $(css_selector).attr('checked', false);
+    //    $(css_selector).addClass("js-add-subscription-"+params.name);
+    //    $(css_selector).removeClass("js-delete-subscription-"+params.id);
+    //};
+
+    //var addFailure = function(obj, data, params){
+    //    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
+    //};
+
+    return {
+        init: init
+        //addSuccessful: addSuccessful,
+        //addFailure: addFailure
+    }
+})();
+
+GS.accountManagement.deleteGradeLevel= (function(){
+    var init = function() {
+        deleteGradeLevelHandler();
+    };
+
+    var deleteGradeLevelHandler = function() {
+        $("input[class^=js-delete-grade-level-]").on('click', function(){
+            //var hash = {};
+            var $self = $(this);
+            var gradeValue = $self.attr("name");
+            if (gradeValue !== undefined) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/delete_grade_selection",
+                    data: {grade: gradeValue},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-delete-grade-level-"+data['grade_level'];
+
+                    $(css_selector).addClass("js-add-grade-level-"+data['grade_level']);
+                    $(css_selector).prop('checked', false);
+                    $(css_selector).removeClass("js-delete-grade-level-"+data['grade_level']);
+
+                });
+            }
+            return false;
+
+        });
+    };
+
+    //var addSuccessful = function(obj, data, params){
+    //    var css_selector = ".js-delete-subscription-"+params.id;
+    //    $(css_selector).attr('checked', false);
+    //    $(css_selector).addClass("js-add-subscription-"+params.name);
+    //    $(css_selector).removeClass("js-delete-subscription-"+params.id);
+    //};
+
+    //var addFailure = function(obj, data, params){
+    //    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
+    //};
+
+    return {
+        init: init
+        //addSuccessful: addSuccessful,
+        //addFailure: addFailure
     }
 })();
 

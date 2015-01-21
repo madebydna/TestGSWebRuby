@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
-
+  has_many :student_grade_levels, foreign_key: 'member_id'
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
   before_save :verify_email!, if: "facebook_id != nil"
@@ -242,6 +242,17 @@ class User < ActiveRecord::Base
   def is_profile_active?
     profile = UserProfile.where(member_id: id).first
     profile.present? && profile.active?
+  end
+
+  def add_user_grade_level(grade)
+
+    StudentGradeLevel.find_or_create_by(member_id: id, grade: grade)
+  end
+
+  def delete_user_grade_level(grade)
+    grade = StudentGradeLevel.find_by(member_id: id, grade: grade)
+    grade.delete if grade.present?
+
   end
 
   private

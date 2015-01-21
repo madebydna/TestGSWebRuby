@@ -94,4 +94,32 @@ class UserController < ApplicationController
     redirect_to manage_account_url
   end
 
+  def update_user_grade_selection
+    user = User.find_by_id(@current_user[:id])
+    grade_level = params[:grade]
+    # require 'pry'; binding.pry;
+
+
+    if grade_level.present?
+      unless   user.add_user_grade_level(grade_level)
+        result = "User profile failed to update grade level info  for user #{user.email} "
+      end
+    end
+    render json: {'error_msg' => result, 'grade_level' => grade_level}
+
+  end
+
+  def delete_user_grade_selection
+    user = User.find_by_id(@current_user[:id])
+    grade_level = params[:grade]
+
+    if grade_level.present?
+      unless   user.delete_user_grade_level(grade_level)
+        result = "User profile failed to update grade level info  for user #{user.email} "
+      end
+    end
+    render json: {'error_msg' => result, 'grade_level' => grade_level}
+
+
+  end
 end

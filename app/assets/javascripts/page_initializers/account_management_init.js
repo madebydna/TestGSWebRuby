@@ -10,6 +10,9 @@ if(gon.pagename == "Account management"){
     GS.accountManagement.slideToggleSection.init();
     GS.accountManagement.displayHometownChooser.init();
     GS.search.autocomplete.cityAutocomplete.setUserAccountStatePickerHandler();
+    GS.accountManagement.addGradeLevel.init();
+    GS.accountManagement.deleteGradeLevel.init();
+
 
 
     var url_hash = window.location.hash;

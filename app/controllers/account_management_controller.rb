@@ -19,6 +19,7 @@ class AccountManagementController < ApplicationController
 
     end
     @city_locale  = @current_user.user_profile.city
+    # require 'pry'; binding.pry;
 
 
     favorite_schools = @current_user.favorite_schools
@@ -46,6 +47,9 @@ class AccountManagementController < ApplicationController
     end
     account_meta_tags
     set_saved_searches_instance_variables
+
+    @display_grade_level_array = ['k', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    @selected_grade_level = @current_user.student_grade_levels
   end
 
   def account_meta_tags

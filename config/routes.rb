@@ -138,6 +138,8 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
+  get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
+  get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
   put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
