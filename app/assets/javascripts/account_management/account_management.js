@@ -178,7 +178,6 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
       hash.callback_error = GS.accountManagement.newsFeedUnsubscribe.deleteFailure;
       hash.href = $self.val();
       GS.util.deleteAjaxCall($self, hash);
-//      return true;
         return false;
 
     });
@@ -186,7 +185,7 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
 
   var deleteSuccessful = function(obj, data, params){
     var css_selector = ".js-delete-subscription-"+params.id;
-//    $(css_selector).attr('checked', false);
+    $(css_selector).attr('checked', false);
     $(css_selector).addClass("js-add-subscription-"+params.name);
     $(css_selector).removeClass("js-delete-subscription-"+params.id);
   };
