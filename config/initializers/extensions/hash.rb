@@ -86,8 +86,14 @@ class Hash
   end
 end
 
-class HashWithSetterCallback < Hash
-  def initialize(&callback)
+#can use HashWithSetterCallback class below or just mixin this module into your hash
+#the latter will allow you to keep a hash object that uses any custom initializers
+module Hash::SetterCallback
+  def self.set_callback!(&callback)
+    @setter_callback = callback
+  end
+
+  def set_callback!(&callback)
     @setter_callback = callback
   end
 
@@ -95,4 +101,13 @@ class HashWithSetterCallback < Hash
     key, value = @setter_callback.call(key, value) if @setter_callback.present?
     super(key, value)
   end
+end
+
+class HashWithSetterCallback < Hash
+  include Hash::SetterCallback
+
+  def initialize(&callback)
+    set_callback!(&callback)
+  end
+
 end
