@@ -171,7 +171,6 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
 
   var setDeleteNewsFeedUnsubscribeHandler = function() {
       $(".js-email-settings").on('click','input[class^=js-delete-subscription-]', function(){
-          alert('delete');
       var hash = {};
       var $self = $(this);
       hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
@@ -187,6 +186,10 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
     var css_selector = ".js-delete-subscription-"+params.id;
     $(css_selector).attr('checked', false);
     $(css_selector).addClass("js-add-subscription-"+params.name);
+      if (params.name.match("^mystat")) {
+          var mst_selector = ".js-subscription-"+params.id;
+          $(mst_selector).addClass("dn");
+      }
     $(css_selector).removeClass("js-delete-subscription-"+params.id);
   };
 
@@ -247,7 +250,6 @@ GS.accountManagement.newsFeedSubscribe= (function(){
 
     var setAddNewsFeedSubscribeHandler = function() {
         $(".js-email-settings").on('click','input[class^=js-add-subscription-]', function(){
-            alert('add');
 
             var $self = $(this);
             var list = $self.attr("name");
@@ -263,10 +265,7 @@ GS.accountManagement.newsFeedSubscribe= (function(){
                     var css_selector = ".js-add-subscription-"+data['list'];
                     $(css_selector).addClass("js-delete-subscription-"+data['subscription_id']);
                     $(css_selector).val('/gsr/user/subscriptions/'+data['subscription_id']);
-//                    $(css_selector).data("params-local",123);
                     $(css_selector).data("params-local", { "name": data['list'], "id" : data['subscription_id'] } );
-                    alert($(css_selector).data('params-local'));
-
                     $(css_selector).removeClass("js-add-subscription-"+data['list']);
                 });
             }
