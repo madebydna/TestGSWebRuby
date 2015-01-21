@@ -7,13 +7,15 @@ class ApplicationController < ActionController::Base
   include UrlHelper
   include OmnitureConcerns
   include HubConcerns
+  include AdvertisingHelper
+
+  prepend_before_action :set_global_ad_targeting_through_gon
 
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
-  before_action :set_global_ad_targeting_through_gon
   before_action :check_for_java_hover_cookie
   before_action :write_locale_session
 
@@ -334,13 +336,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_global_ad_targeting_through_gon
-    set_targeting = gon.ad_set_targeting || {}
+    set_ad_targeting_gon_hash!
+
     if ab_version == 'a'
-      set_targeting['Responsive_Group'] = 'Control'
+      ad_targeting_gon_hash['Responsive_Group'] = 'Control'
     elsif ab_version == 'b'
-      set_targeting['Responsive_Group'] = 'Test'
+      ad_targeting_gon_hash['Responsive_Group'] = 'Test'
     end
-    gon.ad_set_targeting = set_targeting
 
     @advertising_enabled = true
     # equivalent to saying disable advertising if property is not nil and false

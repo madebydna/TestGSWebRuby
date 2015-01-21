@@ -1,7 +1,6 @@
 class StatesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
-  include AdvertisingHelper
   include HubConcerns
   include GuidedSearchConcerns
 
@@ -185,14 +184,11 @@ class StatesController < ApplicationController
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if @show_ads
-      set_targeting = gon.ad_set_targeting || {}
-      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
-      set_targeting['State'] = format_ad_setTargeting(@state[:short].upcase) # abbreviation
-      set_targeting['editorial'] = format_ad_setTargeting('FindaSchoo')
-      set_targeting['template'] = format_ad_setTargeting("ros") # use this for page name - configured_page_name
-
-      gon.ad_set_targeting = set_targeting
+      ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      ad_targeting_gon_hash['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+      ad_targeting_gon_hash['State']      = @state[:short].upcase # abbreviation
+      ad_targeting_gon_hash['editorial']  = 'FindaSchoo'
+      ad_targeting_gon_hash['template']   = "ros" # use this for page name - configured_page_name
     end
   end
 

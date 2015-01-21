@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative '../../features/search/search_spec_helper'
+require 'controllers/concerns/advertising_helper_shared'
 
 describe 'search/_search_results.html.erb', js: true do
   include SearchSpecHelper
@@ -88,6 +89,15 @@ describe 'search/_search_results.html.erb', js: true do
       before do
         set_up_city_browse('mi','Grand Rapids')
       end
+
+      ad_targeting_hash = {
+        'env' => ENV_GLOBAL['advertising_env'],
+        'template' => 'search',
+        'City' => 'GrandRapid',
+        'State' => 'mi'
+      }
+
+      it_should_behave_like 'a controller that sets the gon.set_ad_targeting hash', ad_targeting_hash
 
       it 'should target the state and city' do
         ad_targeting = page.evaluate_script('gon.ad_set_targeting')

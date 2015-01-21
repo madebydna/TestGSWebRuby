@@ -85,3 +85,14 @@ class Hash
     sought_value
   end
 end
+
+class HashWithSetterCallback < Hash
+  def initialize(&callback)
+    @setter_callback = callback
+  end
+
+  def []=(key, value)
+    key, value = @setter_callback.call(key, value) if @setter_callback.present?
+    super(key, value)
+  end
+end
