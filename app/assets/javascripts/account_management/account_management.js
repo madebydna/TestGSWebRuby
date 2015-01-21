@@ -261,8 +261,10 @@ GS.accountManagement.newsFeedSubscribe= (function(){
                     async: true
                 }).done(function (data) {
                     var css_selector = ".js-add-subscription-"+data['list'];
+                    $(css_selector).addClass("js-delete-subscription-"+data['subscription_id']);
+                    $(css_selector).val('/gsr/user/subscriptions/'+data['subscription_id']);
+                    $(css_selector).data('params-remote' , 140);
                     $(css_selector).removeClass("js-add-subscription-"+data['list']);
-                    $(css_selector).addClass("js-delete-subscription-"+data['list']);
                 });
             }
             return true;

@@ -215,6 +215,13 @@ class User < ActiveRecord::Base
       subscription.list == list
     end
   end
+  def subscription_id(list)
+    subscriptions.any? do |subscription|
+       if subscription.list == list
+          return subscription.id
+       end
+    end
+  end
 
   def favorited_school?(school)
     favorite_schools.any? { |favorite| favorite.school_id == school.id && favorite.state == school.state }
