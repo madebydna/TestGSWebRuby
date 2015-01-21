@@ -297,7 +297,7 @@ GS.accountManagement.addGradeLevel= (function(){
     };
 
     var addGradeLevelHandler = function() {
-        $("input[class^=js-add-grade-level-]").on('click', function(){
+        $(".js-123").on('click', 'input[class^=js-add-grade-level-]', function(){
             var hash = {};
             var $self = $(this);
             var gradeValue = $self.attr("name");
@@ -313,31 +313,19 @@ GS.accountManagement.addGradeLevel= (function(){
                     var css_selector = ".js-add-grade-level-"+data['grade_level'];
 
                     $(css_selector).addClass("js-delete-grade-level-"+data['grade_level']);
-                    $(css_selector).prop('checked', true);
+                    //$(css_selector).prop('checked', true);
                     $(css_selector).removeClass("js-add-grade-level-"+data['grade_level']);
 
                 });
             }
-            return false;
+            return true;
 
         });
     };
 
-    //var addSuccessful = function(obj, data, params){
-    //    var css_selector = ".js-delete-subscription-"+params.id;
-    //    $(css_selector).attr('checked', false);
-    //    $(css_selector).addClass("js-add-subscription-"+params.name);
-    //    $(css_selector).removeClass("js-delete-subscription-"+params.id);
-    //};
-
-    //var addFailure = function(obj, data, params){
-    //    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
-    //};
 
     return {
         init: init
-        //addSuccessful: addSuccessful,
-        //addFailure: addFailure
     }
 })();
 
@@ -347,7 +335,8 @@ GS.accountManagement.deleteGradeLevel= (function(){
     };
 
     var deleteGradeLevelHandler = function() {
-        $("input[class^=js-delete-grade-level-]").on('click', function(){
+        $(".js-123").on('click','input[class^=js-delete-grade-level-]', function(){
+            //alert(2);
             //var hash = {};
             var $self = $(this);
             var gradeValue = $self.attr("name");
@@ -363,31 +352,19 @@ GS.accountManagement.deleteGradeLevel= (function(){
                     var css_selector = ".js-delete-grade-level-"+data['grade_level'];
 
                     $(css_selector).addClass("js-add-grade-level-"+data['grade_level']);
-                    $(css_selector).prop('checked', false);
+                    //$(css_selector).prop('checked', false);
                     $(css_selector).removeClass("js-delete-grade-level-"+data['grade_level']);
 
                 });
             }
-            return false;
+            return true;
 
         });
     };
 
-    //var addSuccessful = function(obj, data, params){
-    //    var css_selector = ".js-delete-subscription-"+params.id;
-    //    $(css_selector).attr('checked', false);
-    //    $(css_selector).addClass("js-add-subscription-"+params.name);
-    //    $(css_selector).removeClass("js-delete-subscription-"+params.id);
-    //};
-
-    //var addFailure = function(obj, data, params){
-    //    obj.append("<div class='alert alert-error'><a href='#' class='close' data-dismiss='alert'>&times;</a>Currently we are unable to add you to this email list.  Please try again later.</div>");
-    //};
 
     return {
         init: init
-        //addSuccessful: addSuccessful,
-        //addFailure: addFailure
     }
 })();
 
