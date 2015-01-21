@@ -322,7 +322,7 @@ class SearchController < ApplicationController
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
     end
-    if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
+    if on_city_browse? && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
@@ -467,6 +467,22 @@ class SearchController < ApplicationController
                 else
                   ''
                 end
+  end
+
+  def on_district_browse?
+    @district_browse == true
+  end
+
+  def on_city_browse?
+    @city_browse == true
+  end
+
+  def on_by_name_search?
+    @by_name == true
+  end
+
+  def on_by_location_search?
+    @by_location == true
   end
 
 end
