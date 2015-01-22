@@ -16,10 +16,11 @@
                             <div class="open-sans_sb mtm">
                               <label class="pointer notranslate">
                                 <div class="fl mtn prm">
-                                  <%= check_box_tag 'mystat', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id ,"name" => subscription.list}} %>
+                                  <%= check_box_tag 'mystat', "/gsr/user/subscriptions/#{subscription.id}/", is_checked = true, class: "js-delete-subscription-#{subscription.id}", :data => {:params_local => {"id" => subscription.id, "name" => subscription.list}} %>
 
                                 </div>
-                                <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>, <%= decorated_subscription.school.state %>
+                                <%= decorated_subscription.school.name %>, <%= decorated_subscription.school.city %>
+                                , <%= decorated_subscription.school.state %>
                               </label>
                             </div>
 
@@ -33,139 +34,138 @@
                     <label class="db pointer">
                       <div class="fl mtn prm">
                         <%= check_box_tag "#{subscriptions.first.list}", "/gsr/user/subscriptions/#{subscriptions.first.id}/", is_checked = true, class: "js-delete-subscription-#{subscriptions.first.id}",
-                                                                                                                                                    :data => {:params_local => {"id"  => subscriptions.first.id ,
-                                                                                                                                                                                "name" => subscriptions.first.list}} %>
+                                          :data => {:params_local => {"id" => subscriptions.first.id,
+                                                                      "name" => subscriptions.first.list}} %>
 
                       </div>
                       <h3><%= decorated_subscription.name %></h3>
-                      </label>
+                    </label>
+
                     <div>
                       <%= decorated_subscription.description %>
                     </div>
                   </div>
               <% end %>
+            </div>
 
         <% end %>
-              <% if !current_user.has_signedup?('greatnews') %>
+        <% if !current_user.has_signedup?('greatnews') %>
 
-                  <div class="js-subscription">
-                    <label class="db pointer">
-                      <div class="fl mtn prm">
-                        <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
-                                          :data => {:params_local => {  "name" => "greatnews"}} %>
-
-
-                      </div>
-                      <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
-                    </label>
-
-                    <div>
-                      <%= Subscription.subscription_product("greatnews").description  %>
-
-                    </div>
-                  </div>
-
-              <% end %>
+            <div class="js-subscription">
+              <label class="db pointer">
+                <div class="fl mtn prm">
+                  <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
+                                    :data => {:params_local => {"name" => "greatnews"}} %>
 
 
+                </div>
+                <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
+              </label>
 
-              <% if !current_user.has_signedup?('sponsor') %>
+              <div>
+                <%= Subscription.subscription_product("greatnews").description %>
 
-                  <div class="js-subscription">
-                    <label class="db pointer">
-                      <div class="fl mtn prm">
-                        <%= check_box_tag "sponsor", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
-                                          :data => {:params_local => {  "name" => "sponsor"}} %>
-
-
-                      </div>
-                      <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
-                    </label>
-
-                    <div>
-                      <%= Subscription.subscription_product("sponsor").description  %>
-
-                    </div>
-                  </div>
-
-              <% end %>
-
-
-              <% if !current_user.has_signedup?('mystat') &&  !current_user.has_signedup?('mystat_private') && !current_user.has_signedup?('mystat_unverified')%>
-
-                  <div class="js-subscription">
-
-                      <h3> My School Stats</h3>
-
-
-                    <div>
-                      Follow schools to save them here and we'll update you when there are new reviews, test scores, or GreatSchools ratings.
-
-                    </div>
-                  </div>
-
-              <% end %>
-
-
-
+              </div>
             </div>
+
+        <% end %>
+
+
+
+        <% if !current_user.has_signedup?('sponsor') %>
+
+            <div class="js-subscription">
+              <label class="db pointer">
+                <div class="fl mtn prm">
+                  <%= check_box_tag "sponsor", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
+                                    :data => {:params_local => {"name" => "sponsor"}} %>
+
+
+                </div>
+                <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
+              </label>
+
+              <div>
+                <%= Subscription.subscription_product("sponsor").description %>
+
+              </div>
+            </div>
+
+        <% end %>
+
+
+        <% if !current_user.has_signedup?('mystat') && !current_user.has_signedup?('mystat_private') && !current_user.has_signedup?('mystat_unverified') %>
+
+            <div class="js-subscription">
+
+              <h3> My School Stats</h3>
+
+
+              <div>
+                Follow schools to save them here and we'll update you when there are new reviews, test scores, or
+                GreatSchools ratings.
+
+              </div>
+            </div>
+
+        <% end %>
+
+
+
+        </div>
 
       </div>
   <% else %>
-          <div class="js-subscription">
-            <label class="db pointer">
-              <div class="fl mtn prm">
-                <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
-                                  :data => {:params_local => {  "name" => "greatnews"}} %>
+      <div class="js-subscription">
+        <label class="db pointer">
+          <div class="fl mtn prm">
+            <%= check_box_tag "greatnews", "/gsr/user/subscriptions/greatnews", is_checked = false, class: "js-add-subscription-greatnews",
+                              :data => {:params_local => {"name" => "greatnews"}} %>
 
 
-              </div>
-              <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
-            </label>
-
-            <div>
-              <%= Subscription.subscription_product("greatnews").description  %>
-
-            </div>
           </div>
+          <h3><%= Subscription.subscription_product("greatnews").long_name %></h3>
+        </label>
+
+        <div>
+          <%= Subscription.subscription_product("greatnews").description %>
+
+        </div>
+      </div>
 
 
+      <div class="js-subscription">
+        <label class="db pointer">
+          <div class="fl mtn prm">
+            <%= check_box_tag "sponsor", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
+                              :data => {:params_local => {"name" => "sponsor"}} %>
 
 
-
-          <div class="js-subscription">
-            <label class="db pointer">
-              <div class="fl mtn prm">
-                <%= check_box_tag "sponsor", "/gsr/user/subscriptions/sponsor", is_checked = false, class: "js-add-subscription-sponsor",
-                                  :data => {:params_local => {  "name" => "sponsor"}} %>
-
-
-              </div>
-              <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
-            </label>
-
-            <div>
-              <%= Subscription.subscription_product("sponsor").description  %>
-
-            </div>
           </div>
+          <h3><%= Subscription.subscription_product("sponsor").long_name %></h3>
+        </label>
+
+        <div>
+          <%= Subscription.subscription_product("sponsor").description %>
+
+        </div>
+      </div>
 
 
+      <div class="js-subscription">
+
+        <h3> My School Stats</h3>
 
 
-          <div class="js-subscription">
+        <div>
+          Follow schools to save them here and we'll update you when there are new reviews, test scores, or GreatSchools
+          ratings.
 
-            <h3> My School Stats</h3>
-
-
-            <div>
-              Follow schools to save them here and we'll update you when there are new reviews, test scores, or GreatSchools ratings.
-
-            </div>
-          </div>
+        </div>
+      </div>
 
 
-<% end %>
+  <% end %>
 </div>
 
 
