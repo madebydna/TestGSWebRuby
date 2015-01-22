@@ -88,3 +88,12 @@
   <% end %>
   </tbody>
 </table>
+
+<% if @banned_ip %>
+    <h3>Disable this IP</h3>
+    <%= form_for @banned_ip, :url => admin_ban_ip_path do |banned_ip| %>
+        reason: <%= banned_ip.text_field :reason %>
+        <%= banned_ip.hidden_field :ip %>
+        <%= banned_ip.submit "Disable this IP"%>
+    <% end %>
+<% end %>

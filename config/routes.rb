@@ -106,7 +106,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
 
-
+    post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do

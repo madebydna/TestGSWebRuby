@@ -45,11 +45,25 @@ class Admin::ReviewsController < ApplicationController
         @reviews_by_user = SchoolRating.by_ip(search_string)
         flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
         Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-
+        @banned_ip = BannedIp.new
+        @banned_ip.ip = search_string
       end
 
       render '_reviews_for_email'
     end
+  end
+
+  def ban_ip
+    if params[:banned_ip]
+      ip = params[:banned_ip][:ip]
+      reason = params[:banned_ip][:reason]
+
+      banned_ip = BannedIp.find_or_initialize_by(ip: ip)
+      banned_ip.reason = reason
+      banned_ip.save
+      flash_notice 'IP disabled.'
+    end
+    redirect_back
   end
 
 
