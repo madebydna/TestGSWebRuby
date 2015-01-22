@@ -195,7 +195,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     data['normalizedAddress'] = geocodeResult['normalizedAddress'];
 //                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
+                    data['county'] = geocodeResult['county'];
                     data['sortBy'] = 'DISTANCE';
+                  console.log(data);
+                  console.log(data['county']);
                     (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
                 } else {
                     if (GS.search.stateAbbreviation && getStateFullName(GS.search.stateAbbreviation)) {
@@ -342,6 +345,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                         for (var i = 0; i < results[x].address_components.length; i++) {
                             if (results[x].address_components[i].types.contains('administrative_area_level_1')) {
                                 geocodeResult['state'] = results[x].address_components[i].short_name.substring(0, 30);
+                            }
+                            if (results[x].address_components[i].types.contains('administrative_area_level_2')) {
+                              geocodeResult['county'] = results[x].address_components[i].short_name.substring(0, 30);
                             }
                             if (results[x].address_components[i].types.contains('country')) {
                                 geocodeResult['country'] = results[x].address_components[i].short_name.substring(0, 20);
