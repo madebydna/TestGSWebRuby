@@ -2,7 +2,7 @@
 <%= javascript_tag do %>
     $(function() {
         $("#new_banned_ip input[name='disable_ip']").on('click', function() {
-            return confirm("Are You sure?");
+            return confirm("Are you sure you want to block this IP from submitting reviews?");
         });
     });
 <% end %>
