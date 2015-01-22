@@ -19,7 +19,7 @@ class Admin::ReviewsController < ApplicationController
   def schools
     state = params['state']
     school_id = params['school_id']
-    gon.pagename = 'Reviews moderation schools'
+    gon.pagename = 'Reviews moderation'
     if school_id.present? && state.present?
       redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
     end
@@ -27,9 +27,8 @@ class Admin::ReviewsController < ApplicationController
   end
 
   def users
+    gon.pagename = 'Reviews moderation'
     moderate_by_user
-    gon.pagename = 'Reviews moderation users'
-
   end
 
   def moderate_by_user

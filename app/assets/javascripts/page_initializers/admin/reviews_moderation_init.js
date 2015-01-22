@@ -9,5 +9,20 @@ if(gon.pagename == "Reviews moderation"){
 //      oTable.fnSort( [  [3,'asc'] ] );
 
 
+
+    $('input:checkbox').on('click', function() {
+      var $this = $(this);
+      var value = $this.prop('checked');
+      var name = $this.attr('name');
+
+      new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+
+      if (_.indexOf(new_location, '?') == -1) {
+        new_location += '?';
+      } else {
+        new_location += '&';
+      }
+      location.href = new_location + name + "=" + value;
     });
+  });
 }

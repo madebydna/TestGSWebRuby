@@ -2,30 +2,10 @@
 <% @reviews %>
 
 
-
-<%= javascript_tag do %>
-    $(function() {
-        $('input:checkbox').on('click', function() {
-            var $this = $(this);
-            var value = $this.prop('checked');
-            var name = $this.attr('name');
-
-            new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
-
-            if (_.indexOf(new_location, '?') == -1) {
-                new_location += '?';
-            } else {
-                new_location += '&';
-            }
-            location.href = new_location + name + "=" + value;
-        });
-    });
-<% end %>
-
 <%= render 'admin/reviews/reviews_navigation', page_name: :schools %>
 
 <div class="row ptl limit-width-1200">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="col-xs-12 col-sm-9">
     <%= form_tag moderation_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
       <legend>Find a school by state & ID</legend>
       <div class="form-group">
@@ -37,13 +17,15 @@
       <button type="submit" class="btn btn-primary" id="submit" style="margin-left: 40px">Search</button>
     <% end %>
   </div>
+  <div class="col-xs-12 col-sm-3 tar ptxl">
+    <button type="button" class="btn btn-primary js-button-link" data-link-value="http://admin.greatschools.org/admin/schoolReview/holdList.page" style="margin-left:
+        40px">See Held Schools</button>
+  </div>
 </div>
 
 
 <div class="row limit-width-1200 pam">
   <br/>
-  <% #link_to 'Back to moderation', moderation_admin_reviews_path %>
-
   <h3><%= link_to @school.name, school_url(@school) %></h3>
 
   <div>

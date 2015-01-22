@@ -1,28 +1,4 @@
-
-
-
-<%= javascript_tag do %>
-    $(function() {
-    $('input:checkbox').on('click', function() {
-    var $this = $(this);
-    var value = $this.prop('checked');
-    var name = $this.attr('name');
-
-    new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
-
-    if (_.indexOf(new_location, '?') == -1) {
-    new_location += '?';
-    } else {
-    new_location += '&';
-    }
-    location.href = new_location + name + "=" + value;
-    });
-    });
-<% end %>
-
 <%= render 'reviews_navigation', page_name: :moderation_list %>
-
-<% # render 'reviews_moderation_search_nav' %>
 
 <div class="row limit-width-1200">
     <div class="row pbl">
