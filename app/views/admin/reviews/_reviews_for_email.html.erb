@@ -1,3 +1,12 @@
+
+<%= javascript_tag do %>
+    $(function() {
+        $("#new_banned_ip input[name='disable_ip']").on('click', function() {
+            return confirm("Are You sure?");
+        });
+    });
+<% end %>
+
 <%= render 'nav/topnav' %>
 <%= render 'reviews_moderation_search_nav' %>
 
@@ -94,6 +103,6 @@
     <%= form_for @banned_ip, :url => admin_ban_ip_path do |banned_ip| %>
         reason: <%= banned_ip.text_field :reason %>
         <%= banned_ip.hidden_field :ip %>
-        <%= banned_ip.submit "Disable this IP"%>
+        <%= banned_ip.submit "Disable this IP", :name => 'disable_ip'%>
     <% end %>
 <% end %>
