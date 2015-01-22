@@ -8,52 +8,95 @@
 <% end %>
 
 <%= render 'nav/topnav' %>
-<%= render 'reviews_moderation_search_nav' %>
+<% # render 'reviews_moderation_search_nav' %>
 
+<%= render 'reviews_navigation', page_name: :users %>
+<div class="row ptl limit-width-1200">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <%= form_tag users_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
+      <legend>Find a user by email or IP</legend>
+      <div class="form-group">
+        <div class="controls">
+          <input type="text" id="review_moderation_search_string" name="review_moderation_search_string" placeholder="Email or IP">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submit" style="margin-left: 40px">Search</button>
+    <% end %>
+  </div>
+</div>
+<div class="ptl limit-width-1200">
 <h3>Reviews by User</h3>
 
-<table class="table table-striped" style="margin-bottom: 0px">
-  <thead>
-  <tr>
-    <td>Review</td>
-    <td>Status</td>
-    <td>School</td>
-    <td>Reason if review is flagged</td>
-    <td>Case opened on</td>
-  </tr>
-  </thead>
-  <tbody>
-  <% if @reviews_by_user %>
-      <% @reviews_by_user.each do |review| %>
-          <tr>
-            <td>
-              <%= truncate(review.review_text, length: 30) %>
-            </td>
-            <td>
-              <%= review.status %>
-            </td>
-            <td>
-              <% if review.school %>
-                  <% school = review.school %>
-                  <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
-              <% else %>
-                  School not found
-              <% end %>
-            </td>
-            <td>
-              <% if review.reported_entities.present?%>
-                  <%= review.reported_entities.first.reason %>
-              <% end %>
-            </td>
-            <td>
-              <%= review.posted.strftime '%B %d, %Y' %>
-            </td>
-          </tr>
-      <% end %>
-  <% end %>
-  </tbody>
-</table>
 
+  <table class="table table-striped" id="flagged_reviews_table">
+    <thead>
+    <tr>
+      <td>Review</td>
+      <td>Status</td>
+      <td>School</td>
+      <td>State</td>
+      <td>Reviewer</td>
+      <td>Total reports</td>
+      <td>Auto Flagged</td>
+      <td>User Flagged</td>
+      <td>Case opened on</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @reviews_by_user %>
+      <% @reviews_by_user.each do |review| %>
+        <% is_auto_flagged = false %>
+        <% is_user_flagged = false %>
+        <%  review.reported_entities.each do |reported_entity| %>
+          <% if reported_entity.reporter_id == -1 %>
+            <% is_auto_flagged = true %>
+          <% else %>
+            <% is_user_flagged = true %>
+          <% end %>
+        <% end %>
+      <tr>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to truncate(review.review_text, length: 20), admin_school_moderate_path(state:
+                                                                                                 school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+          <% else %>
+            <%= truncate(review.review_text, length: 20) %>
+          <% end %>
+        </td>
+        <td>
+          <%= review.status %>
+        </td>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+          <% else %>
+            School not found
+          <% end %>
+        </td>
+        <td>
+          <%= review.school.state if review.school%>
+        </td>
+        <td><%= review.user.email if review.user%></td>
+        <td>
+          <%= review.reported_entities.size if review.reported_entities.any? %>
+        </td>
+        <td><%= is_auto_flagged == false ? '' : 'Y' %></td>
+        <td><%= is_user_flagged == false ? '' : 'Y' %></td>
+        <td>
+          <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
+        </td>
+      </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+
+  </table>
+
+
+
+  <% if @reviews_reported_by_user %>
 <h3>Reviews flagged by User</h3>
 
 <table class="table table-striped" style="margin-bottom: 0px">
@@ -67,7 +110,7 @@
   </tr>
   </thead>
   <tbody>
-  <% if @reviews_reported_by_user %>
+
       <% @reviews_reported_by_user.each do |review| %>
           <tr>
             <td>
@@ -94,9 +137,10 @@
             </td>
           </tr>
       <% end %>
-  <% end %>
+
   </tbody>
 </table>
+  <% end %>
 
 <% if @banned_ip %>
     <h3>Disable this IP</h3>
@@ -106,3 +150,4 @@
         <%= banned_ip.submit "Disable this IP", :name => 'disable_ip'%>
     <% end %>
 <% end %>
+</div>

@@ -20,12 +20,14 @@
     });
 <% end %>
 
-<%= render 'reviews_moderation_search_nav' %>
+<%= render 'reviews_navigation', page_name: :moderation_list %>
+
+<% # render 'reviews_moderation_search_nav' %>
 
 <div class="row limit-width-1200">
     <div class="row pbl">
         <%= div_tag sizes: { md: 6, lg: 6 } do %>
-            <h3>Moderation list</h3>
+            <h3>Reviews moderation list</h3>
             <!--<div>
           Filter reviews (filters are restrictive)  <br/>
           <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
@@ -71,14 +73,22 @@
             <% end %>
 
             <tr>
-                <td><%= truncate(review.review_text, length: 20) %></td>
+                <td>
+                  <% if review.school %>
+                    <% school = review.school %>
+                      <%= link_to truncate(review.review_text, length: 20), admin_school_moderate_path(state:
+                                                                                                          school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+                    <% else %>
+                      <%= truncate(review.review_text, length: 20) %>
+                    <% end %>
+                  </td>
                 <td>
                     <%= review.status %>
                 </td>
                 <td>
                     <% if review.school %>
                         <% school = review.school %>
-                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
                     <% else %>
                         School not found
                     <% end %>
@@ -86,7 +96,10 @@
                 <td>
                   <%= review.school.state if review.school%>
                 </td>
-                <td><%= review.user.email if review.user%></td>
+                <td><%= link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>
+                                                                                  review.user.email)) if review
+                    .school%>
+                  </td>
                 <td>
                     <%= review.reported_entities.size if review.reported_entities.any? %>
                 </td>

@@ -16,6 +16,22 @@ class Admin::ReviewsController < ApplicationController
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
 
+  def schools
+    state = params['state']
+    school_id = params['school_id']
+    gon.pagename = 'Reviews moderation schools'
+    if school_id.present? && state.present?
+      redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
+    end
+
+  end
+
+  def users
+    moderate_by_user
+    gon.pagename = 'Reviews moderation users'
+
+  end
+
   def moderate_by_user
 
     search_string = params[:review_moderation_search_string]

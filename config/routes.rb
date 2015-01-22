@@ -116,6 +116,8 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :reviews do
       get 'moderation', on: :collection
+      get 'schools', on: :collection
+      get 'users', on: :collection
       put 'publish', on: :member
       put 'disable', on: :member
       put 'resolve', on: :member
