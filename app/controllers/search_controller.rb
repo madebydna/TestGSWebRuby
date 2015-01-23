@@ -366,6 +366,15 @@ class SearchController < ApplicationController
                     end
     ad_targeting_gon_hash['City']        = targeted_city if targeted_city
     ad_targeting_gon_hash['State']       = @state[:short] if @state
+    ad_targeting_gon_hash['County']      = county_object.try(:name) if county_object
+  end
+
+  def county_object
+    if @city && @city.respond_to?(:county)
+      @city.county
+    else
+      nil
+    end
   end
 
   def setup_fit_scores(results, params_hash)
