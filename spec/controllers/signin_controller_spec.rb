@@ -23,6 +23,37 @@ describe SigninController do
     end
   end
 
+  describe '#post_registration_confirmation' do
+    before do
+      allow(controller).to receive(:redirect_to) { }
+      allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+    end
+    context 'when logged in' do
+      before do
+        allow(controller).to receive(:logged_in?) { true }
+      end
+      context 'and redirect_url exists in params' do
+        before do
+          controller.params[:redirect] = 'localhost:3000'
+        end
+        it 'should execute defered action' do
+          expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+
+      context 'and redirect_url does not exist' do
+        before do
+          controller.params[:redirect] = nil
+        end
+        it 'should execute defered action' do
+          expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+    end
+  end
+
   describe '#create' do
 
     describe 'authenticate' do

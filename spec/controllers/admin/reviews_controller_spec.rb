@@ -131,12 +131,18 @@ describe Admin::ReviewsController do
     let(:reported_entities) { FactoryGirl.build_list(:reported_review, 3) }
     let(:unprocessed_reviews) { FactoryGirl.build_list(:unpublished_review, 3) }
     let(:flagged_reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
+    let(:valid_reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
+    let(:user) {FactoryGirl.build(:user)}
+
 
     before do
       allow(controller).to receive(:unprocessed_reviews).and_return unprocessed_reviews
       allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
       allow(controller).to receive(:reported_entities_for_reviews).and_return reported_entities
       allow(controller.class).to receive(:reported_entities_for_reviews).and_return reported_entities
+      allow(controller).to receive(:find_reviews_by_user).with(user).and_return valid_reviews
+      allow(controller).to receive(:find_reviews_reported_by_user).and_return reported_entities
+      allow(SchoolRating).to receive(:by_ip).and_return valid_reviews
     end
 
     it 'should not look for a school if not provided a state and school ID' do
@@ -169,6 +175,29 @@ describe Admin::ReviewsController do
         expect(assigns[:reviews_to_process]).to eq unprocessed_reviews
       end
     end
+
+    context 'provided a search string' do
+
+      it 'should look for reviews and flags by user if email is provided' do
+        expect(User).to receive(:find_by_email).and_return user
+        expect(controller).to receive(:find_reviews_by_user).with(user).and_return valid_reviews
+        expect(controller).to receive(:reported_entities_for_reviews).and_return reported_entities
+        expect(controller).to receive(:find_reviews_reported_by_user).and_return reported_entities
+
+        get :moderation, review_moderation_search_string: 'someone@domain.com'
+      end
+
+      it 'should look for reviews by IP if IP is provided' do
+        expect(SchoolRating).to receive(:by_ip).and_return valid_reviews
+        expect(controller).to receive(:reported_entities_for_reviews).and_return reported_entities
+
+        get :moderation, review_moderation_search_string: '12.2.3.3'
+        expect(assigns[:banned_ip]).to_not be_nil
+        expect(controller.instance_variable_get(:@banned_ip).ip).to eq('12.2.3.3')
+      end
+
+    end
+
   end
 
   describe '#unprocessed_reviews' do

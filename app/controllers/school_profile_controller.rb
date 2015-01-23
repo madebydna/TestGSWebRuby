@@ -1,8 +1,6 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
-  include AdvertisingHelper
-
   before_action :redirect_tab_urls, only: [:overview]
   before_action :require_state, :require_school
   before_action :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
@@ -142,23 +140,20 @@ class SchoolProfileController < SchoolController
 
   def ad_setTargeting_through_gon
     if @school.show_ads
-      set_targeting = gon.ad_set_targeting || {}
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
-      set_targeting['City'] = format_ad_setTargeting(@school.city)
-      set_targeting['compfilter'] = format_ad_setTargeting((1 + rand(4)).to_s) # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      set_targeting['county'] = format_ad_setTargeting(@school.county) # county name?
-      set_targeting['env'] = format_ad_setTargeting(ENV_GLOBAL['advertising_env']) # alpha, dev, product, omega?
-      set_targeting['gs_rating'] = format_ad_setTargeting(@school.gs_rating)
-      set_targeting['level'] = format_ad_setTargeting(@school.level_code) # p,e,m,h
-      set_targeting['school_id'] = format_ad_setTargeting(@school.id.to_s)
-      set_targeting['State'] = format_ad_setTargeting(@school.state) # abbreviation
-      set_targeting['type'] = format_ad_setTargeting(@school.type)  # private, public, charter
-      set_targeting['zipcode'] = format_ad_setTargeting(@school.zipcode)
-      set_targeting['district_id'] = format_ad_setTargeting(@school.district.present? ? @school.district.FIPScounty : "")
-      set_targeting['template'] = format_ad_setTargeting("SchoolProf")
-
-      gon.ad_set_targeting = set_targeting
+      ad_targeting_gon_hash['City']        = @school.city
+      ad_targeting_gon_hash['compfilter']  = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      ad_targeting_gon_hash['county']      = @school.county # county name?
+      ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+      ad_targeting_gon_hash['gs_rating']   = @school.gs_rating
+      ad_targeting_gon_hash['level']       = @school.level_code # p,e,m,h
+      ad_targeting_gon_hash['school_id']   = @school.id.to_s
+      ad_targeting_gon_hash['State']       = @school.state # abbreviation
+      ad_targeting_gon_hash['type']        = @school.type  # private, public, charter
+      ad_targeting_gon_hash['zipcode']     = @school.zipcode
+      ad_targeting_gon_hash['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+      ad_targeting_gon_hash['template']    = "SchoolProf"
     end
   end
 

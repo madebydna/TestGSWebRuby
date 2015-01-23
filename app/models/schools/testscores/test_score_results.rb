@@ -1,10 +1,10 @@
 class TestScoreResults
 
   def fetch_test_scores(school)
-    cached_test_scores = SchoolCache.for_school('test_scores',school.id,school.state)
+    cached_test_scores =  school.cache_results.test_scores
 
     begin
-      results = cached_test_scores.blank? ? {} : JSON.parse(cached_test_scores.value, symbolize_names: true)
+      results = cached_test_scores.blank? ? {} : cached_test_scores.deep_symbolize_keys
     rescue JSON::ParserError => e
       results = {}
       Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +

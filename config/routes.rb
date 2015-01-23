@@ -40,6 +40,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
+  get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
+
 
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -104,7 +106,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
 
-
+    post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
@@ -114,6 +116,8 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :reviews do
       get 'moderation', on: :collection
+      get 'schools', on: :collection
+      get 'users', on: :collection
       put 'publish', on: :member
       put 'disable', on: :member
       put 'resolve', on: :member
@@ -136,6 +140,8 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
+  get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
+  get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
   put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'

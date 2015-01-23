@@ -8,32 +8,81 @@ class Admin::ReviewsController < ApplicationController
     moderate_by_user
 
     @reported_reviews = self.flagged_reviews
+    gon.reported_reviews_count = @reported_reviews.length
     @reviews_to_process = self.unprocessed_reviews
     @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
-    gon.pagename = 'Reviews moderation'
+    gon.pagename = 'Reviews moderation list'
+    set_meta_tags :title =>  'Reviews moderation list'
 
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
 
+  def schools
+    state = params['state']
+    school_id = params['school_id']
+
+    set_meta_tags :title =>  'Reviews moderation school search'
+
+    if school_id.present? && state.present?
+      redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
+    end
+
+  end
+
+  def users
+    set_meta_tags :title =>  'Reviews moderation user search'
+    moderate_by_user
+  end
+
   def moderate_by_user
-    if params[:email].present?
-      user = User.find_by_email(params[:email])
-      if user
-        #reviews by the user and the flags on those reviews.
-        @reviews_by_user = find_reviews_by_user(user)
+
+    search_string = params[:review_moderation_search_string]
+
+    if search_string.present?
+      search_string.strip!
+
+      #TODO refactor the if and else to be more DRY
+
+      if (search_string).match(/[a-zA-z]/)
+        user = User.find_by_email(search_string)
+        if user
+          #reviews by the user and the flags on those reviews.
+          @reviews_by_user = find_reviews_by_user(user)
+          flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
+          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
+
+          #reviews that are flagged by the user.
+          flagged_by_user = find_reviews_reported_by_user(user)
+          if flagged_by_user.present?
+            @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
+            Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
+          end
+        end
+
+      else
+        @reviews_by_user = SchoolRating.by_ip(search_string)
         flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
         Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-
-        #reviews that are flagged by the user.
-        flagged_by_user = find_reviews_reported_by_user(user)
-        if flagged_by_user.present?
-          @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
-          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
-        end
+        @banned_ip = BannedIp.new
+        @banned_ip.ip = search_string
       end
+
       render '_reviews_for_email'
     end
+  end
+
+  def ban_ip
+    if params[:banned_ip]
+      ip = params[:banned_ip][:ip]
+      reason = params[:banned_ip][:reason]
+
+      banned_ip = BannedIp.find_or_initialize_by(ip: ip)
+      banned_ip.reason = reason
+      banned_ip.save
+      flash_notice 'IP disabled.'
+    end
+    redirect_back
   end
 
 
@@ -41,6 +90,7 @@ class Admin::ReviewsController < ApplicationController
     review = SchoolRating.find(params[:id]) rescue nil
 
     if review
+      review.moderated = true
       if review.update_attributes(params[:school_rating])
         flash_notice 'Review updated.'
       else

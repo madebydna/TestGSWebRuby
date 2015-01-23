@@ -29,6 +29,8 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
     data_keys.each do |key|
       value = characteristic.send(key)
       if value
+        # if the datatype and the breakdowns are configured in the census_data_config_entry table then use those configure specifically
+        # else if the datatype id not present in the census_data_config_entry then cache the datatype.
         if characteristic.data_set_with_values.census_data_config_entry && key == :breakdown
           hash[key] = characteristic.data_set_with_values.census_data_config_entry.label
         else

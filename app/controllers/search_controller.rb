@@ -6,7 +6,6 @@ class SearchController < ApplicationController
   include SortingConcerns
   include GoogleMapConcerns
   include HubConcerns
-  include AdvertisingHelper
 
   #Todo move before filters to methods
   before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
@@ -323,7 +322,7 @@ class SearchController < ApplicationController
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
     end
-    if !@district_browse && hub_matching_current_url && hub_matching_current_url.city
+    if on_city_browse? && hub_matching_current_url && hub_matching_current_url.city
       filters[:collection_id] = hub_matching_current_url.collection_id
     elsif params_hash.include? 'collectionId'
       filters[:collection_id] = params_hash['collectionId']
@@ -357,19 +356,25 @@ class SearchController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
-    set_targeting = gon.ad_set_targeting || {}
-    set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
-    set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    set_targeting['template'] = 'search' # use this for page name - configured_page_name
+    ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
+    ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    ad_targeting_gon_hash['template']    = 'search' # use this for page name - configured_page_name
     targeted_city = if @city && @city.respond_to?(:name)
                       @city.name
                     elsif params[:city]
                       params[:city]
                     end
-    set_targeting['City'] = format_ad_setTargeting(targeted_city) if targeted_city
-    set_targeting['State'] = format_ad_setTargeting(@state[:short]) if @state
+    ad_targeting_gon_hash['City']        = targeted_city if targeted_city
+    ad_targeting_gon_hash['State']       = @state[:short] if @state
+    ad_targeting_gon_hash['County']      = county_object.try(:name) if county_object
+  end
 
-    gon.ad_set_targeting = set_targeting
+  def county_object
+    if @city && @city.respond_to?(:county)
+      @city.county
+    else
+      nil
+    end
   end
 
   def setup_fit_scores(results, params_hash)
@@ -471,6 +476,22 @@ class SearchController < ApplicationController
                 else
                   ''
                 end
+  end
+
+  def on_district_browse?
+    @district_browse == true
+  end
+
+  def on_city_browse?
+    @city_browse == true
+  end
+
+  def on_by_name_search?
+    @by_name == true
+  end
+
+  def on_by_location_search?
+    @by_location == true
   end
 
 end

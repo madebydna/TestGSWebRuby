@@ -10,16 +10,20 @@ class Admin::SchoolsController < ApplicationController
   has_scope :flagged, :type => :boolean
 
   def moderate
+
     @held_school = @school.held_school
     review_id = params[:review_id]
 
     if review_id
       @reviews = SchoolRating.where(id: review_id)
+      title = 'Reviews moderation - review'
     else
+      title = 'Reviews moderation - school'
       @reviews = school_reviews
       @reviews = apply_scopes(@reviews)
       @reviews.to_a.uniq!(&:id)
     end
+    set_meta_tags :title => title
 
     reported_entities = @reported_entities = ReportedEntity.
         where(reported_entity_id: @reviews.map(&:id) ).

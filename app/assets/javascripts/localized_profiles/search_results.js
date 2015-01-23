@@ -302,12 +302,16 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var tooManySchoolsPresentErrors =  $('.js-tooManySchoolsCompareError')
             wrongStateErrors.remove();
             tooManySchoolsPresentErrors.remove();
-        }
+        };
+
+        var capitalizeState = function(name) {
+            return name.replace(/(?:^|\s)\S/g, function(c) { return c.toUpperCase(); });
+        };
 
         var getCompareErrorMessageText = function (error_code, state) {
             if (error_code === 'wrongState') {
                 var longState = GS.states.name(state);
-                var capitalLongState = longState.charAt(0).toUpperCase() + longState.slice(1);
+                var capitalLongState = capitalizeState(longState);
                 var wrongStateText = '<strong>' + 'You&#39re currently comparing schools in&nbsp' + capitalLongState + '</strong>' +
                     '<a class="pointer js-compareSchoolsSubmit">' + '&nbspcompare schools now&nbsp' +
                     '</a>' + 'or' +

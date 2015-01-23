@@ -38,6 +38,34 @@
       background-color: $brand-primary-dark;
       color: #FFFFFF;
     }
+
+  }
+  .dropdown-menu  {
+    background-color: #EBF7FC;
+    border-bottom: solid #26ABE2 2px;
+    width: 100%;
+    li {
+      display: inline;
+      float: left;
+      list-style-type: none;
+
+      text-align: center;
+      a {
+        color: #87898E;
+        font-size: 12px;
+        background-color: #EBF7FC;
+        padding: 0px;
+        line-height: 24px;
+        &:hover {
+          background-color: #EBF7FC;
+          color: $brand-primary-dark;
+        }
+      }
+    }
+  }
+  &.open > a {
+    background-color: $brand-primary-dark;
+    color: #FFFFFF;
   }
   &.active a {
     background-color: $brand-primary-dark;

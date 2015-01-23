@@ -226,10 +226,6 @@ class CategoryDataReader
     hash
   end
 
-  def self.test_scores(school, _)
-    school.test_scores
-  end
-
   def self.school_data(school, _)
     hash = {}
     hash['district'] = school.district.name if school.district.present?

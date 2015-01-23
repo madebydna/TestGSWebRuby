@@ -170,21 +170,27 @@ GS.accountManagement.newsFeedUnsubscribe = (function(){
   };
 
   var setDeleteNewsFeedUnsubscribeHandler = function() {
-    $("a[class^=js-delete-subscription-]").on('click', function(){
+      $(".js-email-settings").on('click','input[class^=js-delete-subscription-]', function(){
       var hash = {};
       var $self = $(this);
-      var id = $self.data('id');
       hash.callback = GS.accountManagement.newsFeedUnsubscribe.deleteSuccessful;
       hash.callback_error = GS.accountManagement.newsFeedUnsubscribe.deleteFailure;
-      hash.href = $self.attr('href');
+      hash.href = $self.val();
       GS.util.deleteAjaxCall($self, hash);
-      return false;
+        return false;
+
     });
   };
 
   var deleteSuccessful = function(obj, data, params){
-    var css_selector = ".js-subscription-"+params.id;
-    $(css_selector).slideUp();
+    var css_selector = ".js-delete-subscription-"+params.id;
+    $(css_selector).attr('checked', false);
+    $(css_selector).addClass("js-add-subscription-"+params.name);
+      if (params.name.match("^mystat")) {
+          var mst_selector = ".js-subscription-"+params.id;
+          $(mst_selector).addClass("dn");
+      }
+    $(css_selector).removeClass("js-delete-subscription-"+params.id);
   };
 
   var deleteFailure = function(obj, data, params){
@@ -236,5 +242,117 @@ GS.accountManagement.displayHometownChooser = (function(){
         init: init
     }
 })();
+
+GS.accountManagement.newsFeedSubscribe= (function(){
+    var init = function() {
+        setAddNewsFeedSubscribeHandler();
+    };
+
+    var setAddNewsFeedSubscribeHandler = function() {
+        $(".js-email-settings").on('click','input[class^=js-add-subscription-]', function(){
+
+            var $self = $(this);
+            var list = $self.attr("name");
+            if (list !== undefined) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/account_subscriptions/",
+                    data: {list: list},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-add-subscription-"+data['list'];
+                    $(css_selector).addClass("js-delete-subscription-"+data['subscription_id']);
+                    $(css_selector).val('/gsr/user/subscriptions/'+data['subscription_id']);
+                    $(css_selector).data("params-local", { "name": data['list'], "id" : data['subscription_id'] } );
+                    $(css_selector).removeClass("js-add-subscription-"+data['list']);
+                });
+            }
+            return true;
+        });
+    };
+
+
+    return {
+        init: init
+    }
+})();
+
+GS.accountManagement.addGradeLevel= (function(){
+    var init = function() {
+        addGradeLevelHandler();
+    };
+
+    var addGradeLevelHandler = function() {
+        $(".js-select-grade-level").on('click', 'input[class^=js-add-grade-level-]', function(){
+            var hash = {};
+            var $self = $(this);
+            var gradeValue = $self.attr("name");
+            if (gradeValue !== undefined) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/save_grade_selection",
+                    data: {grade: gradeValue},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-add-grade-level-"+data['grade_level'];
+
+                    $(css_selector).addClass("js-delete-grade-level-"+data['grade_level']);
+                    $(css_selector).removeClass("js-add-grade-level-"+data['grade_level']);
+
+                });
+            }
+            return true;
+
+        });
+    };
+
+
+    return {
+        init: init
+    }
+})();
+
+GS.accountManagement.deleteGradeLevel= (function(){
+    var init = function() {
+        deleteGradeLevelHandler();
+    };
+
+    var deleteGradeLevelHandler = function() {
+        $(".js-select-grade-level").on('click','input[class^=js-delete-grade-level-]', function(){
+            var $self = $(this);
+            var gradeValue = $self.attr("name");
+            if (gradeValue !== undefined) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/gsr/user/delete_grade_selection",
+                    data: {grade: gradeValue},
+                    dataType: 'json',
+                    async: true
+                }).done(function (data) {
+                    var css_selector = ".js-delete-grade-level-"+data['grade_level'];
+
+                    $(css_selector).addClass("js-add-grade-level-"+data['grade_level']);
+                    $(css_selector).removeClass("js-delete-grade-level-"+data['grade_level']);
+
+                });
+            }
+            return true;
+
+        });
+    };
+
+
+    return {
+        init: init
+    }
+})();
+
+
+
 
 

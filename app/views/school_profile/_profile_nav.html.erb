@@ -4,7 +4,7 @@
     <% nav_on_hash[page_name] = 'class=active' %>
 <% end %>
 <div id="navigation2">
-    <nav class="nav">
+    <nav class="nav" id="optimizely-secondary-nav-original">
         <ul>
             <li <%= nav_on_hash[:overview] %>>
                 <%= link_to 'Overview', school_path(school) %>

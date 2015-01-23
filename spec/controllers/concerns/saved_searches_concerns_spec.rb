@@ -46,17 +46,15 @@ describe SavedSearchesConcerns do
     context 'when the search successfully saved and is not a provisional user' do
       before do
         allow(controller).to receive(:flash).and_return('')
-      end
-      it 'should render a flash notice' do
         allow(controller).to receive(:create_saved_search)
         allow(controller).to receive(:cookies).and_return({})
+      end
+      it 'should render a flash notice' do
         allow(controller).to receive(:flash_notice)
         expect(controller).to receive(:flash_notice)
         controller.handle_html(saved_search_params)
       end
       it 'should set a saved_search = success cookie' do
-        allow(controller).to receive(:create_saved_search)
-        allow(controller).to receive(:cookies).and_return({})
         allow(controller).to receive(:flash_notice)
         expect(controller).to receive(:cookies)
         controller.handle_html(saved_search_params)
@@ -131,10 +129,10 @@ describe SavedSearchesConcerns do
     end
 
     [:name, :search_string, :num_results].each do |field|
-      it "should return an array with an error if #{field.to_s} is blank" do
-        expect(
-          controller.send(:create_saved_search, saved_search_params.deep_dup.merge({field => ''}) ).count
-        ).to_not equal 0
+      it "should return an array with error message(s) if #{field.to_s} is blank" do
+        errors = controller.send(:create_saved_search, saved_search_params.deep_dup.merge({field => ''}) )
+        expect(errors).to be_an_instance_of Array
+        expect(errors.count).to_not equal 0
       end
     end
   end
