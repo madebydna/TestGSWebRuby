@@ -162,14 +162,26 @@ describe UserController do
       clean_models User, StudentGradeLevel
     end
 
-    context 'when user is logged in and grade level is not present' do
+    context 'when user is logged in and grade level is present' do
       before do
         allow(controller).to receive(:current_user) {current_user}
       end
 
-      it 'should add the grade level' do
-        get :update_user_grade_selection, grade: '4'
-        expect(current_user.student_grade_levels.first.grade).to eq('4')
+      it 'should delete the grade level' do
+        get :delete_user_grade_selection, grade: '4'
+        expect(current_user.student_grade_levels.first).to eq(nil)
+      end
+    end
+
+    context 'when user is not logged in and grade level is present' do
+      before do
+        allow(controller).to receive(:current_user) {nil}
+      end
+
+      it 'should not delete the grade level and return error message' do
+        get :delete_user_grade_selection, grade: '4'
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['error_msg']).to eq('Please log in to delete grade level')
       end
     end
   end

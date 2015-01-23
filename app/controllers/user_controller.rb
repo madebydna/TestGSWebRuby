@@ -115,6 +115,11 @@ class UserController < ApplicationController
   def delete_user_grade_selection
     grade_level = params[:grade]
 
+    if current_user.nil?
+      render json: {'error_msg' => 'Please log in to delete grade level', 'grade_level' => grade_level}
+      return
+    end
+
     if grade_level.present?
       unless   current_user.delete_user_grade_level(grade_level)
         result = "User profile failed to update grade level info  for user #{current_user.email} "
