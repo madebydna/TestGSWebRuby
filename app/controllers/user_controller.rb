@@ -95,13 +95,17 @@ class UserController < ApplicationController
   end
 
   def update_user_grade_selection
-    user = User.find_by_id(@current_user[:id])
     grade_level = params[:grade]
 
+    if current_user.nil?
+      render json: {'error_msg' => 'Please log in to add grade level', 'grade_level' => grade_level}
+      return
+    end
 
     if grade_level.present?
-      unless   user.add_user_grade_level(grade_level)
-        result = "User profile failed to update grade level info  for user #{user.email} "
+      obj = current_user.add_user_grade_level(grade_level)
+      if obj.errors.present?
+        result = obj.errors.full_messages.first
       end
     end
     render json: {'error_msg' => result, 'grade_level' => grade_level}
@@ -109,12 +113,11 @@ class UserController < ApplicationController
   end
 
   def delete_user_grade_selection
-    user = User.find_by_id(@current_user[:id])
     grade_level = params[:grade]
 
     if grade_level.present?
-      unless   user.delete_user_grade_level(grade_level)
-        result = "User profile failed to update grade level info  for user #{user.email} "
+      unless   current_user.delete_user_grade_level(grade_level)
+        result = "User profile failed to update grade level info  for user #{current_user.email} "
       end
     end
     render json: {'error_msg' => result, 'grade_level' => grade_level}

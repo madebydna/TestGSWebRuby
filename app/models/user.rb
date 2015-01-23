@@ -252,7 +252,6 @@ class User < ActiveRecord::Base
   end
 
   def add_user_grade_level(grade)
-
     StudentGradeLevel.find_or_create_by(member_id: id, grade: grade)
   end
 
