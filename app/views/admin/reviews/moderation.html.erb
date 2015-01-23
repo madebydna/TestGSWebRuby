@@ -30,10 +30,10 @@
             <td>School</td>
             <td>State</td>
             <td>Reviewer</td>
-            <td>Total reports</td>
-            <td>Auto Flagged</td>
-            <td>User Flagged</td>
-            <td>Case opened on</td>
+            <td>Reports</td>
+            <td>A&nbsp;Flagged</td>
+            <td>U&nbsp;Flagged</td>
+            <td>Opened&nbsp;on</td>
         </tr>
         </thead>
         <tbody>
@@ -58,7 +58,7 @@
                       <%= truncate(review.review_text, length: 20) %>
                     <% end %>
                   </td>
-                <td>
+                <td class="tac">
                     <%= review.status %>
                 </td>
                 <td>
@@ -69,20 +69,20 @@
                         School not found
                     <% end %>
                 </td>
-                <td>
+                <td class="tac">
                   <%= review.school.state if review.school%>
                 </td>
                 <td><%= link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>
                                                                                   review.user.email)) if review
                     .school%>
                   </td>
-                <td>
+                <td class="tac">
                     <%= review.reported_entities.size if review.reported_entities.any? %>
                 </td>
-                <td><%= is_auto_flagged == false ? '' : 'Y' %></td>
-                <td><%= is_user_flagged == false ? '' : 'Y' %></td>
-                <td>
-                    <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
+                <td class="tac"><%= is_auto_flagged == false ? '' : 'Y' %></td>
+                <td class="tac"><%= is_user_flagged == false ? '' : 'Y' %></td>
+                <td class="tar">
+                    <%= review.reported_entities.last.created.strftime '%-m/%d/%Y' if review.reported_entities.any? %>
                 </td>
             </tr>
         <% end %>
