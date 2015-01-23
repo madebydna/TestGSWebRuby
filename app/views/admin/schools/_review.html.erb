@@ -8,10 +8,12 @@
         <br/>
         Affiliation: <%= review.affiliation || 'n/a' %>
         <br/>
-        IP Address: <%= review.ip || 'n/a' %>
+        IP Address: <%= review.ip.present? ? link_to( review.ip, users_admin_reviews_path( :review_moderation_search_string =>
+                                                                                      review.ip)) : 'n/a' %>
         <br/>
         <% if review.user %>
-          <% email = review.user.email %>
+          <% email = link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>
+                                                                            review.user.email)) if review.school %>
           <% username = review.user.user_profile.screen_name if review.user.user_profile.present? %>
         <% else %>
           <% email = 'n/a' %>
