@@ -1,4 +1,4 @@
-if(gon.pagename == "Reviews moderation"){
+if(gon.pagename == "Reviews moderation list"){
 
     $(function () {
 

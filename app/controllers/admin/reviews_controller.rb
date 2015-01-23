@@ -12,7 +12,8 @@ class Admin::ReviewsController < ApplicationController
     @reviews_to_process = self.unprocessed_reviews
     @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
-    gon.pagename = 'Reviews moderation'
+    gon.pagename = 'Reviews moderation list'
+    set_meta_tags :title =>  'Reviews moderation list'
 
     Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
@@ -20,7 +21,9 @@ class Admin::ReviewsController < ApplicationController
   def schools
     state = params['state']
     school_id = params['school_id']
-    gon.pagename = 'Reviews moderation'
+
+    set_meta_tags :title =>  'Reviews moderation school search'
+
     if school_id.present? && state.present?
       redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
     end
@@ -28,7 +31,7 @@ class Admin::ReviewsController < ApplicationController
   end
 
   def users
-    gon.pagename = 'Reviews moderation'
+    set_meta_tags :title =>  'Reviews moderation user search'
     moderate_by_user
   end
 
