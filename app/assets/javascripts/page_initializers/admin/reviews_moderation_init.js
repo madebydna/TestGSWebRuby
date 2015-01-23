@@ -2,13 +2,15 @@ if(gon.pagename == "Reviews moderation"){
 
     $(function () {
 
-      var oTable = $('#flagged_reviews_table').dataTable({bFilter: false,
-        bInfo: false, "pagingType": "simple_numbers","bLengthChange": false,
-        'iDisplayLength': 50});
+      if(gon.reported_reviews_count != undefined && gon.reported_reviews_count <= 150) {
+
+        var oTable = $('#flagged_reviews_table').dataTable({bFilter: false,
+          bInfo: false, "pagingType": "simple_numbers","bLengthChange": false,
+          'iDisplayLength': 50});
 
 //      oTable.fnSort( [  [3,'asc'] ] );
 
-
+      }
 
     $('input:checkbox').on('click', function() {
       var $this = $(this);

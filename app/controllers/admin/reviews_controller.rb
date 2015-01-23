@@ -8,6 +8,7 @@ class Admin::ReviewsController < ApplicationController
     moderate_by_user
 
     @reported_reviews = self.flagged_reviews
+    gon.reported_reviews_count = @reported_reviews.length
     @reviews_to_process = self.unprocessed_reviews
     @reported_entities = self.reported_entities_for_reviews @reported_reviews
 
