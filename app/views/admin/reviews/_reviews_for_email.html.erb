@@ -35,12 +35,14 @@
       <% @reviews_by_user.each do |review| %>
         <% is_auto_flagged = false %>
         <% is_user_flagged = false %>
-        <%  review.reported_entities.each do |reported_entity| %>
-          <% if reported_entity.reporter_id == -1 %>
-            <% is_auto_flagged = true %>
-          <% else %>
-            <% is_user_flagged = true %>
-          <% end %>
+        <% if review.reported_entities.present?%>
+                <%  review.reported_entities.each do |reported_entity| %>
+                    <% if reported_entity.reporter_id == -1 %>
+                        <% is_auto_flagged = true %>
+                    <% else %>
+                        <% is_user_flagged = true %>
+                    <% end %>
+                <% end %>
         <% end %>
       <tr>
         <td>
@@ -68,12 +70,12 @@
         </td>
         <td><%= review.user.email if review.user%></td>
         <td>
-          <%= review.reported_entities.size if review.reported_entities.any? %>
+          <%= review.reported_entities.size if review.reported_entities.present? %>
         </td>
         <td><%= is_auto_flagged == false ? '' : 'Y' %></td>
         <td><%= is_user_flagged == false ? '' : 'Y' %></td>
         <td>
-          <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.any? %>
+          <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.present? %>
         </td>
       </tr>
     <% end %>
@@ -116,7 +118,7 @@
               <% end %>
             </td>
             <td>
-              <% if review.reported_entities..present?%>
+              <% if review.reported_entities.present?%>
                   <%= review.reported_entities.first.reason %>
               <% end %>
             </td>
