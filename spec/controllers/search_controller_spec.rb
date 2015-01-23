@@ -57,31 +57,4 @@ describe SearchController do
       end
     end
   end
-
-  describe '#ad_setTargeting_through_gon' do
-    context 'when city does not have a county' do
-      let(:city) { double('city') }
-      before do
-        allow(city).to receive(:county) { nil }
-      end
-      it 'does not set the county' do
-        controller.instance_variable_set(:@city, city)
-        controller.send(:ad_setTargeting_through_gon)
-        expect(controller.send(:ad_targeting_gon_hash)['County']).to be_nil
-      end
-    end
-    context 'when city has a county' do
-      let(:city) { double('city') }
-      let(:county) { double('county') }
-      before do
-        allow(city).to receive(:county) { county }
-        allow(county).to receive(:name) { 'county' }
-      end
-      it 'sets the city county' do
-        controller.instance_variable_set(:@city, city)
-        controller.send(:ad_setTargeting_through_gon)
-        expect(controller.send(:ad_targeting_gon_hash)['County']).to eq('county')
-      end
-    end
-  end
 end

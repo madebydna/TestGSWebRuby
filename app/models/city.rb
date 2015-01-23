@@ -21,10 +21,6 @@ class City < ActiveRecord::Base
     state == 'DC' ? "Washington, DC" : name
   end
 
-  def county
-    @county ||= County.find_by(state: state, FIPS: fipsCounty)
-  end
-
   def schools_by_rating_desc
     @schools_by_rating_desc ||= (
       schools = School.within_city(self.state, self.name)
