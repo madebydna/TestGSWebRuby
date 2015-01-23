@@ -59,6 +59,10 @@ class QueueDaemon
   def updates_query
     todo, limit, order = unprocessed_status, update_limit, update_order
 
+
+    # Orders the select statements based on the order in the array
+    # So if the array is [4,1,3,5,2] then that is the order the selects will be
+    # In other words the order in which the priority items will be processed
     query = order.inject('') do |q, order_number|
       q << "(SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = #{order_number} ORDER BY `created` ASC LIMIT #{limit}) UNION ALL"
     end
@@ -68,13 +72,14 @@ class QueueDaemon
       LIMIT #{limit}
     eos
   end
-  # An Example Query from updates_query
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 1 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 2 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 3 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 4 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` = 5 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo AND `priority` NOT IN (1,2,3,4,5) ORDER BY `priority`, `created` ASC LIMIT 100)
+
+  # An Example Query from updates_query if update_order = [1, 2, 3, 4, 5]
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 1 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 2 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 3 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 4 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 5 ORDER BY `created` ASC LIMIT 100) UNION ALL
+  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` NOT IN (1,2,3,4,5) ORDER BY `priority`, `created` ASC LIMIT 100)
   # LIMIT 100
 
   def unprocessed_status
