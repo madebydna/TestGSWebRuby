@@ -95,7 +95,9 @@ class SnapshotDataReader < SchoolProfileDataReader
   def formatted_characteristics
     hash = {}
     school.cache_results.characteristics.map  do | key, value |
-      hash.merge!(key.downcase => value.first["school_value"])
+      if value.present?
+        hash.merge!(key.downcase => value.first["school_value"])
+      end
     end
     hash
   end
