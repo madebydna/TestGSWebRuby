@@ -257,6 +257,23 @@ describe FilterBuilder do
         assert_filter_structure(filter_map, index)
       end
     end
+    context 'in Oklahoma City, OK' do
+      let (:filters) { FilterBuilder.new('OK', 'Oklahoma City', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
+        },
+        {panel: 2,
+         contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+         does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
+        },
+        {panel: 3,
+         contains: [:school_focus],
+         does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+        }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
     context 'in Wisconsin' do
       let (:filters) { FilterBuilder.new('WI', nil, false).filters }
       [ { panel: 1,
