@@ -62,7 +62,8 @@ class FilterBuilder
     Hash.new([]).merge(
         {
             in: add_vouchers_callbacks,
-            de: []
+            de: [],
+            ga: []
         }
     ).stringify_keys!
   end

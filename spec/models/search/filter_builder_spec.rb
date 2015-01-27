@@ -192,21 +192,23 @@ describe FilterBuilder do
   end
 
   describe '#filters_with_callbacks' do
-    context 'in Delaware' do
-      let (:filters) { FilterBuilder.new('DE', nil, false).filters }
-      [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
-          does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
-        },
+    %w(DE GA).each do |state|
+      context "in #{state}" do
+        let (:filters) { FilterBuilder.new(state, nil, false).filters }
+        [ { panel: 1,
+            contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+            does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
+          },
           {panel: 2,
-          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-          does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
-        },
+           contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+           does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
+          },
           {panel: 3,
-          contains: [:school_focus],
-          does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
-      }].each_with_index do |filter_map, index|
-        assert_filter_structure(filter_map, index)
+           contains: [:school_focus],
+           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+          }].each_with_index do |filter_map, index|
+          assert_filter_structure(filter_map, index)
+        end
       end
     end
     context 'in Indiana' do
