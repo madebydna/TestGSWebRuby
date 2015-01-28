@@ -1,0 +1,39 @@
+<div class="tac js-searchResultDropdown">
+  <div>
+    <% if decorated_school.has_fit? %>
+        <span class="pointer vam js-icon <%= decorated_school.fit_score_icon %>"></span>
+        <span class="pointer caret pa" style="top: 12px;"></span>
+    <% else %>
+        <div class="mts"></div>
+    <% end %>
+  </div>
+  <div class="hidden-xs pts"></div>
+  <% if decorated_school.has_fit? %>
+      <span class="pointer font-size-xs ma"><%= decorated_school.fit_score_text %></span>
+  <% else %>
+        <span class="pointer font-size-xs tac pts db" style="line-height: 1.3em">
+          No&nbsp;&nbsp;&nbsp;<br>matches
+          <span class="pointer caret pbm"></span>
+        </span>
+  <% end %>
+</div>
+<div class="panel pa dn js-fitScorePopup" style="z-index: 1; width: 200px;">
+  <div class="pal">
+    <% school.fit_score_breakdown.each do |fit_score_breakdown| %>
+      <div class="font-size-xs">
+        <div class="<%= fit_score_breakdown[:match_status] == :yes ? '' : 'gray-dark'%>">
+          <% if fit_score_breakdown[:match_status] == :yes %>
+              <span class="vam iconx16 mrs js-icon i-16-green-check"></span>
+          <% elsif fit_score_breakdown[:match_status] == :no %>
+              <span class="vam iconx16 mrs js-icon i-16-plain-x"></span>
+          <% elsif fit_score_breakdown[:match_status] == :no_data %>
+              <span class="vam iconx16 mrs js-icon i-16-question-mark"></span>
+          <% else %>
+              <span class="vam iconx16 mrs js-icon i-16-not-applicable"></span>
+          <% end %>
+          <%=fit_score_breakdown[:filter]%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

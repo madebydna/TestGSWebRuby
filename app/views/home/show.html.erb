@@ -1,0 +1,34 @@
+<% content_for :head do %>
+    <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
+    <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+<% end %>
+<% content_for :javascript_includes do %>
+    <script>
+        $(function() {
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
+            GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '<%= image_path('home/homepage_picnic.jpg')%>', mobileImage: '<%= image_path('home/homepage_picnic_mobile.jpg')%>', classes:'scaling' });
+        })
+    </script>
+<% end %>
+
+
+
+<%= render 'shared/home/search_hero_prototype', hero_image: @hero_image,
+           hero_bg_mobile: @hero_bg_mobile %>
+
+<%= render 'shared/home/browse_prototype'%>
+
+
+<%= render 'shared/home/email_signup'%>
+
+<%= render 'shared/home/resources_prototype'%>
+
+<%=render 'shared/home/offer_prototype' %>
+
+<%=render 'shared/home/quote_prototype'%>
+
+<%= render 'shared/home/who_we_are_prototype'%>
+
+<%= render 'shared/home/sponsors_prototype'%>
+
+<%= render 'shared/home_footer'%>

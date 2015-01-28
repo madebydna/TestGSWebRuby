@@ -10,7 +10,7 @@ class EspMembership < ActiveRecord::Base
   scope :for_school, ->(school) { where(school_id: school.id, state: school.state) }
 
   def approved?
-    status == 'approved'
+    status == 'approved' && :active
   end
 
   def provisional?

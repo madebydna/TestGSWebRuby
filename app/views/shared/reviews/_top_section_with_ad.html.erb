@@ -1,0 +1,12 @@
+<hr />
+<div class="row ptl mtl">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pbl">
+        <%= render "shared/reviews/link_module", driver: driver %>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pbl">
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop  %>
+        <div class="pvl visible-xs">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile  %>
+        </div>
+    </div>
+</div>

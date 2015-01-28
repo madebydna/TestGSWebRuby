@@ -1,0 +1,23 @@
+<% school_reviews_page_path = school_path(@school) + 'reviews/' %>
+<% school_cache = @school.school_cache %>
+<% star_rating = school_cache.star_rating %>
+
+<div class="ptm tac js-reviewSnapshot">
+  <% if school_cache.num_reviews > 0 %>
+      <div class="js-reviewStars">
+        <% if school_cache.num_ratings > 0 %>
+            <div class="pts"><%= draw_stars_24 star_rating%></div>
+            <div class="font-size-large"><%= pluralize(star_rating, 'star', 'stars') %></div>
+        <% end %>
+      </div>
+      <% if school_cache.num_ratings > 0 %>
+          <div>Based on <%= pluralize(school_cache.num_ratings, 'rating', 'ratings') %></div>
+      <% else %>
+          <div>No community ratings</div>
+      <% end %>
+      <div class="ptm pbl"><%= link_to pluralize(school_cache.num_reviews, 'review', 'reviews'), school_reviews_page_path %></div>
+  <% else %>
+      <div class="js-reviewStars"></div>
+      <div class="">No community reviews</div>
+  <% end %>
+</div>

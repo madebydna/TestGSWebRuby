@@ -1,22 +1,6 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
-<% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="well tac">
-                <button type="button" data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-primary js-button-link " onclick="GS.omniture.track_reviews('Overview');">
-                    BE THE FIRST TO REVIEW
-                </button>
-            </div>
-            <% if @show_ads %>
-                <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :desktop  %>
-                    <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Reviews, view: :mobile  %>
-                </div>
-            <% end %>
-        </div>
-    </div>
-<% else %>
+<% if @school_reviews_global.review_filter_totals.all > 0 && @school_reviews_global.review_filter_totals.all.present? %>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
             <% review_count = @school_reviews_global.rating_averages.overall.counter %>
@@ -25,7 +9,7 @@
             <% end %>
             <% review_total_count = ((review_count == 1)? 'See ' + review_count.to_s + ' Review': 'See all ' + review_count.to_s + ' Reviews') %>
             <%= render "shared/section_header", category_placement:category_placement, link_text: review_total_count, link_to:'reviews' %>
-            <%= render "shared/review_top_sections",driver: 'Overview' %>
+
             <div class="js_reviewsList">
                 <%= render '/shared/review_module_overview', school_reviews_pagination: @school_reviews_all %>
             </div>

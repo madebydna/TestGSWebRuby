@@ -2,21 +2,25 @@ module AdvertisingHelper
 
   protected
 
-  [:desktop, :mobile].each do |view|
-    method_name = "render_#{view}_ad_slot"
+  #executed in application controller to set the formatted gon hash
+  def set_ad_targeting_gon_hash!
+    ad_targeting_gon_hash
+  end
 
-    define_method(method_name) do |slot|
-      render('layouts/ad_layer', 
-        page: @page_config.name.to_sym,
-        slot: slot,
-        view: view
-      )
+  #assign formatted gon hash to gon.ad_set_targeting, but modify the hash via the memoized instance variable reference
+  def ad_targeting_gon_hash
+    @ad_targeting_gon_hash ||= (gon.ad_set_targeting = AdvertisingFormatterHelper.formatted_gon_hash)
+  end
+
+  private
+
+  class AdvertisingFormatterHelper
+    def self.formatted_gon_hash
+      HashWithSetterCallback.new { |key, value| [key, format_ad_setTargeting(value)] }
     end
-    send :protected, method_name
-  end
 
-  def format_ad_setTargeting(value)
-    value.to_s.delete(' ').slice(0,10)
+    def self.format_ad_setTargeting(value)
+      value.to_s.delete(' ').slice(0,10)
+    end
   end
-
 end

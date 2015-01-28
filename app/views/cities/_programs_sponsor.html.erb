@@ -1,6 +1,11 @@
 <% if sponsor && sponsor[:logo] %>
   <div class="row limit-width-1200 tac pvl">
-    <%= image_tag(sponsor[:logo], class: 'mvl') %>
+    <% if sponsor[:newwindow] != 'true' %>
+      <%= link_to image_tag(sponsor[:logo], alt: 'sponsor logo', class: 'mvl'), sponsor[:link]  %>
+    <% else %>
+      <%= link_to image_tag(sponsor[:logo], alt: 'sponsor logo', class: 'mvl'), sponsor[:link], target: '_blank' %>
+    <% end %>
+
     <p class='small gray-dark mtm mbl'><%= sponsor[:description] %></p>
   </div>
 <% end %>

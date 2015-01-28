@@ -1,0 +1,43 @@
+<% if @school %>
+  <%= render layout:'col', locals: { css_class:'phs', category_placement: category_placement } do %>
+    <div class="col-sm-4 col-md-4 col-lg-4 contact-content">
+      <span class="notranslate"><%= @school.street %></span><br/>
+      <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
+      <br/>
+      <% if @school.home_page_url.present? %>
+        <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank">School website</a><br/>
+      <% end %>
+      <% if @school.phone.present? %>
+        <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
+      <% end %>
+      <% if @school.fax.present? %>
+        <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span><br/>
+      <% end %>
+      <span class="iconx16 i-16-home vam"></span>
+      <a class="mls vam contact-content"
+        href="<%= zillow_url ( @school ) %>"
+        onclick="if (s.tl) {s.tl(this,'o', 'Zillow_'+gon.omniture_pagename);} return true;"
+        target="_blank">Nearby homes for sale</a>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 pbl ">
+    <% level_value = 'h' %>
+    <% level_value = 'm' if @school.level_code_array.include? 'm' %>
+    <% level_value = 'e' if @school.level_code_array.include? 'e' %>
+    <% level_value = 'p' if @school.level_code_array.include? 'p' %>
+      <% if @school.district == '' %>
+        <% db_hash = {:level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% else %>
+        <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% end %>
+      <%= link_to(
+         image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm', alt: "Map of "+@school.name+" address."),
+         district_boundary_path(db_hash)) %>
+    </div>
+    <% if @show_ads %>
+      <div class="pbl mbl">
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :mobile  %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

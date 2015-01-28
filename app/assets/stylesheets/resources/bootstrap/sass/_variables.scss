@@ -33,17 +33,16 @@ $brand-warning:         #f0ad4e !default;
 $brand-danger:          #d9534f !default;
 $brand-info:            #5bc0de !default;
 
+
 /////////////MS
-$brand-primary:                #0083B2;
-$brand-primary-darker:         #005877;
+$brand-primary:                #26ABE2;
+$brand-primary-darker:         #204362;
 $brand-primary-dark:           #007299;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
-$brand-primary-lighter2:       lighten($brand-primary, 60%); // #99CDE0
-$brand-primary-lighter3:       lighten($brand-primary, 80%); // #CCE6F0
-$brand-primary-lighter4:       lighten($brand-primary, 92%); // #EBF5F9
-$brand-primary-lighter5:       lighten($brand-primary, 95%); // #F5FAFC
+$brand-primary-lighter:       lighten($brand-primary, 47%); // #F5FAFC
 
 $blue-dark:                    #0D6A99;
+$green-light: #69b684 !default;
 
 
 // Scaffolding
@@ -77,17 +76,21 @@ $font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetic
 $font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
 
 
-$font-size-base:          16px !default;
-$font-size-large:         ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-small:         ceil($font-size-base * 0.875) !default; // ~14px
-$font-size-block:         ceil($font-size-base * 1.5) !default; // ~24px
+$font-size-base:          14px !default;
+$font-size-medium:        ceil($font-size-base * 1.142) !default; // ~16px
+$font-size-large:         ceil($font-size-base * 1.285) !default; // ~18px
+$font-size-xs:            ceil($font-size-base * 0.714) !default; // ~10px
+$font-size-small:         ceil($font-size-base * 0.857) !default; // ~12px
+$font-size-block:         ceil($font-size-base * 1.5) !default; // ~21px
+$font-size-xl:            ceil($font-size-base * 1.714) !default; // ~21px
 
-$font-size-h1:            floor($font-size-base * 2.25) !default; // ~36px
-$font-size-h2:            floor($font-size-base * 1.75) !default; // ~28px
-$font-size-h3:            ceil($font-size-base * 1.32) !default; // ~21px
-$font-size-h4:            ceil($font-size-base * 1.125) !default; // ~18px
-$font-size-h5:            $font-size-small !default;
-$font-size-h6:            $font-size-base !default; // ~12px
+$font-size-h1:            floor($font-size-base * 2.286) !default; // ~32px
+$font-size-h2:            floor($font-size-base * 1.86) !default; // ~26px
+$font-size-h3:            ceil($font-size-base * 1.42) !default; // ~20px
+$font-size-h4:            ceil($font-size-base * 1.285) !default; // ~18px
+
+$font-size-h5:           ceil($font-size-base * 1.142) !default; // ~16px
+$font-size-h6:            $font-size-base !default; // ~14px
 
 $line-height-base:        1.5 !default; // 24/16
 $line-height-computed:    floor($font-size-base * $line-height-base) !default; // ~20px
@@ -167,7 +170,7 @@ $btn-default-border:             #ccc !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             #0083b2 !default;
+$btn-primary-border:             $brand-primary !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
@@ -317,8 +320,8 @@ $navbar-default-color:             #777 !default;
 $navbar-default-bg:                #f8f8f8 !default;
 
 ///////////////////GS
-$navbar-default-color:             #CCE5ED;
-$navbar-default-bg:                #007EAA;
+$navbar-default-color:             #777777;
+$navbar-default-bg:                #FFFFFF;
 
 $navbar-default-border:            darken($navbar-default-bg, 6.5%) !default;
 
@@ -327,8 +330,8 @@ $navbar-default-link-color:                #777 !default;
 $navbar-default-link-hover-color:          #333 !default;
 
 ////////////////////GS
-$navbar-default-link-color:                #CCE5ED;
-$navbar-default-link-hover-color:          #FFF;
+$navbar-default-link-color:                #777777;
+$navbar-default-link-hover-color:          #000000;
 
 $navbar-default-link-hover-bg:             transparent !default;
 $navbar-default-link-active-color:         #555 !default;
@@ -403,6 +406,11 @@ $nav-pills-border-radius:                   $border-radius-base !default;
 $nav-pills-active-link-hover-bg:            $component-active-bg !default;
 $nav-pills-active-link-hover-color:         $component-active-color !default;
 
+// GS Pills
+$nav-pills-active-link-hover-bg:            $btn-default-color;
+$nav-pills-active-link-hover-color:         $component-active-color;
+$nav-pills-link-hover-color:                $btn-default-color;
+
 
 // Pagination
 // -------------------------
@@ -412,7 +420,7 @@ $pagination-border:                    #ddd !default;
 
 $pagination-hover-bg:                  $gray-lighter !default;
 
-$pagination-active-bg:                 $brand-primary !default;
+$pagination-active-bg:                 $brand-primary-dark !default;
 $pagination-active-color:              #fff !default;
 
 $pagination-disabled-color:            $gray-light !default;
@@ -540,7 +548,7 @@ $alert-danger-border:         $state-danger-border !default;
 $progress-bg:                 #f5f5f5 !default;
 $progress-bar-color:          #fff !default;
 
-$progress-bar-bg:             $brand-primary !default;
+$progress-bar-bg:             $green-light;
 $progress-bar-success-bg:     $brand-success !default;
 $progress-bar-warning-bg:     $brand-warning !default;
 $progress-bar-danger-bg:      $brand-danger !default;

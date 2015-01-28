@@ -1,35 +1,38 @@
 <% data # A +Hash+ that holds city rating, if available %>
+<%= debug data if params[:debug] %>
+<% rating_hash = data['city_rating'] %>
 
-<% if !data["city_rating"].nil? && !data["city_rating"]["overall_rating"].nil? %>
-
-    <div class="row mbm pam">
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-            <% rating = data["city_rating"]["overall_rating"] %>
-            <% rating.gsub!("+", "plus") %>
-            <% icon_to_use = 'iconx72-ESD-ratings' %>
-            <% icon_to_choose = 'i-72-ratings-' %>
-            <span class="<%= icon_to_use %> <%= icon_to_choose+rating %>"></span>
-        </div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-            <h4><%= data["city_rating"]["city_rating_label"] %></h4>
-            <p><%= data["city_rating"]["description"] %></p>
-
-        <% if !data["city_rating"]["rating_breakdowns"].nil? %>
-            <p><a  href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
-            <div class="dn well bg-white">
-                <h5>Rating Breakdown</h5>
-                <table class="table table-striped">
-                    <% data["city_rating"]["rating_breakdowns"].each do |key, value| %>
-                        <tr><td><%= key %></td><td><%= value %></td></tr>
-                    <% end %>
-                </table>
-                <% if data["city_rating"]["methodology_url"]%>
-                    <h5>Methodology</h5>
-                    <a href="<%= data["city_rating"]["methodology_url"] %>" target="_blank">View more details on ESD site</a>
-                <% end %>
-            </div>
-        <% end %>
-        </div>
+<% if rating_hash.present? && rating_hash["overall_rating"].present? %>
+  <div class="row mbm pam">
+    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+      <% rating = rating_hash["overall_rating"] %>
+      <% rating.gsub!("+", "plus") %>
+      <% icon_to_use = 'iconx72-ESD-ratings' %>
+      <% icon_to_choose = 'i-72-ratings-' %>
+      <span class="<%= icon_to_use %> <%= icon_to_choose + rating %>"></span>
     </div>
+
+    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+      <h4><%= rating_hash["label"] %></h4>
+      <p><%= rating_hash["description"] %></p>
+
+      <% if rating_hash["rating_breakdowns"].present? %>
+        <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+        <div class="dn well bg-white">
+          <h5>Rating Breakdown</h5>
+
+          <table class="table table-striped">
+            <% rating_hash["rating_breakdowns"].each do |key, value| %>
+                <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
+            <% end %>
+          </table>
+          <% if rating_hash["methodology_url"]%>
+            <h5>Methodology</h5>
+            <a href="<%= rating_hash["methodology_url"] %>" target="_blank">View more details on ESD site</a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 

@@ -31,9 +31,6 @@ LocalizedProfiles::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
-
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
@@ -41,8 +38,13 @@ LocalizedProfiles::Application.configure do
   config.cache_store = :memory_store, { size: 128.megabytes }
 
   # set host that rails should use when building absolute urls
-  config.action_controller.default_url_options = {
+  Rails.application.routes.default_url_options = {
     # host: 'test.host',
+    host: 'localhost',
+    trailing_slash: true
+  }
+
+  config.action_controller.default_url_options = {
     host: 'localhost',
     trailing_slash: true
   }

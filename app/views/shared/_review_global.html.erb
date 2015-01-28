@@ -1,0 +1,25 @@
+<div class="row mvl">
+<% grid_sizing='col-xs-12 col-sm-12 col-md-12 col-lg-12' %>
+<% if @show_ads %>
+    <% grid_sizing='col-xs-12 col-sm-6 col-md-6 col-lg-6' %>
+<% end %>
+
+<hr />
+<h2 class="plm mbl">Tell Your Story!</h2>
+<div class="<%= grid_sizing %> pbl">
+  <div class=" tac mtl">
+    <p class="open-sans_sb">
+          Let others know what you think about your school
+    </p>
+    <button type="button" data-link-value="<%= the_scoop_url %>" class="btn btn-primary mtm js-button-link">
+      Write a review
+    </button>
+  </div>
+</div>
+<% if @show_ads %>
+    <div class="<%= grid_sizing %> pbl">
+        <%= render 'layouts/ad_layer', page: ad_data[:page], slot: ad_data[:slot], view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: ad_data[:page], slot: ad_data[:slot], view: :mobile  %>
+    </div>
+<% end %>
+</div>

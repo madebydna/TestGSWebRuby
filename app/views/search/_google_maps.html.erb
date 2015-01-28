@@ -1,0 +1,20 @@
+<div class="limit-width-1200 full-width js-mapContainer">
+  <div class="hidden">
+    <div class="js-mapPinRatingText">Rating</div>
+    <div class="js-mapPinReviewText">review</div>
+    <div class="js-mapPinReviewsText">reviews</div>
+    <div class="js-mapPinRateThisSchoolText">Rate this school now!</div>
+    <div class="js-mapPinHomesForSaleText">Homes for sale</div>
+    <div class="js-mapPinSchoolTypePrivateText">Private</div> <!--May required to be dynamic based on school object-->
+    <div class="js-mapPinSchoolTypePublicText">Public district</div>
+    <div class="js-mapPinSchoolTypeCharterText">Public charter</div>
+    <div class="js-mapPinAssignedSchoolText">Assigned school</div>
+    <% (1..5).each do |rating| %>
+      <div class="js-mapPinCommunityStars-<%=rating%>"><%= draw_stars_16 rating %></div>
+    <% end %>
+  </div>
+
+  <div class="mtl hidden-xs"></div>
+  <div id="js-map-canvas"></div>
+  <div class="mtl"></div>
+</div>

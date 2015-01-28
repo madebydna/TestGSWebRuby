@@ -2,14 +2,15 @@
   <%= javascript_include_tag "cycle/jquery.cycle2.js" %>
   <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
   <%= javascript_include_tag "cycle/carousel_init.js" %>
-  <script>
-    $(document).ready(function() {
-      GS.track.setOmnitureData();
-    });
-  </script>
+    <script>
+        $(function() {
+            GS.track.setOmnitureData();
+            GS.util.setupImages({ selector: '.js-choose-a-school-img', desktopImage: '<%= image_path('hubs/choose_a_school.png')%>',loadMobile: false});
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path(@hero_image)%>', mobileImage: '<%= image_path(@hero_image_mobile)%>', classes:'scaling' });
+        });
+    </script>
 <% end %>
 
-<%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render 'shared/no_school_alert' %>
 
 <%= render 'shared/search_hero', collection_nickname: @collection_nickname,
@@ -21,15 +22,27 @@
                             hero_image_mobile: @hero_image_mobile %>
 
 <div class="limit-width-1200">
+
   <%= render 'shared/choose_a_school', choose_school: @choose_school %>
-
-  <%= render 'upcoming_events', important_events: @important_events, announcement: @announcement %>
-
-  <%= render 'join_our_community' %>
-
+  <%= render 'shared/upcoming_events', important_events: @important_events, announcement: @announcement %>
+  <% if @show_ads %>
+     <% ad_hash_review_module={page:'City_Home'.to_sym,slot:'Content_Top'.to_sym}%>
+  <%end%>
+  <%= render 'shared/review_global', ad_data:ad_hash_review_module %>
   <%= render 'featured_articles', articles: @articles %>
-
+  <%= render 'shared/home/email_signup'%>
   <%= render 'partner_carousel', partner_carousel: @partner_carousel %>
+
+
+
+   <% if @show_ads %>
+     <div class="mvl">
+        <%= render 'layouts/ad_layer', page: ('City_Home').to_sym, slot: :Footer, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: ('City_Home').to_sym, slot: :Footer, view: :mobile  %>
+     </div>
+
+   <% end %>
+
 </div>
 
 <%= render 'shared/state_footer', state: @state, cities: @cities %>

@@ -1,29 +1,45 @@
 <% data # A +Hash+ that contains a gs_rating +Hash+ if available %>
+<%= debug data if params[:debug] %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% data_config = category_placement.layout_config_json %>
+<% rating_type = (data_config || {}).fetch('rating_type', 'gs') %>
+<% rating_hash = data["#{rating_type}_rating"] %>
 
-<% if !data["gs_rating"].nil? && !data["gs_rating"]["overall_rating"].nil? %>
-
-    <div class="row mbm pam">
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"><span class="iconx72-ratings i-72-ratings-<%= data["gs_rating"]["overall_rating"] %>"></span></div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><h4>GreatSchools Rating</h4>
-            <% if data["gs_rating"]["disclaimer_private"].present? && @school.private_school? %>
-                <p class="alert alert-warning man mbm"><%= data["gs_rating"]["disclaimer_private"].html_safe %></p>
-            <% end %>
-        <p><%= data["gs_rating"]["description"] %></p>
-
-        <% if !data["gs_rating"]["rating_breakdowns"].nil? %>
-            <p><a  href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
-            <div class="dn well bg-white">
-                <h5>Rating Breakdown</h5>
-                <table class="table table-striped">
-                    <% data["gs_rating"]["rating_breakdowns"].each do |key, value| %>
-                        <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
-                        <tr><td colspan="2"><%= value['description'] %></td></tr>
-                    <% end %>
-                </table>
-            </div>
-        <% end %>
-        </div>
+<% if rating_hash.present? && rating_hash["overall_rating"].present? %>
+  <div class="row mbm pam">
+    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+      <span class="iconx72-ratings i-72-ratings-<%= rating_hash["overall_rating"] %>"></span>
     </div>
+    <% label = rating_hash['label'] || 'GreatSchools Rating' %>
+    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+      <h4><%= label %></h4>
+      <% if rating_hash["disclaimer_private"].present? && @school.private_school? && @school.gs_rating != 'nr' %>
+        <p class="alert alert-warning man mbm"><%= rating_hash["disclaimer_private"].html_safe %></p>
+      <% end %>
+        <% if rating_hash["what_is_not_rated"].present? && !@school.preschool? %>
+            <p class="alert alert-warning man mbm"><%= rating_hash["what_is_not_rated"].html_safe %></p>
+        <% end %>
+    <p><%= rating_hash["description"] %></p>
+      <% if rating_hash["rating_breakdowns"].present? || rating_hash["methodology_url"].present? %>
+        <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+        <div class="dn well bg-white">
+            <% if rating_hash["rating_breakdowns"].present? %>
+              <h5>Rating Breakdown</h5>
+              <table class="table table-striped">
+                <% rating_hash["rating_breakdowns"].each do |key, value| %>
+                  <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
+                  <tr><td colspan="2"><%= value['description'] %></td></tr>
+                <% end %>
+              </table>
+            <% end %>
+          <% if rating_hash["methodology_url"].present? %>
+            <h5>Methodology</h5>
+            <a href="<%= rating_hash["methodology_url"] %>" target="_blank">View more details about the GreatSchools rating</a>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 
 

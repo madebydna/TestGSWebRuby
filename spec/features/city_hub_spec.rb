@@ -36,7 +36,7 @@ describe 'City Hub Page' do
     end
     it 'shows announcements' do
       expect(page).to have_css('.alert-success')
-      expect(page).to have_css('strong', text: 'ANNOUNCEMENT', count: 1)
+      expect(page).to have_css('strong', text: 'Announcement', count: 1)
       expect(page).to have_link 'Learn More'
     end
   end
@@ -47,7 +47,7 @@ describe 'City Hub Page' do
       expect(page).to have_content article_title
     end
     it 'shows nearby homes with zillow' do
-      expect(page).to have_content 'Nearby Homes for Sale'
+      expect(page).to have_content 'Nearby homes for sale'
       expect(page).to have_css('iframe')
     end
   end
@@ -57,4 +57,34 @@ describe 'City Hub Page' do
       expect(page).to have_css('.js-partner-carousel')
     end
   end
+
+  shared_examples_for 'sign up for email updates button' do
+    it 'should have a sign up for email updates button' do
+      within('.js-shared-email-signup') do
+        expect(page).to have_button 'Sign up'
+      end
+    end
+  
+    it 'clicking button while logged out should take user to login page' do
+      within('.js-shared-email-signup') do
+        click_button 'Sign up'
+        uri = URI.parse(current_url)
+        expect(uri.path).to eq signin_path
+      end
+    end
+  end
+
+  # describe 'sign up for email updates button' do
+  #   pending 'Pending until Jenkins works with webkit'
+  #   context 'when viewing the mobile version', js: true do
+  #     before do
+  #       Capybara.current_session.driver.browser.resize_window(300, 1000)
+  #     end
+  #     it_behaves_like 'sign up for email updates button'
+  #   end
+  #   context 'when viewing the desktop version', js: true do
+  #     it_behaves_like 'sign up for email updates button'
+  #   end
+  # end
+
 end

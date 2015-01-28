@@ -36,9 +36,9 @@
   &:active,
   &.active {
     outline: 0;
-    background-color: #666666;
+    background-color: $brand-primary-dark;
     color:#FFFFFF;
-    @include box-shadow(inset 0 2px 0px rgba(0,0,0,.125));
+    @include box-shadow(inset 0 2px 0px rgba(0,0,0,.075));
     border-color: #666666;
   }
 

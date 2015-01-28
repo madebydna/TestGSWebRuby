@@ -12,6 +12,7 @@ module AuthenticationConcerns
   # authentication stuff, cookie setting / reading, etc
 
   COMMUNITY_COOKIE_MAX_AGE = 2.years
+  MD5_HASH_LENGTH = 24
 
   def remember_user
     set_auth_cookie
@@ -120,7 +121,10 @@ module AuthenticationConcerns
       email_options[:password] = password
     end
 
-    user = User.new
+    # If user exists modify existing info (password, etc..) otherwise create a new user
+    # Addresses bug where users with no passwords (signed up via newsletter) could not create an account
+    # This lets them register with the email/user they used for the newsletter
+    user = User.where(email: options[:email], password: nil).first_or_initialize
     user.update_attributes options
     user.password = password
 
@@ -160,7 +164,7 @@ module AuthenticationConcerns
       })
       if error.nil?
         flash_notice t('actions.account.created_via_facebook') # TODO: move this up a method
-        UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
+        EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
       end
     else
       unless user.has_facebook_account?
@@ -175,6 +179,41 @@ module AuthenticationConcerns
     end
 
     return user, error
+  end
+
+  def login_required
+    logged_in? && authorized? ? true : access_denied
+  end
+
+  def access_denied
+    respond_to do |accepts|
+      accepts.html do
+        if request.xhr?
+          store_location(request.referrer)
+          render(js: "window.location='#{signin_url}';", content_type: 'text/javascript')
+        else
+          flash_notice('You must sign in to access the page you were trying to reach')
+          store_location
+          redirect_to signin_path
+        end
+      end
+    end
+    false
+  end
+
+  def login_from_hash(hash)
+    begin
+      user_id = hash[MD5_HASH_LENGTH..-1]
+      user = User.find(user_id)
+      if user && user.has_password? && user.email_verified? && user.auth_token == hash
+        log_user_in(user)
+      end
+    rescue
+      if logged_in?
+        log_user_out
+      end
+      log.error("Error while attempting to log in user with hash: #{hash}")
+    end
   end
 
 end

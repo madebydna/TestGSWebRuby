@@ -1,4 +1,8 @@
 class SchoolRating < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  include UrlHelper
+  include UpdateQueueConcerns
+
   db_magic :connection => :surveys
 
   self.table_name='school_rating'
@@ -12,12 +16,15 @@ class SchoolRating < ActiveRecord::Base
   scope :provisional, -> { where('length(status) > 1 AND status LIKE ?', 'p%') }
   scope :not_provisional, -> { where('length(status) = 1') }
   scope :quality_decline, -> { where("quality != 'decline'") }
+  scope :principal, -> { where(who: 'principal') }
+  scope :not_principal, -> { where("who != 'principal'") }
   scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
   scope :disabled, -> { where(status: %w[d pd]) }
   scope :unpublished, -> { where(status: %w[u pu]) }
   scope :held, -> { where(status: %w[h ph]) }
   scope :flagged, -> { joins("INNER JOIN community.reported_entity ON (reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id and reported_entity.active = 1)") }
   scope :ever_flagged, -> { joins("INNER JOIN community.reported_entity ON reported_entity.reported_entity_type in (\"schoolReview\") and reported_entity.reported_entity_id = school_rating.id") }
+  scope :no_rating_and_comments, -> { where("((comments != '' && status != 'a') || quality != 'decline')") }
 
   attr_accessor :reported_entities
   attr_accessor :count
@@ -44,7 +51,11 @@ class SchoolRating < ActiveRecord::Base
 
   before_save :calculate_and_set_status, unless: '@moderated == true'
   before_save :set_processed_date_if_published
-  after_save :auto_report_bad_language, unless: '@moderated == true'
+  after_save :auto_moderate, unless: '@moderated == true'
+  after_save :send_thank_you_email_if_published
+  after_save do
+    log_review_changed(state, school_id, member_id)
+  end
 
   def self.cache_time
     LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
@@ -130,6 +141,16 @@ class SchoolRating < ActiveRecord::Base
       .limit_number(options[:quantity_to_return])
       .offset_number(options[:offset_start])
       .published
+      .not_principal
+      .no_rating_and_comments
+  end
+
+  # group_to_fetch, order_results_by, offset_start, quantity_to_return
+  def self.fetch_principal_review(school, options = {})
+    SchoolRating.where(school_id: school.id, state: school.state)
+    .published
+    .principal
+    .first
   end
 
   def remove_provisional_status!
@@ -167,6 +188,8 @@ class SchoolRating < ActiveRecord::Base
       status = 'u'
     elsif AlertWord.search(review_text).has_really_bad_words?
       status = 'd'
+    elsif PropertyConfig.force_review_moderation?
+      status = 'u'
     else
       status = 'p'
     end
@@ -178,8 +201,10 @@ class SchoolRating < ActiveRecord::Base
     self.status = status
   end
 
-  def auto_report_bad_language
+  def auto_moderate
     alert_word_results = AlertWord.search(review_text)
+
+    reason = nil
 
     if alert_word_results.any?
       reason = 'Review contained '
@@ -192,7 +217,16 @@ class SchoolRating < ActiveRecord::Base
       if alert_word_results.has_really_bad_words?
         reason << "really bad words (#{ alert_word_results.really_bad_words.join(',') })"
       end
+    end
 
+    if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
+      if reason.nil?
+        reason = "Review is for GreatSchools Delaware school."
+      else
+        reason << " Review is for GreatSchools Delaware school."
+      end
+    end
+    if reason
       report = ReportedEntity.from_review(self, reason)
 
       begin
@@ -234,6 +268,17 @@ class SchoolRating < ActiveRecord::Base
     Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time, race_condition_ttl: SchoolRating.cache_time) do
       SchoolRating.where(state: state_abbr, school_id: school_id).published.count
     end
+  end
+
+  def send_thank_you_email_if_published
+    if self.status_changed? && self.published?
+      review_url = school_reviews_url(school)
+      ThankYouForReviewEmail.deliver_to_user(user, school, review_url)
+    end
+  end
+
+  def self.by_ip(ips)
+    SchoolRating.where(ip: ips)
   end
 
   private

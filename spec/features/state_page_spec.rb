@@ -18,7 +18,7 @@ describe 'State Page' do
 
     it 'has the search hero' do
       expect(page).to have_selector '.hub-hero-bg'
-      expect(page).to have_text 'Find a School in'
+      expect(page).to have_text 'Find a school in'
     end
 
     it 'has the content module' do

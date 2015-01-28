@@ -14,6 +14,14 @@ GS.uri.Uri.getPath = function() {
     return window.location.pathname;
 };
 
+GS.uri.Uri.goToPage = function(full_uri) {
+    window.location = full_uri;
+};
+
+GS.uri.Uri.reloadPageWithNewQuery = function(query) {
+    GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + query)
+};
+
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order
  * to override any <base> tag that's on the page, *if* the base tag specifies a host that is different than current
@@ -30,6 +38,23 @@ GS.uri.Uri.getBaseHostname = function() {
     }
 
     return baseHostname;
+};
+
+GS.uri.Uri.putParamObjectIntoQueryString = function(queryString, obj) {
+    params = '';
+    for (var prop in obj) {
+        val = obj[prop];
+        if (val != undefined && val.length > 0) {
+            params = params + '&' + prop + '=' + val;
+        }
+    }
+
+    if (queryString === '' || queryString === '?') {
+        queryString = '?' + params.slice(1, params.length);
+        return queryString === '?' ? '' : queryString
+    } else {
+        return queryString + params
+    }
 };
 
 /**
@@ -75,7 +100,7 @@ GS.uri.Uri.putIntoQueryString = function(queryString, key, value, overwrite) {
  * @param key
  */
 GS.uri.Uri.getFromQueryString = function(key, queryString) {
-    queryString = queryString || decodeURIComponent(window.location.search.substring(1));
+    queryString = queryString || window.location.search.substring(1);
     var vars = [];
     var result;
 
@@ -87,8 +112,8 @@ GS.uri.Uri.getFromQueryString = function(key, queryString) {
         var pair = vars[i].split("=");
         var thisKey = pair[0];
 
-        if (thisKey === key) {
-            result = pair[1];
+        if (decodeURIComponent(thisKey) === key) {
+            result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
             break;
         }
     }
@@ -124,6 +149,16 @@ GS.uri.Uri.removeFromQueryString = function(queryString, key) {
     return queryString;
 };
 
+GS.uri.Uri.getQueryStringFromURL = function () {
+    var index = window.location.href.indexOf('?');
+    if(index === -1) {
+        return "";
+    }
+    else {
+        return window.location.href.slice(index + 1);
+    }
+};
+
 /**
  * Converts URL's querystring into a hash
  * Now works with queryStrings that contain multiple key=value pairs with the same key
@@ -135,13 +170,7 @@ GS.uri.Uri.getQueryData = function(queryString) {
         queryString = queryString.substring(1);
     }
     else {
-        var index = window.location.href.indexOf('?');
-        if(index === -1) {
-            queryString = "";
-        }
-        else {
-            queryString = window.location.href.slice(index + 1);
-        }
+        queryString = GS.uri.Uri.getQueryStringFromURL();
     }
 
     var hashes = queryString.split('&');
@@ -225,4 +254,35 @@ GS.uri.Uri.mergeObjectInto = function(obj1, obj2, overwrite) {
     }
 
     return obj2;
+};
+
+GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
+    for (var name in fieldNameAndValueMap) {
+        var input = $("<input>").attr("type", "hidden").attr("name", name).val(fieldNameAndValueMap[name]);
+        $(formObject).append(input);
+    }
+    return formObject;
+};
+
+//Pass in jQuery elements and it will iterate through and build a query string.
+//example: GS.uri.Uri.getQueryStringFromFormElements($form.find('input, select'))
+GS.uri.Uri.getQueryStringFromFormElements = function($elements) {
+    var queryString = '';
+
+    $elements.each(function() {
+        value = $(this).val();
+        if (value.length > 0) {
+            queryString += '&' + encodeURIComponent(this.name) + '=' + encodeURIComponent(value);
+        }
+    });
+
+    if (queryString.length > 0) {
+        queryString = '?' + queryString.slice(1, queryString.length)
+    }
+
+    return queryString
+};
+
+GS.uri.Uri.changeFormAction = function(action, formObject) {
+    $(formObject).attr("action", action);
 };

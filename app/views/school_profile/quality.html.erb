@@ -1,0 +1,51 @@
+<%= render 'shared/qualaroo' %>
+
+<%= render 'school_profile/header', school: @school %>
+<%= render 'school_profile/profile_nav', school: @school, page_name: :quality %>
+<%= render 'school_profile/profile_nav_w_dropdowns', school: @school, page_name: :quality %>
+
+<div class="row limit-width-1200">
+    <% root_placements = @page_config.root_placements_with_data %>
+    <% root_placements_w_data = @page_config.root_placements_with_profile_data %>
+    <% if root_placements_w_data.empty? %>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <% if @show_ads %>
+                <div class="pvl">
+                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+                </div>
+            <% end %>
+
+                <div class="mvl well">
+                    <h3>Thank you for looking into the quality of this school.</h3>
+                    <p>However, we do not have detailed quality information for this school at this time. We strive to acquire additional school data whenever available.</p>
+                </div>
+
+
+
+            <% if root_placements.present? %>
+                <div class="row">
+                    <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
+                </div>
+            <% end %>
+        </div>
+    <% else %>
+    <div class="hidden-xs hidden-sm col-md-3 col-lg-3 gs_set-z-1">
+        <%= render 'category_placement_nav' %>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" role="main">
+        <% if @show_ads %>
+            <div class="pvl">
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop %>
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            </div>
+        <% end %>
+        <div class="row">
+            <%= render partial: 'category_placement', collection: root_placements, as: :category_placement %>
+        </div>
+    </div>
+    <% end %>
+</div>
+<%= render 'data_layouts/nearby_schools' %>
+
+<%= render 'nav/school_profile_footer', state: @state, cities: @cities %>

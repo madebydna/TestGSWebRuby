@@ -16,4 +16,34 @@ class City < ActiveRecord::Base
   def state_long
     States.abbreviation_hash[state.downcase]
   end
+
+  def display_name
+    state == 'DC' ? "Washington, DC" : name
+  end
+
+  def county
+    @county ||= County.find_by(state: state, FIPS: fipsCounty)
+  end
+
+  def schools_by_rating_desc
+    @schools_by_rating_desc ||= (
+      schools = School.within_city(self.state, self.name)
+
+      School.preload_school_metadata!(schools)
+
+      # If the school doesn't exist in the top_school_ids array,
+      # then sort it to the end
+      schools.sort do |s1, s2|
+        if s1.great_schools_rating == s2.great_schools_rating
+          0
+        elsif s1.great_schools_rating.nil?
+          1
+        elsif s2.great_schools_rating.nil?
+          -1
+        else
+          s2.great_schools_rating.to_i <=> s1.great_schools_rating.to_i
+        end
+      end
+    )
+  end
 end

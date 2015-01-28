@@ -11,7 +11,12 @@ end
 
 describe StatesController do
   describe 'GET show' do
-    it_behaves_like 'a default state controller action', :show
+    context 'without a hub city mapping' do
+      it 'renders state home' do
+        get :show, state: 'indiana'
+        expect(response).to render_template('states/state_home')
+      end
+    end
 
     context 'by default' do
       before(:each) { FactoryGirl.create(:hub_city_mapping, city: nil, state: 'IN') }
@@ -42,5 +47,9 @@ describe StatesController do
 
   describe 'GET choosing_schools' do
     it_behaves_like 'a default state controller action', :choosing_schools
+  end
+
+  describe 'GET guided_search' do
+    it_behaves_like 'a default state controller action', :guided_search
   end
 end

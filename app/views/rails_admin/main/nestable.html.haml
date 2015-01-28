@@ -6,8 +6,9 @@
     window.location.href = destination;
   };
 .row-fluid
+  %h5 Number of rows shown is capped at 500
   .span12
-    %select#page_filter{ onchange: 'filter();'}
+    %select#page_filter{ onchange: 'filter();', name: 'sdfkjdskf'}
       %option{ value: ''}
         \--
       %option{ value: 'Overview'}
@@ -18,6 +19,7 @@
         Details
       %option{ value: 'Reviews' }
         Reviews
+    %span Please choose a page before reordering
 
   .span12#rails_admin_nestable
     .control-group

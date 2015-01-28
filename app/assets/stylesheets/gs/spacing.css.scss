@@ -41,6 +41,10 @@ body { padding-top: 50px }
 .pls,.phs,.pas{padding-left:5px}
 .plm,.phm,.pam{padding-left:10px}
 .pll,.phl,.pal{padding-left:20px}
+.plxl,.phxl,.paxl{padding-left:40px}
+.pbxl,.pvxl,.paxl{padding-bottom:40px}
+.prxl,.phxl,.paxl{padding-right:40px}
+.ptxl,.pvxl,.paxl{padding-top:40px}
 .mtn,.mvn,.man{margin-top: 0}
 .mts,.mvs,.mas{margin-top:5px}
 .mtm,.mvm,.mam{margin-top:10px}
@@ -57,7 +61,12 @@ body { padding-top: 50px }
 .mls,.mhs,.mas{margin-left:5px}
 .mlm,.mhm,.mam{margin-left:10px}
 .mll,.mhl,.mal{margin-left:20px}
-.phxl { padding-left: 80px; padding-right: 80px; }
+.mlxl,.mhxl,.maxl{margin-left:40px}
+.mbxl,.mvxl,.maxl{margin-bottom:40px}
+.mrxl,.mhxl,.maxl{margin-right:40px}
+.mtxl,.mvxl,.maxl{margin-top:40px}
+
+
 
 .pt1 {padding-top:1px}
 .pt2 {padding-top:2px}
@@ -68,7 +77,23 @@ body { padding-top: 50px }
 .pt8 {padding-top:8px}
 .pt9 {padding-top:9px}
 
+.pb1 {padding-top:1px}
+.pb2 {padding-top:2px}
+
+.pb35 {padding-bottom:  35px}
+//use in media query for less that 480
+.pl35 {padding-left: 35px}
+.pl25 {padding-left: 25px}
 .pt-1 { padding-top: 1% }
+
+.mt3 {margin-top: 3px;}
+
+.mv6 {margin-top: 6px;
+      margin-bottom: 6px;
+}
+
+//default module padding
+.dvp {padding-top: 60px; padding-bottom: 60px}
 
 .mha { margin-right: auto; margin-left: auto; }
 
@@ -125,6 +150,9 @@ body { padding-top: 50px }
 
 .wsnw { white-space: nowrap; }
 
+.b-none {bottom: 0;}
+.l-none {left: 0}
+
 .pa { position: absolute; }
 .pf { position: fixed; }
 .pr { position: relative; }
@@ -139,7 +167,9 @@ body { padding-top: 50px }
 .ma { margin: auto; }
 
 .hvs { border-right: 1px #CCCCCC solid; }
+.hbs { border-bottom: 1px #CCCCCC solid; }
 .h24 { height:24px }
+.h30 {height:30px}
 
 .oh { overflow: hidden; }
 .oa { overflow: auto; }
@@ -156,18 +186,140 @@ body { padding-top: 50px }
   width: 100%;
 }
 
+.half-width {
+  width: 50%;
+}
+
+.fifth-width {
+  width: 20%;
+}
+
+.full-max-width {
+  max-width: 100%;
+}
+
+.mh-500 {
+  min-height: 500px;
+}
+.brm { border-radius: 10px; }
+
+.brs { border-radius: $border-radius-small; }
+
+.back-to-top {
+  position: fixed;
+  bottom: 2em;
+  right: 0px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: rgba(160, 160, 160, 0.80);
+  font-size: 16px;
+  padding: 1em;
+  display: none;
+  border-radius: 4px 0 0 4px;
+  z-index: 10;
+}
+
+.back-to-top:hover {
+  background-color: rgba(135, 135, 135, 1.00);
+  color: #CCCCCC;
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 990px) {
   .content-centered {
     margin-top: 0;
   }
+//remove bottom padding from browse schools module
+  .pb35 {padding-bottom: 0}
+}
+
+@media only screen and (max-width: 768px) {
+  //default  mobile module padding
+  .dvp {padding-top: 40px; padding-bottom: 40px}
 }
 
 @media only screen and (max-width: 480px) {
+  .xs-nav-stacked li { width: 100%; margin-top: 5px; }
   .mobile-clearfix {
     @include clearfix();
   }
+  .prn-mobile {padding-right: 0}
+//  .pl35-or-25 {padding-left: 25px}
 }
 
 @media only screen and (min-width:480px) {
   .rating-header-h24 { height:24px; }
+}
+
+@media (min-width:1200px){
+  .plm-mobile {padding-left: 10px}
+  .mobile_img {width: 300px; height: 178px;}
+}
+
+// Hub or City Hub Upcoming Event Mobile Spacing
+
+@media only screen and (max-width: 650px) {
+  .upcoming-event {
+    clear: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .community-partner-row div {
+    clear: left;
+  }
+}
+
+//Lines and Borders
+
+.search-result-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.search-result-border.emphasis-border {
+  border-color: $neutral-color;
+}
+.search-result-border:hover{
+  border: 1px solid $brand-primary;
+}
+
+.gray-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+hr.brand-bar {
+  height: 2px;
+  background: $brand-secondary;
+}
+
+// vertical divider - used on overview
+.vdl{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-left: 1px solid #DDDDDD;
+}
+
+.vdr{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-right: 1px solid #DDDDDD;
+}
+
+
+@media (max-width:990px){
+  .vdr{
+    border-right: none;
+  }
+}
+@media (max-width:767px){
+  .vdl{
+    border-left: none;
+  }
+  .hdp{
+    border-top: 1px solid #DDDDDD;
+    padding-top: 30px;
+    margin-top: 20px;
+  }
 }

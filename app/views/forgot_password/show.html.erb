@@ -1,0 +1,39 @@
+
+
+<div class="limit-width-1200 mtxl  mbxl">
+  <h1 class='tac mbl'>Forgot your password? No problem.</h1>
+  <h4 class='tac mbl'>Please enter your email address to get started.</h4>
+
+  <div class='row tac'>
+  <form class="form-horizontal input-xlarge js-send-reset-password-email"
+        action="<%= send_reset_password_email_path %>"
+        method="post"
+        data-parsley-namespace="data-parsley-"
+  >
+    <%= token_tag form_authenticity_token %>
+    <fieldset>
+      <div class="form-group">
+        <div class="controls">
+          <label class="control-label" for="email">Email</label>
+          <input type="text" id="email" name="email" placeholder="" class=""
+                 data-parsley-required="true"
+                 data-parsley-type="email"
+                 data-parsley-required-message="Please enter an email address."
+                 data-parsley-type-email-message="Please enter a valid email address."
+                 data-parsley-error-container=".js-send-reset-password-email-errors">
+          <p class="js-send-reset-password-email-errors help-block"></p>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="controls">
+          <button class="btn btn-primary">Continue</button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+  </div>
+</div>
+
+<%= render partial: 'nav/school_profile_footer' %>

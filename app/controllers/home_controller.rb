@@ -1,21 +1,20 @@
 class HomeController < ApplicationController
   protect_from_forgery
-  include OmnitureConcerns
 
-  before_filter :ad_setTargeting_through_gon
+  before_action :ad_setTargeting_through_gon
+  before_action :set_login_redirect
 
   layout 'application'
 
-  def prototype
+  def show
 
-    @article_1 = "/assets/article_img.jpg"
-    @parent_img = "/assets/article_img.jpg"
-
+    @canonical_url = home_url
+    # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-                  robots: 'noindex'
+      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
 
     set_omniture_pagename
-
+    gon.pagename = "Homepage"
   end
 
   def set_omniture_pagename
@@ -43,17 +42,12 @@ class HomeController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
-    #if @school.show_ads
-    set_targeting = {}
+    @ad_definition = Advertising.new
     # City, compfilter, env,State, type, template
-    # set_targeting needs to be a string to work
-    set_targeting[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-    set_targeting['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    set_targeting['template'] = 'homepage' # use this for page name - configured_page_name
-    set_targeting['editorial'] = 'pushdownad'
-
-    gon.ad_set_targeting = set_targeting
-    #end
+    ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    ad_targeting_gon_hash['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    ad_targeting_gon_hash['template'] = 'homepage' # use this for page name - configured_page_name
+    ad_targeting_gon_hash['editorial'] = 'pushdownad'
   end
 
 end

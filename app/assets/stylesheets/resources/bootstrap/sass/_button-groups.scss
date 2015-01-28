@@ -47,7 +47,8 @@
     &:focus,
     &:active,
     &.active {
-      z-index: 2;
+//      GS: z-index was causing issues with popups
+//      z-index: 2;
     }
     &:focus {
       // Remove focus outline when dropdown JS adds it after closing the menu

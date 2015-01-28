@@ -1,0 +1,21 @@
+
+<%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
+
+
+<div class="limit-width-1200 mbl">
+  <div class="row">
+    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  </div>
+
+  <div class="row tac">
+    <h1 class='mha phm'><%= @collection_nickname %> Education Community</h1>
+    <p class='phm mbl'><%= @sub_heading.html_safe %></p>
+  </div>
+
+  <%= render 'shared/tabs', tab: @tab, city: @city, state: @state[:long], show_tabs: @show_tabs %>
+  <%= render 'shared/education_community_partners', partners: @partners, tab: @tab, show_tabs: @show_tabs %>
+</div>
+
+<div class="mtl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>

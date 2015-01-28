@@ -59,7 +59,7 @@ body .galleria-thumbnails{margin:auto}
     right: 10px;
     z-index: 2;
     display: none;
-    background: url('classic-loader.gif') no-repeat 2px 2px;
+    background: image-url('classic-loader.gif') no-repeat 2px 2px;
 }
 .galleria-info {
     width: 50%;
@@ -212,7 +212,7 @@ body .galleria-thumbnails{margin:auto}
 .galleria-info-close,
 .galleria-image-nav-left,
 .galleria-image-nav-right {
-    background-image: url('classic-map.png');
+    background-image: image-url('classic-map.png');
     background-repeat: no-repeat;
 }
 .galleria-container.videoplay .galleria-info,

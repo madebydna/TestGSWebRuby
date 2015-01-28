@@ -1,0 +1,22 @@
+<% @renderedFilters = render 'search/filter_form' #rendering and setting to variable to avoid rendering twice %>
+<%= render partial: 'search/filter_toolbar_mobile' %>
+
+
+<div class="js-responsiveSearchPage">
+  <%= render 'search/search_page_search_bar' %>
+  <%= render 'filter_toolbar' %>
+
+  <% if @schools.present? %>
+      <%= render 'search/google_maps', schools: @map_schools %>
+      <%= render 'number_schools_found' %>
+      <%= render 'sorting_toolbar' %>
+      <%= render partial: 'search/search_results', schools: @schools%>
+      <%= render partial: 'pagination_toolbar' %>
+      <%= render partial: 'shared/maponics_disclaimer' %>
+  <% else %>
+      <%= render 'no_results' %>
+  <% end %>
+</div>
+
+<%= render 'shared/home_footer'%>
+

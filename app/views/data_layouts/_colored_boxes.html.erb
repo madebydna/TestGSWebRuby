@@ -1,0 +1,46 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% unless defined? no_title %>
+    <!--set defaults-->
+    <% no_title = false %>
+<% end %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+
+<% data = TableData.new data if !data.is_a? TableData %>
+<% match_data = data_config.match_data(data) %>
+
+<% if match_data.present? %>
+
+    <%= render layout:'col', locals:{ css_class:'pbl', category_placement: category_placement} do %>
+
+        <% unless no_title %>
+            <a name="<%= category.code_name %>"></a>
+            <%= render "shared/section_header", category_placement:category_placement %>
+        <% end %>
+
+        <% match_data.each do |box| %>
+            <% none_case = false %>
+           <% if box[:subject_count] == 1 && box[:subject_random].downcase == 'none' %>
+                <% none_case = true %>
+           <% end %>
+           <div class="col-sm-3 col-md-3 i-48-color-<%= box[:icon] %>" style="height:140px;">
+              <div class="phl text_fff row pvm">
+                <div class="col-xs-4 tac"><span class="mtm iconx48 i-48-<%= box[:icon] %>"></span></div>
+                <div class="col-xs-8 tac">
+                    <span class="open-sans_sb font-size-block"><%= none_case == false ? box[:subject_count] : 0 %></span><br />
+                    <span class=""><%= box[:label] %></span><br />
+                    <% if none_case == false %>
+                        <div class="black pts" style="line-height: 16px"><span class="open-sans_i" >including:</span> <%= box[:subject_random].gs_capitalize_first! %></div>
+                    <% end %>
+                </div>
+              </div>
+           </div>
+        <% end %>
+
+    <% end %>
+
+<% end %>

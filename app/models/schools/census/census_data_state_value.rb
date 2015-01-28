@@ -7,4 +7,5 @@ class CensusDataStateValue < ActiveRecord::Base
 
     belongs_to :census_data_set, :class_name => 'CensusDataSet', foreign_key: 'data_set_id'
 
+    default_scope -> { where(active: true) }
 end

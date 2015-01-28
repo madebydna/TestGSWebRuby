@@ -1,0 +1,36 @@
+<% content_for :javascript_includes do %>
+    <script>
+      $(function() {
+        GS.forms.updateFormVisualElements();
+      });
+    </script>
+<% end %>
+
+
+
+<%= render 'shared/guided_search/helpme_module' %>
+
+<div class="limit-width-940 border-all-light-grey mbxl">
+
+  <%= render 'shared/guided_search/steps_navigation' %>
+
+  <form role="form" name="guidedSearch" action="/search/search.page" class="js-guidedSearch"
+        method="get" >
+    <input type="hidden" name="sort" value="rating_desc">
+
+    <div   class="tab-content">
+  <%=render 'shared/guided_search/get_started'%>
+  <%=render 'shared/guided_search/child_care'%>
+  <%=render 'shared/guided_search/dress_code'%>
+  <%=render 'shared/guided_search/school_focus'%>
+  <%=render 'shared/guided_search/class_offerings'%>
+
+  </div>
+  </form>
+</div>
+
+
+
+<%= render 'nav/short_footer' %>
+
+

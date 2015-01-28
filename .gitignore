@@ -39,3 +39,4 @@ rspec_runner.rb
 
 db/structure.sql
 
+log/queue_daemon_pid

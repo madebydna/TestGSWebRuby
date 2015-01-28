@@ -1,6 +1,6 @@
 <div class="row invert-colors bg-darker">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tac pam">
-    <div class="limit-width-1200 row tal ptl pbm clearfix">
+    <div class="limit-width-1200 row tal ptl pbm">
       <div class="col-sm-6 col-md-6 col-lg-6">
 
         <% if @school %>
@@ -14,19 +14,19 @@
               <h4 class="prl fc-fff">Sign up for email updates</h4>
             </div>
             <div class="form-group fl">
-              <button class="btn btn-primary js-send-me-updates-button-footer">Sign up</button>
+              <button id="footer-sign-up" class="btn btn-primary js-send-me-updates-button-footer">Sign up</button>
             </div>
           </fieldset>
         </form>
       </div>
 
-      <div class="col-sm-6 col-md-6 col-lg-6 fl">
+      <div class="col-sm-6 col-md-6 col-lg-6">
         <p class="js-connect-with-us-buttons fr pts">
-          <%= link_to 'https://www.facebook.com/greatschools' do %><span class="i-32-connect-fb"></span><% end %>
-          <%= link_to 'http://twitter.com/greatschools' do %><span class="i-32-connect-twitter"></span><% end %>
-          <%= link_to 'http://pinterest.com/greatschools/' do %><span class="i-32-connect-pinterest"></span><% end %>
-          <%= link_to 'http://blogs.greatschools.org/greatschoolsblog/' do %><span class="i-32-connect-gs-blog"></span><% end %>
-          <%= link_to 'http://www.youtube.com/greatschools' do %><span class="i-32-connect-youtube"></span><% end %>
+          <%= link_to 'https://www.facebook.com/greatschools', :class=>'js-no_ad' do %><span class="i-32-connect-fb"></span><% end %>
+          <%= link_to 'http://twitter.com/greatschools', :class=>'js-no_ad' do %><span class="i-32-connect-twitter"></span><% end %>
+          <%= link_to 'http://pinterest.com/greatschools/', :class=>'js-no_ad' do %><span class="i-32-connect-pinterest"></span><% end %>
+          <%= link_to 'http://blogs.greatschools.org/greatschoolsblog/', :class=>'js-no_ad' do %><span class="i-32-connect-gs-blog"></span><% end %>
+          <%= link_to 'http://www.youtube.com/greatschools', :class=>'js-no_ad' do %><span class="i-32-connect-youtube"></span><% end %>
         </p>
         <h4 class="prl fc-fff fr">Connect with us</h4>
       </div>

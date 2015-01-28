@@ -4,7 +4,7 @@ end
 
 notification :gntp
 
-guard :rspec, cmd: 'zeus rspec --order rand:$RANDOM', :rspec_env => {'RAILS_ENV' => 'test'}, after_all_pass: false, all_on_start: false, keep_failed: true, rspec: true, test_unit: false, bundler: false do
+guard :rspec, cmd: 'spring rspec', :rspec_env => {'RAILS_ENV' => 'test'}, after_all_pass: false, all_on_start: false, keep_failed: true, rspec: true, test_unit: false, bundler: false do
   # uses the .rspec file
   # --colour --fail-fast --format documentation --tag ~slow
   watch(%r{^spec/.+_spec\.rb$})

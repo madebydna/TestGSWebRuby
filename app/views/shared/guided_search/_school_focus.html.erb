@@ -1,0 +1,128 @@
+<div class="tab-pane" id="<%= @guided_search_tab[3]%>">
+  <h3 class="tac mbl prm">Are any of the following programs important to you?</h3>
+  <div class="row mtl ma mbl">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="montessori"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Montessori
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="science_tech"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Science/technology (STEM)
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="college_focus"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>College focus
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="is"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Independent study
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="online"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Online learning
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="career_tech"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Career and technology
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+
+      <div class="js-gs-checkbox js-pull-down"
+           data-pull-down-content=".js-world-language"
+      >
+        <button class="btn btn-default tal mbm font-size-medium"
+                type="button"
+                style="width:100%;">
+          <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span> World language immersion
+        </button>
+      </div>
+      <div class="dn js-world-language pal" style="border: thin solid #cccccc">
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
+                  data-gs-checkbox="mandarin"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Mandarin
+          </button>
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="">
+          <button class="btn btn-default tal js-gs-checkbox mbm font-size-medium"
+                  data-gs-checkbox="spanish"
+                  type="button"
+                  style="width:100%;">
+            <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>
+            Spanish
+          </button>
+          <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+        </div>
+        <div class="clearfix">
+          <div class="fr ">
+            <button class="btn btn-primary btn-sm js-pull-down" type="button"
+                    data-pull-down-content=".js-world-language"
+            >Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="project"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Project-based learning
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
+      <button class="btn btn-default tal js-gs-checkbox font-size-medium"
+              data-gs-checkbox="arts"
+              type="button"
+              style="width:100%;">
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Arts focus
+      </button>
+      <input type="hidden" name="school_focus[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+  </div>
+  <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[4], previous_tab_name: @guided_search_tab[2]%>
+
+</div>

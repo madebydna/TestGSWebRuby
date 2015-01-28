@@ -1,7 +1,7 @@
 class Admin::AdminController < ApplicationController
   protect_from_forgery
 
-  before_filter :init_page
+  before_action :init_page
 
   layout 'application'
 

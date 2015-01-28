@@ -18,53 +18,53 @@
 <% all_columns = [column_1_contents, column_2_contents]  %>
 
 <div class="row limit-width-1200">
-    <div class="mtl pvl clearfix">
-        <%= @show_ads ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
+  <div class="mtl pvl clearfix">
 
-        <%  all_columns.each_with_index do |col_arr, index_all| %>
+    <%  all_columns.each_with_index do |col_arr, index_all| %>
+      <% layout_grid = "col-xs-12 col-sm-12 col-md-6 col-lg-6" %>
+      <div class="<%= layout_grid %>">
+        <div class="mhm">
+        <table class="table table-striped mbm">
+          <% col_arr.each_with_index do |value_hash, index| %>
+              <% decorator = SnapshotDecorator.decorate(value_hash, context: { config: config, school: @school }) %>
 
-            <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
-            <div class="<%= layout_grid %>">
 
-                <div class="mhm">
-                <table class="table table-striped mbm">
-                    <% col_arr.each_with_index do |value_hash, index| %>
-                        <tr>
-                            <% value_hash.each do |key, value| %>
-                                <td style="width:50%"> <%= capitalize_if_string value[:label] %> </td>
-                                <td style="width:50%">
-                                    <% if config.present? && config[key.to_s].present? && config[key.to_s]["format"].present? && config[key.to_s]["format"].to_s == 'integer' && value[:school_value].present? %>
-                                        <%= (value[:school_value].is_a? Numeric) ? value[:school_value].round : value[:school_value] %>
+              <% decorator.each do |object| %>
+                <% if object.value != 'no info' %>
+                    <tr>
+                        <td style="width:50%"><%= object.label %></td>
+                        <td style="width:50%"><%= raw(decorator.get_link_to_or_value(@school, object.label, object.value)) %></td>
+                    </tr>
+                <% end %>
+              <% end %>
 
-                                    <% elsif value[:school_value] != 'no info' %>
-                                        <%= capitalize_if_string value[:school_value] %>
-                                    <% else %>
-                                        <%= value[:school_value] %>
-                                    <% end %>
-                                </td>
-                            <% end %>
-                        </tr>
-                    <% end %>
-                </table>
-                </div>
-            </div>
-            <% end %>
-            <% if !@school.preschool? %>
-                <div class="fr prl">
-                    <%= link_to '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
-                </div>
-            <% end %>
-        <%= @show_ads ?  '</div>'.html_safe : '' %>
-        <% if @show_ads %>
-            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-                <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :desktop  %>
-            </div>
-        <% end %>
-    </div>
-
-    <% if @show_ads %>
-        <div class="plm">
-            <%= render 'layouts/ad_layer', page: @page_config.name.to_sym, slot: :Snapshot, view: :mobile  %>
+          <% end %>
+        </table>
         </div>
-    <% end %>
+      </div>
+      <% end %>
+      <div class="fr prl">
+        <%= link_to(
+          '<span class="vam iconx16 i-16-pencil mrs"></span>Edit'.html_safe,
+          osp_register_url(
+            city: @school.city,
+            school_id: @school.id.to_s,
+            state: @school.state
+          )
+        ) %>
+      </div>
+
+  </div>
+
 </div>
+<!--&lt;!&ndash; links to help with bounce rate &ndash;&gt;-->
+<!--<div class="row limit-width-1200">-->
+    <!--<div class="col-xs-12 tac">-->
+        <!--<%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores"), class:'btn btn-default mas' %>-->
+        <!--<%= link_to 'Programs', school_details_url(@school, anchor:"Programs"), class:'btn btn-default mas' %>-->
+        <!--<%= link_to 'Extracurriculars', school_details_url(@school, anchor:"Extracurriculars"), class:'btn btn-default mas' %>-->
+        <!--<%= link_to 'Students', school_details_url(@school, anchor:"Students"), class:'btn btn-default mas' %>-->
+        <!--<%= link_to 'Teachers', school_details_url(@school, anchor:"Teachers"), class:'btn btn-default mas' %>-->
+        <!--<%= link_to 'Enrollment', school_details_url(@school, anchor:"Enrollment"), class:'btn btn-default mas' %>-->
+    <!--</div>-->
+<!--</div>-->

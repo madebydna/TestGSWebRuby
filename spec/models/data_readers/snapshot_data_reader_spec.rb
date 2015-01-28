@@ -120,26 +120,54 @@ describe SnapshotDataReader do
       }
       allow(subject).to receive(:data_for_all_sources_for_category).and_return @example_data
 
-      expect(subject.data_for_category category).to include({'enrollment' => { label: 'enrollment', school_value: 'no info' }})
-      expect(subject.data_for_category category).to include({'hours' => { label: 'hours', school_value: 2 }})
+      expect(subject.data_for_category(category).length).to eq(1)
+      expect(subject.data_for_category category).to include({
+        'hours' => {
+          label: 'hours',
+          school_value: 2
+        }
+      })
     end
 
     it 'should use label specified in category_data' do
       @category_data = [
-        FactoryGirl.build(:category_data, response_key: 'enrollment', label: 'enrollment blah'),
+        FactoryGirl.build(:category_data, response_key: 'enrollment', label: 'configured enrollment label'),
       ]
+      @example_data = {
+        census_data_points: {
+          'enrollment' => '42'
+        },
+      }
+      allow(subject).to receive(:data_for_all_sources_for_category).and_return @example_data
       allow(category).to receive(:category_data).and_return @category_data
 
-      expect(subject.data_for_category category).to include({'enrollment' => { label: 'enrollment blah', school_value: 'no info' }})
+      expect(subject.data_for_category category).to include({
+        'enrollment' => {
+          label: 'configured enrollment label',
+          school_value: '42'
+        }
+      })
     end
 
     it 'should default label to the key, if label is not specified' do
       @category_data = [
         FactoryGirl.build(:category_data, response_key: 'enrollment', label: nil),
       ]
+      @example_data = {
+        census_data_points: {
+          'enrollment' => '42'
+        },
+      }
+      allow(subject).to receive(:data_for_all_sources_for_category).and_return @example_data
+
       allow(category).to receive(:category_data).and_return @category_data
 
-      expect(subject.data_for_category category).to include({'enrollment' => { label: 'enrollment', school_value: 'no info' }})
+      expect(subject.data_for_category category).to include({
+        'enrollment' => {
+          label: 'enrollment',
+          school_value: '42'
+        }
+      })
     end
   end
 

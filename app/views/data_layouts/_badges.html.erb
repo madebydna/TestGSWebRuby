@@ -1,0 +1,14 @@
+<% if @school.cache_results.OECD_data.present? %>
+    <%= render "shared/section_header", category_placement:category_placement %>
+  <div class="row">
+    <div class="col-md-12 tac mbm"><span class="badgesx48 i-48-global_competitiveness_badge"></span></div>
+    <div class="col-md-12 tac mbm open-sans_sb">Global Competitiveness</div>
+    <div class="col-md-12 tac mbm"><span class="font-size-small">with America Achieves</span></div>
+    <div class="col-md-12 tac mbm">
+      <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small">Learn More &raquo;</a></div>
+      <div class="dn tal well ma pal" style="max-width: 600px;" id="js_badges_description">
+        <p>This school has chosen to compare itself with the highest-performing schools in the world, so that it can improve the instruction it provides to prepare students for a global future.  <%= link_to 'Read More &raquo;'.html_safe, oecd_landing_path %></p>
+      </div>
+    </div>
+  </div>
+<% end %>

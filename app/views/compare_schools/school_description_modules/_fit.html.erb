@@ -1,0 +1,41 @@
+<% if !@school.max_fit_score.nil? && @school.max_fit_score > 0 %>
+
+  <%= render layout: "compare_schools/school_description_modules/category", locals: {config: config} do %>
+
+    <div class="pvm">
+      <div class="tac" style="height: 24px">
+        <% if @school.fit_score > 0 %>
+          <span class="vam js-icon <%= @school.fit_score_icon %>"></span>
+        <% end %>
+      </div>
+      <div class="tac gray-dark mbm">
+        <span class="font-size-s"><%= @school.fit_score_text %></span>
+      </div>
+      <div class="phm">
+        <table class="full-width <%= config.opt[:table_name] %>">
+          <% @school.fit_score_breakdown.each do |breakdown| %>
+            <tr>
+              <td style="width: 30px">
+                <% if breakdown[:match_status] == :yes %>
+                  <i class="iconx16 i-16-green-check"></i>
+                <% elsif breakdown[:match_status] == :no %>
+                    <i class="iconx16 i-16-plain-x"></i>
+                <% elsif breakdown[:match_status] == :no_data %>
+                    <%= render 'shared/no_data_symbol_and_popup' %>
+                <% else %>
+                    <i class="iconx16 i-16-not-applicable"></i>
+                <% end %>
+              </td>
+              <td class="tal <%= breakdown[:match_status] != :yes ? 'gray-dark' : '' %>">
+                  <%= truncate_with_popup(breakdown[:filter], length: 26)%>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+
+  <% end %>
+
+<% end %>
+

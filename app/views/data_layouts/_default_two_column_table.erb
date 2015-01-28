@@ -2,13 +2,18 @@
 <% category_placement # The +CategoryPlacement+ that this table is for %>
 <% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
 
+<% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
     <% data = TableData.new data if !data.is_a? TableData %>
 
     <a name="<%= category.code_name %>"></a>
     <%= render "shared/section_header", category_placement:category_placement %>
-    <table class="table table-striped">
+
+
+    <%= render "data_layouts/colored_boxes", data: data, category_placement: category_placement, category: category, no_title: true %>
+
+    <table class="table table-striped mhs">
         <% last_key = nil %>
         <% data.rows.each do |row| %>
 
@@ -38,3 +43,10 @@
 
     </table>
 <% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+  }
+%>

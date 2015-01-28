@@ -1,9 +1,9 @@
-<%= render 'nav/topnav' %>
+
 <%= render 'nav/search_bar', state: @state, city: @city, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <div class="bg-light-gray hide-for-mobile fixed-top pvm">
   <div class="limit-width-1200">
-    <%= render 'upcoming_events', important_events: @events, community_page: true %>
+    <%= render 'shared/upcoming_events', important_events: @events, community_page: true %>
   </div>
 </div>
 

@@ -1,0 +1,143 @@
+
+<%= javascript_tag do %>
+    $(function() {
+        $("#new_banned_ip input[name='disable_ip']").on('click', function() {
+            return confirm("Are you sure you want to block this IP from submitting reviews?");
+        });
+    });
+<% end %>
+
+<%= render 'nav/topnav' %>
+
+<%= render 'reviews_navigation', page_name: :users %>
+<%= render 'reviews_user_ip_search' %>
+
+<div class="ptl limit-width-1200">
+<h3>Reviews by User</h3>
+
+
+  <table class="table table-striped" id="flagged_reviews_table">
+    <thead>
+    <tr>
+      <td>Review</td>
+      <td>Status</td>
+      <td>School</td>
+      <td>State</td>
+      <td>Reviewer</td>
+      <td>Total reports</td>
+      <td>Auto Flagged</td>
+      <td>User Flagged</td>
+      <td>Case opened on</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @reviews_by_user %>
+      <% @reviews_by_user.each do |review| %>
+        <% is_auto_flagged = false %>
+        <% is_user_flagged = false %>
+        <% if review.reported_entities.present?%>
+                <%  review.reported_entities.each do |reported_entity| %>
+                    <% if reported_entity.reporter_id == -1 %>
+                        <% is_auto_flagged = true %>
+                    <% else %>
+                        <% is_user_flagged = true %>
+                    <% end %>
+                <% end %>
+        <% end %>
+      <tr>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to truncate(review.review_text, length: 20), admin_school_moderate_path(state:
+                                                                                                 school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+          <% else %>
+            <%= truncate(review.review_text, length: 20) %>
+          <% end %>
+        </td>
+        <td>
+          <%= review.status %>
+        </td>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+          <% else %>
+            School not found
+          <% end %>
+        </td>
+        <td>
+          <%= review.school.state if review.school%>
+        </td>
+        <td><%= review.user.email if review.user%></td>
+        <td>
+          <%= review.reported_entities.size if review.reported_entities.present? %>
+        </td>
+        <td><%= is_auto_flagged == false ? '' : 'Y' %></td>
+        <td><%= is_user_flagged == false ? '' : 'Y' %></td>
+        <td>
+          <%= review.reported_entities.last.created.strftime '%B %d, %Y' if review.reported_entities.present? %>
+        </td>
+      </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+
+  </table>
+
+
+
+  <% if @reviews_reported_by_user %>
+<h3>Reviews flagged by User</h3>
+
+<table class="table table-striped" style="margin-bottom: 0px">
+  <thead>
+  <tr>
+    <td>Review</td>
+    <td>Status</td>
+    <td>School</td>
+    <td>Reason</td>
+    <td>Case opened on</td>
+  </tr>
+  </thead>
+  <tbody>
+
+      <% @reviews_reported_by_user.each do |review| %>
+          <tr>
+            <td>
+              <%= truncate(review.review_text, length: 20) %>
+            </td>
+            <td>
+              <%= review.status %>
+            </td>
+            <td>
+              <% if review.school %>
+                  <% school = review.school %>
+                  <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+              <% else %>
+                  School not found
+              <% end %>
+            </td>
+            <td>
+              <% if review.reported_entities.present?%>
+                  <%= review.reported_entities.first.reason %>
+              <% end %>
+            </td>
+            <td>
+              <%= review.posted.strftime '%B %d, %Y' %>
+            </td>
+          </tr>
+      <% end %>
+
+  </tbody>
+</table>
+  <% end %>
+
+<% if @banned_ip %>
+    <h3>Block this IP</h3>
+    <%= form_for @banned_ip, :url => admin_ban_ip_path do |banned_ip| %>
+        reason: <%= banned_ip.text_field :reason %>
+        <%= banned_ip.hidden_field :ip %>
+        <%= banned_ip.submit "Block this IP", :name => 'disable_ip'%>
+    <% end %>
+<% end %>
+</div>

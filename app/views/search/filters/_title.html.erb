@@ -1,0 +1,11 @@
+<% unless filter.name == :distance && !search_by_location? %>
+<div class="">
+  <div class="ptm">
+    <span class="font-size-small"><%=filter.label%></span><span class="val"></span><br>
+  </div>
+  <div class="hbs mts mbs"></div>
+  <div>
+    <%= yield %>
+  </div>
+</div>
+<%end%>

@@ -22,10 +22,20 @@ class School < ActiveRecord::Base
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
 
+  scope :active, -> { where(active: true) }
+
   self.inheritance_column = nil
 
   def self.find_by_state_and_id(state, id)
     School.on_db(state.downcase.to_sym).find id rescue nil
+  end
+
+  def self.within_district(district)
+    on_db(district.shard).active.where(district_id: district.id)
+  end
+
+  def self.within_city(state_abbreviation, city_name)
+    on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name)
   end
 
   def census_data_for_data_types(data_types = [])
@@ -62,19 +72,45 @@ class School < ActiveRecord::Base
     end
   end
 
-  # get the schools metadata
-  def school_metadata
-    metadata_hash = Hashie::Mash.new()
-    school_metadatas = SchoolMetadata.on_db(shard).where(school_id: id)
-    school_metadatas.each do |metadata|
-      metadata_hash[metadata.meta_key] = metadata.meta_value
+  def self.preload_school_metadata!(schools)
+    return unless schools.present?
+
+    if schools.map(&:state).uniq.size > 1
+      raise ArgumentError('Does not yet support multiple states')
     end
-    return metadata_hash
+
+    school_to_id_map = schools.each_with_object({}) do |school, hash|
+      school.instance_variable_set(:@school_metadata, Hashie::Mash.new)
+      hash[school.id] = school
+    end
+
+    school_metadatas = SchoolMetadata.on_db(schools.first.shard).where(school_id: schools.map(&:id))
+    school_metadatas.each do |metadata|
+      school = school_to_id_map[metadata.school_id]
+      metadata_hash = school.instance_variable_get(:@school_metadata)
+      metadata_hash[metadata.meta_key] = metadata.meta_value
+      school.instance_variable_set(:@school_metadata, metadata_hash)
+    end
   end
 
+  # get the schools metadata
+  def school_metadata
+    @school_metadata ||= (
+      metadata_hash = Hashie::Mash.new()
+      school_metadatas = SchoolMetadata.by_school_id(shard,id)
+      school_metadatas.each do |metadata|
+        metadata_hash[metadata.meta_key] = metadata.meta_value
+      end
+      metadata_hash
+    )
+  end
+  alias_method :metadata, :school_metadata
+
   def school_media_first_hash
-    result = SchoolMedia.fetch_school_media self, 1
-    result.first['hash']  unless result.nil? || result.empty?
+    @school_media_first_hash ||= (
+      result = SchoolMedia.fetch_school_media self, 1
+      result.first['hash']  unless result.nil? || result.empty?
+    )
   end
 
   def school_media
@@ -106,86 +142,10 @@ class School < ActiveRecord::Base
     level_code.split ','
   end
 
-# need to find contiguous grade levels and insert a dash "-" between first and last
-# pre K or PK is smallest
-# KG or K is second smallest - convert KG to K
-# Breaks in grade sequence is separated by a comma
-# UG if alone will be written as Ungraded if at the end of a series append as "& Ungraded"
-  def process_level
-    level_array = level.split ','
-    if level_array.blank?
-      return nil
-    end
-
-    if level_array.length == 1
-      if level_array[0] == 'KG'
-        return 'K'
-      elsif level_array[0] == 'UG'
-        return 'Ungraded'
-      end
-      return level_array[0]
-    end
-
-    # some prep of array and detect ungraded
-    ungraded = false
-    level_array.each_with_index do | value, index |
-      if (value == 'KG')
-        level_array[index] = 'K'
-      elsif (value == 'UG' )
-        ungraded = true
-      end
-    end
-
-    return_str = ''
-
-    temp_array = ['PK','K','1','2','3','4','5','6','7','8','9','10','11','12']
-      .map { |i| (level_array.include? i.to_s) ? i : '|' }
-      .join(' ')
-      .split('|')
-      .each{|obj| obj.strip!}
-      .reject(&:empty?)
-
-    temp_array.each_with_index do |value, index|
-      if index != 0
-        return_str += ', '
-      end
-      inner_array = value.split(' ')
-      return_str += inner_array.first
-      if inner_array.length > 1
-        # use first and last with dash
-        return_str += '-' + inner_array.last
-      end
-    end
-
-    if ungraded == true
-      return_str += " & Ungraded"
-    end
-    return_str
-  end
-
-  def description
-    snippet ||= %Q{#{name} is a #{type} school} unless name.empty? || type.empty?
-    if snippet
-      snippet << %Q{ that serves #{levels_description}} unless levels_description.nil?
-      snippet << %Q{. It has received a GreatSchools rating of #{great_schools_rating} out of 10 based on academic quality.} unless great_schools_rating.nil?
-    end
-    snippet.presence
-  end
-
   def great_schools_rating
     school_metadata[:overallRating].presence
   end
 
-  def levels_description
-    levels = process_level
-    if levels.nil? || levels.include?('Ungraded')
-      nil
-    else
-      levels.length > 2 ? "grades #{levels}" :  "grade #{levels}"
-    end
-  end
-
-  # Return all reviews for this school
   def school_ratings
     SchoolRating.where(state: state, school_id: id)
   end
@@ -193,6 +153,10 @@ class School < ActiveRecord::Base
   # returns all reviews for
   def reviews
     SchoolRating.fetch_reviews self
+  end
+
+  def principal_review
+    SchoolRating.fetch_principal_review self
   end
 
   # group_to_fetch, order_results_by, offset_start, quantity_to_return
@@ -265,5 +229,86 @@ class School < ActiveRecord::Base
     prefix << '_test' if Rails.env.test?
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
+
+
+
+  def self.for_states_and_ids(states, ids)
+    raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
+    raise ArgumentError, 'Number of states and school IDs provided must be equal' unless states.size == ids.size
+
+    schools = []
+
+    state_to_id_hashes = []
+    states.each_with_index do |state, index|
+      state_to_id_hashes <<
+        {
+          state: state,
+          id: ids[index]
+        }
+    end
+    states_to_ids = state_to_id_hashes.group_by { |pair| pair[:state] }
+    states_to_ids.each do |state, values|
+      values.map! { |pair| pair[:id] }
+    end
+
+    states_to_ids.each do |state, ids|
+      schools += self.on_db(state.to_sym).where(id: ids, active: true).to_a
+    end
+
+    # Sort schools the way they were passed in
+    schools = schools.sort_by do |school|
+      state_to_id_hashes.index(
+        {
+          state: school.state.downcase,
+          id: school.id
+        }
+      )
+    end
+  end
+
+  def all_reviews
+    @all_reviews ||= reviews.load
+  end
+
+  def review_count
+    all_reviews.count
+  end
+
+  def calculate_review_data
+    SchoolReviews.calc_review_data(all_reviews)
+  end
+
+  def community_rating
+    calculate_review_data.seek('rating_averages','overall','avg_score')
+  end
+  def pk8?
+    includes_level_code?(%w[p e m])
+  end
+
+  def k8?
+    includes_level_code?(%w[e m])  &&  !preschool?
+  end
+
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores)
+
+  def cache_results
+
+    @school_cache_results ||= (query_results = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS).include_schools(state, id).query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+
+    school_cache_results.decorate_schools(Array(self)).first
+    )
+  end
+
+
+  def self.for_collection_ordered_by_name(state,collection_id)
+    raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
+    school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
+    db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+  end
+
+
+
 
 end

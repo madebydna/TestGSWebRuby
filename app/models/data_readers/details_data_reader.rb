@@ -17,7 +17,7 @@ class DetailsDataReader < SchoolProfileDataReader
 
     #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
-
+      data_show: false,
       art:   {count: 'no info', content: 'Arts & music'},
       sport: {count: 'no info', content: 'Sports'},
       club:  {count: 'no info', content: 'Clubs'},
@@ -39,6 +39,9 @@ class DetailsDataReader < SchoolProfileDataReader
           (Array(data_details[key]).count{|item| item.downcase == "none"})
         end
         return_counts_details[osp_key][:count] = none_count == 0 ?  "no info" : 0
+        return_counts_details[:data_show] = true if none_count > 0
+      else
+        return_counts_details[:data_show] = true
       end
     end
     return_counts_details

@@ -3,7 +3,7 @@ module DeferredActionConcerns
   include ReviewControllerConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
-
+  include SavedSearchesConcerns
   protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(
@@ -11,6 +11,7 @@ module DeferredActionConcerns
     save_review_deferred
     add_favorite_school_deferred
     report_review_deferred
+    saved_search_deferred
   )
 
   def save_deferred_action(action, params)
@@ -70,6 +71,7 @@ module DeferredActionConcerns
     return false if !logged_in? || current_user.provisional?
 
     add_favorite_school params
+    create_subscription params
 
     true
   end
@@ -78,6 +80,14 @@ module DeferredActionConcerns
     return false if !logged_in? || current_user.provisional?
 
     report_review_and_redirect params
+
+    true
+  end
+
+  def saved_search_deferred(params)
+    return false if !logged_in?
+
+    handle_html params
 
     true
   end

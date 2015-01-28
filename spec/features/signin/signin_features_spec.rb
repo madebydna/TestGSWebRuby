@@ -19,6 +19,7 @@ feature "Signin features" do
       find(:css, "#email").set(user.email)
       find(:css, "#password").set('password')
       click_button 'Login'
+      visit signin_path
       expect(subject).to have_content('Sign Out')
     end
   end

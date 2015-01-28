@@ -1,0 +1,49 @@
+<% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
+
+<% gs_rating = @school.gs_rating || 'nr' %>
+<div class="row pr" style="height: 300px;">
+  <div class="col-xs-12 tac">
+    <a href="quality#Ratings" >
+      <div class="link-darkgray pbs">GreatSchools rating<br /></div>
+      <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
+    </a>
+  </div>
+
+<% ratings_array = [] %>
+
+<% state_rating = @school.state_rating %>
+<% if state_rating %>
+    <% rating_text = (@school.state == 'CA' ? 'API score' : 'State rating') %>
+    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
+<% end %>
+
+<% local_rating = @school.local_rating %>
+<% if local_rating %>
+       <% rating_text = ('ESD rating') %>
+        <% ratings_array << (render "shared/rating/snapshot/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating,supporting_text: rating_text) %>
+<% end %>
+
+<% if @school.preK_star_rating %>
+        <% rating_text = 'Preschool rating' %>
+    <% if @school.state == 'MI' %>
+        <% ratings_array << ( render "shared/rating/snapshot/detroit_blue_star", rating:@school.preK_star_rating, supporting_text: rating_text) %>
+    <% else %>
+        <% ratings_array << ( render rating_partial_for_snapshot(@school.state), page:'overview', rating:@school.preK_star_rating, supporting_text: rating_text) %>
+    <% end %>
+<% end %>
+
+<% if ratings_array.present?%>
+    <div class="col-xs-12 tac ptl mts">
+      <a href="quality#Ratings" >
+        <%= raw render_array_horizontally ratings_array, {"xs"=> 4,"sm"=> 4,"md"=> 4,"lg"=> 4} %>
+      </a>
+    </div>
+<% end %>
+
+
+<div class="tac pa full-width"  style="bottom: 20px;" >
+    <%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores") %>&nbsp;|&nbsp;
+    <%= link_to 'Ratings', school_quality_url(@school, anchor:"Ratings") %>
+</div>
+
+</div>

@@ -1,0 +1,103 @@
+
+
+<%= render partial: 'nav/search_bar_guided_search' %>
+
+<% state = StateHomeDecorator.decorate(@state) %>
+
+<div class="phm limit-width-1200">
+  <h1><span class="notranslate"><%= state.name %></span> Schools</h1>
+</div>
+
+<div class="phm limit-width-1200 ">
+  <p>
+    GreatSchools has profiles for more than 
+    <%= state.approximate_schools_in_state %> public, public charter, 
+    and private schools in <span class="notranslate"><%= state.name %></span>. As you search for schools that
+    fit your family, you’ll find information on academic performance, 
+    extracurricular programs, school culture, and more.
+  </p>
+</div>
+
+<div class="row  limit-width-1200">
+    <% if @show_ads %>
+        <div class="mtl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top_Text, view: :mobile  %>
+        </div>
+    <% end %>
+
+  <div class="col-xs-12 tac">
+      <h2 class="phm">Get started finding schools in...</h2>
+  </div>
+  <% state.cities_list.first[0..3].each_with_index do |city, index| %>
+    <%= div_tag sizes: { xs: 12, sm: 6, md: 3, lg: 3 } do %>
+      <div class=" notranslate state_bg_<%= index+1 %>"><div class="pam"><%= link_to(city.name.upcase, city_path(city_params(@state[:long], city.name)), class: 'text_fff font-size-block') %></div></div>
+    <% end %>
+  <% end %>
+</div>
+
+<% cache("cities_in_state_#{@state[:short]}") do%>
+<% column_sizes = { xs: 12, sm: 3, md: 3, lg: 3 } %>
+<div class="row phm limit-width-1200">
+  <div class="clearfix mtl">
+    <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> cities</h2></div>
+    <div class="fl ptm">
+      <%= link_to("See all cities", city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+    </div>
+  </div>
+  <div class="toggle-cities pbxl ptl clearfix notranslate">
+      <div class="col-sm-12 col-md-8 col-lg-9">
+          <div class="row pbl mbl">
+            <% state.cities_list.each do |column_of_cities| %>
+              <%= div_tag sizes: column_sizes do %>
+                <% column_of_cities.each do |city| %>
+                  <%= link_to(city.name, city_path(city_params(@state[:long], city.name))) %></br>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3">
+          <% if @show_ads %>
+              <div>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :desktop  %>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Content_Top, view: :mobile  %>
+              </div>
+          <% end %>
+      </div>
+  </div>
+</div>
+<% end %>
+
+<% cache("districts_in_state_#{@state[:short]}") do%>
+<% column_sizes = { xs: 12, sm: 3, md: 3, lg: 3 } %>
+<div class="row bg-light-gray ">
+    <div class="limit-width-1200 ptl phm">
+    <div class="clearfix mtl">
+        <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> school districts</h2></div>
+      <div class="fl ptm">
+        <%= link_to("See all districts", district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+      </div>
+    </div>
+      <div class="toggle-districts pbxl ptl clearfix notranslate">
+        <% state.districts_list.each do |column_of_districts| %>
+          <%= div_tag sizes: column_sizes do %>
+            <% column_of_districts.each do |district| %>
+                    <%= link_to(district.name, city_district_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(district.city), gs_legacy_url_encode(district.name))) %></br>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <% if @show_ads %>
+        <div class="pvl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Footer, view: :mobile  %>
+        </div>
+    <% end %>
+</div>
+<% end %>
+
+</br>
+
+<%= render 'shared/state_footer', state: @state %>

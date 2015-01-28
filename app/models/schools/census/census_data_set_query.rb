@@ -26,7 +26,6 @@ class CensusDataSetQuery
     CensusDataSet
       .on_db(state.downcase.to_sym)
       .active
-      .scoped
   end
 
   def with_data_types(data_type_names_or_ids)
@@ -74,7 +73,7 @@ class CensusDataSetQuery
   end
 
   def data_sets
-    @data_sets ||= @relation.to_a
+    @data_sets ||= @relation.present? ? @relation.to_a : nil
   end
 
   def data_set_ids

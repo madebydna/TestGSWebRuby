@@ -1,0 +1,84 @@
+<div class="tab-pane active" id="<%= @guided_search_tab[0]%>">
+
+  <h3 class="tac brand-primary mbl prm">Finding the right fit is as easy as 1-2-3!</h3>
+  <div class="mtl pll font-size-medium"><span class="brand-primary">1. </span>Tell us what you're looking for in a school</div>
+  <div class="mtl pll font-size-medium"><span class="brand-primary">2. </span>See which schools are a good fit</div>
+  <div class="mtl pll font-size-medium"><span class="brand-primary">3. </span>Save your favorites so you can visit, apply and get updates</div>
+  <div class="row mtl">
+    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
+      <label class="control-label">Grade<sup>*</sup></label>
+      <select  class="form-control js-error-validation" name="grades" id="js-guided-grades">
+        <option value="" >--Grade--</option>
+        <option value="p">Pre-School</option>
+        <option value="k">Kindergarten</option>
+        <option value="1">1st Grade</option>
+        <option value="2">2nd Grade</option>
+        <option value="3">3rd Grade</option>
+        <option value="4">4th Grade</option>
+        <option value="5">5th Grade</option>
+        <option value="6">6th Grade</option>
+        <option value="7">7th Grade</option>
+        <option value="8">8th Grade</option>
+        <option value="9">9th Grade</option>
+        <option value="10">10th Grade</option>
+        <option value="11">11th Grade</option>
+        <option value="12">12th Grade</option>
+
+      </select>
+      <p class="js-error-message help-block dn">Please select a grade</p>
+
+    </div>
+    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 phl">
+      <label class="control-label">Location<sup>*</sup><span class="gray-dark">(Address or ZIP)</span></label>
+      <input type="text" class="form-control js-error-validation js-noAuto" name="location" id="js-guidedQueryString">
+      <p class="js-error-message help-block dn">Please enter a location</p>
+
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 phl">
+      <label>Show schools within</label>
+      <select class="form-control" id="js-guided-distance">
+        <option value="1">1 Mile</option>
+        <option value="2">2 Miles</option>
+        <option value="3">3 Miles</option>
+        <option value="4">4 Miles</option>
+        <option value="5" selected="selected">5 Miles</option>
+        <option value="10">10 Miles</option>
+        <option value="15">15 Miles</option>
+        <option value="20">20 Miles</option>
+        <option value="25">25 Miles</option>
+        <option value="30">30 Miles</option>
+        <option value="60">60 Miles</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mtl">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl">
+      <label>Transportation</label>
+
+      <button class="btn btn-default tal plm js-gs-checkbox font-size-medium"
+              data-gs-checkbox="public_transit"
+              style="width:100%;"
+              type="button"
+      >
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Near public transit
+      </button>
+      <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
+
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 phl">
+      <label>&nbsp;</label>
+      <button class="btn btn-default tal plm  js-gs-checkbox font-size-medium"
+              data-gs-checkbox="provided_transit"
+              style="width:100%;"
+              type="button"
+      >
+        <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>District provided
+      </button>
+      <input type="hidden" name="transportation[]" value="" class="js-gs-checkbox-value">
+    </div>
+  </div>
+  <div class="row mtl">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 phl"><sup>*</sup> Required</div>
+  </div>
+  <%=render 'shared/guided_search/button_navigation', next_tab_name: @guided_search_tab[1]%>
+</div>

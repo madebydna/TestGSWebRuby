@@ -23,6 +23,37 @@ describe SigninController do
     end
   end
 
+  describe '#post_registration_confirmation' do
+    before do
+      allow(controller).to receive(:redirect_to) { }
+      allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+    end
+    context 'when logged in' do
+      before do
+        allow(controller).to receive(:logged_in?) { true }
+      end
+      context 'and redirect_url exists in params' do
+        before do
+          controller.params[:redirect] = 'localhost:3000'
+        end
+        it 'should execute defered action' do
+          expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+
+      context 'and redirect_url does not exist' do
+        before do
+          controller.params[:redirect] = nil
+        end
+        it 'should execute defered action' do
+          expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+    end
+  end
+
   describe '#create' do
 
     describe 'authenticate' do
@@ -48,6 +79,7 @@ describe SigninController do
 
       context 'successful login' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {password: 'abc'} }
 
         before do
           expect(controller).to receive(:authenticate).and_return([user, nil])
@@ -56,6 +88,35 @@ describe SigninController do
         it 'should log the user in' do
           expect(controller).to receive(:log_user_in).with(user)
           get :create, password: 'abc'
+        end
+
+        it 'should redirect to home if no redirect specified' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:home_url).and_return('/') # To avoid issue where rspec generates join_url incorrectly (with trailing slash)
+          expect(subject).to redirect_to '/'
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:should_attempt_login).and_return(true)
+          allow(controller).to receive(:log_user_in).with(user)
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
         end
       end
     end
@@ -89,8 +150,9 @@ describe SigninController do
 
       context 'successful registration' do
         let(:user) { instance_double(User) }
+        subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
-          user.stub(:provisional?).and_return(false)
+          allow(user).to receive(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
         end
 
@@ -102,6 +164,33 @@ describe SigninController do
         it 'should set the current user to the newly created user' do
           post :create, email: 'blah@example.com'
           expect(controller.send :current_user).to eq(user)
+        end
+
+        it 'should redirect to join if no redirect specified' do
+          expect(subject).to redirect_to join_url
+        end
+
+        it 'should redirect to overview page last visited' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should redirect  if the redirect cookie is set' do
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/city-hub/'
+        end
+
+        it 'should redirect to overview page last visited even if redirect cookie is set' do
+          allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
+          cookies[:redirect_uri] = '/city-hub/'
+          expect(subject).to redirect_to '/profile-url'
+        end
+
+        it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+          cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+          expect(subject.request.url).not_to include '['
+          expect(subject.request.url).not_to include ']'
         end
       end
     end
@@ -137,8 +226,35 @@ describe SigninController do
   describe '#authenticate' do
     let(:user) { instance_double(User) }
 
-    it 'should return an existing user if one exists and it matches given password' do
+    it 'should return an existing provisional user and error message to verify email if the email is provisional' do
       expect(User).to receive(:with_email).and_return(user)
+      allow(user).to receive(:provisional?).and_return(true)
+      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
+      expect(controller.send :authenticate).to eq([ user, 'Before logging in, you must verify your email by clicking the link in the email we sent you.' ])
+    end
+
+    it 'should return an existing user and error message to sign up for an account if the account has no password' do
+      expect(User).to receive(:with_email).and_return(user)
+      expect(user).to receive(:provisional?).and_return(false)
+      expect(user).to receive(:has_password?).and_return(false)
+      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
+      expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
+      expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
+    end
+
+    it 'should return an existing user and error message if the passwords do not match' do
+      expect(User).to receive(:with_email).and_return(user)
+      expect(user).to receive(:provisional?).and_return(false)
+      expect(user).to receive(:has_password?).and_return(true)
+      expect(user).to receive(:password_is?).and_return(false)
+      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
+      expect(controller.send :authenticate).to eq([ user, "The email or password you entered is invalid. Please try again or <a href=\"http://localhost/join/\">create an account</a>." ])
+    end
+
+    it 'should return an existing user if one exists and it matches given password and no error message.' do
+      expect(User).to receive(:with_email).and_return(user)
+      expect(user).to receive(:provisional?).and_return(false)
+      expect(user).to receive(:has_password?).and_return(true)
       expect(user).to receive(:password_is?).and_return(true)
       expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, nil ])
@@ -162,7 +278,7 @@ describe SigninController do
 
     def stub_fb_login_success
       user = double('user', id: 1, auth_token: 'foo')
-      user.stub(:provisional?).and_return(false)
+      allow(user).to receive(:provisional?).and_return(false)
       allow(controller).to receive(:current_user) { user }
       allow(controller).to receive(:facebook_login) { [user, nil] }
     end
@@ -243,6 +359,15 @@ describe SigninController do
               get :facebook_callback, code: 'fb-code'
               expect(response).to redirect_to('/overview-url-double')
             end
+            it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
+              stub_fb_login_fail
+              cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              allow(controller).to receive(:overview_page_for_last_school) { nil }
+              get :facebook_callback, code: 'fb-code'
+              expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
+              expect(subject.request.url).not_to include '['
+              expect(subject.request.url).not_to include ']'
+            end
           end
 
           context 'logged in' do
@@ -259,7 +384,7 @@ describe SigninController do
               stub_fb_login_fail
               allow(controller).to receive(:overview_page_for_last_school) { nil }
               get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/index.page')
+              expect(response).to redirect_to('/')
             end
           end
         end
@@ -324,6 +449,17 @@ describe SigninController do
 
       it 'should publish the user\'s reviews' do
         expect(user).to receive(:publish_reviews!)
+        subject
+      end
+
+      it 'should track user review submission conversion in omniture' do
+        expect(user).to receive(:publish_reviews!).and_return([SchoolRating.new])
+        expect(controller).to receive(:set_omniture_events_in_cookie).
+          with(['review_updates_mss_end_event'])
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({"ab_version"=>nil})
+        expect(controller).to receive(:set_omniture_sprops_in_cookie).
+          with({'custom_completion_sprop' => 'PublishReview'})
         subject
       end
 

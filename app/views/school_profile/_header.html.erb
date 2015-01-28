@@ -1,0 +1,120 @@
+<% # this works because the the part of the statement because the conditional will initialize the var to nil %>
+<% # the ||= wouldnt do what you might expect here, since the variable in question is a boolean and might be false %>
+<% include_contact_info_link = true if include_contact_info_link.nil? %>
+<% include_cta_button_group  = true if include_cta_button_group.nil? %>
+<% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
+
+<div class="header-bg-color ">
+    <div class="row pal limit-width-1200 open-sans">
+      <div >
+        <a class="dn  js-backToCompare">&laquo; Back to compare<div class="pbm"></div></a>
+      </div>
+      <div class="pbl">
+        <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs, top_margin: 'mtn' %>
+      </div>
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
+            <div class="fl prl pbm">
+              <%= link_to(school_url(@school, anchor: 'Media_Gallery')) do %>
+                <%= school_profile_decorator.photo %>
+              <% end %>
+            </div>
+
+            <div class="fl header-title-width" >
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 tal pbm notranslate">
+                        <%= link_to school_url(@school) do %>
+                            <h1 class="mtn pts"><%= @school.name %></h1>
+                        <% end %>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                        <% subheader_content = [
+                           school_profile_decorator.process_level,
+                           @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
+                           raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
+                        ].compact  %>
+
+                        <% if include_contact_info_link %>
+                          <% contact_info_link = link_to(school_url(@school, anchor: 'Contact_this_school')) do %>
+                            <span class="vam iconx16 i-16-map-pin"></span><span class="mls">Contact info</span>
+                          <% end %>
+                          <% subheader_content << contact_info_link %>
+                        <% end %>
+
+                        <% subheader_content.each_with_index do | value, index | %>
+                             <% if index == 0  %>
+                                <div class="fl prm hvs"> <%= value %></div>
+                             <% elsif index + 1 == subheader_content.length %>
+                                <div class="fl phm"> <%= value %></div>
+                             <% else %>
+                                <div class="fl phm hvs"> <%= value %></div>
+                             <% end %>
+                        <% end %>
+                    </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
+                    <% if @school.cache_results.present? %>
+                        <% students_enrolled = @school.cache_results.students_enrolled %>
+                        <% before_care = @school.cache_results.before_care %>
+                        <% after_school = @school.cache_results.after_school %>
+                        <% if students_enrolled.present? && students_enrolled != '?' %>
+                            <div class="fl prm ">Students enrolled: <strong><%= students_enrolled %></strong></div>
+                        <% end %>
+                        <% if before_care.present? && before_care != '?' %>
+                            <div class="fl prm">
+                              <% if before_care.downcase == 'yes'%>
+                                  <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+                                      <span class="link-darkgray">Before care: <strong><%= before_care %></strong></span>
+                                  <% end %>
+                              <% else %>
+                                  Before care: <strong><%= before_care %></strong>
+                              <% end %>
+                            </div>
+                        <% end %>
+                        <% if after_school.present? && after_school != '?'%>
+                            <div class="fl prm">
+                              <% if after_school.downcase == 'yes'%>
+                                  <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
+                                      <span class="link-darkgray">After care: <strong><%= after_school %></strong></span>
+                                  <% end %>
+                              <% else %>
+                                  After care: <strong><%= after_school %></strong>
+                              <% end %>
+                            </div>
+                        <% end %>
+                    <% end %>
+
+                  </div>
+                </div>
+            </div>
+        </div>
+        <% if include_cta_button_group %>
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 ptn">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                    <button data-link-value="<%= school_review_form_path(school) %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
+                      <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
+                    </button>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                    <%= render 'shared/add_to_my_school_list_form', school: @school, driver: 'Header' %>
+                    <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                      <span class="vam iconx16 i-16-heart mrm"></span>Follow this school
+                    </button>
+                  </div>
+                  <% apply_now_url = school.school_metadata.apply_now_url %>
+                  <% if apply_now_url.present? %>
+                    <div class="col-xs-12 col-sm-12 col-md-12 pas">
+                      <button data-link-value="<%= apply_now_url %>" data-link-use-new-window="true" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;">
+                        <span class="vam iconx16 i-16-pencil mrm"></span>Apply now
+                      </button>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<% category = config.opt[:key]%>
+<div>
+  <div class="mtm mbm pts tac full-width header-bg-color pointer js-categoryTitle" style="height:42px; font-size: 16pt;">
+    <%=config.opt[:subtitle] %>
+  </div>
+  <% # BE WARNED!! make sure js-..CategoryData is the first class %>
+  <div class="js-<%= category %>CategoryData js-categoryData">
+    <%= yield %>
+  </div>
+</div>

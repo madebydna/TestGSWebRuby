@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def category_placement_anchor(category_placement)
-    "#{category_placement_title category_placement}-#{category_placement.id}".gsub(/\W+/, '_')
+    "#{category_placement_title category_placement}".gsub(/\W+/, '_')
   end
 
   def category_placement_title(category_placement)
@@ -39,29 +39,6 @@ module ApplicationHelper
       write_s = 's'
     end
     @school_reviews_global.review_filter_totals.all.to_s + ' ' + text_s + write_s
-  end
-
-  def to_bar_chart_array(data_hash)
-    @bar_chart_data = [['year', 'This school','School tool tip', 'State average','State tool tip']] + data_hash.collect.with_index { |(key, value), index|
-      #The google bar chart requires values to be numerical.
-      #Hence set default to 0(This also catches the case when there is no data for state
-      #average or school test score ie. value['state_avg']= nil).
-      #The 3rd and the 5th columns are used for tool tips. Hence they are strings.
-
-      state_score_int = 0
-      state_score_tool_tip = 'State average: ' + value['state_avg'].to_s + '%'
-      #Display the state average only for the latest year.
-      if index == 0 && !value['state_avg'].nil?
-        state_score_int = value['state_avg'].to_i
-      end
-      school_score_int = value['score'].nil? ? 0 : value['score']
-      school_score_tool_tip = 'This school: ' + value['score'].to_s + '%'
-      if !value['score'].nil? && value['score'].to_s.match(/<|=|>|\./)
-        school_score_int = value['score'].gsub(/<|=|>|\./,'').to_i
-      end
-
-      [key.to_s, school_score_int, school_score_tool_tip, state_score_int, state_score_tool_tip]
-    }
   end
 
   def to_bar_chart_review_array(star_counts)
@@ -117,15 +94,16 @@ module ApplicationHelper
   end
 
   # This is used to include all the media assets for a school to the lightbox.
-  def include_lightbox_media (media_hash)
+  def include_lightbox_media (school)
+    media_hash = school.school_media
     r_str = ''
     if media_hash
       media_hash.each { | x  |
         if media_hash
-          r_str <<  '<a href="' + generate_img_path("500", x["hash"])  + '">' + "\n"
+          r_str <<  '<a href="' + school_media_image_path(school.state, "500", x["hash"])  + '">' + "\n"
           r_str <<  '<img '
-          r_str <<  'src="' + generate_img_path("130", x["hash"]) + '",' + "\n"
-          r_str <<  'data-big="'+  generate_img_path("500", x["hash"]) +'"'  + "\n"
+          r_str <<  'src="' + school_media_image_path(school.state, "130", x["hash"]) + '",' + "\n"
+          r_str <<  'data-big="'+  school_media_image_path(school.state, "500", x["hash"]) +'"'  + "\n"
           r_str <<  'data-title=""' + "\n"
           r_str <<  'data-description="" >'  + "\n"
           r_str <<  '</a>' + "\n"
@@ -142,6 +120,16 @@ module ApplicationHelper
       return_partial = "shared/rating/draw_rect_72x58_rating"
     else
       return_partial = "shared/rating/default_rating"
+    end
+    return_partial
+  end
+
+  def rating_partial_for_snapshot ( state )
+    case state
+    when "MI"
+      return_partial = "shared/rating/snapshot/draw_rect_72x58_rating"
+    else
+      return_partial = "shared/rating/snapshot/default_rating"
     end
     return_partial
   end
@@ -204,32 +192,12 @@ module ApplicationHelper
   end
 
   def remote_ip
-    request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip
+     request.env['X_Forwarded_For'] || request.env['X_CLUSTER_CLIENT'] || request.remote_ip
   end
-
-  def breadcrumb_hash
-    if hub_params[:city]
-      {
-          'Home' => home_url,
-          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-          hub_params[:city].gsub(/-/, ' ').gs_capitalize_words => city_url(hub_params)
-      }
-    else
-      {
-          'Home' => home_url,
-          hub_params[:state].gsub(/-/, ' ').gs_capitalize_words => state_url(state: hub_params[:state]),
-      }
-    end
-  end
-
+  
   def zillow_url(school)
     # test that values needed are populated
-    zillow = ''
-    zillow << 'http://www.zillow.com/'
-    zillow << States.abbreviation(school.state).upcase
-    zillow << '-'+school.zipcode
-    zillow << '?cbpartner=GreatSchools&utm_source=GreatSchools&utm_medium=referral&utm_campaign='
-    zillow << (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
+    "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
   end
 
   def zillow_tracking_hash
@@ -237,7 +205,11 @@ module ApplicationHelper
             'overview' => 'localoverview',
             'reviews' => 'localreviews',
             'quality' => 'localquality',
-            'details' => 'localdetails'
+            'details' => 'localdetails',
+            'city_browse' => 'schoolsearch',
+            'district_browse' => 'schoolsearch',
+            'search' => 'schoolsearch',
+            'show' => 'schoolsearch'
         }
 
   end
@@ -268,7 +240,28 @@ module ApplicationHelper
     content_tag_with_sizing :div, *args, &block
   end
 
-  def topnav(school, hub_params)
-    TopNav.new(school, hub_params, cookies)
+  def topnav(school, hub = nil)
+    TopNav.new(school, cookies, hub)
+  end
+
+  def search_by_location?
+    @by_location
+  end
+
+  def search_by_name?
+    @by_name
+  end
+
+  def filtering_search?
+    @filtering_search
+  end
+
+  def guided_search_path(hub)
+    state_url_name = gs_legacy_url_encode(States.state_name(hub.state))
+    if hub.city
+      "/#{state_url_name}/#{gs_legacy_url_city_district_browse_encode(hub.city)}/guided-search"
+    else
+      "/#{state_url_name}/guided-search"
+    end
   end
 end

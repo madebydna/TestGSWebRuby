@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
-  <%= include_gon %>
+
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= yield :javascript_includes %>
   <%= csrf_meta_tags %>
+    <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
+
+    <meta name="google-translate-customization" content="f2de2b2d5878217a-6b29fa5c63ed04fa-g4b85244d931270bb-10" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- For third-generation iPad with high-resolution Retina display: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'144x144', href: image_path('icons/favicons/GS_favicon_144x144.png') %>
+  <!-- For iPhone with high-resolution Retina display: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'114x114', href: image_path('icons/favicons/GS_favicon_114x114.png') %>
+  <!-- For first- and second-generation iPad: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'72x72', href: image_path('icons/favicons/GS_favicon_72x72.png') %>
+  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
+
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
   <% else %>
@@ -18,7 +32,7 @@
   <%= yield :head %>
 </head>
 <body class="open-sans">
-
+<%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render :partial => 'shared/top_notification_bar' %>
 
 <div class="dn">
@@ -30,5 +44,10 @@
 <%=  render 'omniture/omniture' %>
 <%=  render 'omniture/quantcast' %>
 <%=  render 'omniture/comscore' %>
+
+<a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top mrm"></span>Top</a>
+
+<div class="visible-xs js-disableInterstitial"></div>
+
 </body>
 </html>

@@ -8,18 +8,22 @@
 
       <%= render 'shared/popular_cities_in_state', state: state %>
 
-      <span class='gray-dark'>All cities in <%= state[:long].titleize %>:</span>
+        <% state_name_long = state[:long].titleize %>
+        <% if state[:short].downcase == 'dc' %>
+            <% state_name_long = "Washington DC" %>
+        <% end %>
+      <span class='gray-dark'>All cities in <%= state_name_long %>:</span>
 
       <ul class='di'>
         <% ('A'..'Z').to_a.each do |letter| %>
-          <li class='di'><%= link_to(letter, city_alphabet_path(state[:long].capitalize, state[:short].upcase, letter)) %></li>
+          <li class='di'><%= link_to(letter, city_alphabet_path(gs_legacy_url_encode(state[:long].capitalize), state[:short].upcase, letter)) %></li>
         <% end %>
       </ul>
 
       <hr/>
 
       <%= render 'shared/gs_address_and_copyright' %>
-
     </div>
   </div>
 </div>
+<div class="gs_ad_slot visible-lg visible-md" id="adCustom_Welcome_Ad" data-ad-size="[1, 1]" style="width: 0px" data-dfp="Custom_Welcome_Ad"></div>

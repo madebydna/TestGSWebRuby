@@ -1,0 +1,13 @@
+<div class="tac pal">
+  <div ><span class="iconx60 i-60-<%= sprite %>"></span><br /></div>
+  <div>
+    <span class="ptm font-size-block mbn pbn i-60-color-<%= sprite %>">
+        <% if icon_text.present? %>
+            <%= icon_text %>
+        <% end %>
+    </span>
+  </div>
+  <% if supporting_text.present? %>
+      <div class="link-darkgray"><%= supporting_text %></div>
+  <% end %>
+</div>

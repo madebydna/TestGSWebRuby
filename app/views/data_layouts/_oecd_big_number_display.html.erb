@@ -1,0 +1,67 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+
+
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
+  <% data = TableData.new data if !data.is_a? TableData %>
+  <a name="<%= category.code_name %>"></a>
+  <%= render "shared/section_header", category_placement:category_placement %>
+  <div class="row limit_1200 phs pbl">
+    <% last_key = nil %>
+    <% columns_to_print = data_config.columns_to_print(data) %>
+    <% data.rows[0..3].each do |hash| %>
+      <% size = 12 / data.rows[0..3].size %>
+      <% sizes = { xs: 12, sm: size, md: size, lg: size } %>
+      <%= div_tag(sizes: sizes, class:'ptm' ) do %>
+        <div class="ma" style="border:1px solid #CCCCCC; width:250px">
+
+          <% value = data_config.column_value(columns_to_print.second, hash[columns_to_print.second['key'].to_sym]) %>
+          <% label =  columns_to_print.second['label'] %>
+          <% format = columns_to_print.second['format'] %>
+          <div class="pam mls open-sans_sb">This school's <%= hash[:subject].downcase %> score</div>
+          <div class="tac pvl">
+                <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %></span>
+            <br />
+            <%= label %>
+
+
+            <% columns_to_print[2..-1].each do |column| %>
+              <% key = column['key'].to_sym %>
+              <% if hash.has_key?(key) %>
+                <% value = data_config.column_value(column, hash[key]) %>
+                <% format = column['format'] %>
+                <div class="tac ptl">
+                   <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %><% if format == 'percentage' %>%<% end %>
+                   </span>
+                  <br /><%= column['label'] %>
+
+                </div>
+              <% end %>
+            <% end %>
+
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render partial: 'about_this_data',
+           locals: {
+               unique_id: category_placement.id,
+               descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+           }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+    @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+    (@school.footnotes_for_category category: category).present? %>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+    <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+  </div>
+<% end %>
+</hr>

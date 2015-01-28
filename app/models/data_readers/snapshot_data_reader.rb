@@ -3,13 +3,14 @@ class SnapshotDataReader < SchoolProfileDataReader
   def data_for_category(category)
     snapshot_results = []
 
+    cached_test_scores =  school.cache_results.test_scores
+
     data_for_all_sources = self.data_for_all_sources_for_category(category)
 
     #Get the data points that should be displayed for the school collection.
     all_category_data =  category.category_data(school.collections)
 
     all_category_data.each do  |category_data|
-
       key = category_data.response_key
       #default value
       value = 'no info'
@@ -32,12 +33,14 @@ class SnapshotDataReader < SchoolProfileDataReader
             #to an array and read the first value.
             value = Array(data_for_source[key]).first
           end
-          snapshot_results << {
-            key => {
-              school_value: value,
-              label: label
+          if value != 'no info'
+            snapshot_results << {
+              key => {
+                school_value: value,
+                label: label
+              }
             }
-          }
+          end
         end
       end
     end
@@ -75,10 +78,28 @@ class SnapshotDataReader < SchoolProfileDataReader
 
     #Get the data for all the sources.
     data_for_all_sources.each_key do |source|
-      data_for_all_sources[source.to_sym] = school.send(source.to_sym, category)
+      sym = source.to_sym
+      if sym == :census_data_points
+        data_for_all_sources[source.to_sym] = formatted_characteristics
+        # binding.pry
+      else
+        data_for_all_sources[source.to_sym] = school.send(source.to_sym, category)
+        # binding.pry
+      end
+
     end
 
     data_for_all_sources
+  end
+
+  def formatted_characteristics
+    hash = {}
+    school.cache_results.characteristics.map  do | key, value |
+      if value.present?
+        hash.merge!(key.downcase => value.first["school_value"])
+      end
+    end
+    hash
   end
 
   def key_filters

@@ -1,0 +1,66 @@
+<% nav_on_hash = {overview:'', reviews:'', quality:'', details:''} %>
+<% nav_default_on_hash = {overview:'z-index:2;', reviews:'z-index:2;', quality:'z-index:2;', details:'z-index:2;'} %>
+
+<% if page_name && !page_name.empty? %>
+  <% nav_on_hash[page_name] = 'class=active' %>
+  <% nav_default_on_hash[page_name] = 'z-index:1;display:block' %>
+<% end %>
+<div id="navigation2">
+  <nav class="nav dn" id="optimizely-secondary-nav-drop-down">
+    <ul>
+      <li <%= nav_on_hash[:overview] %>>
+        <%= link_to 'Overview', school_path(school), data: {'hover'=> 'dropdown'} %>
+        <div class="dropdown-menu" style="<%= nav_default_on_hash[:overview] %>" >
+          <ul  class="limit-width-1200 tac" class="font-size-small">
+            <li style="width: 30%;"><a tabindex="-1" href="<%= school_path(school) %>" style="">At-a-glance</a></li>
+            <li style="width: 30%;"><a tabindex="-1" href="<%= school_path(school) %>#Profile_Completeness"
+                                       style="">Profile
+              completeness</a></li>
+            <li style="width: 30%;"><a tabindex="-1" href="<%= school_path(school) %>#Media_Gallery" style="">Media
+              gallery</a></li>
+          </ul>
+        </div>
+      </li>
+      <li <%= nav_on_hash[:reviews] %>>
+        <%= link_to 'Reviews', school_reviews_path(school), data: {'hover'=> 'dropdown'} %>
+        <div class="dropdown-menu" style="<%= nav_default_on_hash[:reviews] %>">
+          <ul  class="limit-width-1200 tac">
+            <li style="width: 22%">&nbsp;</li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_reviews_path(school) %>" style="">Read
+            reviews</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_review_form_path(school) %>" style="">Write a review</a></li>
+            <li style="width: 22%">&nbsp;</li>
+          </ul>
+        </div>
+      </li>
+      <li <%= nav_on_hash[:quality] %>>
+        <%= link_to 'Quality', school_quality_path(school), data: {'hover'=> 'dropdown'} %>
+        <div class="dropdown-menu" style="<%= nav_default_on_hash[:quality] %>">
+          <ul  class="limit-width-1200 tac">
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Ratings" style="">Ratings</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Test_scores"
+                                       style="">Test scores</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Student_growth"
+                                       style="">Student growth</a></li>
+            <li style="width: 22%;"><a tabindex="-1" href="<%= school_quality_path(school)%>#Climate" style="">Climate</a></li>
+          </ul>
+        </div>
+      </li>
+      <li <%= nav_on_hash[:details] %>>
+        <%= link_to 'Details', school_details_path(school), data: {'hover'=> 'dropdown'} %>
+        <div class="dropdown-menu" style="<%= nav_default_on_hash[:details] %>">
+          <ul  class="limit-width-1200 tac" class="font-size-small">
+            <li style="width: 17%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Programs"
+                                       style="">Programs</a></li>
+            <li style="width: 17%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Extracurriculars" style="">Extracurriculars</a></li>
+            <li style="width: 17%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Students" style="">Students</a></li>
+            <li style="width: 17%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Teachers" style="">Teachers</a></li>
+            <li style="width: 17%;"><a tabindex="-1" href="<%= school_details_path(school)%>#Enrollment" style="">Enrollment</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div class="mbl">&nbsp;</div>

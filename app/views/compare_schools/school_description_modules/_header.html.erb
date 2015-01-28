@@ -1,0 +1,7 @@
+<% school_page_path = school_url(@school) %>
+
+<div class="mam">
+  <% #ToDo make own decorator and do not use draper %>
+  <div class="js-schoolName full-width notranslate"><%= link_to "#{@school.name}", school_page_path, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
+  <div class="ptm full-width js-gradeLevel"><%= @school.decorated_school_type %> | <%= @school.process_level %></div>
+</div>

@@ -1,77 +1,75 @@
 GS = GS || {};
 GS.util = GS.util || {};
 
+//determine screen size - break points to load different images
+//register image for size and location
+//check for image - either delete or leave or hide
+//add image to correct location
+//mocha - rspec
+//
+//add priority?
+//responsive support
+
 $(function() {
-    GS.util.setupImages = function(options) {
-        var mobileImage = options['mobileImage'];
-        var desktopImage = options['desktopImage'];
+  GS.util.setupImages = function(options) {
+    var mobileImage = options['mobileImage'];
+    var desktopImage = options['desktopImage'];
+    var domSelector = options['selector'];
+    var imgClasses = options['classes'];
+    var breakpoint = options['breakpoint'];
+    var loadMobile= true;
+    var mobileBreakPoint = 481;
+    if(typeof breakpoint !== "undefined"){
+        mobileBreakPoint = breakpoint;
 
-        var isImageLoaded = function(imageContainerSelector) {
-            var img = $(imageContainerSelector).find('img')[0];
-            if (!(typeof img == 'undefined')) {
-                return img.complete;
-            } else {
-                return false;
-            }
-        }
-
-        var isMobile = function(container) {
-            var nameRegex = new RegExp('_mobile....$')
-            return nameRegex.test($(container).find('img').attr('src'))
-        }
-
-        var attachImage = function(container, src) {
-            if (src == '') {
-                $(container).empty();
-                return false;
-            }
-
-            var thisImage = $("<img/>")
-                .error(function() { console.log("error loading image"); })
-                .attr("src", src)
-                .addClass('scaling')
-            $(container).empty();
-            $(container).prepend(thisImage);
-        }
-
-        var shouldSwitch = function(container) {
-            if (isImageLoaded(container)) {
-                var img = $(container).find('img')[0];
-                if($(window).width() < 480) {
-                    if ((typeof img === 'undefined') || (!isMobile(container))) {
-                        return true; // attachImage(container, mobileImage);
-                    }
-                } else {
-                    if ((typeof $(container).find('img')[0] === 'undefined') || (isMobile(container))) {
-                        return true; // attachImage(container, desktopImage);
-                    }
-
-                }
-            } else {
-                return false;
-            }
-        }
-
-        var initImages = function() {
-            $(options['selector']).each(function() {
-                if($(window).width() > 480) {
-                    if (!isImageLoaded(this) || shouldSwitch(this)) {
-                        attachImage(this, desktopImage);
-                    }
-                } else {
-                    if (!isImageLoaded(this) || shouldSwitch(this)) {
-                        attachImage(this, mobileImage);
-                    }
-                }
-            });
-        }
-
-        initImages();
-
-        var reinitTimer;
-        $(window).resize(function() {
-            clearTimeout(reinitTimer);
-            reinitTimer = setTimeout(initImages, 100);
-        });
     }
+    if(typeof options['loadMobile'] !== "undefined"){
+          loadMobile = options['loadMobile'];
+    }
+    var checkPrepForImage = function(obj, imageUrl){
+      // see if any image is loaded
+      // see if the image is already loaded -
+      //  return false;  -- don't load the image
+      // else
+      //  return true
+      //  empty it out -- this may change in the future to hide instead
+      //
+      var imgTag = obj.find("img");
+      if(typeof imgTag === "undefined") return true;
+      if(imgTag.attr("src") === imageUrl) return false;
+      obj.empty();
+      return true;
+    }
+
+    var attachImage = function(obj, src) {
+      var thisImage = $("<img/>")
+        .error(function() { return false; })
+        .attr("src", src)
+        .addClass(imgClasses);
+      obj.prepend(thisImage);
+      return true;
+    }
+
+    var initImages = function() {
+      var imageUrl = desktopImage;
+      var imageSelector = $(domSelector);
+      var loadImage= true;
+      if($(window).width() < mobileBreakPoint) {
+        if (!loadMobile ){
+            loadImage = false;
+        }
+        imageUrl = mobileImage;
+      }
+      if(loadImage && checkPrepForImage(imageSelector, imageUrl)){
+        if(attachImage(imageSelector, imageUrl)){
+          GS.util.log("image loaded:"+imageUrl);
+        }
+        else{
+          GS.util.log("image failed to load:"+imageUrl);
+        }
+      }
+    }
+
+    initImages();
+  }
 });

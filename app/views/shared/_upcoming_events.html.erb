@@ -1,0 +1,51 @@
+  <% if defined?(community_page) %>
+    <div class="bg-light-gray hidden-xs fixed-top pvm">
+    <div class="limit-width-1200">
+
+    <div class="row">
+  <% else %>
+    <div class="row mvl">
+
+  <% end %>
+  <% unless important_events.nil? ||  important_events[:events].empty? %>
+      <hr>
+      <div class='oh'>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
+
+      <h4 class='bottom mtn'>Upcoming events</h4>
+            <% if (params[:city] && params[:state]) %>
+               <%= link_to('See all', city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
+            <% end %>
+            <% if (params[:state] && params[:city].nil?) %>
+               <%= link_to('See all', state_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
+            <% end %>
+      </div>
+      <% important_events[:max_important_event_to_display].times do |i| %>
+        <% event = important_events[:events][i - 1] %>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam upcoming-event">
+          <div class="pull-left iconx48-cal i-48-calender-month-<%= event[:date].month %>">
+            <div class="tac">
+              <h4 class='mtl'><%= event[:date].day %></h4>
+            </div>
+          </div>
+          <div class="pull-left plm">
+            <%= truncate(event[:description], length:30) %>
+            <br/>
+            <%= link_to('Find out more', event[:url], target: '_blank') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+
+    <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
+      <%= render 'shared/event_announcements', announcement: announcement  %>
+    <% end %>
+    <% if controller.controller_name == 'states' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
+          <%= render 'shared/event_announcements', announcement: announcement  %>
+    <% end %>
+  </div>
+  <% if defined?(community_page) %>
+    </div>
+    </div>
+  <% end %>

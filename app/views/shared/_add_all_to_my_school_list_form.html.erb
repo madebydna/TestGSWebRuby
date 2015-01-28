@@ -1,0 +1,6 @@
+<%= form_for FavoriteSchool.new, url: favorite_schools_url, html: { class: 'js-save-all-schools-form' } do |f| %>
+    <%= f.hidden_field :school_id %>
+    <%= f.hidden_field :state %>
+    <%= f.hidden_field :driver, :value => 'Compare_follow_all_schools' %>
+
+<% end %>

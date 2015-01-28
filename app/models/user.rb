@@ -3,13 +3,15 @@ class User < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  has_one :user_profile
+  has_one :user_profile, foreign_key: 'member_id'
   has_many :subscriptions, foreign_key: 'member_id'
+  has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
-  has_many :esp_memberships, foreign_key: 'member_id', conditions: ['active = 1']
-  has_many :reported_reviews, class_name: 'ReportedEntity', foreign_key: 'reporter_id',
-           conditions: 'reported_entity_type = "schoolReview" and active = 1'
-
+  has_many :esp_memberships, foreign_key: 'member_id'
+  has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
+  has_many :member_roles, foreign_key: 'member_id'
+  has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
+  has_many :student_grade_levels, foreign_key: 'member_id'
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
   before_save :verify_email!, if: "facebook_id != nil"
@@ -105,6 +107,10 @@ class User < ActiveRecord::Base
       encrypt_plain_text_password
       save!
     end
+  end
+
+  def has_password?
+    encrypted_password.present?
   end
 
   def encrypt_plain_text_password
@@ -204,6 +210,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  def has_signedup?(list)
+    subscriptions.any? do |subscription|
+      subscription.list == list
+    end
+  end
+  def subscription_id(list)
+    subscriptions.any? do |subscription|
+       if subscription.list == list
+          return subscription.id
+       end
+    end
+  end
+
   def favorited_school?(school)
     favorite_schools.any? { |favorite| favorite.school_id == school.id && favorite.state == school.state }
   end
@@ -215,8 +234,31 @@ class User < ActiveRecord::Base
     memberships.any? { |membership| membership.approved? || membership.provisional? }
   end
 
+  def is_esp_superuser?
+    has_role?(Role.esp_superuser)
+  end
+
+  def has_role?(role)
+    member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
+  end
+
   def reported_review?(review)
     self.reported_reviews.map(&:reported_entity_id).include? review.id
+  end
+
+  def is_profile_active?
+    profile = UserProfile.where(member_id: id).first
+    profile.present? && profile.active?
+  end
+
+  def add_user_grade_level(grade)
+    StudentGradeLevel.find_or_create_by(member_id: id, grade: grade)
+  end
+
+  def delete_user_grade_level(grade)
+    grade = StudentGradeLevel.find_by(member_id: id, grade: grade)
+    grade.delete if grade.present?
+
   end
 
   private
@@ -260,6 +302,5 @@ class User < ActiveRecord::Base
   def set_defaults
     self.time_added = Time.now
   end
-
 
 end

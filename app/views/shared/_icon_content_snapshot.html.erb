@@ -1,0 +1,7 @@
+<div class="tac pbl">
+  <% count = data_local[:count] == 'no info' ? '?' : data_local[:count] %>
+  <% sprite_color = data_local[:count] == 'no info' ? '-grey' : '' %>
+  <div class="link-darkgray mbm"><%= data_local[:content] %></div>
+  <div class="row"><span class="iconx48-snapshot i-48-<%= sprite + sprite_color%>-snapshot"></span><br /></div>
+  <div class="row"><span class="ptm font-size-block mbn pbn i-48-color-<%= sprite + sprite_color %>-snapshot"><%= count %></span></div>
+</div>

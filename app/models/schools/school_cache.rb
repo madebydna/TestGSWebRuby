@@ -6,4 +6,14 @@ class SchoolCache < ActiveRecord::Base
   def self.for_school(name, school_id, state)
     SchoolCache.where(name: name, school_id: school_id, state: state).first()
   end
+
+  def self.for_schools_keys(keys, school_ids, state)
+    school_data = Hash.new { |h,k| h[k] = {} }
+    cached_data = SchoolCache.where(name: keys, school_id: school_ids, state: state)
+    cached_data.each do |cache|
+      cache_value = begin JSON.parse(cache.value) rescue {} end
+      school_data[cache.school_id].merge! cache.name => cache_value
+    end
+    school_data
+  end
 end

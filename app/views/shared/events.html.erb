@@ -1,0 +1,13 @@
+
+<%= render 'nav/search_bar', state: @state, collection_nickname: @collection_nickname, collection_id: @collection_id %>
+
+<div class="limit-width-1200" style='mbl'>
+  <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <% unless @events.nil? %>
+    <%= render 'shared/events_list', events: @events %>
+  <% end %>
+</div>
+
+<div class="mvl">
+  <%= render 'shared/state_footer', state: @state, cities: @cities %>
+</div>

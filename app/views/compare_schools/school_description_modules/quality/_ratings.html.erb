@@ -1,0 +1,28 @@
+<% config.opt ||= {} %>
+<% if config.opt[:ratings_type] == 'GreatSchools Rating'
+     datapoints = @school.school_cache.formatted_greatschools_ratings
+     ratings_types = @great_schools_ratings
+   elsif config.opt[:ratings_type] == 'Local Ratings'
+     datapoints = @school.school_cache.formatted_non_greatschools_ratings
+     ratings_types = @non_great_schools_ratings
+   end
+%>
+
+<% config.opt[:label] = config.opt[:ratings_type] %>
+
+<% if ratings_types.present? %>
+    <%= render 'compare_schools/school_description_modules/section_dividing_bar' unless config.opt[:ratings_type] == 'GreatSchools Rating' %>
+    <%= render 'compare_schools/school_description_modules/label', config: config %>
+<% end %>
+
+<div class="phm">
+  <table class="full-width">
+    <% ratings_types.each do |label| %>
+        <tr>
+          <td><%= truncate_with_popup(label, length: 26) %></td>
+          <% value = label == 'GreatSchools rating' ? @school.great_schools_rating_icon : datapoints[label] %>
+          <td class="tac open-sans_sb" style="width: 40px"><%= value %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>

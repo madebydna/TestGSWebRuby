@@ -1,15 +1,17 @@
 class SigninController < ApplicationController
   include DeferredActionConcerns
-  include OmnitureConcerns
 
   protect_from_forgery
+
+  skip_before_filter :verify_authenticity_token, :only => [:destroy]
+  skip_before_action :write_locale_session
 
   layout 'application'
   public
 
   # store this join / login url only if another location isn't stored
   # If the user was looking at a profile page, we want to go back there instead
-  before_filter :store_location, only: [:new], unless: :has_stored_location?
+  before_action :store_location, only: [:new], unless: :has_stored_location?
 
   # gets the join / login form page
   def new
@@ -65,10 +67,10 @@ class SigninController < ApplicationController
       unless already_redirecting?
         city_hub_page = nil
         if cookies[:redirect_uri]
-          city_hub_page = URI.decode(cookies[:redirect_uri])
+          city_hub_page = cookies[:redirect_uri]
           delete_cookie :redirect_uri
         end
-        redirect_to (overview_page_for_last_school || city_hub_page || user_profile_or_home)
+        redirect_to (overview_page_for_last_school || city_hub_page || (should_attempt_login ? home_url : join_url))
       end
     end
   end
@@ -83,8 +85,11 @@ class SigninController < ApplicationController
   def post_registration_confirmation
     redirect_url = params[:redirect]
 
-    if logged_in? && redirect_url.present?
+    if logged_in?
       executed_deferred_action
+    end
+
+    if logged_in? && redirect_url.present?
       redirect_to (redirect_url || overview_page_for_last_school || user_profile_or_home) unless already_redirecting?
     else
       redirect_to user_profile_or_home
@@ -116,7 +121,7 @@ class SigninController < ApplicationController
     unless already_redirecting?
       redirect_uri =nil
       if cookies[:redirect_uri]
-        redirect_uri = URI.decode(cookies[:redirect_uri])
+        redirect_uri = cookies[:redirect_uri]
         delete_cookie :redirect_uri
       end
       redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
@@ -143,7 +148,11 @@ class SigninController < ApplicationController
         user = token.user
         user.verify!
         if user.save
-          user.publish_reviews!
+          newly_published_reviews = user.publish_reviews!
+          if newly_published_reviews.any?
+            set_omniture_events_in_cookie(['review_updates_mss_end_event'])
+            set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
+          end
           log_user_in user
           redirect_to success_redirect
         else
@@ -172,11 +181,11 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.password_is? params[:password]
-        # no op
-      elsif existing_user.provisional?
+      if existing_user.provisional?
         error = t('forms.errors.email.provisional')
-      else
+      elsif !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+        error = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+      elsif !(existing_user.password_is? params[:password])
         error = t('forms.errors.password.invalid', join_url: join_url).html_safe
       end
     else
@@ -192,8 +201,21 @@ class SigninController < ApplicationController
       email: params[:email]
     })
 
+    hub_city_cookie = read_cookie_value(:hubCity)
+    hub_state_cookie = read_cookie_value(:hubState)
+    if session[:state_locale].present?
+      state_locale = session[:state_locale]
+      city_locale  =  session[:city_locale]
+    elsif !session[:state_locale].present? && hub_state_cookie.present?
+      state_locale = hub_state_cookie
+      city_locale = hub_city_cookie
+    end
     if user && error.nil?
-      UserMailer.welcome_and_verify_email(request, user, stored_location).deliver
+      unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
+        Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
+      end
+
+      EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 
     return user, error

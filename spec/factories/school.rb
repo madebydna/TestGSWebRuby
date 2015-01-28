@@ -48,6 +48,22 @@ FactoryGirl.define do
         type 'public'
       end
 
+      factory :south_san_francisco_high_school do
+        name 'South San Francisco High School'
+        city 'San Francisco'
+        state 'CA'
+        level_code 'h'
+        type 'public'
+      end
+
+      factory :washington_dc_ps_head_start do
+        name 'Washington Dc Ps Head Start'
+        city 'Washington'
+        state 'DC'
+        level_code 'p'
+        type 'private'
+      end
+
       factory :an_elementary_school do
         name 'Elementary School'
         city 'San Francisco'
@@ -82,6 +98,19 @@ FactoryGirl.define do
         end
       end
 
+      trait :with_district do
+        ignore do
+          district_name ''
+        end
+        before(:create) do |school, evaluator|
+          district = FactoryGirl.create(
+            :district,
+            name: evaluator.district_name
+          )
+          school.district_id = district.id
+        end
+      end
+
       trait :with_collection do
         after(:create) do |school, evaluator|
           FactoryGirl.create(
@@ -113,6 +142,27 @@ FactoryGirl.define do
           school.stub(:collections) { [collection] }
         end
       end
+
+      trait :with_gs_rating do
+        ignore do
+          gs_rating 4 #default
+        end
+
+        after(:create) do |school, evaluator|
+          FactoryGirl.create(
+            :school_metadata,
+            school_id: school.id,
+            meta_key: 'overallRating',
+            meta_value: evaluator.gs_rating
+          )
+        end
+      end
+
+      trait :with_levels do
+        level '9,10,11,12'
+        level_code 'h'
+      end
+
     end
 
     factory :school_with_params, class: School do

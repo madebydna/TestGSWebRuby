@@ -1,0 +1,16 @@
+<% content_for :javascript_includes do %>
+    <script>
+        $(function() {
+            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('review_school_chooser/blackboard_1.png')%>', mobileImage: '<%= image_path('review_school_chooser/blackboard_mobile_1.png')%>', classes:'scaling' });
+            GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '<%= image_path('review_school_chooser/blackboard_1.png')%>', mobileImage: '', classes:'scaling' });
+        })
+    </script>
+<% end %>
+
+
+
+<%= render 'shared/review_school_chooser/hero_image_select' %>
+
+
+
+<%= render partial: 'shared/home_footer' %>

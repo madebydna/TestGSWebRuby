@@ -1,5 +1,5 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
-
+<% if @school.gs_rating != 'nr' %>
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
     <% ratings_array = [] %>
 
@@ -11,20 +11,30 @@
             <%  ratings_array << (render "shared/rating/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating, supporting_text:'ESD rating') %>
         <% end %>
         <% if @school.state_rating  %>
-            <%  ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'State rating') %>
+          <% if @school.state == 'CA' %>
+            <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'API score') %>
+          <% else %>
+            <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.state_rating, supporting_text:'State rating') %>
+          <% end %>
         <% end %>
         <% if @school.preK_star_rating  %>
-            <%  ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+            <% if @school.state == 'MI' %>
+              <% ratings_array << (render "shared/rating/detroit_blue_star", rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+            <% else %>
+              <% ratings_array << (render state_partial(@school.state), page:'overview', rating:@school.preK_star_rating, supporting_text:'Preschool rating') %>
+            <% end %>
         <% end %>
     <!-- End detroit hub layout -->
 
     <% if !ratings_array.empty? %>
 
         <%= render "shared/section_header", category_placement:category_placement, link_text:'See all Quality', link_to:'quality', subtitle:'These ratings help make it easier to find and compare schools.' %>
-        <a href="quality#Ratings_15">
+        <a href="quality#Ratings">
             <div class="row">
                 <%= raw render_array_horizontally ratings_array, {"xs"=> 12,"sm"=> 6,"md"=> 4,"lg"=> 3} %>
             </div>
         </a>
     <% end %>
+    <% end %>
+
 <% end %>

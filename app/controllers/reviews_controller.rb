@@ -1,13 +1,14 @@
-class ReviewsController < ApplicationController
+class ReviewsController < SchoolController
   include ReviewControllerConcerns
   include DeferredActionConcerns
-  include OmnitureConcerns
 
   # Find school before executing culture action
-  before_filter :require_state, :require_school, :find_user, except: [:create, :report]
-  before_filter :store_location, only: [:overview, :quality, :details, :reviews]
-  before_filter :set_last_school_visited, only: [:new]
-  before_filter :set_city_state
+
+  before_action :require_state, :require_school, :find_user, except: [:create, :report]
+  before_action :redirect_to_canonical_url, only: [:new]
+  before_action :store_location, only: [:overview, :quality, :details, :reviews]
+  before_action :set_last_school_visited, only: [:new]
+  before_action :set_city_state
 
   def new
     init_page
@@ -62,7 +63,7 @@ class ReviewsController < ApplicationController
   def init_page
     gon.pagename = 'reviews/new'
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
-    @google_signed_image = GoogleSignedImages.new @school, gon
+    create_sized_maps(gon)
     @header_metadata = @school.school_metadata
     @school_reviews_global = SchoolReviews.calc_review_data(@school.reviews)
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
@@ -71,8 +72,7 @@ class ReviewsController < ApplicationController
     set_meta_tags :title =>  'Rate and review ' + @school.name + ' in ' + @school.city + ', ' + @school.state
   end
 
-  def set_footer_cities
-    @cities = City.popular_cities(@state, limit: 28)
+  def canonical_path
+    school_review_form_path(@school)
   end
-
 end

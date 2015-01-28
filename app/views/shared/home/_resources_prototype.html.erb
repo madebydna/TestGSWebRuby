@@ -1,0 +1,65 @@
+<div class="limit-width-1200">
+
+  <div class="row mbl">
+    <div class="plm-mobile">
+      <h2>Getting involved at school</h2>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
+        <% article_hash={title:'I want to get involved... but how?',
+                         content: 'If you\'d like to help out at your child\'s school but aren\'t sure where to start, you\'ve come to the right place.',
+                         image: 'articles/parent-involvement-350x208.jpg',
+                         link: '/improvement/volunteering/366-parent-involvement-primer.gs' } %>
+        <%= render 'shared/article_module', data: article_hash  %>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
+        <% article_hash={title:'How to start a school garden',
+                         content: 'Like the idea of letting kids get their hands dirty while they learn? Follow our step-by-step guide to starting a school garden.',
+                         image: 'articles/school-garden-350x208.jpg',
+                         link: '/improvement/slideshows/3759-how-to-start-school-garden.gs' } %>
+        <%= render 'shared/article_module', data: article_hash  %>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
+        <div class="pam tac">
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :mobile  %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row pbl">
+    <div class="pbl plm-mobile">
+      <h2>Ideas for parents</h2>
+    </div>
+    <div>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
+        <% article_hash={title:'6 secrets of searching for college money',
+                         content: 'If parents start early and get creative, college funds may turn up in the most unexpected places.',
+                         image: 'articles/college-money-350x208.jpg',
+                         link: '/college-prep/paying/3064-money-for-college.gs' } %>
+        <%= render 'shared/article_module', data: article_hash  %>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
+        <% article_hash={title:'House rules on drugs and alcohol',
+                         content: 'When do parents start talking about it, and what are their rules? See how parents balance authority and open communication.',
+                         image: 'articles/house-rules-350x208.jpg',
+                         link: '/parenting/4486-parent-rules-teen-alcohol-drug-use.gs' } %>
+        <%= render 'shared/article_module', data: article_hash  %>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
+        <div class="pam tac">
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :mobile  %>
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

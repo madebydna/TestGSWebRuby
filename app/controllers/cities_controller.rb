@@ -1,27 +1,28 @@
 class CitiesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
-  include OmnitureConcerns
+  include AdvertisingHelper
+  include ApplicationHelper
+  include GuidedSearchConcerns
+  include GoogleMapConcerns
 
-  before_filter :set_city_state
-  before_filter :set_hub_params
-  before_filter :set_login_redirect
-  before_filter :set_footer_cities
-  before_filter :write_meta_tags, except: [:partner]
+  before_action :set_city_state
+  before_action :set_hub
+  before_action :set_login_redirect
+  before_action :set_footer_cities
+  before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
-      render 'error/page_not_found', layout: 'error', status: 404
+    if @hub.nil?  || hub_matching_current_url[:city].nil?
+      city_home
     else
-      @collection_id = mapping.collection_id
-      @zillow_data = ZillowRegionId.data_for(@city, @state)
+      @hub.has_guided_search?
 
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
       @browse_links = CollectionConfig.browse_links(collection_configs)
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sponsor = CollectionConfig.sponsor(collection_configs)
-      @sponsor[:sponsor_page_visible] = mapping.has_partner_page? if @sponsor
       @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
       @announcement = CollectionConfig.city_hub_announcement(collection_configs)
       @articles = CollectionConfig.city_featured_articles(collection_configs)
@@ -29,38 +30,76 @@ class CitiesController < ApplicationController
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
       @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
       @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = city_url(@state[:long], @city)
+      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
+      @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
+      ad_setTargeting_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
+      gon.state_abbr = @state[:short]
+
     end
   end
 
+  def city_home
+    gon.pagename = 'GS:City:Home'
+    @ad_page_name = 'City_Page'.to_sym
+    @city_object = City.where(name: @city, state: @state[:short]).first
+
+    if @city_object.blank? && @state.present?
+      return redirect_to state_url
+    end
+
+    @show_ads = true;
+    if @hub.present?
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+      @show_ads = CollectionConfig.show_ads(collection_configs)
+    end
+
+    @city_rating = CityRating.get_rating(@state[:short], @city)
+    @top_schools = all_schools_by_rating_desc(@city_object,4)
+    @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
+    @show_ads = @show_ads && PropertyConfig.advertising_enabled?
+    gon.show_ads = @show_ads
+    ad_setTargeting_through_gon
+    set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
+    set_city_home_metadata
+
+    render 'city_home'
+  end
+
+  def all_schools_by_rating_desc(city, count=0)
+    @all_schools_in_city_by_rating_desc ||= city.schools_by_rating_desc
+    count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
+  end
+
+
   def events
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
-        'Home' => '/',
-        params[:state].titleize => "/#{params[:state]}",
-        @city.titleize => city_path(params[:state], params[:city])
+        @city.titleize => city_path(params[:state], params[:city]) ,
+        'Events' =>nil
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+      gon.state_abbr = @state[:short]
 
+      render 'shared/events'
     end
   end
 
   def community
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      collection_configs = configs
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
 
       set_community_tab(collection_configs)
       set_community_omniture_data
@@ -70,24 +109,26 @@ class CitiesController < ApplicationController
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
-        @city.titleize => city_path(@state[:long], @city),
+        @city.titleize => city_path(params[:state], params[:city]),
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
+      gon.state_abbr = @state[:short]
 
-
+      render 'shared/community'
     end
   end
 
   def partner
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @partner = CollectionConfig.partner(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @partner = CollectionConfig.partner(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Partner' => nil
@@ -97,43 +138,50 @@ class CitiesController < ApplicationController
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
       set_omniture_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
+      gon.state_abbr = @state[:short]
+
     end
   end
 
 
   def choosing_schools
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
-      @step3_links = CollectionConfig.choosing_page_links(configs)
+
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
+      @step3_links = CollectionConfig.choosing_page_links(collection_configs)
+      @step3_search_links = CollectionConfig.choosing_page_search_links(collection_configs)
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
         'Choosing a School' => nil
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
       set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+      gon.state_abbr = @state[:short]
 
       render 'shared/choosing_schools'
     end
   end
 
   def enrollment
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @events = CollectionConfig.city_hub_important_events(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @events = CollectionConfig.city_hub_important_events(collection_configs)
       @tab = CollectionConfig.enrollment_tabs(@state[:short], @collection_id, params[:tab])
-      @subheading = CollectionConfig.enrollment_subheading(configs)
-      @enrollment_module = CollectionConfig.enrollment_module(configs, @tab[:key])
-      @tips = CollectionConfig.enrollment_tips(configs, @tab[:key])
-      @key_dates = CollectionConfig.key_dates(configs, @tab[:key])
+      @subheading = CollectionConfig.enrollment_subheading(collection_configs)
+      @enrollment_module = CollectionConfig.enrollment_module(collection_configs, @tab[:key])
+      @tips = CollectionConfig.enrollment_tips(collection_configs, @tab[:key])
+      @key_dates = CollectionConfig.key_dates(collection_configs, @tab[:key])
 
       @breadcrumbs = {
         @city.titleize => city_path(params[:state], params[:city]),
@@ -142,42 +190,61 @@ class CitiesController < ApplicationController
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
       set_enrollment_omniture_data
+      gon.state_abbr = @state[:short]
+
       render 'shared/enrollment'
     end
   end
 
   def programs
-    hub_city_mapping = mapping
-    if hub_city_mapping.nil?
+    if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
-      @collection_id = hub_city_mapping.collection_id
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @important_events = CollectionConfig.city_hub_important_events(configs)
-      @heading = CollectionConfig.programs_heading(configs)
-      @intro = CollectionConfig.programs_intro(configs)
-      @sponsor = CollectionConfig.programs_sponsor(configs)
+      @collection_id = @hub.collection_id
+      collection_configs = hub_configs(@collection_id)
+
+      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
+      @heading = CollectionConfig.programs_heading(collection_configs)
+      @intro = CollectionConfig.programs_intro(collection_configs)
+      @sponsor = CollectionConfig.programs_sponsor(collection_configs)
+      @partners = CollectionConfig.programs_partners(collection_configs)
+      @articles = CollectionConfig.programs_articles(collection_configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
+      @breadcrumbs = {
+              @city.titleize => city_path(params[:state], params[:city]) ,
+              'After school and summer programs' =>nil
+            }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
+      gon.state_abbr = @state[:short]
+
     end
   end
 
+  def guided_search
+    render_guided_search
+  end
+
   private
-    def set_community_tab(collection_configs)
-      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
-      case request.path
-      when /(education-community\/education)/
-        @tab = 'Education'
-      when /(education-community\/funders)/
-        @tab = 'Funders'
-      when /(education-community$)/
-        if @show_tabs == false
-          @tab = ''
-        else
-          @tab = 'Community'
-        end
-      end
+
+    def set_city_home_metadata
+      description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
+        "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
+
+      keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
+        "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
+        "#{@city.titleize} Private Schools"
+
+      state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
+      additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
+
+      title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+
+      set_meta_tags keywords: keywords,
+                    description: description,
+                    title: title
     end
+
 
     def set_enrollment_omniture_data
       if @tab == 'Preschools'
@@ -190,37 +257,33 @@ class CitiesController < ApplicationController
 
       set_omniture_data(page_name, page_hier, @city.titleize)
     end
-     def set_community_omniture_data
-       if @tab == 'Community'
-         page_name = "GS:City:EducationCommunity"
-         page_hier = "Home,CityHome,EducationCommunity"
-       else
-         page_name = "GS:City:EducationCommunity:#{@tab}"
-         page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
-       end
 
-       set_omniture_data(page_name, page_hier, @city.titleize)
-     end
-
-
-
-
-    def mapping
-      hub_city_mapping_key = "hub_city_mapping-city:#{@city}-state:#{@state[:short]}-active:1"
-      Rails.cache.fetch(hub_city_mapping_key, expires_in: CollectionConfig.hub_mapping_cache_time, race_condition_ttl: CollectionConfig.hub_mapping_cache_time) do
-        HubCityMapping.where(city: @city, state: @state[:short], active: 1).first
+    def set_community_omniture_data
+      if @tab == 'Community' || @show_tabs == false
+        page_name = "GS:City:EducationCommunity"
+        page_hier = "Home,CityHome,EducationCommunity"
+      else
+        page_name = "GS:City:EducationCommunity:#{@tab}"
+        page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
       end
-    end
 
-    def configs
-      configs_cache_key = "collection_configs-id:#{mapping.collection_id}"
-      Rails.cache.fetch(configs_cache_key, expires_in: CollectionConfig.hub_config_cache_time, race_condition_ttl: CollectionConfig.hub_config_cache_time) do
-        CollectionConfig.where(collection_id: mapping.collection_id).to_a
-     end
+      set_omniture_data(page_name, page_hier, @city.titleize)
     end
 
     def parse_partners(partners)
-      partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(@state[:long], @city))  }
+      partners.try(:[], :partnerLogos).try(:map) { |partner| partner[:anchoredLink].prepend(city_path(params[:state], params[:city]))  }
       partners
     end
+
+
+  def ad_setTargeting_through_gon
+    @ad_definition = Advertising.new
+    if @show_ads
+      ad_targeting_gon_hash['City'] = @city.gs_capitalize_words
+      ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+      ad_targeting_gon_hash['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+      ad_targeting_gon_hash['State'] = @state[:short].upcase # abbreviation
+      ad_targeting_gon_hash['template'] = "ros" # use this for page name - configured_page_name
+    end
+  end
 end

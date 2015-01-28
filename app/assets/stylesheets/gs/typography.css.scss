@@ -1,9 +1,19 @@
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
-h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font-weight-bold; }
+h6, .h6 { @extend .open-sans_i; }
+
+.subtitle-lg { font-size: 24px}
+.subtitle-md { font-size: 20px}
 
 .gold-bar { width:30px; margin-left: 0px; margin-bottom: 10px;  height: 3px; background-color: $brand-secondary }
 .black {color: $gray-base-color}
+.font-size-xs    {font-size: $font-size-xs}
+.font-size-medium {font-size: $font-size-medium}
+
 .font-size-small {font-size: $font-size-small}
+.font-size-large {font-size: $font-size-large}
+.font-size-block {font-size: $font-size-block}
+.font-size-xl {font-size: $font-size-xl}
+
 
 .search-text {
   height: 46px;
@@ -14,8 +24,16 @@ h6, .h6 { font-family: $headings-font-family-italic; font-weight: $headings-font
   border-radius: 3px;
 }
 
+.gs-active-link {
+  color: #007299;
+}
+
+.toolbar-text {
+  font-size: 16px;
+}
+
 p, a {
-  font: 16px 'opensans-regular',Arial,Helvetica,sans-serif;
+  font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
 }
 
 .invert-colors{
@@ -28,16 +46,24 @@ p, a {
   &.bg-darker {background-color: #2b2b2b}
 }
 
+.invert-colors-home {
+  a{color:$gray;}
+}
+
 .best-known-for {
   font-size: $font-size-block;
 }
 
-.stat-block-number {
-  font-family: $font-family-base;
-  font-size: $font-size-block;
-}
+.text_fff { color: #ffffff; }
+.text_000 { color: #000000; }
+.text_orange { color: #ff9369; }
+.text_purple { color: #826e92; }
+.text_green {color: $green_light; }
 
-.text_fff { color: #ffffff}
+// text_font_large is deprecated
+.text_font_large {font-size: 24px;}
+
+.uc { text-transform: uppercase; }
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
@@ -60,12 +86,36 @@ p, a {
   color: $brand-secondary;
 }
 
+.brand-primary {
+  color:$brand-primary;
+}
+
+.emphasis-color {
+  color: $emphasis-color;
+}
+
+.neutral-color {
+  color: $neutral-color;
+}
+
 .gray-dark {
   color: $gray-dark;
 }
 
+.gray-darker {
+  color: $gray-darker;
+}
+
 .gray-light {
   color: $gray-light;
+}
+
+.dark-blue-bg {
+  background-color: $blue-dark;
+}
+
+.dark-gray-bg {
+  background: #3d3d3d;
 }
 
 .inverted-text {
@@ -77,18 +127,71 @@ p, a {
 }
 
 .jumbo-header {
-  font-size: 62px;
+  font-size: 60px;
+}
+.jumbo-text {
+  font-size: 80px;
+  line-height: 60px;
+}
+
+.jumbo-text-sub {
+  font-size: 40px;
+  line-height: 40px;
+}
+
+.default_rating_circle {
+  width: 72px;
+  height: 72px;
+  border: #CCCCCC solid thin;
+  border-radius: 36px;
+  font-size: 32px;
+}
+.default_rating_rect {
+  letter-spacing: 1px;
+  border: #CCCCCC solid thin;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-size: 24px;
+  &.small {
+    font-size: 14px;
+  }
 }
 
 .bg-white { background-color: #FFFFFF; }
 .bg-light-gray { background-color: $well-bg; }
+.bg-medium-gray {background-color: #E5E5E5}
+.bg-emphasis { background-color: $emphasis-color; }
+.bg-neutral { background-color: $neutral-color; }
+.bg-dark-teal { background-color: #006589;}
+.bg-primary-light { background-color: $brand-primary-lighter; }
+.bg-brand-primary { background-color:$brand-primary;  }
 
 .tdn { text-decoration: none; }
+
+
+.mrm_sm {margin-right: 10px;}
+.mrl_lg {margin-right: 0px;}
+.pbm_sm {padding-bottom: 0px;}
 
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
   h2 { font-size:22px; font-family: $headings-font-family-bold; }
   .best-known-for { font-size: 20px; }
+  .subtitle-lg {font-size: 20px}
+  .subtitle-md {font-size: 16px}
+}
+
+@media (min-width: 990px) {
+  .sm-black-lg-white-text, .sm-black-lg-white-text:hover {
+    color: white;
+  }
+}
+
+@media (max-width: 990px) {
+  .sm-black-lg-white-text, .sm-black-lg-white-text:hover {
+    color: black;
+
+  }
 }
 
 @media (min-width:481px) and (max-width:768) {
@@ -101,4 +204,60 @@ p, a {
   .lar {
     text-align: right;
   }
+  .pbm_sm {padding-bottom: 10px;}
 }
+
+@media only screen and (max-width: 767px) {
+  .jumbo-header {font-size: 32px}
+  .center_when_small {text-align: center}
+  .text_font_large {font-size: 36px}
+  .mrm_sm {margin-right: 0}
+}
+
+@media (min-width: 1200px) {
+  .mrl_large {margin-right: 15px}
+}
+
+
+// Translate classes to hide some of googles' images and top gadget bar.
+.goog-te-banner-frame.skiptranslate {display: none !important;}
+body { top: 0px !important; }
+.goog-te-gadget-icon {display:none;}
+.goog-te-gadget-simple a {text-decoration: none !important;}
+
+
+.btn-border-green{
+  border: 1px #8fcdaa solid;
+  //  box-shadow :1px 1px 2px #E6e6e6;
+}
+.btn-bg-green {
+  background-color: #8fcdaa;
+  color: #FFFFFF;
+  &:focus {
+    color: #FFFFFF;
+  }
+}
+
+.square {
+  width: 13px;
+  height: 13px;
+}
+.state_bg_1 { background-color: #6BBEB3 }
+.state_bg_2 { background-color: #E97F6D }
+.state_bg_3 { background-color: #A192AD }
+.state_bg_4 { background-color: #C9DA7A }
+
+.ts{
+  text-shadow: 1px 1px #999999;
+}
+
+//Guided Search
+
+.black-guided-search-bar {
+  background: #000000;
+  width: 100%;
+  height: 45px;
+//  margin: auto;
+}
+
+//@media ()

@@ -139,7 +139,13 @@ class TableData
 
   # for each row in the given table_data, generate an array [label_column, value_column]
   def to_piechart(label_column, value_column)
-    rows.map { |row| ["#{row[label_column]}", row[value_column].to_f.round] }
+    rows.map { |row| ["#{row[label_column]}", row[value_column].to_f.round,
+                      "<p>#{row[label_column]}" << ' ' << row[value_column].to_f.round.to_s << '%</p>'] }
+  end
+
+  def to_barchart(label_column, value_column)
+    rows.map { |row| ["#{row[label_column]}", row[value_column].to_f.round,
+                      "<p>#{row[label_column]}" << ' ' << row[value_column].to_f.round.to_s << '%</p>'] }
   end
 
 end

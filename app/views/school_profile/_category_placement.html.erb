@@ -1,0 +1,22 @@
+<% category_placement %>
+
+<% if category_placement.present? %>
+  <% begin %>
+    <% category_placement = CategoryPlacementPresenter.new(category_placement, @page_config, self) %>
+    <% category_placement_markup = category_placement.render %>
+
+    <% if category_placement_markup.present? %>
+      <%= category_placement_markup %>
+      <% if category_placement.show_bottom_ads? && @school.show_ads  %>
+        <div class="pvl">
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: category_placement.title.to_sym, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: category_placement.title.to_sym, view: :mobile  %>
+        </div>
+      <% end %>
+    <% end %>
+
+  <% rescue => e %>
+    <%= log_view_error "Something went wrong when trying to render category placement #{category_placement.title}", e %>
+    <% raise e if params[:debug] %>
+  <% end %>
+<% end %>

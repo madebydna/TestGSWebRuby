@@ -122,11 +122,15 @@
 // -------------------------
 .nav-pills {
   > li {
-    float: left;
+    // float: left;
+
 
     // Links rendered as pills
     > a {
       border-radius: $nav-pills-border-radius;
+      &:hover {
+        color: $nav-pills-link-hover-color;
+      }
     }
     + li {
       margin-left: 2px;
@@ -146,6 +150,11 @@
         }
       }
     }
+
+    // GS - specific
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
@@ -246,12 +255,12 @@
 
 // Make dropdown carets use link color in navs
 .nav .caret {
-  border-top-color: $brand-secondary;
-  border-bottom-color: $brand-secondary;
+  border-top-color: $brand-primary;
+  border-bottom-color: $brand-primary;
 }
 .nav a:hover .caret {
-  border-top-color: #FFFFFF;
-  border-bottom-color: #FFFFFF;
+  border-top-color: $brand-primary-darker;
+  border-bottom-color: $brand-primary-darker;
 }
 
 // Specific dropdowns

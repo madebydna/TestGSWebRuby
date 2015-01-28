@@ -1,0 +1,290 @@
+<div class="row limit-width-1200 pll tac">
+
+    <%= form_tag("/admin/gsr/choose-pyoc", method: "get") do %>
+
+            <%= label_tag(:state, "State" ,:class => "brand-primary tar") %>
+            <%= text_field_tag(:state, value = params[:state], options = {:size => "3", :required => true,:maxlength =>2})%><br/>
+
+            <%= label_tag(:collection_id, "Collection ID",:class => "brand-primary") %>
+            <%= text_field_tag(:collection_id,value=params[:collection_id], options = {:size => "3" ,:maxlength =>2, :required => true})%><br/>
+            <%= label_tag(:added_schools, "Schools To be Added",:class => "brand-primary") %>
+            <%= text_field_tag(:added_schools, value = params[:added_schools], options = {:size => "100",:maxlength => "800"})%><br/>
+
+            <%= label_tag(:removed_schools, "Schools To be Removed",:class => "brand-primary") %>
+            <%= text_field_tag(:removed_schools, value = params[:removed_schools], options = {:size => "100",:maxlength => "800"})%><br/>
+
+
+          <%= submit_tag("FindSchools",:class => "btn btn-primary") %><br/><br/>
+    <% end %>
+      <%if  @db_schools.present?%>
+      <div class="row limit-width-1200 tac">
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+        <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
+            <%= hidden_field_tag "state", params[:state]%>
+            <%= hidden_field_tag "collection_id", params[:collection_id]%>
+              <%= label_tag "Batch:", nil,:class =>"brand-primary"%>&nbsp;
+              <% if (params[:batch].present? && params[:batch] =="is_k8")%>
+                  <%= radio_button_tag(:batch, "is_k8", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:batch, "is_k8") %>
+              <% end %>
+              <%= label_tag(:k8, "k8") %>
+              <% if (params[:batch].present? && params[:batch] =="is_pk8")%>
+                  <%= radio_button_tag(:batch, "is_pk8", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:batch, "is_pk8") %>
+              <% end %>
+              <%= label_tag(:batch, "pk8") %>
+
+              <% if (params[:batch].present? && params[:batch] =="is_high_school")%>
+                  <%= radio_button_tag(:batch, "is_high_school", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:batch, "is_high_school") %>
+              <% end %>
+              <%= label_tag(:batch, "is_high_school") %><br/>
+            <%= hidden_field_tag "added_schools", params[:added_schools]%>
+            <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+
+
+              <%= label_tag(:page_number_start, "School PDF Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:page_number_start, value = (params[:page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
+              <%= label_tag "Language:", nil,:class =>"brand-primary"%>&nbsp;
+              <%if params[:language].present? && params[:language] =="spanish" %>
+                  <%= radio_button_tag(:language, "spanish", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "spanish") %>
+
+              <% end %>
+              <%= label_tag(:language_spanish, "Spanish") %>
+
+              <% if (params[:language].present? && params[:language] =="english") ||(!params[:language].present?) %>
+                  <%= radio_button_tag(:language, "english", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "english") %>
+
+              <% end %>
+              <%= label_tag(:language_english, "English") %></br>
+
+              Ready to generate Schools PDF ?
+             <%= submit_tag("Generate Final List of Schools in Chooser", :class => "btn btn-primary") %><% end%></div>
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+
+        <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
+              <%= hidden_field_tag "state", params[:state]%>
+              <%= hidden_field_tag "collection_id", params[:collection_id]%>
+              <%= hidden_field_tag "added_schools", params[:added_schools]%>
+              <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+              <%= label_tag(:grade_level_for_index_label, "Grade Level") %>
+              <%= select_tag("grade_level_for_index", options_for_select([['Preschool', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
+              <%= label_tag(:performance_index_page_number_start, " Performance Index  Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:performance_index_page_number_start, value = (params[:performance_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
+
+              <%= label_tag "Language:", nil,:class =>"brand-primary"%>&nbsp;
+              <%if params[:language].present? && params[:language] =="spanish" %>
+                  <%= radio_button_tag(:language, "spanish", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "spanish") %>
+
+              <% end %>
+              <%= label_tag(:language_spanish, "Spanish") %>
+
+              <% if (params[:language].present? && params[:language] =="english") ||(!params[:language].present?) %>
+                  <%= radio_button_tag(:language, "english", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "english") %>
+
+              <% end %>
+              <%= label_tag(:language_english, "English") %></br>
+               Ready to generate Performance Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
+              <%= submit_tag("Generate Final List of Schools Performance Indx", :class => "btn btn-primary") %>
+
+        <% end %>
+          </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+
+          <%= form_tag("/admin/gsr/choose-pyoc", method: "get", class: "alert alert-success") do %>
+              <%= hidden_field_tag "state", params[:state]%>
+              <%= hidden_field_tag "collection_id", params[:collection_id]%>
+              <%= hidden_field_tag "added_schools", params[:added_schools]%>
+              <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+              <%= label_tag(:grade_level_for_index_label, "Grade Level") %>
+              <%= select_tag("grade_level_for_index", options_for_select([['Preschool', 'p'], ['Elementary', 'e'], ['Middle', 'm'], ['High School', 'h']]),:multiple => true ,selected: :grade_level_for_index) %><br/>
+              <%= label_tag(:location_index_page_number_start, " Location Index  Page Number Start",:class => "brand-primary") %>
+              <%= text_field_tag(:location_index_page_number_start, value = (params[:location_index_page_number_start] or 1), options = {:size => "3",:maxlength =>20})%><br/>
+
+              <%= label_tag "Language:", nil,:class =>"brand-primary"%>&nbsp;
+              <%if params[:language].present? && params[:language] =="spanish" %>
+                  <%= radio_button_tag(:language, "spanish", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "spanish") %>
+
+              <% end %>
+              <%= label_tag(:language_spanish, "Spanish") %>
+
+              <% if (params[:language].present? && params[:language] =="english") ||(!params[:language].present?) %>
+                  <%= radio_button_tag(:language, "english", :checked => true) %>
+              <% else %>
+                  <%= radio_button_tag(:language, "english") %>
+
+              <% end %>
+              <%= label_tag(:language_english, "English") %></br>
+
+              Ready to generate Location Index PDF for <%=params[:state].upcase %>, Collection Id <%=params[:collection_id] %> in <%=params[:language] %>?<br/>
+              <%= submit_tag("Generate Final List of Schools Location Indx", :class => "btn btn-primary") %>
+
+          <% end %>
+        </div>
+    </div>
+    <div class="row limit-width-1200 tac">
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <%= form_tag("/admin/gsr/pyoc.pdf", method: "get") do %>
+                    <%= hidden_field_tag "state", params[:state]%>
+                    <%= hidden_field_tag "collection_id", params[:collection_id]%>
+                    <%= hidden_field_tag "added_schools", params[:added_schools]%>
+                    <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+                    <%= hidden_field_tag "page_number_start", params[:page_number_start]%>
+                    <%= hidden_field_tag "batch", params[:batch]%>
+                    <%= hidden_field_tag "language", params[:language]%>
+                    <%= submit_tag("Generate Chooser PDF",:class => "btn btn-primary") %><br/><br/>
+
+                 <% end %>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <%= form_tag("/admin/gsr/pyoc.pdf", method: "get") do %>
+                    <%= hidden_field_tag "state", params[:state]%>
+                    <%= hidden_field_tag "collection_id", params[:collection_id]%>
+                    <%= hidden_field_tag "added_schools", params[:added_schools]%>
+                    <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+                    <%= hidden_field_tag "is_performance_index",1%>
+                    <%= hidden_field_tag "language", params[:language]%>
+                    <%= hidden_field_tag "performance_index_page_number_start", params[:performance_index_page_number_start]%>
+                    <%= hidden_field_tag "grade_level_for_index", params[:grade_level_for_index]%>
+
+
+                    <%= submit_tag("Generate Perfromance Index PDF",:class => "btn btn-primary") %><br/><br/>
+
+                <% end %>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <%= form_tag("/admin/gsr/pyoc.pdf", method: "get") do %>
+                    <%= hidden_field_tag "state", params[:state]%>
+                    <%= hidden_field_tag "collection_id", params[:collection_id]%>
+                    <%= hidden_field_tag "added_schools", params[:added_schools]%>
+                    <%= hidden_field_tag "removed_schools", params[:removed_schools]%>
+                    <%= hidden_field_tag "is_location_index",1%>
+                    <%= hidden_field_tag "language", params[:language]%>
+                    <%= hidden_field_tag "location_index_page_number_start", params[:location_index_page_number_start]%>
+                    <%= hidden_field_tag "grade_level_for_index", params[:grade_level_for_index]%>
+                    <%= submit_tag("Generate Location Index PDF",:class => "btn btn-primary") %><br/><br/>
+
+                <% end %>
+              </div>
+     </div>
+    <%end%>
+
+      <div class="row limit-width-1200">
+      <%if  @db_schools.present?%><h1 class="tac brand-secondary">Total Schools <%= @db_schools.length%></h1>
+
+      <% school_index = 0 %>
+      <table class="table table-striped mbm">
+        <tr>
+          <th class="emphasis-color"> LineNo </th>
+          <th class="emphasis-color"> State  </th>
+          <th class="emphasis-color"> School Name  </th>
+          <th class="emphasis-color"> SchoolId   </th>
+          <th class="emphasis-color"> LevelCode   </th>
+        </tr>
+
+        <% @db_schools.each do |school| %>
+            <tr>
+              <td>  <%= school_index=school_index+1 %></td>
+              <td>  <%= school.state %></td>
+              <td>  <%= school.name %></td>
+              <td>  <%= school.id %></td>
+              <td>  <%= school.level_code.to_s%></td>
+            </tr>
+        <% end %>
+      </table>
+      <% else%>
+          <h2 class="brand-secondary tac">Use the Collection Id Mapping to get the collection ID against the state/City</h2>
+
+          <table class="table table-bordered mbm">
+            <tr>
+              <th class="tac emphasis-color"> State </th>
+              <th class="tac emphasis-color"> City  </th>
+              <th class="tac emphasis-color"> CollectionID    </th>
+            </tr>
+            <tr>
+              <td class="tac">MI</td>
+              <td class="tac">Detroit</td>
+              <td class="tac">1</td>
+            </tr>
+            <tr>
+              <td class="tac">WI</td>
+              <td class="tac">Milwaukee</td>
+              <td class="tac">2</td>
+            </tr>
+            <tr>
+              <td class="tac">IN</td>
+              <td class="tac">Indianapolis</td>
+              <td class="tac">3</td>
+            </tr>
+            <tr>
+              <td class="tac">CA</td>
+              <td class="tac">Oakland</td>
+              <td class="tac">4</td>
+            </tr>
+            <tr>
+              <td class="tac">CA</td>
+              <td class="tac">San Francisco</td>
+              <td class="tac">5</td>
+            </tr>
+            <tr>
+              <td class="tac">IN</td>
+              <td class="tac"></td>
+              <td class="tac">6</td>
+            </tr>
+            <tr>
+              <td class="tac">OH</td>
+              <td class="tac"></td>
+              <td class="tac">7</td>
+            </tr>
+            <tr>
+              <td class="tac">NC</td>
+              <td class="tac"></td>
+              <td class="tac">8</td>
+            </tr>
+            <tr>
+              <td class="tac">DE</td>
+              <td class="tac"></td>
+              <td class="tac">9</td>
+            </tr>
+            <tr>
+              <td class="tac">GA</td>
+              <td class="tac">Atlanta</td>
+              <td class="tac">10</td>
+            </tr>
+            <tr>
+              <td class="tac">GA</td>
+              <td class="tac"></td>
+              <td class="tac">11</td>
+            </tr>
+            <tr>
+              <td class="tac">OK</td>
+              <td class="tac">Oklahoma City</td>
+              <td class="tac">12</td>
+            </tr>
+            <tr>
+              <td class="tac">OK</td>
+              <td class="tac"></td>
+              <td class="tac">13</td>
+            </tr>
+          </table>
+          </div>
+      <% end%>
+</div>

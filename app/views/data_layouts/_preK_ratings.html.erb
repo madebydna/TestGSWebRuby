@@ -1,21 +1,35 @@
 <% data # A +Hash+ that contains a preschool rating +Hash+ if available %>
+<%= debug data if params[:debug] %>
+<% rating_hash = data["preschool_rating"] %>
 
-<% if !data["preK_ratings"].nil? && !data["preK_ratings"]["star_rating"].nil? %>
-    <div class="row mbl pam">
-        <% rating_type = '' %>
-        <% rating_star = data["preK_ratings"]["star_rating"] %>
-        <% if rating_star == 0 %>
-            <% rating_type = '-outline' %>
-            <% rating_star = '1' %>
-        <% end %>
-        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-            <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
-        </div>
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-            <h5><%= data["preK_ratings"]["preK_rating_label"] %></h5>
-            <br/><%= data["preK_ratings"]["description"] %>
-        </div>
+<% if rating_hash.present? && rating_hash["overall_rating"].present? %>
+  <div class="row mbl pam">
+    <% rating_type = '' %>
+    <% rating_star = rating_hash["overall_rating"] %>
+    <% if rating_star == 0 %>
+      <% rating_type = '-outline' %>
+      <% rating_star = '1' %>
+    <% end %>
+    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+      <% if @school.state == 'MI' %>
+        <span class="iconx24-stars_detroit i-24-blue<%= rating_type %>-star i-24-star-<%= rating_star %>"></span>
+      <% else %>
+        <%= render state_partial(@school.state), page:'quality', rating: rating_hash["overall_rating"] %>
+      <% end %>
     </div>
+    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+      <h5><%= rating_hash["label"] %></h5>
+      <p><%= rating_hash["description"] %></p>
+
+      <% if rating_hash["methodology_url"].present? %>
+          <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+          <div class="dn well bg-white">
+            <h5>Methodology</h5>
+            <a href="<%= rating_hash["methodology_url"] %>" target="_blank">View more details on official site</a>
+          </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 
 

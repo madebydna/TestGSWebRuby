@@ -13,7 +13,7 @@
           </div>
           <p class="bottom"><%= abbreviate_at_whitespace(review.comments, 140) %></p>
         </div>
-        <div class="bottom open-sans_b mtl"><%= review.school.name %></div>
+        <div class="bottom open-sans_sb mtl"><%= review.school.name %></div>
         <% unless review.school.gs_rating.nil? %>
           <p class="bottom">GreatSchools rating: <span class="vam iconx24-ratings i-24-ratings-<%= review.school.gs_rating %>"></span></p>
         <% else %>

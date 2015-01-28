@@ -1,11 +1,15 @@
 source "https://rubygems.org"
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.1'
 
 gem 'mysql2', '0.3.13'
 
 gem 'jquery-rails'
 gem 'jquery-cookie-rails'
+
+group :assets do
+  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+end
 
 gem 'rails_admin'
 
@@ -48,13 +52,16 @@ gem 'lodash-rails'
 # for passing vars from ruby rails to javascript
 gem 'gon'
 
+# Wiselinks gives us History.js for changing browser URLs
+gem 'wiselinks'
+
 gem 'mini_fb'
 
 # Uses the materialized path pattern to implement a tree on a model
 gem 'ancestry'
 
 # gem to extend railsadmin with a view for working with models that are trees
-gem 'rails_admin_nestable'
+gem 'rails_admin_nestable', git: 'https://github.com/gs-samson/rails_admin_nestable.git'
 
 # Gives syntax highlighting functionality for code displayed on page
 gem 'coderay'
@@ -72,7 +79,7 @@ gem 'has_scope'
 # supports decorator for models
 gem 'request_store', '~> 1.0.3'
 # Rails 4
-gem 'draper', '~> 1.3'
+gem 'draper', '~> 1.3.1'
 
 gem 'addressable'
 
@@ -85,6 +92,17 @@ gem 'rack_after_reply'
 gem 'protected_attributes'
 
 gem 'nokogiri', '= 1.6.1'
+
+# SOAP client
+gem 'savon', '~> 2.6.0'
+# Ruby/NTLM provides message creator and parser for the NTLM authentication.
+# Required by savon gem
+gem 'rubyntlm', '~> 0.4.0'
+
+gem 'prawn'
+gem 'prawn-table', '~> 0.1.2'
+
+gem 'rest_client', '1.8.1'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
@@ -100,6 +118,7 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
+  gem 'spring-commands-rspec'
 
   gem 'pry-debugger'
 end
@@ -163,6 +182,8 @@ group :development, :test do
   gem 'yard'
 
   gem 'launchy'
+
+  gem 'pdf-reader'
 end
 
 # gem 'sass-rails',   '~> 3.2.3'
@@ -189,3 +210,5 @@ gem "yui-compressor", "~> 0.12.0"
 group :profile do
   gem 'ruby-prof'
 end
+
+

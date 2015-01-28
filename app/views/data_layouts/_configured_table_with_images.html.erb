@@ -1,0 +1,102 @@
+<% data # A +Hash+ containing data for this table to display %>
+<% category_placement # The +CategoryPlacement+ that this table is for %>
+<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+
+<% data_config = category_placement.table_config %>
+<%= debug data if params[:debug] %>
+<% data = TableData.new data %>
+
+<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
+
+<a name="<%= category.code_name %>"></a>
+
+    <%= render "shared/section_header", category_placement:category_placement %>
+
+    <div class="row pbm_sm">
+      <% category_placement.table_config.columns_to_print(data).each do |column| %>
+          <% if column['display_type'] == :data_and_header %>
+              <div class="col-sm-5 col-xs-4 center_when_small tac">
+                <% if column['icon_css_class'].present? %>
+                    <span class="iconx32-college_ready i-32-<%=column['icon_css_class']%> mrm_sm"></span>
+                <% end %>
+                <span class="visible-xs font-size-xs"></span>
+                <span class="font-size-large vab"><%= column['label'] %></span>
+                </div>
+            <% else %>
+              <div class="col-sm-2 col-xs-4 phl">
+                </div>
+              <% end %>
+          <% end %>
+      </div>
+
+    <% columns_to_print = data_config.columns_to_print(data) %>
+
+    <% row_index=0 %>
+    <% data.rows.each do |hash| %>
+        <div class="row pvm">
+          <% col_index=0 %>
+          <% data_config.row_values(columns_to_print, hash) do |label, value, raw_value| %>
+              <% div_class="col-sm-5 col-xs-4 center_when_small" %>
+              <% if col_index == 1 %>
+                  <% div_class="col-sm-2 col-xs-4 tac phl" %>
+              <% end %>
+
+              <div class="<%= div_class%>">
+                <% if col_index != 1 %>
+
+                    <% raw_value = raw_value || 0 %>
+                    <% human_width =  220*raw_value/100%>
+                    <% human_width_grey = 220 - human_width %>
+                    <% human_width_grey_offset = human_width%22 %>
+
+
+                    <div class="row">
+                      <% if col_index == 0 %>
+                          <% cell_color = 'orange'%>
+                      <% elsif col_index == 2%>
+                          <% cell_color = 'purple'%>
+                      <% end %>
+
+                      <div class="ptm mts text_<%=cell_color%> text_font_large open-sans_cb col-sm-3 tac"><%= value.to_s if value.present?%></div>
+                      <div class="clearfix col-sm-9">
+                        <span class='iconx22-human i-22-<%=cell_color%>-human fl hidden-xs' style="width:<%=human_width%>px;"></span>
+                        <span class='iconx22-human i-22-grey-human fl hidden-xs' style="width:<%=human_width_grey%>px; background-position: -<%=human_width_grey_offset%>px -120px"></span>
+                      </div>
+
+                    </div>
+
+                <% else %>
+                    <div class="pts pbm mrl_large"><%= value.to_s.upcase if value.present?%></div>
+                    <% if row_index != (data.rows.size-1 )%>
+                        <div class="iconx24-popular_icons i-24-arrow mrl_large" ></div>
+                    <% end %>
+                <% end %>
+
+                <% col_index = col_index + 1 %>
+                </div>
+          <% end %>
+
+        </div>
+        <% row_index = row_index + 1 %>
+
+    <% end %>
+
+<% end %>
+<br />
+<br />
+
+<%= render partial: 'about_this_data',
+           locals: {
+                   unique_id: category_placement.id,
+                   descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+           }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+        (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+    </div>
+<% end %>

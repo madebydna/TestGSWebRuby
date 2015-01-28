@@ -43,7 +43,7 @@ feature 'school profile snapshot module' do
 
   after(:each) do
     clean_models :ca, School, EspResponse, SchoolMetadata, CensusDataSet,
-                      CensusDataSchoolValue
+                      CensusDataSchoolValue, District
     clean_models  User, Page, Category, CategoryData, CategoryPlacement,
                   HubCityMapping, CensusDataType
   end
@@ -180,6 +180,37 @@ feature 'school profile snapshot module' do
       allow_any_instance_of(CensusDataSet)
         .to receive(:census_data_type).and_return @data_type
       expect(subject).to have_content('Enrollment 100')
+    end
+  end
+
+  context 'When school has a district called "Alameda City Unified"' do
+    let(:school) do
+      FactoryGirl.create(
+        :alameda_high_school,
+        :with_district,
+        district_name: 'Alameda City Unified'
+      )
+    end
+    before do
+      FactoryGirl.create(
+        :category_data,
+        category: snapshot,
+        response_key: 'district',
+        label: 'District',
+        source: 'school_data'
+      )
+    end
+    scenario 'District data point should appear' do
+      expect(subject).to have_content('District Alameda City Unified')
+    end
+
+    scenario 'District name should link to district home' do
+      subject
+      click_link 'Alameda City Unified'
+      uri = URI.parse(current_url)
+      expect(uri.path).to eq city_district_path(
+        district_params_from_district(school.district)
+      )
     end
   end
 

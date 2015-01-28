@@ -1,0 +1,47 @@
+<div class="header-bg-color">
+  <div class="ptl hidden-xs"></div>
+  <div class="row ma limit-width-1200">
+    <div class="row ptm">
+      <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
+        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
+          <%= render 'search/change_location', choose_state: @state[:long].titleize   %>
+        </div>
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
+          <input  type="text"
+                  name="locationSearchString"
+                  value="<%= @search_term %>"
+                  data-prev-search="<%= @search_term || '' %>"
+                  data-state="<%= @state[:short] %>"
+                  id="js-schoolResultsSearch"
+                  class='typeahead search-text full-width pam'
+                  placeholder="">
+
+          <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
+        </div>
+
+        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 phm mbm">
+          <button type='submit' class=" pull-right btn btn-lg btn-primary">Search</button>
+        </div>
+
+        <div class="visible-xs col-xs-3 phm mbm">
+          <button type='submit' class=" pull-right btn btn-primary" style="height: 46px;"><span class="iconx24-icons i-24-search-white"></span></button>
+        </div>
+      </form>
+    </div>
+
+    <% if @nearby_cities && @nearby_cities.size > 0 %>
+        <div class="row phm ptm pbl hidden-xs">
+          <div class="fl mrl">Nearby Cities:</div>
+          <% @nearby_cities.each_index do |x|
+            city = @nearby_cities[x] %>
+              <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
+          <% end %>
+        </div>
+    <% end %>
+    <!--<div class="row pbl plm prm">-->
+    <!--<div class="col-sm-12 col-md-6 hidden-xs"><span>Additional Information:</span> How enrollment works in Delaware</div>-->
+    <!--<div class="col-sm-12 col-md-6 hidden-xs">Apply now</div>-->
+    <!--</div>-->
+
+  </div>
+</div>

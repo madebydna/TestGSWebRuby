@@ -21,15 +21,20 @@ LocalizedProfiles::Application.configure do
   config.action_controller.perform_caching = false
 
   # set host that rails should use when building absolute urls
+  # Both config.action_controller and Rails.application.routes must be assigned
   config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
   config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
+  # Setting Rails.application.routes is needed so that URLs created
+  # within models use the correct host
+  Rails.application.routes.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
+  Rails.application.routes.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 
   # For setting up Devise.
   config.action_mailer.default_url_options = {
     host: ENV_GLOBAL['app_host'] || hostname,
     port: ENV_GLOBAL['app_port'] || 3000
   }
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = ENV_GLOBAL['mail_enabled']
 
   config.action_mailer.delivery_method = :smtp
 
@@ -47,13 +52,6 @@ LocalizedProfiles::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
-
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
-
   # Expands the lines which load the assets
   config.assets.debug = false
 
@@ -63,18 +61,11 @@ LocalizedProfiles::Application.configure do
   # Don't cache in dev environment
   config.cache_store = :null_store
 
-  def local_ip
-    orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily
-
-    UDPSocket.open do |s|
-      s.connect 'greatschools.org', 1
-      s.addr.last
-    end
-  ensure
-    Socket.do_not_reverse_lookup = orig
+  if ENV_GLOBAL['cdn_prefix'].present?
+    config.action_controller.asset_host = ENV_GLOBAL['cdn_prefix']
+  else
+    config.action_controller.asset_host = 'http://localhost:3000'
   end
-
-  config.action_controller.asset_host = 'http://' + local_ip + ':3000'
 
   # For dev environments, use domain: all which will makes session cookies have a domain of localhost
   # or a domain of blah.greatschools.org

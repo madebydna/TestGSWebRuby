@@ -1,0 +1,18 @@
+<div class="limit-width-1200 row phm pbm">
+  <div class="col-xs-12">
+    <span class="open-sans_sb fl subtitle-md js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
+      <%= pluralize(@total_results,'school', 'schools') + ' found' %>
+      <% if @by_location %>
+          <% if @radius %>
+              within <%= pluralize(@radius, 'mile', 'miles') %> of <%= @normalized_address %>
+          <% else %>
+              near <%= @normalized_address %>
+          <% end %>
+      <% elsif @district %>
+          in <%= @district.name %>
+      <% elsif @city %>
+          in <%= @city.name + ', ' + @city.state %>
+      <% end %>
+    </span>
+  </div>
+</div>

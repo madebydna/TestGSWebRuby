@@ -2,7 +2,6 @@ class CensusDataSchoolValue < ActiveRecord::Base
   self.table_name = 'census_data_school_value'
 
   include CensusValueConcerns
-  include ReadOnlyRecord
   include StateSharding
 
   belongs_to :school, foreign_key: 'school_id'
@@ -12,4 +11,5 @@ class CensusDataSchoolValue < ActiveRecord::Base
     where(data_set_id: Array(data_sets.map(&:id)))
   }
 
+  default_scope -> { where(active: true) }
 end

@@ -41,3 +41,18 @@
     </table>
 
 <% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+  }
+%>
+
+<% if @page_config.root_placements_with_data.present? &&
+        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+        (@school.footnotes_for_category category: category).present? %>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
+      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
+    </div>
+<% end %>

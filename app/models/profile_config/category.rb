@@ -2,12 +2,12 @@ class Category < ActiveRecord::Base
   attr_accessible :description, :name, :parent, :source, :layout, :updated_at
   db_magic :connection => :profile_config
 
-  has_many :category_placements, :order => 'collection_id desc'
+  has_many :category_placements, -> { order('collection_id desc') }
 
   belongs_to :parent, :class_name => 'Category'
   has_many :categories, :foreign_key => 'parent_id'
   has_many :response_values, :foreign_key => 'category_id'
-  has_many :category_datas
+  has_many :category_datas, -> { order('category_id, sort_order ASC') }
 
   def category_data(collections = nil)
     category_datas.select do |category_data| 
@@ -35,6 +35,15 @@ class Category < ActiveRecord::Base
       map[cd.response_key] ||= cd.label if cd.label.present?
       map
     end
+  end
+
+  def key_description_map(state, collections = nil)
+    category_data(collections).
+      select { |cd| cd.description_key.present? }.
+      each_with_object({}) do |cd, map|
+        description = DataDescription.description(state, cd.description_key)
+        map[cd.response_key] ||= description if description.present?
+      end
   end
 
   def code_name

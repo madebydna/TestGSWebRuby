@@ -1,29 +1,35 @@
-<%= render 'nav/topnav' %>
+
 <%= render 'nav/search_bar', state: @state, collection_id: @collection_id, collection_nickname: @collection_nickname %>
 
 <% unless @important_events.nil? ||  @important_events.try(:[], :events).try(:empty?) %>
-  <%= render 'upcoming_events', important_events: @important_events, community_page: true %>
+  <%= render 'shared/upcoming_events', important_events: @important_events, community_page: true %>
 <% end %>
 
 <div class="limit-width-1200">
-  <h1 class='tac'><%= @heading %></h1>
-
+  <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <h1 class='tac mbl'><%= @heading %></h1>
 
   <% if @intro %>
     <div class='row mvl'>
-      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm'>
+      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm mbl'>
         <%= @intro[:content].html_safe %>
       </div>
 
-      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar hidden-xs'>
+      <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 lar hidden-xs tac'>
         <%= image_tag('hubs/after_summer_programs.png') %>
       </div>
     </div>
   <% end %>
 </div>
 
+<%= render 'programs_articles', articles: @articles %>
 
-<div class="bg-light-gray pvl">
+<div class="limit-width-1200">
+  <%= render 'programs_partners', partners: @partners %>
+</div>
+
+
+<div class="bg-light-gray pvl mtl">
   <%= render 'programs_sponsor', sponsor: @sponsor %>
 </div>
 

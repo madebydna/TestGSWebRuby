@@ -16,15 +16,20 @@ LocalizedProfiles::Application.configure do
   config.action_controller.perform_caching = true
 
   # set host that rails should use when building absolute urls
+  # Both config.action_controller and Rails.application.routes must be assigned
   config.action_controller.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
   config.action_controller.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
+  # Setting Rails.application.routes is needed so that URLs created
+  # within models use the correct host
+  Rails.application.routes.default_url_options[:host] = ENV_GLOBAL['app_host'] if ENV_GLOBAL['app_host'].present?
+  Rails.application.routes.default_url_options[:port] = ENV_GLOBAL['app_port'] if ENV_GLOBAL['app_port'].present?
 
   # For setting up Devise.
   config.action_mailer.default_url_options = {
     host: ENV_GLOBAL['app_host'] || hostname,
     port: ENV_GLOBAL['app_port'] || 3000
   }
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = ENV_GLOBAL['mail_enabled']
 
   config.action_mailer.delivery_method = :smtp
 
@@ -65,10 +70,11 @@ LocalizedProfiles::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = ActiveSupport::Logger.new('/var/log/gswebruby/production.log')
 
   # Use a different cache store in production
   config.cache_store = :memory_store, { size: 128.megabytes }
-   # Shomi Arora -Dont Cache so QA can test quickly
+  # Shomi Arora -Dont Cache so QA can test quickly
   # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
