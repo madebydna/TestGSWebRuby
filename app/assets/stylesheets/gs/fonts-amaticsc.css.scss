@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'amatic-sc-bold';
+  src:  url('../fonts/amaticsc-bold-webfont.eot?');
+  src:  local('?'),
+  url('../fonts/amaticsc-bold-webfont.woff') format('woff'),
+  url('../fonts/amaticsc-bold-webfont.ttf')  format('truetype'),
+  url('../fonts/amaticsc-bold-webfont.svg#amaticsc-bold') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.amatic-sc_b {
+  font-family: 'amatic-sc-bold';
+  font-weight: 400;
+  font-style: normal;
+}
