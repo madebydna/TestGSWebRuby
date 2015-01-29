@@ -62,10 +62,10 @@ class Advertising
       Text: {
         name: "Text",
         desktop:{
-          dimensions:[728,60]
+          dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[320,60]
+          dimensions:[[320,60],[320,50]]
         }
       }
     }
@@ -123,10 +123,10 @@ class Advertising
       Text: {
         name: "Text",
         desktop:{
-          dimensions:[728,60]
+          dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[320,60]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Nearby_Schools: {
@@ -364,10 +364,10 @@ class Advertising
       Text: {
         name: "Text",
         desktop:{
-          dimensions:[728,60]
+          dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[320,60]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Footer: {
@@ -401,10 +401,10 @@ class Advertising
       Content_Top_Text: {
         name: "Content_Top_Text",
         desktop:{
-          dimensions:[728,60]
+          dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[320,60]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Content_Top: {
@@ -456,10 +456,10 @@ class Advertising
       After8_Text: {
           name: "After8_Text",
           desktop:{
-            dimensions:[728,60]
+            dimensions:[[728,60],[728,90]]
           },
           mobile:{
-            dimensions:[320,60]
+            dimensions:[[320,60],[320,50]]
           }
       },
       After12_Left: {
@@ -509,10 +509,10 @@ class Advertising
         Text: {
             name: "Text",
             desktop:{
-                dimensions:[728,60]
+                dimensions:[[728,60],[728,90]]
             },
             mobile:{
-                dimensions:[320,60]
+                dimensions:[[320,60],[320,50]]
             }
         },
         Footer: {
