@@ -16,7 +16,7 @@
         <% if is_checked == true %>
             <label class="fl prl font-size-large">
               <%= check_box_tag grade, grade, is_checked, class: "js-delete-grade-level-" + grade %>
-              <% if grade != 'k' && grade != 'pk' %>
+              <% if grade != 'kg' && grade != 'pk' %>
                   <%= grade.to_i.ordinalize %>
               <% else %>
                   <%= grade.upcase %>
@@ -27,7 +27,7 @@
 
             <label class="fl prl font-size-large">
               <%= check_box_tag grade, grade, is_checked, class: "js-add-grade-level-" + grade %>
-              <% if grade != 'k' && grade != 'pk' %>
+              <% if grade != 'kg' && grade != 'pk' %>
                   <%= grade.to_i.ordinalize %>
               <% else %>
                   <%= grade.upcase %>
