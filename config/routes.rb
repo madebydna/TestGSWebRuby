@@ -134,6 +134,8 @@ LocalizedProfiles::Application.routes.draw do
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
+  get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
+  get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
   get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'

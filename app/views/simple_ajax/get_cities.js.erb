@@ -1,0 +1,3 @@
+<% if @cities  %>
+$('#city_select').html("<%= escape_javascript options_from_collection_for_select(@cities, :name, :name) %>");
+<% end %>

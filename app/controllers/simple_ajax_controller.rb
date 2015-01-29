@@ -33,4 +33,23 @@ class SimpleAjaxController < ApplicationController
     end
   end
 
+  def get_cities
+    state = params[:state]
+    @cities = City.popular_cities(state) if state.present?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_schools
+    state = params[:state]
+    city = params[:city]
+    @schools = School.within_city(state,city) if state.present? && city.present?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end
