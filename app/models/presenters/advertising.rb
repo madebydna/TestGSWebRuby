@@ -65,7 +65,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,50],[320,60]]
         }
       }
     }
@@ -126,7 +126,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,50],[320,60]]
         }
       },
       Nearby_Schools: {
@@ -367,7 +367,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,50],[320,60]]
         }
       },
       Footer: {
@@ -404,7 +404,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,60],[320,50]]
+          dimensions:[[320,50],[320,60]]
         }
       },
       Content_Top: {
@@ -459,7 +459,7 @@ class Advertising
             dimensions:[[728,60],[728,90]]
           },
           mobile:{
-            dimensions:[[320,60],[320,50]]
+            dimensions:[[320,50],[320,60]]
           }
       },
       After12_Left: {
@@ -512,7 +512,7 @@ class Advertising
                 dimensions:[[728,60],[728,90]]
             },
             mobile:{
-                dimensions:[[320,60],[320,50]]
+                dimensions:[[320,50],[320,60]]
             }
         },
         Footer: {
