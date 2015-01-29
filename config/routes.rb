@@ -89,6 +89,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/moving.topic?content=2220', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
     get '/OECDTestForSchools.page', as: :oecd_landing
+    get '/gk/milestones/', as: :gk_milestones
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
