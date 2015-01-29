@@ -13,11 +13,11 @@
 <% end %>
 
 
-<% if @milestone_banner_prop == 'false' %>
-  <%= render 'shared/home/search_hero_prototype' %>
-<% else %>
+<% if @milestone_banner_prop == 'true' %>
   <%= render 'shared/home/search_hero_short'  %>
   <%= render 'shared/home/milestone_banner'  %>
+<% else %>
+  <%= render 'shared/home/search_hero_prototype' %>
 <% end %>
 <%= render 'shared/home/browse_prototype'%>
 
