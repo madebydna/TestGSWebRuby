@@ -12,7 +12,7 @@ class HomeController < ApplicationController
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
       keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
-
+    @milestone_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     set_omniture_pagename
     gon.pagename = "Homepage"
   end

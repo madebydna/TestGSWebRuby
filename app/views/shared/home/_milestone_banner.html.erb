@@ -1,0 +1,29 @@
+<div class="dark-gray-bg pr mvs">
+  <div class="image-bg-scale image-scaling-height-homepage-banner oh">
+    <div class="img-container is-scaled-banner"><!--not empty--></div>
+  </div>
+  <div class="limit-width-1200">
+    <div class="absolute-center">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <%= link_to(gk_milestones_path) do %>
+            <div class="oa text_fff  clearfix ma home-banner-content-container">
+              <div class="fl tal ptl">
+                <%= image_tag (image_path('home/Greatkids_logo.png')), size: "75x31"  %>
+              <h1 class="jumbo-header-home-banner text_fff amatic-sc_b pvn mvn">milestones</h1>
+              <p class="open-sans_sb font-size-medium mbs">Is your child on track in school?</p>
+              <p class="font-size-small pbs">Watch kids demonstrate success in reading, <br class="hidden-xs" />
+                writing and math for grades K-5</p>
+                <button class="btn btn-sm btn-primary">Watch Videos</button>
+              </div>
+              <div class="fr">
+              <%= image_tag (image_path('home/milestone_banner_face.png')), class: "hidden-xs" %>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

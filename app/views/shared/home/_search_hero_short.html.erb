@@ -1,0 +1,21 @@
+<div class="dark-gray-bg pr">
+  <div class="image-bg-scale image-scaling-height-homepage-short oh">
+    <div class="img-container is-scaled"><!--not empty--></div>
+  </div>
+  <div class="limit-width-1200">
+    <div class="absolute-center">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="oa content-centered-short tac text_fff ">
+            <h1 class="jumbo-header ts text_fff">Welcome to GreatSchools</h1>
+            <div class="subtitle-lg ts">Your community resource to find and share information about schools</div>
+          </div>
+          <div class="search-bar-home ma ptl">
+            <% partial_params = {searchClass: 'js-forceLocationSearch'}%>
+            <%= render partial: 'nav/search_form', locals: partial_params %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

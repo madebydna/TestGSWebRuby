@@ -7,15 +7,18 @@
         $(function() {
             GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
             GS.util.setupImages({ selector: '.is-scaled-hide', desktopImage: '<%= image_path('home/homepage_picnic.jpg')%>', mobileImage: '<%= image_path('home/homepage_picnic_mobile.jpg')%>', classes:'scaling' });
+          GS.util.setupImages({ selector: '.is-scaled-banner', desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>', mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>', classes:'scaling' });
         })
     </script>
 <% end %>
 
 
-
-<%= render 'shared/home/search_hero_prototype', hero_image: @hero_image,
-           hero_bg_mobile: @hero_bg_mobile %>
-
+<% if @milestone_banner_prop == 'false' %>
+  <%= render 'shared/home/search_hero_prototype' %>
+<% else %>
+  <%= render 'shared/home/search_hero_short'  %>
+  <%= render 'shared/home/milestone_banner'  %>
+<% end %>
 <%= render 'shared/home/browse_prototype'%>
 
 
