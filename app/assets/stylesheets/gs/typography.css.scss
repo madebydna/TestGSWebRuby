@@ -68,7 +68,7 @@ p, a {
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
-  h2{font-size:22px; font-family: $headings-font-family-bold}
+  h2{font-size:26px; font-family: $headings-font-family-robotoslab-light;}
   .best_known_for{font-size: 20px}
 
 }
@@ -176,7 +176,7 @@ p, a {
 
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
-  h2 { font-size:22px; font-family: $headings-font-family-bold; }
+  h2 { font-size:26px; font-family: $headings-font-family-robotoslab-light; }
   .best-known-for { font-size: 20px; }
   .subtitle-lg {font-size: 20px}
   .subtitle-md {font-size: 16px}
