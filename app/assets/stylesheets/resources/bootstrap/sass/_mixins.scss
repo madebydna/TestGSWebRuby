@@ -519,7 +519,43 @@
     }
   }
 }
-@mixin button-variant-new($color, $background, $border, $background_active, $active_color) {
+@mixin button-default-variant($color, $background, $border, $background_active, $active_color) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus {
+    color: $active_color;
+    background-color: color-button-background($background, $background_active);
+        border-color: color-button-darken($border);
+  }
+  .open & { &.dropdown-toggle {
+    color: $color;
+    background-color: color-button-darken($background);
+        border-color: color-button-darken($border);
+  } }
+  &:active,
+  &.active {
+    background-image: none;
+  }
+  .open & { &.dropdown-toggle {
+    background-image: none;
+  } }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border;
+    }
+  }
+}
+@mixin button-primary-variant($color, $background, $border, $background_active, $active_color) {
   color: $color;
   background-color: $background;
   border-bottom-color: $border;

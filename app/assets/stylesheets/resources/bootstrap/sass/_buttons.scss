@@ -57,16 +57,19 @@
 // Alternate buttons
 // --------------------------------------------------
 
-.btn-new {
-//  @include button-variant($btn-new-color, $btn-new-bg, $btn-new-border, '#2880b9', '#FFFFFF');
-  @include button-variant-new($btn-new-color, $btn-new-bg-primary, $btn-new-border, $btn-primary-bg, $btn-new-color);
-}
+//.btn-new {
+////  @include button-variant($btn-new-color, $btn-new-bg, $btn-new-border, '#2880b9', '#FFFFFF');
+//  @include button-variant-new($btn-new-color, $btn-new-bg-primary, $btn-new-border, $btn-primary-bg, $btn-new-color);
+//}
 
+//.btn-default {
+//  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border, '#999999', '#FFFFFF');
+//}
 .btn-default {
-  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border, '#999999', '#FFFFFF');
+  @include button-default-variant($btn-default-color, $btn-default-bg, $btn-default-border, '#999999', '#FFFFFF');
 }
 .btn-primary {
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $btn-primary-bg, $btn-primary-color);
+  @include button-primary-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $btn-primary-bg, $btn-primary-color);
 }
 // Warning appears as orange
 .btn-warning {
