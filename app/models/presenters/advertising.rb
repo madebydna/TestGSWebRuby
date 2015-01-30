@@ -1,5 +1,7 @@
 class Advertising
 
+  # NOTE: For ad slots with multiple sizes:  order in which dimensions are listed matters. First dimension determines
+  # ad slot name.
   def initialize
     @ad_slots = Hash.new
 
@@ -65,7 +67,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,50],[320,60]]
+          dimensions:[[320,60],[320,50]]
         }
       }
     }
@@ -126,7 +128,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,50],[320,60]]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Nearby_Schools: {
@@ -367,7 +369,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,50],[320,60]]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Footer: {
@@ -404,7 +406,7 @@ class Advertising
           dimensions:[[728,60],[728,90]]
         },
         mobile:{
-          dimensions:[[320,50],[320,60]]
+          dimensions:[[320,60],[320,50]]
         }
       },
       Content_Top: {
@@ -459,7 +461,7 @@ class Advertising
             dimensions:[[728,60],[728,90]]
           },
           mobile:{
-            dimensions:[[320,50],[320,60]]
+            dimensions:[[320,60],[320,50]]
           }
       },
       After12_Left: {
@@ -512,7 +514,7 @@ class Advertising
                 dimensions:[[728,60],[728,90]]
             },
             mobile:{
-                dimensions:[[320,50],[320,60]]
+                dimensions:[[320,60],[320,50]]
             }
         },
         Footer: {
