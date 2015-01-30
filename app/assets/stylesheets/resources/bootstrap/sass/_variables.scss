@@ -37,7 +37,7 @@ $brand-info:            #5bc0de !default;
 /////////////MS
 $brand-primary:                #26ABE2;
 $brand-primary-darker:         #204362;
-$brand-primary-dark:           #007299;
+$brand-primary-dark:           #2880b9;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
 $brand-primary-lighter:       lighten($brand-primary, 47%); // #F5FAFC
 
@@ -171,6 +171,11 @@ $btn-default-border:             #ccc !default;
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
 $btn-primary-border:             $brand-primary !default;
+
+$btn-new-color:              #fff !default;
+$btn-new-bg-primary:         $brand-primary !default;
+$btn-new-border:             #2880b9 !default;
+$btn-new-hover:               #009edc !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;
