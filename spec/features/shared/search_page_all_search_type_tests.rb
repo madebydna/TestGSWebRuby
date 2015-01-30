@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../features/search/search_spec_helper'
+require_relative '../search/search_spec_helper'
 require_relative './shared_examples_for_pages_with_search_bars'
 
 # shared_examples_for '(features shared across all search pages)' do
