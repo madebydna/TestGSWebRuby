@@ -12,12 +12,14 @@ shared_examples_for 'Features Shared Across All Search Pages' do
     by_location_search: ['100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326],
   }.each_pair do | search_type, args |
     standard_setup = Proc.new { send("set_up_#{search_type}".to_sym, *args) }
+
     describe "#{search_type}" do
       describe 'Search Bar' do
         before &standard_setup
         it_should_behave_like 'a page with a search page autocomplete search bar'
         it_should_behave_like 'a page with a change location button in the search bar'
       end
+
       unless search_type == :by_name_search
         describe 'Nearby Cities' do
           let(:cities) { %w(Anthony Christina Harrison Keith) }
