@@ -145,6 +145,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  #alias it_should_behave_like to test_group. That way the documentation can spit out Test Group:
+  config.alias_it_should_behave_like_to :test_group, ""
+
   config.mock_with :rspec
 
   config.around(:each, :caching) do |example|
