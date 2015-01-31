@@ -102,25 +102,18 @@ RSpec.configure do |config|
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
 
-  #iterator to help run both mobile and desktop tests
-  def desktop_and_mobile(&block)
+  #method to help run both mobile and desktop tests
+  def describe_mobile_and_desktop(context, &block)
     {
         mobile:  [320, 568], #actual width capybara sets is -15, ie: 315 and 1265
         desktop: [1280, 960]
-    }.each_pair &block
+    }.each_pair do |window_type, size|
+      context.describe window_type, js: true do
+        before { page.driver.browser.resize_window(*size) }
+        instance_eval &block
+      end
+    end
   end
-
-  # def describe_mobile_and_desktop(context, &block)
-  #   {
-  #       mobile:  [320, 568], #actual width capybara sets is -15, ie: 315 and 1265
-  #       desktop: [1280, 960]
-  #   }.each_pair do |window_type, size|
-  #     context.describe window_type, js: true do
-  #       block.call(size)
-        # block.call(Proc.new { |page| page.driver.browser.resize_window(*size)})
-      # end
-    # end
-  # end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

@@ -26,25 +26,22 @@ shared_examples_for 'a page with a change location button in the search bar' do
     expect(search_form_element.has_selector?('.rs-change_location')).to be_truthy
   end
 
-  desktop_and_mobile do | window_type, screen_size |
-    describe window_type, js: true do
-      before { page.driver.browser.resize_window(*screen_size) }
-      it 'should have a change location link that is visible' do
-        expect(search_form_element).to have_selector('.rs-change_location', visible: true)
-      end
-      it 'should show list of states when the change location link is clicked' do
-        expect(search_form_element).to have_selector('.rs-search_state_picker', visible: false)
+  describe_mobile_and_desktop(self) do
+    it 'should have a change location link that is visible' do
+      expect(search_form_element).to have_selector('.rs-change_location', visible: true)
+    end
+    it 'should show list of states when the change location link is clicked' do
+      expect(search_form_element).to have_selector('.rs-search_state_picker', visible: false)
+      click_link 'Change location'
+      expect(search_form_element).to have_selector('.rs-search_state_picker', visible: true)
+    end
+    context 'when the user clicks the link and changes the state' do
+      it 'should change the text saying what state they\'re currently in' do
+        text = search_form_element.find(:css, '.rs-current_location_text').text
         click_link 'Change location'
-        expect(search_form_element).to have_selector('.rs-search_state_picker', visible: true)
-      end
-      context 'when the user clicks the link and changes the state' do
-        it 'should change the text saying what state they\'re currently in' do
-          text = search_form_element.find(:css, '.rs-current_location_text').text
-          click_link 'Change location'
-          first('.rs-search_state_picker > li > a').click
-          text2 = search_form_element.find(:css, '.rs-current_location_text').text
-          expect(text).not_to eq(text2)
-        end
+        first('.rs-search_state_picker > li > a').click
+        text2 = search_form_element.find(:css, '.rs-current_location_text').text
+        expect(text).not_to eq(text2)
       end
     end
   end
