@@ -103,15 +103,30 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   #method to help run both mobile and desktop tests
-  def describe_mobile_and_desktop(context, &block)
+  #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
+  def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
     {
-        mobile:  [320, 568], #actual width capybara sets is -15, ie: 315 and 1265
-        desktop: [1280, 960]
+      mobile:  mobile_size,
+      desktop: desktop_size
     }.each_pair do |window_type, size|
-      context.describe window_type, js: true do
+      describe window_type, js: true do
         before { page.driver.browser.resize_window(*size) }
         instance_eval &block
       end
+    end
+  end
+
+  def describe_mobile(mobile_size=[320,568], &block)
+    describe 'mobile', js: true do
+      before { page.driver.browser.resize_window(*mobile_size) }
+      instance_eval &block
+    end
+  end
+
+  def describe_desktop(desktop_size=[1280,960], &block)
+    describe 'desktop', js: true do
+      before { page.driver.browser.resize_window(*desktop_size) }
+      instance_eval &block
     end
   end
 

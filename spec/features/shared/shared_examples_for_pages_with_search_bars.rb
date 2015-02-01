@@ -26,7 +26,7 @@ shared_examples_for 'a page with a change location button in the search bar' do
     expect(search_form_element.has_selector?('.rs-change_location')).to be_truthy
   end
 
-  describe_mobile_and_desktop(self) do
+  describe_mobile_and_desktop do
     it 'should have a change location link that is visible' do
       expect(search_form_element).to have_selector('.rs-change_location', visible: true)
     end
