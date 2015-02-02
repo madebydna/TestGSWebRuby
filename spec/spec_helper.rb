@@ -105,27 +105,21 @@ RSpec.configure do |config|
   #method to help run both mobile and desktop tests
   #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
   def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
-    {
-      mobile:  mobile_size,
-      desktop: desktop_size
-    }.each_pair do |window_type, size|
-      describe window_type, js: true do
-        before { page.driver.browser.resize_window(*size) }
-        instance_eval &block
-      end
-    end
+    describe_mobile(mobile_size, &block)
+    describe_desktop(desktop_size, &block)
   end
 
   def describe_mobile(mobile_size=[320,568], &block)
-    describe 'mobile', js: true do
-      before { page.driver.browser.resize_window(*mobile_size) }
-      instance_eval &block
-    end
+    describe_block_with_page_resize('mobile', mobile_size, &block)
   end
 
   def describe_desktop(desktop_size=[1280,960], &block)
-    describe 'desktop', js: true do
-      before { page.driver.browser.resize_window(*desktop_size) }
+    describe_block_with_page_resize('desktop', desktop_size, &block)
+  end
+
+  def describe_block_with_page_resize(describe_block_name, screen_size, &block)
+    describe describe_block_name, js: true do
+      before { page.driver.browser.resize_window(*screen_size) }
       instance_eval &block
     end
   end
