@@ -1,0 +1,14 @@
+<div class="no_display tac col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 plm prm ptm mbm" id="scoop_state_city_school_select">
+
+  <form name="state_city_school_select_form" class="js_state_city_school_select_form" action="/thescoop" method="post">
+    <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),{include_blank: true, :id => "state_select", :prompt => 'Select state', class: 'form-control' } %>
+    <br/>
+    <%= select_tag 'city', options_for_select([]),{include_blank: true, :id => "city_select", :prompt => 'Select city', class: 'form-control'} %>
+    <br/>
+    <%= select_tag 'school', options_for_select([]),{include_blank: true, :id => "school_select", :prompt => 'Select school', class: 'form-control' } %>
+    <br/>
+    <button type='submit' class='iconx24 i-24-search-lens' style='border: none;'></button>
+  </form>
+
+
+</div>

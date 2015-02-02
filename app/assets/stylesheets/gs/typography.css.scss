@@ -59,6 +59,7 @@ p, a {
 .text_orange { color: #ff9369; }
 .text_purple { color: #826e92; }
 .text_green {color: $green_light; }
+.text_blue {color: blue; }
 
 // text_font_large is deprecated
 .text_font_large {font-size: 24px;}
@@ -173,12 +174,15 @@ p, a {
 .mrl_lg {margin-right: 0px;}
 .pbm_sm {padding-bottom: 0px;}
 
+.no_display {display:none;}
+
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
   h2 { font-size:22px; font-family: $headings-font-family-bold; }
   .best-known-for { font-size: 20px; }
   .subtitle-lg {font-size: 20px}
   .subtitle-md {font-size: 16px}
+  .subtitle-sm {font-size: 12px}
 }
 
 @media (min-width: 990px) {

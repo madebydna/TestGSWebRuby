@@ -9,10 +9,12 @@
                     <div class="oa content-centered tac text_fff ">
                         <h1 class="jumbo-header ts text_fff">You know your school best!</h1>
                         <div class="subtitle-lg ts">Help others find their great school – rate and review yours now</div>
+                        <div class="subtitle-sm ts"><a href="#" id="scoop_search_type_link">Don't see your school?</a></div>
                     </div>
-                    <div class="search-bar-home ma ptl">
+                    <div class="search-bar-home ma ptl" id="scoop_text_select">
                         <%= render partial: 'nav/select_form' %>
                     </div>
+                    <%= render partial: 'shared/review_school_chooser/state_city_school_choose' %>
                 </div>
             </div>
         </div>

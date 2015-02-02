@@ -11,10 +11,4 @@
 
 <%= render 'shared/review_school_chooser/hero_image_select' %>
 
-<%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),{include_blank: true, :id => "state_select", :prompt => 'Select state' } %>
-<br/>
-<%= select_tag 'city', options_for_select([]),{include_blank: true, :id => "city_select", :prompt => 'Select city'} %>
-<br/>
-<%= select_tag 'school', options_for_select([]),{include_blank: true, :id => "school_select", :prompt => 'Select school' } %>
-<br/>
 <%= render partial: 'shared/home_footer' %>

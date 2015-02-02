@@ -43,8 +43,10 @@ class SimpleAjaxController < ApplicationController
   end
 
   def get_schools
-    state = params[:state]
+    state_param = params[:state]
     city = params[:city]
+    state = States.abbreviation(state_param) if state_param.present?
+
     @schools = School.within_city(state,city) if state.present? && city.present?
 
     respond_to do |format|
