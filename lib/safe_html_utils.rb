@@ -1,6 +1,5 @@
 # Inspired by https://gwt.googlesource.com/gwt/+/master/user/src/com/google/gwt/safehtml/shared/SafeHtmlUtils.java
 class SafeHtmlUtils
-  CONSTANT_HTML = '<a href="javascript:trusted()">click here &amp; enjoy</a>';
   HTML_ENTITY_REGEX = /\A[a-z]+\z|\A#[0-9]+\z|\A#x[0-9a-fA-F]+\z/
 
   def self.html_escape(s)
