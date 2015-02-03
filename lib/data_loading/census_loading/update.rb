@@ -24,6 +24,7 @@ class CensusLoading::Update
     @shard = entity_state.to_s.downcase.to_sym
     self.entity_type = self.entity_type.to_s.downcase.to_sym
     @entity_id_type = "#{entity_type.downcase}_id".to_sym
+    @value = SafeHtmlUtils.html_escape_allow_entities(@value) if @value.is_a?(String)
 
     unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
       @value_type = data_type.value_type
