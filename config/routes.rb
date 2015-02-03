@@ -15,10 +15,7 @@ LocalizedProfiles::Application.routes.draw do
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
-
-  # get '/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
-
-  get '/gsr/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
+  get '/find/parentReview', as: :review_choose_school, to: 'review_school_chooser#show'
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
