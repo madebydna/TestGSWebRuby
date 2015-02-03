@@ -1,3 +1,6 @@
 <% if @schools  %>
-$('#school_select').html("<option value=\"\">Select city<\/option>\n<%= escape_javascript options_from_collection_for_select(@schools, :id, :name) %>");
+    var school_select = $('#school_select');
+    school_select.html("<option value=\"\">Select school<\/option>\n<%= escape_javascript options_from_collection_for_select(@schools, :id, :name) %>");
+<% else %>
+    school_select.html("<option value=\"\">Select school<\/option>\n");
 <% end %>

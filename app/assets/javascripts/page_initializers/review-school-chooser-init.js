@@ -20,7 +20,7 @@ $(function() {
       type: 'GET',
       url: "/gsr/ajax/get_cities",
       data: {state: $('#state_select').val()},
-      async: false
+      async: true
     })
   });
 
@@ -29,8 +29,27 @@ $(function() {
       type: 'GET',
       url: "/gsr/ajax/get_schools",
       data: {state: $('#state_select').val(), city: $('#city_select').val()},
-      async: false
+      async: true
     })
   });
+
+  $('#state_city_school_submit_btn').on('click', function() {
+    var state_val = $('#state_select').val();
+    var city_val = $('#city_select').val();
+    var school_val = $('#school_select').val();
+    if(state_val === '') {
+      alert('Please select a state');
+      return false;
+    } else if (city_val === ''){
+      alert('Please select a city');
+      return false;
+    } else if(school_val === ''){
+      alert('Please select a school');
+      return false;
+    }
+
+    return true;
+  });
+
 
 });
