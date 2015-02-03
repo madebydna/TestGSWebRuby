@@ -1,5 +1,5 @@
 $(function() {
-  if (gon.pagename == "ReviewSchoolChooser") {
+  if (gon.pagename == "Write a school review | GreatSchools") {
     GS.search.autocomplete.selectAutocomplete.init();
   }
 
