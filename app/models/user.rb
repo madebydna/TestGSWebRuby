@@ -104,8 +104,13 @@ class User < ActiveRecord::Base
     # TODO: put this elsewhere
 
     if password.present? && encrypted_password.blank?
-      encrypt_plain_text_password
-      save!
+      begin
+        encrypt_plain_text_password
+        save!
+      rescue => e
+        log_user_exception(e)
+        raise e
+      end
     end
   end
 
@@ -295,12 +300,22 @@ class User < ActiveRecord::Base
   def create_user_profile
     profile = UserProfile.where(member_id: id).first
     if profile.nil?
-      UserProfile.create!(member_id: id, screen_name: "user#{id}", private:true, how:self.how, active: true, state:'ca')
+      begin
+        UserProfile.create!(member_id: id, screen_name: "user#{id}", private:true, how:self.how, active: true, state:'ca')
+      rescue => e
+        log_user_exception(e)
+        raise e
+      end
     end
   end
 
   def set_defaults
     self.time_added = Time.now
+  end
+
+  def log_user_exception(e)
+    Rails.logger.warn("Error: #{e.message} for user ID #{id}, email: #{email}. Stacktrace:")
+    Rails.backtrace_cleaner.clean(e.backtrace).each { |frame| Rails.logger.warn(frame) }
   end
 
 end

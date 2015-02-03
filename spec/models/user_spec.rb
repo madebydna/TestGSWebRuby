@@ -242,6 +242,33 @@ describe User do
       end
     end
 
+    describe '#create_user_profile' do
+      after(:each) { clean_models User }
+      let(:user) { FactoryGirl.create(:verified_user) }
+
+      it 'should log exceptions' do
+        user_profile_stub = Class.new
+        allow(user_profile_stub).to receive(:create) { raise 'error' }
+        allow(user_profile_stub).to receive(:where) { user_profile_stub }
+        allow(user_profile_stub).to receive(:first) { nil }
+
+        stub_const('UserProfile', user_profile_stub)
+        expect(user).to receive(:log_user_exception)
+        expect{ user.send(:create_user_profile) }.to raise_error
+      end
+    end
+
+    describe '#encrypt_plain_text_password_after_first_save' do
+      let(:user) { FactoryGirl.build(:verified_user) }
+      it 'should log exceptions' do
+        user.password = 'abcdefg'
+        user.send(:encrypted_password=, nil)
+        allow(user).to receive(:save!) { raise 'error' }
+        expect(user).to receive(:log_user_exception)
+        expect { user.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
+      end
+    end
+
   end
 
 
