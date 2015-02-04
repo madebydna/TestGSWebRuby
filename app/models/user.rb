@@ -310,7 +310,9 @@ class User < ActiveRecord::Base
   end
 
   def set_defaults
-    self.time_added = Time.now
+    now = Time.now
+    self.time_added ||= now
+    self.updated ||= now
   end
 
   def log_user_exception(e)
