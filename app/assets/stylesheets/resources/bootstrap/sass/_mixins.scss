@@ -483,14 +483,14 @@
 // -------------------------
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
-@mixin button-variant($color, $background, $border, $background_active, $active_color, $brand-primary-dark:"") {
+@mixin button-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
   color: $color;
   background-color: $background;
   border-color: $border;
   border-bottom-width: 3px;
-  border-top: $brand-primary-dark;
-  border-right: $brand-primary-dark;
-  border-left: $brand-primary-dark;
+  border-top: $border;
+  border-right: $border;
+  border-left: $border;
 
   &:hover,
   &:focus {
@@ -506,7 +506,6 @@
   &:active,
   &.active {
     background-image: none;
-    border-color: $brand-primary-dark;
   }
   .open & { &.dropdown-toggle {
     background-image: none;
@@ -524,7 +523,7 @@
     }
   }
 }
-@mixin button-default-variant($color, $background, $border, $background_active, $active_color) {
+@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
   color: $color;
   background-color: $background;
   border-color: $border;
@@ -533,53 +532,8 @@
   &:hover,
   &:focus {
     color: $active_color;
-    background-color: #f5fbfd;
-//    background-color: color-button-background($background, $background_active);
-//        border-color: color-button-darken($border);
-        border-color: color-button-darken($border);
-  }
-  .open & { &.dropdown-toggle {
-    color: $color;
-    background-color: color-button-darken($background);
-        border-color: color-button-darken($border);
-  } }
-  &:active,
-  &.active {
-    background-image: none;
-    color: $btn-default-active-border;
-    background-color: $background;
-    border-color: $btn-default-active-border;
-  }
-  .open & { &.dropdown-toggle {
-    background-image: none;
-  } }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      background-color: $background;
-          border-color: $border;
-    }
-  }
-}
-@mixin button-primary-variant($color, $background, $border, $background_active, $active_color) {
-  color: $color;
-  background-color: $background;
-  border-bottom-color: $border;
-  border-top: $brand-primary-dark;
-  border-right: $brand-primary-dark;
-  border-left: $brand-primary-dark;
-  border-bottom-width: 3px;
-
-  &:hover,
-  &:focus {
-    color: $active_color;
     background-color: color-button-background($background, $background_active);
-        border-color: color-button-darken($border);
+        border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
     color: $color;
@@ -589,11 +543,6 @@
   &:active,
   &.active {
     background-image: none;
-    outline: 0;
-    background-color: $brand-primary-dark;
-    color:#FFFFFF;
-    //    @include box-shadow(inset 0 2px 0px rgba(0,0,0,.075));
-    border-color: $brand-primary-dark;
   }
   .open & { &.dropdown-toggle {
     background-image: none;

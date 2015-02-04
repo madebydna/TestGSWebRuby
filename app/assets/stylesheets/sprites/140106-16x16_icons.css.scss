@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/141209-16x16_sprite.png");
+  background-image: asset_data_url("icons/140602-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -188,4 +188,36 @@
 
 .i-16-not-applicable {
   background-position: -512px 0px;
+}
+
+.i-16-blue-pencil {
+  background-position: -528px 0px;
+}
+
+.i-16-blue-pencil-focus {
+  background-position:  -528px -16px;
+}
+
+.i-16-blue-heart {
+  background-position: -544px 0px;
+}
+
+.i-16-blue-heart-focus {
+  background-position: -544px -16px;
+}
+
+.i-16-blue-thought-bubble{
+  background-position: -560px 0px;
+}
+
+.i-16-blue-thought-bubble-focus{
+  background-position: -560px -16px;
+}
+
+.i-16-blue-home {
+  background-position: -576px 0px;
+}
+
+.i-16-blue-home-focus {
+  background-position: -576px -16px;
 }
