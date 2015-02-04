@@ -13,7 +13,7 @@ $(function() {
 
   $('#scoop_search_type_link').on('click', function(event){
     current_text = $(this).text();
-    if(current_text === "Don't see your school?"){
+    if(current_text.indexOf("Don't see") >= 0){
       $(this).text('Return to original search');
     }else{
       $(this).text("Don't see your school?");
