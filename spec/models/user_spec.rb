@@ -243,9 +243,6 @@ describe User do
     end
 
     describe '#create_user_profile' do
-      after(:each) { clean_models User }
-      let(:user) { FactoryGirl.create(:verified_user) }
-
       it 'should log exceptions' do
         user_profile_stub = Class.new
         allow(user_profile_stub).to receive(:create) { raise 'error' }
@@ -259,13 +256,18 @@ describe User do
     end
 
     describe '#encrypt_plain_text_password_after_first_save' do
-      let(:user) { FactoryGirl.build(:verified_user) }
       it 'should log exceptions' do
         user.password = 'abcdefg'
         user.send(:encrypted_password=, nil)
         allow(user).to receive(:save!) { raise 'error' }
         expect(user).to receive(:log_user_exception)
         expect { user.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
+      end
+
+      it "should only get called once, at the time user is first saved" do
+        user.password = 'foobarbaz'
+        expect(user).to receive(:encrypt_plain_text_password_after_first_save).and_call_original.once
+        user.save
       end
     end
 
