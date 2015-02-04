@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: { case_sensitive: false }
   before_save :verify_email!, if: "facebook_id != nil"
   before_save :encrypt_plain_text_password
+  # creating an encrypted pw for user requires their user ID. So pw must be encrypted after first time user is saved
   after_create :create_user_profile, :encrypt_plain_text_password_after_first_save
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, message: 'Please enter a valid email address.'
   validates :plain_text_password, length: { in: 6..14 }, if: :should_validate_password?
