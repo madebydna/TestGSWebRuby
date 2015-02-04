@@ -3,6 +3,14 @@ $(function() {
     GS.search.autocomplete.selectAutocomplete.init();
   }
 
+  $('#js-schoolResultsSearch').on('keyup',function(){
+    if($('#js-schoolResultsSearch').val().length >= 3){
+      $('#scoop_search_type_div').removeClass('no_display');
+    }else{
+      $('#scoop_search_type_div').addClass('no_display');
+    }
+  });
+
   $('#scoop_search_type_link').on('click', function(event){
     current_text = $(this).text();
     if(current_text === "Don't see your school?"){
