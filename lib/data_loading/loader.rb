@@ -31,6 +31,8 @@ class Loader
       SchoolMediaLoading::Loader
     elsif esp_data_type?(data_type)
       EspResponseLoading::Loader
+    elsif data_type == 'school_location'
+      SchoolLocationLoading::Loader
     else
       EspResponseLoading::Loader
     end

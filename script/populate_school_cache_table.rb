@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar']
+  ['ratings','test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools']
 end
 
 def nightly_states

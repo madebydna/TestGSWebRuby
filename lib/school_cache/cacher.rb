@@ -53,12 +53,12 @@ class Cacher
 
   def self.cacher_for(key)
     {
-
         test_scores:      TestScoresCaching::BreakdownsCacher,
         characteristics:  CharacteristicsCaching::CharacteristicsCacher,
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
-        progress_bar:     ProgressBarCaching::ProgressBarCacher
+        progress_bar:     ProgressBarCaching::ProgressBarCacher,
+        nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher
 
     }[key.to_s.to_sym]
   end
@@ -79,7 +79,8 @@ class Cacher
       CharacteristicsCaching::CharacteristicsCacher,
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
-      ProgressBarCaching::ProgressBarCacher
+      ProgressBarCaching::ProgressBarCacher,
+      NearbySchoolsCaching::NearbySchoolsCacher
     ]
   end
 
