@@ -5,22 +5,23 @@ $(function() {
 
   $('#js-schoolResultsSearch').on('keyup',function(){
     if($('#js-schoolResultsSearch').val().length >= 3){
-      $('#scoop_search_type_div').removeClass('no_display');
-    }else{
-      $('#scoop_search_type_div').addClass('no_display');
+      $('.js-scoop_search_type_div').removeClass('dn');
     }
   });
 
-  $('#scoop_search_type_link').on('click', function(event){
+  $('.js-scoop_search_type_link').on('click', function(event){
     current_text = $(this).text();
     if(current_text.indexOf("Don't see") >= 0){
       $(this).text('Return to original search');
+      $('#scoop_text_select').addClass('dn');
+      $('#scoop_state_city_school_select').removeClass('dn');
     }else{
       $(this).text("Don't see your school?");
+      $('#scoop_text_select').removeClass('dn');
+      $('#scoop_state_city_school_select').addClass('dn');
     }
 
-    $('#scoop_text_select').toggleClass('no_display');
-    $('#scoop_state_city_school_select').toggleClass('no_display');
+
   });
 
   $('#state_select').on('change', function() {
@@ -29,7 +30,9 @@ $(function() {
       url: "/gsr/ajax/get_cities",
       data: {state: $('#state_select').val()},
       async: true
-    })
+    }).done(function() {
+      $('.js-cityList').removeClass( "dn" );
+    });
   });
 
   $('#city_select').on('change', function() {
@@ -38,7 +41,12 @@ $(function() {
       url: "/gsr/ajax/get_schools",
       data: {state: $('#state_select').val(), city: $('#city_select').val()},
       async: true
-    })
+    }).done(function() {
+      $('.js-schoolList').removeClass( "dn" );
+    });
+  });
+  $('.js-schoolList').on('change', function() {
+      $('.js-goList').removeClass( "dn" );
   });
 
   $('#state_city_school_submit_btn').on('click', function() {
