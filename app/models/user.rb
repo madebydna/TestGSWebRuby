@@ -253,8 +253,7 @@ class User < ActiveRecord::Base
   end
 
   def is_profile_active?
-    profile = UserProfile.where(member_id: id).first
-    profile.present? && profile.active?
+    user_profile && user_profile.active?
   end
 
   def add_user_grade_level(grade)

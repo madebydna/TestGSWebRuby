@@ -169,7 +169,7 @@ LocalizedProfiles::Application.routes.draw do
     return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
   }
 
-  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#allow_reset_password'
+  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
   get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
 
