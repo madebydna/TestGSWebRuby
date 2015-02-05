@@ -495,8 +495,9 @@
   &:hover,
   &:focus {
     color: $active_color;
-    background-color: color-button-background($background, $background_active);
-        border-color: color-button-darken($border);
+//    background-color: color-button-background($background, $background_active);
+    background-color:  #009edc;
+        border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
     color: $color;
@@ -506,6 +507,7 @@
   &:active,
   &.active {
     background-image: none;
+    border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
     background-image: none;
@@ -543,6 +545,13 @@
   &:active,
   &.active {
     background-image: none;
+    background-color: #195074;
+//    background-color: #FFFFFF;
+    color:#FFFFFF;
+    border-color: #195074;
+
+
+
   }
   .open & { &.dropdown-toggle {
     background-image: none;
