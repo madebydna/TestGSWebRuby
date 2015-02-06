@@ -84,17 +84,17 @@ describe UserController do
       subject { xhr :post, :send_verification_email, email: user.email }
     end
 
-    shared_example_pair('set flash message') do
+    define_opposing_examples('set flash message') do
       subject
       expect(flash).to be_present
     end
 
-    shared_example_pair('send verification email') do
+    define_opposing_examples('send verification email') do
       expect(EmailVerificationEmailNoPassword).to receive(:deliver_to_user)
       subject
     end
 
-    shared_example_pair('redirect user to signin page') do
+    define_opposing_examples('redirect user to signin page') do
       subject
       expect(response).to redirect_to(signin_url)
     end

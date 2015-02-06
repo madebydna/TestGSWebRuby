@@ -48,15 +48,19 @@ def monkey_patch_database_cleaner
   end
 end
 
-def shared_example_pair(name, &proc)
-  shared_examples_for name do
-    it name do
-      instance_exec &proc
-    end
-  end
-  shared_examples_for "do_not_#{name}" do
-    it "should not #{name}" do
-      instance_exec &Proc.new { proc.to_source.gsub('.to', '.to_not') }
+def define_opposing_examples(name, &proc)
+  shared_examples_for name do |positive_or_negative_assertion = true|
+    should_execute_positive_assertion = (positive_or_negative_assertion == true)
+    if should_execute_positive_assertion
+      it name do
+        instance_exec &proc
+      end
+    else
+      it "should not #{name}" do
+        new_source = proc.to_source(strip_enclosure: true).gsub('.to', '.to_not')
+        new_proc = Proc.new { eval(new_source) }
+        instance_exec &new_proc
+      end
     end
   end
 end
@@ -65,12 +69,8 @@ def generate_examples_from_hash(hash)
   hash.each_pair do |context, expectations|
     context context do
       include_context context
-      expectations.each_pair do |expectation, positive_case|
-        if positive_case
-          include_examples expectation.to_s
-        else
-          include_examples "do_not_#{expectation}"
-        end
+      expectations.each_pair do |expectation, args|
+        include_examples expectation.to_s, *args
       end
     end
   end
