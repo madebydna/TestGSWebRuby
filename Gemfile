@@ -184,6 +184,8 @@ group :development, :test do
   gem 'launchy'
 
   gem 'pdf-reader'
+
+  gem 'sourcify'
 end
 
 # gem 'sass-rails',   '~> 3.2.3'

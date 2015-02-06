@@ -48,6 +48,34 @@ def monkey_patch_database_cleaner
   end
 end
 
+def shared_example_pair(name, &proc)
+  shared_examples_for name do
+    it name do
+      instance_exec &proc
+    end
+  end
+  shared_examples_for "do_not_#{name}" do
+    it "should not #{name}" do
+      instance_exec &Proc.new { proc.to_source.gsub('.to', '.to_not') }
+    end
+  end
+end
+
+def generate_examples_from_hash(hash)
+  hash.each_pair do |context, expectations|
+    context context do
+      include_context context
+      expectations.each_pair do |expectation, positive_case|
+        if positive_case
+          include_examples expectation.to_s
+        else
+          include_examples "do_not_#{expectation}"
+        end
+      end
+    end
+  end
+end
+
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
