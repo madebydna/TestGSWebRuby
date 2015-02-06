@@ -15,10 +15,9 @@ LocalizedProfiles::Application.routes.draw do
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
+  get '/find/parentReview', as: :review_choose_school, to: 'review_school_chooser#show'
+  get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
-  # get '/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
-
-  get '/gsr/schoolreview', as: :review_choose_school, to: 'review_school_chooser#show'
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
@@ -135,6 +134,9 @@ LocalizedProfiles::Application.routes.draw do
 
   post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
+  get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
+  get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
+  get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
   get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
   get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'

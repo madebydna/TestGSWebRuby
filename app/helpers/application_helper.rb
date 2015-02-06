@@ -257,10 +257,11 @@ module ApplicationHelper
   end
 
   def guided_search_path(hub)
+    state_url_name = gs_legacy_url_encode(States.state_name(hub.state))
     if hub.city
-      "/#{States.state_name(hub.state)}/#{hub.city.to_s.downcase}/guided-search"
+      "/#{state_url_name}/#{gs_legacy_url_city_district_browse_encode(hub.city)}/guided-search"
     else
-      "/#{States.state_name(hub.state)}/guided-search"
+      "/#{state_url_name}/guided-search"
     end
   end
 end

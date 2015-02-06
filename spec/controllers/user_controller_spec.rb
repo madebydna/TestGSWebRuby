@@ -69,6 +69,58 @@ describe UserController do
   end
 
   describe '#send_verification_email' do
+    after { clean_models User }
+
+    shared_context 'when given an email for existing provisional user' do
+      let(:user) { FactoryGirl.create(:new_user) }
+      subject { xhr :post, :send_verification_email, email: user.email }
+    end
+    shared_context 'when given an email for nonexisting user' do
+      let(:user) { FactoryGirl.create(:new_user) }
+      subject { xhr :post, :send_verification_email, email: 'sslkdfjlsjfklj@greatschools.org' }
+    end
+    shared_context 'when given an email for verified user' do
+      let(:user) { FactoryGirl.create(:verified_user) }
+      subject { xhr :post, :send_verification_email, email: user.email }
+    end
+
+    shared_example_pair('set flash message') do
+      subject
+      expect(flash).to be_present
+    end
+
+    shared_example_pair('send verification email') do
+      expect(EmailVerificationEmailNoPassword).to receive(:deliver_to_user)
+      subject
+    end
+
+    shared_example_pair('redirect user to signin page') do
+      subject
+      expect(response).to redirect_to(signin_url)
+    end
+
+    hash = {
+      'when given an email for existing provisional user' => {
+        'set flash message' => true,
+        'send verification email' => true,
+        'redirect user to signin page' => true
+      },
+      'when given an email for nonexisting user' => {
+        'set flash message' => false,
+        'send verification email' => false,
+        'redirect user to signin page' => true
+      },
+      'when given an email for verified user' => {
+        'set flash message' => false,
+        'send verification email' => false,
+        'redirect user to signin page' => true
+      }
+    }
+
+    generate_examples_from_hash(hash)
+  end
+
+  describe '#change_password' do
     after do
       clean_models User
     end

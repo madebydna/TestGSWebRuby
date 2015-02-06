@@ -62,7 +62,8 @@ class FilterBuilder
     Hash.new([]).merge(
         {
             in: add_vouchers_callbacks,
-            de: []
+            de: [],
+            ga: []
         }
     ).stringify_keys!
   end
@@ -73,6 +74,9 @@ class FilterBuilder
             mi: {
                 detroit: detroit_mi_callbacks
             }.stringify_keys!,
+            ok: {
+                'oklahoma city' => []
+            },
             wi: {
                 milwaukee: add_vouchers_callbacks
             }.stringify_keys!

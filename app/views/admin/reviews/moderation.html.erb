@@ -20,7 +20,11 @@
 
     </div>
 
-    <h3>Flagged reviews</h3>
+    <h3>Flagged reviews
+      <% if @reported_reviews.present?%>
+          (<%= @reported_reviews.size%>)
+      <% end %>
+    </h3>
 
     <table class="table table-striped" id="flagged_reviews_table">
         <thead>

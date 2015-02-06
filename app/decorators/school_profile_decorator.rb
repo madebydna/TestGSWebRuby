@@ -14,7 +14,7 @@ class SchoolProfileDecorator < Draper::Decorator
   end
 
   def photo(width = 130, height = 130)
-    uploaded_photo(height) || street_view_photo(width, height)
+    uploaded_photo(height) || nil # default_photo #street_view_photo(width, height)
   end
 
   def city_state
@@ -40,6 +40,15 @@ class SchoolProfileDecorator < Draper::Decorator
       )
     end
   end
+
+  def default_photo(size = 130)
+      image_tag(
+          image_path("search/no-school-photo.png"),
+          class: 'thumbnail-border',
+          alt: "Image provided by GreatSchools."
+      )
+  end
+
 
   def street_view_photo(width = 130, height = 130)
     return unless google_formatted_street_address.present?

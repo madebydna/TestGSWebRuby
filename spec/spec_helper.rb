@@ -48,6 +48,34 @@ def monkey_patch_database_cleaner
   end
 end
 
+def shared_example_pair(name, &proc)
+  shared_examples_for name do
+    it name do
+      instance_exec &proc
+    end
+  end
+  shared_examples_for "do_not_#{name}" do
+    it "should not #{name}" do
+      instance_exec &Proc.new { proc.to_source.gsub('.to', '.to_not') }
+    end
+  end
+end
+
+def generate_examples_from_hash(hash)
+  hash.each_pair do |context, expectations|
+    context context do
+      include_context context
+      expectations.each_pair do |expectation, positive_case|
+        if positive_case
+          include_examples expectation.to_s
+        else
+          include_examples "do_not_#{expectation}"
+        end
+      end
+    end
+  end
+end
+
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
@@ -102,6 +130,28 @@ RSpec.configure do |config|
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
 
+  #method to help run both mobile and desktop tests
+  #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
+  def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
+    describe_mobile(mobile_size, &block)
+    describe_desktop(desktop_size, &block)
+  end
+
+  def describe_mobile(mobile_size=[320,568], &block)
+    describe_block_with_page_resize('mobile', mobile_size, &block)
+  end
+
+  def describe_desktop(desktop_size=[1280,960], &block)
+    describe_block_with_page_resize('desktop', desktop_size, &block)
+  end
+
+  def describe_block_with_page_resize(describe_block_name, screen_size, &block)
+    describe describe_block_name, js: true do
+      before { page.driver.browser.resize_window(*screen_size) }
+      instance_eval &block
+    end
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -144,6 +194,9 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  #alias it_should_behave_like to test_group. That way the documentation can spit out Test Group:
+  config.alias_it_should_behave_like_to :test_group, ""
 
   config.mock_with :rspec
 

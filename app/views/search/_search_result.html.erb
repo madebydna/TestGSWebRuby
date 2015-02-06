@@ -36,18 +36,14 @@
               <div class="fl">
                 <% if !school.community_rating.nil? && !school.review_count.nil? %>
                   <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-                  <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
+                  <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
                 <% else %>
-                  <em>No Community Reviews</em>
+                  <em class="js-reviewCount">No Community Reviews</em>
                 <% end %>
               </div>
               <div class="phm fl">|</div>
               <div class="prs fl"><%= decorated_school.decorated_school_type %></div>
               <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
-              <% if search_by_location? %>
-                <div class="visible-xs phm fl">|</div>
-                <div class="visible-xs fl"><%= distance %> miles</div>
-              <% end %>
             </div>
           </div>
         </div>
@@ -58,7 +54,7 @@
             <!-- Distance -->
             <div class="hidden-xs col-sm-4 mtl mbm font-size-xs">
               <div class="iconx24-icons i-24-new-grey_map_pin ma db vam"></div>
-              <span class="tac db"><%= distance %> miles</span>
+              <span class="tac db js-distance"><%= distance %> miles</span>
             </div>
             <% end%>
             <!-- GS Rating -->
@@ -96,13 +92,13 @@
       <div class="fl">
       <% if !school.community_rating.nil? && !school.review_count.nil? %>
         <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-        <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small' %>
+        <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
       <% else %>
-        <em>No Community Reviews</em>
+        <em class="js-reviewCount">No Community Reviews</em>
       <% end %>
       </div>
       <% if search_by_location? %>
-        <div class="fr"><%= distance %> miles</div>
+        <div class="fr js-distance"><%= distance %> miles</div>
       <% end %>
     </div>
 

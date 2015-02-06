@@ -16,14 +16,15 @@
   <% end %>
 </div>
 
-
 <div class="tac mtxl ptm">
+  <% show_review_text = school_reviews.present? &&  school_reviews.first.comments.present? &&
+          school_reviews.first.comments.strip.present? && school_reviews.first.status != 'a' %>
 
-  <% if school_reviews.present? &&  school_reviews.first.comments.present? %>
+  <% if show_review_text %>
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <%= link_to school_reviews_url(@school) do %>
-          <div class="gray-dark font-size-large">"<%=  truncate(school_reviews.first.comments,:length => 45,
-                                                                separator: ' ') %>"</div>
+          <div class="gray-dark font-size-large">"<%= truncate(school_reviews.first.comments,:length => 45,
+                                                                    separator: ' ') %>"</div>
       <% end %>
     </div>
   <% else %>

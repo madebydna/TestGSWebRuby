@@ -1,18 +1,31 @@
+<div class="row bg-white pvl <%= @display_morgan_stanley %>">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="oa tac ">
+      <img height="40px" src="<%= image_path('review_school_chooser/morganstanley.png')%>" alt="Morgan Stanley"><br />
+      Welcome Morgan Stanley employees, thank you for participating in 2015 Global Volunteer Month!</div>
+  </div>
+</div>
 <div class="dark-gray-bg pr">
-    <div class="image-bg-scale h500 oh">
+    <div class="image-bg-scale h500 oh" style="height:500px">
         <div class="img-container is-scaled"><!--not empty--></div>
     </div>
     <div class="limit-width-1200">
         <div class="absolute-center">
+
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="oa content-centered tac text_fff ">
-                        <h1 class="jumbo-header ts text_fff">You know your school best!</h1>
-                        <div class="subtitle-lg ts">Help others find their great school – rate and review yours now</div>
+                        <h1 class="jumbo-header ts text_fff">Review your school!</h1>
+                        <div class="subtitle-lg ts">Help others find their great school – You know your school best</div>
+                      <div class="subtitle-sm ptm" style="height:30px;">
+                        <a href="#" class="js-scoop_search_type_link js-scoop_search_type_div dn">Don't see your
+                          school?</a></div>
                     </div>
-                    <div class="search-bar-home ma ptl">
+
+                    <div class="search-bar-home ma ptn" id="scoop_text_select">
                         <%= render partial: 'nav/select_form' %>
                     </div>
+                    <%= render partial: 'shared/review_school_chooser/state_city_school_choose' %>
                 </div>
             </div>
         </div>

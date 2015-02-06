@@ -171,6 +171,9 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-photo').html($existingSchoolPhoto.clone());
         }
 
+        syncAttributesFromExistingResult($existingSearchResult, $listItem);
+
+        //Todo maybe this block into syncAttributesFromExistingResult?
         if (shouldCalculateFit()) {
             var $existingFitScorePopup = $existingSearchResult.find('.js-schoolFitScore').children();
             if ($existingFitScorePopup.size() > 0) {
@@ -197,6 +200,35 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             }
         } else {
             $listItem.show('slow');
+        }
+    };
+
+    var syncAttributesFromExistingResult = function($existingSearchResult, $listItem) {
+        syncDistance($existingSearchResult, $listItem);
+        syncReviewCount($existingSearchResult, $listItem);
+    };
+
+    var syncDistance = function($existingSearchResult, $listItem) {
+        var $distance = $existingSearchResult.find('.js-distance');
+        if ($distance.size() > 0) {
+            var text = $distance.first().text();
+            $listItem.find('.js-distance').html(text);
+        }
+    };
+
+    var syncReviewCount = function($existingSearchResult, $listItem) {
+        var $reviewCount = $existingSearchResult.find('.js-reviewCount');
+        if ($reviewCount.size() > 0) {
+            var text = $reviewCount.first().text();
+            if (text === "No Community Reviews") {
+                $listItem.find('.js-review-count').hide();
+                $listItem.find('.js-no-reviews').show();
+            } else {
+                var href = $reviewCount.first().attr('href');
+                $listItem.find('.js-review-count').html(text).attr('href', href);
+                $listItem.find('.js-no-reviews').hide();
+                $listItem.find('.js-review-count').show();
+            }
         }
     };
 

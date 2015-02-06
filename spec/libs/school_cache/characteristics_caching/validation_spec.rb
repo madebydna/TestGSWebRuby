@@ -57,6 +57,33 @@ describe CharacteristicsCaching::Validation do
            state_average: 0.0}]}
   }
 
+  let(:data_with_empty_values) {
+    {
+      'Ethnicity' => [
+        { year: 2012,
+          source: 'NCES',
+          breakdown: 'White',
+          school_value: 65.38,
+          state_average: 1.05
+        },
+        { year: 2012,
+          source: 'OSSE',
+          breakdown: 'Asian',
+          school_value: 4.86,
+          state_average: 12.15},
+        {
+          year: 2012,
+          source: 'OSSE',
+          breakdown: 'Hawaiian Native/Pacific Islander',
+          school_value: 0.0,
+          state_average: 0.0
+        }
+      ],
+      'Sat percent participation' => []
+    }
+  }
+
+
   let(:school) { FactoryGirl.build(:alameda_high_school) }
   let(:cacher) { CharacteristicsCaching::CharacteristicsCacher.new(school) }
 
@@ -72,6 +99,24 @@ describe CharacteristicsCaching::Validation do
     it 'should reject ethnicity data that does not add up to a reasonable percentage' do
       validated_data = cacher.validate!(low_sum_ethnicity_data)
       expect(validated_data).to eq({})
+    end
+  end
+
+  describe '#validate_format!' do
+    before { cacher.instance_variable_set(:@characteristics, data_with_empty_values) }
+    it 'should remove key/value pairs that have an empty array as a value' do
+      empty_key_value = data_with_empty_values.select {|k,v| v.empty?}
+      expect(data_with_empty_values).to include(empty_key_value)
+      cacher.validate_format!
+      validated_data = cacher.instance_variable_get(:@characteristics)
+      expect(validated_data).to_not include(empty_key_value)
+    end
+    it 'should not remove key/value pairs that have values' do
+      data_with_key_values = data_with_empty_values.select {|k,v| v.present?}
+      expect(data_with_empty_values).to include(data_with_key_values)
+      cacher.validate_format!
+      validated_data = cacher.instance_variable_get(:@characteristics)
+      expect(validated_data).to include(data_with_key_values)
     end
   end
 end

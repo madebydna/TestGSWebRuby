@@ -25,7 +25,11 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def school_value
-    data_set_with_values.school_value
+    # For now, escape census values that go into school cache, since they can come from user input
+    # School profiles potentially render these values in non-safe way
+    value = data_set_with_values.school_value
+    value = SafeHtmlUtils.html_escape_allow_entities(value) if value.is_a?(String)
+    value
   end
 
   def district_average

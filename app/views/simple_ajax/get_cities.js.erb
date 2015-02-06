@@ -1,0 +1,6 @@
+<% if @cities  %>
+    var city_select = $('#city_select');
+    city_select.html("<option value=\"\">Select city<\/option>\n<%= escape_javascript options_from_collection_for_select(@cities, :name, :name) %>");
+<% else %>
+    city_select.html("<option value=\"\">Select city<\/option>\n");
+<% end %>

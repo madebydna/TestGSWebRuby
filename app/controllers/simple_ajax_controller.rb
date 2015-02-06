@@ -33,4 +33,38 @@ class SimpleAjaxController < ApplicationController
     end
   end
 
+  def get_cities
+    state = params[:state]
+    @cities = City.popular_cities(state) if state.present?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_schools
+    state_param = params[:state]
+    city = params[:city]
+    state = States.abbreviation(state_param) if state_param.present?
+
+    @schools = School.within_city(state,city) if state.present? && city.present?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_school_and_forward
+    school_id = params[:school_id]
+    state = params[:state]
+
+    school = School.find_by_state_and_id(state,school_id)
+
+    if school.present?
+      redirect_to school_review_form_path(school)
+    else
+      render 'error/school_not_found', layout: 'error', status: 404
+    end
+  end
+
 end

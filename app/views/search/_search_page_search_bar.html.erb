@@ -3,10 +3,10 @@
   <div class="row ma limit-width-1200">
     <div class="row ptm">
       <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 plm">
+        <div class="col-sm-2 col-md-2 col-lg-2 plm">
           <%= render 'search/change_location', choose_state: @state[:long].titleize   %>
         </div>
-        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 prm mbm">
+        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 plm prm mbm">
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term %>"
