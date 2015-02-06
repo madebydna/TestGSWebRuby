@@ -95,6 +95,16 @@ $(function() {
     }
   });
 
+  $('.ga-track-link').on('click', function() {
+    // if google tracking has a value send to google on button click
+    var google_tracking_type = $(this).data('google-tracking-type');
+    var google_tracking_value = $(this).data('google-tracking-value');
+
+    if(google_tracking_type){
+      ga('send', 'event', 'button', 'click', google_tracking_type, google_tracking_value);
+    }
+  });
+
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');
     if($(this).html() == 'Close'){
