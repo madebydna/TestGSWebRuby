@@ -100,6 +100,7 @@ $(function() {
     var google_tracking_type = $(this).data('google-tracking-type');
     var google_tracking_value = $(this).data('google-tracking-value');
 
+
     if(google_tracking_type){
       ga('send', 'event', 'button', 'click', google_tracking_type, google_tracking_value);
     }
