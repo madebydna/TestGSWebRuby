@@ -14,12 +14,13 @@ module AdvertisingHelper
 
   private
 
-  class AdvertisingFormatterHelper
-    def self.formatted_gon_hash
+  module AdvertisingFormatterHelper
+    module_function
+    def formatted_gon_hash
       HashWithSetterCallback.new { |key, value| [key, format_ad_setTargeting(value)] }
     end
 
-    def self.format_ad_setTargeting(value)
+    def format_ad_setTargeting(value)
       value.to_s.delete(' ').slice(0,10)
     end
   end
