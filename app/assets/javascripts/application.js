@@ -17,6 +17,7 @@
 //= require wiselinks
 //= require dataTables/jquery.dataTables
 //= require_self
+//= require ./util/dependency_init
 //= require_tree ./util
 //= require_tree ./resources
 //= require_tree ./auth
@@ -29,13 +30,3 @@
 //= require_tree ./page_initializers/admin
 //= require_tree ./ads
 
-Function.prototype.gs_bind = function(obj) {
-    var method = this;
-    return function() {
-        return method.apply(obj, arguments);
-    };
-};
-
-window.gon = window.gon || {};
-
-window.GS = {};
