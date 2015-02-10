@@ -76,6 +76,30 @@ def generate_examples_from_hash(hash)
   end
 end
 
+def shared_example(name, &block)
+  params = block.parameters.map(&:last)
+  if params.present?
+    eval <<-HEREDOC
+      shared_examples_for '#{name}' do |#{params.join(',')}|
+        it '#{name}' do
+          instance_exec #{params.join(',')}, &block
+        end
+      end
+    HEREDOC
+  else
+    shared_examples_for name do
+      it name, &block
+    end
+  end
+end
+
+def with_shared_context(name, *args, &block)
+  describe name do
+    include_context name, *args
+    instance_exec &block
+  end
+end
+
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
