@@ -36,6 +36,7 @@ describe 'shared/_search_hero.html.erb' do
 
   context 'on a state page' do
     before(:each) do
+      pending('PT-1213:')
       allow(view).to receive(:state) { { short: 'IN', long: 'indiana' } }
       allow(view).to receive(:state_page) { true }
 

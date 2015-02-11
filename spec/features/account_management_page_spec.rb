@@ -22,7 +22,10 @@ feature 'Account management page' do
     include_context 'signed in verified user'
 
     scenario 'It displays change password link' do
-      expect(subject).to have_content('change password')
+      change_password_div = subject.first('div', text: /\AChange Password\z/)
+      expect(change_password_div).to be_present
+      expect(subject).to have_selector('form input[name=new_password]')
+      expect(subject).to have_selector('form input[name=confirm_password]')
     end
 
     context 'when user has approved osp membership' do
@@ -53,12 +56,14 @@ feature 'Account management page' do
       let!(:gs_subscription) {FactoryGirl.create(:subscription,list: 'greatnews',member_id: user.id)}
 
       scenario 'It should display subscriptions with pretty long_names names if subscription product is present otherwise just the name' do
+        pending('PT-1213: No longer applicable. Delete and make new spec coverage for account management page subscription functionality')
         expect(user.subscriptions.size).to eq(2)
         expect(subject).to have_content(Subscription.subscription_product('greatnews').long_name)
         expect(subject).to have_content('osp') #does not have a subscription product hardcoded, hence so long name
       end
 
       scenario 'user can unsubscribe ' do
+        pending('PT-1213: No longer applicable. Delete and make new spec coverage for account management page subscription functionality')
         expect do
           begin
             subject.within(".js-subscription-#{osp_subscription.id}") {click_on("Unsubscribe")}
