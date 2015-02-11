@@ -11,6 +11,7 @@ FactoryGirl.define do
 
     name 'Test category'
     category_datas { FactoryGirl.build_list(:category_data, 1, response_key: 'a_key', label: 'a label' ) }
+    # category_datas { FactoryGirl.build_list(:category_data, response_key: 'a_key', label: 'a label',json_config: JSON.unparse({"subject_id" => "4"}) ) }
 
     after(:create) do |category, evaluator|
       if evaluator.page

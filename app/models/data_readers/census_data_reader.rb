@@ -151,51 +151,6 @@ class CensusDataReader < SchoolProfileDataReader
     results
   end
 
-  #############################################################################
-  # Methods for actually building Hashes that view will consume
-
-  protected
-
-  # Returns Hash of data types to array of result hashes
-  #
-  # reader.build_hash_from_results({
-  #  "Climate: Effective Leaders - Overall" => [
-  #    +CensusDataSet+
-  #      {
-  #        :id => 176,
-  #        :year => 2013,
-  #        :grade => nil,
-  #        :data_type_id => 237,
-  #        :breakdown_id => nil,
-  #        :active => 1,
-  #        :level_code => "e,m,h",
-  #        :subject_id => nil,
-  #        :source => "CA Dept. of Education"
-  #      }
-  #  ]
-  # })                          #=> "Climate: Effective Leaders - Overall" => [
-  #                                     {
-  #                                       :breakdown => nil,
-  #                                       :school_value => 83.0,
-  #                                       :district_value => nil,
-  #                                       :state_value => nil,
-  #                                       :source => "CA Dept. of Education",
-  #                                       :year => 2011
-  #                                     }
-  #                                   ],
-  #                                 }
-  #
-  def build_data_type_descriptions_to_hashes_map(data_type_to_results_hash)
-    data = {}
-
-    data_type_to_results_hash.each do |key, results|
-      rows = results.compact
-      data[key] = rows
-    end
-
-    data
-  end
-
   ############################################################################
   # Methods for actually retrieving raw data. The "data reader" portion of this
   # class
