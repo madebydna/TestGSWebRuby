@@ -119,4 +119,15 @@ class CensusDataSet < ActiveRecord::Base
     census_data_breakdown.breakdown if census_data_breakdown
   end
 
+  def self.find_or_create_and_activate(shard, attributes)
+    # Attributes should not contain the active flag as the point of this method
+    # is to find/create a data set and activate it
+    data_set = self.on_db(shard)
+    .where(attributes)
+    .first_or_initialize
+
+    data_set.on_db(shard).update_attributes(active: 1)
+    data_set
+  end
+
 end

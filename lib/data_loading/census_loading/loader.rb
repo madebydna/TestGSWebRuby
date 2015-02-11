@@ -42,29 +42,22 @@ class CensusLoading::Loader < CensusLoading::Base
 
   def insert_into!(census_update)
 
-    data_set = CensusDataSet
-      .on_db(census_update.shard)
-      .where(census_update.data_set_attributes)
-      .first_or_initialize
-
-    validate_census_data_set!(data_set, census_update)
-    # TODO Uncomment the following lines when ready to have this write to the database
-    # data_set.on_db(census_update.shard).update_attributes(active: 1)
+    data_set = CensusDataSet.find_or_create_and_activate(census_update.shard, census_update.data_set_attributes)
+    # validate_census_data_set!(data_set, census_update)
 
     value_row = census_update.value_class
       .on_db(census_update.shard)
       .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
       .first_or_initialize
 
-    validate_census_value!(value_row, data_set, census_update)
-    # TODO Uncomment the following lines when ready to have this write to the database
-    # value_row.on_db(census_update.shard).update_attributes(
-    #   active: 1,
-    #   value_text: census_update.value_type == :value_text ? census_update.value : nil,
-    #   value_float: census_update.value_type == :value_float ? census_update.value : nil,
-    #   modified: Time.now,
-    #   modifiedBy: "Queue daemon. Source: #{source}"
-    # )
+    # validate_census_value!(value_row, data_set, census_update)
+    value_row.on_db(census_update.shard).update_attributes(
+      active: 1,
+      value_text: census_update.value_type == :value_text ? census_update.value : nil,
+      value_float: census_update.value_type == :value_float ? census_update.value : nil,
+      modified: Time.now,
+      modifiedBy: "Queue daemon. Source: #{source}"
+    )
 
   end
 
@@ -84,9 +77,8 @@ class CensusLoading::Loader < CensusLoading::Base
           .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
 
         value_rows.each do | value_row |
-          validate_census_value!(value_row, data_set, census_update)
-          # TODO Uncomment the following lines when ready to have this write to the database
-          # value_row.on_db(census_update.shard).update_attributes(active: 1)
+          # validate_census_value!(value_row, data_set, census_update)
+          value_row.on_db(census_update.shard).update_attributes(active: 1)
         end
       end
     end
