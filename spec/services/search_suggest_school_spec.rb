@@ -17,6 +17,11 @@ describe SearchSuggestSchool do
         'school_name' => 'My School',
         'school_id' => '1',
         'city' => 'Oakland'} }
+    let (:sample_result_need_url_encoding) do
+        sample_result['school_profile_path'] = '/####I_need_encoding_!@#$%^&'
+        sample_result
+    end
+
     it 'processes a sample result' do
       result = subject.process_result(sample_result)
       expect(result[:state]).to eq('CA')
@@ -33,6 +38,13 @@ describe SearchSuggestSchool do
       expect(result[:city_name]).to eq('Oakland')
       expect(result[:url]).to eq('/california/city/1-school')
     end
+
+    it 'should encode the school url' do
+      encoding_path = URI.encode(sample_result_need_url_encoding['school_profile_path'])
+      result = subject.process_result(sample_result_need_url_encoding)
+      expect(result[:url]).to eq (encoding_path)
+    end
+
     context 'PK subdomains' do
       it 'prepends for preschools' do
         sample_prek_result = sample_result.merge('school_grade_level' => %w(p preschool))
