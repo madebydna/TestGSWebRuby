@@ -7,15 +7,26 @@ describe CensusLoading::Loader do
 
   describe '#insert_into!' do
 
-    let(:data_type) { nil }
+    let(:data_type) { FactoryGirl.create(:census_data_type) }
     let(:loader) { CensusLoading::Loader.new(nil, nil, 'fake source') }
-    CensusUpdateStruct = Struct.new(:shard, :data_set_attributes, :entity_id_type, :entity_id, :value_type, :value, :value_class)
-    let(:data_set_attributes) { { data_type_id: 1 } }
-    let(:census_update) { CensusUpdateStruct.new(:ca, data_set_attributes, :school_id, 1, :value_float, 23, CensusDataSchoolValue) }
+    let(:school) { FactoryGirl.create(:school) }
+    let(:update) {
+      {
+          entity_state: 'CA',
+          source: 'CA Dept. of Fake',
+          entity_type: :school,
+          entity_id: school.id,
+          value: 23,
+      }
+    }
+    let(:census_update) { CensusLoading::Update.new(data_type, update) }
 
     after do
+      clean_models :ca, School
       clean_models :ca, CensusDataSet
       clean_models :ca, CensusDataSchoolValue
+      clean_models CensusDescription
+      clean_models CensusDataType
     end
 
     context 'data set' do
@@ -23,7 +34,26 @@ describe CensusLoading::Loader do
         @data_set = FactoryGirl.create(:census_data_set)
         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
         expect(CensusDataSet).to receive(:find_or_create_and_activate).with(census_update.shard, census_update.data_set_attributes)
-        loader.insert_into!(census_update)
+        loader.insert_into!(census_update, school)
+      end
+    end
+
+    context 'the census description row' do
+      it 'should be for the correct attributes' do
+        @data_set = FactoryGirl.create(:census_data_set)
+        allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
+        @census_description = FactoryGirl.create(:census_description)
+        allow(CensusDescription).to receive(:where).and_return(CensusDescription)
+        allow(CensusDescription).to receive(:first_or_create!).and_return(@census_description)
+        census_description_attributes = {
+            census_data_set_id: @data_set.id,
+            state: census_update.entity_state,
+            school_type: school.type,
+            source: census_update.source,
+            type: census_update.entity_type
+        }
+        expect(CensusDescription).to receive(:where).with(census_description_attributes)
+        loader.insert_into!(census_update, school)
       end
     end
 
@@ -31,7 +61,7 @@ describe CensusLoading::Loader do
       before do
         @data_set = FactoryGirl.create(:census_data_set)
         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
-        loader.insert_into!(census_update)
+        loader.insert_into!(census_update, school)
         @value_row = CensusDataSchoolValue.on_db(census_update.shard).last
       end
 

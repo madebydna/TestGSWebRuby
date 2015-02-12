@@ -5,8 +5,10 @@ class CensusLoading::Update
 
   attr_accessor :breakdown, :breakdown_id, :data_set_attributes, :data_type, :data_type_id,
                 :entity_id, :entity_id_type, :entity_state, :entity_type, :grade, :shard,
-                :state, :subject, :subject_id, :update_blob, :value, :value_class,
+                :state, :subject, :subject_id, :source, :update_blob, :value, :value_class,
                 :value_record_attributes, :value_type, :year, :action
+
+  DEFAULT_SOURCE = 'Manually entered by a school official'
 
   def initialize(data_type, update_blob)
     @data_type = data_type
@@ -25,6 +27,7 @@ class CensusLoading::Update
     self.entity_type = self.entity_type.to_s.downcase.to_sym
     @entity_id_type = "#{entity_type.downcase}_id".to_sym
     @value = SafeHtmlUtils.html_escape_allow_entities(@value) if @value.is_a?(String)
+    @source ||= DEFAULT_SOURCE
 
     unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
       @value_type = data_type.value_type
@@ -44,6 +47,14 @@ class CensusLoading::Update
             breakdown_id: convert_breakdown_to_id(breakdown) || breakdown_id,
             data_type_id: data_type.id
         }
+  end
+
+  def census_description_attributes
+    {
+        state: entity_state,
+        source: source,
+        type: entity_type
+    }
   end
 
   def validate_update
