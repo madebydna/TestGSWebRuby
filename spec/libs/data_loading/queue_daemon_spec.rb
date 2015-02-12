@@ -36,7 +36,6 @@ describe QueueDaemon do
       end
 
       it "should return #{num_of_high_priority_items} priority 2 items and #{queue_daemon_updates_limit - num_of_high_priority_items} priority 4 items" do
-        pending('PT-1213: TODO: Fix spec / code')
         updates = subject.get_updates
         updates = updates.group_by { |update| update.priority }
         expect(updates[2].count).to eq num_of_high_priority_items

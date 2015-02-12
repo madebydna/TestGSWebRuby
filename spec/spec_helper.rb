@@ -220,6 +220,7 @@ RSpec.configure do |config|
   end
 
   config.alias_it_should_behave_like_to :include_example, "it should behave like"
+  config.alias_it_should_behave_like_to :test_group, ''
 
   config.mock_with :rspec
 

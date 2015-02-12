@@ -50,6 +50,9 @@ describe StatesController do
   end
 
   describe 'GET guided_search' do
-    it_behaves_like 'a default state controller action', :guided_search
+    it 'renders an error page' do
+      get :guided_search, state: 'indiana'
+      expect(response).to redirect_to(state_url('indiana'))
+    end
   end
 end

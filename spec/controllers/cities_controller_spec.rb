@@ -19,7 +19,17 @@ describe CitiesController do
   end
 
   describe 'GET show' do
-    it_behaves_like 'a default cities controller action', :show
+    context 'without a hub city mapping' do
+      it 'renders an error page' do
+        get :show, state: 'michigan', city: 'foobarnotacity'
+        expect(response).to redirect_to(state_url('michigan'))
+      end
+    end
+
+    it 'sets canonical tags' do
+      get :show, state: 'michigan', city: 'detroit'
+      expect(assigns[:canonical_url]).to_not be_nil
+    end
   end
 
   describe 'GET events' do
