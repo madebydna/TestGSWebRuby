@@ -42,6 +42,28 @@ describe 'states' do
     end
   end
 
+  describe '#any_state_abbreviation_regex' do
+    it 'should match CA and be case-insensitive' do
+      expect(States.any_state_abbreviation_regex.match 'CA').to_not be_nil
+      expect(States.any_state_abbreviation_regex.match 'ca').to_not be_nil
+    end
+
+    it 'should match washington dc' do
+      expect(States.any_state_abbreviation_regex.match 'dc').to_not be_nil
+    end
+
+    it 'should not match junk' do
+      expect(States.any_state_abbreviation_regex.match 'foo').to be_nil
+      expect(States.any_state_abbreviation_regex.match '-').to be_nil
+      expect(States.any_state_abbreviation_regex.match ' ').to be_nil
+      expect(States.any_state_abbreviation_regex.match 'zz').to be_nil
+    end
+
+    it 'should not match a full state name' do
+      expect(States.any_state_abbreviation_regex.match 'california').to be_nil
+    end
+  end
+
   describe '.abbreviation' do
     context 'normal input' do
       it 'returns the abbreviation' do

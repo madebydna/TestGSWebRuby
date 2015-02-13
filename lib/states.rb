@@ -86,6 +86,13 @@ module States
     return Regexp.new regex, 'i'
   end
 
+  def self.any_state_abbreviation_regex
+    regex = '\A'
+    regex << state_hash.values.join('\z|\A')
+    regex << '\z'
+    return Regexp.new regex, 'i'
+  end
+
   def self.abbreviations
     abbreviation_hash.keys.sort
   end

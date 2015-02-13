@@ -89,6 +89,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
+    get '/status/error404.page'
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -249,6 +250,15 @@ LocalizedProfiles::Application.routes.draw do
       get 'reviews/write', to: 'reviews#new', as: :review_form
       get '', to: 'school_profile_overview#overview'
     end
+
+    # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
+    get '/school/overview.page', to: redirect { |params, request|
+          if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
+            "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
+          else
+            '/status/error404.page'
+          end
+        }
   end
 
   # Handle preschool URLs
