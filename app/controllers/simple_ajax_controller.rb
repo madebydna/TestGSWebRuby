@@ -49,6 +49,8 @@ class SimpleAjaxController < ApplicationController
 
     @schools = School.within_city(state,city) if state.present? && city.present?
 
+    @schools.to_a.sort_by!(&:name) if @schools.present?
+
     respond_to do |format|
       format.js
     end
