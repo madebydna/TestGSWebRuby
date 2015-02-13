@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/140602-16x16_sprite.png");
+  background-image: asset_data_url("icons/142502-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -21,6 +21,10 @@
 
 .i-16-heart {
   background-position: -16px 0px;
+}
+
+.i-16-heart-hover {
+  background-position: -16px -16px;
 }
 
 .i-16-envelop {
@@ -52,6 +56,10 @@
 }
 .i-16-thought-bubble {
   background-position: -144px 0px;
+}
+
+.i-16-thought-bubble-hover {
+  background-position: -144px -16px;
 }
 
 .i-16-did-you-know {
@@ -110,7 +118,7 @@
   background-position: -256px 0px;
 }
 
-.i-16-gray-thumbs-up {
+.i-16-blue-thumbs-up {
   background-position: -272px 0px;
 }
 
@@ -150,12 +158,12 @@
   background-position: -400px 0px;
 }
 
-.i-16-green-check-bigger {
-  background-position: -416px 0px;
+.i-16-check-bigger-on {
+  background-position: -416px -16px;
 }
 
-.i-16-gray-check-bigger {
-  background-position: -416px -16px;
+.i-16-check-bigger-off {
+  background-position: -416px 0px;
 }
 
 .i-16-blue-x-circle {
@@ -190,34 +198,10 @@
   background-position: -512px 0px;
 }
 
-.i-16-blue-pencil {
+.i-16-blue-home {
   background-position: -528px 0px;
 }
 
-.i-16-blue-pencil-focus {
-  background-position:  -528px -16px;
-}
-
-.i-16-blue-heart {
-  background-position: -544px 0px;
-}
-
-.i-16-blue-heart-focus {
-  background-position: -544px -16px;
-}
-
-.i-16-blue-thought-bubble{
-  background-position: -560px 0px;
-}
-
-.i-16-blue-thought-bubble-focus{
-  background-position: -560px -16px;
-}
-
-.i-16-blue-home {
-  background-position: -576px 0px;
-}
-
 .i-16-blue-home-focus {
-  background-position: -576px -16px;
+  background-position: -5284px -16px;
 }

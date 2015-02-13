@@ -193,13 +193,13 @@ GS.reviews = GS.reviews || function($) {
         obj.data('helpful_id', helpful_id);
 
         var icon_object = obj.find(".iconx16");
-        var button_icon_off = 'i-16-gray-thumbs-up';
+        var button_icon_off = 'i-16-blue-thumbs-up';
         var button_icon_on = 'i-16-white-thumbs-up';
         var button_bg_color_class = 'bg-brand-primary';
 
         if(icon_object.hasClass(button_icon_on)){
           var button_icon_off = 'i-16-white-thumbs-up';
-          var button_icon_on = 'i-16-gray-thumbs-up';
+          var button_icon_on = 'i-16-blue-thumbs-up';
           var button_bg_color_class = '';
         }
 
