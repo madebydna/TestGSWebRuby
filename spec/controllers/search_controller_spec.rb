@@ -84,4 +84,71 @@ describe SearchController do
       end
     end
   end
+
+  describe '#radius_param' do
+    [
+        ['when given radius below minimum', '0', 1],
+        ['when given radius above maximum', '120', 60],
+        ['when given non-numeric radius', 'foobar', 5],
+        ['when given no radius', nil, 5],
+    ].each do |context, input_string, expected_value|
+      context "#{context}" do
+        if input_string.nil?
+          let (:params) { {} }
+        else
+          let (:params) { {'distance' => input_string} }
+        end
+
+        before do
+          allow(controller).to receive(:params_hash).and_return(params)
+        end
+
+        it "should return #{expected_value}" do
+          expect(controller.send(:radius_param)).to eq(expected_value)
+        end
+
+        it 'should cast to Integer' do
+          expect(controller.send(:radius_param)).to be_kind_of(Integer)
+        end
+
+        it 'should record the value actually applied' do
+          expect(controller).to receive(:record_applied_filter_value).with('distance', expected_value)
+          controller.send(:radius_param)
+        end
+      end
+    end
+
+    context 'when given valid radius' do
+      let (:params) { {'distance' => '15'}}
+
+      before do
+        allow(controller).to receive(:params_hash).and_return(params)
+      end
+
+      it 'should return the param supplied' do
+        expect(controller.send(:radius_param)).to eq(15)
+      end
+
+      it 'should cast to Integer' do
+        expect(controller.send(:radius_param)).to be_kind_of(Integer)
+      end
+
+      it 'should not record the value actually applied' do
+        expect(controller).to_not receive(:record_applied_filter_value)
+        controller.send(:radius_param)
+      end
+    end
+  end
+
+  describe '#record_applied_filter_value' do
+    it 'Accepts key/value mappings' do
+      controller.gon.search_applied_filter_values = nil
+      controller.send(:record_applied_filter_value, 'distance', 5) # verify it initializes the hash
+      controller.send(:record_applied_filter_value, 'aroy', 'foo') # verify it adds to the hash
+      controller.send(:record_applied_filter_value, 'aroy2', 'bar')
+      expect(controller.gon.search_applied_filter_values['distance']).to eq(5)
+      expect(controller.gon.search_applied_filter_values['aroy']).to eq('foo')
+      expect(controller.gon.search_applied_filter_values['aroy2']).to eq('bar')
+    end
+  end
 end
