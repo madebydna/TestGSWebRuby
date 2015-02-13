@@ -42,7 +42,7 @@ class CitiesController < ApplicationController
   def city_home
     gon.pagename = 'GS:City:Home'
     @ad_page_name = 'City_Page'.to_sym
-    @city_object = City.where(name: @city, state: @state[:short]).first
+    @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
     if @city_object.blank? && @state.present?
       return redirect_to state_url

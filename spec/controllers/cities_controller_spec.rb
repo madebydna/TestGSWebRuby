@@ -32,6 +32,19 @@ describe CitiesController do
     end
   end
 
+  describe 'Get city_home' do
+    before { clean_models :us_geo, City }
+    after { clean_models :us_geo, City }
+    it 'should redirect to the state page if a deactivated city is requested' do
+      city = FactoryGirl.create(:city, active: 0)
+      allow_any_instance_of(CitiesController).to receive(:set_hub).and_return(nil)
+      state_name = States.state_name(city.state)
+
+      get :show, state: state_name, city: city.name
+      expect(response).to redirect_to(state_url(state_name))
+    end
+  end
+
   describe 'GET events' do
     it_behaves_like 'a default cities controller action', :events
   end
