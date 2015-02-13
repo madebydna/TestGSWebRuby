@@ -303,6 +303,23 @@ describe FilterBuilder do
         assert_filter_structure(filter_map, index)
       end
     end
+     context 'in Washington, DC' do
+      let (:filters) { FilterBuilder.new('DC', 'Washington', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          does_not_contain: [:cgr]
+        },
+        { panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:school_focus, :enrollment],
+          does_not_contain: [:class_offerings]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
 
   end
 

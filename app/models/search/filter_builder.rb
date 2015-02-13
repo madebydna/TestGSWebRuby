@@ -79,6 +79,9 @@ class FilterBuilder
             },
             wi: {
                 milwaukee: add_vouchers_callbacks
+            }.stringify_keys!,
+            dc: {
+                washington: add_vouchers_callbacks
             }.stringify_keys!
         }
     ).stringify_keys!
