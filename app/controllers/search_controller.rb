@@ -257,7 +257,7 @@ class SearchController < ApplicationController
 
   def radius_param
     @radius = params_hash['distance'].presence || DEFAULT_RADIUS
-    @radius = Integer(radius) rescue @radius = DEFAULT_RADIUS
+    @radius = Integer(@radius) rescue @radius = DEFAULT_RADIUS
     @radius = MAX_RADIUS if @radius > MAX_RADIUS
     @radius = MIN_RADIUS if @radius < MIN_RADIUS
     record_applied_filter_value('distance', @radius) unless "#{@radius}" == params_hash['distance']
