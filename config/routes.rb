@@ -106,6 +106,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/style-guide/', to: 'style_guide#index'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
+    get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
