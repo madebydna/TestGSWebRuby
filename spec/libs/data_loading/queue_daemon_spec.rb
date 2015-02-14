@@ -20,7 +20,8 @@ describe QueueDaemon do
     low_priority_item  = {source: :osp, status: :todo, priority: 4, update_blob: "{\"osp\":[{\"entity_state\":\"IN\",\"action\":\"build_cache\",\"entity_id\":\"3035\",\"entity_type\":\"school\"}]}"}
 
     context "when there are #{num_of_high_priority_items} priority 2 and #{num_of_low_priority_items} priority 4 items in the update queue" do
-      before(:all) do
+      before do
+        clean_models UpdateQueue
         UpdateQueue.create(num_of_low_priority_items.times.map  { low_priority_item  })
         UpdateQueue.create(num_of_high_priority_items.times.map { high_priority_item })
       end
