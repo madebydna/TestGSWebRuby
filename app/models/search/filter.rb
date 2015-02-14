@@ -25,6 +25,7 @@ class Filter
         map = f.build_map.inject({}) do |h, (k, v)|
           hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}) ; hash
         end
+        map[name] ||= {} # This allows for sections to not all be for the same key
         [*f.name].each { |name| map[name].merge!({label: f.label}) } if f.display_type == :title ; map
       end
     else

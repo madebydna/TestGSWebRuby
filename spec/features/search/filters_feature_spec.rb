@@ -7,7 +7,7 @@ feature 'Search filters submission', js: true do
 
   context 'when selecting a regular checkbox filter' do
     hard_filters = { 'st[]' => :public }
-    soft_filters = { 'class_offerings[]' => :ap, 'school_focus[]' => :waldorf }
+    soft_filters = { 'class_offerings[]' => :ap, 'school_focus[]' => :waldorf, 'beforeAfterCare[]' => :before }
 
     [hard_filters, soft_filters].each do |filters|
       filters.each do |name, value|

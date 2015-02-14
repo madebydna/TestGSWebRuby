@@ -288,13 +288,13 @@ class FilterBuilder
                 public_transit: {label: 'Near public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
               }
             },
-            beforeAfterCare: {
-              label: 'Before/After Care',
+            extendedHours: {
+              label: 'Extended hours',
               display_type: :title,
-              name: :beforeAfterCare,
+              name: :extendedHours,
               filters: {
-                before: {label: 'Before school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
-                after: {label: 'After school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
+                before: {label: 'Before school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
+                after: {label: 'After school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
             }
           })
