@@ -3,6 +3,7 @@ require 'spec_helper'
 describe UserProfile do
 
   describe '#created' do
+    before { clean_models User, UserProfile }
     after { clean_models User, UserProfile }
     let(:user) { FactoryGirl.build(:verified_user) }
 
@@ -28,6 +29,7 @@ describe UserProfile do
   end
 
   describe '#updated' do
+    before { clean_models User, UserProfile }
     after { clean_models User, UserProfile }
     let(:user) { FactoryGirl.build(:verified_user) }
 
