@@ -89,9 +89,12 @@ describe FilterBuilder do
         end
       end
       context 'should contain advanced filters' do
-        {transportation: 'transportation', beforeAfterCare: 'before/after care'}.each do |k,v|
-          it "like #{v}" do
+        {transportation: 'Transportation options', beforeAfterCare: 'Before/After Care'}.each do |k,v|
+          it "like #{k}" do
             expect(group1_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group1_filters[k][:label]).to eq(v)
           end
         end
       end
@@ -102,9 +105,12 @@ describe FilterBuilder do
       end
       let (:group2_filters) {filters_hash[:filters][:group2][:filters]}
       context 'should contain advanced filters' do
-        {dress_code: 'dress code', class_offerings: 'class offerings', sports: 'sports'}.each do |k,v|
-          it "like #{v}" do
+        {dress_code: 'Dress code', class_offerings: 'Class Offering', sports: 'Sports'}.each do |k,v|
+          it "like #{k}" do
             expect(group2_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group2_filters[k][:label]).to eq(v)
           end
         end
       end
@@ -115,9 +121,12 @@ describe FilterBuilder do
       end
       let (:group3_filters) {filters_hash[:filters][:group3][:filters]}
       context 'should contain advanced filters' do
-        {school_focus: 'school focus'}.each do |k,v|
-          it "like #{v}" do
+        {school_focus: 'School Focus'}.each do |k,v|
+          it "like #{k}" do
             expect(group3_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group3_filters[k][:label]).to eq(v)
           end
         end
       end
