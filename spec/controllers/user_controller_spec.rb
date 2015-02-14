@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe UserController do
+  before do
+    clean_models User, StudentGradeLevel
+  end
 
   describe '#email_available' do
     let(:email_address) { 'blah@host.com'}
