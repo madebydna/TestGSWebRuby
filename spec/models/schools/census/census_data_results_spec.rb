@@ -97,7 +97,7 @@ sets with null breakdowns' do
 
     before(:each) do
       allow(census_data_set_1).to receive(:census_data_type) do
-        FactoryGirl.build(:census_data_type, description: 'test description')
+        FactoryGirl.build(:census_data_type, id: 9, description: 'test description')
       end
       allow(census_data_set_2).to receive(:census_data_type) do
         FactoryGirl.build(:census_data_type, id: 10)
