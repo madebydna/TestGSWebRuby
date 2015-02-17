@@ -525,7 +525,7 @@
     }
   }
 }
-@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
+@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $active_border:"") {
   color: $color;
   background-color: $background;
   border-color: $border;
@@ -545,13 +545,9 @@
   &:active,
   &.active {
     background-image: none;
-    background-color: #195074;
-//    background-color: #FFFFFF;
-    color:#FFFFFF;
-    border-color: #195074;
-
-
-
+    background-color: $active_border;
+    color: $background_active;
+    border-color: $active_border;
   }
   .open & { &.dropdown-toggle {
     background-image: none;
