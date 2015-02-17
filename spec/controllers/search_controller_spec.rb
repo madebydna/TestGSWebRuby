@@ -7,6 +7,14 @@ describe SearchController do
     end
   end
 
+  describe '::SOFT_FILTER_KEYS' do
+    %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program).each do |key|
+      it "should have #{key}" do
+        expect(SearchController::SOFT_FILTER_KEYS).to include(key)
+      end
+    end
+  end
+
   describe '#parse_filters' do
 
     context 'when on district browse and there is matching hub' do

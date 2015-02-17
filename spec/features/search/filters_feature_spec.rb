@@ -132,4 +132,39 @@ feature 'Search filters submission', js: true do
       end
     end
   end
+
+  context 'Bay Area-specific filters' do
+    soft_filters = { 'summer_program[]' => :yes }
+    [soft_filters].each do |filters|
+      filters.each do |name, value|
+        context "clicking the #{name} filter" do
+          let(:checkbox_xpath) { filters_checkbox_xpath(name, value) }
+
+          ['Oakland', 'San Francisco'].each do |city|
+            context "in #{city}" do
+              before do
+                set_up_city_browse('ca', city)
+                open_full_filter_dialog
+                checkbox = page.all(:xpath, checkbox_xpath).last
+                checkbox.click
+                submit_filters
+                open_full_filter_dialog
+                page
+              end
+
+              it 'should still be clicked after page load' do
+                checkbox = page.all(:xpath, checkbox_xpath).last
+                expect(checkbox[:class]).to include('i-16-blue-check-box')
+              end
+
+              it 'should alter the url' do
+                param = encode_square_brackets("#{name}=#{value}")
+                expect(current_url).to include(param)
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end

@@ -82,6 +82,10 @@ class FilterBuilder
             }.stringify_keys!,
             dc: {
                 washington: add_vouchers_callbacks
+            }.stringify_keys!,
+            ca: {
+                oakland: summer_programs_callbacks,
+                'san francisco' => summer_programs_callbacks
             }.stringify_keys!
         }
     ).stringify_keys!
@@ -172,6 +176,29 @@ class FilterBuilder
                             filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
                         }
                     }
+                }
+        }
+    ]
+  end
+
+  def summer_programs_callbacks
+    [
+        {
+            callback_type: 'cache_key',
+            options: {
+                value: 'summer_programs',
+                version: 1
+            }
+        },
+        {
+            conditions:
+                [
+                    {key: 'name', match: 'beforeAfterCare'}, {key: 'value', match: 'after'}
+                ],
+            callback_type: 'insert_after',
+            options:
+                {
+                    summer: {label: 'Summer program', display_type: :basic_checkbox, name: :summer_program, value: :yes}
                 }
         }
     ]

@@ -218,6 +218,9 @@ describe FilterBuilder do
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
         end
+        it 'should not have the summer programs filter' do
+          expect(filters.filters[0].filters.last.filters.find{ |el| el.name == :summer_program }).to be_nil
+        end
       end
     end
     context 'in Indiana' do
@@ -329,7 +332,28 @@ describe FilterBuilder do
         assert_filter_structure(filter_map, index)
       end
     end
-
+    ['Oakland', 'San Francisco'].each do |city|
+      context "in #{city}, CA" do
+        let(:filters) { FilterBuilder.new('CA', city, false).filters }
+        [ { panel: 1,
+            contains: [:grades, :distance, :st, :transportation, :extendedHours],
+            does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
+          },
+          {panel: 2,
+           contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+           does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
+          },
+          {panel: 3,
+           contains: [:school_focus],
+           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+          }].each_with_index do |filter_map, index|
+          assert_filter_structure(filter_map, index)
+        end
+        it 'should have the summer programs filter' do
+          expect(filters.filters[0].filters.last.filters.find{ |el| [el.name, el.value] == [:summer_program, :yes] }).to_not be_nil
+        end
+      end
+    end
   end
 
   describe '#cache_key' do
