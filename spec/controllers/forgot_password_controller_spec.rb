@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ForgotPasswordController do
 
+  before do
+    clean_models User
+  end
+
   after do
     clean_models User
   end
