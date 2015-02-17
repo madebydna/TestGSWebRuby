@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SchoolRating do
   after do
-    clean_dbs :surveys
+    clean_dbs :surveys, :gs_schooldb
   end
 
   let(:review) { FactoryGirl.build(:valid_school_rating) }
