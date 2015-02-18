@@ -305,6 +305,9 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var capitalizeState = function(name) {
+            if (name === "washington dc") {
+                return "Washington DC";
+            }
             return name.replace(/(?:^|\s)\S/g, function(c) { return c.toUpperCase(); });
         };
 
