@@ -18,16 +18,18 @@ $(function() {
   });
 
   $('.js-scoop_search_type_link').on('click', function(event){
-    current_text = $(this).text();
-    if(current_text === $(this).data('cta-text')){
-      $(this).text($(this).data('return-text'));
+    var show_drop_downs_text = $('#js_show_drop_downs_text').text().trim();
+    var show_input_box_text = $('#js_show_input_box_text').text().trim();
+    if($(this).data('cta-text-toggle') === "show drop downs"){
+      $(this).text(show_input_box_text);
+      $(this).data('cta-text-toggle',"show text box");
       $('#scoop_text_select').addClass('dn');
       $('#scoop_state_city_school_select').removeClass('dn');
     }else{
-      $(this).text($(this).data('cta-text'));
+      $(this).text(show_drop_downs_text);
+      $(this).data('cta-text-toggle',"show drop downs");
       $('#scoop_text_select').removeClass('dn');
       $('#scoop_state_city_school_select').addClass('dn');
     }
-
   });
 });
