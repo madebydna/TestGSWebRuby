@@ -9,7 +9,6 @@ class SchoolCompareDecorator < Draper::Decorator
 
   include GradeLevelConcerns
   include RatingsIconConcerns
-  include SchoolTypeConcerns
   include FitScoreConcerns
   include SubscriptionConcerns
 

@@ -3,7 +3,6 @@ class SchoolProfileDecorator < Draper::Decorator
   delegate_all
 
   include GradeLevelConcerns
-  include SchoolTypeConcerns
 
   def link_to_overview(*args, &blk)
     h.link_to h.school_path(school), *args, &blk
