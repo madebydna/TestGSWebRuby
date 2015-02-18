@@ -50,6 +50,8 @@ class SchoolCacheResults
         CachedProgressBarMethods
       when 'test_scores'
         CachedTestScoresMethods
+      when 'nearby_schools'
+        CachedNearbySchoolsMethods
     end
   end
 
