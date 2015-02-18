@@ -6,6 +6,7 @@ class ReviewSchoolChooserController < ApplicationController
   def morgan_stanley
     write_tags_and_gon
     @display_morgan_stanley = ''
+    gon.morganstanley = "morganstanley"
     render 'show'
   end
 

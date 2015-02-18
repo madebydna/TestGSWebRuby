@@ -25,23 +25,27 @@ $(function() {
   });
 
   $('#state_select').on('change', function() {
+    $('.js-cityListLoader').removeClass( "dn" );
     $.ajax({
       type: 'GET',
       url: "/gsr/ajax/get_cities",
       data: {state: $('#state_select').val()},
       async: true
     }).done(function() {
+      $('.js-cityListLoader').addClass( "dn" );
       $('.js-cityList').removeClass( "dn" );
     });
   });
 
   $('#city_select').on('change', function() {
+    $('.js-schoolListLoader').removeClass( "dn" );
     $.ajax({
       type: 'GET',
       url: "/gsr/ajax/get_schools",
       data: {state: $('#state_select').val(), city: $('#city_select').val()},
       async: true
     }).done(function() {
+      $('.js-schoolListLoader').addClass( "dn" );
       $('.js-schoolList').removeClass( "dn" );
     });
   });

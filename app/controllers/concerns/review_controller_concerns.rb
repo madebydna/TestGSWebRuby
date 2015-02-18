@@ -6,6 +6,11 @@ module ReviewControllerConcerns
   protected
 
   def save_review(current_user, review_params)
+    if review_params[:morganstanley].present?
+      current_user.how = 'morganstanley'
+      current_user.save
+      review_params.except!(:morganstanley)
+    end
     review, error = update_existing_review(current_user, review_params)
     return review, error if review || error
 
