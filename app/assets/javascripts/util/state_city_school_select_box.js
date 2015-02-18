@@ -7,7 +7,13 @@ GS.stateCitySchoolSelectBox = GS.stateCitySchoolSelectBox || (function() {
         url: "/gsr/ajax/get_cities",
         data: {state: $('#state_select').val()},
         async: true
-      }).done(function() {
+      }).done(function(data) {
+        var city_select = $('#city_select');
+        city_select.find('option').remove();
+        city_select.append('<option value="">'+'Select city'+'</option>');
+        for(i=0; i < data.length; i++){
+          city_select.append('<option value="'+data[i]+'">'+data[i]+'</option>');
+        }
         $('.js-cityList').removeClass( "dn" );
       });
     });
@@ -20,7 +26,13 @@ GS.stateCitySchoolSelectBox = GS.stateCitySchoolSelectBox || (function() {
         url: "/gsr/ajax/get_schools",
         data: {state: $('#state_select').val(), city: $('#city_select').val()},
         async: true
-      }).done(function() {
+      }).done(function(data) {
+        var school_select = $('#school_select');
+        school_select.find('option').remove();
+        school_select.append('<option value="">'+'Select school'+'</option>');
+        for(i=0; i < data.length; i++){
+          school_select.append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+        }
         $('.js-schoolList').removeClass( "dn" );
       });
     });
