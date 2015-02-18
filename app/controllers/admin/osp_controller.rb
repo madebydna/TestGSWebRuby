@@ -16,9 +16,10 @@ class Admin::OspController <  ApplicationController
          render 'osp/osp_extracurricular_culture'
        elsif params[:page] == '4'
          render 'osp/osp_facilities_staff'
+       else
+         redirect_to my_account_url
        end
 
-       # render 'osp/osp_academics'
      else
       redirect_to my_account_url
      end
