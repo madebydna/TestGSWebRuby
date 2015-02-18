@@ -161,13 +161,16 @@
 .i-16-blue-world-languages {
   background-position: -400px 0px;
 }
-
 .i-16-check-bigger-on {
   background-position: -416px -16px;
 }
 
 .i-16-check-bigger-off {
   background-position: -416px 0px;
+}
+
+.btn:hover .i-16-check-bigger-off {
+  background-position: -416px -16px;
 }
 
 .i-16-blue-x-circle {
