@@ -68,9 +68,10 @@
 .btn-default {
   @include button-default-variant($btn-default-color, $btn-default-bg, $btn-default-color, $btn-default-bg, $btn-default-hover, $btn-default-hover, $btn-default-active-border);
 }
-//.btn-primary {
-//  @include button-primary-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $btn-primary-bg, '#FFFFFF');
-//}
+
+.btn-toggle {
+  @include button-toggle-variant($btn-toggle-color, $btn-toggle-bg, $btn-toggle-border, $btn-toggle-bg-active, $btn-toggle-color-active, $btn-toggle-border, $btn-toggle-bg-hover)
+}
 // Warning appears as orange
 .btn-warning {
   @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border, $btn-warning-bg, $btn-warning-color);

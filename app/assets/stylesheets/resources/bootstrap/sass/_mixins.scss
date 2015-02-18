@@ -534,7 +534,7 @@
   &:hover,
   &:focus {
     color: $active_color;
-    background-color: $btn-default-bg;
+    background-color: $background;
         border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
@@ -562,6 +562,47 @@
     &.active {
       background-color: $background;
           border-color: $border;
+    }
+  }
+}
+
+@mixin button-toggle-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $hover_background:"") {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  border-bottom-width: 3px;
+
+  &:hover
+  {
+    color: $color;
+    background-color: $hover_background;
+    border-color: $hover_border;
+  }
+  .open & { &.dropdown-toggle {
+    color: $color;
+    background-color: color-button-darken($background);
+    border-color: color-button-darken($border);
+  } }
+  &:active,
+  &.active {
+    background-image: none;
+    background-color: $background_active;
+    color: $active_color;
+    border-color: $background_active;
+  }
+  .open & { &.dropdown-toggle {
+    background-image: none;
+  } }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+      border-color: $border;
     }
   }
 }
