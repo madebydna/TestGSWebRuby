@@ -77,4 +77,23 @@ describe 'states' do
       end
     end
   end
+
+  describe '.abbr_to_label' do
+    context 'normal input' do
+      it 'returns the capitalized state' do
+        expect(States.abbr_to_label('mi')).to eq('Michigan')
+      end
+    end
+
+    context 'gibberish input' do
+      it 'returns nil' do
+        expect(States.abbr_to_label('df')).to eq(nil)
+      end
+    end
+    context 'dc as input' do
+      it 'returns Washington DC' do
+        expect(States.abbr_to_label('dc')).to eq('Washington DC')
+      end
+    end
+  end
 end
