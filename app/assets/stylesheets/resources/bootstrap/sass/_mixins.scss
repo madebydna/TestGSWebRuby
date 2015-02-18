@@ -534,7 +534,7 @@
   &:hover,
   &:focus {
     color: $active_color;
-    background-color: color-button-background($background, $background_active);
+    background-color: $btn-default-bg;
         border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
