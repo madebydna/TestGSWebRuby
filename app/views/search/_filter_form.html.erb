@@ -12,7 +12,11 @@
     <% lam.call(@filters) %>
   <% end %>
 
-  <% if @params_hash['state'].present?%><input type="hidden" name="state" value=<%=@params_hash['state']%>><%end%>
-  <% if @params_hash['city'].present?%><input type="hidden" name="city" value=<%=@params_hash['city']%>><%end%>
+  <% if @params_hash['state'].present? %>
+    <%= hidden_field_tag(:state, @params_hash['state'], id: nil) %>
+  <%end%>
+  <% if @params_hash['city'].present? %>
+    <%= hidden_field_tag(:city, @params_hash['city'], id: nil) %>
+  <%end%>
 
 </form>
