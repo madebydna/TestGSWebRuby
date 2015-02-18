@@ -34,7 +34,7 @@ describe SimpleAjaxController do
   end
 
   describe '#get_schools' do
-    let(:schools) { [FactoryGirl.build(:alameda_high_school,id:3),FactoryGirl.build(:bay_farm_elementary_school,id:4)] }
+    let(:schools) { [FactoryGirl.build(:alameda_high_school,id:3),FactoryGirl.build(:bay_farm_elementary_school,id:3)]}
 
     before(:each) do
       allow(School).to receive(:within_city).and_return(schools)
@@ -50,23 +50,19 @@ describe SimpleAjaxController do
       expect(JSON.parse(response.body)).to be_empty
     end
 
-    # it 'should respond to javascript format' do
-    #   xhr :get,  :get_schools, state: 'sc', city: 'columbia'
-    #   expect(response.content_type).to eq(Mime::JSON)
-    # end
-    #
-    # it 'should get a list of schools in the city, state.' do
-    #   state = 'sc'
-    #   city = 'columbia'
-    #
-    #   allow(School).to receive(:within_city).with(state,city).and_return(schools)
-    #   # expect(School).to receive(:within_city).with(state,city).and_return(schools)
-    #   # expect(schools).to receive(:to_a).and_call_original
-    #   # expect(schools).to receive(:sort_by).and_call_original
-    #
-    #   xhr :get,  :get_schools, state: state, city: city
-    #   expect(response.body).to_not be_emtpy
-    # end
+    it 'should respond to javascript format' do
+      xhr :get,  :get_schools, state: 'ca', city: 'columbia'
+      expect(response.content_type).to eq(Mime::JSON)
+    end
+
+    it 'should get a list of schools in the city, state.' do
+      state = 'ca'
+      city = 'columbia'
+
+      expect(School).to receive(:within_city).and_return(schools)
+      xhr :get,  :get_schools, state: state, city: city
+      expect(JSON.parse(response.body)).to eq([{"id"=>3, "name"=>"Alameda High School"}, {"id"=>3, "name"=>"Bay Farm Elementary School"}])
+    end
 
   end
 

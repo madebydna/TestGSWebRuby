@@ -51,7 +51,7 @@ class SimpleAjaxController < ApplicationController
     state = States.abbreviation(state_param) if state_param.present?
 
     @schools = School.within_city(state,city) if state.present? && city.present?
-    response = @schools.select([:id, :name]) if @schools.present?
+    response = @schools.to_a.map { |school| {id:school.id, name: school.name} }
 
     respond_to do |format|
       format.json { render json: response}
