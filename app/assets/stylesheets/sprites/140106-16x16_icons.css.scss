@@ -23,7 +23,7 @@
   background-position: -16px 0px;
 }
 
-.i-16-heart-hover {
+.btn:hover .i-16-heart{
   background-position: -16px -16px;
 }
 
@@ -33,6 +33,10 @@
 
 .i-16-pencil {
   background-position: -48px 0px;
+}
+
+.btn:hover .i-16-pencil {
+  background-position: -48px -16px;
 }
 
 .i-16-phone {
@@ -58,7 +62,7 @@
   background-position: -144px 0px;
 }
 
-.i-16-thought-bubble-hover {
+.btn:hover .i-16-thought-bubble {
   background-position: -144px -16px;
 }
 
@@ -202,6 +206,6 @@
   background-position: -528px 0px;
 }
 
-.i-16-blue-home-focus {
-  background-position: -5284px -16px;
+.btn:hover .i-16-blue-home {
+  background-position: -528px -16px;
 }
