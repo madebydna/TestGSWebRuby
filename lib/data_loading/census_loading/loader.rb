@@ -57,7 +57,7 @@ class CensusLoading::Loader < CensusLoading::Base
       value_text: census_update.value_type == :value_text ? census_update.value : nil,
       value_float: census_update.value_type == :value_float ? census_update.value : nil,
       modified: Time.now,
-      modifiedBy: "Queue daemon. Source: #{source}"
+      modifiedBy: source
     )
 
   end

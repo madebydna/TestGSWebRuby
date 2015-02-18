@@ -82,7 +82,7 @@ describe CensusLoading::Loader do
       end
 
       it 'should have the correct modifiedBy' do
-        expect(@value_row.modifiedBy).to eq('Queue daemon. Source: fake source')
+        expect(@value_row.modifiedBy).to eq('fake source')
       end
     end
   end
