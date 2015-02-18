@@ -264,4 +264,9 @@ module ApplicationHelper
       "/#{state_url_name}/guided-search"
     end
   end
+
+  def school_type_display(type)
+    type = type.to_s
+    type.downcase == "charter" ? "Public charter" : type.gs_capitalize_first
+  end
 end
