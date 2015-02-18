@@ -268,7 +268,7 @@ module WritePdfConcerns
     end
 
 
-    school_type = school.which_school_type
+    school_type = school.which_school_type(school.type)
 
     text_box "#{level} | #{is_spanish ? school_type : school.decorated_school_type} #{truncated_district}",
              :at => [5, cursor],

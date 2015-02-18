@@ -156,8 +156,8 @@ module PdfConcerns
 
   # Map_icon_to_school_name_mapping = {'no_map_icon' => []}
 
-  def which_school_type
-    ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING[decorated_school_type]
+  def which_school_type(type)
+    ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING[school_type_display(type)]
   end
 
   def which_ethnicity_key_mapping(data)

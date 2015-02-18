@@ -265,8 +265,13 @@ module ApplicationHelper
     end
   end
 
+  # this is the single place to reference naming for school type
   def school_type_display(type)
-    type = type.to_s
-    type.downcase == "charter" ? "Public charter" : type.gs_capitalize_first
+    school_types_map = {
+        charter: 'Public charter',
+        public: 'Public district',
+        private: 'Private'
+    }
+    school_types_map[type.to_s.downcase.to_sym]
   end
 end
