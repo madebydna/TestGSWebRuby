@@ -6,6 +6,8 @@ describe LevelCode do
     inputs_and_outputs = {
       'PK' => LevelCode.new('p'),
       'KG' => LevelCode.new('e'),
+      'P' => LevelCode.new('p'),
+      'K' => LevelCode.new('e'),
       '1' => LevelCode.new('e'),
       '2' => LevelCode.new('e'),
       '3' => LevelCode.new('e'),

@@ -103,7 +103,9 @@ describe SearchController do
     end
     {
       'PK' => 'p',
+      'P' => 'p',
       'KG' => 'e',
+      'K' => 'e',
       '5' => 'e',
       '6' => 'm',
       '8' => 'm',

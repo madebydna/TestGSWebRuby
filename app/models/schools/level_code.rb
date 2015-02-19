@@ -33,9 +33,9 @@ class LevelCode
   def self.from_grade(grade)
     level_code =
       case grade.downcase
-        when 'pk'
+        when 'pk','p'
           'p'
-        when 'kg','1','2','3','4','5'
+        when 'kg','k','1','2','3','4','5'
           'e'
         when '6','7','8'
           'm'
