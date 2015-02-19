@@ -77,8 +77,6 @@ describe SearchController do
       controller.gon.get_variable('ad_set_targeting')
     end
 
-    include_example 'sets at least one google ad targeting attribute'
-    include_examples 'sets the base google ad targeting attributes for all pages'
     include_examples 'sets specific google ad targeting attributes', %w[State]
 
     context 'when city does not have a county' do
@@ -102,6 +100,37 @@ describe SearchController do
       it 'sets the city county' do
         expect(subject['County']).to eq('county')
       end
+    end
+    {
+      'PK' => 'p',
+      'KG' => 'e',
+      '5' => 'e',
+      '6' => 'm',
+      '8' => 'm',
+      '9' => 'h',
+      'UG' => nil,
+      'AE' => nil,
+      'junk' => nil,
+      '' => nil,
+      nil => nil
+    }.each_pair do |grade, level_code|
+      context "when filtering by grade #{grade}" do
+        before { controller.params.merge!(grades: grade) }
+        it "it sets the level to #{level_code}" do
+          expect(subject['level']).to eq(level_code)
+        end
+      end
+    end
+  end
+
+  describe '#set_global_ad_targeting_through_gon' do
+    subject do
+      controller.send(:set_global_ad_targeting_through_gon)
+      controller.gon.get_variable('ad_set_targeting')
+    end
+    with_shared_context 'when ads are enabled' do
+      include_example 'sets at least one google ad targeting attribute'
+      include_examples 'sets the base google ad targeting attributes for all pages'
     end
   end
 

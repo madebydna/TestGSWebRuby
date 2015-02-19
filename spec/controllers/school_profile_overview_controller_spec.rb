@@ -38,6 +38,7 @@ describe SchoolProfileOverviewController do
 
     context 'when ads are enabled' do
       before do
+        allow(controller).to receive(:advertising_enabled?).and_return(true)
         allow(school).to receive(:show_ads) { true }
       end
 
@@ -48,6 +49,7 @@ describe SchoolProfileOverviewController do
 
     context 'when ads are not enabled' do
       before do
+        allow(controller).to receive(:advertising_enabled?).and_return(false)
         allow(school).to receive(:show_ads) { false }
       end
       include_example 'does not set any google ad targeting attributes'

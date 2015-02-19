@@ -143,9 +143,7 @@ class SchoolProfileController < SchoolController
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
       ad_targeting_gon_hash['City']        = @school.city
-      ad_targeting_gon_hash['compfilter']  = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       ad_targeting_gon_hash['county']      = @school.county # county name?
-      ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
       ad_targeting_gon_hash['gs_rating']   = @school.gs_rating
       ad_targeting_gon_hash['level']       = @school.level_code # p,e,m,h
       ad_targeting_gon_hash['school_id']   = @school.id.to_s
