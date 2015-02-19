@@ -132,6 +132,19 @@ RSpec::Matchers.define :be_boolean do
   end
 end
 
+RSpec::Matchers.define :memoize do |call|
+  # This won't work for the memoization of symbols
+  match do |subject|
+    id_1 = subject.send(call).object_id
+    id_2 = subject.send(call).object_id
+
+    expect(id_1).to eq id_2
+  end
+
+  failure_message do |subject|
+    "Expected #{call} to be memoized. Subsequent calls to #{call} returned different objects, but it should always return same object."
+  end
+end
 
 Capybara::RSpecMatchers::HaveText.class_eval do
   alias_method :failure_message, :failure_message_for_should
