@@ -392,4 +392,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def show_ads?
+    @show_ads
+  end
+
 end

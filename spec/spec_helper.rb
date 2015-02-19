@@ -219,7 +219,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.alias_it_should_behave_like_to :include_example, "it should behave like"
+  def include_example(*args, &block)
+    include_examples(*args, &block)
+  end
   config.alias_it_should_behave_like_to :test_group, ''
 
   config.mock_with :rspec

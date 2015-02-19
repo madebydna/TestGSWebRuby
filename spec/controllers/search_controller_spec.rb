@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'controllers/contexts/ad_shared_contexts'
+require 'controllers/examples/ad_shared_examples'
 
 describe SearchController do
   [PaginationConcerns, GoogleMapConcerns, MetaTagsHelper, HubConcerns].each do | mod |
@@ -67,15 +69,26 @@ describe SearchController do
   end
 
   describe '#ad_setTargeting_through_gon' do
+    before do
+      controller.instance_variable_set(:@state, short: 'CA')
+    end
+    subject do
+      controller.send(:ad_setTargeting_through_gon)
+      controller.gon.get_variable('ad_set_targeting')
+    end
+
+    include_example 'sets at least one google ad targeting attribute'
+    include_examples 'sets the base google ad targeting attributes for all pages'
+    include_examples 'sets specific google ad targeting attributes', %w[State]
+
     context 'when city does not have a county' do
       let(:city) { double('city') }
       before do
         allow(city).to receive(:county) { nil }
+        controller.instance_variable_set(:@city, city)
       end
       it 'does not set the county' do
-        controller.instance_variable_set(:@city, city)
-        controller.send(:ad_setTargeting_through_gon)
-        expect(controller.send(:ad_targeting_gon_hash)['County']).to be_nil
+        expect(subject['County']).to be_nil
       end
     end
     context 'when city has a county' do
@@ -84,11 +97,10 @@ describe SearchController do
       before do
         allow(city).to receive(:county) { county }
         allow(county).to receive(:name) { 'county' }
+        controller.instance_variable_set(:@city, city)
       end
       it 'sets the city county' do
-        controller.instance_variable_set(:@city, city)
-        controller.send(:ad_setTargeting_through_gon)
-        expect(controller.send(:ad_targeting_gon_hash)['County']).to eq('county')
+        expect(subject['County']).to eq('county')
       end
     end
   end

@@ -44,8 +44,8 @@ class StatesController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
     @ad_page_name = :State_Home_Standard
-    @show_ads = true && PropertyConfig.advertising_enabled?
-    gon.show_ads = @show_ads
+    @show_ads = PropertyConfig.advertising_enabled?
+    gon.show_ads = show_ads?
     ad_setTargeting_through_gon
     render 'states/state_home'
   end
@@ -183,7 +183,7 @@ class StatesController < ApplicationController
 
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
-    if @show_ads
+    if show_ads?
       ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       ad_targeting_gon_hash['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
       ad_targeting_gon_hash['State']      = @state[:short].upcase # abbreviation

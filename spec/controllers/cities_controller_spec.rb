@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'controllers/contexts/ad_shared_contexts'
+require 'controllers/examples/ad_shared_examples'
 
 describe CitiesController do
   before(:each) { FactoryGirl.create(:hub_city_mapping) }
@@ -29,6 +31,23 @@ describe CitiesController do
     it 'sets canonical tags' do
       get :show, state: 'michigan', city: 'detroit'
       expect(assigns[:canonical_url]).to_not be_nil
+    end
+  end
+
+  describe '#ad_setTargeting_through_gon' do
+    subject do
+      get :show, state: 'michigan', city: 'detroit'
+      controller.gon.get_variable('ad_set_targeting')
+    end
+
+    with_shared_context('when ads are enabled') do
+      include_examples 'sets at least one google ad targeting attribute'
+      include_examples 'sets the base google ad targeting attributes for all pages'
+      include_examples 'sets specific google ad targeting attributes', %w[City State]
+    end
+
+    with_shared_context('when ads are not enabled') do
+      include_example 'does not set any google ad targeting attributes'
     end
   end
 

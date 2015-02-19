@@ -48,7 +48,7 @@ class CitiesController < ApplicationController
       return redirect_to state_url
     end
 
-    @show_ads = true;
+    @show_ads = true
     if @hub.present?
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
@@ -59,7 +59,7 @@ class CitiesController < ApplicationController
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
     @show_ads = @show_ads && PropertyConfig.advertising_enabled?
-    gon.show_ads = @show_ads
+    gon.show_ads = show_ads?
     ad_setTargeting_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     set_city_home_metadata
@@ -278,7 +278,7 @@ class CitiesController < ApplicationController
 
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
-    if @show_ads
+    if show_ads?
       ad_targeting_gon_hash['City'] = @city.gs_capitalize_words
       ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
       ad_targeting_gon_hash['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
