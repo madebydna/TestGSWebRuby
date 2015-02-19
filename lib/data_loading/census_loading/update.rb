@@ -50,7 +50,7 @@ class CensusLoading::Update
   end
 
   def census_description_attributes
-    {
+    @census_description_attributes ||= {
         state: entity_state,
         source: source,
         type: entity_type
