@@ -122,13 +122,21 @@
   background-position: -256px 0px;
 }
 
-.i-16-blue-thumbs-up {
+.i-16-thumbs-up {
   background-position: -272px 0px;
 }
 
-.i-16-white-thumbs-up {
+.btn.active .i-16-thumbs-up {
   background-position: -272px -16px;
 }
+
+//.i-16-blue-thumbs-up {
+//  background-position: -272px -16px;
+//}
+//
+//.i-16-white-thumbs-up {
+//  background-position: -272px -16px;
+//}
 
 .i-16-blue-students-enrolled {
   background-position: -288px 0px;
