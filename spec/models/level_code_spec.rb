@@ -25,7 +25,7 @@ describe LevelCode do
 
     inputs_and_outputs.each_pair do |grade, level_code|
       it "given grade #{grade} it should return level code #{level_code}" do
-        expect(LevelCode.from_level(grade)).to eq(level_code)
+        expect(LevelCode.from_grade(grade)).to eq(level_code)
       end
     end
 
