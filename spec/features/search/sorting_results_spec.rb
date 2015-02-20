@@ -80,17 +80,14 @@ describe 'Sorting search results' do
           set_up_by_name_search('dover elementary', 'DE', query_string)
         end
 
+        # By name search never has fit
         sorts = %w(Relevance Rating)
-        if has_fit
-          sorts += ['Fit']
-        end
         sorts_text = "#{sorts.join(' ')}"
 
         default_sort = 'Relevance'
         active_sort = has_rating_sort ? 'Rating' : default_sort
 
         it "should display #{sorts_text}" do
-          pending 'PT-1213: TODO: Fix spec' if sorts_text.match /Fit/
           expect(page.all(sort_button).map{ |b| b.text }).to eq(sorts)
           expect(page.find(active_button)).to have_content(active_sort)
         end
