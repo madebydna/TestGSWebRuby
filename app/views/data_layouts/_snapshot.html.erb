@@ -33,7 +33,7 @@
                 <% if object.value != 'no info' %>
                     <tr>
                         <td style="width:50%"><%= object.label %></td>
-                        <td style="width:50%"><%= raw(decorator.get_link_to_or_value(@school, object.label, object.value)) %></td>
+                        <td style="width:50%"><%= decorator.get_link_to_or_value(@school, object.label, object.value) %></td>
                     </tr>
                 <% end %>
               <% end %>

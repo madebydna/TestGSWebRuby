@@ -27,6 +27,7 @@ class SnapshotDecorator < Draper::Decorator
   end
 
   def format_value(key, value)
+    value = h.sanitize(value) if value.is_a?(String)
     if configured_format(key) == 'integer'
       value = value.is_a?(Numeric) ? value.round : value
     end
@@ -39,6 +40,7 @@ class SnapshotDecorator < Draper::Decorator
     if key == 'head official name'
       value = "<span class='notranslate'>#{value}</span>"
     end
+    value = value.html_safe if value.is_a?(String)
     value
   end
 
