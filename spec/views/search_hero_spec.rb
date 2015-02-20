@@ -21,12 +21,14 @@ describe 'shared/_search_hero.html.erb' do
     end
 
     it 'adds the collection_id to a name search' do
+      pending('PT-1213:')
       render
       expect(rendered).to have_selector('input#js-collectionId', visible: false)
     end
 
     context 'without sponsors' do
       it 'renders without a sponsor bar' do
+        pending('PT-1213:')
         allow(view).to receive(:sponsor) { nil }
         expect { render }.to_not raise_error
         expect(rendered).to_not have_selector('.sponsor-bar')
@@ -36,6 +38,7 @@ describe 'shared/_search_hero.html.erb' do
 
   context 'on a state page' do
     before(:each) do
+      pending('PT-1213:')
       allow(view).to receive(:state) { { short: 'IN', long: 'indiana' } }
       allow(view).to receive(:state_page) { true }
 

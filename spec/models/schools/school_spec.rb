@@ -80,10 +80,7 @@ describe School do
     let(:school) { FactoryGirl.create(:school) }
 
     it 'should query the school cache only once.' do
-      expect_any_instance_of(SchoolCacheQuery).to receive(:query).once.and_call_original
-      5.times do
-        school.cache_results
-      end
+      expect(school).to memoize(:cache_results)
     end
 
   end

@@ -14,7 +14,7 @@ class SearchSuggestSchool < SearchSuggester
         :school_name => school_search_result['school_name'],
         :id => school_search_result['school_id'],
         :city_name => school_search_result['city'],
-        :url => school_url
+        :url => URI.encode(school_url)
     }
   end
 

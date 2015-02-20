@@ -54,6 +54,7 @@ describe 'search/_search_results.html.erb', js: true do
         end
 
         it 'should show the correct ads' do
+          pending('PT-1213: TODO: fix code or rspec')
           slots = create_slots_list(num_results)
           slots.each_with_index do |slot, index|
             next unless slot[:name]

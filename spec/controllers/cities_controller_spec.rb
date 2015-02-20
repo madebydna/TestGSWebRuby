@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'controllers/contexts/ad_shared_contexts'
+require 'controllers/examples/ad_shared_examples'
 
 describe CitiesController do
   before(:each) { FactoryGirl.create(:hub_city_mapping) }
@@ -19,7 +21,47 @@ describe CitiesController do
   end
 
   describe 'GET show' do
-    it_behaves_like 'a default cities controller action', :show
+    context 'without a hub city mapping' do
+      it 'renders an error page' do
+        get :show, state: 'michigan', city: 'foobarnotacity'
+        expect(response).to redirect_to(state_url('michigan'))
+      end
+    end
+
+    it 'sets canonical tags' do
+      get :show, state: 'michigan', city: 'detroit'
+      expect(assigns[:canonical_url]).to_not be_nil
+    end
+  end
+
+  describe '#ad_setTargeting_through_gon' do
+    subject do
+      get :show, state: 'michigan', city: 'detroit'
+      controller.gon.get_variable('ad_set_targeting')
+    end
+
+    with_shared_context('when ads are enabled') do
+      include_examples 'sets at least one google ad targeting attribute'
+      include_examples 'sets the base google ad targeting attributes for all pages'
+      include_examples 'sets specific google ad targeting attributes', %w[City State]
+    end
+
+    with_shared_context('when ads are not enabled') do
+      include_example 'does not set any google ad targeting attributes'
+    end
+  end
+
+  describe 'Get city_home' do
+    before { clean_models :us_geo, City }
+    after { clean_models :us_geo, City }
+    it 'should redirect to the state page if a deactivated city is requested' do
+      city = FactoryGirl.create(:city, active: 0)
+      allow_any_instance_of(CitiesController).to receive(:set_hub).and_return(nil)
+      state_name = States.state_name(city.state)
+
+      get :show, state: state_name, city: city.name
+      expect(response).to redirect_to(state_url(state_name))
+    end
   end
 
   describe 'GET events' do

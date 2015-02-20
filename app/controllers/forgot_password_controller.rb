@@ -48,7 +48,7 @@ class ForgotPasswordController < ApplicationController
     return user, error_msg
   end
 
-  def allow_reset_password
+  def login_and_redirect_to_change_password
     hash = params[:id]
     if hash.present?
       login_from_hash(hash)

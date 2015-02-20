@@ -194,4 +194,6 @@ describe SchoolProfileController do
       end
     end
   end
+
+
 end

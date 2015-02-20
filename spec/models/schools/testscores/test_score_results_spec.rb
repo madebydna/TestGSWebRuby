@@ -26,8 +26,49 @@ describe TestScoreResults do
     end
 
     it 'should return test data' do
-      school_cache_value = '{"data_sets_and_values":[{"data_type_id":18,"data_set_id":84122,"level_code":"e,m,h","subject_id":9,"grade":"9","year":2010,"school_value_text":null,"school_value_float":20,"state_value_text":null,"state_value_float":22,"breakdown_id":1,"number_students_tested":269697},{"data_type_id":18,"data_set_id":84302,"level_code":"e,m,h","subject_id":9,"grade":"9","year":2010,"school_value_text":null,"school_value_float":33,"state_value_text":null,"state_value_float":45,"breakdown_id":1,"number_students_tested":134540}],"data_types":{"18":{"test_label":"XYZ test","test_description":"This test is awesome.","test_source":"xyz test source"}}}'
-      allow(SchoolCache).to receive(:for_school).with('test_scores',school.id,school.state).and_return(school_cache(school_cache_value))
+      school_cache_value = {
+        "data_sets_and_values" => [
+          {
+            "data_type_id" => 18,
+            "data_set_id" => 84122,
+            "level_code" => "e,m,h",
+            "subject_id" => 9,
+            "grade" => "9",
+            "year" => 2010,
+            "school_value_text" => nil,
+            "school_value_float" => 20,
+            "state_value_text" => nil,
+            "state_value_float" => 22,
+            "breakdown_id" => 1,
+            "number_students_tested" => 269697
+          },
+          {
+            "data_type_id" => 18,
+            "data_set_id" => 84302,
+            "level_code" => "e,m,h",
+            "subject_id" => 9,
+            "grade" => "9",
+            "year" => 2010,
+            "school_value_text" => nil,
+            "school_value_float" => 33,
+            "state_value_text" => nil,
+            "state_value_float" => 45,
+            "breakdown_id" => 1,
+            "number_students_tested" => 134540
+          }
+        ],
+        "data_types" => {
+          "18" => {
+            "test_label" => "XYZ test",
+            "test_description" => "This test is awesome.",
+            "test_source" => "xyz test source"
+          }
+        }
+      }
+      allow(school).to receive(:cache_results).and_return(
+                         double('some cached results', test_scores: school_cache_value)
+                       )
+      # allow(SchoolCache).to receive(:for_school).with('test_scores',school.id,school.state).and_return(school_cache(school_cache_value))
 
       expect(subject.fetch_test_scores(school)).to_not be_empty
     end

@@ -48,15 +48,19 @@ def monkey_patch_database_cleaner
   end
 end
 
-def shared_example_pair(name, &proc)
-  shared_examples_for name do
-    it name do
-      instance_exec &proc
-    end
-  end
-  shared_examples_for "do_not_#{name}" do
-    it "should not #{name}" do
-      instance_exec &Proc.new { proc.to_source.gsub('.to', '.to_not') }
+def define_opposing_examples(name, &proc)
+  shared_examples_for name do |positive_or_negative_assertion = true|
+    should_execute_positive_assertion = (positive_or_negative_assertion == true)
+    if should_execute_positive_assertion
+      it name do
+        instance_exec &proc
+      end
+    else
+      it "should not #{name}" do
+        new_source = proc.to_source(strip_enclosure: true).gsub('.to', '.to_not')
+        new_proc = Proc.new { eval(new_source) }
+        instance_exec &new_proc
+      end
     end
   end
 end
@@ -65,14 +69,34 @@ def generate_examples_from_hash(hash)
   hash.each_pair do |context, expectations|
     context context do
       include_context context
-      expectations.each_pair do |expectation, positive_case|
-        if positive_case
-          include_examples expectation.to_s
-        else
-          include_examples "do_not_#{expectation}"
-        end
+      expectations.each_pair do |expectation, args|
+        include_examples expectation.to_s, *args
       end
     end
+  end
+end
+
+def shared_example(name, &block)
+  params = block.parameters.map(&:last)
+  if params.present?
+    eval <<-HEREDOC
+      shared_examples_for '#{name}' do |#{params.join(',')}|
+        it '#{name}' do
+          instance_exec #{params.join(',')}, &block
+        end
+      end
+    HEREDOC
+  else
+    shared_examples_for name do
+      it name, &block
+    end
+  end
+end
+
+def with_shared_context(name, *args, &block)
+  describe name do
+    include_context name, *args
+    instance_exec &block
   end
 end
 
@@ -108,6 +132,19 @@ RSpec::Matchers.define :be_boolean do
   end
 end
 
+RSpec::Matchers.define :memoize do |call|
+  # This won't work for the memoization of symbols
+  match do |subject|
+    id_1 = subject.send(call).object_id
+    id_2 = subject.send(call).object_id
+
+    expect(id_1).to eq id_2
+  end
+
+  failure_message do |subject|
+    "Expected #{call} to be memoized. Subsequent calls to #{call} returned different objects, but it should always return same object."
+  end
+end
 
 Capybara::RSpecMatchers::HaveText.class_eval do
   alias_method :failure_message, :failure_message_for_should
@@ -195,8 +232,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  #alias it_should_behave_like to test_group. That way the documentation can spit out Test Group:
-  config.alias_it_should_behave_like_to :test_group, ""
+  def include_example(*args, &block)
+    include_examples(*args, &block)
+  end
+  config.alias_it_should_behave_like_to :test_group, ''
 
   config.mock_with :rspec
 

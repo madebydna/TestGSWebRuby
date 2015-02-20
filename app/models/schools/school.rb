@@ -35,7 +35,7 @@ class School < ActiveRecord::Base
   end
 
   def self.within_city(state_abbreviation, city_name)
-    on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name)
+    on_db(state_abbreviation.downcase.to_sym).active.where(city: city_name).order(:name)
   end
 
   def census_data_for_data_types(data_types = [])
@@ -289,7 +289,7 @@ class School < ActiveRecord::Base
     includes_level_code?(%w[e m])  &&  !preschool?
   end
 
-  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores)
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores nearby_schools)
 
   def cache_results
 
@@ -313,22 +313,21 @@ class School < ActiveRecord::Base
     query << location_near_formula(lat, lon)
     query << "`distance` FROM `school` where active=1 && id !=#{id} "
     query << level_code_filter
-    query << " ORDER BY `distance` LIMIT #{school_count}";
+    query << " ORDER BY `distance` LIMIT #{school_count}"
     School.on_db(shard).find_by_sql(query)
   end
 
   def location_near_formula(lat, lon)
-    miles_center_of_earth = 3959;
+    miles_center_of_earth = 3959
     "( #{miles_center_of_earth} * acos(cos(radians(#{lat})) * cos( radians( `lat` ) ) * cos(radians(`lon`) - radians(#{lon}) ) + sin(radians(#{lat})) * sin( radians(`lat`) ) ) )"
   end
 
   def level_code_filter
     return '' if level_code_array.blank?
-    str = ' && ('
-    level_code_array.each_with_index do |one_level_code, index|
-      str << ' || ' if index != 0
-      str << "level_code LIKE '#{one_level_code}'"
+    arr_query_str = []
+    level_code_array.each do |one_level_code|
+      arr_query_str << "level_code LIKE '#{one_level_code}'"
     end
-    str << ') '
+    arr_query_str.present? ? ' && (' << arr_query_str.join(" || ") << ') ' : ''
   end
 end

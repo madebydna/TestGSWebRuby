@@ -34,7 +34,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
                            school_profile_decorator.process_level,
-                           @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
+                           school_type_display(@school.type),
                            raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 

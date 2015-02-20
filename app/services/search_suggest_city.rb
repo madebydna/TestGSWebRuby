@@ -11,6 +11,8 @@ class SearchSuggestCity < SearchSuggester
     city_state_name = States.abbreviation_hash[city_search_result['city_state'][0].downcase]
     output_city[:city_name] = city_search_result['city_sortable_name']
     output_city[:url] = gs_legacy_url_city_district_browse_encode("/#{city_state_name}/#{city_search_result['city_sortable_name'].downcase}/schools")
+    url = gs_legacy_url_city_district_browse_encode("/#{city_state_name}/#{city_search_result['city_sortable_name'].downcase}/schools")
+    output_city[:url] = URI.encode(url)
     output_city[:sort_order] = city_search_result['city_number_of_schools']
     output_city[:state] = city_state
 

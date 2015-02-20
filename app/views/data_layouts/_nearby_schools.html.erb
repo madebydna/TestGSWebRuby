@@ -1,9 +1,12 @@
 <%= 
   render(
-    partial: 'shared/horizontal_school_boxes', 
+    partial: 'shared/horizontal_school_boxes',
     locals: { 
       title: "Nearby schools",
-      schools: NearbySchoolDecorator.decorate_collection(@school.neighbors)
+     # schools: @school.cache_results.nearby_schools
+
+   schools: NearbySchoolDecorator.decorate_collection(@school.neighbors)
     }
   )
+
 %>

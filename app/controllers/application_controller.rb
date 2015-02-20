@@ -344,15 +344,25 @@ class ApplicationController < ActionController::Base
       ad_targeting_gon_hash['Responsive_Group'] = 'Test'
     end
 
-    @advertising_enabled = true
+    @advertising_enabled = advertising_enabled?
+    gon.advertising_enabled = @advertising_enabled
+
+    if @advertising_enabled
+      ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
+      ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    end
+  end
+
+  def advertising_enabled?
+    advertising_enabled = true
     # equivalent to saying disable advertising if property is not nil and false
     unless ENV_GLOBAL['advertising_enabled'].nil? || ENV_GLOBAL['advertising_enabled'] == true
-      @advertising_enabled = false
+      advertising_enabled = false
     end
-    if @advertising_enabled # if env disables ads, don't bother checking property table
-      @advertising_enabled = PropertyConfig.advertising_enabled?
+    if advertising_enabled # if env disables ads, don't bother checking property table
+      advertising_enabled = PropertyConfig.advertising_enabled?
     end
-    gon.advertising_enabled = @advertising_enabled
+    return advertising_enabled
   end
 
   #//////////////////////////////////////////////
@@ -390,6 +400,10 @@ class ApplicationController < ActionController::Base
       flash_notice ("Your subscription has been confirmed. Thank you! You'll begin receiving newsletters from us shortly.")
       delete_cookie(java_hover_cookie_name)
     end
+  end
+
+  def show_ads?
+    @show_ads
   end
 
 end

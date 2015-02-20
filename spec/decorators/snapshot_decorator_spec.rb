@@ -66,6 +66,21 @@ describe SnapshotDecorator do
         expect(subject.format_value('data point', 50.5)).to eq 51
       end
     end
+
+    it 'should sanitize the provided value' do
+      result = subject.format_value('head official name', '<script>alert(1);</script>')
+      expect(result).to_not match '<script>'
+    end
+
+    it 'the return value should be html_safe' do
+      result = subject.format_value('head official name', '<script>alert(1);</script>')
+      expect(result).to be_html_safe
+    end
+
+    it 'should not escape the html tags that the method wrapped around the user-provided value' do
+      result = subject.format_value('head official name', '<div>blah</div>')
+      expect(result).to match '<span class=\'notranslate\'>'
+    end
   end
 
 end

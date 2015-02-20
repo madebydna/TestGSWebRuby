@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'controllers/contexts/ad_shared_contexts'
+require 'controllers/examples/ad_shared_examples'
 
 shared_examples_for 'a default state controller action' do |action|
   context 'without a hub city mapping' do
@@ -29,6 +31,23 @@ describe StatesController do
     end
   end
 
+  describe '#ad_setTargeting_through_gon' do
+    subject do
+      get :show, state: 'indiana'
+      controller.gon.get_variable('ad_set_targeting')
+    end
+
+    with_shared_context('when ads are enabled') do
+      include_examples 'sets at least one google ad targeting attribute'
+      include_examples 'sets the base google ad targeting attributes for all pages'
+      include_examples 'sets specific google ad targeting attributes', %w[editorial State]
+    end
+
+    with_shared_context('when ads are not enabled') do
+      include_example 'does not set any google ad targeting attributes'
+    end
+  end
+
   describe 'GET enrollment' do
     it_behaves_like 'a default state controller action', :enrollment
 
@@ -50,6 +69,9 @@ describe StatesController do
   end
 
   describe 'GET guided_search' do
-    it_behaves_like 'a default state controller action', :guided_search
+    it 'renders an error page' do
+      get :guided_search, state: 'indiana'
+      expect(response).to redirect_to(state_url('indiana'))
+    end
   end
 end

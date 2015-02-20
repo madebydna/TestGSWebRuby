@@ -41,17 +41,6 @@ describe CensusDataReader do
     end
   end
 
-  describe '#raw_data_for_category' do
-    it 'should filter down to data for only this category' do
-      category = double('category')
-      data = double('data')
-      allow(category).to receive(:keys).and_return(%w(a b c))
-      allow(subject).to receive(:raw_data).and_return data
-      expect(data).to receive(:for_data_types).with(%w(a b c))
-      subject.send :raw_data_for_category, category
-    end
-  end
-
   describe '#sort_based_on_config' do
     let(:category) { double('category') }
 
@@ -125,105 +114,11 @@ describe CensusDataReader do
 
   end
 
-  describe '#build_data_type_descriptions_to_hashes_map' do
-
-    it 'should only include items that have school value or state value' do
-      data_set_with_school_and_state_values =
-        FactoryGirl.build(
-          :census_data_set,
-          :with_school_value,
-          :with_state_value
-        )
-
-      data_set_without_school_value =
-        FactoryGirl.build(:census_data_set, :with_state_value)
-
-      data_set_without_state_value =
-        FactoryGirl.build(:census_data_set, :with_school_value)
-
-      data_set_without_state_value_or_school_value =
-        FactoryGirl.build(:census_data_set)
-
-      hash = {
-        'a' => [
-          data_set_with_school_and_state_values,
-          data_set_without_school_value,
-          data_set_without_state_value
-        ],
-        'b' => [
-          data_set_without_state_value_or_school_value
-        ]
-      }
-
-      result = subject.send :build_data_type_descriptions_to_hashes_map, hash
-
-      expect(result['b']).to be_empty
-      expect(result['a'].size).to eq 3
-    end
-
-    it 'chooses the breakdown description if config entry breakdown not set' do
-      data_set_with_config_entry_label =
-        FactoryGirl.build(:census_data_set, :with_school_value)
-
-      data_set_without_config_entry_label =
-        FactoryGirl.build(:census_data_set, :with_school_value)
-
-
-      allow(data_set_with_config_entry_label).to receive(:config_entry_breakdown_label).and_return 'a label'
-      allow(data_set_without_config_entry_label).to receive(:config_entry_breakdown_label).and_return nil
-      allow(data_set_without_config_entry_label).to receive(:census_breakdown).and_return 'a different label'
-
-      hash = {
-        'foo' => [
-          data_set_with_config_entry_label,
-          data_set_without_config_entry_label
-        ]
-      }
-
-      result = subject.send :build_data_type_descriptions_to_hashes_map, hash
-      expect(result['foo']).to be_present
-      expect(result['foo'].first[:breakdown]).to eq 'a label'
-      expect(result['foo'].last[:breakdown]).to eq 'a different label'
-    end
-
-    it 'should set the year to the manual override (school modified) year' do
-      data_set_a = FactoryGirl.build(
-        :manual_override_data_set,
-        :with_school_value,
-        school_value_modified: '2000-01-01'
-      )
-
-      hash = {
-        'foo' => [data_set_a]
-      }
-
-      result = subject.send :build_data_type_descriptions_to_hashes_map, hash
-      expect(result['foo'].first[:year]).to eq 2000
-    end
-  end
-
-  describe '#labels_to_hashes_map' do
-    it 'should respond to method call' do
-      expect(subject).to respond_to(:labels_to_hashes_map)
-    end
-  end
-
   describe 'a spec to test sample data code' do
     it 'should not fail' do
       require 'sample_data_helper'
       load_sample_data 'census/name_of_a_test'
       expect(true).to be_truthy
-    end
-  end
-
-  describe '#labels_to_hashes_map' do
-    let(:data) do
-      FactoryGirl.build_stubbed_list(:census_data_set, 2, data_type_id: 1)
-    end
-
-    it 'should memoize the result' do
-      expect(subject).to receive(:raw_data_for_category).once.and_return data
-      subject.labels_to_hashes_map(FactoryGirl.build_stubbed(:category))
     end
   end
 
@@ -281,4 +176,110 @@ describe CensusDataReader do
       expect(result).to eq expected
     end
   end
+
+  describe '#labels_to_hashes_map' do
+    let(:category) { FactoryGirl.build(:category, name:'Class size') }
+
+    let(:all_data) do
+        {
+          "Class size"=>[
+            {
+              :year=>2014,
+              :source=>"DE Dept. of Education",
+              :subject=>"English Language Arts",
+              :school_value=>21.0,
+              :state_average=>19.0
+            },
+            {
+              :year=>2013,
+              :source=>"DE Dept. of Education",
+              :subject=>"English Language Arts",
+              :school_value=>18.0,
+              :state_average=>17.0
+            },
+            {
+             :year=>2014,
+             :source=>"DE Dept. of Education",
+             :subject=>"Math",
+             :school_value=>17.0,
+             :state_average=>20.0
+            }
+          ],
+          'Ethnicity' => [
+            {
+              breakdown: 'White',
+              school_value: 42.1053,
+              district_value: nil,
+              state_value: 71.4284,
+              source: 'CA Dept. of Education',
+              year: 2011
+            }
+          ]
+        }
+    end
+
+    let(:results_hash) do
+      {
+        "Class size"=>[
+          {
+            :year=>2014,
+            :source=>"DE Dept. of Education",
+            :subject=>"English Language Arts",
+            :school_value=>21.0,
+            :state_average=>19.0,
+            :label=>"A label",
+            :description=>nil
+          },
+          {
+            :year=>2013,
+            :source=>"DE Dept. of Education",
+            :subject=>"English Language Arts",
+            :school_value=>18.0,
+            :state_average=>17.0,
+            :label=>"A label",
+            :description=>nil
+          }
+        ]
+      }
+    end
+
+    before do
+      allow(subject).to receive(:convert_subject_to_id).with('English Language Arts').and_return(4)
+      allow(subject).to receive(:convert_subject_to_id).with('Math').and_return(5)
+      allow(subject).to receive(:data_type_id_for_data_type_label).with("Class size").and_return(35)
+      allow(subject).to receive(:data_type_id_for_data_type_label).with("Ethnicity").and_return(32)
+
+    end
+
+    it 'should respond to method call' do
+      expect(subject).to respond_to(:labels_to_hashes_map)
+    end
+
+    it 'should not return any results since there is no data in the cache.' do
+      allow(subject).to receive(:cached_data_for_category).and_return({})
+
+      results = subject.labels_to_hashes_map(category)
+      expect(results).to eq({})
+    end
+
+    it 'should return data for only for class size, since it matches the configured data type id.' do
+      allow(subject).to receive(:cached_data_for_category).and_return(all_data)
+      allow(category.category_datas.first).to receive(:response_key).and_return(35)
+      allow(category.category_datas.first).to receive(:subject_id).and_return(4)
+
+      results = subject.labels_to_hashes_map(category)
+      expect(results).to eq(results_hash)
+    end
+
+    it 'should return the results only for english, since the it matches the configured category data.' do
+      allow(subject).to receive(:cached_data_for_category).and_return(all_data)
+      allow(category.category_datas.first).to receive(:response_key).and_return(35)
+      allow(category.category_datas.first).to receive(:subject_id).and_return(4) # only English Language Arts
+
+      results = subject.labels_to_hashes_map(category)
+      expect(results).to eq(results_hash)
+    end
+
+  end
+
 end

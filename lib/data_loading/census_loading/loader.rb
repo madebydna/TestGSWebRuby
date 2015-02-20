@@ -3,7 +3,6 @@ class CensusLoading::Loader < CensusLoading::Base
   CACHE_KEY = 'characteristics'
   DATA_TYPE = :census
 
-  # TODO handle census_description, census_data_set_file
   # Best ordering: first create data sets, then gs_schooldb.census_* rows, then value row
   # TODO break out data set code into module
 
@@ -28,7 +27,7 @@ class CensusLoading::Loader < CensusLoading::Base
         elsif census_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          insert_into!(census_update)
+          insert_into!(census_update, school)
         end
       rescue Exception => e
         raise e.message
@@ -40,32 +39,35 @@ class CensusLoading::Loader < CensusLoading::Base
     end
   end
 
-  def insert_into!(census_update)
+  def insert_into!(census_update, school)
 
-    data_set = CensusDataSet
-      .on_db(census_update.shard)
-      .where(census_update.data_set_attributes)
-      .first_or_initialize
+    data_set = CensusDataSet.find_or_create_and_activate(census_update.shard, census_update.data_set_attributes)
+    # validate_census_data_set!(data_set, census_update)
 
-    validate_census_data_set!(data_set, census_update)
-    # TODO Uncomment the following lines when ready to have this write to the database
-    # data_set.on_db(census_update.shard).update_attributes(active: 1)
+    configure_census_description!(census_update.census_description_attributes, school.type, data_set.id)
 
     value_row = census_update.value_class
       .on_db(census_update.shard)
       .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
       .first_or_initialize
 
-    validate_census_value!(value_row, data_set, census_update)
-    # TODO Uncomment the following lines when ready to have this write to the database
-    # value_row.on_db(census_update.shard).update_attributes(
-    #   active: 1,
-    #   value_text: census_update.value_type == :value_text ? census_update.value : nil,
-    #   value_float: census_update.value_type == :value_float ? census_update.value : nil,
-    #   modified: Time.now,
-    #   modifiedBy: "Queue daemon. Source: #{source}"
-    # )
+    # validate_census_value!(value_row, data_set, census_update)
+    value_row.on_db(census_update.shard).update_attributes(
+      active: 1,
+      value_text: census_update.value_type == :value_text ? census_update.value : nil,
+      value_float: census_update.value_type == :value_float ? census_update.value : nil,
+      modified: Time.now,
+      modifiedBy: source
+    )
 
+  end
+
+  def configure_census_description!(attributes, school_type, data_set_id)
+    attributes.merge!(
+        { census_data_set_id: data_set_id,
+          school_type: school_type }
+    )
+    CensusDescription.where(attributes).first_or_create!
   end
 
   def disable!(census_update)
@@ -84,9 +86,8 @@ class CensusLoading::Loader < CensusLoading::Base
           .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
 
         value_rows.each do | value_row |
-          validate_census_value!(value_row, data_set, census_update)
-          # TODO Uncomment the following lines when ready to have this write to the database
-          # value_row.on_db(census_update.shard).update_attributes(active: 1)
+          # validate_census_value!(value_row, data_set, census_update)
+          value_row.on_db(census_update.shard).update_attributes(active: 1)
         end
       end
     end

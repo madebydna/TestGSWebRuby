@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe ForgotPasswordController do
 
+  before do
+    clean_models User
+  end
+
   after do
     clean_models User
   end
@@ -49,6 +53,14 @@ describe ForgotPasswordController do
       expect(controller.validate_user).to eq([user, 'No password error message'])
     end
 
+    it 'should validate the user.' do
+      user = FactoryGirl.create(:verified_user)
+      allow(controller).to receive(:params).and_return({email: user.email})
+      allow(User).to receive(:find_by_email).and_return(user)
+
+      expect(controller.validate_user).to eq([user, ''])
+    end
+
   end
 
   describe '#send_reset_password_email' do
@@ -82,21 +94,23 @@ describe ForgotPasswordController do
 
   end
 
-  describe '#allow_reset_password' do
+  describe '#login_and_redirect_to_change_password' do
 
     it 'should allow reset password if the hash is valid.' do
       user = FactoryGirl.create(:verified_user)
       allow(controller).to receive(:params).and_return({id: user.auth_token})
 
+      expect(controller).to receive(:login_from_hash).with(user.auth_token)
+      allow(controller).to receive(:logged_in?) { true }
       expect(controller).to receive(:redirect_to).with(manage_account_url(:anchor => 'change-password'))
-      controller.send :allow_reset_password
+      controller.send :login_and_redirect_to_change_password
     end
 
     it 'should not allow reset password if the hash is not valid.' do
       allow(controller).to receive(:params).and_return({id: 'Sometoken'})
 
       expect(controller).to receive(:redirect_to).with(signin_url)
-      controller.send :allow_reset_password
+      controller.send :login_and_redirect_to_change_password
     end
 
   end

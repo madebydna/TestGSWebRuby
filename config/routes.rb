@@ -87,8 +87,10 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/guidelines.page', as: :review_guidelines
     get '/moving.topic?content=2220', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
+    get '/early-learning.topic?content=8045', as: :early_learning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
+    get '/status/error404.page'
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -105,6 +107,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/style-guide/', to: 'style_guide#index'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
+    get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
@@ -169,7 +172,7 @@ LocalizedProfiles::Application.routes.draw do
     return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
   }
 
-  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#allow_reset_password'
+  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
   get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
 
@@ -249,6 +252,15 @@ LocalizedProfiles::Application.routes.draw do
       get 'reviews/write', to: 'reviews#new', as: :review_form
       get '', to: 'school_profile_overview#overview'
     end
+
+    # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
+    get '/school/overview.page', to: redirect { |params, request|
+          if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
+            "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
+          else
+            '/status/error404.page'
+          end
+        }
   end
 
   # Handle preschool URLs

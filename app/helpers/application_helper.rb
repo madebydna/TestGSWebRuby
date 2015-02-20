@@ -264,4 +264,14 @@ module ApplicationHelper
       "/#{state_url_name}/guided-search"
     end
   end
+
+  # this is the single place to reference naming for school type
+  def school_type_display(type)
+    school_types_map = {
+        charter: 'Public charter',
+        public: 'Public district',
+        private: 'Private'
+    }
+    school_types_map[type.to_s.downcase.to_sym]
+  end
 end

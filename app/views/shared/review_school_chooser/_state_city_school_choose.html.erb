@@ -1,14 +1,19 @@
 <div class="dn tac col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 plm prm ptm mbm"
      id="scoop_state_city_school_select">
   <form name="state_city_school_select_form" id="state_city_school_select_form" action="<%= get_school_and_forward_path %>" method="get">
+    <% if @display_morgan_stanley %>
+      <input type="hidden" name="morganstanley" value="1">
+    <% end %>
     <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),{:id =>
-                                                                                                          "state_select", :prompt => 'Select state', class: 'form-control js-stateList ' } %>
+                                                                                                          "state_select", :prompt => 'Select state', class: 'form-control js-stateList notranslate' } %>
     <br/>
+
     <%= select_tag 'city', options_for_select([]),{:id => "city_select", :prompt => 'Select city', class:
-                             'form-control js-cityList dn'} %>
+                             'form-control js-cityList dn notranslate'} %>
     <br/>
+
     <%= select_tag 'school_id', options_for_select([]),{:id => "school_select", :prompt => 'Select school', class:
-                                  'form-control js-schoolList dn' } %>
+                                  'form-control js-schoolList dn notranslate' } %>
     <br/>
     <button type='submit' class="btn btn-primary js-goList dn" id="state_city_school_submit_btn">Go</button>
   </form>

@@ -1,7 +1,11 @@
 //= require lodash
-//= require util/uri_params
+//= require sinon
+//= require util/dependency_init
+//= require util/uri
+//= require util/states
+//= require util/url_params
 
-describe('uri_params', function() {
+describe('url_params', function() {
 
     function unstub(obj) {
         if(obj.hasOwnProperty('restore')) {

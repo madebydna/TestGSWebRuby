@@ -86,7 +86,26 @@ module States
     return Regexp.new regex, 'i'
   end
 
+  def self.any_state_abbreviation_regex
+    regex = '\A'
+    regex << state_hash.values.join('\z|\A')
+    regex << '\z'
+    return Regexp.new regex, 'i'
+  end
+
   def self.abbreviations
     abbreviation_hash.keys.sort
+  end
+
+  def self.abbr_to_label(state_abbr)
+    labels_hash[state_abbr]
+  end
+
+  def self.labels_hash
+    labels_hash = {}
+    STATE_HASH.invert.each do |k,v|
+      k == "dc" ? labels_hash[k] = "Washington DC" : labels_hash[k] = v.titleize
+    end
+    labels_hash
   end
 end

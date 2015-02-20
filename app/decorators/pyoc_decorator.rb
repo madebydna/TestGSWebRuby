@@ -6,7 +6,6 @@ class PyocDecorator < Draper::Decorator
   delegate_all
 
   include GradeLevelConcerns
-  include SchoolTypeConcerns
   include PdfConcerns
 
 

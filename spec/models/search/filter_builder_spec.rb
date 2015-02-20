@@ -89,9 +89,12 @@ describe FilterBuilder do
         end
       end
       context 'should contain advanced filters' do
-        {transportation: 'transportation', beforeAfterCare: 'before/after care'}.each do |k,v|
-          it "like #{v}" do
+        {transportation: 'Transportation options', extendedHours: 'Extended hours'}.each do |k,v|
+          it "like #{k}" do
             expect(group1_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group1_filters[k][:label]).to eq(v)
           end
         end
       end
@@ -102,9 +105,12 @@ describe FilterBuilder do
       end
       let (:group2_filters) {filters_hash[:filters][:group2][:filters]}
       context 'should contain advanced filters' do
-        {dress_code: 'dress code', class_offerings: 'class offerings', sports: 'sports'}.each do |k,v|
-          it "like #{v}" do
+        {dress_code: 'Dress code', class_offerings: 'Class Offering', sports: 'Sports'}.each do |k,v|
+          it "like #{k}" do
             expect(group2_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group2_filters[k][:label]).to eq(v)
           end
         end
       end
@@ -115,9 +121,12 @@ describe FilterBuilder do
       end
       let (:group3_filters) {filters_hash[:filters][:group3][:filters]}
       context 'should contain advanced filters' do
-        {school_focus: 'school focus'}.each do |k,v|
-          it "like #{v}" do
+        {school_focus: 'School Focus'}.each do |k,v|
+          it "like #{k}" do
             expect(group3_filters).to have_key k
+          end
+          it "with label #{v}" do
+            expect(group3_filters[k][:label]).to eq(v)
           end
         end
       end
@@ -172,7 +181,7 @@ describe FilterBuilder do
         end
       end
       context 'should not contain advanced filters' do
-        {transportation: 'transportation', beforeAfterCare: 'before/after care'}.each do |k,v|
+        {transportation: 'transportation', extendedHours: 'Extended hours'}.each do |k,v|
           it "like #{v}" do
             expect(group1_filters).to_not have_key k
           end
@@ -196,25 +205,28 @@ describe FilterBuilder do
       context "in #{state}" do
         let (:filters) { FilterBuilder.new(state, nil, false).filters }
         [ { panel: 1,
-            contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+            contains: [:grades, :distance, :st, :transportation, :extendedHours],
             does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
           },
           {panel: 2,
            contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-           does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
+           does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
           },
           {panel: 3,
            contains: [:school_focus],
-           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
+        end
+        it 'should not have the summer programs filter' do
+          expect(filters.filters[0].filters.last.filters.find{ |el| el.name == :summer_program }).to be_nil
         end
       end
     end
     context 'in Indiana' do
       let (:filters) { FilterBuilder.new('IN', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          contains: [:grades, :distance, :st, :transportation, :extendedHours],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -232,7 +244,7 @@ describe FilterBuilder do
       let (:filters) { FilterBuilder.new('MI', nil, false).filters }
       [ { panel: 1,
           contains: [:grades, :distance, :st],
-          does_not_contain: [:cgr, :transportation, :beforeAfterCare]
+          does_not_contain: [:cgr, :transportation, :extendedHours]
       }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
@@ -243,7 +255,7 @@ describe FilterBuilder do
     context 'in Detroit, MI' do
       let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :cgr, :transportation, :beforeAfterCare],
+          contains: [:grades, :distance, :st, :cgr, :transportation, :extendedHours],
           does_not_contain: []
         },
         { panel: 2,
@@ -260,16 +272,16 @@ describe FilterBuilder do
     context 'in Oklahoma City, OK' do
       let (:filters) { FilterBuilder.new('OK', 'Oklahoma City', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          contains: [:grades, :distance, :st, :transportation, :extendedHours],
           does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
         },
         {panel: 2,
          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-         does_not_contain: [:grades, :distance, :st, :transportation, :beforeAfterCare, :school_focus, :enrollment]
+         does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
         },
         {panel: 3,
          contains: [:school_focus],
-         does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :beforeAfterCare, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+         does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
@@ -278,7 +290,7 @@ describe FilterBuilder do
       let (:filters) { FilterBuilder.new('WI', nil, false).filters }
       [ { panel: 1,
           contains: [:grades, :distance, :st],
-          does_not_contain: [:cgr, :transportation, :beforeAfterCare]
+          does_not_contain: [:cgr, :transportation, :extendedHours]
       }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
@@ -289,7 +301,7 @@ describe FilterBuilder do
     context 'in Milwaukee, WI' do
       let (:filters) { FilterBuilder.new('WI', 'Milwaukee', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :beforeAfterCare],
+          contains: [:grades, :distance, :st, :transportation, :extendedHours],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -303,7 +315,45 @@ describe FilterBuilder do
         assert_filter_structure(filter_map, index)
       end
     end
-
+     context 'in Washington, DC' do
+      let (:filters) { FilterBuilder.new('DC', 'Washington', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :transportation, :extendedHours],
+          does_not_contain: [:cgr]
+        },
+        { panel: 2,
+          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:school_focus, :enrollment],
+          does_not_contain: [:class_offerings]
+      }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
+    ['Oakland', 'San Francisco'].each do |city|
+      context "in #{city}, CA" do
+        let(:filters) { FilterBuilder.new('CA', city, false).filters }
+        [ { panel: 1,
+            contains: [:grades, :distance, :st, :transportation, :extendedHours],
+            does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
+          },
+          {panel: 2,
+           contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
+           does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
+          },
+          {panel: 3,
+           contains: [:school_focus],
+           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+          }].each_with_index do |filter_map, index|
+          assert_filter_structure(filter_map, index)
+        end
+        it 'should have the summer programs filter' do
+          expect(filters.filters[0].filters.last.filters.find{ |el| [el.name, el.value] == [:summer_program, :yes] }).to_not be_nil
+        end
+      end
+    end
   end
 
   describe '#cache_key' do

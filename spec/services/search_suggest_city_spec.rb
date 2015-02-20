@@ -17,5 +17,10 @@ describe SearchSuggestCity do
       expect(result[:sort_order]).to eq('1')
       expect(result[:url]).to eq('/california/oakland/schools')
     end
+
+    it 'should encode the url' do
+      expect(URI).to receive(:encode)
+      subject.process_result(sample_result)
+    end
   end
 end

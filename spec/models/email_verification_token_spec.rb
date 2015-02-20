@@ -66,9 +66,9 @@ describe EmailVerificationToken do
   end
 
   describe '#expired?' do
-    it 'should be expired when 5 days old or more' do
+    it 'should be expired when more than 5 days old' do
       token = EmailVerificationToken.new(user_id: 1)
-      token.instance_variable_set(:@time, 5.days.ago)
+      token.instance_variable_set(:@time, 5.days.ago - 1.second)
       expect(token).to be_expired
     end
 
