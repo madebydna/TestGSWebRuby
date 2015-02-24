@@ -109,7 +109,6 @@ $(function() {
 
     });
 
-    //pot pie
     $(".js-gs-checkbox").on('click', function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
