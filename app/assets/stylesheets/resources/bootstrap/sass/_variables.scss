@@ -164,7 +164,8 @@ $table-cell-padding:                 10px;   ////////////GS
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #6797c7 !default;
+//$btn-default-color:              #6797c7 !default;
+$btn-default-color:              #4788be !default;
 $btn-default-bg:                 #FFFFFF !default;
 $btn-default-hover:              #1e608b !default;
 $btn-default-border:             #6797c7 !default;
@@ -174,10 +175,10 @@ $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
 $btn-primary-border:             $brand-primary-dark !default;
 
-$btn-toggle-color:               #455367 !default;
+$btn-toggle-color:               #4788be !default;
 $btn-toggle-bg:                  #fff !default;
-$btn-toggle-border:              #7d8091 !default;
-$btn-toggle-bg-hover:            #d4d4d9 !default;
+$btn-toggle-border:              #4788be !default;
+$btn-toggle-hover:               #195074 !default;
 $btn-toggle-color-active:        #fff !default;
 $btn-toggle-bg-active:           #35485d !default;
 

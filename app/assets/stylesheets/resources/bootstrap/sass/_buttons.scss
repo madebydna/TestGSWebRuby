@@ -64,7 +64,7 @@
 }
 
 .btn-toggle {
-  @include button-toggle-variant($btn-toggle-color, $btn-toggle-bg, $btn-toggle-border, $btn-toggle-bg-active, $btn-toggle-color-active, $btn-toggle-border, $btn-toggle-bg-hover)
+  @include button-toggle-variant($btn-toggle-color, $btn-toggle-bg, $btn-toggle-border, $btn-toggle-bg-active, $btn-toggle-color-active, $btn-toggle-hover)
 }
 // Warning appears as orange
 .btn-warning {

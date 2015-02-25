@@ -495,7 +495,6 @@
   &:hover,
   &:focus {
     color: $active_color;
-//    background-color: color-button-background($background, $background_active);
     background-color:  #009edc;
         border-color: $hover_border;
   }
@@ -566,7 +565,7 @@
   }
 }
 
-@mixin button-toggle-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $hover_background:"") {
+@mixin button-toggle-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
   color: $color;
   background-color: $background;
   border-color: $border;
@@ -574,8 +573,8 @@
 
   &:hover
   {
-    color: $color;
-    background-color: $hover_background;
+    color: $hover_border;
+    background-color: $background;
     border-color: $hover_border;
   }
   .open & { &.dropdown-toggle {
