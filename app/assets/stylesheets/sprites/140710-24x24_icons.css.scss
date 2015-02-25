@@ -4,7 +4,7 @@
 
 .iconx24-icons {
   display: inline-block;
-  background-image: asset_data_url("icons/152502-24x24_sprite.png");
+  background-image: asset_data_url("icons/151103-24x24_sprite.png");
   width: 24px;
   height: 24px;
 }
@@ -13,6 +13,10 @@
 
 .i-24-checkmark-on {
   background-position: 0 -24px;
+}
+
+.btn.active .i-24-checkmark-on {
+  background-position: 0px -48px;
 }
 
 .i-24-checkmark-off {

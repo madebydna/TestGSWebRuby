@@ -27,7 +27,6 @@
 
   &:hover,
   &:focus {
-//    color: $btn-default-color;
     text-decoration: none;
     -webkit-transition: border .20s linear, color .20s linear, background-color .20s linear;
     transition: border .20s linear, color .20s linear, background-color .20s linear;
@@ -56,11 +55,6 @@
 
 // Alternate buttons
 // --------------------------------------------------
-
-//.btn-new {
-////  @include button-variant($btn-new-color, $btn-new-bg, $btn-new-border, '#2880b9', '#FFFFFF');
-//  @include button-variant-new($btn-new-color, $btn-new-bg-primary, $btn-new-border, $btn-primary-bg, $btn-new-color);
-//}
 
 .btn-primary {
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $btn-primary-bg, '#FFFFFF', $btn-primary-border);

@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/142502-16x16_sprite.png");
+  background-image: asset_data_url("icons/141103-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -126,17 +126,13 @@
   background-position: -272px 0px;
 }
 
-.btn.active .i-16-thumbs-up {
+.btn:hover .i-16-thumbs-up {
   background-position: -272px -16px;
 }
 
-//.i-16-blue-thumbs-up {
-//  background-position: -272px -16px;
-//}
-//
-//.i-16-white-thumbs-up {
-//  background-position: -272px -16px;
-//}
+.btn.active .i-16-thumbs-up {
+  background-position: -272px -32px;
+}
 
 .i-16-blue-students-enrolled {
   background-position: -288px 0px;
