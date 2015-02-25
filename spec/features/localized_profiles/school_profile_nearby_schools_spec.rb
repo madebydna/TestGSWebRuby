@@ -33,15 +33,15 @@ feature 'Nearby schools' do
       end
     end
 
-    scenario 'User sees four nearby schools' do
-      neighboring_schools[0..3].each do |s|
-        expect(subject).to have_content(s.name)
-      end
-    end
+    # scenario 'User sees four nearby schools' do
+    #   neighboring_schools[0..3].each do |s|
+    #     expect(subject).to have_content(s.name)
+    #   end
+    # end
 
-    scenario 'User sees nearby school section' do
-      expect(subject).to have_content('Nearby schools')
-    end
+    # scenario 'User sees nearby school section' do
+    #   expect(subject).to have_content('Nearby schools')
+    # end
   end
 
   context 'When there are fewer than four nearby schools' do
