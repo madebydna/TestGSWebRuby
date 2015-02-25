@@ -250,7 +250,7 @@ RSpec.configure do |config|
   config.before(:each) { Rails.cache.clear }
   config.after(:each) { Rails.cache.clear }
 
-  config.raise_errors_for_deprecations!
+  # config.raise_errors_for_deprecations!
 
   config.before(:each, js: true) do
     page.driver.block_unknown_urls

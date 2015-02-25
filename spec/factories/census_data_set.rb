@@ -117,27 +117,27 @@ FactoryGirl.define do
         school_value_params[:school_id] = evaluator.school_id
       end
 
-      allow(data_set).to receive(:census_data_school_values) do
-        FactoryGirl.create_list(
-          :census_data_school_value,
-          evaluator.number_of_school_values,
-          school_value_params
-        )
-      end
-
-      allow(data_set).to receive(:census_data_district_values) do
-        FactoryGirl.create_list(
-          :census_data_district_value,
-          evaluator.number_of_district_values
-        )
-      end
-
-      allow(data_set).to receive(:census_data_state_values) do
-        FactoryGirl.create_list(
-          :census_data_state_value,
-          evaluator.number_of_state_values
-        )
-      end
+      # allow(data_set).to receive(:census_data_school_values) do
+      #   FactoryGirl.create_list(
+      #     :census_data_school_value,
+      #     evaluator.number_of_school_values,
+      #     school_value_params
+      #   )
+      # end
+      #
+      # allow(data_set).to receive(:census_data_district_values) do
+      #   FactoryGirl.create_list(
+      #     :census_data_district_value,
+      #     evaluator.number_of_district_values
+      #   )
+      # end
+      #
+      # allow(data_set).to receive(:census_data_state_values) do
+      #   FactoryGirl.create_list(
+      #     :census_data_state_value,
+      #     evaluator.number_of_state_values
+      #   )
+      # end
     end
 
     after :stub do |data_set, evaluator|
@@ -149,27 +149,27 @@ FactoryGirl.define do
         school_value_params[:school_id] = evaluator.school_id
       end
       
-      allow(data_set).to receive(:census_data_school_values) do
-        FactoryGirl.build_stubbed_list(
-          :census_data_school_value,
-          evaluator.number_of_school_values,
-          school_value_params
-        )
-      end
-
-      allow(data_set).to receive(:census_data_district_values) do
-        FactoryGirl.build_stubbed_list(
-          :census_data_district_value,
-          evaluator.number_of_district_values
-        )
-      end
-
-      allow(data_set).to receive(:census_data_state_values) do
-        FactoryGirl.build_stubbed_list(
-          :census_data_state_value,
-          evaluator.number_of_state_values
-        )
-      end
+      # allow(data_set).to receive(:census_data_school_values) do
+      #   FactoryGirl.build_stubbed_list(
+      #     :census_data_school_value,
+      #     evaluator.number_of_school_values,
+      #     school_value_params
+      #   )
+      # end
+      #
+      # allow(data_set).to receive(:census_data_district_values) do
+      #   FactoryGirl.build_stubbed_list(
+      #     :census_data_district_value,
+      #     evaluator.number_of_district_values
+      #   )
+      # end
+      #
+      # allow(data_set).to receive(:census_data_state_values) do
+      #   FactoryGirl.build_stubbed_list(
+      #     :census_data_state_value,
+      #     evaluator.number_of_state_values
+      #   )
+      # end
     end
 
     trait :with_school_value do

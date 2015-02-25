@@ -14,9 +14,11 @@ shared_examples 'an update' do |update_class, required_update_keys|
     }
 
     # No need to initialize a CensusDataType factory for this spec
-    [:value_type, :id].each do |method|
-      allow_message_expectations_on_nil
-      allow(nil).to receive(method).and_return(nil)
+    before do
+      [:value_type, :id].each do |method|
+        allow_message_expectations_on_nil
+        allow(nil).to receive(method).and_return(nil)
+      end
     end
 
     required_update_keys.each do |required_key|
