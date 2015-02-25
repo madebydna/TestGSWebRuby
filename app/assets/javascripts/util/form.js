@@ -11,7 +11,7 @@ GS.forms.updateFormVisualElements = function() {
     if ($this.val() !== '') {
       var checkbox = $this.parent().find('.i-24-checkmark-off');
       checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-      $this.parent().find('.js-gs-checkbox').addClass('btn-border-green');
+      $this.parent().find('.js-gs-checkbox').addClass('active');
     }
   });
 
@@ -20,11 +20,12 @@ GS.forms.updateFormVisualElements = function() {
         var icoValue = $this.parent().data('gs-checkbox-icon-label');
         if ($this.val() !== '') {
             $this.parent().find('.js-icon').removeClass(icoValue+'-off').addClass(icoValue+'-on');
-            $this.parent().addClass('btn-bg-green');
+            $this.parent().addClass('active');
 
         }else {
             $this.parent().find('.js-icon').removeClass(icoValue+'-on').addClass(icoValue+'-off');
-            $this.parent().removeClass('btn-bg-green');
+            //$this.parent().removeClass('btn-bg-green');
+            $this.parent().removeClass('active');
         }
     });
   // Set initial state of visual radio buttons based on if hidden fields
@@ -46,7 +47,7 @@ GS.forms.updateFormVisualElements = function() {
       return $(this).val() !== '';
     }).length > 0) {
       $(this).find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-      $(this).find('.js-icon').parent().addClass('btn-border-green');
+      $(this).find('.js-icon').parent().addClass('active');
     }
   });
 
@@ -56,7 +57,7 @@ GS.forms.updateFormVisualElements = function() {
             return $(this).val() !== '';
         }).length > 0) {
             $(this).find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            $(this).find('.js-icon').parent().addClass('btn-border-green');
+            $(this).find('.js-icon').parent().addClass('active');
         }
     });
 };
@@ -115,12 +116,10 @@ $(function() {
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
             hidden_field.val(gs_checkBox);
-            //self.addClass('btn-border-green');
 
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
             hidden_field.val('');
-            //self.removeClass('btn-border-green');
 
         }
 
