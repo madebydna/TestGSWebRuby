@@ -100,8 +100,11 @@ $(function() {
         });
         if (is_pull_down_selected == true) {
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            pull_down_button.find('.btn').addClass('active');
 
         }else {
+            pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            pull_down_button.find('.btn').removeClass('active');
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
 
         }
