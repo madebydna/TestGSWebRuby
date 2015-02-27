@@ -76,8 +76,21 @@ Main do
   end
 
   def run
+    puts ['username', 'password', 'nice_name', 'email', 'name'].join("\t")
     authors.map do |author|
-      puts author
+      username = ''
+      name_tokens = author.split(' ')
+      email = ''
+      password = ('A'..'z').to_a.shuffle.take(8).join
+      if name_tokens.size == 2
+        username << name_tokens.first[0] << name_tokens.last
+        username.downcase!
+        email << "#{username}@greatschools.org"
+      end
+      nice_name = username
+
+      row = [username, password, nice_name, email, author].join("\t")
+      puts row
     end
 
     exit_success!
