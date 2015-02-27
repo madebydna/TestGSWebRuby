@@ -1,4 +1,3 @@
-require 'pry'
 class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   CACHE_KEY = 'nearby_schools'
   SCHOOL_COUNT = 5
