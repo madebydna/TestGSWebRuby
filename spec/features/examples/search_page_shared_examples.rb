@@ -14,7 +14,6 @@ shared_example 'should have a button to submit the search' do
   expect(subject.has_selector?('button', text: 'Search')).to be_truthy
 end
 
-
 #Change Location Shared Examples
 shared_examples_for 'should have Change Location link in search bar' do
 
@@ -50,4 +49,8 @@ shared_example 'should change the text saying what state they\'re currently in' 
   first('.rs-search_state_picker > li > a').click
   text2 = subject.find(:css, '.rs-current_location_text').text
   expect(text).not_to eq(text2)
+end
+
+shared_example 'should be on compare page' do
+  expect(subject).to eq compare_schools_path.chop
 end

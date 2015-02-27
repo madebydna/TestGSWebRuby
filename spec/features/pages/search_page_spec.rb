@@ -27,5 +27,23 @@ describe 'Search Page' do
       subject { page }
       include_example 'should have links to nearby cities'
     end
+
+    describe 'Comparing Schools', js: true do
+      include_context 'Visit City Browse Search', *['oh', 'youngstown']
+      with_shared_context 'Select Schools and Go to compare' do
+        include_example 'should be on compare page'
+      end
+    end
   end
+
+  describe 'By Location' do
+    describe 'Comparing Schools', js: true do
+      include_context 'Visit By Location Search', *['100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326]
+      with_shared_context 'Select Schools and Go to compare' do
+        include_example 'should be on compare page'
+      end
+    end
+  end
+
+
 end
