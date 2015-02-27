@@ -151,7 +151,7 @@ module PdfConcerns
   COLLECTION_ID_LANDING_PAGE_MAPPING = {
       1 => 'www.greatschoolsdetroit.org',
       2 => 'www.greatschoolsmilwaukee.org',
-      3 => 'www.greatschoolsindianapolis.org'
+      3 => 'www.greatschools.org/indianapolis'
   }
 
   # Map_icon_to_school_name_mapping = {'no_map_icon' => []}
