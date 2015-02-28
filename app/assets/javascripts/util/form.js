@@ -129,7 +129,6 @@ $(function() {
     });
 
     $('.js-gs-checkbox-search').on('click',function(){
-//    $('.js-searchFiltersForm').on('click', '.js-gs-checkbox-search',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -175,11 +174,9 @@ $(function() {
 
         if (hidden_field.val()== '') {
             checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-            self.removeClass('btn-default').addClass('btn-primary');
             hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
         } else {
             checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
-            self.removeClass('btn-primary').addClass('btn-default');
             hidden_field.removeAttr("value").removeAttr("name");
         }
     });
@@ -193,29 +190,8 @@ $(function() {
         var gs_checkBoxCategory= self.data('gs-checkbox-category');
         var gs_iconLabel = self.data('gs-checkbox-icon-label');
         checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-        self.removeClass('btn-default').addClass('btn-primary');
+        self.addClass('active');
         hidden_field.val(gs_checkBox).attr("name", gs_checkBoxCategory);
-    };
-
-    $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
-        var self = $(this);
-        var sibling = self.siblings('.js-sports-gender');
-        var gs_gender = self.data('gs-gender');
-        var self_filters = $('.js-'+ gs_gender +'-sports-values');
-        var sibling_filters = self_filters.siblings('.js-sports-button-group');
-
-        sibling_filters.hide();
-        self_filters.slideToggle('slow');
-        //self.removeClass('btn-default').addClass('btn-primary');
-        //sibling.removeClass('btn-primary').addClass('btn-default');
-    });
-
-    var toggleButtonForSports = function(button, children){
-        if (childCheckboxesAreEmpty(children)){
-            button.removeClass('btn-primary').addClass('btn-default');
-        } else {
-            button.removeClass('btn-default').addClass('btn-primary');
-        }
     };
 
     var toggleCheckboxForCollapsibleBox = function(checkbox, children) {
@@ -243,21 +219,6 @@ $(function() {
             var children = hidden_box.children('div').children('.js-gs-checkbox-value');
             toggleCheckboxForCollapsibleBox(checkbox, children);
         });
-    };
-
-    var toggleButtonForSportsOnLoad = function(){
-        $('.js-sports-gender').each(function(i){
-            var self = $(this);
-            var gs_gender = self.data('gs-gender');
-            var selfFilters = self.parents().siblings('.js-'+ gs_gender +'-sports-values');
-
-            var inputElements = [];
-            $(selfFilters).children('.js-sportsIconButton').each(function(i){
-                inputElements.push($(this).children('.js-value'));
-            });
-            toggleButtonForSports(self,inputElements);
-        });
-
     };
 
     $('.js-guidedSearch').on('submit',function() {
@@ -367,7 +328,6 @@ $(function() {
     };
 
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
-    GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;
     GS.forms.sportsToolTip = sportsToolTip;
     GS.forms.setShowFiltersCookieHandler = setShowFiltersCookieHandler;
     GS.forms.checkFancyCheckbox = checkFancyCheckbox;
@@ -376,7 +336,6 @@ $(function() {
 
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
-    //GS.forms.toggleButtonForSportsOnLoad();
     GS.forms.sportsToolTip();
     GS.forms.setShowFiltersCookieHandler();
 });

@@ -4,7 +4,7 @@
 
 .iconx24-icons {
   display: inline-block;
-  background-image: asset_data_url("icons/151103-24x24_sprite.png");
+  background-image: asset_data_url("icons/150227-24x24_sprite.png");
   width: 24px;
   height: 24px;
 }
@@ -91,56 +91,84 @@
   background-position: -384px 0;
 }
 
-.i-24-soccer-on {
+.btn:hover > .i-24-soccer-off {
   background-position: -384px -24px;
+}
+
+.i-24-soccer-on {
+  background-position: -384px -48px;
 }
 
 .i-24-track-off {
   background-position: -408px 0;
 }
 
-.i-24-track-on {
+.btn:hover > .i-24-track-off {
   background-position: -408px -24px;
+}
+
+.i-24-track-on {
+  background-position: -408px -48px;
 }
 
 .i-24-basketball-off {
   background-position: -432px 0px
 }
 
-.i-24-basketball-on {
+.btn:hover > .i-24-basketball-off {
   background-position: -432px -24px
+}
+
+.i-24-basketball-on {
+  background-position: -432px -48px
 }
 
 .i-24-football-off {
   background-position: -456px 0px
 }
 
-.i-24-football-on {
+.btn:hover > .i-24-football-off {
   background-position: -456px -24px
+}
+
+.i-24-football-on {
+  background-position: -456px -48px
 }
 
 .i-24-volleyball-off {
   background-position: -480px 0px
 }
 
-.i-24-volleyball-on {
+.btn:hover > .i-24-volleyball-off {
   background-position: -480px -24px
+}
+
+.i-24-volleyball-on {
+  background-position: -480px -48px
 }
 
 .i-24-cheerleading-off {
   background-position: -504px 0px
 }
 
-.i-24-cheerleading-on {
+.btn:hover > .i-24-cheerleading-off {
   background-position: -504px -24px
+}
+
+.i-24-cheerleading-on {
+  background-position: -504px -48px
 }
 
 .i-24-baseball-off {
   background-position: -528px 0px
 }
 
-.i-24-baseball-on {
+.btn:hover > .i-24-baseball-off {
   background-position: -528px -24px
+}
+
+.i-24-baseball-on {
+  background-position: -528px -48px
 }
 
 .i-24-grey-down-arrow {
