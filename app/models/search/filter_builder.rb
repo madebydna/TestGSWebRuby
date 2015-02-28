@@ -334,6 +334,7 @@ class FilterBuilder
             girls_sports: {
               label: 'Girls Sports',
               display_type: :title,
+              name: :girls_sports,
               filters: {
                 sports_icons: {
                   display_type: :sports_button_group,
@@ -351,6 +352,7 @@ class FilterBuilder
             boys_sports: {
               label: 'Boys Sports',
               display_type: :title,
+              name: :boys_sports,
               filters: {
                 sports_icons: {
                   display_type: :sports_button_group,
