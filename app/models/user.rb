@@ -252,8 +252,12 @@ class User < ActiveRecord::Base
     self.reported_reviews.map(&:reported_entity_id).include? review.id
   end
 
-  def is_profile_active?
+  def has_active_profile?
     user_profile && user_profile.active?
+  end
+
+  def has_inactive_profile?
+    user_profile && user_profile.inactive?
   end
 
   def add_user_grade_level(grade)

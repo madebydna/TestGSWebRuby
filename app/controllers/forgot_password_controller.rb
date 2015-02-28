@@ -34,7 +34,7 @@ class ForgotPasswordController < ApplicationController
     elsif user.provisional?
       verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
       error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
-    elsif !user.is_profile_active?
+    elsif user.has_inactive_profile?
       error_msg = t('forms.errors.email.de_activated').html_safe
     end
 

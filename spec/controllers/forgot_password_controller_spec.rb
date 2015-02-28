@@ -11,19 +11,29 @@ describe ForgotPasswordController do
   end
 
   describe '#validate_user' do
-    context 'when user has disabled profile' do
+    context 'with valid email and registered user' do
       let(:user) { FactoryGirl.build(:verified_user) }
-      let(:inactive_user_profile) { FactoryGirl.build(:inactive_user_profile) }
-
       before do
         allow(user).to receive(:has_password?).and_return(true)
         allow(controller).to receive(:email_param_error).and_return(nil)
         allow(controller).to receive(:user_from_email_param).and_return(user)
-        allow(user).to receive(:user_profile).and_return(inactive_user_profile)
+        allow(user).to receive(:user_profile).and_return(profile)
       end
 
-      it "should use the \'#{I18n.t('forms.errors.email.de_activated')}\' error message" do
-        expect(controller.validate_user).to eq([user, I18n.t('forms.errors.email.de_activated')])
+      context 'when user has disabled profile' do
+        let(:profile) { FactoryGirl.build(:inactive_user_profile) }
+
+        it "should use the \'#{I18n.t('forms.errors.email.de_activated')}\' error message" do
+          expect(controller.validate_user).to eq([user, I18n.t('forms.errors.email.de_activated')])
+        end
+      end
+
+      context 'when user has no profile' do
+        let(:profile) { nil }
+
+        it "should use the return the user and no error" do
+          expect(controller.validate_user).to eq([user, nil])
+        end
       end
     end
 
