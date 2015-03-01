@@ -102,7 +102,7 @@ describe FilterBuilder do
       end
       let (:group2_filters) {filters_hash[:filters][:group2][:filters]}
       context 'should contain advanced filters' do
-        {dress_code: 'dress code', class_offerings: 'class offerings', boys_sports: 'boys_sports', girls_sports: 'girls_sports'}.each do |k,v|
+        {dress_code: 'Dress code', class_offerings: 'Class Offering', boys_sports: 'Boys Sports', girls_sports: 'Girls Sports'}.each do |k,v|
           it "like #{v}" do
             expect(group2_filters).to have_key k
           end
