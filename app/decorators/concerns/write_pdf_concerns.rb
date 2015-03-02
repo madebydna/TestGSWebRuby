@@ -1,7 +1,7 @@
 #encoding: utf-8
 
 module WritePdfConcerns
-  include ApplicationHelper
+  # include ApplicationHelper
 
   RECT_EDGE_ROUNDING = 10
   DARK_BLUE = 70, 15, 0, 0
