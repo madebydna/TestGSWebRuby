@@ -79,6 +79,13 @@ class FilterBuilder
             },
             wi: {
                 milwaukee: add_vouchers_callbacks
+            }.stringify_keys!,
+            dc: {
+                washington: add_vouchers_callbacks
+            }.stringify_keys!,
+            ca: {
+                oakland: summer_programs_callbacks,
+                'san francisco' => summer_programs_callbacks
             }.stringify_keys!
         }
     ).stringify_keys!
@@ -174,6 +181,29 @@ class FilterBuilder
     ]
   end
 
+  def summer_programs_callbacks
+    [
+        {
+            callback_type: 'cache_key',
+            options: {
+                value: 'summer_programs',
+                version: 1
+            }
+        },
+        {
+            conditions:
+                [
+                    {key: 'name', match: 'beforeAfterCare'}, {key: 'value', match: 'after'}
+                ],
+            callback_type: 'insert_after',
+            options:
+                {
+                    summer: {label: 'Summer program', display_type: :basic_checkbox, name: :summer_program, value: :yes}
+                }
+        }
+    ]
+  end
+
   def include_advanced_filters?(state, city)
     state_callbacks.key?(state) || city_callbacks[state].key?(city)
   end
@@ -263,6 +293,16 @@ class FilterBuilder
           charter: {label: 'Public charter schools', display_type: :basic_checkbox, name: :st, value: :charter},
           private: {label: 'Private schools', display_type: :basic_checkbox, name: :st, value: :private}
         }
+      },
+      gs_rating: {
+        label: 'Quality',
+        display_type: :title,
+        name: :gs_rating,
+        filters: {
+          above_average: {label: 'Above average', display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
+          average: {label: 'Average', display_type: :basic_checkbox, name: :gs_rating, value: :average},
+          below_average: {label: 'Below average', display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
+        }
       }
     }
   end
@@ -285,13 +325,13 @@ class FilterBuilder
                 public_transit: {label: 'Near public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
               }
             },
-            beforeAfterCare: {
-              label: 'Before/After Care',
+            extendedHours: {
+              label: 'Extended hours',
               display_type: :title,
-              name: :beforeAfterCare,
+              name: :extendedHours,
               filters: {
-                before: {label: 'Before school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
-                after: {label: 'After school care', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
+                before: {label: 'Before school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
+                after: {label: 'After school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
             }
           })

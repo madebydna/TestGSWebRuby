@@ -20,7 +20,7 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
   end
 
   def school_media
-    @school_media_count ||= school.school_media_first_hash
+    @school_media ||= school.school_media_first_hash
   end
 
   def osp_data_present?
@@ -86,15 +86,15 @@ class ProgressBarCaching::ProgressBarCacher < Cacher
     unique_keys = [:arts, :foreign_language, :before_after_care, :transportation, :girls_sports, :boys_sports,
                    :staff_resources, :parent_involvement, :facilities ]
 
-    unique_osp_keys_in_school = []
+    unique_osp_keys_in_school = {}
 
     osp_keys_in_school.each do |key|
       if osp_keys_by_group.has_key?(key.to_sym)
-        unique_osp_keys_in_school << osp_keys_by_group[key.to_sym]
+        unique_osp_keys_in_school[osp_keys_by_group[key.to_sym]] = true
       end
     end
 
-    unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.uniq().sort == unique_keys.sort : false
+    unique_osp_keys_in_school.present? ? unique_osp_keys_in_school.keys.length == unique_keys.length : false
   end
 
   def self.listens_to?(data_type)

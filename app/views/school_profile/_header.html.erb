@@ -15,7 +15,11 @@
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 tal clearfix">
             <div class="fl prl pbm">
               <%= link_to(school_url(@school, anchor: 'Media_Gallery')) do %>
-                <%= school_profile_decorator.photo %>
+                <%= school_profile_decorator.photo.present? ? school_profile_decorator.photo : image_tag(
+                    image_path("search/no-school-photo.png"),
+                    class: 'thumbnail-border profile-image',
+                    alt: "Image provided by GreatSchools."
+                ) %>
               <% end %>
             </div>
 
@@ -30,7 +34,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
                            school_profile_decorator.process_level,
-                           @school.type.downcase == "charter" ? "Public charter" : @school.type.gs_capitalize_first,
+                           school_type_display(@school.type),
                            raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 
@@ -93,7 +97,7 @@
               <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                    <button data-link-value="<%= school_review_form_path(school) %>" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
+                    <button data-link-value="<%= school_review_form_path(school) %>" data-google-tracking-type="Review CTA Header" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
                       <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
                     </button>
                   </div>

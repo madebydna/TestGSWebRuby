@@ -27,7 +27,9 @@
 
                               <%= f.hidden_field :state, value: @school.state %>
                               <%= f.hidden_field :school_id, value: @school.id %>
-
+                            <% if params['morganstanley'].present? %>
+                                 <%= f.hidden_field :morganstanley, value: '1' %>
+                            <% end %>
                             <div class="form-group">
                               <label class="control-label" for="input01">How do you rate your school?</label>
                               <div class="controls ptm">
@@ -94,7 +96,7 @@
                             </div>
 
                             <div class="form-actions">
-                              <button type="submit" class="btn btn-primary">Submit your review</button>
+                              <button type="submit" class="btn btn-primary js-ga-track-link" data-google-tracking-type="Review Submit" >Submit your review</button>
                             </div>
                           </fieldset>
                         <% end %>

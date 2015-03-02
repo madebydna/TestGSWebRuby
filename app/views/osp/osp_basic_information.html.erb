@@ -1,0 +1,59 @@
+<div class="row limit-width-1200 pll tac">
+  School : <%= @school.name %> ,  <%= @school.state %> ,  <%= @school.city %>
+ <br/>
+Basic Information
+
+  <br/>
+  <%= link_to "Academics".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "2") %><br/>
+  <%= link_to "ExtraCurricular and Culture".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "3") %><br/>
+  <%= link_to "Faclities And Staff".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "4") %>
+<br/>
+OSP_QUESTION_INFO
+  <% @osp_question.each do |question| %>
+      <br/>
+      <tr>
+        <td>  <%= question.id %></td>
+        <td>  <%= question.esp_response_key %></td>
+        <td>  <%= question.question_label %></td>
+        <td>  <%= question.school_type %></td>
+        <td>  <%= question.level_code %></td>
+        <td>  <%= question.default_config%></td>
+        <td>  <%= question.active%></td>
+        <td>  <%= question.updated%></td>
+      </tr>
+      <br>
+  <% end %>
+  <br/>
+  OSP_QUESTION_GROUP_INFO
+  <% @osp_question_group.each do |group| %>
+      <br/>
+      <tr>
+        <td>  <%= group.id %></td>
+        <td>  <%= group.image_path %></td>
+        <td>  <%= group.heading %></td>
+        <td>  <%= group.sub_text %></td>
+        <td>  <%= group.default_config %></td>
+        <td>  <%= group.active%></td>
+        <td>  <%= group.updated%></td>
+      </tr>
+      <br>
+  <% end %>
+  <br/>
+  OSP_DISPLAY_CONFIG_INFO
+  <% @osp_display_config.each do |display_question| %>
+      <br/>
+      <tr>
+        <td>  <%= display_question.id %></td>
+        <td>  <%= display_question.location_group_id %></td>
+        <td>  <%= display_question.ques_id %></td>
+        <td>  <%= display_question.ques_group_id %></td>
+        <td>  <%= display_question.order_on_page %></td>
+        <td>  <%= display_question.order_in_group%></td>
+        <td>  <%= display_question.page_name%></td>
+        <td>  <%= display_question.config %></td>
+        <td>  <%= display_question.active%></td>
+        <td>  <%= display_question.updated%></td>
+      </tr>
+      <br>
+  <% end %>
+</div>

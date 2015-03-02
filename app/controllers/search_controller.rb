@@ -16,10 +16,11 @@ class SearchController < ApplicationController
   layout 'application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
-  SOFT_FILTER_KEYS = ['beforeAfterCare', 'dress_code', 'boys_sports', 'girls_sports', 'transportation', 'school_focus', 'class_offerings','enrollment']
+  SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program)
   MAX_RESULTS_FOR_MAP = 100
   NUM_NEARBY_CITIES = 8
   MAX_RESULTS_FOR_FIT = 300
+  DEFAULT_RADIUS = 5
   MAX_RADIUS = 60
   MIN_RADIUS = 1
 
@@ -100,11 +101,7 @@ class SearchController < ApplicationController
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @lat = params_hash['lat']
       @lon = params_hash['lon']
-      @radius = params_hash['distance'].presence || 5
-      @radius = Integer(@radius) rescue @radius = 5
-      @radius = MAX_RADIUS if @radius > MAX_RADIUS
-      @radius = MIN_RADIUS if @radius < MIN_RADIUS
-      search_options.merge!({lat: @lat, lon: @lon, radius: @radius})
+      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
       search_options.merge!({state: @state[:short]}) if @state
       @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
       @search_term = params_hash['locationSearchString']
@@ -151,7 +148,6 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
-
     @sort_type = parse_sorts(@params_hash).presence
     @active_sort = active_sort_name(@sort_type)
 
@@ -258,6 +254,15 @@ class SearchController < ApplicationController
 
   protected
 
+  def radius_param
+    @radius = params_hash['distance'].presence || DEFAULT_RADIUS
+    @radius = Integer(@radius) rescue @radius = DEFAULT_RADIUS
+    @radius = MAX_RADIUS if @radius > MAX_RADIUS
+    @radius = MIN_RADIUS if @radius < MIN_RADIUS
+    record_applied_filter_value('distance', @radius) unless "#{@radius}" == params_hash['distance']
+    @radius
+  end
+
   def bail_on_fit?
     if sorting_by_fit? && hide_fit?
       redirect_to path_w_query_string 'sort', nil
@@ -318,6 +323,17 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
+
+    if should_apply_filter?(:gs_rating)
+      gs_rating_params = params_hash['gs_rating']
+      gs_rating_params = [gs_rating_params] unless gs_rating_params.instance_of?(Array)
+      gs_ratings = []
+      gs_ratings += [8,9,10] if gs_rating_params.include? 'above_average'
+      gs_ratings += [4,5,6,7] if gs_rating_params.include? 'average'
+      gs_ratings += [1,2,3] if gs_rating_params.include? 'below_average'
+      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
@@ -356,8 +372,6 @@ class SearchController < ApplicationController
   end
 
   def ad_setTargeting_through_gon
-    ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
-    ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     ad_targeting_gon_hash['template']    = 'search' # use this for page name - configured_page_name
     targeted_city = if @city && @city.respond_to?(:name)
                       @city.name
@@ -367,6 +381,10 @@ class SearchController < ApplicationController
     ad_targeting_gon_hash['City']        = targeted_city if targeted_city
     ad_targeting_gon_hash['State']       = @state[:short] if @state
     ad_targeting_gon_hash['County']      = county_object.try(:name) if county_object
+    if params[:grades].present?
+      level_code = LevelCode.from_grade(params[:grades])
+      ad_targeting_gon_hash['level'] = level_code if level_code
+    end
   end
 
   def county_object
@@ -462,6 +480,13 @@ class SearchController < ApplicationController
     omniture_soft_filters_hash
     omniture_hard_filter(filters, params_hash)
     omniture_distance_filter(params_hash)
+  end
+
+  # Any time we apply a different filter value than what is in the URL, we should record that here
+  # so the view knows how to render the filter form. See search.js::updateFilterState and normalizeInputValue
+  def record_applied_filter_value(filter_name, filter_value)
+    gon.search_applied_filter_values ||= {}
+    gon.search_applied_filter_values[filter_name] = filter_value
   end
 
   def setup_search_gon_variables

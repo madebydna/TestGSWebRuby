@@ -1,9 +1,9 @@
 #encoding: utf-8
-include PdfConcerns
-include WritePdfConcerns
+
 
 class PyocPdf < Prawn::Document
-
+  include PdfConcerns
+  include WritePdfConcerns
 
   # def initialize(schools_decorated_with_cache_results, is_k8_batch, is_high_school_batch, is_pk8_batch, get_page_number_start, is_spanish, collection_id, is_location_index, is_performance_index, location_index_page_number_start, performance_index_page_number_start)
   def initialize(schools_decorated_with_cache_results, opts = {})

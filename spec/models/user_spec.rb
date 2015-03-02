@@ -242,7 +242,70 @@ describe User do
       end
     end
 
-  end
+    describe '#create_user_profile' do
+      it 'should log exceptions' do
+        user_profile_stub = Class.new
+        allow(user_profile_stub).to receive(:create) { raise 'error' }
+        allow(user_profile_stub).to receive(:where) { user_profile_stub }
+        allow(user_profile_stub).to receive(:first) { nil }
 
+        stub_const('UserProfile', user_profile_stub)
+        expect(user).to receive(:log_user_exception)
+        expect{ user.send(:create_user_profile) }.to raise_error
+      end
+    end
+
+    describe '#encrypt_plain_text_password_after_first_save' do
+      it 'should log exceptions' do
+        user.password = 'abcdefg'
+        user.send(:encrypted_password=, nil)
+        allow(user).to receive(:save!) { raise 'error' }
+        expect(user).to receive(:log_user_exception)
+        expect { user.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
+      end
+
+      it "should only get called once, at the time user is first saved" do
+        user.password = 'foobarbaz'
+        expect(user).to receive(:encrypt_plain_text_password_after_first_save).and_call_original.once
+        user.save
+      end
+    end
+
+    describe '#time_added' do
+      after { clean_models User }
+
+      it 'should be less than or equal to the "updated" timestamp after first save' do
+        u = FactoryGirl.build(:new_user)
+        u.save
+        u.reload
+        expect(u.time_added).to be_present
+        expect(u.updated).to be_present
+        expect(u.updated).to eq(u.time_added)
+      end
+
+      it 'should not be changed when user is updated' do
+        u = FactoryGirl.build(:new_user)
+        u.save
+        u.reload
+        expect do
+          u.first_name = 'Foo'
+          u.save
+          u.reload
+        end.to_not change { u.time_added }
+      end
+
+      it 'should never be greater than "updated" timestmap' do
+        u = FactoryGirl.build(:new_user)
+        u.save
+        u = User.find(u.id)
+        sleep(1.second)
+        u.save
+        u.reload
+        expect(u.time_added).to be_present
+        expect(u.updated).to be_present
+        expect(u.updated).to be >= u.time_added
+      end
+    end
+  end
 
 end

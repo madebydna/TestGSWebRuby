@@ -7,6 +7,7 @@ module CharacteristicsCaching::Validation
 
     # List the methods you want to run here.
     # Note that order is important!
+    validate_format!
     validate_ethnicities!
 
     @characteristics
@@ -17,6 +18,16 @@ module CharacteristicsCaching::Validation
   # Please give methods understandable names and logic with
   # comments when necessary. The goal is for a wide audience to
   # understand this business logic.
+
+  def validate_format!
+    remove_empty_values!
+  end
+
+  def remove_empty_values!
+    @characteristics.keep_if do | char_type, values |
+      values.present? or (log_data_rejection(@state,@school.id,char_type,"No value found") and false)
+    end
+  end
 
   def validate_ethnicities!
     if @characteristics['Ethnicity']

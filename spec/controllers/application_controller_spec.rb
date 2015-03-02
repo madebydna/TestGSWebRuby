@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe ApplicationController do
 
+
   it 'should have methods for manipulating cookies' do
     expect(controller).to respond_to(:write_cookie_value)
     expect(controller).to respond_to(:read_cookie_value)
@@ -66,6 +67,8 @@ describe ApplicationController do
           @cookie_jar = HashWithIndifferentAccess.new
           allow(controller).to receive(:cookies).and_return @cookie_jar
         end
+        before { Timecop.freeze }
+        after { Timecop.return }
 
         it 'should set duration on cookie' do
           test_duration = 1.day
@@ -115,6 +118,8 @@ describe ApplicationController do
           @cookie_jar = HashWithIndifferentAccess.new
           allow(controller).to receive(:cookies).and_return @cookie_jar
         end
+        before { Timecop.freeze }
+        after { Timecop.return }
 
         it 'should set duration on cookie' do
           subject.send :write_cookie_value, :test_cookie, 'value', nil, true

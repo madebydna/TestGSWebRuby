@@ -60,6 +60,7 @@ p, a {
 .text_orange { color: #ff9369; }
 .text_purple { color: #826e92; }
 .text_green {color: $green_light; }
+.text_blue {color: blue; }
 
 // text_font_large is deprecated
 .text_font_large {font-size: 24px;}
@@ -180,6 +181,7 @@ p, a {
   .best-known-for { font-size: 20px; }
   .subtitle-lg {font-size: 20px}
   .subtitle-md {font-size: 16px}
+  .subtitle-sm {font-size: 12px}
 }
 
 @media (min-width: 990px) {
@@ -259,6 +261,10 @@ body { top: 0px !important; }
   width: 100%;
   height: 45px;
 //  margin: auto;
+}
+
+.jumbo-header-home-banner{
+  font-size:65px;color:#F1c403;
 }
 
 //@media ()

@@ -79,12 +79,9 @@ $(function() {
   });
 
   $('.js-button-link').on('click', function() {
-    // if google tracking has a value send to google on button click
-    var google_tracking_type = $(this).data('google-tracking-type');
-    var google_tracking_value = $(this).data('google-tracking-value');
-    if(google_tracking_type){
-      ga('send', 'event', 'button', 'click', google_tracking_type, google_tracking_value);
-    }
+
+    //TODO js-button-link class should not tied to tracking and then changing the url.Refactor when iterating over google analytics.
+    GS.ga.track($(this));
 
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
@@ -93,6 +90,13 @@ $(function() {
     } else {
       window.location.href = url;
     }
+
+  });
+
+  //TODO how would we like to handle google tracking.
+  $('.js-ga-track-link').on('click', function() {
+    GS.ga.track($(this));
+    return true;
   });
 
   $('.js_toggle_parent_sib').on('click', function(){
@@ -116,20 +120,4 @@ $(function() {
       $(this).attr('class', cssClass);
     }
   }, 'span');
-});
-$(function() {
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-  ga('create', 'UA-54676320-1', 'auto');
-  ga('send', 'pageview');
 });

@@ -41,7 +41,7 @@ class UserController < ApplicationController
     end
 
     if user.present? && user.provisional?
-      EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
+      EmailVerificationEmailNoPassword.deliver_to_user(user, email_verification_url(user))
       flash_notice t('actions.account.pending_email_verification')
     end
 

@@ -6,23 +6,17 @@ module SearchSpecHelper
   def set_up_city_browse(state_abbrev,city_name,query_string=nil)
     state_name = States.state_name(state_abbrev)
     city = find_and_allow_city(state_abbrev,city_name)
-    set_up_property_table
     yield if block_given?
     visit "/#{state_name}/#{city.name.downcase.gsub(/ /,'-')}/schools?#{query_string}"
-  end
-
-  def set_up_property_table
-    allow(PropertyConfig).to receive(:where).and_return nil
   end
 
   def set_up_district_browse(state_abbrev,district_name,city_name='whatever',query_string=nil)
     # City is required as part of the district_browse url structure, but not really necessary for testing
     state_name = States.state_name(state_abbrev)
     city = find_and_allow_city(state_abbrev,city_name)
-    district = District.new(name: district_name, state: state_abbrev, city: city_name, lat: 47, lon: 47)
-    district.id = 47;
+    district = build(:district, name: district_name, state: state_abbrev, city: city_name, lat: 47, lon: 47)
+    district.id = 47
     allow(District).to receive(:where).and_return([district])
-    set_up_property_table
     yield if block_given?
     visit "/#{state_name}/#{city.name.downcase.gsub(/ /,'-')}/#{district.name.downcase.gsub(/ /,'-')}/schools?#{query_string}"
   end
@@ -30,7 +24,6 @@ module SearchSpecHelper
   def set_up_by_location_search(street_address='100 North Dupont Road', city='Wilmington', zipcode=19807,state='DE',lat=39.752831,lon=-75.588326,query_string=nil)
     school = School.new(name: 'Keith Elementary', state: state, city: city, lat: lat, lon: lon)
     allow(School).to receive(:find).and_return(school)
-    set_up_property_table
     yield if block_given?
     visit "/search/search.page?state=#{state}&lat=#{lat}&lon=#{lon}&city=#{city}&#{query_string}"
   end
@@ -38,14 +31,13 @@ module SearchSpecHelper
   def set_up_by_name_search(school_name='dover elementary',state='DE',query_string=nil)
     school = School.new(name: 'Keith Elementary', state: state)
     allow(School).to receive(:find).and_return(school)
-    set_up_property_table
     yield if block_given?
     encoded_school_name = URI.encode(school_name)
     visit "/search/search.page?state=#{state}&q=#{encoded_school_name}&#{query_string}"
   end
 
   def find_and_allow_city(state_abbrev,city_name)
-    city = City.new(name: city_name, state: state_abbrev)
+    city = build(:city, name: city_name, state: state_abbrev)
     allow(City).to receive(:find_by_state_and_name).and_return(city)
     city
   end
@@ -72,10 +64,47 @@ module SearchSpecHelper
         end
       end
     end
-    ads_and_schools
+    ads_and_schools.map { |div| div['data-dfp'] || :search_result }
   end
 
-  def create_slots_list(num_search_results)
+  def header_ad_slots
+    {
+        desktop: ['Responsive_Search_Content_Top_728x90'],
+        mobile: ['Responsive_Mobile_Search_Content_Top_320x50']
+    }
+  end
+
+
+  def footer_ad_slots
+    {
+        desktop: ['Responsive_Search_Footer_728x90'],
+        mobile: ['Responsive_Mobile_Search_Footer_320x50']
+    }
+  end
+
+  def results_ad_slots
+    {
+        desktop: [
+            'Responsive_Search_After4_728x90',
+            'Responsive_Search_After8_Text_728x60',
+            [
+                'Responsive_Search_After12_Left_300x250',
+                'Responsive_Search_After12_Right_300x250'
+            ],
+            'Responsive_Search_After16_728x90',
+            'Responsive_Search_After20_728x90'
+        ],
+        mobile: [
+            'Responsive_Mobile_Search_After4_300x250',
+            'Responsive_Mobile_Search_After8_Text_320x60',
+            'Responsive_Mobile_Search_After12_320x50',
+            'Responsive_Mobile_Search_After16_300x250',
+            'Responsive_Mobile_Search_After20_320x50'
+        ]
+    }
+  end
+
+  def expected_slots_list(num_search_results)
     slots = []
     slots << header_ad_slots[:desktop].first
     slots << header_ad_slots[:mobile].first
@@ -83,7 +112,7 @@ module SearchSpecHelper
     while num_search_results > 0
       4.times do
         if num_search_results > 0
-          slots << {}
+          slots << :search_result
           num_search_results -= 1
         end
       end
@@ -111,7 +140,7 @@ module SearchSpecHelper
   end
 
   def open_full_filter_dialog
-    page.all(:css, '.js-advancedFilters').last.click
+    find(:css, '.js-advancedFilters').click
   end
 
   def checkbox_accordian(filter_type)

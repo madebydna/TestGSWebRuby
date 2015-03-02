@@ -151,13 +151,13 @@ module PdfConcerns
   COLLECTION_ID_LANDING_PAGE_MAPPING = {
       1 => 'www.greatschoolsdetroit.org',
       2 => 'www.greatschoolsmilwaukee.org',
-      3 => 'www.greatschoolsindianapolis.org'
+      3 => 'www.greatschools.org/indianapolis'
   }
 
   # Map_icon_to_school_name_mapping = {'no_map_icon' => []}
 
-  def which_school_type
-    ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING[decorated_school_type]
+  def which_school_type(type)
+    ENGLISH_TO_SPANISH_SCHOOL_TYPE_MAPPING[school_type_display(type)]
   end
 
   def which_ethnicity_key_mapping(data)
@@ -319,5 +319,14 @@ module PdfConcerns
     end
 
     map_icon_to_school_name_mapping
+  end
+
+  def school_type_display(type)
+    school_types_map = {
+        charter: 'Public charter',
+        public: 'Public district',
+        private: 'Private'
+    }
+    school_types_map[type.to_s.downcase.to_sym]
   end
 end

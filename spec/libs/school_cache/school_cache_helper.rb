@@ -10,10 +10,11 @@ module SchoolCacheHelper
     rev = { name: 'reviews_snapshot', value: reviews_snapshot['reviews_snapshot']}
     esp = { name: 'esp_responses', value: esp_responses['esp_responses']}
     rat = { name: 'ratings', value: ratings['ratings']}
+    nbs = { name: 'nearby_schools', value: nearby_schools['nearby_schools']}
 
-    yield char[:value], rev[:value], esp[:value], rat[:value] if block_given?
+    yield char[:value], rev[:value], esp[:value], rat[:value], nbs[:value] if block_given?
 
-    save_school_cache_to_db!(school_id, state, [char, rev, esp, rat])
+    save_school_cache_to_db!(school_id, state, [char, rev, esp, rat, nbs])
   end
 
   def save_school_cache_to_db!(school_id, state, cache_data)
@@ -148,4 +149,19 @@ module SchoolCacheHelper
     yield rat if block_given?
     rat
   end
+
+  def nearby_schools
+      nbs = {
+        "nearby_schools" => [
+            {"id"=>8234,"name"=>"Saint Joseph Notre Dame High School","city"=>"Alameda","state"=>"CA","gs_rating"=>"nr","type"=>"private","level"=>"9-12","review_score"=>4,"review_count"=>16},
+            {"id"=>17573,"name"=>"Arise High School","city"=>"Oakland","state"=>"CA","gs_rating"=>"2","type"=>"charter","level"=>"9-12","review_score"=>3,"review_count"=>3},
+            {"id"=>8208,"name"=>"Saint Elizabeth High School","city"=>"Oakland","state"=>"CA","gs_rating"=>"nr","type"=>"private","level"=>"9-12","review_score"=>3,"review_count"=>8},
+            {"id"=>14052,"name"=>"Alameda Science And Technology Institute","city"=>"Alameda","state"=>"CA","gs_rating"=>"9","type"=>"public","level"=>"9-12","review_score"=>4,"review_count"=>19},
+            {"id"=>12550,"name"=>"Metwest High School","city"=>"Oakland","state"=>"CA","gs_rating"=>"3","type"=>"public","level"=>"9-12","review_score"=>4,"review_count"=>14}
+        ]
+      }
+      yield nbs if block_given?
+      nbs
+  end
+
 end

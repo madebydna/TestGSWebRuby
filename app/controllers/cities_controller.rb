@@ -42,13 +42,13 @@ class CitiesController < ApplicationController
   def city_home
     gon.pagename = 'GS:City:Home'
     @ad_page_name = 'City_Page'.to_sym
-    @city_object = City.where(name: @city, state: @state[:short]).first
+    @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
     if @city_object.blank? && @state.present?
       return redirect_to state_url
     end
 
-    @show_ads = true;
+    @show_ads = true
     if @hub.present?
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
@@ -59,7 +59,7 @@ class CitiesController < ApplicationController
     @top_schools = all_schools_by_rating_desc(@city_object,4)
     @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
     @show_ads = @show_ads && PropertyConfig.advertising_enabled?
-    gon.show_ads = @show_ads
+    gon.show_ads = show_ads?
     ad_setTargeting_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     set_city_home_metadata
@@ -278,10 +278,8 @@ class CitiesController < ApplicationController
 
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
-    if @show_ads
+    if show_ads?
       ad_targeting_gon_hash['City'] = @city.gs_capitalize_words
-      ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      ad_targeting_gon_hash['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
       ad_targeting_gon_hash['State'] = @state[:short].upcase # abbreviation
       ad_targeting_gon_hash['template'] = "ros" # use this for page name - configured_page_name
     end

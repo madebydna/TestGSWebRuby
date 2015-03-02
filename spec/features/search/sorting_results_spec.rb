@@ -80,10 +80,8 @@ describe 'Sorting search results' do
           set_up_by_name_search('dover elementary', 'DE', query_string)
         end
 
+        # By name search never has fit
         sorts = %w(Relevance Rating)
-        if has_fit
-          sorts += ['Fit']
-        end
         sorts_text = "#{sorts.join(' ')}"
 
         default_sort = 'Relevance'

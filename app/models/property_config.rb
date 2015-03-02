@@ -9,10 +9,11 @@ class PropertyConfig < ActiveRecord::Base
 
   def self.get_property(quay, fail_return_val = '')
     cache_key = 'PropertyConfig/' + quay
-    Rails.cache.fetch(cache_key, expires_in: 2.minutes) do
-      property = PropertyConfig.where(quay: quay).order("id DESC")
-      property.present? ? property.first.value : fail_return_val
+    property = Rails.cache.fetch(cache_key, expires_in: 2.minutes) do
+      PropertyConfig.where(quay: quay).order("id DESC").first
     end
+
+    property.present? ? property.value : fail_return_val
   end
 
   def self.force_review_moderation?

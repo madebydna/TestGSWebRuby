@@ -48,6 +48,58 @@ def monkey_patch_database_cleaner
   end
 end
 
+def define_opposing_examples(name, &proc)
+  shared_examples_for name do |positive_or_negative_assertion = true|
+    should_execute_positive_assertion = (positive_or_negative_assertion == true)
+    if should_execute_positive_assertion
+      it name do
+        instance_exec &proc
+      end
+    else
+      it "should not #{name}" do
+        new_source = proc.to_source(strip_enclosure: true).gsub('.to', '.to_not')
+        new_proc = Proc.new { eval(new_source) }
+        instance_exec &new_proc
+      end
+    end
+  end
+end
+
+def generate_examples_from_hash(hash)
+  hash.each_pair do |context, expectations|
+    context context do
+      include_context context
+      expectations.each_pair do |expectation, args|
+        include_examples expectation.to_s, *args
+      end
+    end
+  end
+end
+
+def shared_example(name, &block)
+  params = block.parameters.map(&:last)
+  if params.present?
+    eval <<-HEREDOC
+      shared_examples_for '#{name}' do |#{params.join(',')}|
+        it '#{name}' do
+          instance_exec #{params.join(',')}, &block
+        end
+      end
+    HEREDOC
+  else
+    shared_examples_for name do
+      it name, &block
+    end
+  end
+end
+
+def with_shared_context(name, *args, &block)
+  describe name do
+    include_context name, *args
+    instance_exec &block
+  end
+end
+
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
@@ -80,6 +132,19 @@ RSpec::Matchers.define :be_boolean do
   end
 end
 
+RSpec::Matchers.define :memoize do |call|
+  # This won't work for the memoization of symbols
+  match do |subject|
+    id_1 = subject.send(call).object_id
+    id_2 = subject.send(call).object_id
+
+    expect(id_1).to eq id_2
+  end
+
+  failure_message do |subject|
+    "Expected #{call} to be memoized. Subsequent calls to #{call} returned different objects, but it should always return same object."
+  end
+end
 
 Capybara::RSpecMatchers::HaveText.class_eval do
   alias_method :failure_message, :failure_message_for_should
@@ -101,6 +166,28 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
+
+  #method to help run both mobile and desktop tests
+  #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
+  def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
+    describe_mobile(mobile_size, &block)
+    describe_desktop(desktop_size, &block)
+  end
+
+  def describe_mobile(mobile_size=[320,568], &block)
+    describe_block_with_page_resize('mobile', mobile_size, &block)
+  end
+
+  def describe_desktop(desktop_size=[1280,960], &block)
+    describe_block_with_page_resize('desktop', desktop_size, &block)
+  end
+
+  def describe_block_with_page_resize(describe_block_name, screen_size, &block)
+    describe describe_block_name, js: true do
+      before { page.current_window.resize_to(*screen_size) }
+      instance_eval &block
+    end
+  end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -145,6 +232,11 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  def include_example(*args, &block)
+    include_examples(*args, &block)
+  end
+  config.alias_it_should_behave_like_to :test_group, ''
+
   config.mock_with :rspec
 
   config.around(:each, :caching) do |example|
@@ -159,6 +251,10 @@ RSpec.configure do |config|
   config.after(:each) { Rails.cache.clear }
 
   config.raise_errors_for_deprecations!
+
+  config.before(:each, js: true) do
+    page.driver.block_unknown_urls
+  end
 
     # use capybara-webkit
   Capybara.javascript_driver = :webkit

@@ -12,6 +12,7 @@ shared_context 'signed in verified user' do
   end
 
   before do
+    clean_models User
     log_in_user(user)
   end
 
@@ -26,6 +27,7 @@ shared_context 'signed in provisional user' do
   end
 
   before do
+    clean_models User
     log_in_user(user)
   end
 

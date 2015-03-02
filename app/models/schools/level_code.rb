@@ -30,4 +30,21 @@ class LevelCode
     @level_codes.join(',').to_s
   end
 
+  def self.from_grade(grade)
+    level_code =
+      case grade.downcase
+        when 'pk','p'
+          'p'
+        when 'kg','k','1','2','3','4','5'
+          'e'
+        when '6','7','8'
+          'm'
+        when '9','10','11','12','13'
+          'h'
+        else
+          nil
+      end
+    LevelCode.new(level_code) if level_code
+  end
+
 end

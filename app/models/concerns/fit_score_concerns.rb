@@ -44,6 +44,9 @@ module FitScoreConcerns
     }.stringify_keys!,
     enrollment: {
       vouchers: :students_vouchers
+    }.stringify_keys!,
+    summer_program: {
+        yes: :summer_program
     }.stringify_keys!
   }.stringify_keys!)
 

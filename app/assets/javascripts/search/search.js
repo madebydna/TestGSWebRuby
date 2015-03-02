@@ -419,29 +419,49 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var updateFilterState = function() {
+        var updated = false;
         var queryData = GS.uri.Uri.getQueryData();
+        var filterName;
         if (queryData) {
             var $form = $('form.js-searchFiltersForm');
-            for (var filterName in queryData) {
+            for (filterName in queryData) {
                 if (queryData.hasOwnProperty(filterName)){
-                    var inputName = normalizeInputName(filterName);
-                    var filterValue = queryData[filterName];
-                    try {
-                        if (typeof filterValue === 'object' && filterValue.length) {
-                            for (var x=filterValue.length-1; x >= 0; x--) {
-                                // currently, filters with multi-values can't be represented by selects
-                                updateFormElement($form, inputName, filterValue[x], {includeSelect:false});
-                            }
-                        } else {
-                            updateFormElement($form, inputName, filterValue, {includeSelect:true});
-                        }
-                    } catch (e) {
-                        // continue
-                    }
+                    updated = true;
+                    updateSingleFilterState($form, filterName, queryData[filterName]);
                 }
             }
+        }
+        // in case the server applied a filter that isn't in the URL, or the server modified a filter value
+        // make sure the form value reflects that
+        // e.g. if distance=0 in URL, server may choose to apply distance=1
+        if (window.gon && gon.search_applied_filter_values) {
+            for (filterName in gon.search_applied_filter_values) {
+                if (gon.search_applied_filter_values.hasOwnProperty(filterName)){
+                    updated = true;
+                    updateSingleFilterState($form, filterName, gon.search_applied_filter_values[filterName]);
+                }
+            }
+        }
+        if (updated) {
             // update parent elements who have had children modified (i.e. sports gender icon and check box groups)
             GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
+        }
+    };
+
+    var updateSingleFilterState = function($form, name, value) {
+        var inputName = normalizeInputName(name);
+        var filterValue = value;
+        try {
+            if (typeof filterValue === 'object' && filterValue.length) {
+                for (var x=filterValue.length-1; x >= 0; x--) {
+                    // currently, filters with multi-values can't be represented by selects
+                    updateFormElement($form, inputName, filterValue[x], {includeSelect:false});
+                }
+            } else {
+                updateFormElement($form, inputName, filterValue, {includeSelect:true});
+            }
+        } catch (e) {
+            // continue
         }
     };
 

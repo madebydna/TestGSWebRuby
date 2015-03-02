@@ -1,6 +1,7 @@
 #encoding: utf-8
 
 module WritePdfConcerns
+  # include ApplicationHelper
 
   RECT_EDGE_ROUNDING = 10
   DARK_BLUE = 70, 15, 0, 0
@@ -268,9 +269,9 @@ module WritePdfConcerns
     end
 
 
-    school_type = school.which_school_type
+    school_type = school.which_school_type(school.type)
 
-    text_box "#{level} | #{is_spanish ? school_type : school.decorated_school_type} #{truncated_district}",
+    text_box "#{level} | #{is_spanish ? school_type : school_type_display(school.type)} #{truncated_district}",
              :at => [5, cursor],
              :width => COL_WIDTH - 10,
              :height => 20,

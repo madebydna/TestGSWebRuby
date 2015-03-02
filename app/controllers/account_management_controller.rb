@@ -48,7 +48,7 @@ class AccountManagementController < ApplicationController
     account_meta_tags
     set_saved_searches_instance_variables
 
-    @display_grade_level_array = ['pk','k', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    @display_grade_level_array = ['PK','KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
     @selected_grade_level = @current_user.student_grade_levels
   end
 
