@@ -125,7 +125,7 @@ feature 'Search filters submission', js: true do
         end
 
         it 'should still be selected after page load' do
-          select_value = page.all(:css, 'select.js-grades-select-box').last.value
+          select_value = find(:css, 'select.js-grades-select-box').value
           expect(select_value).to eq(grade_value)
         end
 
