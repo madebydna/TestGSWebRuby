@@ -26,6 +26,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var path = getQueryPath();
             var query = buildQuery($form);
             GS.uri.Uri.goToPage(path + query)
+            var custom_link = 'search_submit_filters';
+            if ($form.selector.indexOf('Mobile') > -1) {
+              custom_link = custom_link + '_mobile';
+            }
+            GS.track.sendCustomLink(custom_link);
         });
     };
 
@@ -84,8 +89,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (menu.css('display') == 'none') {
                 GS.popup.closeOtherPopups();
                 menu.show();
+                GS.track.sendCustomLink('search_open_filters');
             } else {
                 menu.hide();
+                GS.track.sendCustomLink('search_close_filters');
             }
         });
         GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
@@ -97,10 +104,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
                 $(this).text('Fewer filters');
+                GS.track.sendCustomLink('search_expand_advanced_filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
                 $(this).text('More filters');
+                GS.track.sendCustomLink('search_collapse_advanced_filters');
             }
         });
     };
@@ -113,7 +122,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
-            $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
+            if($('.js-searchFiltersMenuMobile').css('left') == '0px') {
+              hideFilterMenuMobile();
+              GS.track.sendCustomLink('search_close_filters_mobile');
+            } else {
+              showFilterMenuMobile();
+              GS.track.sendCustomLink('search_open_filters_mobile');
+            }
         });
         GS.popup.registerCloseHandler(hideFilterMenuMobile);
     };
@@ -576,6 +591,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             GS.search.autocomplete.searchAutocomplete.detachAutocomplete();
             GS.search.autocomplete.searchAutocomplete.init(GS.search.stateAbbreviation);
             $('.js-currentLocationText').html($(this).text());
+            GS.track.sendCustomLink('search_change_state');
         });
     };
 
