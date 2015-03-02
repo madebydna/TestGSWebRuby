@@ -331,7 +331,7 @@ class SearchController < ApplicationController
       gs_ratings += [8,9,10] if gs_rating_params.include? 'above_average'
       gs_ratings += [4,5,6,7] if gs_rating_params.include? 'average'
       gs_ratings += [1,2,3] if gs_rating_params.include? 'below_average'
-      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty? || gs_rating_params.length == 3
+      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
     end
 
     if should_apply_filter?(:cgr)
