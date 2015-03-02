@@ -293,6 +293,16 @@ class FilterBuilder
           charter: {label: 'Public charter schools', display_type: :basic_checkbox, name: :st, value: :charter},
           private: {label: 'Private schools', display_type: :basic_checkbox, name: :st, value: :private}
         }
+      },
+      gs_rating: {
+        label: 'Quality',
+        display_type: :title,
+        name: :gs_rating,
+        filters: {
+          above_average: {label: 'Above average', display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
+          average: {label: 'Average', display_type: :basic_checkbox, name: :gs_rating, value: :average},
+          below_average: {label: 'Below average', display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
+        }
       }
     }
   end

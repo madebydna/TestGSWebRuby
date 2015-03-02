@@ -66,6 +66,19 @@ describe SearchController do
         end
       end
     end
+
+    context 'When there is overall rating in filter params' do
+      let(:params_hash) { {'gs_rating' => 'above_average'} }
+
+        it "should set the right filter for ratings" do
+          allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:overall_gs_rating=>[8, 9, 10]})
+        end
+    end
   end
 
   describe '#ad_setTargeting_through_gon' do
