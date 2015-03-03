@@ -20,132 +20,35 @@
           <span class="vam iconx24-icons i-24-checkmark-off mrm js-icon"></span>Sports
         </button>
       </div>
-     <div class="dn js-sports pal" style="border: thin solid #cccccc">
-      <div class="btn-group full-width">
-        <button data-toggle="button" type="button" class="btn btn-bg-green btn-default js-sports-gender half-width"
-                data-gs-gender="boys"
 
-        >
-         Boys</button>
+      <div class="dn js-sports pal" style="border: thin solid #cccccc">
 
-        <button data-toggle="button" type="button" class="btn btn-default js-sports-gender half-width"
-                data-gs-gender="girls"
-        >
-        Girls</button>
+        <h4>Girls Sports</h4>
+        <div class="btn-group js-girls-sports-values js-sports-button-group pts full-width" >
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'soccer'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'track'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'basketball'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'volleyball'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'cheerleading'} %>
+        </div>
 
+        <h4>Boys Sports</h4>
+        <div class="btn-group js-boys-sports-values js-sports-button-group pts full-width" >
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'soccer'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'track'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'basketball'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'football'} %>
+          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'baseball'} %>
+        </div>
 
-
+        <div class="clearfix">
+          <div class="fr mtm ">
+            <button class="btn btn-primary btn-sm js-pull-down" type="button" data-pull-down-content=".js-sports">
+              Done
+            </button>
+          </div>
+        </div>
       </div>
-       <div class="btn-group js-girls-sports-values js-sports-button-group dn pts" >
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="soccer"  data-gs-checkbox-icon-label="i-32-sport-soccer" data-original-title="soccer">
-
-           <span class="i-32-sport-soccer-off js-icon"></span>
-           <input type="hidden" name="girls_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="track" data-gs-checkbox-icon-label="i-32-sport-track" data-original-title="track">
-
-           <span class="i-32-sport-track-off js-icon"></span>
-           <input type="hidden" name="girls_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="volleyball"  data-gs-checkbox-icon-label="i-32-sport-volleyball" data-original-title="volleyball">
-
-           <span class="i-32-sport-volleyball-off js-icon"></span>
-           <input type="hidden" name="girls_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="cheerleading" data-gs-checkbox-icon-label="i-32-sport-cheerleading" data-original-title="cheerleading">
-
-           <span class="i-32-sport-cheerleading-off js-icon"></span>
-           <input type="hidden" name="girls_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="basketball"  data-gs-checkbox-icon-label="i-32-sport-basketball" data-original-title="basketball">
-
-           <span class="i-32-sport-basketball-off js-icon"></span>
-           <input type="hidden" name="girls_sports[]" value="" class="js-value">
-         </div>
-
-
-       </div>
-       <div class="btn-group js-boys-sports-values js-sports-button-group  pts" >
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="soccer"  data-gs-checkbox-icon-label="i-32-sport-soccer" data-original-title="soccer">
-
-           <span class="i-32-sport-soccer-off js-icon"></span>
-           <input type="hidden"name="boys_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="track"  data-gs-checkbox-icon-label="i-32-sport-track" data-original-title="track">
-
-           <span class="i-32-sport-track-off js-icon"></span>
-           <input type="hidden"name="boys_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="basketball"  data-gs-checkbox-icon-label="i-32-sport-basketball" data-original-title="basketball">
-
-           <span class="i-32-sport-basketball-off js-icon"></span>
-           <input type="hidden"name="boys_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="football"  data-gs-checkbox-icon-label="i-32-sport-football" data-original-title="football">
-
-           <span class="i-32-sport-football-off js-icon"></span>
-           <input type="hidden"name="boys_sports[]" value="" class="js-value">
-         </div>
-
-
-
-         <div type="button" class="btn btn-default fifth-width js-guidedSearchSportsIconsButton
-         btn-default" data-toggle="tooltip" title="" style="padding-left: 9px; padding-bottom: 4px;" data-gs-checkbox-value="baseball" data-gs-checkbox-icon-label="i-32-sport-baseball" data-original-title="baseball">
-
-           <span class="i-32-sport-baseball-off js-icon"></span>
-           <input type="hidden"name="boys_sports[]" value="" class="js-value">
-         </div>
-
-
-       </div>
-      <div class="clearfix">
-         <div class="fr mtm ">
-           <button class="btn btn-primary btn-sm js-pull-down" type="button"
-                   data-pull-down-content=".js-sports">
-             Done
-           </button>
-         </div>
-       </div>
-
-     </div>
-
-
     </div>
     <div class="col-lg-offset-2 col-md-offset-2  col-lg-4 col-md-4 col-sm-6 col-xs-12 phl pbl">
         <div class="js-gs-checkbox js-pull-down"

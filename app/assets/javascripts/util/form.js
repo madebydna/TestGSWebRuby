@@ -296,31 +296,13 @@ $(function() {
 
         if (hidden_field.val()== '') {
             checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-            self.addClass('btn-bg-green');
+            self.addClass('active');
             hidden_field.val(gs_checkBox);
         } else {
             checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
-            self.removeClass('btn-bg-green');
+            self.removeClass('active');
             hidden_field.val('');
         }
-    });
-
-    $('.js-guidedSearch').on('click', '.js-sports-gender', function() {
-        var self = $(this);
-
-        if (!self.hasClass('btn-bg-green')) {
-            var gs_gender = self.data('gs-gender');
-            var self_filters = $('.js-' + gs_gender + '-sports-values');
-            self_filters.show();
-            self.addClass('btn-bg-green');
-
-
-            var sibling = self.siblings('.js-sports-gender');
-            var sibling_filters = self_filters.siblings('.js-sports-button-group');
-            sibling_filters.hide();
-            sibling.removeClass('btn-bg-green');
-        }
-
     });
 
     var setShowFiltersCookieHandler = function() {
