@@ -325,12 +325,9 @@ class SearchController < ApplicationController
     end
 
     if should_apply_filter?(:gs_rating)
-      gs_rating_params = params_hash['gs_rating']
-      gs_rating_params = [gs_rating_params] unless gs_rating_params.instance_of?(Array)
-      gs_ratings = []
-      gs_ratings += [8,9,10] if gs_rating_params.include? 'above_average'
-      gs_ratings += [4,5,6,7] if gs_rating_params.include? 'average'
-      gs_ratings += [1,2,3] if gs_rating_params.include? 'below_average'
+      gs_rating_params = [*params_hash['gs_rating']]
+      value_map = {'above_average' => [8,9,10],'average' => [4,5,6,7],'below_average' => [1,2,3] }
+      gs_ratings = gs_rating_params.select {|param| value_map.has_key?(param)}.map {|param| value_map[param]}.flatten
       filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
     end
 

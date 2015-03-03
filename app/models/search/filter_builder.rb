@@ -295,13 +295,13 @@ class FilterBuilder
         }
       },
       gs_rating: {
-        label: 'Quality',
+        label: 'GreatSchools Rating',
         display_type: :title,
         name: :gs_rating,
         filters: {
-          above_average: {label: 'Above average', display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
-          average: {label: 'Average', display_type: :basic_checkbox, name: :gs_rating, value: :average},
-          below_average: {label: 'Below average', display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
+          above_average: {label: 'Above average (8-10)', display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
+          average: {label: 'Average (4-7)', display_type: :basic_checkbox, name: :gs_rating, value: :average},
+          below_average: {label: 'Below average (1-3)', display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
         }
       }
     }
