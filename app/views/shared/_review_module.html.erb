@@ -46,9 +46,9 @@
         <div class="clearfix pts">
             <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
                 <div class="pull-left ptm">
-                  <button type="button" class="btn btn-default js_reviewHelpfulButton mrm phm pvs" data-review_id="<%=
+                  <button type="button" class="btn btn-toggle js_reviewHelpfulButton mrm phm pvs" data-toggle="button" data-review_id="<%=
                       review.id %>">
-                    <span class="iconx16 i-16-gray-thumbs-up mt3"></span>
+                    <span class="iconx16 i-16-thumbs-up mt3"></span>
                   </button>
                   <span>
                     <% if @school_reviews_helpful_counts && @school_reviews_helpful_counts[review.id].present? %>

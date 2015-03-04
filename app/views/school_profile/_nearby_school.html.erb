@@ -1,28 +1,21 @@
-  <div style="width:100%;" class="pam">
-    <div class="center-block gray-border" style="">
-      <%= school.link_to_overview do %>
-        <div class="ma oh hidden-xs center-block">
-            <%= school.street_view_photo(450,170) %>
-        </div>
-        <div class="pam link-darkgray">
-          <div class="clearfix">
-            <div class="fl prm">
-              <% rating = school.great_schools_rating %>
-              <% if rating.present? && rating.to_i > 0 %>
-                <span class="vam iconx24-ratings i-24-ratings-<%= school.great_schools_rating %>"></span>
-              <% end %>
-            </div>
-            <div class="fl" style="width: 80%;">
-              <span class="open-sans_sb notranslate">
-                <%= school.name %>
-              </span>
-              <br/>
-              <span class="notranslate"><%= school.city_state %></span>
-              <br/>
-              <%= school_type_display(school.type) %> | <%= school.process_level %>
-            </div>
+<%= link_to(school_hash_to_url_for_profile(school)) do %>
+    <div class="row gray-border mvm mhs link-darkgray">
+      <div class="fl bg-medium-gray hidden-xs visible-sm visible-mg visible-lg">
+        <img src="<%= image_path('lib/media_missing_70x70.png') %>" alt="No school photo available"/>
+      </div>
+      <div class="pvs pvm phm clearfix col-xs-12 col-sm-8 col-lg-9">
+        <div class="mhm fl db iconx24-ratings i-24-ratings-<%= (school['gs_rating'] || 'nr') %>"></div>
+        <div class="fl col-xs-9 col-lg-11">
+
+          <div class="open-sans_cb mbs"><%= school['name'] %></div>
+          <div class="mbn">
+            <div class="fl"><%= school['city'] %>, <%= school['state'] %></div>
+            <div class="fl phs">|</div>
+            <div class="fl"><%= school['type'].capitalize %></div>
+            <div class="fl phs">|</div>
+            <div class="fl"><%= school['level'] %></div>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
-  </div>
+<% end %>

@@ -1,69 +1,45 @@
-<% title # require title %>
-<% schools # require list of schools to display info for %>
+<% title # require title   %>
+<% schools # require list of schools to display info for   %>
+<% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
 <% unless defined?(ad_no_show) %>
-  <% ad_no_show = false %>
+    <% ad_no_show = false %>
 <% end %>
 
 <% version_with_ad = @show_ads %>
 <% version_with_ad = false if ad_no_show %>
-
-<% if version_with_ad %>
-  <% column_sizes = [
-      [
-          { xs: 12, sm: 8, md: 8, lg: 4 },
-          { xs: 12, sm: 4, md: 4, lg: 2 },
-          { xs: 12, sm: 4, md: 4, lg: 2 },
-          { xs: 12, sm: 4, md: 4, lg: 2 },
-          { xs: 12, sm: 4, md: 4, lg: 2 }
-      ]
-  ] %>
-<% else %>
-  <% column_sizes = [
-      [
-          { xs: 12, sm: 3, md: 3, lg: 3 },
-          { xs: 12, sm: 3, md: 3, lg: 3 },
-          { xs: 12, sm: 3, md: 3, lg: 3 },
-          { xs: 12, sm: 3, md: 3, lg: 3 }
-      ]
-  ] %>
-<% end %>
-
-
-
-<% if schools.size >= 4 %>
-  <div class="limit-width-1200 clearfix">
-    <div class="clearfix mbm plm">
-      <hr />
-      <div class="fl">
-        <h2 class="mvn"><%= title.html_safe %></h2>
+<% if schools.present? %>
+    <div class="limit-width-1200 clearfix js-nearbySchools">
+      <div class="clearfix mbm plm">
+        <hr/>
+        <div class="fl">
+          <h2 class="mvn"><%= title.html_safe %></h2>
+        </div>
       </div>
-    </div>
-    <% school_index = 0 %>
-    <% column_sizes.each_with_index do |sizes, row| %>
-      <%= schools %>
       <div class="row mtl">
-        <% sizes.each_with_index do |hash, column| %>
-          <% if version_with_ad && row == 0 && column == 0 %>
-            <%= div_tag(class: 'pbm', sizes: column_sizes.first.first) do %>
-              <div class="pam" style="width:100%;">
-                <% # What do we do about Nearby_Schools slot being hardcoded in this reusable template? %>
-                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :desktop, show_ad_text: false  %>
-                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :mobile, show_ad_text: false  %>
+        <% if version_with_ad %>
+            <div class="pbm col-xs-12 col-md-4">
+              <div class="pam full-width">
+                <% # What do we do about Nearby_Schools slot being hardcoded in this reusable template?   %>
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :desktop, show_ad_text: false %>
+                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :mobile, show_ad_text: false %>
               </div>
-            <% end %>
-          <% else %>
-            <% school = schools[school_index] %>
-            <% school_index += 1 %>
-            <% css_class = 'pbm ' %>
-
-            <%= div_tag(class: css_class, sizes: hash) do %>
-
-              <% # render partial: 'school_profile/nearby_school',
-                         #locals: { school: school } %>
-            <% end %>
-          <% end %>
+            </div>
+            <div class="pbm col-xs-12 col-md-8">
+              <% schools.each do |school| %>
+                  <%= render partial: 'school_profile/nearby_school',
+                             locals: {school: school} %>
+              <% end %>
+              <%= link_to('See more schools', school_profile_decorator.school_zip_location_search_url, class: 'pls') %>
+            </div>
+        <% else %>
+            <div class="pbm col-lg-12">
+              <% schools.each do |school| %>
+                  <%= render partial: 'school_profile/nearby_school',
+                             locals: {school: school} %>
+              <% end %>
+              <%= link_to('See more schools', school_profile_decorator.school_zip_location_search_url) %>
+            </div>
         <% end %>
       </div>
-    <% end %>
-  </div>
+    </div>
 <% end %>

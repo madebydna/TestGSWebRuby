@@ -10,4 +10,28 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
 
 
 
+  def answers
+    question_display_json_config[:answers]
+  end
+
+
+  def label
+    question_display_json_config[:label]
+  end
+
+  def question_display_json_config
+    json = read_attribute(:config)
+    if json.present?
+      begin results = JSON.parse(json,symbolize_names: true)
+      rescue JSON::ParserError => e
+        results = {}
+        Rails.logger.debug "ERROR: parsing JSON display question Config for Id  #{self.id} \n" +
+                               "Exception message: #{e.message}"
+      end
+      results
+    else
+      {}
+    end
+  end
+
 end

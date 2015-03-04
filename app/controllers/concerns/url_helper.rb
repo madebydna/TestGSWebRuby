@@ -266,4 +266,15 @@ module UrlHelper
   def hash_to_query_string(hash)
     CGI.unescape(hash.to_param).gsub(/\[\]/ , '')
   end
+
+  # Input: hash for a school with id, state, city, name
+  # Output: returns a string of the url to the profile
+  def school_hash_to_url_for_profile(school_hash)
+   normalized_name =  encode_school_name(school_hash['name'])
+   city_name = gs_legacy_url_encode(school_hash['city'])
+   state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
+   school_id = school_hash['id']
+   return nil unless normalized_name && city_name && state_name && school_id
+   "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
+  end
 end

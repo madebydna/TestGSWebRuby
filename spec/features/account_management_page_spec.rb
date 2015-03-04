@@ -74,5 +74,15 @@ feature 'Account management page' do
 
       end
     end
+
+    context 'with no user profile' do
+      before { user.user_profile.destroy }
+      scenario 'It displays the password reset form' do
+        change_password_div = subject.first('div', text: /\AChange Password\z/)
+        expect(change_password_div).to be_present
+        expect(subject).to have_selector('form input[name=new_password]')
+        expect(subject).to have_selector('form input[name=confirm_password]')
+      end
+    end
   end
 end

@@ -89,4 +89,14 @@ class SchoolProfileDecorator < Draper::Decorator
     text.gs_capitalize_words
   end
 
+  # Returns the url for a location search with the school address at the center of the search
+  def school_zip_location_search_url
+    normalizedAddress = school.zipcode
+    search_url= "/search/search.page?"
+    search_url += "lat=#{school.lat}&lon=#{school.lon}&state=#{school.state}"
+    search_url +="&locationType=street_address&normalizedAddress=#{normalizedAddress}"
+    search_url +="&sortBy=DISTANCE&locationSearchString=#{normalizedAddress}&distance=5&sort=distance_asc"
+    search_url
+  end
+
 end

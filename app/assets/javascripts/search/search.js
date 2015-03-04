@@ -445,7 +445,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         if (updated) {
             // update parent elements who have had children modified (i.e. sports gender icon and check box groups)
             GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
-            GS.forms.toggleButtonForSportsOnLoad();
         }
     };
 

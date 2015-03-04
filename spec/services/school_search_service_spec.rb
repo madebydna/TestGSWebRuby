@@ -374,6 +374,14 @@ describe 'School Search Service' do
         expect(rval).to_not include('+school_college_going_rate:')
       end
     end
+
+    describe 'handles overall GS rating' do
+      let (:above_average) { {filters: {overall_gs_rating: [8,9,10] }} }
+      it 'include the overall rating filters' do
+        rval = SchoolSearchService.extract_hard_filters above_average
+        expect(rval).to include('+overall_gs_rating:(8 9 10)')
+      end
+    end
   end
 
   describe '.extract_by_location' do

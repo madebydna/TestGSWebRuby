@@ -197,6 +197,35 @@ describe SigninController do
 
   end
 
+  describe '#register' do
+    let(:user) { instance_double(User, user_profile: double('UserProfile').as_null_object) }
+    before do
+      controller.params[:email] = 'test@greatschools.org'
+      allow(controller).to receive(:email_verification_url).and_return(nil)
+      allow(EmailVerificationEmail).to receive(:deliver_to_user)
+    end
+    subject { controller.send(:register) }
+
+    context 'when it successfully registers a user' do
+      before do
+        expect(controller).to receive(:register_user).and_return([user, nil])
+      end
+      it 'should send an EmailVerificationEmail to the user' do
+        expect(EmailVerificationEmail).to receive(:deliver_to_user).and_return(true)
+        subject
+      end
+
+      context 'and user has no profile' do
+        before do
+          allow(user).to receive(:user_profile).and_return(nil)
+        end
+        it 'method should finish executing without error' do
+          expect { subject }.to_not raise_error
+        end
+      end
+    end
+  end
+
   describe '#destroy' do
     subject { get :destroy }
 

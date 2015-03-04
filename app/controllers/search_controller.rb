@@ -148,7 +148,6 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
-
     @sort_type = parse_sorts(@params_hash).presence
     @active_sort = active_sort_name(@sort_type)
 
@@ -324,6 +323,14 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
+
+    if should_apply_filter?(:gs_rating)
+      gs_rating_params = [*params_hash['gs_rating']]
+      value_map = {'above_average' => [8,9,10],'average' => [4,5,6,7],'below_average' => [1,2,3] }
+      gs_ratings = gs_rating_params.select {|param| value_map.has_key?(param)}.map {|param| value_map[param]}.flatten
+      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']

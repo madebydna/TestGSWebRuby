@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/141209-16x16_sprite.png");
+  background-image: asset_data_url("icons/141103-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -23,12 +23,20 @@
   background-position: -16px 0px;
 }
 
+.btn:hover .i-16-heart{
+  background-position: -16px -16px;
+}
+
 .i-16-envelop {
   background-position: -32px 0px;
 }
 
 .i-16-pencil {
   background-position: -48px 0px;
+}
+
+.btn:hover .i-16-pencil {
+  background-position: -48px -16px;
 }
 
 .i-16-phone {
@@ -52,6 +60,10 @@
 }
 .i-16-thought-bubble {
   background-position: -144px 0px;
+}
+
+.btn:hover .i-16-thought-bubble {
+  background-position: -144px -16px;
 }
 
 .i-16-did-you-know {
@@ -110,12 +122,16 @@
   background-position: -256px 0px;
 }
 
-.i-16-gray-thumbs-up {
+.i-16-thumbs-up {
   background-position: -272px 0px;
 }
 
-.i-16-white-thumbs-up {
+.btn:hover .i-16-thumbs-up {
   background-position: -272px -16px;
+}
+
+.btn.active .i-16-thumbs-up {
+  background-position: -272px -32px;
 }
 
 .i-16-blue-students-enrolled {
@@ -149,12 +165,15 @@
 .i-16-blue-world-languages {
   background-position: -400px 0px;
 }
+.i-16-check-bigger-on {
+  background-position: -416px -16px;
+}
 
-.i-16-green-check-bigger {
+.i-16-check-bigger-off {
   background-position: -416px 0px;
 }
 
-.i-16-gray-check-bigger {
+.btn:hover .i-16-check-bigger-off {
   background-position: -416px -16px;
 }
 
@@ -188,4 +207,12 @@
 
 .i-16-not-applicable {
   background-position: -512px 0px;
+}
+
+.i-16-blue-home {
+  background-position: -528px 0px;
+}
+
+.btn:hover .i-16-blue-home {
+  background-position: -528px -16px;
 }

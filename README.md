@@ -113,6 +113,7 @@ and you should see a school profile page
 
 ### Deploying
 
+
   To deploy, you'll want a unix account (ask sysadmins@greatschools.org). You can also use the syncer account
 
   `ssh syncer@alpha`

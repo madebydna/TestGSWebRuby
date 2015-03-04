@@ -30,16 +30,18 @@ end
 
 shared_context 'Click compare on school result number' do | result_number |
   before do
-    #Compare locks selecting other compare schools until the animation of the first one completes
-    #Thus we need to add a sleep to let the animation finish.
-    sleep 2
     school_result = page.all('.js-compareSchoolButton')[result_number - 1]
     school_result.click
+    #Compare locks selecting other compare schools until the animation of the first one completes
+    #Thus we may need to add a sleep to let the animation finish.
+    # sleep 1
   end
 end
 
 shared_context 'Click Compare Schools' do
   before do
+    # may need to add a sleep
+    # sleep 1
     popup_button = page.all('.js-compareSchoolsPopupButton').first
     popup_button.click
     submit_button = page.all('.js-compareSchoolsSubmit').first

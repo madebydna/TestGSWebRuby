@@ -21,31 +21,42 @@ class ForgotPasswordController < ApplicationController
   end
 
   def validate_user
-    error_msg = ""
     user = nil
+    error_msg = email_param_error
+    return [user, error_msg] if error_msg
 
-    email_param = params[:email]
-    if email_param.present?
-      if !email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
-        error_msg = t('forms.errors.email.format')
-      else
-        user = User.find_by_email(email_param)
-        if user.nil?
-          error_msg = t('forms.errors.email.nonexistent_join', join_path: join_path).html_safe
-        elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-          error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
-        elsif user.provisional?
-          verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
-          error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
-        elsif !user.is_profile_active?
-          error_msg = t('forms.errors.email.de_activated').html_safe
-        end
-      end
-    else
-       error_msg = t('forms.errors.email.blank')
+    user = user_from_email_param
+
+    if user.nil?
+      error_msg = t('forms.errors.email.nonexistent_join', join_path: join_path).html_safe
+    elsif ! user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+      error_msg = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+    elsif user.provisional?
+      verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
+      error_msg = (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe
+    elsif user.has_inactive_profile?
+      error_msg = t('forms.errors.email.de_activated').html_safe
     end
 
     return user, error_msg
+  end
+
+  def email_param_error
+    email_param = params[:email]
+
+    if email_param.blank?
+      return t('forms.errors.email.blank')
+    end
+
+    unless email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
+      return t('forms.errors.email.format')
+    end
+
+    return nil
+  end
+
+  def user_from_email_param
+    User.find_by_email(params[:email])
   end
 
   def login_and_redirect_to_change_password

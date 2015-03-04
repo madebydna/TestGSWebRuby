@@ -140,7 +140,7 @@ module SearchSpecHelper
   end
 
   def open_full_filter_dialog
-    page.all(:css, '.js-advancedFilters').last.click
+    find(:css, '.js-advancedFilters').click
   end
 
   def checkbox_accordian(filter_type)

@@ -66,6 +66,32 @@ describe SearchController do
         end
       end
     end
+
+    context 'When there is overall rating in filter params with only above_average filter' do
+      let(:params_hash) { {'gs_rating' => 'above_average'} }
+
+        it 'should set the filter to be 8 to 10' do
+          allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+          allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:overall_gs_rating=>[8, 9, 10]})
+        end
+    end
+    context 'When there is overall rating in filter params with all three rating filters' do
+      let(:params_hash) { {'gs_rating' => ['above_average','average','below_average']} }
+
+      it 'Should set the filter to be 1 to 10 so that it does not include NR' do
+        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to have_key(:overall_gs_rating)
+        (1..10).each {|rating| expect(filters[:overall_gs_rating]).to include(rating)}
+      end
+    end
   end
 
   describe '#ad_setTargeting_through_gon' do

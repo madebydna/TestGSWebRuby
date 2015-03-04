@@ -105,7 +105,7 @@ describe FilterBuilder do
       end
       let (:group2_filters) {filters_hash[:filters][:group2][:filters]}
       context 'should contain advanced filters' do
-        {dress_code: 'Dress code', class_offerings: 'Class Offering', sports: 'Sports'}.each do |k,v|
+        {dress_code: 'Dress code', class_offerings: 'Class Offering', boys_sports: 'Boys Sports', girls_sports: 'Girls Sports'}.each do |k,v|
           it "like #{k}" do
             expect(group2_filters).to have_key k
           end
@@ -174,7 +174,7 @@ describe FilterBuilder do
       let (:group1_filters) {filters_hash[:filters][:group1][:filters]}
 
       context 'should contain simple filters' do
-        {grade: 'grade', distance: 'distance', st: 'school type'}.each do |k,v|
+        {grade: 'grade', distance: 'distance', st: 'school type', gs_rating: 'gs_rating'}.each do |k,v|
           it "like #{v}" do
             expect(group1_filters).to have_key k
           end
@@ -205,16 +205,16 @@ describe FilterBuilder do
       context "in #{state}" do
         let (:filters) { FilterBuilder.new(state, nil, false).filters }
         [ { panel: 1,
-            contains: [:grades, :distance, :st, :transportation, :extendedHours],
+            contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
             does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
           },
           {panel: 2,
            contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-           does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
+           does_not_contain: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :school_focus, :enrollment]
           },
           {panel: 3,
            contains: [:school_focus],
-           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+           does_not_contain: [:enrollment, :grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
         end
@@ -226,7 +226,7 @@ describe FilterBuilder do
     context 'in Indiana' do
       let (:filters) { FilterBuilder.new('IN', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :extendedHours],
+          contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -236,16 +236,16 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: []
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
     context 'in Michigan' do
       let (:filters) { FilterBuilder.new('MI', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st],
+          contains: [:grades, :distance, :st, :gs_rating],
           does_not_contain: [:cgr, :transportation, :extendedHours]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
       it 'does not have panel 2 or 3' do
@@ -255,7 +255,7 @@ describe FilterBuilder do
     context 'in Detroit, MI' do
       let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :cgr, :transportation, :extendedHours],
+          contains: [:grades, :distance, :st, :gs_rating, :cgr, :transportation, :extendedHours],
           does_not_contain: []
         },
         { panel: 2,
@@ -265,23 +265,23 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus],
           does_not_contain: [:enrollment]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
     context 'in Oklahoma City, OK' do
       let (:filters) { FilterBuilder.new('OK', 'Oklahoma City', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :extendedHours],
+          contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
           does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
         },
         {panel: 2,
          contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-         does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
+         does_not_contain: [:grades, :distance, :gs_rating, :st, :transportation, :extendedHours, :school_focus, :enrollment]
         },
         {panel: 3,
          contains: [:school_focus],
-         does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+         does_not_contain: [:enrollment, :grades, :distance, :gs_rating, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
@@ -289,9 +289,9 @@ describe FilterBuilder do
     context 'in Wisconsin' do
       let (:filters) { FilterBuilder.new('WI', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st],
+          contains: [:grades, :distance, :gs_rating, :st],
           does_not_contain: [:cgr, :transportation, :extendedHours]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
       it 'does not have panel 2 or 3' do
@@ -301,7 +301,7 @@ describe FilterBuilder do
     context 'in Milwaukee, WI' do
       let (:filters) { FilterBuilder.new('WI', 'Milwaukee', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :extendedHours],
+          contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -311,14 +311,14 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: [:class_offerings]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
-     context 'in Washington, DC' do
+    context 'in Washington, DC' do
       let (:filters) { FilterBuilder.new('DC', 'Washington', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :transportation, :extendedHours],
+          contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -328,7 +328,7 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: [:class_offerings]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
@@ -336,16 +336,16 @@ describe FilterBuilder do
       context "in #{city}, CA" do
         let(:filters) { FilterBuilder.new('CA', city, false).filters }
         [ { panel: 1,
-            contains: [:grades, :distance, :st, :transportation, :extendedHours],
+            contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
             does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
           },
           {panel: 2,
            contains: [:dress_code, :class_offerings, :boys_sports, :girls_sports],
-           does_not_contain: [:grades, :distance, :st, :transportation, :extendedHours, :school_focus, :enrollment]
+           does_not_contain: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :school_focus, :enrollment]
           },
           {panel: 3,
            contains: [:school_focus],
-           does_not_contain: [:enrollment, :grades, :distance, :st, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
+           does_not_contain: [:enrollment, :grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings, :boys_sports, :girls_sports]
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
         end

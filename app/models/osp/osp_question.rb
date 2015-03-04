@@ -6,6 +6,25 @@ class Osp::OspQuestion < ActiveRecord::Base
   belongs_to :osp_display_config, :class_name => 'Osp::OspDisplayConfig'
   scope :active, -> { where(active: true) }
 
+  def answers
+      question_json_config[:answers]
+  end
+
+
+  def question_json_config
+    json = read_attribute(:default_config)
+    if json.present?
+      begin results = JSON.parse(json,symbolize_names: true)
+      rescue JSON::ParserError => e
+        results = {}
+        Rails.logger.debug "ERROR: parsing JSON Question Config for Question ID  #{self.id} \n" +
+                               "Exception message: #{e.message}"
+      end
+      results
+    else
+      {}
+    end
+  end
 
 
 end

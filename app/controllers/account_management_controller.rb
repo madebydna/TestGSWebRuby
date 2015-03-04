@@ -9,18 +9,17 @@ class AccountManagementController < ApplicationController
     @page_name = 'Account management'
     gon.pagename = 'Account management'
     gon.omniture_pagename = 'GS:Admin:MyAccount'
-    state_locale = @current_user.user_profile.state
+    # User might not have a user_profile row in the db. It might be nil
+    state_locale = @current_user.user_profile.try(:state)
     if state_locale.present?
-    @state_locale = {
-        long: States.state_name(state_locale.downcase.gsub(/\-/, ' ')),
-        short: States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
-    }
-    gon.state_locale_abbr = States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
-
+      @state_locale = {
+          long: States.state_name(state_locale.downcase.gsub(/\-/, ' ')),
+          short: States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
+      }
+      gon.state_locale_abbr = States.abbreviation(state_locale.downcase.gsub(/\-/, ' '))
     end
-    @city_locale  = @current_user.user_profile.city
-    # require 'pry'; binding.pry;
-
+    # User might not have a user_profile row in the db. It might be nil
+    @city_locale  = @current_user.user_profile.try(:city)
 
     favorite_schools = @current_user.favorite_schools
     favorite_schools_map = favorite_schools.group_by { |s| "#{s.state.downcase}#{s.school_id}"}

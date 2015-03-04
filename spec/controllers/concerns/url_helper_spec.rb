@@ -235,4 +235,20 @@ describe UrlHelper do
         to eq('Naauao')
     end
   end
+  describe '#to_school_profile' do
+    context "when hash with a school's id, name, state abbreviation, and city" do
+      it "should return a url to a school profile" do
+        input = {"id"=>213, "name"=>"Bret Harte Middle School", "city"=>"Oakland", "state"=>"CA"}
+        expect(url_helper.send(:school_hash_to_url_for_profile, input)).
+          to eq('/california/oakland/213-Bret-Harte-Middle-School/')
+      end
+      context "when hash missing one of the school hash attributes" do
+        it "should return a url to a school profile" do
+          input = {"id"=>213, "name"=>"Bret Harte Middle School", "state"=>"CA"}
+          expect(url_helper.send(:school_hash_to_url_for_profile, input)).
+              to eq(nil)
+        end
+      end
+    end
+  end
 end

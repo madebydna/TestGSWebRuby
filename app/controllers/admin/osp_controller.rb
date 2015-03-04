@@ -10,7 +10,8 @@ class Admin::OspController <  ApplicationController
      @osp_question = Osp::OspQuestion.take(20)
      @osp_question_group = Osp::OspQuestionGroup.take(20)
      @osp_display_config = Osp::OspDisplayConfig.take(20)
-
+     # @config = JSON.parse('[{"answerSet":[{"AV1":1},{"AV2":2}]},{"label":"oberride"}]')
+     # @answser_set = @config['answerSet']
 
      if current_user.provisional_or_approved_osp_user?(@school)
        if params[:page]== '1'
