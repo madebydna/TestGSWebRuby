@@ -1,0 +1,25 @@
+<form class="form-inline">
+  <div class="row paxl tac">
+    <% review_options.each do |option| %>
+        <div class="dib tac mhl">
+          <div>
+            <label class="tac js-gs-checkbox-search font-size-small"
+                   data-gs-checkbox-value="<%= option %>"
+                   data-gs-checkbox-name="<%=option %>[]"
+                   style="width:100%;">
+              <div class="vam iconx16 js-icon i-grey-unchecked-box"></div>
+            </label>
+            <input type="hidden" class="js-gs-checkbox-value">
+          </div>
+          <div>
+            <%= option %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <div class="tac full-width">
+  <button id="signinBtn" tabindex="3" name="signinBtn" type="submit" class="btn btn-primary js-send-me-updates-button-footer">
+    Submit
+  </button>
+  </div>
+</form>
