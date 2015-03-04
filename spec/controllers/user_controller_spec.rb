@@ -240,4 +240,32 @@ describe UserController do
       end
     end
   end
+
+  describe '#update_user_city_state' do
+    let(:user) { FactoryGirl.create(:verified_user) }
+    before do
+      controller.instance_variable_set(:@current_user, user)
+      controller.params[:userCity] = 'alameda'
+      controller.params[:userState] = 'california'
+      # mock_user_class = double('User').as_null_object
+      # stub_const('User', mock_user_class)
+      # allow(mock_user_class).to receive(:find_by_id).and_return(user)
+      allow_any_instance_of(User).to receive(:find_by_id).and_return(user)
+      allow(controller).to receive(:redirect_to)
+    end
+
+    it 'User\'s profile should be updated' do
+      expect_any_instance_of(UserProfile).to receive(:update_and_save_locale_info)
+      controller.update_user_city_state
+    end
+
+    context 'when user has no profile' do
+      before do
+        user.user_profile.destroy
+      end
+      it 'User\'s profile should be updated' do
+        expect { controller.update_user_city_state }.to_not raise_error
+      end
+    end
+  end
 end

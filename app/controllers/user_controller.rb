@@ -85,7 +85,7 @@ class UserController < ApplicationController
     city_locale = params[:userCity]
 
     user = User.find_by_id(@current_user[:id])
-    if state_locale.present? && city_locale.present?
+    if state_locale.present? && city_locale.present? && user.user_profile.present?
         unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
           result = "User profile failed to update state and city locale info  for user #{user.email} "
         end
