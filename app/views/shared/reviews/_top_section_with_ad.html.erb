@@ -1,12 +1,12 @@
-<hr />
+<hr/>
 <div class="row ptl mtl">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pbl">
-        <%= render "shared/reviews/link_module", driver: driver %>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pbl">
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop  %>
-        <div class="pvl visible-xs">
-            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile  %>
-        </div>
-    </div>
+  <div class="col-xs-12 pbl">
+    <%= render 'shared/reviews/topical_review_display',
+            title: 'How do you feel about string cheese?',
+            review_question_type_partial: 'checkbox_answers',
+             review_options: %w(happy constipated lauging jumpy agitated),
+             review_summary_partial: 'review_results_snapshot'
+             %>
+  </div>
+
 </div>
