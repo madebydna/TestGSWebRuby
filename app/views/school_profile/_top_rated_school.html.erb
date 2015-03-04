@@ -1,0 +1,16 @@
+<%= link_to(school_hash_to_url_for_profile(school)) do %>
+    <div class="row gray-border mvm mhs link-darkgray">
+      <div class="pvs pvm phm clearfix col-xs-12 col-lg-12">
+        <div class="mhm fl db iconx24-ratings i-24-ratings-<%= (school.great_schools_rating || 'nr') %>"></div>
+        <div class="fl col-xs-9 col-sm-8 col-lg-9">
+          <div class="open-sans_cb mbs"><%= school['name'] %></div>
+          <div class="mbn">
+            <div> <%= school['city'] %>, <%= school['state'] %></div>
+            <div class="fl"><%= school['type'].capitalize %></div>
+            <div class="fl phs">|</div>
+            <div class="fl"><%= school['level'] %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
