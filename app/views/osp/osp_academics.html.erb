@@ -1,10 +1,7 @@
 <div class="row limit-width-1200 pll tac">
-  School : <%= @school.name %> ,  <%= @school.state %> ,  <%= @school.city %>
-<br/>
- Academics
-  <br/>
-  <%= link_to "Basic Information".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "1") %><br/>
-  <%= link_to "ExtraCurricular and Culture".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "3") %><br/>
-  <%= link_to "Faclities And Staff".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "4") %>
+
+  <%= render partial: 'osp/osp_header' %>
+
+  <%= render partial: 'osp/osp_nav', locals: {page: 2} %>
 
 </div>
