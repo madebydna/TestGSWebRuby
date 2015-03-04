@@ -1,0 +1,15 @@
+<form action="form-control">
+<% #require 'pry'; binding.pry;
+    review_options.each do |option| %>
+      <div>
+        <label class="tal js-gs-checkbox-search font-size-small"
+               data-gs-checkbox-value="<%= option %>"
+               data-gs-checkbox-name="<%=option %>[]"
+               style="width:100%;">
+          <span class="vam iconx16 mrm js-icon i-grey-unchecked-box"></span>
+          <%=option %>
+        </label>
+        <input type="hidden" class="js-gs-checkbox-value">
+      </div>
+<% end %>
+</form>
