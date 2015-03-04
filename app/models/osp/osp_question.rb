@@ -6,22 +6,8 @@ class Osp::OspQuestion < ActiveRecord::Base
   belongs_to :osp_display_config, :class_name => 'Osp::OspDisplayConfig'
   scope :active, -> { where(active: true) }
 
-
-
-  def answer_set
-    # use quality or p_overall(for prek) for star counts and overall
-    # score.OM-209
-    JSON.parse('[{"anserSet":[{"AV1":1},{"AV2":2}]},{"label":"oberride"}]')
-  end
-
   def answers
-    # binding.pry;
-    result = {}
-    self.question_json_config.each do |attribute|
-      attribute.key("answerSet") == "answerSet"
-      result = attribute
-    end
-    result
+      question_json_config[:answers]
   end
 
 
@@ -31,10 +17,9 @@ class Osp::OspQuestion < ActiveRecord::Base
       begin results = JSON.parse(json,symbolize_names: true)
       rescue JSON::ParserError => e
         results = {}
-        Rails.logger.debug "ERROR: parsing JSON Question Config" +
+        Rails.logger.debug "ERROR: parsing JSON Question Config for Question ID  #{self.id} \n" +
                                "Exception message: #{e.message}"
       end
-
       results
     else
       {}
