@@ -4,7 +4,7 @@
 
 .iconx24-icons {
   display: inline-block;
-  background-image: asset_data_url("icons/140512-24x24_sprite.png");
+  background-image: asset_data_url("icons/150227-24x24_sprite.png");
   width: 24px;
   height: 24px;
 }
@@ -12,10 +12,18 @@
 /* **************** VIEWPORT ***************** */
 
 .i-24-checkmark-on {
-  background-position: 0 0;
+  background-position: 0 -24px;
+}
+
+.btn.active .i-24-checkmark-on {
+  background-position: 0px -48px;
 }
 
 .i-24-checkmark-off {
+  background-position: 0px 0px;
+}
+
+.btn:hover .i-24-checkmark-off {
   background-position: 0px -24px;
 }
 
@@ -83,56 +91,84 @@
   background-position: -384px 0;
 }
 
-.i-24-soccer-on {
+.btn:hover > .i-24-soccer-off {
   background-position: -384px -24px;
+}
+
+.i-24-soccer-on {
+  background-position: -384px -48px;
 }
 
 .i-24-track-off {
   background-position: -408px 0;
 }
 
-.i-24-track-on {
+.btn:hover > .i-24-track-off {
   background-position: -408px -24px;
+}
+
+.i-24-track-on {
+  background-position: -408px -48px;
 }
 
 .i-24-basketball-off {
   background-position: -432px 0px
 }
 
+.btn:hover > .i-24-basketball-off {
+  background-position: -432px -24px
+}
+
 .i-24-basketball-on {
-  background-position: -432px 24px
+  background-position: -432px -48px
 }
 
 .i-24-football-off {
   background-position: -456px 0px
 }
 
+.btn:hover > .i-24-football-off {
+  background-position: -456px -24px
+}
+
 .i-24-football-on {
-  background-position: -456px 24px
+  background-position: -456px -48px
 }
 
 .i-24-volleyball-off {
   background-position: -480px 0px
 }
 
+.btn:hover > .i-24-volleyball-off {
+  background-position: -480px -24px
+}
+
 .i-24-volleyball-on {
-  background-position: -480px 24px
+  background-position: -480px -48px
 }
 
 .i-24-cheerleading-off {
   background-position: -504px 0px
 }
 
+.btn:hover > .i-24-cheerleading-off {
+  background-position: -504px -24px
+}
+
 .i-24-cheerleading-on {
-  background-position: -504px 24px
+  background-position: -504px -48px
 }
 
 .i-24-baseball-off {
   background-position: -528px 0px
 }
 
+.btn:hover > .i-24-baseball-off {
+  background-position: -528px -24px
+}
+
 .i-24-baseball-on {
-  background-position: -528px 24px
+  background-position: -528px -48px
 }
 
 .i-24-grey-down-arrow {
@@ -147,12 +183,24 @@
   background-position: -648px 0px
 }
 
+.btn:hover .i-24-write-review {
+  background-position: -648px -24px
+}
+
 .i-24-answer-questions {
   background-position: -672px 0px
 }
 
+.btn:hover .i-24-answer-questions {
+  background-position: -672px -24px
+}
+
 .i-24-upload-photos {
   background-position: -696px 0px
+}
+
+.btn:hover .i-24-upload-photos {
+  background-position: -696px -24px
 }
 
 .i-24-guide-me {
@@ -164,5 +212,5 @@
 }
 
 .i-24-open-arrow-head {
-  background-position: -744px 24px;
+  background-position: -744px -24px;
 }

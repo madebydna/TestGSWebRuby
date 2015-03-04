@@ -191,17 +191,12 @@ GS.reviews = GS.reviews || function($) {
         var count = data[reviewId];
         var helpful_id = data['helpful_id'];
         obj.data('helpful_id', helpful_id);
+            if(obj.hasClass('active')){
+                obj.removeClass('active');
 
-        var icon_object = obj.find(".iconx16");
-        var button_icon_off = 'i-16-gray-thumbs-up';
-        var button_icon_on = 'i-16-white-thumbs-up';
-        var button_bg_color_class = 'bg-brand-primary';
-
-        if(icon_object.hasClass(button_icon_on)){
-          var button_icon_off = 'i-16-white-thumbs-up';
-          var button_icon_on = 'i-16-gray-thumbs-up';
-          var button_bg_color_class = '';
-        }
+            } else {
+                obj.addClass('active');
+            }
 
         var people_string = 'people';
         if(count == 1){
@@ -214,10 +209,6 @@ GS.reviews = GS.reviews || function($) {
         }
 
         // change button state
-        icon_object.removeClass(button_icon_off);
-        obj.removeClass('bg-brand-primary');
-        icon_object.addClass(button_icon_on);
-        obj.addClass(button_bg_color_class);
         obj.siblings("span").html(response_str);
         obj.prop("disabled",false);
 

@@ -122,7 +122,7 @@ module CompareSchoolsConcerns
                 display_type: 'buttons',
                 opt: {
                     datapoints:[
-                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-envelop', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
+                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-heart', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
                     ]
                 }
             },
@@ -201,9 +201,9 @@ module CompareSchoolsConcerns
                 display_type: 'buttons',
                 opt: {
                     datapoints:[
-                        {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix'},
-                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-envelop', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
-                        {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-home ', class: 'btn btn-default tal clearfix' ,target: '_blank'},
+                        {method: :school_page_url, label: 'View full profile', class: 'btn btn-primary tac clearfix js-button-link'},
+                        {method: :follow_this_school, label: 'Follow this school', icon:'iconx16 i-16-heart', class:'btn btn-default tal clearfix js-save-this-school-button', form: true},
+                        {method: :zillow_formatted_url, label: 'Homes for sale', icon: 'iconx16 i-16-blue-home', class: 'btn btn-default tal clearfix js-button-link' ,target: '_blank'},
                     ]
                 }
             },

@@ -372,8 +372,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var selectCompareSchoolButton = function($school, callback) {
-            $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
-            $school.addClass('btn-border-green');
+            $school.find('.iconx16').removeClass('i-16-check-bigger-off').addClass('i-16-check-bigger-on');
+            //$school.addClass('btn-border-green');
             $school.find('.js-compareSchoolsButtonText').text('');
             $school.animate({width: '0px', paddingLeft: '8px'}, 500, function() {
                 var $schoolText = $school.siblings('.js-compareSchoolsText');
@@ -397,7 +397,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $schoolText.hide();
             $schoolText.removeClass('js-buttonSelected');
             $school.animate({width: '150px', paddingLeft: '20px'},500, function() {
-                $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
+                $school.find('.iconx16').removeClass('i-16-check-bigger-on').addClass('i-16-check-bigger-off');
                 $school.removeClass('btn-border-green');
                 $school.find('.js-compareSchoolsButtonText').text('Compare');
                 syncCompareSchoolsText();

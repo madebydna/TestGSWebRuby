@@ -105,7 +105,7 @@ describe FilterBuilder do
       end
       let (:group2_filters) {filters_hash[:filters][:group2][:filters]}
       context 'should contain advanced filters' do
-        {dress_code: 'Dress code', class_offerings: 'Class Offering', sports: 'Sports'}.each do |k,v|
+        {dress_code: 'Dress code', class_offerings: 'Class Offering', boys_sports: 'Boys Sports', girls_sports: 'Girls Sports'}.each do |k,v|
           it "like #{k}" do
             expect(group2_filters).to have_key k
           end
@@ -236,7 +236,7 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: []
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
@@ -245,7 +245,7 @@ describe FilterBuilder do
       [ { panel: 1,
           contains: [:grades, :distance, :st, :gs_rating],
           does_not_contain: [:cgr, :transportation, :extendedHours]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
       it 'does not have panel 2 or 3' do
@@ -265,7 +265,7 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus],
           does_not_contain: [:enrollment]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
@@ -291,7 +291,7 @@ describe FilterBuilder do
       [ { panel: 1,
           contains: [:grades, :distance, :gs_rating, :st],
           does_not_contain: [:cgr, :transportation, :extendedHours]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
       it 'does not have panel 2 or 3' do
@@ -311,11 +311,11 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: [:class_offerings]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
-     context 'in Washington, DC' do
+    context 'in Washington, DC' do
       let (:filters) { FilterBuilder.new('DC', 'Washington', false).filters }
       [ { panel: 1,
           contains: [:grades, :distance, :st, :gs_rating, :transportation, :extendedHours],
@@ -328,7 +328,7 @@ describe FilterBuilder do
         { panel: 3,
           contains: [:school_focus, :enrollment],
           does_not_contain: [:class_offerings]
-      }].each_with_index do |filter_map, index|
+        }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
     end
