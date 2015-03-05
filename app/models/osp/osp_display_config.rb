@@ -5,8 +5,11 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
   attr_accessible :location_group_id, :osp_question_id, :osp_question_group_id, :order_in_group, :order_on_page, :page_name, :config ,:active,  :updated
 
   scope :active, -> { where(active: true) }
-  has_many :osp_questions, :class_name => 'Osp::OspQuestion', foreign_key: 'id'
-  has_many :osp_question_groups, :class_name => 'Osp::OspQuestionGroup',foreign_key: 'id'
+
+  scope :for_question, ->(question) { where(school_id: school.id, state: school.state) }
+
+  belongs_to :osp_question, :class_name => 'Osp::OspQuestion', foreign_key: 'osp_question_id'
+  belongs_to :osp_question_group, :class_name => 'Osp::OspQuestionGroup',foreign_key: 'osp_question_group_id'
 
 
 
@@ -29,7 +32,15 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     if self.label.present?
        self.label
     else
-      Osp::OspQuestion.active.where(id: self.osp_question_id)
+      osp_question.label
+    end
+  end
+
+  def displayed_answers
+    if self.answers.present?
+      self.answers
+    else
+      osp_question.answers
     end
   end
 
