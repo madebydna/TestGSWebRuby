@@ -333,7 +333,7 @@ class School < ActiveRecord::Base
     return '' if level_code_array.blank?
     arr_query_str = []
     level_code_array.each do |one_level_code|
-      arr_query_str << "level_code LIKE '#{one_level_code}'"
+      arr_query_str << "level_code LIKE '%#{one_level_code}%'"
     end
     arr_query_str.present? ? ' && (' << arr_query_str.join(" || ") << ') ' : ''
   end
