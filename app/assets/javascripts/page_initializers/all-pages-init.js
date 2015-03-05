@@ -17,7 +17,10 @@ GS.track.setOmnitureData();
 
 $(function() {
 
+
   GS.util.BackToTop.init();
+
+  GS.googleAnalytics.tracking.init(gon.pagename);
 
   $.ajaxSetup({ cache: true });
 
@@ -80,8 +83,7 @@ $(function() {
 
   $('.js-button-link').on('click', function() {
 
-    //TODO js-button-link class should not tied to tracking and then changing the url.Refactor when iterating over google analytics.
-    GS.ga.track($(this));
+
 
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value');
@@ -93,11 +95,7 @@ $(function() {
 
   });
 
-  //TODO how would we like to handle google tracking.
-  $('.js-ga-track-link').on('click', function() {
-    GS.ga.track($(this));
-    return true;
-  });
+
 
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');
