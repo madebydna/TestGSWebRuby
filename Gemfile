@@ -165,6 +165,9 @@ group :development, :test do
   # JS testing framework add-on for stubbing
   gem 'sinon-rails'
 
+  # JS testing runner
+  gem 'teaspoon'
+
   # Test coverage tool
   gem 'simplecov', '~> 0.8.0'
   gem 'simplecov-html', '~> 0.8.0'
