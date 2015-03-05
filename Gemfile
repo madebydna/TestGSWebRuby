@@ -160,11 +160,6 @@ group :development, :test do
   gem 'machinist', '>= 2.0.0.beta2'
   gem 'timecop'
 
-  gem 'konacha'
-
-  # JS testing framework add-on for stubbing
-  gem 'sinon-rails'
-
   # JS testing runner
   gem 'teaspoon'
 

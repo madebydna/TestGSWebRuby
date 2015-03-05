@@ -1,6 +1,3 @@
-//= require lodash
-//= require sinon
-//= require util/dependency_init
 //= require util/tracking
 
 describe('tracking', function() {

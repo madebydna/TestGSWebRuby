@@ -49,7 +49,7 @@ Teaspoon.configure do |config|
     #
     # Available: jasmine[1.3.1], mocha[1.10.0, 1.17.1] qunit[1.12.0, 1.14.0]
     suite.use_framework :mocha
-    suite.javascripts += ["support/chai", "support/sinon", "support/chai-jq-0.0.7"]
+    suite.javascripts += ["support/chai", "support/chai-jq-0.0.7", "support/sinon", "support/sinon-chai" ]
 
 
     # Specify a file matcher as a regular expression and all matching files will be loaded when the suite is run. These
