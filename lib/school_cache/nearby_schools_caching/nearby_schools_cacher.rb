@@ -1,6 +1,8 @@
 class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
+  include ApplicationHelper
   CACHE_KEY = 'nearby_schools'
   SCHOOL_COUNT = 5
+
 
   def query_results
     @query_results ||= (
@@ -25,12 +27,17 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
         city: school_obj.city,
         state: school_obj.state,
         gs_rating: school_obj.great_schools_rating.present? ? school_obj.great_schools_rating : 'nr',
-        type: school_obj.type,
+        type: school_type(school_obj),
         level: school_decorator_obj(school_obj),
         review_score: school_review_avg_score(school_obj),
         review_count: school_review_count(school_obj),
         school_media: school_media(school_obj)
     }
+  end
+
+  def school_type(school_obj)
+    school_type_display(school_obj.type)
+
   end
 
   def school_media(school_obj)

@@ -54,9 +54,10 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
       let(:expected) do
         [
             {:id=>1,:name=>"Alameda High School",:city=>"Alameda",:state=>"CA",
-             :gs_rating=>"8",:type=>"public",:level=>"9-12",:review_score=>3,:review_count=>12,:school_media=>"Iamveryprettyimage"},
+             :gs_rating=>"8",:type=>"Public district",:level=>"9-12",:review_score=>3,:review_count=>12,:school_media=>"Iamveryprettyimage"},
             {:id=>2,:name=>"Bay Farm Elementary School",:city=>"Alameda",:state=>"CA",:gs_rating=>"nr",
-             :type=>"public",:level=>"9-12",:review_score=>3,:review_count=>12,:school_media=>"Iamveryprettyimage"}
+             :type=>"Public district",:level=>"9-12",:review_score=>3,:review_count=>12,
+             :school_media=>"Iamveryprettyimage"}
 
         ]
       end
