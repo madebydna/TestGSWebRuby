@@ -28,8 +28,13 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
         type: school_obj.type,
         level: school_decorator_obj(school_obj),
         review_score: school_review_avg_score(school_obj),
-        review_count: school_review_count(school_obj)
+        review_count: school_review_count(school_obj),
+        school_media: school_media(school_obj)
     }
+  end
+
+  def school_media(school_obj)
+    (SchoolProfileDecorator.decorate(school_obj)).uploaded_photo(70)
   end
 
   def school_review_count(school_obj)

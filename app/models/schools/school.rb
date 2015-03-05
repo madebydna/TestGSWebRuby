@@ -318,7 +318,7 @@ class School < ActiveRecord::Base
   def schools_by_distance(school_count)
     query = "SELECT `id`, street,`city`, `state`, `name`, `level`, `type`, `level_code`, "
     query << location_near_formula(lat, lon)
-    query << "`distance` FROM `school` where active=1 && id !=#{id} "
+    query << "`distance` FROM `school` where active=1 && lat is not null && lon is not null && id !=#{id} "
     query << level_code_filter
     query << " ORDER BY `distance` LIMIT #{school_count}"
     School.on_db(shard).find_by_sql(query)
