@@ -1,0 +1,34 @@
+OSP_DISPLAY_CONFIG_INFO <br/>
+<table class="table table-striped mbm">
+<tr>
+  <th class="tac emphasis-color">  Question ID </th>
+  <th class="tac emphasis-color">  location_group_id </th>
+  <th class="tac emphasis-color">  ques_id </th>
+  <th class="tac emphasis-color"> ques_group_id </th>
+  <th class="tac emphasis-color">  order_on_page </th>
+  <th class="tac emphasis-color">  order_in_group </th>
+  <th class="tac emphasis-color">  page_name </th>
+  <th class="tac emphasis-color">  answers </th>
+  <th class="tac emphasis-color">  label </th>
+  <th class="tac emphasis-color"> active </th>
+  <th class="tac emphasis-color">  updated </th>
+</tr>
+<br/>
+<% osp_display_config.each do |display_question| %>
+
+    <tr>
+      <td>  <%= display_question.id %></td>
+      <td>  <%= display_question.location_group_id %></td>
+      <td>  <%= display_question.ques_id %></td>
+      <td>  <%= display_question.ques_group_id %></td>
+      <td>  <%= display_question.order_on_page %></td>
+      <td>  <%= display_question.order_in_group%></td>
+      <td>  <%= display_question.page_name%></td>
+      <td>  <%= display_question.answers %></td>
+      <td>  <%= display_question.label %></td>
+      <td>  <%= display_question.active%></td>
+      <td>  <%= display_question.updated%></td>
+    </tr>
+    <br>
+<% end %>
+</table>

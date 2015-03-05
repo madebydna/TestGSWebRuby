@@ -19,6 +19,12 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     question_display_json_config[:label]
   end
 
+
+  def self.find_by_page(page)
+    self.active.where(page_name: page).order(:order_on_page)
+
+  end
+
   def question_display_json_config
     json = read_attribute(:config)
     if json.present?
