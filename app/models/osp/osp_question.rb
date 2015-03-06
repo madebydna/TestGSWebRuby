@@ -1,4 +1,6 @@
 class Osp::OspQuestion < ActiveRecord::Base
+  include JsonifiedAttributeConcerns
+
   db_magic :connection => :gs_schooldb
   self.table_name = 'osp_questions'
 
@@ -6,31 +8,10 @@ class Osp::OspQuestion < ActiveRecord::Base
   has_many :osp_display_configs, :class_name => 'Osp::OspDisplayConfig'
   scope :active, -> { where(active: true) }
 
-  def answers
-      question_json_config[:answers]
-  end
-
-  def label
-     self.question_label
-  end
+  jsonified_attribute :answers, json_attribute: :default_config, type: :string
 
   def level_code
     super.split(',')
-  end
-
-  def question_json_config
-    json = read_attribute(:default_config)
-    if json.present?
-      begin results = JSON.parse(json,symbolize_names: true)
-      rescue JSON::ParserError => e
-        results = {}
-        Rails.logger.debug "ERROR: parsing JSON Question Config for Question ID  #{self.id} \n" +
-                               "Exception message: #{e.message}"
-      end
-      results
-    else
-      {}
-    end
   end
 
 

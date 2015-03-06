@@ -1,4 +1,7 @@
 class Osp::OspDisplayConfig < ActiveRecord::Base
+
+  include JsonifiedAttributeConcerns
+
   db_magic :connection => :gs_schooldb
   self.table_name = 'osp_display_configs'
 
@@ -11,17 +14,7 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
   belongs_to :osp_question, :class_name => 'Osp::OspQuestion', foreign_key: 'osp_question_id'
   belongs_to :osp_question_group, :class_name => 'Osp::OspQuestionGroup',foreign_key: 'osp_question_group_id'
 
-
-
-  def answers
-    question_display_json_config[:answers]
-  end
-
-
-  def label
-    question_display_json_config[:label]
-  end
-
+  jsonified_attribute :answers, :label, json_attribute: :config, type: :string
 
   def self.find_by_page(page)
     self.active.where(page_name: page).order(:order_on_page)
@@ -39,7 +32,7 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     if self.label.present?
        self.label
     else
-      osp_question.label
+      osp_question.question_label
     end
   end
 
@@ -51,19 +44,5 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     end
   end
 
-  def question_display_json_config
-    json = read_attribute(:config)
-    if json.present?
-      begin results = JSON.parse(json,symbolize_names: true)
-      rescue JSON::ParserError => e
-        results = {}
-        Rails.logger.debug "ERROR: parsing JSON display question Config for Id  #{self.id} \n" +
-                               "Exception message: #{e.message}"
-      end
-      results
-    else
-      {}
-    end
-  end
 
 end
