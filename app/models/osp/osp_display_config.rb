@@ -28,12 +28,20 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     end
   end
 
+  def question_type
+    osp_question.question_type
+  end
+
   def displayed_label
     if self.label.present?
        self.label
     else
       osp_question.question_label
     end
+  end
+
+  def question_response_key
+    osp_question.esp_response_key
   end
 
   def displayed_answers

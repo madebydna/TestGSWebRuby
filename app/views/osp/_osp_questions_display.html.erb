@@ -1,0 +1,11 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <% questions_display_config.each do |display_question| %>
+      <% if display_question.question_type == 'multi_select' %>
+          <%= render partial: 'shared/multi_select_checkbox_button', :locals => {
+                                                                           display_question_label: display_question.displayed_label,
+                                                                           display_question_answers_map: display_question.displayed_answers,
+                                                                           response_key: display_question.question_response_key
+                                                                   } %>
+      <% end %>
+  <% end %>
+</div>
