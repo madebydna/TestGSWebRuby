@@ -5,11 +5,11 @@
         <%= title.html_safe %>
       </header>
       <article>
-        <%=  render "shared/reviews/#{review_question_type_partial}", review_options: review_options %>
+        <%=  render "shared/reviews/modules/input/#{review_question_type_partial}", review_options: review_options %>
       </article>
     </div>
     <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border ptl phl " style="min-height: 280px">
-      <%= render "shared/reviews/#{review_summary_partial}", review_options: review_options %>
+      <%= render "shared/reviews/modules/output/#{review_summary_partial}", review_options: review_options %>
     </div>
   </div>
 </div>
