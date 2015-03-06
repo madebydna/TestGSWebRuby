@@ -54,3 +54,16 @@ end
 shared_example 'should be on compare page' do
   expect(subject).to eq compare_schools_path.chop
 end
+
+#By Name Search Tests
+shared_example 'should contain the expected text' do |text|
+  fail unless subject.present?
+  [*subject].each do | s |
+    expect(s.text).to include(text)
+  end
+end
+
+#By Location examples
+shared_example 'should contain distance sort' do
+  expect(subject.has_selector?('.js_sort-button', text: 'Distance', visible: true)).to be_truthy
+end

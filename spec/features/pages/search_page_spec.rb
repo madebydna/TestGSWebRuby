@@ -43,7 +43,31 @@ describe 'Search Page' do
         include_example 'should be on compare page'
       end
     end
+
+    describe 'page specific elements' do
+      include_context 'Visit By Location Search', *['100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326]
+      with_shared_context 'Sorting toolbar' do
+        include_example 'should contain distance sort'
+      end
+    end
   end
 
+  describe 'By Name' do
+    describe 'search logic' do
+      with_shared_context 'Visit by name search using \'north\' as the query parameter' do
+        context 'when looking at search results school names' do
+          subject { page.all(:css, '.rs-schoolName') }
+          include_example 'should contain the expected text', *['North']
+        end
+      end
+
+      with_shared_context 'Visit by name search using \'magnolia\' as the query parameter' do
+        context 'when looking at search results school addresses' do
+          subject { page.all(:css, '.rs-schoolAddress') }
+          include_example 'should contain the expected text', *['Magnolia']
+        end
+      end
+    end
+  end
 
 end
