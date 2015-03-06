@@ -62,7 +62,11 @@ module JsonifiedAttributeConcerns
   def read_json_attribute(json_attribute)
     json = read_attribute(json_attribute)
     if json.present?
-      JSON.parse(json) rescue {}
+      begin    JSON.parse(json) rescue {}
+      rescue JSON::ParserError => e
+        Rails.logger.debug "ERROR: parsing JSON for ID on table  #{self.id} \n" +
+                               "Exception message: #{e.message}"
+      end
     else
       {}
     end
