@@ -36,6 +36,14 @@ describe 'Search Page' do
         end
       end
     end
+    describe 'search logic' do
+      with_shared_context 'Visit dover delaware city browse' do
+        context 'when looking at search results school addresses' do
+          subject { page.all(:css, '.rs-schoolAddress') }
+          include_example 'should contain the expected text', *['Dover, DE']
+        end
+      end
+    end
   end
 
   describe 'By Location' do

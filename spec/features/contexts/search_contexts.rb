@@ -68,6 +68,10 @@ shared_context 'Visit by name search using parameters state=de and q=magnolia' d
   include_context 'Visit By Name Search', *['magnolia', 'de']
 end
 
+shared_context 'Visit dover delaware city browse' do
+  include_context 'Visit City Browse Search', *['de', 'dover']
+end
+
 shared_context 'Sorting toolbar' do
   subject { page.find(:css, '.js-sortingToolbar') }
 end
