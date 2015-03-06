@@ -3,40 +3,11 @@
 
   <%= render partial: 'osp/osp_nav', locals: {page: 1} %>
 
+  <%= render 'shared/multi_select_checkbox_button', multi_select_display_config: @osp_display_config %>
+
 </div>
 
-  <!--<% @osp_question.each do |question| %>-->
-      <!--<br/>-->
-      <!--<tr>-->
-        <!--<td>  <%= question.id %></td>-->
-        <!--<td>  <%= question.esp_response_key %></td>-->
-        <!--<td>  <%= question.question_label %></td>-->
-        <!--<td>  <%= question.school_type %></td>-->
-        <!--<td>  <%= question.level_code %></td>-->
-        <!--<td>  <%= question.answers%></td>-->
-        <!--<td>  <%= question.active%></td>-->
-        <!--<td>  <%= question.updated%></td>-->
-      <!--</tr>-->
-      <!--<br>-->
-  <!--<% end %>-->
-  <!--<br/>-->
-  <!--OSP_QUESTION_GROUP_INFO-->
-  <!--<% @osp_question_group.each do |group| %>-->
-      <!--<br/>-->
-      <!--<tr>-->
-        <!--<td>  <%= group.id %></td>-->
-        <!--<td>  <%= group.image_path %></td>-->
-        <!--<td>  <%= group.heading %></td>-->
-        <!--<td>  <%= group.sub_text %></td>-->
-        <!--<td>  <%= group.default_config %></td>-->
-        <!--<td>  <%= group.active%></td>-->
-        <!--<td>  <%= group.updated%></td>-->
-      <!--</tr>-->
-      <!--<br>-->
-  <!--<% end %>-->
-  <!--<br/>-->
-<%= render "osp/osp_question_display", osp_display_config: @osp_display_config %>
-
+<%= render 'osp/osp_question_display', osp_display_config: @osp_display_config %>
 
 </div>
 

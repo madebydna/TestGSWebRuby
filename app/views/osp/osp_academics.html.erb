@@ -1,8 +1,10 @@
-<div class="limit-width-1200 tac">
+<div class="limit-width-1200">
 
   <%= render partial: 'osp/osp_header' %>
 
   <%= render partial: 'osp/osp_nav', locals: {page: 2} %>
+  <%= render 'shared/multi_select_checkbox_button', multi_select_display_config: @osp_display_config %>
   <%= render "osp/osp_question_display", osp_display_config: @osp_display_config %>
+
 
 </div>

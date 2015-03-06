@@ -2,7 +2,7 @@
 
 .iconx16 {
   display: inline-block;
-  background-image: asset_data_url("icons/141103-16x16_sprite.png");
+  background-image: asset_data_url("icons/151103-16x16_sprite.png");
   width: 16px;
   height: 16px;
 }
@@ -175,6 +175,14 @@
 
 .btn:hover .i-16-check-bigger-off {
   background-position: -416px -16px;
+}
+
+.active .i-16-check-bigger-off {
+  background-position: -416px -32px;
+}
+
+.btn.active:hover .i-16-check-bigger-off {
+  background-position: -416px -32px;
 }
 
 .i-16-blue-x-circle {

@@ -24,7 +24,6 @@ GS.forms.updateFormVisualElements = function() {
 
         }else {
             $this.parent().find('.js-icon').removeClass(icoValue+'-on').addClass(icoValue+'-off');
-            //$this.parent().removeClass('btn-bg-green');
             $this.parent().removeClass('active');
         }
     });
@@ -111,6 +110,7 @@ $(function() {
 
     });
 
+//todo: refactor to make this generic
     $(".js-gs-checkbox").on('click', function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");

@@ -1,0 +1,26 @@
+<!-- multi select display config example
+
+AL1,AL2 is the label of the button, V1,V2 is the value to be sent on submit
+
+"answers":{"AL1":"V1","AL2":"V2"}
+-->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<% multi_select_display_config.each do |display_question| %>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h3>
+      <%= display_question.displayed_label %>
+      </h3>
+      </div>
+    <% display_question.displayed_answers.each_pair do |key, value| %>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <button data-toggle="button" class="btn btn-toggle js-gs-checkbox"
+                  data-gs-checkbox="<%= value %>"
+                  type="button">
+            <span class="vat iconx16 i-16-check-bigger-off mrs"></span>
+            <%= key %>
+          </button>
+          <input type="hidden" name="<%= value %>[]" value="" class="js-gs-checkbox-value">
+        </div>
+    <% end %>
+<% end %>
+</div>
