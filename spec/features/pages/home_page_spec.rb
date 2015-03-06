@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../examples/footer_shared_examples'
+require_relative '../examples/footer_examples'
 
 describe 'Home Page' do
   before { visit home_path }

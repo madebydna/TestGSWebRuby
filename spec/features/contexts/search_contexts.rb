@@ -1,5 +1,6 @@
 require 'spec_helper'
-require_relative '../../../spec/features/search/search_spec_helper'
+require 'features/search/search_spec_helper'
+require 'features/examples/page_examples'
 include SearchSpecHelper
 
 #Visiting Search Pages
@@ -59,11 +60,11 @@ shared_context 'Set subject to current_path' do
   subject { current_path }
 end
 
-shared_context 'Visit by name search using \'north\' as the query parameter' do
+shared_context 'Visit by name search using parameters state=de and q=north' do
   include_context 'Visit By Name Search', *['north', 'de']
 end
 
-shared_context 'Visit by name search using \'magnolia\' as the query parameter' do
+shared_context 'Visit by name search using parameters state=de and q=magnolia' do
   include_context 'Visit By Name Search', *['magnolia', 'de']
 end
 

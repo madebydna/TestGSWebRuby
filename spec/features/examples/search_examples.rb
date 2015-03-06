@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../contexts/search_contexts'
+require 'features/contexts/search_contexts'
 
 #Search Bar Shared Examples
 shared_example 'should contain a search bar' do
@@ -53,14 +53,6 @@ end
 
 shared_example 'should be on compare page' do
   expect(subject).to eq compare_schools_path.chop
-end
-
-#By Name Search Tests
-shared_example 'should contain the expected text' do |text|
-  fail unless subject.present?
-  [*subject].each do | s |
-    expect(s.text).to include(text)
-  end
 end
 
 #By Location examples
