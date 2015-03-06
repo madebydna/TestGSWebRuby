@@ -1,6 +1,6 @@
 class Osp::OspQuestion < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
-  self.table_name = 'osp_question'
+  self.table_name = 'osp_questions'
 
   attr_accessible :esp_response_key, :question_label, :question_type, :default_config, :school_type, :level_code, :active,  :updated
   belongs_to :osp_display_config, :class_name => 'Osp::OspDisplayConfig'
@@ -8,6 +8,10 @@ class Osp::OspQuestion < ActiveRecord::Base
 
   def answers
       question_json_config[:answers]
+  end
+
+  def label
+     self.question_label
   end
 
 

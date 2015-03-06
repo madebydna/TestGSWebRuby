@@ -1,4 +1,3 @@
-//= require lodash
 //= require util/dependency_init
 //= require util/states
 

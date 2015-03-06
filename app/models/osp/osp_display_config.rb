@@ -1,8 +1,8 @@
 class Osp::OspDisplayConfig < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
-  self.table_name = 'osp_display_config'
+  self.table_name = 'osp_display_configs'
 
-  attr_accessible :location_group_id, :ques_id, :ques_group_id, :order_in_group, :order_on_page, :page_name, :config ,:active,  :updated
+  attr_accessible :location_group_id, :osp_question_id, :osp_question_group_id, :order_in_group, :order_on_page, :page_name, :config ,:active,  :updated
 
   scope :active, -> { where(active: true) }
   has_many :osp_questions, :class_name => 'Osp::OspQuestion', foreign_key: 'id'
@@ -17,6 +17,20 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
 
   def label
     question_display_json_config[:label]
+  end
+
+
+  def self.find_by_page(page)
+    self.active.where(page_name: page).order(:order_on_page)
+
+  end
+
+  def displayed_label
+    if self.label.present?
+       self.label
+    else
+      Osp::OspQuestion.active.where(id: self.osp_question_id)
+    end
   end
 
   def question_display_json_config
