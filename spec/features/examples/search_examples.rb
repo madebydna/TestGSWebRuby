@@ -56,6 +56,10 @@ shared_example 'should be on compare page' do
 end
 
 #By Location examples
-shared_example 'should contain distance sort' do
-  expect(subject.has_selector?('.js_sort-button', text: 'Distance', visible: true)).to be_truthy
+shared_example 'should contain distance sort button' do
+  expect(subject.has_selector?('button', text: 'Distance', visible: true)).to be_truthy
+end
+
+shared_example 'should contain distance sort select option' do
+  expect(subject.has_selector?('option[value=distance]', visible: true)).to be_truthy
 end

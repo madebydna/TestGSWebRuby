@@ -4,8 +4,8 @@ require_relative 'search_spec_helper'
 describe 'Sorting search results' do
   include SearchSpecHelper
 
-  let(:sort_button) {'button.js_sort-button'}
-  let(:active_button) {'button.js_sort-button.active'}
+  let(:sort_button) {'button.rs-sortButton'}
+  let(:active_button) {'button.rs-sortButton.active'}
 
   ['fit', 'no fit'].each do |fit|
     ['rating sort', 'no rating sort'].each do |rating_sort|

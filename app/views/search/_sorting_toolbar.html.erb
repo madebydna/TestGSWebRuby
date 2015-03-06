@@ -8,9 +8,9 @@
         <div class="btn-group">
           <% @relevant_sort_types.each do |sort_name| %>
               <% if @active_sort == sort_name %>
-                  <button type="button" class="btn btn-default js_sort-button active"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton active"><%=sort_name.to_s.titleize%></button>
               <% else %>
-                  <button type="button" class="btn btn-default js_sort-button" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.to_s.titleize%></button>
               <% end %>
           <% end %>
         </div>
