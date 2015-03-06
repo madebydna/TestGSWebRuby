@@ -24,7 +24,7 @@ GS.googleAnalytics.tracking = (function() {
   // label = unique description of action - video name, click identifier, name of button
   // value = this is always a number
   var send = function(category, action, label, value){
-    ga('send', category, action, label, value);
+    ga('send', 'event', category, action, label, value);
   };
 
   /*
