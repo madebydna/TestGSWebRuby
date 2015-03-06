@@ -315,7 +315,11 @@ class FilterBuilder
       filters: {
         group1: {
           display_type: :filter_column_primary,
-          filters: default_simple_filters_hash.merge({
+          filters: default_simple_filters_hash
+        },
+        group2: {
+          display_type: :filter_column_secondary,
+          filters: {
             transportation: {
               label: 'Transportation options',
               display_type: :title,
@@ -333,12 +337,7 @@ class FilterBuilder
                 before: {label: 'Before school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
                 after: {label: 'After school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
-            }
-          })
-        },
-        group2: {
-          display_type: :filter_column_secondary,
-          filters: {
+            },
             dress_code: {
               label: 'Dress code',
               display_type: :title,
@@ -370,7 +369,13 @@ class FilterBuilder
                   }
                 }
               }
-            },
+            }
+          }
+        },
+        group3: {
+          display_type: :filter_column_secondary,
+          name: :group3,
+          filters: {
             girls_sports: {
               label: 'Girls Sports',
               display_type: :title,
@@ -406,13 +411,7 @@ class FilterBuilder
                   }
                 }
               }
-            }
-          }
-        },
-        group3: {
-          display_type: :filter_column_secondary,
-          name: :group3,
-          filters: {
+            },
             school_focus: {
               label: 'School Focus',
               display_type: :title,
