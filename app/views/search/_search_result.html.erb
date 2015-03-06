@@ -25,8 +25,8 @@
           <div class="mll fl col-lg-8 col-md-7">
             <div class="ptm notranslate">
               <div class="mtm hidden-xs"></div>
-              <div><%= link_to "#{school.name}", school_page_url, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium' %></div>
-              <div class="hidden-xs font-size-small"><%="#{school.street}, #{school.city}, #{school.state.upcase} #{school.zip}"%></div>
+              <div><%= link_to "#{school.name}", school_page_url, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium rs-schoolName' %></div>
+              <div class="hidden-xs font-size-small rs-schoolAddress"><%="#{school.street}, #{school.city}, #{school.state.upcase} #{school.zip}"%></div>
               <div class="clearfix visible-xs font-size-small">
                 <div class="prs fl "><%= school_type_display(school.type) %></div>
                 <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
@@ -79,8 +79,7 @@
           <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
             <%= render 'compare_schools_compare_button', school: school %>
             <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', target: '_blank' do %>
-              <!--<div class="iconx24 i-24-home fl mrs"></div>-->
-              <div class="iconx16 i-16-home fl mrs"></div>
+              <div class="iconx16 i-16-blue-home fl mrs"></div>
               <div class="fl">Homes for sale</div>
             <% end %>
           </div>

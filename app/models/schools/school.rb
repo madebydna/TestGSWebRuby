@@ -308,10 +308,17 @@ class School < ActiveRecord::Base
     db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
   end
 
-  def schools_by_distance_cache(school_count)
+
+  # The three following methods return the nearby schools currently using levelcode to filter.
+  # So if school is a high school then it will return high schools
+  # if multiple level schools then will return set  of schools based on distance first then level
+  # So if a elementary and middle school will return the closest elementary or middle schools, the return set could
+  # be all middle schools or elementary schools.
+
+  def schools_by_distance(school_count)
     query = "SELECT `id`, street,`city`, `state`, `name`, `level`, `type`, `level_code`, "
     query << location_near_formula(lat, lon)
-    query << "`distance` FROM `school` where active=1 && id !=#{id} "
+    query << "`distance` FROM `school` where active=1 && lat is not null && lon is not null && id !=#{id} "
     query << level_code_filter
     query << " ORDER BY `distance` LIMIT #{school_count}"
     School.on_db(shard).find_by_sql(query)
@@ -326,7 +333,7 @@ class School < ActiveRecord::Base
     return '' if level_code_array.blank?
     arr_query_str = []
     level_code_array.each do |one_level_code|
-      arr_query_str << "level_code LIKE '#{one_level_code}'"
+      arr_query_str << "level_code LIKE '%#{one_level_code}%'"
     end
     arr_query_str.present? ? ' && (' << arr_query_str.join(" || ") << ') ' : ''
   end

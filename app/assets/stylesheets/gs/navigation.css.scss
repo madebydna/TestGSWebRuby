@@ -256,3 +256,32 @@
 .pointer {
   cursor: pointer;
 }
+
+//OSP nav
+.nav-osp{
+  width: 80%;
+  margin: auto;
+
+
+  .nav_button {
+    position: relative;
+    width: 23%;
+    float: left;
+    background-color: $btn-primary-color;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    &:hover h3 {
+      color: $btn-hover;
+    }
+    &.active {
+      h3 {
+        color : $btn-primary-color;
+      }
+      background-color: $btn-hover;
+    }
+  }
+}
+
+

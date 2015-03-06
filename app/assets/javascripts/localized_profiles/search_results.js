@@ -26,6 +26,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var path = getQueryPath();
             var query = buildQuery($form);
             GS.uri.Uri.goToPage(path + query)
+            var custom_link = 'search_submit_filters';
+            if ($form.selector.indexOf('Mobile') > -1) {
+              custom_link = custom_link + '_mobile';
+            }
+            GS.track.sendCustomLink(custom_link);
         });
     };
 
@@ -84,8 +89,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (menu.css('display') == 'none') {
                 GS.popup.closeOtherPopups();
                 menu.show();
+                GS.track.sendCustomLink('search_open_filters');
             } else {
                 menu.hide();
+                GS.track.sendCustomLink('search_close_filters');
             }
         });
         GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
@@ -97,10 +104,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
                 $(this).text('Fewer filters');
+                GS.track.sendCustomLink('search_expand_advanced_filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
                 $(this).text('More filters');
+                GS.track.sendCustomLink('search_collapse_advanced_filters');
             }
         });
     };
@@ -113,7 +122,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
-            $('.js-searchFiltersMenuMobile').css('left') == '0px' ? hideFilterMenuMobile() : showFilterMenuMobile();
+            if($('.js-searchFiltersMenuMobile').css('left') == '0px') {
+              hideFilterMenuMobile();
+              GS.track.sendCustomLink('search_close_filters_mobile');
+            } else {
+              showFilterMenuMobile();
+              GS.track.sendCustomLink('search_open_filters_mobile');
+            }
         });
         GS.popup.registerCloseHandler(hideFilterMenuMobile);
     };
@@ -357,8 +372,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var selectCompareSchoolButton = function($school, callback) {
-            $school.find('.iconx16').removeClass('i-16-gray-check-bigger').addClass('i-16-green-check-bigger');
-            $school.addClass('btn-border-green');
+            $school.find('.iconx16').removeClass('i-16-check-bigger-off').addClass('i-16-check-bigger-on');
+            //$school.addClass('btn-border-green');
             $school.find('.js-compareSchoolsButtonText').text('');
             $school.animate({width: '0px', paddingLeft: '8px'}, 500, function() {
                 var $schoolText = $school.siblings('.js-compareSchoolsText');
@@ -382,7 +397,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             $schoolText.hide();
             $schoolText.removeClass('js-buttonSelected');
             $school.animate({width: '150px', paddingLeft: '20px'},500, function() {
-                $school.find('.iconx16').removeClass('i-16-green-check-bigger').addClass('i-16-gray-check-bigger');
+                $school.find('.iconx16').removeClass('i-16-check-bigger-on').addClass('i-16-check-bigger-off');
                 $school.removeClass('btn-border-green');
                 $school.find('.js-compareSchoolsButtonText').text('Compare');
                 syncCompareSchoolsText();
@@ -576,6 +591,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             GS.search.autocomplete.searchAutocomplete.detachAutocomplete();
             GS.search.autocomplete.searchAutocomplete.init(GS.search.stateAbbreviation);
             $('.js-currentLocationText').html($(this).text());
+            GS.track.sendCustomLink('search_change_state');
         });
     };
 

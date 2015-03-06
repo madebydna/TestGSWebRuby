@@ -211,8 +211,10 @@ class SigninController < ApplicationController
       city_locale = hub_city_cookie
     end
     if user && error.nil?
-      unless   user.user_profile.update_and_save_locale_info(state_locale,city_locale)
-        Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
+      if user.user_profile.present?
+        unless user.user_profile.update_and_save_locale_info(state_locale,city_locale)
+          Rails.logger.warn("User profile failed to update state and city locale info  for user #{user.email} ")
+        end
       end
 
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))

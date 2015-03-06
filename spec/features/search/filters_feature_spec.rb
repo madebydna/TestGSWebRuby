@@ -78,8 +78,10 @@ feature 'Search filters submission', js: true do
   context 'when selecting a sports filters' do
 
     sports = [:soccer, :basketball]
+    # sports = [:soccer]
 
     [:boys, :girls].each do |gender|
+      # [:girls].each do |gender|
 
       context "for #{gender}" do
 
@@ -90,15 +92,13 @@ feature 'Search filters submission', js: true do
             before do
               set_up_city_browse('de','dover')
               open_full_filter_dialog
-              page.all(:xpath, "//button[@data-gs-gender='#{gender}']").last.click
-              find(:css, "span.i-24-#{sport}-off").click
+              page.all(:xpath, "//div[@data-gs-checkbox-category='#{gender}_sports[]' and @data-gs-checkbox-value='#{sport}']").last.click
               submit_filters
               open_full_filter_dialog
               page
             end
 
             it 'should still be clicked after page load' do
-              page.all(:xpath, "//button[@data-gs-gender='#{gender}']").last.click
               expect(page).to have_css("span.i-24-#{sport}-on")
             end
 
@@ -125,7 +125,7 @@ feature 'Search filters submission', js: true do
         end
 
         it 'should still be selected after page load' do
-          select_value = page.all(:css, 'select.js-grades-select-box').last.value
+          select_value = find(:css, 'select.js-grades-select-box').value
           expect(select_value).to eq(grade_value)
         end
 

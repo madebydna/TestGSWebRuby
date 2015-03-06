@@ -37,6 +37,9 @@ class SearchController < ApplicationController
     elsif params.include?(:city)
       self.city_browse
     elsif params.include?(:q)
+      if params_hash['q'].blank? && @state.present?
+        redirect_to state_url(:state => @state[:long]) and return
+      end
       self.by_name
     else
       render 'error/page_not_found', layout: 'error', status: 404
@@ -124,8 +127,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short]}) if @state
       @search_term=@query_string
     end
-
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
+
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     setup_search_gon_variables
@@ -148,7 +151,6 @@ class SearchController < ApplicationController
     search_options = {number_of_results: number_of_results, offset: offset}
 
     (filters = parse_filters(@params_hash).presence) and search_options.merge!({filters: filters})
-
     @sort_type = parse_sorts(@params_hash).presence
     @active_sort = active_sort_name(@sort_type)
 
@@ -274,7 +276,7 @@ class SearchController < ApplicationController
   end
 
   def hide_fit?
-    @total_results > MAX_RESULTS_FOR_FIT
+    @total_results.present? ? @total_results > MAX_RESULTS_FOR_FIT : true
   end
 
   def calculate_map_range(solr_offset)
@@ -324,6 +326,14 @@ class SearchController < ApplicationController
       grades_params.each {|g| grades << "grade_#{g}".to_sym if valid_grade_params.include? g}
       filters[:grades] = grades unless grades.empty? || grades.length == valid_grade_params.length
     end
+
+    if should_apply_filter?(:gs_rating)
+      gs_rating_params = [*params_hash['gs_rating']]
+      value_map = {'above_average' => [8,9,10],'average' => [4,5,6,7],'below_average' => [1,2,3] }
+      gs_ratings = gs_rating_params.select {|param| value_map.has_key?(param)}.map {|param| value_map[param]}.flatten
+      filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']

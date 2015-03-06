@@ -12,6 +12,9 @@ class UserProfile < ActiveRecord::Base
   def active?
     active == true
   end
+  def inactive?
+    ! active?
+  end
 
   def update_and_save_locale_info(state,city)
 

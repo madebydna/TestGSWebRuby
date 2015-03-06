@@ -227,6 +227,9 @@ class SchoolSearchService
       if filters.include?(:school_college_going_rate)
         filter_arr << "+school_college_going_rate:[#{filters[:school_college_going_rate]}]" if filters[:school_college_going_rate] == '70 TO 100'
       end
+      if filters.include?(:overall_gs_rating)
+        filter_arr << "+overall_gs_rating:(#{filters[:overall_gs_rating].compact.join(' ')})"
+      end
       hash.delete :filters
     end
     filter_arr

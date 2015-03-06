@@ -11,7 +11,7 @@ GS.forms.updateFormVisualElements = function() {
     if ($this.val() !== '') {
       var checkbox = $this.parent().find('.i-24-checkmark-off');
       checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-      $this.parent().find('.js-gs-checkbox').addClass('btn-border-green');
+      $this.parent().find('.js-gs-checkbox').addClass('active');
     }
   });
 
@@ -20,11 +20,12 @@ GS.forms.updateFormVisualElements = function() {
         var icoValue = $this.parent().data('gs-checkbox-icon-label');
         if ($this.val() !== '') {
             $this.parent().find('.js-icon').removeClass(icoValue+'-off').addClass(icoValue+'-on');
-            $this.parent().addClass('btn-bg-green');
+            $this.parent().addClass('active');
 
         }else {
             $this.parent().find('.js-icon').removeClass(icoValue+'-on').addClass(icoValue+'-off');
-            $this.parent().removeClass('btn-bg-green');
+            //$this.parent().removeClass('btn-bg-green');
+            $this.parent().removeClass('active');
         }
     });
   // Set initial state of visual radio buttons based on if hidden fields
@@ -46,7 +47,7 @@ GS.forms.updateFormVisualElements = function() {
       return $(this).val() !== '';
     }).length > 0) {
       $(this).find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-      $(this).find('.js-icon').parent().addClass('btn-border-green');
+      $(this).find('.js-icon').parent().addClass('active');
     }
   });
 
@@ -56,7 +57,7 @@ GS.forms.updateFormVisualElements = function() {
             return $(this).val() !== '';
         }).length > 0) {
             $(this).find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            $(this).find('.js-icon').parent().addClass('btn-border-green');
+            $(this).find('.js-icon').parent().addClass('active');
         }
     });
 };
@@ -99,11 +100,12 @@ $(function() {
         });
         if (is_pull_down_selected == true) {
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
-            pull_down_button.find('.btn').addClass('btn-border-green');
+            pull_down_button.find('.btn').addClass('active');
 
         }else {
+            pull_down_button.find('.js-icon').removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
+            pull_down_button.find('.btn').removeClass('active');
             pull_down_button.find('.js-icon').removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
-            pull_down_button.find('.btn').removeClass('btn-border-green');
 
         }
 
@@ -117,19 +119,16 @@ $(function() {
         if (hidden_field.val()== '') {
             checkbox.removeClass('i-24-checkmark-off').addClass('i-24-checkmark-on');
             hidden_field.val(gs_checkBox);
-            self.addClass('btn-border-green');
 
         }else {
             checkbox.removeClass('i-24-checkmark-on').addClass('i-24-checkmark-off');
             hidden_field.val('');
-            self.removeClass('btn-border-green');
 
         }
 
     });
 
     $('.js-gs-checkbox-search').on('click',function(){
-//    $('.js-searchFiltersForm').on('click', '.js-gs-checkbox-search',function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
         var hidden_field = self.siblings(".js-gs-checkbox-value");
@@ -175,11 +174,9 @@ $(function() {
 
         if (hidden_field.val()== '') {
             checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-            self.removeClass('btn-default').addClass('btn-primary');
             hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
         } else {
             checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
-            self.removeClass('btn-primary').addClass('btn-default');
             hidden_field.removeAttr("value").removeAttr("name");
         }
     });
@@ -193,29 +190,8 @@ $(function() {
         var gs_checkBoxCategory= self.data('gs-checkbox-category');
         var gs_iconLabel = self.data('gs-checkbox-icon-label');
         checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-        self.removeClass('btn-default').addClass('btn-primary');
+        self.addClass('active');
         hidden_field.val(gs_checkBox).attr("name", gs_checkBoxCategory);
-    };
-
-    $('.js-searchFiltersForm').on('click', '.js-sports-gender', function() {
-        var self = $(this);
-        var sibling = self.siblings('.js-sports-gender');
-        var gs_gender = self.data('gs-gender');
-        var self_filters = $('.js-'+ gs_gender +'-sports-values');
-        var sibling_filters = self_filters.siblings('.js-sports-button-group');
-
-        sibling_filters.hide();
-        self_filters.slideToggle('slow');
-        self.removeClass('btn-default').addClass('btn-primary');
-        sibling.removeClass('btn-primary').addClass('btn-default');
-    });
-
-    var toggleButtonForSports = function(button, children){
-        if (childCheckboxesAreEmpty(children)){
-            button.removeClass('btn-primary').addClass('btn-default');
-        } else {
-            button.removeClass('btn-default').addClass('btn-primary');
-        }
     };
 
     var toggleCheckboxForCollapsibleBox = function(checkbox, children) {
@@ -243,21 +219,6 @@ $(function() {
             var children = hidden_box.children('div').children('.js-gs-checkbox-value');
             toggleCheckboxForCollapsibleBox(checkbox, children);
         });
-    };
-
-    var toggleButtonForSportsOnLoad = function(){
-        $('.js-sports-gender').each(function(i){
-            var self = $(this);
-            var gs_gender = self.data('gs-gender');
-            var selfFilters = self.parents().siblings('.js-'+ gs_gender +'-sports-values');
-
-            var inputElements = [];
-            $(selfFilters).children('.js-sportsIconButton').each(function(i){
-                inputElements.push($(this).children('.js-value'));
-            });
-            toggleButtonForSports(self,inputElements);
-        });
-
     };
 
     $('.js-guidedSearch').on('submit',function() {
@@ -335,31 +296,13 @@ $(function() {
 
         if (hidden_field.val()== '') {
             checkbox.removeClass(gs_iconLabel + '-off').addClass(gs_iconLabel + '-on');
-            self.addClass('btn-bg-green');
+            self.addClass('active');
             hidden_field.val(gs_checkBox);
         } else {
             checkbox.removeClass(gs_iconLabel + '-on').addClass(gs_iconLabel + '-off');
-            self.removeClass('btn-bg-green');
+            self.removeClass('active');
             hidden_field.val('');
         }
-    });
-
-    $('.js-guidedSearch').on('click', '.js-sports-gender', function() {
-        var self = $(this);
-
-        if (!self.hasClass('btn-bg-green')) {
-            var gs_gender = self.data('gs-gender');
-            var self_filters = $('.js-' + gs_gender + '-sports-values');
-            self_filters.show();
-            self.addClass('btn-bg-green');
-
-
-            var sibling = self.siblings('.js-sports-gender');
-            var sibling_filters = self_filters.siblings('.js-sports-button-group');
-            sibling_filters.hide();
-            sibling.removeClass('btn-bg-green');
-        }
-
     });
 
     var setShowFiltersCookieHandler = function() {
@@ -367,7 +310,6 @@ $(function() {
     };
 
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad = toggleCheckboxForCollapsibleBoxOnLoad;
-    GS.forms.toggleButtonForSportsOnLoad = toggleButtonForSportsOnLoad;
     GS.forms.sportsToolTip = sportsToolTip;
     GS.forms.setShowFiltersCookieHandler = setShowFiltersCookieHandler;
     GS.forms.checkFancyCheckbox = checkFancyCheckbox;
@@ -376,7 +318,6 @@ $(function() {
 
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
-    GS.forms.toggleButtonForSportsOnLoad();
     GS.forms.sportsToolTip();
     GS.forms.setShowFiltersCookieHandler();
 });

@@ -1,4 +1,3 @@
-//= require util/dependency_init
 //= require util/uri
 
 describe('GS.uri.Uri', function() {

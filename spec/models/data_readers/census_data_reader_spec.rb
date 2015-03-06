@@ -262,24 +262,14 @@ describe CensusDataReader do
       expect(results).to eq({})
     end
 
-    it 'should return data for only for class size, since it matches the configured data type id.' do
+    it 'should return data for only for class size and english, since it matches the configuration.' do
       allow(subject).to receive(:cached_data_for_category).and_return(all_data)
-      allow(category.category_datas.first).to receive(:response_key).and_return(35)
-      allow(category.category_datas.first).to receive(:subject_id).and_return(4)
+      allow(category.category_datas.first).to receive(:response_key).and_return(35) #class size only
+      allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
 
       results = subject.labels_to_hashes_map(category)
       expect(results).to eq(results_hash)
     end
-
-    it 'should return the results only for english, since the it matches the configured category data.' do
-      allow(subject).to receive(:cached_data_for_category).and_return(all_data)
-      allow(category.category_datas.first).to receive(:response_key).and_return(35)
-      allow(category.category_datas.first).to receive(:subject_id).and_return(4) # only English Language Arts
-
-      results = subject.labels_to_hashes_map(category)
-      expect(results).to eq(results_hash)
-    end
-
   end
 
 end

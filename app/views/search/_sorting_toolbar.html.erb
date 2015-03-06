@@ -8,9 +8,9 @@
         <div class="btn-group">
           <% @relevant_sort_types.each do |sort_name| %>
               <% if @active_sort == sort_name %>
-                  <button type="button" class="btn btn-default js_sort-button active"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton active"><%=sort_name.to_s.titleize%></button>
               <% else %>
-                  <button type="button" class="btn btn-default js_sort-button" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.to_s.titleize%></button>
               <% end %>
           <% end %>
         </div>
@@ -33,7 +33,7 @@
     <% #Save Search For Desktop %>
     <div class="hidden-xs fr mll">
       <div class="pr">
-        <button class="btn btn-lg btn-primary js-savedSearchPopupButton" style="line-height: 1.5em;">
+        <button class="btn btn-lg btn-primary js-savedSearchPopupButton" >
           <span class="js-savedSearchPopupButtonText">Save Search</span>
         </button>
         <%= render 'search/saved_search_popup' %>
@@ -44,7 +44,7 @@
     <div class="fr">
       <div class="pr js-compareSchoolsPopupContainer">
         <% #Compare Button For Desktop %>
-        <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton">
+        <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton" >
           Compare <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
         </button>
         <% #Compare Button For Mobile %>

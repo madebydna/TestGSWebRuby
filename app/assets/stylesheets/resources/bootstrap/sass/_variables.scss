@@ -37,7 +37,7 @@ $brand-info:            #5bc0de !default;
 /////////////MS
 $brand-primary:                #26ABE2;
 $brand-primary-darker:         #204362;
-$brand-primary-dark:           #007299;
+$brand-primary-dark:           #2880b9;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
 $brand-primary-lighter:       lighten($brand-primary, 47%); // #F5FAFC
 
@@ -164,13 +164,25 @@ $table-cell-padding:                 10px;   ////////////GS
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #666 !default;
+//$btn-default-color:              #6797c7 !default;
+$btn-default-color:              #4788be !default;
 $btn-default-bg:                 #FFFFFF !default;
-$btn-default-border:             #ccc !default;
+$btn-default-hover:              #1e608b !default;
+$btn-default-border:             #6797c7 !default;
+$btn-default-active-border:      #195074 !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;
-$btn-primary-border:             $brand-primary !default;
+$btn-primary-border:             $brand-primary-dark !default;
+
+$btn-hover:                      #195074 !default;
+
+$btn-toggle-color:               #4788be !default;
+$btn-toggle-bg:                  #fff !default;
+$btn-toggle-border:              #4788be !default;
+$btn-toggle-hover:               #195074 !default;
+$btn-toggle-color-active:        #fff !default;
+$btn-toggle-bg-active:           #35485d !default;
 
 $btn-success-color:              #fff !default;
 $btn-success-bg:                 $brand-success !default;

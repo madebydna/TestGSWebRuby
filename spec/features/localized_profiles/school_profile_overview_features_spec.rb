@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/localized_profiles/school_profile_features_spec'
+require 'features/localized_profiles/school_profile_features'
 
 feature 'School profile overview page' do
   let!(:profile_page) { FactoryGirl.create(:page, name: 'Overview') }

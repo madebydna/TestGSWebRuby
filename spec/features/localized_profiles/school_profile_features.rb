@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/shared/state_footer_features_spec'
+require 'features/shared/state_footer_features'
 
 shared_examples 'school profile page' do
   let(:school) { FactoryGirl.create(:alameda_high_school) }

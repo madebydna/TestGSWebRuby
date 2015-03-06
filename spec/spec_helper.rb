@@ -184,7 +184,7 @@ RSpec.configure do |config|
 
   def describe_block_with_page_resize(describe_block_name, screen_size, &block)
     describe describe_block_name, js: true do
-      before { page.driver.browser.resize_window(*screen_size) }
+      before { page.current_window.resize_to(*screen_size) }
       instance_eval &block
     end
   end
@@ -251,6 +251,10 @@ RSpec.configure do |config|
   config.after(:each) { Rails.cache.clear }
 
   config.raise_errors_for_deprecations!
+
+  config.before(:each, js: true) do
+    page.driver.block_unknown_urls
+  end
 
     # use capybara-webkit
   Capybara.javascript_driver = :webkit
