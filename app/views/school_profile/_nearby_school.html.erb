@@ -1,7 +1,11 @@
 <%= link_to(school_hash_to_url_for_profile(school)) do %>
     <div class="row gray-border mvm mhs link-darkgray">
       <div class="fl bg-medium-gray hidden-xs visible-sm visible-mg visible-lg">
-        <img src="<%= image_path('lib/media_missing_70x70.png') %>" alt="No school photo available"/>
+        <% if school['school_media'] %>
+          <%= school['school_media'].html_safe  %>
+        <% else %>
+          <img src="<%= image_path('lib/media_missing_70x70.png') %>" alt="No school photo available"/>
+        <% end %>
       </div>
       <div class="pvs pvm phm clearfix col-xs-12 col-sm-8 col-lg-9">
         <div class="mhm fl db iconx24-ratings i-24-ratings-<%= (school['gs_rating'] || 'nr') %>"></div>

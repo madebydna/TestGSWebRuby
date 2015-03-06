@@ -14,6 +14,7 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
     allow(nearby).to receive(:school_review_count).and_return(12)
     allow(nearby).to receive(:school_review_avg_score).and_return(3)
     allow(nearby).to receive(:school_decorator_obj).and_return('9-12')
+    allow(nearby).to receive(:school_media).and_return("Iamveryprettyimage")
     nearby
   end
   # allow(school_2).to receive(:great_schools_rating)
@@ -53,9 +54,10 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
       let(:expected) do
         [
             {:id=>1,:name=>"Alameda High School",:city=>"Alameda",:state=>"CA",
-             :gs_rating=>"8",:type=>"public",:level=>"9-12",:review_score=>3,:review_count=>12},
+             :gs_rating=>"8",:type=>"Public district",:level=>"9-12",:review_score=>3,:review_count=>12,:school_media=>"Iamveryprettyimage"},
             {:id=>2,:name=>"Bay Farm Elementary School",:city=>"Alameda",:state=>"CA",:gs_rating=>"nr",
-             :type=>"public",:level=>"9-12",:review_score=>3,:review_count=>12}
+             :type=>"Public district",:level=>"9-12",:review_score=>3,:review_count=>12,
+             :school_media=>"Iamveryprettyimage"}
 
         ]
       end

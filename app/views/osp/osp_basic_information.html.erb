@@ -1,12 +1,11 @@
-<div class="row limit-width-1200 pll tac">
-  School : <%= @school.name %> ,  <%= @school.state %> ,  <%= @school.city %>
- <br/>
-Basic Information
+<div class="limit-width-1200">
+  <%= render partial: 'osp/osp_header' %>
 
-  <br/>
-  <%= link_to "Academics".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "2") %><br/>
-  <%= link_to "ExtraCurricular and Culture".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "3") %><br/>
-  <%= link_to "Faclities And Staff".html_safe, admin_osp_page_path(schoolId: @school.id.to_s,state: @school.state ,page: "4") %>
+  <%= render partial: 'osp/osp_nav', locals: {page: 1} %>
+
+</div>
+
+
 <br/>
   <%=@answser_set %>
 OSP_QUESTION_INFO
@@ -60,3 +59,4 @@ OSP_QUESTION_INFO
       <br>
   <% end %>
 </div>
+
