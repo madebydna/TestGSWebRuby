@@ -46,12 +46,12 @@ class DataFileMapping
   def parse_hash!(columns, key, map)
     map.each do |label, col|
       # These parsers are slightly different because hashes have keys and labels
-      if col.is_a?(Array)
-        col.each do |c|
+      if col.is_a?(Array) || col.is_a?(Integer)
+        [*col].each do |c|
           columns[c].merge!({key => label})
         end
-      elsif col.is_a?(Integer)
-        columns[col].merge!({key => label})
+      else
+        raise "Don't know how to handle #{ { key => map } } because '#{col}' is not an array or integer."
       end
     end
   end

@@ -65,6 +65,20 @@ describe DataFileMapping do
       }
     }
     let(:mapping) { DataFileMapping.new(file_config) }
+    let(:bad_hash_file_config) {
+      # This config misuses the hash column mapping
+      {
+        header_rows: 1,
+        location: '2013/path/to/file.txt',
+        layout: {
+          proficiency_band: {
+            null: [20],
+            level_1: 'this aint valid'
+          },
+        }
+      }
+    }
+    let(:bad_hash_mapping) { DataFileMapping.new(bad_hash_file_config) }
     let(:expected_column_mapping) {
       {
         4=>{district_id: true, number_tested: true},
@@ -81,6 +95,10 @@ describe DataFileMapping do
     it 'should create a hash of columns or :file to descriptors' do
       mapping.parse_layout!
       expect(mapping.columns).to eq(expected_column_mapping)
+    end
+
+    it 'should raise a descriptive error if a column hash mapping is done incorrectly.' do
+      expect { bad_hash_mapping.parse_layout! }.to raise_error(/proficiency_band.*this aint valid/)
     end
   end
 end
