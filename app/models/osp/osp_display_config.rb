@@ -25,7 +25,14 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
 
   def self.find_by_page(page)
     self.active.where(page_name: page).order(:order_on_page)
+  end
 
+
+  def self.find_by_page_and_school(page,school)
+    self.find_by_page(page).select do |osp_display_config|
+      osp_display_config.osp_question.school_type.include?(school.type) &&
+      school.includes_level_code?(osp_display_config.osp_question.level_code)
+    end
   end
 
   def displayed_label

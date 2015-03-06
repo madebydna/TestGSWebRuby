@@ -14,6 +14,9 @@ class Osp::OspQuestion < ActiveRecord::Base
      self.question_label
   end
 
+  def level_code
+    super.split(',')
+  end
 
   def question_json_config
     json = read_attribute(:default_config)
