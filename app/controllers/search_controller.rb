@@ -37,6 +37,9 @@ class SearchController < ApplicationController
     elsif params.include?(:city)
       self.city_browse
     elsif params.include?(:q)
+      if params_hash['q'].blank? && @state.present?
+        redirect_to state_url(:state => @state[:long]) and return
+      end
       self.by_name
     else
       render 'error/page_not_found', layout: 'error', status: 404
@@ -124,8 +127,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short]}) if @state
       @search_term=@query_string
     end
-
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
+
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     setup_search_gon_variables
@@ -273,7 +276,7 @@ class SearchController < ApplicationController
   end
 
   def hide_fit?
-    @total_results > MAX_RESULTS_FOR_FIT
+    @total_results.present? ? @total_results > MAX_RESULTS_FOR_FIT : true
   end
 
   def calculate_map_range(solr_offset)
