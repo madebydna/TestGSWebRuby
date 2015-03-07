@@ -52,8 +52,9 @@ shared_example 'should change the text saying what state they\'re currently in' 
 end
 
 shared_example 'should be on compare page' do
-  expect(subject).to eq compare_schools_path.chop
+  expect(current_path).to eq compare_schools_path.chop
 end
+
 
 #By Location examples
 shared_example 'should contain distance sort button' do
