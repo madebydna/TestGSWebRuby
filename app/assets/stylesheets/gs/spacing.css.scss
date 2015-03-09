@@ -305,6 +305,16 @@ body { padding-top: 50px }
   border: 1px solid #e6e6e6;
 }
 
+.gray-box-border-tlr {
+  border-top: 1px solid #e6e6e6;
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+}
+
+.gray-box-border-v {
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
 hr.brand-bar {
   height: 2px;
   background: $brand-secondary;

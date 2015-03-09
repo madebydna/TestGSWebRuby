@@ -1,26 +1,11 @@
 <div class="js-gs-topical-reviews-checkboxes">
   <form class="form-inline">
-    <div class="row mtxl mbl tac">
-      <% review_options.each do |option| %>
-          <div class="dib tac mhl">
-            <div>
-              <label class="tac js-gs-checkbox-search js-gs-checkbox-topical font-size-small"
-                     data-gs-checkbox-value="<%= option %>"
-                     data-gs-checkbox-name="<%= option %>[]"
-                     style="width:100%;">
-                <div class="vam iconx16 js-icon i-grey-unchecked-box"></div>
-              </label>
-              <input type="hidden" class="js-gs-checkbox-value js-gs-checkbox-topical ">
-            </div>
-            <div>
-              <%= option %>
-            </div>
-          </div>
-      <% end %>
-    </div>
+    <!--<div class="row mtxl mbl tac">-->
+        <%= render 'shared/reviews/modules/input/options_grid', review_options: review_options, option_type: option_type %>
+    <!--</div>-->
     <div class="shim-25 visible-lg visible-md visible-sm hidden-xs"></div>
     <div class="tac full-width dn js-review-question-submit">
-      <button type="submit" id="jwrobes" class="btn btn-primary js-gs-checkbox-submit">
+      <button type="submit" id="jwrobes" class="btn btn-primary js-review-question-submit js-gs-checkbox-submit">
         Submit
       </button>
     </div>

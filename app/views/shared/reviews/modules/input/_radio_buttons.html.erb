@@ -1,0 +1,23 @@
+<div class="js-gs-topical-reviews-radio">
+  <form class="form-inline">
+    <!--<div class="row mtl mbs tac">-->
+        <%= render 'shared/reviews/modules/input/options_grid', review_options: review_options, option_type: option_type %>
+    <!--</div>-->
+    <div class="shim-25 visible-lg visible-md visible-sm hidden-xs"></div>
+    <div class="tac full-width dn mvm js-review-question-submit">
+      <button type="submit" id="jwrobes" class="btn btn-primary js-review-question-submit js-gs-radio-submit">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+<div class="js-topical-reviews-radio-selections dn paxl tac">
+  <div class="ptl font-size-large open-sans">You selected:
+   <span class="open-sans_cb js-radio-selections-text">
+test
+   </span>
+  </div>
+  <div class="mtl">
+    <a href="#" class="js-back-to-radio">Go back to voting</a>
+  </div>
+</div>
