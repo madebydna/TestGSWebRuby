@@ -51,6 +51,10 @@
 
       %>
       <div class="row mtl mbl tac">
+        <% if num_options.to_i <= 5 %>
+            <div class="shim-25"></div>
+            <div class="shim-25 visible-lg visible-md visible-sm hidden-xs"></div>
+        <% end %>
       <% review_options.each_with_index do |option, index| %>
           <% if class_key[num_options][:lastrowstart]
                if index == 0
