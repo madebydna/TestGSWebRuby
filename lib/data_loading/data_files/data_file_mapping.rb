@@ -1,3 +1,30 @@
+# The class that handles a single data file's configuration layer.
+# Things that are configured are:
+# - location: Where the file exists.
+# - header_rows: How many rows of header information are there before the data starts.
+# - layout: What data is in each column. See parse_layout! for more information about this.
+#
+# Example file mapping
+# {
+#   location: '2013/test_scores/sample_file.txt',
+#   header_rows: 1,
+#   layout: {
+#     school_id: 5, # School IDs are found within column 5.
+#     school_name: 6,
+#     district_id: 4,
+#     district_name: 6, # School names and district names are found in column 6.
+#     value: [1, 7, 20], # The values are in columns 1, 7, and 20.
+#     number_tested: [19, 4, 5],
+#     breakdown: :white, # All values in sample_file.txt are tagged breakdown: white.
+#     subject: 'math',
+#     grade: 9,
+#     proficiency_band: {
+#       null: [1, 20], # The values in columns 1 and 20 are tagged proficiency_band: null.
+#       level_1: 7
+#     },
+#   }
+# }
+
 class DataFileMapping
   attr_accessor :header_rows, :location, :layout, :columns
 
