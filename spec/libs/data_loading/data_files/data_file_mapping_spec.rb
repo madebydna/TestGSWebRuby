@@ -45,21 +45,24 @@ describe DataFileMapping do
     let(:file_config) {
       # This config has all of the possible layout types
       {
+        location: '2013/test_scores/sample_file.txt',
         header_rows: 1,
-        location: '2013/path/to/file.txt',
         layout: {
-          school_id: 5,
+          school_id: 5, # School IDs are found within column 5.
           school_name: 6,
           district_id: 4,
-          district_name: 6, # needs to handle repeat column number
-          value_float: [20],
-          number_tested: [19, 4, 5],
-          breakdown: :white,
-          subject: 'math',
+          district_name: 6, # School names and district names are found in column 6.
+          value: [7, 8, 11, 20], # The values are in columns 1, 7, and 20.
+          number_tested: [2, 3],
+          breakdown: :white, # All values in sample_file.txt are tagged breakdown: white.
+          subject: {
+            math: [2, 7, 8],
+            writing: [3, 11, 20]
+          },
           grade: 9,
           proficiency_band: {
-            null: [20],
-            level_1: 7
+            null: [8, 20], # The values in columns 8 and 20 are tagged proficiency_band: null.
+            level_1: [7, 11]
           },
         }
       }
@@ -81,14 +84,17 @@ describe DataFileMapping do
     let(:bad_hash_mapping) { DataFileMapping.new(bad_hash_file_config) }
     let(:expected_column_mapping) {
       {
-        4=>{district_id: true, number_tested: true},
-        5=>{school_id: true, number_tested: true},
-        6=>{school_name: true, district_name: true},
-        7=>{proficiency_band: :level_1},
-        9=>{grade: true},
-        19=>{number_tested: true},
-        20=>{value_float: true, proficiency_band: :null},
-        file: {subject: :math, breakdown: :white},
+        2 => {:number_tested=>true, :subject=>:math},
+        3 => {:number_tested=>true, :subject=>:writing},
+        4 => {:district_id=>true},
+        5 => {:school_id=>true},
+        6 => {:school_name=>true, :district_name=>true},
+        7 => {:value=>true, :subject=>:math, :proficiency_band=>:level_1},
+        8 => {:value=>true, :subject=>:math, :proficiency_band=>:null},
+        9 => {:grade=>true},
+        11 => {:value=>true, :subject=>:writing, :proficiency_band=>:level_1},
+        20 => {:value=>true, :subject=>:writing, :proficiency_band=>:null},
+        :file => {:breakdown=>:white},
       }
     }
 

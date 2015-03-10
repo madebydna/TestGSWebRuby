@@ -13,14 +13,17 @@
 #     school_name: 6,
 #     district_id: 4,
 #     district_name: 6, # School names and district names are found in column 6.
-#     value: [1, 7, 20], # The values are in columns 1, 7, and 20.
-#     number_tested: [19, 4, 5],
+#     value: [7, 8, 11, 20], # The values are in columns 1, 7, and 20.
+#     number_tested: [2, 3],
 #     breakdown: :white, # All values in sample_file.txt are tagged breakdown: white.
-#     subject: 'math',
+#     subject: {
+#       math: [2, 7, 8],
+#       writing: [3, 11, 20]
+#     },
 #     grade: 9,
 #     proficiency_band: {
-#       null: [1, 20], # The values in columns 1 and 20 are tagged proficiency_band: null.
-#       level_1: 7
+#       null: [8, 20], # The values in columns 8 and 20 are tagged proficiency_band: null.
+#       level_1: [7, 11]
 #     },
 #   }
 # }
