@@ -3,7 +3,8 @@ class Osp::OspQuestionGroup < ActiveRecord::Base
   self.table_name = 'osp_question_groups'
 
   attr_accessible :image, :heading, :subtext, :default_config ,:active,  :updated
-  belongs_to :osp_display_config, :class_name => 'Osp::OspDisplayConfig'
+  has_many :osp_display_configs, :class_name => 'Osp::OspDisplayConfig'
+
   scope :active, -> { where(active: true) }
 
 

@@ -9,7 +9,6 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
-  scope :for_question, ->(question) { where(school_id: school.id, state: school.state) }
 
   belongs_to :osp_question, :class_name => 'Osp::OspQuestion', foreign_key: 'osp_question_id'
   belongs_to :osp_question_group, :class_name => 'Osp::OspQuestionGroup',foreign_key: 'osp_question_group_id'
@@ -17,7 +16,7 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
   jsonified_attribute :answers, :label, json_attribute: :config, type: :string
 
   def self.find_by_page(page)
-    self.active.where(page_name: page).order(:order_on_page)
+    self.active.where(page_name: page).order(:order_on_page,:order_in_group)
   end
 
 

@@ -7,8 +7,8 @@ class Admin::OspController <  ApplicationController
 
      @school = School.find_by_state_and_id(params[:state],params[:schoolId])
 
-     @osp_question = Osp::OspQuestion.take(20)
-     @osp_question_group = Osp::OspQuestionGroup.take(20)
+     # @osp_question = Osp::OspQuestion.take(20)
+     # @osp_question_group = Osp::OspQuestionGroup.take(20)
 
      if current_user.provisional_or_approved_osp_user?(@school)
        if params[:page]== '1'
