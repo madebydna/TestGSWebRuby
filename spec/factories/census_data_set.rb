@@ -148,7 +148,7 @@ FactoryGirl.define do
       if evaluator.number_of_school_values == 1
         school_value_params[:school_id] = evaluator.school_id
       end
-      
+
       # allow(data_set).to receive(:census_data_school_values) do
       #   FactoryGirl.build_stubbed_list(
       #     :census_data_school_value,
