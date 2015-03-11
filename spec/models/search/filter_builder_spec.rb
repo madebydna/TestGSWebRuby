@@ -201,7 +201,7 @@ describe FilterBuilder do
   end
 
   describe '#filters_with_callbacks' do
-    %w(DE GA).each do |state|
+    %w(DE GA OK).each do |state|
       context "in #{state}" do
         let (:filters) { FilterBuilder.new(state, nil, false).filters }
         [ { panel: 1,
