@@ -3,14 +3,14 @@ GS.topicalReview = GS.topicalReview || {};
 
 GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() {
 
-    var getCheckboxValues = function (reviewContainer) {
+    var isNoCheckboxValues = function (reviewContainer) {
         var checkbox_values = [];
         $(reviewContainer).find('.js-gs-checkbox-value').each(function (index) {
             if (this.value != "") {
                 checkbox_values.push(this.value);
             }
         });
-        return checkbox_values.join(', ');
+        return checkbox_values.length == 0;
     }
 
     var GS_countCharacters = function (textField) {
@@ -46,13 +46,57 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
 
     }
 
+    var checkForSubmitError = function(reviewContainer) {
+        var errorMessage = $(reviewContainer).find('.js-review-submit-errors');
+        if (isNoCheckboxValues(reviewContainer)) {
+            errorMessage.show();
+        }
+        else {
+            errorMessage.hide();
+            navigateNextTopic(reviewContainer);
+        }
+    }
+
+    var navigateNextTopic = function (reviewContainer) {
+        var reviewContainers = $('.js-topical-review-container');
+        var nextContainerIndex;
+        reviewContainers.each(function(index, container){
+            if ($(container).is(reviewContainer)) {
+                nextContainerIndex = index +1;
+            }
+        })
+        if (nextContainerIndex >= reviewContainers.length) {
+            nextContainerIndex = 0;
+        }
+        reviewContainer.hide();
+        $(reviewContainers[nextContainerIndex]).show();
+    }
+
+    var navigatePreviousTopic = function (reviewContainer) {
+        var reviewContainers = $('.js-topical-review-container');
+        var previousContainerIndex;
+        reviewContainers.each(function (index, container) {
+            if ($(container).is(reviewContainer)) {
+                previousContainerIndex = index - 1;
+            }
+        })
+        if (previousContainerIndex < 0) {
+           previousContainerIndex = reviewContainers.length - 1;
+        }
+        reviewContainer.hide();
+        $(reviewContainers[previousContainerIndex]).show();
+    }
+
     return {
-        getCheckboxValues: getCheckboxValues,
+        isNoCheckboxValues: isNoCheckboxValues,
         GS_countCharacters: GS_countCharacters,
         backToCheckBoxes: backToCheckBoxes,
         optionSelected: optionSelected,
         getRadioValue: getRadioValue,
-        backToRadioButtons: backToRadioButtons
+        backToRadioButtons: backToRadioButtons,
+        navigateNextTopic: navigateNextTopic,
+        navigatePreviousTopic: navigatePreviousTopic,
+        checkForSubmitError: checkForSubmitError
     };
 })();
 
@@ -80,38 +124,22 @@ $(function() {
 
     $('.js-topical-review-container').first().show();
 
+    $('.js-review-question-submit').on('click', function (){
+        var reviewContainer = $(this).parents('.js-topical-review-container');
+        GS.topicalReview.reviewQuestion.checkForSubmitError(reviewContainer);
+    })
+
     $('.js-previous-topic').on('click', function(e){
         e.preventDefault();
-        var topicContainers = $('.js-topical-review-container');
-        var currentContainer = $(this).parents('.js-topical-review-container');
-        var previousContainerIndex;
-        topicContainers.each(function (index, container) {
-            if ($(container).is(currentContainer)) {
-                previousContainerIndex = index - 1;
-            }
-        })
-        if (previousContainerIndex < 0) {
-           previousContainerIndex = topicContainers.length - 1;
-        }
-        currentContainer.hide();
-        $(topicContainers[previousContainerIndex]).show();
+        var reviewContainer = $(this).parents('.js-topical-review-container');
+        GS.topicalReview.reviewQuestion.navigatePreviousTopic(reviewContainer);
+
     })
 
     $('.js-next-topic').on('click', function(e){
         e.preventDefault();
-        var topicContainers = $('.js-topical-review-container');
-        var currentContainer = $(this).parents('.js-topical-review-container');
-        var nextContainerIndex;
-        topicContainers.each(function(index, container){
-            if ($(container).is(currentContainer)) {
-                nextContainerIndex = index +1;
-            }
-        })
-        if (nextContainerIndex >= topicContainers.length) {
-            nextContainerIndex = 0;
-        }
-        currentContainer.hide();
-        $(topicContainers[nextContainerIndex]).show();
+        var reviewContainer = $(this).parents('.js-topical-review-container');
+        GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
     })
 });
 

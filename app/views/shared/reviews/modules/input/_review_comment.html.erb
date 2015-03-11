@@ -3,12 +3,14 @@
     <textarea id="textInput" class="form-control js-review-comment-input" onkeyup="GS.topicalReview.reviewQuestion.GS_countCharacters(this)" rows="8" placeholder="Optional: Explain your choice"/></textarea>
   </form>
   <footer>
-    <div class="js-gs-next-topic">
-
+    <div class="js-review-submit-errors fl has-error dn">
+        <p class="help-block ">
+          You can't submit question without selecting at least one checkbox.
+        </p>
     </div>
     <div class="js-gs-submit-comment">
-      <div class="fr">
-        <button class="btn btn-primary js-review-question-submit js-next-topic">Submit</button>
+      <div class="fr mbm">
+        <button class="btn btn-primary js-review-question-submit">Submit</button>
       </div>
     </div>
   </footer>
