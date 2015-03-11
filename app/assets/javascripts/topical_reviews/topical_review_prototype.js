@@ -4,22 +4,29 @@ GS.topicalReview = GS.topicalReview || {};
 GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() {
 
     var isNoCheckboxValues = function (reviewContainer) {
+        var checkBoxQuestion = $(reviewContainer).find('.js-gs-topical-reviews-checkboxes').length > 0;
         var checkbox_values = [];
         $(reviewContainer).find('.js-gs-checkbox-value').each(function (index) {
             if (this.value != "") {
                 checkbox_values.push(this.value);
             }
         });
-        return checkbox_values.length == 0;
+        return checkbox_values.length == 0 && checkBoxQuestion;
     }
 
     var GS_countCharacters = function (textField) {
-        var text = textField.value;
-        if (text.length > 0) {
-//            $(".js-gs-review-comment").trigger("showSubmit")
+        var reviewContainer = $(textField).parents('.js-topical-review-container');
+        var characterDisplay = $('.js-review-character-display');
+        var characterCountDisplay = $(reviewContainer).find(".js-review-character-count");
+        var characterCount = textField.value.length;
+        var maxCharacters = 2400;
+        var remainingCharacters = maxCharacters - characterCount;
+        if (characterCount > 0) {
+            $(characterDisplay).show();
+            $(characterCountDisplay).text(remainingCharacters);
         }
         else {
-//            $(".js-gs-review-comment").trigger("hideSubmit")
+            $(characterDisplay).hide();
         }
     }
 
