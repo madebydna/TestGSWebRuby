@@ -1,0 +1,21 @@
+OSP_FORM_RESPONSES <br/>
+<table class="table table-striped mbm">
+<tr>
+  <th class="tac emphasis-color">  ID  </th>
+  <th class="tac emphasis-color">  esp_membership_id </th>
+  <th class="tac emphasis-color">  osp_question_id </th>
+  <th class="tac emphasis-color"> response </th>
+  <th class="tac emphasis-color">  updated </th>
+</tr>
+<br/>
+<% @osp_form.each do |form_response| %>
+    <tr>
+      <td>  <%= form_response.id %></td>
+      <td>  <%= form_response.esp_membership_id %></td>
+      <td>  <%= form_response.osp_question_id %></td>
+      <td>  <%= form_response.response %></td>
+      <td>  <%= form_response.updated %></td>
+    </tr>
+    <br>
+<% end %>
+</table>
