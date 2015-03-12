@@ -7,16 +7,20 @@
     <nav class="nav" id="optimizely-secondary-nav-original">
         <ul>
             <li <%= nav_on_hash[:overview] %>>
-                <%= link_to 'Overview', school_path(school) %>
+                <%= link_to 'Overview', school_path(school), class: "js-gaLoad js-gaClick",
+                            data: {'ga-click-label'=> 'nav2NoDropDown linkOverview', 'ga-load-label' =>'nav2NoDropDown linkOverview'} %>
             </li>
             <li <%= nav_on_hash[:reviews] %>>
-                <%= link_to 'Reviews', school_reviews_path(school) %>
+                <%= link_to 'Reviews', school_reviews_path(school), class: "js-gaLoad js-gaClick",
+                            data: {'ga-click-label'=> 'nav2NoDropDown linkReviews', 'ga-load-label' =>'nav2NoDropDown linkReviews'} %>
             </li>
             <li <%= nav_on_hash[:quality] %>>
-                <%= link_to 'Quality', school_quality_path(school) %>
+                <%= link_to 'Quality', school_quality_path(school), class: "js-gaLoad js-gaClick",
+                            data: {'ga-click-label'=> 'nav2NoDropDown linkQuality', 'ga-load-label' =>'nav2NoDropDown linkQuality'} %>
             </li>
             <li <%= nav_on_hash[:details] %>>
-                <%= link_to 'Details', school_details_path(school) %>
+                <%= link_to 'Details', school_details_path(school), class: "js-gaLoad js-gaClick",
+                            data: {'ga-click-label'=> 'nav2NoDropDown linkDetails', 'ga-load-label' =>'nav2NoDropDown linkDetails'} %>
             </li>
         </ul>
     </nav>

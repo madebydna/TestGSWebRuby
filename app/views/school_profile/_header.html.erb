@@ -97,20 +97,30 @@
               <div class="col-xs-12 col-sm-12 col-md-12 margin-top-mobile">
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                    <button data-link-value="<%= school_review_form_path(school) %>" data-google-tracking-type="Review CTA Header" class="btn btn-default tal js-button-link" style="width:100%; padding-left: 8px; font-size: 14px;" onclick="GS.omniture.track_reviews('Header');">
+                    <button data-link-value="<%= school_review_form_path(school) %>"
+                            data-google-tracking-type="Review CTA Header"
+                            class="btn btn-default tal js-button-link js-gaLoad js-gaClick"
+                            style="width:100%; padding-left: 8px; font-size: 14px;"
+                            data-ga-load-label="rateAndReviewHeader" data-ga-click-label="rateAndReviewHeader"
+                            onclick="GS.omniture.track_reviews('Header');">
                       <span class="vam iconx16 i-16-thought-bubble mrm"></span>Rate &amp; Review
                     </button>
                   </div>
                   <div class="col-xs-12 col-sm-12 col-md-12 pas">
                     <%= render 'shared/add_to_my_school_list_form', school: @school, driver: 'Header' %>
-                    <button class="btn btn-default tal js-save-this-school-button" style="width:100%; padding-left: 8px; font-size: 14px;">
+                    <button class="btn btn-default tal js-save-this-school-button"
+                            data-ga-load-label="followThisSchoolHeader" data-ga-click-label="followThisSchoolHeader"
+                            style="width:100%; padding-left: 8px; font-size: 14px;">
                       <span class="vam iconx16 i-16-heart mrm"></span>Follow this school
                     </button>
                   </div>
                   <% apply_now_url = school.school_metadata.apply_now_url %>
                   <% if apply_now_url.present? %>
                     <div class="col-xs-12 col-sm-12 col-md-12 pas">
-                      <button data-link-value="<%= apply_now_url %>" data-link-use-new-window="true" data-ga-load-label="applyNowHeader" data-ga-click-label="applyNowHeader" class="btn btn-default tal js-button-link js-gaLoad js-gaClick" style="width:100%; padding-left: 8px; font-size: 14px;">
+                      <button data-link-value="<%= apply_now_url %>"
+                              data-link-use-new-window="true"
+                              data-ga-load-label="applyNowHeader" data-ga-click-label="applyNowHeader"
+                              class="btn btn-default tal js-button-link js-gaLoad js-gaClick" style="width:100%; padding-left: 8px; font-size: 14px;">
                         <span class="vam iconx16 i-16-pencil mrm"></span>Apply now
                       </button>
                     </div>
