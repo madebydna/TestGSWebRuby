@@ -44,15 +44,14 @@ class ForgotPasswordController < ApplicationController
   def email_param_error
     email_param = params[:email]
 
-    if email_param.blank?
-      return t('forms.errors.email.blank')
-    end
-
-    unless email_param.match(/\A[^@]+@([^@\.]+\.)+[^@\.]+\z/)
-      return t('forms.errors.email.format')
-    end
+    return t('forms.errors.email.blank') if email_param.blank?
+    return t('forms.errors.email.format') unless email_format_valid?
 
     return nil
+  end
+
+  def email_format_valid?
+    EmailValidator.new(params[:email]).format_valid?
   end
 
   def user_from_email_param
