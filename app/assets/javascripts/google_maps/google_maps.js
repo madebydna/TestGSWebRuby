@@ -246,11 +246,11 @@ GS.googleMap = GS.googleMap || (function() {
 
               if(point.fitScore > 0){
                   if (point.strongFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-happy-face"></span>Strong fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-strong-fit"></span>Strong fit' + '</div>';
                   } else if (point.okFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-smiling-face"></span>OK fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-ok-fit"></span>OK fit' + '</div>';
                   } else {
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-neutral-face"></span>Low fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-weak-fit"></span>Weak fit' + '</div>';
                   }
               }
               markup += '</div>'; //sprites

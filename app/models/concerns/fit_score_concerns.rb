@@ -109,11 +109,11 @@ module FitScoreConcerns
 
   def fit_score_icon
     if strong_fit?
-      'iconx24-icons i-24-happy-face'
+      'iconx24-icons i-24-strong-fit'
     elsif ok_fit?
-      'iconx24-icons i-24-smiling-face'
+      'iconx24-icons i-24-ok-fit'
     elsif weak_fit?
-      'iconx24-icons i-24-neutral-face'
+      'iconx24-icons i-24-weak-fit'
     end
   end
 
