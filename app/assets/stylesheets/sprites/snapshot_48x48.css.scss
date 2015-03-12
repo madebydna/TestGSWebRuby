@@ -1,8 +1,8 @@
 /* **************** SPRITE ***************** */
 
-.iconx48 {
+.iconx48-snapshot {
   display: inline-block;
-  background-image: asset_data_url("icons/140929-48x48_sprite.png");
+  background-image: asset_data_url('icons/snapshot_48x48.png');
   width: 48px;
   height: 48px;
 }
@@ -45,6 +45,42 @@
   background-position: -384px 0px;
 }
 
+.i-48-art-snapshot {
+  background-position: -432px 0;
+}
+
+.i-48-clubs-snapshot {
+  background-position: -480px 0px;
+}
+
+.i-48-sports-snapshot {
+  background-position: -528px 0px;
+}
+
+.i-48-language-snapshot {
+  background-position: -576px 0px;
+}
+
+.i-48-global-competitiveness-snapshot {
+  background-position: -624px 0;
+}
+
+.i-48-art-grey-snapshot {
+  background-position: -432px -48px;
+}
+
+.i-48-clubs-grey-snapshot {
+  background-position: -480px -48px;
+}
+
+.i-48-sports-grey-snapshot {
+  background-position: -528px -48px;
+}
+
+.i-48-language-grey-snapshot {
+  background-position: -576px -48px;
+}
+
 
 /////  COLORS
 .i-48-color-visual_arts {
@@ -73,4 +109,30 @@
 }
 .i-48-color-staff {
   background-color: #A192AD;
+}
+
+.i-48-color-art-snapshot {
+  color: #5fcbc8;
+}
+.i-48-color-language-snapshot {
+  color: #c9614f;
+}
+.i-48-color-clubs-snapshot {
+  color: #5f83a7;
+}
+.i-48-color-sports-snapshot {
+  color: #69bd8d;
+}
+
+.i-48-color-art-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-language-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-clubs-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-sports-grey-snapshot {
+  color: #999999;
 }

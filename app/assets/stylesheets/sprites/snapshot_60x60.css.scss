@@ -5,7 +5,7 @@
 
 .iconx60 {
     display: inline-block;
-    background-image: asset_data_url("icons/140625-60x60_sprite.png");
+    background-image: asset_data_url("icons/snapshot_60x60.png");
     width: 60px;
     height: 60px;
 }
@@ -74,35 +74,4 @@
 }
 .i-60-color-application {
   color: #0083b2;
-}
-
-/* **************** SPRITE ***************** */
-
-.iconx60-grey {
-  display: inline-block;
-  background-image: asset_data_url("icons/140507-60x60_sprite.png");
-  width: 60px;
-  height: 60px;
-}
-
-/* **************** VIEWPORT ***************** */
-
-.i-60-school {
-  background-position: 0 0;
-}
-
-.i-60-compare {
-  background-position: -60px 0px;
-}
-
-.i-60-download {
-  background-position: -120px 0px;
-}
-
-.i-60-map {
-  background-position: -180px 0px;
-}
-
-.i-60-friends {
-  background-position: -240px 0px;
 }
