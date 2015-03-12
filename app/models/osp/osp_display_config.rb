@@ -19,6 +19,10 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     self.active.where(page_name: page).order(:order_on_page,:order_in_group)
   end
 
+  def self.find_by_page_and_group(page, group)
+    self.active.where(page_name: page, osp_question_group_id: group).order(:order_on_page,:order_in_group)
+  end
+
 
   def self.find_by_page_and_school(page,school)
     self.find_by_page(page).select do |osp_display_config|
