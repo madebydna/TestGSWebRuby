@@ -40,6 +40,20 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         $(reviewContainer).find('.js-gs-review-comment').show();
     }
 
+    var dropdownOptionSelected = function (reviewContainer) {
+        if (isDropdownValueEmpty(reviewContainer)) {
+            $(reviewContainer).find('.js-gs-review-comment').hide();
+            $(reviewContainer).find('.js-gs-results-snapshot').show();
+        } else {
+            $(reviewContainer).find('.js-gs-results-snapshot').hide();
+            $(reviewContainer).find('.js-gs-review-comment').show();
+        }
+    }
+
+    var isDropdownValueEmpty = function(reviewContainer) {
+        return $(reviewContainer).find ('select option:selected').val() === "";
+    }
+
     var getRadioValue = function (reviewContainer){
         var selectedRadioValue = $(reviewContainer).find('input[type=radio]:checked').val();
         return selectedRadioValue;
@@ -101,6 +115,8 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         optionSelected: optionSelected,
         getRadioValue: getRadioValue,
         backToRadioButtons: backToRadioButtons,
+        dropdownOptionSelected: dropdownOptionSelected,
+        isDropdownValueEmpty: isDropdownValueEmpty,
         navigateNextTopic: navigateNextTopic,
         navigatePreviousTopic: navigatePreviousTopic,
         checkForSubmitError: checkForSubmitError
@@ -117,6 +133,12 @@ $(function() {
     $('.js-topical-radio').on('click', function () {
         var reviewContainer = $(this).parents('.js-topical-review-container');
         GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
+    });
+
+
+    $('.js-topcial-review-dropdown').change(function () {
+        var reviewContainer = $(this).parents('.js-topical-review-container');
+        GS.topicalReview.reviewQuestion.dropdownOptionSelected(reviewContainer);
     });
 
     $('.js-gs-review-comment').on('showSubmit', function(){

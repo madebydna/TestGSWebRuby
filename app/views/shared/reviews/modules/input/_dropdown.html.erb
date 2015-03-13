@@ -2,9 +2,10 @@
   <div class="shim-20 hidden-xs visible-sm visible-md visible-lg"></div>
   <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3 mtxl">
     <div class="controls">
-      <select class="form-control" id="topical_review_dropdown" name="topical_review_dropdown">
-        <% review_options.each_with_index do |option, index| %>
-            <option value="<%= option %>"><%= option %></option>
+      <select class="form-control js-topcial-review-dropdown" id="topical_review_dropdown" name="topical_review_dropdown">
+        <option selected value=""> -- select an option -- </option>
+        <% review_options.each_with_index do |option| %>
+            <option class=""value="<%= option %>"><%= option %></option>
         <% end %>
       </select>
     </div>
