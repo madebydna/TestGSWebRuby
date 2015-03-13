@@ -1,6 +1,19 @@
 <hr/>
 <div class="row ptl mtl">
   <div class="col-xs-12 pbl">
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about Keanu Reeves?',
+               review_question_type_partial: 'dropdown',
+               option_type: '',
+               review_options: %w(disgusted ambivalent transcendent),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">transcendent </span>with the Keanu Reeves, while 3 Parents were <span class="open-sans_cb">disgusted.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
     <%= render 'shared/reviews/modules/topical_review_role_question' %>
 
     <%= render 'shared/reviews/modules/topical_review_container',
@@ -14,6 +27,7 @@
                        'comments' => '25 comments'
                }
     %>
+
     <%= render 'shared/reviews/modules/topical_review_container',
                title: 'How do you feel about darts?',
                review_question_type_partial: 'radio_buttons',
