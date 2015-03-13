@@ -15,5 +15,9 @@ class OspQuestion < ActiveRecord::Base
     super.split(',')
   end
 
+  def self.find_by_question_key( key)
+    self.active.where(esp_response_key: key).first
+  end
+
 
 end

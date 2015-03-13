@@ -1,8 +1,20 @@
 <div class="limit-width-1200">
+
   <%= render partial: 'osp/osp_header' %>
-  <%= render partial: 'osp/osp_nav', locals: {page: 1} %>
+  <form role="form" name="ospPage1" action="/admin/gsr/school/esp/submit_form.page"
+        method="get" >
+    <input type="hidden" name="page" value="1">
+    <input type="hidden" name="state" value="<%= @state[:short] %>">
+    <input type="hidden" name="schoolId" value="<%= @school.id %>">
+
+
+    <%= render partial: 'osp/osp_nav', locals: {page: 1} %>
   <%= render 'osp/osp_form_display_test' %>
   <%= render 'osp/osp_questions_display', questions_display_config: @osp_display_config%>
+
+      <button class="btn btn-primary " type="submit">Submit</button>
+
+  </form>
   <%= render 'shared/state_footer', state: @state, cities: @cities %>
 
 </div>

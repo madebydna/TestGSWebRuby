@@ -5,7 +5,6 @@ class Admin::OspController <  ApplicationController
 
 
   def show
-    # binding.pry;
 
      @school = School.find_by_state_and_id(params[:state],params[:schoolId])
 
@@ -35,7 +34,10 @@ class Admin::OspController <  ApplicationController
   end
 
 
+    def  submit
+      # binding.pry;
 
+    end
 
 
 
