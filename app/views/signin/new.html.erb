@@ -1,8 +1,11 @@
 
 
 <% @active_tab ||= 'login' %>
-
-<div class="row limit-width-1200">
+<div class="signin">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
+  <h2 class="ptl tac">Find great schools, share your stories and get parenting advice</h2>
+</div>
+<div class="row limit-width-1200 signin-content">
     <div class="col-xs-0 col-sm-2 col-md-3 col-lg-2">
 
     </div>
@@ -11,10 +14,6 @@
             <div id="loginModal">
                 <div class="modal-body">
                     <div class="well">
-                        <ul class="nav nav-tabs">
-                            <li class="<%= 'active' if @active_tab == 'login' %> js-login-tab"><a href="#login" data-toggle="tab" id="js_login_tab">Login</a></li>
-                            <li class="<%= 'active' if @active_tab == 'join' %> js-join-tab"><a href="#join" data-toggle="tab" id="js_join_tab">Create account</a></li>
-                        </ul>
                         <div class="tab-content">
                             <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
                                 <form class="form-horizontal js-signin-form" action='<%= authenticate_user_path %>' method="post"
@@ -24,21 +23,17 @@
                                     <fieldset>
                                         <br/>
                                         <div class="row">
-                                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                                <legend>Sign in using Facebook</legend>
+                                            <div class="col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                                                <p class="<%= 'active' if @active_tab == 'join' %>  tar">Don't have an account? <a href="#join" data-toggle="tab" id="js_join_tab">Sign Up</a></p>
 
                                                 <div class="form-group">
 
-                                                    <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link">
-                                                        Connect with Facebook
-                                                    </button>
+                                                  <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
+                                                    Sign in with Facebook
+                                                  </button>
 
                                                 </div>
-                                                <br/>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-6">
-
-                                                <legend>Sign in with your email</legend>
+                                                <p>- or -</p>
 
                                                 <div class="form-group">
                                                     <!-- Email -->
@@ -90,22 +85,39 @@
                                     <fieldset>
                                         <br/>
                                         <div class="row">
-                                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                                <legend>Sign in using Facebook</legend>
+                                            <div class="col-xs-0 hidden-xs col-sm-6 col-md-4 col-lg-4">
+                                              <ul>
+                                                <li>
+                                                  <h3>Weekly newsletter</h3>
+                                                  <p>Get our best articles, worksheets and more delivered weekly.</p>
+                                                </li>
+                                                <li>
+                                                  <h3>Follow schools</h3>
+                                                  <p>Save schools to lists, then get notified when new test scores or reviews are posted.</p>
+                                                </li>
+                                                <li>
+                                                  <h3>Write reviews</h3>
+                                                  <p>Help other parents find a great school by sharing your experiences.</p>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                            <div class="col-sm-6 col-md-6 col-lg-6 bg-white brs pal">
+                                              <p class="<%= 'active' if @active_tab == 'login' %> tar">Have an account? <a href="#login" data-toggle="tab" id="js_login_tab">Login</a></p>
+                                                <legend class="">Create an account using Facebook</legend>
 
                                                 <div class="form-group">
-                                                    <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link">
-                                                        Connect with Facebook
-                                                    </button>
+                                                  <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
+                                                    Sign Up with Facebook
+                                                  </button>
                                                 </div>
 
-                                                <br/>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-6">
-                                                <legend>Create account using your email</legend>
+                                                <p>- or -</p>
+
+                                                <legend class="">Create account using your email</legend>
                                                 <div class="form-group">
                                                     <!-- Email -->
-                                                    <label class="control-label" for="email">Email</label>
+                                                    <label class="control-label" for="email">Email address</label>
 
                                                     <div class="controls">
                                                         <input type="text" id="join-email" name="email" placeholder=""
@@ -146,7 +158,7 @@
                                                 <div class="form-group">
                                                     <!-- Button -->
                                                     <div class="controls">
-                                                        <button class="btn btn-primary">Register email</button>
+                                                        <button class="btn btn-primary">Sign Up</button>
                                                     </div>
                                                 </div>
 
@@ -161,9 +173,17 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-0 col-sm-2 col-md-3  col-lg-2">
+    <div class="col-xs-0 col-sm-2 col-md-3 col-lg-2">
 
     </div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-ftr">
+  <ul class="pt45 pln tac">
+    <li class="di prl plm"><span>250,000+</span> school profiles</li>
+    <li class="di prl plm"><span>1.3M+</span> community reviews of schools</li>
+    <li class="di plm"><span>14,000+</span> articles, worksheets and videos</li>
+  </ul>
+</div>
 </div>
 <%= render 'nav/short_footer' %>
 

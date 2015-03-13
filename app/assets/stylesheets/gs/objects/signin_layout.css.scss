@@ -1,0 +1,67 @@
+.signin {
+  background-color: #07251e;
+
+  .signin-hdr {
+    background-color: #93c83e;
+    background-image: image-url('signin/wallpaper.png');
+    color: #07251e;
+    min-height: 200px;
+  }
+
+  .signin-content {
+    position: relative;
+    top:-100px;
+    clear: both;
+  }
+
+  .signin-ftr {
+    background-color: #2b2b2b;
+    border: 1px solid #3f4e4b;
+    border-left: none;
+    border-right: none;
+    min-height: 120px;
+
+    ul { text-align:center;
+      :not(:last-child) {
+        border-right: 2px solid gray;
+      }
+      li {
+        color: #fff;
+
+
+        span {
+          color: #ffbe00;
+          font-size: 18px;
+          font-style: italic;
+          padding-right: 10px;
+          padding-top: 10px;
+        }
+      }
+    }
+  }
+
+  .well {
+    border: 10px solid #000;
+  }
+
+  legend {
+    border: none;
+    font-size: $font-size-base;
+    color: #3d3d3d;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+/*
+  ul li:nth-child(1) {
+    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal01.png');
+  }
+  ul li:nth-child(2) {
+    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal02.png');
+  }
+  ul li:nth-child(3) {
+    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal03.png');
+  }
+*/
+}
