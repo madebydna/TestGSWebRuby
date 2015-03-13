@@ -276,6 +276,7 @@ LocalizedProfiles::Application.routes.draw do
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/,
+      city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
   } do
 
     get 'quality', to: 'school_profile_quality#quality', as: :quality

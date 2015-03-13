@@ -147,6 +147,12 @@ describe 'school profile routing' do
           to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
     end
 
+    it 'has a route for overviews when the city has a period in its name' do
+      build(:school, state: 'nc', city: 'st. pauls', id: 6810, name: 'faith assembly of god day care', level_code: 'p')
+      expect( get '/north-carolina/st.-pauls/preschools/Faith-Assembly-Of-God-Day-Care/6810/' ).
+        to route_to('school_profile_overview#overview', state: 'north-carolina', city: 'st.-pauls', schoolId: '6810', school_name: 'Faith-Assembly-Of-God-Day-Care' )
+    end
+
     it 'has a url helper for overview' do
       expect( get school_path(@school) ).
           to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
