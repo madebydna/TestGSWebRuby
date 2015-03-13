@@ -17,7 +17,7 @@
                 <li>
                     <%- if nav.has_topnav? %>
                         <a class="dropdown-toggle js-gaLoad js-gaClick" data-toggle="dropdown"
-                           data-ga-load-label="topNavLocalStateCitySelector" data-ga-click-label="topNavLocalStateCitySelector"
+                           data-ga-load-label="topNav localStateCity dropdown" data-ga-click-label="topNav localStateCity dropdown"
                            href="#home">
                             <%= nav.topnav_title %>  <span class="caret"></span>
                         </a>
@@ -53,8 +53,8 @@
                     </ul>
                 </li>
                 <li><%= link_to 'Find a School', home_url, class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink findASchool',
-                                          'ga-load-label'=>'topNavLink findASchool' } %>
+                                    data:{'ga-click-label'=>'topNav findASchool link',
+                                          'ga-load-label'=>'topNav findASchool link' } %>
                 </li>
                 <li>
                     <%= link_to 'Review Your School',
@@ -63,51 +63,51 @@
                 </li>
                 <li><a class="dropdown-toggle js-gaLoad js-gaClick"
                        data-toggle="dropdown"
-                       data-ga-load-label="topNavDiscoverDropdown" data-ga-click-label="topNavDiscoverDropdown"
+                       data-ga-load-label="topNav Discover dropdown" data-ga-click-label="topNav Discover dropdown"
                        href="#back-to-school">Discover <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                       <li class=" ">
                         <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink worksheetsAndActivities',
-                                          'ga-load-label'=>'topNavLink worksheetsAndActivities' } %>
+                                    data:{'ga-click-label'=>'topNav worksheetsAndActivities link',
+                                          'ga-load-label'=>'topNav worksheetsAndActivities link' } %>
                       </li>
                       <li class=" ">
                         <%= link_to 'Health &amp; Wellness'.html_safe, health_and_wellness_article_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink healthAndWellness',
-                                          'ga-load-label'=>'topNavLink healthAndWellness' } %>
+                                    data:{'ga-click-label'=>'topNav healthAndWellness link',
+                                          'ga-load-label'=>'topNav healthAndWellness link' } %>
                       </li>
                       <li>
                         <%= link_to 'Parenting Dilemmas', parenting_dilemmas_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink parentingDilemmas',
-                                          'ga-load-label'=>'topNavLink parentingDilemmas' } %>
+                                    data:{'ga-click-label'=>'topNav parentingDilemmas link',
+                                          'ga-load-label'=>'topNav parentingDilemmas link' } %>
                       </li>
                       <li>
                         <%= link_to 'Road to College'.html_safe, college_articles_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink collegeArticles',
-                                          'ga-load-label'=>'topNavLink collegeArticles' } %>
+                                    data:{'ga-click-label'=>'topNav collegeArticles link',
+                                          'ga-load-label'=>'topNav collegeArticles link' } %>
                       </li>
                       <li class=" ">
                         <%= link_to 'STEM'.html_safe, stem_article_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink STEM',
-                                          'ga-load-label'=>'topNavLink STEM' } %>
+                                    data:{'ga-click-label'=>'topNav STEM link',
+                                          'ga-load-label'=>'topNav STEM link' } %>
                       </li>
                       <li>
                         <%= link_to 'Learning Difficulties', learning_difficulties_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink learningDifficulties',
-                                          'ga-load-label'=>'topNavLink learningDifficulties' } %>
+                                    data:{'ga-click-label'=>'topNav learningDifficulties link',
+                                          'ga-load-label'=>'topNav learningDifficulties link' } %>
                       </li>
                       <li class=" ">
                         <%= link_to 'Early Learning'.html_safe, early_learning_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNavLink earlyLearning',
-                                          'ga-load-label'=>'topNavLink earlyLearning' } %>
+                                    data:{'ga-click-label'=>'topNav earlyLearning link',
+                                          'ga-load-label'=>'topNav earlyLearning link' } %>
                       </li>
                     </ul>
                 </li>
@@ -136,7 +136,10 @@
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_url, class: 'brand-secondary js-no_ad')  %>
+                        <%= link_to('Sign In', signin_url,
+                                    class: 'brand-secondary js-no_ad js-gaLoad js-gaClick',
+                                    data:{'ga-click-label'=>'topNav signIn link',
+                                          'ga-load-label'=>'topNav signIn link' }) %>
                     <% end %>
                 </li>
             </ul>

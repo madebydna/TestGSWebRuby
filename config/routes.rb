@@ -204,8 +204,33 @@ LocalizedProfiles::Application.routes.draw do
       end
     end
 
-    scope '/:state/:city', as: :city, constraints: {
+    # Routes for school profile pages
+    # This needs to go before the city routes because we want to capture the
+    # ID-school_name pattern first and be looser about district names
+    scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
+        format: false,
         state: States.any_state_name_regex,
+        schoolId: /\d+/,
+        school_name: /.+/,
+        city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
+    } do
+      get 'quality', to: 'school_profile_quality#quality', as: :quality
+      get 'details', to: 'school_profile_details#details', as: :details
+      get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
+      get 'reviews/write', to: 'reviews#new', as: :review_form
+      get '', to: 'school_profile_overview#overview'
+    end
+
+    # Routes for city page
+    scope '/:state/:city', as: :city, constraints: {
+      # Format: false allows periods to be in path segments.
+      # This then needs to be paired with a regex constraint for each path component.
+      # So in this hash there needs to be state and city and down below there's a constraint 
+      # with the district segment's contrainst.
+      format: false,
+      state: States.any_state_name_regex,
+      # This regex will allow for any valid path segment characters
+      city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
     } do
 
       get '', to: 'cities#show'
@@ -227,30 +252,12 @@ LocalizedProfiles::Application.routes.draw do
         get '/partner', to: 'cities#partner', as: :partner
       end
 
-      # Route to district home. Java will handle this, so set controller
-      # to just 404 by default. route helper will be city_district_path(...)
       # NOTE: this must come last in the city scope, because it will match
-      # Anything after the cty name
-      get '/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
-        district = request.params[:district]
-        # district can't = preschools and must start with letter
-        return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
+      # anything after the cty name
+      get '/:district', to: 'districts#show', as: :district, constraints: {
+        # This regex will allow for any valid path segment characters, but not the word preschools
+        district: Regexp.new(/(?!preschools)#{UrlHelper.valid_path_component_chars}+/),
       }
-    end
-
-    # Routes for city page
-
-    # Routes for school profile pages
-    scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
-        state: States.any_state_name_regex,
-        schoolId: /\d+/,
-        school_name: /.+/,
-    } do
-      get 'quality', to: 'school_profile_quality#quality', as: :quality
-      get 'details', to: 'school_profile_details#details', as: :details
-      get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
-      get 'reviews/write', to: 'reviews#new', as: :review_form
-      get '', to: 'school_profile_overview#overview'
     end
 
     # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL

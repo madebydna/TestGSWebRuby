@@ -42,6 +42,16 @@ describe 'school profile routing' do
     )
   end
 
+  it 'should route to the school when the city has a period in it' do
+    expect( get '/minnesota/st.-paul/3692-St-Paul-Conservatory-Performing-Art/' ).to route_to(
+      'school_profile_overview#overview',
+      state: 'minnesota',
+      city: 'st.-paul',
+      schoolId: '3692',
+      school_name: 'St-Paul-Conservatory-Performing-Art'
+    )
+  end
+
   it 'should not handle old style overview URL with invalid params: /school/overview.page?id=1&state=ZZ' do
     expect( get '/school/overview.page?id=1&state=ZZ' ).to(
       route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1', state: 'ZZ')

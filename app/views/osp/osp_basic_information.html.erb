@@ -1,10 +1,7 @@
 <div class="limit-width-1200">
   <%= render partial: 'osp/osp_header' %>
   <%= render partial: 'osp/osp_nav', locals: {page: 1} %>
-  <%= render 'osp/osp_questions_display', questions_display_config: @osp_display_config %>
-
   <%= render 'osp/osp_form_display_test' %>
-
-
+  <%= render 'osp/osp_questions_display', questions_display_config: @osp_display_config%>
 </div>
 

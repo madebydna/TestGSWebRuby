@@ -78,8 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def state_param_safe
-    state = (params[:state] || '').dup
-    state.gsub! '-', ' ' if state.length > 2
+    state = (gs_legacy_url_decode(params[:state]) || '').dup
     state_abbreviation = States.abbreviation(state)
     state_abbreviation.downcase! if state_abbreviation.present?
     state_abbreviation
@@ -87,12 +86,12 @@ class ApplicationController < ActionController::Base
 
   def city_param
     return if params[:city].nil?
-    params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
+    gs_legacy_url_decode(params[:city])
   end
 
   def district_param
     return if params[:district].nil?
-    params[:district].gsub(/\-/, ' ').gsub(/\_/, '-')
+    gs_legacy_url_decode(params[:district])
   end
 
   def redirect_tab_urls
@@ -236,20 +235,20 @@ class ApplicationController < ActionController::Base
 
   def set_city_state
     @state = {
-      long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
-      short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
+      long: States.state_name(gs_legacy_url_decode(params[:state])),
+      short: States.abbreviation(gs_legacy_url_decode(params[:state]))
     } if params[:state]
-    @city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-') if params[:city]
+    @city = gs_legacy_url_decode(params[:city]) if params[:city]
   end
 
   def set_verified_city_state
     if params[:state].present?
-      long_name = States.state_name(params[:state].downcase.gsub(/\-/, ' ')) || return
-      short_name = States.abbreviation(params[:state].downcase.gsub(/\-/, ' ')) || return
+      long_name = States.state_name(gs_legacy_url_decode(params[:state])) || return
+      short_name = States.abbreviation(gs_legacy_url_decode(params[:state])) || return
       @state = {long: long_name, short: short_name}
     end
     if params[:city]
-      city = params[:city].gsub(/\-/, ' ').gsub(/\_/, '-')
+      city = gs_legacy_url_decode(params[:city])
       city = City.find_by_state_and_name(@state[:short], city) || return
       @city = city
     end

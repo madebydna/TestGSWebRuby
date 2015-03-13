@@ -2,6 +2,10 @@ module UrlHelper
   require 'addressable/uri'
   extend ActiveSupport::Concern
 
+  def self.valid_path_component_chars
+    "[A-Za-z0-9\\-\\.\\_\\~\\!\\$\\&\\'\\(\\)\\*\\+\\,\\;\\=\\:\\@\\%]"
+  end
+
   protected
 
   included do |base|
@@ -15,19 +19,20 @@ module UrlHelper
     end
   end
 
+  # This function should be used when you need to look up a parameter by its name.
+  # To revert, use gs_legacy_url_decode
   def gs_legacy_url_encode(param)
     return nil if param.nil?
-    param.downcase.gsub('-', '_').gsub(' ', '-').gsub('.', '')
-  end
-
-  def gs_legacy_url_city_encode(param)
-    return nil if param.nil?
-    param.downcase.gsub(' ', '-').gsub('.', '')
-  end
-
-  def gs_legacy_url_city_district_browse_encode(param)
-    return nil if param.nil?
     param.downcase.gsub('-', '_').gsub(' ', '-')
+  end
+  alias :gs_legacy_url_city_encode :gs_legacy_url_encode
+  alias :gs_legacy_url_city_district_browse_encode :gs_legacy_url_encode
+
+  # The opposite of gs_legacy_url_encode. Use this to get the name back from a param
+  # that was created with the encode method.
+  def gs_legacy_url_decode(param)
+    return nil if param.nil?
+    param.gsub('-', ' ').gsub('_', '-')
   end
 
   def encode_school_name(param)
@@ -277,4 +282,5 @@ module UrlHelper
    return nil unless normalized_name && city_name && state_name && school_id
    "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
   end
+
 end
