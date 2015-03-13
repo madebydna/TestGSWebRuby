@@ -1,4 +1,4 @@
-class Osp::OspFormResponse < ActiveRecord::Base
+class OspFormResponse < ActiveRecord::Base
 
   include JsonifiedAttributeConcerns
 
@@ -9,7 +9,7 @@ class Osp::OspFormResponse < ActiveRecord::Base
 
   belongs_to :esp_membership, foreign_key: 'esp_membership_id'
 
-  belongs_to :osp_question, :class_name => 'Osp::OspQuestion', foreign_key: 'osp_question_id'
+  belongs_to :osp_question, :class_name => 'OspQuestion', foreign_key: 'osp_question_id'
 
   jsonified_attribute :responses, json_attribute: :responses, type: :string
 

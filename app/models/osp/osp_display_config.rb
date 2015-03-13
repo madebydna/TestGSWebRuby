@@ -1,4 +1,4 @@
-class Osp::OspDisplayConfig < ActiveRecord::Base
+class OspDisplayConfig < ActiveRecord::Base
 
   include JsonifiedAttributeConcerns
 
@@ -10,8 +10,8 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
   scope :active, -> { where(active: true) }
 
 
-  belongs_to :osp_question, :class_name => 'Osp::OspQuestion', foreign_key: 'osp_question_id'
-  belongs_to :osp_question_group, :class_name => 'Osp::OspQuestionGroup',foreign_key: 'osp_question_group_id'
+  belongs_to :osp_question, :class_name => 'OspQuestion', foreign_key: 'osp_question_id'
+  belongs_to :osp_question_group, :class_name => 'OspQuestionGroup',foreign_key: 'osp_question_group_id'
 
   jsonified_attribute :answers, :label, json_attribute: :config, type: :string
 
