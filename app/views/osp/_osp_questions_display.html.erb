@@ -1,10 +1,8 @@
-<%= render 'osp/osp_quick_links'%>
-
-<div class="pt45 mtl pls ma" style="width: 80%">
+<div class="ma width-95 pt45 pls">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
   <% questions_display_config.each do |display_question| %>
       <% if display_question.osp_question_group_id.present? %>
           <% if  display_question.order_in_group == 1 %>
-          <%= render partial: 'osp/osp_questions_group', :locals => {group_info: display_question.osp_question_group}%>
           <%= render partial: 'osp/osp_group_display' , :locals => {group_info: display_question.osp_question_group} %>
           <% end %>
           <% if display_question.question_type == 'multi_select' %>
@@ -24,4 +22,5 @@
           <% end %>
       <% end %>
   <% end %>
+  </div>
 </div>
