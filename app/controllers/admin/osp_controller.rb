@@ -1,5 +1,7 @@
 class Admin::OspController <  ApplicationController
   before_action :login_required
+  before_action :set_city_state
+  before_action :set_footer_cities
 
 
   def show
