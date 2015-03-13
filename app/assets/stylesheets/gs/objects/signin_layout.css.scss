@@ -25,16 +25,12 @@
       :not(:last-child) {
         border-right: 2px solid gray;
       }
-      li {
-        color: #fff;
 
+      li {
+        color: white;
 
         span {
           color: #ffbe00;
-          font-size: 18px;
-          font-style: italic;
-          padding-right: 10px;
-          padding-top: 10px;
         }
       }
     }
@@ -53,15 +49,4 @@
   ul {
     list-style-type: none;
   }
-/*
-  ul li:nth-child(1) {
-    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal01.png');
-  }
-  ul li:nth-child(2) {
-    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal02.png');
-  }
-  ul li:nth-child(3) {
-    list-style-image: url('http://google-maps-icons.googlecode.com/files/teal03.png');
-  }
-*/
 }
