@@ -30,6 +30,19 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         }
     }
 
+    var textBoxCharacters = function(textBox) {
+        var reviewContainer = $(textBox).parents('.js-topical-review-container');
+        var characterCount = textBox.value.length;
+        if (characterCount > 0) {
+            $(reviewContainer).find('.js-gs-results-snapshot').hide();
+            $(reviewContainer).find('.js-gs-review-comment').show();
+        }
+        else {
+            $(reviewContainer).find('.js-gs-review-comment').hide();
+            $(reviewContainer).find('.js-gs-results-snapshot').show();
+        }
+    }
+
     var backToCheckBoxes = function(reviewContainer) {
         $(reviewContainer).find('.js-gs-topical-reviews-checkbox-selections').hide();
         $(reviewContainer).find('.js-gs-topical-reviews-checkboxes').show();
@@ -117,6 +130,7 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         backToRadioButtons: backToRadioButtons,
         dropdownOptionSelected: dropdownOptionSelected,
         isDropdownValueEmpty: isDropdownValueEmpty,
+        textBoxCharacters: textBoxCharacters,
         navigateNextTopic: navigateNextTopic,
         navigatePreviousTopic: navigatePreviousTopic,
         checkForSubmitError: checkForSubmitError
