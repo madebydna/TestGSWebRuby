@@ -55,5 +55,9 @@ class Osp::OspDisplayConfig < ActiveRecord::Base
     end
   end
 
+  def group_heading
+    osp_question_group.heading
+  end
+
 
 end
