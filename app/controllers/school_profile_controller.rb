@@ -191,4 +191,9 @@ class SchoolProfileController < SchoolController
         "-school-name/"+@page_config.name.downcase
   end
 
+  def set_noindex_meta_tags
+    set_meta_tags({ noindex: true, nofollow: true, noarchive: true })
+
+  end
+
 end
