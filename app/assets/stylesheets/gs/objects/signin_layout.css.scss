@@ -37,7 +37,7 @@
   }
 
   .well {
-    border: 10px solid #000;
+    border: 10px solid #07251e;
   }
 
   legend {
@@ -49,4 +49,36 @@
   ul {
     list-style-type: none;
   }
+
+  .promos {
+
+      li::before {
+        display: inline-block;
+        background-image: asset_data_url("icons/icons_24x24.png");
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        content: " ";
+      }
+
+      li:nth-child(1):before {
+        background-position: -792px 0px;
+        left: 5px;
+        top: 20px;
+      }
+
+      li:nth-child(2):before {
+        background-position: -744px 0px;
+        left: 5px;
+        top: 114px;
+      }
+
+      li:nth-child(3):before {
+        background-position: -768px 0px;
+        left: 5px;
+        top: 226px;
+      }
+
+  }
+
 }
