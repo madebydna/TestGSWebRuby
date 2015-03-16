@@ -5,11 +5,13 @@ class CensusDataCountryValue < ActiveRecord::Base
   belongs_to :census_data_set, :class_name => 'CensusDataSet', foreign_key: 'data_set_id'
   belongs_to :country, :class_name => 'Country'
 
+  default_scope -> { where(active: true) }
+
   def self.get_country_scores_by_subject
     final_hash = []
     country_scores =  CensusDataCountryValue.preload(:country)
     data_set_ids = country_scores.map(&:data_set_id)
-    subjects = CensusDataSet.on_db(:gs_schooldb).where(id:data_set_ids).preload(:test_data_subject)
+    subjects = CensusDataSet.on_db(:gs_schooldb).where(id:data_set_ids,active: 1).preload(:test_data_subject)
 
     subjects.each_with_index  do | subject, index |
       final_hash << {
