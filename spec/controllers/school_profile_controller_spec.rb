@@ -200,9 +200,7 @@ describe SchoolProfileController do
     subject { controller.send(:set_noindex_meta_tags) }
     it 'should call set_meta_tags with the correct hash' do
       expected_hash = {
-        noindex: true,
-        nofollow: true,
-        noarchive: true
+        robots: 'noindex, nofollow, noarchive'
       }
       expect(controller).to receive(:set_meta_tags).with(expected_hash)
       subject

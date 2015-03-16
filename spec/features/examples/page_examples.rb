@@ -15,3 +15,14 @@ end
 shared_example 'should have url path' do |path|
   expect(current_path).to eq(path)
 end
+
+%w[noindex nofollow noarchive].each do |value|
+  shared_example("should have the #{value} meta tag") do
+    robots_tag = subject.find('meta[name="robots"]', visible: false)
+    csv = robots_tag.native.attributes['content'].value
+    expect(csv).to be_present
+    values = csv.split(',')
+    values.each(&:strip!)
+    expect(values).to include(value)
+  end
+end

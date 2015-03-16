@@ -23,6 +23,7 @@ FactoryGirl.define do
         level_code 'h'
         type 'public'
         active false
+        notes 'GREATSCHOOLS_DEMO_SCHOOL_PROFILE'
       end
 
       factory :alameda_high_school do
