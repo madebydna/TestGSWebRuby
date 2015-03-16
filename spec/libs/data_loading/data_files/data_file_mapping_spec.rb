@@ -48,6 +48,7 @@ describe DataFileMapping do
         location: '2013/test_scores/sample_file.txt',
         header_rows: 1,
         layout: {
+          data_type: 'A Test Datatype',
           school_id: 5, # School IDs are found within column 5.
           school_name: 6,
           district_id: 4,
@@ -84,21 +85,82 @@ describe DataFileMapping do
     let(:bad_hash_mapping) { DataFileMapping.new(bad_hash_file_config) }
     let(:expected_column_mapping) {
       {
-        2 => {:number_tested=>true, :subject=>:math},
-        3 => {:number_tested=>true, :subject=>:writing},
-        4 => {:district_id=>true},
-        5 => {:school_id=>true},
-        6 => {:school_name=>true, :district_name=>true},
-        7 => {:value=>true, :subject=>:math, :proficiency_band=>:level_1},
-        8 => {:value=>true, :subject=>:math, :proficiency_band=>:null},
-        9 => {:grade=>true},
-        11 => {:value=>true, :subject=>:writing, :proficiency_band=>:level_1},
-        20 => {:value=>true, :subject=>:writing, :proficiency_band=>:null},
-        :file => {:breakdown=>:white},
+        2 => {
+          # TODO How do we match number testeds with values?
+          # Maybe when reading the file ask the file mapping what the number tested is for whatever dataset we are on?
+          data_type: :'A Test Datatype',
+          value_type: :number_tested,
+          breakdown: :white,
+          subject: :math,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
+        3 =>{
+          data_type: :'A Test Datatype',
+          value_type: :number_tested,
+          breakdown: :white,
+          subject: :writing,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
+        7 => {
+          data_type: :'A Test Datatype',
+          value_type: :value,
+          breakdown: :white,
+          proficiency_band: :level_1,
+          subject: :math,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
+        8 => {
+          data_type: :'A Test Datatype',
+          value_type: :value,
+          breakdown: :white,
+          proficiency_band: :null,
+          subject: :math,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
+        11 => {
+          data_type: :'A Test Datatype',
+          value_type: :value,
+          breakdown: :white,
+          proficiency_band: :level_1,
+          subject: :writing,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
+        20 => {
+          data_type: :'A Test Datatype',
+          value_type: :value,
+          breakdown: :white,
+          proficiency_band: :null,
+          subject: :writing,
+          district_id: 4,
+          school_id: 5,
+          school_name: 6,
+          district_name: 6,
+          grade: 9,
+        },
       }
     }
 
-    it 'should create a hash of columns or :file to descriptors' do
+    it 'should create a hash of value column descriptors' do
       mapping.parse_layout!
       expect(mapping.columns).to eq(expected_column_mapping)
     end

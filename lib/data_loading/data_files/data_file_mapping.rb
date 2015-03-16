@@ -39,6 +39,7 @@ class DataFileMapping
   end
 
   def parse_layout!
+    @base_value_description = {}
     @columns = layout.each_with_object(Hash.new { |h,k| h[k] = {} }) do |(key, map), columns|
       # The key is the column type: like school_id, number_tested, and subject.
       # The map is how that column type is configured. Different objects have different rules:
@@ -49,6 +50,9 @@ class DataFileMapping
       #   EX: proficiency_band: { null: [20] } yields { 20 => { proficiency_band: :null } }
       parse_map!(columns, key, map)
     end
+    @columns = @columns.each_with_object({}) do |(column, description), columns|
+      columns[column] = description.merge(@base_value_description)
+    end
   end
 
   protected
@@ -58,12 +62,16 @@ class DataFileMapping
   end
 
   def parse_integer!(columns, key, map)
-    columns[map].merge!({ key => true } )
+    if key == :number_tested || key == :value
+      columns[map] = {value_type: key}
+    else
+      @base_value_description.merge!({ key => map } )
+    end
   end
   alias :parse_fixnum! :parse_integer!
 
   def parse_string!(columns, key, map)
-    columns[:file].merge!({ key => map.to_s.to_sym })
+    @base_value_description.merge!({ key => map.to_s.to_sym } )
   end
   alias :parse_symbol! :parse_string!
 
