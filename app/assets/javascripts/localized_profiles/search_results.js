@@ -123,7 +123,9 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var searchFilterMenuMobileHandler = function() {
         $(".js-searchFiltersDropdownMobile").on('click', function() {
             if($('.js-searchFiltersMenuMobile').css('left') == '0px') {
-              hideFilterMenuMobile();
+              hideFilterMenuMobile(function() {
+                  $(".js-searchFiltersDropdownMobile").blur();
+              });
               GS.track.sendCustomLink('search_close_filters_mobile');
             } else {
               showFilterMenuMobile();
@@ -137,8 +139,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         GS.popup.closeOtherPopups();
         $('.js-searchFiltersMenuMobile').animate({left: '0'}, 'slow');
     };
-    var hideFilterMenuMobile = function() {
-        $('.js-searchFiltersMenuMobile').animate({left: '-300px'}, 'slow');
+    var hideFilterMenuMobile = function(callback) {
+        $('.js-searchFiltersMenuMobile').animate({left: '-300px'}, 'slow', function() {
+            typeof callback === 'function' && callback();
+        });
     };
 
     var setSearchFilterMenuMobileOffsetFromTop = function() {
