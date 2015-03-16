@@ -1,7 +1,9 @@
-<div class="limit-width-1200">
+<div class="">
   <%= render partial: 'osp/osp_header' %>
   <%= render partial: 'osp/osp_nav', locals: {page: 4} %>
-  <%= render partial: 'osp/osp_questions_display', locals: {questions_display_config: @osp_display_config}%>
-  <%= render 'shared/state_footer', state: @state, cities: @cities %>
-
 </div>
+<div class="limit-width-1200">
+  <%= render partial: 'osp/osp_questions_display', locals: {questions_display_config: @osp_display_config}%>
+</div>
+
+<%= render 'shared/state_footer', state: @state, cities: @cities %>
