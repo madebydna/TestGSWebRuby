@@ -14,6 +14,7 @@ class DataLoadMapping
     end
   end
 
+  
   def initialize(config)
     @config = config
     @name = config[:name]
