@@ -1,5 +1,59 @@
 GS.topicalReview = GS.topicalReview || {};
 
+GS.topicalReview.starRating = (function() {
+    var YELLOW_STAR_SELECTOR = 'i-52-orange-star';
+    var GREY_STAR_SELECTOR = 'i-52-grey-star';
+    var INDIVIDUAL_STAR_CONTAINER = '.js-topicalReviewStarContainer';
+    var INDIVIDUAL_STAR_SELECTOR = '.js-topicalReviewStar';
+    var LABEL_BOLD_CLASS = 'open-sans_sb';
+
+    var applyStarRating = function(container, hiddenField) {
+
+        var selectStar = function(rating) {
+
+            $(container).find(INDIVIDUAL_STAR_SELECTOR).each(function(index) {
+                var star_rating = index + 1;
+                if (star_rating <= rating) {
+                    $(this).addClass(YELLOW_STAR_SELECTOR);
+                    $(this).removeClass(GREY_STAR_SELECTOR);
+                } else {
+                    $(this).addClass(GREY_STAR_SELECTOR);
+                    $(this).removeClass(YELLOW_STAR_SELECTOR);
+                }
+                if (star_rating === rating) {
+                    $(this).siblings('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
+                }
+                else {
+                    $(this).siblings('.js-topicalReviewLabel').removeClass(LABEL_BOLD_CLASS);
+                }
+            });
+
+        };
+
+        $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function() {
+            $this = $(this);
+            var rating = $this.index() + 1;
+            $(hiddenField).val(rating);
+            selectStar(rating);
+       });
+
+        $(container).on('mouseover', INDIVIDUAL_STAR_CONTAINER, function() {
+            selectStar($(this).index() + 1);
+        });
+
+        $(container).on('mouseout', INDIVIDUAL_STAR_CONTAINER, function() {
+            var rating = $(hiddenField).val();
+            selectStar(rating);
+            var selectedStar = $(container).find(INDIVIDUAL_STAR_CONTAINER).get(rating - 1);
+            $(selectedStar).children('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
+        });
+    };
+
+    return {
+        applyStarRating: applyStarRating
+    }
+
+})();
 
 GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() {
 
@@ -184,6 +238,8 @@ $(function() {
         var reviewContainer = $(this).parents('.js-topical-review-container');
         GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
     })
+
+    GS.topicalReview.starRating.applyStarRating('.js-topicalReviewStars', '#js-topicalOverallRating')
 });
 
 
