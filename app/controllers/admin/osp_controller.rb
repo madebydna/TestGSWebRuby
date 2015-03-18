@@ -6,11 +6,8 @@ class Admin::OspController < ApplicationController
 
 
   def show
-
     @school = School.find_by_state_and_id(params[:state], params[:schoolId])
     @school_with_esp_data = decorate_school(@school)
-    @osp_form = OspFormResponse.take(20)
-
     if current_user.provisional_or_approved_osp_user?(@school)
       render_osp_page
     else
@@ -22,7 +19,6 @@ class Admin::OspController < ApplicationController
   def submit
     @school = School.find_by_state_and_id(params[:state], params[:schoolId])
     @school_with_esp_data = decorate_school(@school)
-
     questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
 
     questionKeyParams.each_pair do |key, values|
@@ -42,8 +38,7 @@ class Admin::OspController < ApplicationController
         end
 
     end
-
-    render_osp_page
+    redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
 
   end
 
