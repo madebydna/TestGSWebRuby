@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'features/search/search_spec_helper'
 require 'features/examples/page_examples'
+require 'features/selectors/search_page_selectors'
+require 'features/selectors/city_browse_page_selector'
 include SearchSpecHelper
 
 #Visiting Search Pages
@@ -8,11 +10,20 @@ shared_context 'Visit City Browse Search' do |state_abbrev, city_name, query_str
   before do
     set_up_city_browse(state_abbrev,city_name,query_string)
   end
+  subject do
+    page
+    CityBrowsePageSelectors.new
+    SearchPageSelectors.new
+  end
 end
 
 shared_context 'Visit District Browse Search' do |state_abbrev, district_name, city_name, query_string=nil|
   before do
     set_up_district_browse(state_abbrev, district_name, city_name, query_string)
+  end
+  subject do
+    page
+    SearchPageSelectors.new
   end
 end
 
@@ -20,11 +31,19 @@ shared_context 'Visit By Location Search' do |address, city_name, zipcode, lat, 
   before do
     set_up_by_location_search(address, city_name, zipcode, lat, lon, query_string)
   end
+  subject do
+    page
+    SearchPageSelectors.new
+  end
 end
 
 shared_context 'Visit By Name Search' do |search_term, state, query_string|
   before do
     set_up_by_name_search(search_term, state, query_string)
+  end
+  subject do
+    page
+    SearchPageSelectors.new
   end
 end
 

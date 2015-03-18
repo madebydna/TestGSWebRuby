@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative '../contexts/school_profile_contexts'
+require_relative '../examples/page_examples'
 require_relative '../pages/school_profile_overview_page'
 
 shared_context 'with Alameda High School' do
@@ -16,10 +17,6 @@ end
 
 shared_example 'should be on the correct page' do
   expect(subject).to be_displayed
-end
-
-shared_example 'should have element' do |element|
-  instance_eval("expect(subject).to have_#{element}")
 end
 
 def expect_it_to_have_element(element)
@@ -57,6 +54,9 @@ describe 'School Profile Overview Page' do
     with_shared_context 'with a demo school' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
+      include_example 'should have the noindex meta tag'
+      include_example 'should have the nofollow meta tag'
+      include_example 'should have the noarchive meta tag'
     end
   end
 

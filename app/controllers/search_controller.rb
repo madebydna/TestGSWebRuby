@@ -234,6 +234,7 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestSchool.new.search(count: 20, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
   end
 
@@ -243,6 +244,7 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestCity.new.search(count: 10, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
   end
 
@@ -252,7 +254,13 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
+  end
+
+  def set_cache_headers_for_suggest
+    cache_time = ENV_GLOBAL['search_suggest_cache_time'] || 0
+    expires_in cache_time, public: true
   end
 
   protected

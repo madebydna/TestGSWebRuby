@@ -19,6 +19,24 @@ module CachedProgramsMethods
     end
   end
 
+  def values_for(key)
+    if programs[key].is_a? Hash
+      programs[key].keys
+    else
+      []
+    end
+  end
+
+
+  def created_time_for(key)
+    if programs[key].is_a? Hash
+      value = programs[key].values[0]
+      created_time = Time.parse(value['created'])
+    else
+      nil
+    end
+  end
+
   def before_care
     before_after_care('before')
   end

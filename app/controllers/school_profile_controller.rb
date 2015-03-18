@@ -29,6 +29,7 @@ class SchoolProfileController < SchoolController
   end
 
   def init_page
+    set_noindex_meta_tags if @school.demo_school?
     @school_reviews_all = @school.reviews.load
     create_sized_maps(gon)
     gon.pagename = configured_page_name
@@ -192,8 +193,7 @@ class SchoolProfileController < SchoolController
   end
 
   def set_noindex_meta_tags
-    set_meta_tags({ noindex: true, nofollow: true, noarchive: true })
-
+    set_meta_tags(robots: 'noindex, nofollow, noarchive')
   end
 
 end
