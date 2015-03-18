@@ -1,5 +1,7 @@
 require 'spec_helper'
 require_relative '../contexts/footer_contexts'
+require 'features/selectors/state_home_page'
+
 
 #Footer Shared Examples
 shared_examples_for 'should have a footer' do
@@ -20,4 +22,8 @@ end
 
 shared_example 'should have an about great schools section' do
   expect(subject).to have_content('About GreatSchools')
+end
+
+shared_example 'should have state footer' do
+  expect(subject).to have_state_footer
 end
