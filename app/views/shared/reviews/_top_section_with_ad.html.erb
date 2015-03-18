@@ -2,6 +2,14 @@
 <div class="row ptl mtl">
   <div class="col-xs-12 pbl">
 
+   <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about the meaning of life?',
+               review_question_type_partial: 'one_word',
+               option_type: '',
+               review_options: %w(),
+               review_summary_partial: 'have_a_voice',
+               review_summary_data: {}
+    %>
 
    <%= render 'shared/reviews/modules/topical_review_container',
                title: 'How do you feel about the meaning of life?',
