@@ -22,9 +22,11 @@ GS.topicalReview.starRating = (function() {
                 }
                 if (star_rating === rating) {
                     $(this).siblings('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
+                    $(this).siblings('.js-topicalReviewLabel').removeClass('gray-dark');
                 }
                 else {
                     $(this).siblings('.js-topicalReviewLabel').removeClass(LABEL_BOLD_CLASS);
+                    $(this).siblings('.js-topicalReviewLabel').addClass('gray-dark');
                 }
             });
 
@@ -46,6 +48,7 @@ GS.topicalReview.starRating = (function() {
             selectStar(rating);
             var selectedStar = $(container).find(INDIVIDUAL_STAR_CONTAINER).get(rating - 1);
             $(selectedStar).children('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
+            $(selectedStar).children('.js-topicalReviewLabel').removeClass('gray-dark');
         });
     };
 
