@@ -228,4 +228,37 @@ describe SearchController do
       expect(controller.gon.search_applied_filter_values['aroy2']).to eq('bar')
     end
   end
+
+  describe '#set_cache_headers_for_suggest' do
+    let(:cache_time) { 12345 }
+    it 'should call expires_in with public: true' do
+      expect(controller).to receive(:expires_in).with(anything, {public: true})
+      controller.set_cache_headers_for_suggest
+    end
+    it 'should get cache time from environment variable' do
+      allow(ENV_GLOBAL).to receive(:[]).and_return(cache_time)
+      expect(controller).to receive(:expires_in).with(cache_time, anything)
+      controller.set_cache_headers_for_suggest
+    end
+  end
+
+  [:city, :school, :district].each do | search_type |
+    describe "XHR GET suggest_#{search_type}_by_name" do
+      let(:cache_time) { 12345 }
+      let(:env_global) { ENV_GLOBAL.to_hash.merge({'search_suggest_cache_time' => cache_time}) }
+      let(:action) { "suggest_#{search_type}_by_name".to_sym }
+
+      it 'should have cache-control headers set to public and a configured time' do
+        stub_const('ENV_GLOBAL', env_global)
+        xhr :get, action, state: 'de', query: 's'
+        expect(response.header).to include({'Cache-Control' => "max-age=#{cache_time}, public"})
+      end
+
+      it 'should not have \'Vary\' headers' do
+        stub_const('ENV_GLOBAL', env_global)
+        xhr :get, action, state: 'de', query: 's'
+        expect(response.header).to_not include({'Vary' => anything})
+      end
+    end
+  end
 end
