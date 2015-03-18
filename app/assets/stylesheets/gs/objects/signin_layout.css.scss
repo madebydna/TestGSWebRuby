@@ -1,49 +1,87 @@
 .signin {
-  background-color: #07251e;
+  background-color: $dirt-green;
 
   .signin-hdr {
-    background-color: #93c83e;
+    background-color: $wallpaper-green;
     background-image: image-url('signin/wallpaper.png');
-    color: #07251e;
-    min-height: 200px;
-  }
+    color: $dirt-green;
+    min-height: 240px;
 
-  .signin-content {
-    position: relative;
-    top:-100px;
-    clear: both;
-  }
+    h2 {
+      font-size: 40px;
+      max-width: 610px;
+      margin: 24px auto;
+    }
 
-  .signin-ftr {
-    background-color: #2b2b2b;
-    border: 1px solid #3f4e4b;
-    border-left: none;
-    border-right: none;
-    min-height: 120px;
-
-    ul { text-align:center;
-      :not(:last-child) {
-        border-right: 2px solid gray;
+    @media only screen and (max-width: 767px) {
+      min-height: 210px;
+      h2 {
+        font-size: 32px;
+        max-width: 500px;
+        margin: 16px auto;
       }
+    }
 
-      li {
-        color: white;
-
-        span {
-          color: #ffbe00;
-        }
+    @media only screen and (max-width: 599px) {
+      min-height: 180px;
+      h2 {
+        font-size: 20px;
+        max-width: 320px;
+        margin: 16px auto;
       }
     }
   }
 
+  .signin-content {
+    position: relative;
+    top: -80px;
+    clear: both;
+    label {
+      font-size: 12px;
+      a {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .signin-ftr {
+    background-color: $absence-gray;
+    border: 1px solid $clay-green;
+    border-left: none;
+    border-right: none;
+    min-height: 120px;
+    ul {
+      li {
+        color: white;
+        border-right: 2px solid gray;
+
+        @media only screen and (max-width: 767px) {
+          display: block;
+          padding: 0;
+          border-right: none;
+        }
+
+        span {
+          color: $brand-secondary;
+        }
+      }
+      li.last {
+        border-right: none;
+      }
+    }
+
+
+  }
+
   .well {
-    border: 10px solid #07251e;
+    border: 10px solid $dirt-green;
+    background-color: $well-bg;
   }
 
   legend {
     border: none;
     font-size: $font-size-base;
-    color: #3d3d3d;
+    color: $neutral-color;
   }
 
   ul {
@@ -51,34 +89,32 @@
   }
 
   .promos {
+    min-width: 280px;
+    li::before {
+      display: inline-block;
+      background-image: asset_data_url("icons/icons_24x24.png");
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      content: " ";
+    }
 
-      li::before {
-        display: inline-block;
-        background-image: asset_data_url("icons/icons_24x24.png");
-        width: 24px;
-        height: 24px;
-        position: absolute;
-        content: " ";
-      }
+    li:nth-child(1):before {
+      background-position: -792px 0px;
+      left: 5px;
+      top: 20px;
+    }
 
-      li:nth-child(1):before {
-        background-position: -792px 0px;
-        left: 5px;
-        top: 20px;
-      }
+    li:nth-child(2):before {
+      background-position: -744px 0px;
+      left: 5px;
+      top: 114px;
+    }
 
-      li:nth-child(2):before {
-        background-position: -744px 0px;
-        left: 5px;
-        top: 114px;
-      }
-
-      li:nth-child(3):before {
-        background-position: -768px 0px;
-        left: 5px;
-        top: 226px;
-      }
-
+    li:nth-child(3):before {
+      background-position: -768px 0px;
+      left: 5px;
+      top: 226px;
+    }
   }
-
 }
