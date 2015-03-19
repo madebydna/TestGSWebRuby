@@ -41,6 +41,10 @@ class StatesController < ApplicationController
   end
 
   def state_home
+    #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
+    if @state[:short] == 'dc'
+      return redirect_to city_path('washington-dc', 'washington'), status: 301
+    end
     @params_hash = parse_array_query_string(request.query_string)
     gon.state_abbr = @state[:short]
     @ad_page_name = :State_Home_Standard
