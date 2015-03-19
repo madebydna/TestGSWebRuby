@@ -50,6 +50,16 @@ describe 'district page routing' do
         district: '12th-district'
       )
     end
+
+    it 'should route a district with a # in it' do
+      # %23 is the encoded value of #
+      expect( get '/minnesota/st.-paul/district-%2312/' ).to route_to(
+        'districts#show',
+        state: 'minnesota',
+        city: 'st.-paul',
+        district: 'district-#12'
+      )
+    end
   end
 
 end

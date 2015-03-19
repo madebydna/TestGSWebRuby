@@ -26,6 +26,10 @@ describe 'city page routing' do
     it 'should route a city with a period in it' do
       expect( get '/minnesota/st.-paul/' ).to route_to('cities#show', state: 'minnesota', city: 'st.-paul')
     end
+
+    it 'should route a city with a # in it' do
+      expect( get '/minnesota/st.-%23aul/' ).to route_to('cities#show', state: 'minnesota', city: 'st.-#aul')
+    end
   end
 
 end

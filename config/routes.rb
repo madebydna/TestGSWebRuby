@@ -23,10 +23,14 @@ LocalizedProfiles::Application.routes.draw do
 
   # Routes for search pages
   get ':state/:city/schools/', as: :search_city_browse,
-      constraints: {state: States.any_state_name_regex, city: /[^\/]*/}, to: 'search#city_browse'
+    # This city regex allows for all characters except /
+    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+    constraints: {state: States.any_state_name_regex, city: /[^\/]+/}, to: 'search#city_browse'
 
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
-      constraints: {state: States.any_state_name_regex, district_name: /[^\/]*/}, to: 'search#district_browse'
+    # This city regex allows for all characters except /
+    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+    constraints: {state: States.any_state_name_regex, district_name: /[^\/]+/}, to: 'search#district_browse'
 
   get '/search/search.page', as: :search, to: 'search#search'
 
@@ -216,7 +220,9 @@ LocalizedProfiles::Application.routes.draw do
         state: States.any_state_name_regex,
         schoolId: /\d+/,
         school_name: /.+/,
-        city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
+        # This city regex allows for all characters except /
+        # http://guides.rubyonrails.org/routing.html#specifying-constraints
+        city: /[^\/]+/,
     } do
       get 'quality', to: 'school_profile_quality#quality', as: :quality
       get 'details', to: 'school_profile_details#details', as: :details
@@ -233,8 +239,9 @@ LocalizedProfiles::Application.routes.draw do
       # with the district segment's contrainst.
       format: false,
       state: States.any_state_name_regex,
-      # This regex will allow for any valid path segment characters
-      city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
+      # This city regex allows for all characters except /
+      # http://guides.rubyonrails.org/routing.html#specifying-constraints
+      city: /[^\/]+/,
     } do
 
       get '', to: 'cities#show'
@@ -259,8 +266,9 @@ LocalizedProfiles::Application.routes.draw do
       # NOTE: this must come last in the city scope, because it will match
       # anything after the cty name
       get '/:district', to: 'districts#show', as: :district, constraints: {
-        # This regex will allow for any valid path segment characters, but not the word preschools
-        district: Regexp.new(/(?!preschools)#{UrlHelper.valid_path_component_chars}+/),
+        # This city regex allows for all characters except / and the word preschools
+        # http://guides.rubyonrails.org/routing.html#specifying-constraints
+        district: /(?!preschools)[^\/]+/
       }
     end
 
@@ -279,7 +287,9 @@ LocalizedProfiles::Application.routes.draw do
       state: States.any_state_name_regex,
       schoolId: /\d+/,
       school_name: /.+/,
-      city: Regexp.new(/#{UrlHelper.valid_path_component_chars}+/),
+      # This city regex allows for all characters except /
+      # http://guides.rubyonrails.org/routing.html#specifying-constraints
+      city: /[^\/]+/,
   } do
 
     get 'quality', to: 'school_profile_quality#quality', as: :quality

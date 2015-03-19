@@ -2,10 +2,6 @@ module UrlHelper
   require 'addressable/uri'
   extend ActiveSupport::Concern
 
-  def self.valid_path_component_chars
-    "[A-Za-z0-9\\-\\.\\_\\~\\!\\$\\&\\'\\(\\)\\*\\+\\,\\;\\=\\:\\@\\%]"
-  end
-
   protected
 
   included do |base|
