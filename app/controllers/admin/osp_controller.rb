@@ -46,7 +46,7 @@ class Admin::OspController < ApplicationController
     osp_form_data.esp_membership_id = esp_membership_id
     response_json_rows = []
     response_values.each { |response_value|
-      response_json_rows.push({"entity_state" => params[:state], "entity_id" => @school.id, "value" => response_value, "member_id" => esp_membership_id})
+      response_json_rows.push({"entity_state" => params[:state], "entity_id" => @school.id, "value" => response_value, "member_id" => esp_membership_id, "created" => Time.now , "esp_source" => "osp_form"})
 
     }
     response_set = {key => response_json_rows}
