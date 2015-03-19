@@ -128,6 +128,9 @@ LocalizedProfiles::Application.routes.draw do
       put 'report', on: :member
     end
 
+    get  '/reset_password', to: 'users#generate_reset_password_link' , as: :generate_reset_password_link
+    get  '/users/search'
+
     resources :held_school
     resources :reported_entity do
       put 'deactivate', on: :member
