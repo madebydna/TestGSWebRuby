@@ -43,6 +43,17 @@ namespace :gsweb do
     end
   end
 
+  task :use_omega_db do
+    database_local = Rails.root.join('config', 'database_local.yml')
+    database_local_point_at_omega=
+        Rails.root.join('config', 'database_local.point_at_omega.yml')
+
+    File.open(database_local, 'a') do |f|
+      f << "\n"
+      f << File.read(database_local_point_at_omega)
+    end
+  end
+
   task :use_localhost_db do
     database_local = Rails.root.join('config', 'database_local.yml')
     database_local_point_at_dev = 

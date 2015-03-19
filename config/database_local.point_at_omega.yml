@@ -1,0 +1,74 @@
+
+# start: database_local.point_at_dev.yml
+# don't change above comment since it's used by script
+mysql_dev: &mysql_dev
+  <<: *mysql
+  host: omega.greatschools.org
+  username: service
+  password: service
+
+mysql_dev_rw: &mysql_dev_rw
+  <<: *mysql_dev
+
+mysql_dev_ro: &mysql_dev_ro
+  <<: *mysql_dev
+
+mysql_rw_server_to_use_in_development: &mysql_rw_server_to_use_in_development
+  <<: *mysql_dev_rw
+
+mysql_ro_server_to_use_in_development: &mysql_ro_server_to_use_in_development
+  <<: *mysql_dev_ro
+
+development: &development
+  <<: *mysql_rw_server_to_use_in_development
+  database: localized_profiles
+  profile_config_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: localized_profiles
+    legacy: false
+  profile_config:
+    <<: *mysql_ro_server_to_use_in_development
+    database: localized_profiles
+    legacy: false
+  _STATE__rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: __STATE_
+    legacy: true
+  _STATE_:
+    <<: *mysql_ro_server_to_use_in_development
+    database: __STATE_
+    legacy: true
+  gs_schooldb_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: gs_schooldb
+    legacy: true
+  gs_schooldb:
+    <<: *mysql_ro_server_to_use_in_development
+    database: gs_schooldb
+    legacy: true
+  surveys_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: surveys
+    legacy: true
+  surveys:
+    <<: *mysql_ro_server_to_use_in_development
+    database: surveys
+    legacy: true
+  community_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: community
+    legacy: true
+  community:
+    <<: *mysql_ro_server_to_use_in_development
+    database: community
+    legacy: true
+  us_geo_rw:
+    <<: *mysql_rw_server_to_use_in_development
+    database: us_geo
+    legacy: true
+  us_geo:
+    <<: *mysql_ro_server_to_use_in_development
+    database: us_geo
+    legacy: true
+# don't change below comment since it's used by script
+# end: database_local.point_at_dev.yml
