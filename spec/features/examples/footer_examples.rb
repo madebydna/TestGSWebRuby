@@ -24,6 +24,12 @@ shared_example 'should have an about great schools section' do
   expect(subject).to have_content('About GreatSchools')
 end
 
+
+=begin
+Will need to require the selector file to have this example work
+Todo: need to make the selectors shared across pages
+=end
+
 shared_example 'should have state footer' do
   expect(subject).to have_state_footer
 end
