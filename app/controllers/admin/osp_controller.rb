@@ -22,24 +22,36 @@ class Admin::OspController < ApplicationController
     questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
 
     questionKeyParams.each_pair do |key, values|
-      should_data_be_saved =false;
+      should_data_be_saved =false
+      response_values = []
       values.each { |value|
         if value.present?
-          puts key , value
-          should_data_be_saved = true ;
+          should_data_be_saved = true
+          response_values.push(value)
         end
         }
         if should_data_be_saved
-          # binding.pry;
-          osp_form_data = OspFormResponse.new
-          osp_form_data.osp_question_id = OspQuestion.find_by_question_key(key).id
-          osp_form_data.esp_membership_id = current_user.esp_membership_for_school(@school).id
-          osp_form_data.save!
+          save_osp_from_row_per_question(key, response_values)
         end
 
     end
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
 
+  end
+
+  def save_osp_from_row_per_question(key, response_values)
+    osp_form_data = OspFormResponse.new
+    osp_form_data.osp_question_id = OspQuestion.find_by_question_key(key).id
+    esp_membership_id = current_user.esp_membership_for_school(@school).id
+    osp_form_data.esp_membership_id = esp_membership_id
+    response_json_rows = []
+    response_values.each { |response_value|
+      response_json_rows.push({"entity_state" => params[:state], "entity_id" => @school.id, "value" => response_value, "member_id" => esp_membership_id})
+
+    }
+    response_set = {key => response_json_rows}
+    osp_form_data.response = response_set.to_json
+    osp_form_data.save!
   end
 
   def decorate_school(school)
