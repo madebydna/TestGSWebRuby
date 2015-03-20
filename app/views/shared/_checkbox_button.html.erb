@@ -1,0 +1,23 @@
+<% #This partial will float left all the buttons horizontally 'stacking' them %>
+<% #Parent element needs to be a block containing the buttons %>
+
+<% #args %>
+<% key #required. Key name needs [] if multiple values share key. ex. boys_sports[] (values are soccer, baseball, etc..) %>
+<% value #required %>
+<% text ||= key.to_s.gsub(/\[|\]/, '') #optional. defaults to key and strips [] %>
+<% button_classes ||= "btn btn-toggle mvm mrl pull-left js-checkboxButton" #optional %>
+<% icon_classes ||= "vat iconx16 i-16-check-bigger-off mrs" #optional %>
+<% active ||= false #optional %>
+
+<div class="<%= button_classes %> <%= 'active' if active %>"
+     data-checkbox-button-key="<%= key %>"
+     data-checkbox-button-value="<%= value %>"
+     data-toggle="button"
+     type="button"
+>
+  <% #assumes css handles active/hover/activehover state %>
+  <span class="<%= icon_classes %>"></span>
+  <% #js will handle the assigning/unassigning of key/values of this input element %>
+  <input type="hidden" class="js-hiddenField">
+  <%= text %>
+</div>

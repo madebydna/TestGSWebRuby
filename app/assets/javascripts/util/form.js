@@ -316,6 +316,37 @@ $(function() {
     GS.forms.checkSportsIcon = checkSportsIcon;
 });
 
+GS.forms.elements = (function() {
+    var checkboxButtonSelector = ".js-checkboxButton";
+    var checkboxButtonKeyDataAttr = "checkbox-button-key";
+    var checkboxButtonValueDataAttr = "checkbox-button-value";
+    var hiddenFieldSelector = ".js-hiddenField";
+
+    var setCheckboxButtonHandler = function() {
+        $("body").on("click", checkboxButtonSelector, function() {
+            var $self = $(this);
+            var $hiddenField = $self.find(hiddenFieldSelector);
+
+            if ($hiddenField.val() == '') {
+                var key = $self.data(checkboxButtonKeyDataAttr);
+                var value = $self.data(checkboxButtonValueDataAttr);
+                $hiddenField.attr("value", value).attr("name", key);
+            } else {
+                $hiddenField.removeAttr("value").removeAttr("name");
+            }
+        })
+    };
+
+    var init = function() {
+        setCheckboxButtonHandler()
+    };
+
+    return {
+        init: init
+    }
+
+})();
+
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();
     GS.forms.sportsToolTip();

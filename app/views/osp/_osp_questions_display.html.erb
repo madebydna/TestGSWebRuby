@@ -9,20 +9,20 @@
 
 
           <% if display_question.question_type == 'multi_select' %>
-              <%= render partial: 'shared/multi_select_checkbox_button', :locals => {
+              <%= render partial: 'osp/osp_question_display', :locals => {
                       display_question_label: display_question.displayed_label,
                       display_question_answers_map: display_question.displayed_answers,
-                      response_key: display_question.question_response_key
+                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key)
               } %>
           <% end %>
       <% else %>
           <div class="pt4">
           <% if display_question.question_type == 'multi_select' %>
 
-              <%= render partial: 'shared/multi_select_checkbox_button', :locals => {
+              <%= render partial: 'osp/osp_question_display', :locals => {
                       display_question_label: display_question.displayed_label,
                       display_question_answers_map: display_question.displayed_answers,
-                      response_key: display_question.question_response_key
+                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key)
               } %>
 
           <% end %>
