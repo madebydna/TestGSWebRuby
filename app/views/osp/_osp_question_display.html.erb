@@ -12,10 +12,10 @@ preexisting_esp_values       ie) ['before', 'after']
     </h3>
   </div>
 
-  <% display_question_answers_map.each_pair do |key, value| %>
+  <% display_text_and_answers_map.each_pair do |text, value| %>
     <% [*value].each do |val| %>
       <% button_active = preexisting_esp_values.include?(val) ? true : nil %>
-      <%= render partial: 'shared/checkbox_button', locals: {key: "#{key}[]", value: val, active: button_active} %>
+      <%= render partial: 'shared/checkbox_button', locals: {key: "#{response_key}[]", text: text, value: val, active: button_active} %>
     <% end %>
   <% end %>
 </div>
