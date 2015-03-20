@@ -1,0 +1,77 @@
+/* =3 x16 (Stars)
+-------------------------------------------------------------------------------------------*/
+
+/* **************** SPRITE ***************** */
+
+.iconx60 {
+    display: inline-block;
+    background-image: asset_data_url("icons/snapshot_60x60.png");
+    width: 60px;
+    height: 60px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-60-art {
+    background-position: 0 0;
+}
+
+.i-60-language {
+    background-position: -60px 0px;
+}
+
+.i-60-schedule {
+  background-position: -120px 0px;
+}
+
+.i-60-clubs {
+  background-position: -180px 0px;
+}
+
+.i-60-sports {
+  background-position: -240px 0px;
+}
+
+.i-60-community {
+  background-position: -300px 0px;
+}
+
+.i-60-students {
+  background-position: -360px 0px;
+}
+
+.i-60-community_blue {
+  background-position: -420px 0px;
+}
+
+.i-60-application {
+  background-position: -480px 0px;
+}
+
+.i-60-color-art {
+  color: #5fcbc8;
+}
+.i-60-color-language {
+  color: #c9614f;
+}
+.i-60-color-schedule {
+  color: #f19150;
+}
+.i-60-color-clubs {
+  color: #5f83a7;
+}
+.i-60-color-sports {
+  color: #69bd8d;
+}
+.i-60-color-community {
+  color: #b2718e;
+}
+.i-60-color-students {
+  color: #0083b2;
+}
+.i-60-color-community_blue {
+  color: #0083b2;
+}
+.i-60-color-application {
+  color: #0083b2;
+}

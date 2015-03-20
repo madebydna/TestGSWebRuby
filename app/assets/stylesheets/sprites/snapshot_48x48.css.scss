@@ -1,0 +1,138 @@
+/* **************** SPRITE ***************** */
+
+.iconx48-snapshot {
+  display: inline-block;
+  background-image: asset_data_url('icons/snapshot_48x48.png');
+  width: 48px;
+  height: 48px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-48-visual_art {
+  background-position: 0 0;
+}
+
+.i-48-music {
+  background-position: -48px 0px;
+}
+
+.i-48-ap_classes {
+  background-position: -96px 0px;
+}
+
+.i-48-world_languages {
+  background-position: -144px 0px;
+}
+
+.i-48-facilities {
+  background-position: -192px 0px;
+}
+
+.i-48-girls_sports {
+  background-position: -240px 0px;
+}
+
+.i-48-boys_sports {
+  background-position: -288px 0px;
+}
+
+.i-48-clubs {
+  background-position: -336px 0px;
+}
+
+.i-48-staff {
+  background-position: -384px 0px;
+}
+
+.i-48-art-snapshot {
+  background-position: -432px 0;
+}
+
+.i-48-clubs-snapshot {
+  background-position: -480px 0px;
+}
+
+.i-48-sports-snapshot {
+  background-position: -528px 0px;
+}
+
+.i-48-language-snapshot {
+  background-position: -576px 0px;
+}
+
+.i-48-global-competitiveness-snapshot {
+  background-position: -624px 0;
+}
+
+.i-48-art-grey-snapshot {
+  background-position: -432px -48px;
+}
+
+.i-48-clubs-grey-snapshot {
+  background-position: -480px -48px;
+}
+
+.i-48-sports-grey-snapshot {
+  background-position: -528px -48px;
+}
+
+.i-48-language-grey-snapshot {
+  background-position: -576px -48px;
+}
+
+
+/////  COLORS
+.i-48-color-visual_arts {
+  background-color: #EE955A;
+}
+.i-48-color-music {
+  background-color: #C2D56B;
+}
+.i-48-color-ap_classes {
+  background-color: #78BD90;
+}
+.i-48-color-world_languages {
+  background-color: #C9DA7A;
+}
+.i-48-color-facilities {
+  background-color: #6BBEB3;
+}
+.i-48-color-girls_sports {
+  background-color: #FBC668;
+}
+.i-48-color-boys_sports {
+  background-color: #F0A06B;
+}
+.i-48-color-clubs {
+  background-color: #E97F6D;
+}
+.i-48-color-staff {
+  background-color: #A192AD;
+}
+
+.i-48-color-art-snapshot {
+  color: #5fcbc8;
+}
+.i-48-color-language-snapshot {
+  color: #c9614f;
+}
+.i-48-color-clubs-snapshot {
+  color: #5f83a7;
+}
+.i-48-color-sports-snapshot {
+  color: #69bd8d;
+}
+
+.i-48-color-art-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-language-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-clubs-grey-snapshot {
+  color: #999999;
+}
+.i-48-color-sports-grey-snapshot {
+  color: #999999;
+}

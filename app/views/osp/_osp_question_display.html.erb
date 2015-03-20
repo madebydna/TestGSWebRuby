@@ -1,34 +1,21 @@
-OSP_DISPLAY_CONFIG_INFO <br/>
-<table class="table table-striped mbm">
-<tr>
-  <th class="tac emphasis-color">  Question ID </th>
-  <th class="tac emphasis-color">  location_group_id </th>
-  <th class="tac emphasis-color">  ques_id </th>
-  <th class="tac emphasis-color"> ques_group_id </th>
-  <th class="tac emphasis-color">  order_on_page </th>
-  <th class="tac emphasis-color">  order_in_group </th>
-  <th class="tac emphasis-color">  page_name </th>
-  <th class="tac emphasis-color">  answers </th>
-  <th class="tac emphasis-color">  label </th>
-  <th class="tac emphasis-color"> active </th>
-  <th class="tac emphasis-color">  updated </th>
-</tr>
-<br/>
-<% osp_display_config.each do |display_question| %>
+<!-- multi select display config example
 
-    <tr>
-      <td>  <%= display_question.id %></td>
-      <td>  <%= display_question.location_group_id %></td>
-      <td>  <%= display_question.osp_question_id %></td>
-      <td>  <%= display_question.osp_question_group_id %></td>
-      <td>  <%= display_question.order_on_page %></td>
-      <td>  <%= display_question.order_in_group%></td>
-      <td>  <%= display_question.page_name%></td>
-      <td>  <%= display_question.displayed_answers %></td>
-      <td>  <%= display_question.displayed_label %></td>
-      <td>  <%= display_question.active%></td>
-      <td>  <%= display_question.updated%></td>
-    </tr>
-    <br>
-<% end %>
-</table>
+display_question_answers_map ie) {"transportation" => "public"} or {"before_after_care" => ["before", "after"]}
+display_question_label       ie) 'Do you have before and/or after care on site?'
+preexisting_esp_values       ie) ['before', 'after']
+
+-->
+<div class="clearfix">
+  <div class="col-xs-12">
+    <h3 class="mbs">
+      <%= display_question_label %>
+    </h3>
+  </div>
+
+  <% display_question_answers_map.each_pair do |key, value| %>
+    <% [*value].each do |val| %>
+      <% button_active = preexisting_esp_values.include?(val) ? true : nil %>
+      <%= render partial: 'shared/checkbox_button', locals: {key: "#{key}[]", value: val, active: button_active} %>
+    <% end %>
+  <% end %>
+</div>

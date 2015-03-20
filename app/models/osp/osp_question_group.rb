@@ -1,9 +1,10 @@
-class Osp::OspQuestionGroup < ActiveRecord::Base
+class OspQuestionGroup < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'osp_question_groups'
 
   attr_accessible :image, :heading, :subtext, :default_config ,:active,  :updated
-  belongs_to :osp_display_config, :class_name => 'Osp::OspDisplayConfig'
+  has_many :osp_display_configs, :class_name => 'OspDisplayConfig'
+
   scope :active, -> { where(active: true) }
 
 

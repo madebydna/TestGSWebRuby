@@ -21,29 +21,7 @@
 @import "gs/fonts-opensans-condbold";
 @import "gs/fonts-amaticsc";
 @import "gs/fonts-robotoslab-light";
-@import "sprites/arrows";
-//@import "sprites/search-icon";
-@import "sprites/140710-24x24_icons";
-@import "sprites/140305-24x24_stars_detroit";
-@import "sprites/140625-60x60_sprites";
-@import "sprites/130930-16x16_stars";
-@import "sprites/140113-24x24_stars";
-@import "sprites/130919-24x24_search";
-@import "sprites/140106-16x16_icons";
-@import "sprites/140106-24x24_ratings";
-@import "sprites/140106-72x72_ratings";
-@import "sprites/140117-32x32_connect_with_us_buttons";
-@import "sprites/140806-32x32_sport_icons";
-@import "sprites/150311-96x96-sprite_osp";
-//@import "sprites/search-hero-sprites";
-@import "sprites/calendar_month";
-@import "sprites/140106-72x58_ESD_ratings"; /* city specific */
-@import "sprites/140917-22x60_human";
-@import "sprites/140918-24x24_popular_icons";
-@import "sprites/140918-32x32_college_ready";
-@import "sprites/140929-48x48_sprites";
-@import "sprites/141209-48x48_icons";
-@import "sprites/150105-48x48_badges";
+@import "sprites/*";
 @import "gs/typography";
 @import "gs/navigation";
 @import "gs/spacing";
@@ -56,6 +34,7 @@
 @import "gs/twitter-typeahead";
 @import "gs/objects/scaling_image_layout";
 @import "gs/objects/search_area_layout";
+@import "gs/objects/signin_layout";
 @import "gs/objects/district_city_layout";
 @import "resources/datatables/jquery.datatables";
 

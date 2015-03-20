@@ -125,9 +125,8 @@ sets with null breakdowns' do
 
   describe '#max_year_per_data_type' do
     let(:data_sets) do
-      (1..3).map do |id| FactoryGirl.build_stubbed(
+      data_sets = (1..3).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
-          :with_school_value,
           id: id,
           data_type_id: 1,
           year: 2000 - id
@@ -135,12 +134,15 @@ sets with null breakdowns' do
       end +
       (4..5).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
-          :with_school_value,
           id: id,
           data_type_id: 2,
           year: 2010 - id
         )
       end
+      data_sets.each do |data_set|
+        allow(data_set).to receive(:census_data_school_values).and_return(FactoryGirl.build_stubbed_list(:census_data_school_value, 1))
+      end
+      data_sets
     end
 
     subject { CensusDataResults.new(data_sets) }
@@ -152,9 +154,8 @@ sets with null breakdowns' do
 
   describe '#filter_to_max_year_per_data_type!' do
     let(:data_sets) do
-      (1..3).map do |id| FactoryGirl.build_stubbed(
+      data_sets = (1..3).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
-          :with_school_value,
           id: id,
           data_type_id: 1,
           year: 2000 - id
@@ -162,12 +163,15 @@ sets with null breakdowns' do
       end +
       (4..5).map do |id| FactoryGirl.build_stubbed(
           :census_data_set,
-          :with_school_value,
           id: id,
           data_type_id: 2,
           year: 2010 - id
         )
       end
+      data_sets.each do |data_set|
+        allow(data_set).to receive(:census_data_school_values).and_return(FactoryGirl.build_stubbed_list(:census_data_school_value, 1))
+      end
+      data_sets
     end
 
     subject { CensusDataResults.new(data_sets) }

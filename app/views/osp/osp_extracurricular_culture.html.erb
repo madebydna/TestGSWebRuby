@@ -1,7 +1,9 @@
-<div class="limit-width-1200 tac">
+<div>
   <%= render partial: 'osp/osp_header' %>
-
   <%= render partial: 'osp/osp_nav', locals: {page: 3} %>
-  <%= render "osp/osp_question_display", osp_display_config: @osp_display_config %>
+</div>
+<div class="limit-width-1200">
+  <%= render partial: 'osp/osp_form', locals: {page: 3} %>
 
 </div>
+<%= render 'shared/state_footer', state: @state, cities: @cities %>

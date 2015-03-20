@@ -29,6 +29,7 @@ class SchoolProfileController < SchoolController
   end
 
   def init_page
+    set_noindex_meta_tags if @school.demo_school?
     @school_reviews_all = @school.reviews.load
     create_sized_maps(gon)
     gon.pagename = configured_page_name
@@ -189,6 +190,10 @@ class SchoolProfileController < SchoolController
 
     @facebook_comments_permalink = domain+ @state[:long].downcase.gsub(' ', '-') + "/city-name/"+ @school.id.to_s +
         "-school-name/"+@page_config.name.downcase
+  end
+
+  def set_noindex_meta_tags
+    set_meta_tags(robots: 'noindex, nofollow, noarchive')
   end
 
 end

@@ -7,7 +7,7 @@ shared_context 'user registers a new account' do
     visit join_path
     fill_in 'join-email', with: email
     check 'terms_terms'
-    click_button 'Register email'
+    click_button 'Sign Up'
   end
 
   after(:each) do

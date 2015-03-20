@@ -14,6 +14,14 @@ shared_example 'should have a button to submit the search' do
   expect(subject.has_selector?('button', text: 'Search')).to be_truthy
 end
 
+shared_example 'should have list view link for search results' do
+  expect(subject).to have_search_results_list_view_link
+end
+
+shared_example 'should have map view link for search results' do
+  expect(subject).to have_search_results_map_view_link
+end
+
 #Change Location Shared Examples
 shared_examples_for 'should have Change Location link in search bar' do
 
@@ -52,8 +60,9 @@ shared_example 'should change the text saying what state they\'re currently in' 
 end
 
 shared_example 'should be on compare page' do
-  expect(subject).to eq compare_schools_path.chop
+  expect(current_path).to eq compare_schools_path.chop
 end
+
 
 #By Location examples
 shared_example 'should contain distance sort button' do

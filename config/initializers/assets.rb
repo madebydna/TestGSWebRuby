@@ -1,0 +1,1 @@
+Rails.application.config.assets.precompile += ['cm_athena_gs.js']

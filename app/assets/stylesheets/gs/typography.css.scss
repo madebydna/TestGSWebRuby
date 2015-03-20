@@ -271,4 +271,7 @@ body { top: 0px !important; }
   font-size:65px;color:#F1c403;
 }
 
-//@media ()
+// allows ie to resize images better
+img {
+  -ms-interpolation-mode: bicubic;
+}

@@ -4,6 +4,8 @@ class EspMembership < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   belongs_to :user, foreign_key: 'member_id'
+  has_many :osp_form_responses, :class_name => 'OspFormResponses'
+
 
   scope :active, -> { where(active: 1) }
 

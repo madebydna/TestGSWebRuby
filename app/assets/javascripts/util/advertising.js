@@ -53,6 +53,11 @@ if (gon.advertising_enabled) {
     }
   };
 
+  GS.ad.slotRenderedHandler = function(event) {
+    if (event.isEmpty) {
+      jQuery('.js-' + event.slot.getSlotId().getDomId() + '-wrapper').hide();
+    }
+  };
 
 // google code for gpt
   var googletag = googletag || {};
@@ -95,6 +100,8 @@ if (gon.advertising_enabled) {
         }
 
         GS.ad.setPageLevelTargeting();
+        googletag.pubads().collapseEmptyDivs();
+        googletag.pubads().addEventListener('slotRenderEnded', GS.ad.slotRenderedHandler);
         googletag.enableServices();
 
         $(dfp_slots).each(function () {
