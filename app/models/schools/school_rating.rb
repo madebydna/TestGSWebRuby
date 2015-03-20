@@ -186,7 +186,7 @@ class SchoolRating < ActiveRecord::Base
       status = 'h'
     elsif BannedIp.ip_banned?(ip) || who == 'student'
       status = 'u'
-    elsif AlertWord.search(review_text).has_really_bad_words? || UrlUtils.contains_url?(review_text)
+    elsif AlertWord.search(review_text).has_really_bad_words?
       status = 'd'
     elsif PropertyConfig.force_review_moderation?
       status = 'u'
@@ -226,15 +226,6 @@ class SchoolRating < ActiveRecord::Base
         reason << " Review is for GreatSchools Delaware school."
       end
     end
-
-    if UrlUtils.contains_url?(review_text)
-      if reason.nil?
-        reason = "Review contains a URL."
-      else
-        reason << " and contains a URL."
-      end
-    end
-
     if reason
       report = ReportedEntity.from_review(self, reason)
 

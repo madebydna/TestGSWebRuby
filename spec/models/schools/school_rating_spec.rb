@@ -96,7 +96,6 @@ describe SchoolRating do
   describe '#auto_moderate' do
     before do
       subject.school = school
-      allow(UrlUtils).to receive(:contains_url?).and_return(false)
     end
 
     it 'should not report a review with no bad language' do
@@ -141,20 +140,6 @@ describe SchoolRating do
       subject.auto_moderate
     end
 
-    it 'should report reviews that contain a URL' do
-      allow(UrlUtils).to receive(:contains_url?).and_return(true)
-      expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review contained warning words (alert_word_1,alert_word_2) and contains a URL.')
-      subject.auto_moderate
-    end
-
-    it 'should report reviews that contain a URL' do
-      allow(UrlUtils).to receive(:contains_url?).and_return(true)
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review contains a URL.')
-      subject.auto_moderate
-    end
-
     it 'should not report reviews for Delaware private schools' do
       school.state = 'DE'
       school.type = 'private'
@@ -186,7 +171,6 @@ describe SchoolRating do
     before do
       subject.school = school
       allow(AlertWord).to receive(:search).and_return(no_bad_language)
-      allow(UrlUtils).to receive(:contains_url?).and_return(false)
     end
 
     # There was a time when all reviews were automatically flagged for moderation
@@ -252,18 +236,6 @@ describe SchoolRating do
             allow(AlertWord).to receive(:search).and_return(really_bad_words)
             subject.calculate_and_set_status
             expect(subject).to be_disabled
-          end
-
-          it 'status should be set to disabled if review contains a URL' do
-            allow(UrlUtils).to receive(:contains_url?).and_return(true)
-            subject.calculate_and_set_status
-            expect(subject).to be_disabled
-          end
-
-          it 'status should be not be affected if it does not contain a URL' do
-            allow(UrlUtils).to receive(:contains_url?).and_return(false)
-            subject.calculate_and_set_status
-            expect(subject).to be_provisional_published
           end
         end
 
