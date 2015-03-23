@@ -1,5 +1,5 @@
 $(function() {
     if (gon.pagename == "Osp") {
-        GS.forms.elements.init();
+        GS.forms.elements.init(".js-ospQuestionsContainer");
     }
 });
