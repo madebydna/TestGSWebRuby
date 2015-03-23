@@ -17,27 +17,12 @@ class OspFormResponse < ActiveRecord::Base
 
 
   def  self.find_form_data_for_school_state(state,schoolId)
-    OspFormResponse.joins(:esp_membership).where('esp_membership.state' => state ,'esp_membership.school_id'=> schoolId)
+    OspFormResponse.joins(:esp_membership).where('esp_membership.state' => state ,'esp_membership.school_id'=> schoolId).order('osp_question_id').order('updated desc ')
   end
 
-  def self.created_time_from_osp_form(key,osp_form_data)
-    osp_form_created_time = nil
-    osp_form_data.each { |form_row |
-      parsed_response = JSON.parse(form_row.response)
-      key_name = parsed_response.keys.first
-      if key_name == key
-        values = parsed_response[key_name]
-        value =values[0]
-        if value.present?
-          osp_form_created_time = Time.parse(value['created'])
-        end
-      end
-    }
-    osp_form_created_time
-  end
-
-  def self.values_from_osp_form(key,osp_form_data)
+  def self.time_and_values_from_osp_form(key,osp_form_data)
     response_values = []
+    osp_form_created_time = nil
     osp_form_data.each { |form_row |
       parsed_response = JSON.parse(form_row.response)
       key_name = parsed_response.keys.first
@@ -45,28 +30,30 @@ class OspFormResponse < ActiveRecord::Base
         values = parsed_response[key_name]
         response_values = []
         values.each { |value|
-        response_values.push(value)
+        response_values.push(value['value'])
+        osp_form_created_time = Time.parse(value['created'])
         }
+        # Get the key value with the latest timestamp and then break the loop
+        break
       end
     }
-    response_values
-    # binding.pry
+    if osp_form_created_time && response_values
+    return osp_form_created_time,response_values
+    end
   end
 
   def self.values_for(key, osp_form_data, school_with_esp_data)
     school_cache_values = school_with_esp_data.values_for(key)
-    osp_form_values = values_from_osp_form(key, osp_form_data)
+    osp_form_values = time_and_values_from_osp_form(key, osp_form_data)
+    # By default school cache values are selected first
     values = school_cache_values
-    osp_from_data_for_key_time = created_time_from_osp_form(key, osp_form_data)
     if osp_form_values.present? && !school_cache_values.present?
-        values = osp_form_values
-
-    elsif !osp_form_values.present? && school_cache_values.present?
-      values = school_cache_values
-
+        values = osp_form_values[1]
+    elsif osp_form_values.present?  && school_cache_values.present?
+          if  osp_form_values[0] > school_with_esp_data.created_time_for(key)
+              values = osp_form_values[1]
+          end
     end
-
-    # binding.pry
     values
   end
 

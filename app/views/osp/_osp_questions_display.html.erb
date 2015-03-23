@@ -12,7 +12,7 @@
               <%= render partial: 'osp/osp_question_display', :locals => {
                       display_question_label: display_question.displayed_label,
                       display_text_and_value_map: display_question.displayed_answers,
-                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key),
+                      preexisting_esp_values:    @osp_form_data.values_for(display_question.question_response_key,@osp_form_data,@school_with_esp_data)      ,
                       response_key: display_question.question_response_key
               } %>
           <% end %>
@@ -23,7 +23,7 @@
               <%= render partial: 'osp/osp_question_display', :locals => {
                       display_question_label: display_question.displayed_label,
                       display_text_and_value_map: display_question.displayed_answers,
-                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key),
+                      preexisting_esp_values:  @osp_form_data.values_for(display_question.question_response_key,@osp_form_data,@school_with_esp_data),
                       response_key: display_question.question_response_key
               } %>
 

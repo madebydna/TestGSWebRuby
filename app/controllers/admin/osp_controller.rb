@@ -9,11 +9,6 @@ class Admin::OspController < ApplicationController
     @school = School.find_by_state_and_id(params[:state], params[:schoolId])
     @school_with_esp_data = decorate_school(@school)
     @osp_form_data = OspFormResponse.find_form_data_for_school_state(params[:state],params[:schoolId])
-    @osp_form_data.values_for("before_after_care",@osp_form_data,@school_with_esp_data)
-    # binding.pry;
-
-    key = "before_after_care"
-
     if current_user.provisional_or_approved_osp_user?(@school)
       render_osp_page
     else
@@ -26,7 +21,6 @@ class Admin::OspController < ApplicationController
     @school = School.find_by_state_and_id(params[:state], params[:schoolId])
     @school_with_esp_data = decorate_school(@school)
     questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
-
     questionKeyParams.each_pair do |key, values|
       should_data_be_saved =false
       response_values = []
