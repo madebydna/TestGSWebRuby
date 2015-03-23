@@ -29,11 +29,12 @@ module CachedProgramsMethods
 
 
   def created_time_for(key)
+    created_time = nil
     if programs[key].is_a? Hash
       value = programs[key].values[0]
-      created_time = Time.parse(value['created'])
-    else
-      nil
+      if value.present?
+          created_time = Time.parse(value['created'])
+      end
     end
   end
 
