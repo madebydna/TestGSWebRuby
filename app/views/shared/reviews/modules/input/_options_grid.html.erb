@@ -1,4 +1,4 @@
-      <% num_options = review_options.count.to_s
+      <% num_options = question_responses.count.to_s
          class_key ={
              "2" =>{
                      class0: "",
@@ -55,7 +55,7 @@
             <div class="shim-25"></div>
             <div class="shim-25 visible-lg visible-md visible-sm hidden-xs"></div>
         <% end %>
-      <% review_options.each_with_index do |option, index| %>
+      <% question_responses.each_with_index do |option, index| %>
           <% if class_key[num_options][:lastrowstart]
                if index == 0
                  klasses = class_key[num_options][:class1] + class_key[num_options][:class0]
