@@ -322,8 +322,8 @@ GS.forms.elements = (function() {
     var checkboxButtonValueDataAttr = "checkbox-button-value";
     var hiddenFieldSelector = ".js-hiddenField";
 
-    var setCheckboxButtonHandler = function() {
-        $("body").on("click", checkboxButtonSelector, function() {
+    var setCheckboxButtonHandler = function(listenerElementSelector) {
+        $(listenerElementSelector).on("click", checkboxButtonSelector, function() {
             var $self = $(this);
             var $hiddenField = $self.find(hiddenFieldSelector);
 
@@ -337,8 +337,8 @@ GS.forms.elements = (function() {
         })
     };
 
-    var init = function() {
-        setCheckboxButtonHandler()
+    var init = function(checkboxListener) {
+        setCheckboxButtonHandler(checkboxListener)
     };
 
     return {
