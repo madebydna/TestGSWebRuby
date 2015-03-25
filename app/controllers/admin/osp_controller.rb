@@ -20,38 +20,44 @@ class Admin::OspController < ApplicationController
   def submit
     @school = School.find_by_state_and_id(params[:state], params[:schoolId])
     @school_with_esp_data = decorate_school(@school)
+    #ToDo probably should be more strict about validation than this
+    #right now any param not in that list gets passed through.
     questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
-    questionKeyParams.each_pair do |key, values|
-      should_data_be_saved =false
-      response_values = []
-      values.each { |value|
-        if value.present?
-          should_data_be_saved = true
-          response_values.push(value)
-        end
-        }
-        if should_data_be_saved
-          save_osp_from_row_per_question(key, response_values)
-        end
 
+    questionKeyParams.each do |key, vals|
+      response_values = [*vals].select(&:present?).compact
+      save_osp_from_row_per_question(key, response_values) if response_values.present?
     end
+
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
 
   end
 
   def save_osp_from_row_per_question(key, response_values)
-    osp_form_data = OspFormResponse.new
-    osp_form_data.osp_question_id = OspQuestion.find_by_question_key(key).id
+    osp_question_id   = OspQuestion.find_by_question_key(key).id
     esp_membership_id = current_user.esp_membership_for_school(@school).id
-    osp_form_data.esp_membership_id = esp_membership_id
-    response_json_rows = []
-    response_values.each { |response_value|
-      response_json_rows.push({"entity_state" => params[:state], "entity_id" => @school.id, "value" => response_value, "member_id" => esp_membership_id, "created" => Time.now , "esp_source" => "osp_form"})
+    response_blob     = make_response_blob(key, esp_membership_id, response_values)
 
-    }
-    response_set = {key => response_json_rows}
-    osp_form_data.response = response_set.to_json
-    osp_form_data.save!
+    OspFormResponse.create(
+      osp_question_id: osp_question_id,
+      esp_membership_id: esp_membership_id,
+      response: response_blob
+    ).errors.full_messages
+  end
+
+  def make_response_blob(key, esp_membership_id, response_values)
+    rvals = response_values.map do |response_value|
+      {
+       entity_state: params[:state],
+          entity_id: @school.id,
+              value: response_value,
+          member_id: esp_membership_id,
+            created: Time.now,
+         esp_source: "osp_form"
+      }.stringify_keys!
+    end
+
+    {key => rvals}.to_json
   end
 
   def decorate_school(school)

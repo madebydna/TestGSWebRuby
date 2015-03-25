@@ -5,7 +5,7 @@ class OspFormResponse < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'osp_form_responses'
 
-  attr_accessible :esp_membership_id, :osp_question_id,:responses, :updated
+  attr_accessible :esp_membership_id, :osp_question_id, :response, :updated
 
   belongs_to :esp_membership, foreign_key: 'esp_membership_id'
 
