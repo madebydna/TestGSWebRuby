@@ -19,6 +19,6 @@
   <% #assumes css handles active/hover/activehover state %>
   <span class="<%= icon_classes %>"></span>
   <% #js will handle the assigning/unassigning of key/values of this input element %>
-  <input type="hidden" class="js-hiddenField">
+  <input type="hidden" class="js-hiddenField" <%= "name=#{key} value=#{value}" if active %>>
   <%= text %>
 </div>
