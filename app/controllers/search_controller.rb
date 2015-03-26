@@ -342,7 +342,7 @@ class SearchController < ApplicationController
       filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
     end
 
-    if should_apply_filter?(:ptq_rating)
+    if should_apply_filter?(:ptq_rating) || params_hash.include?('ptq_rating')
       path_to_quality_rating_params = params_hash['ptq_rating']
       path_to_quality_rating_params = [path_to_quality_rating_params] unless path_to_quality_rating_params.instance_of?(Array)
       all_ratings = %w[level_1 level_2 level_3 level_4]
