@@ -342,6 +342,16 @@ class SearchController < ApplicationController
       filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
     end
 
+    if should_apply_filter?(:ptq_rating)
+      path_to_quality_rating_params = params_hash['ptq_rating']
+      path_to_quality_rating_params = [path_to_quality_rating_params] unless path_to_quality_rating_params.instance_of?(Array)
+      all_ratings = %w[level_1 level_2 level_3 level_4]
+      path_to_quality_ratings = path_to_quality_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
+      path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
+
+      filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty? || path_to_quality_ratings.length == 4
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']

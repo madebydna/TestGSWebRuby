@@ -75,6 +75,7 @@ describe SearchController do
           allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
           allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
           allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
+          allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
           filters = controller.send(:parse_filters, params_hash)
           expect(filters).to eq({:overall_gs_rating=>[8, 9, 10]})
         end
@@ -90,6 +91,18 @@ describe SearchController do
         filters = controller.send(:parse_filters, params_hash)
         expect(filters).to have_key(:overall_gs_rating)
         (1..10).each {|rating| expect(filters[:overall_gs_rating]).to include(rating)}
+
+    context 'When there is path to quality rating in filter params' do
+      let(:params_hash) { {'ptq_rating' => ['level_2','level_3']} }
+
+      it "should set the right filter for ratings" do
+        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to eq({:ptq_rating=>['Level 2','Level 3']})
       end
     end
   end
