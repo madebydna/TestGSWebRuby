@@ -22,55 +22,55 @@ class Admin::OspController < ApplicationController
     questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
 
     #If performance becomes an issue, look into making this a bulk single insert.
-    questionKeyParams.each do |key, vals|
-      response_values = [*vals].select(&:present?).compact
-      save_response(key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
+    questionKeyParams.each do |question_key, answers|
+      response_values = [*answers].select(&:present?).compact
+      save_response!(question_key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
     end
 
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
 
   end
 
-  def save_response(key, esp_membership_id, response_values)
-    osp_question_id   = OspQuestion.find_by_question_key(key).id
-    response_blob = make_response_blob(key, esp_membership_id, response_values)
+  def save_response!(question_key, esp_membership_id, response_values)
+    osp_question_id   = OspQuestion.find_by_question_key(question_key).id
+    response_blob = make_response_blob(question_key, esp_membership_id, response_values)
 
     error = create_osp_form_response!(osp_question_id, esp_membership_id, response_blob)
     Rails.logger.error "Was not able to save osp response to osp_form_response table. error: \n #{error}" if error.present?
     #think about better error handling, handling 500's, and error messaging.
 
-    if @is_approved_user
+    if @is_approved_user && !error.present?
       error = create_update_queue_row!(response_blob)
       Rails.logger.error "Was not able to save osp response to update_queue table. error: \n #{error}" if error.present?
     end
   end
 
-  def make_response_blob(key, esp_membership_id, response_values)
+  def make_response_blob(question_key, esp_membership_id, response_values)
     rvals = response_values.map do |response_value|
       {
-       entity_state: params[:state],
-          entity_id: @school.id,
-              value: response_value,
-          member_id: esp_membership_id,
-            created: Time.now,
-         esp_source: "osp_form"
+        entity_state: params[:state],
+           entity_id: @school.id,
+               value: response_value,
+           member_id: esp_membership_id,
+             created: Time.now,
+          esp_source: "osp_form"
       }.stringify_keys!
     end
 
-    {key => rvals}.to_json
+    {question_key => rvals}.to_json
   end
 
   def create_osp_form_response!(osp_question_id, esp_membership_id, response)
     OspFormResponse.create(
-          osp_question_id: osp_question_id,
-        esp_membership_id: esp_membership_id,
-                 response: response
+        osp_question_id: osp_question_id,
+      esp_membership_id: esp_membership_id,
+               response: response
     ).errors.full_messages
   end
 
   def create_update_queue_row!(response_blob)
     UpdateQueue.create(
-           source: :osp,
+           source: :osp_form,
          priority: 2,
       update_blob: response_blob,
     ).errors.full_messages

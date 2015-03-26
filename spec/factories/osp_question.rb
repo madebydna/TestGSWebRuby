@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :question do
+  factory :osp_question do
     sequence(:id) { |n| n }
     sequence(:esp_response_key) { |n| "test+#{n}Key" }
     sequence(:question_label) { |n| "test+#{n} Label" }
