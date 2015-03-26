@@ -27,6 +27,7 @@ class ReviewQuestion < ActiveRecord::Base
 
   def display_hash
     {
+        id: self.id,
     question: self.question,
      layout: self.layout,
      responses: self.response_array

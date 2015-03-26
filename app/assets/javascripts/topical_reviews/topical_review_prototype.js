@@ -150,21 +150,67 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
 
     var navigateNextTopic = function (reviewContainer) {
         var reviewContainers = $('.js-topical-review-container');
+        if (isMultipleQuestions()) {
+            var nextContainer = getNextReviewContainer(reviewContainers, reviewContainer);
+            removeOrHideQuestions(reviewContainer);
+            $(nextContainer).show();
+        }
+        else {
+            GS.topicalReview.reviewQuestion.hideQuestionNavigation();
+            removeOrHideQuestions(reviewContainer);
+        }
+    }
+
+    var navigatePreviousTopic = function (reviewContainer) {
+        var reviewContainers = $('.js-topical-review-container');
+        if (isMultipleQuestions()) {
+            var previousContainer = getPreviousReviewContainer(reviewContainers, reviewContainer);
+            removeOrHideQuestions(reviewContainer);
+            $(previousContainer).show();
+        } else {
+            GS.topicalReview.reviewQuestion.hideQuestionNavigation();
+            removeOrHideQuestions(reviewContainer);
+        }
+    }
+
+    var removeOrHideQuestions = function(reviewContainer) {
+        if (reviewContainer.hasClass('js-reviewComplete')) {
+            $(reviewContainer).remove();
+            oneQuestionCheck();
+            noQuestionsCheck();
+        } else {
+            reviewContainer.hide();
+            oneQuestionCheck();
+        }
+    }
+
+    var noQuestionsCheck = function () {
+        if (isNoQuestions()) {
+            hideQuestionNavigation();
+            showQuestionsComplete();
+        }
+    }
+
+    var oneQuestionCheck = function () {
+        if ($('.js-topical-review-container').length === 1) {
+            hideQuestionNavigation();
+        }
+    }
+
+    var getNextReviewContainer = function (reviewContainers, reviewContainer) {
         var nextContainerIndex;
-        reviewContainers.each(function(index, container){
+        reviewContainers.each(function (index, container) {
             if ($(container).is(reviewContainer)) {
-                nextContainerIndex = index +1;
+                nextContainerIndex = index + 1;
             }
         })
         if (nextContainerIndex >= reviewContainers.length) {
             nextContainerIndex = 0;
         }
-        reviewContainer.hide();
-        $(reviewContainers[nextContainerIndex]).show();
+        return $(reviewContainers[nextContainerIndex]);
     }
 
-    var navigatePreviousTopic = function (reviewContainer) {
-        var reviewContainers = $('.js-topical-review-container');
+    var getPreviousReviewContainer = function (reviewContainers, reviewContainer) {
         var previousContainerIndex;
         reviewContainers.each(function (index, container) {
             if ($(container).is(reviewContainer)) {
@@ -172,11 +218,29 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
             }
         })
         if (previousContainerIndex < 0) {
-           previousContainerIndex = reviewContainers.length - 1;
+            previousContainerIndex = reviewContainers.length - 1;
         }
-        reviewContainer.hide();
-        $(reviewContainers[previousContainerIndex]).show();
+        return $(reviewContainers[previousContainerIndex]);
     }
+
+    var hideQuestionNavigation = function() {
+        var questionNavigation = $('.js-topicalQuestionNavigation');
+        $(questionNavigation).hide();
+    }
+
+    var isMultipleQuestions = function() {
+       return $('.js-topical-review-container').length > 1;
+    }
+
+    var isNoQuestions = function() {
+        return $('.js-topical-review-container').length === 0;
+    }
+
+    var showQuestionsComplete= function() {
+        $('.js-QuestionsComplete').show();
+    }
+
+
 
     return {
         isNoCheckboxValues: isNoCheckboxValues,
@@ -190,7 +254,11 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         textBoxCharacters: textBoxCharacters,
         navigateNextTopic: navigateNextTopic,
         navigatePreviousTopic: navigatePreviousTopic,
-        checkForSubmitError: checkForSubmitError
+        checkForSubmitError: checkForSubmitError,
+        isMultipleQuestions: isMultipleQuestions,
+        hideQuestionNavigation: hideQuestionNavigation,
+        isNoQuestions: isNoQuestions,
+        showQuestionsComplete: showQuestionsComplete
     };
 })();
 
@@ -224,10 +292,6 @@ $(function() {
 
     $('.js-topical-review-container').first().show();
 
-    $('.js-review-question-submit').on('click', function (){
-        var reviewContainer = $(this).parents('.js-topical-review-container');
-        GS.topicalReview.reviewQuestion.checkForSubmitError(reviewContainer);
-    })
 
     $('.js-previous-topic').on('click', function(e){
         e.preventDefault();
@@ -242,6 +306,39 @@ $(function() {
         GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
     })
 
+    $('.js-gs-checkbox-topic').on('click',function(){
+        var self=$(this);
+        var checkbox = self.children(".js-icon");
+        var hidden_field = self.siblings(".js-gs-checkbox-value-topical");
+        var gs_checkBox= self.data('gs-checkbox-value');
+        var gs_checkBoxCategory= self.data('gs-checkbox-name');
+        if (hidden_field.length === 0) {
+            $(this).before($(this).data('fields'));
+            checkbox.removeClass('i-grey-unchecked-box').addClass('i-16-blue-check-box');
+            hidden_field.attr("value", gs_checkBox).attr("name", gs_checkBoxCategory);
+        } else {
+            $(hidden_field).remove();
+            checkbox.removeClass('i-16-blue-check-box').addClass('i-grey-unchecked-box');
+            hidden_field.removeAttr("value").removeAttr("name");
+        }
+    });
+
+    $(document).ready(function() {
+        if (!GS.topicalReview.reviewQuestion.isMultipleQuestions()) {
+            GS.topicalReview.reviewQuestion.hideQuestionNavigation();
+        }
+        if (GS.topicalReview.reviewQuestion.isNoQuestions()) {
+            GS.topicalReview.reviewQuestion.showQuestionsComplete();
+        }
+    });
+
+    $('.new_review').on('ajax:success', function(event, xhr, status, error) {
+        var reviewContainer = $(this).parents('.js-topical-review-container');
+        $(reviewContainer).addClass('js-reviewComplete');
+        $(reviewContainer).hide();
+        GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
+    }).on('ajax:error', function(event, xhr, status, error){
+    })
     GS.topicalReview.starRating.applyStarRating('.js-topicalReviewStars', '#js-topicalOverallRating')
 });
 

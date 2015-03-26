@@ -1,14 +1,3 @@
-<div>
-  <div>
-    <label class="tac js-gs-checkbox-search js-gs-checkbox-topical font-size-small"
-           data-gs-checkbox-value="<%= option %>"
-           data-gs-checkbox-name="<%= option %>[]"
-           style="width:100%;">
-      <div class="vam iconx16 js-icon i-grey-unchecked-box"></div>
-    </label>
-    <input type="hidden" class="js-gs-checkbox-value js-gs-checkbox-topical ">
-  </div>
-  <div>
-    <%= option %>
-  </div>
-</div>
+<fieldset class="js-gs-checkbox-value-topical">
+    <%=  f.hidden_field(:answer_value, {value: option})%>
+</fieldset>

@@ -18,6 +18,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/find/parentReview', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
+  resources :reviews, path: '/gsr/reviews'
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
@@ -160,11 +161,11 @@ LocalizedProfiles::Application.routes.draw do
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
-  post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/
-  }
+  # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
+  #     state: States.any_state_name_regex,
+  #     schoolId: /\d+/,
+  #     school_name: /.+/
+  # }
 
   get '/gsr/:state/:city/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
     district = request.params[:district]

@@ -1,11 +1,15 @@
 <hr/>
 <div class="row ptl mtl">
-  <div class="col-xs-12 pbl">
+  <div class="col-xs-12 pbl js-topicalReviewQuestionsConatiner">
+    <div class="js-QuestionsComplete dn tac bg-brand-primary limit-width-1200" style="min-height: 280px;">
+      <h1>You have Completed All the Questions</h1>
+    </div>
     <% @school.topical_review_question_hash.each do |topic_name, questions| %>
         <% questions.each do |review_question| %>
             <%= render "shared/reviews/modules/topical_review_#{review_question[:layout]}_container",
                        title: review_question[:question],
-                       question_responses: review_question[:responses]
+                       question_responses: review_question[:responses],
+                       review_question_id: review_question[:id]
             %>
         <% end %>
     <% end %>
