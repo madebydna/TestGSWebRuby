@@ -28,9 +28,10 @@ $(function() {
   var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
   $.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
-  $.getScript('//connect.facebook.net/en_US/all.js', function(){
+  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
     FB.init({
       appId: '178930405559082',
+      version    : 'v2.2',
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
