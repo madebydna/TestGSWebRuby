@@ -241,9 +241,7 @@ class User < ActiveRecord::Base
   end
 
   def esp_membership_for_school(school = nil)
-    memberships = self.esp_memberships
-    memberships = memberships.for_school(school) if school
-    memberships.presence.first
+    school.present? ? esp_memberships.for_school(school).first : nil
   end
 
   def is_esp_superuser?
