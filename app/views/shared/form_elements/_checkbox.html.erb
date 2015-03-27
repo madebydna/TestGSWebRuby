@@ -1,0 +1,12 @@
+<% button_classes ||= "btn-toggle" #optional %>
+<% button_classes << ' btn btn-checkbox' #add default classes%>
+<% data_attr ||= '' #optional %>
+<% icon_classes ||= 'vat iconx16 i-16-white-check' #optionl. %>
+<% active ||= false #optional %>
+
+<div class="<%= button_classes %>  <%= 'active' if active %>"
+  data-toggle="button"
+  <%= data_attr if data_attr.present? %>
+  >
+  <span class="<%= icon_classes %>"></span>
+</div>

@@ -4,10 +4,14 @@
 <% #display_question_label       ie) 'Do you have before and/or after care on site?' %>
 <% #preexisting_esp_values       ie) ['before', 'after'] #pre-existing value for response key %>
 
-<div class="clearfix row">
+<div class="row js-ospQuestionAndAnswers">
   <div class="col-xs-12">
     <h3 class="mbs">
       <%= display_question_label %>
+      <span class="mll mbs">
+        <%= render partial: 'shared/form_elements/checkbox', locals: {button_classes: 'btn-toggle js-disableTriggerElement', data_attr: "data-target-parent=.js-ospQuestionAndAnswers"} %>
+      </span>
+      <span class="font-size-small">None</span>
     </h3>
   </div>
 
@@ -15,7 +19,7 @@
     <% display_text_and_value_map.each_pair do |text, value| %>
       <% [*value].each do |val| %>
         <% button_active = preexisting_esp_values.include?(val) ? true : nil %>
-        <%= render partial: 'shared/checkbox_button', locals: {key: "#{response_key}[]", text: text, value: val, active: button_active} %>
+        <%= render partial: 'shared/form_elements/checkbox_with_hidden_input', locals: {key: "#{response_key}[]", text: text, value: val, active: button_active} %>
       <% end %>
     <% end %>
   </div>

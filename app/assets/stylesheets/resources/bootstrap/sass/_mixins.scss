@@ -571,6 +571,11 @@
   border-color: $border;
   border-bottom-width: 3px;
 
+  &.btn-checkbox {
+    border-bottom-width: 1px;
+    border-color: grey;
+  }
+
   &:hover
   {
     color: $hover_border;
@@ -592,18 +597,6 @@
   .open & { &.dropdown-toggle {
     background-image: none;
   } }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      background-color: $background;
-      border-color: $border;
-    }
-  }
 }
 
 // Button sizes

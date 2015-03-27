@@ -1,5 +1,6 @@
 $(function() {
     if (gon.pagename == "Osp") {
-        GS.forms.elements.init(".js-ospQuestionsContainer");
+        GS.forms.elements.setCheckboxButtonHandler(".js-ospQuestionsContainer");
+        GS.forms.elements.setEnableDisableElementsAndFieldsetsHandler(".js-ospQuestionsContainer");
     }
 });
