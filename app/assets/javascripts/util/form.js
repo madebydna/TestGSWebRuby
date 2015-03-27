@@ -320,12 +320,17 @@ GS.forms.elements = (function() {
     var checkboxButtonSelector = ".js-checkboxButton";
     var checkboxButtonKeyDataAttr = "checkbox-button-key";
     var checkboxButtonValueDataAttr = "checkbox-button-value";
-    var hiddenFieldSelector = ".js-hiddenField";
+    var hiddenInputSelector = "input";
+    var hiddenFieldsetSelector = "fieldset";
+    var disableElementTriggerSelector = ".js-disableTriggerElement";
+    var disableElementTargetSelector = ".js-disableTarget";
+    var disableElementParentDataAttr = "target-parent";
+    var click = "click";
 
-    var setCheckboxButtonHandler = function(listenerElementSelector) {
-        $(listenerElementSelector).on("click", checkboxButtonSelector, function() {
+    var setCheckboxButtonHandler = function(parentListenerSelector) {
+        $(parentListenerSelector).on(click, checkboxButtonSelector, function() {
             var $self = $(this);
-            var $hiddenField = $self.find(hiddenFieldSelector);
+            var $hiddenField = $self.find(hiddenInputSelector);
 
             if ($hiddenField.val() == '') {
                 var key = $self.data(checkboxButtonKeyDataAttr);
@@ -337,12 +342,46 @@ GS.forms.elements = (function() {
         })
     };
 
-    var init = function(checkboxListener) {
-        setCheckboxButtonHandler(checkboxListener)
+    var disableElementAndChildFieldsets = function($element) {
+        if (typeof $element == 'string') $element = $($element);
+
+        $element.each(function() {
+            var $self = $(this);
+            $self.attr('disabled', true);
+            $self.find(hiddenFieldsetSelector).attr('disabled', true)
+        });
+    };
+
+    var enableElementAndChildFieldsets = function($element) {
+        if (typeof $element == 'string') $element = $($element);
+
+        $element.each(function() {
+            var $self = $(this);
+            $self.attr('disabled', false);
+            $self.find(hiddenFieldsetSelector).attr('disabled', false)
+        });
+    };
+
+    var setEnableDisableElementsAndFieldsetsHandler = function(parentListenerSelector) {
+        $(parentListenerSelector).on(click, disableElementTriggerSelector, function() {
+            var $trigger = $(this);
+            var target_parent = $trigger.data(disableElementParentDataAttr);
+            if (typeof target_parent === 'string') {
+                var $parent = $trigger.closest(target_parent);
+                var $target = $parent.find(disableElementTargetSelector);
+                $trigger.hasClass('active') == false ? disableElementAndChildFieldsets($target) : enableElementAndChildFieldsets($target);
+                //The logic above should be if active == true.
+                //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
+                //I don't like this solution, but am open to suggestions
+            }
+        });
     };
 
     return {
-        init: init
+        setCheckboxButtonHandler: setCheckboxButtonHandler,
+        setEnableDisableElementsAndFieldsetsHandler: setEnableDisableElementsAndFieldsetsHandler,
+        disableElementAndChildFieldsets: disableElementAndChildFieldsets,
+        enableElementAndChildFieldsets: enableElementAndChildFieldsets
     }
 
 })();
