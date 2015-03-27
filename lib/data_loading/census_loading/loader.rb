@@ -4,7 +4,6 @@ class CensusLoading::Loader < CensusLoading::Base
   DATA_TYPE = :census
 
   # Best ordering: first create data sets, then gs_schooldb.census_* rows, then value row
-  # TODO break out data set code into module
 
   def load!
 
@@ -15,8 +14,10 @@ class CensusLoading::Loader < CensusLoading::Base
 
       census_update = CensusLoading::Update.new(census_data_type, update)
 
-      # Raises school not found exception if one doesn't exist with that ID
-      school = School.on_db(census_update.shard).find(census_update.entity_id)
+      # Raises entity not found exception if one doesn't exist with that ID
+      unless census_update.entity_type == :state
+        entity = census_update.entity_type.constantize.on_db(census_update.shard).find(census_update.entity_id)
+      end
 
       begin
         if census_update.action == ACTION_DISABLE
@@ -27,28 +28,33 @@ class CensusLoading::Loader < CensusLoading::Base
         elsif census_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          insert_into!(census_update, school)
+          insert_into!(census_update, entity)
         end
       rescue Exception => e
         raise e.message
       ensure
         unless census_update.action == ACTION_NO_CACHE_BUILD
-          Cacher.create_caches_for_data_type(school, DATA_TYPE)
+          Cacher.create_caches_for_data_type(entity, DATA_TYPE) if entity.is_a?(School)
         end
       end
     end
   end
 
-  def insert_into!(census_update, school)
+  def insert_into!(census_update, entity)
 
     data_set = CensusDataSet.find_or_create_and_activate(census_update.shard, census_update.data_set_attributes)
     # validate_census_data_set!(data_set, census_update)
 
-    configure_census_description!(census_update.census_description_attributes, school.type, data_set.id)
+    school_type = entity.respond_to?(:type) ? entity.type : 'public'
+    configure_census_description!(census_update.census_description_attributes, school_type, data_set.id)
 
+    value_row_attributes = { data_set_id: data_set.id }
+    unless census_update.entity_type == :state
+      value_row_attributes.merge!({ census_update.entity_id_type => census_update.entity_id })
+    end
     value_row = census_update.value_class
       .on_db(census_update.shard)
-      .where(census_update.entity_id_type => census_update.entity_id, data_set_id: data_set.id)
+      .where(value_row_attributes)
       .first_or_initialize
 
     # validate_census_value!(value_row, data_set, census_update)
