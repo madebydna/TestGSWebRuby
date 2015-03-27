@@ -7,7 +7,7 @@
 <% text ||= key.to_s.gsub(/\[|\]/, '') #optional. defaults to key and strips [] %>
 <% button_classes ||= "btn btn-toggle mvs mrm pull-left" #optional %>
 <% button_classes << ' js-checkboxButton' #add default classes%>
-<% icon_classes ||= "vat iconx16 i-16-check-bigger-off mrs" #optional %>
+<% icon_classes ||= '' #optionl. ex "vat iconx16 i-16-check-bigger-off mrs" %>
 <% active ||= false #optional %>
 
 <div class="<%= button_classes %> <%= 'active' if active %>"
