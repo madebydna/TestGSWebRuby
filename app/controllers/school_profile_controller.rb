@@ -70,7 +70,7 @@ class SchoolProfileController < SchoolController
         canonical_path,
         true,
         request.query_parameters
-      )
+      ), status: :moved_permanently
     end
   end
 
