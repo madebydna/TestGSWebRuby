@@ -20,7 +20,15 @@ class Loader
     datatype.to_s.downcase == 'osp'
   end
 
-  def self.determine_loading_class(data_type)
+  def self.determine_loading_class(source ,data_type)
+    # The esp loader class write happens only from Form UI now
+    if  source == 'osp_form'
+        if census_data_type?(data_type)
+          CensusLoading::Loader
+        else
+          EspResponseLoading::Loader
+        end
+    elsif source !='osp_form'
     if census_data_type?(data_type)
       CensusLoading::Loader
     elsif data_type == 'newsletter'
@@ -36,5 +44,6 @@ class Loader
     else
       EspResponseLoading::Loader
     end
+      end
   end
 end
