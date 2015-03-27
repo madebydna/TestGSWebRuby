@@ -37,6 +37,9 @@ class SearchController < ApplicationController
     elsif params.include?(:city)
       self.city_browse
     elsif params.include?(:q)
+      if params_hash['q'].blank? && @state.present?
+        redirect_to state_url(:state => @state[:long]) and return
+      end
       self.by_name
     else
       render 'error/page_not_found', layout: 'error', status: 404
@@ -124,8 +127,8 @@ class SearchController < ApplicationController
       search_options.merge!({state: @state[:short]}) if @state
       @search_term=@query_string
     end
-
     @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
+
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     setup_search_gon_variables
@@ -231,6 +234,7 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestSchool.new.search(count: 20, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
   end
 
@@ -240,6 +244,7 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestCity.new.search(count: 10, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
   end
 
@@ -249,7 +254,13 @@ class SearchController < ApplicationController
     state_abbr = @state[:short] if @state && @state[:short].present?
     response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
 
+    set_cache_headers_for_suggest
     render json:response_objects
+  end
+
+  def set_cache_headers_for_suggest
+    cache_time = ENV_GLOBAL['search_suggest_cache_time'] || 0
+    expires_in cache_time, public: true
   end
 
   protected
@@ -273,7 +284,7 @@ class SearchController < ApplicationController
   end
 
   def hide_fit?
-    @total_results > MAX_RESULTS_FOR_FIT
+    @total_results.present? ? @total_results > MAX_RESULTS_FOR_FIT : true
   end
 
   def calculate_map_range(solr_offset)
@@ -329,6 +340,16 @@ class SearchController < ApplicationController
       value_map = {'above_average' => [8,9,10],'average' => [4,5,6,7],'below_average' => [1,2,3] }
       gs_ratings = gs_rating_params.select {|param| value_map.has_key?(param)}.map {|param| value_map[param]}.flatten
       filters[:overall_gs_rating] = gs_ratings unless gs_ratings.empty?
+    end
+
+    if should_apply_filter?(:ptq_rating) || params_hash.include?('ptq_rating')
+      path_to_quality_rating_params = params_hash['ptq_rating']
+      path_to_quality_rating_params = [path_to_quality_rating_params] unless path_to_quality_rating_params.instance_of?(Array)
+      all_ratings = %w[level_1 level_2 level_3 level_4]
+      path_to_quality_ratings = path_to_quality_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
+      path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
+
+      filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
     end
 
     if should_apply_filter?(:cgr)

@@ -61,7 +61,7 @@ class CensusLoading::Update
     if entity_state.blank? || entity_type.blank?
       raise 'Every census update must have an entity_state and entity_type specified'
     end
-    if entity_id.blank? && entity_type != :state
+    if entity_id.blank? && entity_type.to_sym != :state
       raise 'Non-state level updates must have an entity_id specified'
     end
     if value.nil?

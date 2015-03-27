@@ -1,0 +1,7 @@
+<% sprops = controller.gon.all_variables.try(:fetch, 'omniture_sprops', {}) %>
+<% school_level = sprops['schoolLevel'] %>
+<% school_type = sprops['schoolType'] %>
+<% hier1 = controller.gon.all_variables.try(:fetch, 'omniture_hier1', {}) %>
+<% query_string = "query=gslev=#{school_level}&gstype=#{school_type}&gshier1=#{hier1}" %>
+
+<%= javascript_include_tag("cm_athena_gs.js?#{query_string}", id: 'cm_athena') %>

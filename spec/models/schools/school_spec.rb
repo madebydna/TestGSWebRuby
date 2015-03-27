@@ -85,4 +85,20 @@ describe School do
 
   end
 
+  it { is_expected.to respond_to(:demo_school?) }
+  describe '#demo_school?' do
+    context 'when notes containts string "GREATSCHOOLS_DEMO_SCHOOL_PROFILE"' do
+      before { subject.notes = 'foo GREATSCHOOLS_DEMO_SCHOOL_PROFILE bar' }
+      it { is_expected.to be_demo_school }
+    end
+    context 'when notes is nil' do
+      before { subject.notes = nil }
+      it { is_expected.to_not be_demo_school }
+    end
+    context 'when notes is some miscellaneous text' do
+      before { subject.notes = 'sljf lsdkjf lsdj fljskf' }
+      it { is_expected.to_not be_demo_school }
+    end
+  end
+
 end

@@ -5,8 +5,8 @@ GS.googleAnalytics.tracking = (function() {
   var gaClickSelector = '.js-gaClick';
   var gaLoadLabel = 'gaLoadLabel';
   var gaClickLabel = "gaClickLabel";
-  var gaLoadValueNumber = 'gaLoadValue';
-  var gaClickValueNumber = 'gaClickValue';
+  var gaLoadValue = 'gaLoadValue';
+  var gaClickValue = 'gaClickValue';
   var clickEventType = "click";
   var pageName = '';
 
@@ -24,12 +24,12 @@ GS.googleAnalytics.tracking = (function() {
   // label = unique description of action - video name, click identifier, name of button
   // value = this is always a number
   var send = function(category, action, label, value){
-    ga('send', category, action, label, value);
+    ga('send', 'event', category, action, label, value);
   };
 
   /*
   *  need to set up values for category, action and label -- value is a number
-  *  ga('send', category, action, label, value);
+  *  ga('send', 'event', category, action, label, value);
   *
   * */
 
@@ -45,15 +45,15 @@ GS.googleAnalytics.tracking = (function() {
     });
   };
 
-  var sendClickEvent = function(obj){
-    var label = getLabel(obj, gaClickLabel);
-    var value = getValue(obj, gaClickValueNumber);
+  var sendClickEvent = function($obj){
+    var label = getLabel($obj, gaClickLabel);
+    var value = getValue($obj, gaClickValue);
     send( getPageName(), clickEventType, label, value);
   };
 
-  var sendLoadEvent = function(obj){
-    var label = getLabel(obj, gaLoadLabel);
-    var value = getValue(obj, gaLoadValueNumber);
+  var sendLoadEvent = function($obj){
+    var label = getLabel($obj, gaLoadLabel);
+    var value = getValue($obj, gaLoadValue);
     send( getPageName(), 'load', label, value);
   };
 
@@ -61,16 +61,32 @@ GS.googleAnalytics.tracking = (function() {
     return pageName;
   };
 
-  var getLabel = function(obj, labelName){
-    var label = obj.data(labelName);
+  var getLoadLabelName = function(){
+    return gaLoadLabel;
+  };
+
+  var getClickLabelName = function(){
+    return gaClickLabel;
+  };
+
+  var getLoadValueName = function(){
+    return gaLoadValue;
+  };
+
+  var getClickValueName = function(){
+    return gaClickValue;
+  };
+
+  var getLabel = function($obj, labelName){
+    var label = $obj.data(labelName);
     if(typeof label === 'undefined'){
       return 'label not defined';  // default
     }
     return label;
   };
 
-  var getValue = function(obj, valueName){
-    var value = obj.data(valueName);
+  var getValue = function($obj, valueName){
+    var value = $obj.data(valueName);
     if(typeof value === 'undefined'){
       return -1;  // default
     }

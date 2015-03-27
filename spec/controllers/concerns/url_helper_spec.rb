@@ -140,18 +140,19 @@ describe UrlHelper do
 
   describe '#gs_legacy_url_encode' do
     it 'should replace hyphens with underscores' do
-      expect(url_helper.send :gs_legacy_url_encode, '-schoolname').to eq '_schoolname'
-      expect(url_helper.send :gs_legacy_url_encode, '-schoolname-').to eq '_schoolname_'
+      expect(url_helper.send :gs_legacy_url_encode, '-paramname').to eq '_paramname'
+      expect(url_helper.send :gs_legacy_url_encode, '-paramname-').to eq '_paramname_'
     end
 
     it 'should replace spaces with hyphens' do
-      expect(url_helper.send :gs_legacy_url_encode, ' schoolname').to eq '-schoolname'
-      expect(url_helper.send :gs_legacy_url_encode, ' school name ').to eq '-school-name-'
+      expect(url_helper.send :gs_legacy_url_encode, ' paramname').to eq '-paramname'
+      expect(url_helper.send :gs_legacy_url_encode, ' param name ').to eq '-param-name-'
     end
 
-    it 'should replace periods' do
-      expect(url_helper.send :gs_legacy_url_encode, '.schoolname').to eq 'schoolname'
-      expect(url_helper.send :gs_legacy_url_encode, '.school.name').to eq 'schoolname'
+    it 'should not replace periods' do
+      # PT-1347 We removed the period substitution to handle city and district names with periods in them.
+      expect(url_helper.send :gs_legacy_url_encode, '.paramname').to eq '.paramname'
+      expect(url_helper.send :gs_legacy_url_encode, '.param.name').to eq '.param.name'
     end
 
     it 'should return nil if provided nil' do

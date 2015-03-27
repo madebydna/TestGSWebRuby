@@ -91,7 +91,7 @@ GS.reviewsAd.getAdSlotWidthStrMobile = function(index){
 };
 
 GS.reviewsAd.reviewDiv = function(id, visible_sizes_str, width) {
-  return '<div class="gs_ad_slot_reviews ma '+visible_sizes_str+'" id="'+ id +'" style="width:'+width+'"></div>';
+  return '<div class="gs_ad_slot_reviews '+visible_sizes_str+'"><div class="ma" id="'+ id +'" style="width:'+width+'"></div></div>';
 };
 
 GS.reviewsAd.reviewAdSlotName = function(num){

@@ -19,7 +19,8 @@ class SigninController < ApplicationController
                   robots: 'noindex'
 
     @active_tab = params[:tab] || 'login'
-    gon.pagename = 'signin/new'
+    @pagename = 'signin/new'
+    gon.pagename = @pagename
 
     gon.omniture_pagename = 'GS:Admin:Login'
     gon.omniture_hier1 = 'Account,LogIn'
@@ -31,7 +32,8 @@ class SigninController < ApplicationController
                   robots: 'noindex'
 
     @active_tab = 'join'
-    gon.pagename = 'signin/new' # If this is changed, make sure JS is handled, i.e. signin_new-init.js
+    @pagename = 'signin/new'
+    gon.pagename = @pagename  # If this is changed, make sure JS is handled, i.e. signin_new-init.js
 
     gon.omniture_pagename = 'GS:Admin:CreateAccount'
     gon.omniture_hier1 = 'Account,SignUp'

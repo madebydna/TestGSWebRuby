@@ -34,10 +34,10 @@ describe PaginationConcerns do
       allow_any_instance_of(NilClass).to receive(:page)
       allow_any_instance_of(NilClass).to receive(:per)
       allow(Kaminari).to receive(:paginate_array)
-      allow_message_expectations_on_nil
     end
     [:@max_number_of_pages, :@window_size, :@pagination].each do |var|
       it "should set #{var.to_s} instance variable" do
+        allow_message_expectations_on_nil
         pending('PT-1213: TODO: fix code or rspec')
         ### Seems to only fail when running all the specs
         ### stack level too deep error

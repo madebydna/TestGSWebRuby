@@ -377,9 +377,17 @@ describe 'School Search Service' do
 
     describe 'handles overall GS rating' do
       let (:above_average) { {filters: {overall_gs_rating: [8,9,10] }} }
-      it 'include the overall rating filters' do
+      it 'should include the overall rating filters' do
         rval = SchoolSearchService.extract_hard_filters above_average
         expect(rval).to include('+overall_gs_rating:(8 9 10)')
+      end
+    end
+
+    describe 'handles path to progress rating' do
+      let (:level_2) { {filters: {ptq_rating: ['Level 2', 'Level 3'] }} }
+      it 'should include the path to progress rating filters' do
+        rval = SchoolSearchService.extract_hard_filters level_2
+        expect(rval).to include('+path_to_quality_rating:("Level 2" "Level 3")')
       end
     end
   end

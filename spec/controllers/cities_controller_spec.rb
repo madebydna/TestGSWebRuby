@@ -9,13 +9,13 @@ describe CitiesController do
   shared_examples_for 'a default cities controller action' do |action|
     context 'without a hub city mapping' do
       it 'renders an error page' do
-        get action, state: 'michigan', city: 'foobarnotacity'
+        get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
         expect(response).to render_template('error/page_not_found')
       end
     end
 
     it 'sets canonical tags' do
-      get action, state: 'michigan', city: 'detroit'
+      get action, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
       expect(assigns[:canonical_url]).to_not be_nil
     end
   end
@@ -23,20 +23,20 @@ describe CitiesController do
   describe 'GET show' do
     context 'without a hub city mapping' do
       it 'renders an error page' do
-        get :show, state: 'michigan', city: 'foobarnotacity'
+        get :show, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
         expect(response).to redirect_to(state_url('michigan'))
       end
     end
 
     it 'sets canonical tags' do
-      get :show, state: 'michigan', city: 'detroit'
+      get :show, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
       expect(assigns[:canonical_url]).to_not be_nil
     end
   end
 
   describe '#ad_setTargeting_through_gon' do
     subject do
-      get :show, state: 'michigan', city: 'detroit'
+      get :show, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
       controller.gon.get_variable('ad_set_targeting')
     end
 
@@ -59,7 +59,7 @@ describe CitiesController do
       allow_any_instance_of(CitiesController).to receive(:set_hub).and_return(nil)
       state_name = States.state_name(city.state)
 
-      get :show, state: state_name, city: city.name
+      get :show, state: state_name, city: gs_legacy_url_city_encode(city.name)
       expect(response).to redirect_to(state_url(state_name))
     end
   end

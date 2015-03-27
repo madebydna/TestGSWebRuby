@@ -16,6 +16,16 @@ FactoryGirl.define do
       collections { FactoryGirl.build_list :collection, 1 }
       created { Time.now.to_s }
 
+      factory :demo_school do
+        name 'A demo school'
+        city 'Alameda'
+        state 'CA'
+        level_code 'h'
+        type 'public'
+        active false
+        notes 'GREATSCHOOLS_DEMO_SCHOOL_PROFILE'
+      end
+
       factory :alameda_high_school do
         name 'Alameda High School'
         city 'Alameda'

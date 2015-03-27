@@ -1,6 +1,6 @@
 class EspResponseLoading::Update
 
-  attr_accessor :data_type, :entity_id, :entity_state, :shard, :state, :update_blob, :value, :member_id, :source, :action
+  attr_accessor :data_type, :entity_id, :entity_state, :shard, :state, :update_blob, :value, :member_id, :source, :action, :created, :esp_source
 
   def initialize(data_type, update_blob, source)
     @data_type = data_type

@@ -24,7 +24,6 @@ GS.forms.updateFormVisualElements = function() {
 
         }else {
             $this.parent().find('.js-icon').removeClass(icoValue+'-on').addClass(icoValue+'-off');
-            //$this.parent().removeClass('btn-bg-green');
             $this.parent().removeClass('active');
         }
     });
@@ -111,6 +110,7 @@ $(function() {
 
     });
 
+//todo: refactor to make this generic
     $(".js-gs-checkbox").on('click', function(){
         var self=$(this);
         var checkbox = self.children(".js-icon");
@@ -315,6 +315,37 @@ $(function() {
     GS.forms.checkFancyCheckbox = checkFancyCheckbox;
     GS.forms.checkSportsIcon = checkSportsIcon;
 });
+
+GS.forms.elements = (function() {
+    var checkboxButtonSelector = ".js-checkboxButton";
+    var checkboxButtonKeyDataAttr = "checkbox-button-key";
+    var checkboxButtonValueDataAttr = "checkbox-button-value";
+    var hiddenFieldSelector = ".js-hiddenField";
+
+    var setCheckboxButtonHandler = function(listenerElementSelector) {
+        $(listenerElementSelector).on("click", checkboxButtonSelector, function() {
+            var $self = $(this);
+            var $hiddenField = $self.find(hiddenFieldSelector);
+
+            if ($hiddenField.val() == '') {
+                var key = $self.data(checkboxButtonKeyDataAttr);
+                var value = $self.data(checkboxButtonValueDataAttr);
+                $hiddenField.attr("value", value).attr("name", key);
+            } else {
+                $hiddenField.removeAttr("value").removeAttr("name");
+            }
+        })
+    };
+
+    var init = function(checkboxListener) {
+        setCheckboxButtonHandler(checkboxListener)
+    };
+
+    return {
+        init: init
+    }
+
+})();
 
 $(document).ready(function() {
     GS.forms.toggleCheckboxForCollapsibleBoxOnLoad();

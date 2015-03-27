@@ -16,7 +16,9 @@
             <ul class="nav navbar-nav">
                 <li>
                     <%- if nav.has_topnav? %>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#home">
+                        <a class="dropdown-toggle js-gaLoad js-gaClick" data-toggle="dropdown"
+                           data-ga-load-label="topNav localStateCity dropdown" data-ga-click-label="topNav localStateCity dropdown"
+                           href="#home">
                             <%= nav.topnav_title %>  <span class="caret"></span>
                         </a>
                     <% end %>
@@ -50,37 +52,62 @@
                         <% end %>
                     </ul>
                 </li>
-                <li><%= link_to 'Find a School', home_url %></li>
+                <li><%= link_to 'Find a School', home_url, class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav findASchool link',
+                                          'ga-load-label'=>'topNav findASchool link' } %>
+                </li>
                 <li>
                     <%= link_to 'Review Your School',
                         (defined?(@school) ? school_review_form_path(@school) : the_scoop_path),
                         :onclick=>"GS.omniture.track_reviews('GlobalNav');", :class=>'js-no_ad' %>
                 </li>
-                <li><a class="dropdown-toggle"
+                <li><a class="dropdown-toggle js-gaLoad js-gaClick"
                        data-toggle="dropdown"
+                       data-ga-load-label="topNav Discover dropdown" data-ga-click-label="topNav Discover dropdown"
                        href="#back-to-school">Discover <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                       <li class=" ">
-                        <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url %>
+                        <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav worksheetsAndActivities link',
+                                          'ga-load-label'=>'topNav worksheetsAndActivities link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'Health &amp; Wellness'.html_safe, health_and_wellness_article_url %>
+                        <%= link_to 'Health &amp; Wellness'.html_safe, health_and_wellness_article_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav healthAndWellness link',
+                                          'ga-load-label'=>'topNav healthAndWellness link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Parenting Dilemmas', parenting_dilemmas_url %>
+                        <%= link_to 'Parenting Dilemmas', parenting_dilemmas_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav parentingDilemmas link',
+                                          'ga-load-label'=>'topNav parentingDilemmas link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Road to College'.html_safe, college_articles_url %>
+                        <%= link_to 'Road to College'.html_safe, college_articles_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav collegeArticles link',
+                                          'ga-load-label'=>'topNav collegeArticles link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'STEM'.html_safe, stem_article_url %>
+                        <%= link_to 'STEM'.html_safe, stem_article_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav STEM link',
+                                          'ga-load-label'=>'topNav STEM link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Learning Difficulties', learning_difficulties_url %>
+                        <%= link_to 'Learning Difficulties', learning_difficulties_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav learningDifficulties link',
+                                          'ga-load-label'=>'topNav learningDifficulties link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'Early Learning'.html_safe, early_learning_url %>
+                        <%= link_to 'Early Learning'.html_safe, early_learning_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav earlyLearning link',
+                                          'ga-load-label'=>'topNav earlyLearning link' } %>
                       </li>
                     </ul>
                 </li>
@@ -109,7 +136,10 @@
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_url, class: 'brand-secondary js-no_ad')  %>
+                        <%= link_to('Sign In', signin_url,
+                                    class: 'brand-secondary js-no_ad js-gaLoad js-gaClick',
+                                    data:{'ga-click-label'=>'topNav signIn link',
+                                          'ga-load-label'=>'topNav signIn link' }) %>
                     <% end %>
                 </li>
             </ul>

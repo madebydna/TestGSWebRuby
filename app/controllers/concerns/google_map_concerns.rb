@@ -58,8 +58,8 @@ module GoogleMapConcerns
 
   def assign_sprite_files_though_gon
     sprite_files = {}
-    sprite_files['imageUrlOffPage'] = view_context.image_path('icons/140710-10x10_dots_icons.png')
-    sprite_files['imageUrlOnPage'] = view_context.image_path('icons/140725-29x40_pins.png')
+    sprite_files['imageUrlOffPage'] = view_context.image_path('icons/dots_icons_10x10.png')
+    sprite_files['imageUrlOnPage'] = view_context.image_path('icons/pins_29x40.png')
 
     gon.sprite_files = sprite_files
 

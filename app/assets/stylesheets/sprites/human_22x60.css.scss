@@ -1,0 +1,22 @@
+/* **************** SPRITE ***************** */
+
+.iconx22-human {
+  display: inline-block;
+  background-image: asset_data_url("icons/human_22x60.png");
+  width: 22px;
+  height: 60px;
+  background-repeat: repeat-x;
+}
+
+/* **************** VIEWPORT ***************** */
+
+/* row 0 */
+
+.i-22-orange-human {
+  background-position: 0 0;
+}
+/* row 60 */
+
+.i-22-purple-human {
+  background-position: 0 -60px;
+}

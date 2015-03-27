@@ -63,7 +63,9 @@ class FilterBuilder
         {
             in: add_vouchers_callbacks,
             de: [],
-            ga: []
+            ga: [],
+            ok: []
+
         }
     ).stringify_keys!
   end
@@ -74,9 +76,6 @@ class FilterBuilder
             mi: {
                 detroit: detroit_mi_callbacks
             }.stringify_keys!,
-            ok: {
-                'oklahoma city' => []
-            },
             wi: {
                 milwaukee: add_vouchers_callbacks
             }.stringify_keys!,
@@ -241,7 +240,7 @@ class FilterBuilder
             name: :grades,
             filters: {
               :default => {label: 'Select Grade', display_type: :select_box_value, name: :grades, value: nil},
-              :p => {label: 'Pre-School', display_type: :select_box_value, name: :grades, value: :p},
+              :p => {label: 'Preschool', display_type: :select_box_value, name: :grades, value: :p},
               :k => {label: 'Kindergarten', display_type: :select_box_value, name: :grades, value: :k},
               1 => {label: '1st Grade', display_type: :select_box_value, name: :grades, value: 1},
               2 => {label: '2nd Grade', display_type: :select_box_value, name: :grades, value: 2},

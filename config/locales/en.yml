@@ -27,6 +27,13 @@ en:
               too_short: 'Please use at least %{count} words in your comment.'
               too_long: 'Your comment can only be up to %{count} characters long.'
   forms:
+    admin:
+      errors:
+        email:
+          nonexistent: 'Sorry, we do not have an account with that email address.'
+          account_without_password: 'Account with no password.'
+          provisional: 'User is provisional.'
+          de_activated: 'The account associated with that email address has been disabled.'
     errors:
       email:
         blank: 'Please enter an email address.'

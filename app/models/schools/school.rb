@@ -348,4 +348,8 @@ class School < ActiveRecord::Base
     end
     arr_query_str.present? ? ' && (' << arr_query_str.join(" || ") << ') ' : ''
   end
+
+  def demo_school?
+    notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
+  end
 end

@@ -1,0 +1,229 @@
+/* -------------------------------------------------------------------------------------------*/
+
+/* **************** SPRITE ***************** */
+
+.iconx24-icons {
+  display: inline-block;
+  background-image: asset_data_url("icons/icons_24x24.png");
+  width: 24px;
+  height: 24px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+.i-24-checkmark-on {
+  background-position: 0 -24px;
+}
+
+.btn.active .i-24-checkmark-on {
+  background-position: 0px -48px;
+}
+
+.i-24-checkmark-off {
+  background-position: 0px 0px;
+}
+
+.btn:hover .i-24-checkmark-off {
+  background-position: 0px -24px;
+}
+
+.i-24-new-ratings-10{
+  background-position: -24px 0;
+}
+
+.i-24-new-ratings-9{
+  background-position: -48px 0;
+}
+
+.i-24-new-ratings-8{
+  background-position: -72px 0;
+}
+
+.i-24-new-ratings-7{
+  background-position: -96px 0;
+}
+
+.i-24-new-ratings-6{
+  background-position: -120px 0;
+}
+
+.i-24-new-ratings-5{
+  background-position: -144px 0;
+}
+
+.i-24-new-ratings-4{
+  background-position: -168px 0;
+}
+
+.i-24-new-ratings-3{
+  background-position: -192px 0;
+}
+
+.i-24-new-ratings-2{
+  background-position: -216px 0;
+}
+
+.i-24-new-ratings-1{
+  background-position: -240px 0;
+}
+
+.i-24-new-ratings-nr{
+   background-position: -264px 0;
+}
+
+.i-24-strong-fit {
+  background-position: -288px 0;
+}
+
+.i-24-ok-fit {
+  background-position: -312px 0;
+}
+
+.i-24-weak-fit {
+  background-position: -336px 0;
+}
+
+.i-24-new-grey_map_pin {
+  background-position: -360px 0;
+}
+
+.i-24-soccer-off {
+  background-position: -384px 0;
+}
+
+.btn:hover > .i-24-soccer-off {
+  background-position: -384px -24px;
+}
+
+.i-24-soccer-on {
+  background-position: -384px -48px;
+}
+
+.i-24-track-off {
+  background-position: -408px 0;
+}
+
+.btn:hover > .i-24-track-off {
+  background-position: -408px -24px;
+}
+
+.i-24-track-on {
+  background-position: -408px -48px;
+}
+
+.i-24-basketball-off {
+  background-position: -432px 0px
+}
+
+.btn:hover > .i-24-basketball-off {
+  background-position: -432px -24px
+}
+
+.i-24-basketball-on {
+  background-position: -432px -48px
+}
+
+.i-24-football-off {
+  background-position: -456px 0px
+}
+
+.btn:hover > .i-24-football-off {
+  background-position: -456px -24px
+}
+
+.i-24-football-on {
+  background-position: -456px -48px
+}
+
+.i-24-volleyball-off {
+  background-position: -480px 0px
+}
+
+.btn:hover > .i-24-volleyball-off {
+  background-position: -480px -24px
+}
+
+.i-24-volleyball-on {
+  background-position: -480px -48px
+}
+
+.i-24-cheerleading-off {
+  background-position: -504px 0px
+}
+
+.btn:hover > .i-24-cheerleading-off {
+  background-position: -504px -24px
+}
+
+.i-24-cheerleading-on {
+  background-position: -504px -48px
+}
+
+.i-24-baseball-off {
+  background-position: -528px 0px
+}
+
+.btn:hover > .i-24-baseball-off {
+  background-position: -528px -24px
+}
+
+.i-24-baseball-on {
+  background-position: -528px -48px
+}
+
+.i-24-grey-down-arrow {
+  background-position: -600px 0px
+}
+
+.i-24-search-white {
+  background-position: -624px 0px
+}
+
+.i-24-write-review {
+  background-position: -648px 0px
+}
+
+.btn:hover .i-24-write-review {
+  background-position: -648px -24px
+}
+
+.i-24-answer-questions {
+  background-position: -672px 0px
+}
+
+.btn:hover .i-24-answer-questions {
+  background-position: -672px -24px
+}
+
+.i-24-upload-photos {
+  background-position: -696px 0px
+}
+
+.btn:hover .i-24-upload-photos {
+  background-position: -696px -24px
+}
+
+.i-24-guide-me {
+  background-position: -720px 0px
+}
+
+.i-24-close-arrow-head {
+  background-position: -744px 0px;
+}
+
+.i-24-open-arrow-head {
+  background-position: -744px -24px;
+}
+
+.i-24-weekly-newsletter {
+  background-position: -792px 0px;
+}
+
+.i-24-follow-schools {
+  background-position: -744px 0px;
+}
+
+.i-24-write-reviews {
+  background-position: -768px 0px;
+}
+

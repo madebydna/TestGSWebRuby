@@ -30,7 +30,7 @@ feature "Join Page" do
       visit join_path
       fill_in 'join-email', with: 'ssprouse+testing@greatschools.org'
       check 'terms_terms'
-      click_button 'Register email'
+      click_button 'Sign Up'
       @email = ExactTarget.last_delivery_args
     end
     after(:each) do

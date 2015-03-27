@@ -240,6 +240,10 @@ class User < ActiveRecord::Base
     memberships.any? { |membership| membership.approved? || membership.provisional? }
   end
 
+  def esp_membership_for_school(school = nil)
+    school.present? ? esp_memberships.for_school(school).first : nil
+  end
+
   def is_esp_superuser?
     has_role?(Role.esp_superuser)
   end
