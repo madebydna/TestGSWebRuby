@@ -16,7 +16,7 @@ class CensusLoading::Loader < CensusLoading::Base
 
       # Raises entity not found exception if one doesn't exist with that ID
       unless census_update.entity_type == :state
-        entity = census_update.entity_type.to_s.constantize.on_db(census_update.shard).find(census_update.entity_id)
+        entity = census_update.entity_type.to_s.titleize.constantize.on_db(census_update.shard).find(census_update.entity_id)
       end
 
       begin
