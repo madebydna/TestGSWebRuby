@@ -349,7 +349,7 @@ class SearchController < ApplicationController
       path_to_quality_ratings = path_to_quality_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
       path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
 
-      filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty? || path_to_quality_ratings.length == 4
+      filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
     end
 
     if should_apply_filter?(:cgr)
