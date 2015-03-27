@@ -53,7 +53,7 @@ class Admin::OspController < ApplicationController
                value: response_value,
            member_id: esp_membership_id,
              created: Time.now,
-          esp_source: "osp_form"
+          esp_source: "osp"
       }.stringify_keys!
     end
 
