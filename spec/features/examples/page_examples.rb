@@ -30,3 +30,7 @@ end
     expect(values).to include(value)
   end
 end
+
+shared_example 'should be on the correct page' do
+  expect(subject).to be_displayed
+end

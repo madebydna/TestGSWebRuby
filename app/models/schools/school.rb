@@ -153,12 +153,10 @@ class School < ActiveRecord::Base
   # returns Topics with questions for school
 
   def topical_review_question_hash
-    topical_review_questions_hash = {}
-    filtered_topics = ReviewTopic.filter_by_level_code_and_type(self)
-    filtered_topics.each do |topic|
-      topical_review_questions_hash[topic.name] = topic.build_questions_display_hash(self)
+    filtered_topics = ReviewTopic.find_by_school(self)
+    filtered_topics.each_with_object({}) do |topic, hash|
+      hash[topic.name] = topic.build_questions_display_hash(self)
     end
-    topical_review_questions_hash
   end
 
   # returns all reviews for
