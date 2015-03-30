@@ -26,7 +26,6 @@ class EspResponseLoading::Update
         {
             school_id: entity_id,
             response_key: data_type,
-            response_value: value
         }
   end
 
