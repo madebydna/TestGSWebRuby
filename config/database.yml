@@ -38,6 +38,17 @@ mysql_dev_rw: &mysql_dev_rw
 mysql_dev_ro: &mysql_dev_ro
   <<: *mysql_dev
 
+mysql_omega: &mysql_omega
+  <<: *mysql
+  host: omega.greatschools.org
+  username: service
+  password: service
+
+mysql_omega_rw: &mysql_omega_rw
+  <<: *mysql_omega
+mysql_omega_ro: &mysql_omega_ro
+  <<: *mysql_omega
+
 mysql_rw_server_to_use_in_development: &mysql_rw_server_to_use_in_development
   <<: *mysql_localhost_rw
 
