@@ -9,7 +9,9 @@ class User < ActiveRecord::Base
   has_many :favorite_schools, foreign_key: 'member_id'
   has_many :esp_memberships, foreign_key: 'member_id'
   has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
+  has_many :reported_reviews, -> { active }, class_name: 'ReportedReview', foreign_key: 'list_member_id', inverse_of: :user
   has_many :member_roles, foreign_key: 'member_id'
+  has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'list_member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :student_grade_levels, foreign_key: 'member_id'
   validates_presence_of :email

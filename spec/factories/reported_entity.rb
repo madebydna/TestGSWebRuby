@@ -6,7 +6,7 @@ FactoryGirl.define do
     sequence(:reported_entity_id) { |n| n }
     active true
 
-    factory :reported_review do
+    factory :old_reported_review do
       reported_entity_type 'schoolReview'
     end
   end

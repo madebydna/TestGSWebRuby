@@ -8,7 +8,7 @@ describe Admin::ReportedEntityController do
   it { is_expected.to respond_to(:deactivate) }
 
   describe '#deactivate' do
-    let(:reported_entity) { FactoryGirl.create(:reported_review) }
+    let(:reported_entity) { FactoryGirl.create(:old_reported_review) }
 
     it 'should read the reported entity object' do
       expect(ReportedEntity).to receive(:find).with reported_entity.id

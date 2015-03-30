@@ -128,7 +128,7 @@ describe Admin::ReviewsController do
 
   describe '#moderation' do
     let(:school) { FactoryGirl.build(:school) }
-    let(:reported_entities) { FactoryGirl.build_list(:reported_review, 3) }
+    let(:reported_entities) { FactoryGirl.build_list(:old_reported_review, 3) }
     let(:unprocessed_reviews) { FactoryGirl.build_list(:unpublished_review, 3) }
     let(:flagged_reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
     let(:valid_reviews) { FactoryGirl.build_list(:valid_school_rating, 3) }
@@ -258,9 +258,9 @@ describe Admin::ReviewsController do
 
     it 'should correctly map reported entities to reviews' do
       reported_entities = []
-      reported_entities += FactoryGirl.build_list(:reported_review, 3, reported_entity_id: reviews[0].id)
-      reported_entities += FactoryGirl.build_list(:reported_review, 2, reported_entity_id: reviews[1].id)
-      reported_entities += FactoryGirl.build_list(:reported_review, 1, reported_entity_id: reviews[2].id)
+      reported_entities += FactoryGirl.build_list(:old_reported_review, 3, reported_entity_id: reviews[0].id)
+      reported_entities += FactoryGirl.build_list(:old_reported_review, 2, reported_entity_id: reviews[1].id)
+      reported_entities += FactoryGirl.build_list(:old_reported_review, 1, reported_entity_id: reviews[2].id)
 
       controller.class.send :load_reported_entities_onto_reviews, reviews, reported_entities
 
