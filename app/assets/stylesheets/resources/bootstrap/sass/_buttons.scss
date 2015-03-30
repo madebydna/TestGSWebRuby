@@ -46,7 +46,7 @@
   fieldset[disabled] & {
     cursor: not-allowed;
     pointer-events: none; // Future-proof disabling of clicks
-    @include opacity(.65);
+    @include opacity(.4);
     @include box-shadow(none);
   }
 

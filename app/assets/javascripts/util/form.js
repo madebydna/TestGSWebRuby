@@ -321,7 +321,6 @@ GS.forms.elements = (function() {
     var checkboxButtonKeyDataAttr = "checkbox-button-key";
     var checkboxButtonValueDataAttr = "checkbox-button-value";
     var hiddenInputSelector = "input";
-    var hiddenFieldsetSelector = "fieldset";
     var disableElementTriggerSelector = ".js-disableTriggerElement";
     var disableElementTargetSelector = ".js-disableTarget";
     var disableElementParentDataAttr = "target-parent";
@@ -342,34 +341,34 @@ GS.forms.elements = (function() {
         })
     };
 
-    var disableElementAndChildFieldsets = function($element) {
+    var disableElementAndChildInputs = function($element) {
         if (typeof $element == 'string') $element = $($element);
 
         $element.each(function() {
             var $self = $(this);
             $self.attr('disabled', true);
-            $self.find(hiddenFieldsetSelector).attr('disabled', true)
+            $self.find(hiddenInputSelector).attr('disabled', true)
         });
     };
 
-    var enableElementAndChildFieldsets = function($element) {
+    var enableElementAndChildInputs = function($element) {
         if (typeof $element == 'string') $element = $($element);
 
         $element.each(function() {
             var $self = $(this);
             $self.attr('disabled', false);
-            $self.find(hiddenFieldsetSelector).attr('disabled', false)
+            $self.find(hiddenInputSelector).attr('disabled', false)
         });
     };
 
-    var setEnableDisableElementsAndFieldsetsHandler = function(parentListenerSelector) {
+    var setEnableDisableElementsAndInputsHandler = function(parentListenerSelector) {
         $(parentListenerSelector).on(click, disableElementTriggerSelector, function() {
             var $trigger = $(this);
             var target_parent = $trigger.data(disableElementParentDataAttr);
             if (typeof target_parent === 'string') {
                 var $parent = $trigger.closest(target_parent);
                 var $target = $parent.find(disableElementTargetSelector);
-                $trigger.hasClass('active') == false ? disableElementAndChildFieldsets($target) : enableElementAndChildFieldsets($target);
+                $trigger.hasClass('active') == false ? disableElementAndChildInputs($target) : enableElementAndChildInputs($target);
                 //The logic above should be if active == true.
                 //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
                 //I don't like this solution, but am open to suggestions
@@ -379,9 +378,9 @@ GS.forms.elements = (function() {
 
     return {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
-        setEnableDisableElementsAndFieldsetsHandler: setEnableDisableElementsAndFieldsetsHandler,
-        disableElementAndChildFieldsets: disableElementAndChildFieldsets,
-        enableElementAndChildFieldsets: enableElementAndChildFieldsets
+        setEnableDisableElementsAndInputsHandler: setEnableDisableElementsAndInputsHandler,
+        disableElementAndChildInputs: disableElementAndChildInputs,
+        enableElementAndChildInputs: enableElementAndChildInputs
     }
 
 })();
