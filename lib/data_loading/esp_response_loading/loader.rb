@@ -72,7 +72,8 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
             active: active,
             created: esp_response_update.created,
             esp_source: esp_response_update.esp_source,
-            member_id: esp_response_update.member_id
+            member_id: esp_response_update.member_id,
+            response_value: esp_response_update.value
         }
         )
     )
