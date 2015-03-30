@@ -1,20 +1,8 @@
 require 'spec_helper'
+require 'features/examples/page_examples'
 require_relative '../examples/osp_examples'
 require_relative '../examples/footer_examples'
 require_relative '../../../spec/features/contexts/osp_contexts'
-
-shared_context 'visit OSP page' do
-  include_context 'signed in approved osp user for school', :ca, 1
-  let(:school) { FactoryGirl.create(:school, id: 1) }
-  before do
-    visit admin_osp_page_path(page:1,schoolId:school.id, state:school.state)
-    # save_and_open_page
-  end
-  after do
-    clean_models School
-  end
-  subject { page }
-end
 
 describe 'OSP Basic Page' do
   with_shared_context 'visit OSP page' do
@@ -46,6 +34,16 @@ describe 'OSP Basic Page' do
       subject.find('h3', text: 'Facilities & Staff')
     end
 
+  end
+
+  with_shared_context 'with a basic set of osp questions in db' do
+    with_shared_context 'visit OSP page' do
+      with_shared_context 'when clicking the none option on a question group' do
+        context 'the group of questions', js: true do
+          include_example 'should be disabled'
+        end
+      end
+    end
   end
 
 end

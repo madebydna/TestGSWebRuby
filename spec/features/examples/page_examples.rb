@@ -20,6 +20,16 @@ shared_example 'should have redirected to' do |path|
   expect(current_path).to eq(path)
 end
 
+
+
+### Need js: true to work ###
+
+shared_example 'should be disabled' do
+  [*subject].each do |element|
+    expect(element.has_css?('[disabled]')).to be_truthy
+  end
+end
+
 %w[noindex nofollow noarchive].each do |value|
   shared_example("should have the #{value} meta tag") do
     robots_tag = subject.find('meta[name="robots"]', visible: false)
@@ -30,3 +40,4 @@ end
     expect(values).to include(value)
   end
 end
+

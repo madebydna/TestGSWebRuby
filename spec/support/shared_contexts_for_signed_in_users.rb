@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 def log_in_user(user)
-  page.driver.browser.set_cookie("auth_token=#{user.auth_token};")
-  page.driver.browser.set_cookie("MEMID=#{user.id};")
-  page.driver.browser.set_cookie("community_www=#{user.auth_token.gsub('=', '~')};")
+  host = Capybara.app_host ? URI(Capybara.app_host).host : '127.0.0.1'
+
+  page.driver.browser.set_cookie("auth_token=#{user.auth_token}; domain=#{host}")
+  page.driver.browser.set_cookie("MEMID=#{user.id}; domain=#{host}")
+  page.driver.browser.set_cookie("community_www=#{user.auth_token.gsub('=', '~')}; domain=#{host}")
 end
 
 shared_context 'signed in verified user' do
