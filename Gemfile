@@ -7,9 +7,7 @@ gem 'mysql2', '0.3.13'
 gem 'jquery-rails'
 gem 'jquery-cookie-rails'
 
-group :assets do
-  gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-end
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
 gem 'rails_admin'
 
