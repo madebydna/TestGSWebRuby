@@ -9,7 +9,7 @@
     <h3 class="mbs">
       <%= display_question_label %>
       <span class="mll">
-        <%= render partial: 'shared/form_elements/checkbox', locals: {button_classes: 'btn-toggle js-disableTriggerElement mb2', data_attr: "data-target-parent=.js-ospQuestionAndAnswers"} %>
+        <%= render partial: 'shared/form_elements/checkbox_trigger', locals: {button_classes: 'btn-toggle js-disableTriggerElement mb2', data_attr: "data-target-parent=.js-ospQuestionAndAnswers"} %>
       </span>
       <span class="font-size-small vam">None</span>
     </h3>
@@ -19,7 +19,7 @@
     <% display_text_and_value_map.each_pair do |text, value| %>
       <% [*value].each do |val| %>
         <% button_active = preexisting_esp_values.include?(val) ? true : nil %>
-        <%= render partial: 'shared/form_elements/checkbox_with_hidden_input', locals: {key: "#{response_key}[]", text: text, value: val, active: button_active} %>
+        <%= render partial: 'shared/form_elements/checkbox_button', locals: {key: "#{response_key}[]", text: text, value: val, active: button_active} %>
       <% end %>
     <% end %>
   </div>
