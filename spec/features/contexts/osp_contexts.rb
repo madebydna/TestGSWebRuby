@@ -71,6 +71,6 @@ shared_context 'when clicking the none option on a question group' do
     trigger.click if trigger.present?
   end
   subject do
-    osp_page.disabledElementTarget.first
+    osp_page.disabledElementTarget
   end
 end
