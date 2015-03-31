@@ -397,6 +397,12 @@ class Advertising
           dimensions:[300,250]
         }
       },
+      Custom: {
+        name: "Custom",
+        desktop:{
+            dimensions:[970,250]
+        }
+      }
     }
 
     @ad_slots[:State_Home_Standard] = {

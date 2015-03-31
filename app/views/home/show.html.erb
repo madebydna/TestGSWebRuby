@@ -2,6 +2,7 @@
     <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
     <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
 <% end %>
+
 <% content_for :javascript_includes do %>
     <script>
         $(function() {
@@ -12,23 +13,28 @@
     </script>
 <% end %>
 
-
 <% if @milestone_banner_prop == 'true' %>
   <%= render 'shared/home/search_hero_short'  %>
   <%= render 'shared/home/milestone_banner'  %>
 <% else %>
   <%= render 'shared/home/search_hero_prototype' %>
 <% end %>
-<%= render 'shared/home/browse_prototype'%>
 
+<div class="row">
+  <div class="col-xs-12">
+    <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Custom, view: :desktop  %>
+  </div>
+</div>
+
+<%= render 'shared/home/browse_prototype'%>
 
 <%= render 'shared/home/email_signup'%>
 
 <%= render 'shared/home/resources_prototype'%>
 
-<%=render 'shared/home/offer_prototype' %>
+<%= render 'shared/home/offer_prototype' %>
 
-<%=render 'shared/home/quote_prototype'%>
+<%= render 'shared/home/quote_prototype'%>
 
 <%= render 'shared/home/who_we_are_prototype'%>
 
