@@ -7,8 +7,8 @@ class ReportedReview < ActiveRecord::Base
 
   attr_accessible :id, :list_member_id, :review_id, :comment, :active, :reason, :created
 
-  belongs_to :user, foreign_key: 'list_member_id', inverse_of: :reported_reviews
-
+  belongs_to :user, foreign_key: 'list_member_id'
+  belongs_to :review, inverse_of: :reports
 
 
 end

@@ -1,9 +1,10 @@
 FactoryGirl.define do
 
-  factory :review_note, class: ReviewNote do
+  factory :school_note, class: SchoolNote do
     sequence(:id) { |n| n }
     list_member_id 0
-    review_id 1
+    school_id 1
+    state 'CA'
     notes 'foo'
   end
 
