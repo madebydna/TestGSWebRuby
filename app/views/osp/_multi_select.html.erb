@@ -12,9 +12,12 @@
       </span>
       <div class="dib">
         <span class="">
-          <%= render partial: 'shared/form_elements/checkbox_trigger', locals: {button_classes: 'btn-toggle js-disableTriggerElement mb2', data_attr: "data-target-parent=.js-ospQuestionAndAnswers"} %>
+          <%= render partial: 'shared/form_elements/checkbox_trigger', locals: {
+            button_classes: 'btn-toggle js-disableTriggerElement mb2',
+            data_attr: "data-target-parent=.js-ospQuestionAndAnswers",
+            text: 'None'
+          } %>
         </span>
-        <span class="font-size-small vam">None</span>
       </div>
     </h3>
   </div>

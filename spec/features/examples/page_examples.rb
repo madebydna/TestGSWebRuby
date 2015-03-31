@@ -26,7 +26,7 @@ end
 
 shared_example 'should be disabled' do
   [*subject].each do |element|
-    expect(element.has_css?('[disabled]')).to be_truthy
+    expect(element[:disabled]).to_not be_nil
   end
 end
 
