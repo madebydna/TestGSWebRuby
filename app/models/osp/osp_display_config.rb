@@ -56,7 +56,7 @@ class OspDisplayConfig < ActiveRecord::Base
   end
 
   def display_options
-    options || {}
+    options || osp_question.options || {}
   end
 
   def group_heading
