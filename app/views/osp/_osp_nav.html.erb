@@ -1,26 +1,41 @@
 <% osp_page = []  %>
 <% osp_page[page] = 'active'  %>
-
+<% nav_label_hash = {1 => 'Basic Information', 2 => 'Academics', 3 => 'Extracurriculars & Culture', 4 => 'Facilities & Staff'}%>
 
 <div class="bg-medium-gray tac clearfix pvm mbl">
-  <div class="nav-osp">
-    <div class="limit-width-1200">
-      <span class="nav_button <%=osp_page[1]%> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">
+  <div class="nav-osp hidden-xs">
+    <div class="limit-width-1200 ">
+      <span class="nav_button <%= osp_page[1] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">
         <h3 class="absolute-center brand-primary pt45"> Basic Information </h3>
         <span class="iconx96 i-96-question-mark"></span>
       </span>
-    <span class="nav_button <%=osp_page[2]%> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">
-      <h3 class="absolute-center brand-primary pt45"> Academics </h3>
-      <span class="iconx96 iconx96 i-96-book"></span>
-    </span>
-    <span class="nav_button <%=osp_page[3]%> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">
-      <h3 class="absolute-center brand-primary pt45"> Extracurriculars <br/> & Culture </h3>
-      <span class="iconx96 i-96-trophy"></span>
-    </span>
-    <span class="nav_button <%=osp_page[4]%> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "4") %>">
-      <h3 class="absolute-center brand-primary pt45"> Facilities <br/> & Staff </h3>
-      <span class="iconx96 i-96-person"></span>
-    </span>
+      <span class="nav_button <%= osp_page[2] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">
+       <h3 class="absolute-center brand-primary pt45"> Academics </h3>
+       <span class="iconx96 iconx96 i-96-book"></span>
+      </span>
+      <span class="nav_button <%= osp_page[3] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">
+       <h3 class="absolute-center brand-primary pt45"> Extracurriculars <br/> & Culture </h3>
+       <span class="iconx96 i-96-trophy"></span>
+      </span>
+      <span class="nav_button <%= osp_page[4] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "4") %>">
+       <h3 class="absolute-center brand-primary pt45"> Facilities <br/> & Staff </h3>
+       <span class="iconx96 i-96-person"></span>
+      </span>
     </div>
   </div>
+
+  <div class="visible-xs dropdown tal mlm">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+      <%= nav_label_hash[page] || 'Basic Information'%>
+      <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">Basic Information</a></li>
+      <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">Academics</a></li>
+      <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">Extracurriculars & Culture</a></li>
+      <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "4") %>">Facilities & Staff</a></li>
+    </ul>
+  </div>
 </div>
+
