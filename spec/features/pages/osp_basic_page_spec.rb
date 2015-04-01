@@ -10,9 +10,9 @@ describe 'OSP Basic Page' do
       subject.find('h1', text: school.name)
     end
 
-    it 'should have dashboard button' do
-      subject.find_button('dashboard')
-    end
+    # it 'should have dashboard button' do
+    #   subject.find_button('dashboard')
+    # end
 
     it 'should have an h3 with text Basic Information' do
       subject.find('h3', text: 'Basic Information')
@@ -34,8 +34,10 @@ describe 'OSP Basic Page' do
       subject.find('h3', text: 'Facilities & Staff')
     end
 
+    it 'should have a submit button' do
+      subject.find_button('Submit')
+    end
   end
-
   with_shared_context 'with a basic set of osp questions in db' do
     with_shared_context 'visit OSP page' do
       with_shared_context 'when clicking the none option on a question group' do
@@ -46,4 +48,16 @@ describe 'OSP Basic Page' do
     end
   end
 
+# describe 'should show active groups' do
+#   question_group = FactoryGirl.create(:osp_question_groups)
+#
+#   it 'should show group title' do
+#     subject.find('h3', text: question_group.heading)
+#   end
+#
+#   puts question_group.image_path
+#   subject.has_selector?("img[src$='osp/camera.png']")
+#
+# end
+# end
 end
