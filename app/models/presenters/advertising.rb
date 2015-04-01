@@ -46,6 +46,12 @@ class Advertising
           dimensions:[300,250]
         }
       },
+      Custom: {
+        name: "Custom",
+        desktop:{
+            dimensions:[[970,250],[728,90]]
+        }
+      },
       Contact_Info: {
         name: "Contact_Info",
         desktop:{
@@ -400,7 +406,7 @@ class Advertising
       Custom: {
         name: "Custom",
         desktop:{
-            dimensions:[970,250]
+          dimensions:[[970,250],[728,90]]
         }
       }
     }
