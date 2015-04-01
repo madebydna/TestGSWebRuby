@@ -24,13 +24,13 @@
     </div>
   </div>
 
-  <div class="visible-xs dropdown tal mlm">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+  <div class="visible-xs dropdown tal mlm mrm">
+    <button class="btn btn-default dropdown-toggle full-width" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
       <%= nav_label_hash[page] || 'Basic Information'%>
       <span class="caret"></span>
     </button>
 
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <ul class="dropdown-menu full-width" role="menu" aria-labelledby="dropdownMenu1">
       <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">Basic Information</a></li>
       <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">Academics</a></li>
       <li><a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">Extracurriculars & Culture</a></li>
