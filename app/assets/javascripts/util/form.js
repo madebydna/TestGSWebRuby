@@ -323,7 +323,6 @@ GS.forms.elements = (function() {
     var hiddenInputSelector = "input";
     var disableElementTriggerSelector = ".js-disableTriggerElement";
     var disableElementTargetSelector = ".js-disableTarget";
-    var disableElementParentDataAttr = "target-parent";
     var click = "click";
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
@@ -341,38 +340,34 @@ GS.forms.elements = (function() {
         })
     };
 
-    var disableElementAndChildInputs = function($element) {
-        if (typeof $element == 'string') $element = $($element);
+    var disableElementAndChildInputs = function($elements) {
+        toggleElementAndChildInputs($elements, true);
+    };
 
-        $element.each(function() {
+    var enableElementAndChildInputs = function($elements) {
+        toggleElementAndChildInputs($elements, false);
+    };
+
+    var toggleElementAndChildInputs = function($elements, bool) {
+        if (typeof $elements == 'string') $elements = $($elements);
+
+        $elements.each(function() {
             var $self = $(this);
-            $self.attr('disabled', true);
-            $self.find(hiddenInputSelector).attr('disabled', true)
+            $self.attr('disabled', bool);
+            $self.find(hiddenInputSelector).attr('disabled', bool)
         });
     };
 
-    var enableElementAndChildInputs = function($element) {
-        if (typeof $element == 'string') $element = $($element);
+    var setEnableDisableElementsAndInputsHandler = function(sectionContainer, disableElementParent) {
+        $(sectionContainer).on(click, disableElementTriggerSelector, function() {
+            $trigger = $(this);
+            $parent = $trigger.closest(disableElementParent);
+            $targets = $parent.find(disableElementTargetSelector);
 
-        $element.each(function() {
-            var $self = $(this);
-            $self.attr('disabled', false);
-            $self.find(hiddenInputSelector).attr('disabled', false)
-        });
-    };
-
-    var setEnableDisableElementsAndInputsHandler = function(parentListenerSelector) {
-        $(parentListenerSelector).on(click, disableElementTriggerSelector, function() {
-            var $trigger = $(this);
-            var target_parent = $trigger.data(disableElementParentDataAttr);
-            if (typeof target_parent === 'string') {
-                var $parent = $trigger.closest(target_parent);
-                var $target = $parent.find(disableElementTargetSelector);
-                $trigger.hasClass('active') == false ? disableElementAndChildInputs($target) : enableElementAndChildInputs($target);
-                //The logic above should be if active == true.
-                //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
-                //I don't like this solution, but am open to suggestions
-            }
+            $trigger.hasClass('active') == false ? disableElementAndChildInputs($targets) : enableElementAndChildInputs($targets);
+            //The logic above should be if active == true.
+            //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
+            //I don't like this solution, but am open to suggestions
         });
     };
 

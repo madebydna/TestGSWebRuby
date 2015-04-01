@@ -571,7 +571,7 @@
   border-color: $border;
   border-bottom-width: 3px;
 
-  &.btn-checkbox {
+  &.btn-checkbox-square {
     border-bottom-width: 1px;
     border-color: grey;
   }
@@ -589,7 +589,6 @@
   } }
   &:active,
   &.active {
-//    background-image: none;
     background-color: $background_active;
     color: $active_color;
     border-color: $background_active;
