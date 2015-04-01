@@ -42,7 +42,7 @@ shared_context 'with a basic set of osp questions in db' do
   let(:optional_factory_girl_config) do
     {
       osp_question_group_id: nil,
-      question_type: 'multi_select'
+      question_type: 'conditional_multi_select'
     }
   end
 
