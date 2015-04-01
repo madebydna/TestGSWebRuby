@@ -35,7 +35,8 @@
     </div>
     <% if @show_ads %>
       <div class="pbl mbl">
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :desktop  %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Custom, view: :desktop, visible_for: "visible-md visible-lg" %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :desktop, visible_for: "visible-sm" %>
         <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :mobile  %>
       </div>
     <% end %>
