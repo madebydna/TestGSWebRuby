@@ -1,0 +1,20 @@
+<% key #required. Key name needs [] if multiple values share key. ex. boys_sports[] (values are soccer, baseball, etc..) %>
+<% value #required %>
+<% text ||= '' #optional %>
+<% active ||= false #optional %>
+<% button_classes ||= '' #optional %>
+<% button_classes << ' btn btn-checkbox-square js-checkboxButton' #add default classes%>
+
+
+<label class="pointer">
+  <input class="<%= button_classes %>  <%= 'active' if active %>"
+    data-toggle="button"
+    data-checkbox-button-key="<%= key %>"
+    data-checkbox-button-value="<%= value %>"
+    readonly
+    <%= "name=#{key} value=#{value}" if active %>
+  />
+  <% if text.present? %>
+    <span class='font-size-medium'><%=text%></span>
+  <% end %>
+</label>

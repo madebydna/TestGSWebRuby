@@ -596,14 +596,6 @@
   .open & { &.dropdown-toggle {
     background-image: none;
   } }
-
-  input[type="button"] & {
-    &.active {
-      background-color: $background_active;
-      color: $active_color;
-      border-color: $background_active;
-    }
-  }
 }
 
 // Button sizes
