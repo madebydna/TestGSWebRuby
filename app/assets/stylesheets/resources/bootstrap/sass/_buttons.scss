@@ -143,14 +143,12 @@
 //for checkboxes
 .btn-checkbox-square {
   @extend .btn-toggle;
-  padding: 8px;
-  line-height: 0px;
-}
-
-.checkbox-square-icon {
   @extend .vam;
   @extend .iconx16;
   @extend .i-16-white-check;
+  padding: 8px;
+  line-height: 0px;
+  text-indent: 100px; //this is usually put on an input element. this is to prevent text from value attr from appearing.
 }
 
 .btn-checkbox {

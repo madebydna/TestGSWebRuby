@@ -1,20 +1,21 @@
 <% #multi select display config example %>
 
-<% #display_text_and_value__map  ie) {"public transportation" => "public"} or {"before care" => "before"]} %>
-<% #display_question_label       ie) 'Do you have before and/or after care on site?' %>
-<% #preexisting_esp_values       ie) ['before', 'after'] #pre-existing value for response key %>
+<% #display_text_and_value_map  ex) {"public transportation" => "public"} or {"before care" => "before"]} %>
+<% #display_question_label       ex) 'Do you have before and/or after care on site?' %>
+<% #preexisting_esp_values       ex) ['before', 'after'] #pre-existing value for response key %>
+<% #response_key                 ex) 'before_after_care' %>
 
-<div class="row js-ospQuestionAndAnswers">
+<% display_question_label     = display_question.displayed_label %>
+<% display_text_and_value_map = display_question.displayed_answers %>
+<% preexisting_esp_values %>
+<% response_key  %>
+
+<div class="row js-disableTriggerAndTargetParent">
   <div class="col-xs-12">
     <h3 class="mbs">
       <span class="mrl">
         <%= display_question_label %>
       </span>
-      <div class="dib">
-        <span class="">
-          <%= render partial: 'shared/form_elements/checkbox_trigger', locals: { button_classes: 'js-disableTriggerElement mb2', text: 'None' } %>
-        </span>
-      </div>
     </h3>
   </div>
 

@@ -323,12 +323,13 @@ GS.forms.elements = (function() {
     var hiddenInputSelector = "input";
     var disableElementTriggerSelector = ".js-disableTriggerElement";
     var disableElementTargetSelector = ".js-disableTarget";
+    var disableTriggerAndTargetParent = ".js-disableTriggerAndTargetParent";
     var click = "click";
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
         $(parentListenerSelector).on(click, checkboxButtonSelector, function() {
             var $self = $(this);
-            var $hiddenField = $self.find(hiddenInputSelector);
+            var $hiddenField = $self.is('input') == true ? $self : $self.find(hiddenInputSelector);
 
             if ($hiddenField.val() == '') {
                 var key = $self.data(checkboxButtonKeyDataAttr);
@@ -351,23 +352,44 @@ GS.forms.elements = (function() {
     var toggleElementAndChildInputs = function($elements, bool) {
         if (typeof $elements == 'string') $elements = $($elements);
 
-        $elements.each(function() {
-            var $self = $(this);
-            $self.attr('disabled', bool);
-            $self.find(hiddenInputSelector).attr('disabled', bool)
+        $elements.attr('disabled', bool);
+        $elements.find(hiddenInputSelector).attr('disabled', bool)
+    };
+
+    var toggleTriggerElementAndChildInputs = function($trigger, disableWhenActive) {
+        disableWhenActive = disableWhenActive || false;
+        var $parent = $trigger.closest(disableTriggerAndTargetParent);
+        var $targets = $parent.find(disableElementTargetSelector);
+
+        $trigger.hasClass('active') == disableWhenActive ? disableElementAndChildInputs($targets) : enableElementAndChildInputs($targets);
+        //The logic above should be if active == true.
+        //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
+        //I don't like this solution, but am open to suggestions
+    };
+
+    var setEnableDisableElementsAndInputsHandler = function(sectionContainer) {
+        $(sectionContainer).on(click, disableElementTriggerSelector, function() {
+            var $trigger = $(this);
+            toggleTriggerElementAndChildInputs($trigger, false);
         });
     };
 
-    var setEnableDisableElementsAndInputsHandler = function(sectionContainer, disableElementParent) {
-        $(sectionContainer).on(click, disableElementTriggerSelector, function() {
-            $trigger = $(this);
-            $parent = $trigger.closest(disableElementParent);
-            $targets = $parent.find(disableElementTargetSelector);
+    //exceptions could be '.btn' (single), '.btn.btn-toggle' (element with those two classes) '.btn,.btn-toggle' (multiple)
+    var clearAllChildActiveClasses = function($element, exceptions) {
+        exceptions = exceptions || '';
+        if (typeof $element == 'string') $element = $($element);
 
-            $trigger.hasClass('active') == false ? disableElementAndChildInputs($targets) : enableElementAndChildInputs($targets);
-            //The logic above should be if active == true.
-            //However bootstrap js seems to executes after this code does, so the active class doesn't get set till after
-            //I don't like this solution, but am open to suggestions
+        $element.find('.active:not(' + exceptions + ')' ).removeClass('active')
+    };
+
+    var disableTargetElementsIfTriggerActive = function() {
+        var $triggers = $(disableElementTriggerSelector + '.active');
+        $triggers.each(function() {
+            var $self = $(this);
+            var $parent = $self.parent(disableTriggerAndTargetParent);
+
+            toggleTriggerElementAndChildInputs($self, true);
+            clearAllChildActiveClasses($parent, disableElementTriggerSelector)
         });
     };
 
@@ -375,7 +397,8 @@ GS.forms.elements = (function() {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
         setEnableDisableElementsAndInputsHandler: setEnableDisableElementsAndInputsHandler,
         disableElementAndChildInputs: disableElementAndChildInputs,
-        enableElementAndChildInputs: enableElementAndChildInputs
+        enableElementAndChildInputs: enableElementAndChildInputs,
+        disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive
     }
 
 })();
