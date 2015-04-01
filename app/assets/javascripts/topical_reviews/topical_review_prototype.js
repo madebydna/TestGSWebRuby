@@ -100,12 +100,20 @@ GS.topicalReview.checkBoxes = (function (){
 
 //        Ajax submission for checkBox question
         $('.new_review').on('ajax:success', function(event, xhr, status, error) {
+          var redirect_url = xhr.redirect_url;
+            if(redirect_url !== undefined && redirect_url !== '') {
+              window.location = redirect_url;
+            }
+
+
+
             var reviewContainer = $(this).parents('.js-topical-review-container');
             $(reviewContainer).addClass('js-reviewComplete');
             $(reviewContainer).hide();
             GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
         }).on('ajax:error', function(event, xhr, status, error){
-        })
+          alert(xhr.responseText);
+        });
     };
 
     return {

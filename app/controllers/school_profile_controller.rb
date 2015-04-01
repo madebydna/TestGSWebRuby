@@ -1,21 +1,22 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
+  # TODO: Refactor these actions
   before_action :redirect_tab_urls, only: [:overview]
   before_action :require_state, :require_school
   before_action :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
-  before_action :read_config_for_page
-  before_action :init_page, :set_header_data
+  before_action :read_config_for_page, only: [:overview, :quality, :details, :reviews]
+  before_action :init_page, :set_header_data, only: [:overview, :quality, :details, :reviews]
   before_action :store_location, only: [:overview, :quality, :details, :reviews]
   before_action :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
-  before_action :set_seo_meta_tags
+  before_action :set_seo_meta_tags, only: [:overview, :quality, :details, :reviews]
 
-  before_action :ad_setTargeting_through_gon
-  before_action :set_city_state
-  before_action :facebook_comments_permalink
-  before_action :set_hub
-  before_action :enable_ads
-  before_action :set_breadcrumbs
+  before_action :ad_setTargeting_through_gon, only: [:overview, :quality, :details, :reviews]
+  before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
+  before_action :facebook_comments_permalink, only: [:overview, :quality, :details, :reviews]
+  before_action :set_hub, only: [:overview, :quality, :details, :reviews]
+  before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
+  before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
   # after_filter :set_last_modified_date
 
   layout 'application'
