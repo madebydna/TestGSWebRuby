@@ -141,11 +141,24 @@
 }
 
 //for checkboxes
-.btn-checkbox {
+.btn-checkbox-square {
+  @extend .btn-toggle;
   padding: 8px;
   line-height: 0px;
 }
 
+.checkbox-square-icon {
+  @extend .vam;
+  @extend .iconx16;
+  @extend .i-16-white-check;
+}
+
+.btn-checkbox {
+  @extend .btn-toggle;
+  @extend .mvs;
+  @extend .mrm;
+  @extend .pull-left;
+}
 
 // Block button
 // --------------------------------------------------
