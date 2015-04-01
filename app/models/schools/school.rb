@@ -351,7 +351,7 @@ class School < ActiveRecord::Base
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
   end
 
-  def notes
-    @notes ||= SchoolNote.find_by_school(school)
-  end
+  # def notes
+  #   @notes ||= SchoolNote.find_by_school(self)
+  # end
 end
