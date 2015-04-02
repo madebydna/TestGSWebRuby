@@ -144,8 +144,9 @@
 .btn-checkbox-square {
   @extend .btn-toggle;
   @extend .vam;
-  @extend .iconx16;
-  @extend .i-16-white-check;
+  @extend .iconx24-icons;
+  @extend .i-24-checkmark-white;
+
   padding: 8px;
   line-height: 0px;
   text-indent: 100px; //this is usually put on an input element. this is to prevent text from value attr from appearing.
