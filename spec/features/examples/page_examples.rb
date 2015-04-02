@@ -20,7 +20,11 @@ shared_example 'should have redirected to' do |path|
   expect(current_path).to eq(path)
 end
 
-
+shared_example 'should contain the active class' do 
+  [*subject].each do |element|
+    expect(element[:class]).to include 'active'
+  end
+end
 
 ### Need js: true to work ###
 

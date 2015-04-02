@@ -36,7 +36,7 @@ shared_context 'with a basic set of osp questions in db' do
         esp_response_key: :before_after_care,
         osp_question_group_id: nil,
         question_type: 'multi_select',
-        default_config: { #will be turned into json, so needs to be string
+        config: { #will be turned into json, so needs to be string
           'answers' => {
             "Before Care" => "before",
             "After Care" => "after",
@@ -47,7 +47,7 @@ shared_context 'with a basic set of osp questions in db' do
         esp_response_key: :transportation,
         osp_question_group_id: nil,
         question_type: 'conditional_multi_select',
-        default_config: { #will be turned into json, so needs to be string
+        config: { #will be turned into json, so needs to be string
           'answers' => {
             'Bus' => 'bus',
             'Canoe' => 'canoe',
@@ -75,26 +75,39 @@ end
 
 shared_context 'click the none option on a conditional multi select question group' do
   before do
-    trigger = osp_page.disabledElementTrigger.first
+    trigger = osp_page.osp_form.disabledElementTrigger.first
     trigger.click if trigger.present?
   end
   subject do
-    osp_page.disabledElementTarget
+    osp_page.osp_form.disabledElementTarget
   end
 end
 
 shared_context 'click a value in a conditional multi select group and then clicking none' do
   before do
-    button = osp_page.disabledElementTarget.first
+    button = osp_page.osp_form.disabledElementTarget.first
     button.click if button.present?
   end
 
   include_context 'click the none option on a conditional multi select question group'
 end
 
+shared_context 'click Before Care and Canoe button options' do
+  let(:selected_answers) { ['Before Care', 'Canoe'] }
+  include_context 'click several values in a multi select group'
+end
+
+shared_context 'click several values in a multi select group' do
+  before do
+    answers = Regexp.new(selected_answers.join('|'))
+    elements = osp_page.osp_form.checkboxes(text: answers)
+    elements.each(&:click)
+  end
+end
+
 shared_context 'submit the osp form' do
   before do
-    form = osp_page.ospPageForm
+    form = osp_page.osp_form
     form.submit.click if form.present?
   end
 

@@ -1,9 +1,9 @@
 class OspPage < SitePrism::Page
 
-  elements :disabledElementTrigger, ".js-disableTriggerElement"
-  elements :disabledElementTarget, ".js-disableTarget"
-
-  section :ospPageForm, "form[name='ospPage']" do
+  section :osp_form, "form[name='ospPage']" do
+    elements :checkboxes, ".js-checkboxButton"
+    elements :disabledElementTrigger, ".js-disableTriggerElement"
+    elements :disabledElementTarget, ".js-disableTarget"
     element :submit, "button[type='submit']"
   end
 
