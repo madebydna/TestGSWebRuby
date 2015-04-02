@@ -23,9 +23,7 @@
 <% if @show_ads %>
   <div class="row ptm">
     <div class="col-xs-12">
-      <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Custom, view: :desktop, visible_for:'visible-lg visible-md'%>
-      <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Custom, view: :desktop, visible_for:'visible-sm'%>
-      <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Custom, view: :mobile, visible_for:'visible-xs'%>
+      <%= render 'layouts/ad_layer', page: :Homepage, slot: :Custom, view: :desktop, visible_for: 'visible-lg visible-md'%>
     </div>
   </div>
 <% end %>
