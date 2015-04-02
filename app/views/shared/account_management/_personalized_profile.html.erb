@@ -57,6 +57,22 @@
 
 </div>
 
+<% if @reviews.present? %>
+    <div class="limit-width-1200">
+      <div class="bg-light-gray mvl js-header-slide-toggle">
+        <div class="row">
+          <div class="col-xs-12 clearfix phm">
+            <div class="fl pointer font-size-large mam">
+              My School Reviews
+            </div>
+            <span class="fr iconx32-college_ready i-32-close-arrow-head pointer mtm"></span>
+          </div>
+        </div>
+      </div>
+      <%= render partial: 'shared/account_management/school_reviews' %>
+    </div>
+<% end %>
+
 <% if @saved_searches.present? %>
     <div class="limit-width-1200">
       <div class="bg-light-gray mvl js-header-slide-toggle">

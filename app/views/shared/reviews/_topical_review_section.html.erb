@@ -3,6 +3,7 @@
   <div class="js-QuestionsComplete dn tac bg-brand-primary limit-width-1200" style="min-height: 280px;">
     <h1>You have Completed All the Questions</h1>
   </div>
+
   <% @school.topical_review_question_hash.each do |topic_name, questions| %>
       <% questions.each do |review_question| %>
           <%= render "shared/reviews/modules/topical_review_#{review_question[:layout]}_container",
@@ -12,5 +13,7 @@
           %>
       <% end %>
   <% end %>
+  <%= render "shared/reviews/modules/topical_review_question_complete_container", title: 'What do you think about Homework?'
+  %>
 </div>
 

@@ -1,0 +1,39 @@
+<%      review_summary_data = {
+        'summary' => '5 Parents were <span class="open-sans_cb">unhappy </span>with the homework policy, while 3 Parents were <span class="open-sans_cb">happy</span>',
+        'comments' => '25 comments'
+} %>
+
+<div class="limit-width-1200 clearfix js-topical-review-container dn">
+  <div class="row bg-light-gray gray-box-border-v" >
+    <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr" style="min-height: 280px">
+      <header class="bg-yellow full-width tac open-sans_sb pvl">
+        <%= title.html_safe %>
+      </header>
+      <section>
+       <div class=" tac ptl font-size-large">You selected: <span class="open-sans_sb">angry, neutral</span></div>
+        <div class="ptm phxl">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae dolor illum nam natus placeat
+          repellat suscipit? Accusamus, cumque dicta dolor ea eum hic maiores molestias nihil obcaecati quae sint voluptas!
+        </div>
+        <div class="tac ptxl pbl">
+          <%= link_to  my_school_list_url, rel:'nofollow' do %>
+              <button type="submit" class="btn btn-primary js-reviewQuestionEdit">Manage your answers</button>
+        <%  end %>
+      </div>
+      </section>
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">
+      <%= render "shared/reviews/modules/output/review_results_snapshot", review_summary_data: review_summary_data  %>
+    </div>
+  </div>
+  <div class="full-width mtl">
+    <div class="fl">
+      <%= link_to("< Previous topic", "#", class:"js-previous-topic") %>
+    </div>
+    <div class="fr">
+      <%= link_to("Next topic >", "#", class:"js-next-topic") %>
+    </div>
+
+  </div>
+</div>

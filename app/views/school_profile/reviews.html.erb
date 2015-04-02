@@ -49,8 +49,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <% if @show_ads %>
-                        <%= render "shared/reviews/top_two_sections" %>
-                        <%= render "shared/reviews/top_section_with_ad",driver: 'Reviews' %>
+                      <%= render "shared/reviews/topical_review_section" %>
                     <% else %>
                         <%= render "shared/review_top_sections",driver: 'Reviews' %>
                     <% end %>
