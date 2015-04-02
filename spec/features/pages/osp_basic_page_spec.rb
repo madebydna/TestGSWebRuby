@@ -6,38 +6,41 @@ require_relative '../../../spec/features/contexts/osp_contexts'
 
 describe 'OSP Basic Page' do
   with_shared_context 'visit OSP page' do
-    it 'should have an h1 with the school name' do
-      subject.find('h1', text: school.name)
+
+    describe_mobile_and_desktop do
+      it 'should have nav bar with school name' do
+        subject.find('.rs-osp_school_name', text: school.name)
+      end
+
+      it 'should have dashboard button' do
+        subject.find_button('dashboard')
+      end
+
+      it 'should have a submit button' do
+        subject.find_button('Submit')
+      end
     end
 
-    # it 'should have dashboard button' do
-    #   subject.find_button('dashboard')
-    # end
+    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff', 'Basic Information']
 
-    it 'should have an h3 with text Basic Information' do
-      subject.find('h3', text: 'Basic Information')
+    describe_desktop do
+      osp_forms.each do |form|
+        it 'should have an h3 with text ' + form do
+          subject.find('h3', text: form)
+        end
+      end
     end
 
-    it 'should have an active class with Basic Information' do
-      subject.find('.active', text: 'Basic Information')
-    end
-
-    it 'should have an h3 with text Academics' do
-      subject.find('h3', text: 'Academics')
-    end
-
-    it 'should have an h3 with text Extracurriculars & Culture' do
-      subject.find('h3', text: 'Extracurriculars & Culture')
-    end
-
-    it 'should have an h3 with text Facilities & Staff' do
-      subject.find('h3', text: 'Facilities & Staff')
-    end
-
-    it 'should have a submit button' do
-      subject.find_button('Submit')
+    describe_mobile do
+      osp_forms.each do |form|
+        it 'should have dropdown with text ' + form do
+          click_button 'Basic Information'
+          subject.find('.js-button-link', text: form)
+        end
+      end
     end
   end
+
   with_shared_context 'with a basic set of osp questions in db' do
     with_shared_context 'visit OSP page' do
       with_shared_context 'click a value in a conditional multi select group and then clicking none', js: true do
@@ -49,6 +52,7 @@ describe 'OSP Basic Page' do
       end
     end
   end
+
 
 # describe 'should show active groups' do
 #   question_group = FactoryGirl.create(:osp_question_groups)
