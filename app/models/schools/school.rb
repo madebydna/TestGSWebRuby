@@ -155,7 +155,7 @@ class School < ActiveRecord::Base
   def topical_review_question_hash
     filtered_topics = ReviewTopic.find_by_school(self)
     filtered_topics.each_with_object({}) do |topic, hash|
-      hash[topic.name] = topic.build_questions_display_hash(self)
+      hash[topic.name] = topic.build_questions_display_array(self)
     end
   end
 

@@ -51,7 +51,7 @@ class SchoolProfileReviewsController < SchoolProfileController
 private
 
   def review_params
-    params.require(:review).permit(:list_member_id,:school_id, :state, :review_question_id, :comment,
+    params.require(:review).permit(:school_id, :state, :review_question_id, :comment,
                                    review_answers_attributes:[ :value, :review_id])
   end
 

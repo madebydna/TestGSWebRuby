@@ -11,14 +11,19 @@ module ReviewControllerConcerns
       raise(ArgumentError, "Must provide school_id and state") unless params[:school_id] && params[:state]
 
       @user = user
-
-      params.each do |k,v|
-        instance_variable_set("@#{k}", v) unless v.nil?
-      end
+      @params = params
     end
 
     def school
-      @school ||= School.find_by_state_and_id(@state, @school_id)
+      @school ||= School.find_by_state_and_id(state, school_id)
+    end
+
+    def state
+      @params[:state]
+    end
+
+    def school_id
+      @params[:school_id]
     end
 
     def save_new_review
@@ -42,7 +47,10 @@ module ReviewControllerConcerns
     end
 
     def review_attributes
-      self.instance_values.merge(school: school, user: @user)
+      @params.merge(
+          school: school,
+          user: @user
+      )
     end
 
     # TODO: Figure this out

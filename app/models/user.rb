@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
   has_many :esp_memberships, foreign_key: 'member_id'
+  # Reviews that this User authored
+  has_many :reviews, foreign_key: 'list_member_id'
+
+  # Review answers that User authored
+  has_many :review_answers, through: :reviews
+
   # has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
 
   # Reviews that this User authored, that are published now
