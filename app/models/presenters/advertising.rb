@@ -406,7 +406,7 @@ class Advertising
       Custom: {
         name: "Custom",
         desktop:{
-          dimensions:[[970,250],[728,90]]
+          dimensions:[[970,250]]
         }
       }
     }
