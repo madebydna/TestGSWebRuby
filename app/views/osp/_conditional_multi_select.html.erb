@@ -9,6 +9,7 @@
 <% display_question_label     = display_question.displayed_label %>
 <% display_text_and_value_map = display_question.displayed_answers %>
 <% display_options            = display_question.display_options %>
+<% input_value                = display_options['input_value'] || 'none' %>
 <% preexisting_esp_values %>
 <% response_key  %>
 
@@ -19,13 +20,13 @@
         <%= display_question_label %>
       </span>
       <div class="dib">
-        <% is_none_active = preexisting_esp_values.include?('none') ? true : false  %>
+        <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
         <span>
           <%= render partial: 'shared/form_elements/checkbox_square', locals: {
                   key: "#{response_key}[]",
-                  value: 'none',
+                  value: input_value,
                   button_classes: 'js-disableTriggerElement mb2',
-                  text: display_options['text_label'] ||= 'None',
+                  text: display_options['text_label'] || 'None',
                   active: is_none_active
           } %>
         </span>
