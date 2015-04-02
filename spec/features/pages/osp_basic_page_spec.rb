@@ -40,9 +40,15 @@ describe 'OSP Basic Page' do
   end
   with_shared_context 'with a basic set of osp questions in db' do
     with_shared_context 'visit OSP page' do
-      with_shared_context 'when clicking the none option on a question group' do
-        context 'the group of questions', js: true do
+      with_shared_context 'click a value in a conditional multi select group and then clicking none' do
+        context 'the conditional multi select group of questions', js: true do
           include_example 'should be disabled'
+        end
+
+        with_shared_context 'submit the osp form' do
+          context 'the conditional multi select group of questions', js: true do
+            include_example 'should be disabled'
+          end
         end
       end
     end
