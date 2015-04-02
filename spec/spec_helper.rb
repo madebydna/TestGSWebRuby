@@ -94,7 +94,8 @@ def shared_example(name, &block)
 end
 
 def with_shared_context(name, *args, &block)
-  js_arg = args[0][:js] if args[0].try(:[], :js).present?
+  # commented this out since js_arg isn't being referenced and this was causing an error
+  # js_arg = args[0][:js] if args[0].try(:[], :js).present?
   describe name do
     include_context name, *args
     instance_exec &block
