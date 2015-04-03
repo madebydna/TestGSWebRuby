@@ -21,6 +21,58 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
     end
   end
 
+  describe '#active=' do
+    let!(:first) { FactoryGirl.create(factory, :active) }
+    let!(:second) { FactoryGirl.create(factory, :inactive) }
+    after do
+      clean_models klass
+    end
+    [true, 1].each do |value|
+      it "should correctly handle #{value} as true" do
+        first.active = value
+        first.save
+        second.active = value
+        second.save
+        first.reload
+        second.reload
+        expect(first).to be_active
+        expect(second).to be_active
+      end
+    end
+    [false, 0].each do |value|
+      it "should correctly handle #{value} as false" do
+        first.active = value
+        first.save
+        second.active = value
+        second.save
+        first.reload
+        second.reload
+        expect(first).to be_inactive
+        expect(second).to be_inactive
+      end
+    end
+  end
+
+  describe '#deactivate' do
+    let!(:object) { FactoryGirl.create(factory, :active) }
+    after do
+      clean_models klass
+    end
+    it 'should set active flag to false' do
+      expect { object.deactivate }.to change { object.active? }.from(true).to(false)
+    end
+  end
+
+  describe '#activate' do
+    let!(:object) { FactoryGirl.create(factory, :inactive) }
+    after do
+      clean_models klass
+    end
+    it 'should set active flag to true' do
+      expect { object.activate }.to change { object.active? }.from(false).to(true)
+    end
+  end
+
   describe '#active?' do
     subject { FactoryGirl.create(factory, :active) }
     after do
