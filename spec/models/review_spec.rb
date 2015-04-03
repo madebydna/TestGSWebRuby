@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative 'examples/model_with_active_field'
+require_relative 'examples/model_with_school_association'
 
 describe Review do
   it { is_expected.to be_a(Review) }

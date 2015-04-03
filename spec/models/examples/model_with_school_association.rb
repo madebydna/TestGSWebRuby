@@ -13,13 +13,12 @@ shared_examples_for 'model with school association' do |klass = described_class,
 
   describe '.find_by_school' do
     let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    let!(:first) { FactoryGirl.create(factory, school_id: 9999, school_state: 'xx') }
+    let!(:first) { FactoryGirl.create(factory, school_id: 9999, school_state: 'WY') }
     let!(:second) { FactoryGirl.create(factory, school_id: school.id, school_state: school.state) }
-    let!(:third) { FactoryGirl.create(factory, school_id: 9998, school_state: 'xx') }
+    let!(:third) { FactoryGirl.create(factory, school_id: 9998, school_state: 'WY') }
     let!(:fourth) { FactoryGirl.create(factory, school_id: school.id, school_state: school.state) }
     after do
-      clean_models School
-      clean_models klass
+      clean_dbs :gs_schooldb, :ca, :wy
     end
     subject do
       klass.find_by_school(school)
@@ -40,19 +39,28 @@ shared_examples_for 'model with school association' do |klass = described_class,
   describe '#school' do
     let!(:school) { FactoryGirl.create(:alameda_high_school) }
     subject { FactoryGirl.build(factory, school_id: school.id, school_state: school.state) }
+    after do
+      clean_dbs :gs_schooldb, :ca
+    end
     it 'should find associated school' do
+      expect(subject.school).to be_present
       expect(subject.school.id).to eq(school.id)
     end
   end
 
   describe '#school=' do
-    let!(:school) { FactoryGirl.create(:alameda_high_school) }
-    subject { FactoryGirl.build(factory, school_id: nil, school_state: nil) }
+    let!(:school) { FactoryGirl.create(:alameda_high_school, id: 1, state: 'CA') }
+    subject { FactoryGirl.build(factory, school_id: 999, school_state: 'WY') }
+    after do
+      clean_dbs :gs_schooldb, :ca, :wy
+    end
     it 'should set school_id to the correct value' do
-      expect { subject.school = school }.to change { subject.school_id }.from(nil).to(school.id)
+      subject.school = school
+      expect(subject.school_id).to eq(school.id)
     end
     it 'should set school_state to the correct value' do
-      expect { subject.school = school }.to change { subject.state }.from(nil).to(school.state)
+      subject.school = school
+      expect(subject.state).to eq(school.state)
     end
   end
 

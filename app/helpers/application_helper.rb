@@ -3,8 +3,6 @@ require './app/models/presenters/topnav'
 module ApplicationHelper
   include CookieConcerns
 
-  protected
-
   # Hack: Remove /assets/ prefix since it is set that way in hub_config
   # And needs to remain until hubs are off of Java
   def image_tag(path, *args, &blk)

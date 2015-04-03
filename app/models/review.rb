@@ -1,5 +1,6 @@
 class Review < ActiveRecord::Base
   include BehaviorForModelsWithActiveField
+  include BehaviorForModelsWithSchoolAssociation
   include Rails.application.routes.url_helpers
   include UrlHelper
   self.table_name = 'reviews'
@@ -7,6 +8,7 @@ class Review < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   alias_attribute :member_id, :list_member_id
+  alias_attribute :school_state, :state
 
   belongs_to :user, foreign_key: 'list_member_id'
 
@@ -71,27 +73,7 @@ class Review < ActiveRecord::Base
     super << :updated
   end
 
- # find_by_school(school: my_school) or find_by_school(school_id: 1, state: 'ca')
-  def self.find_by_school(hash)
-    school_id = nil
-    state = nil
 
-    if hash[:school]
-      school_id = hash[:school].id
-      state = hash[:school].state
-    elsif hash[:state] && hash[:school_id]
-      school_id = hash[:school_id]
-      state = hash[:state]
-    else
-      raise(ArgumentError, "Must provide :school or :state and :school_id")
-    end
-
-    where(
-      school_id: school_id,
-      state: state,
-      active: true
-    )
-  end
 
   def school=(school)
     @school = school
