@@ -66,8 +66,10 @@ describe Admin::OspController do
       it 'should insert the same blobs into update_queue and form_response tables' do
         update_queue_blobs = UpdateQueue.all.map(&:update_blob)
         osp_form_response_blobs = OspFormResponse.all.map(&:response)
-        update_queue_blobs.each_with_index do |update_queue_blob, n|
-          expect(update_queue_blob).to eql(osp_form_response_blobs[n])
+        expect(update_queue_blobs.count).to eql(osp_form_response_blobs.count)
+
+        update_queue_blobs.each do |update_queue_blob|
+          expect(osp_form_response_blobs).to include(update_queue_blob)
         end
       end
       it 'should use the query parameter question keys as keys in the response blobs' do
