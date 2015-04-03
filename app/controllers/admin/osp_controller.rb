@@ -32,17 +32,14 @@ class Admin::OspController < ApplicationController
   end
 
   def save_response!(question_key, esp_membership_id, response_values)
-    osp_question_id   = OspQuestion.find_by_question_key(question_key).id
+    osp_question_id = OspQuestion.find_by_question_key(question_key).try(:id)
+    osp_question_id or (Rails.logger.warn("Didn't save osp response. Couldn't find osp question key: #{question_key}") and return)
+
     response_blob = make_response_blob(question_key, esp_membership_id, response_values)
 
     error = create_osp_form_response!(osp_question_id, esp_membership_id, response_blob)
-    Rails.logger.error "Was not able to save osp response to osp_form_response table. error: \n #{error}" if error.present?
-    #think about better error handling, handling 500's, and error messaging.
-
-    if @is_approved_user && !error.present?
-      error = create_update_queue_row!(response_blob)
-      Rails.logger.error "Was not able to save osp response to update_queue table. error: \n #{error}" if error.present?
-    end
+    create_update_queue_row!(response_blob) if @is_approved_user && !error.present?
+    #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
   def make_response_blob(question_key, esp_membership_id, response_values)
@@ -56,23 +53,30 @@ class Admin::OspController < ApplicationController
           esp_source: "osp"
       }.stringify_keys!
     end
+
     {question_key => rvals}.to_json
   end
 
   def create_osp_form_response!(osp_question_id, esp_membership_id, response)
-    OspFormResponse.create(
+    error = OspFormResponse.create(
         osp_question_id: osp_question_id,
       esp_membership_id: esp_membership_id,
                response: response
     ).errors.full_messages
+
+    Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
+    error
   end
 
   def create_update_queue_row!(response_blob)
-    UpdateQueue.create(
+    error = UpdateQueue.create(
            source: :osp_form,
          priority: 2,
       update_blob: response_blob,
     ).errors.full_messages
+
+    Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
+    error
   end
 
   def decorate_school(school)
@@ -117,7 +121,7 @@ class Admin::OspController < ApplicationController
   end
 
   def set_esp_membership_instance_vars
-    esp_membership     = current_user.esp_membership_for_school(@school)
+    esp_membership = current_user.esp_membership_for_school(@school)
     if esp_membership.present?
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?

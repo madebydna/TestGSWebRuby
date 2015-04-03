@@ -21,15 +21,13 @@
       </span>
       <div class="mtl">
         <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
-        <div>
-          <%= render partial: 'shared/form_elements/checkbox_square', locals: {
-                  key: "#{response_key}[]",
-                  value: input_value,
-                  button_classes: 'js-disableTriggerElement mb2',
-                  text: display_options['text_label'] || 'None',
-                  active: is_none_active
-          } %>
-        </div>
+        <%= render partial: 'shared/form_elements/checkbox_square', locals: {
+                key: "#{response_key}[]",
+                value: input_value,
+                button_classes: 'js-disableTriggerElement mb2',
+                text: display_options['text_label'] || 'None',
+                active: is_none_active
+        } %>
       </div>
     </h3>
   </div>
