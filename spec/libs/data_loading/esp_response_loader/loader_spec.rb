@@ -33,8 +33,8 @@ describe EspResponseLoading::Loader do
 
       it 'should create a row in esp and disable the existing rows' do
         expect(subject).to receive(:disable!).with(esp_update, value_row)
-        expect(subject).to receive(:insert_into!).with(esp_update, 1)
-        subject.esp_insert(esp_update, value_row)
+        expect(subject).to receive(:insert_into!).with(esp_update, active: true)
+        subject.handle_update(esp_update, value_row)
       end
     end
     context 'when inserting older data than the db has' do
@@ -54,8 +54,8 @@ describe EspResponseLoading::Loader do
 
       it 'should create a disabled row in esp' do
         expect(subject).to_not receive(:disable!)
-        expect(subject).to receive(:insert_into!).with(esp_update, 0)
-        subject.esp_insert(esp_update, value_row)
+        expect(subject).to receive(:insert_into!).with(esp_update, active: false)
+        subject.handle_update(esp_update, value_row)
       end
     end
 
@@ -76,8 +76,8 @@ describe EspResponseLoading::Loader do
 
       it 'should create a row in esp' do
         expect(subject).to_not receive(:disable!)
-        expect(subject).to receive(:insert_into!).with(esp_update, 1)
-        subject.esp_insert(esp_update, value_row)
+        expect(subject).to receive(:insert_into!).with(esp_update, active: true)
+        subject.handle_update(esp_update, value_row)
       end
     end
 
@@ -146,21 +146,21 @@ describe EspResponseLoading::Loader do
       }
       let(:esp_update) { EspResponseLoading::Update.new('before_after_care', update, 'osp_form') }
       it 'should have the correct source' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.response_value).to eq(esp_update.value)
         end
       end
 
       it 'should have the correct created time' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.created).to eq(esp_update.created)
         end
       end
 
       it 'should have the correct member id' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.member_id).to eq(esp_update.member_id)
         end
@@ -168,27 +168,27 @@ describe EspResponseLoading::Loader do
 
 
       it 'should have the correct value' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.response_value).to eq(esp_update.value)
         end
       end
 
       it 'should have the correct response key' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.response_key).to eq(esp_update.data_type)
         end
       end
 
       it 'should have the true active flag' do
-        subject.insert_into!(esp_update, 1)
+        subject.insert_into!(esp_update, active: true)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.active).to eq(true)
         end
       end
       it 'should have the false active flag' do
-        subject.insert_into!(esp_update, 2)
+        subject.insert_into!(esp_update, active: false)
         EspResponse.on_db(:ca).all.each do |response|
           expect(response.active).to eq(false)
         end
