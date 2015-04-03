@@ -8,17 +8,11 @@ describe 'OSP Basic Page' do
   with_shared_context 'visit OSP page' do
 
     describe_mobile_and_desktop do
-      it 'should have nav bar with school name' do
-        subject.find('.rs-osp_school_name', text: school.name)
-      end
 
-      it 'should have dashboard button' do
-        subject.find_button('dashboard')
-      end
+      include_example 'should have nav bar with school name'
+      include_example 'should have dashboard button'
+      include_example 'should have a submit button'
 
-      it 'should have a submit button' do
-        subject.find_button('Submit')
-      end
     end
 
     osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff', 'Basic Information']
