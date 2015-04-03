@@ -19,9 +19,9 @@
       <span class="mrl">
         <%= display_question_label %>
       </span>
-      <div class="dib">
+      <div class="mtl">
         <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
-        <span>
+        <div>
           <%= render partial: 'shared/form_elements/checkbox_square', locals: {
                   key: "#{response_key}[]",
                   value: input_value,
@@ -29,7 +29,7 @@
                   text: display_options['text_label'] || 'None',
                   active: is_none_active
           } %>
-        </span>
+        </div>
       </div>
     </h3>
   </div>
