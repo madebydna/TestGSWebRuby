@@ -49,7 +49,7 @@ class Admin::OspController < ApplicationController
            entity_id: @school.id,
                value: response_value,
            member_id: esp_membership_id,
-             created: Time.zone.now,
+             created: Time.now,
           esp_source: "osp"
       }.stringify_keys!
     end
