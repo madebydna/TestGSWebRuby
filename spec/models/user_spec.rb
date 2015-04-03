@@ -180,20 +180,16 @@ describe User do
       let(:school) { FactoryGirl.build(:school, id: school_id, state: state) }
 
       it 'should support a school hash parameter' do
-        expect(SchoolRating).to receive(:where).with(
-          member_id: subject.id,
-          state: state,
-          school_id: school_id
-        )
+        relation = double
+        expect(Review).to receive(:where).with(active: true, state: state, school_id: school_id).and_return(relation)
+        expect(relation).to receive(:where).with(list_member_id: subject.id)
         subject.reviews_for_school(school: school)
       end
 
       it 'should support state + school_id parameters' do
-        expect(SchoolRating).to receive(:where).with(
-          member_id: subject.id,
-          state: state,
-          school_id: school_id
-        )
+        relation = double
+        expect(Review).to receive(:where).with(active: true, state: state, school_id: school_id).and_return(relation)
+        expect(relation).to receive(:where).with(list_member_id: subject.id)
         subject.reviews_for_school(state: state, school_id: school_id)
       end
 

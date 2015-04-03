@@ -489,41 +489,6 @@ describe SchoolRating do
     end
   end
 
-  describe '#send_thank_you_email_if_published' do
-    let(:school_rating) { FactoryGirl.build(:school_rating, status: 'p') }
-    before do
-      allow(school_rating).to receive(:calculate_and_set_status) {}
-    end
 
-    it 'Tells ThankYouForReviewEmail to send an email' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user)
-      school_rating.save
-    end
-
-    it 'Only sends an email when status is published' do
-      expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
-      %w[pp ph pd pu h d u].each do |status|
-        school_rating.status = status
-        school_rating.save
-      end
-      school_rating.save
-    end
-
-    it 'Sends only one email when review is saved multiple times' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user).once
-      school_rating.save
-      school_rating.comments = school_rating.comments + ' blah'
-      school_rating.save
-    end
-
-    it 'Sends two emails if review is published, disabled, published again' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user).twice
-      school_rating.save
-      school_rating.status = 'd'
-      school_rating.save
-      school_rating.status = 'p'
-      school_rating.save
-    end
-  end
 
 end

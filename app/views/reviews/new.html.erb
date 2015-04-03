@@ -21,7 +21,7 @@
                   <div class="modal-body">
                     <div class="well">
                       <div class="tab-pane active in" id="login">
-                        <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}, url: school_ratings_path(school_params(@school))) do |f| %>
+                        <%= form_for(SchoolRating.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'form-horizontal parsley-form', role: 'form'}, url: school_reviews_path(school_params(@school))) do |f| %>
                           <fieldset>
                             <legend>Write a review about <%= @school.name %></legend>
 

@@ -1,6 +1,8 @@
 module UpdateQueueConcerns
   extend ActiveSupport::Concern
 
+  protected
+
   def log_review_changed(state_abbr, school_id, member_id)
     begin
       update_attrs = {

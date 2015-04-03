@@ -53,10 +53,6 @@ class User < ActiveRecord::Base
     where(email: email).first
   end
 
-  def school_reviews
-    SchoolRating.belonging_to(self)
-  end
-
   def reviews_for_school(*args)
     Review.find_by_school(*args).where(list_member_id: self.id)
   end

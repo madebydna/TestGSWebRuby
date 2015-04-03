@@ -3,6 +3,7 @@ require 'spec_helper'
 shared_examples_for 'a controller that can save a review' do
 
 	describe '#save_review' do
+    before { pending('TODO: remove these specs') }
     let(:current_user) { FactoryGirl.build(:user) }
     let(:existing_review) { FactoryGirl.build(:school_rating) }
     let(:review_params) {
@@ -100,6 +101,7 @@ shared_examples_for 'a controller that can save a review' do
 	end
 
   describe '#update_existing_review' do
+    before { pending('TODO: remove these specs') }
     let(:current_user) { FactoryGirl.build(:user) }
     let(:existing_review) { FactoryGirl.build(:school_rating) }
     let(:review_params) {
@@ -180,6 +182,7 @@ shared_examples_for 'a controller that can save a review' do
   end
 
   describe '#review_from_params' do
+    before { pending('TODO: remove these specs') }
     let(:school) { FactoryGirl.build(:school) }
     let(:review_params) {
       {
@@ -226,6 +229,7 @@ shared_examples_for 'a controller that can save a review' do
   end
 
   describe '#save_review_and_redirect' do
+    before { pending('TODO: remove these specs') }
     let(:review_params) {
       {
         school_id: 1,

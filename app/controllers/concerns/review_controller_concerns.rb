@@ -6,12 +6,19 @@ module ReviewControllerConcerns
   protected
 
   class ReviewParams
+    attr_reader :params, :user
     def initialize(params, user)
-      raise(ArgumentError, "Must provide params hash") unless params && params.is_a?(Hash)
-      raise(ArgumentError, "Must provide school_id and state") unless params[:school_id] && params[:state]
-
       @user = user
       @params = params
+    end
+
+    def errors
+      result = []
+      result << 'No valid parameters supplied' unless params && params.is_a?(Hash)
+      result << 'Must provide school id' unless params[:school_id]
+      result << 'Must provide school state' unless params[:state]
+      result << 'Specified school was not found' unless school
+      result
     end
 
     def school
@@ -27,7 +34,9 @@ module ReviewControllerConcerns
     end
 
     def save_new_review
-      handle_save(new_review)
+      review = Review.new
+      review.attributes = review_attributes
+      handle_save(review)
     end
 
     def update_existing_review
@@ -37,17 +46,20 @@ module ReviewControllerConcerns
     end
 
     def handle_save(review)
-      error = nil
+      errors = []
+      errors += self.errors.dup
+      return nil, errors if errors.any?
+
       unless review.save
-        # safe even if no errors
-        error = review.errors.full_messages.first
+        errors += review.errors.full_messages
         review = nil
       end
-      return review, error
+      errors = nil if errors.empty?
+      return review, errors
     end
 
     def review_attributes
-      @params.merge(
+      @params.except(:state).except(:school_id).merge(
           school: school,
           user: @user
       )
@@ -56,10 +68,6 @@ module ReviewControllerConcerns
     # TODO: Figure this out
     def existing_review
       @existing_review ||= user.reviews_for_school(school: school).first
-    end
-
-    def new_review
-      Review.new(review_attributes)
     end
   end
 
@@ -82,7 +90,7 @@ module ReviewControllerConcerns
       redirect_to reviews_page_for_last_school
     else
       flash_error error
-      redirect_to review_form_for_last_school
+      redirect_to reviews_page_for_last_school
     end
   end
 

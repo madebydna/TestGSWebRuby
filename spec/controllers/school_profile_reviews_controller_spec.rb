@@ -5,9 +5,10 @@ describe SchoolProfileReviewsController do
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
 
-  it 'should have only one action' do
-    expect(controller.action_methods.size).to eq(1)
-    expect(controller.action_methods - ['reviews']).to eq(Set.new)
+  it 'should have only specified actions' do
+    puts controller.action_methods.to_a.join(', ')
+    expect(controller.action_methods.size).to eq(2)
+    expect(controller.action_methods - ['reviews', 'create']).to eq(Set.new)
   end
 
   describe 'GET reviews' do

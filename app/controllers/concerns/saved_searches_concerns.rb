@@ -2,6 +2,8 @@ module SavedSearchesConcerns
   extend ActiveSupport::Concern
   ERROR_MESSAGE = 'Currently we are unable to save your search. Please try again later'
 
+  protected
+
   def handle_json(saved_search_attrs)
     errors = create_saved_search(saved_search_attrs)
     if errors.present?

@@ -1,5 +1,7 @@
 class Review < ActiveRecord::Base
   include BehaviorForModelsWithActiveField
+  include Rails.application.routes.url_helpers
+  include UrlHelper
   self.table_name = 'reviews'
 
   db_magic :connection => :gs_schooldb
@@ -8,7 +10,7 @@ class Review < ActiveRecord::Base
 
   belongs_to :user, foreign_key: 'list_member_id'
 
-  belongs_to :review_question, foreign_key: 'review_question_id'
+  belongs_to :question, class_name:'ReviewQuestion', foreign_key: 'review_question_id'
   has_many :review_answers
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   has_many :reports, class_name: 'ReportedReview', foreign_key: 'review_id', inverse_of: :review
@@ -16,7 +18,7 @@ class Review < ActiveRecord::Base
 
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
-  attr_accessible :member_id, :user, :list_member_id, :school_id, :state, :review_question_id, :comment, :user_type
+  attr_accessible :member_id, :user, :list_member_id, :school_id, :school, :state, :review_question_id, :comment, :user_type
 
   # TODO: i18n this message
   validates_uniqueness_of :list_member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
@@ -49,6 +51,8 @@ class Review < ActiveRecord::Base
   }
 
   validate :comment_minimum_length
+
+  after_save :send_thank_you_email_if_published
 
   def comment_minimum_length
     # TODO: Internationalize the error string
@@ -152,5 +156,14 @@ class Review < ActiveRecord::Base
     reported_review.review = self
     reported_review
   end
+
+  def send_thank_you_email_if_published
+    if self.active_changed? && self.active?
+      review_url = school_reviews_url(school)
+      ThankYouForReviewEmail.deliver_to_user(user, school, review_url)
+    end
+  end
+
+
 
 end
