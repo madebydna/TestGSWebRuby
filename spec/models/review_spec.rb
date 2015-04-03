@@ -19,9 +19,8 @@ describe Review do
   let(:alert_and_really_bad_words) { AlertWord::AlertWordSearchResult.new([ 'alert_word_1'], ['really_bad_word_1' ]) }
 
 
-  it 'should have a calculate_and_set_status method' do
-    pending("This will wait for spring 271")
-    expect(subject).to respond_to :calculate_and_set_status
+  it 'should have a calculate_and_set_active method' do
+    expect(subject).to respond_to :calculate_and_set_active
   end
 
   it 'should have a combination of attributes that are valid' do
@@ -76,25 +75,23 @@ describe Review do
   end
 
   it 'should NOT be valid if user is a student and school is not a high school' do
-    pending("Get this to pass once there is a role table created")
     review.user = user
-    review.who = 'student'
+    review.user_type = 'student'
     review.school = school
     school.level_code = 'e,m'
     expect(review).to_not be_valid
   end
 
   it 'should be valid if user is a student and school is a high school' do
-    pending("get this to pass once there is a role table created")
     review.user = user
-    review.who = 'student'
+    review.user_type = 'student'
     review.school = school
     school.level_code = 'm,h'
     expect(review).to be_valid
   end
 
   it 'should require an ip address' do
-    pending ("Pending in case review gets ip address added")
+    pending ("TODO: Pending in case review gets ip address added")
     review.ip = nil
     expect(review).to_not be_valid
     review.ip = '123.123.123.123'
@@ -183,52 +180,39 @@ describe Review do
     end
   end
 
-  describe '#calculate_and_set_status' do
+  describe '#calculate_and_set_active' do
     let(:new_user) { FactoryGirl.build(:new_user) }
 
     before do
-      pending("this will wait for next sprint of with moderation")
       subject.school = school
       allow(AlertWord).to receive(:search).and_return(no_bad_language)
     end
 
-    # There was a time when all reviews were automatically flagged for moderation
-    # by adding another before_save filter that was called after #calculate_and_set_status
-    # This tests that the auto moderation was removed correctly
-    it 'should be unchanged after object called' do
-      pending "Update to new role staus in model"
-      registered_user = FactoryGirl.build(:verified_user)
-      subject.who = 'parent'
-      subject.user = new_user
-      subject.calculate_and_set_status
-      allow(subject).to receive(:valid?).and_return(true)
-      expect{ subject.save }.to_not change{ subject.status }
-    end
-
     it 'should check for banned IP' do
-      pending("get this to work")
-      subject.who = 'parent'
+      pending('TODO: do we need an ip method on review')
+      fail
+      subject.user_type = 'parent'
       subject.user = user
       allow(BannedIp).to receive(:banned_ips).and_return(['123.123.123.123'])
 
       subject.ip = '123.123.123.123'
-      subject.calculate_and_set_status
-      expect(subject).to be_unpublished
+      subject.calculate_and_set_active
+      expect(subject).to be_inactive
 
       subject.ip = '1.1.1.1'
-      subject.calculate_and_set_status
-      expect(subject).to_not be_unpublished
+      subject.calculate_and_set_active
+      expect(subject).to_not be_inactive
     end
 
     context 'when reviews are not per-moderated' do
       context 'with new user, parent' do
         before do
-          subject.who = 'parent'
+          subject.user_type = 'parent'
           subject.user = new_user
         end
 
         after do
-          expect(subject).to be_provisional
+          expect(subject).to be_inactive
         end
 
         context 'non-held school' do
@@ -236,27 +220,27 @@ describe Review do
             allow(subject.school).to receive(:held?).and_return(false)
           end
 
-          it 'should have a status of pp' do
-            subject.calculate_and_set_status
-            expect(subject).to be_provisional_published
+          it 'should have a status of inactive' do
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
 
-          it 'should be unpublished if user is student' do
-            subject.who = 'student'
-            subject.calculate_and_set_status
-            expect(subject).to be_unpublished
+          it 'should be inactive if user is student' do
+            subject.user_type = 'student'
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
 
           it 'should not be affected by alert words' do
             allow(AlertWord).to receive(:search).and_return(alert_words)
-            subject.calculate_and_set_status
-            expect(subject).to be_provisional_published
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
 
-          it 'status should be set to disabled if there are really bad words' do
+          it 'status should be set to inactive if there are really bad words' do
             allow(AlertWord).to receive(:search).and_return(really_bad_words)
-            subject.calculate_and_set_status
-            expect(subject).to be_disabled
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
         end
 
@@ -266,8 +250,8 @@ describe Review do
           end
 
           it 'should have a held status' do
-            subject.calculate_and_set_status
-            expect(subject).to be_held
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
         end
       end
@@ -281,31 +265,27 @@ describe Review do
           allow(AlertWord).to receive(:search).and_return(no_bad_language)
         end
 
-        after do
-          expect(subject).to_not be_provisional
-        end
-
         context 'non-held school' do
           before do
             allow(subject.school).to receive(:held?).and_return(false)
           end
 
-          it 'should be published when user is a parent' do
-            subject.who = 'parent'
-            subject.calculate_and_set_status
-            expect(subject).to be_published
+          it 'should be active when user is a parent' do
+            subject.user_type = 'parent'
+            subject.calculate_and_set_active
+            expect(subject).to be_active
           end
 
-          it 'should be published when user is a principal' do
-            subject.who = 'principal'
-            subject.calculate_and_set_status
-            expect(subject).to be_published
+          it 'should be active when user is a principal' do
+            subject.user_type = 'principal'
+            subject.calculate_and_set_active
+            expect(subject).to be_active
           end
 
-          it 'should be unpublished if user is student' do
-            subject.who = 'student'
-            subject.calculate_and_set_status
-            expect(subject).to be_unpublished
+          it 'should be inactive if user is student' do
+            subject.user_type = 'student'
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
         end
 
@@ -315,8 +295,8 @@ describe Review do
           end
 
           it 'should have a held status' do
-            subject.calculate_and_set_status
-            expect(subject).to be_held
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
           end
         end
       end
@@ -331,12 +311,12 @@ describe Review do
       end
       context 'with new user, parent' do
         before do
-          subject.who = 'parent'
+          subject.user_type = 'parent'
           subject.user = new_user
         end
 
         after do
-          expect(subject).to be_provisional
+          expect(subject).to be_inactive
         end
 
         context 'non-held school' do
@@ -346,9 +326,9 @@ describe Review do
 
           %w[parent principal student].each do |who|
             it "should be unpublished when user is a #{who}" do
-              subject.who = who
-              subject.calculate_and_set_status
-              expect(subject).to be_unpublished
+              subject.user_type = who
+              subject.calculate_and_set_active
+              expect(subject).to be_inactive
             end
           end
         end
@@ -363,10 +343,6 @@ describe Review do
           allow(AlertWord).to receive(:search).and_return(no_bad_language)
         end
 
-        after do
-          expect(subject).to_not be_provisional
-        end
-
         context 'non-held school' do
           before do
             allow(subject.school).to receive(:held?).and_return(false)
@@ -374,9 +350,9 @@ describe Review do
 
           %w[parent principal student].each do |who|
             it "should be unpublished when user is a #{who}" do
-              subject.who = who
-              subject.calculate_and_set_status
-              expect(subject).to be_unpublished
+              subject.user_type = who
+              subject.calculate_and_set_active
+              expect(subject).to be_inactive
             end
           end
         end

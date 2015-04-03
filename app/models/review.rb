@@ -43,6 +43,8 @@ class Review < ActiveRecord::Base
   # scope :held, -> { where(status: %w[h ph]) }
 
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
+  validates :user_type, inclusion: { in: %w(parent teacher student principal unknown) }, if: 'school && school.includes_highschool?'
+  validates :user_type, inclusion: { in: %w(parent teacher principal unknown) }, unless: 'school && school.includes_highschool?'
   validates_presence_of :school
   validates_presence_of :user
 
@@ -164,6 +166,18 @@ class Review < ActiveRecord::Base
     end
   end
 
+  def calculate_and_set_active
+    if user.provisional?  ||
+      school.held? ||
+      user_type == 'student' ||
+      AlertWord.search(comment).has_really_bad_words? ||
+      PropertyConfig.force_review_moderation?
+      #BannedIp.ip_banned?(ip)
 
+      deactivate
+    else
+      activate
+    end
+  end
 
 end
