@@ -29,6 +29,13 @@ class EspResponseLoading::Update
         }
   end
 
+  def created_before?(time)
+    time <  @created
+  end
+
+  def created_after?(time)
+    time >  @created
+  end
   def validate_update
     raise 'Every esp response update must have an entity_state specified' if entity_state.blank?
     raise 'Every esp response update must have a data_type specified' if data_type.blank?

@@ -25,7 +25,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
         elsif esp_response_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          esp_insert(esp_response_update, existing_values_for_response_key)
+          handle_update(esp_response_update, existing_values_for_response_key)
         end
       rescue Exception => e
         raise e.message
@@ -37,15 +37,30 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     end
   end
 
-  def esp_insert(esp_response_update, value_row)
-    if value_row.first.present? && (value_row.first.created < esp_response_update.created)
-      disable!(esp_response_update, value_row)
-      insert_into!(esp_response_update, 1)
-    elsif value_row.first.present? && (value_row.first.created > esp_response_update.created)
-      insert_into!(esp_response_update, 0)
-    else
-      insert_into!(esp_response_update, 1)
+  class EspResponseValueUpdate
+    def initialize(esp_response_update, value_row)
+      @esp_response_update = esp_response_update
+      @value_row = value_row
     end
+    attr_reader :value_row, :esp_response_update
+
+    def should_be_active?
+      value_row.present? && esp_response_update.created_before?(value_row.created) || value_row.blank?
+    end
+
+    def should_be_disabled?
+      value_row.present? && esp_response_update.created_before?(value_row.created)
+    end
+  end
+
+  def handle_update(esp_response_update, value_row)
+    value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
+    
+    if value_info.should_be_active? && value_info.should_be_disabled?
+      disable!(esp_response_update, value_row)
+    end
+
+    insert_into!(esp_response_update, active: value_info.should_be_active?)
   end
 
   def validate_esp_response!(value_row, esp_response_update)
@@ -63,21 +78,10 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     raise errors.unshift("SCHOOL ##{value_row.school_id} ESP Response").join("\n") if errors.present?
   end
 
-  def insert_into!(esp_response_update,active)
-
-    EspResponse
-      .on_db(esp_response_update.shard)
-      .create(esp_response_update.attributes.merge(
-        {
-            active: active,
-            created: esp_response_update.created,
-            esp_source: esp_response_update.esp_source,
-            member_id: esp_response_update.member_id,
-            response_value: esp_response_update.value
-        }
-        )
-    )
-
+  def insert_into!(esp_response_update, attributes = {})
+    esp_response = EspResponse.new_from_esp_response_update(esp_response_update)
+    esp_response.attributes = attributes
+    esp_response.on_db(esp_response_update.shard).save
   end
 
   def disable!(esp_response_update,value_row)
