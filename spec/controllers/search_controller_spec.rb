@@ -67,31 +67,65 @@ describe SearchController do
       end
     end
 
-    context 'When there is overall rating in filter params with only above_average filter' do
-      let(:params_hash) { {'gs_rating' => 'above_average'} }
-
-        it 'should set the filter to be 8 to 10' do
-          allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-          allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-          allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
-          allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
-          filters = controller.send(:parse_filters, params_hash)
-          expect(filters).to eq({:overall_gs_rating=>[8, 9, 10]})
-        end
-    end
-    context 'When there is overall rating in filter params with all three rating filters' do
-      let(:params_hash) { {'gs_rating' => ['above_average','average','below_average']} }
-
-      it 'Should set the filter to be 1 to 10 so that it does not include NR' do
+    context 'When there is overall rating in filter params' do
+      gs_rating_allows = Proc.new {
         allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
-        filters = controller.send(:parse_filters, params_hash)
-        expect(filters).to have_key(:overall_gs_rating)
-        (1..10).each {|rating| expect(filters[:overall_gs_rating]).to include(rating)}
+        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
+      }
+
+      context 'with only above_average filter' do
+        let(:params_hash) { {'gs_rating' => 'above_average'} }
+
+        it 'should set the filter to be 8 to 10' do
+          instance_exec &gs_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:overall_gs_rating=>[8, 9, 10]})
+        end
+      end
+
+      context 'with all three rating filters' do
+        let(:params_hash) { {'gs_rating' => ['above_average','average','below_average']} }
+
+        it 'Should set the filter to be 1 to 10 so that it does not include NR' do
+          instance_exec &gs_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to have_key(:overall_gs_rating)
+          (1..10).each {|rating| expect(filters[:overall_gs_rating]).to include(rating)}
+        end
       end
     end
+
+    context 'When there is path to quality rating in filter params' do
+      path_to_quality_rating_allows = Proc.new {
+        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
+      }
+
+      context 'with a few ratings' do
+        let(:params_hash) { {'ptq_rating' => ['level_2','level_3']} }
+        it "should set the right filter for ratings" do
+          instance_exec &path_to_quality_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:ptq_rating=>['Level 2','Level 3']})
+        end
+      end
+
+      context 'with a all ratings' do
+        let(:params_hash) { {'ptq_rating' => ['level_1','level_2','level_3','level_4']} }
+        it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
+          instance_exec &path_to_quality_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:ptq_rating=>["Level 1", "Level 2", "Level 3", "Level 4"]})
+        end
+      end
+    end
+
   end
 
   describe '#ad_setTargeting_through_gon' do

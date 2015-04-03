@@ -20,6 +20,20 @@ shared_example 'should have redirected to' do |path|
   expect(current_path).to eq(path)
 end
 
+shared_example 'should contain the active class' do 
+  [*subject].each do |element|
+    expect(element[:class]).to include 'active'
+  end
+end
+
+### Need js: true to work ###
+
+shared_example 'should be disabled' do
+  [*subject].each do |element|
+    expect(element[:disabled]).to_not be_nil
+  end
+end
+
 %w[noindex nofollow noarchive].each do |value|
   shared_example("should have the #{value} meta tag") do
     robots_tag = subject.find('meta[name="robots"]', visible: false)
@@ -30,3 +44,4 @@ end
     expect(values).to include(value)
   end
 end
+

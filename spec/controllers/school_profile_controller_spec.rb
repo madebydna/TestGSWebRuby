@@ -143,7 +143,7 @@ describe SchoolProfileController do
 
       it 'should redirect to the right path' do
         expect(controller).to receive(:redirect_to).
-          with('/michigan/detroit/1-A-School/')
+          with('/michigan/detroit/1-A-School/', {:status=>:moved_permanently})
         controller.send :redirect_to_canonical_url
       end
 
@@ -151,7 +151,7 @@ describe SchoolProfileController do
       it 'should preserve url parameters when redirecting' do
         request.query_parameters[:preserve_me] = 'yay'
         expect(controller).to receive(:redirect_to).
-          with('/michigan/detroit/1-A-School/?preserve_me=yay')
+          with('/michigan/detroit/1-A-School/?preserve_me=yay', {:status=>:moved_permanently})
         controller.send :redirect_to_canonical_url
       end
     end

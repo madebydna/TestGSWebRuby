@@ -1,32 +1,20 @@
-<div class="ma pls" xmlns="http://www.w3.org/1999/html">
+<% #this should contain a container instead of mhm %>
+<div class="mhm js-ospQuestionsContainer" xmlns="http://www.w3.org/1999/html">
   <% questions_display_config.each do |display_question| %>
-      <% if display_question.osp_question_group_id.present? %>
-          <% if  display_question.order_in_group == 1 %>
-            <div class="pt45 pbl">
+      <% if  display_question.osp_question_group_id.present? && display_question.order_in_group == 1 %>
+          <div class="pt45 pbl">
             <%= render partial: 'osp/osp_group_display' , :locals => {group_info: display_question.osp_question_group} %>
-            </div>
-            <% end %>
-
-
-          <% if display_question.question_type == 'multi_select' %>
-              <%= render partial: 'osp/osp_question_display', :locals => {
-                      display_question_label: display_question.displayed_label,
-                      display_question_answers_map: display_question.displayed_answers,
-                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key)
-              } %>
-          <% end %>
-      <% else %>
-          <div class="pt4">
-          <% if display_question.question_type == 'multi_select' %>
-
-              <%= render partial: 'osp/osp_question_display', :locals => {
-                      display_question_label: display_question.displayed_label,
-                      display_question_answers_map: display_question.displayed_answers,
-                      preexisting_esp_values: @school_with_esp_data.values_for(display_question.question_response_key)
-              } %>
-
-          <% end %>
           </div>
+      <% end %>
+
+      <% begin %>
+          <%= render partial: "osp/#{display_question.question_type}", :locals => {
+                  display_question:           display_question,
+                  preexisting_esp_values:     @osp_form_data.values_for(display_question.question_response_key,@osp_form_data,@school_with_esp_data)      ,
+                  response_key:               display_question.question_response_key
+          } %>
+      <% rescue => error %>
+          <% Rails.logger.warn "Error rendering Osp Question Partial. Error: \n #{error}" %>
       <% end %>
   <% end %>
 </div>

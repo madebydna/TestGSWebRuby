@@ -23,8 +23,11 @@ describe CensusLoading::Loader do
 
     after do
       clean_models :ca, School
+      clean_models :ca, District
       clean_models :ca, CensusDataSet
       clean_models :ca, CensusDataSchoolValue
+      clean_models :ca, CensusDataDistrictValue
+      clean_models :ca, CensusDataStateValue
       clean_models CensusDescription
       clean_models CensusDataType
     end
@@ -58,31 +61,51 @@ describe CensusLoading::Loader do
     end
 
     context 'the created value row' do
-      before do
-        @data_set = FactoryGirl.create(:census_data_set)
-        allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
-        loader.insert_into!(census_update, school)
-        @value_row = CensusDataSchoolValue.on_db(census_update.shard).last
-      end
+      [:school, :district, :state].each do |entity_type|
+        context "for #{entity_type} level data" do
+          let(:update) {
+            {
+              entity_state: 'CA',
+              source: 'CA Dept. of Fake',
+              entity_type: entity_type,
+              entity_id: 100,
+              value: 23,
+            }
+          }
+          let(:census_update) { CensusLoading::Update.new(data_type, update) }
+          before do
+            unless entity_type == :state
+              entity = FactoryGirl.create(entity_type, id: update[:entity_id])
+            end
+            @data_set = FactoryGirl.create(:census_data_set)
+            allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
+            loader.insert_into!(census_update, entity)
+            value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
+            @value_row = value_class.on_db(census_update.shard).last
+          end
 
-      it 'should be active' do
-        expect(@value_row.active).to eq(1)
-      end
+          it 'should be active' do
+            expect(@value_row.active).to eq(1)
+          end
 
-      it 'should have the correct data_set_id' do
-        expect(@value_row.data_set_id).to eq(@data_set.id)
-      end
+          it 'should have the correct data_set_id' do
+            expect(@value_row.data_set_id).to eq(@data_set.id)
+          end
 
-      it 'should have the correct entity_id' do
-        expect(@value_row.send(census_update.entity_id_type)).to eq(census_update.entity_id)
-      end
+          unless entity_type == :state
+            it 'should have the correct entity_id' do
+              expect(@value_row.send(census_update.entity_id_type)).to eq(census_update.entity_id)
+            end
+          end
 
-      it 'should have the correct value' do
-        expect(@value_row.send(census_update.value_type)).to eq(census_update.value)
-      end
+          it 'should have the correct value' do
+            expect(@value_row.send(census_update.value_type)).to eq(census_update.value)
+          end
 
-      it 'should have the correct modifiedBy' do
-        expect(@value_row.modifiedBy).to eq('fake source')
+          it 'should have the correct modifiedBy' do
+            expect(@value_row.modifiedBy).to eq('fake source')
+          end
+        end
       end
     end
   end

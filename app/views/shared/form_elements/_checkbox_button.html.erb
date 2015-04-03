@@ -5,19 +5,21 @@
 <% key #required. Key name needs [] if multiple values share key. ex. boys_sports[] (values are soccer, baseball, etc..) %>
 <% value #required %>
 <% text ||= key.to_s.gsub(/\[|\]/, '') #optional. defaults to key and strips [] %>
-<% button_classes ||= "btn btn-toggle mvm mrl pull-left js-checkboxButton" #optional %>
-<% icon_classes ||= "vat iconx16 i-16-check-bigger-off mrs" #optional %>
+<% button_classes ||= "btn-checkbox" #optional %>
+<% button_classes << ' btn js-checkboxButton' #add default classes%>
+<% icon_classes ||= '' #optionl. ex "vat iconx16 i-16-check-bigger-off mrs" %>
 <% active ||= false #optional %>
 
 <div class="<%= button_classes %> <%= 'active' if active %>"
      data-checkbox-button-key="<%= key %>"
      data-checkbox-button-value="<%= value %>"
      data-toggle="button"
-     type="button"
 >
   <% #assumes css handles active/hover/activehover state %>
-  <span class="<%= icon_classes %>"></span>
+  <% if icon_classes.present? %>
+    <span class="<%= icon_classes %>"></span>
+  <% end %>
   <% #js will handle the assigning/unassigning of key/values of this input element %>
-  <input type="hidden" class="js-hiddenField">
+  <input type="hidden" <%= "name=#{key} value=#{value}" if active %> />
   <%= text %>
 </div>

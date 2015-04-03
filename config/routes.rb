@@ -92,6 +92,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/moving.topic?content=2220', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
     get '/early-learning.topic?content=8045', as: :early_learning
+    get '/summer-learning.topic?content=7082', as: :summer_planning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
     get '/status/error404.page'

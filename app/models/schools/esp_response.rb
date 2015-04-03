@@ -14,4 +14,28 @@ class EspResponse < ActiveRecord::Base
     self.member_id = user.id
   end
 
+  def self.new_from_esp_response_update(esp_response_update)
+    esp_response = EspResponse.new
+    esp_response.attributes = (
+        esp_response_update.attributes.merge(
+            {
+                created: esp_response_update.created,
+                esp_source: esp_response_update.esp_source,
+                member_id: esp_response_update.member_id,
+                response_value: esp_response_update.value
+            }
+        )
+    )
+    esp_response
+  end
+
+  def active=(value)
+    if value == true || value == 1
+      write_attribute(:active, 1)
+    else
+      write_attribute(:active, 0)
+    end
+  end
+
+
 end

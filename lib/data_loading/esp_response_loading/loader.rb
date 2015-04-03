@@ -13,15 +13,19 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       school = School.on_db(esp_response_update.shard).find(esp_response_update.entity_id)
 
       begin
+        existing_values_for_response_key = EspResponse
+        .on_db(esp_response_update.shard)
+        .where(esp_response_update.attributes)
+        .where(active: 1)
         if esp_response_update.action == ACTION_DISABLE
-          disable!(esp_response_update)
+          disable!(esp_response_update,existing_values_for_response_key)
           # If we choose to support delete later, we can uncomment this and then create the delete method below
           # elsif esp_response_update.action == 'delete'
           #   delete!(esp_response_update)
         elsif esp_response_update.action == ACTION_BUILD_CACHE
           # do nothing
         else
-          insert_into!(esp_response_update)
+          handle_update(esp_response_update, existing_values_for_response_key)
         end
       rescue Exception => e
         raise e.message
@@ -31,6 +35,32 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
         end
       end
     end
+  end
+
+  class EspResponseValueUpdate
+    def initialize(esp_response_update, value_row)
+      @esp_response_update = esp_response_update
+      @value_row = value_row
+    end
+    attr_reader :value_row, :esp_response_update
+
+    def should_be_active?
+      value_row.present? && esp_response_update.created_before?(value_row.created) || value_row.blank?
+    end
+
+    def should_be_disabled?
+      value_row.present? && esp_response_update.created_before?(value_row.created)
+    end
+  end
+
+  def handle_update(esp_response_update, value_row)
+    value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
+    
+    if value_info.should_be_active? && value_info.should_be_disabled?
+      disable!(esp_response_update, value_row)
+    end
+
+    insert_into!(esp_response_update, active: value_info.should_be_active?)
   end
 
   def validate_esp_response!(value_row, esp_response_update)
@@ -48,35 +78,17 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     raise errors.unshift("SCHOOL ##{value_row.school_id} ESP Response").join("\n") if errors.present?
   end
 
-  def insert_into!(esp_response_update)
-
-    value_row = EspResponse
-      .on_db(esp_response_update.shard)
-      .where(esp_response_update.attributes)
-      .first_or_initialize
-
-    validate_esp_response!(value_row, esp_response_update)
-    # TODO Uncomment the following lines when ready to have this write to the database
-    # value_row.on_db(esp_response_update.shard).update_attributes(
-    #   active: 1,
-    #   created: Time.now,
-    #   esp_source: esp_response_update.source,
-    #   member_id: esp_response_update.member_id
-    # )
-
+  def insert_into!(esp_response_update, attributes = {})
+    esp_response = EspResponse.new_from_esp_response_update(esp_response_update)
+    esp_response.attributes = attributes
+    esp_response.on_db(esp_response_update.shard).save
   end
 
-  def disable!(esp_response_update)
-    value_row = EspResponse
-      .on_db(esp_response_update.shard)
-      .where(esp_response_update.attributes)
-      .where(active: 1)
-
+  def disable!(esp_response_update,value_row)
     if value_row.present?
       value_row.each do | row |
-        validate_esp_response!(row, esp_response_update)
-        # TODO Uncomment the following lines when ready to have this write to the database
-        # row.on_db(esp_response_update.shard).update_attributes(active: 0)
+        # validate_esp_response!(row, esp_response_update)
+        row.on_db(esp_response_update.shard).update_attributes(active: 0)
       end
     end
   end

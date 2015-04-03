@@ -120,3 +120,4 @@ and you should see a school profile page
 
   Once inside, these 2 commands deploy to alpha:
   `sudo -u syncer gsdeploy-fetch alpha gswebruby && sudo -u syncer deployfarmer gswebruby`
+

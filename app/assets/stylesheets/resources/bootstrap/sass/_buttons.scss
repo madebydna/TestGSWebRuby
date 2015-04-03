@@ -46,7 +46,7 @@
   fieldset[disabled] & {
     cursor: not-allowed;
     pointer-events: none; // Future-proof disabling of clicks
-    @include opacity(.65);
+    @include opacity(.4);
     @include box-shadow(none);
   }
 
@@ -140,6 +140,24 @@
   padding: 1px 15px;
 }
 
+//for checkboxes
+.btn-checkbox-square {
+  @extend .btn-toggle;
+  @extend .vam;
+  @extend .iconx24-icons;
+  @extend .i-24-checkmark-white;
+
+  padding: 8px;
+  line-height: 0px;
+  text-indent: 100px; //this is usually put on an input element. this is to prevent text from value attr from appearing.
+}
+
+.btn-checkbox {
+  @extend .btn-toggle;
+  @extend .mvs;
+  @extend .mrm;
+  @extend .pull-left;
+}
 
 // Block button
 // --------------------------------------------------

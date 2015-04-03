@@ -94,7 +94,8 @@ def shared_example(name, &block)
 end
 
 def with_shared_context(name, *args, &block)
-  describe name do
+  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  describe *[name, js_arg].compact do
     include_context name, *args
     instance_exec &block
   end

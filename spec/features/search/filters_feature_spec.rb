@@ -114,7 +114,7 @@ feature 'Search filters submission', js: true do
 
   context 'when selecting a dropdown filter' do
 
-    grades = { 'Pre-School' => 'p', '1st Grade' => '1'}
+    grades = { 'Preschool' => 'p', '1st Grade' => '1'}
     grades.each do |grade, grade_value|
       context "for #{grade}" do
         before do

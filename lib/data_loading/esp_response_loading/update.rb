@@ -1,6 +1,6 @@
 class EspResponseLoading::Update
 
-  attr_accessor :data_type, :entity_id, :entity_state, :shard, :state, :update_blob, :value, :member_id, :source, :action
+  attr_accessor :data_type, :entity_id, :entity_state, :shard, :state, :update_blob, :value, :member_id, :source, :action, :created, :esp_source
 
   def initialize(data_type, update_blob, source)
     @data_type = data_type
@@ -26,10 +26,16 @@ class EspResponseLoading::Update
         {
             school_id: entity_id,
             response_key: data_type,
-            response_value: value
         }
   end
 
+  def created_before?(time)
+    time <  @created
+  end
+
+  def created_after?(time)
+    time >  @created
+  end
   def validate_update
     raise 'Every esp response update must have an entity_state specified' if entity_state.blank?
     raise 'Every esp response update must have a data_type specified' if data_type.blank?

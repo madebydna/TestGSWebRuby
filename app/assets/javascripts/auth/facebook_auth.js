@@ -8,7 +8,7 @@ Lots of file refactored into auth.js
 GS.facebook = GS.facebook || (function ($) {
 
     // Facebook permissions that GS.org will ask for during FB.login()
-    var facebookPermissions = 'email,user_likes,friends_likes,friends_education_history,user_education_history';
+    var facebookPermissions = 'public_profile, email, user_friends';
 
     // Resolved on first successful FB login and on every page load if FB status is signed in; never rejected
     var successfulLoginDeferred = $.Deferred();

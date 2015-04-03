@@ -1,5 +1,7 @@
 class Admin::StyleGuideController < ApplicationController
 
+  layout "style_guide"
+
   def index
     page_name = params['page']
     if params['page'].blank?

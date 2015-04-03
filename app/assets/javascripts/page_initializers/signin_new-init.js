@@ -32,7 +32,7 @@ if(gon.pagename == 'signin/new'){
             omnitureObject.pageName = JOIN_PAGENAME;
             omnitureObject.hier1 = JOIN_HIER;
             sendToOmniture(omnitureObject);
-            location.hash = '#join';
+            location.hash = '#';
         });
 
         var sendToOmniture = function(omnitureObject){

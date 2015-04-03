@@ -26,7 +26,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:approved_esp_membership,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+        FactoryGirl.create(:esp_membership, :with_approved_status,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
       end
     end
 
