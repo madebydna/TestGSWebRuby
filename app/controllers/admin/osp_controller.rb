@@ -8,7 +8,6 @@ class Admin::OspController < ApplicationController
 
 
   def show
-    binding.pry;
     @osp_form_data = OspFormResponse.find_form_data_for_school_state(params[:state],params[:schoolId])
     if current_user.provisional_or_approved_osp_user?(@school)
       render_osp_page
