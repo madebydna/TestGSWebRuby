@@ -386,10 +386,10 @@ GS.forms.elements = (function() {
         var $triggers = $(disableElementTriggerSelector + '.active');
         $triggers.each(function() {
             var $self = $(this);
-            var $parent = $self.closest(disableTriggerAndTargetParent);
+            //var $parent = $self.closest(disableTriggerAndTargetParent);
 
             toggleTriggerElementAndChildInputs($self, true);
-            clearAllChildActiveClasses($parent, disableElementTriggerSelector)
+            //clearAllChildActiveClasses($parent, disableElementTriggerSelector)
         });
     };
 
