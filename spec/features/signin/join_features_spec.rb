@@ -61,8 +61,8 @@ feature "Join Page" do
         let(:verification_link) { @email[:attributes][:VERIFICATION_LINK].match(/(http.+)(\">.+)/)[1] }
         let(:user) { User.with_email 'ssprouse+testing@greatschools.org' }
         let(:review) {
-          FactoryGirl.create(:school_rating,
-            status: 'pp',
+          FactoryGirl.create(:review,
+            active: false,
             user: user,
             school: FactoryGirl.create(:school, state: 'ca')
           )
@@ -80,8 +80,8 @@ feature "Join Page" do
         end
 
         it 'removes the provisional status from the user\'s reviews' do
-          expect{ subject }.to change{ review.reload; review.status }
-            .from('pp').to('p')
+          expect{ subject }.to change{ review.reload; review.active? }
+            .from(false).to(true)
         end
       end
     end

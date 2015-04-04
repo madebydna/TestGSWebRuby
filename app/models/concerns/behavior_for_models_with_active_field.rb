@@ -3,6 +3,7 @@ module BehaviorForModelsWithActiveField
 
   included do
     scope :active, -> { where(active: true) }
+    scope :inactive, -> { where(active: false) }
   end
 
   def active_field_type

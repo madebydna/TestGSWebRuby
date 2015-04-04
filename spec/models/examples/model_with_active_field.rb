@@ -21,6 +21,19 @@ shared_examples_for 'model with active field' do |klass = described_class, facto
     end
   end
 
+  describe '.inactive' do
+    let!(:first_active) { FactoryGirl.create(factory, :active) }
+    let!(:first_inactive) { FactoryGirl.create(factory, :inactive) }
+    let!(:second_active) { FactoryGirl.create(factory, :active) }
+    after do
+      clean_models klass
+    end
+    it "should find only inactive #{klass.name.pluralize}" do
+      expect(klass.inactive.size).to eq(1)
+      expect(klass.inactive.first.id).to eq(first_inactive.id)
+    end
+  end
+
   describe '#active=' do
     let!(:first) { FactoryGirl.create(factory, :active) }
     let!(:second) { FactoryGirl.create(factory, :inactive) }

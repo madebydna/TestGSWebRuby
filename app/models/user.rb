@@ -57,14 +57,6 @@ class User < ActiveRecord::Base
     Review.find_by_school(*args).where(list_member_id: self.id)
   end
 
-  def published_reviews
-    school_reviews.published
-  end
-
-  def provisional_reviews
-    school_reviews.provisional
-  end
-
   def self.email_taken?(email)
     User.where(email:email).any?
   end
@@ -160,15 +152,15 @@ class User < ActiveRecord::Base
   end
 
   def publish_reviews!
-    reviews_to_upgrade = provisional_reviews
+    reviews_to_upgrade = reviews.inactive
     # make provisional reviews 'not provisional', i.e. deleted, published, or held
     reviews_to_upgrade.each do |review|
-      review.remove_provisional_status!
+      review.activate
       review.save!
     end
 
     # return reviews that are published now
-    reviews_to_upgrade.select { |review| review.published? }
+    reviews_to_upgrade.select { |review| review.active? }
   end
 
   def has_facebook_account?
