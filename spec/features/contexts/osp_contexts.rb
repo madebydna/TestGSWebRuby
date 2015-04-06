@@ -135,3 +135,14 @@ shared_example 'should only contain none in the response' do
     end
   end
 end
+
+shared_context 'OSP nav should have an h3 with text' do |form|
+  subject {find('h3', text: form)}
+end
+
+shared_context 'click OSP mobile nav' do |form|
+  before do
+    click_button 'Basic Information'
+  end
+  subject { find('.js-button-link', text: form) }
+end

@@ -15,21 +15,20 @@ describe 'OSP Basic Page' do
 
     end
 
-    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff', 'Basic Information']
+    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff']
 
     describe_desktop do
       osp_forms.each do |form|
-        it 'should have an h3 with text ' + form do
-          subject.find('h3', text: form)
+        with_shared_context 'OSP nav should have an h3 with text', form do
+          include_example 'should contain the expected text', form
         end
       end
     end
 
     describe_mobile do
       osp_forms.each do |form|
-        it 'should have dropdown with text ' + form do
-          click_button 'Basic Information'
-          subject.find('.js-button-link', text: form)
+        with_shared_context 'click OSP mobile nav', form do
+          include_example 'should contain the expected text', form
         end
       end
     end

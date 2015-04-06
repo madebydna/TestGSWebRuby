@@ -28,3 +28,4 @@ shared_example 'should have a submit button' do
   subject.find_button('Submit')
 end
 
+
