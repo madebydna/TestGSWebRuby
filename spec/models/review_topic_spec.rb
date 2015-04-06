@@ -81,6 +81,7 @@ describe '.find_by_school' do
     end
     describe '#display_array' do
       it 'should return array of hashes' do
+        pending ('removed test because the api is using review_questions and not an array of display hashes; Remove if new design is confirmed;')
         expect(subject.display_array).to be_a(Array)
       end
     end

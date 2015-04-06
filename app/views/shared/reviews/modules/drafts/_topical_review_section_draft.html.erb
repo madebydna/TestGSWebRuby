@@ -1,0 +1,34 @@
+<hr/>
+<div class="js-topicalReviewQuestionsContainer ptl mtl">
+  <%= render "shared/reviews/modules/topical_review_checkbox_container_container",
+             title: review_question[:question],
+             question_responses: review_question[:responses],
+             review_question_id: review_question[:id],
+             collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }
+  %>
+</div>
+
+
+<!--this is its own partial and gets exectuted once per questions from above-->
+<div class="row bg-light-gray gray-box-border-v js-review-questions">
+  <%= form_for Review.new, remote: true, url: school_reviews_path(@school) do |f| %>
+      <%= f.hidden_field :state, value: @school.state %>
+      <%= f.hidden_field :school_id, value: @school.id %>
+      <%= f.hidden_field :review_question_id, value: review_question_id %>
+
+  <% # based on question layout, render a partial see below #>
+
+
+     <% end %>
+</div>
+
+
+<div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr" style="min-height: 280px">
+  <div class="bg-yellow full-width tac open-sans_sb pvl">
+    <%= title.html_safe %>
+  </div>
+  <%= render "shared/reviews/modules/input/responses_grid", question_responses: question_responses, option_type: 'checkbox', f: f %>
+</div>
+<div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">
+  <%= render 'shared/reviews/modules/input/review_comment', f: f %>
+</div>

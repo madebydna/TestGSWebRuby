@@ -23,10 +23,10 @@ class ReviewTopic < ActiveRecord::Base
       )
     end
 
-    def display_array
-      # questions_matching_school(school).map { |review_question| review_question.display_hash }
-      @display_hash ||= questions.map(&:display_hash)
-    end
+  #   def display_array
+  #     # questions_matching_school(school).map { |review_question| review_question.display_hash }
+  #     @display_hash ||= questions.map(&:display_hash)
+  #   end
   end
 
   def self.find_by_school(school)
@@ -39,7 +39,7 @@ class ReviewTopic < ActiveRecord::Base
 
   def build_questions_display_array(school)
     # questions_matching_school(school).map { |review_question| review_question.display_hash }
-    create_review_topics_for_school(school).display_array
+    create_review_topics_for_school(school).questions
   end
 
   def create_review_topics_for_school(school)

@@ -269,14 +269,14 @@ $(function() {
 
     $('.js-previous-topic').on('click', function(e){
         e.preventDefault();
-        var reviewContainer = $(this).parents('.js-topical-review-container');
+        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topical-review-container:visible')
         GS.topicalReview.reviewQuestion.navigatePreviousTopic(reviewContainer);
 
     });
 
     $('.js-next-topic').on('click', function(e){
         e.preventDefault();
-        var reviewContainer = $(this).parents('.js-topical-review-container');
+        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topical-review-container:visible')
         GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
     });
 
