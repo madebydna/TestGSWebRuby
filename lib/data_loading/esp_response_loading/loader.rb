@@ -56,9 +56,8 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   end
 
   def handle_update(esp_response_update, value_row)
-    require 'pry';binding.pry;
     value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
-    
+
     if value_info.should_be_active? && value_info.should_be_disabled?
       disable!(esp_response_update, value_row)
     end
