@@ -85,7 +85,10 @@ class FilterBuilder
             ca: {
                 oakland: summer_programs_callbacks,
                 'san francisco' => summer_programs_callbacks
-            }.stringify_keys!
+            }.stringify_keys!,
+            in: {
+              indianapolis: indianapolis_callbacks,
+            }.stringify_keys!,
         }
     ).stringify_keys!
   end
@@ -132,6 +135,20 @@ class FilterBuilder
     end
   end
 
+  def indianapolis_callbacks
+    [
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'ptq_rating_vouchers',
+          version: 1
+        }
+      },
+      ptq_rating_callback,
+      voucher_callback,
+    ]
+  end
+
   def add_vouchers_callbacks
     [
       {
@@ -141,16 +158,46 @@ class FilterBuilder
           version: 1
         }
       },
-      {conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
-        {
-          enrollment: {
-            label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
-              filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
-            }
+      voucher_callback
+    ]
+  end
+
+  def voucher_callback
+    # Note that this callback is different than the rest because it needs to be combined
+    # with another. Regular callbacks should all include a cache_key component.
+    {
+      conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
+      {
+        enrollment: {
+          label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
+            filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
           }
         }
       }
-    ]
+    }
+  end
+
+  def ptq_rating_callback
+    # Note that this callback is different than the rest because it needs to be combined
+    # with another. Regular callbacks should all include a cache_key component.
+    {
+      conditions:
+      [
+        {key: 'name', match: 'gs_rating'}
+      ],
+      callback_type: 'insert_after',
+      options:
+      {
+        ptq_rating: {
+          label: 'PTQ Rating (Preschool Only)', display_type: :title, name: :ptq_rating, filters: {
+            ptq1: { label: 'Level 1', display_type: :basic_checkbox, name: :ptq_rating, value: :level_1 },
+            ptq2: { label: 'Level 2', display_type: :basic_checkbox, name: :ptq_rating, value: :level_2 },
+            ptq3: { label: 'Level 3', display_type: :basic_checkbox, name: :ptq_rating, value: :level_3 },
+            ptq4: { label: 'Level 4', display_type: :basic_checkbox, name: :ptq_rating, value: :level_4 },
+          }
+        }
+      }
+    }
   end
 
   def detroit_mi_callbacks
