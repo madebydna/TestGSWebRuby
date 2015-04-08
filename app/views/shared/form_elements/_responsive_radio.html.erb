@@ -1,0 +1,24 @@
+<% text_value_pair %>
+<% key %>
+<% active_value ||= nil %>
+
+<div class="js-responsiveRadioGroup">
+
+  <% #rendering a horizontal(sm,md,lg) and vertical(xs) button group for desktop %>
+  <% ['btn-group hidden-xs', 'btn-group-vertical visible-xs'].each do | classes | %>
+
+    <div class="<%= classes %>" role="group" data-toggle="buttons">
+
+      <% #rendering each radio button %>
+      <% text_value_pair.each do |text, value| %>
+        <% active = value == active_value %>
+        <div class="btn btn-default js-responsiveRadio <%= 'active' if active %>" data-value="<%= value %>" >
+          <%= text %>
+          <input type="radio" <%= "name=#{key} value=#{value}" %> <%= 'checked' if active %>/>
+        </div>
+      <% end %>
+
+    </div>
+
+  <% end %>
+</div>

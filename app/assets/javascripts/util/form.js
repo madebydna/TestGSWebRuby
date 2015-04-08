@@ -324,6 +324,8 @@ GS.forms.elements = (function() {
     var disableElementTriggerSelector = ".js-disableTriggerElement";
     var disableElementTargetSelector = ".js-disableTarget";
     var disableTriggerAndTargetParent = ".js-disableTriggerAndTargetParent";
+    var responsiveRadioSelector = ".js-responsiveRadio";
+    var responsiveRadioGroupSelector = ".js-responsiveRadioGroup";
     var click = "click";
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
@@ -393,12 +395,26 @@ GS.forms.elements = (function() {
         });
     };
 
+    var setResponsiveRadioHandler = function(sectionContainer) {
+        $(sectionContainer).on(click, responsiveRadioSelector, function() {
+            var $self = $(this);
+            var value = $self.data('value');
+            var $group = $self.closest(responsiveRadioGroupSelector);
+
+            //Remove active class from other radios
+            $group.find(responsiveRadioSelector).not('[data-value=' + value + "]").removeClass('active');
+            //Toggle on other(desktop/mobile) button
+            $group.find(responsiveRadioSelector + '[data-value=' + value + "]").not(this).button('toggle');
+        });
+    };
+
     return {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
         setEnableDisableElementsAndInputsHandler: setEnableDisableElementsAndInputsHandler,
         disableElementAndChildInputs: disableElementAndChildInputs,
         enableElementAndChildInputs: enableElementAndChildInputs,
-        disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive
+        disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive,
+        setResponsiveRadioHandler: setResponsiveRadioHandler
     }
 
 })();
