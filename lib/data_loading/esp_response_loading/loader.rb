@@ -47,7 +47,6 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     attr_reader :value_row, :esp_response_update
 
     def should_be_active?
-      require 'pry';binding.pry;
       value_row.present? && esp_response_update.created_before?(value_row.created) || value_row.blank?
     end
 
