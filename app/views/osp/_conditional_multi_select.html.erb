@@ -34,16 +34,14 @@
 
   <div class="col-xs-12">
     <% display_text_and_value_map.each_pair do |text, value| %>
-        <% [*value].each do |val| %>
-            <% is_active = preexisting_esp_values.include?(val) ? true : nil %>
-            <%= render partial: 'shared/form_elements/checkbox_button', locals: {
-                    key: "#{response_key}[]",
-                    text: text,
-                    value: val,
-                    active: is_active,
-                    button_classes: 'btn-checkbox js-disableTarget'
-            } %>
-        <% end %>
+      <% is_active = preexisting_esp_values.include?(value) ? true : nil %>
+      <%= render partial: 'shared/form_elements/checkbox_button', locals: {
+              key: "#{response_key}[]",
+              text: text,
+              value: value,
+              active: is_active,
+              button_classes: 'btn-checkbox js-disableTarget'
+      } %>
     <% end %>
   </div>
 </div>
