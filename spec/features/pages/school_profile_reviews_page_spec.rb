@@ -21,14 +21,15 @@ end
 
 shared_context 'Click Question Response' do
   before do
-    response_option = subject.all(:css, '.js-checkboxContainer', visible: true).first
+    response_option = subject.visible_review_question.responses.first
     response_option.click
   end
 end
 
 shared_context 'Submit Response' do
   before do
-    question_submit = subject.all(:css, '.js-review-question-submit', visible: true).first
+    # question_submit = subject.all(:css, '.js-review-question-submit', visible: true).first
+    question_submit = subject.visible_review_question.submit_button
     question_submit.click
     sleep (1)
   end
@@ -62,19 +63,18 @@ describe 'School Profile Reviews Page', js: true do
           expect(subject.review_module).to have_questions
         end
         it 'should not show the review comment form' do
-          expect(subject.review_question).not_to have_review_comment
+          expect(subject.visible_review_question).not_to have_review_comment
         end
 
         with_shared_context 'Click Question Response' do
           it 'should show the review comment section' do
-            expect(subject.review_question).to have_review_comment
+            expect(subject.visible_review_question).to have_review_comment
           end
 
           with_shared_context 'signed in verified user' do
             with_shared_context 'Submit Response' do
               it 'should show next question' do
-                question_text = subject.find(:css, '.bg-yellow').text
-                expect(question_text).to eq(review_question2.question)
+                expect(subject.visible_review_question.question.text).to eq(review_question2.question)
               end
             end
           end

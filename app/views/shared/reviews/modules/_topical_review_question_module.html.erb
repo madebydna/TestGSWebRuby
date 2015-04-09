@@ -1,5 +1,5 @@
 <!--this is its own partial and gets exectuted once per questions from above-->
-<div class="row bg-light-gray gray-box-border-v limit-width-1200 js-topical-review-container js-review-questions dn">
+<div class="row bg-light-gray gray-box-border-v limit-width-1200 js-topical-review-container dn" data-review-topic-id="<%= question.review_topic.id %>">
   <%= form_for Review.new, remote: true, url: school_reviews_path(@school) do |f| %>
       <%= f.hidden_field :state, value: @school.state %>
       <%= f.hidden_field :school_id, value: @school.id %>
