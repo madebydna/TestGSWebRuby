@@ -1,7 +1,7 @@
 class ReportedReview < ActiveRecord::Base
   include BehaviorForModelsWithActiveField
 
-  self.table_name = 'review_reported'
+  self.table_name = 'review_flags'
 
   db_magic :connection => :gs_schooldb
 

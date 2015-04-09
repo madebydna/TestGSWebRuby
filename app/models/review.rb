@@ -7,10 +7,9 @@ class Review < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  alias_attribute :member_id, :list_member_id
   alias_attribute :school_state, :state
 
-  belongs_to :user, foreign_key: 'list_member_id'
+  belongs_to :user, foreign_key: 'member_id'
 
   belongs_to :question, class_name:'ReviewQuestion', foreign_key: 'review_question_id'
   has_many :review_answers
@@ -20,10 +19,10 @@ class Review < ActiveRecord::Base
 
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
-  attr_accessible :member_id, :user, :list_member_id, :school_id, :school, :state, :review_question_id, :comment, :user_type
+  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment, :user_type
 
   # TODO: i18n this message
-  validates_uniqueness_of :list_member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
+  validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
 
   scope :reported, -> { joins(:reports).where('flags.active' => true) }
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }

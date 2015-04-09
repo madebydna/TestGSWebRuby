@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :favorite_schools, foreign_key: 'member_id'
   has_many :esp_memberships, foreign_key: 'member_id'
   # Reviews that this User authored
-  has_many :reviews, foreign_key: 'list_member_id'
+  has_many :reviews, foreign_key: 'member_id'
 
   # Review answers that User authored
   has_many :review_answers, through: :reviews
@@ -17,13 +17,13 @@ class User < ActiveRecord::Base
   # has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
 
   # Reviews that this User authored, that are published now
-  has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'list_member_id'
+  has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'member_id'
 
   # Reviews that this User authored, that are reported now
-  has_many :reported_reviews, -> { reported }, class_name: 'Review', foreign_key: 'list_member_id'
+  has_many :reported_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'
 
   # ReportedReview objects that this User created by reporting a review
-  has_many :review_reports, foreign_key: 'list_member_id', class_name: 'ReportedReview'
+  has_many :review_reports, foreign_key: 'member_id', class_name: 'ReportedReview'
 
   # Reviews that this User reported
   has_many :reviews_user_reported, class_name: 'Review', through: :review_reports, source: :review
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def reviews_for_school(*args)
-    Review.find_by_school(*args).where(list_member_id: self.id)
+    Review.find_by_school(*args).where(member_id: self.id)
   end
 
   def self.email_taken?(email)
