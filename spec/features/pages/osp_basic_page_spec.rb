@@ -44,9 +44,17 @@ describe 'OSP Basic Page' do
         end
       end
 
-      with_shared_context 'click Before Care and Canoe button options', js: true do 
+      with_shared_context 'click Before Care and Canoe button options', js: true do
         with_shared_context 'submit the osp form' do
           include_example 'Before Care and Canoe buttons should be active'
+        end
+      end
+
+      with_shared_context 'click No Dress code and no preference radio buttons', js: true do
+        with_shared_context 'submit the osp form' do
+          with_shared_context 'within osp form' do
+            include_example 'should only have one active button'
+          end
         end
       end
     end

@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../../../spec/support/shared_contexts_for_signed_in_users'
 require 'features/selectors/osp_page'
 
+### Setting Up Signed in User ###
 
 shared_context 'signed in approved osp user for school' do |state, school_id|
   before do
@@ -14,6 +15,8 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
     clean_models User, EspMembership
   end
 end
+
+### Navigation ###
 
 shared_context 'visit OSP page' do
   include_context 'signed in approved osp user for school', :ca, 1
@@ -28,6 +31,8 @@ shared_context 'visit OSP page' do
   end
   subject { page }
 end
+
+### DB Setup ###
 
 shared_context 'with a basic set of osp questions in db' do
   let(:questions) do
@@ -57,6 +62,18 @@ shared_context 'with a basic set of osp questions in db' do
             'text_label' => 'General'
           }
         }.to_json
+      },
+      {
+        esp_response_key: :dress_code,
+        osp_question_group_id: nil,
+        question_type: 'radio',
+        config: { #will be turned into json, so needs to be string
+          'answers' => {
+            'No Dress Code' => 'no_dress_code',
+            'Dresscode/Uniform' => 'uniform&&dress_code',
+            'No Preference' => 'no_preference'
+          }
+        }.to_json
       }
     ]
   end
@@ -71,6 +88,26 @@ shared_context 'save osp question to db' do
     end
   end
   after { clean_models OspQuestion, OspDisplayConfig }
+end
+
+### Clicking Buttons ###
+
+shared_context 'click Before Care and Canoe button options' do
+  let(:selected_answers) { ['Before Care', 'Canoe'] }
+  include_context 'click several buttons'
+end
+
+shared_context 'click No Dress code and no preference radio buttons' do
+  let(:selected_answers) { ['No Dress Code', 'No Preference'] }
+  include_context 'click several buttons'
+end
+
+shared_context 'click several buttons' do #Can be radio, multi-select, or conditional multi-select types
+  before do
+    answers = Regexp.new(selected_answers.join('|'))
+    elements = osp_page.osp_form.buttons(text: answers)
+    elements.each(&:click)
+  end
 end
 
 shared_context 'click the none option on a conditional multi select question group' do
@@ -92,18 +129,8 @@ shared_context 'click a value in a conditional multi select group and then click
   include_context 'click the none option on a conditional multi select question group'
 end
 
-shared_context 'click Before Care and Canoe button options' do
-  let(:selected_answers) { ['Before Care', 'Canoe'] }
-  include_context 'click several values in a multi select group'
-end
 
-shared_context 'click several values in a multi select group' do
-  before do
-    answers = Regexp.new(selected_answers.join('|'))
-    elements = osp_page.osp_form.checkboxes(text: answers)
-    elements.each(&:click)
-  end
-end
+### Submitting osp form  ###
 
 shared_context 'submit the osp form' do
   before do
@@ -112,6 +139,12 @@ shared_context 'submit the osp form' do
   end
 
   after { clean_models UpdateQueue, OspFormResponse }
+end
+
+### Scoping subject  ###
+
+shared_context 'within osp form' do
+  subject { osp_page.osp_form }
 end
 
 # Capybara seems to execute some commands asychounously.
