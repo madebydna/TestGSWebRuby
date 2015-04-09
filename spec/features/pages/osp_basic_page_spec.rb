@@ -51,6 +51,9 @@ describe 'OSP Basic Page' do
       end
 
       with_shared_context 'click No Dress code and no preference radio buttons', js: true do
+        with_shared_context 'within osp form' do
+          include_example 'should only have one active button'
+        end
         with_shared_context 'submit the osp form' do
           with_shared_context 'within osp form' do
             include_example 'should only have one active button'
