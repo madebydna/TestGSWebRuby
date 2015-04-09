@@ -11,7 +11,7 @@ FactoryGirl.define do
     quality '5'
     ip '123.123.123.123'
     posted { Time.zone.now }
-    
+
     factory :valid_school_rating, class: SchoolRating do
     end
 

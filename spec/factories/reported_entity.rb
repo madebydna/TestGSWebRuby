@@ -5,6 +5,8 @@ FactoryGirl.define do
     association :user, factory: :user, strategy: :build
     sequence(:reported_entity_id) { |n| n }
     active true
+    created { Time.zone.now }
+
 
     factory :old_reported_review do
       reported_entity_type 'schoolReview'
