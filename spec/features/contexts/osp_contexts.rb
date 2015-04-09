@@ -69,9 +69,9 @@ shared_context 'with a basic set of osp questions in db' do
         question_type: 'radio',
         config: { #will be turned into json, so needs to be string
           'answers' => {
-            'No Dress Code' => 'no_dress_code',
-            'Dresscode/Uniform' => 'uniform&&dress_code',
-            'No Preference' => 'no_preference'
+            'Dress code' => 'dress_code',
+            'Uniform' => 'uniform',
+            'No dress code' => 'no_dress_code'
           }
         }.to_json
       }
@@ -97,8 +97,8 @@ shared_context 'click Before Care and Canoe button options' do
   include_context 'click several buttons'
 end
 
-shared_context 'click No Dress code and no preference radio buttons' do
-  let(:selected_answers) { ['No Dress Code', 'No Preference'] }
+shared_context 'click No Dress code and Dress code radio buttons' do
+  let(:selected_answers) { ['No dress code', 'Dress code'] }
   include_context 'click several buttons'
 end
 
