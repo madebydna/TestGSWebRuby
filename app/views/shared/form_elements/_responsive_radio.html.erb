@@ -12,7 +12,7 @@
       <% #rendering each radio button %>
       <% text_value_pair.each do |text, value| %>
         <% active = value == active_value %>
-        <div class="btn btn-default js-responsiveRadio <%= 'active' if active %>" data-value="<%= value %>" >
+        <div class="btn btn-toggle js-responsiveRadio <%= 'active' if active %>" data-value="<%= value %>" >
           <%= text %>
           <input type="radio" <%= "name=#{key} value=#{value}" %> <%= 'checked' if active %>/>
         </div>

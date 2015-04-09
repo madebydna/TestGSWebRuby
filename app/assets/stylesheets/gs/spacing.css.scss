@@ -211,6 +211,11 @@ body { padding-top: 50px }
 .mh-500 {
   min-height: 500px;
 }
+
+.maxw-400 {
+  max-width: 400px;
+}
+
 .brm { border-radius: 10px; }
 
 .brs { border-radius: $border-radius-small; }
