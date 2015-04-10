@@ -171,6 +171,7 @@ LocalizedProfiles::Application.routes.draw do
 
   post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
       state: States.any_state_name_regex,
+      city: /[^\/]+/,
       schoolId: /\d+/,
       school_name: /.+/
   }
