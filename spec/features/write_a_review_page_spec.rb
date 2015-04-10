@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'Write a Review Page' do
-  let(:school) { FactoryGirl.create(:school) }
+  let(:school) { FactoryGirl.create(:school, city: 'St. Paul') }
   let!(:reviews_page) { FactoryGirl.create(:page, name: 'Reviews') }
   before(:all) do
     clean_models :ca, School
@@ -25,7 +25,7 @@ feature 'Write a Review Page' do
       expect(subject).to have_content('Click on stars to rate')
     end
   end
-  
+
   context 'when reviews are not pre-moderated' do
     context 'When registered user is logged in' do
       include_context 'signed in verified user'
