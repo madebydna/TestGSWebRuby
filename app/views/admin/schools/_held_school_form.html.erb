@@ -1,29 +1,32 @@
 <% school %>
 <% held_school %>
 
-<% if held_school %>
-  School on hold since <%= held_school.created %>
-  <br/>
-  <%= form_for(held_school,
-      method: :delete,
-      url: admin_held_school_path(held_school)) do |f| %>
-    <%= f.submit value: 'Remove hold (will delete notes)',
-    class: 'btn btn-sm btn-primary mvm', data: { disable_with: 'Removing hold...' } %>
-  <% end %>
-<% else %>
+<div class="rs-held-school-container">
+  <% if held_school %>
+    School on hold since <%= held_school.created %>
+    <br/>
+    <%= form_for(held_school,
+                 method: :delete,
+                 url: admin_held_school_path(held_school)) do |f| %>
+      <%= f.button('Remove hold (will delete notes)', value: 'Remove hold (will delete notes)',
+                   class: 'btn btn-sm btn-primary mvm', data: { disable_with: 'Removing hold...' }) %>
+    <% end %>
+  <% else %>
     School not on hold
-<% end %>
+  <% end %>
 
-<br/>
+  <br/>
 
-<% held_school ||= HeldSchool.new %>
+  <% held_school ||= HeldSchool.new %>
 
-<%= form_for(held_school,
-    url: held_school.new_record? ? admin_held_school_index_path : admin_held_school_path(held_school) ) do |f| %>
-  <%= f.hidden_field :school_id, value: school.id %>
-  <%= f.hidden_field :state, value: school.state %>
-  <%= f.text_area(:notes, rows: 4,
-    class: 'input-xlarge', 'style' => 'width: 100%') %>
-  <%= f.submit (held_school.new_record? ? 'Put school on hold' : 'Save notes'),
-    class: 'btn btn-sm btn-primary mtm', data: { disable_with: 'Saving...' } %>
-<% end %>
+  <%= form_for(held_school,
+               url: held_school.new_record? ? admin_held_school_index_path : admin_held_school_path(held_school) ) do |f| %>
+    <%= f.hidden_field :school_id, value: school.id %>
+    <%= f.hidden_field :state, value: school.state %>
+    <%= f.text_area(:notes, rows: 4,
+                    class: 'input-xlarge', 'style' => 'width: 100%') %>
+    <%= f.button (held_school.new_record? ? 'Put school on hold' : 'Save notes'),
+                 class: 'btn btn-sm btn-primary mtm', data: { disable_with: 'Saving...' } %>
+  <% end %>
+</div>
+

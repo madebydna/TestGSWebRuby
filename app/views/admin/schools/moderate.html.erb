@@ -40,5 +40,7 @@
     <% end %>
   </div>
 
-  <%= render partial: 'review', collection: @reviews, as: :review %>
+  <div class="rs-list-of-reviews">
+    <%= render partial: 'review', collection: @reviews, as: :review %>
+  </div>
 </div>

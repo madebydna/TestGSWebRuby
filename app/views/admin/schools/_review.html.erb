@@ -53,7 +53,9 @@
     </div>
     <div class="rightcolumn col-lg-8">
         <h5>Review</h5>
-        <%= review.comments %>
+        <div class="rs-review-comment">
+          <%= review.comments %>
+        </div>
         <br/>
         <br/>
         <% reported_entities.each do |reported_entity| %>
@@ -80,7 +82,7 @@
         <h5>Notes</h5>
         <%= form_for(review, url: admin_review_path(review), method: :put) do |f| %>
           <%= f.text_area(:note, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-          <%= content_tag :div, f.submit('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+          <%= content_tag :div, f.button('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
         <% end %>
           <br/>
 

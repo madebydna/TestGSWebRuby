@@ -1,6 +1,6 @@
 <div class="row ptl limit-width-1200">
   <div class="col-xs-12 col-sm-9">
-    <%= form_tag schools_admin_reviews_path, method: 'get', role: 'form', class: 'form-inline' do %>
+    <%= form_tag schools_admin_reviews_path, method: 'get', role: 'form', class: 'rs-school-search-form form-inline' do %>
       <legend>Find a school by state & ID</legend>
       <div class="form-group">
         <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase), class: 'form-control' %>

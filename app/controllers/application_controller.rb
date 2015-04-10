@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
     school_id = (params[:schoolId] || params[:school_id]).to_i
 
     if school_id > 0
-      School.on_db(state_param.downcase.to_sym).find school_id
+      School.on_db(state_param.downcase.to_sym).find school_id rescue nil
     else
       nil
     end
