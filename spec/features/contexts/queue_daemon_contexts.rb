@@ -9,6 +9,8 @@ shared_context 'Then run the queue daemon' do
     q = QueueDaemon.new
     q.process_unprocessed_updates
   end
+
+  after { clean_dbs :gs_schooldb }
 end
 
 #this is asynchronous so the timing of results getting processed will vary and is not buffered
@@ -26,4 +28,5 @@ shared_context 'Start the Queue Daemon Process' do
     Process.kill("HUP", pid)
   end
 
+  after { clean_dbs :gs_schooldb }
 end

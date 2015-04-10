@@ -158,20 +158,9 @@ end
 # So a form submission won't be able to save rows into the db before this block retrieves rows
 # leaving this here for now, but will need to think of a clean way to still test this flow
 shared_context 'the OspFormResponse objects\' responses in the db' do
+  before { current_url } #buffers execution timing to prevent async issue. See queue_daemon_contexts
   subject do
     OspFormResponse.pluck(:response).map {|r| JSON.parse(r)}
-  end
-end
-
-shared_example 'should only contain none in the response' do
-  fail unless subject.present?
-
-  [*subject].each do |response|
-    response.each do |key, answers|
-      answers.each do |answer|
-        expect(answer['value']).to match /none|neither/
-      end
-    end
   end
 end
 

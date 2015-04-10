@@ -32,4 +32,15 @@ shared_example 'should have a submit button' do
   subject.find_button('Submit')
 end
 
+shared_example 'should only contain the following values in the form response' do | *matches |
+  fail unless subject.present?
+
+  [*subject].each do |response|
+    response.each do |key, answers|
+      answers.each do |answer|
+        expect(answer['value']).to match Regexp.new(matches.flatten.join('|'))
+      end
+    end
+  end
+end
 

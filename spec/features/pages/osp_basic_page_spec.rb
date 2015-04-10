@@ -41,6 +41,10 @@ describe 'OSP Basic Page' do
 
         with_shared_context 'submit the osp form' do
           include_example 'the conditional multi select group of questions should be disabled'
+
+          with_shared_context 'the OspFormResponse objects\' responses in the db' do
+            include_example 'should only contain the following values in the form response', ['none', 'neither']
+          end
         end
       end
 
