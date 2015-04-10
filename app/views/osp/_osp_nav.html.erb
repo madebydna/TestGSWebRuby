@@ -2,13 +2,15 @@
 <% osp_page[page] = 'active' %>
 <% nav_label_hash = {1 => 'Basic Information', 2 => 'Academics', 3 => 'Extracurriculars & Culture', 4 => 'Facilities & Staff'} %>
 
-<div class="bg-medium-gray tac clearfix pvm mbl">
+<div class="bg-medium-gray tac clearfix pvm mbl js-ospNav">
+
+  <% # Desktop Nav %>
   <div class="nav-osp hidden-xs">
     <div class="limit-width-1200">
       <div class="row">
         <div class="col-sm-3">
           <div class="phs">
-            <div class="nav_button full-width <%= osp_page[1] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">
+            <div class="nav_button full-width <%= osp_page[1] %> pointer js-submitTrigger" data-page-number="1">
               <h3 class="absolute-center brand-primary pt45"> Basic Information </h3>
               <span class="iconx96 i-96-question-mark"></span>
             </div>
@@ -16,7 +18,7 @@
         </div>
         <div class="col-sm-3">
           <div class="phs">
-            <div class="nav_button full-width <%= osp_page[2] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">
+            <div class="nav_button full-width <%= osp_page[2] %> pointer js-submitTrigger" data-page-number="2">
               <h3 class="absolute-center brand-primary pt45"> Academics </h3>
               <span class="iconx96 iconx96 i-96-book"></span>
             </div>
@@ -24,7 +26,7 @@
         </div>
         <div class="col-sm-3">
           <div class="phs">
-            <div class="nav_button full-width <%= osp_page[3] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">
+            <div class="nav_button full-width <%= osp_page[3] %> pointer js-submitTrigger" data-page-number="3">
               <h3 class="absolute-center brand-primary pt45"> Extracurriculars <br/> & Culture </h3>
               <span class="iconx96 i-96-trophy"></span>
             </div>
@@ -32,7 +34,7 @@
         </div>
         <div class="col-sm-3">
           <div class="phs">
-            <div class="nav_button full-width <%= osp_page[4] %> pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "4") %>">
+            <div class="nav_button full-width <%= osp_page[4] %> pointer js-submitTrigger" data-page-number="4">
               <h3 class="absolute-center brand-primary pt45"> Facilities <br/> & Staff </h3>
               <span class="iconx96 i-96-person"></span>
             </div>
@@ -42,6 +44,7 @@
     </div>
   </div>
 
+  <% # Mobile Nav %>
   <div class="visible-xs dropdown tal mlm mrm">
     <button class="btn btn-default dropdown-toggle full-width" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
       <%= nav_label_hash[page] || 'Basic Information' %>
@@ -49,18 +52,11 @@
     </button>
 
     <ul class="dropdown-menu full-width" role="menu" aria-labelledby="dropdownMenu1">
-      <li>
-        <a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "1") %>">Basic
-          Information</a></li>
-      <li>
-        <a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "2") %>">Academics</a>
-      </li>
-      <li>
-        <a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "3") %>">Extracurriculars
-          & Culture</a></li>
-      <li>
-        <a class="pointer js-button-link" data-link-value="<%= admin_osp_page_path(schoolId: @school.id.to_s, state: @school.state, page: "4") %>">Facilities
-          & Staff</a></li>
+      <% nav_label_hash.each do |page_number, page_name| %>
+        <li>
+          <a class="pointer js-submitTrigger" data-page-number="<%=page_number%>"><%= page_name %></a>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>

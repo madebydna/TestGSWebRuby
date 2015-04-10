@@ -23,13 +23,19 @@ shared_context 'visit OSP page' do
   let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
   let(:osp_page) { OspPage.new }
   before do
-    visit admin_osp_page_path(page:1,schoolId:school.id, state:school.state)
-    # save_and_open_page
+    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
   end
   after do
     clean_models School
   end
   subject { page }
+end
+
+shared_context 'click osp nav link element with text:' do |text|
+  before do
+    button = osp_page.osp_nav.nav_buttons(text: text).first
+    button.click
+  end
 end
 
 ### DB Setup ###
@@ -177,5 +183,5 @@ shared_context 'click OSP mobile nav' do |form|
   before do
     click_button 'Basic Information'
   end
-  subject { find('.js-button-link', text: form) }
+  subject { find('.js-submitTrigger', text: form) }
 end

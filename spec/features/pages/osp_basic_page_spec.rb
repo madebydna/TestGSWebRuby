@@ -48,6 +48,18 @@ describe 'OSP Basic Page' do
         with_shared_context 'submit the osp form' do
           include_example 'Before Care and Canoe buttons should be active'
         end
+
+        with_shared_context 'click osp nav link element with text:', 'Academics' do
+          include_example 'Before Care and Canoe buttons should be active'
+        end
+
+        describe_mobile do
+          with_shared_context 'click OSP mobile nav' do
+            with_shared_context 'click osp nav link element with text:', 'Academics' do
+              include_example 'Before Care and Canoe buttons should be active'
+            end
+          end
+        end
       end
 
       describe_mobile_and_desktop do

@@ -408,13 +408,22 @@ GS.forms.elements = (function() {
         });
     };
 
+    var setCustomSubmitHandler = function(submitTrigger, formName, sectionContainer, callback) {
+        $(sectionContainer).on(click, submitTrigger, function(e) {
+            var $form = $('form[name=' + formName + ']');
+            if (typeof callback === 'function') callback.call(this, e, $form);
+            $form.submit();
+        });
+    };
+
     return {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
         setEnableDisableElementsAndInputsHandler: setEnableDisableElementsAndInputsHandler,
         disableElementAndChildInputs: disableElementAndChildInputs,
         enableElementAndChildInputs: enableElementAndChildInputs,
         disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive,
-        setResponsiveRadioHandler: setResponsiveRadioHandler
+        setResponsiveRadioHandler: setResponsiveRadioHandler,
+        setCustomSubmitHandler: setCustomSubmitHandler
     }
 
 })();
