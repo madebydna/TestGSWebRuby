@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/pages/admin/school_moderate_page'
+require 'features/pages/admin/school_moderation_page'
 
 shared_context 'search for school' do |state, id|
   before do
@@ -20,7 +20,7 @@ describe 'School moderate page' do
   state = 'CA'
   school_id = '1'
   let(:page_object) do
-    SchoolModeratePage.new
+    SchoolModerationPage.new
   end
   subject { page_object }
 
@@ -50,7 +50,7 @@ describe 'School moderate page' do
           page_object.held_school_module.notes_box.set('Some notes')
           page_object.held_school_module.submit_button.click
         end
-        subject { SchoolModeratePage.new.held_school_module }
+        subject { SchoolModerationPage.new.held_school_module }
         it { is_expected.to have_content 'School on hold'}
         it 'notes box should have "Some notes"' do
           expect(subject.notes_box).to have_content 'Some notes'
@@ -58,7 +58,7 @@ describe 'School moderate page' do
 
         context 'when removing the held status' do
           before do
-            SchoolModeratePage.new.held_school_module.remove_held_status_button.click
+            SchoolModerationPage.new.held_school_module.remove_held_status_button.click
           end
           it { is_expected.to have_content 'School not on hold'}
           it 'notes box should not have content' do
@@ -100,7 +100,7 @@ describe 'School moderate page' do
                   page_object.reviews.first.notes_box.set('Here is a test note')
                   page_object.reviews.first.save_notes_button.click
                 end
-                subject { SchoolModeratePage.new.reviews.first.notes_box }
+                subject { SchoolModerationPage.new.reviews.first.notes_box }
                 # We need a new SchoolModeratePage as the subject, since the page has been reloaded
                 it { is_expected.to have_content 'Here is a test note' }
               end
