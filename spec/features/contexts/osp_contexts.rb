@@ -16,17 +16,21 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 end
 
+### School Blocks ###
+
+shared_context 'Basic High School' do
+  let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
+  after { clean_models School }
+end
+
 ### Navigation ###
 
 shared_context 'visit OSP page' do
   include_context 'signed in approved osp user for school', :ca, 1
-  let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
+  include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
     visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
-  end
-  after do
-    clean_models School
   end
   subject { page }
 end
@@ -126,7 +130,7 @@ shared_context 'click the none option on a conditional multi select question gro
   end
 end
 
-shared_context 'click a value in a conditional multi select group and then clicking none' do
+shared_context 'click a value in a conditional multi select group and then click none' do
   before do
     button = osp_page.osp_form.disabledElementTarget.first
     button.click if button.present?

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_context 'Then run the queue daemon' do
+shared_context 'then run the queue daemon' do
   #buffers before block execution, so that queue daemon will get run
   #this forces the before block to wait until current_url can get run, which is after all requests have finished
   #otherwise, queue daemon will get run too early before the requests finishes and data is in the update_queue table
