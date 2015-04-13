@@ -4,5 +4,5 @@ class SchoolNote < ActiveRecord::Base
   include BehaviorForModelsWithSchoolAssociation
 
   db_magic :connection => :gs_schooldb
-  attr_accessible :id, :list_member_id, :school_id, :school_state, :notes, :active, :created
+  attr_accessible :id, :member_id, :school_id, :school_state, :notes, :active, :created
 end

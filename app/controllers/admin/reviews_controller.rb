@@ -5,17 +5,13 @@ class Admin::ReviewsController < ApplicationController
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
     end
 
-    moderate_by_user
+    # We need the reviews that are associated with the most recently created flags
+    # We will paginate on the flags table
+    @reported_reviews = ReportedReview.limit(10).includes(:review).group_by(&:review).keys
 
-    @reported_reviews = self.flagged_reviews
     gon.reported_reviews_count = @reported_reviews.length
-    @reviews_to_process = self.unprocessed_reviews
-    @reported_entities = self.reported_entities_for_reviews @reported_reviews
-
     gon.pagename = 'Reviews moderation list'
     set_meta_tags :title =>  'Reviews moderation list'
-
-    Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
 
   def schools
@@ -35,42 +31,37 @@ class Admin::ReviewsController < ApplicationController
     moderate_by_user
   end
 
-  def moderate_by_user
-
-    search_string = params[:review_moderation_search_string]
-
-    if search_string.present?
-      search_string.strip!
-
-      #TODO refactor the if and else to be more DRY
-
-      if (search_string).match(/[a-zA-z]/)
-        user = User.find_by_email(search_string)
-        if user
-          #reviews by the user and the flags on those reviews.
-          @reviews_by_user = find_reviews_by_user(user)
-          flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
-          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-
-          #reviews that are flagged by the user.
-          flagged_by_user = find_reviews_reported_by_user(user)
-          if flagged_by_user.present?
-            @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
-            Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
-          end
-        end
-
-      else
-        @reviews_by_user = SchoolRating.by_ip(search_string)
-        flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
-        Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-        @banned_ip = BannedIp.new
-        @banned_ip.ip = search_string
-      end
-
-      render '_reviews_for_email'
-    end
-  end
+  # def moderate_by_user
+  #
+  #   search_string = params[:review_moderation_search_string]
+  #
+  #   if search_string.present?
+  #     search_string.strip!
+  #
+  #     #TODO refactor the if and else to be more DRY
+  #
+  #     if (search_string).match(/[a-zA-z]/)
+  #       user = User.find_by_email(search_string)
+  #       if user
+  #         #reviews by the user and the flags on those reviews.
+  #         @reviews_by_user = find_reviews_by_user(user)
+  #
+  #         #reviews that are flagged by the user.
+  #         flagged_by_user = find_reviews_reported_by_user(user)
+  #         if flagged_by_user.present?
+  #           @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
+  #         end
+  #       end
+  #
+  #     else
+  #       @reviews_by_user = SchoolRating.by_ip(search_string)
+  #       @banned_ip = BannedIp.new
+  #       @banned_ip.ip = search_string
+  #     end
+  #
+  #     render '_reviews_for_email'
+  #   end
+  # end
 
   def ban_ip
     if params[:banned_ip]
@@ -174,26 +165,6 @@ unexpected error: #{e}."
 
   protected
 
-  def unprocessed_reviews
-    if @school
-      reviews = @school.school_ratings
-    else
-      reviews = SchoolRating.where(status: %w[u h])
-    end
-
-    reviews.order('posted desc').page(params[:unprocessed_reviews_page]).per(25)
-  end
-
-  def flagged_reviews
-    if @school
-      reviews = @school.school_ratings.ever_flagged
-    else
-      reviews = SchoolRating.where(status: %w[p d r a]).flagged.group(:reported_entity_id)
-    end
-
-    reviews.order('posted desc')
-  end
-
   def self.load_reported_entities_onto_reviews(reviews, reported_entities)
     if reviews.present? && reported_entities.present?
       reviews.each do |review|
@@ -205,10 +176,6 @@ unexpected error: #{e}."
     end
   end
 
-  def reported_entities_for_reviews(reviews)
-    ReportedEntity.find_by_reviews(reviews).order('created desc')
-  end
-
   def email_user_about_review_removal(review)
     if review.who == 'student'
       StudentReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
@@ -218,15 +185,15 @@ unexpected error: #{e}."
   end
 
   def find_reviews_by_user(user)
-    SchoolRating.belonging_to(user)
+    user.reviews
   end
 
   def find_reviews_reported_by_user(user)
-    ReportedEntity.where(reporter_id: user.id,reported_entity_type: "schoolReview")
+    user.review_flags
   end
 
   def find_reviews_by_ids(review_ids)
-    SchoolRating.where(id: review_ids)
+    Review.where(id: review_ids)
   end
 
 end

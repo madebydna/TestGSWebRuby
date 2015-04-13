@@ -182,14 +182,14 @@ describe User do
       it 'should support a school hash parameter' do
         relation = double
         expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
-        expect(relation).to receive(:where).with(list_member_id: subject.id)
+        expect(relation).to receive(:where).with(member_id: subject.id)
         subject.reviews_for_school(school: school)
       end
 
       it 'should support state + school_id parameters' do
         relation = double
         expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
-        expect(relation).to receive(:where).with(list_member_id: subject.id)
+        expect(relation).to receive(:where).with(member_id: subject.id)
         subject.reviews_for_school(state: state, school_id: school_id)
       end
 

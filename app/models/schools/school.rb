@@ -159,10 +159,6 @@ class School < ActiveRecord::Base
     end
   end
 
-  # returns all reviews for
-  def reviews
-    SchoolRating.fetch_reviews self
-  end
 
   def principal_review
     SchoolRating.fetch_principal_review self
@@ -349,6 +345,14 @@ class School < ActiveRecord::Base
 
   def demo_school?
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
+  end
+
+  def reviews
+    @reviews ||= Review.where(school_id: self.id, state: self.state)
+  end
+
+  def flagged_reviews
+    reviews.reported
   end
 
   # def notes

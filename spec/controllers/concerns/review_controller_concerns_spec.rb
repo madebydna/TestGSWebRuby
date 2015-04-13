@@ -36,7 +36,7 @@ describe ReviewControllerConcerns::ReviewParams do
     it 'should set the member_id on review' do
       user.id = 999
       review, errors = subject
-      expect(review.list_member_id).to eq(999)
+      expect(review.member_id).to eq(999)
     end
 
     it 'should set the user_type on review' do

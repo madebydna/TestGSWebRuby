@@ -17,9 +17,10 @@ class Review < ActiveRecord::Base
   has_many :reports, class_name: 'ReportedReview', foreign_key: 'review_id', inverse_of: :review
 
 
+
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
-  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment, :user_type
+  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment
 
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
@@ -37,15 +38,13 @@ class Review < ActiveRecord::Base
   #Wating for role table to be created
   # scope :principal, -> { where(who: 'principal') }
   # scope :not_principal, -> { where("who != 'principal'") }
-  # scope :belonging_to, ->(user) { where(list_member_id: user.id).order('posted desc') }
+  # scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
 
   # Update if applicable with new review status
   # scope :posted_asc, -> { order('posted asc') }
   # scope :held, -> { where(status: %w[h ph]) }
 
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
-  validates :user_type, inclusion: { in: %w(parent teacher student principal unknown) }, if: 'school && school.includes_highschool?'
-  validates :user_type, inclusion: { in: %w(parent teacher principal unknown) }, unless: 'school && school.includes_highschool?'
   validates_presence_of :school
   validates_presence_of :user
 
@@ -56,6 +55,10 @@ class Review < ActiveRecord::Base
   validate :comment_minimum_length
 
   after_save :send_thank_you_email_if_published
+
+  def status
+    active? ? :active : :inactive
+  end
 
   def comment_minimum_length
     # TODO: Internationalize the error string
