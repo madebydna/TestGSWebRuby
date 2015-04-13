@@ -9,8 +9,15 @@ end
 
 shared_example 'should eql the expected text' do |text|
   fail unless subject.present?
-  [*subject].each do | s |
+  [*subject].each do |s|
     expect(s.text).to eql(text)
+  end
+end
+
+shared_example 'should eql the expected value' do |value|
+  fail unless subject.present?
+  [*subject].each do | s |
+    expect(s.value).to eql(value)
   end
 end
 

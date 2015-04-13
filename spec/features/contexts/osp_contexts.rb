@@ -84,6 +84,12 @@ shared_context 'with a basic set of osp questions in db' do
             'No dress code' => 'no_dress_code'
           }
         }.to_json
+      },
+      {
+      #     # todo: need to fix, this is not the actual key for this question
+          esp_response_key: :boardgames,
+          osp_question_group_id: nil,
+          question_type: 'input_field_sm'
       }
     ]
   end
@@ -139,6 +145,15 @@ shared_context 'click a value in a conditional multi select group and then click
   include_context 'click the none option on a conditional multi select question group'
 end
 
+### Open text / input fields ###
+
+shared_context 'enter information into small text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form input[type=text]").set "uuddllrrbass"
+  end
+end
+
 
 ### Submitting osp form  ###
 
@@ -155,6 +170,13 @@ end
 
 shared_context 'within osp form' do
   subject { osp_page.osp_form }
+end
+
+shared_context 'within input field' do |esp_response_key|
+  subject do
+    form = osp_page.osp_form
+    form.find("form input[name=#{esp_response_key}]")
+  end
 end
 
 # Capybara seems to execute some commands asychounously.
