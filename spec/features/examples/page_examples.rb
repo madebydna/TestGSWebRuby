@@ -7,6 +7,13 @@ shared_example 'should contain the expected text' do |text|
   end
 end
 
+shared_example 'should eql the expected text' do |text|
+  fail unless subject.present?
+  [*subject].each do | s |
+    expect(s.text).to eql(text)
+  end
+end
+
 
 shared_example 'should have a link with' do |opts|
   expect(subject).to have_link(opts[:text], :href => opts[:href])

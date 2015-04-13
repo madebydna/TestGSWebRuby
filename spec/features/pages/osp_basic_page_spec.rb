@@ -86,9 +86,9 @@ describe 'OSP Basic Page' do
   end
 
   with_shared_context 'Basic High School' do
-    with_shared_context 'Visit Compare Page' do
+    with_shared_context 'Visit Compare Page', js: true do
       with_shared_context 'the compare page value of', 'Before care' do
-        include_example 'should contain the expected text', ''
+        include_example 'should eql the expected text', ''
       end
     end
   end
@@ -97,7 +97,7 @@ describe 'OSP Basic Page' do
     with_shared_context 'visit OSP page' do
       with_shared_context 'click Before Care and Canoe button options', js: true do
         with_shared_context 'submit the osp form' do
-          include_context 'then run the queue daemon'
+          include_context 'then run the queue daemon', :ca
           with_shared_context 'Visit Compare Page' do
             with_shared_context 'the compare page value of', 'Before care' do
               include_example 'should contain the expected text', 'Yes'
