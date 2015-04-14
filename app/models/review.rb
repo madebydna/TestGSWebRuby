@@ -15,9 +15,9 @@ class Review < ActiveRecord::Base
   has_many :review_answers
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :notes
-  has_many :reports, class_name: 'ReportedReview', foreign_key: 'review_id', inverse_of: :review
+  has_many :flags, -> { where(active: true) }, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
 
-
+  #has_many :school_members, ->(review) { where(school_members: [state: review.state, school_id: review.school_id, member_id: review.user.id] ) }, class_name: '::SchoolMember'
 
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
@@ -58,6 +58,7 @@ class Review < ActiveRecord::Base
   validate :comment_minimum_length
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
+  after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
 
   def status
@@ -107,9 +108,11 @@ class Review < ActiveRecord::Base
   def auto_moderate
     alert_word_results = AlertWord.search(comment)
 
+    reasons = []
     comment = nil
 
     if alert_word_results.any?
+      reasons << ReviewFlag::BAD_LANGUAGE
       comment = 'Review contained '
       if alert_word_results.has_alert_words?
         comment << "warning words (#{ alert_word_results.alert_words.join(',') })"
@@ -123,14 +126,20 @@ class Review < ActiveRecord::Base
     end
 
     if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
+      reasons << ReviewFlag::LOCAL_SCHOOL
       if comment.nil?
         comment = "Review is for GreatSchools Delaware school."
       else
         comment << " Review is for GreatSchools Delaware school."
       end
     end
+
+    if user_type == 'student'
+      reasons << ReviewFlag::STUDENT
+    end
+
     if comment
-      reported_review = build_reported_review(comment, 'auto-flagged')
+      reported_review = build_reported_review(comment, reasons)
       begin
         reported_review.save!
       rescue
@@ -139,10 +148,10 @@ class Review < ActiveRecord::Base
     end
   end
 
-  def build_reported_review(comment, reason)
-    reported_review = ReportedReview.new
+  def build_reported_review(comment, reasons)
+    reported_review = ReviewFlag.new
     reported_review.comment = comment
-    reported_review.reason = reason
+    reported_review.reasons = reasons
     reported_review.review = self
     reported_review
   end
@@ -159,17 +168,27 @@ class Review < ActiveRecord::Base
       school.held? ||
       user_type == 'student' ||
       AlertWord.search(comment).has_really_bad_words? ||
-      PropertyConfig.force_review_moderation?
+      PropertyConfig.force_review_moderation? ||
+      flags.any?
       #BannedIp.ip_banned?(ip)
 
       deactivate
-    else
-      activate
     end
+
+    true
+  end
+
+  def school_member
+    SchoolMember.find_by_school_and_user(school, user)
   end
 
   def user_type
-    nil
+    if school_member
+      school_member.user_type
+    else
+      'unknown'
+    end
   end
+
 
 end

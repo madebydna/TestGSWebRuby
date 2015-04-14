@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
   # Reviews that this User authored, that are reported now
   has_many :reported_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'
 
-  # ReportedReview objects that this User created by reporting a review
-  has_many :review_flags, foreign_key: 'member_id', class_name: 'ReportedReview'
+  # ReviewFlag objects that this User created by reporting a review
+  has_many :review_flags, foreign_key: 'member_id', class_name: 'ReviewFlag'
 
   # Reviews that this User reported
   has_many :reviews_user_reported, class_name: 'Review', through: :review_flags, source: :review

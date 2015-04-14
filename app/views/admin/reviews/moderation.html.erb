@@ -40,7 +40,7 @@
 
             <% is_auto_flagged = false %>
             <% is_user_flagged = false %>
-            <%  review.reports.each do |reported_entity| %>
+            <%  review.flags.each do |reported_entity| %>
                 <% if reported_entity.member_id == -1 || reported_entity.member_id == nil || reported_entity.member_id == 0 %>
                     <% is_auto_flagged = true %>
                 <% else %>
@@ -77,12 +77,12 @@
                     .school%>
                   </td>
                 <td class="tac">
-                    <%= review.reports.size if review.reports.any? %>
+                    <%= review.flags.size if review.flags.any? %>
                 </td>
                 <td class="tac"><%= is_auto_flagged == false ? '' : 'Y' %></td>
                 <td class="tac"><%= is_user_flagged == false ? '' : 'Y' %></td>
                 <td class="tar">
-                    <%= review.reports.last.created.strftime '%-m/%d/%Y' if review.reports.any? %>
+                    <%= review.flags.last.created.strftime '%-m/%d/%Y' if review.flags.any? %>
                 </td>
             </tr>
         <% end %>

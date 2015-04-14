@@ -207,7 +207,7 @@ unexpected error: #{e}."
   end
 
   def reported_reviews
-    ReportedReview.limit(10).includes(:review).group_by(&:review).keys.compact
+    ReviewFlag.limit(10).includes(:review).group_by(&:review).keys.compact
   end
 
   def review_params

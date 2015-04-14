@@ -76,22 +76,6 @@ describe Review do
     expect(review).to be_valid
   end
 
-  it 'should NOT be valid if user is a student and school is not a high school' do
-    review.user = user
-    review.user_type = 'student'
-    review.school = school
-    school.level_code = 'e,m'
-    expect(review).to_not be_valid
-  end
-
-  it 'should be valid if user is a student and school is a high school' do
-    review.user = user
-    review.user_type = 'student'
-    review.school = school
-    school.level_code = 'm,h'
-    expect(review).to be_valid
-  end
-
   it 'should require an ip address' do
     pending ("TODO: Pending in case review gets ip address added")
     review.ip = nil
@@ -103,7 +87,7 @@ describe Review do
   describe '#build_reported_review' do
     it "should return a reported review object with correct attributes" do
     reported_review = subject.build_reported_review('bad words','auto-flagged')
-    expect(reported_review).to be_a(ReportedReview)
+    expect(reported_review).to be_a(ReviewFlag)
     expect(reported_review.comment).to eq('bad words')
     expect(reported_review.reason).to eq('auto-flagged')
     end
@@ -113,6 +97,7 @@ describe Review do
   describe '#auto_moderate' do
     before do
       subject.school = school
+      subject.user = user
     end
 
     it 'should not report a review with no bad language' do
@@ -129,15 +114,15 @@ describe Review do
 
     it 'should send the correct comment and reason' do
       expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1,alert_word_2)', 'auto-flagged')
+      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1,alert_word_2)', [:'bad-language'])
       subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(really_bad_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', 'auto-flagged')
+      expect(subject).to receive(:build_reported_review).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', [:'bad-language'])
       subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(alert_and_really_bad_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', 'auto-flagged')
+      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', [:'bad-language'])
       subject.auto_moderate
     end
 
@@ -145,7 +130,7 @@ describe Review do
       school.state = 'DE'
       school.type = 'public'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', 'auto-flagged')
+      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', [:'local-school'])
       subject.auto_moderate
     end
 
@@ -153,7 +138,7 @@ describe Review do
       school.state = 'DE'
       school.type = 'charter'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', 'auto-flagged')
+      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', [:'local-school'])
       subject.auto_moderate
     end
 
@@ -193,7 +178,7 @@ describe Review do
     it 'should check for banned IP' do
       pending('TODO: do we need an ip method on review')
       fail
-      subject.user_type = 'parent'
+      allow(subject).to receive(:user_type).and_return('parent')
       subject.user = user
       allow(BannedIp).to receive(:banned_ips).and_return(['123.123.123.123'])
 
@@ -209,7 +194,7 @@ describe Review do
     context 'when reviews are not per-moderated' do
       context 'with new user, parent' do
         before do
-          subject.user_type = 'parent'
+          allow(subject).to receive(:user_type).and_return('parent')
           subject.user = new_user
         end
 
@@ -228,7 +213,7 @@ describe Review do
           end
 
           it 'should be inactive if user is student' do
-            subject.user_type = 'student'
+            allow(subject).to receive(:user_type).and_return('student')
             subject.calculate_and_set_active
             expect(subject).to be_inactive
           end
@@ -273,19 +258,19 @@ describe Review do
           end
 
           it 'should be active when user is a parent' do
-            subject.user_type = 'parent'
+            allow(subject).to receive(:user_type).and_return('parent')
             subject.calculate_and_set_active
             expect(subject).to be_active
           end
 
           it 'should be active when user is a principal' do
-            subject.user_type = 'principal'
+            allow(subject).to receive(:user_type).and_return('principal')
             subject.calculate_and_set_active
             expect(subject).to be_active
           end
 
           it 'should be inactive if user is student' do
-            subject.user_type = 'student'
+            allow(subject).to receive(:user_type).and_return('student')
             subject.calculate_and_set_active
             expect(subject).to be_inactive
           end
@@ -313,7 +298,7 @@ describe Review do
       end
       context 'with new user, parent' do
         before do
-          subject.user_type = 'parent'
+          allow(subject).to receive(:user_type).and_return('parent')
           subject.user = new_user
         end
 
@@ -328,7 +313,7 @@ describe Review do
 
           %w[parent principal student].each do |who|
             it "should be unpublished when user is a #{who}" do
-              subject.user_type = who
+              allow(subject).to receive(:user_type).and_return(who)
               subject.calculate_and_set_active
               expect(subject).to be_inactive
             end
@@ -352,7 +337,7 @@ describe Review do
 
           %w[parent principal student].each do |who|
             it "should be unpublished when user is a #{who}" do
-              subject.user_type = who
+              allow(subject).to receive(:user_type).and_return(who)
               subject.calculate_and_set_active
               expect(subject).to be_inactive
             end

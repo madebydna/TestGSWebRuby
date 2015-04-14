@@ -43,7 +43,7 @@ describe Admin::ReviewsController do
     it 'should report the review if one is found' do
       allow(controller).to receive(:logged_in?).and_return(true)
       comment = 'foo'
-      reported_entity = double(ReportedReview).as_null_object
+      reported_entity = double(ReviewFlag).as_null_object
       review = FactoryGirl.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:build_reported_review).with(comment, 'user-reported') {
@@ -57,7 +57,7 @@ describe Admin::ReviewsController do
     it 'should handle save failure by setting flash message' do
       allow(controller).to receive(:logged_in?).and_return(true)
       comment = 'foo'
-      review_flag = double(ReportedReview).as_null_object
+      review_flag = double(ReviewFlag).as_null_object
       review = FactoryGirl.build(:review)
       allow(Review).to receive(:find).and_return(review)
       expect(review).to receive(:build_reported_review).with(comment, 'user-reported') {

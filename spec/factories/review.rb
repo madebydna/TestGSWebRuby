@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :review, class: Review do
     sequence(:id) { |n| n }
-    association :user, factory: :user, strategy: :build
+    association :user, factory: :verified_user, strategy: :build
     association :question, factory: :review_question, strategy: :build
     state 'CA'
     active 1
