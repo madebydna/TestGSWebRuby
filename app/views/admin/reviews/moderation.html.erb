@@ -72,9 +72,11 @@
                 <td class="tac">
                   <%= review.school.state if review.school%>
                 </td>
-                <td><%= link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>
-                                                                                  review.user.email)) if review
-                    .school%>
+                <td>
+                  <%= link_to(
+                        review.user.email,
+                        users_admin_reviews_path(review_moderation_search_string: review.user.email)
+                      ) if review.school && review.user %>
                   </td>
                 <td class="tac">
                     <%= review.flags.size if review.flags.any? %>
