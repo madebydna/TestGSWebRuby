@@ -1,6 +1,6 @@
 class ReviewNote < ActiveRecord::Base
   include BehaviorForModelsWithActiveField
-
+  self.table_name = 'review_notes'
   db_magic :connection => :gs_schooldb
 
   attr_accessible :id, :member_id, :review_id, :notes, :active, :created
