@@ -27,7 +27,8 @@ class Review < ActiveRecord::Base
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
 
-  scope :reported, -> { joins(:reports).where('flags.active' => true) }
+  scope :reported, -> { joins(:reports).where('review_flags.active' => true) }
+  scope :ever_flagged, -> { joins(:reports) }
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
 
   # Commented out to be added back in with Moderation models

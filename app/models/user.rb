@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_many :review_flags, foreign_key: 'member_id', class_name: 'ReportedReview'
 
   # Reviews that this User reported
-  has_many :reviews_user_reported, class_name: 'Review', through: :review_reports, source: :review
+  has_many :reviews_user_reported, class_name: 'Review', through: :review_flags, source: :review
 
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb

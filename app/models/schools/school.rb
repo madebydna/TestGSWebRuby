@@ -355,6 +355,10 @@ class School < ActiveRecord::Base
     reviews.reported
   end
 
+  def reviews_that_have_ever_been_flagged
+    reviews.reported
+  end
+
   # def notes
   #   @notes ||= SchoolNote.find_by_school(self)
   # end
