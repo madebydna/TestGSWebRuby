@@ -86,10 +86,15 @@ shared_context 'with a basic set of osp questions in db' do
         }.to_json
       },
       {
-      #     # todo: need to fix, this is not the actual key for this question
           esp_response_key: :boardgames,
           osp_question_group_id: nil,
           question_type: 'input_field_sm'
+      },
+      {
+          esp_response_key: :videogames,
+          osp_question_group_id: nil,
+          question_type: 'input_field_lg'
+
       }
     ]
   end
@@ -154,6 +159,13 @@ shared_context 'enter information into small text field' do
   end
 end
 
+shared_context 'enter information into large text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form textarea").set "This is the most awesome large text area ever!"
+  end
+end
+
 
 ### Submitting osp form  ###
 
@@ -176,6 +188,13 @@ shared_context 'within input field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
     form.find("form input[name=#{esp_response_key}]")
+  end
+end
+
+shared_context 'within textarea field' do |esp_response_key|
+  subject do
+    form = osp_page.osp_form
+    form.find("form textarea[name=#{esp_response_key}]")
   end
 end
 
