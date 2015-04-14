@@ -75,7 +75,7 @@ describe 'School moderate page' do
     with_shared_context 'search for school', state, school_id do
       context 'with flagged reviews' do
         let!(:user) { FactoryGirl.create(:verified_user) }
-        let!(:review) { FactoryGirl.create(:school_rating, :flagged, user: user, school: school) }
+        let!(:review) { FactoryGirl.create(:review, :flagged, user: user, school: school) }
         after do
           clean_dbs :gs_schooldb, :surveys, :community
         end
@@ -88,7 +88,7 @@ describe 'School moderate page' do
             subject { page_object.reviews.first }
 
             it { is_expected.to have_comment }
-            it { is_expected.to have_content review.comments }
+            it { is_expected.to have_content review.comment }
             it { is_expected.to have_content review.user.email }
 
             describe 'notes' do
@@ -100,7 +100,7 @@ describe 'School moderate page' do
                   page_object.reviews.first.notes_box.set('Here is a test note')
                   page_object.reviews.first.save_notes_button.click
                 end
-                subject { SchoolModerationPage.new.reviews.first.notes_box }
+                subject { SchoolModerationPage.new.reviews.first }
                 # We need a new SchoolModeratePage as the subject, since the page has been reloaded
                 it { is_expected.to have_content 'Here is a test note' }
               end

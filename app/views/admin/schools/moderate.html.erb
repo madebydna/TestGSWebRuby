@@ -20,11 +20,8 @@
 
   <div>
     <h5>Filters</h5>
-    <%= check_box_tag :provisional, true, params[:provisional] == 'true' %> Provisional (p_) &nbsp;&nbsp;
-    <%= check_box_tag :unpublished, true, params[:unpublished] == 'true' %> Unpublished (u) &nbsp;&nbsp;
-    <%= check_box_tag :disabled, true, params[:disabled] == 'true' %> Disabled (d) &nbsp;&nbsp;
-    <%= check_box_tag :held, true, params[:held] == 'true' %> Held (h) &nbsp;&nbsp;
-    <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Flagged &nbsp;&nbsp;
+    <%= check_box_tag :active, true, params[:active] == 'true' %> Active &nbsp;&nbsp;
+    <%= check_box_tag :inactive, true, params[:inactive] == 'true' %> Inactive &nbsp;&nbsp;
   </div>
   <div>
     <strong><%= pluralize @reviews.size, 'review' %></strong> displayed

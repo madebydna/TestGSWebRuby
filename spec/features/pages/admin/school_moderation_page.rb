@@ -15,8 +15,8 @@ class SchoolModerationPage < SitePrism::Page
 
   sections :reviews, '.rs-list-of-reviews div.row' do
     element :comment, '.rs-review-comment'
-    element :notes_box, 'textarea[name="school_rating[note]"]'
-    element :save_notes_button, 'button', text: 'Save notes'
+    element :notes_box, '.rs-review-notes textarea'
+    element :save_notes_button, '.rs-review-notes button', text: 'Save notes'
   end
 
 end

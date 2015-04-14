@@ -78,11 +78,12 @@ class Admin::ReviewsController < ApplicationController
 
 
   def update
-    review = SchoolRating.find(params[:id]) rescue nil
+    review = Review.find(params[:id]) rescue nil
 
     if review
       review.moderated = true
-      if review.update_attributes(params[:school_rating])
+      review.notes.build if review_params['notes_attributes']
+      if review.update_attributes(review_params)
         flash_notice 'Review updated.'
       else
         flash_error 'Sorry, something went wrong updating the review.'
@@ -194,6 +195,10 @@ unexpected error: #{e}."
 
   def find_reviews_by_ids(review_ids)
     Review.where(id: review_ids)
+  end
+
+  def review_params
+    params.require(:review).permit(:id, notes_attributes: [:id, :notes, :_destroy])
   end
 
 end

@@ -126,11 +126,13 @@ LocalizedProfiles::Application.routes.draw do
       get 'moderation', on: :collection
       get 'schools', on: :collection
       get 'users', on: :collection
-      put 'publish', on: :member
-      put 'disable', on: :member
+      put 'activate', on: :member
+      put 'deactivate', on: :member
       put 'resolve', on: :member
       put 'report', on: :member
     end
+
+    resources :review_notes, only: [:create]
 
     get  '/reset_password', to: 'users#generate_reset_password_link' , as: :generate_reset_password_link
     get  '/users/search'

@@ -14,6 +14,7 @@ class Review < ActiveRecord::Base
   belongs_to :question, class_name:'ReviewQuestion', foreign_key: 'review_question_id'
   has_many :review_answers
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
+  accepts_nested_attributes_for :notes
   has_many :reports, class_name: 'ReportedReview', foreign_key: 'review_id', inverse_of: :review
 
 
@@ -21,6 +22,7 @@ class Review < ActiveRecord::Base
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
   attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment
+  attr_writer :moderated
 
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
@@ -54,6 +56,7 @@ class Review < ActiveRecord::Base
 
   validate :comment_minimum_length
 
+  before_save :calculate_and_set_active, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
 
   def status
@@ -162,6 +165,10 @@ class Review < ActiveRecord::Base
     else
       activate
     end
+  end
+
+  def user_type
+    nil
   end
 
 end
