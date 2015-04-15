@@ -85,7 +85,15 @@ describe 'OSP Basic Page' do
         with_shared_context 'enter information into small text field', js: true do
           with_shared_context 'submit the osp form' do
             with_shared_context 'within input field', :boardgames do
-              include_example 'should eql the expected value', 'uuddllrrbass'
+              include_example 'should eql the expected value', 'uuddlrlrbas'
+            end
+          end
+        end
+
+        with_shared_context 'enter information into medium text field', js: true do
+          with_shared_context 'submit the osp form' do
+            with_shared_context 'within textarea field', :puzzlegames do
+              include_example 'should eql the expected value', 'upupdowndownleftrightleftrightBAstart'
             end
           end
         end
@@ -93,10 +101,11 @@ describe 'OSP Basic Page' do
         with_shared_context 'enter information into large text field', js: true do
           with_shared_context 'submit the osp form' do
             with_shared_context 'within textarea field', :videogames do
-              include_example 'should eql the expected value', 'This is the most awesome large text area ever!'
+              include_example 'should eql the expected value', 'upupdowndownleftrightleftrightBAstart'
             end
           end
         end
+
       end
     end
   end

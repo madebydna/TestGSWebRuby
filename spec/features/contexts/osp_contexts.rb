@@ -95,6 +95,12 @@ shared_context 'with a basic set of osp questions in db' do
           osp_question_group_id: nil,
           question_type: 'input_field_lg'
 
+      },
+      {
+          esp_response_key: :puzzlegames,
+          osp_question_group_id: nil,
+          question_type: 'input_field_md'
+
       }
     ]
   end
@@ -155,14 +161,21 @@ end
 shared_context 'enter information into small text field' do
   before do
     form = osp_page.osp_form
-    form.find("form input[type=text]").set "uuddllrrbass"
+    form.find("form input[type=text]").set "uuddlrlrbas"
+  end
+  end
+
+shared_context 'enter information into medium text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form textarea[name='puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 
 shared_context 'enter information into large text field' do
   before do
     form = osp_page.osp_form
-    form.find("form textarea").set "This is the most awesome large text area ever!"
+    form.find("form textarea[name='videogames']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 

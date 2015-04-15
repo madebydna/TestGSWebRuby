@@ -6,3 +6,22 @@
   width: 300px
 }
 
+.input-field-lg {
+  resize: vertical;
+
+}
+
+.form-control.input-field-md {
+  width: 100%;
+  height: 39px;
+  resize: none;
+
+}
+
+@media only screen and (max-width : 480px) {
+  .form-control.input-field-md {
+    width: 100%;
+    height: 60px;
+  }
+
+}
