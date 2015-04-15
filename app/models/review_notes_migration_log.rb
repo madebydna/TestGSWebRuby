@@ -3,5 +3,7 @@ class ReviewNotesMigrationLog < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
+  validates_presence_of(:school_rating_id, :review_note_id)
+
 
 end

@@ -34,5 +34,6 @@ class ReviewFlag < ActiveRecord::Base
     reason.split(',')
   end
 
+  validates_presence_of(:review_id, :member_id, :reason)
 
 end

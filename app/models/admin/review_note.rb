@@ -8,4 +8,6 @@ class ReviewNote < ActiveRecord::Base
   belongs_to :review, inverse_of: :notes
   belongs_to :user, foreign_key: 'member_id'
 
+  validates_presence_of(:review_id)
+
 end
