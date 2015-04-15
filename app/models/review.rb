@@ -27,7 +27,7 @@ class Review < ActiveRecord::Base
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
 
-  scope :reported, -> { joins(:reports).where('review_flags.active' => true) }
+  scope :reported, -> { joins(:flags).where('review_flags.active' => true) }
   scope :ever_flagged, -> { joins(:reports) }
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
 
@@ -179,7 +179,8 @@ class Review < ActiveRecord::Base
   end
 
   def school_member
-    SchoolMember.find_by_school_and_user(school, user)
+    return nil unless school && user
+    @school_member ||= SchoolMember.find_by_school_and_user(school, user)
   end
 
   def user_type

@@ -9,10 +9,8 @@ class Admin::ReviewsController < ApplicationController
 
     if params[:state].present? && params[:school_id].present?
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
-      @reported_reviews = @school.reviews_that_have_ever_been_flagged
+      @reported_reviews = @school.reviews_that_have_ever_been_flagged.page(params[:page]).per(50)
     else
-      # We need the reviews that are associated with the most recently created flags
-      # We will paginate on the flags table
       @reported_reviews = reported_reviews
     end
 
@@ -207,7 +205,7 @@ unexpected error: #{e}."
   end
 
   def reported_reviews
-    ReviewFlag.limit(10).includes(:review).group_by(&:review).keys.compact
+    Review.reported.order('review_flags.created desc').page(params[:page]).per(50)
   end
 
   def review_params

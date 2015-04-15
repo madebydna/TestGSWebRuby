@@ -18,7 +18,7 @@
         <% end %>
     </div>
 
-    <h3>Flagged reviews (<%= @reported_reviews.size %>) </h3>
+    <h3>Flagged reviews (<%= @reported_reviews.size %> of <%= @reported_reviews.total_count %>) </h3>
 
     <table class="table table-striped" id="flagged_reviews_table">
         <thead>
@@ -29,8 +29,7 @@
             <td>State</td>
             <td>Reviewer</td>
             <td>Reports</td>
-            <td>A&nbsp;Flagged</td>
-            <td>U&nbsp;Flagged</td>
+            <td>Reasons</td>
             <td>Opened&nbsp;on</td>
         </tr>
         </thead>
@@ -38,15 +37,7 @@
 
         <% @reported_reviews.each do |review| %>
 
-            <% is_auto_flagged = false %>
-            <% is_user_flagged = false %>
-            <%  review.flags.each do |reported_entity| %>
-                <% if reported_entity.member_id == -1 || reported_entity.member_id == nil || reported_entity.member_id == 0 %>
-                    <% is_auto_flagged = true %>
-                <% else %>
-                    <% is_user_flagged = true %>
-                <% end %>
-            <% end %>
+
 
             <tr>
                 <td>
@@ -81,8 +72,7 @@
                 <td class="tac">
                     <%= review.flags.size if review.flags.any? %>
                 </td>
-                <td class="tac"><%= is_auto_flagged == false ? '' : 'Y' %></td>
-                <td class="tac"><%= is_user_flagged == false ? '' : 'Y' %></td>
+                <td class="tac"><%= review.flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
                 <td class="tar">
                     <%= review.flags.last.created.strftime '%-m/%d/%Y' if review.flags.any? %>
                 </td>
@@ -91,6 +81,8 @@
         </tbody>
 
     </table>
+
+    Flagged reviews: <%= paginate @reported_reviews, param_name: :page %>
 
     <br/><br/>
 
