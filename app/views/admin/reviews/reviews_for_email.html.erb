@@ -1,0 +1,30 @@
+
+<%= javascript_tag do %>
+    $(function() {
+        $("#new_banned_ip input[name='disable_ip']").on('click', function() {
+            return confirm("Are you sure you want to block this IP from submitting reviews?");
+        });
+    });
+<% end %>
+
+<%= render 'nav/topnav' %>
+
+<%= render 'reviews_navigation', page_name: :users %>
+<%= render 'reviews_user_ip_search' %>
+
+<div class="ptl limit-width-1200">
+  <h3>Reviews by User</h3>
+  <%= render 'list_of_reviews', reviews: @reviews_by_user %>
+
+  <h3>Reviews reported by User</h3>
+  <%= render 'list_of_reviews', reviews: @reviews_reported_by_user %>
+
+  <% if @banned_ip %>
+      <h3>Block this IP</h3>
+      <%= form_for @banned_ip, :url => admin_ban_ip_path do |banned_ip| %>
+          reason: <%= banned_ip.text_field :reason %>
+          <%= banned_ip.hidden_field :ip %>
+          <%= banned_ip.submit "Block this IP", :name => 'disable_ip'%>
+      <% end %>
+  <% end %>
+</div>

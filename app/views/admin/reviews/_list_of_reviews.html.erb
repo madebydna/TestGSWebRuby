@@ -1,0 +1,60 @@
+<% if reviews.present? %>
+  <table class="table table-striped" id="flagged_reviews_table">
+    <thead>
+    <tr>
+      <td>Review</td>
+      <td>Status</td>
+      <td>School</td>
+      <td>State</td>
+      <td>Reviewer</td>
+      <td>Reports</td>
+      <td>Reasons</td>
+      <td>Opened&nbsp;on</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% reviews.each do |review| %>
+      <tr>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to truncate(review.comment, length: 20), admin_school_moderate_path(state:
+                                                                                           school_params(school)[:state], school_id: school.id, review_id: review.id) %>
+          <% else %>
+            <%= truncate(review.comment, length: 20) %>
+          <% end %>
+        </td>
+        <td class="tac">
+          <%= review.status.to_s.capitalize %>
+        </td>
+        <td>
+          <% if review.school %>
+            <% school = review.school %>
+            <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
+          <% else %>
+            School not found
+          <% end %>
+        </td>
+        <td class="tac">
+          <%= review.school.state if review.school %>
+        </td>
+        <td>
+          <%= link_to(
+                review.user.email,
+                users_admin_reviews_path(review_moderation_search_string: review.user.email)
+              ) if review.school && review.user %>
+        </td>
+        <td class="tac">
+          <%= review.flags.size if review.flags.any? %>
+        </td>
+        <td class="tac"><%= review.flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
+        <td class="tar">
+          <%= review.flags.last.created.strftime '%-m/%d/%Y' if review.flags.any? %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  None
+<% end %>

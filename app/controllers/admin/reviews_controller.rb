@@ -3,8 +3,7 @@ class Admin::ReviewsController < ApplicationController
   def moderation
     if params[:review_moderation_search_string]
       moderate_by_user
-      render '_reviews_for_email'
-      return
+      render 'reviews_for_email'
     end
 
     if params[:state].present? && params[:school_id].present?
@@ -13,6 +12,8 @@ class Admin::ReviewsController < ApplicationController
     else
       @reported_reviews = reported_reviews
     end
+
+    preload_schools_onto_reviews(@reported_reviews)
 
     gon.reported_reviews_count = @reported_reviews.length
     gon.pagename = 'Reviews moderation list'
@@ -33,6 +34,7 @@ class Admin::ReviewsController < ApplicationController
   def users
     set_meta_tags :title =>  'Reviews moderation user search'
     moderate_by_user
+    render 'reviews_for_email'
   end
 
   def moderate_by_user
@@ -205,11 +207,22 @@ unexpected error: #{e}."
   end
 
   def reported_reviews
-    Review.reported.order('review_flags.created desc').page(params[:page]).per(50)
+    Review.reported.includes(:flags).order('review_flags.created desc').eager_load(:user).merge(User.verified).page(params[:page]).per(50)
   end
 
   def review_params
     params.require(:review).permit(:id, notes_attributes: [:id, :notes, :_destroy])
   end
 
+  def preload_schools_onto_reviews(reviews)
+    make_key = Proc.new { |state, id| "#{state}_#{id}" }
+    states = reviews.map(&:state)
+    ids = reviews.map(&:school_id)
+    schools = School.for_states_and_ids(states, ids)
+    key_to_school_map = schools.each_with_object({}) { |school, hash| hash[make_key.call(school.state, school.id)] = school }
+
+    reviews.each do |review|
+      review.instance_variable_set(:@school, key_to_school_map[make_key.call(review.state, review.school_id)])
+    end
+  end
 end
