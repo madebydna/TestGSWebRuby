@@ -1,6 +1,24 @@
 <% @held_school %>
 <% @reviews %>
 
+<script type="text/javascript">
+  $(function(){
+    $('input:checkbox').on('click', function() {
+      var $this = $(this);
+      var value = $this.prop('checked');
+      var name = $this.attr('name');
+
+      new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+
+      if (_.indexOf(new_location, '?') == -1) {
+        new_location += '?';
+      } else {
+        new_location += '&';
+      }
+      location.href = new_location + name + "=" + value;
+    });
+  });
+</script>
 
 <%= render 'admin/reviews/reviews_navigation', page_name: :schools %>
 
@@ -22,6 +40,8 @@
     <h5>Filters</h5>
     <%= check_box_tag :active, true, params[:active] == 'true' %> Active &nbsp;&nbsp;
     <%= check_box_tag :inactive, true, params[:inactive] == 'true' %> Inactive &nbsp;&nbsp;
+    <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Open flags &nbsp;&nbsp;
+    <%= check_box_tag :has_inactive_flags, true, params[:has_inactive_flags] == 'true' %> Resolved flags &nbsp;&nbsp;
   </div>
   <div>
     <strong><%= pluralize @reviews.size, 'review' %></strong> displayed

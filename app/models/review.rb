@@ -15,7 +15,7 @@ class Review < ActiveRecord::Base
   has_many :review_answers
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :notes
-  has_many :flags, -> { where(active: true) }, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
+  has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
 
   #has_many :school_members, ->(review) { where(school_members: [state: review.state, school_id: review.school_id, member_id: review.user.id] ) }, class_name: '::SchoolMember'
 
@@ -27,8 +27,10 @@ class Review < ActiveRecord::Base
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
 
-  scope :reported, -> { joins(:flags).where('review_flags.active' => true) }
-  scope :ever_flagged, -> { joins(:reports) }
+  scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
+  scope :has_inactive_flags, -> { joins(:flags).where('review_flags.active' => false) }
+  scope :ever_flagged, -> { joins(:flags) }
+  scope :has_comment, -> { where('reviews.comment IS NOT NULL and reviews.comment != ""')}
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
 
   # Commented out to be added back in with Moderation models

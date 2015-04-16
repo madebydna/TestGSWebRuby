@@ -4,13 +4,15 @@
     <div class="row pbl">
       <%= div_tag sizes: { md: 6, lg: 6 } do %>
         <h3>Reviews moderation list</h3>
+        <!--
         <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
-          <div>
-            <% if @school %>
-              <br/>
-              Showing reviews for <%= @school.name %>. <%= link_to 'View all', moderation_admin_reviews_path %>
-            <% end %>
-          </div>
+        -->
+        <div>
+          <% if @school %>
+            <br/>
+            Showing reviews for <%= @school.name %>. <%= link_to 'View all', moderation_admin_reviews_path %>
+          <% end %>
+        </div>
       <% end %>
     </div>
 

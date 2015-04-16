@@ -8,12 +8,12 @@ class Admin::ReviewsController < ApplicationController
 
     if params[:state].present? && params[:school_id].present?
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
-      @reported_reviews = @school.reviews_that_have_ever_been_flagged.page(params[:page]).per(50)
+      @reported_reviews = school_reported_reviews(@school)
     else
       @reported_reviews = reported_reviews
     end
 
-    preload_schools_onto_reviews(@reported_reviews)
+    preload_schools_onto_reviews(@reported_reviews) if @reported_reviews.present?
 
     gon.reported_reviews_count = @reported_reviews.length
     gon.pagename = 'Reviews moderation list'
@@ -124,17 +124,17 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
-
   def resolve
-    begin
-      ReportedEntity.on_db(:community_rw)
-        .where(reported_entity_id: params[:id], reported_entity_type: 'schoolReview')
-        .update_all(active: false)
-      flash_error 'Review resolved successfully'
-    rescue => e
-      flash_error "Review could not be resolved because of \
-unexpected error: #{e}."
+    review = Review.find(params[:id]) rescue nil
+    review.flags.active.each do |flag|
+      flag.deactivate
+      unless flag.save
+        flash_error "Review flag could not be resolved because of unexpected error: #{e}. Not all flags resolved."
+        return
+      end
     end
+
+    flash_notice 'Review flags resolved successfully'
 
     redirect_back
   end
@@ -206,8 +206,27 @@ unexpected error: #{e}."
     Review.where(id: review_ids)
   end
 
+  def school_reported_reviews(school)
+    school.
+      reviews.
+      ever_flagged.
+      has_comment.
+        eager_load(:flags).
+        order('review_flags.created desc').
+          eager_load(:user).
+          merge(User.verified).
+            page(params[:page]).per(50)
+  end
+
   def reported_reviews
-    Review.reported.includes(:flags).order('review_flags.created desc').eager_load(:user).merge(User.verified).page(params[:page]).per(50)
+    Review.
+      flagged.
+      has_comment.
+        eager_load(:flags).
+        order('review_flags.created desc').
+          eager_load(:user).
+          merge(User.verified).
+            page(params[:page]).per(50)
   end
 
   def review_params

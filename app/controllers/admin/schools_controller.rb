@@ -4,6 +4,8 @@ class Admin::SchoolsController < ApplicationController
 
   has_scope :active, type: :boolean
   has_scope :inactive, type: :boolean
+  has_scope :flagged, type: :boolean
+  has_scope :has_inactive_flags, type: :boolean
 
   def moderate
     @held_school = @school.held_school
@@ -13,7 +15,7 @@ class Admin::SchoolsController < ApplicationController
       @reviews = Review.where(id: params[:review_id])
     else
       title = 'Reviews moderation - school'
-      @reviews = @school.reviews
+      @reviews = @school.reviews.where('reviews.comment IS NOT NULL AND reviews.comment != ""')
       @reviews = apply_scopes(@reviews)
       @reviews.to_a.uniq!(&:id)
     end

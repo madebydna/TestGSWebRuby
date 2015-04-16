@@ -7,13 +7,15 @@
       <td>School</td>
       <td>State</td>
       <td>Reviewer</td>
-      <td>Reports</td>
+      <td>Open flags</td>
       <td>Reasons</td>
       <td>Opened&nbsp;on</td>
     </tr>
     </thead>
     <tbody>
     <% reviews.each do |review| %>
+      <% active_flags = review.flags.select(&:active?) %>
+      <% inactive_flags = review.flags.select(&:inactive?) %>
       <tr>
         <td>
           <% if review.school %>
@@ -45,11 +47,15 @@
               ) if review.school && review.user %>
         </td>
         <td class="tac">
-          <%= review.flags.size if review.flags.any? %>
+          <%= active_flags.size %>
         </td>
-        <td class="tac"><%= review.flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
+        <td class="tac"><%= active_flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
         <td class="tar">
-          <%= review.flags.last.created.strftime '%-m/%d/%Y' if review.flags.any? %>
+          <% if active_flags.any? %>
+            <%= active_flags.last.created.strftime '%-m/%d/%Y' if active_flags.any? %>
+          <% else %>
+            <%= inactive_flags.last.created.strftime '%-m/%d/%Y' if inactive_flags.any? %>
+          <% end %>
         </td>
       </tr>
     <% end %>
