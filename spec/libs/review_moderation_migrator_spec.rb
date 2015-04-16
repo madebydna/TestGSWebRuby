@@ -14,6 +14,8 @@ end
 #
 describe ReviewModerationMigrator::SchoolNotes do
 
+  subject {ReviewModerationMigrator::SchoolNotes.new("2014-04-10")}
+  after(:each) { clean_models :gs_schooldb, SchoolNote, HeldSchool }
   it 'should have the method to run the migration' do
     expect(subject).to respond_to(:run!)
   end
@@ -23,7 +25,6 @@ describe ReviewModerationMigrator::SchoolNotes do
       before do
         FactoryGirl.create(:school_note)
       end
-      after(:all) { clean_models :gs_schooldb, SchoolNote }
 
       it 'should respond to truncate_school_notes' do
         expect(subject).to respond_to(:truncate_school_notes)
@@ -42,9 +43,6 @@ describe ReviewModerationMigrator::SchoolNotes do
   end
 
   describe '#build_school_note' do
-    after do
-      clean_models(:gs_schooldb, HeldSchool, SchoolNote)
-    end
     let(:held_school) {FactoryGirl.build(:held_school)}
     it 'should create a new school_note with a held_school object' do
       expect(subject.build_school_note(held_school)).to be_a(SchoolNote)
@@ -56,10 +54,7 @@ describe ReviewModerationMigrator::SchoolNotes do
   describe '#migrate' do
     context 'when there are no school notes in the database' do
       before do
-        FactoryGirl.create(:held_school)
-      end
-      after do
-        clean_models(HeldSchool, SchoolNote)
+        FactoryGirl.create(:held_school, created: "2014-04-09")
       end
       it 'should migrate all data in held_schools to school_notes' do
         expect(SchoolNote.count).to eq(0)

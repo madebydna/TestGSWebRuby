@@ -1,37 +1,3 @@
-# 1. build the errors and log them (mixin)
-# 2. send email to errors (mixin)
-# 3. collect email and date from user
-# 4. build way to test input and return incorrect input (mixin)
-# 5. have a date that is default
-# 6. add status updates as to what percent is done
-# 7. test for if item potent - done
-#
-# Plan for review flags:
-# .5. build the school_rating to review_id hash DONE
-# 1. Get all review_entities: DONE
-#   :created before date, that are for reviews,
-#   :that do not have id's in review_flags_migration_logs
-# 2. Attach the school_rating to each call
-# 3. Build each new review_flag:
-#   get the review_id by calling the the school_rating to review_id hash with the reported_entity_id
-#   set the comment (from reported_entity)
-#   get the member_id from the reporter_id (from reported entity)/ this is confusing alias for possibly reporter_id
-#   set the created and update (from reported entity)
-#   set the active (from reported entity)
-#   translate the reason:
-#     logic:
-#       is user-reported if reporter_id != -1
-#       is one of the auto-flagged options if reported_id == -1
-#       bad-language: if reported_id = -1 and (comment has text 'warning words' or 'really bad words' school_rating has status 'd')
-#       held-school: reported_id = -1 and school_rating status has 'h'
-#       student if reported_id = -1(school_rating has who = 'student') TODO: check if former student also counts as student
-#       blocked-ip: if reported_id = -1 AND BannedIP.ipbanned?(school_rating.ip) == true
-#       force-flagged: if reported_id = -1 and is not Banned_IP and is not student
-#       local-school: if reported_entity.reason includes text 'Review is for GreatSchools Delaware school.'
-#       auto-flagged: if reported_id = -1 AND none of above options are true
-#   log to the review_flags_migration_logs the reported_entity_id and the review_flag_id
-#   send out email with errors
-
 
 module ReviewModerationMigrator
 
@@ -56,9 +22,18 @@ module ReviewModerationMigrator
 
   class SchoolNotes
 
+    def initialize(time_str)
+      @date = Time.parse(time_str)
+    end
+
     def run!
-      truncate_school_notes
+      start_time = Time.now
+      # truncate_school_notes
       migrate
+      end_time = Time.now
+      migration_time = ((end_time - start_time).to_s.slice(0, 4))
+      final_message = "Started at #{start_time} and ended at #{end_time} \n Took a total of #{migration_time} seconds to migrate"
+      puts final_message
     end
 
     def truncate_school_notes
@@ -68,7 +43,7 @@ module ReviewModerationMigrator
     end
 
     def migrate
-      HeldSchool.find_each do |held_school|
+      HeldSchool.where('created < ?', @date).find_each do |held_school|
         build_school_note(held_school)
       end
     end
@@ -238,6 +213,7 @@ module ReviewModerationMigrator
       @reported_entity_ids = reported_entity_ids
       @error_file = File.new("log/review_flags_output.txt", 'w+')
       @missing_review_ids_file = File.new("log/review_flags_missing_review_ids.txt", 'w+')
+      @possible_banned_ips_file = File.new("log/review_flags_suspect_ids.txt", 'w+')
     end
 
     def run!
@@ -363,8 +339,8 @@ module ReviewModerationMigrator
         return 'held-school' if is_held_school?(reported_entity)
         return 'student' if is_student?(reported_entity)
         return 'local-school' if is_local_school?(reported_entity)
-        # return 'banned-ip' if is_banned_ip?(reported_entity) TODO: ask samson about banned ip
-        # return 'force-flagged' if is_force_flagged?(reported_entity)
+        return 'blocked-ip' if is_banned_ip?(reported_entity)
+        return 'force-flagged' if is_force_flagged?(reported_entity)
         return 'auto-flagged'
       rescue => error
         puts("Error getting reason for reported entity; Message: #{error.message}")
@@ -376,10 +352,10 @@ module ReviewModerationMigrator
     end
 
     def is_bad_language?(reported_entity)
-      # bad_words_present = reported_entity.reason.include?('warning words') || reported_entity.reason.include?('really bad words')
-      bad_words_present = reported_entity.reason.include?('really bad words')
-      bad_word_status = reported_entity.school_rating.status.include?('d')
-      bad_word_status && bad_words_present
+      reported_entity.reason.include?('warning words') || reported_entity.reason.include?('really bad words')
+      # bad_words_present = reported_entity.reason.include?('really bad words')
+      # bad_word_status = reported_entity.school_rating.status.include?('d')
+      # bad_word_status && bad_words_present
     end
 
     def is_held_school?(reported_entity)
@@ -394,18 +370,25 @@ module ReviewModerationMigrator
       reported_entity.reason.include?('Review is for GreatSchools Delaware school')
     end
 
-    # def is_banned_ip?(reported_entity)
-    #   ip = reported_entity.school_rating.ip
-    #   if ip
-    #     return BannedIp.is_banned?(reported_entity.school_rating.ip)
-    #   else
-    #     return false
-    #   end
-    # end
+    def is_banned_ip?(reported_entity)
+      ip = reported_entity.school_rating.ip
+      if ip
+        if reported_entity.reason.include?('on ban list at time of submission')
+          return true
+        else
+          message = "ReportedEntity ID: #{reported_entity.id}, SchoolRating ID: #{reported_entity.school_rating.id}"
+          message += " IP: #{ip} \n"
+          @possible_banned_ips_file.write(message)
+          return false
+        end
+      else
+        return false
+      end
+    end
 
-    # def is_force_flagged?(reported_entity)
-    #   !is_student?(reported_entity) && !is_banned_ip?(reported_entity) && reported_entity.school_rating.status.include?('u')
-    # end
+    def is_force_flagged?(reported_entity)
+      !is_student?(reported_entity) && !is_banned_ip?(reported_entity) && reported_entity.school_rating.status.include?('u')
+    end
 
     def log_migrated_review_flag(reported_entity_id, review_flag_id)
       review_flag_migration_log = ReviewFlagsMigrationLog.new(reported_entity_id: reported_entity_id, review_flag_id: review_flag_id)
@@ -437,7 +420,41 @@ module ReviewModerationMigrator
       @review_key[school_rating_id]
     end
 
-
   end
 
 end
+
+
+# 1. build the errors and log them (mixin)
+# 2. send email to errors (mixin)
+# 3. collect email and date from user
+# 4. build way to test input and return incorrect input (mixin)
+# 5. have a date that is default
+# 6. add status updates as to what percent is done
+# 7. test for if item potent - done
+#
+# Plan for review flags:
+# .5. build the school_rating to review_id hash DONE
+# 1. Get all review_entities: DONE
+#   :created before date, that are for reviews,
+#   :that do not have id's in review_flags_migration_logs
+# 2. Attach the school_rating to each call
+# 3. Build each new review_flag:
+#   get the review_id by calling the the school_rating to review_id hash with the reported_entity_id
+#   set the comment (from reported_entity)
+#   get the member_id from the reporter_id (from reported entity)/ this is confusing alias for possibly reporter_id
+#   set the created and update (from reported entity)
+#   set the active (from reported entity)
+#   translate the reason:
+#     logic:
+#       is user-reported if reporter_id != -1
+#       is one of the auto-flagged options if reported_id == -1
+#       bad-language: if reported_id = -1 and (comment has text 'warning words' or 'really bad words' school_rating has status 'd')
+#       held-school: reported_id = -1 and school_rating status has 'h'
+#       student if reported_id = -1(school_rating has who = 'student') TODO: check if former student also counts as student
+#       blocked-ip: if reported_id = -1 AND BannedIP.ipbanned?(school_rating.ip) == true
+#       force-flagged: if reported_id = -1 and is not Banned_IP and is not student
+#       local-school: if reported_entity.reason includes text 'Review is for GreatSchools Delaware school.'
+#       auto-flagged: if reported_id = -1 AND none of above options are true
+#   log to the review_flags_migration_logs the reported_entity_id and the review_flag_id
+#   send out email with errors

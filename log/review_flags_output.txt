@@ -1,0 +1,2 @@
+Started at 2015-04-15 13:25:44 -0700 and ended at 2015-04-15 13:43:35 -0700 
+ Took a total of 17.8 minutes to migrate

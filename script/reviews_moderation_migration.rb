@@ -64,7 +64,7 @@ end
 def run_migration(limit = nil, ids = nil)
   case TABLE
     when 'held_schools'
-      ReviewModerationMigrator::SchoolNotes.new(DATE_STR).migrate
+      ReviewModerationMigrator::SchoolNotes.new(DATE_STR).run!
     when 'review_notes'
       ReviewModerationMigrator::ReviewNotes.new(DATE_STR, limit, ids).run!
     when 'reported_entities'
@@ -72,7 +72,14 @@ def run_migration(limit = nil, ids = nil)
   end
 end
 
+
+
 validate
-third_argument = process_third_argument(ARGV[2]) if ARGV[2]
+
+ if ARGV[2]
+   third_argument = process_third_argument(ARGV[2])
+ else
+   third_argument = [nil, nil]
+ end
 run_migration(third_argument.first, third_argument.last)
 
