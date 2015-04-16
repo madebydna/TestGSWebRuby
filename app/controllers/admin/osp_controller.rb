@@ -133,10 +133,15 @@ class Admin::OspController < ApplicationController
     if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?
-      flash_notice t('forms.osp.provisional_user') if esp_membership.provisional?
+      notify_provisional_user if esp_membership.provisional?
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
+  end
+
+  def notify_provisional_user
+    flash_notice_has_not_been_set = !flash[:notice].try(:include?, t('forms.osp.provisional_user'))
+    flash_notice t('forms.osp.provisional_user') if flash_notice_has_not_been_set
   end
 
   def render_success_or_error
