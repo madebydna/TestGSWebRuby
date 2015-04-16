@@ -1,11 +1,12 @@
 <% display_question_label = display_question.displayed_label %>
-
-<div class="col-xs-12">
-  <h3 class="mbl">
+<div class="row mbl pbl">
+  <div class="col-xs-12">
+    <h3 class="mbl">
       <span class="mrl">
         <%= display_question_label %>
       </span>
-  </h3>
-</div>
+    </h3>
+  </div>
 
-<textarea class="form-control input-field-lg" rows="3" name="<%=response_key%>" value="<%=preexisting_esp_values[0]%>"><%=preexisting_esp_values[0]%></textarea>
+  <textarea class="form-control input-field-lg" rows="3" name="<%= response_key %>" value="<%= preexisting_esp_values[0] %>"><%= preexisting_esp_values[0] %></textarea>
+</div>

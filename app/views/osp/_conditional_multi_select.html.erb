@@ -13,13 +13,13 @@
 <% preexisting_esp_values %>
 <% response_key  %>
 
-<div class="row js-disableTriggerAndTargetParent">
+<div class="row js-disableTriggerAndTargetParent mbl pbl">
   <div class="col-xs-12">
     <h3 class="mbl">
       <span class="mrl">
         <%= display_question_label %>
       </span>
-      <div class="mtl">
+      <div class="mtm">
         <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
         <%= render partial: 'shared/form_elements/checkbox_square', locals: {
                 key: "#{response_key}[]",
