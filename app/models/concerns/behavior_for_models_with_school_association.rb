@@ -40,8 +40,13 @@ module BehaviorForModelsWithSchoolAssociation
 
   def school=(school)
     @school = school
-    self.school_state = school.state
-    self.school_id = school.id
+    if school
+      self.school_state = school.state
+      self.school_id = school.id
+    else
+      self.school_state = nil
+      self.school_id = nil
+    end
   end
 
 end

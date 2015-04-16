@@ -3,29 +3,20 @@ class Review < ActiveRecord::Base
   include BehaviorForModelsWithSchoolAssociation
   include Rails.application.routes.url_helpers
   include UrlHelper
-  self.table_name = 'reviews'
 
   db_magic :connection => :gs_schooldb
+  self.table_name = 'reviews'
 
+  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment
   alias_attribute :school_state, :state
+  attr_writer :moderated
 
   belongs_to :user, foreign_key: 'member_id'
-
   belongs_to :question, class_name:'ReviewQuestion', foreign_key: 'review_question_id'
   has_many :review_answers
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
-  accepts_nested_attributes_for :notes
   has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
-
-  #has_many :school_members, ->(review) { where(school_members: [state: review.state, school_id: review.school_id, member_id: review.user.id] ) }, class_name: '::SchoolMember'
-
   accepts_nested_attributes_for :review_answers, allow_destroy: true
-
-  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment
-  attr_writer :moderated
-
-  # TODO: i18n this message
-  validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
 
   scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
   scope :has_inactive_flags, -> { joins(:flags).where('review_flags.active' => false) }
@@ -33,30 +24,14 @@ class Review < ActiveRecord::Base
   scope :has_comment, -> { where('reviews.comment IS NOT NULL and reviews.comment != ""')}
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
 
-  # Commented out to be added back in with Moderation models
-
-  # This have all been replaced by active (check for ussage)
-  # scope :disabled, -> { where(status: %w[d pd]) }
-  # scope :unpublished, -> { where(status: %w[u pu]) }
-  # scope :published, -> { where(:status => ['a', 'p']) }
-
-  #Wating for role table to be created
-  # scope :principal, -> { where(who: 'principal') }
-  # scope :not_principal, -> { where("who != 'principal'") }
-  # scope :belonging_to, ->(user) { where(member_id: user.id).order('posted desc') }
-
-  # Update if applicable with new review status
-  # scope :posted_asc, -> { order('posted asc') }
-  # scope :held, -> { where(status: %w[h ph]) }
-
+  # TODO: i18n this message
+  validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
   validates_presence_of :school
   validates_presence_of :user
-
   validates :comment, length: {
       maximum: 2400,
   }
-
   validate :comment_minimum_length
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
@@ -80,23 +55,6 @@ class Review < ActiveRecord::Base
 
   def timestamp_attributes_for_update
     super << :updated
-  end
-
-
-
-  def school=(school)
-    @school = school
-    if school.nil?
-      self.school_id = nil
-      self.state = nil
-    else
-      self.school_id = school.id
-      self.state = school.state
-    end
-  end
-
-  def school
-    @school ||= School.on_db(self.state.downcase.to_sym).find self.school_id rescue nil
   end
 
   def uniqueness_attributes
