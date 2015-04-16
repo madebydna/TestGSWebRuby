@@ -58,25 +58,37 @@ class Admin::OspController < ApplicationController
   end
 
   def create_osp_form_response!(osp_question_id, esp_membership_id, response)
-    error = OspFormResponse.create(
-        osp_question_id: osp_question_id,
-      esp_membership_id: esp_membership_id,
-               response: response
-    ).errors.full_messages
+    begin
+      error = OspFormResponse.create(
+          osp_question_id: osp_question_id,
+          esp_membership_id: esp_membership_id,
+          response: response
+      ).errors.full_messages
 
-    Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
-    error
+      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
+      error
+        # todo need to fix with real validation
+    rescue => error
+      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}"
+      error
+    end
   end
 
   def create_update_queue_row!(response_blob)
-    error = UpdateQueue.create(
-           source: :osp_form,
-         priority: 2,
-      update_blob: response_blob,
-    ).errors.full_messages
+    begin
+      error = UpdateQueue.create(
+          source: :osp_form,
+          priority: 2,
+          update_blob: response_blob,
+      ).errors.full_messages
 
-    Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
-    error
+      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
+      error
+        # todo need to fix with real validation
+    rescue => error
+      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}"
+      error
+    end
   end
 
   def decorate_school(school)
