@@ -2,12 +2,13 @@ require 'spec_helper'
 
 shared_context 'user esp_membership status is' do | user_type |
   factory_girl_mapping = {
-    approved: :with_approved_esp_membership
+    approved: :with_approved_esp_membership,
+    provisional: :with_provisional_esp_membership
   }
 
   let(:current_user) { FactoryGirl.create(:user, factory_girl_mapping[user_type]) }
 
-  after { clean_models User, UserProfile }
+  after { clean_models User, UserProfile, EspMembership }
 end
 
 shared_context 'using a basic set of question keys and answers' do
@@ -52,3 +53,8 @@ shared_context 'send osp form submit request' do
   after { clean_models UpdateQueue, OspFormResponse }
 end
 
+shared_context 'and saving the data will return an error' do
+  before do
+    allow(controller).to receive(:create_osp_form_response!).and_return('This is an error')
+  end
+end

@@ -30,6 +30,17 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_provisional_esp_membership do
+      ignore do
+        school_id 1 #default
+        state 'ca' #default
+      end
+
+      after(:create) do |user, evaluator|
+        FactoryGirl.create(:esp_membership, :with_provisional_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+      end
+    end
+
     #usage let!(:user) {FactoryGirl.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_role do
       ignore do

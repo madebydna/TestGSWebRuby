@@ -166,6 +166,10 @@ class ApplicationController < ActionController::Base
     flash_message :notice, message
   end
 
+  def flash_success(message)
+    flash_message :success, message
+  end
+
   def already_redirecting?
     # Based on rails source code for redirect_to
     response_body

@@ -3,17 +3,14 @@ class Admin::OspController < ApplicationController
   before_action :set_city_state
   before_action :set_footer_cities
   before_action :set_osp_school_instance_vars
-  before_action :set_esp_membership_instance_vars, only: [:submit]
+  before_action :set_esp_membership_instance_vars
+  after_action :render_success_or_error, only: [:submit]
   SCHOOL_CACHE_KEYS = %w(esp_responses)
 
 
   def show
     @osp_form_data = OspFormResponse.find_form_data_for_school_state(params[:state],params[:schoolId])
-    if current_user.provisional_or_approved_osp_user?(@school)
-      render_osp_page
-    else
-      redirect_to my_account_url
-    end
+    render_osp_page
   end
 
   def submit
@@ -26,9 +23,7 @@ class Admin::OspController < ApplicationController
       response_values = [*answers].select(&:present?).compact
       save_response!(question_key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
     end
-
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
-
   end
 
   def save_response!(question_key, esp_membership_id, response_values)
@@ -39,6 +34,7 @@ class Admin::OspController < ApplicationController
 
     error = create_osp_form_response!(osp_question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if @is_approved_user && !error.present?
+    @render_error ||= error.present?
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
@@ -134,12 +130,17 @@ class Admin::OspController < ApplicationController
 
   def set_esp_membership_instance_vars
     esp_membership = current_user.esp_membership_for_school(@school)
-    if esp_membership.present?
+    if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?
+      flash_notice t('forms.osp.provisional_user') if esp_membership.provisional?
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
+  end
+
+  def render_success_or_error
+    @render_error ? flash_error(t('forms.osp.saving_error')) : flash_success(t('forms.osp.changes_saved'))
   end
 
 end
