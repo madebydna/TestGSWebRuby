@@ -52,13 +52,18 @@ module SchoolReviewConcerns
 
   def five_star_reviews
     @five_star_reviews ||= (
-      Review.
-        active.
-        five_star_review.
-        where(school_id: self.id, state: self.state).
-        includes(question: :review_topic).
-        to_a
+      five_star_review_scope.
+      order(created: :desc).
+      to_a
     )
+  end
+
+  def five_star_review_scope
+    Review.
+      active.
+      five_star_review.
+      where(school_id: self.id, state: self.state).
+      includes(:review_answers, question: :review_topic)
   end
 
 end

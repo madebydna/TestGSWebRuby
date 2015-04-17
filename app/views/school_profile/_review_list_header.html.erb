@@ -4,7 +4,7 @@
   <hr />
 
   <div class="col-xs-12 col-md-6 pam">
-    <h3 class="mvn"><%= pluralize(reviews.having_comments.count, 'review', 'reviews') %> of this school</h3>
+    <h3 class="mvn"><%= pluralize(reviews.number_of_reviews_with_comments, 'review', 'reviews') %> of this school</h3>
   </div>
 
   <div class="col-xs-12 col-md-6 clearfix pam">

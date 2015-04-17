@@ -5,7 +5,6 @@
 <%= render 'school_profile/profile_nav_w_dropdowns', school: @school, page_name: :reviews %>
 
 <div class="row limit-width-1200">
-    <% # require 'pry'; binding.pry %>
     <% if @school_reviews.blank? %>
       <div class="col-xs-12 mtl"  style="z-index: 1;">
         <% if @show_ads %>
@@ -20,7 +19,6 @@
       </div>
     <% else %>
         <div class="col-xs-12 ptl"  style="z-index: 1;">
-            <% require 'pry'; binding.pry %>
             <% if @show_ads %>
               <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
               <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
@@ -33,8 +31,8 @@
                 <% else %>
                   <%= render 'shared/review_top_sections',
                              driver: 'Reviews',
-                             average_score: @school_reviews.average_score,
-                             ratings_count: @school_reviews.count %>
+                             average_score: @school_reviews.average_5_star_rating,
+                             ratings_count: @school_reviews.number_of_5_star_ratings %>
                 <% end %>
               </div>
             </div>
@@ -46,7 +44,6 @@
                 </div>
               </div>
             <% end %>
-          <% require 'pry'; binding.pry %>
 
             <%= render 'review_list_header', reviews: @school_reviews %>
 
@@ -57,11 +54,11 @@
 
           <%= button_tag(
                 'Read more',
-                class: "mtm col-xs-12 btn btn-default js_reviewsGetNextTen #{'dn' unless @school_reviews.count > 10}",
+                class: "mtm col-xs-12 btn btn-default js_reviewsGetNextTen #{'dn' unless @school_reviews.number_of_reviews_with_comments > 10}",
                 style: 'z-index: 1;',
                 data: {
-                   'total-count' => @school_reviews.having_comments.count,
-                   'all-count' => @school_reviews.having_comments.count,
+                   'total-count' => @school_reviews.number_of_reviews_with_comments,
+                   'all-count' => @school_reviews.number_of_reviews_with_comments,
                    'parent-count' => @school_reviews.parent_reviews.having_comments.count,
                    'student-count' => @school_reviews.student_reviews.having_comments.count,
                    'offset' => @review_limit,
@@ -81,4 +78,4 @@
 
 <%= render 'shared/rich_snippets/rich_snippets_school_info', school: @school %>
 <%= render 'shared/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
-<%= render 'shared/rich_snippets/rich_snippets_average_review_rating', school: @school %>
+<%= render 'shared/rich_snippets/rich_snippets_average_review_rating', school: @school, school_reviews: @school_reviews %>

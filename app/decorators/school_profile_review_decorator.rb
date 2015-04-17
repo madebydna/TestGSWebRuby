@@ -5,6 +5,12 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   decorates :review
   delegate_all
 
+  def star_rating
+    value = review.answer
+    value = nil if value < 1 || value > 5
+    value
+  end
+
   def user_type
     if review.user_type.blank? || review.user_type == 'unknown'
       'community member'
@@ -19,7 +25,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def comment
     if review.comment.blank?
-      h.content_tag(:div, 'This review submitted without content.', html: { class: 'well mbn' })
+      h.content_tag(:div, 'This review submitted without content.', class: 'well mbn' )
     else
       review.comment
     end

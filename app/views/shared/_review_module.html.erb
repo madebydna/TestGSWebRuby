@@ -12,7 +12,7 @@
 <% end %>
 <hr />
 <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
-    <% overall_review_rating = review.answer %>
+    <% overall_review_rating = review.star_rating %>
     
     <% if include_rich_snippets %>
         <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
@@ -22,7 +22,7 @@
 
     <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
         <div>
-            <% if overall_review_rating == 'decline' %>
+            <% if overall_review_rating.nil? %>
                 <span class="open-sans_i">no rating</span>
             <% else %>
                 <%= draw_stars_16 overall_review_rating.to_i %>

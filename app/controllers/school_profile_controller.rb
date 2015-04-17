@@ -31,7 +31,7 @@ class SchoolProfileController < SchoolController
 
   def init_page
     set_noindex_meta_tags if @school.demo_school?
-    @school_reviews = SchoolReviews.new(@school)
+    @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
     create_sized_maps(gon)
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews.count

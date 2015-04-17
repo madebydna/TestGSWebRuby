@@ -16,7 +16,7 @@ class SchoolProfileReviewsController < SchoolProfileController
     @canonical_url = school_url(@school)
 
     # @school_reviews = @school.reviews_filter quantity_to_return: 10
-    @school_reviews = SchoolReviews.new(@school)
+    @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
 
     # @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
     @school_principal_review = @school.principal_review

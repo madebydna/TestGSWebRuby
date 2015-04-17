@@ -33,17 +33,6 @@ module ApplicationHelper
     draw_stars 24, on_star_count
   end
 
-  def to_bar_chart_review_array(star_counts)
-    [
-      ['Star Count', 'count'],
-      ['5 stars',  star_counts[5]],
-      ['4 stars',  star_counts[4]],
-      ['3 stars',  star_counts[3]],
-      ['2 stars',  star_counts[2]],
-      ['1 star',  star_counts[1]]
-    ]
-  end
-
   def generate_img_path(img_size, media_hash)
     comm_media_prefix = "library/"
     ENV_GLOBAL['media_server'] + '/' + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-#{img_size}.jpg"
