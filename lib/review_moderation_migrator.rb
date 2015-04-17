@@ -72,8 +72,11 @@ module ReviewModerationMigrator
       @review_key = school_rating_review_id_key
       @limit = limit
       @school_rating_ids = school_rating_ids
-      @error_file = File.new("log/review_notes_output.txt", 'w+')
-      @missing_review_ids_file = File.new("log/review_notes_missing_review_ids.txt", 'w+')
+      @error_file_location = "/tmp/review_notes_migration_output.txt"
+      @missing_review_ids_file_location = "/tmp/review_notes_missing_review_ids.txt"
+      @error_file = File.new(@error_file_location, 'w+')
+      @missing_review_ids_file = File.new(@missing_review_ids_file_location, 'w+')
+      puts "You can see the log files here: \n #{@error_file_location} \n #{@missing_review_ids_file_location}"
     end
 
     def run!
@@ -204,16 +207,19 @@ module ReviewModerationMigrator
 
   class ReviewFlags
 
-    attr_accessor :date, :review_key, :limit
+    attr_accessor :date, :review_key, :limit, :banned_ips_file_location, :error_file_location, :review_flags_missing_review_ids_file_location
 
     def initialize(date_string, limit = nil, reported_entity_ids = nil)
       @date = Time.parse(date_string)
       @limit = limit
       @review_key = school_rating_review_id_key
       @reported_entity_ids = reported_entity_ids
-      @error_file = File.new("log/review_flags_output.txt", 'w+')
-      @missing_review_ids_file = File.new("log/review_flags_missing_review_ids.txt", 'w+')
-      @possible_banned_ips_file = File.new("log/review_flags_suspect_ids.txt", 'w+')
+      @error_file_location = "/tmp/review_flags_migration_output.txt"
+      @review_flags_missing_review_ids_file_location = "/tmp/review_flags_missing_review_ids.txt"
+      @banned_ips_file_location = "/tmp/review_flags_suspect_ids.txt"
+      @error_file = File.new(@error_file_location, 'w+')
+      @missing_review_ids_file = File.new(@review_flags_missing_review_ids_file_location, 'w+')
+      @possible_banned_ips_file = File.new(@banned_ips_file_location, 'w+')
     end
 
     def run!
@@ -232,6 +238,7 @@ module ReviewModerationMigrator
       @error_file.write(final_message)
       @error_file.close
       @missing_review_ids_file.close
+      puts "You can see the log files here: \n #{@error_file_location} \n #{@review_flags_missing_review_ids_file_location} \n #{@possible_banned_ips_file}"
     end
 
     def get_migrated_reported_entity_ids
