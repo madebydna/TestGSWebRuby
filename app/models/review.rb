@@ -23,6 +23,7 @@ class Review < ActiveRecord::Base
   scope :ever_flagged, -> { joins(:flags) }
   scope :has_comment, -> { where('reviews.comment IS NOT NULL and reviews.comment != ""')}
   scope :selection_filter, ->(show_by_group) { where(:user_type => show_by_group) unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
+  scope :five_star_review, -> { joins(question: :review_topic).where('review_topics.id = 1') }
 
   # TODO: i18n this message
   validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
@@ -47,6 +48,14 @@ class Review < ActiveRecord::Base
     if comment.present? && comment.split(' ').length < 15
       errors.add(:comment, "comment is too short (minimum is 15 words")
     end
+  end
+
+  def comment
+    read_attribute(:comment).strip
+  end
+
+  def has_comment?
+    comment.present?
   end
 
   def timestamp_attributes_for_create
@@ -149,6 +158,10 @@ class Review < ActiveRecord::Base
     else
       'unknown'
     end
+  end
+
+  def answer
+    review_answers.first.answer_value.to_i if review_answers.first
   end
 
 

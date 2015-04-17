@@ -1,3 +1,4 @@
+<% review = SchoolProfileReviewDecorator.decorate(review) %>
 <% include_rich_snippets ||= false %>
 <% if @school.show_ads %>
     <% ad_placement_array = [2, 5, 8] %>
@@ -11,11 +12,11 @@
 <% end %>
 <hr />
 <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
-    <% overall_review_rating = review.overall %>
+    <% overall_review_rating = review.answer %>
     
     <% if include_rich_snippets %>
         <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
-        <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted.strftime "%Y-%m-%d" %>"></time>
+        <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted %>"></time>
         <span itemprop="rating" class="dn"><%= overall_review_rating.to_i %></span>
     <% end %>
 
@@ -27,24 +28,24 @@
                 <%= draw_stars_16 overall_review_rating.to_i %>
             <% end %>
         </div>
-        <br />Posted <%= review.posted.strftime "%B %d, %Y" %><br />
-        - a <span class="cuc_posted-by"><%= review.who == "other" ? "community member" : review.who %></span>
+        <br />Posted <%= review.posted %><br />
+        - a <span class="cuc_posted-by"><%= review.user_type %></span>
     <% end %>
 
     <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 } do %>
-        <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
+        <% if review.comment.present? %>
             <% if include_rich_snippets %>
                 <span itemprop="description">
-                    <%= review.comments %>
+                    <%= review.comment %>
                 </span>
             <% else %>
-                <%= review.comments %>
+                <%= review.comment %>
             <% end %>
         <% else %>
             <div class="well mbn">This review submitted without content.</div>
         <% end %>
         <div class="clearfix pts">
-            <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
+            <% if review.comment.present? %>
                 <div class="pull-left ptm">
                   <button type="button" class="btn btn-toggle js_reviewHelpfulButton mrm phm pvs" data-toggle="button" data-review_id="<%=
                       review.id %>">

@@ -31,10 +31,10 @@ class SchoolProfileController < SchoolController
 
   def init_page
     set_noindex_meta_tags if @school.demo_school?
-    @school_reviews_all = @school.reviews.load
+    @school_reviews = SchoolReviews.new(@school)
     create_sized_maps(gon)
     gon.pagename = configured_page_name
-    gon.review_count = @school_reviews_all.count();
+    gon.review_count = @school_reviews.count
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
@@ -50,7 +50,7 @@ class SchoolProfileController < SchoolController
 
   def set_header_data
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.calc_review_data @school_reviews_all
+    @school_reviews_global = SchoolReviews.calc_review_data @school_reviews
   end
 
 
@@ -135,7 +135,7 @@ class SchoolProfileController < SchoolController
   end
 
   def set_last_modified_date
-    review_date = @school_reviews_all.present? ? @school_reviews_all.first.posted : nil
+    review_date = @school.reviews.present? ? @school.reviews.first.created : nil
     school_date = @school.modified.present? ? @school.modified.to_date : nil
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end

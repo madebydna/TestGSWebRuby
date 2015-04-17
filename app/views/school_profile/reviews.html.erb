@@ -5,116 +5,70 @@
 <%= render 'school_profile/profile_nav_w_dropdowns', school: @school, page_name: :reviews %>
 
 <div class="row limit-width-1200">
-
-
-    <% if @school_reviews_global.review_filter_totals.all == 0 || @school_reviews_global.review_filter_totals.all.nil? %>
-        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 mtl"  style="z-index: 1;">
-            <% if @show_ads %>
-                <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
-                </div>
-            <% end %>
-            <% if @school_principal_review %>
-                <div class="well mvl row" style="padding:40px">
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 tac pvm prm"><%= image_tag(image_path("lib/school_principal_icon_130x130_140902.png"))%></div>
-                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12  clearfix">
-                        <h2 class="ptn mtn">School Official Point of View</h2>
-                        <span class="open-sans_i"><%= @school_principal_review.comments %></span>
-                        <br />
-                        <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
-                    </div>
-                </div>
-            <% end %>
-          <%= render "shared/review_no_ratings" %>
-          <%= render "shared/reviews/topical_review_section" %>
-        </div>
+    <% # require 'pry'; binding.pry %>
+    <% if @school_reviews.blank? %>
+      <div class="col-xs-12 mtl"  style="z-index: 1;">
+        <% if @show_ads %>
+          <div class="pvl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+          </div>
+        <% end %>
+        <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
+        <%= render 'shared/review_no_ratings' %>
+        <%= render 'shared/reviews/topical_review_section' %>
+      </div>
     <% else %>
-        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 ptl"  style="z-index: 1;">
+        <div class="col-xs-12 ptl"  style="z-index: 1;">
+            <% require 'pry'; binding.pry %>
             <% if @show_ads %>
-                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
-                <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
-            <% if @school_principal_review %>
-                <div class="well mvl row" style="padding:40px">
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 tac pvm prm"><%= image_tag(image_path("lib/school_principal_icon_130x130_140902.png"))%></div>
-                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12  clearfix">
-                        <h2 class="ptn mtn">School Official Point of View</h2>
-                        <span class="open-sans_i"><%= @school_principal_review.comments %></span>
-                        <br />
-                        <div class="fr ptm"><%= @school_principal_review.posted.to_formatted_s(:long)  %></div>
-                    </div>
-                </div>
-            <% end %>
+            <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <% if @show_ads %>
-                      <%= render "shared/reviews/topical_review_section" %>
-                    <% else %>
-                        <%= render "shared/review_top_sections",driver: 'Reviews' %>
-                    <% end %>
-                </div>
+              <div class="col-xs-12">
+                <% if @show_ads %>
+                  <%= render 'shared/reviews/topical_review_section' %>
+                <% else %>
+                  <%= render 'shared/review_top_sections',
+                             driver: 'Reviews',
+                             average_score: @school_reviews.average_score,
+                             ratings_count: @school_reviews.count %>
+                <% end %>
+              </div>
             </div>
             <% if @show_ads %>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-                        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
-                        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
-                    </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
                 </div>
+              </div>
             <% end %>
-            <div class="row">
-                <hr />
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pam">
-                    <h3 class="mvn"><%= write_review_count 'review' %> of this school</h3>
-                </div>
+          <% require 'pry'; binding.pry %>
 
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 clearfix pam">
-                    <div class="dropdown fr pll margin-bottom-mobile">
-                        <button type="button" class="btn btn-default js_reviewFilterDropDownText js_bootstrapExtDropdownText" data-toggle="dropdown" href="#">Date newest to oldest <b class="caret"></b></button>
-                        <ul class="dropdown-menu mll js_reviewFilterDropDown" data-order-selected="newToOld">
-                            <li><a data-order-review="newToOld">Date newest to oldest</a></li>
-                            <li><a data-order-review="oldToNew">Date oldest to newest</a></li>
-                            <li><a data-order-review="ratingsHighToLow">Ratings high to low</a></li>
-                            <li><a data-order-review="ratingsLowToHigh">Ratings low to high</a></li>
+            <%= render 'review_list_header', reviews: @school_reviews %>
 
-                        </ul>
-                    </div>
-                    <% if @school_reviews_global.review_filter_totals.parent != @school_reviews_global.review_filter_totals.all %>
-                        <div class="fr">
-                            <div class="btn-group js_reviewFilterButton js_bootstrapExtButtonSelect" data-group-selected="all">
-                                <button type="button" class="btn btn-default active" data-group-name="all">All</button>
-                                <% if @school_reviews_global.review_filter_totals.parent > 0 %>
-                                    <button type="button" class="btn btn-default" data-group-name="parent">Parents</button>
-                                <% end %>
-                                <% if @school_reviews_global.review_filter_totals.student > 0 %>
-                                    <button type="button" class="btn btn-default" data-group-name="student">Students</button>
-                                <% end %>
-
-                            </div>
-                        </div>
-                    <% end %>
-                </div>
-            </div>
-            <div>
-                <hr />
-                <p class="phm">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
-                <%= link_to 'Learn more.', review_guidelines_url %></p>
-            </div>
             <div class="js_reviewsList">
                 <%= render partial: '/shared/review_module',
-                           collection: @school_reviews, as: :review, locals: { include_rich_snippets: true } %>
+                           collection: @school_reviews.having_comments, as: :review, locals: { include_rich_snippets: true } %>
             </div>
-            <% if @school_reviews_global.review_filter_totals.all <= 10 %>
-                <% @review_button_hide ="dn" %>
-            <% end %>
-            <button data-total-count="<%= @school_reviews_global.review_filter_totals.all %>"
-                    data-all-count="<%= @school_reviews_global.review_filter_totals.all %>"
-                    data-parent-count="<%= @school_reviews_global.review_filter_totals.parent %>"
-                    data-student-count="<%= @school_reviews_global.review_filter_totals.student %>"
-                    data-offset="<%= @review_limit %>"
-                    data-limit="<%= @review_limit %>"
-                    class="mtm col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-default js_reviewsGetNextTen <%= @review_button_hide %>" style="z-index: 1;">Read more</button>
+
+          <%= button_tag(
+                'Read more',
+                class: "mtm col-xs-12 btn btn-default js_reviewsGetNextTen #{'dn' unless @school_reviews.count > 10}",
+                style: 'z-index: 1;',
+                data: {
+                   'total-count' => @school_reviews.having_comments.count,
+                   'all-count' => @school_reviews.having_comments.count,
+                   'parent-count' => @school_reviews.parent_reviews.having_comments.count,
+                   'student-count' => @school_reviews.student_reviews.having_comments.count,
+                   'offset' => @review_limit,
+                   'limit' => @review_limit
+                }) %>
+
+
         </div>
     <% end %>
 </div>

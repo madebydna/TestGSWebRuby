@@ -1,16 +1,16 @@
-<% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
-<% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
+<% average_score %>
+<% ratings_count %>
 
 <% if average_score > 0 %>
   <div class="row ptl">
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
-        <%= render "shared/reviews/star_module", average_score: average_score, ratings_count: ratings_count %>
+    <div class="col-xs-12 col-sm-6 col-md-4 pbl">
+        <%= render 'shared/reviews/star_module', average_score: average_score, ratings_count: ratings_count %>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pbl">
-        <%= render "shared/reviews/bar_graph" %>
+    <div class="col-xs-12 col-sm-6 col-md-4 pbl">
+        <%= render 'shared/reviews/bar_graph' %>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4  pbl">
-        <%= render "shared/reviews/link_module", driver: driver %>
+    <div class="col-xs-12 col-md-4 pbl">
+        <%= render 'shared/reviews/link_module', driver: driver %>
     </div>
   </div>
 <% else %>

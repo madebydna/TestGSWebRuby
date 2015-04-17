@@ -33,14 +33,6 @@ module ApplicationHelper
     draw_stars 24, on_star_count
   end
 
-  def write_review_count text_s
-    write_s = ''
-    if @school_reviews_global.review_filter_totals.all != 1
-      write_s = 's'
-    end
-    @school_reviews_global.review_filter_totals.all.to_s + ' ' + text_s + write_s
-  end
-
   def to_bar_chart_review_array(star_counts)
     [
       ['Star Count', 'count'],

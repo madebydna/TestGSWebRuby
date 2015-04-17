@@ -7,6 +7,7 @@ class SchoolProfileReviewsController < SchoolProfileController
 
   layout 'application'
 
+
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
@@ -14,9 +15,10 @@ class SchoolProfileReviewsController < SchoolProfileController
     @canonical_url = school_reviews_url(@school)
     @canonical_url = school_url(@school)
 
-    @school_reviews = @school.reviews_filter quantity_to_return: 10
+    # @school_reviews = @school.reviews_filter quantity_to_return: 10
+    @school_reviews = SchoolReviews.new(@school)
 
-    @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
+    # @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
     @school_principal_review = @school.principal_review
 
     @review_offset = 0
