@@ -1,9 +1,9 @@
 class Admin::OspController < ApplicationController
-  before_action :login_required
+  before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
-  before_action :set_footer_cities
-  before_action :set_osp_school_instance_vars
-  before_action :set_esp_membership_instance_vars
+  before_action :set_footer_cities, except: [:approve_provisional_osp_user_data]
+  before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
+  before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
   after_action :render_success_or_error, only: [:submit]
   SCHOOL_CACHE_KEYS = %w(esp_responses)
 
@@ -24,6 +24,16 @@ class Admin::OspController < ApplicationController
       save_response!(question_key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
     end
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
+  end
+
+  #ToDo when Java is no longer the proxy, this should not be a route
+  def approve_provisional_osp_user_data
+    osp_form_responses = OspFormResponse.where(esp_membership_id: params[:membership_id])
+    osp_form_responses.each do | osp_form_response |
+      create_update_queue_row!(osp_form_response.response)
+    end
+    # only java is receiving this html, does not matter that it renders blank page
+    render text: ''
   end
 
   def save_response!(question_key, esp_membership_id, response_values)

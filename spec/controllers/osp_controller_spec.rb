@@ -150,4 +150,32 @@ describe Admin::OspController do
     end
   end
 
+  describe '#approve_provisional_osp_user_data' do
+    let(:esp_membership_id) { 1 }
+    before do
+      3.times { FactoryGirl.create(:osp_form_response, esp_membership_id: esp_membership_id) }
+      allow(controller).to receive(:params).and_return({membership_id: esp_membership_id})
+      allow(controller).to receive(:render)
+    end
+    after do
+      clean_models OspFormResponse, UpdateQueue
+    end
+
+    it 'should save rows to update_queue' do
+      expect(UpdateQueue.count).to eql 0
+      controller.approve_provisional_osp_user_data
+      expect(UpdateQueue.count).to eql 3
+    end
+
+    context 'osp_form_responses and update_queue' do
+      it 'should have the same blob' do
+        controller.approve_provisional_osp_user_data
+        update_queue_blobs = UpdateQueue.all.map(&:update_blob)
+        osp_form_responses = OspFormResponse.all
+        osp_form_responses.each do |osp_form_response|
+          expect(update_queue_blobs).to include(osp_form_response.response)
+        end
+      end
+    end
+  end
 end
