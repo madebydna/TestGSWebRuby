@@ -234,17 +234,17 @@ module ReviewModerationMigrator
       @missing_review_ids_file.close
     end
 
-    def get_migrated_school_rating_ids
-      ReviewNotesMigrationLog.all.pluck(:school_rating_id)
+    def get_migrated_reported_entity_ids
+      ReviewFlagsMigrationLog.all.pluck(:reported_entity_id)
     end
 
     def migrate_specific_reported_entities
       # this is to make the script item potent and not create new review_flags if already created
-      migrated_school_rating_ids = get_migrated_school_rating_ids
+      migrated_reported_entity_ids = get_migrated_reported_entity_ids
       # adding a -1 to the array because the mysql query does not work with an empty array
-      migrated_school_rating_ids << -1
+      migrated_reported_entity_ids << -1
       ReportedEntity.includes(:school_rating).where(
-          'created < ? AND reported_entity_type = ? AND id NOT IN (?) AND id IN (?)', @date, 'schoolReview', migrated_school_rating_ids, @reported_entity_ids).
+          'created < ? AND reported_entity_type = ? AND id NOT IN (?) AND id IN (?)', @date, 'schoolReview', migrated_reported_entity_ids, @reported_entity_ids).
           find_each do |reported_entity|
         build_review_flag(reported_entity) if has_review?(reported_entity)
       end
@@ -252,11 +252,11 @@ module ReviewModerationMigrator
 
     def migrate_with_limit
       # this is to make the script item potent and not create new review_flags if already created
-      migrated_school_rating_ids = get_migrated_school_rating_ids
+      migrated_reported_entity_ids = get_migrated_reported_entity_ids
       # adding a -1 to the array because the mysql query does not work with an empty array
-      migrated_school_rating_ids << -1
+      migrated_reported_entity_ids << -1
       ReportedEntity.includes(:school_rating).where(
-          'created < ? AND reported_entity_type = ? AND id NOT IN (?)', @date, 'schoolReview', migrated_school_rating_ids).
+          'created < ? AND reported_entity_type = ? AND id NOT IN (?)', @date, 'schoolReview', migrated_reported_entity_ids).
           limit(@limit).each do |reported_entity|
         build_review_flag(reported_entity) if has_review?(reported_entity)
       end
@@ -264,11 +264,11 @@ module ReviewModerationMigrator
 
     def migrate
       # this is to make the script item potent and not create new review_flags if already created
-      migrated_school_rating_ids = get_migrated_school_rating_ids
+      migrated_reported_entity_ids = get_migrated_reported_entity_ids
       # adding a -1 to the array because the mysql query does not work with an empty array
-      migrated_school_rating_ids << -1
+      migrated_reported_entity_ids << -1
       ReportedEntity.includes(:school_rating).where(
-          'created < ? AND reported_entity_type = ? AND id NOT IN (?)', @date, 'schoolReview', migrated_school_rating_ids).limit(@limit).
+          'created < ? AND reported_entity_type = ? AND id NOT IN (?)', @date, 'schoolReview', migrated_reported_entity_ids).limit(@limit).
           find_each do |reported_entity|
         build_review_flag(reported_entity) if has_review?(reported_entity)
       end
@@ -333,15 +333,20 @@ module ReviewModerationMigrator
 
 
     def get_reason(reported_entity)
+      reason = []
       begin
-        return 'user-reported' if is_user_reported?(reported_entity)
-        return 'bad-language' if is_bad_language?(reported_entity)
-        return 'held-school' if is_held_school?(reported_entity)
-        return 'student' if is_student?(reported_entity)
-        return 'local-school' if is_local_school?(reported_entity)
-        return 'blocked-ip' if is_banned_ip?(reported_entity)
-        return 'force-flagged' if is_force_flagged?(reported_entity)
-        return 'auto-flagged'
+        reason << 'user-reported' if is_user_reported?(reported_entity)
+        reason << 'bad-language' if is_bad_language?(reported_entity)
+        reason << 'held-school' if is_held_school?(reported_entity)
+        reason << 'student' if is_student?(reported_entity)
+        reason << 'local-school' if is_local_school?(reported_entity)
+        reason << 'blocked-ip' if is_banned_ip?(reported_entity)
+        reason << 'force-flagged' if is_force_flagged?(reported_entity)
+        if reason.empty?
+          return 'auto-flagged'
+        else
+          return reason.join(',')
+        end
       rescue => error
         puts("Error getting reason for reported entity; Message: #{error.message}")
       end
@@ -353,9 +358,6 @@ module ReviewModerationMigrator
 
     def is_bad_language?(reported_entity)
       reported_entity.reason.include?('warning words') || reported_entity.reason.include?('really bad words')
-      # bad_words_present = reported_entity.reason.include?('really bad words')
-      # bad_word_status = reported_entity.school_rating.status.include?('d')
-      # bad_word_status && bad_words_present
     end
 
     def is_held_school?(reported_entity)
@@ -363,7 +365,8 @@ module ReviewModerationMigrator
     end
 
     def is_student?(reported_entity)
-      reported_entity.school_rating.who == 'student' && reported_entity.school_rating.status.include?('u')
+      # reported_entity.school_rating.who == 'student' && reported_entity.school_rating.status.include?('u')
+      reported_entity.school_rating.who == 'student'
     end
 
     def is_local_school?(reported_entity)
@@ -387,7 +390,7 @@ module ReviewModerationMigrator
     end
 
     def is_force_flagged?(reported_entity)
-      !is_student?(reported_entity) && !is_banned_ip?(reported_entity) && reported_entity.school_rating.status.include?('u')
+      !is_student?(reported_entity) && !is_banned_ip?(reported_entity) && reported_entity.school_rating.status.include?('u') && !is_user_reported?(reported_entity)
     end
 
     def log_migrated_review_flag(reported_entity_id, review_flag_id)
