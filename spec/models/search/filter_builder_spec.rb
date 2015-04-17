@@ -242,6 +242,23 @@ describe FilterBuilder do
         assert_filter_structure(filter_map, index)
       end
     end
+    context 'in Indianapolis, IN' do
+      let (:filters) { FilterBuilder.new('IN', 'Indianapolis', false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :gs_rating, :ptq_rating],
+          does_not_contain: [:cgr]
+        },
+        { panel: 2,
+          contains: [:transportation, :extendedHours, :dress_code, :class_offerings],
+          does_not_contain: []
+        },
+        { panel: 3,
+          contains: [:boys_sports, :girls_sports, :school_focus, :enrollment],
+          does_not_contain: [:class_offerings]
+        }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+      end
+    end
     context 'in Michigan' do
       let (:filters) { FilterBuilder.new('MI', nil, false).filters }
       [ { panel: 1,
@@ -386,8 +403,8 @@ describe FilterBuilder do
       let (:forced_simple) { FilterBuilder.new('in', nil, true).filters.cache_key }
       context 'in Indianapolis' do
         let (:indy_cache_key) { FilterBuilder.new('in', 'Indianapolis', false).filters.cache_key }
-        it 'should represent a vouchers configuration' do
-          expect(indy_cache_key).to start_with('vouchers')
+        it 'should represent a ptq_rating and vouchers configuration' do
+          expect(indy_cache_key).to start_with('ptq_rating_vouchers')
         end
       end
       it 'should represent a vouchers configuration' do

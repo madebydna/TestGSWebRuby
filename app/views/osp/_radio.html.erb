@@ -7,8 +7,9 @@
 
 <% display_question_label     = display_question.displayed_label %>
 <% display_text_and_value_map = display_question.displayed_answers %>
-<% preexisting_esp_values %>
 <% response_key  %>
+<% preexisting_esp_values %>
+<% active_value = [*preexisting_esp_values].first %>
 
 <div class="row mbl pbl">
   <div class="col-xs-12">
@@ -20,14 +21,10 @@
   </div>
 
   <div class="col-xs-12">
-    <% display_text_and_value_map.each_pair do |text, value| %>
-      <% is_active = preexisting_esp_values.include?(value) ? true : nil %>
-      <%= render partial: 'shared/form_elements/checkbox_button', locals: {
-        key: "#{response_key}[]",
-        text: text,
-        value: value,
-        active: is_active
-      } %>
-    <% end %>
+    <%= render 'shared/form_elements/responsive_radio',
+      text_value_pair: display_text_and_value_map,
+      key: response_key,
+      active_value: active_value
+    %>
   </div>
 </div>
