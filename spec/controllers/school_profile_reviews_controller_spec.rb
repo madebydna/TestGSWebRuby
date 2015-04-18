@@ -32,11 +32,6 @@ describe SchoolProfileReviewsController do
       get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school]).to eq(school)
     end
-
-    it 'should set data needed for header' do
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school_reviews_global]).to be_present
-    end
   end
 
 end

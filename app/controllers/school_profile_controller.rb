@@ -34,7 +34,7 @@ class SchoolProfileController < SchoolController
     @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
     create_sized_maps(gon)
     gon.pagename = configured_page_name
-    gon.review_count = @school_reviews.count
+    gon.review_count = @school_reviews.number_of_reviews_with_comments
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
@@ -50,7 +50,6 @@ class SchoolProfileController < SchoolController
 
   def set_header_data
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.calc_review_data @school_reviews
   end
 
 

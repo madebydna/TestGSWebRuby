@@ -19,7 +19,6 @@ class SchoolProfileReviewsController < SchoolProfileController
     @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
 
     # @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
-    @school_principal_review = @school.principal_review
 
     @review_offset = 0
     @review_limit = 10

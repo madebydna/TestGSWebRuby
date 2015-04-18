@@ -15,7 +15,7 @@ class Admin::SchoolsController < ApplicationController
       @reviews = Review.where(id: params[:review_id])
     else
       title = 'Reviews moderation - school'
-      @reviews = @school.reviews.where('reviews.comment IS NOT NULL AND reviews.comment != ""')
+      @reviews = @school.reviews_scope.has_comment.order(created: :desc)
       @reviews = apply_scopes(@reviews)
       @reviews.to_a.uniq!(&:id)
     end

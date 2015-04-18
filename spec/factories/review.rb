@@ -25,7 +25,7 @@ FactoryGirl.define do
     trait :flagged do
       after(:create) do |review, evaluator|
         FactoryGirl.create(
-          :reported_review,
+          :review_flag,
           review: review,
           user: review.user
         )
