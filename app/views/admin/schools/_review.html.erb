@@ -66,9 +66,10 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <td>Reason</td>
-                <td>Reported on</td>
-                <td>Reported by</td>
+                <td class="col-xs-2">Reason</td>
+                <td class="col-xs-2">Reported on</td>
+                <td class="col-xs-3">Reported by</td>
+                <td class="col-xs-5">Comment</td>
               </tr>
             </thead>
             <tbody>
@@ -83,6 +84,7 @@
                       Unknown
                     <% end %>
                   </td>
+                  <td><%= flag.comment %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -97,9 +99,10 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <td>Reason</td>
-              <td>Reported on</td>
-              <td>Reported by</td>
+              <td class="col-xs-2">Reason</td>
+              <td class="col-xs-2">Reported on</td>
+              <td class="col-xs-3">Reported by</td>
+              <td class="col-xs-5">Comment</td>
             </tr>
             </thead>
             <tbody>
@@ -114,6 +117,7 @@
                     Unknown
                   <% end %>
                 </td>
+                <td><%= flag.comment %></td>
               </tr>
             <% end %>
             </tbody>
