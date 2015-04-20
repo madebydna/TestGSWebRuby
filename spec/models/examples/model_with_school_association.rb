@@ -28,11 +28,13 @@ shared_examples_for 'model with school association' do |klass = described_class,
       expect(subject.first.id).to eq(second.id)
       expect(subject.last.id).to eq(fourth.id)
     end
-    it "should not return inactive #{klass.name.pluralize}" do
-      fourth.active = false
-      fourth.save
-      expect(subject.size).to eq(1)
-      expect(subject.first.id).to eq(second.id)
+    if klass.new.respond_to?(:active)
+      it "should not return inactive #{klass.name.pluralize}" do
+        fourth.active = false
+        fourth.save
+        expect(subject.size).to eq(1)
+        expect(subject.first.id).to eq(second.id)
+      end
     end
   end
 
