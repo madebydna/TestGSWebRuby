@@ -3,15 +3,15 @@ class AlertWord < ActiveRecord::Base
 
   class AlertWordSearchResult < Struct.new(:alert_words, :really_bad_words)
     def any?
-      alert_words.any? || really_bad_words.any?
+      alert_words.present? || really_bad_words.present?
     end
 
     def has_alert_words?
-      alert_words.any?
+      alert_words.present?
     end
 
     def has_really_bad_words?
-      really_bad_words.any?
+      really_bad_words.present?
     end
   end
 
@@ -33,6 +33,8 @@ class AlertWord < ActiveRecord::Base
   end
 
   def self.search(text)
+    return AlertWordSearchResult.new unless text.present?
+
     alert_words, really_bad_words = all_words
     string = text.squeeze(' ')
 

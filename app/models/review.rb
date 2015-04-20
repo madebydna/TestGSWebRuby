@@ -51,7 +51,8 @@ class Review < ActiveRecord::Base
   end
 
   def comment
-    read_attribute(:comment).strip
+    string = read_attribute(:comment)
+    string.strip if string.present?
   end
 
   def has_comment?
@@ -136,7 +137,7 @@ class Review < ActiveRecord::Base
     if user.provisional?  ||
       school.held? ||
       user_type == 'student' ||
-      AlertWord.search(comment).has_really_bad_words? ||
+      (comment.present? && AlertWord.search(comment).has_really_bad_words?) ||
       PropertyConfig.force_review_moderation? ||
       flags.any?
       #BannedIp.ip_banned?(ip)

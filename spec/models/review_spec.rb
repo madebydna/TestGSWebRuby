@@ -386,4 +386,15 @@ describe Review do
     end
   end
 
+  describe '#comment' do
+    after do
+      clean_models Review
+    end
+    context 'when review has no comment' do
+      let(:review) { FactoryGirl.create(:review, comment: nil) }
+      subject { review.comment }
+      it { is_expected.to be_nil }
+    end
+  end
+
 end
