@@ -7,7 +7,7 @@ class Review < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'reviews'
 
-  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment
+  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment, :review_answers_attributes
   alias_attribute :school_state, :state
   attr_writer :moderated
 
