@@ -1,7 +1,7 @@
 # An enumerable collection of reviews with additional behavior
 class SchoolReviews
-  include Enumerable
-  extend Forwardable
+  include Enumerable # means it can respond to enumerable methods
+  extend Forwardable # allows the forwarding, which allows the functions listed below to be defined in this class
   def_delegators :reviews, :each, :each_with_object, :[], :blank?, :present?, :any?, :sum, :count, :select
 
   attr_reader :school, :review_cache

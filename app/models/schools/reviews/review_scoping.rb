@@ -13,8 +13,11 @@ module ReviewScoping
   end
 
   %w[parent student principal].each do |user_type|
+    empty_array = []
+    empty_array.extend ReviewScoping
+    empty_array.extend ReviewCalculations
     define_method("#{user_type}_reviews") do
-      by_user_type[user_type] || []
+      by_user_type[user_type] || empty_array
     end
   end
 
@@ -31,6 +34,7 @@ module ReviewScoping
       array = select(&:has_comment?)
       array.extend ReviewScoping
       array.extend ReviewCalculations
+      # if you set it to an array and add back the other modules and then freeze it to prevent others from modifying the array
       array.freeze
     )
   end

@@ -1,7 +1,12 @@
-<%
-   offset = options[:offset] || ''  %>
-
-<div class="<%= offset %> fl js-topicalReviewStarContainer tac col-xs-2 col-sm-2 col-md-2 col-lg-2">
+  <% offset = options[:offset] || ''  %>
+<% new_object = f.object.send(:review_answers).klass.new %>
+<% id = Time.now.to_f %>
+<% fields = f.fields_for(:review_answers, new_object, child_index: id) do |builder| %>
+    <fieldset class="js-topicalHiddenField js-topicalOverallRating">
+      <%= builder.hidden_field(:answer_value, {value: response_value}) %>
+    </fieldset>
+<% end %>
+<div class="<%= offset %> fl js-topicalReviewStarContainer tac col-xs-2 col-sm-2 col-md-2 col-lg-2"  data-fields="<%= fields.gsub("\n", "") %>">
   <div class="mhs iconx52-stars i-52-grey-star i-52-star-1 js-topicalReviewStar"></div>
   <div class="js-topicalReviewLabel gray-dark"><%= options[:label_value] %></div>
 </div>

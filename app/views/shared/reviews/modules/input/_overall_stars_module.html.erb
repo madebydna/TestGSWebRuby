@@ -1,0 +1,39 @@
+<div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr" style="min-height: 280px">
+  <div class="bg-yellow full-width tac js-questionTitle open-sans_sb pvl">
+    <%= question.question.html_safe %>
+  </div>
+  <div class="row mtl mbl tac">
+    <div class="controls ptxl pts col-xs-12 col-sm-10 col-md-10 col-lg-10 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 js-topicalReviewStars">
+      <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Terrible', offset: 'col-xs-offset-1 col-sm-offset-1'}, f: f, response_value: 1 %>
+      <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Bad' }, f: f, response_value:2 %>
+      <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Average'  }, f: f, response_value:3 %>
+      <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Good' }, f: f, response_value:4 %>
+      <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Great' }, f: f, response_value:5 %>
+    </div>
+    <div class="js-starHiddenFields"></div>
+
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">
+  <div class="js-gs-review-comment">
+    <%= f.text_area :comment, {class: "form-control js-review-comment-input",
+                               onkeyup:"GS.topicalReview.reviewQuestion.GS_countCharacters(this)",
+                               rows: "8",
+                               placeholder:"Optional: Explain your choice" } %>
+    <footer>
+      <div class="fl">
+        <p class="help-block js-review-character-display dn">You have <span class="js-review-character-count"></span> left in your review</p>
+        <div class="js-review-submit-errors has-error dn">
+          <p class="help-block ">
+            You can't submit question without selecting at least one checkbox.
+          </p>
+        </div>
+      </div>
+      <div class="js-gs-submit-comment">
+        <div class="fr mbm">
+          <button type="submit" class="btn btn-primary js-review-question-submit">Submit</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

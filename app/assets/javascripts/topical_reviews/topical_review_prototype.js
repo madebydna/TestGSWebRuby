@@ -6,6 +6,7 @@ GS.topicalReview.starRating = (function() {
     var INDIVIDUAL_STAR_CONTAINER = '.js-topicalReviewStarContainer';
     var INDIVIDUAL_STAR_SELECTOR = '.js-topicalReviewStar';
     var LABEL_BOLD_CLASS = 'open-sans_sb';
+    var HIDDEN_FIELDS_DATA_SELECTOR = 'fields';
 
     var applyStarRating = function(container, hiddenField) {
 
@@ -34,7 +35,11 @@ GS.topicalReview.starRating = (function() {
 
         $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function() {
             $this = $(this);
+            var hiddenFieldsContainer = $(".js-starHiddenFields");
+            hiddenFieldsContainer.empty();
             var rating = $this.index() + 1;
+            var hidden_field = $this.data('fields');
+            hiddenFieldsContainer.append(hidden_field);
             $(hiddenField).val(rating);
             selectStar(rating);
        });
@@ -44,8 +49,10 @@ GS.topicalReview.starRating = (function() {
         });
 
         $(container).on('mouseout', INDIVIDUAL_STAR_CONTAINER, function() {
-            var rating = $(hiddenField).val();
+            var rating = $('.js-starHiddenFields').find('input').val()
             selectStar(rating);
+//            debugger
+//            var selectedStar =
             var selectedStar = $(container).find(INDIVIDUAL_STAR_CONTAINER).get(rating - 1);
             $(selectedStar).children('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
             $(selectedStar).children('.js-topicalReviewLabel').removeClass('gray-dark');

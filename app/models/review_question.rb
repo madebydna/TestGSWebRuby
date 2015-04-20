@@ -14,7 +14,7 @@ class ReviewQuestion < ActiveRecord::Base
   def response_array
     str = read_attribute(:responses)
     if str.present?
-      return str.split(' ')
+      return str.split(',')
     else
       []
     end
