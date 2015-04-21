@@ -214,8 +214,7 @@ class Admin::ReviewsController < ApplicationController
         order('review_flags.created desc').
           eager_load(:user).
           merge(User.verified).
-            page(params[:page]).per(50).
-              to_a
+            page(params[:page]).per(50)
   end
 
   def reported_reviews
@@ -225,8 +224,7 @@ class Admin::ReviewsController < ApplicationController
         order('review_flags.created desc').
           eager_load(:user).
           merge(User.verified).
-            page(params[:page]).per(50).
-               to_a
+            page(params[:page]).per(50)
   end
 
   def review_params
