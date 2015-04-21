@@ -90,7 +90,7 @@ describe Admin::ReviewsController do
     context 'provided a state and school ID' do
       before do
         expect(School).to receive(:find_by_state_and_id).with('ca', '1').and_return(school)
-        allow(school).to receive(:reviews_that_have_ever_been_flagged).and_return(flagged_reviews)
+        allow(controller).to receive(:school_reported_reviews).and_return(flagged_reviews)
       end
 
       it 'should look for a school if provided a state and school ID' do

@@ -79,7 +79,7 @@ feature "Join Page" do
             .from(true).to(false)
         end
 
-        it 'removes the provisional status from the user\'s reviews' do
+        it 'activates the the user\'s non-flagged reviews' do
           expect{ subject }.to change{ review.reload; review.active? }
             .from(false).to(true)
         end

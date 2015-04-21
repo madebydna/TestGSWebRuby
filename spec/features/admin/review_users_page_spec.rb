@@ -18,21 +18,21 @@ describe 'Review users page' do
   end
 
   describe 'Searching by email or IP' do
-    context 'with an email for a user with flagged reviews' do
+    context 'with an email for a user without flagged reviews' do
       before do
         subject.find_by_email_or_ip_form.search_box.set('blah@greatschools.org')
         subject.find_by_email_or_ip_form.search_button.click
       end
 
       it 'Should show an empty list of reviews' do
-        expect(subject).to have_flagged_reviews_table
-        expect(subject.flagged_reviews_table.flagged_reviews).to be_empty
+        expect(subject).to_not have_flagged_reviews_table
+        expect(subject).to have_content 'None'
       end
     end
 
     context 'with an email for a user with flagged reviews' do
       let(:user) { FactoryGirl.create(:verified_user) }
-      let!(:reviews) { FactoryGirl.create_list(:school_rating, 2, :flagged, user: user) }
+      let!(:reviews) { FactoryGirl.create_list(:review, 2, :flagged, user: user) }
       before do
         subject.find_by_email_or_ip_form.search_box.set(user.email)
         subject.find_by_email_or_ip_form.search_button.click
@@ -42,7 +42,7 @@ describe 'Review users page' do
         clean_dbs :gs_schooldb, :surveys, :community
       end
 
-      it 'Should show an empty list of reviews' do
+      it 'Should show a list of reviews' do
         expect(subject).to have_flagged_reviews_table
         expect(subject.flagged_reviews_table.flagged_reviews.size).to eq(2)
       end

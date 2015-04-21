@@ -1,5 +1,8 @@
+<% reviews %>
+<% css_class = css_class || '' %>
+
 <% if reviews.present? %>
-  <table class="table table-striped" id="flagged_reviews_table">
+  <table class="table table-striped <%= css_class %>">
     <thead>
     <tr>
       <td>Review</td>

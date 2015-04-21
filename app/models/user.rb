@@ -154,7 +154,7 @@ class User < ActiveRecord::Base
   end
 
   def publish_reviews!
-    reviews_to_upgrade = reviews.inactive
+    reviews_to_upgrade = reviews.inactive.not_flagged
     # make provisional reviews 'not provisional', i.e. deleted, published, or held
     reviews_to_upgrade.each do |review|
       review.activate

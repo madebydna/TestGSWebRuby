@@ -14,10 +14,10 @@
 
 <div class="ptl limit-width-1200">
   <h3>Reviews by User</h3>
-  <%= render 'list_of_reviews', reviews: @reviews_by_user %>
+  <%= render 'list_of_reviews', reviews: @reviews_by_user, css_class: 'flagged_reviews_table' %>
 
   <h3>Reviews reported by User</h3>
-  <%= render 'list_of_reviews', reviews: @reviews_reported_by_user %>
+  <%= render 'list_of_reviews', reviews: @reviews_reported_by_user, css_class: 'reviews_flagged_by_user_table' %>
 
   <% if @banned_ip %>
       <h3>Block this IP</h3>

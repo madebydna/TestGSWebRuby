@@ -208,25 +208,25 @@ class Admin::ReviewsController < ApplicationController
 
   def school_reported_reviews(school)
     school.
-      reviews.
+      reviews_scope.
       ever_flagged.
-      has_comment.
         eager_load(:flags).
         order('review_flags.created desc').
           eager_load(:user).
           merge(User.verified).
-            page(params[:page]).per(50)
+            page(params[:page]).per(50).
+              to_a
   end
 
   def reported_reviews
     Review.
       flagged.
-      has_comment.
         eager_load(:flags).
         order('review_flags.created desc').
           eager_load(:user).
           merge(User.verified).
-            page(params[:page]).per(50)
+            page(params[:page]).per(50).
+               to_a
   end
 
   def review_params

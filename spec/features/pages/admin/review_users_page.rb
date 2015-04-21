@@ -6,7 +6,7 @@ class ReviewUsersPage < SitePrism::Page
     element :search_button, 'button'
   end
 
-  section :flagged_reviews_table, '#flagged_reviews_table' do
+  section :flagged_reviews_table, '.flagged_reviews_table' do
     elements :flagged_reviews, 'tbody tr'
   end
 

@@ -19,6 +19,7 @@ class Review < ActiveRecord::Base
   accepts_nested_attributes_for :review_answers, allow_destroy: true
 
   scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
+  scope :not_flagged, -> { eager_load(:flags).where( 'review_flags.active = 0 OR review_flags.review_id IS NULL' ) }
   scope :has_inactive_flags, -> { joins(:flags).where('review_flags.active' => false) }
   scope :ever_flagged, -> { joins(:flags) }
   scope :has_comment, -> { where('reviews.comment IS NOT NULL and reviews.comment != ""')}
