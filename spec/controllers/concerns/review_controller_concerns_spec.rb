@@ -39,12 +39,6 @@ describe ReviewControllerConcerns::ReviewParams do
       expect(review.member_id).to eq(999)
     end
 
-    it 'should set the user_type on review' do
-      review_params[:user_type] = 'parent'
-      review, errors = subject
-      expect(review.user_type).to eq('parent')
-    end
-
     it 'should set the comment on review' do
       review_params[:comment] = 'foo bar baz'
       review, errors = subject
@@ -107,7 +101,7 @@ describe ReviewControllerConcerns::ReviewParams do
   end
 
   describe '#existing_review' do
-    let(:users) { FactoryGirl.create_list(:user, 5) }
+    let(:users) { FactoryGirl.create_list(:verified_user, 5) }
     let(:user) { users[3] }
     let(:schools) { FactoryGirl.create_list(:a_high_school, 5) }
     let(:reviews) { FactoryGirl.create_list(:review, 5) }
