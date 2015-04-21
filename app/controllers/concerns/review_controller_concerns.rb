@@ -15,8 +15,8 @@ module ReviewControllerConcerns
     def errors
       result = []
       result << 'No valid parameters supplied' unless params && params.is_a?(Hash)
-      result << 'Must provide school id' unless params[:review][:school_id]
-      result << 'Must provide school state' unless params[:review][:state]
+      result << 'Must provide school id' unless school_id
+      result << 'Must provide school state' unless state
       result << 'Specified school was not found' unless school
       result
     end
@@ -26,11 +26,11 @@ module ReviewControllerConcerns
     end
 
     def state
-      @params[:review][:state]
+      params[:state]
     end
 
     def school_id
-      @params[:review][:school_id]
+      params[:school_id]
     end
 
     def save_new_review
@@ -59,11 +59,7 @@ module ReviewControllerConcerns
     end
 
     def review_attributes
-      # @params.except(:state).except(:school_id).merge(
-      #     school: school,
-      #     user: @user
-      # )
-      @params[:review].merge(user:user,school: school )
+      params.merge(user:user,school: school )
     end
 
     # TODO: Figure this out
