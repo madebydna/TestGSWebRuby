@@ -10,9 +10,22 @@
     height: 24px;
 }
 
+.iconx24-stars_detroit {
+    display: inline-block;
+    background-image: asset_data_url("icons/stars_detroit_24x24.png");
+    width: 24px;
+    height: 24px;
+}
+
+/* -------------------------------------------------------------------------------------------*/
+
 /* **************** VIEWPORT ***************** */
 
 /* row 0 */
+
+.i-24-blue-star {
+    background-position: 0 0;
+}
 
 .i-24-orange-star {
     background-position: 0 0;
@@ -21,6 +34,10 @@
 
 .i-24-grey-star {
     background-position: -216px -24px;
+}
+
+.i-24-blue-outline-star {
+    background-position: 0px -24px;
 }
 
 /* This is for the stars grey or orange */
