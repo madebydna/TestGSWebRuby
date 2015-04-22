@@ -101,6 +101,28 @@ def with_shared_context(name, *args, &block)
   end
 end
 
+def when_I(name, *args, &block)
+  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  args.shift if js_arg
+  describe *[name, js_arg].compact do
+    before do
+      page_object.send(name.to_s.gsub(' ', '_'), *args)
+    end
+    instance_exec &block
+  end
+end
+
+def with_subject(name, *args, &block)
+  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  args.shift if js_arg
+  describe *[name, js_arg].compact do
+     subject do
+       page_object.send(name.to_s.gsub(' ', '_'), *args)
+     end
+     instance_exec &block
+   end
+end
+
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
@@ -186,6 +208,23 @@ RSpec.configure do |config|
     describe describe_block_name, js: true do
       before { page.current_window.resize_to(*screen_size) }
       instance_eval &block
+    end
+  end
+
+  def its(attribute, *options, &block)
+    describe(attribute.to_s) do
+      let(:__its_subject) do
+        subject.send(attribute)
+      end
+
+      def is_expected
+        expect(__its_subject)
+      end
+      alias_method :are_expected, :is_expected
+
+      options << {} unless options.last.kind_of?(Hash)
+
+      example(nil, *options, &block)
     end
   end
 

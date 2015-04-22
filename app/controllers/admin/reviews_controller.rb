@@ -126,6 +126,12 @@ class Admin::ReviewsController < ApplicationController
 
   def resolve
     review = Review.find(params[:id]) rescue nil
+
+    unless review
+      flash_error 'Could not find review for specified review ID. No flags resolved.'
+      return
+    end
+
     review.flags.active.each do |flag|
       flag.deactivate
       unless flag.save

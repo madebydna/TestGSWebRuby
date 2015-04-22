@@ -15,7 +15,7 @@ class Admin::SchoolsController < ApplicationController
       @reviews = Review.where(id: params[:review_id])
     else
       title = 'Reviews moderation - school'
-      @reviews = @school.reviews_scope.has_comment.order(created: :desc)
+      @reviews = school_reviews(@school)
       @reviews = apply_scopes(@reviews)
       @reviews.to_a.uniq!(&:id)
     end
@@ -23,6 +23,13 @@ class Admin::SchoolsController < ApplicationController
       review.notes.build
     end
     set_meta_tags :title => title
+  end
+
+  def school_reviews(school)
+    Review.
+      where(school_id: school.id, state: school.state).
+      includes(:review_answers, question: :review_topic).
+      order(created: :desc)
   end
 
 end
