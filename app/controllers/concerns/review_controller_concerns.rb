@@ -82,7 +82,11 @@ module ReviewControllerConcerns
         set_omniture_events_in_cookie(['review_updates_mss_end_event'])
         set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
       else
-        flash_notice t('actions.review.pending_moderation')
+        if current_user.provisional?
+          flash_notice t('actions.review.pending_email_verification')
+        else
+          flash_notice t('actions.review.pending_moderation')
+        end
       end
       redirect_to reviews_page_for_last_school
     else

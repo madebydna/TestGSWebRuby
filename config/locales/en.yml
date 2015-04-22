@@ -54,7 +54,7 @@ en:
       signed_out: 'Signed out successfully.'
     review:
       login_required: 'You need to log in or register your email in order to post a review.'
-      pending_email_verification: 'Thanks for your school review! We''ll post it once your email address has been verified.'
+      pending_email_verification: 'Thank you - we''ve saved your review. We can publish it once you verify your email address; please check your inbox for an email from us.'
       pending_moderation: 'Please note that it can take up to 48 hours for your review to be posted to our site.'
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
     report_review:

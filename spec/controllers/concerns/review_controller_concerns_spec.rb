@@ -133,6 +133,7 @@ describe ReviewControllerConcerns::ReviewParams do
     let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
     let(:review_params) { double }
     let(:review) { FactoryGirl.build(:review) }
+    let(:current_user) { FactoryGirl.build(:user) }
     before do
       allow(controller).to receive(:t) { |s| I18n.t(s) }
       allow(controller).to receive(:set_omniture_events_in_cookie)
@@ -157,18 +158,35 @@ describe ReviewControllerConcerns::ReviewParams do
         subject
       end
 
-      it "should flash actions.review.pending_moderation message if review is not active" do
-        allow(review).to receive(:active?).and_return(false)
-        expect(controller).to receive(:flash_notice).with I18n.t('actions.review.pending_moderation')
-        expect(controller).to receive(:redirect_to).with '/reviewspage'
-        subject
+      context 'when user is email validated' do
+        it "should flash actions.review.pending_moderation message if review is not active" do
+          allow(review).to receive(:active?).and_return(false)
+          allow(controller).to receive(:current_user).and_return(current_user)
+          allow(current_user).to receive(:provisional?).and_return(false)
+          expect(controller).to receive(:flash_notice).with I18n.t('actions.review.pending_moderation')
+          expect(controller).to receive(:redirect_to).with '/reviewspage'
+          subject
+        end
+
+        it 'should flash actions.review.activated message if review is active' do
+          allow(review).to receive(:active?).and_return(true)
+          allow(controller).to receive(:current_user).and_return(current_user)
+          allow(current_user).to receive(:provisional?).and_return(false)
+          expect(controller).to receive(:flash_notice).with I18n.t('actions.review.activated')
+          expect(controller).to receive(:redirect_to).with '/reviewspage'
+          subject
+        end
       end
 
-      it 'should flash actions.review.activated message if review is active' do
-        allow(review).to receive(:active?).and_return(true)
-        expect(controller).to receive(:flash_notice).with I18n.t('actions.review.activated')
-        expect(controller).to receive(:redirect_to).with '/reviewspage'
-        subject
+      context 'when user is provisional' do
+        it "should flash actions.review.pending_email_verification message" do
+          allow(review).to receive(:active?).and_return(false)
+          allow(controller).to receive(:current_user).and_return(current_user)
+          allow(current_user).to receive(:provisional?).and_return(true)
+          expect(controller).to receive(:flash_notice).with I18n.t('actions.review.pending_email_verification')
+          expect(controller).to receive(:redirect_to).with '/reviewspage'
+          subject
+        end
       end
     end
 

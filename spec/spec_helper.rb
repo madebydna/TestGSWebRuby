@@ -163,11 +163,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.include Capybara::DSL
-
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
-
+  config.include WaitForAjax, type: :feature
   #method to help run both mobile and desktop tests
   #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
   def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
