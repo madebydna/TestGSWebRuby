@@ -38,15 +38,15 @@ describe 'School moderate page' do
       with_subject :held_school_module do
         after { clean_models HeldSchool }
 
-        it { is_expected.to be_on_hold }
+        it { is_expected.to_not be_on_hold }
 
         when_I :submit_a_school_note, 'Some notes' do
           with_subject :held_school_module do
-            it { is_expected.to have_content 'School on hold'}
+            it { is_expected.to be_on_hold }
             its(:notes_box) { is_expected.to have_content 'Some notes' }
 
             when_I :remove_school_held_status do
-              it { is_expected.to have_content 'School not on hold' }
+              it { is_expected.to_not be_on_hold }
               it 'notes box should be blank' do
                 expect(subject.notes_box.value).to be_blank
               end

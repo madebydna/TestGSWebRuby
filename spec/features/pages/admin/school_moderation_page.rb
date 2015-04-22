@@ -14,7 +14,7 @@ class SchoolModerationPage < SitePrism::Page
     element :remove_held_status_button, 'button', text: 'Remove hold (will delete notes)'
 
     def on_hold?
-      text.match /School not on hold/
+      text.match /School on hold/
     end
   end
 
