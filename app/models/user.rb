@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :reviews, foreign_key: 'member_id'
 
   # Review answers that User authored
-  has_many :review_answers, through: :reviews
+  has_many :answers, through: :reviews
 
   # has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
 

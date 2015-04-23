@@ -7,16 +7,16 @@ class Review < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'reviews'
 
-  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment, :review_answers_attributes
+  attr_accessible :member_id, :user, :member_id, :school_id, :school, :state, :review_question_id, :comment, :answers_attributes
   alias_attribute :school_state, :state
   attr_writer :moderated
 
   belongs_to :user, foreign_key: 'member_id'
   belongs_to :question, class_name:'ReviewQuestion', foreign_key: 'review_question_id'
-  has_many :review_answers
+  has_many :answers, class_name:'ReviewAnswer', foreign_key: 'review_id', inverse_of: :review
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
-  accepts_nested_attributes_for :review_answers, allow_destroy: true
+  accepts_nested_attributes_for :answers, allow_destroy: true
 
   scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
   scope :not_flagged, -> { eager_load(:flags).where( 'review_flags.active = 0 OR review_flags.review_id IS NULL' ) }
@@ -163,7 +163,7 @@ class Review < ActiveRecord::Base
   end
 
   def answer
-    review_answers.first.answer_value.to_i if review_answers.first
+    answers.first.answer_value.to_i if answers.first
   end
 
 

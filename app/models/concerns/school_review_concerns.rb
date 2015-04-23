@@ -21,7 +21,7 @@ module SchoolReviewConcerns
     Review.
       active.
         where(school_id: self.id, state: self.state).
-          includes(:review_answers, question: :review_topic)
+          includes(:answers, question: :review_topic)
   end
 
 

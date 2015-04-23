@@ -92,13 +92,13 @@
 //
 //        $(CHECKBOX_CONTAINER).on('click', function () {
 //            var self = $(this);
-//            var reviewContainer = self.parents('.js-topical-review-container');
+//            var reviewContainer = self.parents('.js-topicalReviewContainer');
 //            GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
 //            toggleCheckbox(self);
 //        });
 //
 //        $('.new_review').on('ajax:success', function(event, xhr, status, error) {
-//            var reviewContainer = $(this).parents('.js-topical-review-container');
+//            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
 //            $(reviewContainer).addClass('js-reviewComplete');
 //            $(reviewContainer).hide();
 //            GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
@@ -126,7 +126,7 @@
 //    }
 //
 //    var GS_countCharacters = function (textField) {
-//        var reviewContainer = $(textField).parents('.js-topical-review-container');
+//        var reviewContainer = $(textField).parents('.js-topicalReviewContainer');
 //        var characterDisplay = $('.js-review-character-display');
 //        var characterCountDisplay = $(reviewContainer).find(".js-review-character-count");
 //        var characterCount = textField.value.length;
@@ -142,14 +142,14 @@
 //    }
 //
 //    var textBoxCharacters = function(textBox) {
-//        var reviewContainer = $(textBox).parents('.js-topical-review-container');
+//        var reviewContainer = $(textBox).parents('.js-topicalReviewContainer');
 //        var characterCount = textBox.value.length;
 //        if (characterCount > 0) {
 //            $(reviewContainer).find('.js-gs-results-snapshot').hide();
-//            $(reviewContainer).find('.js-gs-review-comment').show();
+//            $(reviewContainer).find('.js-topicalReviewComment').show();
 //        }
 //        else {
-//            $(reviewContainer).find('.js-gs-review-comment').hide();
+//            $(reviewContainer).find('.js-topicalReviewComment').hide();
 //            $(reviewContainer).find('.js-gs-results-snapshot').show();
 //        }
 //    }
@@ -161,16 +161,16 @@
 //
 //    var optionSelected = function (reviewContainer){
 //        $(reviewContainer).find('.js-gs-results-snapshot').hide();
-//        $(reviewContainer).find('.js-gs-review-comment').show();
+//        $(reviewContainer).find('.js-topicalReviewComment').show();
 //    }
 //
 //    var dropdownOptionSelected = function (reviewContainer) {
 //        if (isDropdownValueEmpty(reviewContainer)) {
-//            $(reviewContainer).find('.js-gs-review-comment').hide();
+//            $(reviewContainer).find('.js-topicalReviewComment').hide();
 //            $(reviewContainer).find('.js-gs-results-snapshot').show();
 //        } else {
 //            $(reviewContainer).find('.js-gs-results-snapshot').hide();
-//            $(reviewContainer).find('.js-gs-review-comment').show();
+//            $(reviewContainer).find('.js-topicalReviewComment').show();
 //        }
 //    }
 //
@@ -203,7 +203,7 @@
 ////    }
 //
 //    var navigateNextTopic = function (reviewContainer) {
-//        var reviewContainers = $('.js-topical-review-container');
+//        var reviewContainers = $('.js-topicalReviewContainer');
 //        if (isMultipleQuestions()) {
 //            var nextContainer = getNextReviewContainer(reviewContainers, reviewContainer);
 //            removeOrHideQuestions(reviewContainer);
@@ -216,7 +216,7 @@
 //    }
 //
 //    var navigatePreviousTopic = function (reviewContainer) {
-//        var reviewContainers = $('.js-topical-review-container');
+//        var reviewContainers = $('.js-topicalReviewContainer');
 //        if (isMultipleQuestions()) {
 //            var previousContainer = getPreviousReviewContainer(reviewContainers, reviewContainer);
 //            removeOrHideQuestions(reviewContainer);
@@ -246,7 +246,7 @@
 //    }
 //
 //    var oneQuestionCheck = function () {
-//        if ($('.js-topical-review-container').length === 1) {
+//        if ($('.js-topicalReviewContainer').length === 1) {
 //            hideQuestionNavigation();
 //        }
 //    }
@@ -283,11 +283,11 @@
 //    }
 //
 //    var isMultipleQuestions = function() {
-//        return $('.js-topical-review-container').length > 1;
+//        return $('.js-topicalReviewContainer').length > 1;
 //    }
 //
 //    var isNoQuestions = function() {
-//        return $('.js-topical-review-container').length === 0;
+//        return $('.js-topicalReviewContainer').length === 0;
 //    }
 //
 //    var showQuestionsComplete= function() {
@@ -318,39 +318,39 @@
 //$(function() {
 //
 ////    $('.js-topical-radio').on('click', function () {
-////        var reviewContainer = $(this).parents('.js-topical-review-container');
+////        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
 ////        GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
 ////    });
 ////
 ////
 ////    $('.js-topcial-review-dropdown').change(function () {
-////        var reviewContainer = $(this).parents('.js-topical-review-container');
+////        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
 ////        GS.topicalReview.reviewQuestion.dropdownOptionSelected(reviewContainer);
 ////    });
 //
-////    $('.js-gs-review-comment').on('showSubmit', function(){
+////    $('.js-topicalReviewComment').on('showSubmit', function(){
 ////        $('.js-gs-next-topic').hide();
 ////        $('.js-gs-submit-comment').show();
 ////    })
 ////
-////    $('.js-gs-review-comment').on('hideSubmit', function(){
+////    $('.js-topicalReviewComment').on('hideSubmit', function(){
 ////        $('.js-gs-submit-comment').hide();
 ////        $('.js-gs-next-topic').show();
 ////    })
 //
-//    $('.js-topical-review-container').first().show();
+//    $('.js-topicalReviewContainer').first().show();
 //
 //
 //    $('.js-previous-topic').on('click', function(e){
 //        e.preventDefault();
-//        var reviewContainer = $(this).parents('.js-topical-review-container');
+//        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
 //        GS.topicalReview.reviewQuestion.navigatePreviousTopic(reviewContainer);
 //
 //    })
 //
 //    $('.js-next-topic').on('click', function(e){
 //        e.preventDefault();
-//        var reviewContainer = $(this).parents('.js-topical-review-container');
+//        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
 //        GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
 //    })
 //
@@ -375,7 +375,7 @@
 
 
 //    var navigateNextTopic = function (reviewContainer) {
-//        var reviewContainers = $('.js-topical-review-container');
+//        var reviewContainers = $('.js-topicalReviewContainer');
 //        if (isMultipleQuestions()) {
 //            var nextContainer = getNextReviewContainer(reviewContainers, reviewContainer);
 //            removeOrHideQuestions(reviewContainer);
@@ -388,7 +388,7 @@
 //    };
 //
 //    var navigatePreviousTopic = function (reviewContainer) {
-//        var reviewContainers = $('.js-topical-review-container');
+//        var reviewContainers = $('.js-topicalReviewContainer');
 //        if (isMultipleQuestions()) {
 //            var previousContainer = getPreviousReviewContainer(reviewContainers, reviewContainer);
 //            removeOrHideQuestions(reviewContainer);
@@ -418,7 +418,7 @@
 //    };
 //
 //    var oneQuestionCheck = function () {
-//        if ($('.js-topical-review-container').length === 1) {
+//        if ($('.js-topicalReviewContainer').length === 1) {
 //            hideQuestionNavigation();
 //        }
 //    };
@@ -455,11 +455,11 @@
 //    };
 //
 //    var isMultipleQuestions = function() {
-//       return $('.js-topical-review-container').length > 1;
+//       return $('.js-topicalReviewContainer').length > 1;
 //    };
 //
 //    var isNoQuestions = function() {
-//        return $('.js-topical-review-container').length === 0;
+//        return $('.js-topicalReviewContainer').length === 0;
 //    };
 
 //    var showQuestionsComplete = function() {
@@ -480,7 +480,7 @@
 
 //
 
-//    $('.js-topical-review-container').first().show();
+//    $('.js-topicalReviewContainer').first().show();
 //
 //    $(document).ready(function() {
 //        if (!GS.topicalReview.reviewQuestion.isMultipleQuestions()) {
@@ -492,14 +492,14 @@
 //    });
 //    $('.js-previous-topic').on('click', function(e){
 //        e.preventDefault();
-//        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topical-review-container:visible')
+//        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topicalReviewContainer:visible')
 //        GS.topicalReview.reviewQuestion.navigatePreviousTopic(reviewContainer);
 //
 //    });
 
 //    $('.js-next-topic').on('click', function(e){
 //        e.preventDefault();
-//        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topical-review-container:visible')
+//        var reviewContainer = $(this).parents('.js-topicalReviewQuestionsContainer ').find('.js-topicalReviewContainer:visible')
 //        GS.topicalReview.reviewQuestion.navigateNextTopic(reviewContainer);
 //    });
 

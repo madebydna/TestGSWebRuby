@@ -1,4 +1,4 @@
-<div class="limit-width-1200 clearfix js-topical-review-container dn" style="min-height: 280px">
+<div class="limit-width-1200 clearfix js-topicalReviewContainer dn" style="min-height: 280px">
   <div class="row bg-light-gray gray-box-border-v js-review-questions">
     <%= form_for Review.new, remote: true, url: school_reviews_path(@school) do |f| %>
         <%= f.hidden_field :state, value: @school.state %>

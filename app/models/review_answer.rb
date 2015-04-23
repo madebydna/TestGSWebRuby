@@ -3,7 +3,7 @@ class ReviewAnswer < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  belongs_to :review, foreign_key: 'review_id'
+  belongs_to :review, inverse_of: :answers
 
   alias_attribute :value, :answer_value
 

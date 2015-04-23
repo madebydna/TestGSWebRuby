@@ -58,7 +58,7 @@ private
 
   def review_params
     params.require(:review).permit(:school_id, :state, :review_question_id, :comment,
-    review_answers_attributes:[ :value, :review_id])
+    answers_attributes:[ :value, :review_id])
   end
 
 end

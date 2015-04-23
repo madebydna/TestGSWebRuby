@@ -5,33 +5,31 @@
   <div class="row mtl mbl tac">
     <% offset = ""  %>
     <% response_count = question.response_array.count %>
-    <!--Currently this grid is set up only to wor for four options-->
-    <% question.response_array.each_with_index do |response_value, index| %>
-        <% if index == 0 %>
-            <% offset = "col-sm-offset-1 col-md-offset-1 col-lg-offset-1" %>
+    <!--Currently this grid is set up only for five options-->
+    <% new_object = f.object.send(:answers).klass.new %>
+    <% id = Time.now.to_f.to_s.sub('.', '') %>
+    <%= f.fields_for(:answers, new_object, child_index: id) do |builder| %>
+        <fieldset class="js-topicalHiddenField">
+        <% question.response_array.each_with_index do |response_value, index| %>
+            <% if index == 0 %>
+                <% offset = "col-sm-offset-1 col-md-offset-1 col-lg-offset-1" %>
             <% else %>
-        <% offset = ""  %>
+                <% offset = "" %>
+            <% end %>
+            <% if index % 3 == 0 %>
+                <div class="clearfix visible-xs"></div>
+            <% end %>
+              <div class="<%= offset %> col-xs-4 col-sm-2 mtm phm">
+                <div>
+                  <%= builder.radio_button(:answer_value, response_value, class: 'js-topicalRadioButton') %>
+                </div>
+                <div>
+                  <%= response_value %>
+                </div>
+              </div>
         <% end %>
-        <% if index % 3 == 0  %>
-            <div class="clearfix visible-xs"></div>
-        <% end %>
-        <div class="<%= offset  %> col-xs-4 col-sm-2 mtm">
-          <% new_object = f.object.send(:review_answers).klass.new %>
-          <% id = Time.now.to_f.to_s.sub('.', '') %>
-          <% fields = f.fields_for(:review_answers, new_object, child_index: id) do |builder| %>
-              <fieldset class="js-topicalHiddenField">
-                <%= builder.hidden_field(:answer_value, {value: response_value}) %>
-              </fieldset>
-          <% end %>
-          <!-- On click of empty checkbox the review_answer field created above is appended as a hidden field-->
-          <!-- On click of checked checkbox the review_answer field is destroyed-->
-          <div class="tac js-checkboxContainer font-size-small"
-               data-fields="<%= fields.gsub("\n", "") %>">
-            <div class="vam iconx16 js-icon i-grey-unchecked-box"></div>
-            <div><%= response_value %></div>
-          </div>
-        </div>
-  <% end %>
+        </fieldset>
+    <% end %>
   </div>
 </div>
 <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">

@@ -10,9 +10,9 @@
             <div class="clearfix visible-xs"></div>
         <% end %>
         <div class="col-xs-6 col-sm-3">
-          <% new_object = f.object.send(:review_answers).klass.new %>
+          <% new_object = f.object.send(:answers).klass.new %>
           <% id = Time.now.to_f.to_s.sub('.', '') %>
-          <% fields = f.fields_for(:review_answers, new_object, child_index: id) do |builder| %>
+          <% fields = f.fields_for(:answers, new_object, child_index: id) do |builder| %>
               <fieldset class="js-topicalHiddenField">
                 <%= builder.hidden_field(:answer_value, {value: response_value}) %>
               </fieldset>

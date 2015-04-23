@@ -100,7 +100,7 @@ GS.topicalReview.checkBoxes = (function (){
 
         $(CHECKBOX_CONTAINER).on('click', function () {
             var self = $(this);
-            var reviewContainer = self.parents('.js-topical-review-container');
+            var reviewContainer = self.parents('.js-topicalReviewContainer');
             GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
             toggleCheckbox(self);
         });
@@ -111,7 +111,7 @@ GS.topicalReview.checkBoxes = (function (){
             if(redirect_url !== undefined && redirect_url !== '') {
               window.location = redirect_url;
             }
-            var reviewContainer = $(this).parents('.js-topical-review-container');
+            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
             $(reviewContainer).addClass('js-reviewComplete');
             var carousel = $('.js-reviewQuestionCarousel')
             carousel.slick('slickNext')
@@ -135,15 +135,17 @@ GS.topicalReview.questionCarousel =(function(){
             speed: 300,
             slidesToShow: 1,
             adaptiveHeight: true,
+            draggable: false,
             appendArrows: ".js-topicalQuestionNavigation",
             prevArrow: ".js-previous-topic",
             nextArrow: ".js-next-topic"
+
         });
 
         var topicID = GS.uri.Uri.getFromQueryString('topicID')
 
         var getSlideId = function (topicID) {
-            var topicSelector = '.js-topical-review-container[data-review-topic-id="'+ topicID + '"]';
+            var topicSelector = '.js-topicalReviewContainer[data-review-topic-id="'+ topicID + '"]';
             var matchingTopics =  $(topicSelector);
             var question = $(matchingTopics).filter(function(){return !$(this).hasClass('slick-cloned')}).first();
             return question.data('slickIndex');
@@ -163,8 +165,10 @@ GS.topicalReview.questionCarousel =(function(){
 
 GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() {
 
+    var RADIO_BUTTON = '.js-topicalRadioButton';
+
     var GS_countCharacters = function (textField) {
-        var reviewContainer = $(textField).parents('.js-topical-review-container');
+        var reviewContainer = $(textField).parents('.js-topicalReviewContainer');
         var characterDisplay = $('.js-review-character-display');
         var characterCountDisplay = $(reviewContainer).find(".js-review-character-count");
         var characterCount = textField.value.length;
@@ -180,31 +184,42 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
     };
 
     var textBoxCharacters = function(textBox) {
-        var reviewContainer = $(textBox).parents('.js-topical-review-container');
+        var reviewContainer = $(textBox).parents('.js-topicalReviewContainer');
         var characterCount = textBox.value.length;
         if (characterCount > 0) {
             $(reviewContainer).find('.js-gs-results-snapshot').hide();
-            $(reviewContainer).find('.js-gs-review-comment').show();
+            $(reviewContainer).find('.js-topicalReviewComment').show();
         }
         else {
-            $(reviewContainer).find('.js-gs-review-comment').hide();
+            $(reviewContainer).find('.js-topicalReviewComment').hide();
             $(reviewContainer).find('.js-gs-results-snapshot').show();
         }
     };
 
     var optionSelected = function (reviewContainer){
         $(reviewContainer).find('.js-gs-results-snapshot').hide();
-        $(reviewContainer).find('.js-gs-review-comment').show();
+        $(reviewContainer).find('.js-topicalReviewComment').show();
     };
+
+    var init = function () {
+        $(RADIO_BUTTON).on('change', function () {
+            var self = $(this);
+            var reviewContainer = self.parents('.js-topicalReviewContainer');
+            GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
+        });
+    }
 
     return {
         GS_countCharacters: GS_countCharacters,
         optionSelected: optionSelected,
         textBoxCharacters: textBoxCharacters,
+        init: init
     };
 })();
 
 $(function() {
+
+    GS.topicalReview.reviewQuestion.init();
 
     GS.topicalReview.starRating.applyStarRating('.js-topicalReviewStars', '#js-topicalOverallRating');
 
