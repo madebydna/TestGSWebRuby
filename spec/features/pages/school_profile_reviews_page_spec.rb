@@ -6,6 +6,15 @@ require_relative '../examples/school_profile_reviews_examples'
 require_relative '../pages/school_profile_reviews_page'
 require 'support/shared_contexts_for_signed_in_users'
 
+shared_context 'with active reviews' do
+  before do
+    [
+      FactoryGirl.create(:review)
+    ]
+
+  end
+end
+
 describe 'School Profile Reviews Page', js: true do
 
   after do
@@ -61,6 +70,12 @@ describe 'School Profile Reviews Page', js: true do
             end
           end
         end
+      end
+    end
+
+    with_shared_context 'with reviews' do
+      with_shared_context 'Visit School Profile Reviews' do
+
       end
     end
   end

@@ -22,7 +22,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
   section :visible_review_question, ReviewQuestionVisible, ".js-topical-review-container.slick-active"
 
   section :reviews_list, '#js_reviewsList' do
-    sections :reviews, '.cuc_review' do
+    sections :reviews, '#js_reviewsList .cuc_review' do
       element :review_helpful_button, '.js_reviewHelpfulButton'
       element :flag_review_link, '.rs-report-review-link'
       element :review_flagged_text, 'div', text: 'You\'ve reported this review'
