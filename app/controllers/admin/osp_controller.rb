@@ -122,7 +122,7 @@ class Admin::OspController < ApplicationController
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('extracurricular_culture', @school)
       render 'osp/osp_extracurricular_culture'
     elsif params[:page] == '4'
-      set_meta_tags title: 'Edit School Profile -Facilities & Staff | GreatSchools'
+      set_meta_tags title: 'Edit School Profile - Facilities & Staff | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('facilities_staff', @school)
       render 'osp/osp_facilities_staff'
     else
