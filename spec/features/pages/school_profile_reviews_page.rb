@@ -7,9 +7,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
   class ReviewQuestionVisible < SitePrism::Section
     element :question, '.bg-yellow'
     elements :responses, '.js-checkboxContainer'
-    elements :review_comment, '.js-topicalReviewComment'
+    element :review_comment, '.js-topicalReviewComment'
     element :submit_button, 'button'
     elements :stars, '.js-topicalReviewStarContainer'
+    elements :radio_buttons, "input[type='radio']"
   end
 
   class ReviewQuestionHidden < SitePrism::Section

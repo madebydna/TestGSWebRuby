@@ -28,7 +28,7 @@ class Admin::SchoolsController < ApplicationController
   def school_reviews(school)
     Review.
       where(school_id: school.id, state: school.state).
-      includes(:review_answers, question: :review_topic).
+      includes(:answers, question: :review_topic).
       order(created: :desc)
   end
 
