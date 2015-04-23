@@ -5,11 +5,10 @@ class Admin::OspController < ApplicationController
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
   after_action :render_success_or_error, only: [:submit]
-  SCHOOL_CACHE_KEYS = %w(esp_responses)
 
 
   def show
-    @osp_form_data = OspFormResponse.find_form_data_for_school_state(params[:state],params[:schoolId])
+    @osp_data = OspData.for(@school) #add rescue here that shows nice error
     render_osp_page
   end
 
@@ -35,6 +34,8 @@ class Admin::OspController < ApplicationController
     # only java is receiving this html, does not matter that it renders blank page
     render text: ''
   end
+
+  protected
 
   def save_response!(question_key, esp_membership_id, response_values)
     osp_question_id = OspQuestion.find_by_question_key(question_key).try(:id)
@@ -97,16 +98,6 @@ class Admin::OspController < ApplicationController
     end
   end
 
-  def decorate_school(school)
-    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
-    query = query.include_schools(school.state, school.id)
-    query_results = query.query
-
-    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
-    school_cache_results.decorate_schools([school]).first
-  end
-
-
   def render_osp_page
     gon.pagename = "Osp"
     if params[:page]== '1'
@@ -135,8 +126,7 @@ class Admin::OspController < ApplicationController
   #think about making more generic and moving to application controller
   def set_osp_school_instance_vars
     if @state[:short].present? && params[:schoolId].present?
-      @school               = School.find_by_state_and_id(@state[:short], params[:schoolId])
-      @school_with_esp_data = decorate_school(@school)
+      @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
     else
       redirect_to my_account_url #ToDo think of better redirect
     end

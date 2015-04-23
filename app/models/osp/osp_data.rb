@@ -1,0 +1,59 @@
+#encapsulates 'osp' data about a school that can be modified on the osp form page
+#represents data from osp_form_responses and school_cache tables, but may include census tables in the future
+class OspData
+
+  attr_accessor :cachified_school, :osp_form_responses
+
+  SCHOOL_CACHE_KEYS = %w(esp_responses)
+
+  def initialize(school)
+    @cachified_school = decorate_school(school)
+    @osp_form_responses = OspFormResponse.find_form_data_for_school_state(school.state, school.id)
+  end
+
+  #maybe not worth having this around since its just for semantics. ie OspData.for(school)
+  def self.for(school)
+    OspData.new(school)
+  end
+
+  def values_for(key, question_id)
+    begin
+      key = key.to_s
+      school_cache_values = cachified_school.values_for(key) #will return empty array if no results
+      osp_response_values = most_recent_osp_form_response(key, question_id)
+
+      if osp_response_values.present? && school_cache_values.present?
+        cachified_school.created_time_for(key) > osp_response_values[:created_at] ? school_cache_values : osp_response_values[:values]
+      else
+        osp_response_values.present? ? osp_response_values[:values] : school_cache_values
+      end
+    rescue => error
+      Rails.logger.error "Can't get values for key: #{key} school: #{cachified_school.state}, #{cachified_school.id} error: \n #{error}"
+      []
+    end
+  end
+
+  private
+
+  def decorate_school(school)
+    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
+    query = query.include_schools(school.state, school.id)
+    query_results = query.query
+
+    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+    school_cache_results.decorate_school(school)
+  end
+
+  def most_recent_osp_form_response(response_key, question_id)
+    osp_form_responses.each do | osp_form_response |
+      if osp_form_response.osp_question_id == question_id
+        values = JSON.parse(osp_form_response.response)[response_key]
+        created_at = Time.parse(values.first['created'])
+        values.map! { |value| value['value'] }
+
+        return values.present? ? {created_at: created_at, values: values} : nil
+      end
+    end
+  end
+
+end

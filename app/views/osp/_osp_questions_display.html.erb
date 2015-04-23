@@ -10,7 +10,7 @@
       <% begin %>
           <%= render partial: "osp/#{display_question.question_type}", :locals => {
                   display_question:           display_question,
-                  preexisting_esp_values:     @osp_form_data.values_for(display_question.question_response_key,@osp_form_data,@school_with_esp_data)      ,
+                  preexisting_esp_values:     @osp_data.values_for(display_question.question_response_key, display_question.osp_question_id),
                   response_key:               display_question.question_response_key
           } %>
       <% rescue => error %>
