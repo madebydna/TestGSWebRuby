@@ -28,7 +28,7 @@
                 <%= draw_stars_16 overall_review_rating.to_i %>
             <% end %>
         </div>
-        <br />Posted <%= review.posted %><br />
+        <br /><span class="rs-review-posted">Posted <%= review.posted %></span><br />
         - a <span class="cuc_posted-by"><%= review.user_type %></span>
     <% end %>
 

@@ -8,37 +8,59 @@ FactoryGirl.define do
     active 1
     comment 'this is a valid comments value since it contains 15 words - including the hyphen'
 
-    # factory :five_star_review do
-    #   association :question, factory: :five_star_rating_question, strategy: :build
-    #   [:build, :build_stubbed, :create].each do |strategy|
-    #     after(strategy) do |review, evaluator|
-    #       strategy = :build_stubbed if strategy == :stub
-    #       answer = evaluator[:answer] || send(strategy, :review_answer, answer_value: (1..5).to_a.shuffle.first )
-    #       review.review_answers << answer
-    #       review.save if strategy == :create
-    #     end
-    #   end
-    # end
-    #
-    # factory :teacher_effectiveness_review do
-    #   association :question, factory: :teacher_question, strategy: :build
-    #   [:build, :stub, :create].each do |strategy|
-    #     after(strategy) do |review, evaluator|
-    #       strategy = :build_stubbed if strategy == :stub
-    #       answer = evaluator[:answer] || send(
-    #         strategy,
-    #         :review_answer,
-    #         answer_value: 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
-    #           split(',').
-    #           shuffle.
-    #           first
-    #       )
-    #       require 'pry'; binding.pry
-    #       review.review_answers << answer
-    #       review.save if strategy == :create
-    #     end
-    #   end
-    # end
+    factory :five_star_review do
+      association :question, factory: :five_star_rating_question, strategy: :build
+      [:build, :build_stubbed, :create].each do |strategy|
+        after(strategy) do |review, evaluator|
+          # http://stackoverflow.com/questions/17754770/factorygirl-build-stubbed-strategy-with-a-has-many-association
+          # We should create our own factory methods when we need factory objects to be prepopulated with associated
+          # objects. But adding this hack now since we don't have time to do that now
+          #
+          # If the review has an ID, then ActiveRecord will go to the DB to get ReviewAnswers, or will try to save
+          # them when adding to review_answers collection on the Review
+          unless strategy == :create
+            id = review.id
+            review.id = nil
+          end
+          strategy = :build_stubbed if strategy == :stub
+          answer = evaluator[:answer] || send(strategy, :review_answer, review: review, answer_value: (1..5).to_a.shuffle.first )
+          review.answers << answer
+          answer.review = review
+
+          # Add back the ID that the factory generated
+          unless strategy == :create
+            review.id = id
+          end
+        end
+      end
+    end
+
+    factory :teacher_effectiveness_review do
+      association :question, factory: :teacher_question, strategy: :build
+      [:build, :stub, :create].each do |strategy|
+        after(strategy) do |review, evaluator|
+          # http://stackoverflow.com/questions/17754770/factorygirl-build-stubbed-strategy-with-a-has-many-association
+          unless strategy == :create
+            id = review.id
+            review.id = nil
+          end
+          strategy = :build_stubbed if strategy == :stub
+          answer = evaluator[:answer] || send(
+            strategy,
+            :review_answer,
+            review: review,
+            answer_value: 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
+              split(',').
+              shuffle.
+              first
+          )
+          review.answers << answer
+          unless strategy == :create
+            review.id = id
+          end
+        end
+      end
+    end
 
     [:build, :build_stubbed, :create].each do |strategy|
       after(strategy) do |review, evaluator|

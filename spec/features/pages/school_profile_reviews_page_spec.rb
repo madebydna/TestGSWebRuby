@@ -6,15 +6,6 @@ require_relative '../examples/school_profile_reviews_examples'
 require_relative '../pages/school_profile_reviews_page'
 require 'support/shared_contexts_for_signed_in_users'
 
-shared_context 'with active reviews' do
-  before do
-    [
-        FactoryGirl.create(:review)
-    ]
-
-  end
-end
-
 describe 'School Profile Reviews Page', js: true do
 
   after do
@@ -105,11 +96,28 @@ describe 'School Profile Reviews Page', js: true do
 
     end
 
-    # with_shared_context 'with reviews' do
-    #   with_shared_context 'Visit School Profile Reviews' do
+    with_shared_context 'with two active reviews' do
+      with_shared_context 'Visit School Profile Reviews' do
+        it { is_expected.to have_reviews }
 
-    # end
-    # end
+        with_subject :reviews do
+          they { are_expected.to have_posted }
+        end
+
+        with_subject :review_dates do
+          it { is_expected.to be_in_descending_order }
+        end
+      end
+
+      with_shared_context 'with inactive review' do
+        with_shared_context 'Visit School Profile Reviews' do
+          with_subject :reviews do
+            its(:size) { is_expected.to eq(2) }
+            they { are_expected.to_not have_content 'inactive review' }
+          end
+        end
+      end
+    end
   end
 end
 

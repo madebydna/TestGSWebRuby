@@ -228,6 +228,27 @@ RSpec.configure do |config|
     end
   end
 
+  def they(*options, &block)
+    describe 'Every element in the subject' do
+      before do
+        @__pointer = nil
+      end
+
+      def are_expected
+        expect(@__pointer)
+      end
+
+      options << {} unless options.last.kind_of?(Hash)
+
+      example(nil, *options) do
+        subject.each do |s|
+          @__pointer = s
+          instance_eval &block
+        end
+      end
+    end
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

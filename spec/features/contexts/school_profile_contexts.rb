@@ -20,9 +20,15 @@ shared_context 'Visit School Profile Overview' do |s = nil|
 end
 
 shared_context 'Visit School Profile Reviews' do |s = nil|
-  subject do
+  let(:page_object) do
     visit school_reviews_path(s || school)
     SchoolProfileReviewsPage.new
+  end
+  before do
+    visit school_reviews_path(s || school)
+  end
+  subject do
+    page_object
   end
 end
 

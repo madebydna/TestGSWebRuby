@@ -19,7 +19,7 @@
         <% else %>
           <p class="bottom">GreatSchools rating: <span class="vam iconx24-ratings i-24-ratings-nr"></span></p>
         <% end %>
-        <%= link_to "Read all #{review.count} reviews", school_reviews_url(review.school) %>
+        <%= link_to "Read all #{reviews.number_of_reviews_with_comments} reviews", school_reviews_url(review.school) %>
       </div>
     <% end %>
   </div>

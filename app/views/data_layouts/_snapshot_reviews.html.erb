@@ -1,5 +1,5 @@
 <% average_score = @school_reviews.average_5_star_rating %>
-<% ratings_count = @school_reviews.number_of_reviews_with_comments %>
+<% reviews_count = @school_reviews.number_of_reviews_with_comments %>
 <% school_reviews = @school_reviews %>
 
 <div class="tac" style="height:300px;">
@@ -59,8 +59,8 @@
   </div>
 
   <div class="tac pa full-width" style="bottom: 20px;">
-    <% if ratings_count > 0 %>
-      <% reviews_count_text = pluralize(ratings_count, 'Review', 'Reviews') %>
+    <% if reviews_count > 0 %>
+      <% reviews_count_text = pluralize(reviews_count, 'Review', 'Reviews') %>
       <%= link_to reviews_count_text, school_reviews_url(@school),
                   class:"js-gaLoad js-gaClick",
                   data:{

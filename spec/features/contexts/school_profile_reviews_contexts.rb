@@ -92,3 +92,50 @@ shared_context 'submit response with bad word' do
   end
 end
 
+shared_context 'with two active reviews' do
+  let!(:two_active_reviews) do
+    [
+      FactoryGirl.create(:five_star_review, active: true, school: school),
+      FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
+    ]
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end
+
+shared_context 'with active review' do
+  let!(:active_review) do
+    FactoryGirl.create(:five_star_review, active: true, school: school)
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end
+
+shared_context 'with inactive review' do
+  let!(:inactive_review) do
+    FactoryGirl.create(:five_star_review, active: false, school: school, comment: 'inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review')
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end
+
+shared_context 'with five star review' do
+  let!(:five_star_review) do
+    FactoryGirl.create(:five_star_review, active: true, school: school)
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end
+
+shared_context 'with topical review' do
+  let!(:topical_review) do
+    FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end

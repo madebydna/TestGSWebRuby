@@ -26,6 +26,8 @@ shared_example 'should show next question' do
 end
 
 shared_example 'should not show the review comment form' do
+  subject
+  save_and_open_page
   expect(subject.visible_review_question).not_to have_review_comment
 end
 
