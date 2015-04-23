@@ -26,6 +26,10 @@ describe Admin::OspController do
           get :show, state: school.state, schoolId: school.id, page: page_number
           expect(response).to render_template(page)
         end
+
+        it 'should have correct osp page meta tag' do
+          allow(controller).to receive(:set_meta_tags)
+        end
       end
     end
 

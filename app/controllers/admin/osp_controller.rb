@@ -110,15 +110,19 @@ class Admin::OspController < ApplicationController
   def render_osp_page
     gon.pagename = "Osp"
     if params[:page]== '1'
+      set_meta_tags title: 'Edit School Profile - Basic Information | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)
       render 'osp/osp_basic_information'
     elsif params[:page] == '2'
+      set_meta_tags title: 'Edit School Profile - Academics | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('academics', @school)
       render 'osp/osp_academics'
     elsif params[:page] == '3'
+      set_meta_tags title: 'Edit School Profile - Extracurricular & Culture | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('extracurricular_culture', @school)
       render 'osp/osp_extracurricular_culture'
     elsif params[:page] == '4'
+      set_meta_tags title: 'Edit School Profile -Facilities & Staff | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('facilities_staff', @school)
       render 'osp/osp_facilities_staff'
     else
