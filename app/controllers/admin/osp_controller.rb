@@ -13,14 +13,9 @@ class Admin::OspController < ApplicationController
   end
 
   def submit
-    #ToDo probably should be more strict about validation than this
-    #right now any param not in that list gets passed through.
-    questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
-
     #If performance becomes an issue, look into making this a bulk single insert.
-    questionKeyParams.each do |question_key, answers|
-      response_values = [*answers].select(&:present?).compact
-      save_response!(question_key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
+    questions_and_answers.each do | (question_id, response_key, values) |
+      save_response!(question_id, response_key, values, @esp_membership_id)
     end
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
   end
@@ -37,13 +32,21 @@ class Admin::OspController < ApplicationController
 
   protected
 
-  def save_response!(question_key, esp_membership_id, response_values)
-    osp_question_id = OspQuestion.find_by_question_key(question_key).try(:id)
-    osp_question_id or (Rails.logger.warn("Didn't save osp response. Couldn't find osp question key: #{question_key}") and return)
+  def questions_and_answers
+    params.except(:controller , :action , :page , :schoolId, :state).map do | param, values |
+      question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
+      next unless values.present?
 
+      #TODO add validation here to only allow questions/answers that a school is registered for
+      #Validate based on question type and for open text use same validation logic as JS
+      [question_id.to_i, response_key, [*values].uniq]
+    end.compact
+  end
+
+  def save_response!(question_id, question_key, response_values, esp_membership_id)
     response_blob = make_response_blob(question_key, esp_membership_id, response_values)
 
-    error = create_osp_form_response!(osp_question_id, esp_membership_id, response_blob)
+    error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if @is_approved_user && !error.present?
     @render_error ||= error.present?
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?

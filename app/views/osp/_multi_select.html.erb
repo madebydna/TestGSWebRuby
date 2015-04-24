@@ -7,6 +7,7 @@
 
 <% display_question_label     = display_question.displayed_label %>
 <% display_text_and_value_map = display_question.displayed_answers %>
+<% q_id                       = display_question.osp_question_id %>
 <% preexisting_esp_values %>
 <% response_key  %>
 
@@ -23,7 +24,7 @@
     <% display_text_and_value_map.each_pair do |text, value| %>
       <% is_active = preexisting_esp_values.include?(value) ? true : nil %>
       <%= render partial: 'shared/form_elements/checkbox_button', locals: {
-        key: "#{response_key}[]",
+        key: "#{q_id}-#{response_key}[]",
         text: text,
         value: value,
         active: is_active

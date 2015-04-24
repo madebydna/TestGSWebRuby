@@ -10,6 +10,7 @@
 <% display_text_and_value_map = display_question.displayed_answers %>
 <% display_options            = display_question.display_options %>
 <% input_value                = display_options['input_value'] || 'none' %>
+<% q_id                       = display_question.osp_question_id %>
 <% preexisting_esp_values %>
 <% response_key  %>
 
@@ -22,7 +23,7 @@
       <div class="mtm">
         <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
         <%= render partial: 'shared/form_elements/checkbox_square', locals: {
-                key: "#{response_key}[]",
+                key: "#{q_id}-#{response_key}[]",
                 value: input_value,
                 button_classes: 'js-disableTriggerElement mb2',
                 text: display_options['text_label'] || 'None',
@@ -36,7 +37,7 @@
     <% display_text_and_value_map.each_pair do |text, value| %>
       <% is_active = preexisting_esp_values.include?(value) ? true : nil %>
       <%= render partial: 'shared/form_elements/checkbox_button', locals: {
-              key: "#{response_key}[]",
+              key: "#{q_id}-#{response_key}[]",
               text: text,
               value: value,
               active: is_active,
