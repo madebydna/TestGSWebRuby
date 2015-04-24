@@ -64,8 +64,8 @@ class SimpleAjaxController < ApplicationController
 
     school = School.find_by_state_and_id(state,school_id)
     if school.present?
-      redirect_to (params[:morganstanley].present? ?  school_review_form_path(school) + "?morganstanley=1" :
-          school_review_form_path(school))
+      redirect_to (params[:morganstanley].present? ?  school_reviews_path(school) + "?morganstanley=1" :
+          school_reviews_path(school))
     else
       render 'error/school_not_found', layout: 'error', status: 404
     end

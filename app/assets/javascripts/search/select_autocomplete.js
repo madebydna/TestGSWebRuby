@@ -25,7 +25,7 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
         templates: markup.schoolResultsMarkup()
       }
     ).on('typeahead:selected', function (event, suggestion, dataset) {
-        GS.uri.Uri.goToPage(suggestion['url']+"/reviews/write/");
+        GS.uri.Uri.goToPage(suggestion['url']+"reviews/");
       });
   };
 

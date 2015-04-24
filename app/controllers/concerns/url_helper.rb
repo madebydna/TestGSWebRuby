@@ -116,7 +116,7 @@ module UrlHelper
     ENV_GLOBAL['media_server'] + '/' + comm_media_prefix + "school_media/" + state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-#{img_size}.jpg"
   end
 
-  %w(school school_details school_quality school_reviews school_review_form).each do |helper_name|
+  %w(school school_details school_quality school_reviews ).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       if school == nil
         params = school_params_hash params_hash

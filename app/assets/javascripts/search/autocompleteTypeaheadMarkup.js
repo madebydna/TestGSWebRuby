@@ -45,7 +45,7 @@ GS.search.autocomplete.selectdisplay = GS.search.autocomplete.selectdisplay || (
       morganstanley = "?morganstanley=1"
     }
     return {
-      suggestion: Handlebars.compile('<a href="{{url}}reviews/write/'+morganstanley+'" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
+      suggestion: Handlebars.compile('<a href="{{url}}reviews/'+morganstanley+'" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
     }
   };
 
