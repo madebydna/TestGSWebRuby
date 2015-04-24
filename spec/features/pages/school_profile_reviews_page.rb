@@ -35,12 +35,31 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :five_stars, '.i-16-orange-star .i-16-star-5'
     element :posted, '.rs-review-posted'
 
+    section :flag_review_form, '.rs-report-review-form' do
+      element :comment_box, 'review_flag[comment]'
+      element :submit_button, 'button', text: 'Submit'
+      element :cancel_link, 'a', text: 'Cancel'
+    end
+
     def posted_date
       Time.zone.parse(posted.text)
+    end
+
+    def click_on_flag_review_link
+      flag_review_link.click
+    end
+
+    def submit_review_flag_comment(comment = 'Foo bar baz')
+      flag_review_form.comment_box.set(comment)
+      flag_review_form.submit_button.click
     end
   end
 
   sections :reviews, ReviewSection, '.js_reviewsList .cuc_review'
+
+  def first_review
+    reviews.first
+  end
 
   def review_dates
     reviews.map(&:posted_date)

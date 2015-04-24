@@ -99,14 +99,14 @@ module ReviewControllerConcerns
 
     if logged_in?
       begin
-        review_id = params[:reported_entity_id]
-        reason = params[:reason]
+        review_id = params[:review_id]
+        comment = params[:comment]
 
-        review = SchoolRating.find review_id rescue nil
+        review = Review.find review_id rescue nil
         if review
-          reported_entity = ReportedEntity.from_review review, reason
-          reported_entity.reporter_id = current_user.id
-          if reported_entity.save
+          review_flag = review.build_reported_review(comment, ReviewFlag::USER_REPORTED)
+          review_flag.user = current_user
+          if review_flag.save
             flash_notice t('actions.report_review.reported')
           else
             flash_error t('actions.generic_error')

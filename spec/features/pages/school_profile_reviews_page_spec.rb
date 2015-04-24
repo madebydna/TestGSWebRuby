@@ -102,6 +102,20 @@ describe 'School Profile Reviews Page', js: true do
 
         with_subject :reviews do
           they { are_expected.to have_posted }
+          they { are_expected.to have_flag_review_link }
+
+          with_subject :first_review do
+            when_I :click_on_flag_review_link do
+              it { is_expected.to have_flag_review_form }
+            end
+            when_I :submit_review_flag_comment, 'I hate this review' do
+              it 'should be saved to the database' do
+                flag = ReviewFlag.last
+                expect(flag.comment).to eq('I hate this review')
+                expect(flag.review_id).to eq(active_reviews.last.id)
+              end
+            end
+          end
         end
 
         with_subject :review_dates do

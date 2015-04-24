@@ -143,10 +143,11 @@ GS.reviews = GS.reviews || function($) {
         var new_form = $(containerDomSelector + ' form');
 
         new_form.attr('id', 'js-report-review-form-' + reviewId);
+        new_form.attr('class', 'rs-report-review-form');
 
         var old_action = new_form.attr('action');
 
-        var action = old_action.replace(new RegExp('0/$'), reviewId + '/');
+        var action = old_action.replace(new RegExp('0'), reviewId);
 
         new_form.attr('action', action);
 

@@ -249,7 +249,7 @@ class User < ActiveRecord::Base
   end
 
   def reported_review?(review)
-    self.reviews_user_reported.map(&:review_id).include? review.id
+    self.reviews_user_reported.map(&:id).include? review.id
   end
 
   def has_active_profile?

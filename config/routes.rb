@@ -145,7 +145,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :data_load_schedules, path: '/data-planning'
   end
 
-  post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
+  post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
@@ -231,7 +231,6 @@ LocalizedProfiles::Application.routes.draw do
       # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
       resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
       resources :reviews, only: [:create], controller: 'school_profile_reviews'
-
       get 'reviews/write', to: 'reviews#new', as: :review_form
       get '', to: 'school_profile_overview#overview'
     end
