@@ -72,13 +72,13 @@
         </div>
     <% end %>
 
-
+    <div style="display:none;">
+      <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 } %>
+      <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 }, class: "js-report-review-container-#{review.id}" %>
+    </div>
 </div>
 
-<div class="row pam" style="display:none;">
-  <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 } %>
-  <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 }, class: "js-report-review-container-#{review.id}" %>
-</div>
+
 
 <% unique_content_for :global_hidden_content do %>
     <div class="js-report-review-form-template rs-report-review-form">

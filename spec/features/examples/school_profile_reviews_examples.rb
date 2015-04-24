@@ -26,8 +26,6 @@ shared_example 'should show next question' do
 end
 
 shared_example 'should not show the review comment form' do
-  subject
-  save_and_open_page
   expect(subject.visible_review_question).not_to have_review_comment
 end
 
@@ -36,24 +34,29 @@ shared_example 'should show the review comment section' do
 end
 
 shared_example 'should save review with expected value' do |value|
+  wait_for_page_to_finish
   expect(Review.last.answers.count).to eq(1)
   expect(Review.last.answers.first.value).to eq(value)
 end
 
 shared_example 'should save overall review with comment without bad words' do
+  wait_for_page_to_finish
   comment = 'lorem ' * 15
   expect(Review.last.comment).to eq(comment.strip)
 end
 
 shared_example 'should save overall review with comment with bad words' do
+  wait_for_page_to_finish
   comment = 'lorem ' * 15 + 'test_really_bad_word'
   expect(Review.last.comment).to eq(comment)
 end
 
 shared_example 'should save review that is active' do
+  wait_for_page_to_finish
   expect(Review.last.active).to eq(true)
 end
 
 shared_example 'should save review that is not active' do
+  wait_for_page_to_finish
   expect(Review.last.active).to eq(false)
 end

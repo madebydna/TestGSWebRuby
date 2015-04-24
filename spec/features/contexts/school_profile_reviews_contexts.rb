@@ -100,7 +100,7 @@ shared_context 'with two active reviews' do
     ]
   end
   after do
-    clean_dbs :gs_schooldb
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer
   end
 end
 

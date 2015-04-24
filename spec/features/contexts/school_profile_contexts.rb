@@ -34,4 +34,7 @@ end
 
 shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
+  after do
+    clean_models School
+  end
 end

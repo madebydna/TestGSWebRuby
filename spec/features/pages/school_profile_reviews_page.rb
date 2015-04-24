@@ -36,7 +36,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :posted, '.rs-review-posted'
 
     section :flag_review_form, '.rs-report-review-form' do
-      element :comment_box, 'review_flag[comment]'
+      element :comment_box, 'textarea[name="review_flag[comment]"]'
       element :submit_button, 'button', text: 'Submit'
       element :cancel_link, 'a', text: 'Cancel'
     end

@@ -106,7 +106,7 @@ def when_I(name, *args, &block)
   args.shift if js_arg
   describe *[name, js_arg].compact do
     before do
-      page_object.send(name.to_s.gsub(' ', '_'), *args)
+      subject.send(name.to_s.gsub(' ', '_'), *args)
     end
     instance_exec &block
   end
@@ -247,6 +247,13 @@ RSpec.configure do |config|
         end
       end
     end
+  end
+
+  # this forces rspec execution to wait until current_url can get run, which is after all requests have finished
+  # otherwise, rspec will execute code/examples/blocks before requests finish. This could cause assertions to fail
+  # If they execute after database has already been cleaned or before rails has finished processing the request
+  def wait_for_page_to_finish
+    current_url
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -97,37 +97,42 @@ describe 'School Profile Reviews Page', js: true do
     end
 
     with_shared_context 'with two active reviews' do
-      with_shared_context 'Visit School Profile Reviews' do
-        it { is_expected.to have_reviews }
+      with_shared_context 'signed in verified user' do
+        with_shared_context 'Visit School Profile Reviews' do
+          it { is_expected.to have_reviews }
 
-        with_subject :reviews do
-          they { are_expected.to have_posted }
-          they { are_expected.to have_flag_review_link }
+          with_subject :reviews do
+            they { are_expected.to have_posted }
+            they { are_expected.to have_flag_review_link }
 
-          with_subject :first_review do
-            when_I :click_on_flag_review_link do
-              it { is_expected.to have_flag_review_form }
-            end
-            when_I :submit_review_flag_comment, 'I hate this review' do
-              it 'should be saved to the database' do
-                flag = ReviewFlag.last
-                expect(flag.comment).to eq('I hate this review')
-                expect(flag.review_id).to eq(active_reviews.last.id)
+            with_subject :first_review do
+              when_I :click_on_flag_review_link do
+                it { is_expected.to have_flag_review_form }
+
+                when_I :submit_review_flag_comment, 'I hate this review' do
+                  it 'should be saved to the database' do
+                    wait_for_page_to_finish
+                    flag = ReviewFlag.last
+                    expect(flag).to be_present
+                    expect(flag.comment).to eq('I hate this review')
+                    expect(flag.review_id).to eq(two_active_reviews.first.id)
+                  end
+                end
               end
             end
           end
+
+          with_subject :review_dates do
+            it { is_expected.to be_in_descending_order }
+          end
         end
 
-        with_subject :review_dates do
-          it { is_expected.to be_in_descending_order }
-        end
-      end
-
-      with_shared_context 'with inactive review' do
-        with_shared_context 'Visit School Profile Reviews' do
-          with_subject :reviews do
-            its(:size) { is_expected.to eq(2) }
-            they { are_expected.to_not have_content 'inactive review' }
+        with_shared_context 'with inactive review' do
+          with_shared_context 'Visit School Profile Reviews' do
+            with_subject :reviews do
+              its(:size) { is_expected.to eq(2) }
+              they { are_expected.to_not have_content 'inactive review' }
+            end
           end
         end
       end
