@@ -1,0 +1,29 @@
+<% review_flags %>
+<% css_class %>
+
+<table class="table table-striped <%= css_class %>">
+  <thead>
+  <tr>
+    <td class="col-xs-2">Reason</td>
+    <td class="col-xs-2">Flagged on</td>
+    <td class="col-xs-3">Flagged by</td>
+    <td class="col-xs-5">Comment</td>
+  </tr>
+  </thead>
+  <tbody>
+  <% review_flags.each do |flag| %>
+    <tr>
+      <td><%= flag.reason %></td>
+      <td><%= flag.created.strftime('%B %d, %Y') %></td>
+      <td>
+        <% if flag.user %>
+          <%= link_to(flag.user.email, users_admin_reviews_path(review_moderation_search_string: flag.review.user.email)) %>
+        <% else %>
+          Unknown
+        <% end %>
+      </td>
+      <td><%= flag.comment %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

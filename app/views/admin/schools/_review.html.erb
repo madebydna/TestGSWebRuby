@@ -63,32 +63,7 @@
 
         <% if active_flags.present? %>
           <h5>Open flags</h5>
-          <table class="table table-striped rs-open-flags-table">
-            <thead>
-              <tr>
-                <td class="col-xs-2">Reason</td>
-                <td class="col-xs-2">Flagged on</td>
-                <td class="col-xs-3">Flagged by</td>
-                <td class="col-xs-5">Comment</td>
-              </tr>
-            </thead>
-            <tbody>
-              <% active_flags.each do |flag| %>
-                <tr>
-                  <td><%= flag.reason %></td>
-                  <td><%= flag.created.strftime('%B %d, %Y') %></td>
-                  <td>
-                    <% if flag.user %>
-                      <%= link_to(flag.user.email, users_admin_reviews_path(review_moderation_search_string: review.user.email)) %>
-                    <% else %>
-                      Unknown
-                    <% end %>
-                  </td>
-                  <td><%= flag.comment %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <%= render 'review_flags_table', review_flags: active_flags, css_class: 'rs-open-flags-table' %>
         <% else %>
           <h5>No open flags</h5>
         <% end %>
@@ -96,32 +71,7 @@
 
         <% if inactive_flags.present? %>
           <h5>Resolved flags</h5>
-          <table class="table table-striped rs-resolved-flags-table">
-            <thead>
-            <tr>
-              <td class="col-xs-2">Reason</td>
-              <td class="col-xs-2">Flagged on</td>
-              <td class="col-xs-3">Flagged by</td>
-              <td class="col-xs-5">Comment</td>
-            </tr>
-            </thead>
-            <tbody>
-            <% inactive_flags.each do |flag| %>
-              <tr>
-                <td><%= flag.reason %></td>
-                <td><%= flag.created.strftime('%B %d, %Y') %></td>
-                <td>
-                  <% if flag.user %>
-                    <%= link_to(flag.user.email, users_admin_reviews_path(review_moderation_search_string: review.user.email)) %>
-                  <% else %>
-                    Unknown
-                  <% end %>
-                </td>
-                <td><%= flag.comment %></td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
+          <%= render 'review_flags_table', review_flags: inactive_flags, css_class: 'rs-resolved-flags-table' %>
         <% end %>
 
         <hr/>
@@ -146,10 +96,10 @@
         </div>
 
         <div id="flag-review-form-<%= review.id %>" class="collapse">
-          <h5>Report review</h5>
-          <%= form_for(review, url: report_admin_review_path(review), method: :put) do |f| %>
+          <h5>Flag review</h5>
+          <%= form_for(review, url: flag_admin_review_path(review), method: :put) do |f| %>
             <%= text_area_tag(:reason, '', rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
-            <%= content_tag :div, f.submit('Report review', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+            <%= content_tag :div, f.submit('Flag review', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
           <% end %>
         </div>
     </div>

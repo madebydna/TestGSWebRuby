@@ -129,7 +129,7 @@ LocalizedProfiles::Application.routes.draw do
       put 'activate', on: :member
       put 'deactivate', on: :member
       put 'resolve', on: :member
-      put 'report', on: :member
+      put 'flag', on: :member
     end
 
     resources :review_notes, only: [:create]
