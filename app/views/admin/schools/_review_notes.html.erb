@@ -1,0 +1,20 @@
+<% review %>
+
+<div class="rs-review-notes">
+  <h5>Notes</h5>
+  <% review.notes.includes(:user).each do |review_note| %>
+    <%= "#{review_note.created.strftime('%B %d, %Y')} " %>
+    <%= "#{review_note.user.email} :" if review_note.user %>
+    <%= review_note.notes %>
+    <br/>
+    <hr/>
+    <br/>
+  <% end %>
+  <%= form_for(ReviewNote.new, url: admin_review_notes_path, method: :post) do |f| %>
+    <% # notes_form.hidden_field(:user, @current_user) %>
+    <%= f.hidden_field(:review_id, value: review.id) %>
+    <%= f.text_area(:notes, rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+    <%= content_tag :div, f.button('Save notes', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+  <% end %>
+  <br/>
+</div>
