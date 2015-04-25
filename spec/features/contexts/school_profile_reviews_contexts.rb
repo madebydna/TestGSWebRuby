@@ -100,7 +100,33 @@ shared_context 'with two active reviews' do
     ]
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+  end
+end
+
+shared_context 'with seven parent reviews' do
+  let!(:seven_parent_reviews) do
+    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
+    reviews.each do |review|
+      FactoryGirl.create(:parent_school_member, school: review.school, user: review.user)
+    end
+    reviews
+  end
+  after do
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+  end
+end
+
+shared_context 'with seven student reviews' do
+  let!(:seven_student_reviews) do
+    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
+    reviews.each do |review|
+      FactoryGirl.create(:student_school_member, school: review.school, user: review.user)
+    end
+    reviews
+  end
+  after do
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
   end
 end
 

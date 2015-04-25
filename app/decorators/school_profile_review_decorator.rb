@@ -5,10 +5,37 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   decorates :review
   delegate_all
 
+  def answer_markup
+    default_text = 'no rating' # non five-star ratings must have answer specified, no always use 'no rating'
+    if review.question.stars_question?
+      answer_value.present? ? h.draw_stars_16(answer_value.to_i) : default_text
+    else
+      answer_value || default_text
+    end
+  end
+
+  def answer_value
+    if review.answers
+      review.answers.first.answer_value
+    end
+  end
+
+  def topic_label
+    topic_name
+  end
+
+  def topic_name
+    review.question.review_topic.name
+  end
+
   def star_rating
-    value = review.answer
-    value = nil if value < 1 || value > 5
-    value
+    if review.question.stars_question?
+      value = review.answer
+      value = nil if value < 1 || value > 5
+      value
+    else
+      nil
+    end
   end
 
   def user_type

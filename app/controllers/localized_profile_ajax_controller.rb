@@ -10,24 +10,25 @@ class LocalizedProfileAjaxController < ApplicationController
     limit = (params[:limit] || '10').to_i
     filter_by = params[:filter_by] || nil
 
-    active_record_relation = @school.five_star_review_scope
+    active_record_relation = @school.reviews_scope
     active_record_relation = sort(active_record_relation)
     reviews = active_record_relation.to_a
-    reviews = reviews[offset..offset + (limit - 1)]
 
     if filter_by.present? && filter_by != 'all'
       reviews.extend ReviewScoping
-      reviews = reviews.by_user_type[filter_by] || []
+      reviews = reviews.by_user_type[filter_by]
     end
 
-    @school_reviews = SchoolReviews.new(@school, reviews)
+    school_reviews = SchoolReviews.new(@school, reviews).having_comments
+    school_reviews = school_reviews[offset..offset + (limit - 1)]
+    @school_reviews = school_reviews
 
     @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
   end
 
   def sort(active_record_relation)
-    order_by = params[:order_by] || nil
-    case order_by
+    order = params[:order_by] || nil
+    case order
       when 'oldToNew'
         active_record_relation = active_record_relation.order("reviews.created ASC")
       when 'ratingsHighToLow'

@@ -106,6 +106,17 @@ def when_I(name, *args, &block)
   args.shift if js_arg
   describe *[name, js_arg].compact do
     before do
+      page_object.send(name.to_s.gsub(' ', '_'), *args)
+    end
+    instance_exec &block
+  end
+end
+
+def on_subject(name, *args, &block)
+  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  args.shift if js_arg
+  describe *[name, js_arg].compact do
+    before do
       subject.send(name.to_s.gsub(' ', '_'), *args)
     end
     instance_exec &block
@@ -122,6 +133,8 @@ def with_subject(name, *args, &block)
      instance_exec &block
    end
 end
+
+
 
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)

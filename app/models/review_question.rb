@@ -11,6 +11,10 @@ class ReviewQuestion < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
+  def stars_question?
+    layout == 'overall_stars'
+  end
+
   def response_array
     str = read_attribute(:responses)
     if str.present?

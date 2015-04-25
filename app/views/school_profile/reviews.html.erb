@@ -48,7 +48,7 @@
 
             <div class="js_reviewsList">
                 <%= render partial: '/shared/review_module',
-                           collection: @school_reviews.having_comments, as: :review, locals: { include_rich_snippets: true } %>
+                           collection: @school_reviews.having_comments.take(10), as: :review, locals: { include_rich_snippets: true } %>
             </div>
 
           <%= button_tag(

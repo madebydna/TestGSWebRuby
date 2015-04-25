@@ -98,18 +98,50 @@ describe 'School Profile Reviews Page', js: true do
 
     with_shared_context 'with two active reviews' do
       with_shared_context 'signed in verified user' do
+        with_shared_context 'with seven parent reviews' do
+          include_context 'with seven student reviews'
+          with_shared_context 'Visit School Profile Reviews' do
+            with_subject :reviews do
+              its(:size) { is_expected.to eq(10) }
+            end
+
+            when_I :filter_by_parents do
+              with_subject :reviews do
+                it 'shows only parent reviews' do
+                  page_object.wait_for_reviews
+                  subject.each do |review|
+                    expect(review).to be_parent_review
+                  end
+                end
+              end
+            end
+
+            when_I :filter_by_students do
+              with_subject :reviews do
+                it 'shows only student reviews' do
+                  page_object.wait_for_reviews
+                  subject.each do |review|
+                    expect(review).to be_student_review
+                  end
+                end
+              end
+            end
+          end
+        end
+
         with_shared_context 'Visit School Profile Reviews' do
           it { is_expected.to have_reviews }
+          it { is_expected.to have_reviews_list_header }
 
           with_subject :reviews do
             they { are_expected.to have_posted }
             they { are_expected.to have_flag_review_link }
 
             with_subject :first_review do
-              when_I :click_on_flag_review_link do
+              on_subject :click_on_flag_review_link do
                 it { is_expected.to have_flag_review_form }
 
-                when_I :submit_review_flag_comment, 'I hate this review' do
+                on_subject :submit_review_flag_comment, 'I hate this review' do
                   it 'should be saved to the database' do
                     wait_for_page_to_finish
                     flag = ReviewFlag.last
@@ -122,8 +154,17 @@ describe 'School Profile Reviews Page', js: true do
             end
           end
 
+
           with_subject :review_dates do
             it { is_expected.to be_in_descending_order }
+          end
+
+          with_subject :review_values do
+            it 'should have the topic name' do
+              subject.each_with_index do |review_value, index|
+                expect(review_value).to have_content(two_active_reviews[index].question.review_topic.name)
+              end
+            end
           end
         end
 

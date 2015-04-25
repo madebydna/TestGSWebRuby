@@ -23,6 +23,11 @@ class SchoolProfileReviewsPage < SitePrism::Page
   section :review_module, ReviewsSection, '.js-topicalReviewQuestionsContainer'
   section :visible_review_question, ReviewQuestionVisible, ".js-topicalReviewContainer.slick-active"
 
+  section :reviews_list_header, '.rs-review-list-header' do
+    element :all_filter_button, 'button', text: 'All'
+    element :parents_filter_button, 'button', text: 'Parents'
+    element :students_filter_button, 'button', text: 'Students'
+  end
 
   class ReviewSection < SitePrism::Section
     element :review_helpful_button, '.js_reviewHelpfulButton'
@@ -34,6 +39,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :four_stars, '.i-16-orange-star .i-16-star-4'
     element :five_stars, '.i-16-orange-star .i-16-star-5'
     element :posted, '.rs-review-posted'
+    element :value_text, '.rs-review-value'
 
     section :flag_review_form, '.rs-report-review-form' do
       element :comment_box, 'textarea[name="review_flag[comment]"]'
@@ -53,16 +59,40 @@ class SchoolProfileReviewsPage < SitePrism::Page
       flag_review_form.comment_box.set(comment)
       flag_review_form.submit_button.click
     end
+
+    def parent_review?
+      !! text.match(/- a parent/)
+    end
+
+    def student_review?
+      !! text.match(/- a student/)
+    end
   end
 
-  sections :reviews, ReviewSection, '.js_reviewsList .cuc_review'
+  sections :reviews, ReviewSection, '.js_reviewsList .cuc_review', visible: true
 
   def first_review
     reviews.first
   end
 
+  def review_values
+    reviews.map(&:value_text)
+  end
+
   def review_dates
     reviews.map(&:posted_date)
+  end
+
+  def reset_filter
+    reviews_list_header.all_filter_button.click
+  end
+
+  def filter_by_parents
+    reviews_list_header.parents_filter_button.click
+  end
+
+  def filter_by_students
+    reviews_list_header.students_filter_button.click
   end
 end
 
