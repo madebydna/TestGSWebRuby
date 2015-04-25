@@ -14,19 +14,17 @@ class User < ActiveRecord::Base
   # Review answers that User authored
   has_many :answers, through: :reviews
 
-  # has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
-
   # Reviews that this User authored, that are published now
   has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'member_id'
 
-  # Reviews that this User authored, that are reported now
-  has_many :reported_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'
+  # Reviews that this User authored, that are flagged now
+  has_many :flagged_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'
 
   # ReviewFlag objects that this User created by reporting a review
   has_many :review_flags, foreign_key: 'member_id', class_name: 'ReviewFlag'
 
-  # Reviews that this User reported
-  has_many :reviews_user_reported, class_name: 'Review', through: :review_flags, source: :review
+  # Reviews that this User flagged
+  has_many :reviews_user_flagged, class_name: 'Review', through: :review_flags, source: :review
 
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
@@ -248,8 +246,8 @@ class User < ActiveRecord::Base
     member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end
 
-  def reported_review?(review)
-    self.reviews_user_reported.map(&:id).include? review.id
+  def flagged_review?(review)
+    self.reviews_user_flagged.map(&:id).include? review.id
   end
 
   def has_active_profile?

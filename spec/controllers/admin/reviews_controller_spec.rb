@@ -5,7 +5,7 @@ describe Admin::ReviewsController do
   it 'should have the right methods' do
     expect(controller).to respond_to :deactivate
     expect(controller).to respond_to :activate
-    expect(controller).to respond_to :report
+    expect(controller).to respond_to :flag
   end
 
   describe '#update' do
@@ -32,7 +32,7 @@ describe Admin::ReviewsController do
     end
   end
 
-  describe '#report' do
+  describe '#flag' do
     before do
       request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
     end
@@ -40,18 +40,18 @@ describe Admin::ReviewsController do
       expect(response).to redirect_to request.env['HTTP_REFERER']
     end
 
-    it 'should report the review if one is found' do
+    it 'should flag the review if one is found' do
       allow(controller).to receive(:logged_in?).and_return(true)
       comment = 'foo'
-      reported_entity = double(ReviewFlag).as_null_object
+      review_flag = double(ReviewFlag).as_null_object
       review = FactoryGirl.build(:review)
       allow(Review).to receive(:find).and_return(review)
-      expect(review).to receive(:build_reported_review).with(comment, 'user-reported') {
-        reported_entity
+      expect(review).to receive(:build_review_flag).with(comment, 'user-reported') {
+        review_flag
       }
-      expect(reported_entity).to receive(:save).and_return(true)
+      expect(review_flag).to receive(:save).and_return(true)
       expect(controller).to receive(:flash_notice)
-      post :report, id: 1, reason: comment
+      post :flag, id: 1, reason: comment
     end
 
     it 'should handle save failure by setting flash message' do
@@ -60,12 +60,12 @@ describe Admin::ReviewsController do
       review_flag = double(ReviewFlag).as_null_object
       review = FactoryGirl.build(:review)
       allow(Review).to receive(:find).and_return(review)
-      expect(review).to receive(:build_reported_review).with(comment, 'user-reported') {
+      expect(review).to receive(:build_review_flag).with(comment, 'user-reported') {
         review_flag
       }
       expect(review_flag).to receive(:save).and_return(false)
       expect(controller).to receive(:flash_error)
-      post :report, id: 1, reason: comment
+      post :flag, id: 1, reason: comment
     end
   end
 
@@ -79,7 +79,7 @@ describe Admin::ReviewsController do
     before do
       allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
       allow(controller).to receive(:find_reviews_by_user).with(user).and_return valid_reviews
-      allow(controller).to receive(:find_reviews_reported_by_user).and_return flagged_reviews
+      allow(controller).to receive(:find_reviews_flagged_by_user).and_return flagged_reviews
     end
 
     it 'should not look for a school if not provided a state and school ID' do
@@ -90,7 +90,7 @@ describe Admin::ReviewsController do
     context 'provided a state and school ID' do
       before do
         expect(School).to receive(:find_by_state_and_id).with('ca', '1').and_return(school)
-        allow(controller).to receive(:school_reported_reviews).and_return(flagged_reviews)
+        allow(controller).to receive(:school_flagged_reviews).and_return(flagged_reviews)
       end
 
       it 'should look for a school if provided a state and school ID' do
@@ -98,9 +98,9 @@ describe Admin::ReviewsController do
         get :moderation, state: 'ca', school_id: 1
       end
 
-      it 'should expose reported reviews to the view' do
+      it 'should expose flagged reviews to the view' do
         get :moderation, state: 'ca', school_id: 1
-        expect(assigns[:reported_reviews]).to eq flagged_reviews
+        expect(assigns[:flagged_reviews]).to eq flagged_reviews
       end
     end
 
@@ -109,7 +109,7 @@ describe Admin::ReviewsController do
       it 'should look for reviews and flags by user if email is provided' do
         expect(User).to receive(:find_by_email).and_return user
         expect(controller).to receive(:find_reviews_by_user).with(user).and_return valid_reviews
-        expect(controller).to receive(:find_reviews_reported_by_user).and_return flagged_reviews
+        expect(controller).to receive(:find_reviews_flagged_by_user).and_return flagged_reviews
 
         get :moderation, review_moderation_search_string: 'someone@domain.com'
       end

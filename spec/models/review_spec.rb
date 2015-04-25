@@ -13,7 +13,7 @@ describe Review do
   let(:review) { FactoryGirl.build(:review) }
   let(:school) { FactoryGirl.build(:school) }
   let(:user) { FactoryGirl.build(:user) }
-  # create reported review
+  # create review flag
 
   let(:no_bad_language) { AlertWord::AlertWordSearchResult.new([],[]) }
   let(:alert_words) { AlertWord::AlertWordSearchResult.new(%w(alert_word_1 alert_word_2), []) }
@@ -84,12 +84,12 @@ describe Review do
     expect(review).to be_valid
   end
 
-  describe '#build_reported_review' do
+  describe '#build_review_flag' do
     it "should return a reported review object with correct attributes" do
-    reported_review = subject.build_reported_review('bad words','auto-flagged')
-    expect(reported_review).to be_a(ReviewFlag)
-    expect(reported_review.comment).to eq('bad words')
-    expect(reported_review.reason).to eq('auto-flagged')
+    review_flag = subject.build_review_flag('bad words','auto-flagged')
+    expect(review_flag).to be_a(ReviewFlag)
+    expect(review_flag.comment).to eq('bad words')
+    expect(review_flag.reason).to eq('auto-flagged')
     end
   end
 
@@ -102,27 +102,27 @@ describe Review do
 
     it 'should not report a review with no bad language' do
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_reported_review)
+      expect(subject).to_not receive(:build_review_flag)
       subject.auto_moderate
     end
 
     it 'should save a reported review' do
       expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(subject).to receive(:build_reported_review)
+      expect(subject).to receive(:build_review_flag)
       subject.auto_moderate
     end
 
     it 'should send the correct comment and reason' do
       expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1,alert_word_2)', [:'bad-language'])
+      expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1,alert_word_2)', [:'bad-language'])
       subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(really_bad_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', [:'bad-language'])
+      expect(subject).to receive(:build_review_flag).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', [:'bad-language'])
       subject.auto_moderate
 
       expect(AlertWord).to receive(:search).and_return(alert_and_really_bad_words)
-      expect(subject).to receive(:build_reported_review).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', [:'bad-language'])
+      expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', [:'bad-language'])
       subject.auto_moderate
     end
 
@@ -130,7 +130,7 @@ describe Review do
       school.state = 'DE'
       school.type = 'public'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+      expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
       subject.auto_moderate
     end
 
@@ -138,7 +138,7 @@ describe Review do
       school.state = 'DE'
       school.type = 'charter'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_reported_review).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+      expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
       subject.auto_moderate
     end
 
@@ -146,7 +146,7 @@ describe Review do
       school.state = 'DE'
       school.type = 'private'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_reported_review)
+      expect(subject).to_not receive(:build_review_flag)
       subject.auto_moderate
     end
 
@@ -154,7 +154,7 @@ describe Review do
       school.state = 'NY'
       school.type = 'public'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_reported_review)
+      expect(subject).to_not receive(:build_review_flag)
       subject.auto_moderate
     end
 
@@ -162,7 +162,7 @@ describe Review do
       school.state = 'NY'
       school.type = 'charter'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_reported_review)
+      expect(subject).to_not receive(:build_review_flag)
       subject.auto_moderate
     end
   end

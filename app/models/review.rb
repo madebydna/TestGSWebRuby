@@ -110,21 +110,21 @@ class Review < ActiveRecord::Base
     end
 
     if comment
-      reported_review = build_reported_review(comment, reasons)
+      review_flag = build_review_flag(comment, reasons)
       begin
-        reported_review.save!
+        review_flag.save!
       rescue
-        Rails.logger.error "Could not save reported_entity for review with ID #{id}"
+        Rails.logger.error "Could not save ReviewFlag for review with ID #{id}"
       end
     end
   end
 
-  def build_reported_review(comment, reasons)
-    reported_review = ReviewFlag.new
-    reported_review.comment = comment
-    reported_review.reasons = reasons
-    reported_review.review = self
-    reported_review
+  def build_review_flag(comment, reasons)
+    review_flag = ReviewFlag.new
+    review_flag.comment = comment
+    review_flag.reasons = reasons
+    review_flag.review = self
+    review_flag
   end
 
   def send_thank_you_email_if_published

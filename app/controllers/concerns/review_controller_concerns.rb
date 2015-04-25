@@ -95,7 +95,7 @@ module ReviewControllerConcerns
     end
   end
 
-  def report_review_and_redirect(params)
+  def flag_review_and_redirect(params)
 
     if logged_in?
       begin
@@ -104,7 +104,7 @@ module ReviewControllerConcerns
 
         review = Review.find review_id rescue nil
         if review
-          review_flag = review.build_reported_review(comment, ReviewFlag::USER_REPORTED)
+          review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
           review_flag.user = current_user
           if review_flag.save
             flash_notice t('actions.report_review.reported')

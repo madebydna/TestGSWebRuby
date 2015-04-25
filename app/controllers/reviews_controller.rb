@@ -14,7 +14,7 @@ class ReviewsController < ApplicationController
     end
 
     if logged_in?
-      report_review_and_redirect review_id: review_id, comment: comment
+      flag_review_and_redirect review_id: review_id, comment: comment
     else
       save_deferred_action :report_review_deferred, review_id: review_id, comment: comment
       flash_error t('actions.report_review.login_required')

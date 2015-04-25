@@ -55,7 +55,7 @@
             <% end %>
           </span>
         </div>
-        <% if logged_in? && current_user.reported_review?(review) %>
+        <% if logged_in? && current_user.flagged_review?(review) %>
           <div class="pull-right small ptm">You've reported this review</div>
         <% else %>
           <div class="pull-right small ptm rs-report-review-link js-report-review-link-<%= review.id %>">

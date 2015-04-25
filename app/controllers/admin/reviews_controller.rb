@@ -8,14 +8,14 @@ class Admin::ReviewsController < ApplicationController
 
     if params[:state].present? && params[:school_id].present?
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
-      @reported_reviews = school_reported_reviews(@school)
+      @flagged_reviews = school_flagged_reviews(@school)
     else
-      @reported_reviews = reported_reviews
+      @flagged_reviews = flagged_reviews
     end
 
-    preload_schools_onto_reviews(@reported_reviews) if @reported_reviews.present?
+    preload_schools_onto_reviews(@flagged_reviews) if @flagged_reviews.present?
 
-    gon.reported_reviews_count = @reported_reviews.length
+    gon.flagged_reviews_count = @flagged_reviews.length
     gon.pagename = 'Reviews moderation list'
     set_meta_tags :title =>  'Reviews moderation list'
   end
@@ -44,7 +44,7 @@ class Admin::ReviewsController < ApplicationController
       @reviews_by_user = find_reviews_by_user(user)
 
       #reviews that are flagged by the user.
-      @reviews_reported_by_user = find_reviews_reported_by_user(user)
+      @reviews_flagged_by_user = find_reviews_flagged_by_user(user)
     end
 
     # ip = ip_from_params
@@ -157,11 +157,11 @@ class Admin::ReviewsController < ApplicationController
     reason = 'user-reported'
 
     if review.present? && reason.present?
-      reported_entity = review.build_reported_review(comment, reason)
-      reported_entity.user = current_user if logged_in?
+      review_flag = review.build_review_flag(comment, reason)
+      review_flag.user = current_user if logged_in?
 
-      if reported_entity.save
-        flash_notice 'Review has been reported'
+      if review_flag.save
+        flash_notice 'Review has been flagged'
       else
         flash_error 'Sorry, something went wrong while reporting the review.'
       end
@@ -204,15 +204,15 @@ class Admin::ReviewsController < ApplicationController
     user.reviews
   end
 
-  def find_reviews_reported_by_user(user)
-    user.reviews_user_reported
+  def find_reviews_flagged_by_user(user)
+    user.reviews_user_flagged
   end
 
   def find_reviews_by_ids(review_ids)
     Review.where(id: review_ids)
   end
 
-  def school_reported_reviews(school)
+  def school_flagged_reviews(school)
     school.
       reviews_scope.
       ever_flagged.
@@ -223,7 +223,7 @@ class Admin::ReviewsController < ApplicationController
             page(params[:page]).per(50)
   end
 
-  def reported_reviews
+  def flagged_reviews
     Review.
       flagged.
         eager_load(:flags).

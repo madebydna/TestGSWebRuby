@@ -79,7 +79,7 @@ module DeferredActionConcerns
   def report_review_deferred(params)
     return false if !logged_in? || current_user.provisional?
 
-    report_review_and_redirect params
+    flag_review_and_redirect params
 
     true
   end
