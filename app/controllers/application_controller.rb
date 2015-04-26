@@ -170,6 +170,10 @@ class ApplicationController < ActionController::Base
     flash_message :success, message
   end
 
+  def flash_notice_include?(message)
+    flash[:notice].try(:include?, message)
+  end
+
   def already_redirecting?
     # Based on rails source code for redirect_to
     response_body

@@ -4,16 +4,13 @@ class OspData
 
   attr_accessor :cachified_school, :osp_form_responses
 
+  singleton_class.send(:alias_method, :for, :new)
+
   SCHOOL_CACHE_KEYS = %w(esp_responses)
 
   def initialize(school)
     @cachified_school = decorate_school(school)
-    @osp_form_responses = OspFormResponse.find_form_data_for_school_state(school.state, school.id)
-  end
-
-  #maybe not worth having this around since its just for semantics. ie OspData.for(school)
-  def self.for(school)
-    OspData.new(school)
+    @osp_form_responses = OspFormResponse.for_school(school).order(:osp_question_id, updated: :desc)
   end
 
   def values_for(key, question_id)
@@ -28,7 +25,7 @@ class OspData
         osp_response_values.present? ? osp_response_values[:values] : school_cache_values
       end
     rescue => error
-      Rails.logger.error "Can't get values for key: #{key} school: #{cachified_school.state}, #{cachified_school.id} error: \n #{error}"
+      Rails.logger.error "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}; error: \n #{error}"
       []
     end
   end

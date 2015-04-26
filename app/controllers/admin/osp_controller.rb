@@ -15,7 +15,7 @@ class Admin::OspController < ApplicationController
   def submit
     #If performance becomes an issue, look into making this a bulk single insert.
     questions_and_answers.each do | (question_id, response_key, values) |
-      save_response!(question_id, response_key, values, @esp_membership_id)
+      save_response!(question_id, response_key, values, @esp_membership_id, @is_approved_user)
     end
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
   end
@@ -43,11 +43,11 @@ class Admin::OspController < ApplicationController
     end.compact
   end
 
-  def save_response!(question_id, question_key, response_values, esp_membership_id)
+  def save_response!(question_id, question_key, response_values, esp_membership_id, is_approved_user)
     response_blob = make_response_blob(question_key, esp_membership_id, response_values)
 
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
-    create_update_queue_row!(response_blob) if @is_approved_user && !error.present?
+    create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
@@ -140,15 +140,14 @@ class Admin::OspController < ApplicationController
     if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?
-      notify_provisional_user if esp_membership.provisional?
+      notify_provisional_user! if esp_membership.provisional?
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
   end
 
-  def notify_provisional_user
-    flash_notice_has_not_been_set = !flash[:notice].try(:include?, t('forms.osp.provisional_user'))
-    flash_notice t('forms.osp.provisional_user') if flash_notice_has_not_been_set
+  def notify_provisional_user!
+    flash_notice t('forms.osp.provisional_user') unless flash_notice_include?(t('forms.osp.provisional_user'))
   end
 
   def render_success_or_error
