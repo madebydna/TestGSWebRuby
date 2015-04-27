@@ -30,6 +30,10 @@ describe Admin::OspController do
         it 'should have correct osp page meta tag' do
           allow(controller).to receive(:set_meta_tags)
         end
+
+        it 'should have correct omniture tracking' do
+          allow(controller).to receive(:set_omniture_data_for_school)
+        end
       end
     end
 
@@ -105,6 +109,11 @@ describe Admin::OspController do
           membership_ids.each do |id|
             expect(id).to eql(esp_membership.id)
           end
+        end
+
+        it 'should escape html, iframe and script tags' do
+          # escaped method is called
+          # escaped method is acoutally escaping
         end
       end
 

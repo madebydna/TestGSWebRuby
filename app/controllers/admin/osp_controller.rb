@@ -6,6 +6,8 @@ class Admin::OspController < ApplicationController
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
   after_action :render_success_or_error, only: [:submit]
 
+  PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
+  PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
 
   def show
     @osp_data = OspData.for(@school) #add rescue here that shows nice error
@@ -103,20 +105,20 @@ class Admin::OspController < ApplicationController
 
   def render_osp_page
     gon.pagename = "Osp"
+    gon.omniture_pagename = PAGE_NAME[params[:page]]
+    set_omniture_data_for_school(gon.omniture_pagename)
+    set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
+
     if params[:page]== '1'
-      set_meta_tags title: 'Edit School Profile - Basic Information | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)
       render 'osp/osp_basic_information'
     elsif params[:page] == '2'
-      set_meta_tags title: 'Edit School Profile - Academics | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('academics', @school)
       render 'osp/osp_academics'
     elsif params[:page] == '3'
-      set_meta_tags title: 'Edit School Profile - Extracurricular & Culture | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('extracurricular_culture', @school)
       render 'osp/osp_extracurricular_culture'
     elsif params[:page] == '4'
-      set_meta_tags title: 'Edit School Profile - Facilities & Staff | GreatSchools'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('facilities_staff', @school)
       render 'osp/osp_facilities_staff'
     else
