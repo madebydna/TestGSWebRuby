@@ -39,7 +39,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :four_stars, '.i-16-orange-star .i-16-star-4'
     element :five_stars, '.i-16-orange-star .i-16-star-5'
     element :posted, '.rs-review-posted'
-    element :value_text, '.rs-review-value'
+    element :value_text, '.rs-review-value' # also contains the review topic label
 
     section :flag_review_form, '.rs-report-review-form' do
       element :comment_box, 'textarea[name="review_flag[comment]"]'
