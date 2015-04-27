@@ -10,7 +10,8 @@ class OspData
 
   def initialize(school)
     @cachified_school = decorate_school(school)
-    @osp_form_responses = OspFormResponse.for_school(school).order(:osp_question_id, updated: :desc)
+    #probably should be doing uniq in mysql instead of ruby. Also if in ruby, may want to add limit
+    @osp_form_responses = OspFormResponse.for_school(school).order(:osp_question_id, updated: :desc).to_a
   end
 
   def values_for(key, question_id)
@@ -51,6 +52,7 @@ class OspData
         return values.present? ? {created_at: created_at, values: values} : nil
       end
     end
+    nil
   end
 
 end

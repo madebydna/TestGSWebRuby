@@ -15,6 +15,12 @@ shared_context 'when there is a school_cache and no osp_form_response' do
   after { clean_models(SchoolCache) }
 end
 
+shared_context 'when there is a school_cache and no matching osp_form_response' do
+  before { FactoryGirl.create(:osp_form_response_with_transportation, :with_esp_member, osp_question_id: 2, esp_membership_id: esp_membership_id) }
+  before { FactoryGirl.create(:school_cache_esp_responses, school_id: school.id) }
+  after { clean_models(SchoolCache, OspFormResponse, EspMembership) }
+end
+
 shared_context 'when there are multiple osp_form_responses and no school_cache data' do
   before { FactoryGirl.create(:osp_form_response_with_boys_sports, :with_esp_member, osp_question_id: 1, esp_membership_id: esp_membership_id) }
   before { FactoryGirl.create(:osp_form_response_with_different_boys_sports, updated: (Time.now - 1.day), osp_question_id: 1, esp_membership_id: esp_membership_id) }

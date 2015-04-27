@@ -33,6 +33,16 @@ describe OspData do
         end
       end
 
+      with_shared_context 'when there is a school_cache and no matching osp_form_response' do
+        include_example 'should return an array'
+        with_shared_context 'values from osp_form_responses and school_cache for comparison' do
+          it 'should return the school_cache data' do
+            values = subject.values_for(response_key, question_id)
+            expect(values).to eql school_cache_values
+          end
+        end
+      end
+
       with_shared_context 'when there are multiple osp_form_responses and no school_cache data' do
         include_example 'should return an array'
         with_shared_context 'values from osp_form_responses and school_cache for comparison' do

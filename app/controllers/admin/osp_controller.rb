@@ -105,6 +105,7 @@ class Admin::OspController < ApplicationController
 
   def render_osp_page
     gon.pagename = "Osp"
+    gon.state_name = @state[:short]
     gon.omniture_pagename = PAGE_NAME[params[:page]]
     set_omniture_data_for_school(gon.omniture_pagename)
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
