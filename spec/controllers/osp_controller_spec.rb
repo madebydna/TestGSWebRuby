@@ -33,6 +33,7 @@ describe Admin::OspController do
 
         it 'should have correct omniture tracking' do
           allow(controller).to receive(:set_omniture_data_for_school)
+          allow(controller).to receive(:set_omniture_data_for_user_request)
         end
       end
     end

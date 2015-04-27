@@ -108,6 +108,7 @@ class Admin::OspController < ApplicationController
     gon.state_name = @state[:short]
     gon.omniture_pagename = PAGE_NAME[params[:page]]
     set_omniture_data_for_school(gon.omniture_pagename)
+    set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
 
     if params[:page]== '1'
