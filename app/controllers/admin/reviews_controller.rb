@@ -8,12 +8,10 @@ class Admin::ReviewsController < ApplicationController
 
     if params[:state].present? && params[:school_id].present?
       @school = School.find_by_state_and_id(params[:state], params[:school_id])
-      @flagged_reviews = school_flagged_reviews(@school)
+      @flagged_reviews = flagged_reviews(@school)
     else
       @flagged_reviews = flagged_reviews
     end
-
-    preload_schools_onto_reviews(@flagged_reviews) if @flagged_reviews.present?
 
     gon.flagged_reviews_count = @flagged_reviews.length
     gon.pagename = 'Reviews moderation list'
@@ -145,9 +143,9 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
-  def report
+  def flag
     unless logged_in?
-      flash_error 'You must be logged in to report a review'
+      flash_error 'You must be logged in to flag a review'
       redirect_back
       return
     end
@@ -163,7 +161,7 @@ class Admin::ReviewsController < ApplicationController
       if review_flag.save
         flash_notice 'Review has been flagged'
       else
-        flash_error 'Sorry, something went wrong while reporting the review.'
+        flash_error 'Sorry, something went wrong while flagging the review.'
       end
     end
 
@@ -212,40 +210,25 @@ class Admin::ReviewsController < ApplicationController
     Review.where(id: review_ids)
   end
 
-  def school_flagged_reviews(school)
-    school.
-      reviews_scope.
-      ever_flagged.
-        eager_load(:flags).
-        order('review_flags.created desc').
-          eager_load(:user).
-          merge(User.verified).
-            page(params[:page]).per(50)
-  end
+  def flagged_reviews(school = nil)
+    if school
+      partial_scope = school.reviews_scope.ever_flagged
+    else
+      partial_scope = Review.flagged
+    end
 
-  def flagged_reviews
-    Review.
-      flagged.
-        eager_load(:flags).
-        order('review_flags.created desc').
-          eager_load(:user).
-          merge(User.verified).
-            page(params[:page]).per(50)
+    partial_scope.
+      eager_load(:flags).
+      order('review_flags.created desc').
+        eager_load(:user).
+        merge(User.verified).
+          page(params[:page]).per(50).
+            extend(SchoolAssociationPreloading).
+              preload_associated_schools!
   end
 
   def review_params
     params.require(:review).permit(:id, notes_attributes: [:id, :notes, :_destroy])
   end
 
-  def preload_schools_onto_reviews(reviews)
-    make_key = Proc.new { |state, id| "#{state}_#{id}" }
-    states = reviews.map(&:state)
-    ids = reviews.map(&:school_id)
-    schools = School.for_states_and_ids(states, ids)
-    key_to_school_map = schools.each_with_object({}) { |school, hash| hash[make_key.call(school.state, school.id)] = school }
-
-    reviews.each do |review|
-      review.instance_variable_set(:@school, key_to_school_map[make_key.call(review.state, review.school_id)])
-    end
-  end
 end

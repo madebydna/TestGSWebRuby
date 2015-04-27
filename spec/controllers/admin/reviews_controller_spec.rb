@@ -75,7 +75,6 @@ describe Admin::ReviewsController do
     let(:valid_reviews) { FactoryGirl.build_list(:review, 3) }
     let(:user) {FactoryGirl.build(:user)}
 
-
     before do
       allow(controller).to receive(:flagged_reviews).and_return flagged_reviews
       allow(controller).to receive(:find_reviews_by_user).with(user).and_return valid_reviews
