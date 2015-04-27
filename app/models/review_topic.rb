@@ -3,7 +3,7 @@ class ReviewTopic < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  has_many :review_questions
+  has_many :review_questions, inverse_of: :review_topic
 
   alias_attribute :school_level_code, :school_level
 
