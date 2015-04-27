@@ -18,6 +18,22 @@ class Review < ActiveRecord::Base
   has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :answers, allow_destroy: true
 
+  # See http://pivotallabs.com/rails-associations-with-multiple-foreign-keys/ and comments
+  # See the primary key and foreign key of association which will make ActiveRecord join Review to SchoolMember
+  # using member_id. But we need two use two more keys. Specify state and school ID in association's condition block
+  # Need to check for JoinAssociation:
+  # - If school_member is being included/preloaded onto a join, do 1st part of condition using arel_table
+  # - If review is a single model, perform 2nd part of condition
+  belongs_to :school_member,
+             ->(join_or_model) do
+               if join_or_model.is_a?(JoinDependency::JoinAssociation)
+                 where(state: Review.arel_table[:state], school_id: Review.arel_table[:school_id])
+               else
+                 where(state: join_or_model.state, school_id: join_or_model.school_id)
+               end
+             end, foreign_key: 'member_id', primary_key: 'member_id'
+
+
   scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
   scope :not_flagged, -> { eager_load(:flags).where( 'review_flags.active = 0 OR review_flags.review_id IS NULL' ) }
   scope :has_inactive_flags, -> { joins(:flags).where('review_flags.active' => false) }
@@ -147,11 +163,6 @@ class Review < ActiveRecord::Base
     end
 
     true
-  end
-
-  def school_member
-    return nil unless school && user
-    @school_member ||= SchoolMember.find_by_school_and_user(school, user)
   end
 
   def user_type
