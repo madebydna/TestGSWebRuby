@@ -3,7 +3,7 @@ module SchoolReviewConcerns
 
   # returns Topics with questions for school
   def topical_review_question_hash
-    filtered_topics = ReviewTopic.find_by_school(self)
+    filtered_topics = ReviewTopic.includes(:review_questions).find_by_school(self)
     filtered_topics.each_with_object({}) do |topic, hash|
       hash[topic.name] = topic.build_questions_display_array(self)
     end
@@ -21,6 +21,7 @@ module SchoolReviewConcerns
     Review.
       active.
         where(school_id: self.id, state: self.state).
+          eager_load(:school_member).
           includes(:answers, question: :review_topic)
   end
 
