@@ -1,3 +1,21 @@
+<% topic_key = {overall: {header: "Review your school!",
+              subheading: "Families want to hear your honest opinion about your school." },
+    homework: {header: "How is homework at your school?",
+               subheading: "Too much? Too little? Share you opinion?"},
+     teachers: {header: "Share your thoughts on teachers.",
+               subheading: "Great schools begin with great teachers.  How are yours?"},
+     honesty: {header: "How does your school teach honesty?",
+               subheading: "Search for your school to share your thoughts."},
+     empathy: {header: "How does your school build empathy?",
+               subheading: "Search for your school to share your thoughts."},
+     grit: {header: "How does your school develop persistence?",
+               subheading: "Search for your school to share your thoughts."},
+     respect: {header: "How does your school encourage respect?",
+               subheading: "Search for your school to share your thoughts."}
+   }
+header = topic_key[@topic.to_sym][:header]
+   subheading = topic_key[@topic.to_sym][:subheading]
+%>
 <div class="row bg-white pvl <%= @display_morgan_stanley %>">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="oa tac ">
@@ -15,8 +33,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="oa content-centered tac text_fff ">
-                        <h1 class="jumbo-header ts text_fff">Review your school!</h1>
-                        <div class="subtitle-lg ts">Help others find their great school – You know your school best</div>
+                        <h1 class="jumbo-header ts text_fff"><%= header %></h1>
+                        <div class="subtitle-lg ts"><%= subheading %></div>
                       <div class="subtitle-sm ptm" style="height:30px;">
                         <a href="#" class="js-scoop_search_type_link js-scoop_search_type_div dn"
                            data-cta-text-toggle="show drop downs">Don't see your school?</a></div>

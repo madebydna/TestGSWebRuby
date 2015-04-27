@@ -40,13 +40,24 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
 GS.search.autocomplete.selectdisplay = GS.search.autocomplete.selectdisplay || (function() {
 
   var schoolResultsMarkup = function() {
+   var queryString = "";
     var morganstanley = "";
+    var topic = "";
     if(gon.morganstanley){
-      morganstanley = "?morganstanley=1"
+      queryString = "?morganstanley=1"
     }
+    if (gon.topic) {
+        if (queryString.length > 2) {
+            queryString = queryString + "&topic="+ gon.topic
+        }
+        else {
+            queryString = "?topic=" + gon.topic
+        }
+      }
     return {
-      suggestion: Handlebars.compile('<a href="{{url}}reviews/'+morganstanley+'" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
+      suggestion: Handlebars.compile('<a href="{{url}}reviews/'+queryString+'" class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
     }
+
   };
 
   return {

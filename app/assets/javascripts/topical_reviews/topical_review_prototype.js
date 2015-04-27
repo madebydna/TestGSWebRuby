@@ -142,15 +142,15 @@ GS.topicalReview.questionCarousel =(function(){
 
         });
 
-        var topicID = GS.uri.Uri.getFromQueryString('topicID')
+        var topic = GS.uri.Uri.getFromQueryString('topic')
 
-        var getSlideId = function (topicID) {
-            var topicSelector = '.js-topicalReviewContainer[data-review-topic-id="'+ topicID + '"]';
+        var getSlideId = function (topic) {
+            var topicSelector = '.js-topicalReviewContainer[data-review-topic="'+ topic + '"]';
             var matchingTopics =  $(topicSelector);
             var question = $(matchingTopics).filter(function(){return !$(this).hasClass('slick-cloned')}).first();
             return question.data('slickIndex');
         }
-        var slideId =  getSlideId(topicID);
+        var slideId =  getSlideId(topic);
 
         if (!slideId) {
             slideId = 0;
