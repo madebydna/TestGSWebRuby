@@ -223,6 +223,15 @@ describe SearchController do
         end
       end
     end
+    context 'when searching near a zip code by location' do
+      before { controller.params.merge!(zipCode: '94111') }
+      it 'should pass zip code through as a targeting attribute' do
+        expect(subject['Zipcode']).to eq('94111')
+      end
+    end
+    it 'should not set zip code on browse' do
+      expect(subject['Zipcode']).to be_nil
+    end
   end
 
   describe '#set_global_ad_targeting_through_gon' do

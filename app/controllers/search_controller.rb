@@ -411,6 +411,9 @@ class SearchController < ApplicationController
       level_code = LevelCode.from_grade(params[:grades])
       ad_targeting_gon_hash['level'] = level_code if level_code
     end
+    if params[:zipCode].present?
+      ad_targeting_gon_hash['Zipcode'] = params[:zipCode]
+    end
   end
 
   def county_object
