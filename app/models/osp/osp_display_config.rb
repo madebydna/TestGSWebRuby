@@ -13,7 +13,7 @@ class OspDisplayConfig < ActiveRecord::Base
   belongs_to :osp_question, :class_name => 'OspQuestion', foreign_key: 'osp_question_id'
   belongs_to :osp_question_group, :class_name => 'OspQuestionGroup',foreign_key: 'osp_question_group_id'
 
-  jsonified_attribute :answers, :label, :options, json_attribute: :config, type: :string
+  jsonified_attribute :answers, :label,:validations,:options, json_attribute: :config, type: :string
 
   def self.find_by_page(page)
     self.active.where(page_name: page).order(:order_on_page,:order_in_group)
@@ -61,6 +61,14 @@ class OspDisplayConfig < ActiveRecord::Base
 
   def group_heading
     osp_question_group.heading
+  end
+
+  def display_validations
+    if self.validations.present?
+      self.validations
+    else
+      osp_question.validations
+    end
   end
 
 
