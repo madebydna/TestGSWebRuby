@@ -151,16 +151,57 @@ class User < ActiveRecord::Base
     self.email_verified = true
   end
 
-  def publish_reviews!
-    reviews_to_upgrade = reviews.inactive.not_flagged
-    # make provisional reviews 'not provisional', i.e. deleted, published, or held
-    reviews_to_upgrade.each do |review|
-      review.activate
-      review.save!
+  class UserReviewPublisher
+    attr_reader :user
+
+    def initialize(user)
+      @user = user
     end
 
-    # return reviews that are published now
-    reviews_to_upgrade.select { |review| review.active? }
+    # Reviews the user wrote that are able to be seen on the site (non-flagged reviews)
+    # Includes already-published reviews
+    def publishable_reviews
+      @publishable_reviews ||= user.reviews.not_flagged
+    end
+
+    # Only one review for an individual school and question can be active at one time
+    # Group publishable reviews by school and question
+    def publishable_reviews_by_group
+      publishable_reviews.group_by do |review|
+        [review.school_id, review.state, review.review_question_id]
+      end
+    end
+
+    def most_recently_created_review(reviews)
+      reviews.sort_by(&:created).last
+    end
+
+    def reviews_have_active_review?(reviews)
+      !! reviews.detect { |review| review.active? }
+    end
+
+    def reviews_to_publish_for_new_user
+      reviews = []
+      publishable_reviews_by_group.values.each do |reviews_for_group|
+        unless reviews_have_active_review?(reviews_for_group)
+          reviews << most_recently_created_review(reviews_for_group)
+        end
+      end
+      reviews
+    end
+
+    def publish_reviews_for_new_user!
+      reviews_to_publish_for_new_user.each do |review|
+        review.activate
+        review.save!
+      end
+      # return reviews that are published now
+      reviews_to_publish_for_new_user.select { |review| review.active? }
+    end
+  end
+
+  def publish_reviews!
+    UserReviewPublisher.new(self).publish_reviews_for_new_user!
   end
 
   def has_facebook_account?

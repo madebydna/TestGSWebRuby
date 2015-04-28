@@ -302,6 +302,43 @@ describe User do
         expect(u.updated).to be >= u.time_added
       end
     end
+
+
+    describe '#publish_reviews!' do
+      let(:school) do
+        FactoryGirl.create(:alameda_high_school)
+      end
+      let(:question) do
+        FactoryGirl.create(:five_star_rating_question)
+      end
+      let!(:existing_reviews) do
+        reviews = [
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+        ]
+        reviews.each do
+        |review| review.moderated = true
+          review.save
+        end
+        reviews
+      end
+      after do
+        clean_models School
+        clean_dbs :gs_schooldb
+      end
+      subject { user }
+
+      it 'should publish the most recent inactive review' do
+        user.verify_email!
+        user.save
+        subject.publish_reviews!
+        existing_reviews.each(&:reload)
+        expect(existing_reviews[0]).to be_inactive
+        expect(existing_reviews[1]).to be_inactive
+        expect(existing_reviews[2]).to be_active
+      end
+    end
   end
 
 end

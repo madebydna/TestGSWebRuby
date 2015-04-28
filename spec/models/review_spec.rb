@@ -386,6 +386,42 @@ describe Review do
     end
   end
 
+  describe '#uniqueness' do
+    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:school) do
+      FactoryGirl.create(:alameda_high_school)
+    end
+    let(:question) do
+      FactoryGirl.create(:five_star_rating_question)
+    end
+    after do
+      clean_models School
+      clean_dbs :gs_schooldb
+    end
+
+    it 'should prevent multiple active reviews for the same user / school / question' do
+      review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+      review.moderated = true
+      review.activate
+      review.save
+
+      expect do
+        review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+      end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Each question can only be answered once')
+    end
+
+    it 'should not prevent multiple inactive reviews for the same user / school / question' do
+      3.times do
+        expect do
+          review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+          review.moderated = false
+          review.deactivate
+          review.save
+        end.to_not raise_error
+      end
+    end
+  end
+
   describe '#comment' do
     after do
       clean_models Review

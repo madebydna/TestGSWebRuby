@@ -43,7 +43,12 @@ class Review < ActiveRecord::Base
   scope :five_star_review, -> { joins(question: :review_topic).where('review_topics.id = 1') }
 
   # TODO: i18n this message
-  validates_uniqueness_of :member_id, :scope => [:school_id, :state, :review_question_id], message: 'Each question can only be answered once'
+  validates_uniqueness_of(
+    :member_id,
+    scope: [:school_id, :state, :review_question_id],
+    conditions: -> { where(active: 1) },
+    message: 'Each question can only be answered once'
+  )
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
   validates_presence_of :school
   validates_presence_of :user
@@ -92,6 +97,7 @@ class Review < ActiveRecord::Base
     }
   end
 
+  # TODO: Refactor this into a ReviewFlagBuilder
   def auto_moderate
     alert_word_results = AlertWord.search(comment)
 
@@ -123,6 +129,14 @@ class Review < ActiveRecord::Base
 
     if user_type == 'student'
       reasons << ReviewFlag::STUDENT
+    end
+
+    if school.held?
+      reasons << ReviewFlag::HELD_SCHOOL
+    end
+
+    if PropertyConfig.force_review_moderation?
+      reasons << ReviewFlag::FORCE_FLAGGED
     end
 
     if comment
