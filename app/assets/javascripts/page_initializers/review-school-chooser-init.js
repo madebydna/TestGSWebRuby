@@ -1,6 +1,6 @@
 $(function() {
   if (gon.pagename == "Write a school review | GreatSchools") {
-    GS.search.autocomplete.selectAutocomplete.init();
+    GS.search.autocomplete.selectAutocomplete.init(null, GS.search.autocomplete.display.schoolResultsMarkupNoLink, schoolReviewsCallback);
 
     GS.stateCitySchoolSelectBox.stateSelect();
     GS.stateCitySchoolSelectBox.citySelect();
@@ -33,3 +33,33 @@ $(function() {
     }
   });
 });
+
+//TODO: Move to final location of topical review javascript
+
+var buildQueryStringsAnchors = function () {
+    var queryStringAnchor = "";
+    queryStringAnchor += morganStanleyQueryString();
+    queryStringAnchor += topicAnchor();
+    return queryStringAnchor;
+}
+
+var morganStanleyQueryString = function () {
+    var queryString = "";
+    if (gon.morganstanley) {
+        queryString = "?morganstanley=1";
+    }
+    return queryString;
+}
+
+var topicAnchor = function () {
+    var topicAnchor = "";
+    if (gon.topic_id) {
+        topicAnchor += "#topic" + gon.topic_id;
+    }
+    return topicAnchor;
+}
+
+var schoolReviewsCallback =  function (event, suggestion, dataset) {
+    var queryStringsAnchors = buildQueryStringsAnchors();
+    GS.uri.Uri.goToPage(suggestion['url']+"reviews/" + queryStringsAnchors);
+};

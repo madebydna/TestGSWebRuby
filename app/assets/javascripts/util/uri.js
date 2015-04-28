@@ -19,7 +19,7 @@ GS.uri.Uri.getPath = function() {
 };
 
 GS.uri.Uri.goToPage = function(full_uri) {
-    window.location = full_uri;
+    window.open(full_uri, '_self');
 };
 
 GS.uri.Uri.reloadPageWithNewQuery = function(query) {

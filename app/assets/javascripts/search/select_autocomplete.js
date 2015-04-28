@@ -3,14 +3,13 @@ GS.search.autocomplete = GS.search.autocomplete || {};
 
 GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocomplete || (function() {
 
-  var init = function(state_abbr) {
-    attachAutocomplete(state_abbr);
+  var init = function(state_abbr, markupCallback, onSelectCallback ) {
+    attachAutocomplete(state_abbr, markupCallback, onSelectCallback);
   };
 
-  var attachAutocomplete = function (state_abbr) {
+  var attachAutocomplete = function (state_abbr, markupCallback, onSelectCallback) {
     var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
     var autocomplete = GS.search.autocomplete;
-    var markup = autocomplete.selectdisplay;
     var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
    $('.typeahead').typeahead({
         hint: true,
@@ -22,11 +21,9 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
         displayKey: 'school_name',
         source: schools.ttAdapter(),
         clearBloodhound: schools.ttAdapterClear(),
-        templates: markup.schoolResultsMarkup()
+        templates: markupCallback.call()
       }
-    ).on('typeahead:selected', function (event, suggestion, dataset) {
-        GS.uri.Uri.goToPage(suggestion['url']+"reviews/");
-      });
+    ).on('typeahead:selected', onSelectCallback );
   };
 
   return {
