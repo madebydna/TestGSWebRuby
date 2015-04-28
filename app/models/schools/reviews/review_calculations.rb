@@ -31,7 +31,7 @@ module ReviewCalculations
   end
 
   def having_numeric_answer
-  @having_numeric_answer ||= select { |review| review.answer.present? && review.answer.to_i.to_s == review.answer }
+    @having_numeric_answer ||= select { |review| review.answer.present? && review.answer.to_i.to_s == review.answer.to_s }
   end
 
   def count_having_rating

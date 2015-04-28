@@ -1,7 +1,7 @@
 # To be mixed in to an array of Reviews
 # Requires methods from Enumerable
 module ReviewScoping
-  FIVE_STAR_RATING_TOPIC_NAME = 'Five star rating'
+  FIVE_STAR_RATING_TOPIC_NAME = '5 star rating'
 
   def empty_extended_array
     value = []
