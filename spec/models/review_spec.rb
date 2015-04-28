@@ -134,6 +134,36 @@ describe Review do
       subject.auto_moderate
     end
 
+    context 'when reviews are pre-moderated' do
+      before do
+        stub_const('PropertyConfig', double(:'force_review_moderation?' => true))
+      end
+
+      it 'should report reviews that are pre-moderated' do
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to receive(:build_review_flag).with(be_nil, [:'force-flagged'])
+        subject.auto_moderate
+      end
+    end
+
+    context 'when school is held' do
+      before { allow(school).to receive(:held?).and_return(true) }
+      it 'should report reviews for held schools' do
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to receive(:build_review_flag).with(be_nil, [:'held-school'])
+        subject.auto_moderate
+      end
+    end
+
+    context 'when user is a student' do
+      before { allow(subject).to receive(:user_type).and_return('student') }
+      it 'should report reviews for students' do
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to receive(:build_review_flag).with(be_nil, [:'student'])
+        subject.auto_moderate
+      end
+    end
+
     it 'should report reviews for Delaware charter schools' do
       school.state = 'DE'
       school.type = 'charter'
@@ -290,11 +320,8 @@ describe Review do
     end
 
     context 'when reviews are pre-moderated' do
-      let(:fake_property_class) { Class.new }
       before do
-        stub_const('PropertyConfig', fake_property_class)
-        allow(fake_property_class).to receive(:force_review_moderation?)
-                                      .and_return(true)
+        stub_const('PropertyConfig', double(:'force_review_moderation?' => true))
       end
       context 'with new user, parent' do
         before do

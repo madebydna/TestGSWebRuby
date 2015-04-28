@@ -139,7 +139,7 @@ class Review < ActiveRecord::Base
       reasons << ReviewFlag::FORCE_FLAGGED
     end
 
-    if comment
+    if comment.present? || reasons.present?
       review_flag = build_review_flag(comment, reasons)
       begin
         review_flag.save!
