@@ -298,7 +298,8 @@ LocalizedProfiles::Application.routes.draw do
 
     get 'quality', to: 'school_profile_quality#quality', as: :quality
     get 'details', to: 'school_profile_details#details', as: :details
-    get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
+    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+    resources :reviews, only: [:create], controller: 'school_profile_reviews'
     get '', to: 'school_profile_overview#overview'
   end
 
