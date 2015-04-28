@@ -51,8 +51,6 @@ GS.topicalReview.starRating = (function() {
         $(container).on('mouseout', INDIVIDUAL_STAR_CONTAINER, function() {
             var rating = $('.js-starHiddenFields').find('input').val()
             selectStar(rating);
-//            debugger
-//            var selectedStar =
             var selectedStar = $(container).find(INDIVIDUAL_STAR_CONTAINER).get(rating - 1);
             $(selectedStar).children('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
             $(selectedStar).children('.js-topicalReviewLabel').removeClass('gray-dark');
@@ -126,7 +124,25 @@ GS.topicalReview.checkBoxes = (function (){
 
 })();
 
-GS.topicalReview.questionCarousel =(function(){
+GS.topicalReview.questionCarousel = (function () {
+
+    var getSlideIdForFirstTopicQuestion = function (topicId) {
+        var topicSelector = '.js-topicalReviewContainer[data-review-topic="' + topicId + '"]';
+        var matchingQuestions = $(topicSelector);
+        var topicQuestions = filterOutClonedQuestions(matchingQuestions);
+        var question = topicQuestions.first();
+        return question.data('slickIndex') || 0;
+    }
+
+    var filterOutClonedQuestions = function(matchingQuestions) {
+        return $(matchingQuestions).filter(function () {
+            return !$(this).hasClass('slick-cloned')
+        })
+    }
+
+    var getTopicId = function () {
+       return GS.uri.Uri.getHashValue().slice(5);
+    }
 
     var init = function () {
 
@@ -139,24 +155,12 @@ GS.topicalReview.questionCarousel =(function(){
             appendArrows: ".js-topicalQuestionNavigation",
             prevArrow: ".js-previous-topic",
             nextArrow: ".js-next-topic"
-
         });
 
-        var topic = GS.uri.Uri.getFromQueryString('topic')
-
-        var getSlideId = function (topic) {
-            var topicSelector = '.js-topicalReviewContainer[data-review-topic="'+ topic + '"]';
-            var matchingTopics =  $(topicSelector);
-            var question = $(matchingTopics).filter(function(){return !$(this).hasClass('slick-cloned')}).first();
-            return question.data('slickIndex');
-        }
-        var slideId =  getSlideId(topic);
-
-        if (!slideId) {
-            slideId = 0;
-        }
+        var topicId = getTopicId();
+        var slideId = getSlideIdForFirstTopicQuestion(topicId);
         $questionCarousel.slick('slickGoTo', Number(slideId));
-    }
+    };
 
     return {
         init: init
@@ -207,7 +211,7 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
             var reviewContainer = self.parents('.js-topicalReviewContainer');
             GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
         });
-    }
+    };
 
     return {
         GS_countCharacters: GS_countCharacters,

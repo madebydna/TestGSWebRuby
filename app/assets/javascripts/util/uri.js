@@ -10,6 +10,10 @@ GS.uri.Uri.getHref = function() {
     return window.location.href;
 };
 
+GS.uri.Uri.getHashValue = function () {
+    return window.location.hash.substr(1);
+}
+
 GS.uri.Uri.getPath = function() {
     return window.location.pathname;
 };

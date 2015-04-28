@@ -4,7 +4,6 @@
   <%= render partial: "shared/reviews/modules/topical_review_question_module",
              collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
   %>
-  <%   render 'shared/reviews/modules/topical_review_question_complete_container'  %>
   </div>
   <%= render 'shared/reviews/modules/question_navigation' %>
 </div>
