@@ -1,0 +1,53 @@
+<% display_question_label = display_question.displayed_label %>
+<% q_id                   = display_question.osp_question_id %>
+<% response_key  %>
+<% value = [*preexisting_esp_values].first %>
+
+<% #TODO include quesiton label %>
+<div class="row mbl pbl">
+  <div class="col-xs-12">
+    <h3 >
+      <span class="mrl">
+        <%= display_question_label %>
+      </span>
+    </h3>
+  </div>
+
+  <% #autocomplete %>
+  <div class="col-xs-12 mbl pbl js-autocompleteContainer">
+
+    <% #don't see your school %>
+    <div class="subtitle-sm" style="height:20px;">
+      <a class="js-doNotSeeResult dn pointer"
+         data-no-result-text="Don't see your school?"
+         data-return-to-search-text="Return to original search"
+         data-state="<%= params['state'] %>">
+        Don't see your school?
+      </a>
+    </div>
+
+    <% #autocomplete search bar %>
+    <div class="search-bar-home js-autocompleteFieldContainer <%= 'dn' if value.present? %>">
+      <div class="full-width mbm">
+        <input type="text"
+               class='typeahead search-text full-width pam'
+               placeholder="Enter school name">
+        <label class="dn js-translate-placeholder">Enter school name</label>
+      </div>
+    </div>
+
+    <% #value to be submitted %>
+    <div class="js-selectedAutocompleteVal font-size-large <%= 'dn' unless value.present? %>">
+      <input type="hidden" <%= "name='#{q_id}-#{response_key}'" %> <%= "value='#{value}'" if value.present? %>>
+      <span><%= value if value.present? %></span>
+      <a class="js-editAutocompleteVal pointer">Edit</a>
+    </div>
+
+    <% #list of select boxes %>
+    <div class="js-selectListsContainer dn ptm" style="max-width: 600px;">
+      <select class="form-control js-citySelect dn notranslate"></select> <br/>
+      <select class="form-control js-schoolSelect dn notranslate"></select> <br/>
+    </div>
+  </div>
+
+</div>

@@ -9,6 +9,12 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
         }
     };
 
+    var schoolResultsNoLinkMarkup = function() {
+        return {
+            suggestion: Handlebars.compile('<a class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
+        }
+    };
+
     var districtResultsMarkup = function() {
         return {
             suggestion: Handlebars.compile('<a href="{{url}}" class="tt-suggestion-link"><p class="tt-suggestion-text"><span class="tt-schools-in">Schools in</span> <strong>{{district_name}}, {{state}}</strong></p></a>')
@@ -29,6 +35,7 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
 
     return {
         schoolResultsMarkup: schoolResultsMarkup,
+        schoolResultsNoLinkMarkup: schoolResultsNoLinkMarkup,
         districtResultsMarkup: districtResultsMarkup,
         cityResultsMarkup: cityResultsMarkup,
         cityChooserMarkup: cityChooserMarkup
