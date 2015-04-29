@@ -119,7 +119,7 @@ class CollectionConfig < ActiveRecord::Base
           raw_partners_str.gsub!(/\s(\w+)\:/) { |str| ":#{str[1..-2]} =>" }
           partners = eval(raw_partners_str)
           partners[:partnerLogos].each do |partner|
-            partner[:logoPath].prepend(ENV_GLOBAL['cdn_host'])
+            partner[:logoPath].prepend('/assets')
           end
         rescue Exception => e
           Rails.logger.error('Something went wrong while parsing state_partners' + e.message)
