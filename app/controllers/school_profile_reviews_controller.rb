@@ -7,7 +7,6 @@ class SchoolProfileReviewsController < SchoolProfileController
 
   layout 'application'
 
-
   def reviews
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
@@ -15,13 +14,9 @@ class SchoolProfileReviewsController < SchoolProfileController
     @canonical_url = school_reviews_url(@school)
     @canonical_url = school_url(@school)
 
-    # @school_reviews = @school.reviews_filter quantity_to_return: 10
-    # @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
-
     @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
 
-    @review_offset = 0
-    @review_limit = 10
+    @reviews_page_size = 10
     @show_facebook_comments = PropertyConfig.show_facebook_comments?(@state[:short])
   end
 
@@ -48,13 +43,22 @@ class SchoolProfileReviewsController < SchoolProfileController
     end
   end
 
-
-
 private
 
   def review_params
-    params.require(:review).permit(:school_id, :state, :review_question_id, :comment,
-                                   answers_attributes:[:review_id, :answer_value])
+    params.
+      require(:review).
+      permit(
+        :school_id,
+        :state,
+        :review_question_id,
+        :comment,
+        answers_attributes:
+          [
+            :review_id,
+            :answer_value
+          ]
+      )
   end
 
 end

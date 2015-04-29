@@ -60,8 +60,8 @@
                    'all-count' => @school_reviews.number_of_reviews_with_comments,
                    'parent-count' => @school_reviews.parent_reviews.having_comments.count,
                    'student-count' => @school_reviews.student_reviews.having_comments.count,
-                   'offset' => @review_limit,
-                   'limit' => @review_limit
+                   'offset' => @reviews_page_size,
+                   'limit' => @reviews_page_size
                 }) %>
 
 
