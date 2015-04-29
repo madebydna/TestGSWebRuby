@@ -38,7 +38,10 @@
 
     <% #value to be submitted %>
     <div class="js-selectedAutocompleteVal font-size-large <%= 'dn' unless value.present? %>">
-      <input type="hidden" <%= "name=#{q_id}-#{response_key}" %> <%= "value='#{value}'" if value.present? %>>
+      <input type="hidden"
+             name="<%="#{q_id}-#{response_key}" %>"
+             value="<%= value if value.present? %>"
+             data-response-key="<%= "#{q_id}-#{response_key}" %>">
       <span><%= value if value.present? %></span>
       <a class="js-editAutocompleteVal pointer">Edit</a>
     </div>

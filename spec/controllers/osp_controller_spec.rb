@@ -65,7 +65,7 @@ describe Admin::OspController do
         osp_facilities_staff: 4
       }.each do |page, page_number|
         it "should redirect user back to #{page} page when submit is clicked on the #{page} page" do
-          get :submit, state: school.state, schoolId: school.id, page: page_number
+          post :submit, state: school.state, schoolId: school.id, page: page_number
           expect(response.location).to match(admin_osp_page_url.chop) #chop trailing slash
         end
       end
@@ -123,7 +123,7 @@ describe Admin::OspController do
 
         it 'should have called flash_success' do
           expect(controller).to receive(:flash_success)
-          get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+          post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
         end
       end
     end
@@ -139,7 +139,7 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
     end
   end
@@ -155,11 +155,11 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_notice' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
     end
   end

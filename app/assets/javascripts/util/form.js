@@ -341,6 +341,7 @@ GS.forms.elements = (function() {
     var dataState = 'state';
     var dataNoResultText = 'no-result-text';
     var dataReturnToSearchText = 'return-to-search-text';
+    var dataResponseKey = 'response-key';
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
         $(parentListenerSelector).on(click, checkboxButtonSelector, function() {
@@ -448,27 +449,17 @@ GS.forms.elements = (function() {
         });
     };
 
-    var setAutoCompleteVal = function(text, $autocompleteField) {
-        var $doNotSeeResults = $autocompleteField.closest(autocompleteContainer).find(doNotSeeResult);
-        var $fieldContainer = $autocompleteField.closest(autocompleteFieldContainer);
-        var $val = $fieldContainer.siblings(selectedAutocompleteVal + ':hidden:first');
-
-        $fieldContainer.hide('slow', function() {
-            $doNotSeeResults.hide('fast');
-            $val.find('input').val(text);
-            $val.find('span').text(text);
-            $val.show('slow');
-        });
-    };
-
     var setAutocompleteVal = function(text, $elementToHide) {
         var $autocompleteContainer = $elementToHide.closest(autocompleteContainer);
         var $doNotSeeResults = $autocompleteContainer.find(doNotSeeResult);
         var $val = $autocompleteContainer.find(selectedAutocompleteVal + ':hidden:first');
+        var $input = $val.find('input');
+        var keyName = $input.data(dataResponseKey);
 
         $elementToHide.hide('slow', function() {
             $doNotSeeResults.hide('fast');
-            $val.find('input').val(text);
+            $input.val(text);
+            $input.attr('name', keyName);
             $val.find('span').text(text);
             $val.show('slow');
         });
@@ -587,7 +578,6 @@ GS.forms.elements = (function() {
         setResponsiveRadioHandler: setResponsiveRadioHandler,
         setCustomSubmitHandler: setCustomSubmitHandler,
         setEditAutocompleteHandler: setEditAutocompleteHandler,
-        setAutoCompleteVal: setAutoCompleteVal,
         initOspPageAutocomplete: initOspPageAutocomplete
     }
 
