@@ -38,11 +38,14 @@ class Admin::OspController < ApplicationController
     params.except(:controller , :action , :page , :schoolId, :state).map do | param, values |
       question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
       next unless values.present?
-
-      #TODO add validation here to only allow questions/answers that a school is registered for
-      #Validate based on question type and for open text use same validation logic as JS
-      [question_id.to_i, response_key, [*values].uniq]
+      validate_questions_and_answers(question_id.to_i, response_key, values)
     end.compact
+  end
+
+  def validate_questions_and_answers(question_id, response_key, response_values)
+    #TODO add validation here to only allow questions/answers that a school is registered for
+    #Validate based on question type and for open text use same validation logic as JS
+    [question_id, response_key, [*response_values].uniq]
   end
 
   def save_response!(question_id, question_key, response_values, esp_membership_id, is_approved_user)
