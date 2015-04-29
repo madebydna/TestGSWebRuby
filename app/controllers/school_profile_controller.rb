@@ -13,7 +13,6 @@ class SchoolProfileController < SchoolController
 
   before_action :ad_setTargeting_through_gon, only: [:overview, :quality, :details, :reviews]
   before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
-  before_action :facebook_comments_permalink, only: [:overview, :quality, :details, :reviews]
   before_action :set_hub, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
   before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
@@ -37,7 +36,6 @@ class SchoolProfileController < SchoolController
     gon.review_count = @school_reviews.number_of_reviews_with_comments
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
-    @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
     set_last_modified_date
@@ -179,17 +177,6 @@ class SchoolProfileController < SchoolController
 
   def ad_page_name
     ('School_' + @page_config.name).to_sym
-  end
-
-  def facebook_comments_permalink
-    uri = URI(request.original_url)
-    host = uri.host
-    host = "www.greatschools.org" if uri.host == "pk.greatschools.org"
-    port = (uri.port != 80 && uri.port.present?) ? ':'+uri.port.to_s : ''
-    domain = "http://" + host + port + "/"
-
-    @facebook_comments_permalink = domain+ @state[:long].downcase.gsub(' ', '-') + "/city-name/"+ @school.id.to_s +
-        "-school-name/"+@page_config.name.downcase
   end
 
   def set_noindex_meta_tags

@@ -69,9 +69,7 @@
     <% end %>
 </div>
 
-<% if @facebook_comments_show %>
-  <%= render 'shared/facebook_comments', permalink: @facebook_comments_permalink %>
-<% end %>
+<%= render 'shared/facebook_comments' if @show_facebook_comments %>
 <%= render 'data_layouts/nearby_schools' %>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 

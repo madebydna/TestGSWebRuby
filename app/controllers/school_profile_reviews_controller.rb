@@ -22,8 +22,7 @@ class SchoolProfileReviewsController < SchoolProfileController
 
     @review_offset = 0
     @review_limit = 10
-
-    @facebook_comments_show = property_state_on?(@facebook_comments_prop, @state[:short])
+    @show_facebook_comments = PropertyConfig.show_facebook_comments?(@state[:short])
   end
 
   def create
