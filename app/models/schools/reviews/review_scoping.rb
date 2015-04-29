@@ -1,5 +1,13 @@
 # To be mixed in to an array of Reviews
 # Requires methods from Enumerable
+#
+# Contains methods that, given a collection of reviews, can group the reviews, give us a subset of reviews (the
+# reviews for a specific group) tell us how many have comments, or give us only the reviews with comments, etc.
+#
+# These are things that SQL could do, but there are drawbacks. SQL queries can be complex and less reusable. At times
+# we might already have an array of reviews in memory (after getting reviews that need to be displayed on page) and
+# so we have everything we need to perform these calculations in Rails rather than from SQL. Regardless, this module
+# provides the below methods for operating on collections of reviews that you have
 module ReviewScoping
   FIVE_STAR_RATING_TOPIC_NAME = '5 star rating'
 

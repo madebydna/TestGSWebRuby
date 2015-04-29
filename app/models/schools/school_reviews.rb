@@ -1,7 +1,16 @@
 # An enumerable collection of reviews with additional behavior
+#
+# Contains methods that return important information about reviews. These methods form the public API of
+# SchoolReviews and should be the source of the values that get rendered in view templates
+#
+# Can be constructed with a review cache object, in which case this class will delagate the above mentioned methods
+# to the cache object rather than consulting the school's reviews. If the review cache object doesn't have the
+# information that the SchoolReviews instance is being asked for, it will consult the school's reviews
 class SchoolReviews
-  include Enumerable # means it can respond to enumerable methods
-  extend Forwardable # allows the forwarding, which allows the functions listed below to be defined in this class
+  # Include enumerable methods, so that a SchoolReviews instance itself can be treated like an array of reviews
+  include Enumerable
+  # Extend Forwardable which defines the def_delagators method. Delegate enumerable methods to underlying reviews array
+  extend Forwardable
   def_delegators :reviews, :each, :each_with_object, :[], :blank?, :present?, :any?, :sum, :count, :select
 
   attr_reader :school, :review_cache
@@ -9,6 +18,7 @@ class SchoolReviews
 
   include ReviewScoping
 
+  # Builds a new SchoolReviews instance, giving it a review_cache object and possibly a school
   def self.build_from_cache(review_cache, school = nil)
     school_reviews = SchoolReviews.new(school, nil)
     school_reviews.review_cache = review_cache
@@ -23,6 +33,8 @@ class SchoolReviews
   end
 
   def reviews
+    # Questionable: Maybe force the SchoolReviews builder/caller to provide the reviews?
+    # If school reviews were not provided to this class, obtain them from the school model
     @reviews ||= school.reviews || []
     @reviews.extend ReviewScoping
     @reviews.extend ReviewCalculations

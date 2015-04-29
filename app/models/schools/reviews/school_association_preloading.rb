@@ -22,6 +22,15 @@ module SchoolAssociationPreloading
     end
   end
 
+  # This method is intended to exist on an array of ActiveRecord objects
+  #
+  # Pool up all the states and school IDs for all of my objects
+  # Ask the School class to go find all the schools for those states and IDs
+  # When the results come back, we need to preload each school onto the appropriate model
+  # To do this efficiently, create a map of { state + school ID => school }
+  # Go through all the models, and using the same state + school ID key, look up the correct school
+  # Set a @school instance variable on the model, with the assumption that the model will know
+  # to use it (see behavior_for_models_with_school_association.rb)
   def preload_associated_schools!
     return unless present?
 

@@ -1,3 +1,8 @@
+# This class is acting as an adapter between some code that already existed and being used to cache review hashes
+# into school cache, and new ReviewScoping and ReviewCalculations modules that contain behavior for
+# breaking apart a big collection of reviews into groups, and performing various calculations on those reviews
+#
+# This class has methods for building hashes of review_info that have the same structure as the hashes in school_cache
 class ReviewCaching
   attr_reader :reviews
 

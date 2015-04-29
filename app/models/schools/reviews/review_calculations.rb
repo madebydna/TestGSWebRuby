@@ -1,5 +1,16 @@
 # To be mixed in to an array of Reviews
 # Requires methods from Enumerable
+#
+# Contains methods that, given a collection of reviews, can perform calculations on the reviews, including creating
+# a distribution map of the number of times a given answer occurred. It is the caller's responsibility to make sure
+# that calculations are being performed on the correct collection of reviews. For example, calling score_distribution
+# on a collection that contains reviews for multiple questions (5 stars question vs 'too much homework' question)
+# would give incorrect results
+#
+# These are things that SQL could do, but there are drawbacks. SQL queries can be complex and less reusable. At times
+# we might already have an array of reviews in memory (after getting reviews that need to be displayed on page) and
+# so we have everything we need to perform these calculations in Rails rather than from SQL. Regardless, this module
+# provides the below methods for operating on collections of reviews that you have
 module ReviewCalculations
 
   include ReviewScoping
