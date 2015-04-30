@@ -21,6 +21,23 @@ class SchoolCacheResults
     end
   end
 
+  module HashWithSchoolCacheData
+    def cache_data
+      self
+    end
+  end
+
+  def get_cache_object_for_school(state, school_id)
+    hash = @school_data[[state, school_id]]
+    if hash
+      hash.send(:extend, HashWithSchoolCacheData)
+      hash.keys.each do |key|
+        hash.send(:extend, (module_for_key(key)))
+      end
+    end
+    hash
+  end
+
   private
 
   def build_school_data_hash

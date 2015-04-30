@@ -300,23 +300,15 @@ class SchoolSearchService
       @school_cache_results ||= (
         query = SchoolCacheQuery.new.include_cache_keys(REVIEW_INFO_CACHE_KEY)
         query = query.include_schools(state, school_ids)
-        query.query_and_use_cache_keys.each_with_object({}) do |school_cache, hash|
-          require 'pry'; binding.pry
-          hash[[school_cache.state, school_cache.school_id]] = school_cache
-        end
+        query_results = query.query_and_use_cache_keys
+        SchoolCacheResults.new(REVIEW_INFO_CACHE_KEY, query_results)
       )
     end
 
     def review_cache_object_for_school(school_id)
       return nil unless school_id.present? && school_cache_results.present?
 
-      school_cache_object = school_cache_results[[state, school_id]]
-      if school_cache_object
-        # I feel that SchoolCacheQuery should have a method called something like .decorator_results
-        # that will extend the results with the correct module, based on the name attribute. Similar to what
-        # SchoolCacheResults is doing but would be more reusable
-        school_cache_object.extend CachedReviewsSnapshotMethods
-      end
+      school_cache_results.get_cache_object_for_school(state, school_id)
     end
   end
 end

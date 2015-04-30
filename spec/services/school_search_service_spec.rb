@@ -440,16 +440,18 @@ describe 'School Search Service' do
         end
 
         allow_any_instance_of(SchoolSearchService::SearchResultReviewInfoAppender).to receive(:school_cache_results) do
-          [1, 2].each_with_object({}) do |id, hash|
+          query_results = [1, 2].map do |id|
             school_cache = SchoolCache.new
+            school_cache.state = 'CA'
+            school_cache.school_id = id
+            school_cache.name = 'reviews_snapshot'
             school_cache.value = {
-              'reviews_snapshot' => {
-                'num_reviews' => 4,
-                'avg_star_rating' => 5
-              }
+              'num_reviews' => 4,
+              'avg_star_rating' => 5
             }.to_json
-            hash[['CA', id]] = school_cache
+            school_cache
           end
+          SchoolCacheResults.new('reviews_snapshot', query_results)
         end
       end
 
