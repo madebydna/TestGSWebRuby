@@ -276,3 +276,30 @@ body { top: 0px !important; }
 img {
   -ms-interpolation-mode: bicubic;
 }
+
+//Parsley error message display
+
+.parsley-errors-list{
+  padding-left: 0;
+}
+
+.parsley-required{
+  color: $state-danger-text;
+  list-style-type: none;
+}
+
+.parsley-maxlength{
+  color: $state-danger-text;
+  list-style-type: none;
+}
+
+.parsley-type{
+  color: $state-danger-text;
+  list-style-type: none;
+}
+
+.parsley-custom-error-message{
+  color: $state-danger-text;
+  list-style-type: none;
+
+}

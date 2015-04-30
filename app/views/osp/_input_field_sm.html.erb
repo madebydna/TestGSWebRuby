@@ -1,6 +1,7 @@
 <% display_question_label = display_question.displayed_label %>
 <% q_id                   = display_question.osp_question_id %>
 <% display_validations    = display_question.display_validations %>
+<% parsley_validations = [*display_validations].inject('') { |string, (k , v)| string << "#{k}=#{v} " } %>
 <% response_key  %>
 
 <div class="row mbl pbl">
@@ -11,7 +12,6 @@
       </span>
     </h3>
   </div>
-  <input type="text" class="form-control input-field-sm" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>">
- <!--<%=display_validations %>-->
+  <input <%= parsley_validations %> class="form-control input-field-sm" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>">
 </div>
 
