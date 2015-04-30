@@ -15,7 +15,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def answer_value
-    if review.answers
+    if !review.answers.empty?
       review.answers.first.answer_value
     end
   end
