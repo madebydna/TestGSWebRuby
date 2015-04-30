@@ -9,7 +9,7 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
         }
     };
 
-    var schoolResultsMarkupNoLink = function() {
+    var schoolResultsNoLinkMarkup = function() {
         return {
             suggestion: Handlebars.compile('<a class="tt-suggestion-link"><p class="tt-suggestion-text"><strong>{{school_name}}</strong><br><span class="tt-state-name">{{city_name}}, {{state}}</span></p></a>')
         }
@@ -35,7 +35,7 @@ GS.search.autocomplete.display = GS.search.autocomplete.display || (function() {
 
     return {
         schoolResultsMarkup: schoolResultsMarkup,
-        schoolResultsMarkupNoLink: schoolResultsMarkupNoLink,
+        schoolResultsNoLinkMarkup: schoolResultsNoLinkMarkup,
         districtResultsMarkup: districtResultsMarkup,
         cityResultsMarkup: cityResultsMarkup,
         cityChooserMarkup: cityChooserMarkup

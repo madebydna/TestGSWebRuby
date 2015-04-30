@@ -1,6 +1,6 @@
 $(function() {
   if (gon.pagename == "Write a school review | GreatSchools") {
-    GS.search.autocomplete.selectAutocomplete.init(null, GS.search.autocomplete.display.schoolResultsMarkupNoLink, schoolReviewsCallback);
+    GS.search.autocomplete.selectAutocomplete.init(null, GS.search.autocomplete.display.schoolResultsNoLinkMarkup, schoolReviewsCallback);
 
     GS.stateCitySchoolSelectBox.stateSelect();
     GS.stateCitySchoolSelectBox.citySelect();

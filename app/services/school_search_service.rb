@@ -238,6 +238,9 @@ class SchoolSearchService
       if filters.include?(:ptq_rating)
         filter_arr << "+path_to_quality_rating:(\"#{filters[:ptq_rating].compact.join('" "')}\")"
       end
+      if filters.include?(:gstq_rating)
+        filter_arr << "+great_start_to_quality_rating:(#{filters[:gstq_rating].compact.join(' ')})"
+      end
       hash.delete :filters
     end
     filter_arr

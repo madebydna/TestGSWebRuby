@@ -14,7 +14,7 @@ class EspResponse < ActiveRecord::Base
     self.member_id = user.id
   end
 
-  def self.new_from_esp_response_update(esp_response_update)
+  def self.build_from_esp_response_update(esp_response_update)
     esp_response = EspResponse.new
     esp_response.attributes = (
         esp_response_update.attributes.merge(

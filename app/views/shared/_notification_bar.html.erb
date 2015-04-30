@@ -1,4 +1,4 @@
-<% flash_type_to_alert_class_mapping = { 'error' => 'alert-danger', 'notice' => 'alert-warning' } %>
+<% flash_type_to_alert_class_mapping = { 'error' => 'alert-danger', 'notice' => 'alert-warning', 'success' => 'alert-success'  } %>
 <% flash.each do |key, value| %>
     <% css_class = flash_type_to_alert_class_mapping[key] %>
     <% value = Array(value) %>

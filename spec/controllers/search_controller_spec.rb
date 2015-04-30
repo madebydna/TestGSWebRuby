@@ -74,6 +74,7 @@ describe SearchController do
         allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
         allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with only above_average filter' do
@@ -105,6 +106,7 @@ describe SearchController do
         allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
+        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with a few ratings' do
@@ -122,6 +124,44 @@ describe SearchController do
           instance_exec &path_to_quality_rating_allows
           filters = controller.send(:parse_filters, params_hash)
           expect(filters).to eq({:ptq_rating=>["Level 1", "Level 2", "Level 3", "Level 4"]})
+        end
+      end
+    end
+
+    context 'When there is great start to quality rating in filter params' do
+      gstq_rating_allows = Proc.new {
+        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(true)
+      }
+
+      context 'with one rating' do
+        let(:params_hash) { {'gstq_rating' => '5'} }
+        it "should set the right filter for ratings" do
+          instance_exec &gstq_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:gstq_rating=> ['5']})
+        end
+      end
+
+      context 'with a few ratings' do
+        let(:params_hash) { {'gstq_rating' => %w(4 5)} }
+        it "should set the right filters for ratings" do
+          instance_exec &gstq_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:gstq_rating=> %w(4 5)})
+        end
+      end
+
+      context 'with all ratings' do
+        let(:params_hash) { {'gstq_rating' => %w(1 2 3 4 5)} }
+        it "should set all 5 ratings filters" do
+          instance_exec &gstq_rating_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({:gstq_rating=> %w(1 2 3 4 5)})
         end
       end
     end
@@ -182,6 +222,15 @@ describe SearchController do
           expect(subject['level']).to eq(level_code)
         end
       end
+    end
+    context 'when searching near a zip code by location' do
+      before { controller.params.merge!(zipCode: '94111') }
+      it 'should pass zip code through as a targeting attribute' do
+        expect(subject['Zipcode']).to eq('94111')
+      end
+    end
+    it 'should not set zip code on browse' do
+      expect(subject['Zipcode']).to be_nil
     end
   end
 

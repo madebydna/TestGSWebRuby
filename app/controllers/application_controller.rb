@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
+  before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :check_for_java_hover_cookie
@@ -166,6 +167,14 @@ class ApplicationController < ActionController::Base
     flash_message :notice, message
   end
 
+  def flash_success(message)
+    flash_message :success, message
+  end
+
+  def flash_notice_include?(message)
+    flash[:notice].try(:include?, message)
+  end
+
   def already_redirecting?
     # Based on rails source code for redirect_to
     response_body
@@ -216,6 +225,13 @@ class ApplicationController < ActionController::Base
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
+  def set_cafemom_ip_value
+    # TODO share code with application_helper::remote_ip?
+    # HTTP_X_CLUSTER_CLIENT_IP is set to "Undefined" when not behind stingray
+    gon.CF_ATHENA = request.env['X_Forwarded_For'] || request.env['HTTP_X_CLUSTER_CLIENT_IP']
+    gon.CF_ATHENA = request.remote_ip if gon.CF_ATHENA == nil || gon.CF_ATHENA == 'Undefined'
   end
 
   # get Page name in PageConfig, based on current controller action

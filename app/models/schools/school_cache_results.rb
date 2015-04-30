@@ -38,6 +38,10 @@ class SchoolCacheResults
     hash
   end
 
+  def decorate_school(school)
+    decorate_schools([school]).first
+  end
+
   private
 
   def build_school_data_hash

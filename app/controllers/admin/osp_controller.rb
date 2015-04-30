@@ -1,44 +1,59 @@
 class Admin::OspController < ApplicationController
-  before_action :login_required
+  before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
-  before_action :set_footer_cities
-  before_action :set_osp_school_instance_vars
-  before_action :set_esp_membership_instance_vars, only: [:submit]
-  SCHOOL_CACHE_KEYS = %w(esp_responses)
+  before_action :set_footer_cities, except: [:approve_provisional_osp_user_data]
+  before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
+  before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
+  after_action :render_success_or_error, only: [:submit]
 
+  PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
+  PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
 
   def show
-    @osp_form_data = OspFormResponse.find_form_data_for_school_state(params[:state],params[:schoolId])
-    if current_user.provisional_or_approved_osp_user?(@school)
-      render_osp_page
-    else
-      redirect_to my_account_url
-    end
+    @osp_data = OspData.for(@school) #add rescue here that shows nice error
+    render_osp_page
   end
 
   def submit
-    #ToDo probably should be more strict about validation than this
-    #right now any param not in that list gets passed through.
-    questionKeyParams = params.except(:controller , :action , :page , :schoolId, :state)
-
     #If performance becomes an issue, look into making this a bulk single insert.
-    questionKeyParams.each do |question_key, answers|
-      response_values = [*answers].select(&:present?).compact
-      save_response!(question_key, @esp_membership_id, response_values) if response_values.present? #might want to wrap in rescue block
+    questions_and_answers.each do | (question_id, response_key, values) |
+      save_response!(question_id, response_key, values, @esp_membership_id, @is_approved_user)
     end
-
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
-
   end
 
-  def save_response!(question_key, esp_membership_id, response_values)
-    osp_question_id = OspQuestion.find_by_question_key(question_key).try(:id)
-    osp_question_id or (Rails.logger.warn("Didn't save osp response. Couldn't find osp question key: #{question_key}") and return)
+  #ToDo when Java is no longer the proxy, this should not be a route
+  def approve_provisional_osp_user_data
+    osp_form_responses = OspFormResponse.where(esp_membership_id: params[:membership_id])
+    osp_form_responses.each do | osp_form_response |
+      create_update_queue_row!(osp_form_response.response)
+    end
+    # only java is receiving this html, does not matter that it renders blank page
+    render text: ''
+  end
 
+  protected
+
+  def questions_and_answers
+    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token).map do | param, values |
+      question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
+      next unless values.present?
+      validate_questions_and_answers(question_id.to_i, response_key, values)
+    end.compact
+  end
+
+  def validate_questions_and_answers(question_id, response_key, response_values)
+    #TODO add validation here to only allow questions/answers that a school is registered for
+    #Validate based on question type and for open text use same validation logic as JS
+    [question_id, response_key, [*response_values].uniq]
+  end
+
+  def save_response!(question_id, question_key, response_values, esp_membership_id, is_approved_user)
     response_blob = make_response_blob(question_key, esp_membership_id, response_values)
 
-    error = create_osp_form_response!(osp_question_id, esp_membership_id, response_blob)
-    create_update_queue_row!(response_blob) if @is_approved_user && !error.present?
+    error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
+    create_update_queue_row!(response_blob) if is_approved_user && !error.present?
+    @render_error ||= error.present?
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
@@ -49,7 +64,7 @@ class Admin::OspController < ApplicationController
            entity_id: @school.id,
                value: response_value,
            member_id: esp_membership_id,
-             created: Time.zone.now,
+             created: Time.now,
           esp_source: "osp"
       }.stringify_keys!
     end
@@ -58,39 +73,47 @@ class Admin::OspController < ApplicationController
   end
 
   def create_osp_form_response!(osp_question_id, esp_membership_id, response)
-    error = OspFormResponse.create(
-        osp_question_id: osp_question_id,
-      esp_membership_id: esp_membership_id,
-               response: response
-    ).errors.full_messages
+    begin
+      error = OspFormResponse.create(
+          osp_question_id: osp_question_id,
+          esp_membership_id: esp_membership_id,
+          response: response
+      ).errors.full_messages
 
-    Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
-    error
+      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
+      error
+        # todo need to fix with real validation
+    rescue => error
+      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}"
+      error
+    end
   end
 
   def create_update_queue_row!(response_blob)
-    error = UpdateQueue.create(
-           source: :osp_form,
-         priority: 2,
-      update_blob: response_blob,
-    ).errors.full_messages
+    begin
+      error = UpdateQueue.create(
+          source: :osp_form,
+          priority: 2,
+          update_blob: response_blob,
+      ).errors.full_messages
 
-    Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
-    error
+      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
+      error
+        # todo need to fix with real validation
+    rescue => error
+      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}"
+      error
+    end
   end
-
-  def decorate_school(school)
-    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
-    query = query.include_schools(school.state, school.id)
-    query_results = query.query
-
-    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
-    school_cache_results.decorate_schools([school]).first
-  end
-
 
   def render_osp_page
     gon.pagename = "Osp"
+    gon.state_name = @state[:short]
+    gon.omniture_pagename = PAGE_NAME[params[:page]]
+    set_omniture_data_for_school(gon.omniture_pagename)
+    set_omniture_data_for_user_request
+    set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
+
     if params[:page]== '1'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)
       render 'osp/osp_basic_information'
@@ -113,8 +136,7 @@ class Admin::OspController < ApplicationController
   #think about making more generic and moving to application controller
   def set_osp_school_instance_vars
     if @state[:short].present? && params[:schoolId].present?
-      @school               = School.find_by_state_and_id(@state[:short], params[:schoolId])
-      @school_with_esp_data = decorate_school(@school)
+      @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
@@ -122,12 +144,21 @@ class Admin::OspController < ApplicationController
 
   def set_esp_membership_instance_vars
     esp_membership = current_user.esp_membership_for_school(@school)
-    if esp_membership.present?
+    if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?
+      notify_provisional_user! if esp_membership.provisional?
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
+  end
+
+  def notify_provisional_user!
+    flash_notice t('forms.osp.provisional_user') unless flash_notice_include?(t('forms.osp.provisional_user'))
+  end
+
+  def render_success_or_error
+    @render_error ? flash_error(t('forms.osp.saving_error')) : flash_success(t('forms.osp.changes_saved'))
   end
 
 end

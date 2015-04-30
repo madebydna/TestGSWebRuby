@@ -173,6 +173,7 @@ module ApplicationHelper
   end
 
   def remote_ip
+    # TODO share code with application_controller::set_cafemom_ip_value
      request.env['X_Forwarded_For'] || request.env['X_CLUSTER_CLIENT'] || request.remote_ip
   end
   

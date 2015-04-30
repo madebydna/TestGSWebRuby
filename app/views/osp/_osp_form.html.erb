@@ -1,9 +1,7 @@
-
-<form role="form" name="ospPage" action="/admin/gsr/school/esp/submit_form.page"
-      method="get">
+<%= form_tag admin_osp_submit_path, name: 'ospPage' do %>
   <input type="hidden" name="page" value="<%= page %>">
   <input type="hidden" name="state" value="<%= @state[:short] %>">
   <input type="hidden" name="schoolId" value="<%= @school.id %>">
   <%= render partial: 'osp/osp_questions_display', locals: {questions_display_config: @osp_display_config} %>
   <%= render partial: 'osp/osp_navigation' %>
-</form>
+<% end %>

@@ -352,6 +352,14 @@ class SearchController < ApplicationController
       filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
     end
 
+    if should_apply_filter?(:gstq_rating) || params_hash.include?('gstq_rating')
+      gstq_rating_params = [*params_hash['gstq_rating']]
+      all_ratings = %w[1 2 3 4 5]
+      gstq_rating_params = gstq_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
+
+      filters[:gstq_rating] = gstq_rating_params unless gstq_rating_params.empty?
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']
@@ -402,6 +410,9 @@ class SearchController < ApplicationController
     if params[:grades].present?
       level_code = LevelCode.from_grade(params[:grades])
       ad_targeting_gon_hash['level'] = level_code if level_code
+    end
+    if params[:zipCode].present?
+      ad_targeting_gon_hash['Zipcode'] = params[:zipCode]
     end
   end
 

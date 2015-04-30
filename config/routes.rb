@@ -19,6 +19,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
+
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
   # Routes for search pages
@@ -30,7 +31,7 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, district_name: /[^\/]+/}, to: 'search#district_browse'
+    constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/}, to: 'search#district_browse'
 
   get '/search/search.page', as: :search, to: 'search#search'
 
@@ -45,6 +46,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
 
+  # todo delete this when java is gone
+  get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
 
 # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
@@ -113,7 +116,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
     get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
-    get  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit_page
+    post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
