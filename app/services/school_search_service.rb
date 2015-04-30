@@ -278,7 +278,7 @@ class SchoolSearchService
 
     def state
       if school_search_documents.present?
-        school_search_documents.first['school_database_state']
+        Array.wrap(school_search_documents.first['school_database_state']).first.upcase
       end
     end
 
@@ -298,9 +298,12 @@ class SchoolSearchService
     def school_cache_results
       return nil unless school_ids.present? && state.present?
       @school_cache_results ||= (
-        query = SchoolCacheQuery.new.include_cache_keys(REVIEW_INFO_CACHE_KEYS)
+        query = SchoolCacheQuery.new.include_cache_keys(REVIEW_INFO_CACHE_KEY)
         query = query.include_schools(state, school_ids)
-        query.query_and_use_cache_keys
+        query.query_and_use_cache_keys.each_with_object({}) do |school_cache, hash|
+          require 'pry'; binding.pry
+          hash[[school_cache.state, school_cache.school_id]] = school_cache
+        end
       )
     end
 
