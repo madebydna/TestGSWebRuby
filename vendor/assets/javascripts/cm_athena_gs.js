@@ -2,17 +2,28 @@ function cm_replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
+function cm_dot2num(dot)
+{
+    var d = dot.split('.');
+    return ((((((+d[0])*256)+(+d[1]))*256)+(+d[2]))*256)+(+d[3]);
+}
+
 var cm_mainCode = function() {
     var cafemomis = '';
     var site = '';
     var domain = window.location.hostname;
     var referrer = document.referrer;
     var language = window.navigator.userLanguage || window.navigator.language;
+    var athena = '';
     
     var img  = document.createElement('img');
     img.src  =  "//pixel.mathtag.com/event/img?mt_id=673196&mt_adid=105595&v1=&v2=&v3=&s1=&s2=&s3=";
     document.getElementsByTagName('head').item(0).appendChild(img);
     site = 'greatschools';
+
+    if (typeof(gon) !== 'undefined' && gon.CF_ATHENA) {
+        athena = cm_dot2num(gon.CF_ATHENA);
+    }
 
     var random_number = Math.floor((Math.random() * 1000) + 1);
     if (random_number == 1) {
@@ -40,7 +51,7 @@ var cm_mainCode = function() {
         }
     }
     var img  = document.createElement('img');
-    img.src  = "//pixel.mathtag.com/event/img?mt_id=673188&mt_adid=105595&v1=&v2="+site+"&v3="+cafemomis+"&v4="+language+"&v5="+referrer+cm_query;
+    img.src  = "//pixel.mathtag.com/event/img?mt_id=673188&mt_adid=105595&v1=" + athena + "&v2="+site+"&v3="+cafemomis+"&v4="+language+"&v5="+referrer+cm_query;
     document.getElementsByTagName('head').item(0).appendChild(img);
 };
 

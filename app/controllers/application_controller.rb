@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include ApplicationHelper
   include CookieConcerns
   include AuthenticationConcerns
   include SessionConcerns
@@ -14,6 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
   before_action :set_optimizely_gon_env_value
+  before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :check_for_java_hover_cookie
@@ -224,6 +226,10 @@ class ApplicationController < ActionController::Base
 
   def set_optimizely_gon_env_value
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
+  end
+
+  def set_cafemom_ip_value
+    gon.CF_ATHENA = remote_ip
   end
 
   # get Page name in PageConfig, based on current controller action
