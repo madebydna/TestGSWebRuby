@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  include ApplicationHelper
   include CookieConcerns
   include AuthenticationConcerns
   include SessionConcerns
@@ -229,7 +228,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cafemom_ip_value
-    gon.CF_ATHENA = remote_ip
+    # TODO share code with application_helper::remote_ip
+    gon.CF_ATHENA = request.env['X_Forwarded_For'] || request.env['X_CLUSTER_CLIENT'] || request.remote_ip
   end
 
   # get Page name in PageConfig, based on current controller action
