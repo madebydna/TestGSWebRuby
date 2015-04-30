@@ -23,17 +23,17 @@ class ReviewCaching
   def rating_scores_per_user_type
     rating_averages_per_type = Hashie::Mash.new(
       reviews.by_user_type.each_with_object({}) do |(user_type, reviews), hash|
-        hash[user_type.to_sym] = reviews.rating_scores_hash
+        hash[user_type.to_sym] = reviews.five_star_rating_reviews.rating_scores_hash
       end
     )
 
-    rating_averages_per_type[:overall] = reviews.rating_scores_hash
+    rating_averages_per_type[:overall] = reviews.five_star_rating_reviews.rating_scores_hash
     rating_averages_per_type
   end
 
   def calc_review_data
     Hashie::Mash.new(
-      star_counts: reviews.score_distribution,
+      star_counts: reviews.five_star_rating_reviews.score_distribution,
       rating_averages: rating_scores_per_user_type,
       review_filter_totals: review_counts_per_user_type
     )

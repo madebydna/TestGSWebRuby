@@ -9,7 +9,7 @@
 # so we have everything we need to perform these calculations in Rails rather than from SQL. Regardless, this module
 # provides the below methods for operating on collections of reviews that you have
 module ReviewScoping
-  FIVE_STAR_RATING_TOPIC_NAME = '5 star rating'
+  FIVE_STAR_RATING_TOPIC_NAME = 'Overall'
 
   def empty_extended_array
     value = []

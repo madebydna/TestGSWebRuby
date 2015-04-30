@@ -30,8 +30,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def star_rating
     if review.question.stars_question?
-      value = review.answer
-      value = nil if value < 1 || value > 5
+      value = review.answer.to_i
+      if value
+        value = nil if value < 1 || value > 5
+      end
       value
     else
       nil

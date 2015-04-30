@@ -309,7 +309,7 @@ describe User do
         FactoryGirl.create(:alameda_high_school)
       end
       let(:question) do
-        FactoryGirl.create(:five_star_rating_question)
+        FactoryGirl.create(:overall_rating_question)
       end
       let!(:existing_reviews) do
         reviews = [

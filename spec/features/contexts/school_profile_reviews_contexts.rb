@@ -7,11 +7,11 @@ require 'support/shared_contexts_for_signed_in_users'
 
 shared_context 'with 2 questions: first an overall star topic question; second a radio button question' do
   # create topics- requires that a school was set by previous context
-  let(:five_star_rating_topic) { FactoryGirl.create(:five_star_rating_topic, school_level: school.level_code, school_type: school.type) }
+  let(:overall_topic) { FactoryGirl.create(:overall_topic, school_level: school.level_code, school_type: school.type) }
   let(:teachers_topic) { FactoryGirl.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
   # create questions for topic
   # Execute immediately
-  let!(:five_star_rating_question) { FactoryGirl.create(:five_star_rating_question, review_topic: five_star_rating_topic ) }
+  let!(:overall_rating_question) { FactoryGirl.create(:overall_rating_question, review_topic: overall_topic ) }
   let!(:teacher_question) { FactoryGirl.create(:teacher_question, review_topic: teachers_topic) }
 
   after do

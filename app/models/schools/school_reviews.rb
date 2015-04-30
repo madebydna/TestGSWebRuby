@@ -51,7 +51,7 @@ class SchoolReviews
 
   def number_of_5_star_ratings
     # We can have reviews for the 5 star rating question that have comments but no actual answer value
-    review_cache.try(:num_ratings) || five_star_rating_reviews.count_having_rating
+    review_cache.try(:num_ratings) || five_star_rating_reviews.count_having_numeric_answer
   end
 
   def five_star_rating_score_distribution

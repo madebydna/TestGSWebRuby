@@ -9,7 +9,13 @@ FactoryGirl.define do
     comment 'this is a valid comments value since it contains 15 words - including the hyphen'
 
     factory :five_star_review do
-      association :question, factory: :five_star_rating_question, strategy: :build
+
+      ignore do
+        answer_value (1..5).to_a.shuffle.first
+      end
+
+      association :question, factory: :overall_rating_question, strategy: :build
+
       [:build, :build_stubbed, :create].each do |strategy|
         after(strategy) do |review, evaluator|
           # http://stackoverflow.com/questions/17754770/factorygirl-build-stubbed-strategy-with-a-has-many-association
@@ -23,7 +29,8 @@ FactoryGirl.define do
             review.id = nil
           end
           strategy = :build_stubbed if strategy == :stub
-          answer = evaluator[:answer] || send(strategy, :review_answer, review: review, answer_value: (1..5).to_a.shuffle.first )
+          answer_value = evaluator.answer_value
+          answer = evaluator[:answer] || send(strategy, :review_answer, review: review, answer_value: answer_value )
           review.answers << answer
           answer.review = review
 
@@ -36,6 +43,12 @@ FactoryGirl.define do
     end
 
     factory :teacher_effectiveness_review do
+      ignore do
+        answer_value 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
+              split(',').
+              shuffle.
+              first
+      end
       association :question, factory: :teacher_question, strategy: :build
       [:build, :stub, :create].each do |strategy|
         after(strategy) do |review, evaluator|
@@ -45,14 +58,12 @@ FactoryGirl.define do
             review.id = nil
           end
           strategy = :build_stubbed if strategy == :stub
+          answer_value = evaluator.answer_value
           answer = evaluator[:answer] || send(
             strategy,
             :review_answer,
             review: review,
-            answer_value: 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
-              split(',').
-              shuffle.
-              first
+            answer_value: answer_value
           )
           review.answers << answer
           unless strategy == :create

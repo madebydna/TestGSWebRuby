@@ -188,8 +188,11 @@ class Review < ActiveRecord::Base
   end
 
   def answer
-    answers.first.answer_value.to_i if answers.first
+    answers.first.value if answers.first
   end
 
+  def answer_as_int
+    answer.to_i.to_s == answer.to_s ? answer.to_i : nil
+  end
 
 end

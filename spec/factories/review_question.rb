@@ -10,8 +10,8 @@ FactoryGirl.define do
     school_type 'public,private,charter'
     school_level 'p,e,m,h'
 
-    factory :five_star_rating_question do
-      association :review_topic, factory: :five_star_rating_topic, strategy: :build
+    factory :overall_rating_question do
+      association :review_topic, factory: :overall_topic, strategy: :build
       question 'How would you rate your experience at this school?'
       responses '1,2,3,4,5'
       layout 'overall_stars'

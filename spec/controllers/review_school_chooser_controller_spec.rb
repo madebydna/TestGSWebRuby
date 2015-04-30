@@ -7,7 +7,7 @@ end
 
 describe ReviewSchoolChooserController do
   let(:current_user) { FactoryGirl.build(:user) }
-  let(:five_star_rating_topic) { FactoryGirl.build(:five_star_rating_topic, id: 1) }
+  let(:overall_topic) { FactoryGirl.build(:overall_topic, id: 1) }
   let(:teachers_topic) { FactoryGirl.build(:teachers_topic) }
 
   describe '#review_topic' do
@@ -33,7 +33,7 @@ describe ReviewSchoolChooserController do
       end
       before do
         allow(controller).to receive(:params).and_return(params)
-        allow(ReviewTopic).to receive(:find).with('1').and_return(five_star_rating_topic)
+        allow(ReviewTopic).to receive(:find).with('1').and_return(overall_topic)
       end
       after do
         clean_dbs(:gs_schooldb)
@@ -42,7 +42,7 @@ describe ReviewSchoolChooserController do
         expect(controller.send(:review_topic)).to be_an_instance_of(ReviewTopic)
       end
       it 'should return the topic overall' do
-        expect(controller.send(:review_topic)).to eq(five_star_rating_topic)
+        expect(controller.send(:review_topic)).to eq(overall_topic)
       end
     end
     context 'with no topic parameter not matching a topic' do
@@ -52,7 +52,7 @@ describe ReviewSchoolChooserController do
         }
       end
       before do
-        five_star_rating_topic.save
+        overall_topic.save
         allow(controller).to receive(:params).and_return(params)
       end
         after do
@@ -62,7 +62,7 @@ describe ReviewSchoolChooserController do
         expect(controller.send(:review_topic)).to be_an_instance_of(ReviewTopic)
       end
       it 'should return the topic overall' do
-        expect(controller.send(:review_topic)).to eq(five_star_rating_topic)
+        expect(controller.send(:review_topic)).to eq(overall_topic)
       end
     end
 

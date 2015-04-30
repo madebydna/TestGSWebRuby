@@ -419,7 +419,7 @@ describe Review do
       FactoryGirl.create(:alameda_high_school)
     end
     let(:question) do
-      FactoryGirl.create(:five_star_rating_question)
+      FactoryGirl.create(:overall_rating_question)
     end
     after do
       clean_models School
@@ -460,4 +460,26 @@ describe Review do
     end
   end
 
+  describe '#answer_as_int' do
+    after do
+      clean_models Review
+    end
+    context 'with five star review answer integer value saved as string' do
+      let(:five_star_review_value_4_str) { FactoryGirl.build(:five_star_review, answer_value: '4') }
+      subject { five_star_review_value_4_str }
+      it 'should return answer value as int' do
+        expect(subject.answer_as_int).to be_a(Integer)
+      end
+      it 'should return the correct answer value as integer' do
+        expect(subject.answer_as_int).to eq(4)
+      end
+    end
+    context 'with string review answer string value that is not an integer' do
+      let(:review_with_string_answer) { FactoryGirl.build(:teacher_effectiveness_review)}
+      subject { review_with_string_answer}
+      it 'should return the string answer value as nil' do
+        expect(subject.answer_as_int).to eq(nil)
+      end
+    end
+  end
 end

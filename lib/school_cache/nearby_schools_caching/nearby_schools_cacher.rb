@@ -51,7 +51,7 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   def school_review_avg_score(school_obj)
     school_review_obj(school_obj).rating_averages.overall.avg_score
   end
-
+  # TODO: ask Samson about whether this requires and additional code
   def school_review_obj(school_obj)
     begin
       @review_results_obj[school_obj] ||=

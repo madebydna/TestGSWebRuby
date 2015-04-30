@@ -20,7 +20,7 @@ module ReviewCalculations
     {
       avg_score: average_score.round,
       total: total_score,
-      counter: count_having_rating
+      counter: count_having_numeric_answer
     }
   end
 
@@ -28,24 +28,23 @@ module ReviewCalculations
     @score_distribution ||= (
       reviews_by_answer = group_by(&:answer)
       reviews_by_answer.delete(nil)
-      reviews_by_answer.delete(0)
       reviews_by_answer.each_with_object({}) { |(score, answers), hash| hash[score] = answers.size }.compact
     )
   end
-  # only sum with ineteger
+  # only sum with integer
   def total_score
-    @total_score ||= sum(&:answer)
+    @total_score ||= having_numeric_answer.sum(&:answer_as_int)
   end
 
   def average_score
-    @average_score ||= count_having_rating > 0 ? having_numeric_answer.sum(&:answer) / count_having_rating.to_f : 0
+    @average_score ||= count_having_numeric_answer > 0 ? total_score / count_having_numeric_answer.to_f : 0
   end
 
   def having_numeric_answer
     @having_numeric_answer ||= select { |review| review.answer.present? && review.answer.to_i.to_s == review.answer.to_s }
   end
 
-  def count_having_rating
+  def count_having_numeric_answer
     @count_having_rating ||= having_numeric_answer.count
   end
 end
