@@ -407,4 +407,75 @@ describe 'School Search Service' do
       expect(SchoolSearchService.extract_by_location({lon:2.0, radius:10.0})).to eq('')
     end
   end
+
+  describe '.parse_school_results' do
+    context 'with solr results containing school ID and state' do
+      subject { SchoolSearchService.parse_school_results(solr_results)[:results] }
+      let(:solr_results) do
+        docs = [
+          {
+            'school_database_state' => 'CA',
+            'school_id' => 1,
+            'school_review_count_ruby' => 1, # old value from Solr. We want to test that this isn't being used
+            'community_rating' => 1
+          },
+          {
+            'school_database_state' => 'CA',
+            'school_id' => 2,
+            'school_review_count_ruby' => 1, # old value from Solr. We want to test that this isn't being used
+            'community_rating' => 1
+          }
+        ]
+        {
+          'response' => {
+            'docs' => docs,
+            'numFound' => docs.size,
+            'start' => 0
+          }
+        }
+      end
+      before do
+        allow(SchoolSearchService).to receive(:parse_school_document) do |hash|
+          SchoolSearchResult.new(hash)
+        end
+
+        allow_any_instance_of(SchoolSearchService::SearchResultReviewInfoAppender).to receive(:school_cache_results) do
+          [1, 2].each_with_object({}) do |id, hash|
+            school_cache = SchoolCache.new
+            school_cache.value = {
+              'reviews_snapshot' => {
+                'num_reviews' => 4,
+                'avg_star_rating' => 5
+              }
+            }.to_json
+            hash[['CA', id]] = school_cache
+          end
+        end
+      end
+
+      it 'should not use number of reviews received by Solr' do
+        subject.each do |result|
+          expect(result.review_count).to_not eq(1)
+        end
+      end
+
+      it 'should use correct number of reviews' do
+        subject.each do |result|
+          expect(result.review_count).to eq(4)
+        end
+      end
+
+      it 'should not use number of reviews received by Solr' do
+        subject.each do |result|
+          expect(result.community_rating).to_not eq(1)
+        end
+      end
+
+      it 'should use correct number of star rating' do
+        subject.each do |result|
+          expect(result.community_rating).to eq(5)
+        end
+      end
+    end
+  end
 end

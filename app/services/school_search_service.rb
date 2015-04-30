@@ -115,6 +115,7 @@ class SchoolSearchService
 
   def self.parse_school_results(solr_results)
     normalized_results = []
+    add_review_info_to_search_results!(solr_results)
     solr_results['response']['docs'].each do |school_search_result|
       normalized_results << parse_school_document(school_search_result)
     end
@@ -124,6 +125,10 @@ class SchoolSearchService
         results: normalized_results,
         spellcheck: parse_spellcheck_results(solr_results)
     }
+  end
+
+  def self.add_review_info_to_search_results!(solr_results)
+    SearchResultReviewInfoAppender.new(solr_results).add_review_info_to_search_results!
   end
 
   def self.parse_spellcheck_results(solr_results)
@@ -249,5 +254,66 @@ class SchoolSearchService
     hash.delete :lon
     hash.delete :radius
     query
+  end
+
+
+  class SearchResultReviewInfoAppender
+
+    attr_reader :solr_results
+    REVIEW_INFO_CACHE_KEY = 'reviews_snapshot'
+
+    def initialize(solr_results)
+      @solr_results = solr_results
+    end
+
+    def school_search_documents
+      solr_results['response']['docs']
+    end
+
+    def school_ids
+      school_search_documents.map do |school_search_result|
+        school_search_result['school_id']
+      end
+    end
+
+    def state
+      if school_search_documents.present?
+        school_search_documents.first['school_database_state']
+      end
+    end
+
+    def add_review_info_to_search_results!
+      return unless solr_results.present?
+
+      school_search_documents.each do |school_search_document|
+        school_id = school_search_document['school_id']
+        review_cache_object = review_cache_object_for_school(school_id)
+        if review_cache_object
+          school_search_document['school_review_count_ruby'] = review_cache_object.num_reviews
+          school_search_document['community_rating'] = review_cache_object.star_rating
+        end
+      end
+    end
+
+    def school_cache_results
+      return nil unless school_ids.present? && state.present?
+      @school_cache_results ||= (
+        query = SchoolCacheQuery.new.include_cache_keys(REVIEW_INFO_CACHE_KEYS)
+        query = query.include_schools(state, school_ids)
+        query.query_and_use_cache_keys
+      )
+    end
+
+    def review_cache_object_for_school(school_id)
+      return nil unless school_id.present? && school_cache_results.present?
+
+      school_cache_object = school_cache_results[[state, school_id]]
+      if school_cache_object
+        # I feel that SchoolCacheQuery should have a method called something like .decorator_results
+        # that will extend the results with the correct module, based on the name attribute. Similar to what
+        # SchoolCacheResults is doing but would be more reusable
+        school_cache_object.extend CachedReviewsSnapshotMethods
+      end
+    end
   end
 end
