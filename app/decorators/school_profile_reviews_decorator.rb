@@ -28,13 +28,17 @@ module SchoolProfileReviewsDecorator
 
   # Given a hash for review answer distribution, turn it into an array that will be used to render a bar chart
   def to_bar_chart_array
-    star_distribution = {
-      5 => 0,
-      4 => 0,
-      3 => 0,
-      2 => 0,
-      1 => 0,
-    }.merge(five_star_rating_score_distribution)
+    # Handle input distribution map with keys as integers or keys as strings
+    star_distribution = five_star_rating_score_distribution.gs_rename_keys(&:to_s)
+    star_distribution.reverse_merge!(
+      {
+        '5' => 0,
+        '4' => 0,
+        '3' => 0,
+        '2' => 0,
+        '1' => 0
+      }
+    )
 
     chart = [
       ['Stars', 'count']
