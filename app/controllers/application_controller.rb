@@ -228,8 +228,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cafemom_ip_value
-    # TODO share code with application_helper::remote_ip
-    gon.CF_ATHENA = request.env['X_Forwarded_For'] || request.env['X_CLUSTER_CLIENT'] || request.remote_ip
+    # TODO share code with application_helper::remote_ip?
+    # HTTP_X_CLUSTER_CLIENT_IP is set to "Undefined" when not behind stingray
+    gon.CF_ATHENA = request.env['X_Forwarded_For'] || request.env['HTTP_X_CLUSTER_CLIENT_IP']
+    gon.CF_ATHENA = request.remote_ip if gon.CF_ATHENA == nil || gon.CF_ATHENA == 'Undefined'
   end
 
   # get Page name in PageConfig, based on current controller action
