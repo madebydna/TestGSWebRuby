@@ -21,7 +21,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def topic_label
-    topic_name
+    review.question.review_topic.label
   end
 
   def topic_markup
