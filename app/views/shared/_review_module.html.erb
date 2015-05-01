@@ -20,7 +20,7 @@
 
   <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
     <div class="open-sans_i rs-review-value">
-      <div class="pbs"><%= review.topic_label %>:</div>
+      <%= review.topic_markup %>
       <span class="open-sans_cb">
         <%= review.answer_markup %>
       </span>
