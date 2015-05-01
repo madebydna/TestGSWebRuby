@@ -58,7 +58,7 @@
                 </li>
                 <li>
                     <%= link_to 'Review Your School',
-                        ((defined?(@school) && @school.present?) ? school_reviews_path(@school) : the_scoop_path),
+                        ((defined?(@school) && @school.present?) ? school_reviews_path(@school, anchor: 'topic1') : the_scoop_path),
                         :onclick=>"GS.omniture.track_reviews('GlobalNav');", :class=>'js-no_ad' %>
                 </li>
                 <li><a class="dropdown-toggle js-gaLoad js-gaClick"

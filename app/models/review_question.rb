@@ -11,6 +11,8 @@ class ReviewQuestion < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
+  alias_method :topic, :review_topic
+
   def stars_question?
     layout == 'overall_stars'
   end
