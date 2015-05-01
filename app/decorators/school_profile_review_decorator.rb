@@ -8,14 +8,14 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   def answer_markup
     default_text = 'no rating' # non five-star ratings must have answer specified, no always use 'no rating'
     if review.question.stars_question?
-      answer_value.present? ? h.draw_stars_16(answer_value.to_i) : default_text
+      star_rating.present? ? h.draw_stars_16(star_rating.to_i) : default_text
     else
       answer_value || default_text
     end
   end
 
   def answer_value
-    if !review.answers.empty?
+    unless review.answers.empty?
       review.answers.first.answer_value
     end
   end
@@ -25,7 +25,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def topic_markup
-    h.content_tag(:span, "#{topic_label}:", class: 'pbs') unless topic_label == 'Overall'
+    h.content_tag(:span, "#{topic_label}:", class: 'pbs') unless review.question.stars_question?
   end
 
   def topic_name
