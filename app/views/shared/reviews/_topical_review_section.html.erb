@@ -1,5 +1,10 @@
 <hr/>
-<div class="js-topicalReviewQuestionsContainer ptl mtl">
+<div class="js-topicalReviewQuestionsContainer">
+<div class="pll mbl">
+  <h2 class="">Review Topics</h2>
+    <p class="">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
+      <%= link_to 'Learn more.', review_guidelines_url %></p>
+</div>
   <div class="js-reviewQuestionCarousel">
   <%= render partial: "shared/reviews/modules/topical_review_question_module",
              collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
