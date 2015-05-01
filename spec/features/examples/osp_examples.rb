@@ -44,3 +44,9 @@ shared_example 'should only contain the following values in the form response' d
   end
 end
 
+shared_example 'should not submit value in text field' do
+  response_before_click = page.response_headers['X-Request-Id']
+  osp_page.osp_form.submit.click
+  response_after_click = page.response_headers['X-Request-Id']
+  expect(response_before_click).to eql(response_after_click)
+end

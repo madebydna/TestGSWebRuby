@@ -124,6 +124,60 @@ shared_context 'with a basic set of osp questions in db' do
   include_context 'save osp question to db'
 end
 
+shared_context 'with a basic set of parsley validated osp questions in db' do
+  let(:question_ids) do
+    {
+        boardgames:        1,
+        puzzlegames:       2,
+        videogames:        3
+    }
+  end
+  let(:questions) do
+    [
+        {
+            id: question_ids[:boardgames],
+            esp_response_key: :boardgames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email',
+                    'data-parsley-trigger' => 'keyup'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:videogames],
+            esp_response_key: :videogames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_lg',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email',
+                    'data-parsley-trigger' => 'keyup'
+                }
+            }.to_json
+
+        },
+        {
+            id: question_ids[:puzzlegames],
+            esp_response_key: :puzzlegames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email',
+                    'data-parsley-trigger' => 'keyup'
+                }
+            }.to_json
+
+        }
+    ]
+  end
+
+  include_context 'save osp question to db'
+end
+
 shared_context 'save osp question to db' do
   before do
     questions.each do |question|
