@@ -30,7 +30,7 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
     # This city regex allows for all characters except /
     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    constraints: {state: States.any_state_name_regex, district_name: /[^\/]+/}, to: 'search#district_browse'
+    constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/}, to: 'search#district_browse'
 
   get '/search/search.page', as: :search, to: 'search#search'
 
@@ -115,7 +115,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
     get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
-    get  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit_page
+    post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 

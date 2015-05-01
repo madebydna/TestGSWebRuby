@@ -390,6 +390,14 @@ describe 'School Search Service' do
         expect(rval).to include('+path_to_quality_rating:("Level 2" "Level 3")')
       end
     end
+
+    describe 'handles great start to quality rating' do
+      let (:ratings_4_5) { {filters: {gstq_rating: ['4', '5'] }} }
+      it 'should include the great start to quality rating filter' do
+        rval = SchoolSearchService.extract_hard_filters ratings_4_5
+        expect(rval).to include('+great_start_to_quality_rating:(4 5)')
+      end
+    end
   end
 
   describe '.extract_by_location' do

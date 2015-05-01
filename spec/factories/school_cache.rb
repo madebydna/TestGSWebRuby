@@ -14,4 +14,37 @@ FactoryGirl.define do
     value :value
     updated Time.now
   end
+
+  factory :school_cache_esp_responses, class: SchoolCache do
+    name 'esp_responses'
+    sequence(:school_id) { |n| n }
+    state 'CA'
+    value ({
+      'ap_classes' => {
+        'latin' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        },
+        'japanese' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      },
+      'boys_sports' => {
+        'soccer' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        },
+        'swimming' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      }
+    }.to_json)
+    updated Time.now
+  end
 end

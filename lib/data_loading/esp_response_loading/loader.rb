@@ -47,10 +47,10 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     attr_reader :value_row, :esp_response_update
 
     def should_be_active?
-      value_row.present? && esp_response_update.created_before?(value_row.created) || value_row.blank?
+      (value_row.present? && esp_response_update.created_before?(value_row.created))|| value_row.blank?
     end
 
-    def should_be_disabled?
+    def existing_data_should_be_disabled?
       value_row.present? && esp_response_update.created_before?(value_row.created)
     end
   end
@@ -58,7 +58,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   def handle_update(esp_response_update, value_row)
     value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
 
-    if value_info.should_be_active? && value_info.should_be_disabled?
+    if value_info.should_be_active? && value_info.existing_data_should_be_disabled?
       disable!(esp_response_update, value_row)
     end
 
@@ -81,7 +81,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   end
 
   def insert_into!(esp_response_update, attributes = {})
-    esp_response = EspResponse.new_from_esp_response_update(esp_response_update)
+    esp_response = EspResponse.build_from_esp_response_update(esp_response_update)
     esp_response.attributes = attributes
     esp_response.on_db(esp_response_update.shard).save
   end

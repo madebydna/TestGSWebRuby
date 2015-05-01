@@ -45,9 +45,20 @@ end
 ### DB Setup ###
 
 shared_context 'with a basic set of osp questions in db' do
+  let(:question_ids) do
+    {
+      before_after_care: 1,
+      transportation:    2,
+      dress_code:        3,
+      boardgames:        4,
+      puzzlegames:       5,
+      videogames:        6
+    }
+  end
   let(:questions) do
     [
       {
+        id: question_ids[:before_after_care],
         esp_response_key: :before_after_care,
         osp_question_group_id: nil,
         question_type: 'multi_select',
@@ -59,6 +70,7 @@ shared_context 'with a basic set of osp questions in db' do
         }.to_json
       },
       {
+        id: question_ids[:tansportation],
         esp_response_key: :transportation,
         osp_question_group_id: nil,
         question_type: 'conditional_multi_select',
@@ -74,6 +86,7 @@ shared_context 'with a basic set of osp questions in db' do
         }.to_json
       },
       {
+        id: question_ids[:dress_code],
         esp_response_key: :dress_code,
         osp_question_group_id: nil,
         question_type: 'radio',
@@ -86,17 +99,20 @@ shared_context 'with a basic set of osp questions in db' do
         }.to_json
       },
       {
+          id: question_ids[:boardgames],
           esp_response_key: :boardgames,
           osp_question_group_id: nil,
           question_type: 'input_field_sm'
       },
       {
+          id: question_ids[:videogames],
           esp_response_key: :videogames,
           osp_question_group_id: nil,
           question_type: 'input_field_lg'
 
       },
       {
+          id: question_ids[:puzzlegames],
           esp_response_key: :puzzlegames,
           osp_question_group_id: nil,
           question_type: 'input_field_md'
@@ -168,14 +184,14 @@ shared_context 'enter information into small text field' do
 shared_context 'enter information into medium text field' do
   before do
     form = osp_page.osp_form
-    form.find("form textarea[name='puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
+    form.find("form textarea[name='#{question_ids[:puzzlegames]}-puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 
 shared_context 'enter information into large text field' do
   before do
     form = osp_page.osp_form
-    form.find("form textarea[name='videogames']").set "upupdowndownleftrightleftrightBAstart"
+    form.find("form textarea[name='#{question_ids[:videogames]}-videogames']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 
@@ -186,6 +202,7 @@ shared_context 'submit the osp form' do
   before do
     form = osp_page.osp_form
     form.submit.click if form.present?
+
   end
 
   after { clean_models UpdateQueue, OspFormResponse }
@@ -200,21 +217,17 @@ end
 shared_context 'within input field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
-    form.find("form input[name=#{esp_response_key}]")
+    form.find("form input[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
   end
 end
 
 shared_context 'within textarea field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
-    form.find("form textarea[name=#{esp_response_key}]")
+    form.find("form textarea[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
   end
 end
 
-# Capybara seems to execute some commands asychounously.
-# In this case, it doesn't wait for the request to finish before executing this block,
-# So a form submission won't be able to save rows into the db before this block retrieves rows
-# leaving this here for now, but will need to think of a clean way to still test this flow
 shared_context 'the OspFormResponse objects\' responses in the db' do
   before { current_url } #buffers execution timing to prevent async issue. See queue_daemon_contexts
   subject do

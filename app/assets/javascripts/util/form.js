@@ -326,7 +326,22 @@ GS.forms.elements = (function() {
     var disableTriggerAndTargetParent = ".js-disableTriggerAndTargetParent";
     var responsiveRadioSelector = ".js-responsiveRadio";
     var responsiveRadioGroupSelector = ".js-responsiveRadioGroup";
+    var editAutocompleteVal = '.js-editAutocompleteVal';
+    var selectedAutocompleteVal = '.js-selectedAutocompleteVal';
+    var autocompleteContainer = '.js-autocompleteContainer';
+    var autocompleteFieldContainer = '.js-autocompleteFieldContainer';
+    var doNotSeeResult = '.js-doNotSeeResult';
+    var selectListsContianer = '.js-selectListsContainer';
+    var citySelect = '.js-citySelect';
+    var schoolSelect = '.js-schoolSelect';
+    var typeahead = '.typeahead';
     var click = "click";
+    var change = "change";
+    var keyup = 'keyup';
+    var dataState = 'state';
+    var dataNoResultText = 'no-result-text';
+    var dataReturnToSearchText = 'return-to-search-text';
+    var dataResponseKey = 'response-key';
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
         $(parentListenerSelector).on(click, checkboxButtonSelector, function() {
@@ -416,6 +431,144 @@ GS.forms.elements = (function() {
         });
     };
 
+    //AUTOCOMPLETE BEGIN
+    var setEditAutocompleteHandler = function(sectionContainer) {
+        $(sectionContainer).on(click, editAutocompleteVal, function() {
+            var $self = $(this);
+            var $autocompleteContainer = $self.closest(autocompleteContainer);
+            var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
+            var $doNotSeeResults = $autocompleteContainer.find(doNotSeeResult);
+            var doNotShowText = $doNotSeeResults.data(dataNoResultText);
+
+            $doNotSeeResults.text(doNotShowText);
+            $self.closest(selectedAutocompleteVal).hide('slow', function() {
+                $doNotSeeResults.show('fast');
+                $autocompleteFieldContainer.show('slow');
+                $self.siblings('input').removeAttr('name').removeAttr('value')
+            });
+        });
+    };
+
+    var setAutocompleteVal = function(text, $elementToHide) {
+        var $autocompleteContainer = $elementToHide.closest(autocompleteContainer);
+        var $doNotSeeResults = $autocompleteContainer.find(doNotSeeResult);
+        var $val = $autocompleteContainer.find(selectedAutocompleteVal + ':hidden:first');
+        var $input = $val.find('input');
+        var keyName = $input.data(dataResponseKey);
+
+        $elementToHide.hide('slow', function() {
+            $doNotSeeResults.hide('fast');
+            $input.val(text);
+            $input.attr('name', keyName);
+            $val.find('span').text(text);
+            $val.show('slow');
+        });
+    };
+
+    var setDoNotSeeResultHandlers = function(dontSeeResultCallback) {
+        setShowDoNotSeeResultsHandler();
+        setToggleDoNotSeeResultsHandler(dontSeeResultCallback)
+    };
+
+    var setShowDoNotSeeResultsHandler = function() {
+        $(autocompleteContainer).on(keyup, typeahead, function(){
+            var $self = $(this);
+            if ($self.val().length >= 3) {
+                var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
+                $doNotSeeResult.removeClass('dn');
+            }
+        });
+    };
+
+    var setToggleDoNotSeeResultsHandler = function(dontSeeResultCallback) {
+        $(autocompleteContainer).on('click', doNotSeeResult, function(){
+            var $self = $(this);
+            var $autocompleteContainer = $self.closest(autocompleteContainer);
+            var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
+            var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
+
+            if ($self.text().trim() == $self.data(dataNoResultText)) {
+                dontSeeResultCallback.call(this, $self, $autocompleteContainer);
+                $self.text($self.data(dataReturnToSearchText));
+            } else {
+                $selectListsContainer.hide('slow', function() {
+                    $autocompleteFieldContainer.show('slow');
+                });
+                $self.text($self.data(dataNoResultText));
+            }
+        });
+    };
+
+    //Call with call or apply on js-dontSeeResult link
+    var loadCities = function($self, $autocompleteContainer) {
+        var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
+        var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
+        var $citySelect = $autocompleteContainer.find(citySelect);
+        var state = $self.data(dataState);
+
+        $.ajax({
+            type: 'GET',
+            url: "/gsr/ajax/get_cities",
+            data: {state: state},
+            async: true
+        }).done(function(data) {
+            $citySelect.find('option').remove();
+            $citySelect.append('<option>'+'Select city'+'</option>');
+            for(i=0; i < data.length; i++){
+                $citySelect.append('<option data-value="'+data[i]+'">'+data[i]+'</option>');
+            }
+            $autocompleteFieldContainer.hide('slow', function() {
+                $citySelect.removeClass('dn');
+                $selectListsContainer.show('slow');
+            })
+        });
+    };
+
+    var setCitySelectedHandler = function() {
+        $(autocompleteContainer).on(change, citySelect, function() {
+            var $self = $(this);
+            var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
+            var $schoolSelect = $self.siblings(schoolSelect + ':first');
+
+            $.ajax({
+                type: 'GET',
+                url: "/gsr/ajax/get_schools",
+                data: {state: $doNotSeeResult.data(dataState), city: $self.find(':selected').data('value')},
+                async: true
+            }).done(function(data) {
+                $schoolSelect.find('option').remove();
+                $schoolSelect.append('<option>'+'Select school'+'</option>');
+                for(i=0; i < data.length; i++){
+                    $schoolSelect.append('<option data-value="'+data[i].name+'">'+data[i].name+'</option>');
+                }
+                $schoolSelect.removeClass('dn');
+            });
+        });
+    };
+
+    var setSchoolSelectedHandler = function() {
+        $(autocompleteContainer).on(change, schoolSelect, function() {
+            var $self = $(this);
+            var schoolName = $self.find(':selected').data('value');
+            setAutocompleteVal(schoolName, $(this).closest(selectListsContianer))
+        });
+    };
+
+    var initOspPageAutocomplete = function(parentContainer) {
+        setEditAutocompleteHandler(parentContainer);
+        setDoNotSeeResultHandlers(loadCities);
+        setCitySelectedHandler();
+        setSchoolSelectedHandler();
+
+        var markup = GS.search.autocomplete.display.schoolResultsNoLinkMarkup;
+        GS.search.autocomplete.selectAutocomplete.init(gon.state_name, markup, function(event, suggestion, dataset) {
+            setAutocompleteVal(suggestion['school_name'], $(this).closest(autocompleteFieldContainer));
+        });
+    };
+
+    //AUTOCOMPLETE END
+
+
     return {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
         setEnableDisableElementsAndInputsHandler: setEnableDisableElementsAndInputsHandler,
@@ -423,7 +576,9 @@ GS.forms.elements = (function() {
         enableElementAndChildInputs: enableElementAndChildInputs,
         disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive,
         setResponsiveRadioHandler: setResponsiveRadioHandler,
-        setCustomSubmitHandler: setCustomSubmitHandler
+        setCustomSubmitHandler: setCustomSubmitHandler,
+        setEditAutocompleteHandler: setEditAutocompleteHandler,
+        initOspPageAutocomplete: initOspPageAutocomplete
     }
 
 })();

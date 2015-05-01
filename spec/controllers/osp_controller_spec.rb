@@ -26,6 +26,15 @@ describe Admin::OspController do
           get :show, state: school.state, schoolId: school.id, page: page_number
           expect(response).to render_template(page)
         end
+
+        it 'should have correct osp page meta tag' do
+          allow(controller).to receive(:set_meta_tags)
+        end
+
+        it 'should have correct omniture tracking' do
+          allow(controller).to receive(:set_omniture_data_for_school)
+          allow(controller).to receive(:set_omniture_data_for_user_request)
+        end
       end
     end
 
@@ -56,7 +65,7 @@ describe Admin::OspController do
         osp_facilities_staff: 4
       }.each do |page, page_number|
         it "should redirect user back to #{page} page when submit is clicked on the #{page} page" do
-          get :submit, state: school.state, schoolId: school.id, page: page_number
+          post :submit, state: school.state, schoolId: school.id, page: page_number
           expect(response.location).to match(admin_osp_page_url.chop) #chop trailing slash
         end
       end
@@ -102,6 +111,11 @@ describe Admin::OspController do
             expect(id).to eql(esp_membership.id)
           end
         end
+
+        it 'should escape html, iframe and script tags' do
+          # escaped method is called
+          # escaped method is acoutally escaping
+        end
       end
 
       context 'send osp form submit request' do
@@ -109,7 +123,7 @@ describe Admin::OspController do
 
         it 'should have called flash_success' do
           expect(controller).to receive(:flash_success)
-          get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+          post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
         end
       end
     end
@@ -125,7 +139,7 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
     end
   end
@@ -141,11 +155,11 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_notice' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
       end
     end
   end

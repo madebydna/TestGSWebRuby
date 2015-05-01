@@ -7,6 +7,7 @@
 
 <% display_question_label     = display_question.displayed_label %>
 <% display_text_and_value_map = display_question.displayed_answers %>
+<% q_id                       = display_question.osp_question_id %>
 <% response_key  %>
 <% preexisting_esp_values %>
 <% active_value = [*preexisting_esp_values].first %>
@@ -23,7 +24,7 @@
   <div class="col-xs-12">
     <%= render 'shared/form_elements/responsive_radio',
       text_value_pair: display_text_and_value_map,
-      key: response_key,
+      key: "#{q_id}-#{response_key}",
       active_value: active_value
     %>
   </div>

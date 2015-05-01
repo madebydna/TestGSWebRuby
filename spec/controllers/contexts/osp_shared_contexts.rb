@@ -11,20 +11,34 @@ shared_context 'user esp_membership status is' do | user_type |
   after { clean_models User, UserProfile, EspMembership }
 end
 
-shared_context 'using a basic set of question keys and answers' do
+shared_context 'set question and request keys' do
   let(:question_keys_and_answers) do
-    {
-      before_after_care: [:before, :after],
-      transportation: [:bus, :train, :canoe],
-      sports: [:basket_weaving, :plate_spinning]
-    }
+    questions_with_ids_and_answers.inject({}) do |h, question|
+      h.merge({question[:response_key] => question[:answers]})
+    end
   end
+  let(:request_keys_and_answers) do
+    questions_with_ids_and_answers.inject({}) do |h, question|
+      h.merge({"#{question[:id]}-#{question[:response_key]}" => question[:answers]})
+    end
+  end
+end
+
+shared_context 'using a basic set of question keys and answers' do
+  let(:questions_with_ids_and_answers) do
+    [
+      {id: 1, response_key: 'before_after_care', answers: [:before, :after]},
+      {id: 2, response_key: 'transportation', answers: [:bus, :train, :canoe]},
+      {id: 3, response_key: 'boys_sports', answers: [:basket_weaving, :plate_spinning]}
+    ]
+  end
+  include_context 'set question and request keys'
 end
 
 shared_context 'Osp question key and answers saved in the db' do
   before do
-    question_keys_and_answers.each_key do |key|
-      FactoryGirl.create(:osp_question, esp_response_key: key)
+    questions_with_ids_and_answers.each do |question|
+      FactoryGirl.create(:osp_question, id: question[:id], esp_response_key: question[:response_key])
     end
   end
   after { clean_models OspQuestion }
@@ -48,7 +62,7 @@ end
 #depends on having all dependencies met
 shared_context 'send osp form submit request' do
   before do
-    get :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+    get :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
   end
   after { clean_models UpdateQueue, OspFormResponse }
 end
