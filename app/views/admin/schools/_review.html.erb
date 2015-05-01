@@ -28,10 +28,18 @@
     </div>
     <div class="rightcolumn col-lg-8">
         <h5>Review</h5>
+        <div class="rs-review-topic">
+          Topic: <%= review.question.topic.name %>
+        </div>
+        <div class="rs-review-answer">
+          Response: <%= review.answer %>
+        </div>
+        <br/>
         <div class="rs-review-comment">
           <%= review.comment %>
         </div>
         <br/>
+
 
         <%= render 'review_flags', review: review %>
         <hr/>

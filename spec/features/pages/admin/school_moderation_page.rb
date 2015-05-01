@@ -28,6 +28,8 @@ class SchoolModerationPage < SitePrism::Page
     element :activate_button, 'button', text: 'Activate'
     element :resolve_flags_button, 'button', text: 'Resolve all flags'
     element :flag_review_button, 'button', text: 'Flag this review'
+    element :review_answer, '.rs-review-answer'
+    element :review_topic, '.rs-review-topic'
 
     class ReviewFlagSection < SitePrism::Section
       element :reason, 'td:nth-child(1)'

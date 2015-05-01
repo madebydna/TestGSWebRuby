@@ -9,7 +9,7 @@ end
 
 shared_context 'flagged reviews' do
   let!(:user) { FactoryGirl.create(:verified_user) }
-  let!(:review) { FactoryGirl.create(:review, :flagged, user: user, school: school) }
+  let!(:review) { FactoryGirl.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
   after do
     clean_dbs :gs_schooldb, :surveys, :community
   end
@@ -78,6 +78,8 @@ describe 'School moderate page' do
             it { is_expected.to have_flag_review_button }
             it { is_expected.to have_notes_box }
             it { is_expected.to have_save_notes_button }
+            it { is_expected.to have_review_answer }
+            it { is_expected.to have_review_topic }
 
             it { is_expected.to have_open_flags }
             it { is_expected.to_not have_resolved_flags }
