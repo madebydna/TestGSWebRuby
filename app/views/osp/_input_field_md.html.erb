@@ -1,7 +1,8 @@
 <% display_question_label = display_question.displayed_label %>
 <% q_id                   = display_question.osp_question_id %>
 <% display_validations    = display_question.display_validations %>
-<% parsley_validations = [*display_validations].inject('') { |string, (k , v)| string << "#{k}=#{v} " } %>
+<% parsley_validations = [*display_validations].inject('') { |string, (k , v)| string << "#{k}=#{v} " } if display_validations.present? %>
+<% parsley_trigger_keyup = display_validations.nil? ? '' : @keyup%>
 
 <% response_key  %>
 
@@ -14,5 +15,5 @@
     </h3>
   </div>
 
-  <textarea <%= parsley_validations %> class="form-control input-field-md" rows="0" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>"><%= preexisting_esp_values[0] %></textarea>
+  <textarea <%= parsley_validations %> <%= parsley_trigger_keyup %> class="form-control input-field-md" rows="0" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>"><%= preexisting_esp_values[0] %></textarea>
 </div>
