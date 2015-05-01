@@ -1,0 +1,38 @@
+.topical-review-container {
+  @extend .bg-light-gray;
+  @extend .limit-width-1200;
+  @extend .gray-box-border-v;
+  @extend .row;
+  .topical-review-question-container {
+    @extend .col-xs-12;
+    @extend .col-md-6;
+    @extend .gray-box-border-tlr;
+    @extend .tac;
+    @media (max-width: $screen-md-min){
+      min-height: 280px;
+    }
+    @media (max-width: $screen-sm-min){
+      min-height: 200px;
+    }
+  }
+  .question-title{
+    @extend .bg-yellow;
+    @extend .open-sans_sb;
+    @extend .pvl;
+  }
+
+  .overall-star-container {
+    @extend .tac;
+    @extend .col-xs-2;
+    @extend .mbm;
+
+  }
+  .review-comment {
+    @extend .ptl;
+    @extend .phl;
+    .question-submit{
+      @extend .mtm;
+    }
+  }
+}
+

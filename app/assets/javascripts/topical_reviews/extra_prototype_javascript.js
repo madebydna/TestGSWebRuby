@@ -475,9 +475,20 @@
 //        showQuestionsComplete: showQuestionsComplete
 //};
 //})();
-
-
-
+//
+// var textBoxCharacters = function(textBox) {
+//    var reviewContainer = $(textBox).parents('.js-topicalReviewContainer');
+//    var characterCount = textBox.value.length;
+//    if (characterCount > 0) {
+//        $(reviewContainer).find('.js-gs-results-snapshot').hide();
+//        $(reviewContainer).find('.js-topicalReviewComment').show();
+//    }
+//    else {
+//        $(reviewContainer).find('.js-topicalReviewComment').hide();
+//        $(reviewContainer).find('.js-gs-results-snapshot').show();
+//    }
+//};
+//
 //
 
 //    $('.js-topicalReviewContainer').first().show();

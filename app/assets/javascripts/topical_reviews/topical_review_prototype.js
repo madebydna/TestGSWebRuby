@@ -1,24 +1,24 @@
 GS.topicalReview = GS.topicalReview || {};
 
-GS.topicalReview.starRating = (function() {
-    var YELLOW_STAR_SELECTOR = 'i-52-orange-star';
-    var GREY_STAR_SELECTOR = 'i-52-grey-star';
+GS.topicalReview.starRating = (function () {
+    var YELLOW_STAR_SELECTOR = 'i-48-orange-star';
+    var BLUE_STAR_SELECTOR = 'i-48-blue-star';
     var INDIVIDUAL_STAR_CONTAINER = '.js-topicalReviewStarContainer';
     var INDIVIDUAL_STAR_SELECTOR = '.js-topicalReviewStar';
     var LABEL_BOLD_CLASS = 'open-sans_sb';
     var HIDDEN_FIELDS_DATA_SELECTOR = 'fields';
 
-    var applyStarRating = function(container, hiddenField) {
+    var applyStarRating = function (container, hiddenField) {
 
-        var selectStar = function(rating) {
+        var selectStar = function (rating) {
 
-            $(container).find(INDIVIDUAL_STAR_SELECTOR).each(function(index) {
+            $(container).find(INDIVIDUAL_STAR_SELECTOR).each(function (index) {
                 var star_rating = index + 1;
                 if (star_rating <= rating) {
                     $(this).addClass(YELLOW_STAR_SELECTOR);
-                    $(this).removeClass(GREY_STAR_SELECTOR);
+                    $(this).removeClass(BLUE_STAR_SELECTOR);
                 } else {
-                    $(this).addClass(GREY_STAR_SELECTOR);
+                    $(this).addClass(BLUE_STAR_SELECTOR);
                     $(this).removeClass(YELLOW_STAR_SELECTOR);
                 }
                 if (star_rating === rating) {
@@ -33,7 +33,7 @@ GS.topicalReview.starRating = (function() {
 
         };
 
-        $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function() {
+        $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function () {
             $this = $(this);
             var hiddenFieldsContainer = $(".js-starHiddenFields");
             hiddenFieldsContainer.empty();
@@ -42,13 +42,13 @@ GS.topicalReview.starRating = (function() {
             hiddenFieldsContainer.append(hidden_field);
             $(hiddenField).val(rating);
             selectStar(rating);
-       });
+        });
 
-        $(container).on('mouseover', INDIVIDUAL_STAR_CONTAINER, function() {
+        $(container).on('mouseover', INDIVIDUAL_STAR_CONTAINER, function () {
             selectStar($(this).index() + 1);
         });
 
-        $(container).on('mouseout', INDIVIDUAL_STAR_CONTAINER, function() {
+        $(container).on('mouseout', INDIVIDUAL_STAR_CONTAINER, function () {
             var rating = $('.js-starHiddenFields').find('input').val()
             selectStar(rating);
             var selectedStar = $(container).find(INDIVIDUAL_STAR_CONTAINER).get(rating - 1);
@@ -63,10 +63,10 @@ GS.topicalReview.starRating = (function() {
 
 })();
 
-GS.topicalReview.checkBoxes = (function (){
-   var CHECKBOX_CONTAINER = '.js-checkboxContainer';
-   var ICON_SELECTOR =  '.js-icon';
-   var HIDDEN_FIELDS_DATA_SELECTOR = 'fields';
+GS.topicalReview.checkBoxes = (function () {
+    var CHECKBOX_CONTAINER = '.js-checkboxContainer';
+    var ICON_SELECTOR = '.js-icon';
+    var HIDDEN_FIELDS_DATA_SELECTOR = 'fields';
 
     var init = function () {
 
@@ -104,22 +104,22 @@ GS.topicalReview.checkBoxes = (function (){
         });
 
 //        Ajax submission for checkBox question
-        $('.new_review').on('ajax:success', function(event, xhr, status, error) {
-          var redirect_url = xhr.redirect_url;
-            if(redirect_url !== undefined && redirect_url !== '') {
-              window.location = redirect_url;
+        $('.new_review').on('ajax:success', function (event, xhr, status, error) {
+            var redirect_url = xhr.redirect_url;
+            if (redirect_url !== undefined && redirect_url !== '') {
+                window.location = redirect_url;
             }
             var reviewContainer = $(this).parents('.js-topicalReviewContainer');
             $(reviewContainer).addClass('js-reviewComplete');
             var carousel = $('.js-reviewQuestionCarousel')
             carousel.slick('slickNext')
-        }).on('ajax:error', function(event, xhr, status, error){
-          alert(xhr.responseText);
+        }).on('ajax:error', function (event, xhr, status, error) {
+            alert(xhr.responseText);
         });
     };
 
     return {
-     init: init
+        init: init
     }
 
 })();
@@ -134,14 +134,14 @@ GS.topicalReview.questionCarousel = (function () {
         return question.data('slickIndex') || 0;
     }
 
-    var filterOutClonedQuestions = function(matchingQuestions) {
+    var filterOutClonedQuestions = function (matchingQuestions) {
         return $(matchingQuestions).filter(function () {
             return !$(this).hasClass('slick-cloned')
         })
     }
 
     var getTopicId = function () {
-       return GS.uri.Uri.getHashValue().slice(5);
+        return GS.uri.Uri.getHashValue().slice(5);
     }
 
     var init = function () {
@@ -167,16 +167,18 @@ GS.topicalReview.questionCarousel = (function () {
     }
 })();
 
-GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() {
+GS.topicalReview.characterCount = (function () {
+    var TOPICAL_REVIEW_CONTAINER = '.js-topicalReviewContainer';
+    var CHARACTER_MESSAGE_DISPLAY = '.js-reviewCharacterDisplay';
+    var CHARACTER_COUNT_DISPLAY = '.js-reviewCharacterCount'
+    var MAX_CHARACTERS = 2400;
 
-    var RADIO_BUTTON = '.js-topicalRadioButton';
-
-    var GS_countCharacters = function (textField) {
-        var reviewContainer = $(textField).parents('.js-topicalReviewContainer');
-        var characterDisplay = $('.js-review-character-display');
-        var characterCountDisplay = $(reviewContainer).find(".js-review-character-count");
+    var init = function (textField) {
+        var reviewContainer = $(textField).parents(TOPICAL_REVIEW_CONTAINER);
+        var characterDisplay = $(CHARACTER_MESSAGE_DISPLAY);
+        var characterCountDisplay = $(reviewContainer).find(CHARACTER_COUNT_DISPLAY);
         var characterCount = textField.value.length;
-        var maxCharacters = 2400;
+        var maxCharacters = MAX_CHARACTERS;
         var remainingCharacters = maxCharacters - characterCount;
         if (characterCount > 0) {
             $(characterDisplay).show();
@@ -187,43 +189,36 @@ GS.topicalReview.reviewQuestion = GS.topicalReview.reviewQuestion|| (function() 
         }
     };
 
-    var textBoxCharacters = function(textBox) {
-        var reviewContainer = $(textBox).parents('.js-topicalReviewContainer');
-        var characterCount = textBox.value.length;
-        if (characterCount > 0) {
-            $(reviewContainer).find('.js-gs-results-snapshot').hide();
-            $(reviewContainer).find('.js-topicalReviewComment').show();
-        }
-        else {
-            $(reviewContainer).find('.js-topicalReviewComment').hide();
-            $(reviewContainer).find('.js-gs-results-snapshot').show();
-        }
-    };
+    return {
+        init: init
+    }
+})();
 
-    var optionSelected = function (reviewContainer){
-        $(reviewContainer).find('.js-gs-results-snapshot').hide();
-        $(reviewContainer).find('.js-topicalReviewComment').show();
-    };
+GS.topicalReview.radioButton = GS.topicalReview.radioButton || (function () {
+
+    var RADIO_BUTTON = '.js-topicalRadioButton';
 
     var init = function () {
         $(RADIO_BUTTON).on('change', function () {
             var self = $(this);
             var reviewContainer = self.parents('.js-topicalReviewContainer');
-            GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
+            showCommentField(reviewContainer);
         });
     };
 
+    var showCommentField = function (reviewContainer) {
+        $(reviewContainer).find('.js-gs-results-snapshot').hide();
+        $(reviewContainer).find('.js-topicalReviewComment').show();
+    };
+
     return {
-        GS_countCharacters: GS_countCharacters,
-        optionSelected: optionSelected,
-        textBoxCharacters: textBoxCharacters,
         init: init
     };
 })();
 
-$(function() {
+$(function () {
 
-    GS.topicalReview.reviewQuestion.init();
+    GS.topicalReview.radioButton.init();
 
     GS.topicalReview.starRating.applyStarRating('.js-topicalReviewStars', '#js-topicalOverallRating');
 

@@ -1,21 +1,20 @@
-<div class="js-topicalReviewComment dn">
-  <%= f.text_area :comment, {class: "form-control js-review-comment-input",
-                            onkeyup:"GS.topicalReview.reviewQuestion.GS_countCharacters(this)",
-                            rows: "8",
-                            placeholder:"Please share why you feel this way. (optional)" } %>
-  <footer>
+<% f %>
+<%
+   placeholder = options[:placeholder]
+   display = options[:display] ||= ""
+%>
+<div class="review-comment js-topicalReviewComment <%= display %>">
+  <%= f.text_area :comment, {class: "form-control",
+                             onkeyup: "GS.topicalReview.characterCount.init(this)",
+                             rows: "8",
+                             placeholder: placeholder} %>
+  <div>
     <div class="fl">
-      <p class="help-block js-review-character-display dn">You have <span class="js-review-character-count"></span> left in your review</p>
-      <div class="js-review-submit-errors has-error dn">
-        <p class="help-block ">
-          You can't submit question without selecting at least one checkbox.
-        </p>
-      </div>
+      <p class="help-block js-reviewCharacterDisplay dn">You have <span class="js-reviewCharacterCount"></span> left
+        in your review</p>
     </div>
-    <div class="js-gs-submit-comment">
-      <div class="fr mbm">
-        <button type="submit" class="btn btn-primary js-review-question-submit">Submit</button>
-      </div>
+    <div class="fr">
+      <button type="submit" class="btn question-submit btn-primary">Submit</button>
     </div>
-  </footer>
+  </div>
 </div>
