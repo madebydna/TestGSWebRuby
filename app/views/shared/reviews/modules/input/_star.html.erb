@@ -8,7 +8,7 @@
       <%= builder.hidden_field(:answer_value, {value: response_value}) %>
     </fieldset>
 <% end %>
-<div class="<%= offset %> overall-star-container js-topicalReviewStarContainer"  data-fields="<%= fields.gsub("\n", "") %>">
+<div class="<%= offset %> col-xs-2 tac mbm js-topicalReviewStarContainer"  data-fields="<%= fields.gsub("\n", "") %>">
   <div class="iconx48-stars i-48-blue-star i-48-star-1 js-topicalReviewStar"></div>
   <div class="js-topicalReviewLabel gray-dark"><%= options[:label_value] %></div>
 </div>

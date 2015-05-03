@@ -47,7 +47,7 @@ class Review < ActiveRecord::Base
     :member_id,
     scope: [:school_id, :state, :review_question_id],
     conditions: -> { where(active: 1) },
-    message: 'Each question can only be answered once'
+    message: 'You have already submitted a review for this topic.'
   )
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
   validates_presence_of :school

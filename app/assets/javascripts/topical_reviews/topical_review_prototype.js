@@ -35,7 +35,11 @@ GS.topicalReview.starRating = (function () {
 
         $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function () {
             $this = $(this);
+            var starDummyValidationField = $('.dummy').parsley()[0];
             var hiddenFieldsContainer = $(".js-starHiddenFields");
+//            This resets the dummy field used to validate the rating using parsley
+//            TODO: find a better way to do this
+            starDummyValidationField.reset();
             hiddenFieldsContainer.empty();
             var rating = $this.index() + 1;
             var hidden_field = $this.data('fields');
@@ -102,21 +106,34 @@ GS.topicalReview.checkBoxes = (function () {
             GS.topicalReview.reviewQuestion.optionSelected(reviewContainer);
             toggleCheckbox(self);
         });
-
-//        Ajax submission for checkBox question
-        $('.new_review').on('ajax:success', function (event, xhr, status, error) {
-            var redirect_url = xhr.redirect_url;
-            if (redirect_url !== undefined && redirect_url !== '') {
-                window.location = redirect_url;
-            }
-            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
-            $(reviewContainer).addClass('js-reviewComplete');
-            var carousel = $('.js-reviewQuestionCarousel')
-            carousel.slick('slickNext')
-        }).on('ajax:error', function (event, xhr, status, error) {
-            alert(xhr.responseText);
-        });
     };
+
+    return {
+        init: init
+    }
+
+})();
+
+    GS.topicalReview.form = (function () {
+//        Ajax submission for checkBox question
+        var init = function () {
+
+            $('.new_review').on('ajax:before', function (event, xhr, status, error) {
+            }).on('ajax:success', function (event, xhr, status, error) {
+                var redirect_url = xhr.redirect_url;
+                if (redirect_url !== undefined && redirect_url !== '') {
+                    window.location = redirect_url;
+                }
+                var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+                $(reviewContainer).addClass('js-reviewComplete');
+                var carousel = $('.js-reviewQuestionCarousel')
+                carousel.slick('slickNext')
+            }).on('ajax:error', function (event, xhr, status, error) {
+                var errorMessage = xhr.responseJSON.join(' ');
+                var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
+                errorMessageContainer.html(errorMessage);
+            });
+        };
 
     return {
         init: init
@@ -218,11 +235,13 @@ GS.topicalReview.radioButton = GS.topicalReview.radioButton || (function () {
 
 $(function () {
 
+    GS.topicalReview.form.init();
+
     GS.topicalReview.radioButton.init();
 
     GS.topicalReview.starRating.applyStarRating('.js-topicalReviewStars', '#js-topicalOverallRating');
 
-    GS.topicalReview.checkBoxes.init();
+//    GS.topicalReview.checkBoxes.init();
 
     GS.topicalReview.questionCarousel.init();
 });
