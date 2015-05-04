@@ -4,13 +4,11 @@ class OspData
 
   attr_accessor :cachified_school, :osp_form_responses
 
-  singleton_class.send(:alias_method, :for, :new)
-
   SCHOOL_CACHE_KEYS = %w(esp_responses)
 
   def initialize(school)
     @cachified_school = decorate_school(school)
-    #probably should be doing uniq in mysql instead of ruby. Also if in ruby, may want to add limit
+    #probably should be doing a unique/distinct in mysql. Also if in ruby, may want to add limit
     @osp_form_responses = OspFormResponse.for_school(school).order(:osp_question_id, updated: :desc).to_a
   end
 

@@ -5,6 +5,9 @@ require 'features/contexts/compare_schools_contexts'
 require_relative '../examples/osp_examples'
 require_relative '../examples/footer_examples'
 require_relative '../../../spec/features/contexts/osp_contexts'
+require 'features/examples/osp_examples'
+require 'features/examples/footer_examples'
+require 'features/contexts/osp_contexts'
 
 describe 'OSP Basic Page' do
   with_shared_context 'visit OSP page' do

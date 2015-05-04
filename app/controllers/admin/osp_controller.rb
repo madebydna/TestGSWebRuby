@@ -10,7 +10,7 @@ class Admin::OspController < ApplicationController
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
 
   def show
-    @osp_data = OspData.for(@school) #add rescue here that shows nice error
+    @osp_data = OspData.new(@school) #add rescue here that shows nice error
     render_osp_page
   end
 

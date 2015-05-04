@@ -94,7 +94,7 @@ def shared_example(name, &block)
 end
 
 def with_shared_context(name, *args, &block)
-  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  js_arg = process_args(args)
   describe *[name, js_arg].compact do
     include_context name, *args
     instance_exec &block
@@ -102,8 +102,7 @@ def with_shared_context(name, *args, &block)
 end
 
 def when_I(name, *args, &block)
-  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
-  args.shift if js_arg
+  js_arg = process_args(args)
   describe *[name, js_arg].compact do
     before do
       page_object.send(name.to_s.gsub(' ', '_'), *args)
@@ -113,8 +112,7 @@ def when_I(name, *args, &block)
 end
 
 def on_subject(name, *args, &block)
-  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
-  args.shift if js_arg
+  js_arg = process_args(args)
   describe *[name, js_arg].compact do
     before do
       subject.send(name.to_s.gsub(' ', '_'), *args)
@@ -124,8 +122,7 @@ def on_subject(name, *args, &block)
 end
 
 def with_subject(name, *args, &block)
-  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
-  args.shift if js_arg
+  js_arg = process_args(args)
   describe *[name, js_arg].compact do
      subject do
        page_object.send(name.to_s.gsub(' ', '_'), *args)
@@ -134,6 +131,9 @@ def with_subject(name, *args, &block)
    end
 end
 
+def process_args(args)
+  args.try(:last).try(:has_key?, :js) ? args.pop : nil
+end
 
 
 # Takes as arguments as list of db names as symbols

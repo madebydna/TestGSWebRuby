@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../spec/support/shared_contexts_for_signed_in_users'
+require 'support/shared_contexts_for_signed_in_users'
 require 'features/selectors/osp_page'
 
 ### Setting Up Signed in User ###
@@ -184,7 +184,7 @@ shared_context 'save osp question to db' do
       FactoryGirl.create(:osp_question, :with_osp_display_config, question)
     end
   end
-  after { clean_models OspQuestion, OspDisplayConfig }
+  after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
 end
 
 ### Clicking Buttons ###
@@ -209,17 +209,17 @@ end
 
 shared_context 'click the none option on a conditional multi select question group' do
   before do
-    trigger = osp_page.osp_form.disabledElementTrigger.first
+    trigger = osp_page.osp_form.conditionalMultiSelectTrigger.first
     trigger.click if trigger.present?
   end
   subject do
-    osp_page.osp_form.disabledElementTarget
+    osp_page.osp_form.conditionalMultiSelectTarget
   end
 end
 
 shared_context 'click a value in a conditional multi select group and then click none' do
   before do
-    button = osp_page.osp_form.disabledElementTarget.first
+    button = osp_page.osp_form.conditionalMultiSelectTarget.first
     button.click if button.present?
   end
 
