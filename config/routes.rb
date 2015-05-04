@@ -74,7 +74,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/special-education.topic?content=1541', as: :learning_difficulties
     get '/parenting.topic?content=1539', as: :health_and_behavior
     # TODO: see how to fix this route for ruby
-    get '/school/parentReview.page', as: :the_scoop
+    get '/reviews/', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
