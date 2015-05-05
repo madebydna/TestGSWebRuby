@@ -4,4 +4,4 @@
 <% hier1 = controller.gon.all_variables.try(:fetch, 'omniture_hier1', {}) %>
 <% query_string = "query=gslev=#{school_level}&gstype=#{school_type}&gshier1=#{hier1}" %>
 
-<%= javascript_include_tag("cm_athena_gs.js?#{query_string}", id: 'cm_athena') %>
+<%= javascript_include_tag("cm_athena_gs_v2.js?#{query_string}", id: 'cm_athena') %>
