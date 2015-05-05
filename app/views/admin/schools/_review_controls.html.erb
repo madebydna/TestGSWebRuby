@@ -1,0 +1,31 @@
+<% review %>
+
+<% if review.active? %>
+  <%= form_for review, url: deactivate_admin_review_path(review), method: :put do |f| %>
+    <%= f.button 'Deactivate',
+                 class: 'btn btn-sm mtm ' + (review.inactive? ? 'btn-disabled' : 'btn-primary'),
+                 data: { disable_with: 'Deactivating...' } %>
+  <% end %>
+<% else %>
+  <%= form_for review, url: activate_admin_review_path(review), method: :put do |f| %>
+    <%= f.button 'Activate',
+                 class: 'btn btn-sm mtm ' + (review.active? ? 'btn-disabled' : 'btn-primary'),
+                 data: { disable_with: 'Activating...' } %>
+  <% end %>
+<% end %>
+
+<%= form_for review, url: resolve_admin_review_path(review), method: :put do |f| %>
+  <%= f.button 'Resolve all flags',
+               id: "js-resolve-review-#{review.id}",
+               class: "btn btn-sm mtm btn-primary",
+               data: { disable_with: 'Resolving...' } %>
+<% end %>
+
+<%= button_tag(
+      'Flag this review',
+      class: 'btn btn-sm mtm btn-primary',
+      data: {
+        toggle: 'collapse',
+        target: "#flag-review-form-#{review.id}"
+      }
+) %>

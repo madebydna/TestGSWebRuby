@@ -10,14 +10,15 @@ class Admin::OspController < ApplicationController
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
 
   def show
-    @osp_data = OspData.for(@school) #add rescue here that shows nice error
+    @osp_data = OspData.new(@school) #add rescue here that shows nice error
     render_osp_page
   end
 
   def submit
     #If performance becomes an issue, look into making this a bulk single insert.
+    submit_time = Time.now
     questions_and_answers.each do | (question_id, response_key, values) |
-      save_response!(question_id, response_key, values, @esp_membership_id, @is_approved_user)
+      save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
     redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
   end
@@ -48,8 +49,8 @@ class Admin::OspController < ApplicationController
     [question_id, response_key, [*response_values].uniq]
   end
 
-  def save_response!(question_id, question_key, response_values, esp_membership_id, is_approved_user)
-    response_blob = make_response_blob(question_key, esp_membership_id, response_values)
+  def save_response!(question_id, question_key, response_values, submit_time, esp_membership_id, is_approved_user)
+    response_blob = make_response_blob(question_key, esp_membership_id, response_values, submit_time)
 
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
@@ -57,14 +58,14 @@ class Admin::OspController < ApplicationController
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
-  def make_response_blob(question_key, esp_membership_id, response_values)
+  def make_response_blob(question_key, esp_membership_id, response_values, submit_time)
     rvals = response_values.map do |response_value|
       {
         entity_state: params[:state],
            entity_id: @school.id,
                value: response_value,
            member_id: esp_membership_id,
-             created: Time.now,
+             created: submit_time,
           esp_source: "osp"
       }.stringify_keys!
     end
@@ -113,6 +114,7 @@ class Admin::OspController < ApplicationController
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
+    @keyup = "data-parsley-trigger=keyup"
 
     if params[:page]== '1'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)

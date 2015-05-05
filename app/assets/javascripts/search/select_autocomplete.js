@@ -3,7 +3,7 @@ GS.search.autocomplete = GS.search.autocomplete || {};
 
 GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocomplete || (function() {
 
-  var init = function(state_abbr, markupCallback, onSelectCallback) {
+  var init = function(state_abbr, markupCallback, onSelectCallback ) {
     attachAutocomplete(state_abbr, markupCallback, onSelectCallback);
   };
 
@@ -23,7 +23,7 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
         clearBloodhound: schools.ttAdapterClear(),
         templates: markupCallback.call()
       }
-    ).on('typeahead:selected', onSelectCallback)
+    ).on('typeahead:selected', onSelectCallback );
   };
 
   return {

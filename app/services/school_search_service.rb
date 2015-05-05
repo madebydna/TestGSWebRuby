@@ -253,4 +253,7 @@ class SchoolSearchService
     hash.delete :radius
     query
   end
+
+
+
 end

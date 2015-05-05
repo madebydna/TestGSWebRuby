@@ -63,6 +63,11 @@ describe AlertWord do
       expect(AlertWord.search(' test  alert  phrase ')).to have_alert_words
     end
 
+    it 'should not find any alert words or really bad words when given nil' do
+      expect(AlertWord.search(nil)).to_not have_really_bad_words
+      expect(AlertWord.search(nil)).to_not have_alert_words
+    end
+
     describe 'should handle @ signs just like java code' do
       it 'should not match an @ sign within a \'word\' of symbols' do
         expect(AlertWord.search('*@#* you')).to_not have_alert_words

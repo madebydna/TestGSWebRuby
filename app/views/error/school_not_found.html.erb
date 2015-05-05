@@ -1,6 +1,12 @@
-
-<p>
-  Sorry, this school could not be found.
-  Please use the search box at the top of the page to
-  find schools by school name, district or city.
-</p>
+<br/>
+<div class="limit-width-1200">
+  <div class="row">
+    <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8">
+      <h3>School not found</h3>
+      <p>
+        Sorry, the specified school could not be found. You can <%= link_to('go back', request.env['HTTP_REFERER']) %> to the previous page, or search
+        for a school from our <%= link_to('home page', home_path) %>.
+      </p>
+    </div>
+  </div>
+</div>

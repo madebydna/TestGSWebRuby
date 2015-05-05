@@ -2,44 +2,34 @@ class Admin::SchoolsController < ApplicationController
 
   before_action :require_state, :require_school, except: :index
 
-  has_scope :unpublished, :type => :boolean
-  has_scope :provisional, :type => :boolean
-  has_scope :disabled, :type => :boolean
-  has_scope :reported, :type => :boolean
-  has_scope :held, :type => :boolean
-  has_scope :flagged, :type => :boolean
+  has_scope :active, type: :boolean
+  has_scope :inactive, type: :boolean
+  has_scope :flagged, type: :boolean
+  has_scope :has_inactive_flags, type: :boolean
 
   def moderate
-
     @held_school = @school.held_school
-    review_id = params[:review_id]
 
-    if review_id
-      @reviews = SchoolRating.where(id: review_id)
+    if params[:review_id]
       title = 'Reviews moderation - review'
+      @reviews = Review.where(id: params[:review_id])
     else
       title = 'Reviews moderation - school'
-      @reviews = school_reviews
+      @reviews = school_reviews(@school)
       @reviews = apply_scopes(@reviews)
       @reviews.to_a.uniq!(&:id)
     end
-    set_meta_tags :title => title
-
-    reported_entities = @reported_entities = ReportedEntity.
-        where(reported_entity_id: @reviews.map(&:id) ).
-        where(reported_entity_type: %w[schoolReview topicalSchoolReview]).
-        order(created: :desc)
-
     @reviews.each do |review|
-      review.reported_entities = reported_entities.select { |entity| entity.reported_entity_id == review.id } || []
+      review.notes.build
     end
+    set_meta_tags :title => title
   end
 
-  def school_reviews
-    SchoolRating.where(
-      state: @school.state,
-      school_id: @school.id
-    ).order('posted desc')
+  def school_reviews(school)
+    Review.
+      where(school_id: school.id, state: school.state).
+      includes(:answers, question: :review_topic).
+      order(created: :desc)
   end
 
 end

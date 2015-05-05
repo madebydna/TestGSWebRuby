@@ -1,0 +1,9 @@
+<hr/>
+<div class="js-topicalReviewQuestionsContainer ptl mtl">
+  <div class="js-reviewQuestionCarousel">
+  <%= render partial: "shared/reviews/modules/topical_review_question_module",
+             collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
+  %>
+  </div>
+  <%= render 'shared/reviews/modules/question_navigation' %>
+</div>

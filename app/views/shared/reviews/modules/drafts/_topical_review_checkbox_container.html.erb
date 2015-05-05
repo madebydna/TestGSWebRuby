@@ -1,0 +1,19 @@
+<div class="limit-width-1200 clearfix js-topicalReviewContainer dn" style="min-height: 280px">
+  <div class="row bg-light-gray gray-box-border-v js-review-questions">
+    <%= form_for Review.new, remote: true, url: school_reviews_path(@school) do |f| %>
+        <%= f.hidden_field :state, value: @school.state %>
+        <%= f.hidden_field :school_id, value: @school.id %>
+        <%= f.hidden_field :review_question_id, value: review_question_id %>
+        <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr" style="min-height: 280px">
+          <div class="bg-yellow full-width tac open-sans_sb pvl">
+            <%= title.html_safe %>
+          </div>
+          <%= render "shared/reviews/modules/input/responses_grid", question_responses: question_responses, option_type: 'checkbox', f: f %>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">
+          <%= render 'shared/reviews/modules/input/review_comment', f: f %>
+        </div>
+    <% end %>
+  </div>
+  <%= render 'shared/reviews/modules/question_navigation' %>
+</div>

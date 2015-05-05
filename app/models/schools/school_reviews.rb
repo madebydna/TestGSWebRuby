@@ -1,63 +1,65 @@
+# An enumerable collection of reviews with additional behavior
+#
+# Contains methods that return important information about reviews. These methods form the public API of
+# SchoolReviews and should be the source of the values that get rendered in view templates
+#
+# Can be constructed with a review cache object, in which case this class will delagate the above mentioned methods
+# to the cache object rather than consulting the school's reviews. If the review cache object doesn't have the
+# information that the SchoolReviews instance is being asked for, it will consult the school's reviews
 class SchoolReviews
-    def self.calc_review_data(school_reviews_all)
+  # Include enumerable methods, so that a SchoolReviews instance itself can be treated like an array of reviews
+  include Enumerable
+  # Extend Forwardable which defines the def_delagators method. Delegate enumerable methods to underlying reviews array
+  extend Forwardable
+  def_delegators :reviews, :each, :each_with_object, :[], :blank?, :present?, :any?, :sum, :count, :select
 
-      # fetches all reviews
-      #school_reviews_all = school.reviews
-      #store star counts for overall
-      star_counts = [ 0, 0, 0, 0, 0, 0 ]
-      #store resulting average and components for calculating them
-      rating_averages = Hashie::Mash.new(
-          {
-              overall:   { avg_score: 0, total: 0, counter: 0 },
-              principal: { avg_score: 0, total: 0, counter: 0 },
-              teacher:   { avg_score: 0, total: 0, counter: 0 },
-              parent:    { avg_score: 0, total: 0, counter: 0 }
-          }
-      )
-      review_filter_totals = Hashie::Mash.new(
-          {
-              all: school_reviews_all.size,
-              parent: 0,
-              student: 0
-          }
-      )
+  attr_reader :school, :review_cache
+  attr_writer :review_cache
 
-      school_reviews_all.each do |review|
-        overall_rating = review.overall
+  include ReviewScoping
 
-        if overall_rating != 'decline'
-          star_counts[overall_rating.to_i] = star_counts[overall_rating.to_i]+1
-        end
-        if review.who == 'parent'
-          review_filter_totals.parent = review_filter_totals.parent+1
-        end
-        if review.who == 'student'
-          review_filter_totals.student = review_filter_totals.student+1
-        end
-        set_reviews_values rating_averages.overall, overall_rating
-        set_reviews_values rating_averages.principal, review.principal
-        set_reviews_values rating_averages.teacher, review.teachers
-        set_reviews_values rating_averages.parent, review.parents
-      end
-      determine_star_average rating_averages.overall
-      determine_star_average rating_averages.principal
-      determine_star_average rating_averages.teacher
-      determine_star_average rating_averages.parent
+  # Builds a new SchoolReviews instance, giving it a review_cache object and possibly a school
+  def self.build_from_cache(review_cache, school = nil)
+    school_reviews = SchoolReviews.new(school, nil)
+    school_reviews.review_cache = review_cache
+    school_reviews
+  end
 
-      Hashie::Mash.new({:star_counts => star_counts,  :rating_averages => rating_averages, :review_filter_totals => review_filter_totals   })
+  def initialize(school, reviews = nil)
+    @school = school
+    @reviews = reviews
+    @reviews.extend ReviewScoping if @reviews
+    @reviews.extend ReviewCalculations if @reviews
+  end
 
-    end
+  def reviews
+    # Questionable: Maybe force the SchoolReviews builder/caller to provide the reviews?
+    # If school reviews were not provided to this class, obtain them from the school model
+    @reviews ||= school.reviews || []
+    @reviews.extend ReviewScoping
+    @reviews.extend ReviewCalculations
+    @reviews
+  end
 
-    def self.set_reviews_values (set_obj,  set_value )
-      if set_value != 'decline'
-        set_obj.total = set_obj.total + set_value.to_i
-        set_obj.counter = set_obj.counter + 1
-      end
-    end
+  def average_5_star_rating
+    review_cache.try(:star_rating) || five_star_rating_reviews.average_score.round
+  end
 
-    def self.determine_star_average ( set_obj )
-      if set_obj.counter != 0
-        set_obj.avg_score = (set_obj.total.to_f / set_obj.counter.to_f).round
-      end
-    end
+  def number_of_reviews_with_comments
+    review_cache.try(:num_reviews) || reviews.number_with_comments
+  end
+
+  def number_of_5_star_ratings
+    # We can have reviews for the 5 star rating question that have comments but no actual answer value
+    review_cache.try(:num_ratings) || five_star_rating_reviews.count_having_numeric_answer
+  end
+
+  def five_star_rating_score_distribution
+    review_cache.try(:star_counts) || five_star_rating_reviews.score_distribution
+  end
+
+  def self.calc_review_data(reviews)
+    ReviewCaching.new(reviews).calc_review_data
+  end
+
 end

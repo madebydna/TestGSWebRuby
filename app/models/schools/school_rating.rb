@@ -8,6 +8,7 @@ class SchoolRating < ActiveRecord::Base
   self.table_name='school_rating'
 
   belongs_to :user, foreign_key: 'member_id'
+  has_many :reported_entities,-> { where('entity_type = "schoolRating"')}, foreign_key: :reported_entity_id
 
   scope :selection_filter, ->(show_by_group) { where(:who => show_by_group)  unless show_by_group == 'all' || show_by_group.nil? || show_by_group.empty? }
   scope :limit_number, ->(count) { limit(count) unless count.nil? }

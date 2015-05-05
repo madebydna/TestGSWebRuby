@@ -1,63 +1,62 @@
-<% if !@school.reviews.nil? %>
-    <% hide_reviews_overview = "" %>
+<% unless reviews.blank? %>
+  <% hide_reviews_overview = '' %>
 
-    <% if @show_ads %>
-        <div class="row">
-            <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
-                <div class="pvl">
-                    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop  %>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
-    <% end %>
+  <% if @show_ads %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
+        <div class="pvl">
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop  %>
+        </div>
+      </div>
 
-    <%  @school.reviews.each_with_index do |review, i| %>
-        <% if i > 1 %>
+      <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
+  <% end %>
+        <% reviews.each_with_index do |review, i| %>
+          <% review = SchoolProfileReviewDecorator.decorate(review) unless review.is_a?(SchoolProfileReviewDecorator) %>
+          <% if i > 1 %>
             <% hide_reviews_overview = " dn" %>
-        <% end %>
-        <% if i % 2 == 0 %>
+          <% end %>
+          <% if i % 2 == 0 %>
             <div class=" row<%= hide_reviews_overview %>">
-        <% end %>
+          <% end %>
 
-        <% overall_review_rating = review.overall %>
-
-        <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-12 col-md-12 col-lg-12" : "col-xs-12 col-sm-12 col-md-6 col-lg-6")%>
-        <div class="<%= layout_grid %>  ptl phl">
+          <% layout_grid = (@show_ads ?  "col-xs-12" : "col-xs-12 col-md-6")%>
+          <div class="<%= layout_grid %>  ptl phl">
             <div class="well">
-                <div class="mbl">
-                    <% if overall_review_rating == 'decline' %>
-                        <span class="open-sans_i">no rating</span>
-                    <% else %>
-                        <%= draw_stars_16 overall_review_rating.to_i %>
-                    <% end %>
-                    <span class="mlm vat"><%= review.posted.strftime "%B %d, %Y" %></span>
-                </div>
-                <% if review.comments.present? && review.comments.strip.present? && review.status != 'a' %>
-                    <%= review.comments %>
-                <% else %>
-                    <div class="well mbn">This review submitted without content.</div>
-                <% end %>
-                <br /><br />
-                - submitted by a <span class="cuc_posted-by">
-                <%= review.who == "other" ? "community member" : review.who %></span>
-            </div>
-        </div>
+              <div class="mbl">
+                <span class="open-sans_i rs-review-value prl">
+                  <%= review.topic_markup %>
+                  <span class="open-sans_cb ptm">
+                    <%= review.answer_markup %>
+                  </span>
+                </span>
+                <br class="visible-xs" />
+                <span class="vat"><%= review.posted %></span>
+              </div>
 
-        <% if i % 2 == 1 %>
+              <%= review.comment %>
+              <br /><br />
+              - submitted by a <span class="cuc_posted-by"><%= review.user_type %></span>
             </div>
+          </div>
+
+          <% if i % 2 == 1 %>
+            </div>
+          <% end %>
         <% end %>
-    <% end %>
     <% if @show_ads %>
-        </div>
+      </div>
     </div>
-    <% end %>
+
+  <% end %>
 <% end %>
 <!-- need final close on div for odd totals -->
-<% if @school_reviews_global.review_filter_totals.all % 2 == 1 %>
-    </div>
+<% if reviews.count % 2 == 1 %>
+  </div>
 <% end %>
+
 <% if @show_ads %>
-    <div class="visible-xs plm pvl mbl">
-        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile  %>
-    </div>
+  <div class="visible-xs plm pvl mbl">
+    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile  %>
+  </div>
 <% end %>

@@ -15,7 +15,8 @@ LocalizedProfiles::Application.routes.draw do
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
-  get '/find/parentReview', as: :review_choose_school, to: 'review_school_chooser#show'
+  # change to /reviews/?topic=1
+  get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
 
@@ -72,7 +73,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
     get '/special-education.topic?content=1541', as: :learning_difficulties
     get '/parenting.topic?content=1539', as: :health_and_behavior
-    get '/school/parentReview.page', as: :the_scoop
+    # TODO: see how to fix this route for ruby
+    get '/reviews/', as: :the_scoop
     get '/account/', as: :my_account
     get '/mySchoolList.page', as: :my_school_list
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
@@ -129,11 +131,13 @@ LocalizedProfiles::Application.routes.draw do
       get 'moderation', on: :collection
       get 'schools', on: :collection
       get 'users', on: :collection
-      put 'publish', on: :member
-      put 'disable', on: :member
+      put 'activate', on: :member
+      put 'deactivate', on: :member
       put 'resolve', on: :member
-      put 'report', on: :member
+      put 'flag', on: :member
     end
+
+    resources :review_notes, only: [:create]
 
     get  '/reset_password', to: 'users#generate_reset_password_link' , as: :generate_reset_password_link
     get  '/users/search'
@@ -146,7 +150,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :data_load_schedules, path: '/data-planning'
   end
 
-  post '/gsr/review/report/:reported_entity_id', to:'reviews#report', as: :reported_review
+  post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
@@ -171,12 +175,11 @@ LocalizedProfiles::Application.routes.draw do
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
-  post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
-      state: States.any_state_name_regex,
-      city: /[^\/]+/,
-      schoolId: /\d+/,
-      school_name: /.+/
-  }
+  # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
+  #     state: States.any_state_name_regex,
+  #     schoolId: /\d+/,
+  #     school_name: /.+/
+  # }
 
   get '/gsr/:state/:city/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
     district = request.params[:district]
@@ -230,8 +233,9 @@ LocalizedProfiles::Application.routes.draw do
     } do
       get 'quality', to: 'school_profile_quality#quality', as: :quality
       get 'details', to: 'school_profile_details#details', as: :details
-      get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
-      get 'reviews/write', to: 'reviews#new', as: :review_form
+      # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
+      resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+      resources :reviews, only: [:create], controller: 'school_profile_reviews'
       get '', to: 'school_profile_overview#overview'
     end
 
@@ -298,8 +302,8 @@ LocalizedProfiles::Application.routes.draw do
 
     get 'quality', to: 'school_profile_quality#quality', as: :quality
     get 'details', to: 'school_profile_details#details', as: :details
-    get 'reviews', to: 'school_profile_reviews#reviews', as: :reviews
-    get 'reviews/write', to: 'reviews#new', as: :review_form
+    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+    resources :reviews, only: [:create], controller: 'school_profile_reviews'
     get '', to: 'school_profile_overview#overview'
   end
 

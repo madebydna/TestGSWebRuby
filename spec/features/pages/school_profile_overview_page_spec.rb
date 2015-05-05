@@ -3,20 +3,12 @@ require_relative '../contexts/school_profile_contexts'
 require_relative '../examples/page_examples'
 require_relative '../pages/school_profile_overview_page'
 
-shared_context 'with Alameda High School' do
-  let!(:school) { FactoryGirl.create(:alameda_high_school) }
-end
-
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }
 end
 
 shared_context 'with a demo school' do
   let!(:school) { FactoryGirl.create(:demo_school, name: 'A demo school') }
-end
-
-shared_example 'should be on the correct page' do
-  expect(subject).to be_displayed
 end
 
 def expect_it_to_have_element(element)

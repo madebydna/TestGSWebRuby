@@ -415,4 +415,6 @@ describe 'School Search Service' do
       expect(SchoolSearchService.extract_by_location({lon:2.0, radius:10.0})).to eq('')
     end
   end
+
+
 end

@@ -8,10 +8,28 @@ class User < ActiveRecord::Base
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
   has_many :esp_memberships, foreign_key: 'member_id'
-  has_many :reported_reviews, -> { where('reported_entity_type = "schoolReview" and active = 1') }, class_name: 'ReportedEntity', foreign_key: 'reporter_id'
+  # Reviews that this User authored
+  has_many :reviews, foreign_key: 'member_id'
+
+  # Review answers that User authored
+  has_many :answers, through: :reviews
+
+  # Reviews that this User authored, that are published now
+  has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'member_id'
+
+  # Reviews that this User authored, that are flagged now
+  has_many :flagged_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'
+
+  # ReviewFlag objects that this User created by reporting a review
+  has_many :review_flags, foreign_key: 'member_id', class_name: 'ReviewFlag'
+
+  # Reviews that this User flagged
+  has_many :reviews_user_flagged, class_name: 'Review', through: :review_flags, source: :review
+
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :student_grade_levels, foreign_key: 'member_id'
+
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
   before_save :verify_email!, if: "facebook_id != nil"
@@ -26,6 +44,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how
   attr_accessor :updating_password, :plain_text_password
 
+  scope :verified, -> { where(email_verified: true) }
+
   SECRET = 23088
   PROVISIONAL_PREFIX = 'provisional:'
 
@@ -33,34 +53,8 @@ class User < ActiveRecord::Base
     where(email: email).first
   end
 
-  def school_reviews
-    SchoolRating.belonging_to(self)
-  end
-
-  def reviews_for_school(args)
-    if args[:school]
-      school_id = args[:school].id
-      state = args[:school].state
-    elsif args[:state] && args[:school_id]
-      school_id = args[:school_id]
-      state = args[:state]
-    else
-      raise(ArgumentError, "Must provide :school or :state and :school_id")
-    end
-
-    SchoolRating.where(
-      member_id: self.id,
-      state: state,
-      school_id: school_id
-    )
-  end
-
-  def published_reviews
-    school_reviews.published
-  end
-
-  def provisional_reviews
-    school_reviews.provisional
+  def reviews_for_school(*args)
+    Review.find_by_school(*args).where(member_id: self.id)
   end
 
   def self.email_taken?(email)
@@ -157,16 +151,57 @@ class User < ActiveRecord::Base
     self.email_verified = true
   end
 
-  def publish_reviews!
-    reviews_to_upgrade = provisional_reviews
-    # make provisional reviews 'not provisional', i.e. deleted, published, or held
-    reviews_to_upgrade.each do |review|
-      review.remove_provisional_status!
-      review.save!
+  class UserReviewPublisher
+    attr_reader :user
+
+    def initialize(user)
+      @user = user
     end
 
-    # return reviews that are published now
-    reviews_to_upgrade.select { |review| review.published? }
+    # Reviews the user wrote that are able to be seen on the site (non-flagged reviews)
+    # Includes already-published reviews
+    def publishable_reviews
+      @publishable_reviews ||= user.reviews.not_flagged
+    end
+
+    # Only one review for an individual school and question can be active at one time
+    # Group publishable reviews by school and question
+    def publishable_reviews_by_group
+      publishable_reviews.group_by do |review|
+        [review.school_id, review.state, review.review_question_id]
+      end
+    end
+
+    def most_recently_created_review(reviews)
+      reviews.sort_by(&:created).last
+    end
+
+    def reviews_have_active_review?(reviews)
+      !! reviews.detect { |review| review.active? }
+    end
+
+    def reviews_to_publish_for_new_user
+      reviews = []
+      publishable_reviews_by_group.values.each do |reviews_for_group|
+        unless reviews_have_active_review?(reviews_for_group)
+          reviews << most_recently_created_review(reviews_for_group)
+        end
+      end
+      reviews
+    end
+
+    def publish_reviews_for_new_user!
+      reviews_to_publish_for_new_user.each do |review|
+        review.activate
+        review.save!
+      end
+      # return reviews that are published now
+      reviews_to_publish_for_new_user.select { |review| review.active? }
+    end
+  end
+
+  def publish_reviews!
+    UserReviewPublisher.new(self).publish_reviews_for_new_user!
   end
 
   def has_facebook_account?
@@ -252,8 +287,8 @@ class User < ActiveRecord::Base
     member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end
 
-  def reported_review?(review)
-    self.reported_reviews.map(&:reported_entity_id).include? review.id
+  def flagged_review?(review)
+    self.reviews_user_flagged.map(&:id).include? review.id
   end
 
   def has_active_profile?

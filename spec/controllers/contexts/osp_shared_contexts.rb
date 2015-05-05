@@ -41,7 +41,7 @@ shared_context 'Osp question key and answers saved in the db' do
       FactoryGirl.create(:osp_question, id: question[:id], esp_response_key: question[:response_key])
     end
   end
-  after { clean_models OspQuestion }
+  after { clean_models :gs_schooldb, OspQuestion }
 end
 
 #needs to execute after current user is set

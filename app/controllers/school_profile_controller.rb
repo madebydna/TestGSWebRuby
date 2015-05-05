@@ -1,21 +1,21 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
+  # TODO: Refactor these actions
   before_action :redirect_tab_urls, only: [:overview]
   before_action :require_state, :require_school
   before_action :redirect_to_canonical_url, only: [:overview, :quality, :details, :reviews]
-  before_action :read_config_for_page
-  before_action :init_page, :set_header_data
+  before_action :read_config_for_page, only: [:overview, :quality, :details, :reviews]
+  before_action :init_page, :set_header_data, only: [:overview, :quality, :details, :reviews]
   before_action :store_location, only: [:overview, :quality, :details, :reviews]
   before_action :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
-  before_action :set_seo_meta_tags
+  before_action :set_seo_meta_tags, only: [:overview, :quality, :details, :reviews]
 
-  before_action :ad_setTargeting_through_gon
-  before_action :set_city_state
-  before_action :facebook_comments_permalink
-  before_action :set_hub
-  before_action :enable_ads
-  before_action :set_breadcrumbs
+  before_action :ad_setTargeting_through_gon, only: [:overview, :quality, :details, :reviews]
+  before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
+  before_action :set_hub, only: [:overview, :quality, :details, :reviews]
+  before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
+  before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -30,13 +30,12 @@ class SchoolProfileController < SchoolController
 
   def init_page
     set_noindex_meta_tags if @school.demo_school?
-    @school_reviews_all = @school.reviews.load
+    @school_reviews = SchoolProfileReviewsDecorator.decorate(SchoolReviews.new(@school), view_context)
     create_sized_maps(gon)
     gon.pagename = configured_page_name
-    gon.review_count = @school_reviews_all.count();
+    gon.review_count = @school_reviews.number_of_reviews_with_comments
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
-    @facebook_comments_prop = PropertyConfig.get_property('facebook_comments')
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
     set_last_modified_date
@@ -49,7 +48,6 @@ class SchoolProfileController < SchoolController
 
   def set_header_data
     @header_metadata = @school.school_metadata
-    @school_reviews_global = SchoolReviews.calc_review_data @school_reviews_all
   end
 
 
@@ -134,7 +132,7 @@ class SchoolProfileController < SchoolController
   end
 
   def set_last_modified_date
-    review_date = @school_reviews_all.present? ? @school_reviews_all.first.posted : nil
+    review_date = @school.reviews.present? ? @school.reviews.first.created : nil
     school_date = @school.modified.present? ? @school.modified.to_date : nil
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end
@@ -179,17 +177,6 @@ class SchoolProfileController < SchoolController
 
   def ad_page_name
     ('School_' + @page_config.name).to_sym
-  end
-
-  def facebook_comments_permalink
-    uri = URI(request.original_url)
-    host = uri.host
-    host = "www.greatschools.org" if uri.host == "pk.greatschools.org"
-    port = (uri.port != 80 && uri.port.present?) ? ':'+uri.port.to_s : ''
-    domain = "http://" + host + port + "/"
-
-    @facebook_comments_permalink = domain+ @state[:long].downcase.gsub(' ', '-') + "/city-name/"+ @school.id.to_s +
-        "-school-name/"+@page_config.name.downcase
   end
 
   def set_noindex_meta_tags

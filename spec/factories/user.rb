@@ -5,16 +5,13 @@ FactoryGirl.define do
     password 'password'
 
     factory :email_only do
-      email 'test@greatschools.org'
     end
 
     factory :new_user do
-      email 'test@greatschools.org'
       password 'password'
     end
 
     factory :verified_user do
-      email 'test@greatschools.org'
       password 'password'
       email_verified true
     end

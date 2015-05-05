@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../spec/support/shared_contexts_for_signed_in_users'
+require 'support/shared_contexts_for_signed_in_users'
 require 'features/selectors/osp_page'
 
 ### Setting Up Signed in User ###
@@ -124,13 +124,74 @@ shared_context 'with a basic set of osp questions in db' do
   include_context 'save osp question to db'
 end
 
+shared_context 'with a basic set of parsley validated osp questions in db' do
+  let(:question_ids) do
+    {
+        boardgames:        1,
+        puzzlegames:       2,
+        videogames:        3,
+        video_urls:        4
+    }
+  end
+  let(:questions) do
+    [
+        {
+            id: question_ids[:boardgames],
+            esp_response_key: :boardgames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:videogames],
+            esp_response_key: :videogames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_lg',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:puzzlegames],
+            esp_response_key: :puzzlegames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:video_urls],
+            esp_response_key: :video_urls,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-youtubevimeotag' => ''
+                }
+            }.to_json
+        }
+    ]
+  end
+
+  include_context 'save osp question to db'
+end
+
 shared_context 'save osp question to db' do
   before do
     questions.each do |question|
       FactoryGirl.create(:osp_question, :with_osp_display_config, question)
     end
   end
-  after { clean_models OspQuestion, OspDisplayConfig }
+  after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
 end
 
 ### Clicking Buttons ###
@@ -155,17 +216,17 @@ end
 
 shared_context 'click the none option on a conditional multi select question group' do
   before do
-    trigger = osp_page.osp_form.disabledElementTrigger.first
+    trigger = osp_page.osp_form.conditionalMultiSelectTrigger.first
     trigger.click if trigger.present?
   end
   subject do
-    osp_page.osp_form.disabledElementTarget
+    osp_page.osp_form.conditionalMultiSelectTarget
   end
 end
 
 shared_context 'click a value in a conditional multi select group and then click none' do
   before do
-    button = osp_page.osp_form.disabledElementTarget.first
+    button = osp_page.osp_form.conditionalMultiSelectTarget.first
     button.click if button.present?
   end
 
@@ -185,6 +246,13 @@ shared_context 'enter information into medium text field' do
   before do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[:puzzlegames]}-puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
+  end
+  end
+
+shared_context 'enter video url information into medium text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form textarea[name='#{question_ids[:video_urls]}-video_urls']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 

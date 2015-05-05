@@ -1,0 +1,9 @@
+<% review %>
+
+<div id="flag-review-form-<%= review.id %>" class="collapse">
+  <h5>Flag review</h5>
+  <%= form_for(review, url: flag_admin_review_path(review), method: :put) do |f| %>
+    <%= text_area_tag(:reason, '', rows: 4, class: 'input-xlarge', 'style' => 'width: 100%') %>
+    <%= content_tag :div, f.submit('Flag review', class: 'btn btn-primary pull-right mtm'), class: 'form-actions' %>
+  <% end %>
+</div>

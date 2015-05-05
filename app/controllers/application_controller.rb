@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
     school_id = (params[:schoolId] || params[:school_id]).to_i
 
     if school_id > 0
-      School.on_db(state_param.downcase.to_sym).find school_id
+      School.on_db(state_param.downcase.to_sym).find school_id rescue nil
     else
       nil
     end
@@ -380,23 +380,7 @@ class ApplicationController < ActionController::Base
     return advertising_enabled
   end
 
-  #//////////////////////////////////////////////
-  #
-  # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)
-  #   returns true is state is part of list or if all is present in list
-  #   returns false if state is not found and all is not in list
-  #
-  #//////////////////////////////////////////////
 
-  def property_state_on?(state_list_str, current_state)
-    state_arr = state_list_str.split(',') if state_list_str.present?
-    if state_arr.present?
-      state_arr.select!{ |state| state.upcase == current_state.upcase || state.upcase == 'ALL' }
-      state_arr.present?
-    else
-      false
-    end
-  end
 
   def write_locale_session
     [:state_locale, :city_locale].each { |k| session.delete(k) }

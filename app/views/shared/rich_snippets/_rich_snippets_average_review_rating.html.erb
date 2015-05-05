@@ -1,10 +1,12 @@
+<% school %>
+<% school_reviews %>
+
 <span class="dn" itemscope="" itemtype="http://data-vocabulary.org/Review-aggregate">
-<span itemprop="itemreviewed"><%= @school.name %></span>
-   <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
-  Rating:
-  <span itemprop="average"><%= @school_reviews_global.rating_averages.overall.avg_score %></span> out of
-         <span itemprop="best">5</span>
+  <span itemprop="itemreviewed"><%= school.name %></span>
+  <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
+    Rating:
+    <span itemprop="average"><%= school_reviews.average_5_star_rating %></span> out of <span itemprop="best">5</span>
    </span>
   based on
-<span itemprop="count"><%= @school.reviews.size %></span> reviews.
+  <span itemprop="count"><%= school_reviews.number_of_5_star_ratings %></span> reviews.
 </span>

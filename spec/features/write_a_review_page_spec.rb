@@ -3,6 +3,11 @@ require 'spec_helper'
 feature 'Write a Review Page' do
   let(:school) { FactoryGirl.create(:school, city: 'St. Paul') }
   let!(:reviews_page) { FactoryGirl.create(:page, name: 'Reviews') }
+  before do
+    pending 'TODO: Remove after transition to topical reviews'
+    fail
+  end
+
   before(:all) do
     clean_models :ca, School
     clean_models SchoolRating, Page, User

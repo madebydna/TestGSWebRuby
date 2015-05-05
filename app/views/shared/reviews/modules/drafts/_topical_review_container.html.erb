@@ -1,0 +1,24 @@
+<div class="limit-width-1200 clearfix js-topicalReviewContainer dn">
+  <div class="row bg-light-gray gray-box-border-v" >
+    <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr" style="min-height: 280px">
+      <header class="bg-yellow full-width tac open-sans_cb pvl">
+        <%= title.html_safe %>
+      </header>
+      <article>
+        <%=  render "shared/reviews/modules/input/#{review_question_type_partial}", review_options: review_options, option_type: option_type %>
+      </article>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12 bg-light-gray gray-box-border-tlr ptl phl " style="min-height: 280px">
+      <%= render "shared/reviews/modules/output/#{review_summary_partial}", review_summary_data: review_summary_data  %>
+    </div>
+  </div>
+  <div class="full-width mtl">
+    <div class="fl">
+      <%= link_to("< Previous topic", "#", class:"js-previous-topic") %>
+    </div>
+    <div class="fr">
+      <%= link_to("Next topic >", "#", class:"js-next-topic") %>
+    </div>
+
+  </div>
+</div>

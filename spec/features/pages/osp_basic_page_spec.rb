@@ -5,6 +5,9 @@ require 'features/contexts/compare_schools_contexts'
 require_relative '../examples/osp_examples'
 require_relative '../examples/footer_examples'
 require_relative '../../../spec/features/contexts/osp_contexts'
+require 'features/examples/osp_examples'
+require 'features/examples/footer_examples'
+require 'features/contexts/osp_contexts'
 
 describe 'OSP Basic Page' do
   with_shared_context 'visit OSP page' do
@@ -110,6 +113,35 @@ describe 'OSP Basic Page' do
     end
   end
 
+  with_shared_context 'with a basic set of parsley validated osp questions in db' do
+    with_shared_context 'visit OSP page' do
+
+      with_shared_context 'enter information into small text field', js: true do
+        with_shared_context 'within textarea field', :boardgames do
+          include_example 'should not submit value in text field'
+        end
+      end
+
+      with_shared_context 'enter information into medium text field', js: true do
+        with_shared_context 'within textarea field', :puzzlegames do
+          include_example 'should not submit value in text field'
+        end
+      end
+
+      with_shared_context 'enter information into large text field', js: true do
+        with_shared_context 'within textarea field', :videogames do
+          include_example 'should not submit value in text field'
+        end
+      end
+
+      with_shared_context 'enter video url information into medium text field', js: true do
+        with_shared_context 'within textarea field', :video_urls do
+          include_example 'should not submit value in text field'
+        end
+      end
+    end
+  end
+
   with_shared_context 'Basic High School' do
     with_shared_context 'Visit Compare Page', js: true do
       with_shared_context 'the compare page value of', 'Before care' do
@@ -133,16 +165,4 @@ describe 'OSP Basic Page' do
     end
   end
 
-# describe 'should show active groups' do
-#   question_group = FactoryGirl.create(:osp_question_groups)
-#
-#   it 'should show group title' do
-#     subject.find('h3', text: question_group.heading)
-#   end
-#
-#   puts question_group.image_path
-#   subject.has_selector?("img[src$='osp/camera.png']")
-#
-# end
-# end
 end

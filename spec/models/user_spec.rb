@@ -180,20 +180,16 @@ describe User do
       let(:school) { FactoryGirl.build(:school, id: school_id, state: state) }
 
       it 'should support a school hash parameter' do
-        expect(SchoolRating).to receive(:where).with(
-          member_id: subject.id,
-          state: state,
-          school_id: school_id
-        )
+        relation = double
+        expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
+        expect(relation).to receive(:where).with(member_id: subject.id)
         subject.reviews_for_school(school: school)
       end
 
       it 'should support state + school_id parameters' do
-        expect(SchoolRating).to receive(:where).with(
-          member_id: subject.id,
-          state: state,
-          school_id: school_id
-        )
+        relation = double
+        expect(Review).to receive(:where).with(active: true, school_state: state, school_id: school_id).and_return(relation)
+        expect(relation).to receive(:where).with(member_id: subject.id)
         subject.reviews_for_school(state: state, school_id: school_id)
       end
 
@@ -304,6 +300,43 @@ describe User do
         expect(u.time_added).to be_present
         expect(u.updated).to be_present
         expect(u.updated).to be >= u.time_added
+      end
+    end
+
+
+    describe '#publish_reviews!' do
+      let(:school) do
+        FactoryGirl.create(:alameda_high_school)
+      end
+      let(:question) do
+        FactoryGirl.create(:overall_rating_question)
+      end
+      let!(:existing_reviews) do
+        reviews = [
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+          FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+        ]
+        reviews.each do
+        |review| review.moderated = true
+          review.save
+        end
+        reviews
+      end
+      after do
+        clean_models School
+        clean_dbs :gs_schooldb
+      end
+      subject { user }
+
+      it 'should publish the most recent inactive review' do
+        user.verify_email!
+        user.save
+        subject.publish_reviews!
+        existing_reviews.each(&:reload)
+        expect(existing_reviews[0]).to be_inactive
+        expect(existing_reviews[1]).to be_inactive
+        expect(existing_reviews[2]).to be_active
       end
     end
   end

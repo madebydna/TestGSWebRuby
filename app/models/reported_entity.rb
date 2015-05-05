@@ -8,6 +8,8 @@ class ReportedEntity < ActiveRecord::Base
 
   belongs_to :user, foreign_key: :reporter_id
 
+  belongs_to :school_rating, foreign_key: :reported_entity_id
+
   alias_attribute :type, :reported_entity_type
 
   def active

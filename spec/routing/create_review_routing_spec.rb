@@ -13,7 +13,7 @@ describe 'create review routing' do
     elsif args.size == 2
       city_param, city = args
     end
-    expect( post school_ratings_path(school_params.merge(city: city_param)) ).to route_to(controller: 'reviews', action: 'create', state: 'south-carolina', city: city, schoolId: '1', school_name: 'Keith-School-of-Excellence')
+    expect( post school_reviews_path(nil, school_params.merge(city: city_param)) ).to route_to(action: 'create', controller: 'school_profile_reviews', state: 'south-carolina', city: city, schoolId: '1', school_name: 'Keith-School-Of-Excellence')
   end
 
   before do
@@ -26,9 +26,9 @@ describe 'create review routing' do
 
   let(:school_params) {
     {
-      state: 'south-carolina',
-      schoolId: 1,
-      school_name: 'Keith-School-of-Excellence'
+      state_name: 'south carolina',
+      id: 1,
+      name: 'Keith School Of Excellence'
     }
   }
 
@@ -37,11 +37,11 @@ describe 'create review routing' do
   end
 
   it 'should route a school within a two-word city' do
-    expect_route_to_be_correct_for_city('north-asheville')
+    expect_route_to_be_correct_for_city('north_asheville')
   end
 
   it 'should route a school within a city with a period in it' do
-    expect_route_to_be_correct_for_city('st.-asheville')
+    expect_route_to_be_correct_for_city('st._asheville')
   end
 
   it 'should route a school within a city with a # in it' do

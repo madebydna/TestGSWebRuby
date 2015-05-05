@@ -10,12 +10,16 @@ GS.uri.Uri.getHref = function() {
     return window.location.href;
 };
 
+GS.uri.Uri.getHashValue = function () {
+    return window.location.hash.substr(1);
+}
+
 GS.uri.Uri.getPath = function() {
     return window.location.pathname;
 };
 
 GS.uri.Uri.goToPage = function(full_uri) {
-    window.location = full_uri;
+    window.open(full_uri, '_self');
 };
 
 GS.uri.Uri.reloadPageWithNewQuery = function(query) {

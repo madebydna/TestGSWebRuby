@@ -12,5 +12,6 @@ $(function() {
             $form.find('input[name=page]').val(pageNumber);
         });
 
+        GS.gsParsleyValidations.init();
     }
 });

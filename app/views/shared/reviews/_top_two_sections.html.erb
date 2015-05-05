@@ -1,5 +1,5 @@
-<% average_score = @school_reviews_global.rating_averages.overall.avg_score %>
-<% ratings_count = @school_reviews_global.rating_averages.overall.counter %>
+<% average_score = @school_reviews.average_5_star_rating %>
+<% ratings_count = @school_reviews.number_of_5_star_ratings %>
 
 <% if average_score > 0 %>
     <div class="row ptl">
