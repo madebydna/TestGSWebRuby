@@ -3,15 +3,25 @@ require 'spec_helper'
 describe ReviewsCaching::ReviewsSnapshotCacher do
   let(:school) { FactoryGirl.build(:alameda_high_school) }
   let(:cacher) { ReviewsCaching::ReviewsSnapshotCacher.new(school) }
-  let(:sample_reviews) { [FactoryGirl.build(:school_rating), FactoryGirl.build(:school_rating)] }
+  let(:now) { Time.zone.now.to_s }
+  let(:sample_reviews) do
+    reviews = [
+      FactoryGirl.build(:five_star_review, created: now, answer_value: '5'),
+      FactoryGirl.build(:five_star_review, created: now, answer_value: '5')
+    ]
+    school_member = SchoolMember.new
+    school_member.user_type = 'parent'
+    reviews.each { |review| review.school_member = school_member }
+    reviews
+  end
   let(:most_recent_reviews) {
     [
         {comments: 'this is a valid comments value since it contains 15 words - including the hyphen',
-         posted: Date.today.to_s,
+         posted: now,
          who: 'parent',
          quality: '5'},
         {comments: 'this is a valid comments value since it contains 15 words - including the hyphen',
-         posted: Date.today.to_s,
+         posted: now,
          who: 'parent',
          quality: '5'}
     ]
