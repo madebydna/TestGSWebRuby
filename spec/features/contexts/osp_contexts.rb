@@ -129,7 +129,8 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
     {
         boardgames:        1,
         puzzlegames:       2,
-        videogames:        3
+        videogames:        3,
+        video_urls:        4
     }
   end
   let(:questions) do
@@ -141,8 +142,7 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             question_type: 'input_field_sm',
             config: {
                 'validations' => {
-                    'data-parsley-type' => 'email',
-                    'data-parsley-trigger' => 'keyup'
+                    'data-parsley-type' => 'email'
                 }
             }.to_json
         },
@@ -153,11 +153,9 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             question_type: 'input_field_lg',
             config: {
                 'validations' => {
-                    'data-parsley-type' => 'email',
-                    'data-parsley-trigger' => 'keyup'
+                    'data-parsley-type' => 'email'
                 }
             }.to_json
-
         },
         {
             id: question_ids[:puzzlegames],
@@ -166,11 +164,20 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             question_type: 'input_field_md',
             config: {
                 'validations' => {
-                    'data-parsley-type' => 'email',
-                    'data-parsley-trigger' => 'keyup'
+                    'data-parsley-type' => 'email'
                 }
             }.to_json
-
+        },
+        {
+            id: question_ids[:video_urls],
+            esp_response_key: :video_urls,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-youtubevimeotag' => ''
+                }
+            }.to_json
         }
     ]
   end
@@ -239,6 +246,13 @@ shared_context 'enter information into medium text field' do
   before do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[:puzzlegames]}-puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
+  end
+  end
+
+shared_context 'enter video url information into medium text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form textarea[name='#{question_ids[:video_urls]}-video_urls']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 
