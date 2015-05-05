@@ -10,7 +10,7 @@
    end
 %>
 <div class="ptl phl js-topicalReviewComment <%= display %>">
-  <%= f.text_area :comment, {class: "form-control",
+  <%= f.text_area :comment, {class: "form-control mbs",
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
                              placeholder: placeholder,
@@ -18,13 +18,15 @@
                              'data-parsley-required'=>"#{comment_required}",
                              'data-parsley-errors-container' => "##{parsley_error_id}",
                              'data-parsley-minwords-message'=> 'Please be sure your story is 15 words or more in length.',
-                             'data-parsley-required-message'=> 'Thanks for your opinion! Please share some thoughts on this school in order to save your rating.'
+                             'data-parsley-required-message'=> 'Thanks for your opinion! Please share some thoughts on this school in order to save your rating.',
+                             'data-parsley-maxlength'=>"2500",
+                             'data-parsley-maxlength-message' => 'Sorry, we have a 2,500 character limit for reviews. Please shorten your review to save it.'
   } %>
   <div class="row tal">
     <div class="col-xs-9">
-      <div class="help-block js-reviewCharacterDisplay mvs dn">You have <span class="js-reviewCharacterCount"></span> left
+      <div class="help-block js-reviewCharacterDisplay mtn mbn dn">You have <span class="js-reviewCharacterCount"></span> left
         in your review</div>
-      <div class= "js-topicalReviewErrorMessage mts parsley-type" id="<%= parsley_error_id %>" class="mts"></div>
+      <div class= "js-topicalReviewErrorMessage parsley-type" id="<%= parsley_error_id %>"></div>
     </div>
     <div class="col-xs-2 col-xs-offset-1">
       <button type="submit" class="btn btn-primary fr mtl mbl">Submit</button>
