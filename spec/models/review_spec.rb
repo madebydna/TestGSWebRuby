@@ -434,7 +434,7 @@ describe Review do
 
       expect do
         review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
-      end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Each question can only be answered once')
+      end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: You have already submitted a review for this topic.')
     end
 
     it 'should not prevent multiple inactive reviews for the same user / school / question' do
