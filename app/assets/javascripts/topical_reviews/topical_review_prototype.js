@@ -126,11 +126,23 @@ GS.topicalReview.checkBoxes = (function () {
                 }
                 var reviewContainer = $(this).parents('.js-topicalReviewContainer');
                 $(reviewContainer).addClass('js-reviewComplete');
-                var carousel = $('.js-reviewQuestionCarousel')
+                var carousel = $('.js-reviewQuestionCarousel');
                 carousel.slick('slickNext')
             }).on('ajax:error', function (event, xhr, status, error) {
-                var errorMessage = xhr.responseJSON.join(' ');
+                var errorMessage = "There was an error saving your review.";
                 var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
+                var responseJSON = xhr.responseJSON;
+                if (xhr.responseJSON) {
+                    if (responseJSON.length > 1) {
+                        errorMessage = responseJSON.join(' ');
+                    }
+                    else {
+                        errorMessage = responseJSON[0];
+                    }
+                }
+                console.log(xhr);
+                console.log(xhr.responseJSON);
+                console.log(xhr.responseText);
                 errorMessageContainer.html(errorMessage);
             });
         };
