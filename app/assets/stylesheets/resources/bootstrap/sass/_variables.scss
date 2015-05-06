@@ -15,14 +15,7 @@ $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
-////////////MS
-$gray-base-color:        #000;
-$gray-darkest:           lighten($gray-base-color, 24%); // #333
-$gray-darker:            lighten($gray-base-color, 40%); // #666
-$gray-dark:              lighten($gray-base-color, 60%); // #999
-$gray:                   lighten($gray-base-color, 80%); // #ccc
-$gray-light:             lighten($gray-base-color, 90%); // #ebebeb
-$gray-lighter:           lighten($gray-base-color, 95%); // #f4f4f4
+
 
 // Brand colors
 // -------------------------

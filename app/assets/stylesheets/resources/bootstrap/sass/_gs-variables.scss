@@ -1,15 +1,54 @@
-$headings-font-family-bold:    "opensans-bold", Helvetica, Arial, sans-serif;
-$headings-font-family-semibold:    "opensans-semibold", Helvetica, Arial, sans-serif;
-$headings-font-family-italic: "opensans-italic", Helvetica, Arial, sans-serif;
-$headings-font-family-robotoslab-light: RobotoSlab-Light,"opensans-semibold", Helvetica, Arial;
-$headings-font-weight-bold:    400;
-$brand-secondary:         #ffb725;
-$brand-secondary-dark:    #926100;
-$border-light-grey:    1px #cccccc solid;
-$emphasis-color:              #E6705C;
-$neutral-color:           #444444;
+// Contains GS-specific overrides (default values are in _variables.scss)
+// Also contains GS-specific variables
 
-$dirt-green: #07251e;
-$clay-green: #3f4e4b;
-$wallpaper-green: #93c83e;
-$absence-gray: #2b2b2b;
+// Grays
+// -------------------------
+$gray-base-color:        #000;
+$gray-darkest:           lighten($gray-base-color, 24%); // #333
+$gray-darker:            lighten($gray-base-color, 40%); // #666
+$gray-dark:              lighten($gray-base-color, 60%); // #999
+$gray:                   lighten($gray-base-color, 80%); // #ccc
+$gray-light:             lighten($gray-base-color, 90%); // #ebebeb
+$gray-lighter:           lighten($gray-base-color, 95%); // #f4f4f4
+
+// Brand colors
+// -------------------------
+$brand-secondary:                 #ffb725;
+$brand-secondary-dark:            #926100;
+
+// Other Colors
+// -------------------------
+$neutral-color:           #444444;
+$dirt-green:              #07251e;
+$clay-green:              #3f4e4b;
+$wallpaper-green:         #93c83e;
+$absence-gray:            #2b2b2b;
+$emphasis-color:          #E6705C;
+
+// Typography
+// -------------------------
+$headings-font-family-bold:               "opensans-bold", Helvetica, Arial, sans-serif;
+$headings-font-family-semibold:           "opensans-semibold", Helvetica, Arial, sans-serif;
+$headings-font-family-italic:             "opensans-italic", Helvetica, Arial, sans-serif;
+$headings-font-family-robotoslab-light:   RobotoSlab-Light,"opensans-semibold", Helvetica, Arial;
+$headings-font-weight-bold:               400;
+
+// Tables
+// -------------------------
+
+
+// Forms
+// -------------------------
+$input-color-placeholder:         $gray-light;
+
+// Buttons
+// -------------------------
+
+
+// Components
+// -------------------------
+$border-light-grey:               1px #cccccc solid;
+
+
+
+
