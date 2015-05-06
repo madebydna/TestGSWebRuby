@@ -2,8 +2,10 @@ GS = GS || {}
 GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     var blockHtmlTags = function(val, _) {
-        var htmlTagRegex = /<([a-z0-9]+)>(.|\n)*<\/\1>/;
-        return val.match(htmlTagRegex) ? false : true
+        var pairOfTagsRegex = /<(\s|\n)*([a-z0-9]+)[^>]*>(.|\n)*<\s*\/\2(.|\n)*>/;
+        var whiteListedSingleTags = /<(\s|\n)*(img|input|br)(.|\n)*>/;
+
+        return val.match(pairOfTagsRegex) || val.match(whiteListedSingleTags) ? false : true
     };
 
     var youtubeVimeoTag = function(val, _){
