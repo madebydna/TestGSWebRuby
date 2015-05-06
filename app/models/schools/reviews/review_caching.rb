@@ -14,9 +14,9 @@ class ReviewCaching
 
   def review_counts_per_user_type
     {
-      all: reviews.count,
-      parent: reviews.parent_reviews.count,
-      student: reviews.student_reviews.count
+      all: reviews.having_comments.count,
+      parent: reviews.parent_reviews.having_comments.count,
+      student: reviews.student_reviews.having_comments.count
     }
   end
 

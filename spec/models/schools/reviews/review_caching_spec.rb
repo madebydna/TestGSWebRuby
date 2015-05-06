@@ -15,7 +15,9 @@ describe ReviewCaching do
   let(:five_star_student_review1_val_2) { FactoryGirl.build(:five_star_review, answer_value: 2) }
   let(:five_star_student_review2_val_4) { FactoryGirl.build(:five_star_review, answer_value: 4) }
   let(:teacher_effectiveness_parent_review) { FactoryGirl.build(:teacher_effectiveness_review) }
+  let(:teacher_effectiveness_parent_review2) { FactoryGirl.build(:teacher_effectiveness_review, comment: nil) }
   let(:teacher_effectiveness_student_review) { FactoryGirl.build(:teacher_effectiveness_review) }
+  let(:teacher_effectiveness_student_review2) { FactoryGirl.build(:teacher_effectiveness_review, comment: nil) }
 
     before do
       allow(five_star_parent_review1_val_4).to receive(:user_type).and_return('parent')
@@ -23,7 +25,9 @@ describe ReviewCaching do
       allow(five_star_student_review1_val_2).to receive(:user_type).and_return('student')
       allow(five_star_student_review2_val_4).to receive(:user_type).and_return('student')
       allow(teacher_effectiveness_parent_review).to receive(:user_type).and_return('parent')
+      allow(teacher_effectiveness_parent_review2).to receive(:user_type).and_return('parent')
       allow(teacher_effectiveness_student_review).to receive(:user_type).and_return('student')
+      allow(teacher_effectiveness_student_review2).to receive(:user_type).and_return('student')
       reviews_array.push(five_star_parent_review1_val_4, five_star_parent_review2_val_3,
                    five_star_student_review1_val_2, five_star_student_review2_val_4,
                    teacher_effectiveness_student_review, teacher_effectiveness_parent_review
@@ -50,6 +54,13 @@ describe ReviewCaching do
         expect(subject.review_counts_per_user_type).to be_a(Hash)
       end
       it 'should return a hash with correct count for reviews by user_type for all topics' do
+        expect(subject.review_counts_per_user_type[:all]).to eq(6)
+        expect(subject.review_counts_per_user_type[:parent]).to eq(3)
+        expect(subject.review_counts_per_user_type[:student]).to eq(3)
+      end
+      it 'should not consider reviews that dont have comments' do
+        reviews_array.push(teacher_effectiveness_parent_review2)
+        reviews_array.push(teacher_effectiveness_student_review2)
         expect(subject.review_counts_per_user_type[:all]).to eq(6)
         expect(subject.review_counts_per_user_type[:parent]).to eq(3)
         expect(subject.review_counts_per_user_type[:student]).to eq(3)
@@ -90,8 +101,13 @@ describe ReviewCaching do
     end
 
     it 'should return correct star counts' do
-      pending ('ask Samson how best to test this')
-      expect(subject.calc_review_data[:star_counts]).to eq(reviews_array.five_star_rating_reviews.score_distribution)
+      expect(
+        subject.calc_review_data[:star_counts]
+      ).to eq(
+             Hashie::Mash.new(
+               reviews_array.five_star_rating_reviews.score_distribution
+             )
+           )
     end
 
   end
