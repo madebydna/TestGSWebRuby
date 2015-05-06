@@ -2,7 +2,7 @@ GS = GS || {}
 GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     var blockHtmlTags = function(val, _) {
-        var htmlTagRegex = /^<([a-z]+)([^<]+)*(?:>(.*)<\/\1>|\s+\/>)$/;
+        var htmlTagRegex = /<([a-z0-9]+)>(.|\n)*<\/\1>/;
         return val.match(htmlTagRegex) ? false : true
     };
 
