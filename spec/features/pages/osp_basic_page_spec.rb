@@ -139,6 +139,11 @@ describe 'OSP Basic Page' do
           include_example 'should not submit value in text field'
         end
       end
+      with_shared_context 'enter video url information into medium text field', js: true do
+        with_shared_context 'within textarea field', :normal_text_field do
+          include_example 'should not submit value in text field'
+        end
+      end
     end
   end
 

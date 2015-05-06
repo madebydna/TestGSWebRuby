@@ -130,7 +130,8 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
         boardgames:        1,
         puzzlegames:       2,
         videogames:        3,
-        video_urls:        4
+        video_urls:        4,
+        normal_text_field: 5
     }
   end
   let(:questions) do
@@ -176,6 +177,17 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             config: {
                 'validations' => {
                     'data-parsley-youtubevimeotag' => ''
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:normal_text_field],
+            esp_response_key: :normal_text_field,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-blockhtmltags' => ''
                 }
             }.to_json
         }
