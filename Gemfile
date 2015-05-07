@@ -14,7 +14,7 @@ gem 'rails_admin'
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'
 
-# Authentication, used for rails-admin
+# Authentication, used for rai
 gem 'devise'
 
 # Add database sharding support to Active Record

@@ -1,4 +1,4 @@
-class Admin::OspController < ApplicationController
+class OspController < ApplicationController
   before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
   before_action :set_footer_cities, except: [:approve_provisional_osp_user_data]
