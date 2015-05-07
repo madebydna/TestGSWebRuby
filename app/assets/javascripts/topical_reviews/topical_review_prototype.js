@@ -236,6 +236,7 @@ GS.topicalReview.radioButton = GS.topicalReview.radioButton || (function () {
     };
 
     var showCommentField = function (reviewContainer) {
+        $(reviewContainer).find('.js-topicalReviewHaveAVoice').hide();
         $(reviewContainer).find('.js-gs-results-snapshot').hide();
         $(reviewContainer).find('.js-topicalReviewComment').show();
     };
