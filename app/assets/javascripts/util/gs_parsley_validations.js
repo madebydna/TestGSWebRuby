@@ -14,6 +14,8 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
         var vimeoREgEx = /^(?:https?:\/\/)?(?:www\.)?(\bvimeo\.com\b)\/([0-9a-zA-Z\-_]+)$/;
         if(val.match(youtubeWatchRegEx) || val.match(youtubeShareRegEx) || val.match(vimeoREgEx) ){
             return true;
+        } else {
+            return false;
         }
 
     };
