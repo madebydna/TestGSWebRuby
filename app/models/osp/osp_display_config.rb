@@ -32,7 +32,7 @@ class OspDisplayConfig < ActiveRecord::Base
   end
 
   def children
-    @children = [*OspQuestion.find(question_ids)]
+    @children = [*OspQuestion.find([*question_ids])]
   end
 
   def question_type

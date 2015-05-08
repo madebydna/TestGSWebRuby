@@ -4,7 +4,7 @@
 <% #parsley_validations can look like (data-parsley-youtubevimeotag data-parsley-type='email') rendered on page and {'data-parsley-youtubevimeotag': '', 'data-parsley-type':'email'} in db%>
 <% parsley_validations    = [*display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
 <% preexisting_esp_value  = preexisting_esp_values.first %>
-<% parsley_trigger_keyup  = display_validations.nil? ? '' : @keyup%>
+<% parsley_defaults  = display_validations.nil? ? '' : @parsley_defaults%>
 <% response_key  %>
 
 <% child_question            = display_question.children.first %>
@@ -24,12 +24,10 @@
     </div>
   <% end %>
 
-  <input <%= parsley_validations %> <%= parsley_trigger_keyup %>
+  <input <%= parsley_validations %> <%= parsley_defaults %>
          type="text"
          class="form-control pull-left mrl mbl input-field-sm js-disableTriggerElement"
          data-parsley-errors-container= <%= "##{q_id}-parsley-error" %>
-         <%= parsley_validations %>
-         <%= parsley_trigger_keyup %>
          name="<%= "#{q_id}-#{response_key}" %>"
          value="<%= preexisting_esp_value %>"
   >
