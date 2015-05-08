@@ -34,6 +34,9 @@ describe 'School Profile Reviews Page', js: true do
               include_example 'should save review that is active'
               include_example 'should show next question'
               include_example 'should show a radio_button question'
+              with_subject :visible_review_question do
+                it { is_expected.to have_call_to_action_text }
+              end
               include_example 'should not show the review comment form'
             end
 
@@ -69,6 +72,16 @@ describe 'School Profile Reviews Page', js: true do
                 include_example 'should save review with expected value', '3'
                 include_example 'should save overall review with comment without bad words'
                 include_example 'should save review that is not active'
+                with_shared_context 'Visit School Profile Reviews' do
+                  include_example 'should show a radio_button question'
+                  with_shared_context 'select first radio button option' do
+                    include_example 'should show the review comment section'
+                    with_shared_context 'submit response with comment without bad words' do
+                      include_example 'should save overall review with comment without bad words'
+                      include_example 'should save review with expected value', "Very ineffective"
+                    end
+                  end
+                end
               end
             end
 
@@ -164,9 +177,14 @@ describe 'School Profile Reviews Page', js: true do
           end
 
           with_subject :review_values do
-            it 'should have the topic name' do
+            it 'should have the topic label' do
               subject.each_with_index do |review_value, index|
-                expect(review_value).to have_content(two_active_reviews[index].question.review_topic.name)
+                topic_label = two_active_reviews[index].question.review_topic.label
+                if topic_label == 'Overall experience'
+                  expect(review_value).to_not have_content(topic_label)
+                else
+                  expect(review_value).to have_content(topic_label)
+                end
               end
             end
           end

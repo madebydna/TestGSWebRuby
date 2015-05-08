@@ -13,7 +13,7 @@ class OspDisplayConfig < ActiveRecord::Base
   belongs_to :osp_question, :class_name => 'OspQuestion', foreign_key: 'osp_question_id'
   belongs_to :osp_question_group, :class_name => 'OspQuestionGroup',foreign_key: 'osp_question_group_id'
 
-  jsonified_attribute :answers, :label, :validations,:options, json_attribute: :config, type: :string
+  jsonified_attribute :answers, :label, :validations, :options, :question_ids, json_attribute: :config, type: :string
 
   def self.find_by_page(page)
     self.active.where(page_name: page).order(:order_on_page,:order_in_group)
@@ -29,6 +29,10 @@ class OspDisplayConfig < ActiveRecord::Base
       osp_display_config.osp_question.school_type.include?(school.type) &&
       school.includes_level_code?(osp_display_config.osp_question.level_code) && osp_display_config.osp_question.active
     end
+  end
+
+  def children
+    @children = [*OspQuestion.find([*question_ids])]
   end
 
   def question_type

@@ -1859,7 +1859,7 @@
     window.ParsleyConfig.i18n.en = $.extend(window.ParsleyConfig.i18n.en || {}, {
         defaultMessage: "This value seems to be invalid.",
         type: {
-            email:        "This value should be a valid email.",
+            email:        "Please enter a valid email address.",
             url:          "This value should be a valid url.",
             number:       "This value should be a valid number.",
             integer:      "This value should be a valid integer.",

@@ -169,13 +169,14 @@ GS.topicalReview.questionCarousel = (function () {
         })
     }
 
-    var getTopicId = function () {
+    var getTopicIdFromAnchor = function () {
         return GS.uri.Uri.getHashValue().slice(5);
     }
 
     var init = function () {
-
-        var $questionCarousel = $('.js-reviewQuestionCarousel').slick({
+        var questionCarouselSelector = '.js-reviewQuestionCarousel';
+        var $questionCarousel = $(questionCarouselSelector);
+        $questionCarousel.slick({
             infinite: true,
             speed: 300,
             slidesToShow: 1,
@@ -185,8 +186,8 @@ GS.topicalReview.questionCarousel = (function () {
             prevArrow: ".js-previous-topic",
             nextArrow: ".js-next-topic"
         });
-
-        var topicId = getTopicId();
+        var topicIdFromHtmlDataAttribute = $questionCarousel.data('gs-first-topic-id');
+        var topicId = topicIdFromHtmlDataAttribute || getTopicIdFromAnchor();
         var slideId = getSlideIdForFirstTopicQuestion(topicId);
         $questionCarousel.slick('slickGoTo', Number(slideId));
     };
@@ -236,6 +237,7 @@ GS.topicalReview.radioButton = GS.topicalReview.radioButton || (function () {
     };
 
     var showCommentField = function (reviewContainer) {
+        $(reviewContainer).find('.js-topicalReviewHaveAVoice').hide();
         $(reviewContainer).find('.js-gs-results-snapshot').hide();
         $(reviewContainer).find('.js-topicalReviewComment').show();
     };

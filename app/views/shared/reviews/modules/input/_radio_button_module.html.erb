@@ -26,5 +26,10 @@
 <% options = {placeholder: 'Please share why you feel this way. (optional)',
               display: 'dn', comment_required: false} %>
 <div class="topical-review-question-container right">
+  <% unless options[:comment_required] %>
+    <div class="ptl phl js-topicalReviewHaveAVoice">
+      <%= render 'shared/reviews/modules/output/have_a_voice' %>
+    </div>
+  <% end %>
   <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
 </div>
