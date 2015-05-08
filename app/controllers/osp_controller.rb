@@ -36,7 +36,7 @@ class OspController < ApplicationController
   protected
 
   def questions_and_answers
-    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token).map do | param, values |
+    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token,:isFruitcakeSchool,:showOspGateway,:anyPageStarted).map do | param, values |
       question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
       next unless values.present?
       validate_questions_and_answers(question_id.to_i, response_key, values)
