@@ -52,7 +52,9 @@ shared_context 'with a basic set of osp questions in db' do
       dress_code:        3,
       boardgames:        4,
       puzzlegames:       5,
-      videogames:        6
+      videogames:        6,
+      award:             7,
+      award_year:        8,
     }
   end
   let(:questions) do
@@ -117,6 +119,25 @@ shared_context 'with a basic set of osp questions in db' do
           osp_question_group_id: nil,
           question_type: 'input_field_md'
 
+      },
+      {
+          id: question_ids[:award],
+          esp_response_key: :award,
+          osp_question_group_id: nil,
+          question_type: 'input_and_year',
+          config: { #will be turned into json, so needs to be string
+            'question_ids' => [question_ids[:award_year]]
+          }.to_json
+      },
+    ]
+  end
+
+  let(:questions_without_display_conf) do
+    [
+      {
+        id: question_ids[:award_year],
+        esp_response_key: :award_year,
+        question_type: 'input_and_year',
       }
     ]
   end
@@ -202,6 +223,9 @@ shared_context 'save osp question to db' do
     questions.each do |question|
       FactoryGirl.create(:osp_question, :with_osp_display_config, question)
     end
+    [*try(:questions_without_display_conf)].each do |question|
+      FactoryGirl.create(:osp_question, question)
+    end
   end
   after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
 end
@@ -247,12 +271,19 @@ end
 
 ### Open text / input fields ###
 
-shared_context 'enter information into small text field' do
+shared_context 'enter following text into text field with name' do | text, name |
   before do
     form = osp_page.osp_form
-    form.find("form input[type=text]").set "uuddlrlrbas"
+    form.find("form input[type=text][name='#{question_ids[name]}-#{name}']").set text
   end
+end
+
+shared_context 'selecting the following option in select box with name' do | text, name |
+  before do
+    form = osp_page.osp_form
+    form.find("form select[name='#{question_ids[name]}-#{name}']").set text
   end
+end
 
 shared_context 'enter information into medium text field' do
   before do
@@ -298,6 +329,13 @@ shared_context 'within input field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
     form.find("form input[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
+  end
+end
+
+shared_context 'within select box' do |esp_response_key|
+  subject do
+    form = osp_page.osp_form
+    form.find("form select[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
   end
 end
 
