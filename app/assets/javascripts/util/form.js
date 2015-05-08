@@ -568,6 +568,24 @@ GS.forms.elements = (function() {
 
     //AUTOCOMPLETE END
 
+    var setConditionalQuestionHandler = function(conditionalQuestionContainer) {
+        $(conditionalQuestionContainer).on(keyup, disableElementTriggerSelector, function() {
+            toggleDisable($(this), conditionalQuestionContainer);
+        });
+    }
+
+    var disableTargetElementsIfTriggerEmpty = function(parentContainer) {
+        var $triggers = $(disableElementTriggerSelector + '[type=text]');
+        $triggers.each(function() {
+            toggleDisable($(this), parentContainer);
+        });
+    };
+
+    var toggleDisable = function($self, parentContainer) {
+        var $disableTarget = $self.closest(parentContainer).find(disableElementTargetSelector);
+        $self.val() === '' ? disableElementAndChildInputs($disableTarget) : enableElementAndChildInputs($disableTarget);
+    }
+
 
     return {
         setCheckboxButtonHandler: setCheckboxButtonHandler,
@@ -578,7 +596,9 @@ GS.forms.elements = (function() {
         setResponsiveRadioHandler: setResponsiveRadioHandler,
         setCustomSubmitHandler: setCustomSubmitHandler,
         setEditAutocompleteHandler: setEditAutocompleteHandler,
-        initOspPageAutocomplete: initOspPageAutocomplete
+        initOspPageAutocomplete: initOspPageAutocomplete,
+        setConditionalQuestionHandler: setConditionalQuestionHandler,
+        disableTargetElementsIfTriggerEmpty: disableTargetElementsIfTriggerEmpty
     }
 
 })();

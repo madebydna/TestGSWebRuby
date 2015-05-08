@@ -1,0 +1,57 @@
+<% display_question_label = display_question.displayed_label %>
+<% q_id                   = display_question.osp_question_id %>
+<% display_validations    = display_question.display_validations %>
+<% #parsley_validations can look like (data-parsley-youtubevimeotag data-parsley-type='email') rendered on page and {'data-parsley-youtubevimeotag': '', 'data-parsley-type':'email'} in db%>
+<% parsley_validations    = [*display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
+<% preexisting_esp_value  = preexisting_esp_values.first %>
+<% parsley_trigger_keyup  = display_validations.nil? ? '' : @keyup%>
+<% response_key  %>
+
+<% child_question            = display_question.children.first %>
+<% child_id                  = child_question.id %>
+<% child_response_key        = child_question.esp_response_key %>
+<% child_esp_value           = @osp_data.values_for(child_response_key, child_id).first.to_i %>
+<% should_select_child_value = preexisting_esp_value.present? && child_esp_value.present? %>
+
+<div class="row mbl js-conditionalQuestion">
+  <% if display_question_label.present? %>
+    <div class="col-xs-12">
+      <h3 class="mbl">
+        <span class="mrl">
+          <%= display_question_label %>
+        </span>
+      </h3>
+    </div>
+  <% end %>
+
+  <input <%= parsley_validations %> <%= parsley_trigger_keyup %>
+         type="text"
+         class="form-control pull-left mrl mbl input-field-sm js-disableTriggerElement"
+         data-parsley-errors-container= <%= "##{q_id}-parsley-error" %>
+         <%= parsley_validations %>
+         <%= parsley_trigger_keyup %>
+         name="<%= "#{q_id}-#{response_key}" %>"
+         value="<%= preexisting_esp_value %>"
+  >
+  <select class="form-control js-disableTarget"
+          style='width: 150px;'
+          name=<%= "#{child_id}-#{child_response_key}"%>
+  >
+
+    <% #currently hardcoded for the last 4 years so as to keep the time up to date %>
+    <% #can move to config hash in db later if desired %>
+    <% current_year = Date.today.strftime("%Y").to_i %>
+
+    <option>Select Year</option>
+    <% (0..3).each do |x| %>
+      <% this_year = current_year - x %>
+      <option value=<%= this_year %> <%= ' selected' if this_year == child_esp_value && should_select_child_value %>>
+        <%= this_year %>
+      </option>
+    <% end %>
+
+  </select>
+  <div id=<%= "#{q_id}-parsley-error" %> style="clear: both;"></div>
+
+</div>
+

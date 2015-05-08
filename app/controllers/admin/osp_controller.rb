@@ -114,7 +114,7 @@ class Admin::OspController < ApplicationController
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
-    @keyup = "data-parsley-trigger=keyup"
+    @keyup = "data-parsley-trigger=keyup data-parsley-blockhtmltags"
 
     if params[:page]== '1'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)
