@@ -11,7 +11,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :submit_button, 'button'
     elements :stars, '.js-topicalReviewStarContainer'
     elements :radio_buttons, "input[type='radio']"
-    element :call_to_action_text, 'span', text: 'Have a Voice!'
+    element :call_to_action_text, 'span', text: 'Have your say!'
   end
 
   class ReviewQuestionHidden < SitePrism::Section
