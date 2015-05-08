@@ -5,16 +5,15 @@ describe SchoolReviews do
   context 'initialized with only a school with no reviews' do
     let(:school) { FactoryGirl.build(:school) }
     let!(:school_reviews) do
-      school_reviews = SchoolReviews.new(school)
-      school_reviews.extend Enumerable
-      school_reviews.extend Forwardable
-      school_reviews.extend ReviewScoping
+      school_reviews = SchoolReviews.new do
+        [].extend(ReviewScoping).extend(ReviewCalculations)
+      end
     end
     subject { school_reviews }
 
     describe '#initialize' do
-      it 'sets school to be a school' do
-        expect(subject.school).to eq(school)
+      it 'sets reviews_proc to be proc' do
+        expect(subject.reviews_proc).to be_a(Proc)
       end
     end
 
@@ -37,7 +36,7 @@ describe SchoolReviews do
       context 'without access to review cache' do
         it 'should return a rounded average 5 star rating score' do
           subject.stub_chain('review_cache.star_rating').and_return(nil)
-          subject.stub_chain('five_star_rating_reviews.average_score').and_return(3.5)
+          subject.stub_chain('reviews.five_star_rating_reviews.average_score').and_return(3.5)
           expect(subject.average_5_star_rating).to eq(4)
         end
       end
@@ -69,7 +68,7 @@ describe SchoolReviews do
       context 'without access to review cache' do
         it 'should return number of 5 star ratings' do
           subject.stub_chain('review_cache.num_ratings').and_return(nil)
-          subject.stub_chain('five_star_rating_reviews.count_having_numeric_answer').and_return(3)
+          subject.stub_chain('reviews.five_star_rating_reviews.count_having_numeric_answer').and_return(3)
           expect(subject.number_of_5_star_ratings).to eq(3)
         end
       end
@@ -86,7 +85,7 @@ describe SchoolReviews do
       context 'without access to review cache' do
         it 'should return number of 5 star ratings' do
           subject.stub_chain('review_cache.star_counts').and_return(nil)
-          subject.stub_chain('five_star_rating_reviews.score_distribution').and_return(3)
+          subject.stub_chain('reviews.five_star_rating_reviews.score_distribution').and_return(3)
           expect(subject.five_star_rating_score_distribution).to eq(3)
         end
       end
@@ -100,14 +99,5 @@ describe SchoolReviews do
       end
     end
   end
-
-  describe '.build_from_cache' do
-    it 'should return an instance of Review Caching' do
-      pending ('ask Samson how to test this')
-      review_cache = []
-      expect(SchoolReviews.build_from_cache(review_cache)).to be_a(ReviewCaching)
-    end
-  end
-
 
 end

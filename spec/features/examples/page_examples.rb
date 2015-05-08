@@ -48,6 +48,12 @@ shared_example 'should be disabled' do
   end
 end
 
+shared_example 'should not be disabled' do
+  [*subject].each do |element|
+    expect(element[:disabled]).to be_nil
+  end
+end
+
 %w[noindex nofollow noarchive].each do |value|
   shared_example("should have the #{value} meta tag") do
     robots_tag = subject.find('meta[name="robots"]', visible: false)

@@ -3,7 +3,6 @@
 <% display_validations    = display_question.display_validations %>
 <% #parsley_validations can look like (data-parsley-youtubevimeotag data-parsley-type='email') rendered on page and {'data-parsley-youtubevimeotag': '', 'data-parsley-type':'email'} in db%>
 <% parsley_validations = [*display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
-<% parsley_defaults = display_validations.nil? ? '' : @parsley_defaults%>
 
 <% response_key  %>
 
@@ -16,5 +15,5 @@
     </h3>
   </div>
 
-  <textarea <%= parsley_validations %> <%= parsley_defaults %> class="form-control input-field-md" rows="0" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>"><%= preexisting_esp_values[0] %></textarea>
+  <textarea <%= parsley_validations %> <%= @parsley_defaults %> class="form-control input-field-md" rows="0" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>"><%= preexisting_esp_values[0] %></textarea>
 </div>

@@ -5,11 +5,11 @@
     <p class="">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
       <%= link_to 'Learn more.', review_guidelines_url %></p>
 </div>
-  <% first_unanswered_topic_for_user = '' %>
+  <% first_unanswered_topic_id_for_user = '' %>
   <% if logged_in? %>
-    <% first_unanswered_topic_for_user = (ReviewTopic.pluck(:id) - @current_user.reviews.map(&:topic).map(&:id)).first || '' %>
+    <% first_unanswered_topic_id_for_user = @current_user.first_unanswered_topic.try(:id) %>
   <% end %>
-  <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= first_unanswered_topic_for_user %>">
+  <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= first_unanswered_topic_id_for_user %>">
   <%= render partial: "shared/reviews/modules/topical_review_question_module",
              collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
   %>
