@@ -85,7 +85,7 @@ describe 'OSP Basic Page' do
           end
         end
 
-        with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :boardgamesdo
+        with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :boardgames do
           with_shared_context 'submit the osp form' do
             with_shared_context 'within input field', :boardgames do
               include_example 'should eql the expected value', 'uuddlrlrbas'
