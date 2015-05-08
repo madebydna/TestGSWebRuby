@@ -72,6 +72,16 @@ describe 'School Profile Reviews Page', js: true do
                 include_example 'should save review with expected value', '3'
                 include_example 'should save overall review with comment without bad words'
                 include_example 'should save review that is not active'
+                with_shared_context 'Visit School Profile Reviews' do
+                  include_example 'should show a radio_button question'
+                  with_shared_context 'select first radio button option' do
+                    include_example 'should show the review comment section'
+                    with_shared_context 'submit response with comment without bad words' do
+                      include_example 'should save overall review with comment without bad words'
+                      include_example 'should save review with expected value', "Very ineffective"
+                    end
+                  end
+                end
               end
             end
 

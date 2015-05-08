@@ -195,4 +195,8 @@ class Review < ActiveRecord::Base
     answer.to_i.to_s == answer.to_s ? answer.to_i : nil
   end
 
+  def topic
+    question.topic
+  end
+
 end
