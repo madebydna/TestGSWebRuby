@@ -1,6 +1,20 @@
 module SchoolReviewConcerns
   extend ActiveSupport::Concern
 
+  included do
+    [
+      :average_5_star_rating,
+      :number_of_reviews_with_comments,
+      :number_of_5_star_ratings,
+      :five_star_rating_score_distribution
+    ].each do |method|
+      delegate method, to: :reviews_with_calculations
+    end
+
+    alias_method :review_count, :number_of_reviews_with_comments
+    alias_method :community_rating, :average_5_star_rating
+  end
+
   # returns Topics with questions for school
   def topical_review_question_hash
     filtered_topics = ReviewTopic.includes(:review_questions).find_by_school(self)
@@ -40,7 +54,9 @@ module SchoolReviewConcerns
     @reviews ||= (
       reviews_scope.
         order(created: :desc).
-          to_a
+          to_a.
+            extend(ReviewScoping).
+              extend(ReviewCalculations)
     )
   end
 
@@ -50,6 +66,14 @@ module SchoolReviewConcerns
         order(created: :desc).
           to_a
     )
+  end
+
+  def use_review_cache(review_cache_object)
+    reviews_with_calculations(review_cache_object)
+  end
+
+  def reviews_with_calculations(review_cache_object = nil)
+    @reviews_with_calculations ||= SchoolReviews.new(review_cache_object) { reviews }
   end
 
 end

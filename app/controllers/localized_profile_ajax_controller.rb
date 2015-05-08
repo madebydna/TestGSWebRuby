@@ -19,7 +19,7 @@ class LocalizedProfileAjaxController < ApplicationController
       reviews = reviews.by_user_type[filter_by]
     end
 
-    school_reviews = SchoolReviews.new(@school, reviews).having_comments
+    school_reviews = SchoolReviews.new { reviews }.having_comments
     school_reviews = school_reviews[offset..offset + (limit - 1)]
     @school_reviews = school_reviews
 
