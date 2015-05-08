@@ -135,29 +135,12 @@ def process_args(args)
   args.try(:last).try(:has_key?, :js) ? args.pop : nil
 end
 
-def disconnect_connection_pools(db)
-  ActiveRecord::Base.connection_handler.connection_pools.
-    values.each do |pool|
-    if pool.connections.present? &&
-      ( pool.connections.first.
-        current_database == "#{db}_test" )
-      pool.disconnect!
-    end
-  end
-end
-
-def disconnect_all_connection_pools
-  ActiveRecord::Base.connection_handler.connection_pools.values.each do |pool|
-    pool.disconnect!
-  end
-end
 
 # Takes as arguments as list of db names as symbols
 def clean_dbs(*args)
   args.each do |db|
     DatabaseCleaner[:active_record, connection: "#{db}_rw".to_sym].strategy = :truncation
     DatabaseCleaner[:active_record, connection: "#{db}_rw".to_sym].clean
-    disconnect_connection_pools(db)
   end
 end
 
@@ -173,7 +156,6 @@ def clean_models(db, *models)
       db_name = "_#{db_name}" if States.abbreviations.include?(db_name)
       db_name << '_test'
       model.connection.execute("TRUNCATE #{db_name}.#{model.table_name}")
-      disconnect_connection_pools(db_name.sub('_test', ''))
     else
       model.destroy_all
     end
@@ -346,10 +328,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) { Rails.cache.clear }
-  config.after(:each) do
-    Rails.cache.clear
-    disconnect_all_connection_pools
-  end
+  config.after(:each) { Rails.cache.clear }
 
   # config.raise_errors_for_deprecations!
 
