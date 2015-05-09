@@ -62,6 +62,7 @@ class CensusLoading::Loader < CensusLoading::Base
       active: 1,
       value_text: census_update.value_type == :value_text ? census_update.value : nil,
       value_float: census_update.value_type == :value_float ? census_update.value : nil,
+      # modified: census_update.created.present? ? census_update.created : Time.now,
       modified: Time.now,
       modifiedBy: source
     )

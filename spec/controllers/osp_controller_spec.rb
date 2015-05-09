@@ -123,7 +123,7 @@ describe Admin::OspController do
 
         it 'should have called flash_success' do
           expect(controller).to receive(:flash_success)
-          post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+          post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
         end
       end
     end
@@ -139,7 +139,7 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
       end
     end
   end
@@ -155,11 +155,11 @@ describe Admin::OspController do
       after { clean_models UpdateQueue, OspFormResponse }
       it 'should have called flash_notice' do
         expect(controller).to receive(:flash_error)
-        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
       end
       it 'should have called flash_error' do
         expect(controller).to receive(:flash_error)
-        post :submit, { state: school.state, schoolId: school.id }.merge(question_keys_and_answers)
+        post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
       end
     end
   end

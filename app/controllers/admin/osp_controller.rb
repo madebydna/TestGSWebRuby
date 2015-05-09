@@ -36,8 +36,9 @@ class Admin::OspController < ApplicationController
   protected
 
   def questions_and_answers
-    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token).map do | param, values |
+    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticity_token).map do | param, values |
       question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
+      next if question_id.to_i == 0
       next unless values.present?
       validate_questions_and_answers(question_id.to_i, response_key, values)
     end.compact
@@ -50,15 +51,19 @@ class Admin::OspController < ApplicationController
   end
 
   def save_response!(question_id, question_key, response_values, submit_time, esp_membership_id, is_approved_user)
-    response_blob = make_response_blob(question_key, esp_membership_id, response_values, submit_time)
-
+    response_blob = make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
+
+    error = create_census_response!(question_id, response_values, submit_time) if is_approved_user && !error.present?
+    @render_error ||= error.present?
+
+
     #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
-  def make_response_blob(question_key, esp_membership_id, response_values, submit_time)
+  def make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
     rvals = response_values.map do |response_value|
       {
         entity_state: params[:state],
@@ -71,6 +76,34 @@ class Admin::OspController < ApplicationController
     end
 
     {question_key => rvals}.to_json
+  end
+
+  def make_census_response_blob(census_data_type, response_values, submit_time)
+    rvals = response_values.map do |response_value|
+      {
+          entity_state: params[:state],
+          entity_id: @school.id,
+          entity_type: 'school',
+          value: response_value,
+          created: submit_time,
+          source: 'manually entered by school official'
+      }.stringify_keys!
+    end
+
+    {census_data_type => rvals}.to_json
+  end
+
+  def create_census_response!(question_id, response_values, submit_time)
+    begin
+      census_data_type = OspQuestion.find(question_id).census_data_type
+      if census_data_type.present?
+        response_blob = make_census_response_blob(census_data_type, response_values, submit_time)
+        create_update_queue_row!(response_blob)
+      end
+    rescue => error
+      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}"
+      error
+    end
   end
 
   def create_osp_form_response!(osp_question_id, esp_membership_id, response)
