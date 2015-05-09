@@ -26,8 +26,8 @@ module UserReviewConcerns
   end
 
   # Does not consider active vs inactive reviews
-  def first_unanswered_topic
-    (ReviewTopic.all.to_a - reviews.map(&:topic)).first
+  def first_unanswered_topic(school)
+    (ReviewTopic.all.to_a - reviews_for_school(school: school).map(&:topic)).first
   end
 
   def publish_reviews!
