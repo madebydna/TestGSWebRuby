@@ -110,7 +110,12 @@ describe 'School Profile Reviews Page', js: true do
           end
         end
       end
+    end
 
+    with_shared_context 'an overall principal review' do
+      with_shared_context 'Visit School Profile Reviews' do
+        it { is_expected.to have_principal_review }
+      end
     end
 
     with_shared_context 'with two active reviews' do

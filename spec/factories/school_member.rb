@@ -12,6 +12,9 @@ FactoryGirl.define do
     factory :teacher_school_member do
       user_type 'teacher'
     end
+    factory :principal_school_member do
+      user_type 'principal'
+    end
   end
 
 end

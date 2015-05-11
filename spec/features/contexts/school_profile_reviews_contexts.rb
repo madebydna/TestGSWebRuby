@@ -104,6 +104,14 @@ shared_context 'with two active reviews' do
   end
 end
 
+shared_context 'an overall principal review' do
+  let!(:overall_principal_review) do
+    review = FactoryGirl.create(:five_star_review, active: true, school: school)
+    FactoryGirl.create(:principal_school_member, school: review.school, user: review.user)
+    review
+  end
+end
+
 shared_context 'with seven parent reviews' do
   let!(:seven_parent_reviews) do
     reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)

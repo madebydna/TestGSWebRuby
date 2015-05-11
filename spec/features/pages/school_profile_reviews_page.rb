@@ -23,6 +23,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
   element :profile_navigation, '#navigation2'
   section :review_module, ReviewsSection, '.js-topicalReviewQuestionsContainer'
   section :visible_review_question, ReviewQuestionVisible, ".js-topicalReviewContainer.slick-active"
+  element :principal_review, 'h2', text: 'School Official Point of View'
 
   section :reviews_list_header, '.rs-review-list-header' do
     element :all_filter_button, 'button', text: 'All'
