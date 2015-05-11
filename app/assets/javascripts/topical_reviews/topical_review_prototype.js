@@ -33,13 +33,20 @@ GS.topicalReview.starRating = (function () {
 
         };
 
+        var resetDummyParsleyForm = function () {
+            var dummyInputFormForStarValidation = $('.dummy');
+            if (dummyInputFormForStarValidation.length > 0) {
+                starDummyValidationField = dummyInputFormForStarValidation.parsley()[0];
+                starDummyValidationField.reset();
+            }
+        };
+
         $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function () {
             $this = $(this);
-            var starDummyValidationField = $('.dummy').parsley()[0];
-            var hiddenFieldsContainer = $(".js-starHiddenFields");
 //            This resets the dummy field used to validate the rating using parsley
 //            TODO: find a better way to do this
-            starDummyValidationField.reset();
+            resetDummyParsleyForm();
+            var hiddenFieldsContainer = $(".js-starHiddenFields");
             hiddenFieldsContainer.empty();
             var rating = $this.index() + 1;
             var hidden_field = $this.data('fields');
