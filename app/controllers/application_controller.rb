@@ -230,7 +230,7 @@ class ApplicationController < ActionController::Base
   def set_cafemom_ip_value
     # TODO share code with application_helper::remote_ip?
     # HTTP_X_CLUSTER_CLIENT_IP is set to "Undefined" when not behind stingray
-    gon.CF_ATHENA = request.env['X_Forwarded_For'] || request.env['HTTP_X_CLUSTER_CLIENT_IP']
+    gon.CF_ATHENA = request.env['X_FORWARDED_FOR'] || request.env['HTTP_X_FORWARDED_FOR'] || request.env['HTTP_X_CLUSTER_CLIENT_IP']
     gon.CF_ATHENA = request.remote_ip if gon.CF_ATHENA == nil || gon.CF_ATHENA == 'Undefined'
   end
 
