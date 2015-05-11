@@ -93,9 +93,8 @@ describe SchoolReviews do
 
     describe '.calc_review_data' do
       it 'should return an instance of Review Caching' do
-        pending ('ask Samson how to test this')
         reviews = []
-        expect(SchoolReviews.calc_review_data(reviews)).to be_a(ReviewCaching)
+        expect(SchoolReviews.calc_review_data(reviews)).to be_a(Hashie::Mash)
       end
     end
   end
