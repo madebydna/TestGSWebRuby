@@ -42,7 +42,7 @@
     <option>Select Year</option>
     <% (0..3).each do |x| %>
       <% this_year = current_year - x %>
-      <option value=<%= this_year %> <%= ' selected' if this_year == child_esp_value && should_select_child_value %>>
+      <option <% if this_year == child_esp_value && should_select_child_value then %> selected <% end %> value=<%= this_year %> >
         <%= this_year %>
       </option>
     <% end %>
