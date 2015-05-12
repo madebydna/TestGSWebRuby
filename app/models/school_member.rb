@@ -13,4 +13,10 @@ class SchoolMember < ActiveRecord::Base
     raise ArgumentError.new('Must provide school and user') unless school && user
     find_by(state: school.state, school_id: school.id, member_id: user.id)
   end
+
+  def principal?
+    user_type == 'principal'
+  end
+  alias_method :school_leader?, :principal?
+
 end
