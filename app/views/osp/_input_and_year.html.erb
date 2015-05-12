@@ -9,8 +9,11 @@
 <% child_question            = display_question.children.first %>
 <% child_id                  = child_question.id %>
 <% child_response_key        = child_question.esp_response_key %>
-<% child_esp_value           = @osp_data.values_for(child_response_key, child_id).first.to_i %>
-<% should_select_child_value = preexisting_esp_value.present? && child_esp_value.present? %>
+<% child_esp_value           = @osp_data.values_for(child_response_key, child_id).first %>
+<% current_year              = Date.today.strftime("%Y").to_i %>
+<% years_to_show             = (0..3).map { |x| (current_year - x).to_s } %>
+<% should_select_child_value = preexisting_esp_value.present? && years_to_show.include?(child_esp_value) %>
+<% should_select_na          = preexisting_esp_value.present? && !should_select_child_value %>
 
 <div class="row mbl js-conditionalQuestion">
   <% if display_question_label.present? %>
@@ -37,15 +40,14 @@
 
     <% #currently hardcoded for the last 4 years so as to keep the time up to date %>
     <% #can move to config hash in db later if desired %>
-    <% current_year = Date.today.strftime("%Y").to_i %>
 
-    <option>Select Year</option>
-    <% (0..3).each do |x| %>
-      <% this_year = current_year - x %>
+    <option value='n/a'>Select Year</option>
+    <% years_to_show.each do |this_year| %>
       <option <% if this_year == child_esp_value && should_select_child_value then %> selected <% end %> value=<%= this_year %> >
         <%= this_year %>
       </option>
     <% end %>
+    <option value='n/a' <% if should_select_na then %> selected <% end %>>Not Applicable</option>
 
   </select>
   <div id=<%= "#{q_id}-parsley-error" %> style="clear: both;"></div>
