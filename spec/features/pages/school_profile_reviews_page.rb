@@ -69,6 +69,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
     def student_review?
       !! text.match(/- a student/)
     end
+
+    def school_leader_review?
+      !! text.match(/- a school leader/)
+    end
   end
 
   sections :reviews, ReviewSection, '.js_reviewsList .cuc_review', visible: true

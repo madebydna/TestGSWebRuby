@@ -118,6 +118,15 @@ describe 'School Profile Reviews Page', js: true do
       end
     end
 
+    with_shared_context 'a topical principal review' do
+      with_shared_context 'Visit School Profile Reviews' do
+        it { is_expected.to_not have_principal_review }
+        with_subject :first_review do
+          it { is_expected.to be_school_leader_review }
+        end
+      end
+    end
+
     with_shared_context 'with two active reviews' do
       with_shared_context 'signed in verified user' do
         with_shared_context 'with seven parent reviews' do

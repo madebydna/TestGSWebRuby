@@ -10,28 +10,31 @@ describe ReviewScoping do
   let(:five_star_parent_review2) { FactoryGirl.build(:five_star_review) }
   let(:five_star_teacher_review1) { FactoryGirl.build(:five_star_review) }
   let(:five_star_student_review1) { FactoryGirl.build(:five_star_review) }
+  let(:five_star_principal_review) { FactoryGirl.build(:five_star_review) }
   let(:teacher_effectiveness_principal_review) { FactoryGirl.build(:teacher_effectiveness_review) }
   let(:teacher_effectiveness_unknown_review) { FactoryGirl.build(:teacher_effectiveness_review) }
 
   subject { reviews_array }
 
-  shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+  shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
     before do
       allow(five_star_parent_review1).to receive(:user_type).and_return('parent')
       allow(five_star_parent_review2).to receive(:user_type).and_return('parent')
       allow(five_star_student_review1).to receive(:user_type).and_return('student')
       allow(five_star_teacher_review1).to receive(:user_type).and_return('teacher')
+      allow(five_star_principal_review).to receive(:user_type).and_return('principal')
       allow(teacher_effectiveness_principal_review).to receive(:user_type).and_return('principal')
       allow(teacher_effectiveness_unknown_review).to receive(:user_type).and_return('unknown')
       subject.push(five_star_parent_review1, five_star_student_review1,
                    five_star_parent_review2, five_star_teacher_review1,
-                   teacher_effectiveness_principal_review, teacher_effectiveness_unknown_review
+                   five_star_principal_review, teacher_effectiveness_principal_review,
+                   teacher_effectiveness_unknown_review
       )
     end
   end
 
   describe '#by_user_type' do
-    with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
       it 'should return a hash' do
         expect(subject.by_user_type).to be_a(Hash)
       end
@@ -44,7 +47,7 @@ describe ReviewScoping do
         expect(subject.by_user_type['parent'].count).to eq(2)
         expect(subject.by_user_type['student'].count).to eq(1)
         expect(subject.by_user_type['teacher'].count).to eq(1)
-        expect(subject.by_user_type['principal'].count).to eq(1)
+        expect(subject.by_user_type['principal'].count).to eq(2)
         expect(subject.by_user_type['unknown'].count).to eq(1)
       end
       it 'should extend each array with ReviewScoping and ReviewCalculations modules' do
@@ -56,7 +59,7 @@ describe ReviewScoping do
   end
 
   describe '#by_topic' do
-    with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
       it 'should return a hash' do
         expect(subject.by_topic).to be_a(Hash)
       end
@@ -66,7 +69,7 @@ describe ReviewScoping do
         end
       end
       it 'should return hash with correct count of reviews in each topic' do
-        expect(subject.by_topic['Overall'].count).to eq(4)
+        expect(subject.by_topic['Overall'].count).to eq(5)
         expect(subject.by_topic['Teachers'].count).to eq(2)
       end
       it 'should return hash an array of reviews as values' do
@@ -74,6 +77,7 @@ describe ReviewScoping do
         expect(subject.by_topic['Overall']).to include(five_star_parent_review2)
         expect(subject.by_topic['Overall']).to include(five_star_student_review1)
         expect(subject.by_topic['Overall']).to include(five_star_teacher_review1)
+        expect(subject.by_topic['Overall']).to include(five_star_principal_review)
         expect(subject.by_topic['Teachers']).to include(teacher_effectiveness_principal_review)
         expect(subject.by_topic['Teachers']).to include(teacher_effectiveness_unknown_review)
       end
@@ -86,7 +90,7 @@ describe ReviewScoping do
   end
 
   describe '#five_star_rating_reviews' do
-    with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
       it 'should return an array' do
         expect(subject.five_star_rating_reviews).to be_a(Array)
       end
@@ -100,7 +104,7 @@ describe ReviewScoping do
 
   %w(parent student principal).each do |user_type|
     describe "#{user_type}_reviews" do
-      with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+      with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
         it 'should return an array' do
           expect(subject.send("#{user_type}_reviews")).to be_a(Array)
         end
@@ -114,13 +118,13 @@ describe ReviewScoping do
   end
 
   describe '#has_principal_review?' do
-    with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
       it 'should return true' do
         expect(subject.has_principal_review?).to be_truthy
       end
     end
-    context 'with no principal review' do
-      before { subject - [teacher_effectiveness_principal_review] }
+    context 'with no 5 star rating principal review' do
+      before { subject - [five_star_principal_review] }
       it 'should return false' do
         expect(subject.has_principal_review?).to be_falsey
       end
@@ -128,9 +132,9 @@ describe ReviewScoping do
   end
 
   describe '#principal_review' do
-    with_shared_context 'with 4 five star reviews users: 2 parent, 1 students, 1 teacher; 2 teacher effectiveness users: 1 principal, 1 unknown' do
-      it 'should return the one principal review' do
-        expect(subject.principal_review).to eq(teacher_effectiveness_principal_review)
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+      it 'should return one 5 star rating principal review' do
+        expect(subject.principal_review).to eq(five_star_principal_review)
       end
       context 'a second principal review added to reviews array' do
         let(:second_principal_review) { FactoryGirl.build(:five_star_review) }
@@ -139,13 +143,13 @@ describe ReviewScoping do
           subject << second_principal_review
         end
         it 'should return only the first principal review' do
-          expect(subject.principal_review).to eq(teacher_effectiveness_principal_review)
+          expect(subject.principal_review).to eq(five_star_principal_review)
           expect(subject.principal_review).to_not eq(second_principal_review)
         end
       end
     end
-    context 'with no principal review' do
-      before { subject - [teacher_effectiveness_principal_review] }
+    context 'with no 5 star rating principal review' do
+      before { subject - [five_star_principal_review] }
       it 'should return nil' do
         expect(subject.principal_review).to eq(nil)
       end

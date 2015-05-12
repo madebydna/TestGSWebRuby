@@ -55,11 +55,11 @@ module ReviewScoping
   end
 
   def has_principal_review?
-    principal_reviews.present?
+    five_star_rating_reviews.principal_reviews.present?
   end
 
   def principal_review
-    principal_reviews.first
+    five_star_rating_reviews.principal_reviews.first
   end
 
   def having_comments

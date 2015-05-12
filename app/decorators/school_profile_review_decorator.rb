@@ -47,6 +47,8 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   def user_type
     if review.user_type.blank? || review.user_type == 'unknown'
       'community member'
+    elsif review.user_type == 'principal'
+      'school leader'
     else
       review.user_type
     end
