@@ -11,7 +11,7 @@
 <% child_response_key        = child_question.esp_response_key %>
 <% child_esp_value           = @osp_data.values_for(child_response_key, child_id).first %>
 <% current_year              = Date.today.strftime("%Y").to_i %>
-<% years_to_show             = (0..3).map { |x| (current_year - x).to_s } %>
+<% years_to_show             = (0..5).map { |x| (current_year - x).to_s } %>
 <% should_select_child_value = preexisting_esp_value.present? && years_to_show.include?(child_esp_value) %>
 <% should_select_na          = preexisting_esp_value.present? && !should_select_child_value %>
 
