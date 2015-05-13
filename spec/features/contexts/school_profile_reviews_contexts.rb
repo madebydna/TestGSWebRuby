@@ -57,6 +57,23 @@ shared_context 'with signing into a verified account' do
   end
 end
 
+shared_context 'with signed in as principal for school' do
+  let(:user) do
+    FactoryGirl.create(:verified_user)
+  end
+  let!(:school_member) do
+    FactoryGirl.create(:principal_school_member, school: school, user: user)
+  end
+
+  before do
+    log_in_user(user)
+  end
+
+  after do
+    clean_models User, SchoolMember
+  end
+end
+
 shared_context 'click third star' do
   before do
     response_option = subject.visible_review_question.stars[2]

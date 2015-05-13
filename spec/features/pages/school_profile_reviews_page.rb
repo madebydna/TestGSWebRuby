@@ -9,6 +9,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     elements :responses, '.js-checkboxContainer'
     element :review_comment, '.js-topicalReviewComment'
     element :submit_button, 'button'
+    element :review_form, 'form'
     elements :stars, '.js-topicalReviewStarContainer'
     elements :radio_buttons, "input[type='radio']"
     element :call_to_action_text, 'span', text: 'Have your say!'

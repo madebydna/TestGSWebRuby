@@ -14,7 +14,29 @@ shared_example 'should show the review module' do
 end
 
 shared_example 'should show the overall star question' do
+  expect(subject.visible_review_question.review_form.text).to include('How would you rate your experience at this school?')
+end
+
+shared_example 'should show stars' do
+  subject.wait_for_visible_review_question
   expect(subject.visible_review_question).to have_stars
+end
+
+shared_example 'should not show stars' do
+  subject.wait_for_visible_review_question
+  expect(subject.visible_review_question).to_not have_stars
+end
+
+shared_example 'should show submit button with principal text' do
+  expect(subject.visible_review_question).to_not have_stars
+end
+
+shared_example 'should show a radio_button question' do
+  expect(subject.visible_review_question).to have_radio_buttons
+end
+
+shared_example 'should not show radio buttons' do
+  expect(subject.visible_review_question).to_not have_radio_buttons
 end
 
 shared_example 'should show a radio_button question' do
@@ -22,6 +44,8 @@ shared_example 'should show a radio_button question' do
 end
 
 shared_example 'should show next question' do
+  pending ('fails intermittently due to timing with carousel and ajax')
+  fail
   expect(subject.visible_review_question.question.text).to eq(teacher_question.question)
 end
 

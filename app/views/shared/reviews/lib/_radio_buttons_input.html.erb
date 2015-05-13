@@ -1,0 +1,22 @@
+<% f; question; %>
+<div class="row mtl mbl tac">
+  <!--Currently this grid is set up only for five options-->
+  <% new_object = f.object.send(:answers).klass.new %>
+  <% id = Time.now.to_f.to_s.sub('.', '') %>
+  <%= f.fields_for(:answers, new_object, child_index: id) do |builder| %>
+      <fieldset class="js-topicalHiddenField">
+        <% question.response_array.each_with_index do |response_value, index| %>
+            <% offset = "" %>
+            <% offset = "col-sm-offset-1 col-md-offset-1 col-lg-offset-1" if index == 0 %>
+            <% if index % 3 == 0 %>
+                <div class="clearfix visible-xs"></div>
+            <% end %>
+            <div class="<%= offset %> col-xs-4 col-sm-2 mtm phm">
+              <div><%= builder.radio_button(:answer_value, response_value, class: 'js-topicalRadioButton') %>
+              </div>
+              <div> <%= response_value %> </div>
+            </div>
+        <% end %>
+      </fieldset>
+  <% end %>
+</div>

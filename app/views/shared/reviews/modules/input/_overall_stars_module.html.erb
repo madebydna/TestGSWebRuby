@@ -1,32 +1,20 @@
+<%
+   f
+   principal = @school_member ? @school_member.principal? : false
+%>
+
 <div class="topical-review-question-container left">
   <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
-  <div class="row controls ptxl js-topicalReviewStars">
-    <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Terrible', offset: 'col-xs-offset-1 col-sm-offset-1'}, f: f, response_value: 1 %>
-    <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Bad'}, f: f, response_value: 2 %>
-    <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Average'}, f: f, response_value: 3 %>
-    <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Good'}, f: f, response_value: 4 %>
-    <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Great'}, f: f, response_value: 5 %>
-    <div class="js-starHiddenFields">
-      <!--Parsley.js does not easily validate hidden fields.
-      To validate the star rating I created this dummy field hide its display.
-      When a star rating is selected it uses JS ro empty this js-starHiddenFields
-      and enters the correct hidden value for the star rating.
-      TODO: find better solution to this problem
-      -->
-      <div class="dn">
-        <% parsley_error_id = "topical-parsley-errors-#{question.id}" %>
-        <%= f.text_field(:state, {value: @school.state, class: "dummy",
-                                  'data-parsley-minlength' => 9999,
-                                  'data-parsley-errors-container' => "##{parsley_error_id}",
-                                  'data-parsley-minlength-message' => 'Thanks for sharing your story! Please vote in order to save your comments.'
-        }) %>
-      </div>
-    </div>
-  </div>
+  <% unless principal %>
+      <%= render 'shared/reviews/lib/stars_input', f: f, question: question %>
+  <% end %>
 </div>
 <div class="topical-review-question-container right">
-  <% options = {placeholder: 'Please share why you feel this way.',
-                comment_required: true
+  <% options = {
+          placeholder: principal ? '' : 'Please share why you feel this way.',
+          comment_required: true,
+          principal: principal,
+          submit_text: principal ? 'Submit Statement' : 'Submit'
   } %>
   <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
 </div>

@@ -1,21 +1,14 @@
 <% f %>
 <%
-   placeholder = options[:placeholder]
-   display = options[:display] ||= ""
    parsley_error_id = "topical-parsley-errors-#{question.id}"
-   if options[:comment_required]
-     comment_required = true
-     else
-     comment_required = false
-   end
 %>
-<div class="ptl phl js-topicalReviewComment <%= display %>">
+<div class="ptl phl js-topicalReviewComment <%= options[:display_none] ? 'dn' : '' %>">
   <%= f.text_area :comment, {class: "form-control mbs",
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
-                             placeholder: placeholder,
+                             placeholder: options[:placeholder],
                              'data-parsley-minwords'=>'15',
-                             'data-parsley-required'=>"#{comment_required}",
+                             'data-parsley-required'=>"#{options[:comment_required] ? 'true' : 'false'}",
                              'data-parsley-errors-container' => "##{parsley_error_id}",
                              'data-parsley-minwords-message'=> 'Please be sure your story is 15 words or more in length.',
                              'data-parsley-required-message'=> 'Thanks for your opinion! Please share some thoughts on this school in order to save your rating.',
@@ -26,10 +19,12 @@
     <div class="col-xs-8">
       <div class="help-block js-reviewCharacterDisplay mtn mbn dn">You have <span class="js-reviewCharacterCount"></span> left
         in your review</div>
+      <% #parsley error id places error message for the specific question_id %>
+
       <div class= "js-topicalReviewErrorMessage parsley-type" id="<%= parsley_error_id %>"></div>
     </div>
     <div class="col-xs-2 col-xs-offset-2">
-      <button type="submit" class="btn btn-primary fr mtl mbl">Submit</button>
+      <button type="submit" class="btn btn-primary fr mtl mbl"><%= options[:submit_text] %></button>
     </div>
   </div>
 </div>
