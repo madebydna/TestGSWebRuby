@@ -64,7 +64,7 @@ module ReviewControllerConcerns
 
     # TODO: Figure this out
     def existing_review
-      @existing_review ||= user.reviews_for_school(school: school).first
+      @existing_review ||= user.active_reviews_for_school(school: school).first
     end
   end
 

@@ -14,6 +14,16 @@ class SchoolMember < ActiveRecord::Base
     find_by(state: school.state, school_id: school.id, member_id: user.id)
   end
 
+  # Returns all reviews the user wrote for the school
+  def reviews
+    @reviews ||= user.reviews_for_school(school: school).to_a
+  end
+
+  # Returns active reviews the user wrote for the school
+  def active_reviews
+    reviews.select(&:active?)
+  end
+
   def principal?
     user_type == 'principal'
   end

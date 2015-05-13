@@ -131,7 +131,7 @@ shared_examples_for 'a controller that can save a review' do
 
     context 'with a user with no existing review' do
       before(:each) do
-        allow(current_user).to receive(:reviews_for_school).and_return []
+        allow(current_user).to receive(:active_reviews_for_school).and_return []
       end
 
       it 'should return nil review and nil error' do
@@ -145,7 +145,7 @@ shared_examples_for 'a controller that can save a review' do
 
     context 'with a user with one existing review' do
       before(:each) do
-        allow(current_user).to receive(:reviews_for_school).and_return [ existing_review ]
+        allow(current_user).to receive(:active_reviews_for_school).and_return [ existing_review ]
       end
 
       it 'should update and return the review' do
