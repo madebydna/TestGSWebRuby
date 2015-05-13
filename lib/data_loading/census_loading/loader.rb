@@ -41,7 +41,6 @@ class CensusLoading::Loader < CensusLoading::Base
   end
 
   def insert_into!(census_update, entity)
-
     data_set = CensusDataSet.find_or_create_and_activate(census_update.shard, census_update.data_set_attributes)
     # validate_census_data_set!(data_set, census_update)
 
@@ -62,8 +61,7 @@ class CensusLoading::Loader < CensusLoading::Base
       active: 1,
       value_text: census_update.value_type == :value_text ? census_update.value : nil,
       value_float: census_update.value_type == :value_float ? census_update.value : nil,
-      # modified: census_update.created.present? ? census_update.created : Time.now,
-      modified: Time.now,
+      modified: census_update.created.present? ? census_update.created : Time.now,
       modifiedBy: source
     )
 

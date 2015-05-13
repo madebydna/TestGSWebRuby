@@ -6,14 +6,14 @@ class CensusLoading::Update
   attr_accessor :breakdown, :breakdown_id, :data_set_attributes, :data_type, :data_type_id,
                 :entity_id, :entity_id_type, :entity_state, :entity_type, :grade, :shard,
                 :state, :subject, :subject_id, :source, :update_blob, :value, :value_class,
-                :value_record_attributes, :value_type, :year, :action #:created
+                :value_record_attributes, :value_type, :year, :action, :created
 
   DEFAULT_SOURCE = 'Manually entered by a school official'
 
   def initialize(data_type, update_blob)
     @data_type = data_type
     @update_blob = update_blob
-
+    @created     = created
     @update_blob.each do |key, value|
       instance_variable_set("@#{key}", value)
     end
@@ -54,8 +54,6 @@ class CensusLoading::Update
         state: entity_state,
         source: source,
         type: entity_type
-        # todo: add created time to census table
-        # created: created
     }
   end
 
