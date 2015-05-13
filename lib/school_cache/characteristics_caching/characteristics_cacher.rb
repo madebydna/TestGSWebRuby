@@ -42,9 +42,7 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
   end
 
   def data_keys
-    # todo: add created time to census table
-    # [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average,:district_average, :created]
-    [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average,:district_average]
+    [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average,:district_average, :created]
   end
 
   def config_entry_test(characteristic)

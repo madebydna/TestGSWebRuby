@@ -71,9 +71,8 @@ class CharacteristicsCaching::QueryResultDecorator
     data_set_with_values.year
   end
 
-  # todo: add created time to census table
-  # def created
-  #   data_set_with_values.school_modified
-  # end
+  def created
+    data_set_with_values.school_modified
+  end
 
 end

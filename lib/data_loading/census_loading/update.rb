@@ -68,4 +68,13 @@ class CensusLoading::Update
       raise 'Every census update must have a value' unless action == CensusLoading::Loader::ACTION_BUILD_CACHE
     end
   end
+
+  def created_before?(time)
+    time <  @created
+  end
+
+  def created_after?(time)
+    time >  @created
+  end
+
 end
