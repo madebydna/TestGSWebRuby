@@ -50,3 +50,7 @@ shared_example 'should not submit value in text field' do
   response_after_click = page.response_headers['X-Request-Id']
   expect(response_before_click).to eql(response_after_click)
 end
+
+shared_example 'should have switch schools link' do
+  subject.find_link('switch schools')
+end

@@ -16,17 +16,17 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 end
 
-# shared_context 'signed in approved superuser for school' do |state, school_id|
-#   before do
-#     factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
-#     super_user = FactoryGirl.create(:verified_user, :with_approved_superuser_membership, factory_girl_options)
-#     log_in_user(super_user)
-#   end
-#
-#   after do
-#     clean_models :gs_schooldb, User, EspMembership, MemberRole
-#   end
-# end
+shared_context 'signed in approved superuser for school' do |state, school_id|
+  before do
+    factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
+    super_user = FactoryGirl.create(:verified_user, :with_approved_superuser_membership, factory_girl_options)
+    log_in_user(super_user)
+  end
+
+  after do
+    clean_models :gs_schooldb, User, EspMembership, MemberRole
+  end
+end
 
 ### School Blocks ###
 

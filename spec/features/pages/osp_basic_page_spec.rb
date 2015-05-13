@@ -10,13 +10,11 @@ require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
 
 describe 'OSP Basic Page' do
-  # with_shared_context 'visit OSP superuser page' do
-    # describe_mobile_and_desktop do
-    #   it 'should have switch schools link' do
-    #     subject.find_link('switch schools')
-    #   end
-    # end
-  # end
+  with_shared_context 'visit OSP superuser page' do
+    describe_mobile_and_desktop do
+      include_example 'should have switch schools link'
+    end
+  end
 
   with_shared_context 'visit OSP page' do
 

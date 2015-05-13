@@ -38,18 +38,18 @@ FactoryGirl.define do
       end
     end
 
-    # trait :with_approved_superuser_membership do
-    #   ignore do
-    #     school_id 1 #default
-    #     state 'ca' #default
-    #     role_id 8
-    #   end
-    #
-    #   after(:create) do |user, evaluator|
-    #     FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
-    #     FactoryGirl.create(:member_role,member_id: user.id,role_id:evaluator.role_id)
-    #   end
-    # end
+    trait :with_approved_superuser_membership do
+      ignore do
+        school_id 1 #default
+        school_id_2 2
+        state 'ca' #default
+      end
+
+      after(:create) do |user, evaluator|
+        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id_2,state:evaluator.state,member_id: user.id)
+      end
+    end
 
     #usage let!(:user) {FactoryGirl.create(:verified_user,:with_role,:role_id=>8 )}
     trait :with_role do
