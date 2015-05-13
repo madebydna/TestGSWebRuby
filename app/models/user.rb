@@ -212,6 +212,14 @@ class User < ActiveRecord::Base
     has_role?(Role.esp_superuser)
   end
 
+  def is_esp_demigod?
+    if esp_memberships.count > 1
+      true
+    else
+      false
+    end
+  end
+
   def has_role?(role)
     member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end

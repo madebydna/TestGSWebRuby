@@ -10,6 +10,14 @@ require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
 
 describe 'OSP Basic Page' do
+  # with_shared_context 'visit OSP superuser page' do
+    # describe_mobile_and_desktop do
+    #   it 'should have switch schools link' do
+    #     subject.find_link('switch schools')
+    #   end
+    # end
+  # end
+
   with_shared_context 'visit OSP page' do
 
     describe_mobile_and_desktop do
@@ -24,7 +32,7 @@ describe 'OSP Basic Page' do
 
     describe_desktop do
       osp_forms.each do |form|
-        with_shared_context 'OSP nav should have an h3 with text', form do
+        with_shared_context 'Within the h3 with text', form do
           include_example 'should contain the expected text', form
         end
       end

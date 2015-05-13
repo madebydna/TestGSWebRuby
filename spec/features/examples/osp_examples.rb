@@ -21,7 +21,7 @@ shared_example 'should only have one active button' do
 end
 
 shared_example 'should have nav bar with school name' do
-  subject.find('.rs-osp_school_name', text: school.name)
+  subject.find('.rs-osp_school_name', text: school.name.upcase)
 end
 
 shared_example 'should have dashboard button' do

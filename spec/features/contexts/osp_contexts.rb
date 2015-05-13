@@ -16,6 +16,18 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 end
 
+# shared_context 'signed in approved superuser for school' do |state, school_id|
+#   before do
+#     factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
+#     super_user = FactoryGirl.create(:verified_user, :with_approved_superuser_membership, factory_girl_options)
+#     log_in_user(super_user)
+#   end
+#
+#   after do
+#     clean_models :gs_schooldb, User, EspMembership, MemberRole
+#   end
+# end
+
 ### School Blocks ###
 
 shared_context 'Basic High School' do
@@ -27,6 +39,16 @@ end
 
 shared_context 'visit OSP page' do
   include_context 'signed in approved osp user for school', :ca, 1
+  include_context 'Basic High School'
+  let(:osp_page) { OspPage.new }
+  before do
+    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
+  end
+  subject { page }
+end
+
+shared_context 'visit OSP superuser page' do
+  include_context 'signed in approved superuser for school', :ca, 1
   include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
@@ -353,7 +375,7 @@ shared_context 'the OspFormResponse objects\' responses in the db' do
   end
 end
 
-shared_context 'OSP nav should have an h3 with text' do |form|
+shared_context 'Within the h3 with text' do |form|
   subject {find('h3', text: form)}
 end
 
