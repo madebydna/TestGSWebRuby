@@ -9,6 +9,14 @@ class SchoolMember < ActiveRecord::Base
 
   alias_attribute :school_state, :state
 
+  def self.build_unknown_school_member(school, user)
+    school_member = new
+    school_member.school = school
+    school_member.user = user
+    school_member.user_type = 'unknown'
+    school_member
+  end
+
   def self.find_by_school_and_user(school, user)
     raise ArgumentError.new('Must provide school and user') unless school && user
     find_by(state: school.state, school_id: school.id, member_id: user.id)
