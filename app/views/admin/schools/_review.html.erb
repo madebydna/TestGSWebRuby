@@ -4,7 +4,7 @@
     <div class="leftcolumn col-lg-4 prm">
         <h5>Review details</h5>
         <br/>
-        Affiliation: <%= review.user_type || 'n/a' %>
+        Affiliation: <%= SchoolProfileReviewDecorator.decorate(review).user_type %>
         <br/>
         <% if review.user %>
           <% email = link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>

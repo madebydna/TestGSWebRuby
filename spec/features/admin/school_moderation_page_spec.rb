@@ -10,6 +10,7 @@ end
 shared_context 'flagged reviews' do
   let!(:user) { FactoryGirl.create(:verified_user) }
   let!(:review) { FactoryGirl.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
+  let!(:school_member) { FactoryGirl.create(:principal_school_member, user: user, school: school) }
   after do
     clean_dbs :gs_schooldb, :surveys, :community
   end
@@ -83,6 +84,7 @@ describe 'School moderate page' do
 
             it { is_expected.to have_open_flags }
             it { is_expected.to_not have_resolved_flags }
+            it { is_expected.to be_school_leader_review }
 
             with_subject :the_first_open_flag do
               its(:reason) { is_expected.to have_content(review.flags.first.reason) }

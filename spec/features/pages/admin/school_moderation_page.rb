@@ -52,6 +52,18 @@ class SchoolModerationPage < SitePrism::Page
     def inactive?
       text.match /Status: inactive/
     end
+
+    def parent_review?
+      !! text.match(/Affiliation: parent/)
+    end
+
+    def student_review?
+      !! text.match(/Affiliation: student/)
+    end
+
+    def school_leader_review?
+      !! text.match(/Affiliation: school leader/)
+    end
   end
 
   sections :reviews, ReviewSection, '.rs-list-of-reviews div.row'
