@@ -118,6 +118,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/choose-pyoc', to: 'pyoc#choose'
     get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
     post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
+    post  '/school/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
+    delete  '/school/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 

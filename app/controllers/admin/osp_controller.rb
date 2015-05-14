@@ -1,10 +1,13 @@
 class Admin::OspController < ApplicationController
+
+  include PhotoUploadConcerns
+
   before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
-  before_action :set_footer_cities, except: [:approve_provisional_osp_user_data]
+  before_action :set_footer_cities, only: [:show]
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
-  after_action :render_success_or_error, only: [:submit]
+  after_action  :success_or_error_flash, only: [:submit]
 
   PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
@@ -31,6 +34,32 @@ class Admin::OspController < ApplicationController
     end
     # only java is receiving this html, does not matter that it renders blank page
     render text: ''
+  end
+
+  def add_image
+    number_of_images_for_school = SchoolMedia.where(school_id: @school.id, state: @school.state).all_except_inactive.count
+    return render_error unless number_of_images_for_school <= MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
+
+    begin
+      file = params['imageFile']['0']
+
+      return render_error unless valid_file?(file)
+      school_media = create_image!(file)
+      render_success_js(school_media.id)
+    rescue => error
+      Rails.logger.error error
+      render_error_js
+    end
+  end
+
+  #test that unauthorized user can't delete images via directly hitting this action and changing params
+  def delete_image
+    media = SchoolMedia.find(params[:fileId]) rescue (return render_error_js)
+    if @is_approved_user || media.member_id == @esp_membership_id
+      media.update_attributes(status: SchoolMedia::DISABLED, date_updated: Time.now) and render_success_js(media.id)
+    else
+      render_error_js
+    end
   end
 
   protected
@@ -149,6 +178,7 @@ class Admin::OspController < ApplicationController
     set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
     @parsley_defaults = "data-parsley-trigger=keyup data-parsley-blockhtmltags"
+    set_school_media_hashs_gon_var! #move to only appear on pages with the photo upload
 
     if params[:page]== '1'
       @osp_display_config = OspDisplayConfig.find_by_page_and_school('basic_information', @school)
@@ -183,7 +213,7 @@ class Admin::OspController < ApplicationController
     if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
       @is_approved_user  = esp_membership.approved?
-      notify_provisional_user! if esp_membership.provisional?
+      notify_provisional_user! if esp_membership.provisional? && !request.xhr?
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
@@ -193,8 +223,21 @@ class Admin::OspController < ApplicationController
     flash_notice t('forms.osp.provisional_user') unless flash_notice_include?(t('forms.osp.provisional_user'))
   end
 
-  def render_success_or_error
+  def success_or_error_flash
     @render_error ? flash_error(t('forms.osp.saving_error')) : flash_success(t('forms.osp.changes_saved'))
+  end
+
+  def render_success_js(image_id)
+    render json: {success: 'Successfully Removed!', imageId: image_id}
+  end
+
+  def render_error_js
+    render json: {error: 'Was not able to Remove'}
+  end
+
+  def set_school_media_hashs_gon_var!
+    gon.school_media_hashes = SchoolMedia.school_media_hashes_for_osp(@school)
+    gon.school_id           = @school.id
   end
 
 end

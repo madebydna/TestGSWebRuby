@@ -15,5 +15,6 @@ $(function() {
         });
 
         GS.gsParsleyValidations.init();
+        GS.photoUploads.init();
     }
 });
