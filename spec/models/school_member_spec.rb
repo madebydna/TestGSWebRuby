@@ -17,6 +17,7 @@ describe SchoolMember do
         nil => :unknown,
         'unknown' => :unknown,
         'parent' => :parent,
+        'community member' => :'community member',
         'foo' => :unknown
       }.each_pair do |value_from_db, expected_value|
         with_shared_context 'when user type has value', value_from_db do
@@ -31,6 +32,7 @@ describe SchoolMember do
       {
         nil => :principal,
         'unknown' => :principal,
+        'community member' => :'community member',
         'parent' => :parent,
         'foo' => :principal
       }.each_pair do |value_from_db, expected_value|

@@ -5,6 +5,7 @@ class SchoolMember < ActiveRecord::Base
     TEACHER = :teacher
     STUDENT = :student
     PRINCIPAL = :principal
+    COMMUNITY_MEMBER = :'community member'
     UNKNOWN = :unknown
   end
 
@@ -13,6 +14,7 @@ class SchoolMember < ActiveRecord::Base
     Affiliation::TEACHER,
     Affiliation::STUDENT,
     Affiliation::PRINCIPAL,
+    Affiliation::COMMUNITY_MEMBER,
     Affiliation::UNKNOWN,
   ].freeze
 
@@ -47,7 +49,7 @@ class SchoolMember < ActiveRecord::Base
   end
 
   VALID_AFFILIATIONS.each do |type|
-    method_name = "#{type}?"
+    method_name = "#{type.to_s.gsub(' ','_')}?"
     define_method method_name do
       user_type == type
     end

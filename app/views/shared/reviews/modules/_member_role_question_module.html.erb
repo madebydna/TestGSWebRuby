@@ -1,25 +1,32 @@
-  <%
-     member_roles = ['parent', 'teacher', 'student', 'principal']
-  %>
+<%
+   member_roles = {
+           'parent' => 'parent',
+           'student' => 'student',
+           'teacher' => 'teacher',
+           'principal' => 'school official',
+           'community member' => 'community member'
+   }
+%>
 
-  <div class="limit-width-1200 row bg-light-gray gray-box-border js-roleQuestion tac <%= display ? '' : 'dn' %>">
-    <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 bg-light-gray mtl">
-      <div class="mvl font-size-large open-sans_sb">WHAT'S YOUR RELATIONSHIP TO THIS SCHOOL?</div>
-      <div class="row">
-          <%= form_for @school_member, remote: true, url: school_user_path(@school) do |f| %>
+<div class="limit-width-1200 row bg-light-gray gray-box-border js-roleQuestion tac mbl <%= display ? '' : 'dn' %>">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 mtl">
+    <div class="font-size-large open-sans_sb phs mvl">WHAT'S YOUR RELATIONSHIP TO THIS SCHOOL?</div>
+    <div class="row">
+      <%= form_for @school_member, remote: true, url: school_user_path(@school) do |f| %>
 
-          <% member_roles.each_with_index do |option| %>
-              <div class="dib mbs col-xs-3 col-lg-3">
+          <% member_roles.each do |value, display_value| %>
+
+              <div class="<%= value == 'parent' ? 'col-xs-offset-1 ' : '' %>col-xs-2 col-lg-2 dib mbs">
                 <div>
-                  <div><%= f.radio_button(:user_type, option, class: 'js-topicalRadioButton') %></div>
-                  <div> <%= option %> </div>
+                  <div><%= f.radio_button(:user_type, value, class: 'js-topicalRadioButton') %></div>
+                  <div> <%= display_value %> </div>
                 </div>
               </div>
-        <% end %>
+          <% end %>
+          </div>
           <div>
             <button class="btn btn-primary js-review-question-submit mvl">Submit</button>
           </div>
-          <% end %>
+      <% end %>
       </div>
-    </div>
-  </div>
+</div>
