@@ -34,6 +34,41 @@ describe CensusLoading::Loader do
       clean_models CensusDataType
     end
 
+    # context 'the census data value' do
+    #   [:school].each do |entity_type|
+    #     context "for #{entity_type} level data" do
+    #       let(:update) {
+    #         {
+    #             entity_state: 'CA',
+    #             source: 'OSP Form',
+    #             entity_type: entity_type,
+    #             entity_id: 131,
+    #             value: 23,
+    #             created:'2010-05-14 13:30:01.000000000 -0700'
+    #
+    #         }
+    #       }
+    #       let(:census_update) { CensusLoading::Update.new(data_type, update) }
+    #       before do
+    #         unless entity_type == :state
+    #           entity = FactoryGirl.create(entity_type, id: update[:entity_id])
+    #         end
+    #         @data_set = FactoryGirl.create(:census_data_set)
+    #         @data_value = FactoryGirl.create(:census_data_school_value_with_newer_data)
+    #         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
+    #         # allow(loader).to   receive(:get_existing_values).and_return(@data_value)
+    #         loader.insert_into!(census_update, entity)
+    #         value_class = "CensusData#{entity_type.to_s.titleize}Value".constantize
+    #         @value_row = value_class.on_db(census_update.shard).last
+    #       end
+    #
+    #       it 'should not be inserted and preexisting value stays at the latest entry in value tables' do
+    #         expect(@value_row.value_float).to eq(@data_value.value_float)
+    #       end
+    #     end
+    #   end
+    # end
+
     context 'data set' do
       it 'should be for the correct attributes' do
         @data_set = FactoryGirl.create(:census_data_set)

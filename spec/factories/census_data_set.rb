@@ -6,6 +6,27 @@ FactoryGirl.define do
     n
   end
 
+
+  factory :census_data_school_value_with_newer_data, class: CensusDataSchoolValue do
+    sequence(:value_float)
+    sequence(:school_id)
+    active 1
+    modified Time.now
+  end
+
+  factory :census_data_district_value_with_newer_data, class: CensusDataDistrictValue do
+    sequence(:value_float)
+    sequence(:district_id)
+    active 1
+    modified Time.now
+  end
+
+  factory :census_data_state_value_with_newer_data, class: CensusDataStateValue do
+    sequence(:value_float)
+    active 1
+    modified Time.now
+  end
+
   factory :census_data_school_value, class: CensusDataSchoolValue do
     value_float { generate(:school_value_float) }
     sequence(:school_id)

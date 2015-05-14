@@ -55,8 +55,7 @@ class CensusLoading::Loader < CensusLoading::Base
       .on_db(census_update.shard)
       .where(value_row_attributes)
       .first_or_initialize
-      should_be_inserted = (value_row.present? && !value_row.modified.present?)||  (value_row.present? && value_row.modified.present? && census_update.created_before?(value_row.modified))|| value_row.blank?
-      if (should_be_inserted)
+      if (should_be_updated?(census_update, value_row))
         value_row.on_db(census_update.shard).update_attributes(
             active: 1,
             value_text: census_update.value_type == :value_text ? census_update.value : nil,
@@ -69,6 +68,10 @@ class CensusLoading::Loader < CensusLoading::Base
     # validate_census_value!(value_row, data_set, census_update)
 
 
+  end
+
+  def should_be_updated?(census_update, value_row)
+       (value_row.present? && !value_row.modified.present?)|| (value_row.present? && value_row.modified.present? && census_update.created_before?(value_row.modified))|| value_row.blank?
   end
 
   def configure_census_description!(attributes, school_type, data_set_id)
