@@ -24,10 +24,6 @@ shared_example 'should have nav bar with school name' do
   subject.find('.rs-osp_school_name', text: school.name.upcase)
 end
 
-shared_example 'should have dashboard button' do
-  subject.find_button('dashboard')
-end
-
 shared_example 'should have a submit button' do
   subject.find_button('Submit')
 end

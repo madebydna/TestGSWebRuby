@@ -21,7 +21,6 @@ describe 'OSP Basic Page' do
     describe_mobile_and_desktop do
 
       include_example 'should have nav bar with school name'
-      include_example 'should have dashboard button'
       include_example 'should have a submit button'
 
     end

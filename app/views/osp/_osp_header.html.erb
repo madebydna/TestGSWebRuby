@@ -1,21 +1,37 @@
+<% osp_school_decorator = SchoolProfileDecorator.decorate(@school) %>
+
 <div class="pvm bg-light-gray clearfix">
   <div class="limit-width-1200 clearfix prl hidden-xs">
-    <button class="btn btn-primary mts fr js-button-link" data-link-value="<%= my_account_url %>">
-      dashboard
-    </button>
-  <h4 class="tal fl gray-header rs-osp_school_name"> <%= @school.name.upcase %></h4>
-    <% if current_user.is_esp_demigod? || current_user.is_esp_superuser? %>
-    <%=link_to 'switch schools', osp_dashboard_path, class: 'fl pll mtm pt2' %>
-    <% end %>
+    <div class="clearfix">
+      <h4 class="tal fl gray-header rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></h4>
+      <% if current_user.is_esp_demigod? || current_user.is_esp_superuser? %>
+          <%= link_to 'switch schools', osp_dashboard_path, class: 'fl pll mtm pt2' %>
+      <% end %>
+    </div>
+    <div>
+      <p class="small">
+        <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
+        | <%= osp_school_decorator.city_state %>
+      </p>
+      <p class="small">
+        <%= osp_school_decorator.street %>
+      </p>
+    </div>
   </div>
 
   <div class="visible-xs clearfix prm">
-    <button class="btn btn-primary btn-sm mts fr js-button-link" data-link-value="<%= my_account_url %>">
-      dashboard
-    </button>
-    <p class="gray-header default ptm plm rs-osp_school_name"> <%= @school.name.upcase %></p>
-    <% if current_user.is_esp_demigod? || current_user.is_esp_superuser?%>
-        <%=link_to 'switch schools', osp_dashboard_path, class: 'plm' %>
+    <p class="gray-header default ptm plm rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></p>
+    <div class="plm">
+      <p class="small">
+        <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
+        | <%= osp_school_decorator.city_state %>
+      </p>
+      <p class="small">
+        <%= osp_school_decorator.street %>
+      </p>
+    </div>
+    <% if current_user.is_esp_demigod? || current_user.is_esp_superuser? %>
+        <%= link_to 'switch schools', osp_dashboard_path, class: 'plm' %>
     <% end %>
   </div>
 </div>
