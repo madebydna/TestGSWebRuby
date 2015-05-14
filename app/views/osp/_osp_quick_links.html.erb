@@ -1,15 +1,13 @@
-<div class="fr pt45 prl hidden-xs col-lg-2 col-md-2 col-sm-2 clearfix">
-  <ul>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-    <li>Quick Link</li>
-  </ul>
-  <div class="ptm">
-    <button class="btn btn-default">Save and go to school profile</button>
+<div class="hidden-xs fr pt45 prl col-sm-2">
+  <div class=" vdl pll">
+    <button class="btn btn-default js-button-link"  data-link-value="<%= school_path(@school)%>" data-link-use-new-window='true'>
+      Go to school profile
+    </button>
   </div>
 </div>
+
+<div class="visible-xs tac col-xs-12">
+    <%= link_to('Go to school profile', school_path(@school), :target => "_blank") %>
+    <div class="hdp"></div>
+</div>
+

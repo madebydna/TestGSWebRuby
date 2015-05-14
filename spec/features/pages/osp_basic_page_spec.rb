@@ -34,6 +34,8 @@ describe 'OSP Basic Page' do
           include_example 'should contain the expected text', form
         end
       end
+
+      include_example 'should have go to school profile button'
     end
 
     describe_mobile do
@@ -42,6 +44,8 @@ describe 'OSP Basic Page' do
           include_example 'should contain the expected text', form
         end
       end
+
+      include_example 'should have go to school profile link'
     end
   end
 

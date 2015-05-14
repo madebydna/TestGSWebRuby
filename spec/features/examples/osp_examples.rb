@@ -54,3 +54,11 @@ end
 shared_example 'should have switch schools link' do
   subject.find_link('switch schools')
 end
+
+shared_example 'should have go to school profile button' do
+  subject.find_button('Go to school profile', exact: true)
+end
+
+shared_example 'should have go to school profile link' do
+  subject.find_link('Go to school profile', exact: true)
+end

@@ -3,7 +3,11 @@
   <%= render partial: 'osp/osp_nav', locals: {page: 3} %>
 </div>
 <div class="limit-width-1200">
-  <%= render partial: 'osp/osp_form', locals: {page: 3} %>
-
+  <div class="row">
+    <%= render partial: 'osp/osp_quick_links' , locals: {page: 3}%>
+    <div class="col-sm-10">
+      <%= render partial: 'osp/osp_form', locals: {page: 3} %>
+    </div>
+  </div>
 </div>
 <%= render 'shared/state_footer', state: @state, cities: @cities %>
