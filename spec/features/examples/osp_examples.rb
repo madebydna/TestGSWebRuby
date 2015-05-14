@@ -24,6 +24,17 @@ shared_example 'should have nav bar with school name' do
   subject.find('.rs-osp_school_name', text: school.name.upcase)
 end
 
+shared_example 'should have school address' do
+  subject.find('.rs-school_address', text:school.street)
+end
+
+shared_example 'should have basic school information' do
+  subject.find('.rs-school-information', text: school.level)
+  subject.find('.rs-school-information', text: school.type.capitalize + ' district')
+  subject.find('.rs-school-information', text: school.city)
+  subject.find('.rs-school-information', text: school.state)
+end
+
 shared_example 'should have a submit button' do
   subject.find_button('Submit')
 end

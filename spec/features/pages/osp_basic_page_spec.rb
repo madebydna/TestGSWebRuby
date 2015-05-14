@@ -22,6 +22,8 @@ describe 'OSP Basic Page' do
 
       include_example 'should have nav bar with school name'
       include_example 'should have a submit button'
+      include_example 'should have basic school information'
+      include_example 'should have school address'
 
     end
 

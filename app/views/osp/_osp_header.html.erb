@@ -9,25 +9,26 @@
       <% end %>
     </div>
     <div>
-      <p class="small">
+      <p class="small rs-school_address">
+        <%= osp_school_decorator.street %>
+      </p>
+      <p class="small rs-school-information">
         <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
         | <%= osp_school_decorator.city_state %>
       </p>
-      <p class="small">
-        <%= osp_school_decorator.street %>
-      </p>
+
     </div>
   </div>
 
   <div class="visible-xs clearfix prm">
     <p class="gray-header default ptm plm rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></p>
     <div class="plm">
-      <p class="small">
+      <p class="small rs-school_address">
+        <%= osp_school_decorator.street %>
+      </p>
+      <p class="small rs-school-information">
         <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
         | <%= osp_school_decorator.city_state %>
-      </p>
-      <p class="small">
-        <%= osp_school_decorator.street %>
       </p>
     </div>
     <% if current_user.is_esp_demigod? || current_user.is_esp_superuser? %>
