@@ -55,8 +55,8 @@ class CensusLoading::Loader < CensusLoading::Base
       .on_db(census_update.shard)
       .where(value_row_attributes)
       .first_or_initialize
-      # should_be_inserted =  (value_row.present? && census_update.created_before?(value_row.modified))|| value_row.blank?
-      # if (should_be_inserted)
+      should_be_inserted = (value_row.present? && !value_row.modified.present?)||  (value_row.present? && value_row.modified.present? && census_update.created_before?(value_row.modified))|| value_row.blank?
+      if (should_be_inserted)
         value_row.on_db(census_update.shard).update_attributes(
             active: 1,
             value_text: census_update.value_type == :value_text ? census_update.value : nil,
@@ -64,7 +64,7 @@ class CensusLoading::Loader < CensusLoading::Base
             modified: census_update.created.present? ? census_update.created : Time.now,
             modifiedBy: source
         )
-      # end
+      end
 
     # validate_census_value!(value_row, data_set, census_update)
 

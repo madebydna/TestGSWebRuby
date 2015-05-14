@@ -17,6 +17,8 @@ describe CensusLoading::Loader do
           entity_type: :school,
           entity_id: school.id,
           value: 23,
+          created:'2015-05-13 11:50:40'
+
       }
     }
     let(:census_update) { CensusLoading::Update.new(data_type, update) }
