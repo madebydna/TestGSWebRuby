@@ -27,6 +27,10 @@ class SchoolMember < ActiveRecord::Base
     @reviews ||= user.reviews_for_school(school: school).to_a
   end
 
+  def user_type
+    read_attribute(:user_type) || 'unknown'
+  end
+
   # Returns active reviews the user wrote for the school
   def active_reviews
     reviews.select(&:active?)

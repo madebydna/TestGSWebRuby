@@ -4,7 +4,7 @@ class SchoolUserController < SchoolProfileController
     json_message = {}
     status = :ok
     school_user = nil
-    user_type = params[:user_type]
+    user_type = school_user_params[:user_type]
 
     begin
       school_user = build_school_user
@@ -29,8 +29,17 @@ class SchoolUserController < SchoolProfileController
     unless @school
       raise Exception.new('Current school is unknown')
     end
-
     SchoolMember.build_unknown_school_member(@school, current_user)
+  end
+
+  private
+
+  def school_user_params
+    params.
+        require(:school_member).
+        permit(
+        :user_type
+          )
   end
 
 end

@@ -118,24 +118,38 @@ GS.topicalReview.checkBoxes = (function () {
     return {
         init: init
     }
-
 })();
 
-    GS.topicalReview.form = (function () {
-//        Ajax submission for checkBox question
-        var init = function () {
+GS.topicalReview.form = (function () {
+    var QUESTION_CAROUSEL_CONTAINER_SELECTOR = '.js-reviewQuestionCarouselContainer';
 
-            $('.new_review').on('ajax:before', function (event, xhr, status, error) {
-            }).on('ajax:success', function (event, xhr, status, error) {
-                var redirect_url = xhr.redirect_url;
-                if (redirect_url !== undefined && redirect_url !== '') {
-                    window.location = redirect_url;
-                }
-                var reviewContainer = $(this).parents('.js-topicalReviewContainer');
-                $(reviewContainer).addClass('js-reviewComplete');
-                var carousel = $('.js-reviewQuestionCarousel');
-                carousel.slick('slickNext')
-            }).on('ajax:error', function (event, xhr, status, error) {
+    var displayRoleQuestion = function () {
+        $('.js-roleQuestion').show();
+    };
+
+    var isRoleQuestionOnPage = function () {
+        var $roleQuestion = $('.js-roleQuestion');
+        return $roleQuestion.length > 0;
+    };
+    var init = function () {
+
+        $('.new_review').on('ajax:before', function (event, xhr, status, error) {
+        }).on('ajax:success', function (event, xhr, status, error) {
+            var redirect_url = xhr.redirect_url;
+            if (redirect_url !== undefined && redirect_url !== '') {
+                window.location = redirect_url;
+            }
+            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+            $(reviewContainer).addClass('js-reviewComplete');
+            if (isRoleQuestionOnPage()) {
+                GS.topicalReview.questionCarousel.hide();
+                displayRoleQuestion();
+            }
+            else {
+                GS.topicalReview.questionCarousel.goToNextSlide();
+            }
+
+        }).on('ajax:error', function (event, xhr, status, error) {
                 var errorMessage = "There was an error saving your review.";
                 var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
                 var responseJSON = xhr.responseJSON;
@@ -157,10 +171,43 @@ GS.topicalReview.checkBoxes = (function () {
     return {
         init: init
     }
+})();
+
+
+GS.topicalReview.memberForm = (function () {
+    var showCarousel= function () {
+        GS.topicalReview.questionCarousel.show();
+    };
+
+//        Ajax submission for role question
+    var init = function () {
+
+        $('.new_school_member').on('ajax:success', function (event, xhr, status, error) {
+            var userType =  $('#new_school_member input:checked').val()
+            if (userType == 'principal') {
+                window.location.reload();
+            }
+            $('.js-roleQuestion').remove();
+            var wasInitialized = GS.topicalReview.questionCarousel.isInitialized();
+            showCarousel();
+            if(wasInitialized) {
+                GS.topicalReview.questionCarousel.goToNextSlide();
+            }
+        }).on('ajax:error', function (event, xhr, status, error) {
+            console.log('error with role');
+        });
+    };
+
+    return {
+        init: init
+    }
 
 })();
 
 GS.topicalReview.questionCarousel = (function () {
+    var QUESTION_CAROUSEL_SELECTOR = '.js-reviewQuestionCarousel';
+    var QUESTION_CAROUSEL_CONTAINER_SELECTOR = '.js-reviewQuestionCarouselContainer';
+    var initialized = false;
 
     var getSlideIdForFirstTopicQuestion = function (topicId) {
         var topicSelector = '.js-topicalReviewContainer[data-review-topic="' + topicId + '"]';
@@ -168,21 +215,25 @@ GS.topicalReview.questionCarousel = (function () {
         var topicQuestions = filterOutClonedQuestions(matchingQuestions);
         var question = topicQuestions.first();
         return question.data('slickIndex') || 0;
-    }
+    };
 
     var filterOutClonedQuestions = function (matchingQuestions) {
         return $(matchingQuestions).filter(function () {
-            return !$(this).hasClass('slick-cloned')
+            return !$(this).hasClass('slick-cloned');
         })
-    }
+    };
 
     var getTopicIdFromAnchor = function () {
         return GS.uri.Uri.getHashValue().slice(5);
-    }
+    };
 
     var init = function () {
-        var questionCarouselSelector = '.js-reviewQuestionCarousel';
-        var $questionCarousel = $(questionCarouselSelector);
+        if(initialized == true || getCarouselContainer().is(":visible")  == false) {
+            return;
+        }
+        initialized = true;
+        var $questionCarousel = $(QUESTION_CAROUSEL_SELECTOR);
+
         $questionCarousel.slick({
             infinite: true,
             speed: 300,
@@ -193,14 +244,55 @@ GS.topicalReview.questionCarousel = (function () {
             prevArrow: ".js-previous-topic",
             nextArrow: ".js-next-topic"
         });
-        var topicIdFromHtmlDataAttribute = $questionCarousel.data('gs-first-topic-id');
-        var topicId = topicIdFromHtmlDataAttribute || getTopicIdFromAnchor();
+
+        goToSlideForPreferredTopic();
+    };
+
+    var show = function() {
+        getCarouselContainer().show();
+        init();
+    };
+
+    var hide = function() {
+        getCarouselContainer().hide();
+    };
+
+    var getCarousel = function() {
+        return $(QUESTION_CAROUSEL_SELECTOR);
+    };
+
+    var getCarouselContainer = function() {
+        return $(QUESTION_CAROUSEL_CONTAINER_SELECTOR);
+    };
+
+    var goToNextSlide = function() {
+        getCarousel().slick('slickNext');
+    };
+
+    var goToTopic = function (topicId) {
+        var $questionCarousel = $(QUESTION_CAROUSEL_SELECTOR);
         var slideId = getSlideIdForFirstTopicQuestion(topicId);
         $questionCarousel.slick('slickGoTo', Number(slideId));
     };
 
+    // Go to topic specified by anchor in URL or next unaswered topic (written in dom)
+    var goToSlideForPreferredTopic = function() {
+        var topicIdFromHtmlDataAttribute = getCarousel().data('gs-first-topic-id');
+        var topicId = topicIdFromHtmlDataAttribute || getTopicIdFromAnchor();
+        goToTopic(topicId);
+    };
+
+    var isInitialized = function() {
+        return initialized;
+    };
+
     return {
-        init: init
+        init: init,
+        goToNextSlide: goToNextSlide,
+        hide: hide,
+        show: show,
+        goToSlideForPreferredTopic: goToSlideForPreferredTopic,
+        isInitialized: isInitialized
     }
 })();
 
@@ -257,6 +349,8 @@ GS.topicalReview.radioButton = GS.topicalReview.radioButton || (function () {
 $(function () {
 
     GS.topicalReview.form.init();
+
+    GS.topicalReview.memberForm.init();
 
     GS.topicalReview.radioButton.init();
 

@@ -1,0 +1,25 @@
+  <%
+     member_roles = ['parent', 'teacher', 'student', 'principal']
+  %>
+
+  <div class="limit-width-1200 row bg-light-gray gray-box-border js-roleQuestion tac <%= display ? '' : 'dn' %>">
+    <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 bg-light-gray mtl">
+      <div class="mvl font-size-large open-sans_sb">WHAT'S YOUR RELATIONSHIP TO THIS SCHOOL?</div>
+      <div class="row">
+          <%= form_for SchoolMember.new, remote: true, url: school_user_path(@school) do |f| %>
+
+          <% member_roles.each_with_index do |option| %>
+              <div class="dib mbs col-xs-3 col-lg-3">
+                <div>
+                  <div><%= f.radio_button(:user_type, option, class: 'js-topicalRadioButton') %></div>
+                  <div> <%= option %> </div>
+                </div>
+              </div>
+        <% end %>
+          <div>
+            <button class="btn btn-primary js-review-question-submit mvl">Submit</button>
+          </div>
+          <% end %>
+      </div>
+    </div>
+  </div>

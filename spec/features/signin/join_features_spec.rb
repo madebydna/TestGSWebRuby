@@ -8,7 +8,7 @@ feature "Join Page" do
       visit join_path
     end
     after(:each) do
-      clean_models User, SchoolRating
+      clean_models User, SchoolRating, ReviewTopic, ReviewQuestion, Review, ReviewAnswer
       clean_models :ca, School, SchoolMetadata
     end
 

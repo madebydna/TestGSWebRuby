@@ -421,12 +421,12 @@ describe User do
     subject { user.first_unanswered_topic(school) }
 
     it 'should get reviews for the given school' do
-      expect(user).to receive(:active_reviews_for_school).with(school: school).and_return(reviews)
+      expect(user).to receive(:reviews_for_school).with(school: school).and_return(reviews)
       subject
     end
 
     it 'should return the first unanswered topic' do
-      allow(user).to receive(:active_reviews_for_school).and_return(reviews)
+      allow(user).to receive(:reviews_for_school).and_return(reviews)
       allow(ReviewTopic).to receive(:all).and_return(topics)
       expect(subject).to eq(topics[1])
     end

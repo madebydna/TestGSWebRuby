@@ -29,7 +29,7 @@ class SchoolProfileController < SchoolController
   end
 
   def init_page
-    @school_member = SchoolMember.find_by_school_and_user(@school, current_user) if logged_in?
+    @school_member = school_member if logged_in?
     set_noindex_meta_tags if @school.demo_school?
     @school_reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
     create_sized_maps(gon)
@@ -182,6 +182,16 @@ class SchoolProfileController < SchoolController
 
   def set_noindex_meta_tags
     set_meta_tags(robots: 'noindex, nofollow, noarchive')
+  end
+
+  def school_member
+    member =  SchoolMember.find_by_school_and_user(@school, current_user)
+    unless member
+      member = SchoolMember.new
+      member.school = @school
+      member.user = current_user
+    end
+    member
   end
 
 end
