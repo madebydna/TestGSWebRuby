@@ -306,6 +306,7 @@ LocalizedProfiles::Application.routes.draw do
     get 'details', to: 'school_profile_details#details', as: :details
     resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
+    resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profile_overview#overview'
   end
 

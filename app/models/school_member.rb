@@ -30,7 +30,7 @@ class SchoolMember < ActiveRecord::Base
   alias_attribute :school_state, :state
 
   validates_presence_of :user_type
-  validates_inclusion_of :user_type, :in => VALID_AFFILIATIONS
+  validates_inclusion_of :user_type, :in => VALID_AFFILIATIONS.map(&:to_s)
 
 
   def self.build_unknown_school_member(school, user)

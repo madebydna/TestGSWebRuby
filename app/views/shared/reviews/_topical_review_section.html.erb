@@ -9,7 +9,7 @@
   <% # if not logged in there will be no @school member only show review questions  %>
   <% if @school_member %>
       <% # if logged in and user has a role only show questions  %>
-      <% if @school_member.user_type != 'unknown'
+      <% if !@school_member.unknown?
            display_review_questions = true %>
       <% # if logged in and has unknown role  %>
       <% else %>

@@ -84,7 +84,7 @@ describe 'School moderate page' do
 
             it { is_expected.to have_open_flags }
             it { is_expected.to_not have_resolved_flags }
-            it { is_expected.to be_school_leader_review }
+            # it { is_expected.to be_school_leader_review }
 
             with_subject :the_first_open_flag do
               its(:reason) { is_expected.to have_content(review.flags.first.reason) }

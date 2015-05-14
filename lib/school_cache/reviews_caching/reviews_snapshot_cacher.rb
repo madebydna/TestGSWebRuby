@@ -36,7 +36,7 @@ class ReviewsCaching::ReviewsSnapshotCacher < Cacher
         review_blob = {
             comments: review.comment,
             posted: review.created.to_s,
-            who: review.user_type,
+            who: review.user_type.to_s,
             quality: review.answer
         }
         reviews << review_blob

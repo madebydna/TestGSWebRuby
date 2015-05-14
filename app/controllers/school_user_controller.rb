@@ -11,6 +11,7 @@ class SchoolUserController < SchoolProfileController
       school_user.user_type = user_type if user_type
       unless school_user.save
         status = :unprocessable_entity
+        Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
