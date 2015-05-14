@@ -4,7 +4,7 @@
       dashboard
     </button>
   <h4 class="tal fl gray-header rs-osp_school_name"> <%= @school.name.upcase %></h4>
-    <% if current_user.is_esp_demigod? %>
+    <% if current_user.is_esp_demigod? || current_user.is_esp_superuser? %>
     <%=link_to 'switch schools', osp_dashboard_path, class: 'fl pll mtm pt2' %>
     <% end %>
   </div>
@@ -14,7 +14,7 @@
       dashboard
     </button>
     <p class="gray-header default ptm plm rs-osp_school_name"> <%= @school.name.upcase %></p>
-    <% if current_user.is_esp_demigod? %>
+    <% if current_user.is_esp_demigod? || current_user.is_esp_superuser?%>
         <%=link_to 'switch schools', osp_dashboard_path, class: 'plm' %>
     <% end %>
   </div>
