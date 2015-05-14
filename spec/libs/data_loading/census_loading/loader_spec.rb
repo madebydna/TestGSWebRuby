@@ -72,6 +72,8 @@ describe CensusLoading::Loader do
               entity_type: entity_type,
               entity_id: 100,
               value: 23,
+              created:'2015-05-14 13:30:01.000000000 -0700'
+
             }
           }
           let(:census_update) { CensusLoading::Update.new(data_type, update) }
@@ -92,6 +94,10 @@ describe CensusLoading::Loader do
 
           it 'should have the correct data_set_id' do
             expect(@value_row.data_set_id).to eq(@data_set.id)
+          end
+
+          it 'should have the correct modified time' do
+            expect(@value_row.modified).to eq(census_update.created)
           end
 
           unless entity_type == :state
