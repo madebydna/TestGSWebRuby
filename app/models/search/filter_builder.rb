@@ -236,11 +236,11 @@ class FilterBuilder
             display_type: :title,
             name: :gstq_rating,
             filters: {
-                gstq1: { label: '1 star', display_type: :basic_checkbox, name: :gstq_rating, value: :'1' },
-                gstq2: { label: '2 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
-                gstq3: { label: '3 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
-                gstq4: { label: '4 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
-                gstq5: { label: '5 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'5' }
+              gstq5: { label: '5 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'5' },
+              gstq4: { label: '4 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
+              gstq3: { label: '3 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
+              gstq2: { label: '2 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
+              gstq1: { label: '1 star', display_type: :basic_checkbox, name: :gstq_rating, value: :'1' }
             }
         }
       }
