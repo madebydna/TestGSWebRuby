@@ -38,12 +38,12 @@ class Admin::OspController < ApplicationController
 
   def add_image
     number_of_images_for_school = SchoolMedia.where(school_id: @school.id, state: @school.state).all_except_inactive.count
-    return render_error unless number_of_images_for_school <= MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
+    return render_error_js unless number_of_images_for_school <= MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
 
     begin
       file = params['imageFile']['0']
 
-      return render_error unless valid_file?(file)
+      return render_error_js unless valid_file?(file)
       school_media = create_image!(file)
       render_success_js(school_media.id)
     rescue => error
