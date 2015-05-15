@@ -15,6 +15,8 @@ module PhotoUploadConcerns
 
   def create_image!(file)
     status = @is_approved_user ? SchoolMedia::PENDING : SchoolMedia::PROVISIONAL_PENDING
+
+    approve_images(state: @school.state, school_id: @school.id) if @is_approved_user
     school_media = create_school_media_row!(file.original_filename, status)
     raise "file: #{file.original_filename} was not saved to database. PhotoUploadConcerns line: #{__LINE__}" unless school_media.persisted?
     send_image_to_processor!(school_media, file.tempfile)
@@ -49,4 +51,13 @@ module PhotoUploadConcerns
       }
     )
   end
+
+  def approve_images(query_hash)
+    query_hash.slice!(:member_id, :state, :school_id)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash, status: SchoolMedia::PROVISIONAL_PENDING)
+      .update_all({status: SchoolMedia::PENDING})
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash, status: SchoolMedia::PROVISIONAL)
+      .update_all({status: SchoolMedia::ACTIVE})
+  end
+
 end

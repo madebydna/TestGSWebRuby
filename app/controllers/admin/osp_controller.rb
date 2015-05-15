@@ -32,7 +32,7 @@ class Admin::OspController < ApplicationController
     osp_form_responses.each do | osp_form_response |
       create_update_queue_row!(osp_form_response.response)
     end
-    approve_images(params[:membership_id].to_i)
+    approve_images(member_id: params[:membership_id])
     # only java is receiving this html, does not matter that it renders blank page
     render text: ''
   end
@@ -208,13 +208,6 @@ class Admin::OspController < ApplicationController
   def set_school_media_hashs_gon_var!
     gon.school_media_hashes = SchoolMedia.school_media_hashes_for_osp(@school)
     gon.school_id           = @school.id
-  end
-
-  def approve_images(member_id)
-    SchoolMedia.on_db(:gs_schooldb_rw).where(member_id: member_id, status: SchoolMedia::PROVISIONAL_PENDING)
-      .update_all({status: SchoolMedia::PENDING})
-    SchoolMedia.on_db(:gs_schooldb_rw).where(member_id: member_id, status: SchoolMedia::PROVISIONAL)
-      .update_all({status: SchoolMedia::ACTIVE})
   end
 
   ### BEFORE ACTIONS ###
