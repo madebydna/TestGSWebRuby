@@ -97,64 +97,128 @@ class Review < ActiveRecord::Base
     }
   end
 
-  # TODO: Refactor this into a ReviewFlagBuilder
+  class ReviewFlagBuilder
+    PRINCIPAL_NOT_APPROVED_ERROR = 'User self reported as principal but is not an approved OSP user'
+    IS_DELAWARE_SCHOOL_ERROR = 'Review is for GreatSchools Delaware school.'
+
+    attr_accessor :review, :comment, :reasons
+
+    def initialize(review)
+      @review = review
+      @reasons = []
+      @comment = ''
+    end
+
+    def self.build(review)
+      new(review).auto_moderate.build
+    end
+
+    def school_member
+      @school_member ||= review.school_member || SchoolMember.build_unknown_school_member(review.school, review.user)
+    end
+
+    def school
+      review.school
+    end
+
+    def alert_word_results
+      @alert_word_results ||= AlertWord.search(review.comment)
+    end
+
+    def check_alert_words
+      if alert_word_results.any?
+        self.reasons << ReviewFlag::BAD_LANGUAGE
+        self.comment = 'Review contained '
+        if alert_word_results.has_alert_words?
+          self.comment << "warning words (#{ alert_word_results.alert_words.join(',') })"
+        end
+        if alert_word_results.has_alert_words? && alert_word_results.has_really_bad_words?
+          self.comment << ' and '
+        end
+        if alert_word_results.has_really_bad_words?
+          self.comment << "really bad words (#{ alert_word_results.really_bad_words.join(',') })"
+        end
+      end
+      return self
+    end
+
+    def check_for_local_school
+      if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
+        self.reasons << ReviewFlag::LOCAL_SCHOOL
+        comment << ' ' if self.comment.present?
+        self.comment << IS_DELAWARE_SCHOOL_ERROR
+      end
+      return self
+    end
+
+    def check_for_held_school
+      if school.held?
+        self.reasons << ReviewFlag::HELD_SCHOOL
+      end
+      return self
+    end
+
+    def check_for_forced_moderation
+      if PropertyConfig.force_review_moderation?
+        self.reasons << ReviewFlag::FORCE_FLAGGED
+      end
+      return self
+    end
+
+    def check_for_student_user_type
+      if school_member.student?
+        self.reasons << ReviewFlag::STUDENT
+      end
+      return self
+    end
+
+    def check_for_principal_user_type
+      if school_member.principal?
+        unless school_member.approved_osp_user?
+          self.comment << PRINCIPAL_NOT_APPROVED_ERROR
+          self.reasons << ReviewFlag::AUTO_FLAGGED
+        end
+      end
+    end
+
+    def auto_moderate
+      check_alert_words
+      check_for_local_school
+      check_for_student_user_type
+      check_for_principal_user_type
+      check_for_held_school
+      check_for_forced_moderation
+      self
+    end
+
+    def build
+      if self.comment.present? || reasons.present?
+        # call presence on comment so that empty string becomes nil
+        return build_review_flag(comment.presence, reasons)
+      end
+      return nil
+    end
+
+    private
+
+    def build_review_flag(comment, reasons)
+      review_flag = ReviewFlag.new
+      review_flag.comment = comment
+      review_flag.reasons = reasons
+      review_flag.review = review
+      review_flag
+    end
+  end
+
   def auto_moderate
-    alert_word_results = AlertWord.search(comment)
-
-    reasons = []
-    comment = nil
-
-    if alert_word_results.any?
-      reasons << ReviewFlag::BAD_LANGUAGE
-      comment = 'Review contained '
-      if alert_word_results.has_alert_words?
-        comment << "warning words (#{ alert_word_results.alert_words.join(',') })"
-      end
-      if alert_word_results.has_alert_words? && alert_word_results.has_really_bad_words?
-        comment << ' and '
-      end
-      if alert_word_results.has_really_bad_words?
-        comment << "really bad words (#{ alert_word_results.really_bad_words.join(',') })"
-      end
-    end
-
-    if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
-      reasons << ReviewFlag::LOCAL_SCHOOL
-      if comment.nil?
-        comment = "Review is for GreatSchools Delaware school."
-      else
-        comment << " Review is for GreatSchools Delaware school."
-      end
-    end
-
-    if user_type == 'student'
-      reasons << ReviewFlag::STUDENT
-    end
-
-    if school.held?
-      reasons << ReviewFlag::HELD_SCHOOL
-    end
-
-    if PropertyConfig.force_review_moderation?
-      reasons << ReviewFlag::FORCE_FLAGGED
-    end
-
-    if comment.present? || reasons.present?
-      review_flag = build_review_flag(comment, reasons)
+    review_flag = ReviewFlagBuilder.build(self)
+    if review_flag
       begin
         review_flag.save!
       rescue
         Rails.logger.error "Could not save ReviewFlag for review with ID #{id}"
       end
     end
-  end
-
-  def build_review_flag(comment, reasons)
-    review_flag = ReviewFlag.new
-    review_flag.comment = comment
-    review_flag.reasons = reasons
-    review_flag.review = self
-    review_flag
   end
 
   def send_thank_you_email_if_published

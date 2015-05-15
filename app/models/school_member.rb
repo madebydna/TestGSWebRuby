@@ -34,12 +34,16 @@ class SchoolMember < ActiveRecord::Base
   validates_presence_of :user_type
   validates_inclusion_of :user_type, :in => VALID_AFFILIATIONS.map(&:to_s)
 
+  after_initialize :defaults
+
+  def defaults
+    self.user_type = Affiliation::UNKNOWN if read_attribute(:user_type).nil?
+  end
 
   def self.build_unknown_school_member(school, user)
     school_member = new
     school_member.school = school
     school_member.user = user
-    school_member.user_type = Affiliation::UNKNOWN
     school_member
   end
 

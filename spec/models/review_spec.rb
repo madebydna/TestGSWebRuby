@@ -84,116 +84,169 @@ describe Review do
     expect(review).to be_valid
   end
 
-  describe '#build_review_flag' do
-    it "should return a reported review object with correct attributes" do
-    review_flag = subject.build_review_flag('bad words','auto-flagged')
-    expect(review_flag).to be_a(ReviewFlag)
-    expect(review_flag.comment).to eq('bad words')
-    expect(review_flag.reason).to eq('auto-flagged')
-    end
-  end
-
-
-  describe '#auto_moderate' do
-    before do
-      subject.school = school
-      subject.user = user
+  describe Review::ReviewFlagBuilder do
+    describe '#build_review_flag' do
+      subject do
+        Review::ReviewFlagBuilder.new(review)
+      end
+      it "should return a ReviewFlag object with correct attributes" do
+        review_flag = subject.send(:build_review_flag, 'bad words','auto-flagged')
+        expect(review_flag).to be_a(ReviewFlag)
+        expect(review_flag.comment).to eq('bad words')
+        expect(review_flag.reason).to eq('auto-flagged')
+      end
     end
 
-    it 'should not report a review with no bad language' do
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_review_flag)
-      subject.auto_moderate
-    end
-
-    it 'should save a reported review' do
-      expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(subject).to receive(:build_review_flag)
-      subject.auto_moderate
-    end
-
-    it 'should send the correct comment and reason' do
-      expect(AlertWord).to receive(:search).and_return(alert_words)
-      expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1,alert_word_2)', [:'bad-language'])
-      subject.auto_moderate
-
-      expect(AlertWord).to receive(:search).and_return(really_bad_words)
-      expect(subject).to receive(:build_review_flag).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', [:'bad-language'])
-      subject.auto_moderate
-
-      expect(AlertWord).to receive(:search).and_return(alert_and_really_bad_words)
-      expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', [:'bad-language'])
-      subject.auto_moderate
-    end
-
-    it 'should report reviews for Delaware public schools' do
-      school.state = 'DE'
-      school.type = 'public'
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
-      subject.auto_moderate
-    end
-
-    context 'when reviews are pre-moderated' do
+    describe '#build' do
+      subject do
+        Review::ReviewFlagBuilder.new(review)
+      end
       before do
-        stub_const('PropertyConfig', double(:'force_review_moderation?' => true))
+        review.school = school
+        review.user = user
       end
 
-      it 'should report reviews that are pre-moderated' do
+      it 'should not flag a review with no bad language' do
         expect(AlertWord).to receive(:search).and_return(no_bad_language)
-        expect(subject).to receive(:build_review_flag).with(be_nil, [:'force-flagged'])
-        subject.auto_moderate
+        expect(subject).to_not receive(:build_review_flag)
+        subject.auto_moderate.build
       end
-    end
 
-    context 'when school is held' do
-      before { allow(school).to receive(:held?).and_return(true) }
-      it 'should report reviews for held schools' do
+      it 'should save a flagged review' do
+        expect(AlertWord).to receive(:search).and_return(alert_words)
+        expect(subject).to receive(:build_review_flag)
+        subject.auto_moderate.build
+      end
+
+      context 'with alert words' do
+        before do
+          expect(AlertWord).to receive(:search).and_return(alert_words)
+        end
+        it 'should send the correct comment and reason' do
+          expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1,alert_word_2)', [:'bad-language'])
+          subject.auto_moderate.build
+        end
+      end
+
+      context 'with really bad words' do
+        before do
+          expect(AlertWord).to receive(:search).and_return(really_bad_words)
+        end
+        it 'should send the correct comment and reason' do
+          expect(subject).to receive(:build_review_flag).with('Review contained really bad words (really_bad_word_1,really_bad_word_2)', [:'bad-language'])
+          subject.auto_moderate.build
+        end
+      end
+
+      context 'with alert words and really bad bad words' do
+        before do
+          expect(AlertWord).to receive(:search).and_return(alert_and_really_bad_words)
+        end
+        it 'should send the correct comment and reason' do
+          expect(subject).to receive(:build_review_flag).with('Review contained warning words (alert_word_1) and really bad words (really_bad_word_1)', [:'bad-language'])
+          subject.auto_moderate.build
+        end
+      end
+
+      it 'should flag reviews for Delaware public schools' do
+        school.state = 'DE'
+        school.type = 'public'
         expect(AlertWord).to receive(:search).and_return(no_bad_language)
-        expect(subject).to receive(:build_review_flag).with(be_nil, [:'held-school'])
-        subject.auto_moderate
+        expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+        subject.auto_moderate.build
       end
-    end
 
-    context 'when user is a student' do
-      before { allow(subject).to receive(:user_type).and_return('student') }
-      it 'should report reviews for students' do
+      context 'when reviews are pre-moderated' do
+        before do
+          stub_const('PropertyConfig', double(:'force_review_moderation?' => true))
+        end
+
+        it 'should flag reviews that are pre-moderated' do
+          expect(AlertWord).to receive(:search).and_return(no_bad_language)
+          expect(subject).to receive(:build_review_flag).with(be_nil, [:'force-flagged'])
+          subject.auto_moderate.build
+        end
+      end
+
+      context 'when school is held' do
+        before { allow(school).to receive(:held?).and_return(true) }
+        it 'should flag reviews for held schools' do
+          expect(AlertWord).to receive(:search).and_return(no_bad_language)
+          expect(subject).to receive(:build_review_flag).with(be_nil, [:'held-school'])
+          subject.auto_moderate.build
+        end
+      end
+
+      context 'when user is a student' do
+        let(:school_member) { FactoryGirl.build(:student_school_member) }
+        before { allow(review).to receive(:school_member).and_return(school_member) }
+        it 'should flag reviews for students' do
+          expect(AlertWord).to receive(:search).and_return(no_bad_language)
+          expect(subject).to receive(:build_review_flag).with(be_nil, [:'student'])
+          subject.auto_moderate.build
+        end
+      end
+
+      context 'when user is a principal' do
+        let(:school_member) { FactoryGirl.build(:principal_school_member) }
+        before do
+          allow(review).to receive(:school_member).and_return(school_member)
+          expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        end
+        context 'when principal is osp verified' do
+          before do
+            allow(school_member).to receive(:approved_osp_user?).and_return(true)
+          end
+          it 'should not flag review' do
+            expect(subject).to_not receive(:build_review_flag)
+            subject.auto_moderate.build
+          end
+        end
+        context 'when principal is not osp verified' do
+          before do
+            allow(school_member).to receive(:approved_osp_user?).and_return(false)
+          end
+          it 'should not flag review' do
+            expect(subject).to receive(:build_review_flag).with(
+                                 'User self reported as principal but is not an approved OSP user',
+                                 [:'auto-flagged']
+                               )
+            subject.auto_moderate.build
+          end
+        end
+      end
+
+      it 'should flag reviews for Delaware charter schools' do
+        school.state = 'DE'
+        school.type = 'charter'
         expect(AlertWord).to receive(:search).and_return(no_bad_language)
-        expect(subject).to receive(:build_review_flag).with(be_nil, [:'student'])
-        subject.auto_moderate
+        expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+        subject.auto_moderate.build
       end
-    end
 
-    it 'should report reviews for Delaware charter schools' do
-      school.state = 'DE'
-      school.type = 'charter'
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
-      subject.auto_moderate
-    end
+      it 'should not flag reviews for Delaware private schools' do
+        school.state = 'DE'
+        school.type = 'private'
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to_not receive(:build_review_flag)
+        subject.auto_moderate.build
+      end
 
-    it 'should not report reviews for Delaware private schools' do
-      school.state = 'DE'
-      school.type = 'private'
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_review_flag)
-      subject.auto_moderate
-    end
+      it 'should not flag reviews for New York public schools' do
+        school.state = 'NY'
+        school.type = 'public'
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to_not receive(:build_review_flag)
+        subject.auto_moderate.build
+      end
 
-    it 'should not report reviews for New York public schools' do
-      school.state = 'NY'
-      school.type = 'public'
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_review_flag)
-      subject.auto_moderate
-    end
-
-    it 'should not report reviews for New York charter schools' do
-      school.state = 'NY'
-      school.type = 'charter'
-      expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(subject).to_not receive(:build_review_flag)
-      subject.auto_moderate
+      it 'should not flag reviews for New York charter schools' do
+        school.state = 'NY'
+        school.type = 'charter'
+        expect(AlertWord).to receive(:search).and_return(no_bad_language)
+        expect(subject).to_not receive(:build_review_flag)
+        subject.auto_moderate.build
+      end
     end
   end
 
