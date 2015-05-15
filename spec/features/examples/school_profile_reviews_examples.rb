@@ -13,6 +13,14 @@ shared_example 'should show the review module' do
   expect(subject).to have_review_module
 end
 
+shared_example 'should show role question' do
+  expect(subject).to have_role_question
+end
+
+shared_example 'should not show role question' do
+  expect(subject).to_not have_role_question
+end
+
 shared_example 'should show the overall star question' do
   expect(subject.visible_review_question.review_form.text).to include('How would you rate your experience at this school?')
 end
@@ -44,9 +52,13 @@ shared_example 'should show a radio_button question' do
 end
 
 shared_example 'should show next question' do
-  pending ('fails intermittently due to timing with carousel and ajax')
-  fail
+  # pending ('fails intermittently due to timing with carousel and ajax')
+  # fail
   expect(subject.visible_review_question.question.text).to eq(teacher_question.question)
+end
+
+shared_example 'should have call to action text' do
+  expect(subject.visible_review_question).to have_call_to_action_text
 end
 
 shared_example 'should not show the review comment form' do
@@ -61,6 +73,11 @@ shared_example 'should save review with expected value' do |value|
   wait_for_page_to_finish
   expect(Review.last.answers.count).to eq(1)
   expect(Review.last.answers.first.value).to eq(value)
+end
+
+shared_example 'should save SchoolMember with parent user type' do
+  wait_for_page_to_finish
+  expect(SchoolMember.last.user_type).to eq(:parent)
 end
 
 shared_example 'should save overall review with comment without bad words' do

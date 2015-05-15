@@ -8,8 +8,8 @@ require 'support/shared_contexts_for_signed_in_users'
 
 describe 'School Profile Reviews Page', js: true do
   before do
-    pending('TODO: Figure out why tests fail intermittently')
-    fail
+    # pending('TODO: Figure out why tests fail intermittently')
+    # fail
   end
 
   after do
@@ -27,7 +27,7 @@ describe 'School Profile Reviews Page', js: true do
         include_example 'should show the overall star question'
         include_example 'should show stars'
         include_example 'should show the review comment section'
-        with_shared_context 'signed in verified user' do
+        with_shared_context 'signed in verified user with role for school' do
           with_shared_context 'click third star' do
             with_shared_context 'submit response with comment without bad words' do
               include_example 'should save review with expected value', '3'
@@ -35,10 +35,7 @@ describe 'School Profile Reviews Page', js: true do
               include_example 'should save review that is active'
               include_example 'should show next question'
               include_example 'should show a radio_button question'
-              with_subject :visible_review_question do
-
-                it { pending ('fix'); is_expected.to have_call_to_action_text }
-              end
+              include_example 'should have call to action text'
               include_example 'should not show the review comment form'
             end
 
@@ -60,12 +57,23 @@ describe 'School Profile Reviews Page', js: true do
                 expect(page.current_path).to eq(join_path)
               end
 
-              with_shared_context 'with signing into a verified account' do
+              with_shared_context 'with signing into a verified account without role for school' do
                 include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
-                include_example 'should save review with expected value', '3'
+                # include_example 'should save review with expected value', '3'
                 include_example 'should save overall review with comment without bad words'
                 include_example 'should save review that is active'
+                include_example 'should show role question'
+              end
+
+              with_shared_context 'with signing into a verified account with role for school' do
+                include_example 'should be redirected to the reviews page'
+                include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
+                # include_example 'should save review with expected value', '3'
+                include_example 'should save overall review with comment without bad words'
+                include_example 'should save review that is active'
+                include_example 'should not show role question'
+                include_example 'should show a radio_button question'
               end
 
               with_shared_context 'with signing up for a new account' do
@@ -75,13 +83,9 @@ describe 'School Profile Reviews Page', js: true do
                 include_example 'should save overall review with comment without bad words'
                 include_example 'should save review that is not active'
                 with_shared_context 'Visit School Profile Reviews' do
+                  with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  with_shared_context 'select first radio button option' do
-                    include_example 'should show the review comment section'
-                    with_shared_context 'submit response with comment without bad words' do
-                      include_example 'should save overall review with comment without bad words'
-                      include_example 'should save review with expected value', "Very ineffective"
-                    end
+                  include_example 'should save SchoolMember with parent user type'
                   end
                 end
               end

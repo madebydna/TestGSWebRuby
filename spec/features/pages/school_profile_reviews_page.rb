@@ -25,6 +25,11 @@ class SchoolProfileReviewsPage < SitePrism::Page
   section :review_module, ReviewsSection, '.js-topicalReviewQuestionsContainer'
   section :visible_review_question, ReviewQuestionVisible, ".js-topicalReviewContainer.slick-active"
   element :principal_review, 'h2', text: 'School Official Point of View'
+  element :active_topic_1_question, :xpath, "//div[@id='topic1'][contains(concat(' ',@class, ' '),'slick-active')]"
+  element :active_topic_1_question_aria, :xpath, "//div[@id='topic1'][@aria-hidden='false']"
+  element :active_topic_2_question, :xpath, "//div[@id='topic2'][contains(concat(' ',@class, ' '),'slick-active')]"
+  element :active_topic_2_question_aria, :xpath, "//div[@id='topic2'][@aria-hidden='false']"
+  element :role_question, '.js-roleQuestion'
 
   section :reviews_list_header, '.rs-review-list-header' do
     element :all_filter_button, 'button', text: 'All'
