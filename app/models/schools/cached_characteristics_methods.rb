@@ -31,6 +31,15 @@ module CachedCharacteristicsMethods
     NO_DATA_SYMBOL
   end
 
+  def created_time(name)
+    if valid_characteristic_cache(characteristics[name]) && characteristics[name].present?
+      Time.parse(characteristics[name].first['created'])
+    end
+  end
+
+
+
+
   def ethnicity_data
     characteristics['Ethnicity'] || []
   end
@@ -94,7 +103,6 @@ module CachedCharacteristicsMethods
       false
     end
   end
-
 
 
 

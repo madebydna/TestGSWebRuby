@@ -85,7 +85,7 @@ class Admin::OspController < ApplicationController
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
-    error = create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user)
+    error = create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
     @render_error ||= error.present?
 
 
@@ -122,17 +122,16 @@ class Admin::OspController < ApplicationController
     {census_data_type => rvals}.to_json
   end
 
-  def create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user)
-    # binding.pry;
+  def create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
     begin
-      census_data_type = OspQuestion.find(question_id).census_data_type
+     census_data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key]
       if census_data_type.present?
         response_blob = make_census_response_blob(census_data_type, response_values, submit_time)
         create_osp_form_response!(question_id, esp_membership_id, response_blob)
         create_update_queue_row!(response_blob) if is_approved_user
       end
     rescue => error
-      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}"
+      Rails.logger.error "Didn't save osp response to update_queue and osp response table. error: \n #{error}"
       error
     end
   end

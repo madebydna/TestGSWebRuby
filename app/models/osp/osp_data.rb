@@ -4,7 +4,12 @@ class OspData
 
   attr_accessor :cachified_school, :osp_form_responses
 
-  SCHOOL_CACHE_KEYS = %w(esp_responses)
+  SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
+
+  CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment'}
+
+
+
 
   def initialize(school)
     @cachified_school = decorate_school(school)
@@ -15,21 +20,36 @@ class OspData
   def values_for(key, question_id)
     begin
       key = key.to_s
-      school_cache_values = cachified_school.values_for(key) #will return empty array if no results
+      census_key = CENSUS_KEY_TO_ESP_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
+      if (census_key)
+        school_cache_values_from_census_data  = Array(cachified_school.characteristcs_value_by_name(census_key, grade: nil, number_value: false))
+        if osp_response_values.present? && school_cache_values_from_census_data.present?
+          cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
+        else
+          osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_census_data
+        end
 
-      if osp_response_values.present? && school_cache_values.present?
-        cachified_school.created_time_for(key) > osp_response_values[:created_at] ? school_cache_values : osp_response_values[:values]
       else
-        osp_response_values.present? ? osp_response_values[:values] : school_cache_values
+        school_cache_values  = cachified_school.values_for(key) #will return empty array if no results
+        if osp_response_values.present? && school_cache_values.present?
+          cachified_school.created_time_for(key) > osp_response_values[:created_at] ? school_cache_values : osp_response_values[:values]
+        else
+          osp_response_values.present? ? osp_response_values[:values] : school_cache_values
+        end
+
       end
+
+
     rescue => error
       Rails.logger.error "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}; error: \n #{error}"
       []
     end
   end
 
+
   private
+
 
   def decorate_school(school)
     query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
