@@ -54,9 +54,9 @@ module PhotoUploadConcerns
 
   def approve_images(query_hash)
     query_hash.slice!(:member_id, :state, :school_id)
-    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash, status: SchoolMedia::PROVISIONAL_PENDING)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL_PENDING))
       .update_all({status: SchoolMedia::PENDING})
-    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash, status: SchoolMedia::PROVISIONAL)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL))
       .update_all({status: SchoolMedia::ACTIVE})
   end
 
