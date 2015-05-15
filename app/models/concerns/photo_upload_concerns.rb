@@ -4,7 +4,7 @@ module PhotoUploadConcerns
   extend ActiveSupport::Concern
 
   MAX_FILE_SIZE                   = 2000000 #2MB
-  VALID_FILE_TYPES                = ["image/gif", "image/jpeg", "image/png"]
+  VALID_FILE_TYPES                = ["image/gif", "image/jpeg", "image/png", "application/octet-stream"]
   FORM_BOUNDARY                   = "-----FormBoundaryAaB03xiasf3Gh"
   MAX_NUMBER_OF_IMAGES_FOR_SCHOOL = 10
   def valid_file?(file)
