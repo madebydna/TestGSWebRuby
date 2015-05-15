@@ -231,11 +231,11 @@ class Review < ActiveRecord::Base
   def calculate_and_set_active
     if user.provisional?  ||
       school.held? ||
-      user_type == 'student' ||
+      school_member_or_default.student? ||
+      (school_member_or_default.principal? && ! school_member_or_default.approved_osp_user?) ||
       (comment.present? && AlertWord.search(comment).has_really_bad_words?) ||
       PropertyConfig.force_review_moderation? ||
       flags.any?
-      #BannedIp.ip_banned?(ip)
 
       deactivate
     end
@@ -243,12 +243,16 @@ class Review < ActiveRecord::Base
     true
   end
 
+  def school_member_or_default
+    school_member || build_school_member
+  end
+
+  def build_school_member
+    SchoolMember.build_unknown_school_member(school, user)
+  end
+
   def user_type
-    if school_member
-      school_member.user_type
-    else
-      'unknown'
-    end
+    school_member_or_default.user_type.to_s
   end
 
   def answer
@@ -261,6 +265,14 @@ class Review < ActiveRecord::Base
 
   def topic
     question.topic
+  end
+
+  def build_review_flag(comment, reasons)
+    review_flag = ReviewFlag.new
+    review_flag.comment = comment
+    review_flag.reasons = reasons
+    review_flag.review = self
+    review_flag
   end
 
 end

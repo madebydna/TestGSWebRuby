@@ -275,64 +275,36 @@ describe Review do
     end
 
     context 'when reviews are not per-moderated' do
-      context 'with new user, parent' do
+      context 'with new parent user' do
+        let(:parent_school_member) { FactoryGirl.build(:parent_school_member) }
         before do
-          allow(subject).to receive(:user_type).and_return('parent')
+          allow(subject).to receive(:school_member).and_return(parent_school_member)
           subject.user = new_user
-        end
-
-        after do
-          expect(subject).to be_inactive
         end
 
         context 'non-held school' do
           before do
             allow(subject.school).to receive(:held?).and_return(false)
           end
-
-          it 'should have a status of inactive' do
-            subject.calculate_and_set_active
-            expect(subject).to be_inactive
-          end
-
-          it 'should be inactive if user is student' do
-            allow(subject).to receive(:user_type).and_return('student')
-            subject.calculate_and_set_active
-            expect(subject).to be_inactive
-          end
-
-          it 'should not be affected by alert words' do
-            allow(AlertWord).to receive(:search).and_return(alert_words)
-            subject.calculate_and_set_active
-            expect(subject).to be_inactive
-          end
-
-          it 'status should be set to inactive if there are really bad words' do
-            allow(AlertWord).to receive(:search).and_return(really_bad_words)
-            subject.calculate_and_set_active
-            expect(subject).to be_inactive
-          end
         end
 
-        context 'held school' do
-          before do
-            allow(subject.school).to receive(:held?).and_return(true)
-          end
-
-          it 'should have a held status' do
-            subject.calculate_and_set_active
-            expect(subject).to be_inactive
-          end
+        it 'review should be inactive since user is provisional' do
+          subject.calculate_and_set_active
+          expect(subject).to be_inactive
         end
       end
 
       context 'with registered user' do
         let(:registered_user) { FactoryGirl.build(:verified_user) }
+        let(:principal_school_member) { FactoryGirl.build(:principal_school_member) }
+        let(:student_school_member) { FactoryGirl.build(:student_school_member) }
+        let(:parent_school_member) { FactoryGirl.build(:parent_school_member) }
 
         before do
           subject.school = school
           subject.user = registered_user
           allow(AlertWord).to receive(:search).and_return(no_bad_language)
+          allow(subject).to receive(:school_member).and_return(parent_school_member)
         end
 
         context 'non-held school' do
@@ -341,19 +313,40 @@ describe Review do
           end
 
           it 'should be active when user is a parent' do
-            allow(subject).to receive(:user_type).and_return('parent')
-            subject.calculate_and_set_active
-            expect(subject).to be_active
-          end
-
-          it 'should be active when user is a principal' do
-            allow(subject).to receive(:user_type).and_return('principal')
+            allow(subject).to receive(:school_member).and_return(parent_school_member)
             subject.calculate_and_set_active
             expect(subject).to be_active
           end
 
           it 'should be inactive if user is student' do
-            allow(subject).to receive(:user_type).and_return('student')
+            allow(subject).to receive(:school_member).and_return(student_school_member)
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
+          end
+
+          it 'should be inactive if user is a principal and not approved' do
+            allow(principal_school_member).to receive(:approved_osp_user?).and_return(false)
+            allow(subject).to receive(:school_member).and_return(principal_school_member)
+            subject.calculate_and_set_active
+            expect(subject).to be_inactive
+          end
+
+          it 'should be active if user is a principal and is approved' do
+            allow(principal_school_member).to receive(:approved_osp_user?).and_return(true)
+            allow(subject).to receive(:school_member).and_return(principal_school_member)
+            subject.calculate_and_set_active
+            expect(subject).to be_active
+          end
+
+          it 'should not be affected by alert words' do
+            allow(AlertWord).to receive(:search).and_return(alert_words)
+            subject.calculate_and_set_active
+            expect(subject).to be_active
+          end
+
+          it 'status should be set to inactive if there are really bad words' do
+            subject.comment = ' foo ' * 15
+            allow(AlertWord).to receive(:search).and_return(really_bad_words)
             subject.calculate_and_set_active
             expect(subject).to be_inactive
           end

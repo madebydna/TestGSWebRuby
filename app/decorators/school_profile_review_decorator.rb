@@ -45,12 +45,12 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def user_type
-    if review.user_type.blank? || review.user_type == 'unknown'
+    if review.school_member_or_default.unknown?
       'community member'
-    elsif review.user_type == 'principal'
+    elsif review.school_member_or_default.principal?
       'school leader'
     else
-      review.user_type
+      review.school_member_or_default.user_type
     end
   end
 
