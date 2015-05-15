@@ -32,7 +32,7 @@ class Admin::OspController < ApplicationController
     osp_form_responses.each do | osp_form_response |
       create_update_queue_row!(osp_form_response.response)
     end
-    approve_images(params[:membership_id])
+    approve_images(params[:membership_id].to_i)
     # only java is receiving this html, does not matter that it renders blank page
     render text: ''
   end
