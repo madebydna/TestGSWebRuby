@@ -7,8 +7,11 @@ class SchoolUserController < SchoolProfileController
     user_type = school_user_params[:user_type]
 
     begin
-      school_user = build_school_user
+      school_user = find_or_initialize_school_user
       school_user.user_type = user_type if user_type
+      if school_user.principal? || school_user.student?
+        school_user.deactivate_reviews!
+      end
       unless school_user.save
         status = :unprocessable_entity
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
@@ -23,14 +26,17 @@ class SchoolUserController < SchoolProfileController
     end
   end
 
-  def build_school_user
+  def find_or_initialize_school_user
     unless logged_in?
       raise Exception.new('User not logged in')
     end
     unless @school
       raise Exception.new('Current school is unknown')
     end
-    SchoolMember.build_unknown_school_member(@school, current_user)
+
+    school_member = SchoolMember.find_by_school_and_user(@school, current_user)
+    school_member ||= SchoolMember.build_unknown_school_member(@school, current_user)
+    school_member
   end
 
   private

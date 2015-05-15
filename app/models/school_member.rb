@@ -67,6 +67,17 @@ class SchoolMember < ActiveRecord::Base
     @reviews ||= user.reviews_for_school(school: school).to_a
   end
 
+  def deactivate_reviews!
+    reviews.each do |review|
+      review.deactivate
+      unless review.save
+        message = "Error(s) occurred while attempting to deactivate review #{review.id}"
+        message << " for user #{school_member.user.id}. review.errors: #{review.errors.full_messages}"
+        Rails.logger.error(message)
+      end
+    end
+  end
+
   def user_type
     type = read_attribute(:user_type).try(:to_sym)
     type = Affiliation::UNKNOWN unless VALID_AFFILIATIONS.include?(type)
