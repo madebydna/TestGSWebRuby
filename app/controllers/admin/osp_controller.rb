@@ -212,9 +212,9 @@ class Admin::OspController < ApplicationController
   end
 
   def approve_images(member_id)
-    SchoolMedia.where(member_id: member_id, status: SchoolMedia::PROVISIONAL_PENDING)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(member_id: member_id, status: SchoolMedia::PROVISIONAL_PENDING)
       .update_all({status: SchoolMedia::PENDING})
-    SchoolMedia.where(member_id: member_id, status: SchoolMedia::PROVISIONAL)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(member_id: member_id, status: SchoolMedia::PROVISIONAL)
       .update_all({status: SchoolMedia::ACTIVE})
   end
 
