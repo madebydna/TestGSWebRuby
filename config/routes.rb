@@ -53,6 +53,7 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
+    get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
@@ -69,9 +70,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/gsFaq.page', as: :faq
     # get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
-    get '/worksheets-activities.topic?content=4313', as: :worksheets_and_activities
-    get '/parenting-dilemmas.topic?content=4321', as: :parenting_dilemmas
-    get '/special-education.topic?content=1541', as: :learning_difficulties
+    get '/gk/worksheets/', as: :worksheets_and_activities
+    get '/gk/category/dilemmas/', as: :parenting_dilemmas
+    get '/gk/category/learning-disabilities/', as: :learning_difficulties
     get '/parenting.topic?content=1539', as: :health_and_behavior
     # TODO: see how to fix this route for ruby
     get '/reviews/', as: :the_scoop
@@ -93,10 +94,11 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/districts/:state_long/:state_short', as: :district_list
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
-    get '/moving.topic?content=2220', as: :moving
+    get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
-    get '/early-learning.topic?content=8045', as: :early_learning
+    get '/gk/category/early-learning/', as: :early_learning
     get '/summer-learning.topic?content=7082', as: :summer_planning
+    get '/gk/summer-learning/', as: :summer_learning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
     get '/status/error404.page'

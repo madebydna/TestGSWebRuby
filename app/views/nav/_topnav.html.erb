@@ -64,20 +64,20 @@
                 <li><a class="dropdown-toggle js-gaLoad js-gaClick"
                        data-toggle="dropdown"
                        data-ga-load-label="topNav Discover dropdown" data-ga-click-label="topNav Discover dropdown"
-                       href="#back-to-school">Discover <span class="caret"></span>
+                       href="#greatkids">GreatKids! <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                      <li class=" ">
+                        <%= link_to 'Welcome to GreatKids!'.html_safe, greatkids_home_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav gkHome link',
+                                          'ga-load-label'=>'topNav gkHome link' } %>
+                      </li>
                       <li class=" ">
                         <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav worksheetsAndActivities link',
                                           'ga-load-label'=>'topNav worksheetsAndActivities link' } %>
-                      </li>
-                      <li class=" ">
-                        <%= link_to 'Health &amp; Wellness'.html_safe, health_and_wellness_article_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav healthAndWellness link',
-                                          'ga-load-label'=>'topNav healthAndWellness link' } %>
                       </li>
                       <li>
                         <%= link_to 'Parenting Dilemmas', parenting_dilemmas_url,
@@ -86,16 +86,10 @@
                                           'ga-load-label'=>'topNav parentingDilemmas link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Moving with Kids'.html_safe, moving_url,
+                        <%= link_to 'Moving With Kids'.html_safe, moving_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav movingWithKids link',
                                           'ga-load-label'=>'topNav movingWithKids link' } %>
-                      </li>
-                      <li class=" ">
-                        <%= link_to 'Summer Planning'.html_safe, summer_planning_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav summerPlanning link',
-                                          'ga-load-label'=>'topNav summerPlanning link' } %>
                       </li>
                       <li>
                         <%= link_to 'Learning Difficulties', learning_difficulties_url,
@@ -108,6 +102,12 @@
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav earlyLearning link',
                                           'ga-load-label'=>'topNav earlyLearning link' } %>
+                      </li>
+                      <li class=" ">
+                        <%= link_to 'Summer Learning'.html_safe, summer_learning_url,
+                                    class: "js-gaLoad js-gaClick",
+                                    data:{'ga-click-label'=>'topNav summerLearning link',
+                                          'ga-load-label'=>'topNav summerLearning link' } %>
                       </li>
                     </ul>
                 </li>
