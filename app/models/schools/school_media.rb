@@ -11,10 +11,10 @@ class SchoolMedia < ActiveRecord::Base
 
   MAX_PHOTOS_FOR_OSP = 10
   OSP_IMAGE_SIZE = 130
-  PROCESSING_IMAGE_ICON = 'http://www.gscdn.org/library/school_media/dc/de/de1cfc9bd39c397861ed32f7cd4633375be7562a-130.jpg'
+  PROCESSING_IMAGE_ICON = 'osp/clock_icon.png'
 
   #pending here means the image has yet to be processed, not a pending user
-  #using this terminology to keep consistent with java. 
+  #using this terminology to keep consistent with java.
   #When java code (and maybe update_content_extract_daemon are updated)
   #Consider renaming to be a little less confusing
   PENDING                        = 0
@@ -42,7 +42,7 @@ class SchoolMedia < ActiveRecord::Base
     school_media.map do | media |
       image_hash = media['hash']
       image_url = if [PENDING, PROVISIONAL_PENDING].include?(media.status)
-                    ActionController::Base.helpers.asset_path("osp/clock_icon.png")
+                    ActionController::Base.helpers.asset_path(PROCESSING_IMAGE_ICON)
                   else
                     school_media_image_path(school.state, OSP_IMAGE_SIZE, image_hash)
                   end

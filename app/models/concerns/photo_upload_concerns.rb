@@ -9,7 +9,7 @@ module PhotoUploadConcerns
   MAX_NUMBER_OF_IMAGES_FOR_SCHOOL = 10
   def valid_file?(file)
     return false if file.size > MAX_FILE_SIZE
-    return false if !VALID_FILE_TYPES.include?(file.content_type)
+    return false if !VALID_FILE_TYPES.any? { |type| /#{type}/ =~ file.content_type }
     true
   end
 
