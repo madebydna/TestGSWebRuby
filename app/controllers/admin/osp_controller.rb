@@ -32,6 +32,7 @@ class Admin::OspController < ApplicationController
     osp_form_responses.each do | osp_form_response |
       create_update_queue_row!(osp_form_response.response)
     end
+    approve_images(params[:membership_id])
     # only java is receiving this html, does not matter that it renders blank page
     render text: ''
   end
@@ -197,6 +198,26 @@ class Admin::OspController < ApplicationController
     end
   end
 
+  def render_success_js(image_id)
+    render json: {success: 'Successfully Removed!', imageId: image_id}
+  end
+
+  def render_error_js
+    render json: {error: 'Was not able to Remove'}
+  end
+
+  def set_school_media_hashs_gon_var!
+    gon.school_media_hashes = SchoolMedia.school_media_hashes_for_osp(@school)
+    gon.school_id           = @school.id
+  end
+
+  def approve_images(member_id)
+    SchoolMedia.where(member_id: member_id, status: SchoolMedia::PROVISIONAL_PENDING)
+      .update_all({status: SchoolMedia::PENDING})
+    SchoolMedia.where(member_id: member_id, status: SchoolMedia::PROVISIONAL)
+      .update_all({status: SchoolMedia::ACTIVE})
+  end
+
   ### BEFORE ACTIONS ###
 
   #think about making more generic and moving to application controller
@@ -225,19 +246,6 @@ class Admin::OspController < ApplicationController
 
   def success_or_error_flash
     @render_error ? flash_error(t('forms.osp.saving_error')) : flash_success(t('forms.osp.changes_saved'))
-  end
-
-  def render_success_js(image_id)
-    render json: {success: 'Successfully Removed!', imageId: image_id}
-  end
-
-  def render_error_js
-    render json: {error: 'Was not able to Remove'}
-  end
-
-  def set_school_media_hashs_gon_var!
-    gon.school_media_hashes = SchoolMedia.school_media_hashes_for_osp(@school)
-    gon.school_id           = @school.id
   end
 
 end
