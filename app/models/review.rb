@@ -58,6 +58,7 @@ class Review < ActiveRecord::Base
   validate :comment_minimum_length
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
+  before_save :remove_answers_for_principals, unless: '@moderated == true'
   after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
 
@@ -273,6 +274,12 @@ class Review < ActiveRecord::Base
     review_flag.reasons = reasons
     review_flag.review = self
     review_flag
+  end
+
+  def remove_answers_for_principals
+    if school_member_or_default.principal?
+      answers.each { |answer| answer.destroy }
+    end
   end
 
 end

@@ -9,12 +9,12 @@ class SchoolUserController < SchoolProfileController
     begin
       school_user = find_or_initialize_school_user
       school_user.user_type = user_type if user_type
-      if school_user.principal? || school_user.student?
-        school_user.deactivate_reviews!
-      end
       unless school_user.save
         status = :unprocessable_entity
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
+      end
+      if school_user.principal? || school_user.student?
+        school_user.deactivate_reviews!
       end
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
