@@ -2,133 +2,27 @@
 
 <div class="row limit-width-1200">
     <div class="row pbl">
-        <%= div_tag sizes: { md: 6, lg: 6 } do %>
-            <h3>Reviews moderation list</h3>
-            <!--<div>
-          Filter reviews (filters are restrictive)  <br/>
-          <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
-        </div>-->
-
-            <div>
-                <% if @school %>
-                    <br/>
-                    Showing reviews for <%= @school.name %>. <%= link_to 'View all', moderation_admin_reviews_path %>
-                <% end %>
-
-            </div>
-        <% end %>
-
+      <%= div_tag sizes: { md: 6, lg: 6 } do %>
+        <h3>Reviews moderation list</h3>
+        <!--
+        <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
+        -->
+        <div>
+          <% if @school %>
+            <br/>
+            Showing reviews for <%= @school.name %>. <%= link_to 'View all', moderation_admin_reviews_path %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
-    <h3>Flagged reviews
-      <% if @reported_reviews.present?%>
-          (<%= @reported_reviews.size%>)
-      <% end %>
-    </h3>
+    <h3>Showing <%= @flagged_reviews.size %> flagged reviews out of <%= @flagged_reviews.total_count %> </h3>
 
-    <table class="table table-striped" id="flagged_reviews_table">
-        <thead>
-        <tr>
-            <td>Review</td>
-            <td>Status</td>
-            <td>School</td>
-            <td>State</td>
-            <td>Reviewer</td>
-            <td>Reports</td>
-            <td>A&nbsp;Flagged</td>
-            <td>U&nbsp;Flagged</td>
-            <td>Opened&nbsp;on</td>
-        </tr>
-        </thead>
-        <tbody>
-        <% @reported_reviews.each do |review| %>
-            <% is_auto_flagged = false %>
-            <% is_user_flagged = false %>
-            <%  review.reported_entities.each do |reported_entity| %>
-                <% if reported_entity.reporter_id == -1 %>
-                    <% is_auto_flagged = true %>
-                <% else %>
-                    <% is_user_flagged = true %>
-                <% end %>
-            <% end %>
 
-            <tr>
-                <td>
-                  <% if review.school %>
-                    <% school = review.school %>
-                      <%= link_to truncate(review.review_text, length: 20), admin_school_moderate_path(state:
-                                                                                                          school_params(school)[:state], school_id: school.id, review_id: review.id) %>
-                    <% else %>
-                      <%= truncate(review.review_text, length: 20) %>
-                    <% end %>
-                  </td>
-                <td class="tac">
-                    <%= review.status %>
-                </td>
-                <td>
-                    <% if review.school %>
-                        <% school = review.school %>
-                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
-                    <% else %>
-                        School not found
-                    <% end %>
-                </td>
-                <td class="tac">
-                  <%= review.school.state if review.school%>
-                </td>
-                <td><%= link_to( review.user.email, users_admin_reviews_path( :review_moderation_search_string =>
-                                                                                  review.user.email)) if review
-                    .school%>
-                  </td>
-                <td class="tac">
-                    <%= review.reported_entities.size if review.reported_entities.any? %>
-                </td>
-                <td class="tac"><%= is_auto_flagged == false ? '' : 'Y' %></td>
-                <td class="tac"><%= is_user_flagged == false ? '' : 'Y' %></td>
-                <td class="tar">
-                    <%= review.reported_entities.last.created.strftime '%-m/%d/%Y' if review.reported_entities.any? %>
-                </td>
-            </tr>
-        <% end %>
-        </tbody>
+    <%= render 'list_of_reviews', reviews: @flagged_reviews, css_class: 'flagged_reviews_table' %>
 
-    </table>
+    Flagged reviews: <%= paginate @flagged_reviews, param_name: :page %>
 
     <br/><br/>
 
-
-    <h3>Unprocessed reviews</h3>
-    <table class="table table-striped" style="margin-bottom: 0px">
-        <thead>
-        <tr>
-            <td>Status</td>
-            <td>School</td>
-            <td>Reason</td>
-            <td>Case opened on</td>
-        </tr>
-        </thead>
-        <tbody>
-        <% @reviews_to_process.each do |review| %>
-            <tr>
-                <td>
-                    <%= review.status %>
-                </td>
-                <td>
-                    <% if review.school %>
-                        <% school = review.school %>
-                        <%= link_to school.name, admin_school_moderate_path(state: school_params(school)[:state], school_id: school.id) %>
-                    <% else %>
-                        School not found
-                    <% end %>
-                </td>
-                <td>
-                </td>
-                <td>
-                    <%= review.posted.strftime '%B %d, %Y' %>
-                </td>
-            </tr>
-        <% end %>
-        </tbody>
-    </table>
-    Unprocessed reviews: <%= paginate @reviews_to_process, param_name: :unprocessed_reviews_page %>
 </div>

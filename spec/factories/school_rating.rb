@@ -11,14 +11,14 @@ FactoryGirl.define do
     quality '5'
     ip '123.123.123.123'
     posted { Time.zone.now }
-    
+
     factory :valid_school_rating, class: SchoolRating do
     end
 
     trait :flagged do
       after(:create) do |review, evaluator|
         FactoryGirl.create(
-          :reported_review,
+          :old_reported_review,
           reported_entity_id: review.id,
           user: review.user
         )

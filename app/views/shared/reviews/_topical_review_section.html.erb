@@ -1,0 +1,42 @@
+<hr/>
+<div class="js-topicalReviewQuestionsContainer">
+  <div class="plm mbl">
+    <h2>Review topics</h2>
+
+    <p class="">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
+      <%= link_to 'Learn more.', review_guidelines_url %></p>
+  </div>
+  <% # if not logged in there will be no @school member only show review questions  %>
+  <% if @school_member %>
+      <% # if logged in and user has a role only show questions  %>
+      <% if !@school_member.unknown?
+           display_review_questions = true %>
+      <% # if logged in and has unknown role  %>
+      <% else %>
+          <% # if user answered questions render and display role question & hide review questions  %>
+          <% if @school_member.reviews.present? %>
+              <%= render 'shared/reviews/modules/member_role_question_module', display: true %>
+              <% display_review_questions = false %>
+          <% # if logged in and has not answered questions, render and hide role question & display review questions  %>
+          <% else %>
+              <%= render 'shared/reviews/modules/member_role_question_module', display: false %>
+              <% display_review_questions = true %>
+          <% end %>
+      <% end %>
+  <% else %>
+      <% display_review_questions = true %>
+  <% end %>
+
+  <% first_unanswered_topic_id_for_user = '' %>
+  <% if logged_in? %>
+      <% first_unanswered_topic_id_for_user = @current_user.first_unanswered_topic(@school).try(:id) %>
+  <% end %>
+  <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
+    <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= first_unanswered_topic_id_for_user %>">
+      <%= render partial: "shared/reviews/modules/topical_review_question_module",
+                 collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
+      %>
+    </div>
+    <%= render 'shared/reviews/modules/question_navigation' %>
+  </div>
+</div>

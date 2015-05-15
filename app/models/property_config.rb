@@ -29,4 +29,26 @@ class PropertyConfig < ActiveRecord::Base
       property.present? ? property.first.value == 'true' : true
     end
   end
+
+  def self.show_facebook_comments?(state)
+    facebook_property = get_property('facebook_comments')
+    property_state_on?(facebook_property, state)
+  end
+
+  #//////////////////////////////////////////////
+  #
+  # Compare the comma separated list of states(state_list_str) with the state you wish to compare to(current_state)
+  #   returns true is state is part of list or if all is present in list
+  #   returns false if state is not found and all is not in list
+  #
+  #//////////////////////////////////////////////
+  def self.property_state_on?(state_list_str, current_state)
+    state_arr = state_list_str.split(',') if state_list_str.present?
+    if state_arr.present?
+      state_arr.select!{ |state| state.upcase == current_state.upcase || state.upcase == 'ALL' }
+      state_arr.present?
+    else
+      false
+    end
+  end
 end

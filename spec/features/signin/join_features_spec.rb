@@ -8,7 +8,7 @@ feature "Join Page" do
       visit join_path
     end
     after(:each) do
-      clean_models User, SchoolRating
+      clean_models User, SchoolRating, ReviewTopic, ReviewQuestion, Review, ReviewAnswer
       clean_models :ca, School, SchoolMetadata
     end
 
@@ -61,8 +61,8 @@ feature "Join Page" do
         let(:verification_link) { @email[:attributes][:VERIFICATION_LINK].match(/(http.+)(\">.+)/)[1] }
         let(:user) { User.with_email 'ssprouse+testing@greatschools.org' }
         let(:review) {
-          FactoryGirl.create(:school_rating,
-            status: 'pp',
+          FactoryGirl.create(:review,
+            active: false,
             user: user,
             school: FactoryGirl.create(:school, state: 'ca')
           )
@@ -79,9 +79,9 @@ feature "Join Page" do
             .from(true).to(false)
         end
 
-        it 'removes the provisional status from the user\'s reviews' do
-          expect{ subject }.to change{ review.reload; review.status }
-            .from('pp').to('p')
+        it 'activates the the user\'s non-flagged reviews' do
+          expect{ subject }.to change{ review.reload; review.active? }
+            .from(false).to(true)
         end
       end
     end

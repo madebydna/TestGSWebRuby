@@ -8,7 +8,7 @@
               <%= datapoints[:label] %>
             </button>
         <% else %>
-            <button class="<%= datapoints[:class]%>" data-link-value="<%= @school.send(datapoints[:method])%>" style='width:80%' data-link-use-new-window="<%= datapoints[:target].present? ? true : '' %>">
+            <button class="<%= datapoints[:class]%>" data-link-value="<%= @school.send(datapoints[:method])%>" style='width:80%' rel="<%= datapoints[:rel]%>" data-link-use-new-window="<%= datapoints[:target].present? ? true : '' %>">
                 <span class="vat <%= datapoints[:icon] %> mrs"></span>
                 <%= datapoints[:label] %>
             </button>

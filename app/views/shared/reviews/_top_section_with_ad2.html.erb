@@ -1,0 +1,127 @@
+<hr/>
+<div class="row ptl mtl">
+  <div class="col-xs-12 pbl">
+
+   <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about the meaning of life?',
+               review_question_type_partial: 'one_word',
+               option_type: '',
+               review_options: %w(),
+               review_summary_partial: 'have_a_voice',
+               review_summary_data: {}
+    %>
+
+   <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about the meaning of life?',
+               review_question_type_partial: 'overall',
+               option_type: '',
+               review_options: %w(),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">transcendent </span>with the Keanu Reeves, while 3 Parents were <span class="open-sans_cb">disgusted.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+   <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about yourself?',
+               review_question_type_partial: 'one_word',
+               option_type: '',
+               review_options: %w(),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">transcendent </span>with the Keanu Reeves, while 3 Parents were <span class="open-sans_cb">disgusted.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about Keanu Reeves?',
+               review_question_type_partial: 'dropdown',
+               option_type: '',
+               review_options: %w(disgusted ambivalent transcendent),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">transcendent </span>with the Keanu Reeves, while 3 Parents were <span class="open-sans_cb">disgusted.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_role_question' %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about ping pong?',
+               review_question_type_partial: 'radio_buttons',
+               option_type: 'radio_button',
+               review_options: %w(agitated happy),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '25 Parents were <span class="open-sans_cb">agitated </span>by the ping pong policy, while 2 Parents were <span class="open-sans_cb">happy.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about darts?',
+               review_question_type_partial: 'radio_buttons',
+               option_type: 'radio_button',
+               review_options: %w(disgusted ambivalent transcendent),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">transcendent </span>with the darts policy, while 3 Parents were <span class="open-sans_cb">disgusted.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How many times do you play ping pong in a day?',
+               review_question_type_partial: 'radio_buttons',
+               option_type: 'radio_button',
+               review_options: [ 'once', 'twice', 'twenty', 'infinite'],
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '9 Parents played ping pong <span class="open-sans_cb">20 times </span, while 2 Parents played ping pong<span class="open-sans_cb">once.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about string cheese?',
+               review_question_type_partial: 'checkbox_answers',
+               option_type: 'checkbox',
+               review_options: %w(happy agitated sleepy smiley whatever),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">happy </span>with the string cheese policy, while 2 Parents were <span class="open-sans_cb">whatever.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about bullying?',
+               review_question_type_partial: 'radio_buttons',
+               option_type: 'radio_button',
+               review_options: %w(happy agitated frustrated happy supported sad puffy ),
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">happy </span>with the school policy, while 2 Parents were <span class="open-sans_cb">angry.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+    <%= render 'shared/reviews/modules/topical_review_container',
+               title: 'How do you feel about dancing?',
+               review_question_type_partial: 'checkbox_answers',
+               option_type: 'checkbox',
+               review_options: ['happy', 'kind of embarrassed', 'confident', 'awesome', 'not enough', 'too much', 'whatever', 'slimy', 'ecstatic'],
+               review_summary_partial: 'review_results_snapshot',
+               review_summary_data: {
+                       'summary' => '5 Parents were <span class="open-sans_cb">happy </span>with the school policy, while 2 Parents were <span class="open-sans_cb">angry.</span>',
+                       'comments' => '25 comments'
+               }
+    %>
+
+  </div>
+
+</div>

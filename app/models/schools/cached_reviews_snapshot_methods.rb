@@ -14,4 +14,8 @@ module CachedReviewsSnapshotMethods
   def num_ratings
     reviews_snapshot['num_ratings'] || 0
   end
+
+  def star_counts
+    reviews_snapshot['star_counts']
+  end
 end

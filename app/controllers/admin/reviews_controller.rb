@@ -1,21 +1,21 @@
 class Admin::ReviewsController < ApplicationController
 
   def moderation
-    if params[:state].present? && params[:school_id].present?
-      @school = School.find_by_state_and_id(params[:state], params[:school_id])
+    if params[:review_moderation_search_string]
+      moderate_by_user
+      render 'reviews_for_email'
     end
 
-    moderate_by_user
+    if params[:state].present? && params[:school_id].present?
+      @school = School.find_by_state_and_id(params[:state], params[:school_id])
+      @flagged_reviews = flagged_reviews(@school)
+    else
+      @flagged_reviews = flagged_reviews
+    end
 
-    @reported_reviews = self.flagged_reviews
-    gon.reported_reviews_count = @reported_reviews.length
-    @reviews_to_process = self.unprocessed_reviews
-    @reported_entities = self.reported_entities_for_reviews @reported_reviews
-
+    gon.flagged_reviews_count = @flagged_reviews.length
     gon.pagename = 'Reviews moderation list'
     set_meta_tags :title =>  'Reviews moderation list'
-
-    Admin::ReviewsController.load_reported_entities_onto_reviews(@reported_reviews, @reported_entities)
   end
 
   def schools
@@ -27,49 +27,30 @@ class Admin::ReviewsController < ApplicationController
     if school_id.present? && state.present?
       redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
     end
-
   end
 
   def users
     set_meta_tags :title =>  'Reviews moderation user search'
     moderate_by_user
+    render 'reviews_for_email'
   end
 
   def moderate_by_user
+    user = user_from_params
+    if user
+      #reviews by the user and the flags on those reviews.
+      @reviews_by_user = find_reviews_by_user(user)
 
-    search_string = params[:review_moderation_search_string]
-
-    if search_string.present?
-      search_string.strip!
-
-      #TODO refactor the if and else to be more DRY
-
-      if (search_string).match(/[a-zA-z]/)
-        user = User.find_by_email(search_string)
-        if user
-          #reviews by the user and the flags on those reviews.
-          @reviews_by_user = find_reviews_by_user(user)
-          flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
-          Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-
-          #reviews that are flagged by the user.
-          flagged_by_user = find_reviews_reported_by_user(user)
-          if flagged_by_user.present?
-            @reviews_reported_by_user = find_reviews_by_ids(flagged_by_user.map(&:reported_entity_id))
-            Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_reported_by_user, flagged_by_user)
-          end
-        end
-
-      else
-        @reviews_by_user = SchoolRating.by_ip(search_string)
-        flags_for_reviews = self.reported_entities_for_reviews(@reviews_by_user) if @reviews_by_user
-        Admin::ReviewsController.load_reported_entities_onto_reviews(@reviews_by_user, flags_for_reviews) if flags_for_reviews
-        @banned_ip = BannedIp.new
-        @banned_ip.ip = search_string
-      end
-
-      render '_reviews_for_email'
+      #reviews that are flagged by the user.
+      @reviews_flagged_by_user = find_reviews_flagged_by_user(user)
     end
+
+    # ip = ip_from_params
+    # if ip
+    #   @reviews_by_user = SchoolRating.by_ip(ip)
+    #   @banned_ip = BannedIp.new
+    #   @banned_ip.ip = ip
+    # end
   end
 
   def ban_ip
@@ -85,13 +66,13 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
-
   def update
-    review = SchoolRating.find(params[:id]) rescue nil
+    review = Review.find(params[:id]) rescue nil
 
     if review
       review.moderated = true
-      if review.update_attributes(params[:school_rating])
+      review.notes.build if review_params['notes_attributes']
+      if review.update_attributes(review_params)
         flash_notice 'Review updated.'
       else
         flash_error 'Sorry, something went wrong updating the review.'
@@ -101,37 +82,40 @@ class Admin::ReviewsController < ApplicationController
     redirect_back
   end
 
-  def publish
-    review = SchoolRating.find(params[:id]) rescue nil
+  def activate
+    review = Review.find(params[:id]) rescue nil
 
     if review
       # Setting the moderated attribute true here allows us to save the review while bypassing some validations
-      # moderated is not a db field and is not persisted
+      # moderated is not a db field as is not persisted
       review.moderated = true
-      review.publish!
+      review.activate
       if review.save
-        flash_notice 'Review published.'
+        # TODO: Do we still need to email user?
+        # email_user_about_review_removal(review)
+        flash_notice 'Review activated.'
       else
-        flash_error 'Sorry, something went wrong publishing the review.'
+        flash_error 'Sorry, something went wrong while activating the review.'
       end
     end
 
     redirect_back
   end
 
-  def disable
-    review = SchoolRating.find(params[:id]) rescue nil
+  def deactivate
+    review = Review.find(params[:id]) rescue nil
 
     if review
       # Setting the moderated attribute true here allows us to save the review while bypassing some validations
       # moderated is not a db field as is not persisted
       review.moderated = true
-      review.disable!
+      review.deactivate
       if review.save
-        email_user_about_review_removal(review)
-        flash_notice 'Review disabled.'
+        # TODO: Do we still need to email user?
+        # email_user_about_review_removal(review)
+        flash_notice 'Review deactivated'
       else
-        flash_error 'Sorry, something went wrong while disabling the review.'
+        flash_error 'Sorry, something went wrong while deactivating the review.'
       end
     end
 
@@ -139,33 +123,45 @@ class Admin::ReviewsController < ApplicationController
   end
 
   def resolve
-    begin
-      ReportedEntity.on_db(:community_rw)
-        .where(reported_entity_id: params[:id], reported_entity_type: 'schoolReview')
-        .update_all(active: false)
-      flash_error 'Review resolved successfully'
-    rescue => e
-      flash_error "Review could not be resolved because of \
-unexpected error: #{e}."
+    review = Review.find(params[:id]) rescue nil
+
+    unless review
+      flash_error 'Could not find review for specified review ID. No flags resolved.'
+      return
     end
+
+    review.flags.active.each do |flag|
+      flag.deactivate
+      unless flag.save
+        flash_error "Review flag could not be resolved because of unexpected error: #{e}. Not all flags resolved."
+        return
+      end
+    end
+
+    flash_notice 'Review flags resolved successfully'
 
     redirect_back
   end
 
-  def report
-    review = SchoolRating.find(params[:id]) rescue nil
-    reason = params[:reason]
+  def flag
+    unless logged_in?
+      flash_error 'You must be logged in to flag a review'
+      redirect_back
+      return
+    end
+
+    review = Review.find(params[:id]) rescue nil
+    comment = params[:reason]
+    reason = 'user-reported'
 
     if review.present? && reason.present?
-      reported_entity = ReportedEntity.from_review(review, reason)
-      if logged_in?
-        reported_entity.reporter_id = current_user.id
-      end
+      review_flag = review.build_review_flag(comment, reason)
+      review_flag.user = current_user if logged_in?
 
-      if reported_entity.save
-        flash_notice 'Review has been reported'
+      if review_flag.save
+        flash_notice 'Review has been flagged'
       else
-        flash_error 'Sorry, something went wrong while reporting the review.'
+        flash_error 'Sorry, something went wrong while flagging the review.'
       end
     end
 
@@ -174,39 +170,24 @@ unexpected error: #{e}."
 
   protected
 
-  def unprocessed_reviews
-    if @school
-      reviews = @school.school_ratings
-    else
-      reviews = SchoolRating.where(status: %w[u h])
-    end
+  def user_from_params
+    search_string = params[:review_moderation_search_string]
 
-    reviews.order('posted desc').page(params[:unprocessed_reviews_page]).per(25)
-  end
+    if search_string.present?
+      search_string = search_string.strip
 
-  def flagged_reviews
-    if @school
-      reviews = @school.school_ratings.ever_flagged
-    else
-      reviews = SchoolRating.where(status: %w[p d r a]).flagged.group(:reported_entity_id)
-    end
-
-    reviews.order('posted desc')
-  end
-
-  def self.load_reported_entities_onto_reviews(reviews, reported_entities)
-    if reviews.present? && reported_entities.present?
-      reviews.each do |review|
-        entities = reported_entities.select do
-          |entity| entity.reported_entity_id == review.id && entity.reported_entity_type == 'schoolReview'
-        end
-        review.reported_entities = entities
-      end
+      User.find_by_email(search_string) if search_string.match(/[a-zA-z]/)
     end
   end
 
-  def reported_entities_for_reviews(reviews)
-    ReportedEntity.find_by_reviews(reviews).order('created desc')
+  def ip_from_params
+    search_string = params[:review_moderation_search_string]
+
+    if search_string.present?
+      search_string = search_string.strip
+
+      search_string unless search_string.match(/[a-zA-z]/)
+    end
   end
 
   def email_user_about_review_removal(review)
@@ -218,15 +199,36 @@ unexpected error: #{e}."
   end
 
   def find_reviews_by_user(user)
-    SchoolRating.belonging_to(user)
+    user.reviews
   end
 
-  def find_reviews_reported_by_user(user)
-    ReportedEntity.where(reporter_id: user.id,reported_entity_type: "schoolReview")
+  def find_reviews_flagged_by_user(user)
+    user.reviews_user_flagged
   end
 
   def find_reviews_by_ids(review_ids)
-    SchoolRating.where(id: review_ids)
+    Review.where(id: review_ids)
+  end
+
+  def flagged_reviews(school = nil)
+    if school
+      partial_scope = school.reviews_scope.ever_flagged
+    else
+      partial_scope = Review.flagged
+    end
+
+    partial_scope.
+      eager_load(:flags).
+      order('review_flags.created desc').
+        eager_load(:user).
+        merge(User.verified).
+          page(params[:page]).per(50).
+            extend(SchoolAssociationPreloading).
+              preload_associated_schools!
+  end
+
+  def review_params
+    params.require(:review).permit(:id, notes_attributes: [:id, :notes, :_destroy])
   end
 
 end

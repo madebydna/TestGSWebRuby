@@ -5,115 +5,108 @@ module ReviewControllerConcerns
 
   protected
 
-  def save_review(current_user, review_params)
-    if review_params[:morganstanley].present?
-      current_user.how = 'morganstanley'
-      current_user.save
-      review_params.except!(:morganstanley)
+  class ReviewParams
+    attr_reader :params, :user
+    def initialize(params, user)
+      @user = user
+      @params = params
     end
-    review, error = update_existing_review(current_user, review_params)
-    return review, error if review || error
 
-    begin
-      review = review_from_params(review_params)
-      review.user = current_user
+    def errors
+      result = []
+      result << 'No valid parameters supplied' unless params && params.is_a?(Hash)
+      result << 'Must provide school id' unless school_id
+      result << 'Must provide school state' unless state
+      result << 'Specified school was not found' unless school
+      result
+    end
+
+    def school
+      @school ||= School.find_by_state_and_id(state, school_id)
+    end
+
+    def state
+      params[:state]
+    end
+
+    def school_id
+      params[:school_id]
+    end
+
+    def save_new_review
+      review = Review.new
+      review.attributes = review_attributes
+      handle_save(review)
+    end
+
+    def update_existing_review
+      review = existing_review
+      review.attributes = review_attributes
+      handle_save(review)
+    end
+
+    def handle_save(review)
+      errors = []
+      errors += self.errors.dup
+      return nil, errors if errors.any?
 
       unless review.save
-        # safe even if no errors
-        error = review.errors.full_messages.first
+        errors += review.errors.full_messages
         review = nil
       end
-    rescue => e
-      Rails.logger.debug e
-      error = 'Something went wrong while trying to save the review.'
+      errors = nil if errors.empty?
+      return review, errors
     end
 
-    return review, error
-  end
-
-  def update_existing_review(current_user, review_params)
-    existing_review, error = nil
-
-    begin
-      existing_review = current_user.reviews_for_school(
-        state: review_params[:state], 
-        school_id: review_params[:school_id]
-      ).first
-
-      if existing_review
-        review_from_params = review_from_params(review_params)
-        review_from_params.user = current_user
-        unless existing_review.update_attributes(review_from_params.attributes)
-          # safe even if no errors
-          error = existing_review.errors.full_messages.first
-          existing_review = nil
-        end
-      end
-    rescue => e
-      Rails.logger.debug e
-      error = 'Something went wrong while trying to save the review.'
+    def review_attributes
+      params.merge(user:user,school: school )
     end
 
-    return existing_review, error
+    # TODO: Figure this out
+    def existing_review
+      @existing_review ||= user.active_reviews_for_school(school: school).first
+    end
   end
 
-  def save_review_and_redirect(review_params)
-    review, error = save_review(current_user, review_params)
+  def build_review_params(params)
+    ReviewParams.new(params, current_user)
+  end
+
+  def save_review_and_redirect(params)
+    review, error = build_review_params(params).save_new_review
 
     if error.nil?
-      if review.published?
+      if review.active?
         flash_notice t('actions.review.activated')
         #set omniture events and props after the review has been published.
         set_omniture_events_in_cookie(['review_updates_mss_end_event'])
         set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
-      elsif review.unpublished? || review.disabled? || review.held?
-        flash_notice t('actions.review.pending_moderation')
+      else
+        if current_user.provisional?
+          flash_notice t('actions.review.pending_email_verification')
+        else
+          flash_notice t('actions.review.pending_moderation')
+        end
       end
       redirect_to reviews_page_for_last_school
     else
       flash_error error
-      redirect_to review_form_for_last_school
+      redirect_to reviews_page_for_last_school
     end
   end
 
-  def review_from_params(review_params)
-    if review_params && review_params.is_a?(Hash) &&
-      review_params[:school_id] && review_params[:state]
-
-      school = School.find_by_state_and_id(
-        review_params[:state], 
-        review_params[:school_id]
-      )
-
-      review = SchoolRating.new
-      if school.preschool?
-        review.p_overall = review_params[:overall]
-      else
-        review.quality = review_params[:overall]
-      end
-      review.state = review_params[:state]
-      review.school = school
-      review.comments = review_params[:review_text]
-      review.affiliation = review_params[:affiliation]
-      review.school_type = school.type
-      review.posted = Time.now.to_s
-      review.ip = remote_ip
-      review
-    end
-  end
-
-  def report_review_and_redirect(params)
+  def flag_review_and_redirect(params)
 
     if logged_in?
       begin
-        review_id = params[:reported_entity_id]
-        reason = params[:reason]
+        review_id = params[:review_id]
+        comment = params[:comment]
 
-        review = SchoolRating.find review_id rescue nil
+        review = Review.find review_id rescue nil
         if review
-          reported_entity = ReportedEntity.from_review review, reason
-          reported_entity.reporter_id = current_user.id
-          if reported_entity.save
+          review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
+          review_flag.user = current_user
+          if review_flag.save
             flash_notice t('actions.report_review.reported')
           else
             flash_error t('actions.generic_error')

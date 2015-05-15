@@ -1,0 +1,33 @@
+<% review_options = ['parent', 'school official', 'student', 'community member'] %>
+<div class="limit-width-1200 clearfix js-topicalReviewContainer dn">
+  <div class="row bg-light-gray gray-box-border tac">
+    <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 bg-light-gray mtl ">
+      <header class="mvl font-size-large open-sans_sb">WHAT'S YOUR RELATIONSHIP TO THIS SCHOOL?</header>
+      <article class="row">
+        <form class="form-inline">
+          <% review_options.each_with_index do |option| %>
+              <div class="dib mbs col-xs-3 col-lg-3">
+                <div>
+                  <%= radio_button_tag('whatever', option, false, class: "js-topical-radio") %>
+                </div>
+                <div class="col-md-offset-2 col-lg-offset-2 phm col-md-8 col-lg-8">
+                  <%= option %>
+                </div>
+              </div>
+          <% end %>
+          <div>
+            <button class="btn btn-primary js-review-question-submit mvl">Submit</button>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+  <div class="full-width mtl">
+    <div class="fl">
+      <%= link_to("< Previous topic", "#", class: "js-previous-topic") %>
+    </div>
+    <div class="fr">
+      <%= link_to("Next topic >", "#", class: "js-next-topic") %>
+    </div>
+  </div>
+</div>

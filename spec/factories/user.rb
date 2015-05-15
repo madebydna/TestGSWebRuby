@@ -5,16 +5,13 @@ FactoryGirl.define do
     password 'password'
 
     factory :email_only do
-      email 'test@greatschools.org'
     end
 
     factory :new_user do
-      email 'test@greatschools.org'
       password 'password'
     end
 
     factory :verified_user do
-      email 'test@greatschools.org'
       password 'password'
       email_verified true
     end
@@ -38,6 +35,19 @@ FactoryGirl.define do
 
       after(:create) do |user, evaluator|
         FactoryGirl.create(:esp_membership, :with_provisional_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+      end
+    end
+
+    trait :with_approved_superuser_membership do
+      ignore do
+        school_id 1 #default
+        school_id_2 2
+        state 'ca' #default
+      end
+
+      after(:create) do |user, evaluator|
+        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
+        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id_2,state:evaluator.state,member_id: user.id)
       end
     end
 

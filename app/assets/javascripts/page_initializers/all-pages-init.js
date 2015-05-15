@@ -87,7 +87,7 @@ $(function() {
 
 
     var use_new_window = $(this).data('link-use-new-window');
-    var url = $(this).data('link-value');
+    var url = $(this).data('link-value').replace('#%23', '#');
     if(use_new_window == true) {
       window.open(url, '_blank');
     } else {

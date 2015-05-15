@@ -202,29 +202,49 @@ class FilterBuilder
 
   def detroit_mi_callbacks
     [
-        {
-          callback_type: 'cache_key',
-          options: {
-            value: 'college_readiness',
-            version: 2
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'college_readiness_gstq_rating',
+          version: 1
+        }
+      },
+      college_readiness_gstq_callback,
+      # gstq_rating_callback,
+    ]
+  end
+
+  def college_readiness_gstq_callback
+    {
+      conditions:
+      [
+        {key: 'name', match: 'gs_rating'}
+      ],
+      callback_type: 'insert_after',
+      options:
+      {
+        cgr: {
+          label: 'College Readiness',
+          display_type: :title,
+          name: :cgr,
+          filters: {
+            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
           }
         },
-        {
-            conditions:
-                [
-                    {key: 'name', match: 'st'}, {key: 'display_type', match: 'title'}
-                ],
-            callback_type: 'insert_after',
-            options:
-                {
-                    cgr: {
-                        label: 'College Readiness', display_type: :title, name: :cgr, filters: {
-                            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
-                        }
-                    }
-                }
+        gstq_rating: {
+            label: 'Great Start to Quality (preschool only)',
+            display_type: :title,
+            name: :gstq_rating,
+            filters: {
+              gstq5: { label: '5 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'5' },
+              gstq4: { label: '4 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
+              gstq3: { label: '3 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
+              gstq2: { label: '2 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
+              gstq1: { label: '1 star', display_type: :basic_checkbox, name: :gstq_rating, value: :'1' }
+            }
         }
-    ]
+      }
+    }
   end
 
   def summer_programs_callbacks

@@ -1,0 +1,13 @@
+<% review %>
+<% active_flags = review.flags.select(&:active?) %>
+<% inactive_flags = review.flags.select(&:inactive?) %>
+
+<% if active_flags.present? %>
+  <h5>Open flags</h5>
+  <%= render 'review_flags_table', review_flags: active_flags, css_class: 'rs-open-flags-table' %>
+<% end %>
+
+<% if inactive_flags.present? %>
+  <h5>Resolved flags</h5>
+  <%= render 'review_flags_table', review_flags: inactive_flags, css_class: 'rs-resolved-flags-table' %>
+<% end %>

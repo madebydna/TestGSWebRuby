@@ -21,11 +21,18 @@ shared_example 'should only have one active button' do
 end
 
 shared_example 'should have nav bar with school name' do
-  subject.find('.rs-osp_school_name', text: school.name)
+  subject.find('.rs-osp_school_name', text: school.name.upcase)
 end
 
-shared_example 'should have dashboard button' do
-  subject.find_button('dashboard')
+shared_example 'should have school address' do
+  subject.find('.rs-school_address', text:school.street)
+end
+
+shared_example 'should have basic school information' do
+  subject.find('.rs-school-information', text: school.level)
+  subject.find('.rs-school-information', text: school.type.capitalize + ' district')
+  subject.find('.rs-school-information', text: school.city)
+  subject.find('.rs-school-information', text: school.state)
 end
 
 shared_example 'should have a submit button' do
@@ -44,3 +51,21 @@ shared_example 'should only contain the following values in the form response' d
   end
 end
 
+shared_example 'should not submit value in text field' do
+  response_before_click = page.response_headers['X-Request-Id']
+  osp_page.osp_form.submit.click
+  response_after_click = page.response_headers['X-Request-Id']
+  expect(response_before_click).to eql(response_after_click)
+end
+
+shared_example 'should have switch schools link' do
+  subject.find_link('switch schools')
+end
+
+shared_example 'should have go to school profile button' do
+  subject.find_button('Go to school profile', exact: true)
+end
+
+shared_example 'should have go to school profile link' do
+  subject.find_link('Go to school profile', exact: true)
+end

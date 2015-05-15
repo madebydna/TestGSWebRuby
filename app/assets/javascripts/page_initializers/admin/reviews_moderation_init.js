@@ -2,9 +2,9 @@ if(gon.pagename == "Reviews moderation list"){
 
     $(function () {
 
-      if(gon.reported_reviews_count != undefined && gon.reported_reviews_count <= 150) {
+      if(gon.flagged_reviews_count != undefined && gon.flagged_reviews_count <= 150) {
 
-        var oTable = $('#flagged_reviews_table').dataTable({bFilter: false,
+        var oTable = $('.flagged_reviews_table').dataTable({bFilter: false,
           bInfo: false, "pagingType": "simple_numbers","bLengthChange": false,
           'iDisplayLength': 50});
 

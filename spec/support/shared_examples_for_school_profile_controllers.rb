@@ -22,11 +22,6 @@ shared_examples_for 'a configurable profile page' do |action|
       expect(assigns[:school]).to eq(school)
     end
 
-    it 'should set data needed for header' do
-      get action, controller.view_context.school_params(school)
-      expect(assigns[:school_reviews_global]).to be_present
-    end
-
     it 'should 404 with non-existent school' do
       allow(controller).to receive(:find_school).and_return(nil)
       get action, controller.view_context.school_params(school)

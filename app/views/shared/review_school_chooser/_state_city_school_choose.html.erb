@@ -4,6 +4,9 @@
     <% if @display_morgan_stanley %>
       <input type="hidden" name="morganstanley" value="1">
     <% end %>
+    <% if @topic %>
+        <input type="hidden" name="topic_id" value="<%= @topic.id %>">
+    <% end %>
     <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),{:id =>
                                                                                                           "state_select", :prompt => 'Select state', class: 'form-control js-stateList notranslate' } %>
     <br/>

@@ -16,4 +16,8 @@ class SchoolCache < ActiveRecord::Base
     end
     school_data
   end
+
+  def cache_data
+    JSON.parse(value) rescue {}
+  end
 end

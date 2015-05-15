@@ -1,0 +1,20 @@
+<%
+   f
+   principal = @school_member ? @school_member.principal? : false
+%>
+
+<div class="topical-review-question-container left">
+  <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
+  <% unless principal %>
+      <%= render 'shared/reviews/lib/stars_input', f: f, question: question %>
+  <% end %>
+</div>
+<div class="topical-review-question-container right">
+  <% options = {
+          placeholder: principal ? '' : 'Please share why you feel this way.',
+          comment_required: true,
+          principal: principal,
+          submit_text: principal ? 'Submit Statement' : 'Submit'
+  } %>
+  <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
+</div>

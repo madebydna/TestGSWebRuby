@@ -149,11 +149,12 @@ describe SigninController do
       end
 
       context 'successful registration' do
-        let(:user) { instance_double(User) }
+        let(:user) { instance_double(User).as_null_object }
         subject(:response) { get :create, {email: 'blah@example.com'} }
         before do
           allow(user).to receive(:provisional?).and_return(false)
           expect(controller).to receive(:register).and_return([user, nil])
+          allow(controller).to receive(:log_user_in)
         end
 
         it 'should tell the user what to do next' do
@@ -161,9 +162,9 @@ describe SigninController do
           get :create, email: 'blah@example.com'
         end
 
-        it 'should set the current user to the newly created user' do
+        it 'should log in the user' do
+          expect(controller).to receive(:log_user_in).with(user) {}
           post :create, email: 'blah@example.com'
-          expect(controller.send :current_user).to eq(user)
         end
 
         it 'should redirect to join if no redirect specified' do

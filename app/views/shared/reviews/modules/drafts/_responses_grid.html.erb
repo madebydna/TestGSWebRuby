@@ -1,0 +1,6 @@
+<div class="row mtl mbl tac">
+  <% response_count = question_responses.count  %>
+  <% question_responses.each_with_index do |response_value, index| %>
+    <%= question_response_div(response_count, index, 'checkbox', f, :answers, response_value ) %>
+  <% end %>
+</div>

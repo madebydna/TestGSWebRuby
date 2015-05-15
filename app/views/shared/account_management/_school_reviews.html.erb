@@ -1,0 +1,74 @@
+
+    <% display_hash = [
+            {
+                    school_name: 'Alameda High School',
+                    review_questions: [
+                            {
+                                    question: 'How do you feel about bullying',
+                                    question_responses: ['sad', 'so so', 'angry'],
+                                    question_answers: ['sad', 'angry'],
+                                    comment: 'I am blah'* 10
+                            },
+                            {
+                                    question: 'How do you feel about the food',
+                                    question_responses: ['sad', 'so so', 'angry'],
+                                    question_answers: ['sad', 'angry'],
+                                    comment: 'I am blah'* 10
+                            }
+                    ]
+            },
+       {
+               school_name: 'Cleveland Elementary School',
+               review_questions: [
+                       {
+                               question: 'How do you feel about bullying',
+                               question_responses: ['sad', 'so so', 'angry'],
+                               question_answers: ['sad', 'angry'],
+                               comment: 'I am blah'* 10
+                       },
+                       {
+                               question: 'How do you feel about the food',
+                               question_responses: ['sad', 'so so', 'angry'],
+                               question_answers: ['sad', 'angry'],
+                               comment: 'I am blah'* 10
+                       }
+               ]
+       }
+       ] %>
+    <!--<div class="ptl"></div>-->
+    <!--<div class="bg-light-gray mvl">-->
+        <div class="row limit-width-1200 mhm ma">
+            <div class="col-xs-12">
+
+                <% # favorite_school is the object representing the row in favorite_school table %>
+              <% display_hash.each do |school|  %>
+                  <div class="border-all-light-grey">
+                    <div class="font-size-large tac bg-medium-gray pvm"><%= school[:school_name] %></div>
+                    <div class="question_container">
+                      <% school[:review_questions].each do |question| %>
+                          <div class="border-all-light-grey">
+                            <div class="open-sans_sb tac bg-yellow pvm"><%= question[:question] %></div>
+                            <%= form_for Review.new, remote: true, url: school_reviews_path(School.find_by_state_and_id(:ca, 149)) do |f| %>
+                                <%= f.hidden_field :state, value: 'CA' %>
+                                <%= f.hidden_field :school_id, value: 149 %>
+                                <%= f.hidden_field :review_question_id, value: 1 %>
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-6">
+                                <%= render '/shared/reviews/modules/input/responses_grid', question_responses: question[:question_responses], option_type: 'checkbox', f: f %>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-6">
+                                    <%= f.text_area :comment,  {class: "form-control ",
+                                                               onkeyup:"GS.topicalReview.reviewQuestion.GS_countCharacters(this)",
+                                                               rows: "6",
+                                                               placeholder:"Optional: Explain your choice" } %>
+                                  </div>
+                                </div>
+                            <% end %>
+                          </div>
+                      <% end %>
+                    </div>
+                  </div>
+              <% end  %>
+           </div>
+        </div>
+    </div>

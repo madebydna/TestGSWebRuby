@@ -1,0 +1,21 @@
+.topical-review-question-container {
+  @extend .col-xs-12;
+  @extend .col-md-6;
+  @extend .gray-box-border-tlr;
+  text-align: center;
+  &.left {
+    min-height: 280px;
+  }
+  &.right {
+    min-height: 280px;
+  }
+  @media (max-width: $screen-xs-min) {
+    &.left {
+      min-height: 200px;
+    }
+    &.right {
+      min-height: 285px;
+    }
+  }
+}
+

@@ -94,10 +94,61 @@ def shared_example(name, &block)
 end
 
 def with_shared_context(name, *args, &block)
-  js_arg = args.try(:[], 0).try(:has_key?, :js) ? args[0] : nil
+  js_arg = process_args(args)
   describe *[name, js_arg].compact do
     include_context name, *args
     instance_exec &block
+  end
+end
+
+def when_I(name, *args, &block)
+  js_arg = process_args(args)
+  describe *[name, js_arg].compact do
+    before do
+      page_object.send(name.to_s.gsub(' ', '_'), *args)
+    end
+    instance_exec &block
+  end
+end
+
+def on_subject(name, *args, &block)
+  js_arg = process_args(args)
+  describe *[name, js_arg].compact do
+    before do
+      subject.send(name.to_s.gsub(' ', '_'), *args)
+    end
+    instance_exec &block
+  end
+end
+
+def with_subject(name, *args, &block)
+  js_arg = process_args(args)
+  describe *[name, js_arg].compact do
+     subject do
+       page_object.send(name.to_s.gsub(' ', '_'), *args)
+     end
+     instance_exec &block
+   end
+end
+
+def process_args(args)
+  args.try(:last).try(:has_key?, :js) ? args.pop : nil
+end
+
+def disconnect_connection_pools(db)
+  ActiveRecord::Base.connection_handler.connection_pools.
+    values.each do |pool|
+    if pool.connections.present? &&
+      ( pool.connections.first.
+        current_database == "#{db}_test" )
+      pool.disconnect!
+    end
+  end
+end
+
+def disconnect_all_connection_pools
+  ActiveRecord::Base.connection_handler.connection_pools.values.each do |pool|
+    pool.disconnect!
   end
 end
 
@@ -106,6 +157,7 @@ def clean_dbs(*args)
   args.each do |db|
     DatabaseCleaner[:active_record, connection: "#{db}_rw".to_sym].strategy = :truncation
     DatabaseCleaner[:active_record, connection: "#{db}_rw".to_sym].clean
+    disconnect_connection_pools(db)
   end
 end
 
@@ -121,6 +173,7 @@ def clean_models(db, *models)
       db_name = "_#{db_name}" if States.abbreviations.include?(db_name)
       db_name << '_test'
       model.connection.execute("TRUNCATE #{db_name}.#{model.table_name}")
+      disconnect_connection_pools(db_name.sub('_test', ''))
     else
       model.destroy_all
     end
@@ -163,11 +216,10 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.include Capybara::DSL
-
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
-
+  config.include WaitForAjax, type: :feature
   #method to help run both mobile and desktop tests
   #actual width capybara sets seems to be -15, ie: 320 => 305 and 1280 => 1265. height is the same
   def describe_mobile_and_desktop(mobile_size=[320,568], desktop_size=[1280,960], &block)
@@ -188,6 +240,51 @@ RSpec.configure do |config|
       before { page.current_window.resize_to(*screen_size) }
       instance_eval &block
     end
+  end
+
+  def its(attribute, *options, &block)
+    describe(attribute.to_s) do
+      let(:__its_subject) do
+        subject.send(attribute)
+      end
+
+      def is_expected
+        expect(__its_subject)
+      end
+      alias_method :are_expected, :is_expected
+
+      options << {} unless options.last.kind_of?(Hash)
+
+      example(nil, *options, &block)
+    end
+  end
+
+  def they(*options, &block)
+    describe 'Every element in the subject' do
+      before do
+        @__pointer = nil
+      end
+
+      def are_expected
+        expect(@__pointer)
+      end
+
+      options << {} unless options.last.kind_of?(Hash)
+
+      example(nil, *options) do
+        subject.each do |s|
+          @__pointer = s
+          instance_eval &block
+        end
+      end
+    end
+  end
+
+  # this forces rspec execution to wait until current_url can get run, which is after all requests have finished
+  # otherwise, rspec will execute code/examples/blocks before requests finish. This could cause assertions to fail
+  # If they execute after database has already been cleaned or before rails has finished processing the request
+  def wait_for_page_to_finish
+    current_url
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -249,7 +346,10 @@ RSpec.configure do |config|
   end
 
   config.before(:each) { Rails.cache.clear }
-  config.after(:each) { Rails.cache.clear }
+  config.after(:each) do
+    Rails.cache.clear
+    disconnect_all_connection_pools
+  end
 
   # config.raise_errors_for_deprecations!
 

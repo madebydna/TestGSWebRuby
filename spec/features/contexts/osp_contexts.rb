@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../spec/support/shared_contexts_for_signed_in_users'
+require 'support/shared_contexts_for_signed_in_users'
 require 'features/selectors/osp_page'
 
 ### Setting Up Signed in User ###
@@ -16,6 +16,18 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 end
 
+shared_context 'signed in approved superuser for school' do |state, school_id|
+  before do
+    factory_girl_options = {state: state, school_id: school_id}.delete_if {|_,v| v.nil?}
+    super_user = FactoryGirl.create(:verified_user, :with_approved_superuser_membership, factory_girl_options)
+    log_in_user(super_user)
+  end
+
+  after do
+    clean_models :gs_schooldb, User, EspMembership, MemberRole
+  end
+end
+
 ### School Blocks ###
 
 shared_context 'Basic High School' do
@@ -27,6 +39,16 @@ end
 
 shared_context 'visit OSP page' do
   include_context 'signed in approved osp user for school', :ca, 1
+  include_context 'Basic High School'
+  let(:osp_page) { OspPage.new }
+  before do
+    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
+  end
+  subject { page }
+end
+
+shared_context 'visit OSP superuser page' do
+  include_context 'signed in approved superuser for school', :ca, 1
   include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
@@ -52,7 +74,9 @@ shared_context 'with a basic set of osp questions in db' do
       dress_code:        3,
       boardgames:        4,
       puzzlegames:       5,
-      videogames:        6
+      videogames:        6,
+      award:             7,
+      award_year:        8,
     }
   end
   let(:questions) do
@@ -117,7 +141,99 @@ shared_context 'with a basic set of osp questions in db' do
           osp_question_group_id: nil,
           question_type: 'input_field_md'
 
+      },
+      {
+          id: question_ids[:award],
+          esp_response_key: :award,
+          osp_question_group_id: nil,
+          question_type: 'input_and_year',
+          config: { #will be turned into json, so needs to be string
+            'question_ids' => [question_ids[:award_year]]
+          }.to_json
+      },
+    ]
+  end
+
+  let(:questions_without_display_conf) do
+    [
+      {
+        id: question_ids[:award_year],
+        esp_response_key: :award_year,
+        question_type: 'input_and_year',
       }
+    ]
+  end
+
+  include_context 'save osp question to db'
+end
+
+shared_context 'with a basic set of parsley validated osp questions in db' do
+  let(:question_ids) do
+    {
+        boardgames:        1,
+        puzzlegames:       2,
+        videogames:        3,
+        video_urls:        4,
+        normal_text_field: 5
+    }
+  end
+  let(:questions) do
+    [
+        {
+            id: question_ids[:boardgames],
+            esp_response_key: :boardgames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:videogames],
+            esp_response_key: :videogames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_lg',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:puzzlegames],
+            esp_response_key: :puzzlegames,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-type' => 'email'
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:video_urls],
+            esp_response_key: :video_urls,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-youtubevimeotag' => ''
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:normal_text_field],
+            esp_response_key: :normal_text_field,
+            osp_question_group_id: nil,
+            question_type: 'input_field_md',
+            config: {
+                'validations' => {
+                    'data-parsley-blockhtmltags' => ''
+                }
+            }.to_json
+        }
     ]
   end
 
@@ -129,8 +245,11 @@ shared_context 'save osp question to db' do
     questions.each do |question|
       FactoryGirl.create(:osp_question, :with_osp_display_config, question)
     end
+    [*try(:questions_without_display_conf)].each do |question|
+      FactoryGirl.create(:osp_question, question)
+    end
   end
-  after { clean_models OspQuestion, OspDisplayConfig }
+  after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
 end
 
 ### Clicking Buttons ###
@@ -155,17 +274,17 @@ end
 
 shared_context 'click the none option on a conditional multi select question group' do
   before do
-    trigger = osp_page.osp_form.disabledElementTrigger.first
+    trigger = osp_page.osp_form.conditionalMultiSelectTrigger.first
     trigger.click if trigger.present?
   end
   subject do
-    osp_page.osp_form.disabledElementTarget
+    osp_page.osp_form.conditionalMultiSelectTarget
   end
 end
 
 shared_context 'click a value in a conditional multi select group and then click none' do
   before do
-    button = osp_page.osp_form.disabledElementTarget.first
+    button = osp_page.osp_form.conditionalMultiSelectTarget.first
     button.click if button.present?
   end
 
@@ -174,17 +293,31 @@ end
 
 ### Open text / input fields ###
 
-shared_context 'enter information into small text field' do
+shared_context 'enter following text into text field with name' do | text, name |
   before do
     form = osp_page.osp_form
-    form.find("form input[type=text]").set "uuddlrlrbas"
+    form.find("form input[type=text][name='#{question_ids[name]}-#{name}']").set text
   end
+end
+
+shared_context 'selecting the following option in select box with name' do | text, name |
+  before do
+    form = osp_page.osp_form
+    form.find("form select[name='#{question_ids[name]}-#{name}']").set text
   end
+end
 
 shared_context 'enter information into medium text field' do
   before do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[:puzzlegames]}-puzzlegames']").set "upupdowndownleftrightleftrightBAstart"
+  end
+  end
+
+shared_context 'enter video url information into medium text field' do
+  before do
+    form = osp_page.osp_form
+    form.find("form textarea[name='#{question_ids[:video_urls]}-video_urls']").set "upupdowndownleftrightleftrightBAstart"
   end
 end
 
@@ -221,6 +354,13 @@ shared_context 'within input field' do |esp_response_key|
   end
 end
 
+shared_context 'within select box' do |esp_response_key|
+  subject do
+    form = osp_page.osp_form
+    form.find("form select[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
+  end
+end
+
 shared_context 'within textarea field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
@@ -235,7 +375,7 @@ shared_context 'the OspFormResponse objects\' responses in the db' do
   end
 end
 
-shared_context 'OSP nav should have an h3 with text' do |form|
+shared_context 'Within the h3 with text' do |form|
   subject {find('h3', text: form)}
 end
 

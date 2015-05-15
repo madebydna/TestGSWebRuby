@@ -1,4 +1,6 @@
 class School < ActiveRecord::Base
+  include SchoolReviewConcerns
+
   LEVEL_CODES = {
     primary: 'p',
     preschool: 'p',
@@ -150,26 +152,6 @@ class School < ActiveRecord::Base
     SchoolRating.where(state: state, school_id: id)
   end
 
-  # returns all reviews for
-  def reviews
-    SchoolRating.fetch_reviews self
-  end
-
-  def principal_review
-    SchoolRating.fetch_principal_review self
-  end
-
-  # group_to_fetch, order_results_by, offset_start, quantity_to_return
-  def reviews_filter( options ={} )
-    #second parameter is group to filter by leave it as empty string '' for all
-    #third parameter is order by - options are
-    #   '' empty string is most recent first
-    #   'oldest' is oldest first
-    #   'rating_top' is by highest rating
-    #   'rating_bottom' is by lowest rating
-    SchoolRating.fetch_reviews self, group_to_fetch: options[:group_type], order_results_by: options[:order_results_by], offset_start: options[:offset_start], quantity_to_return: options[:quantity_to_return]
-  end
-
   def state_name
     States.state_name(state)
   end
@@ -252,7 +234,7 @@ class School < ActiveRecord::Base
     end
 
     states_to_ids.each do |state, ids|
-      schools += self.on_db(state.to_sym).where(id: ids, active: true).to_a
+      schools += self.on_db(state.downcase.to_sym).where(id: ids, active: true).to_a
     end
 
     # Sort schools the way they were passed in
@@ -266,21 +248,6 @@ class School < ActiveRecord::Base
     end
   end
 
-  def all_reviews
-    @all_reviews ||= reviews.load
-  end
-
-  def review_count
-    all_reviews.count
-  end
-
-  def calculate_review_data
-    SchoolReviews.calc_review_data(all_reviews)
-  end
-
-  def community_rating
-    calculate_review_data.seek('rating_averages','overall','avg_score')
-  end
   def pk8?
     includes_level_code?(%w[p e m])
   end
@@ -341,4 +308,8 @@ class School < ActiveRecord::Base
   def demo_school?
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
   end
+
+  # def notes
+  #   @notes ||= SchoolNote.find_by_school(self)
+  # end
 end

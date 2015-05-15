@@ -40,7 +40,7 @@
 
             <div class="tac">
               <button type="button" data-ga-click-label="ProgressBar Review" data-ga-click-value="<%= score %>"
-                      data-link-value="<%= school_review_form_path(@school) %>" class="btn btn-default js-button-link js-gaClick mas" onclick="GS.omniture.track_reviews('Overview');">
+                      data-link-value="<%= school_reviews_path(@school) %>" class="btn btn-default js-button-link js-gaClick mas" onclick="GS.omniture.track_reviews('Overview');">
                   <span class="iconx24-icons i-24-write-review vam mrm"></span>Write a review
               </button>
               <% if !@school.preschool? %>

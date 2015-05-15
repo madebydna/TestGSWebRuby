@@ -22,6 +22,7 @@
 //= require_tree ./resources
 //= require_tree ./auth
 //= require_tree ./localized_profiles
+//= require_tree ./topical_reviews
 //= require_tree ./search
 //= require_tree ./guided_search
 //= require_tree ./google_maps

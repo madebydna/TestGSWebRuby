@@ -218,6 +218,7 @@ class SearchController < ApplicationController
 
     (map_start, map_end) = calculate_map_range solr_offset
     @map_schools = school_results[map_start .. map_end]
+    SchoolSearchResultReviewInfoAppender.add_review_info_to_school_search_results!(@map_schools)
 
     # mark the results that appear in the list so the map can handle them differently
     @schools.each { |school| school.on_page = true } if @schools.present?

@@ -1,3 +1,4 @@
+<%  decorated_topic = ReviewTopicDecorator.decorate(@topic) %>
 <div class="row bg-white pvl <%= @display_morgan_stanley %>">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="oa tac ">
@@ -15,8 +16,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="oa content-centered tac text_fff ">
-                        <h1 class="jumbo-header ts text_fff">Review your school!</h1>
-                        <div class="subtitle-lg ts">Help others find their great school – You know your school best</div>
+                        <h1 class="jumbo-header ts text_fff"><%= decorated_topic.header %></h1>
+                        <div class="subtitle-lg ts"><%= decorated_topic.subheading %></div>
                       <div class="subtitle-sm ptm" style="height:30px;">
                         <a href="#" class="js-scoop_search_type_link js-scoop_search_type_div dn"
                            data-cta-text-toggle="show drop downs">Don't see your school?</a></div>
