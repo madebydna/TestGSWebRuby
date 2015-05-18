@@ -29,7 +29,7 @@ class OspController < ApplicationController
     questions_and_answers.each do | (question_id, response_key, values) |
       save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
-    redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:page])
+    redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:redirectPage])
   end
 
   #ToDo when Java is no longer the proxy, this should not be a route
@@ -73,7 +73,7 @@ class OspController < ApplicationController
   protected
 
   def questions_and_answers
-    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token,:isFruitcakeSchool,:showOspGateway,:anyPageStarted).map do | param, values |
+    params.except(:controller, :action, :page, :redirectPage, :schoolId, :state, :utf8, :authenticy_token, :isFruitcakeSchool, :showOspGateway, :anyPageStarted).map do | param, values |
       question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
       next if question_id.to_i == 0
       next unless values.present?

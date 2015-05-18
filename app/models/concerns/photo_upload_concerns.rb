@@ -22,13 +22,15 @@ module PhotoUploadConcerns
   end
 
   def create_school_media_row!(filename, status)
+    time = Time.now
     SchoolMedia.create({
       school_id:      @school.id,
       state:          @school.state,
       member_id:      @esp_membership_id,
       status:         status,
       orig_file_name: filename,
-      date_created:   Time.now
+      date_created:   time,
+      date_updated:   time
     })
   end
 
@@ -59,11 +61,12 @@ module PhotoUploadConcerns
   end
 
   def approve_images(query_hash)
+    time = Time.now
     query_hash.slice!(:member_id, :state, :school_id)
     SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL_PENDING))
-      .update_all({status: SchoolMedia::PENDING})
+      .update_all({status: SchoolMedia::PENDING, date_updated: time})
     SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL))
-      .update_all({status: SchoolMedia::ACTIVE})
+      .update_all({status: SchoolMedia::ACTIVE, date_updated: time})
   end
 
 end
