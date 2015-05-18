@@ -6,7 +6,7 @@ class OspData
 
   SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
 
-  CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment'}
+  CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
 
 
 
