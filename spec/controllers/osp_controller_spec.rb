@@ -66,7 +66,7 @@ describe Admin::OspController do
       }.each do |page, page_number|
         it "should redirect user back to #{page} page when submit is clicked on the #{page} page" do
           post :submit, state: school.state, schoolId: school.id, page: page_number
-          expect(response.location).to match(admin_osp_page_url.chop) #chop trailing slash
+          expect(response.location).to match(osp_page_url.chop) #chop trailing slash
         end
       end
     end

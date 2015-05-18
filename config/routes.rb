@@ -39,6 +39,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
+  get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
+  post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
+  post  '/school/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
+  delete  '/school/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
@@ -118,10 +122,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/style-guide/', to: 'style_guide#index'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
-    get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
-    post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
-    post  '/school/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
-    delete  '/school/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
+
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 

@@ -42,7 +42,7 @@ shared_context 'visit OSP page' do
   include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
-    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
+    visit osp_page_path(page: 1, schoolId: school.id, state: school.state)
   end
   subject { page }
 end

@@ -1,5 +1,5 @@
-class Admin::OspController < ApplicationController
 
+class OspController < ApplicationController
   include PhotoUploadConcerns
 
   before_action :login_required, except: [:approve_provisional_osp_user_data]
@@ -73,7 +73,7 @@ class Admin::OspController < ApplicationController
   protected
 
   def questions_and_answers
-    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticity_token).map do | param, values |
+    params.except(:controller , :action , :page , :schoolId, :state, :utf8, :authenticy_token,:isFruitcakeSchool,:showOspGateway,:anyPageStarted).map do | param, values |
       question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
       next if question_id.to_i == 0
       next unless values.present?
