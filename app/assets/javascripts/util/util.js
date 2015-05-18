@@ -91,14 +91,12 @@ GS.util.deleteAjaxCall = function(obj, hash) {
   var callback = hash.callback || $self.data('callback') || GS.util.ajaxCallbackSuccess;
   var callback_error = hash.callback_error || $self.data('callback_error') || GS.util.ajaxCallbackError;
   var params_local = hash.params_local || $self.data('params-local');
-  var params_remote = hash.params_remote || $self.data('params-remote');
 
   if (link_value !== undefined) {
     $.when(
       $.ajax({
         url: link_value,
         type: 'DELETE',
-        data: params_remote
       })
     ).then(
       function (data) {

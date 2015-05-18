@@ -53,7 +53,6 @@ GS.photoUploads = GS.photoUploads || (function() {
             schoolId: gon.school_id.toString(),
             state:    gon.state_name
         })
-        hash.params_remote = {}
         hash.params_local = { dropzone: this };
         GS.util.deleteAjaxCall({}, hash);
         return false;
