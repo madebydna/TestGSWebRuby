@@ -48,7 +48,7 @@ GS.photoUploads = GS.photoUploads || (function() {
         hash.callback_error = deleteImageCallbackFailure;
 
         //not using jquery ajax data attribute because java is not passing those through on DELETE method
-        hash.href = GS.uri.Uri.putParamObjectIntoQueryString('/school/esp/delete_image?fileId=' + file.id, {
+        hash.href = GS.uri.Uri.putParamObjectIntoQueryString('/gsr/ajax/esp/delete_image?fileId=' + file.id, {
             fileName: file.name,
             schoolId: gon.school_id.toString(),
             state:    gon.state_name
@@ -82,7 +82,7 @@ GS.photoUploads = GS.photoUploads || (function() {
     };
 
     var dropzoneConfig = {
-        url: "/school/esp/add_image",
+        url: "/gsr/ajax/esp/add_image",
         paramName: 'imageFile',
         maxFilesize: 2,
         parallelUploads: 1,
