@@ -28,4 +28,41 @@ describe SchoolProfileReviewsDecorator, type: :view do
       expect(chart_keys).to eq(['Stars', '5 stars', '4 stars', '3 stars', '2 stars', '1 star'])
     end
   end
+
+  describe '#answer_summary_text' do
+    let(:score_distribution) do
+      {
+        foo: 2,
+        bar: 6,
+        baz: 3
+      }
+    end
+    before do
+      allow(reviews).to receive(:score_distribution).and_return score_distribution
+    end
+    subject { reviews.answer_summary_text }
+
+    it 'should use the value with the highest number of occurrences' do
+      expect(subject).to match "bar"
+    end
+
+    it 'should display the number of occurrences' do
+      expect(subject).to match "(#{6})"
+    end
+  end
+
+  describe '#see_all_reviews_phrase' do
+    before do
+      allow(reviews).to receive(:number_of_reviews_with_comments).and_return number_of_reviews_with_comments
+    end
+    subject { reviews.see_all_reviews_phrase }
+    context 'when there are 10 reviews' do
+      let(:number_of_reviews_with_comments) { 10 }
+      it { is_expected.to eq('See all 10 reviews')}
+    end
+    context 'when there is 1 review' do
+      let(:number_of_reviews_with_comments) { 1 }
+      it { is_expected.to eq('See 1 review')}
+    end
+  end
 end

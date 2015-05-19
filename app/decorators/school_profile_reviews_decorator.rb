@@ -19,10 +19,17 @@ module SchoolProfileReviewsDecorator
     @view_context
   end
 
+  def answer_summary_text
+    distribution = score_distribution.sort_by { |k, v| v }.reverse
+    text =  "Most users (#{distribution.first.last}) say "
+    text << h.content_tag('span', distribution.first.first, class:'open-sans_cb')
+    text.html_safe
+  end
+
   def see_all_reviews_phrase
     phrase = 'See '
     phrase << 'all ' if number_of_reviews_with_comments > 1
-    phrase << h.pluralize(number_of_reviews_with_comments, 'Review', 'Reviews')
+    phrase << h.pluralize(number_of_reviews_with_comments, 'review', 'reviews')
     phrase
   end
 
