@@ -2,6 +2,7 @@
 class OspController < ApplicationController
   include PhotoUploadConcerns
 
+  before_action :set_login_redirect
   before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
   before_action :set_footer_cities, only: [:show]
