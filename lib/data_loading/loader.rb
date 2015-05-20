@@ -25,6 +25,8 @@ class Loader
     if  source == 'osp_form'
         if census_data_type?(data_type)
           CensusLoading::Loader
+        elsif data_type == 'school_data'
+          SchoolLoading::Loader
         else
           EspResponseLoading::Loader
         end

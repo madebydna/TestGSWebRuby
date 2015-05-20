@@ -93,7 +93,7 @@ class OspController < ApplicationController
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
-    error = create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
+    error = create_nonOSP_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
     @render_error ||= error.present?
 
 
@@ -115,7 +115,7 @@ class OspController < ApplicationController
     {question_key => rvals}.to_json
   end
 
-  def make_census_response_blob(census_data_type, response_values, submit_time)
+  def make_nonOSP_response_blob(census_data_type, response_values, submit_time)
     rvals = response_values.map do |response_value|
       {
           entity_state: params[:state],
@@ -130,11 +130,11 @@ class OspController < ApplicationController
     {census_data_type => rvals}.to_json
   end
 
-  def create_census_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
+  def create_nonOSP_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
     begin
-     census_data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key]
-      if census_data_type.present?
-        response_blob = make_census_response_blob(census_data_type, response_values, submit_time)
+     data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key] || OspData::SCHOOL_KEY_TO_ESP_KEY[question_key]
+      if data_type.present?
+        response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time)
         create_osp_form_response!(question_id, esp_membership_id, response_blob)
         create_update_queue_row!(response_blob) if is_approved_user
       end

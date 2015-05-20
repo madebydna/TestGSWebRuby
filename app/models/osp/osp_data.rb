@@ -8,6 +8,7 @@ class OspData
 
   CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
 
+  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_served' => 'level' , 'school_url' => 'home_page_url'}
 
 
 
@@ -21,15 +22,23 @@ class OspData
     begin
       key = key.to_s
       census_key = CENSUS_KEY_TO_ESP_KEY[key]
+      school_key = SCHOOL_KEY_TO_ESP_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
-      if (census_key)
-        school_cache_values_from_census_data  = Array(cachified_school.characteristcs_value_by_name(census_key, grade: nil, number_value: false))
+      if census_key.present?
+        school_cache_values_from_census_data  = cachified_school.characteristcs_value_by_name(census_key, grade: nil, number_value: false).to_s.split(',')
         if osp_response_values.present? && school_cache_values_from_census_data.present?
           cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
         else
           osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_census_data
         end
-
+      elsif school_key.present?
+        school_value  = cachified_school.school.send(school_key).split(',') #will return empty array if no results
+        modified_time = cachified_school.school.modified
+        if osp_response_values.present? && school_value.present?
+          modified_time > osp_response_values[:created_at] ? school_value : osp_response_values[:values]
+        else
+          osp_response_values.present? ? osp_response_values[:values] : school_value
+        end
       else
         school_cache_values  = cachified_school.values_for(key) #will return empty array if no results
         if osp_response_values.present? && school_cache_values.present?
@@ -62,7 +71,7 @@ class OspData
 
   def most_recent_osp_form_response(response_key, question_id)
     osp_form_responses.each do | osp_form_response |
-      if osp_form_response.osp_question_id == question_id
+      if osp_form_response.osp_question_id == question_id &&  (osp_form_response.response)[response_key] == response_key
         values = JSON.parse(osp_form_response.response)[response_key]
         created_at = Time.parse(values.first['created'])
         values.map! { |value| value['value'] }
