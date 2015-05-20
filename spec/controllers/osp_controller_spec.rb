@@ -142,6 +142,10 @@ describe Admin::OspController do
           it 'should save a properly formatted phone number into osp_form_responses' do
             expect(form_response_values['school_phone']).to include('(123) 456-7890')
           end
+
+          it 'should save a properly formatted fax number into osp_form_responses' do
+            expect(form_response_values['school_fax']).to include('(123) 456-7890')
+          end
         end
       end
 
@@ -154,6 +158,10 @@ describe Admin::OspController do
 
           it 'should save a properly formatted phone number into osp_form_responses' do
             expect(form_response_values['school_phone']).to eq(nil)
+          end
+
+          it 'should save a properly formatted phone number into osp_form_responses' do
+            expect(form_response_values['school_fax']).to eq(nil)
           end
         end
       end

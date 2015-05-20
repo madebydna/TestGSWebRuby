@@ -38,7 +38,8 @@ end
 shared_context 'using a set of question keys and valid answers that have validations' do
   let(:questions_with_ids_and_answers) do
     [
-      {id: 1, response_key: 'school_phone', answers: ['1234567890']}
+      {id: 1, response_key: 'school_phone', answers: ['1234567890']},
+      {id: 2, response_key: 'school_fax', answers: ['1234567890']}
     ]
   end
   include_context 'set question and request keys'
@@ -47,7 +48,8 @@ end
 shared_context 'using a set of question keys and invalid answers that have validations' do
   let(:questions_with_ids_and_answers) do
     [
-      {id: 1, response_key: 'school_phone', answers: ['123']}
+      {id: 1, response_key: 'school_phone', answers: ['123']},
+      {id: 2, response_key: 'school_fax', answers: ['123']}
     ]
   end
   include_context 'set question and request keys'
@@ -70,7 +72,7 @@ shared_context 'all responses in key value form from the db' do
       key_values.each do |key, values|
         values.map! { |v| v['value'] }
       end
-      key_values
+      hash.merge(key_values)
     end
   end
 end
