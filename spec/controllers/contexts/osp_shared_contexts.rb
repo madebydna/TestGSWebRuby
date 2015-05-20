@@ -35,6 +35,24 @@ shared_context 'using a basic set of question keys and answers' do
   include_context 'set question and request keys'
 end
 
+shared_context 'using a set of question keys and valid answers that have validations' do
+  let(:questions_with_ids_and_answers) do
+    [
+      {id: 1, response_key: 'school_phone', answers: ['1234567890']}
+    ]
+  end
+  include_context 'set question and request keys'
+end
+
+shared_context 'using a set of question keys and invalid answers that have validations' do
+  let(:questions_with_ids_and_answers) do
+    [
+      {id: 1, response_key: 'school_phone', answers: ['123']}
+    ]
+  end
+  include_context 'set question and request keys'
+end
+
 shared_context 'Osp question key and answers saved in the db' do
   before do
     questions_with_ids_and_answers.each do |question|
@@ -42,6 +60,19 @@ shared_context 'Osp question key and answers saved in the db' do
     end
   end
   after { clean_models :gs_schooldb, OspQuestion }
+end
+
+shared_context 'all responses in key value form from the db' do
+  #ex { before_care: ['after', 'before'], transportation: ['public'] }
+  let(:form_response_values) do
+    OspFormResponse.all.inject({}) do |hash, item|
+      key_values = JSON.parse(item.response)
+      key_values.each do |key, values|
+        values.map! { |v| v['value'] }
+      end
+      key_values
+    end
+  end
 end
 
 #needs to execute after current user is set

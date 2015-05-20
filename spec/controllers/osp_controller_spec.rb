@@ -127,6 +127,37 @@ describe Admin::OspController do
         end
       end
     end
+
+    #Section for testing Validations
+    context 'when user is an approved osp user and there are no errors' do
+      include_context 'user esp_membership status is', :approved
+
+      #valid answers
+      with_shared_context 'using a set of question keys and valid answers that have validations' do
+        include_context 'Osp question key and answers saved in the db'
+        include_context 'setup osp controller instance var dependencies'
+        with_shared_context 'send osp form submit request' do
+          include_context 'all responses in key value form from the db'
+
+          it 'should save a properly formatted phone number into osp_form_responses' do
+            expect(form_response_values['school_phone']).to include('(123) 456-7890')
+          end
+        end
+      end
+
+      #invalid answers
+      with_shared_context 'using a set of question keys and invalid answers that have validations' do
+        include_context 'Osp question key and answers saved in the db'
+        include_context 'setup osp controller instance var dependencies'
+        with_shared_context 'send osp form submit request' do
+          include_context 'all responses in key value form from the db'
+
+          it 'should save a properly formatted phone number into osp_form_responses' do
+            expect(form_response_values['school_phone']).to eq(nil)
+          end
+        end
+      end
+    end
   end
 
   context 'when user is an approved osp user and there are errors' do

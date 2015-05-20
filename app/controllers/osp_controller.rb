@@ -13,6 +13,7 @@ class OspController < ApplicationController
   GON_PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
   DB_PAGE_NAME = { '1' => 'basic_information', '2' => 'academics', '3' => 'extracurricular_culture', '4' => 'facilities_staff' }
+  RESPONSE_VALIDATIONS = ['school_phone'] #eventually move into shared module that the queue daemon also uses to validate data
 
   def show
     @osp_data = OspData.new(@school) #add rescue here that shows nice error
@@ -85,7 +86,23 @@ class OspController < ApplicationController
   def validate_questions_and_answers(question_id, response_key, response_values)
     #TODO add validation here to only allow questions/answers that a school is registered for
     #Validate based on question type and for open text use same validation logic as JS
-    [question_id, response_key, [*response_values].uniq]
+    #eventually move into shared module that the queue daemon also uses to validate data
+    
+    if RESPONSE_VALIDATIONS.include?(response_key)
+      send("#{response_key}_validation".to_sym, question_id, response_key, response_values)
+    else
+      [question_id, response_key, [*response_values].uniq]
+    end
+  end
+
+  def school_phone_validation(question_id, response_key, response_values)
+    value = [*response_values].first.to_s
+    pn = value.gsub(/[^\d]/, '')
+    return nil unless pn.length == 10
+
+    phone_number = "(#{pn[0..2]}) #{pn[3..5]}-#{pn[6..9]}" #ex (345) 123-5678
+
+    [question_id, response_key, [phone_number]]
   end
 
   def save_response!(question_id, question_key, response_values, submit_time, esp_membership_id, is_approved_user)
@@ -101,7 +118,7 @@ class OspController < ApplicationController
   end
 
   def make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
-    rvals = response_values.map do |response_value|
+    rvals = [*response_values].map do |response_value|
       {
         entity_state: params[:state],
            entity_id: @school.id,
@@ -116,7 +133,7 @@ class OspController < ApplicationController
   end
 
   def make_nonOSP_response_blob(census_data_type, response_values, submit_time)
-    rvals = response_values.map do |response_value|
+    rvals = [*response_values].map do |response_value|
       {
           entity_state: params[:state],
           entity_id: @school.id,
@@ -185,7 +202,7 @@ class OspController < ApplicationController
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"
-    @parsley_defaults = "data-parsley-trigger=keyup data-parsley-blockhtmltags"
+    @parsley_defaults = "data-parsley-trigger=keyup data-parsley-blockhtmltags data-parsley-validation-threshold=0 "
     set_school_media_hashs_gon_var! #change to only appear on pages with the photo upload
 
     if db_page_name = DB_PAGE_NAME[params[:page]]

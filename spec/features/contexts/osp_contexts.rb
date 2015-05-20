@@ -174,7 +174,8 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
         puzzlegames:       2,
         videogames:        3,
         video_urls:        4,
-        normal_text_field: 5
+        normal_text_field: 5,
+        school_phone:      6
     }
   end
   let(:questions) do
@@ -231,6 +232,17 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             config: {
                 'validations' => {
                     'data-parsley-blockhtmltags' => ''
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:school_phone],
+            esp_response_key: :school_phone,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-phonenumber' => ''
                 }
             }.to_json
         }

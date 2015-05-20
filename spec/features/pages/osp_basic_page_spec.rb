@@ -179,6 +179,11 @@ describe 'OSP Basic Page' do
           include_example 'should not submit value in text field'
         end
       end
+      with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :school_phone, js: true do
+        with_shared_context 'within textarea field', :school_phone do
+          include_example 'should not submit value in text field'
+        end
+      end
     end
   end
 
