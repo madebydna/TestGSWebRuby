@@ -64,8 +64,8 @@ class FilterBuilder
             in: add_vouchers_callbacks,
             de: [],
             ga: [],
-            ok: []
-
+            ok: [],
+            oh: add_vouchers_callbacks
         }
     ).stringify_keys!
   end
