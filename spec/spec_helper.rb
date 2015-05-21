@@ -214,6 +214,13 @@ Rails.application.routes.default_url_options[:trailing_slash] = true
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
+  config.backtrace_exclusion_patterns = [
+    /\/lib\d*\/ruby\//,
+    /org\/jruby\//,
+    /bin\//,
+    /lib\/rspec\/(core|expectations|matchers|mocks)/,
+    /gems/
+  ]
   config.include Capybara::DSL
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
