@@ -8,7 +8,7 @@ class OspData
 
   CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
 
-  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_served' => 'level' , 'school_url' => 'home_page_url'}
+  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url'}
 
 
 
