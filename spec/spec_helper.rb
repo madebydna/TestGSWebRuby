@@ -136,8 +136,7 @@ def process_args(args)
 end
 
 def disconnect_connection_pools(db)
-  ActiveRecord::Base.connection_handler.connection_pools.
-    values.each do |pool|
+  ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
     if pool.connections.present? &&
       ( pool.connections.first.
         current_database == "#{db}_test" )
@@ -147,7 +146,7 @@ def disconnect_connection_pools(db)
 end
 
 def disconnect_all_connection_pools
-  ActiveRecord::Base.connection_handler.connection_pools.values.each do |pool|
+  ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
     pool.disconnect!
   end
 end
