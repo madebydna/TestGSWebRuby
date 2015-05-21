@@ -21,11 +21,10 @@ class Loader
   end
 
   def self.determine_loading_class(source ,data_type)
-    # The esp loader class write happens only from Form UI now
     if  source == 'osp_form'
         if census_data_type?(data_type)
           CensusLoading::Loader
-        elsif data_type == 'school_data'
+        elsif  OspData::SCHOOL_KEY_TO_ESP_KEY[data_type]
           SchoolLoading::Loader
         else
           EspResponseLoading::Loader

@@ -4,6 +4,8 @@ class SchoolLoading::Loader < SchoolLoading::Base
   DATA_TYPE = :school_data
 
   def load!
+    # require 'pry'
+    # binding.pry
     updates.each do |update|
       next if update.blank?
 

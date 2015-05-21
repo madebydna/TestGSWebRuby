@@ -32,7 +32,7 @@ module CachedCharacteristicsMethods
   end
 
   def created_time(name)
-    if valid_characteristic_cache(characteristics[name]) && characteristics[name].present?
+    if valid_characteristic_cache(characteristics[name]) && characteristics[name].present? && characteristics[name].first['created'].present?
       Time.parse(characteristics[name].first['created'])
     end
   end
