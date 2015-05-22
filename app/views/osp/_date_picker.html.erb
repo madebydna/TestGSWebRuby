@@ -13,4 +13,7 @@
     </h3>
       <input type="text" onkeydown="return false" class="form-control datepicker input-field-sm" data-date-format="mm/dd/yyyy" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>">
   </div>
+
+  <%= javascript_include_tag("bootstrap-datepicker.min.js") %>
+  <%= stylesheet_link_tag("bootstrap-datepicker3.css") %>
 </div>
