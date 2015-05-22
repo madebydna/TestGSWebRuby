@@ -40,14 +40,14 @@ FactoryGirl.define do
 
     trait :with_approved_superuser_membership do
       ignore do
-        school_id 1 #default
-        school_id_2 2
-        state 'ca' #default
+        school_id nil #default
+        state nil #default
       end
 
       after(:create) do |user, evaluator|
-        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id,state:evaluator.state,member_id: user.id)
-        FactoryGirl.create(:esp_membership, :with_approved_status ,school_id: evaluator.school_id_2,state:evaluator.state,member_id: user.id)
+        FactoryGirl.create(:esp_membership, :with_approved_status, school_id: evaluator.school_id, state: evaluator.state, member_id: user.id)
+        FactoryGirl.create(:role, id: 8)
+        FactoryGirl.create(:member_role, role_id: 8, member_id: user.id)
       end
     end
 

@@ -1,14 +1,30 @@
 require 'spec_helper'
 
+shared_context 'with state=ca and school_id=1' do
+  let(:state) { 'ca' }
+  let(:school_id) { 1 }
+end
+
 shared_context 'user esp_membership status is' do | user_type |
-  factory_girl_mapping = {
-    approved: :with_approved_esp_membership,
-    provisional: :with_provisional_esp_membership
+  include_context 'with state=ca and school_id=1'
+  let(:factory_girl_mapping) {
+    {
+      approved: :with_approved_esp_membership,
+      provisional: :with_provisional_esp_membership,
+      super: :with_approved_superuser_membership
+    }
+  }
+  let(:factory_girl_options) {
+    {
+      approved: {state: state, school_id: school_id},
+      provisional: {state: state, school_id: school_id},
+      super: {state: nil, school_id: nil}
+    }
   }
 
-  let(:current_user) { FactoryGirl.create(:user, factory_girl_mapping[user_type]) }
+  let(:current_user) { FactoryGirl.create(:user, factory_girl_mapping[user_type], factory_girl_options[user_type]) }
 
-  after { clean_models User, UserProfile, EspMembership }
+  after { clean_models :gs_schooldb, User, UserProfile, EspMembership, Role, MemberRole }
 end
 
 shared_context 'set question and request keys' do
@@ -80,8 +96,6 @@ end
 #needs to execute after current user is set
 shared_context 'setup osp controller instance var dependencies' do
   let(:esp_membership) { current_user.esp_memberships.first }
-  let(:state) { esp_membership.state }
-  let(:school_id) { esp_membership.school_id }
   let(:school) { FactoryGirl.build(:alameda_high_school, id: school_id, state: state) }
 
   before do

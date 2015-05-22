@@ -71,62 +71,66 @@ describe Admin::OspController do
       end
     end
 
-    context 'when user is an approved osp user and there are no errors' do
-      include_context 'user esp_membership status is', :approved
-      include_context 'using a basic set of question keys and answers'
-      include_context 'Osp question key and answers saved in the db'
-      include_context 'setup osp controller instance var dependencies'
-      with_shared_context 'send osp form submit request' do
-        it 'should insert rows into update_queue and osp_form_responses tables' do
-          expect(UpdateQueue.count).to_not be 0
-          expect(OspFormResponse.count).to_not be 0
-        end
-  
-        it 'should insert the same blobs into update_queue and form_response tables' do
-          update_queue_blobs = UpdateQueue.all.map(&:update_blob)
-          osp_form_response_blobs = OspFormResponse.all.map(&:response)
-          expect(update_queue_blobs.count).to eql(osp_form_response_blobs.count)
-  
-          update_queue_blobs.each do |update_queue_blob|
-            expect(osp_form_response_blobs).to include(update_queue_blob)
+    [:approved, :super].each do |status|
+       context "when user is a #{status} osp user and there are no errors" do
+         with_shared_context 'user esp_membership status is', status do
+          include_context 'using a basic set of question keys and answers'
+          include_context 'Osp question key and answers saved in the db'
+          include_context 'setup osp controller instance var dependencies'
+          with_shared_context 'send osp form submit request' do
+            it 'should insert rows into update_queue and osp_form_responses tables' do
+              expect(UpdateQueue.count).to_not be 0
+              expect(OspFormResponse.count).to_not be 0
+            end
+      
+            it 'should insert the same blobs into update_queue and form_response tables' do
+              update_queue_blobs = UpdateQueue.all.map(&:update_blob)
+              osp_form_response_blobs = OspFormResponse.all.map(&:response)
+              expect(update_queue_blobs.count).to eql(osp_form_response_blobs.count)
+      
+              update_queue_blobs.each do |update_queue_blob|
+                expect(osp_form_response_blobs).to include(update_queue_blob)
+              end
+            end
+            it 'should use the query parameter question keys as keys in the response blobs' do
+              osp_form_response_keys = OspFormResponse.all.map { |item| JSON.parse(item.response).keys.first }
+              question_keys_and_answers.each_key do |key|
+                expect(osp_form_response_keys).to include(key.to_s)
+              end
+            end
+            it 'should insert a blob that uses the current user and state/school_id from the request' do
+              osp_form_response_values = OspFormResponse.all.map { |item| JSON.parse(item.response).values.first }.flatten
+              osp_form_response_values.each do |value_hash|
+                expect(value_hash['entity_state']).to eql(state)
+                expect(value_hash['member_id']).to eql(esp_membership.id)
+                expect(value_hash['entity_id']).to eql(school_id)
+              end
+            end
+            it 'should insert a osp_form_response row that uses the current users esp_membership_id' do
+              membership_ids = OspFormResponse.all.map(&:esp_membership_id)
+              membership_ids.each do |id|
+                expect(id).to eql(esp_membership.id)
+              end
+            end
+    
+            it 'should escape html, iframe and script tags' do
+              # escaped method is called
+              # escaped method is acoutally escaping
+            end
           end
-        end
-        it 'should use the query parameter question keys as keys in the response blobs' do
-          osp_form_response_keys = OspFormResponse.all.map { |item| JSON.parse(item.response).keys.first }
-          question_keys_and_answers.each_key do |key|
-            expect(osp_form_response_keys).to include(key.to_s)
+    
+          context 'send osp form submit request' do
+            after { clean_models UpdateQueue, OspFormResponse }
+    
+            it 'should have called flash_success' do
+              expect(controller).to receive(:flash_success)
+              post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
+            end
           end
-        end
-        it 'should insert a blob that uses the current user and state/school_id from the request' do
-          osp_form_response_values = OspFormResponse.all.map { |item| JSON.parse(item.response).values.first }.flatten
-          osp_form_response_values.each do |value_hash|
-            expect(value_hash['entity_state']).to eql(state)
-            expect(value_hash['member_id']).to eql(esp_membership.id)
-            expect(value_hash['entity_id']).to eql(school_id)
-          end
-        end
-        it 'should insert a osp_form_response row that uses the current users esp_membership_id' do
-          membership_ids = OspFormResponse.all.map(&:esp_membership_id)
-          membership_ids.each do |id|
-            expect(id).to eql(esp_membership.id)
-          end
-        end
-
-        it 'should escape html, iframe and script tags' do
-          # escaped method is called
-          # escaped method is acoutally escaping
-        end
-      end
-
-      context 'send osp form submit request' do
-        after { clean_models UpdateQueue, OspFormResponse }
-
-        it 'should have called flash_success' do
-          expect(controller).to receive(:flash_success)
-          post :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
         end
       end
     end
+
 
     #Section for testing Validations
     context 'when user is an approved osp user and there are no errors' do
