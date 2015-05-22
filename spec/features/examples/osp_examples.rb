@@ -69,3 +69,7 @@ end
 shared_example 'should have go to school profile link' do
   subject.find_link('Go to school profile', exact: true)
 end
+
+shared_example 'should display calendar picker' do
+  page.find('.datepicker')
+end

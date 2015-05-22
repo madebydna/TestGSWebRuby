@@ -144,6 +144,10 @@ describe 'OSP Basic Page' do
         with_shared_context 'within select box', :award_year do
           include_example 'should be disabled'
         end
+
+       with_shared_context 'find input field with name', :date_picker do
+         include_example 'should display calendar picker'
+        end
       end
     end
   end

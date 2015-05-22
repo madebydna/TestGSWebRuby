@@ -77,6 +77,7 @@ shared_context 'with a basic set of osp questions in db' do
       videogames:        6,
       award:             7,
       award_year:        8,
+      date_picker:       9,
     }
   end
   let(:questions) do
@@ -151,6 +152,12 @@ shared_context 'with a basic set of osp questions in db' do
             'question_ids' => [question_ids[:award_year]]
           }.to_json
       },
+      {
+          id: question_ids[:date_picker],
+          esp_response_key: :date_picker,
+          osp_question_group_id: nil,
+          question_type: 'date_picker'
+      }
     ]
   end
 
@@ -349,6 +356,13 @@ shared_context 'enter information into large text field' do
   before do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[:videogames]}-videogames']").set "upupdowndownleftrightleftrightBAstart"
+  end
+end
+
+shared_context 'find input field with name' do |name|
+  before do
+    form = osp_page.osp_form
+    form.find("form input[name='#{question_ids[name]}-#{name}']")
   end
 end
 
