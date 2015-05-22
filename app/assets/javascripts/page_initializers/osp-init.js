@@ -16,5 +16,7 @@ $(function() {
 
         GS.gsParsleyValidations.init();
         GS.photoUploads.init();
+
+        $('.datepicker').datepicker();
     }
 });
