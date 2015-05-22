@@ -1,13 +1,36 @@
 <div class="hidden-xs fr pt45 prl col-md-2 col-sm-3">
+  <div class="vdl pll">
+    <%= link_to 'Link to FAQ',  'http://www.google.com', target: '_blank' %>
+  </div>
+</div>
+<div class="visible-xs tac col-xs-12">
+  <%= link_to 'Link to FAQ',  'http://www.google.com', target: '_blank' %>  <div class="hdp"></div>
+</div>
+<div class="hidden-xs fr pt45 prl col-md-2 col-sm-3">
+  <div class=" vdl pll">
+    <button class="btn btn-default js-button-link"  data-link-value="<%= school_reviews_path(@school, anchor: 'topic1')%>" data-link-use-new-window='true'>
+      Post a message
+    </button>
+  </div>
+</div>
+
+<div class="visible-xs tac col-xs-12">
+  <%= link_to 'Post a message',  school_reviews_path(@school, anchor: 'topic1'), target: '_blank' %>
+  <div class="hdp"></div>
+</div>
+<div class="hidden-xs fr pt45 prl col-md-2 col-sm-3">
   <div class=" vdl pll">
     <button class="btn btn-default js-button-link"  data-link-value="<%= school_path(@school)%>" data-link-use-new-window='true'>
       Go to school profile
     </button>
   </div>
 </div>
-
 <div class="visible-xs tac col-xs-12">
-    <%= link_to 'Go to school profile', school_path(@school), target: '_blank' %>
-    <div class="hdp"></div>
+  <%= link_to 'Go to school profile', school_path(@school), target: '_blank' %>
+  <div class="hdp"></div>
 </div>
+
+
+
+
 
