@@ -1,14 +1,15 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
 <% media_hash = @school.school_media %>
-<% if media_hash != [] || (@header_metadata.school_video1 && youtube_parse_id_from_str(@header_metadata.school_video1).present? )  %>
+<% school_video_hash = school_video_hashes(@school.cache_results.values_for(EspKeys::SCHOOL_VIDEO).first, @header_metadata.school_video1).first %>
+<% if media_hash != [] || school_video_hash.present? %>
   <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do  %>
     <%= render "shared/section_header", category_placement:category_placement %>
     <div class="row limit-width-1200">
       <div class="mtl pvl clearfix">
         <%= @show_ads ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
           <div id="galleria">
-            <%= include_lightbox_youtube_video @header_metadata.school_video1 %>
+            <%= include_lightbox_school_video(school_video_hash) %>
             <%= include_lightbox_media(@school) %>
           </div>
         <%= @show_ads ?  '</div>'.html_safe : '' %>
