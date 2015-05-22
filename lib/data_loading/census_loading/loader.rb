@@ -71,8 +71,6 @@ class CensusLoading::Loader < CensusLoading::Base
   end
 
   def should_be_updated?(census_update, value_row)
-    # require 'pry'
-    # binding.pry
    value_row.blank? || (!census_update.created.present?) || (value_row.present? && !value_row.modified.present?)|| (value_row.present? && value_row.modified.present? &&  census_update.created.present? && census_update.created_before?(value_row.modified))
   end
 

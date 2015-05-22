@@ -6,15 +6,14 @@ class OspData
 
   SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
 
-  CENSUS_KEY_TO_ESP_KEY = {'student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
+  CENSUS_KEY_TO_ESP_KEY = {'pk_capacity' => 'capacity','student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
 
-  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url'}
+  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url' ,'school_phone' => 'phone' ,'school_fax' => 'fax'}
 
 
 
   def initialize(school)
     @cachified_school = decorate_school(school)
-    #probably should be doing a unique/distinct in mysql. Also if in ruby, may want to add limit
     @osp_form_responses = OspFormResponse.for_school(school).order(:osp_question_id, updated: :desc).to_a
   end
 

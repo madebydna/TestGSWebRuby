@@ -36,6 +36,14 @@ describe Loader do
       end
     end
 
+    context 'with a school data type and osp_form source' do
+
+      it 'should return CensusLoading::Loader' do
+        expect(Loader.determine_loading_class('osp_form','street')).to eq(SchoolLoading::Loader)
+      end
+    end
+
+
     context 'with a random data type and osp_form source ' do
 
       it 'should return EspResponseLoading::Loader' do

@@ -142,6 +142,7 @@ class OspController < ApplicationController
           entity_type: 'school',
           value: response_value,
           created: submit_time,
+          member_id: esp_membership_id,
           source: 'manually entered by school official'
       }.stringify_keys!
     end

@@ -20,11 +20,15 @@ class Loader
     datatype.to_s.downcase == 'osp'
   end
 
+  def self.school_data_type?(data_type)
+    OspData::SCHOOL_KEY_TO_ESP_KEY.values.include?(data_type)
+  end
+
   def self.determine_loading_class(source ,data_type)
     if  source == 'osp_form'
         if census_data_type?(data_type)
           CensusLoading::Loader
-        elsif  OspData::SCHOOL_KEY_TO_ESP_KEY[data_type]
+        elsif school_data_type?(data_type)
           SchoolLoading::Loader
         else
           EspResponseLoading::Loader
