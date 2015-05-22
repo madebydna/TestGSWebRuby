@@ -35,12 +35,16 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :all_filter_button, 'button', text: 'All'
     element :parents_filter_button, 'button', text: 'Parents'
     element :students_filter_button, 'button', text: 'Students'
+    element :reviews_topic_filter_button, 'button', text: 'All topics'
+    element :overall_topic_filter, 'a', text: 'Overall'
+    element :teachers_topic_filter, 'a', text: 'Teachers'
   end
 
   class ReviewSection < SitePrism::Section
     element :review_helpful_button, '.js_reviewHelpfulButton'
     element :flag_review_link, '.rs-report-review-link'
     element :review_flagged_text, 'div', text: 'You\'ve reported this review'
+    element :stars, '.iconx16-stars'
     element :one_star, '.i-16-orange-star .i-16-star-1'
     element :two_stars, '.i-16-orange-star .i-16-star-2'
     element :three_stars, '.i-16-orange-star .i-16-star-3'
@@ -79,6 +83,14 @@ class SchoolProfileReviewsPage < SitePrism::Page
     def school_leader_review?
       !! text.match(/- a school leader/)
     end
+
+    def overall_review?
+       has_stars?
+    end
+
+    def teacher_effectiveness_review?
+      !!text.match(/Teacher effectiveness/)
+    end
   end
 
   sections :reviews, ReviewSection, '.js_reviewsList .cuc_review', visible: true
@@ -105,6 +117,16 @@ class SchoolProfileReviewsPage < SitePrism::Page
 
   def filter_by_students
     reviews_list_header.students_filter_button.click
+  end
+
+  def filter_by_overall_topic
+    reviews_list_header.reviews_topic_filter_button.click
+    reviews_list_header.overall_topic_filter.click
+  end
+
+  def filter_by_teachers_topic
+    reviews_list_header.reviews_topic_filter_button.click
+    reviews_list_header.teachers_topic_filter.click
   end
 end
 

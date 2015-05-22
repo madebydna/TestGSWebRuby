@@ -84,6 +84,7 @@ body { padding-top: 50px }
 //use in media query for less that 480
 .pl35 {padding-left: 35px}
 .pl25 {padding-left: 25px}
+.pl60 {padding-left: 60px}
 .pt-1 { padding-top: 1% }
 
 .mt3 {margin-top: 3px;}
@@ -370,4 +371,15 @@ hr.brand-bar {
 .profile-image{
   width: 130px;
   height: 130px;
+}
+
+.reviews-topic-filter {
+  float: left;
+}
+
+@media only screen and (max-width: 413px) {
+  .reviews-topic-filter {
+    float: right;
+    clear: right;
+  }
 }

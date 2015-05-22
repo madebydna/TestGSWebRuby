@@ -232,6 +232,46 @@ shared_context 'with seven student reviews' do
   end
 end
 
+
+
+shared_context 'with seven parent overall reviews' do
+  let!(:overall_question) do
+    FactoryGirl.create(:overall_rating_question)
+  end
+  # let!(:review_answer) do
+  #   FactoryGirl.build(:review_answer_overall)
+  # end
+  let!(:seven_parent_reviews) do
+    reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school, question: overall_question)
+    reviews.each do |review|
+      FactoryGirl.create(:parent_school_member, school: review.school, user: review.user)
+      # FactoryGirl.create(:review_answer_overall, review: review)
+    end
+    reviews
+  end
+  after do
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+  end
+end
+
+
+shared_context 'with seven student teacher effectiveness reviews' do
+  let!(:teacher_question) do
+    FactoryGirl.create(:teacher_question)
+  end
+  let!(:seven_student_reviews) do
+    reviews = FactoryGirl.create_list(:teacher_effectiveness_review, 7, active: true, school: school, question: teacher_question )
+    reviews.each do |review|
+      FactoryGirl.create(:student_school_member, school: review.school, user: review.user)
+      # FactoryGirl.create(:review_answer_teacher, review: review)
+    end
+    reviews
+  end
+  after do
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+  end
+end
+
 shared_context 'with active review' do
   let!(:active_review) do
     FactoryGirl.create(:five_star_review, active: true, school: school)

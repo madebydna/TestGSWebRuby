@@ -234,6 +234,47 @@ describe 'School Profile Reviews Page', js: true do
         end
       end
     end
+
+    with_shared_context 'with seven parent overall reviews' do
+      include_context 'with seven student teacher effectiveness reviews'
+      with_shared_context 'signed in verified user' do
+        with_shared_context 'Visit School Profile Reviews' do
+          it { is_expected.to have_reviews }
+          it { is_expected.to have_reviews_list_header }
+
+          with_subject :reviews do
+            its(:size) { is_expected.to eq(10) }
+          end
+
+          with_subject :reviews_list_header do
+            it { is_expected.to have_reviews_topic_filter_button }
+            include_example 'should have reviews filter with default All topics'
+          end
+
+          when_I :filter_by_overall_topic do
+            with_subject :reviews do
+              it 'shows only overall reviews' do
+                page_object.wait_for_reviews
+                subject.each do |review|
+                  expect(review).to be_overall_review
+                end
+              end
+            end
+          end
+
+          when_I :filter_by_teachers_topic do
+            with_subject :reviews do
+              it 'shows only teachers reviews' do
+                page_object.wait_for_reviews
+                subject.each do |review|
+                  expect(review).to be_teacher_effectiveness_review
+                end
+              end
+            end
+          end
+        end
+      end
+    end
   end
 end
 
