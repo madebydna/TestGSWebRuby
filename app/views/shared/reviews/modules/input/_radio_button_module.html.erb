@@ -1,5 +1,7 @@
 <% topic_name = question.topic.name %>
-<% reviews_for_topic = @school_reviews.by_topic[topic_name] %>
+<% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
+<% answer_summary_text = reviews_for_topic.answer_summary_text %>
+
 <%
    f
    principal = @school_member ? @school_member.principal? : false
@@ -7,9 +9,9 @@
 <div class="topical-review-question-container left">
   <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
   <% if principal %>
-    <% if reviews_for_topic.present? %>
+    <% if answer_summary_text %>
       <div class="font-size-large mtxl ptxl">
-        <%= SchoolProfileReviewsDecorator.decorate(reviews_for_topic, self).answer_summary_text %>
+        <%= answer_summary_text %>
       </div>
     <% end %>
   <% else %>
@@ -25,9 +27,9 @@
 <div class="topical-review-question-container right">
   <% unless options[:comment_required] %>
     <div class="ptl phl <%= principal ? 'dn' : '' %> js-topicalReviewHaveAVoice">
-      <% if reviews_for_topic.present? %>
+      <% if answer_summary_text.present? %>
         <div class="font-size-large mtxl ptxl">
-          <%= SchoolProfileReviewsDecorator.decorate(reviews_for_topic, self).answer_summary_text %>
+          <%= answer_summary_text %>
         </div>
       <% else %>
         <%= render 'shared/reviews/modules/output/have_a_voice' %>

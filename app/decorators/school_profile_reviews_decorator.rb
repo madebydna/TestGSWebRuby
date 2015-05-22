@@ -20,6 +20,7 @@ module SchoolProfileReviewsDecorator
   end
 
   def answer_summary_text
+    return nil unless score_distribution.present?
     distribution = score_distribution.sort_by { |k, v| v }.reverse
     text =  "Most users (#{distribution.first.last}) say "
     text << h.content_tag('span', distribution.first.first, class:'open-sans_cb')
@@ -28,8 +29,8 @@ module SchoolProfileReviewsDecorator
 
   def see_all_reviews_phrase
     phrase = 'See '
-    phrase << 'all ' if size > 1
-    phrase << h.pluralize(size, 'review', 'reviews')
+    phrase << 'all ' if count > 1
+    phrase << h.pluralize(count, 'review', 'reviews')
     phrase
   end
 

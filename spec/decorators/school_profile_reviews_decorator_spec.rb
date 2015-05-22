@@ -49,6 +49,11 @@ describe SchoolProfileReviewsDecorator, type: :view do
     it 'should display the number of occurrences' do
       expect(subject).to match "(#{6})"
     end
+
+    context 'when there are no answers and therefore an empty score distribution' do
+      let(:score_distribution) { [] }
+      it { is_expected.to be_nil }
+    end
   end
 
   describe '#see_all_reviews_phrase' do
