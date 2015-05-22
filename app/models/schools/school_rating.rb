@@ -58,10 +58,6 @@ class SchoolRating < ActiveRecord::Base
     log_review_changed(state, school_id, member_id)
   end
 
-  def self.cache_time
-    LocalizedProfiles::Application.config.hub_recent_reviews_cache_time.minutes.from_now
-  end
-
   def school=(school)
     @school = school
     if school.nil?
@@ -244,31 +240,8 @@ class SchoolRating < ActiveRecord::Base
     end
   end
 
-  def self.find_recent_reviews_in_hub(state_abbr, collection_id, max_reviews = 2)
-    # Because our build fails with native sql otherwise
-    # https://jenkins.greatschools.org/job/GSWebRubyAlpha%20-%20All%20Specs/2/console
-    table = Rails.env.test? ?  "_#{state_abbr.downcase}_test" : "_#{state_abbr.downcase}"
-
-    SchoolRating.joins("JOIN #{table}.school s ON s.id=school_rating.school_id")
-                .joins("JOIN #{table}.school_metadata m ON m.school_id=s.id")
-                .where("s.active=1 AND m.meta_key='#{School::METADATA_COLLECTION_ID_KEY}'")
-                .where("m.meta_value=? AND status='p'", collection_id)
-                .where("DATE_SUB(CURDATE(),INTERVAL 90 DAY) <= posted AND school_rating.state=?", state_abbr.upcase)
-                .order('posted desc')
-                .limit(max_reviews)
-                .to_a
-                .map { |rating| rating.count = recent_reviews_in_hub_count(rating.state, rating.school.id); rating  }
-  end
-
   def reported?
     Array(reported_entities).any?
-  end
-
-  def self.recent_reviews_in_hub_count(state_abbr, school_id)
-    cache_key = "recent_reviews_count-state:#{state_abbr}-school_id:#{school_id}"
-    Rails.cache.fetch(cache_key, expires_in: SchoolRating.cache_time, race_condition_ttl: SchoolRating.cache_time) do
-      SchoolRating.where(state: state_abbr, school_id: school_id).published.count
-    end
   end
 
   def send_thank_you_email_if_published

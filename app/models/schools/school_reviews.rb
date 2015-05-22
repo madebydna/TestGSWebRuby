@@ -18,7 +18,7 @@ class SchoolReviews
   include ReviewScoping
 
   def reviews
-    reviews_proc.call
+    @reviews ||= reviews_proc.call
   end
 
   def initialize(review_cache = nil, &reviews_proc)
@@ -26,12 +26,16 @@ class SchoolReviews
     @review_cache = review_cache
   end
 
-  def average_5_star_rating
-    review_cache.try(:star_rating) || reviews.five_star_rating_reviews.average_score.round
+  def number_of_active_reviews
+    review_cache.try(:num_reviews) || reviews.size
   end
 
   def number_of_reviews_with_comments
-    review_cache.try(:num_reviews) || reviews.number_with_comments
+    reviews.number_with_comments
+  end
+
+  def number_of_contributors
+    reviews.number_of_distinct_users
   end
 
   def number_of_5_star_ratings
@@ -39,12 +43,12 @@ class SchoolReviews
     review_cache.try(:num_ratings) || reviews.five_star_rating_reviews.count_having_numeric_answer
   end
 
-  def five_star_rating_score_distribution
-    review_cache.try(:star_counts) || reviews.five_star_rating_reviews.score_distribution
+  def average_5_star_rating
+    review_cache.try(:star_rating) || reviews.five_star_rating_reviews.average_score.round
   end
 
-  def self.calc_review_data(reviews)
-    ReviewCaching.new(reviews).calc_review_data
+  def five_star_rating_score_distribution
+    reviews.five_star_rating_reviews.score_distribution
   end
 
 end

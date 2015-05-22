@@ -26,6 +26,22 @@ describe SchoolReviews do
       end
     end
 
+    describe '#number_of_active_reviews' do
+      context 'with access to review cache' do
+        it 'should try and get number_of_active_reviews from review cache' do
+          subject.stub_chain('review_cache.num_reviews').and_return(8)
+          expect(subject.number_of_active_reviews).to eq(8)
+        end
+      end
+      context 'without access to review cache' do
+        it 'should return number of reviews' do
+          subject.stub_chain('review_cache.num_reviews').and_return(nil)
+          subject.stub_chain('reviews.size').and_return(10)
+          expect(subject.number_of_active_reviews).to eq(10)
+        end
+      end
+    end
+
     describe '#average_5_star_rating' do
       context 'with access to review cache' do
         it 'should try and get star_rating from review cache' do
@@ -43,12 +59,6 @@ describe SchoolReviews do
     end
 
     describe '#number_of_reviews_with_coments' do
-      context 'with access to review cache' do
-        it 'should try and get number of reviews with comments from review cache' do
-          subject.stub_chain('review_cache.num_reviews').and_return(8)
-          expect(subject.number_of_reviews_with_comments).to eq(8)
-        end
-      end
       context 'without access to review cache' do
         it 'should return the number of reviews with comments' do
           subject.stub_chain('review_cache.num_reviews').and_return(nil)
@@ -74,27 +84,12 @@ describe SchoolReviews do
       end
     end
 
-
     describe '#five_star_rating_score_distribution' do
-      context 'with access to review cache' do
-        it 'should try and get the five star rating distribution from review cache' do
-          subject.stub_chain('review_cache.star_counts').and_return(4)
-          expect(subject.five_star_rating_score_distribution).to eq(4)
-        end
-      end
       context 'without access to review cache' do
         it 'should return number of 5 star ratings' do
-          subject.stub_chain('review_cache.star_counts').and_return(nil)
           subject.stub_chain('reviews.five_star_rating_reviews.score_distribution').and_return(3)
           expect(subject.five_star_rating_score_distribution).to eq(3)
         end
-      end
-    end
-
-    describe '.calc_review_data' do
-      it 'should return an instance of Review Caching' do
-        reviews = []
-        expect(SchoolReviews.calc_review_data(reviews)).to be_a(Hashie::Mash)
       end
     end
   end

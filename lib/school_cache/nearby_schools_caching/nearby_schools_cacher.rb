@@ -29,37 +29,16 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
         gs_rating: school_obj.great_schools_rating.present? ? school_obj.great_schools_rating : 'nr',
         type: school_type(school_obj),
         level: school_decorator_obj(school_obj),
-        review_score: school_review_avg_score(school_obj),
-        review_count: school_review_count(school_obj),
         school_media: school_media(school_obj)
     }
   end
 
   def school_type(school_obj)
     school_type_display(school_obj.type)
-
   end
 
   def school_media(school_obj)
     (SchoolProfileDecorator.decorate(school_obj)).uploaded_photo(70)
-  end
-
-  def school_review_count(school_obj)
-    school_review_obj(school_obj).rating_averages.overall.counter
-  end
-
-  def school_review_avg_score(school_obj)
-    school_review_obj(school_obj).rating_averages.overall.avg_score
-  end
-
-  def school_review_obj(school_obj)
-    begin
-      @review_results_obj[school_obj] ||=
-        (SchoolReviews.calc_review_data(school_obj.reviews))
-    rescue StandardError => e
-      puts e
-    end
-
   end
 
   def school_decorator_obj(school_obj)

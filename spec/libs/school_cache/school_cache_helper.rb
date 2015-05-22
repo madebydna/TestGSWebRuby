@@ -50,22 +50,7 @@ module SchoolCacheHelper
     reviews = {
       "reviews_snapshot" => {
         "num_ratings" => 8,
-        "num_reviews" => 3,
-        "most_recent_reviews" => [
-          {
-            "comments" => "This school makes it seem as though it wants the best for its students. It trys to act as if it can keep up with the times by installing smartboards in class rooms, but godforbid if a student wants to bring in a tablet in order to keep their lives more organized and to help them accel in classes. just a few minutes ago a held a brief meeting with the principle whhere he told me i could not use my tablet , in which i made clear i would hold all responsibility for , in my AP Classes in order to help me accel. In stead he said it would be a distraction to me and it will wind up lost or stolen, like he some how kneew what kind of person i am or the responsibility to have. i inforemed him of how i could take off any games and leave it with just the note pad app., but to him it wasnt good enough. So to really cap this i think its safe to say that they dont care about kids education because had he said yes id be in class learning right now instead of using the fulltime accessablie computers, But i guess they are not distracking huih?!",
-            "posted" => "2012-01-03",
-            "who" => "other",
-            "quality" => "1"
-          },
-          {
-            "comments" => "All 4 of my children have gone to Middletown HS and I am very pleased with the education they received.  All of my children have gone on to college and have become very successful!  I give credit to Middletown HS for giving them the foundation to succeed.",
-            "posted" => "2011-02-22",
-            "who" => "parent",
-            "quality" => "5"
-          }
-        ],
-        "star_counts"=>[0, 1, 1, 0, 0, 1]
+        "num_reviews" => 3
       }
     }
     yield reviews if block_given?

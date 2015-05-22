@@ -11,23 +11,35 @@ describe ReviewCalculations do
   let(:five_star_review_value_3) { FactoryGirl.build(:five_star_review, answer_value: 3) }
   let(:five_star_review_value_1) { FactoryGirl.build(:five_star_review, answer_value: 1) }
   let(:non_numeric_review) { FactoryGirl.build(:teacher_effectiveness_review) }
+  let(:user_1) { FactoryGirl.build(:verified_user) }
+  let(:user_2) { FactoryGirl.build(:verified_user) }
 
   subject { reviews_array }
 
   shared_context 'with 2 five star reviews values: 4 & 3 AND 1 non-numeric review' do
     before do
-      subject << five_star_review_value_4
-      subject << five_star_review_value_3
-      subject << non_numeric_review
+      reviews_array << five_star_review_value_4
+      reviews_array << five_star_review_value_3
+      reviews_array << non_numeric_review
     end
   end
 
   shared_context 'with 4 five star reviews values: 4,3,3,1' do
     before do
-      subject << five_star_review_value_4
-      subject << five_star_review_value_3
-      subject << five_star_review_value_3
-      subject << five_star_review_value_1
+      reviews_array << five_star_review_value_4
+      reviews_array << five_star_review_value_3
+      reviews_array << five_star_review_value_3
+      reviews_array << five_star_review_value_1
+    end
+  end
+
+  shared_context 'with three reviews with a single user and two reviews with a different user' do
+    before do
+      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
+      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
+      reviews_array << FactoryGirl.build(:five_star_review, user: user_1)
+      reviews_array << FactoryGirl.build(:five_star_review, user: user_2)
+      reviews_array << FactoryGirl.build(:five_star_review, user: user_2)
     end
   end
 
@@ -146,4 +158,10 @@ describe ReviewCalculations do
     end
   end
 
+  describe '#number_of_distinct_users' do
+    subject { reviews_array.number_of_distinct_users }
+    with_shared_context 'with three reviews with a single user and two reviews with a different user' do
+      it { is_expected.to eq(2) }
+    end
+  end
 end

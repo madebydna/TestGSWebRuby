@@ -52,16 +52,17 @@ describe SchoolProfileReviewsDecorator, type: :view do
   end
 
   describe '#see_all_reviews_phrase' do
-    before do
-      allow(reviews).to receive(:number_of_reviews_with_comments).and_return number_of_reviews_with_comments
-    end
     subject { reviews.see_all_reviews_phrase }
     context 'when there are 10 reviews' do
-      let(:number_of_reviews_with_comments) { 10 }
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 10)
+      end
       it { is_expected.to eq('See all 10 reviews')}
     end
     context 'when there is 1 review' do
-      let(:number_of_reviews_with_comments) { 1 }
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 1)
+      end
       it { is_expected.to eq('See 1 review')}
     end
   end

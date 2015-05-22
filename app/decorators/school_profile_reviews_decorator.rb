@@ -28,8 +28,8 @@ module SchoolProfileReviewsDecorator
 
   def see_all_reviews_phrase
     phrase = 'See '
-    phrase << 'all ' if number_of_reviews_with_comments > 1
-    phrase << h.pluralize(number_of_reviews_with_comments, 'review', 'reviews')
+    phrase << 'all ' if size > 1
+    phrase << h.pluralize(size, 'review', 'reviews')
     phrase
   end
 
