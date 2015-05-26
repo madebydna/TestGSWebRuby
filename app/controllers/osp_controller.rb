@@ -134,7 +134,7 @@ class OspController < ApplicationController
     {question_key => rvals}.to_json
   end
 
-  def make_nonOSP_response_blob(census_data_type, response_values, submit_time)
+  def make_nonOSP_response_blob(census_data_type, response_values, submit_time,esp_membership_id)
     rvals = [*response_values].map do |response_value|
       {
           entity_state: params[:state],
@@ -154,7 +154,7 @@ class OspController < ApplicationController
     begin
      data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key] || OspData::SCHOOL_KEY_TO_ESP_KEY[question_key]
       if data_type.present?
-        response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time)
+        response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time,esp_membership_id)
         create_osp_form_response!(question_id, esp_membership_id, response_blob)
         create_update_queue_row!(response_blob) if is_approved_user
       end
