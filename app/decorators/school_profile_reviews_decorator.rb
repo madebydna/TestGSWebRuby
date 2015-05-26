@@ -27,6 +27,17 @@ module SchoolProfileReviewsDecorator
     text.html_safe
   end
 
+  def see_comments_text
+    text = "See ratings"
+    number_with_comments = having_comments.count
+    if number_with_comments > 0
+      text = 'See '
+      text << 'all ' if number_with_comments > 1
+      text << h.pluralize(number_with_comments, 'comment', 'comments')
+    end
+    text
+  end
+
   def see_all_reviews_phrase
     phrase = 'See '
     phrase << 'all ' if count > 1

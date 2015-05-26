@@ -57,6 +57,52 @@ describe SchoolProfileReviewsDecorator, type: :view do
   end
 
   describe '#see_all_reviews_phrase' do
+
+    subject { reviews.see_comments_text }
+    context 'when there are 10 reviews with comments' do
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 10)
+      end
+      before do
+        allow(reviews).to receive_message_chain(:having_comments, :count).
+                              and_return 10
+      end
+      it { is_expected.to eq('See all 10 comments') }
+    end
+    context 'when there is 1 review with a comment' do
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 1)
+      end
+      before do
+        allow(reviews).to receive_message_chain(:having_comments, :count).
+                              and_return 1
+      end
+      it { is_expected.to eq('See 1 comment') }
+    end
+    context 'when there are 10 reviews with no comments' do
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 10, comment: '')
+      end
+      before do
+        allow(reviews).to receive_message_chain(:having_comments, :count).
+                              and_return 0
+      end
+      it { is_expected.to eq('See ratings') }
+    end
+    context 'when there is 5 reviews with comments 1 review without comments' do
+      let(:reviews) do
+        FactoryGirl.build_list(:review, 5)
+        FactoryGirl.build(:review, comment: '')
+      end
+      before do
+        allow(reviews).to receive_message_chain(:having_comments, :count).
+                              and_return 5
+      end
+      it { is_expected.to eq('See all 5 comments') }
+    end
+  end
+
+  describe '#see_all_reviews_phrase' do
     subject { reviews.see_all_reviews_phrase }
     context 'when there are 10 reviews' do
       let(:reviews) do
