@@ -17,6 +17,9 @@ $(function() {
         GS.gsParsleyValidations.init();
         GS.photoUploads.init();
 
-        $('.datepicker').datepicker();
+        var $datepicker = $('.datepicker')
+        if ($datepicker.length > 0) {
+            $datepicker.datepicker();
+        }
     }
 });
