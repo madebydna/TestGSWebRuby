@@ -4,8 +4,6 @@ class SchoolLoading::Loader < SchoolLoading::Base
 
   def load!
     begin
-      updates.map{|update| update["value"] }.join(",")
-
 
       if updates.present?
         to_be_updated_value =  updates.map{|update| update["value"] }.join(",")
@@ -28,7 +26,7 @@ class SchoolLoading::Loader < SchoolLoading::Base
 
 
   def should_be_inserted?(update, existing_school)
-       (existing_school.present? && !existing_school.modified.present?)|| (existing_school.present? && existing_school.modified.present? &&  update.created.present? && Time.parse(update.created)  >  existing_school.modified)
+     (existing_school.present? && !existing_school.modified.present?)|| (existing_school.present? && existing_school.modified.present? &&  update.created.present? && Time.parse(update.created) +2.minutes >  existing_school.modified)
   end
 
 end
