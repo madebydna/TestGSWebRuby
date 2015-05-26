@@ -5,9 +5,12 @@ GS.reviews = GS.reviews || function($) {
         var filterByGroup = $(".js_reviewFilterButton");
 
         var reviewContentLayer = $(".js_reviewsList");
+        var reviewsListHeader = '#js_reviewsListHeader';
 
         var filterByTopicDropDown = $(".js_reviewTopicFilterDropDown");
         var selectTopicDropDownText = $(".js_reviewTopicFilterDropDownText");
+
+        var filterByTopicLink= $(".js_reviewTopicFilterLink");
 
         var getFieldValues = function(){
             var result = {};
@@ -52,6 +55,17 @@ GS.reviews = GS.reviews || function($) {
             }
         });
 
+        filterByTopicLink.on("click", "a", function () {
+            nextTenButton.addClass("dn");
+            var topicSelected = $(this).data("topic-filter");
+            selectTopicDropDownText.html(topicSelected + ' <b class="caret"></b>');
+            reviewContentLayer.html('');
+            filterByTopicDropDown.data("topic-selected", topicSelected);
+            var results = getFieldValues();
+            results['offset'] = 0;
+            callReviewsAjax(results, false);
+        });
+
         $("body").on("click", ".js_reviewHelpfulButton", function(){
           // disable button
 
@@ -82,6 +96,7 @@ GS.reviews = GS.reviews || function($) {
                 reviewContentLayer.append(html);
                 GS.reviewsAd.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
                 toggleNextTenButton(results);
+                window.location.href = reviewsListHeader;
             }.gs_bind(this));
         };
 
