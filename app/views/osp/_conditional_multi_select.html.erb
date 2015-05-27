@@ -21,7 +21,7 @@
         <%= display_question_label %>
       </span>
       <div class="mtm">
-        <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
+        <% is_none_active = preexisting_esp_values.include?(input_value) || 'None'  ? true : false  %>
         <%= render partial: 'shared/form_elements/checkbox_square', locals: {
                 key: "#{q_id}-#{response_key}[]",
                 value: input_value,
