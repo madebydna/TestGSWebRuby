@@ -24,7 +24,7 @@ class OspData
       school_key = SCHOOL_KEY_TO_ESP_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
       if census_key.present?
-        school_cache_values_from_census_data  = cachified_school.characteristcs_value_by_name(census_key, grade: nil, number_value: false).to_s.split(',')
+        school_cache_values_from_census_data  = cachified_school.census_value(census_key, grade: nil, number_value: false).to_s.split(',')
         if osp_response_values.present? && school_cache_values_from_census_data.present? && cachified_school.created_time(census_key).present?
           cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
         else
