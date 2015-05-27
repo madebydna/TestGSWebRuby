@@ -64,10 +64,22 @@ end
 
 shared_example 'should have go to school profile button' do
   subject.find_button('Go to school profile', exact: true)
+  end
+
+shared_example 'should have post a message button' do
+  subject.find_button('Post a message', exact: true)
 end
 
 shared_example 'should have go to school profile link' do
   subject.find_link('Go to school profile', exact: true)
+  end
+
+shared_example 'should have post a message link' do
+  subject.find_link('Post a message', exact: true)
+  end
+
+shared_example 'should have need help link' do
+  subject.find_link('Need help?', exact: true)
 end
 
 shared_example 'should display calendar picker' do

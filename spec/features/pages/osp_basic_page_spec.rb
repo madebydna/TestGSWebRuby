@@ -24,6 +24,7 @@ describe 'OSP Basic Page' do
       include_example 'should have a submit button'
       include_example 'should have basic school information'
       include_example 'should have school address'
+      include_example 'should have need help link'
 
     end
 
@@ -37,6 +38,7 @@ describe 'OSP Basic Page' do
       end
 
       include_example 'should have go to school profile button'
+      include_example 'should have post a message button'
     end
 
     describe_mobile do
@@ -47,6 +49,7 @@ describe 'OSP Basic Page' do
       end
 
       include_example 'should have go to school profile link'
+      include_example 'should have post a message link'
     end
   end
 
@@ -85,6 +88,9 @@ describe 'OSP Basic Page' do
       end
 
       describe_mobile_and_desktop do
+
+        # include_example 'should have need help link'
+
         with_shared_context 'click No Dress code and Dress code radio buttons' do
           with_shared_context 'within osp form' do
             include_example 'should only have one active button'
