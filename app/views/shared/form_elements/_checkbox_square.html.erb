@@ -6,7 +6,7 @@
 <% button_classes << ' btn btn-checkbox-square js-checkboxButton' #add default classes%>
 
 
-<!--<label class="pointer">-->
+<label class="pointer">
   <div class="<%= button_classes %>  <%= 'active' if active %>"
     data-toggle="button"
     data-checkbox-button-key="<%= key %>"
@@ -14,10 +14,11 @@
     readonly
   >
 
-  <input type="hidden" <%= "name=#{key} value=#{value}" if active %> />
-</div>
+  <input class="dn" <%= "name=#{key} value=#{value}" if active %> />
+  </div>
 
   <% if text.present? %>
     <span class='font-size-medium'><%=text%></span>
   <% end %>
-<!--</label>-->
+</label>
+
