@@ -87,4 +87,17 @@ describe '.find_by_school' do
     end
   end
 
+  describe '#overall?' do
+    context 'when its a overall topic' do
+      let(:review_topic) { FactoryGirl.create(:overall_topic) }
+      subject { review_topic.overall? }
+      it { is_expected.to eq(true) }
+    end
+    context 'when its a overall topic' do
+      let(:review_topic) { FactoryGirl.create(:teachers_topic) }
+      subject { review_topic.overall? }
+      it { is_expected.to eq(false) }
+    end
+  end
+
 end

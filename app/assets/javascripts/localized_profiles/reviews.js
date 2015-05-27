@@ -97,6 +97,8 @@ GS.reviews = GS.reviews || function($) {
                 GS.reviewsAd.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
                 toggleNextTenButton(results);
                 window.location.href = reviewsListHeader;
+                var chartData = $('.js-reviewsListChart').data('topic-chart');
+                GS.visualchart.drawBarChartReviewsList(JSON.stringify(chartData),'js_reviews_list_bar_chart_div');
             }.gs_bind(this));
         };
 

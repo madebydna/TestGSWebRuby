@@ -75,4 +75,11 @@ module ReviewScoping
   def number_with_comments
     having_comments.size
   end
+
+  def first_topic
+    @topic ||= (
+    map(&:topic).uniq.first
+    )
+  end
+
 end

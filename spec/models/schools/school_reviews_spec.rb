@@ -84,14 +84,6 @@ describe SchoolReviews do
       end
     end
 
-    describe '#five_star_rating_score_distribution' do
-      context 'without access to review cache' do
-        it 'should return number of 5 star ratings' do
-          subject.stub_chain('reviews.five_star_rating_reviews.score_distribution').and_return(3)
-          expect(subject.five_star_rating_score_distribution).to eq(3)
-        end
-      end
-    end
   end
 
 end

@@ -8,18 +8,18 @@
 
 
   <% topics = reviews.map(&:topic).uniq %>
-  <div class="clearfix pam">
+  <div class="clearfix bg-medium-gray pam">
     <div class="row">
       <div class="col-xs-12 col-sm-3">
         <div class="dropdown reviews-topic-filter margin-bottom-mobile">
           <button type="button"
-                  class="btn btn-default js_reviewTopicFilterDropDownText js_bootstrapExtDropdownText"
+                  class="btn btn-default pointer js_reviewTopicFilterDropDownText js_bootstrapExtDropdownText"
                   data-toggle="dropdown"
-                  href="#">All topics <b class="caret"></b></button>
+                  >All topics <b class="caret"></b></button>
           <ul class="dropdown-menu mll js_reviewTopicFilterDropDown" data-topic-selected="allTopics">
-            <li><a data-topic-filter="allTopics">All topics</a></li>
+            <li><a class="pointer" data-topic-filter="allTopics">All topics</a></li>
             <% topics.each do |topic| %>
-                <li><a data-topic-filter="<%= topic.name %>"><%= topic.name %></a></li>
+                <li><a class="pointer" data-topic-filter="<%= topic.name %>"><%= topic.name %></a></li>
             <% end %>
           </ul>
         </div>

@@ -1,5 +1,6 @@
 <div class="ma notranslate" style="width:250px;">
-    <% reviews_chart_array = @school_reviews.to_bar_chart_array %>
+    <% reviews_chart_array = SchoolProfileReviewsDecorator.decorate(
+            @school_reviews.five_star_rating_reviews, self).to_bar_chart_array %>
     <% reviews_bar_chart_div_id = "js_reviews_bar_chart_div" %>
 
     <div id="<%= reviews_bar_chart_div_id %>"><!--Div for bar chart--></div>

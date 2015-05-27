@@ -16,6 +16,7 @@ class SchoolReviews
   attr_accessor :review_cache, :reviews_proc
 
   include ReviewScoping
+  include ReviewCalculations
 
   def reviews
     @reviews ||= reviews_proc.call
@@ -47,8 +48,8 @@ class SchoolReviews
     review_cache.try(:star_rating) || reviews.five_star_rating_reviews.average_score.round
   end
 
-  def five_star_rating_score_distribution
-    reviews.five_star_rating_reviews.score_distribution
+  def self.calc_review_data(reviews)
+    ReviewCaching.new(reviews).calc_review_data
   end
 
 end

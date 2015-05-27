@@ -11,30 +11,39 @@ describe SchoolProfileReviewsDecorator, type: :view do
   subject { reviews }
 
   describe '#to_bar_chart_array' do
+    let(:overall_topic) { FactoryGirl.build(:overall_topic) }
+    let(:question) { FactoryGirl.build(:overall_rating_question, review_topic: overall_topic) }
+    let(:reviews) do
+      FactoryGirl.build_list(:five_star_review, 2, question: question)
+    end
     before do
-      allow(reviews).to receive(:five_star_rating_score_distribution) do
+      allow(reviews).to receive(:score_distribution_for_topic) do
         {
-          '1' => 1,
-          '3' => 1,
-          '2' => 1,
-          '5' => 1,
-          '4' => 1
+            '1' => 1,
+            '3' => 1,
+            '2' => 1,
+            '5' => 1,
+            '4' => 1
         }
       end
     end
-    subject { reviews.to_bar_chart_array }
+    subject { reviews }
     it 'should order stars in descending order' do
-      chart_keys = subject.map(&:first)
-      expect(chart_keys).to eq(['Stars', '5 stars', '4 stars', '3 stars', '2 stars', '1 star'])
+      allow(subject).to receive(:first_topic).and_return(overall_topic)
+      allow(overall_topic).to receive_message_chain(:review_questions, :first, :response_array).
+                                  and_return(question.response_array)
+      allow(subject).to receive_message_chain(:topic, :overall?).and_return(true)
+      chart_keys = subject.to_bar_chart_array.map(&:first)
+      expect(chart_keys).to eq(['Overall', '5 stars', '4 stars', '3 stars', '2 stars', '1 star'])
     end
   end
 
   describe '#answer_summary_text' do
     let(:score_distribution) do
       {
-        foo: 2,
-        bar: 6,
-        baz: 3
+          foo: 2,
+          bar: 6,
+          baz: 3
       }
     end
     before do
@@ -108,13 +117,28 @@ describe SchoolProfileReviewsDecorator, type: :view do
       let(:reviews) do
         FactoryGirl.build_list(:review, 10)
       end
-      it { is_expected.to eq('See all 10 reviews')}
+      it { is_expected.to eq('See all 10 reviews') }
     end
     context 'when there is 1 review' do
       let(:reviews) do
         FactoryGirl.build_list(:review, 1)
       end
-      it { is_expected.to eq('See 1 review')}
+      it { is_expected.to eq('See 1 review') }
+    end
+  end
+
+  describe '#question_text' do
+    subject { reviews }
+    let(:teacher_topic) { FactoryGirl.build(:teachers_topic) }
+    let(:question1) { FactoryGirl.build(:teacher_question, review_topic: teacher_topic) }
+    let(:reviews) do
+      FactoryGirl.build_list(:teacher_effectiveness_review, 2, question: question1)
+    end
+    before do
+    end
+    it 'should do something' do
+      allow(subject).to receive_message_chain(:first_topic, :first_question).and_return (question1)
+      expect(subject.question_text).to eq("How effective are this school's teachers at making students successful?")
     end
   end
 end
