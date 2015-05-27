@@ -7,9 +7,20 @@ class GSLogger
   class << self
 
     [WARN, ERROR, INFO].each do |constant|
-      define_method(constant.downcase) do |tag, exception, opts = {} |
-        log(constant, tag, binding.send(:caller).first, exception, opts)
+      define_method(constant.downcase) do |tag, exception = nil, opts = {} |
+        begin
+          log(constant, tag, binding.send(:caller).first, exception, opts)
+        rescue => e
+          log_own_failure(e)
+        end
       end
+    end
+
+    def log_own_failure(e)
+      m = "GS||ERROR||GSLogger||#{e.class} #{e.message}||#{Time.now}||ERROR_LOCATION:#{e.backtrace.first}||"
+      m << "RESCUE_LOCATION:#{binding.send(:caller).first}||OPT_MESSAGE||OPT_VARS"
+      m.gsub!(/\n\t/, '')
+      Rails.logger.error(m)
     end
 
     def log(level, tag, rescue_line, exception, opts = {})
@@ -24,10 +35,10 @@ class GSLogger
 
     #make sure to keep the order of the logs consistent
     #ie GS||LEVEL||TAG||ERROR||TIME||ERROR_LOCATION||RESCUE_LOCATION||OPT_MESSAGE||OPT_VARS
-    def process_log(level, tag, rescue_line, exception)
+    def process_log(level, tag, rescue_line, e)
       time            = Time.now
-      error           = "#{exception.class} #{exception.message}"
-      error_location  = "#{exception.backtrace.first}"
+      error           = e.is_a?(Exception) ? "#{e.class} #{e.message}" : "No exception thrown"
+      error_location  = e.is_a?(Exception) ? "#{e.backtrace.first}" : "No exception thrown"
 
       [
         "GS",

@@ -57,7 +57,7 @@ class OspController < ApplicationController
       approve_all_images_for_school(@school) if @is_approved_user
       render_success_js(school_media.id)
     rescue => error
-      Rails.logger.error error
+      GSLogger.error('OSP', error, vars: params, message: 'Failed to add image')
       render_error_js
     end
   end
@@ -76,9 +76,14 @@ class OspController < ApplicationController
 
   def questions_and_answers
     params.except(:controller, :action, :page, :redirectPage, :schoolId, :state, :utf8, :authenticy_token, :isFruitcakeSchool, :showOspGateway, :anyPageStarted).map do | param, values |
-      question_id, response_key = param.split('-', 2) rescue Rails.logger.error("error: invalid param #{param}") and next
+      begin
+        question_id, response_key = param.split('-', 2)
+      rescue => error
+        GSLogger.warn('OSP', error, vars: params, message: "invalid param #{param}") and next
+      end
       next if question_id.to_i == 0
       next unless values.present?
+
       validate_questions_and_answers(question_id.to_i, response_key, values)
     end.compact
   end
@@ -159,7 +164,7 @@ class OspController < ApplicationController
         create_update_queue_row!(response_blob) if is_approved_user
       end
     rescue => error
-      Rails.logger.error "Didn't save osp response to update_queue and osp response table. error: \n #{error}"
+      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue and osp response table')
       error
     end
   end
@@ -172,11 +177,11 @@ class OspController < ApplicationController
           response: response
       ).errors.full_messages
 
-      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}" if error.present?
+      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to osp_form_response table') if error.present?
       error
-        # todo need to fix with real validation
-    rescue => error
-      Rails.logger.error "Didn't save osp response to osp_form_response table. error: \n #{error}"
+
+    rescue => e
+      GSLogger.error('OSP', e, vars: params, message: 'Didnt save osp response to osp_form_response table')
       error
     end
   end
@@ -189,11 +194,11 @@ class OspController < ApplicationController
           update_blob: response_blob,
       ).errors.full_messages
 
-      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}" if error.present?
+      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to update_queue table') if error.present?
       error
-        # todo need to fix with real validation
+
     rescue => error
-      Rails.logger.error "Didn't save osp response to update_queue table. error: \n #{error}"
+      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue table')
       error
     end
   end
