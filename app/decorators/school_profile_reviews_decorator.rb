@@ -60,7 +60,7 @@ module SchoolProfileReviewsDecorator
   # Given a hash for review answer distribution, turn it into an array that will be used to render a bar chart
   def to_bar_chart_array
     topic = first_topic
-    topic_distribution = score_distribution_for_topic(topic.name).gs_rename_keys(&:to_s)
+    topic_distribution = score_distribution.gs_rename_keys(&:to_s)
     topic_keys = topic.review_questions.first.response_array
     topic_keys = Hash[topic_keys.reverse.zip(Array.new(topic_keys.count, 0))]
     topic_distribution = topic_keys.merge(topic_distribution)

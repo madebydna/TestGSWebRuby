@@ -17,7 +17,7 @@ describe SchoolProfileReviewsDecorator, type: :view do
       FactoryGirl.build_list(:five_star_review, 2, question: question)
     end
     before do
-      allow(reviews).to receive(:score_distribution_for_topic) do
+      allow(reviews).to receive_message_chain(:score_distribution, :gs_rename_keys) do
         {
             '1' => 1,
             '3' => 1,

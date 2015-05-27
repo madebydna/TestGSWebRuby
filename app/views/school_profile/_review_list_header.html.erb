@@ -7,7 +7,7 @@
   </div>
 
 
-  <% topics = reviews.map(&:topic).uniq %>
+  <% topics = reviews.map(&:topic).uniq.sort %>
   <div class="clearfix bg-medium-gray pam">
     <div class="row">
       <div class="col-xs-12 col-sm-3">

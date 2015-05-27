@@ -53,8 +53,4 @@ module ReviewCalculations
     @count_having_rating ||= having_numeric_answer.count
   end
 
-  def score_distribution_for_topic(topic_name)
-    by_topic[topic_name].score_distribution
-  end
-
 end

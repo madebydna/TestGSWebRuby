@@ -1,7 +1,7 @@
 <div class="js-reviewsTotalCount" data-total-count="<%= @filtered_school_reviews.count %>"></div>
 <% if @topic_scoped %>
     <div class="mtl row">
-      <div class="col-xs-12 col-sm-5 plxl mbs">
+      <div class="col-xs-12 col-sm-7 plxl mbs">
         <div class="open-sans_i font-size-medium"><%=  @filtered_school_reviews.question_text %></div>
         <div class="open-sans_sb mvs">
           <%= @filtered_school_reviews.reviews_count_text %> | <%= @filtered_school_reviews.comments_count_text %>
