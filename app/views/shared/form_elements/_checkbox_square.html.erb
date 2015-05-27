@@ -7,13 +7,14 @@
 
 
 <label class="pointer">
-  <input class="<%= button_classes %>  <%= 'active' if active %>"
+  <div class="<%= button_classes %>  <%= 'active' if active %>"
     data-toggle="button"
     data-checkbox-button-key="<%= key %>"
     data-checkbox-button-value="<%= value %>"
     readonly
-    <%= "name=#{key} value=#{value}" if active %>
-  />
+  >
+  <input type="hidden" <%= "name=#{key} value=#{value}" if active %> />
+</div>
   <% if text.present? %>
     <span class='font-size-medium'><%=text%></span>
   <% end %>
