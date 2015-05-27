@@ -46,6 +46,7 @@ module ApplicationHelper
   end
 
   def include_lightbox_school_video(video_source)
+    return unless video_source.present?
     include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
   end
 
