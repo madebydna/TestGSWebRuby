@@ -93,7 +93,6 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   end
 
   def insert_into!(esp_response_update, attributes = {})
-    # require 'pry';binding.pry
     esp_response = EspResponse.build_from_esp_response_update(esp_response_update)
     esp_response.attributes = attributes
     esp_response.on_db(esp_response_update.shard).save
