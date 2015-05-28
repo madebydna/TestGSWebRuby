@@ -1,7 +1,7 @@
 class ReviewVote < ActiveRecord::Base
   include BehaviorForModelsWithActiveField
   db_magic :connection => :gs_schooldb
-  self.table_name = 'helpful_reviews'
+  self.table_name = 'review_votes'
 
   belongs_to :review, inverse_of: :votes
   belongs_to :user, foreign_key: 'member_id'
