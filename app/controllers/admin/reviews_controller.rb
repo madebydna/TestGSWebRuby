@@ -95,7 +95,7 @@ class Admin::ReviewsController < ApplicationController
         # email_user_about_review_removal(review)
         flash_notice 'Review activated.'
       else
-        flash_error 'Sorry, something went wrong while activating the review.'
+        flash_error "Sorry, something went wrong while activating the review: #{review.errors.full_messages.first}"
       end
     end
 
@@ -115,7 +115,7 @@ class Admin::ReviewsController < ApplicationController
         # email_user_about_review_removal(review)
         flash_notice 'Review deactivated'
       else
-        flash_error 'Sorry, something went wrong while deactivating the review.'
+        flash_error "Sorry, something went wrong while deactivating the review: #{review.errors.full_messages.first}"
       end
     end
 
