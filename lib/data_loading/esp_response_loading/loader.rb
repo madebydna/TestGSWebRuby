@@ -13,12 +13,14 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
       school = School.on_db(esp_response_update.shard).find(esp_response_update.entity_id)
 
       begin
-        @existing_values_for_response_key ||= (
-          EspResponse
-          .on_db(esp_response_update.shard)
-          .where(esp_response_update.attributes)
-          .where(active: 1)
-        )
+        existing_values_for_response_key(esp_response_update)
+        # @existing_values_for_response_key ||= begin (
+        #   EspResponse
+        #   .on_db(esp_response_update.shard)
+        #   .where(esp_response_update.attributes)
+        #   .where(active: 1)
+        # )
+        # end
         if esp_response_update.action == ACTION_DISABLE
           disable!(esp_response_update,@existing_values_for_response_key)
           # If we choose to support delete later, we can uncomment this and then create the delete method below
@@ -55,7 +57,18 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     end
   end
 
+  def existing_values_for_response_key(esp_response_update)
+    return @existing_values_for_response_key if defined? @existing_values_for_response_key
+    @existing_values_for_response_key ||= begin (
+    EspResponse
+    .on_db(esp_response_update.shard)
+    .where(esp_response_update.attributes)
+    .where(active: 1)
+    ) || []
+    end
+  end
   def handle_update(esp_response_update, value_row)
+    require 'pry' ;binding.pry if data_type=='immersion_language'
     value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
 
     if value_info.should_be_active? && value_info.existing_data_should_be_disabled?
@@ -81,6 +94,7 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   end
 
   def insert_into!(esp_response_update, attributes = {})
+    # require 'pry';binding.pry
     esp_response = EspResponse.build_from_esp_response_update(esp_response_update)
     esp_response.attributes = attributes
     esp_response.on_db(esp_response_update.shard).save
