@@ -123,7 +123,7 @@ class OspController < ApplicationController
 
   def save_response!(question_id, question_key, response_values, submit_time, esp_membership_id, is_approved_user)
     response_blob = make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
-    error = create_osp_form_response!(question_id, esp_membership_id, response_blob)
+    error = create_osp_form_response!(question_id, esp_membership_id, response_blob, submit_time)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
     error = create_nonOSP_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
@@ -169,7 +169,7 @@ class OspController < ApplicationController
      data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key] || OspData::SCHOOL_KEY_TO_ESP_KEY[question_key]
       if data_type.present?
         response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time,esp_membership_id)
-        create_osp_form_response!(question_id, esp_membership_id, response_blob)
+        create_osp_form_response!(question_id, esp_membership_id, response_blob, submit_time)
         create_update_queue_row!(response_blob) if is_approved_user
       end
     rescue => error
@@ -178,12 +178,15 @@ class OspController < ApplicationController
     end
   end
 
-  def create_osp_form_response!(osp_question_id, esp_membership_id, response)
+  def create_osp_form_response!(osp_question_id, esp_membership_id, response, submit_time)
     begin
       error = OspFormResponse.create(
-          osp_question_id: osp_question_id,
+          osp_question_id:   osp_question_id,
           esp_membership_id: esp_membership_id,
-          response: response
+          school_id:         @school.id,
+          state:             @school.state,
+          response:          response,
+          updated:           submit_time
       ).errors.full_messages
 
       GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to osp_form_response table') if error.present?
