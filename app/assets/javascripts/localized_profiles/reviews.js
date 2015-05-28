@@ -52,6 +52,7 @@ GS.reviews = GS.reviews || function($) {
                 var results = getFieldValues();
                 results['offset'] = 0;
                 callReviewsAjax(results, false);
+                 window.location.href = reviewsListHeader;
             }
         });
 
@@ -64,6 +65,7 @@ GS.reviews = GS.reviews || function($) {
             var results = getFieldValues();
             results['offset'] = 0;
             callReviewsAjax(results, false);
+            window.location.href = reviewsListHeader;
         });
 
         $("body").on("click", ".js_reviewHelpfulButton", function(){
@@ -92,7 +94,6 @@ GS.reviews = GS.reviews || function($) {
                 reviewContentLayer.append(html);
                 GS.reviewsAd.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
                 toggleNextTenButton(results);
-                window.location.href = reviewsListHeader;
                 var chartData = $('.js-reviewsListChart').data('topic-chart');
                 GS.visualchart.drawBarChartReviewsList(JSON.stringify(chartData),'js_reviews_list_bar_chart_div');
             }.gs_bind(this));

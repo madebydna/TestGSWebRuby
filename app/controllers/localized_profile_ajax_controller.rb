@@ -23,7 +23,7 @@ class LocalizedProfileAjaxController < ApplicationController
     @filtered_reviews ||= (
     filter_by_user_type = params[:filter_by_user_type] || nil
     filter_by_topic = params[:filter_by_topic] || nil
-    active_record_relation = @school.reviews_scope
+    active_record_relation = @school.reviews_scope.order(created: :desc)
     reviews = active_record_relation.to_a
     reviews.extend ReviewScoping
     reviews.extend ReviewCalculations
