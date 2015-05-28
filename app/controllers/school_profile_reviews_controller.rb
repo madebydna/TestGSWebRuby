@@ -13,8 +13,6 @@ class SchoolProfileReviewsController < SchoolProfileController
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
 
-    @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
-
     @reviews_page_size = 10
     @show_facebook_comments = PropertyConfig.show_facebook_comments?(@state[:short])
   end

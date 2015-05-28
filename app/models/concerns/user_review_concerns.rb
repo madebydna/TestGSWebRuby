@@ -38,6 +38,10 @@ module UserReviewConcerns
     UserReviewPublisher.new(self).publish_reviews_for_new_user!
   end
 
+  def has_active_vote_on_review?(review)
+    review_votes.active.map(&:review_id).include?(review.id)
+  end
+
   class UserReviewPublisher
     attr_reader :user
 

@@ -16,6 +16,7 @@ class Review < ActiveRecord::Base
   has_many :answers, class_name:'ReviewAnswer', foreign_key: 'review_id', inverse_of: :review
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
+  has_many :votes, class_name: 'ReviewVote', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :answers, allow_destroy: true
 
   # See http://pivotallabs.com/rails-associations-with-multiple-foreign-keys/ and comments

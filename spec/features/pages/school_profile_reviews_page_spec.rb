@@ -235,6 +235,76 @@ describe 'School Profile Reviews Page', js: true do
       end
     end
 
+    with_shared_context 'with active review' do
+      with_shared_context 'Visit School Profile Reviews' do
+        with_subject :first_review do
+          it { is_expected.to have_vote_for_review_button }
+          when_I :vote_on_the_first_review do
+            it 'should be redirected to the join page' do
+              expect(page.current_path).to eq(join_path)
+            end
+            with_shared_context 'with signing up for a new account' do
+              include_example 'should be redirected to the reviews page'
+              with_subject :first_review do
+                it { is_expected.to have_number_of_votes }
+                its(:number_of_votes_text) { is_expected.to match /1 person/ }
+                when_I :unvote_the_first_review do
+                  it { is_expected.to_not have_unvote_review_button }
+                  it { is_expected.to have_vote_for_review_button }
+                  its(:number_of_votes_text) { is_expected.to be_empty }
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
+    with_shared_context 'with active review with one vote' do
+      with_shared_context 'Visit School Profile Reviews' do
+        with_subject :first_review do
+          it { is_expected.to have_vote_for_review_button }
+          it { is_expected.to_not have_unvote_review_button }
+          when_I :vote_on_the_first_review do
+            it 'should be redirected to the join page' do
+              expect(page.current_path).to eq(join_path)
+            end
+            with_shared_context 'with signing up for a new account' do
+              include_example 'should be redirected to the reviews page'
+              with_subject :first_review do
+                it { is_expected.to have_number_of_votes }
+                it { is_expected.to have_unvote_review_button }
+                its(:number_of_votes_text) { is_expected.to match /2 people/ }
+                when_I :unvote_the_first_review do
+                  it { is_expected.to_not have_unvote_review_button }
+                  it { is_expected.to have_vote_for_review_button }
+                  it { is_expected.to have_number_of_votes }
+                  its(:number_of_votes_text) { is_expected.to match /1 person/ }
+                end
+              end
+            end
+          end
+        end
+      end
+
+      with_shared_context 'signed in verified user' do
+        with_shared_context 'Visit School Profile Reviews' do
+          with_subject :first_review do
+            when_I :vote_on_the_first_review do
+              with_subject :first_review do
+                it { is_expected.to have_number_of_votes }
+                its(:number_of_votes_text) { is_expected.to match /2 people/ }
+                when_I :unvote_the_first_review do
+                  it { is_expected.to have_number_of_votes }
+                  its(:number_of_votes_text) { is_expected.to match /1 person/ }
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
     with_shared_context 'with seven parent overall reviews' do
       include_context 'with seven student teacher effectiveness reviews'
       with_shared_context 'signed in verified user' do

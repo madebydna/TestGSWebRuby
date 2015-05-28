@@ -281,6 +281,17 @@ shared_context 'with active review' do
   end
 end
 
+shared_context 'with active review with one vote' do
+  let!(:active_review_with_one_vote) do
+    review = FactoryGirl.create(:five_star_review, active: true, school: school)
+    FactoryGirl.create(:review_vote, review: review)
+    review
+  end
+  after do
+    clean_dbs :gs_schooldb
+  end
+end
+
 shared_context 'with inactive review' do
   let!(:inactive_review) do
     FactoryGirl.create(:five_star_review, active: false, school: school, comment: 'inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review inactive review')

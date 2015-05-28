@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :student_grade_levels, foreign_key: 'member_id'
+  has_many :review_votes, foreign_key: 'member_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }

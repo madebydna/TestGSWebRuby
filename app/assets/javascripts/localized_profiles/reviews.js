@@ -67,13 +67,9 @@ GS.reviews = GS.reviews || function($) {
         });
 
         $("body").on("click", ".js_reviewHelpfulButton", function(){
-          // disable button
-
-          //$(this).prop("disabled",true);
           var review_id = $(this).data( "review_id" );
-          var helpful_id = $(this).data( "helpful_id" );
           if($.isNumeric(review_id)){
-            helpfulReviewAjax(review_id, helpful_id, $(this));
+            postReviewVoteOrUnvote(review_id, $(this));
           }
         });
 
@@ -185,41 +181,50 @@ GS.reviews = GS.reviews || function($) {
         }
     };
 
-    var helpfulReviewAjax = function(reviewId, helpful_id, obj) {
-      obj.prop("disabled",true);
+    var postReviewVoteOrUnvote = function(reviewId, obj) {
+      obj.prop("disabled", true);
+      var isActive = obj.hasClass('active');
+      var shouldUnvote = !isActive;
+
+      url = '';
+      if(shouldUnvote) {
+        url = "/gsr/reviews/" + reviewId + "/vote";
+      } else {
+        url = "/gsr/reviews/" + reviewId + "/unvote";
+      }
+
       jQuery.ajax({
-        type:'GET',
-        url:"/gsr/ajax/create_helpful_review",
-        data:{
-          review_id: reviewId,
-          helpful_id: helpful_id
+        type: 'POST',
+        url: url,
+        data: {
+          review_id: reviewId
         },
-        dataType: "json",
-        async:true
+        dataType: "json"
       }).done(function (data) {
+        var redirectUrl = data.redirect_url;
+        if (redirectUrl !== undefined && redirectUrl !== '') {
+          window.location = redirectUrl;
+        }
+
         var count = data[reviewId];
-        var helpful_id = data['helpful_id'];
-        obj.data('helpful_id', helpful_id);
-            if(obj.hasClass('active')){
-                obj.removeClass('active');
-
-            } else {
-                obj.addClass('active');
-            }
-
+        if(isActive){
+          obj.removeClass('active');
+        } else {
+          obj.addClass('active');
+        }
         var people_string = 'people';
         if(count == 1){
           people_string = 'person';
         }
 
-        var response_str = count + ' '+ people_string +' found this helpful';
+        var response_str = count + ' ' + people_string + ' found this helpful';
         if (isNaN(count)) {
           response_str = '';
         }
 
         // change button state
         obj.siblings("span").html(response_str);
-        obj.prop("disabled",false);
+        obj.prop("disabled", false);
 
       }.gs_bind(this));
     };

@@ -156,11 +156,12 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
+  post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
+  post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
-  get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
   get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation

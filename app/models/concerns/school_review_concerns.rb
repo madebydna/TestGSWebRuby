@@ -36,7 +36,7 @@ module SchoolReviewConcerns
       active.
         where(school_id: self.id, state: self.state).
           eager_load(:school_member).
-          includes(:answers, question: :review_topic)
+          includes(:answers, :votes, question: :review_topic)
   end
 
   # Similar to reviews_scope, but returns only "five star reviews", which are reviews that belong to the

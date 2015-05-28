@@ -23,7 +23,6 @@ describe SchoolProfileReviewsController do
     it 'should set the list of reviews' do
       reviews = FactoryGirl.build_list(:review, 2)
       school_reviews = double('SchoolReviews', reviews: reviews).as_null_object
-      expect(HelpfulReview).to receive(:helpful_counts).with(school_reviews).and_return({})
       expect(SchoolReviews).to receive(:new).and_return(school_reviews)
       get 'reviews', controller.view_context.school_params(school)
       expect(assigns[:school_reviews]).to eq(school_reviews)

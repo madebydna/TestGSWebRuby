@@ -72,6 +72,18 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     end
   end
 
+  def helpful_reviews_text
+    @helpful_reviews_text ||= (
+      number_of_votes = review.votes.active.size
+      text = ''
+      if number_of_votes > 0
+        text << pluralize(number_of_votes, 'person', 'people')
+        text << ' found this helpful'
+      end
+      text
+    )
+  end
+
   def created
     review.created.strftime "%B %d, %Y"
   end
