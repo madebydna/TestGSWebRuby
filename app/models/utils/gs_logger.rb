@@ -27,7 +27,7 @@ class GSLogger
       base_log = process_log(level, tag, rescue_line, exception)
       options  = process_opts(opts)
 
-      log = (base_log + options).join('||').gsub(/\n\t/, '')
+      log = (base_log + options).join('||').gsub(/\n|\t|\r/, '')
       log.prepend("\n").concat("\n")
 
       Rails.logger.error(log)
