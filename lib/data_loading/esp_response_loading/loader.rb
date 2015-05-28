@@ -68,7 +68,6 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     end
   end
   def handle_update(esp_response_update, value_row)
-    require 'pry' ;binding.pry if data_type=='immersion_language'
     value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
 
     if value_info.should_be_active? && value_info.existing_data_should_be_disabled?
