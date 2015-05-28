@@ -21,5 +21,15 @@ $(function() {
         if ($datepicker.length > 0) {
             $datepicker.datepicker();
         }
+
+        var $timepicker = $('.timepicker')
+        if ($timepicker.length > 0) {
+            $timepicker.timepicker({
+                'timeFormat': 'h:i A',
+                'minTime': '5:00am',
+                'maxTime': '10:00pm',
+                'step': 5
+            });
+        }
     }
 });

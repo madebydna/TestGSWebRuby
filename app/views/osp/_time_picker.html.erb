@@ -1,0 +1,25 @@
+<% display_question_label = display_question.displayed_label %>
+<% q_id                   = display_question.osp_question_id %>
+<% response_key %>
+
+<% time = begin %>
+  <% existing_time = Time.parse(preexisting_esp_values[0]) %>
+  <% rounded_time = Time.at((existing_time.to_f / 300).round * 300) #nearest 5 minutes %>
+  <% rounded_time.strftime('%I:%M %p') %>
+<% rescue %>
+  <% nil %>
+<% end %>
+
+<div class="row mbl pbl">
+  <div class="col-xs-12">
+    <h3 class="mbl">
+      <span class="mrl">
+        <%= display_question_label %>
+      </span>
+    </h3>
+      <input type="text" class="form-control timepicker input-field-sm" name="<%= "#{q_id}-#{response_key}" %>" value="<%= time %>">
+  </div>
+
+  <%= javascript_include_tag("jquery.timepicker.min.js") %>
+  <%= stylesheet_link_tag("jquery.timepicker.css") %>
+</div>

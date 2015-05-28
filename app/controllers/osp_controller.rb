@@ -13,7 +13,7 @@ class OspController < ApplicationController
   GON_PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
   DB_PAGE_NAME = { '1' => 'basic_information', '2' => 'academics', '3' => 'extracurricular_culture', '4' => 'facilities_staff' }
-  RESPONSE_VALIDATIONS = ['school_phone', 'school_fax'] #eventually move into shared module that the queue daemon also uses to validate data
+  RESPONSE_VALIDATIONS = ['school_phone', 'school_fax', 'start_time', 'end_time'] #eventually move into shared module that the queue daemon also uses to validate data
 
   def show
     @osp_data = OspData.new(@school) #add rescue here that shows nice error
@@ -111,6 +111,15 @@ class OspController < ApplicationController
   end
 
   alias school_fax_validation :school_phone_validation
+
+  def start_time_validation(question_id, response_key, response_values)
+    time = [*response_values].first.to_s
+    return nil unless time =~ /^(0[0-9]|1[0-2]):[0-5](0|5)\s(AM|PM)$/
+
+    [question_id, response_key, [time]]
+  end
+
+  alias end_time_validation :start_time_validation
 
   def save_response!(question_id, question_key, response_values, submit_time, esp_membership_id, is_approved_user)
     response_blob = make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
