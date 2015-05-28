@@ -103,7 +103,7 @@ shared_context 'setup osp controller instance var dependencies' do
     allow(School).to receive(:find_by_state_and_id).and_return(school)
   end
 
-  after { clean_models EspMembership }
+  after { clean_models :gs_schooldb, EspMembership }
 end
 
 #depends on having all dependencies met
@@ -111,7 +111,7 @@ shared_context 'send osp form submit request' do
   before do
     get :submit, { state: school.state, schoolId: school.id }.merge(request_keys_and_answers)
   end
-  after { clean_models UpdateQueue, OspFormResponse }
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
 end
 
 shared_context 'and saving the data will return an error' do
