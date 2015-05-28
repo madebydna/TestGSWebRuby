@@ -20,6 +20,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     end
   end
 
+  def topic
+    review.question.review_topic
+  end
+
   def topic_label
     review.question.review_topic.label
   end
@@ -82,6 +86,14 @@ class SchoolProfileReviewDecorator < Draper::Decorator
       end
       text
     )
+  end
+
+  def submitted_values_text
+    submitted_value = answer_value
+    submitted_value = pluralize(answer_value, 'star', 'stars') if topic.overall?
+    text = "You selected: "
+    text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
+    text.html_safe
   end
 
   def created

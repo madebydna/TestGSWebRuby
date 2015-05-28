@@ -92,4 +92,10 @@ class SchoolMember < ActiveRecord::Base
     reviews.select(&:active?)
   end
 
+  def find_by_question(question)
+    reviews.find do |review|
+      review.question == question
+    end
+  end
+
 end

@@ -39,29 +39,52 @@ describe SchoolProfileReviewsDecorator, type: :view do
   end
 
   describe '#answer_summary_text' do
-    let(:score_distribution) do
-      {
-          foo: 2,
-          bar: 6,
-          baz: 3
-      }
-    end
-    before do
-      allow(reviews).to receive(:score_distribution).and_return score_distribution
-    end
-    subject { reviews.answer_summary_text }
+    context 'when it is not an overall topic' do
+      let(:score_distribution) do
+        {
+            foo: 2,
+            bar: 6,
+            baz: 3
+        }
+      end
+      before do
+        allow(reviews).to receive(:score_distribution).and_return score_distribution
+      end
 
-    it 'should use the value with the highest number of occurrences' do
-      expect(subject).to match "bar"
+      before do
+        allow(reviews).to receive_message_chain(:first_topic, :overall?).and_return(false)
+      end
+      subject { reviews.answer_summary_text }
+      it 'should use the value with the highest number of occurrences' do
+        expect(subject).to match "bar"
+      end
+
+      it 'should display the number of occurrences' do
+        expect(subject).to match "(#{6})"
+      end
+
+      context 'when there are no answers and therefore an empty score distribution' do
+        let(:score_distribution) { [] }
+        it { is_expected.to be_nil }
+      end
     end
 
-    it 'should display the number of occurrences' do
-      expect(subject).to match "(#{6})"
-    end
-
-    context 'when there are no answers and therefore an empty score distribution' do
-      let(:score_distribution) { [] }
-      it { is_expected.to be_nil }
+    context 'with the overall topic' do
+      let(:score_distribution) do
+        {
+            '4' => 2,
+            '2' => 6,
+            '1' => 3
+        }
+      end
+      before do
+        allow(reviews).to receive(:score_distribution).and_return score_distribution
+      end
+      before do
+        allow(reviews).to receive_message_chain(:first_topic, :overall?).and_return(true)
+      end
+      subject { reviews.answer_summary_text }
+      it { is_expected.to match "2 stars" }
     end
   end
 

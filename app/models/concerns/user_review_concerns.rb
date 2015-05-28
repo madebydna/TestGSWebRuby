@@ -26,7 +26,7 @@ module UserReviewConcerns
   end
 
   def reviews_for_school(*args)
-    Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id)
+    Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id).includes(:answers)
   end
 
   # Does not consider active vs inactive reviews

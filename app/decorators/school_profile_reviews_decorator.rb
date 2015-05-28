@@ -22,8 +22,12 @@ module SchoolProfileReviewsDecorator
   def answer_summary_text
     return nil unless score_distribution.present?
     distribution = score_distribution.sort_by { |k, v| v }.reverse
+    top_response_text = distribution.first.first
+    if first_topic.overall?
+      top_response_text = h.pluralize(top_response_text, 'star', 'stars')
+    end
     text =  "Most users (#{distribution.first.last}) say "
-    text << h.content_tag('span', distribution.first.first, class:'open-sans_cb')
+    text << h.content_tag('span', top_response_text, class:'open-sans_cb')
     text.html_safe
   end
 
