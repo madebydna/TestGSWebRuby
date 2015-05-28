@@ -4,14 +4,30 @@ module ReviewVotingConcerns
   protected
 
   class ReviewVoting
+    attr_accessor :errors
     attr_reader :params, :user, :ip
     def initialize(params, user, ip)
       @params = params
       @user = user
       @ip = ip
+      @errors = []
+    end
+
+    def valid?
+      validate_not_own_review
+    end
+
+    def validate_not_own_review
+      if user.reviews.active.include?(review)
+        @errors << 'Sorry, you may not vote on your own review.'
+        return false
+      end
+      return true
     end
 
     def vote_for_review
+      return nil, errors unless valid?
+
       review_vote = find_or_initialize_review_vote
       review_vote.activate
       unless review_vote.save

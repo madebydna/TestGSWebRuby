@@ -6,7 +6,7 @@ describe ReviewVotesController do
     let!(:review) do
       FactoryGirl.create(:five_star_review)
     end
-    let(:user) { review.user }
+    let(:user) { FactoryGirl.create(:verified_user) }
     after do
       clean_dbs :gs_schooldb
     end
@@ -21,6 +21,20 @@ describe ReviewVotesController do
         expect(vote).to be_present
         expect(vote.size).to eq(1)
         expect(vote.first).to be_active
+      end
+
+      context 'when user has written a review' do
+        before do
+          controller.instance_variable_set(:@current_user, review.user)
+        end
+        
+        it 'should not let you vote on your own review' do
+          xhr :post, :create, id: review.id
+          vote = ReviewVote.active.where(review_id: review.id).to_a
+          expect(vote).to_not be_present
+          hash = JSON.parse(response.body)
+          expect(hash['error']).to eq('Sorry, you may not vote on your own review.')
+        end
       end
 
       context 'when user already voted on review' do
