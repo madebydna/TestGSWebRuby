@@ -10,8 +10,6 @@ class LocalizedProfileAjaxController < ApplicationController
     @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(
                                                         SchoolReviews.new {filtered_reviews}, view_context)
     @paginated_reviews = paginate_reviews
-    # require 'pry'; binding.pry;
-
     @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@paginated_reviews)
   end
 

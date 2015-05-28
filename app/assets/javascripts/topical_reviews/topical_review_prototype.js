@@ -135,6 +135,7 @@ GS.topicalReview.form = (function () {
 
         $('.new_review').on('ajax:before', function (event, xhr, status, error) {
         }).on('ajax:success', function (event, xhr, status, error) {
+            var topicSubmitted = $(this).parents('.js-topicalReviewContainer').data('review-topic');
             var redirect_url = xhr.redirect_url;
             if (redirect_url !== undefined && redirect_url !== '') {
                 window.location = redirect_url;
@@ -148,6 +149,7 @@ GS.topicalReview.form = (function () {
             else {
                 GS.topicalReview.questionCarousel.goToNextSlide();
             }
+            disableSubmitButton(topicSubmitted);
 
         }).on('ajax:error', function (event, xhr, status, error) {
                 var errorMessage = "There was an error saving your review.";
@@ -167,6 +169,13 @@ GS.topicalReview.form = (function () {
                 errorMessageContainer.html(errorMessage);
             });
         };
+
+    var disableSubmitButton = function (topicSubmitted) {
+        var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> Review Submitted </button>'
+        var submittedQuestion = $('#topic' + topicSubmitted);
+        submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
+        submittedQuestion.find('.js-topicalReviewSubmitContainer').html(disabledButtonHtml);
+    };
 
     return {
         init: init
