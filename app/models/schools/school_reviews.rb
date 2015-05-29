@@ -22,6 +22,12 @@ class SchoolReviews
     @reviews ||= reviews_proc.call
   end
 
+  # review_cache is an optional object which contains precomputed values, such as average 5 star rating
+  # if provided, this class should use it the data source when being asked for info about reviews
+  #
+  # reviews_proc is required and will be lazily executed and memoized the first time reviews are required. This makes
+  # it the responsibility of the caller to determine the scope/query for the fetching the reviews. It might never
+  # be executed if a review_cache was provided and has all the data this object needs
   def initialize(review_cache = nil, &reviews_proc)
     @reviews_proc = reviews_proc
     @review_cache = review_cache
