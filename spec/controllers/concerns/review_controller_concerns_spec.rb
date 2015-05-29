@@ -19,53 +19,59 @@ describe ReviewControllerConcerns::ReviewParams do
       allow(params_object).to receive(:handle_save) { |review| review }
     end
 
-    it 'should save a review' do
-      expect(params_object).to receive(:handle_save).with(kind_of(Review)) { |review| review }
-      review, errors = subject
-      expect(review).to be_a(Review)
-      expect(errors).to be_nil
-    end
-
-    it 'should return any errors' do
-      expect(params_object).to receive(:handle_save).with(kind_of(Review)) { |review| [nil, 'An error message'] }
-      review, errors = subject
-      expect(review).to be_nil
-      expect(errors).to eq('An error message')
-    end
-
-    it 'should set the member_id on review' do
-      user.id = 999
-      review, errors = subject
-      expect(review.member_id).to eq(999)
-    end
-
-    it 'should set the comment on review' do
-      review_params[:comment] = 'foo bar baz'
-      review, errors = subject
-      expect(review.comment).to eq('foo bar baz')
-    end
-
-    context 'only when the school is found in the database' do
-      let(:school) { FactoryGirl.create(:alameda_high_school) }
-      after do
-        clean_models School
+    context 'without an existing review' do
+      before do
+        allow(params_object).to receive(:existing_review).and_return nil
       end
-      it 'should set the school id and state on review' do
-        review_params[:school_id] = school.id
-        review_params[:state] = school.state
-        review, errors = subject
-        expect(review.school_id).to eq(school.id)
-        expect(review.state).to eq(school.state)
-      end
-    end
 
-    context 'when the school is not found in the database' do
-      it 'should NOT set the school id and state on review' do
-        review_params[:school_id] = 999
-        review_params[:state] = 'ca'
+      it 'should save a review' do
+        expect(params_object).to receive(:handle_save).with(kind_of(Review)) { |review| review }
         review, errors = subject
-        expect(review.school_id).to eq(nil)
-        expect(review.state).to eq(nil)
+        expect(review).to be_a(Review)
+        expect(errors).to be_nil
+      end
+
+      it 'should return any errors' do
+        expect(params_object).to receive(:handle_save).with(kind_of(Review)) { |review| [nil, 'An error message'] }
+        review, errors = subject
+        expect(review).to be_nil
+        expect(errors).to eq('An error message')
+      end
+
+      it 'should set the member_id on review' do
+        user.id = 999
+        review, errors = subject
+        expect(review.member_id).to eq(999)
+      end
+
+      it 'should set the comment on review' do
+        review_params[:comment] = 'foo bar baz'
+        review, errors = subject
+        expect(review.comment).to eq('foo bar baz')
+      end
+
+      context 'only when the school is found in the database' do
+        let(:school) { FactoryGirl.create(:alameda_high_school) }
+        after do
+          clean_models School
+        end
+        it 'should set the school id and state on review' do
+          review_params[:school_id] = school.id
+          review_params[:state] = school.state
+          review, errors = subject
+          expect(review.school_id).to eq(school.id)
+          expect(review.state).to eq(school.state)
+        end
+      end
+
+      context 'when the school is not found in the database' do
+        it 'should NOT set the school id and state on review' do
+          review_params[:school_id] = 999
+          review_params[:state] = 'ca'
+          review, errors = subject
+          expect(review.school_id).to eq(nil)
+          expect(review.state).to eq(nil)
+        end
       end
     end
   end
