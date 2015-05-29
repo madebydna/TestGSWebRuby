@@ -79,7 +79,19 @@ describe SchoolProfileReviewsController do
       end
     end
 
-    context 'when logged in as an osp approved principal' do
+    shared_context 'when logged in as a parent' do
+      let!(:user) { FactoryGirl.create(:verified_user) }
+      let!(:school_member) { FactoryGirl.create(:parent_school_member, school: school, user: user) }
+      before do
+        controller.instance_variable_set(:@current_user, user)
+      end
+      after do
+        clean_models School
+        clean_dbs :gs_schooldb
+      end
+    end
+
+    shared_context 'when logged in as an osp approved principal' do
       let!(:user) { FactoryGirl.create(:verified_user) }
       let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
       before do
@@ -90,37 +102,105 @@ describe SchoolProfileReviewsController do
         clean_models School
         clean_dbs :gs_schooldb
       end
-
-      it 'should create an active review' do
-        post_a_review
-        expect(Review.count).to eq(1)
-        expect(Review.first).to be_active
-      end
-
-      context 'when user had a previous active review for same topic' do
-        let!(:review) { FactoryGirl.create(:five_star_review, school: school, user: user, review_question_id: 1) }
-        before do
-          review.moderated = true
-          review.activate
-          review.save
-        end
-        it 'should deactivate the old review' do
-          post_a_review
-          review.reload
-          expect(review).to be_inactive
-          expect(Review.count).to eq(2)
-          expect(Review.active.count).to eq(1)
-        end
-        it 'should write a new active review' do
-          post_a_review
-          review.reload
-          expect(Review.count).to eq(2)
-          expect((Review.all - [review]).first).to be_active
-        end
-      end
-
     end
 
+    shared_context 'when logged in as a non-approved principal' do
+      let!(:user) { FactoryGirl.create(:verified_user) }
+      let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
+      before do
+        controller.instance_variable_set(:@current_user, user)
+        allow_any_instance_of(SchoolMember).to receive(:approved_osp_user?).and_return(false)
+      end
+      after do
+        clean_models School
+        clean_dbs :gs_schooldb
+      end
+    end
+
+    shared_context 'when logged in as a student' do
+      let!(:user) { FactoryGirl.create(:verified_user) }
+      let!(:school_member) { FactoryGirl.create(:student_school_member, school: school, user: user) }
+      before do
+        controller.instance_variable_set(:@current_user, user)
+      end
+      after do
+        clean_models School
+        clean_dbs :gs_schooldb
+      end
+    end
+
+    [
+      'when logged in as a non-approved principal',
+      'when logged in as a student'
+    ].each do |context|
+      with_shared_context context do
+        it 'should create an inactive review' do
+          post_a_review
+          expect(Review.count).to eq(1)
+          expect(Review.first).to be_inactive
+        end
+
+        context 'when user had a previous active review for same topic' do
+          let!(:review) { FactoryGirl.create(:five_star_review, school: school, user: user, review_question_id: 1) }
+          before do
+            review.moderated = true
+            review.activate
+            review.save
+          end
+
+          it 'should deactivate the old review' do
+            post_a_review
+            review.reload
+            expect(review).to be_inactive
+            expect(Review.count).to eq(2)
+          end
+
+          it 'should write a new inactive review' do
+            post_a_review
+            review.reload
+            expect(Review.count).to eq(2)
+            expect((Review.all - [review]).first).to be_inactive
+          end
+        end
+      end
+    end
+
+    [
+      'when logged in as an osp approved principal',
+      'when logged in as a parent'
+    ].each do |context|
+      with_shared_context context do
+        it 'should create an active review' do
+          post_a_review
+          expect(Review.count).to eq(1)
+          expect(Review.first).to be_active
+        end
+
+        context 'when user had a previous active review for same topic' do
+          let!(:review) { FactoryGirl.create(:five_star_review, school: school, user: user, review_question_id: 1) }
+          before do
+            review.moderated = true
+            review.activate
+            review.save
+          end
+
+          it 'should deactivate the old review' do
+            post_a_review
+            review.reload
+            expect(review).to be_inactive
+            expect(Review.count).to eq(2)
+            expect(Review.active.count).to eq(1)
+          end
+
+          it 'should write a new active review' do
+            post_a_review
+            review.reload
+            expect(Review.count).to eq(2)
+            expect((Review.all - [review]).first).to be_active
+          end
+        end
+      end
+    end
   end
 
 end

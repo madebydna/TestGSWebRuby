@@ -35,14 +35,18 @@ module ReviewControllerConcerns
 
     def save_new_review
       review = Review.new
-      old_review = existing_review
-      if old_review
-        old_review.deactivate
-        _, errors = handle_save(old_review)
-        return old_review, errors if errors.present?
-      end
+      existing_review, errors = deactivate_existing_review
+      return existing_review, errors if errors.present?
       review.attributes = review_attributes
       handle_save(review)
+    end
+
+    def deactivate_existing_review
+      old_review = existing_review
+      return nil, nil unless old_review
+
+      old_review.deactivate
+      handle_save(old_review)
     end
 
     def update_existing_review
@@ -68,7 +72,6 @@ module ReviewControllerConcerns
       params.merge(user:user,school: school )
     end
 
-    # TODO: Figure this out
     def existing_review
       @existing_review ||= user.active_reviews_for_school(school: school).first
     end
