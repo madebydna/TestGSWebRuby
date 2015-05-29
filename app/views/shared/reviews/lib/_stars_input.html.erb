@@ -1,24 +1,40 @@
-<% f; question; %>
+<%
+   f; question;
+   # if there is a submitted_review the answer is a string value 1 to 5
+   # if there is no submitted_review the answer is nil
+   submitted_answer;
+%>
 <div class="row controls ptxl js-topicalReviewStars">
-  <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Terrible', offset: 'col-xs-offset-1 col-sm-offset-1'}, f: f, response_value: 1 %>
-  <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Bad'}, f: f, response_value: 2 %>
-  <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Average'}, f: f, response_value: 3 %>
-  <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Good'}, f: f, response_value: 4 %>
-  <%= render 'shared/reviews/modules/input/star', options: {label_value: 'Great'}, f: f, response_value: 5 %>
+  <%= render 'shared/reviews/modules/input/star', submitted_answer: submitted_answer, options: {label_value: 'Terrible', offset: 'col-xs-offset-1 col-sm-offset-1'}, f: f, response_value: 1 %>
+  <%= render 'shared/reviews/modules/input/star', submitted_answer: submitted_answer, options: {label_value: 'Bad'}, f: f, response_value: 2 %>
+  <%= render 'shared/reviews/modules/input/star', submitted_answer: submitted_answer, options: {label_value: 'Average'}, f: f, response_value: 3 %>
+  <%= render 'shared/reviews/modules/input/star', submitted_answer: submitted_answer, options: {label_value: 'Good'}, f: f, response_value: 4 %>
+  <%= render 'shared/reviews/modules/input/star', submitted_answer: submitted_answer, options: {label_value: 'Great'}, f: f, response_value: 5 %>
   <div class="js-starHiddenFields">
+    <% if submitted_answer.present? %>
+        <% new_object = f.object.send(:answers).klass.new %>
+        <% id = Time.now.to_f.to_s.sub('.', '') %>
+        <%= f.fields_for(:answers, new_object, child_index: id) do |builder| %>
+            <fieldset class="js-topicalHiddenField js-topicalOverallRating">
+              <%= builder.hidden_field(:answer_value, value: submitted_answer) %>
+            </fieldset>
+        <% end %>
+    <% else %>
     <!--Parsley.js does not easily validate hidden fields.
     To validate the star rating I created this dummy field hide its display.
     When a star rating is selected it uses JS ro empty this js-starHiddenFields
     and enters the correct hidden value for the star rating.
     TODO: find better solution to this problem
     -->
-    <div class="dn">
-      <% parsley_error_id = "topical-parsley-errors-#{question.id}" %>
-      <%= f.text_field(:state, {value: @school.state, class: "dummy",
-                                'data-parsley-minlength' => 9999,
-                                'data-parsley-errors-container' => "##{parsley_error_id}",
-                                'data-parsley-minlength-message' => 'Thanks for sharing your story! Please vote in order to save your comments.'
-      }) %>
-    </div>
+        <div class="dn">
+          <% parsley_error_id = "topical-parsley-errors-#{question.id}" %>
+          <%= f.text_field(:state,
+                           {value: @school.state, class: "dummy",
+                                    'data-parsley-minlength' => 9999,
+                                    'data-parsley-errors-container' => "##{parsley_error_id}",
+                                    'data-parsley-minlength-message' => 'Thanks for sharing your story! Please vote in order to save your comments.'
+          }) %>
+        </div>
+    <% end %>
   </div>
 </div>

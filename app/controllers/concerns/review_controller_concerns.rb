@@ -33,6 +33,10 @@ module ReviewControllerConcerns
       params[:school_id]
     end
 
+    def school_member
+      @school_member ||= SchoolMember.build_unknown_school_member(school, user)
+    end
+
     def save_new_review
       review = Review.new
       existing_review, errors = deactivate_existing_review
@@ -73,7 +77,7 @@ module ReviewControllerConcerns
     end
 
     def existing_review
-      @existing_review ||= user.active_reviews_for_school(school: school).first
+      @existing_review ||= school_member.find_active_review_by_question_id(params[:review_question_id].to_i)
     end
   end
 

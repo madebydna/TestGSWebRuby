@@ -107,30 +107,31 @@ describe ReviewControllerConcerns::ReviewParams do
   end
 
   describe '#existing_review' do
-    let(:users) { FactoryGirl.create_list(:verified_user, 5) }
-    let(:user) { users[3] }
-    let(:schools) { FactoryGirl.create_list(:a_high_school, 5) }
+    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:school) { FactoryGirl.create(:a_high_school) }
     let(:reviews) { FactoryGirl.create_list(:review, 5) }
     let(:review_questions) { FactoryGirl.create_list(:review_question, 5) }
     let(:review_params) do
       {
-        state: schools[3].state,
-        school_id: schools[3].id,
-        question_id: review_questions[3].id
+        state: school.state,
+        school_id: school.id,
+        review_question_id: review_questions[3].id
       }
     end
     before do
-      reviews[4].question = review_questions[3]
-      reviews[4].user = user
-      reviews[4].school = schools[3]
-      reviews[4].save
+      (0..4).to_a.each do |n|
+        reviews[n].question = review_questions[n]
+        reviews[n].user = user
+        reviews[n].school = school
+        reviews[n].save
+      end
     end
     after do
       clean_models User, School, Review, ReviewQuestion, ReviewTopic
     end
 
     it 'should return only the review for current user, given school, matching review question' do
-      expect(subject.existing_review).to eq(reviews[4])
+      expect(subject.existing_review).to eq(reviews[3])
     end
   end
 

@@ -182,6 +182,24 @@ GS.topicalReview.form = (function () {
     }
 })();
 
+GS.topicalReview.manageReview = (function () {
+    var init = function () {
+        $('.js-reviewManageButton').on('click', showReviewForm);
+    };
+
+    var showReviewForm = function() {
+        var topicalReview= $(this).parents('.js-topicalReviewContainer');
+        topicalReview.find('.js-topicalReviewHaveAVoice').hide();
+        topicalReview.find('.js-topicalReviewComment').show();
+        topicalReview.find('.js-submittedReviewContainer').hide();
+        topicalReview.find('.js-reviewFormContainer').show();
+    };
+
+    return {
+        init: init
+    }
+})();
+
 
 GS.topicalReview.memberForm = (function () {
     var showCarousel= function () {
@@ -360,6 +378,8 @@ $(function () {
     GS.topicalReview.form.init();
 
     GS.topicalReview.memberForm.init();
+
+    GS.topicalReview.manageReview.init();
 
     GS.topicalReview.radioButton.init();
 

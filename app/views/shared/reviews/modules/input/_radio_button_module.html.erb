@@ -1,12 +1,12 @@
+<%
+   f; submitted_review;
+   principal = @school_member ? @school_member.principal? : false
+%>
 <% topic_name = question.topic.name %>
 <% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
 <% answer_summary_text = reviews_for_topic.answer_summary_text %>
 <% review_comments_text = reviews_for_topic.see_comments_text%>
 
-<%
-   f
-   principal = @school_member ? @school_member.principal? : false
-%>
 <div class="topical-review-question-container left">
   <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
   <% if principal %>
@@ -16,7 +16,10 @@
       </div>
     <% end %>
   <% else %>
-    <%= render 'shared/reviews/lib/radio_buttons_input', f: f, question: question %>
+    <%= render 'shared/reviews/lib/radio_buttons_input', f: f,
+                                                         question: question,
+                                                         submitted_answer: submitted_review.try(:answer)
+    %>
   <% end %>
 </div>
 <% options = {
@@ -42,5 +45,9 @@
         <% end %>
       </div>
 <% end %>
-  <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
+  <%= render 'shared/reviews/modules/input/review_comment', f: f,
+                                                            options: options,
+                                                            question: question,
+                                                            submitted_review: submitted_review
+  %>
 </div>

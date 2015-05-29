@@ -3,7 +3,7 @@
    parsley_error_id = "topical-parsley-errors-#{question.id}"
 %>
 <div class="ptl phl js-topicalReviewComment <%= options[:display_none] ? 'dn' : '' %>">
-  <%= f.text_area :comment, {class: "form-control mbs",
+  <% text_area_options =  {class: "form-control mbs",
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
                              placeholder: options[:placeholder],
@@ -14,7 +14,13 @@
                              'data-parsley-required-message'=> 'Thanks for your opinion! Please share some thoughts on this school in order to save your rating.',
                              'data-parsley-maxlength'=>"2500",
                              'data-parsley-maxlength-message' => 'Sorry, we have a 2,500 character limit for reviews. Please shorten your review to save it.'
-  } %>
+  }  %>
+  <%
+ if submitted_review && submitted_review.has_comment?
+     text_area_options = text_area_options.merge({value: submitted_review.comment})
+   end
+  %>
+  <%= f.text_area :comment, text_area_options %>
   <div class="row tal">
     <div class="col-xs-8">
       <div class="help-block js-reviewCharacterDisplay mtn mbn dn">You have <span class="js-reviewCharacterCount"></span> left

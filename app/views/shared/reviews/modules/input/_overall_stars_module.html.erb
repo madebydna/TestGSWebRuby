@@ -1,12 +1,16 @@
 <%
    f
+   submitted_review
    principal = @school_member ? @school_member.principal? : false
 %>
 
 <div class="topical-review-question-container left">
   <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
   <% unless principal %>
-      <%= render 'shared/reviews/lib/stars_input', f: f, question: question %>
+      <%= render 'shared/reviews/lib/stars_input', f: f,
+                                                   question: question,
+                                                   submitted_answer: submitted_review.try(:answer)
+      %>
   <% end %>
 </div>
 <div class="topical-review-question-container right">
@@ -16,5 +20,9 @@
           principal: principal,
           submit_text: principal ? 'Submit Statement' : 'Submit'
   } %>
-  <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
+  <%= render 'shared/reviews/modules/input/review_comment', f: f,
+                                                            options: options,
+                                                            question: question,
+                                                            submitted_review: submitted_review
+  %>
 </div>
