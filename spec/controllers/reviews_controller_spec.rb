@@ -71,9 +71,10 @@ describe ReviewsController do
     it 'should flash error message if review can\'t be saved' do
       review = Review.new
       allow(Review).to receive(:find).and_return review
-      expect(review).to receive(:build_review_flag).with(@comment, ReviewFlag::USER_REPORTED) .and_return(
-                                 double(save: false, :'user=' => true)
-                               )
+      review_flag = double(save: false, :'user=' => true)
+      allow(review_flag).to receive(:attributes).and_return({})
+      allow(review_flag).to receive(:errors).and_return([])
+      expect(review).to receive(:build_review_flag).with(@comment, ReviewFlag::USER_REPORTED).and_return(review_flag)
       expect(controller).to receive(:flash_error).with I18n.t('actions.generic_error')
       controller.send :flag_review_and_redirect,
                       review_id: @review_id,
