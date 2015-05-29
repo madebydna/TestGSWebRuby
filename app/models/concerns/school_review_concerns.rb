@@ -1,6 +1,13 @@
 module SchoolReviewConcerns
   extend ActiveSupport::Concern
 
+  # Generally I think it would be better if, when needing to get star rating / review distribution info,
+  # we use the SchoolReviews class via reviews_with_calculations method, or simply mix ReviewCalculations into
+  # your own Review array as needed
+  #
+  # But, we already had a lot of code calling methods like school.review_count or school.community_rating,
+  # So this code adapts to that previous design by delegating some methods to reviews_with_calculations
+  # - Samson
   included do
     [
       :average_5_star_rating,
