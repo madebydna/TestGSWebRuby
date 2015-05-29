@@ -26,8 +26,9 @@ module SchoolProfileReviewsDecorator
     if first_topic.overall?
       top_response_text = h.pluralize(top_response_text, 'star', 'stars')
     end
-    text =  "Most users (#{distribution.first.last}) say "
+    text = "Currently, most people answered "
     text << h.content_tag('span', top_response_text, class:'open-sans_cb')
+    text << " (#{h.pluralize(distribution.first.last, 'response', 'responses')})."
     text.html_safe
   end
 

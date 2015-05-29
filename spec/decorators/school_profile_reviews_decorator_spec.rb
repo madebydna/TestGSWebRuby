@@ -60,7 +60,7 @@ describe SchoolProfileReviewsDecorator, type: :view do
       end
 
       it 'should display the number of occurrences' do
-        expect(subject).to match "(#{6})"
+        expect(subject).to match "(#{6} responses)"
       end
 
       context 'when there are no answers and therefore an empty score distribution' do
