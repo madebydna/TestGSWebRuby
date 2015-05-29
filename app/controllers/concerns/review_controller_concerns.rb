@@ -35,6 +35,12 @@ module ReviewControllerConcerns
 
     def save_new_review
       review = Review.new
+      old_review = existing_review
+      if old_review
+        old_review.deactivate
+        _, errors = handle_save(old_review)
+        return old_review, errors if errors.present?
+      end
       review.attributes = review_attributes
       handle_save(review)
     end
