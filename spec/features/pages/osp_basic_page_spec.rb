@@ -202,6 +202,22 @@ describe 'OSP Basic Page' do
     end
   end
 
+  with_shared_context 'with a basic set of osp questions in db' do
+    with_shared_context 'with oddly formatted data in school cache for school', 'CA', 1 do
+      with_shared_context 'visit OSP page', js: true do
+        with_shared_context 'within button(s) with the text(s)', 'Before Care' do
+          include_example 'should contain the active class'
+        end
+        with_shared_context 'within button(s) with the text(s)', 'Unicycle!!!' do
+          include_example 'should be disabled'
+        end
+        with_shared_context 'within button(s) with the text(s)', 'No dress code' do
+          include_example 'should contain the active class'
+        end
+      end
+    end
+  end
+
   with_shared_context 'Basic High School' do
     with_shared_context 'Visit Compare Page', js: true do
       with_shared_context 'the compare page value of', 'Before care' do

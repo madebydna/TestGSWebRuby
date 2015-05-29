@@ -283,6 +283,16 @@ shared_context 'save osp question to db' do
   after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
 end
 
+shared_context 'with oddly formatted data in school cache for school' do |state, school_id|
+  before do
+    FactoryGirl.create(:school_cache_odd_formatted_esp_responses, state: state, school_id: school_id )
+  end
+
+  after do
+    clean_models :gs_schooldb, SchoolCache
+  end
+end
+
 ### Clicking Buttons ###
 
 shared_context 'click Before Care and Canoe button options' do
@@ -403,6 +413,13 @@ shared_context 'within textarea field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
+  end
+end
+
+shared_context 'within button(s) with the text(s)' do |button_text| #string or array
+  subject do
+    answers = Regexp.new([*button_text].join('|'))
+    osp_page.osp_form.buttons(text: answers)
   end
 end
 
