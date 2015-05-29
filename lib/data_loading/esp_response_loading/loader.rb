@@ -64,8 +64,6 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
     .where(esp_response_update.attributes)
     .where(active: 1).to_a
     )
-    # @existing_values_for_response_key
-    # require 'pry' ;binding.pry
 
   end
   def handle_update(esp_response_update, value_row)
