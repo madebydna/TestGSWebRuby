@@ -117,5 +117,4 @@ LocalizedProfiles::Application.configure do
 
   config.hub_mapping_cache_time = 60 * 24
   config.hub_config_cache_time = 10
-  config.hub_recent_reviews_cache_time = 10
 end

@@ -33,10 +33,24 @@ module ReviewControllerConcerns
       params[:school_id]
     end
 
+    def school_member
+      @school_member ||= SchoolMember.build_unknown_school_member(school, user)
+    end
+
     def save_new_review
       review = Review.new
+      existing_review, errors = deactivate_existing_review
+      return existing_review, errors if errors.present?
       review.attributes = review_attributes
       handle_save(review)
+    end
+
+    def deactivate_existing_review
+      old_review = existing_review
+      return nil, nil unless old_review
+
+      old_review.deactivate
+      handle_save(old_review)
     end
 
     def update_existing_review
@@ -62,9 +76,8 @@ module ReviewControllerConcerns
       params.merge(user:user,school: school )
     end
 
-    # TODO: Figure this out
     def existing_review
-      @existing_review ||= user.active_reviews_for_school(school: school).first
+      @existing_review ||= school_member.find_active_review_by_question_id(params[:review_question_id].to_i)
     end
   end
 
@@ -109,6 +122,7 @@ module ReviewControllerConcerns
           if review_flag.save
             flash_notice t('actions.report_review.reported')
           else
+            GSLogger.error('REVIEWS', nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
             flash_error t('actions.generic_error')
           end
         else

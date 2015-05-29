@@ -154,5 +154,60 @@ describe Admin::ReviewsController do
     end
   end
 
+  shared_context 'with one inactive review' do
+    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:review) do
+      r = FactoryGirl.build(:five_star_review, school: school)
+      r.moderated = true
+      r.deactivate
+      r.save
+      r
+    end
+    after do
+      clean_dbs :gs_schooldb
+      clean_models :ca, School
+    end
+  end
+
+  shared_context 'with one active review' do
+    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:review) do
+      r = FactoryGirl.build(:five_star_review, school: school)
+      r.moderated = true
+      r.activate
+      r.save
+      r
+    end
+    after do
+      clean_dbs :gs_schooldb
+      clean_models :ca, School
+    end
+  end
+
+  describe '#activate' do
+    subject do
+      post :activate, id: review.id
+      review.reload
+    end
+    with_shared_context 'with one inactive review' do
+      it 'should activate the review' do
+        expect{subject}.to change{ review.active }.from(false).to(true)
+      end
+    end
+  end
+
+  describe '#deactivate' do
+    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    subject do
+      post :deactivate, id: review.id
+      review.reload
+    end
+    with_shared_context 'with one active review' do
+      it 'should deactivate the review' do
+        expect{subject}.to change{ review.active }.from(true).to(false)
+      end
+    end
+  end
+
 
 end

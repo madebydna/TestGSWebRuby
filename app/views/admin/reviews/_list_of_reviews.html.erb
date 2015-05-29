@@ -55,9 +55,11 @@
         <td class="tac"><%= active_flags.map(&:reasons).inject([], &:+).uniq.join(', ') %></td>
         <td class="tar">
           <% if active_flags.any? %>
-            <%= active_flags.last.created.strftime '%-m/%d/%Y' if active_flags.any? %>
-          <% else %>
-            <%= inactive_flags.last.created.strftime '%-m/%d/%Y' if inactive_flags.any? %>
+            <% time = active_flags.last.created %>
+            <%= time.strftime '%-m/%d/%Y' %><%= " at #{time.strftime('%r')}" if time.strftime('%r') != '12:00:00 AM' %>
+          <% elsif inactive_flags.any? %>
+            <% time = active_flags.last.created %>
+            <%= time.strftime '%-m/%d/%Y' %><%= " at #{time.strftime('%r')}" if time.strftime('%r') != '12:00:00 AM' %>
           <% end %>
         </td>
       </tr>

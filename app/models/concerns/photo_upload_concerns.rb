@@ -5,7 +5,6 @@ module PhotoUploadConcerns
 
   MAX_FILE_SIZE                   = 2000000 #2MB
   VALID_FILE_TYPES                = ["image/gif", "image/jpeg", "image/png", "application/octet-stream"]
-  FORM_BOUNDARY                   = "-----FormBoundaryAaB03xiasf3Gh"
   MAX_NUMBER_OF_IMAGES_FOR_SCHOOL = 10
   def valid_file?(file)
     return false if file.size > MAX_FILE_SIZE
@@ -15,6 +14,7 @@ module PhotoUploadConcerns
 
   def create_image!(file)
     status = @is_approved_user ? SchoolMedia::PENDING : SchoolMedia::PROVISIONAL_PENDING
+
     school_media = create_school_media_row!(file.original_filename, status)
     raise "file: #{file.original_filename} was not saved to database. PhotoUploadConcerns line: #{__LINE__}" unless school_media.persisted?
     send_image_to_processor!(school_media, file.tempfile)
@@ -22,13 +22,15 @@ module PhotoUploadConcerns
   end
 
   def create_school_media_row!(filename, status)
+    time = Time.now
     SchoolMedia.create({
       school_id:      @school.id,
       state:          @school.state,
       member_id:      @esp_membership_id,
       status:         status,
       orig_file_name: filename,
-      date_created:   Time.now
+      date_created:   time,
+      date_updated:   time
     })
   end
 
@@ -49,4 +51,22 @@ module PhotoUploadConcerns
       }
     )
   end
+
+  def approve_all_images_for_school(school)
+    approve_images(state: school.state, school_id: school.id)
+  end
+
+  def approve_all_images_for_member(member_id)
+    approve_images(member_id: member_id)
+  end
+
+  def approve_images(query_hash)
+    time = Time.now
+    query_hash.slice!(:member_id, :state, :school_id)
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL_PENDING))
+      .update_all({status: SchoolMedia::PENDING, date_updated: time})
+    SchoolMedia.on_db(:gs_schooldb_rw).where(query_hash.merge(status: SchoolMedia::PROVISIONAL))
+      .update_all({status: SchoolMedia::ACTIVE, date_updated: time})
+  end
+
 end

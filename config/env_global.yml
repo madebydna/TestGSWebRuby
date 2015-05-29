@@ -17,6 +17,7 @@ solr.ro.server.url: "http://omega.greatschools.org:8580/main/"
 solr.rw.server.url:  "http://omega.greatschools.org:8580/main/"
 cdn_host: 'http://www.gscdn.org'
 optimizely_key: "384121511"
+gtm_container_id: 'GTM-N9TK8P'
 advertising_env: "dev"
 advertising_enabled: true
 home_path: "/"

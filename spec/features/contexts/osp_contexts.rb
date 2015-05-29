@@ -12,7 +12,7 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 
   after do
-    clean_models User, EspMembership
+    clean_models :gs_schooldb, User, EspMembership
   end
 end
 
@@ -24,7 +24,7 @@ shared_context 'signed in approved superuser for school' do |state, school_id|
   end
 
   after do
-    clean_models :gs_schooldb, User, EspMembership, MemberRole
+    clean_models :gs_schooldb, User, UserProfile, EspMembership, MemberRole, Role
   end
 end
 
@@ -42,7 +42,7 @@ shared_context 'visit OSP page' do
   include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
-    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
+    visit osp_page_path(page: 1, schoolId: school.id, state: school.state)
   end
   subject { page }
 end
@@ -52,7 +52,7 @@ shared_context 'visit OSP superuser page' do
   include_context 'Basic High School'
   let(:osp_page) { OspPage.new }
   before do
-    visit admin_osp_page_path(page: 1, schoolId: school.id, state: school.state)
+    visit osp_page_path(page: 1, schoolId: school.id, state: school.state)
   end
   subject { page }
 end
@@ -77,6 +77,7 @@ shared_context 'with a basic set of osp questions in db' do
       videogames:        6,
       award:             7,
       award_year:        8,
+      date_picker:       9,
     }
   end
   let(:questions) do
@@ -151,6 +152,12 @@ shared_context 'with a basic set of osp questions in db' do
             'question_ids' => [question_ids[:award_year]]
           }.to_json
       },
+      {
+          id: question_ids[:date_picker],
+          esp_response_key: :date_picker,
+          osp_question_group_id: nil,
+          question_type: 'date_picker'
+      }
     ]
   end
 
@@ -174,7 +181,9 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
         puzzlegames:       2,
         videogames:        3,
         video_urls:        4,
-        normal_text_field: 5
+        normal_text_field: 5,
+        school_phone:      6,
+        school_fax:        7
     }
   end
   let(:questions) do
@@ -231,6 +240,28 @@ shared_context 'with a basic set of parsley validated osp questions in db' do
             config: {
                 'validations' => {
                     'data-parsley-blockhtmltags' => ''
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:school_phone],
+            esp_response_key: :school_phone,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-phonenumber' => ''
+                }
+            }.to_json
+        },
+        {
+            id: question_ids[:school_fax],
+            esp_response_key: :school_fax,
+            osp_question_group_id: nil,
+            question_type: 'input_field_sm',
+            config: {
+                'validations' => {
+                    'data-parsley-phonenumber' => ''
                 }
             }.to_json
         }
@@ -328,6 +359,13 @@ shared_context 'enter information into large text field' do
   end
 end
 
+shared_context 'find input field with name' do |name|
+  before do
+    form = osp_page.osp_form
+    form.find("form input[name='#{question_ids[name]}-#{name}']")
+  end
+end
+
 
 ### Submitting osp form  ###
 
@@ -338,7 +376,7 @@ shared_context 'submit the osp form' do
 
   end
 
-  after { clean_models UpdateQueue, OspFormResponse }
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
 end
 
 ### Scoping subject  ###

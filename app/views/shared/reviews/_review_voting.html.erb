@@ -1,0 +1,22 @@
+<% review %>
+
+<div class="rs-review-voting">
+  <% if logged_in? && @current_user.has_active_vote_on_review?(review) %>
+    <% css_class = 'active' %>
+  <% else %>
+    <% css_class = '' %>
+  <% end %>
+
+  <button type="button"
+          class="btn btn-toggle js_reviewHelpfulButton mrm phm pvs <%= css_class %>"
+          data-toggle="button"
+          data-review_id="<%= review.id %>">
+    <span class="iconx16 i-16-thumbs-up mt3"></span>
+  </button>
+
+  <span>
+    <% if review.helpful_reviews_text.present? %>
+      <%= review.helpful_reviews_text %>
+    <% end %>
+  </span>
+</div>

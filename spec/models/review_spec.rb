@@ -476,10 +476,13 @@ describe Review do
       review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
       review.moderated = true
       review.activate
-      review.save
+      review.save!
 
       expect do
         review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
+        review.moderated = true
+        review.activate
+        review.save!
       end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: You have already submitted a review for this topic.')
     end
 
@@ -489,7 +492,7 @@ describe Review do
           review = FactoryGirl.create(:five_star_review, active: false, school: school, question:question, user: user)
           review.moderated = false
           review.deactivate
-          review.save
+          review.save!
         end.to_not raise_error
       end
     end

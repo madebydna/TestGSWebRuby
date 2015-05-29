@@ -38,6 +38,18 @@ module ApplicationHelper
     ENV_GLOBAL['media_server'] + '/' + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-#{img_size}.jpg"
   end
 
+  def school_video_hashes(*args)
+    args.compact.map do |video_str|
+      id = youtube_parse_id_from_str(video_str)
+      {type: :youtube, id: id} if id.present?
+    end.compact
+  end
+
+  def include_lightbox_school_video(video_source)
+    return unless video_source.present?
+    include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
+  end
+
   def youtube_parse_id (video_str, youtube_match_string)
     youtube_id = video_str.split(youtube_match_string)[1].split('&')[0]
   end
@@ -58,9 +70,8 @@ module ApplicationHelper
   end
 
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
-  def include_lightbox_youtube_video (video_str)
+  def include_lightbox_youtube_video (youtube_id)
     r_str= ''
-    youtube_id = youtube_parse_id_from_str(video_str)
     if youtube_id.present?
         r_str <<  '<a href="https://www.youtube.com/watch?v=' + youtube_id + '">'  + "\n"
         r_str <<  '<img ' + "\n"

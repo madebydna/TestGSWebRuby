@@ -92,4 +92,16 @@ class SchoolMember < ActiveRecord::Base
     reviews.select(&:active?)
   end
 
+  def find_by_question(question)
+    reviews.find do |review|
+      review.question == question
+    end
+  end
+
+  def find_active_review_by_question_id(question_id)
+    active_reviews.find do |review|
+      review.review_question_id == question_id.to_i
+    end
+  end
+
 end

@@ -1,4 +1,8 @@
-<% f %>
+<%
+   f
+   # if there is no submitted_answer the int value will be 0
+   submitted_value = submitted_answer.to_i
+%>
 
 <% offset = options[:offset] || ''  %>
 <% new_object = f.object.send(:answers).klass.new %>
@@ -9,6 +13,6 @@
     </fieldset>
 <% end %>
 <div class="<%= offset %> col-xs-2 tac mbm js-topicalReviewStarContainer"  data-fields="<%= fields.gsub("\n", "") %>">
-  <div class="iconx48-stars i-48-blue-star i-48-star-1 js-topicalReviewStar"></div>
+  <div class="iconx48-stars <%= submitted_value >= response_value ? 'i-48-orange-star' : 'i-48-blue-star' %> i-48-star-1 js-topicalReviewStar"></div>
   <div class="js-topicalReviewLabel gray-dark"><%= options[:label_value] %></div>
 </div>

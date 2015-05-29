@@ -31,6 +31,11 @@ module ReviewCalculations
       reviews_by_answer.each_with_object({}) { |(score, answers), hash| hash[score] = answers.size }.compact
     )
   end
+
+  def number_of_distinct_users
+    group_by(&:member_id).keys.size
+  end
+
   # only sum with integer
   def total_score
     @total_score ||= having_numeric_answer.sum(&:answer_as_int)
@@ -47,4 +52,5 @@ module ReviewCalculations
   def count_having_numeric_answer
     @count_having_rating ||= having_numeric_answer.count
   end
+
 end

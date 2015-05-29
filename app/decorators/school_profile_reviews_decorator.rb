@@ -19,32 +19,66 @@ module SchoolProfileReviewsDecorator
     @view_context
   end
 
+  def answer_summary_text
+    return nil unless score_distribution.present?
+    distribution = score_distribution.sort_by { |k, v| v }.reverse
+    top_response_text = distribution.first.first
+    if first_topic.overall?
+      top_response_text = h.pluralize(top_response_text, 'star', 'stars')
+    end
+    text = "Currently, most people answered "
+    text << h.content_tag('span', top_response_text, class:'open-sans_cb')
+    text << " (#{h.pluralize(distribution.first.last, 'response', 'responses')})."
+    text.html_safe
+  end
+
+  def see_comments_text
+    text = "See ratings"
+    number_with_comments = having_comments.count
+    if number_with_comments > 0
+      text = 'See '
+      text << 'all ' if number_with_comments > 1
+      text << h.pluralize(number_with_comments, 'comment', 'comments')
+    end
+    text
+  end
+
   def see_all_reviews_phrase
     phrase = 'See '
-    phrase << 'all ' if number_of_reviews_with_comments > 1
-    phrase << h.pluralize(number_of_reviews_with_comments, 'Review', 'Reviews')
+    phrase << 'all ' if count > 1
+    phrase << h.pluralize(count, 'review', 'reviews')
     phrase
+  end
+
+  def reviews_count_text
+    h.pluralize(count, 'review', 'reviews')
+  end
+
+  def comments_count_text
+    h.pluralize(having_comments.count, 'comment', 'comments')
+  end
+
+  def question_text
+    first_topic.first_question.question
   end
 
   # Given a hash for review answer distribution, turn it into an array that will be used to render a bar chart
   def to_bar_chart_array
-    # Handle input distribution map with keys as integers or keys as strings
-    star_distribution = five_star_rating_score_distribution.gs_rename_keys(&:to_s)
-    star_distribution = {
-      '5' => 0,
-      '4' => 0,
-      '3' => 0,
-      '2' => 0,
-      '1' => 0
-    }.merge(star_distribution)
+    topic = first_topic
+    topic_distribution = score_distribution.gs_rename_keys(&:to_s)
+    topic_keys = topic.review_questions.first.response_array
+    topic_keys = Hash[topic_keys.reverse.zip(Array.new(topic_keys.count, 0))]
+    topic_distribution = topic_keys.merge(topic_distribution)
 
     chart = [
-      ['Stars', 'count']
+        [topic.name, 'count']
     ]
 
-    star_distribution.each_with_object(chart) do |(star, number_of_occurrences), chart_array|
-      label = h.pluralize(star, 'star', 'stars')
-      chart_array << [ label, number_of_occurrences ]
+    topic_distribution.each_with_object(chart) do |(label, number_of_occurrences), chart_array|
+      if topic.overall?
+        label = h.pluralize(label, 'star', 'stars')
+      end
+      chart_array << [label, number_of_occurrences]
     end
   end
 

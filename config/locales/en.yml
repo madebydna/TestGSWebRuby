@@ -51,7 +51,7 @@ en:
     osp:
       provisional_user: 'You have a provisional account. Any changes you make will be published on the site after your account has been approved.'
       changes_saved: 'Any changes you made have been saved'
-      saving_error: 'Whoops! There was an error saving your data!'
+      saving_error: 'An error occurred while saving your data. Please try saving again.'
   actions:
     generic_error: 'We''re sorry, something went wrong processing your request.'
     session:

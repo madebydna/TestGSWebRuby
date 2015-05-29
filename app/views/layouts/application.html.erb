@@ -5,6 +5,7 @@
 
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= yield :javascript_includes %>
@@ -32,6 +33,7 @@
   <%= yield :head %>
 </head>
 <body class="open-sans">
+<%= render 'google_tag_manager/install' %>
 <%= render 'nav/topnav', hub_params: @hub_params %>
 <%= render :partial => 'shared/top_notification_bar' %>
 

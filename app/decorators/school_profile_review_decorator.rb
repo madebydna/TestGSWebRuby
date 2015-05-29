@@ -20,6 +20,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     end
   end
 
+  def topic
+    review.question.review_topic
+  end
+
   def topic_label
     review.question.review_topic.label
   end
@@ -70,6 +74,26 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     if review.comment.present?
       h.truncate(comment, length: length, separator: ' ')
     end
+  end
+
+  def helpful_reviews_text
+    @helpful_reviews_text ||= (
+      number_of_votes = review.votes.active.size
+      text = ''
+      if number_of_votes > 0
+        text << pluralize(number_of_votes, 'person', 'people')
+        text << ' found this helpful'
+      end
+      text
+    )
+  end
+
+  def submitted_values_text
+    submitted_value = answer_value
+    submitted_value = pluralize(answer_value, 'star', 'stars') if topic.overall?
+    text = "You selected: "
+    text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
+    text.html_safe
   end
 
   def created

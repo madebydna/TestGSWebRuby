@@ -20,7 +20,8 @@ $(function() {
 
   GS.util.BackToTop.init();
 
-  GS.googleAnalytics.tracking.init(gon.pagename);
+  // PT-1535 Cleanslating our GA install for now.
+  // GS.googleAnalytics.tracking.init(gon.pagename);
 
   $.ajaxSetup({ cache: true });
 

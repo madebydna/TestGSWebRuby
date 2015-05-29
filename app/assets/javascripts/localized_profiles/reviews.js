@@ -4,33 +4,24 @@ GS.reviews = GS.reviews || function($) {
         var nextTenButton = $(".js_reviewsGetNextTen");
         var filterByGroup = $(".js_reviewFilterButton");
 
-        var selectOrderDropDown = $(".js_reviewFilterDropDown");
-        var selectOrderDropDownText = $(".js_reviewFilterDropDownText");
         var reviewContentLayer = $(".js_reviewsList");
+        var reviewsListHeader = '#js_reviewsListHeader';
+
+        var filterByTopicDropDown = $(".js_reviewTopicFilterDropDown");
+        var selectTopicDropDownText = $(".js_reviewTopicFilterDropDownText");
+
+        var filterByTopicLink= $(".js_reviewTopicFilterLink");
 
         var getFieldValues = function(){
             var result = {};
             result['offset'] = nextTenButton.data( "offset" );
             result['limit'] = nextTenButton.data( "limit" );
             result['totalCount'] = nextTenButton.data( "total-count" );
-            result['filter_by'] = filterByGroup.data( "group-selected" );
-            result['order_by'] = selectOrderDropDown.data( "order-selected" );
+            result['filter_by_user_type'] = filterByGroup.data( "group-selected" );
+            result['filter_by_topic'] = filterByTopicDropDown.data( "topic-selected" );
             return result;
         };
 
-        // group is the button group selection -  parent, all or student
-        var setTotalCountByGroup = function(group){
-            var totalCount = nextTenButton.data( "all-count" );
-            if(group == "parent"){
-                totalCount = nextTenButton.data( "parent-count" );
-            }
-            else{
-                if(group == "student"){
-                    totalCount = nextTenButton.data( "student-count" );
-                }
-            }
-            nextTenButton.data( "total-count", totalCount );
-        };
 
         nextTenButton.on("click", function(){
             $(this).addClass("dn");
@@ -43,7 +34,6 @@ GS.reviews = GS.reviews || function($) {
             var groupSelected = $(this).data( "group-name" )
             if(filterByGroup.data( "group-selected"  ) != groupSelected){
                 nextTenButton.addClass("dn");
-                setTotalCountByGroup(groupSelected);
                 reviewContentLayer.html('');
                 filterByGroup.data( "group-selected", groupSelected);
                 var results = getFieldValues();
@@ -52,27 +42,36 @@ GS.reviews = GS.reviews || function($) {
             }
         });
 
-        selectOrderDropDown.on("click", "a", function(){
+        filterByTopicDropDown.on("click", "a", function(){
             nextTenButton.addClass("dn");
-            var order_by = $(this).data( "order-review" );
-            if(selectOrderDropDown.data( "order-selected"  ) != order_by){
-                selectOrderDropDown.data( "order-selected", order_by);
-                selectOrderDropDownText.html($(this).html()+' <b class="caret"></b>');
+            var topicSelected = $(this).data( "topic-filter" );
+             if(filterByGroup.data( "topic-selected"  ) != topicSelected){
+                selectTopicDropDownText.html($(this).html()+' <b class="caret"></b>');
                 reviewContentLayer.html('');
+                filterByTopicDropDown.data( "topic-selected", topicSelected);
                 var results = getFieldValues();
                 results['offset'] = 0;
                 callReviewsAjax(results, false);
+                 window.location.href = reviewsListHeader;
             }
         });
 
-        $("body").on("click", ".js_reviewHelpfulButton", function(){
-          // disable button
+        filterByTopicLink.on("click", "a", function () {
+            nextTenButton.addClass("dn");
+            var topicSelected = $(this).data("topic-filter");
+            selectTopicDropDownText.html(topicSelected + ' <b class="caret"></b>');
+            reviewContentLayer.html('');
+            filterByTopicDropDown.data("topic-selected", topicSelected);
+            var results = getFieldValues();
+            results['offset'] = 0;
+            callReviewsAjax(results, false);
+            window.location.href = reviewsListHeader;
+        });
 
-          //$(this).prop("disabled",true);
+        $("body").on("click", ".js_reviewHelpfulButton", function(){
           var review_id = $(this).data( "review_id" );
-          var helpful_id = $(this).data( "helpful_id" );
           if($.isNumeric(review_id)){
-            helpfulReviewAjax(review_id, helpful_id, $(this));
+            postReviewVoteOrUnvote(review_id, $(this));
           }
         });
 
@@ -85,7 +84,8 @@ GS.reviews = GS.reviews || function($) {
                     schoolId: GS.schoolIdFromUrl(),
                     offset: results['offset'],
                     limit: results['limit'],
-                    filter_by: results['filter_by'],
+                    filter_by_user_type: results['filter_by_user_type'],
+                    filter_by_topic: results['filter_by_topic'],
                     order_by: results['order_by']
                 },
                 dataType:'text',
@@ -93,11 +93,16 @@ GS.reviews = GS.reviews || function($) {
             }).done(function (html) {
                 reviewContentLayer.append(html);
                 GS.reviewsAd.writeDivAndFillReviews(adStartInt(results['offset'], results['limit'], nextTen));
+                toggleNextTenButton(results);
+                var chartData = $('.js-reviewsListChart').data('topic-chart');
+                GS.visualchart.drawBarChartReviewsList(JSON.stringify(chartData),'js_reviews_list_bar_chart_div');
             }.gs_bind(this));
+        };
 
+        var toggleNextTenButton = function (results) {
             var new_offset = results['offset'] + results['limit'];
-            nextTenButton.data( "offset", new_offset );
-            if(results['totalCount'] > new_offset){
+            nextTenButton.data("offset", new_offset);
+            if ($('.js-reviewsTotalCount').data('total-count') > new_offset) {
                 nextTenButton.removeClass("dn");
             }
         };
@@ -177,41 +182,50 @@ GS.reviews = GS.reviews || function($) {
         }
     };
 
-    var helpfulReviewAjax = function(reviewId, helpful_id, obj) {
-      obj.prop("disabled",true);
+    var postReviewVoteOrUnvote = function(reviewId, obj) {
+      obj.prop("disabled", true);
+      var isActive = obj.hasClass('active');
+      var shouldUnvote = !isActive;
+
+      url = '';
+      if(shouldUnvote) {
+        url = "/gsr/reviews/" + reviewId + "/vote";
+      } else {
+        url = "/gsr/reviews/" + reviewId + "/unvote";
+      }
+
       jQuery.ajax({
-        type:'GET',
-        url:"/gsr/ajax/create_helpful_review",
-        data:{
-          review_id: reviewId,
-          helpful_id: helpful_id
+        type: 'POST',
+        url: url,
+        data: {
+          review_id: reviewId
         },
-        dataType: "json",
-        async:true
+        dataType: "json"
       }).done(function (data) {
+        var redirectUrl = data.redirect_url;
+        if (redirectUrl !== undefined && redirectUrl !== '') {
+          window.location = redirectUrl;
+        }
+
         var count = data[reviewId];
-        var helpful_id = data['helpful_id'];
-        obj.data('helpful_id', helpful_id);
-            if(obj.hasClass('active')){
-                obj.removeClass('active');
-
-            } else {
-                obj.addClass('active');
-            }
-
+        if(isActive){
+          obj.removeClass('active');
+        } else {
+          obj.addClass('active');
+        }
         var people_string = 'people';
         if(count == 1){
           people_string = 'person';
         }
 
-        var response_str = count + ' '+ people_string +' found this helpful';
+        var response_str = count + ' ' + people_string + ' found this helpful';
         if (isNaN(count)) {
           response_str = '';
         }
 
         // change button state
         obj.siblings("span").html(response_str);
-        obj.prop("disabled",false);
+        obj.prop("disabled", false);
 
       }.gs_bind(this));
     };

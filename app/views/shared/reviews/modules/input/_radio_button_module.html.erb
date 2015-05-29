@@ -1,11 +1,25 @@
 <%
-   f
+   f; submitted_review;
    principal = @school_member ? @school_member.principal? : false
 %>
+<% topic_name = question.topic.name %>
+<% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
+<% answer_summary_text = reviews_for_topic.answer_summary_text %>
+<% review_comments_text = reviews_for_topic.see_comments_text%>
+
 <div class="topical-review-question-container left">
   <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
-  <% unless principal %>
-      <%= render 'shared/reviews/lib/radio_buttons_input', f: f, question: question %>
+  <% if principal %>
+    <% if answer_summary_text %>
+      <div class="font-size-large mtxl ptxl">
+        <%= answer_summary_text %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render 'shared/reviews/lib/radio_buttons_input', f: f,
+                                                         question: question,
+                                                         submitted_answer: submitted_review.try(:answer)
+    %>
   <% end %>
 </div>
 <% options = {
@@ -16,9 +30,24 @@
 } %>
 <div class="topical-review-question-container right">
   <% unless options[:comment_required] %>
-    <div class="ptl phl <%= principal ? 'dn' : '' %> js-topicalReviewHaveAVoice">
-      <%= render 'shared/reviews/modules/output/have_a_voice' %>
-    </div>
-  <% end %>
-  <%= render 'shared/reviews/modules/input/review_comment', f: f, options: options, question: question %>
+      <div class="ptl phl <%= principal ? 'dn' : '' %> js-topicalReviewHaveAVoice">
+        <% if answer_summary_text.present? %>
+            <div class="font-size-large mtxl ptxl">
+              <%= answer_summary_text %>
+            </div>
+            <div class="js_reviewTopicFilterLink">
+              <a class="pointer"  data-topic-filter="<%= topic_name %>">
+               <%= review_comments_text %>
+              </a>
+            </div>
+        <% else %>
+            <%= render 'shared/reviews/modules/output/have_a_voice' %>
+        <% end %>
+      </div>
+<% end %>
+  <%= render 'shared/reviews/modules/input/review_comment', f: f,
+                                                            options: options,
+                                                            question: question,
+                                                            submitted_review: submitted_review
+  %>
 </div>

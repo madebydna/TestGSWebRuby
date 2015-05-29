@@ -4,6 +4,7 @@ module DeferredActionConcerns
   include SubscriptionConcerns
   include FavoriteSchoolsConcerns
   include SavedSearchesConcerns
+  include ReviewVotingConcerns
   protected
 
   ALLOWED_DEFERRED_ACTIONS = %w(
@@ -12,6 +13,7 @@ module DeferredActionConcerns
     add_favorite_school_deferred
     report_review_deferred
     saved_search_deferred
+    vote_for_review_deferred
   )
 
   def save_deferred_action(action, params)
@@ -90,6 +92,12 @@ module DeferredActionConcerns
     handle_html params
 
     true
+  end
+
+  def vote_for_review_deferred(params)
+    return false if !logged_in?
+
+    vote_for_review_and_redirect(params)
   end
 
   def self.included obj

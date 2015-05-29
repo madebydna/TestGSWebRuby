@@ -1862,7 +1862,7 @@
             email:        "Please enter a valid email address.",
             url:          "This value should be a valid url.",
             number:       "This value should be a valid number.",
-            integer:      "This value should be a valid integer.",
+            integer:      "Please only enter whole numbers.",
             digits:       "This value should be digits.",
             alphanum:     "This value should be alphanumeric."
         },

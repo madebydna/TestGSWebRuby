@@ -6,39 +6,50 @@ class LocalizedProfileAjaxController < ApplicationController
   layout false
 
   def reviews_pagination
-    offset = (params[:offset] || '0').to_i
-    limit = (params[:limit] || '10').to_i
-    filter_by = params[:filter_by] || nil
-
-    active_record_relation = @school.reviews_scope
-    active_record_relation = sort(active_record_relation)
-    reviews = active_record_relation.to_a
-
-    if filter_by.present? && filter_by != 'all'
-      reviews.extend ReviewScoping
-      reviews = reviews.by_user_type[filter_by]
-    end
-
-    school_reviews = SchoolReviews.new { reviews }.having_comments
-    school_reviews = school_reviews[offset..offset + (limit - 1)]
-    @school_reviews = school_reviews
-
-    @school_reviews_helpful_counts = HelpfulReview.helpful_counts(@school_reviews)
+    @school_member = school_member if logged_in?
+    @topic_scoped = topic_scoped?
+    @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(
+                                                        SchoolReviews.new {filtered_reviews}, view_context)
+    @paginated_reviews = paginate_reviews
   end
 
-  def sort(active_record_relation)
-    order = params[:order_by] || nil
-    case order
-      when 'oldToNew'
-        active_record_relation = active_record_relation.order("reviews.created ASC")
-      when 'ratingsHighToLow'
-        active_record_relation = active_record_relation.order("answer_value DESC, reviews.created DESC")
-      when 'ratingsLowToHigh'
-        active_record_relation = active_record_relation.order("answer_value ASC, reviews.created DESC")
-      else
-        active_record_relation = active_record_relation.order("reviews.created DESC")
+  protected
+
+  def school_member
+    member = SchoolMember.find_by_school_and_user(@school, current_user)
+    member ||= SchoolMember.build_unknown_school_member(@school, current_user)
+    member
+  end
+
+  def topic_scoped?
+    topic_scope = params[:filter_by_topic]
+    topic_scope.present? && topic_scope != 'allTopics'
+  end
+
+  def filtered_reviews
+    @filtered_reviews ||= (
+    filter_by_user_type = params[:filter_by_user_type] || nil
+    filter_by_topic = params[:filter_by_topic] || nil
+    active_record_relation = @school.reviews_scope.order(created: :desc)
+    reviews = active_record_relation.to_a
+    reviews.extend ReviewScoping
+    reviews.extend ReviewCalculations
+    if filter_by_user_type.present? && filter_by_user_type != 'all'
+      reviews = reviews.by_user_type[filter_by_user_type]
     end
-    return active_record_relation
+
+    if filter_by_topic && filter_by_topic != 'allTopics'
+      reviews = reviews.by_topic[filter_by_topic]
+    end
+    reviews
+    )
+  end
+
+  def paginate_reviews
+    offset = (params[:offset] || '0').to_i
+    limit = (params[:limit] || '10').to_i
+    school_reviews_having_comments = SchoolReviews.new { filtered_reviews.having_comments }
+    school_reviews_having_comments[offset..offset + (limit - 1)]
   end
 
 end

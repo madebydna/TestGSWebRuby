@@ -22,28 +22,48 @@ describe SchoolProfileDataDecorator do
       expect { subject.footnotes(page_config: double.as_null_object) }.to raise_error(ArgumentError)
     end
 
-    it 'should build a map with label and value' do
-      group = @section.children.first
-      group.title = 'Student ethnicity'
-      group.save!
+    context 'with valid data' do
+      before do
+        group = @section.children.first
+        group.title = 'Student ethnicity'
+        group.save!
 
-      allow(@page_config).to receive(:category_placement_has_children?).and_return true
-      allow(@page_config).to receive(:category_placement_leaves).and_return [ group.children.first ]
-      allow(@page_config).to receive(:category_placement_parent).and_return group
+        allow(@page_config).to receive(:category_placement_has_children?).and_return true
+        allow(@page_config).to receive(:category_placement_leaves).and_return [ group.children.first ]
+        allow(@page_config).to receive(:category_placement_parent).and_return group
+      end
+      it 'should build a map with label and value' do
 
-      allow(subject).to receive(:footnotes_for_category).and_return(
-        [
-          source: 'NCES',
-          year: '2012'
+        allow(subject).to receive(:footnotes_for_category).and_return(
+          [
+            source: 'NCES',
+            year: '2012'
+          ]
+        )
+
+        expected = [
+          label: 'Student ethnicity',
+          value: 'NCES, 2011-2012'
         ]
-      )
 
-      expected = [
-        label: 'Student ethnicity',
-        value: 'NCES, 2011-2012'
-      ]
+        expect(subject.footnotes(category: footnotes_category, page_config: @page_config)).to eq expected
+      end
 
-      expect(subject.footnotes(category: footnotes_category, page_config: @page_config)).to eq expected
+      it 'should build the correct value when year is 0' do
+        allow(subject).to receive(:footnotes_for_category).and_return(
+          [
+            source: 'Manually entered',
+            year: '0'
+          ]
+        )
+
+        expected = [
+          label: 'Student ethnicity',
+          value: 'Manually entered'
+        ]
+
+        expect(subject.footnotes(category: footnotes_category, page_config: @page_config)).to eq expected
+      end
     end
   end
 

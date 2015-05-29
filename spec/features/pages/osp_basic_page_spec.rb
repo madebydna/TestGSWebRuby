@@ -24,6 +24,7 @@ describe 'OSP Basic Page' do
       include_example 'should have a submit button'
       include_example 'should have basic school information'
       include_example 'should have school address'
+      include_example 'should have need help link'
 
     end
 
@@ -37,6 +38,7 @@ describe 'OSP Basic Page' do
       end
 
       include_example 'should have go to school profile button'
+      include_example 'should have post a message button'
     end
 
     describe_mobile do
@@ -47,6 +49,7 @@ describe 'OSP Basic Page' do
       end
 
       include_example 'should have go to school profile link'
+      include_example 'should have post a message link'
     end
   end
 
@@ -85,6 +88,9 @@ describe 'OSP Basic Page' do
       end
 
       describe_mobile_and_desktop do
+
+        # include_example 'should have need help link'
+
         with_shared_context 'click No Dress code and Dress code radio buttons' do
           with_shared_context 'within osp form' do
             include_example 'should only have one active button'
@@ -144,6 +150,10 @@ describe 'OSP Basic Page' do
         with_shared_context 'within select box', :award_year do
           include_example 'should be disabled'
         end
+
+       with_shared_context 'find input field with name', :date_picker do
+         include_example 'should display calendar picker'
+        end
       end
     end
   end
@@ -176,6 +186,16 @@ describe 'OSP Basic Page' do
       end
       with_shared_context 'enter video url information into medium text field', js: true do
         with_shared_context 'within textarea field', :normal_text_field do
+          include_example 'should not submit value in text field'
+        end
+      end
+      with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :school_phone, js: true do
+        with_shared_context 'within textarea field', :school_phone do
+          include_example 'should not submit value in text field'
+        end
+      end
+      with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :school_fax, js: true do
+        with_shared_context 'within textarea field', :school_fax do
           include_example 'should not submit value in text field'
         end
       end

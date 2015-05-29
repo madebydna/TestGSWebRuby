@@ -5,38 +5,12 @@ describe 'compare_schools/school_description_modules/_reviews_snapshot.html.erb'
   let(:reviews_snapshot) {{
       'avg_star_rating'=>4,
       'num_ratings'=>14,
-      'num_reviews'=>17,
-      'most_recent_reviews'=> [
-          {'comments'=>
-               'first comment',
-           'posted'=>'2012-04-23',
-           'who'=>'parent',
-           'quality'=>'5'},
-          {'comments'=>
-               'second comment',
-           'posted'=>'2011-07-11',
-           'who'=>'parent',
-           'quality'=>'5'}
-      ],
-      'star_counts'=>[0, 2, 0, 1, 0, 11]
+      'num_reviews'=>17
   }}
   let(:no_ratings_snapshot) {{
       'avg_star_rating'=>nil,
       'num_ratings'=>0,
-      'num_reviews'=>17,
-      'most_recent_reviews'=> [
-          {'comments'=>
-               'first comment',
-           'posted'=>'2012-04-23',
-           'who'=>'parent',
-           'quality'=>'decline'},
-          {'comments'=>
-               'second comment',
-           'posted'=>'2011-07-11',
-           'who'=>'parent',
-           'quality'=>'decline'}
-      ],
-      'star_counts'=>[0, 0, 0, 0, 0, 0]
+      'num_reviews'=>17
   }}
 
   init_school_with_cache

@@ -66,12 +66,12 @@ class SigninController < ApplicationController
       executed_deferred_action
 
       unless already_redirecting?
-        city_hub_page = nil
+        redirect_uri = nil
         if cookies[:redirect_uri]
-          city_hub_page = cookies[:redirect_uri]
+          redirect_uri = cookies[:redirect_uri]
           delete_cookie :redirect_uri
         end
-        redirect_to (overview_page_for_last_school || city_hub_page || (should_attempt_login ? home_url : join_url))
+        redirect_to (redirect_uri || overview_page_for_last_school || (should_attempt_login ? home_url : join_url))
       end
     end
   end

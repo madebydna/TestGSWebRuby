@@ -101,3 +101,8 @@ shared_example 'should save review that is not active' do
   wait_for_page_to_finish
   expect(Review.last.active).to eq(false)
 end
+
+shared_example 'should have reviews filter with default All topics' do
+  wait_for_page_to_finish
+  expect(subject.reviews_topic_filter_button.text).to eq('All topics')
+end

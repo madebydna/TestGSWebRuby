@@ -2,15 +2,32 @@
 <!--if current school_member exists and has answered questions for school and has no role then show role question-->
 <!--and hide-->
 
-<div
-  id='<%= "topic#{question.topic.id}" %>'
-  class="link-down-compensate bg-light-gray gray-box-border-v row limit-width-1200 js-topicalReviewContainer dn"
-  data-review-topic="<%= question.review_topic.id %>">
-  <%= form_for Review.new, remote: true, url: school_reviews_path(@school), html:  {'data-parsley-validate' => '', 'data-parsley-excluded'=>'input[type=button], input[type=submit], input[type=reset]'} do |f| %>
-      <%= f.hidden_field :state, value: @school.state %>
-      <%= f.hidden_field :school_id, value: @school.id %>
-      <%= f.hidden_field :review_question_id, value: question.id %>
+<% submitted_review = @school_member.find_by_question(question) if @school_member %>
+<% submitted_review = SchoolProfileReviewDecorator.decorate(submitted_review) if submitted_review %>
 
-      <%= render "shared/reviews/modules/input/#{question.layout}_module", question: question, f: f %>
+<div
+id='<%= "topic#{question.topic.id}" %>'
+class="link-down-compensate bg-light-gray gray-box-border-v row limit-width-1200 js-topicalReviewContainer dn"
+data-review-topic="<%= question.review_topic.id %>">
+  <% if submitted_review %>
+      <%= render "shared/reviews/modules/output/submitted_review_module", question: question,
+                                                                          submitted_review: submitted_review
+      %>
   <% end %>
+
+  <div class="js-reviewFormContainer <%= submitted_review ? 'dn' : '' %> ">
+    <%= form_for Review.new, remote: true, url: school_reviews_path(@school),
+                 html: {'data-parsley-validate' => '',
+                        'data-parsley-excluded' => 'input[type=button],
+                        input[type=submit], input[type=reset]'} do |f| %>
+        <%= f.hidden_field :state, value: @school.state %>
+        <%= f.hidden_field :school_id, value: @school.id %>
+        <%= f.hidden_field :review_question_id, value: question.id %>
+
+        <%= render "shared/reviews/modules/input/#{question.layout}_module", question: question,
+                                                                             f: f,
+                                                                             submitted_review: submitted_review
+        %>
+    <% end %>
+  </div>
 </div>

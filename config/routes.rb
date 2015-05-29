@@ -39,6 +39,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
+  get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
+  post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
+  post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
+  delete  '/gsr/ajax/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
 
   get '/gsr/search/suggest/school', as: :search_school_suggest, to: 'search#suggest_school_by_name'
   get '/gsr/search/suggest/city', as: :search_city_suggest, to: 'search#suggest_city_by_name'
@@ -118,10 +122,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/style-guide/', to: 'style_guide#index'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
-    get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
-    post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
-    post  '/school/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
-    delete  '/school/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
+
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
 
@@ -155,11 +156,12 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
+  post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
+  post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
-  get '/gsr/ajax/create_helpful_review', :to => 'simple_ajax#create_helpful_review'
   get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation

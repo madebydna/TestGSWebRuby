@@ -26,7 +26,7 @@ module UserReviewConcerns
   end
 
   def reviews_for_school(*args)
-    Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id)
+    Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id).order(created: :desc).includes(:answers)
   end
 
   # Does not consider active vs inactive reviews
@@ -36,6 +36,10 @@ module UserReviewConcerns
 
   def publish_reviews!
     UserReviewPublisher.new(self).publish_reviews_for_new_user!
+  end
+
+  def has_active_vote_on_review?(review)
+    review_votes.active.map(&:review_id).include?(review.id)
   end
 
   class UserReviewPublisher

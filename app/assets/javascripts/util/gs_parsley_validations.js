@@ -20,12 +20,20 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     };
 
+    var phoneNumber = function(val, _) {
+        if (val === '') return true;
+        var match = val.match(/\d/g);
+        return (match === null || match.length !== 10) ? false : true;
+    };
+
     var init = function() {
         window.ParsleyValidator
               .addValidator('blockhtmltags', blockHtmlTags)
               .addMessage('en', 'blockhtmltags', 'Sorry but html tags are not allowed')
               .addValidator('youtubevimeotag', youtubeVimeoTag)
               .addMessage('en','youtubevimeotag','Only valid Youtube or Vimeo videos allowed.')
+              .addValidator('phonenumber', phoneNumber)
+              .addMessage('en','phonenumber','Please enter a valid 10 digit phone number')
     };
 
     return {

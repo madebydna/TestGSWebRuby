@@ -27,7 +27,7 @@ class SchoolMedia < ActiveRecord::Base
   PROVISIONAL                    = 7
 
   def self.order_by()
-        order("sort DESC")
+        order("id ASC, sort DESC")
   end
 
   def self.fetch_school_media(school, quantity)

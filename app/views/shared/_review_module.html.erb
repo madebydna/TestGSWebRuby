@@ -43,18 +43,9 @@
     <% end %>
     <div class="clearfix pts">
       <% if review.comment.present? %>
-        <!--<div class="pull-left ptm">-->
-          <!-- <button type="button" class="btn btn-toggle js_reviewHelpfulButton mrm phm pvs" data-toggle="button" data-review_id="< %=
-              review.id %>"> -->
-            <!--<span class="iconx16 i-16-thumbs-up mt3"></span>-->
-          <!--</button>-->
-          <!--<span>-->
-            <!--< % if @school_reviews_helpful_counts && @school_reviews_helpful_counts[review.id].present? %>-->
-                <!--< %= pluralize(@school_reviews_helpful_counts[review.id], 'person') %>-->
-                <!--found this helpful-->
-            <!--<i % end %>-->
-          <!--</span>-->
-        <!--</div>-->
+        <div class="pull-left ptm">
+          <%= render 'shared/reviews/review_voting', review: review unless @school_member && @school_member.active_reviews.include?(review) %>
+        </div>
         <% if logged_in? && current_user.flagged_review?(review) %>
           <div class="pull-right small ptm">You've reported this review</div>
         <% else %>

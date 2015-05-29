@@ -71,7 +71,7 @@ class CensusLoading::Loader < CensusLoading::Base
   end
 
   def should_be_updated?(census_update, value_row)
-       (value_row.present? && !value_row.modified.present?)|| (value_row.present? && value_row.modified.present? && census_update.created_before?(value_row.modified))|| value_row.blank?
+   value_row.blank? || (!census_update.created.present?) || (value_row.present? && !value_row.modified.present?)|| (value_row.present? && value_row.modified.present? &&  census_update.created.present? && census_update.created_before?(value_row.modified))
   end
 
   def configure_census_description!(attributes, school_type, data_set_id)

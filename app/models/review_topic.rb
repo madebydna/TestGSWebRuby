@@ -49,4 +49,13 @@ class ReviewTopic < ActiveRecord::Base
   def level_code_array
     self.school_level_code.split(',')
   end
+
+  def overall?
+    name == 'Overall'
+  end
+
+  def first_question
+    review_questions.first
+  end
+
 end

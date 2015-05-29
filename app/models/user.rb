@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :student_grade_levels, foreign_key: 'member_id'
+  has_many :review_votes, foreign_key: 'member_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -204,7 +205,8 @@ class User < ActiveRecord::Base
     memberships.any? { |membership| membership.approved? || membership.provisional? }
   end
 
-  def esp_membership_for_school(school = nil)
+  def esp_membership_for_school(school = nil) #always returns membership if user is a superuser
+    return esp_memberships.first if is_esp_superuser?
     school.present? ? esp_memberships.for_school(school).first : nil
   end
 

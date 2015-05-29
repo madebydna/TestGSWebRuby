@@ -1,0 +1,35 @@
+<% submitted_review %>
+<% topic_name = question.topic.name %>
+<% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
+
+<div class="js-submittedReviewContainer">
+  <div class="topical-review-question-container left">
+    <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
+    <% unless @school_member.principal? %>
+        <div class=" tac ptl font-size-large"><%= submitted_review.submitted_values_text %></span></div>
+    <% end %>
+    <div class="ptm pbl phxl tal <%= @school_member.principal? ? 'mtl' : '' %>">
+      <% unless submitted_review.active? %>
+          <span class="open-sans_i">(Pending activation) </span>
+      <% end %>
+      <%= submitted_review.truncated_comment(220) %>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary mvm js-reviewManageButton" data-topic-id="<%= question.topic.id %>">Manage
+        review
+      </button>
+    </div>
+  </div>
+  <div class="topical-review-question-container right">
+    <div class="ptl phl ">
+      <div class="font-size-large mtxl ptxl">
+        <%= reviews_for_topic.answer_summary_text %>
+      </div>
+      <div class="js_reviewTopicFilterLink">
+        <a class="pointer" data-topic-filter="<%= topic_name %>">
+          <%= reviews_for_topic.see_comments_text %>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,8 @@ FactoryGirl.define do
       n
     end
     esp_membership_id 1
+    state 'ca'
+    school_id 1
     response ({
       "boys_sports" => [
         {
@@ -114,15 +116,15 @@ FactoryGirl.define do
 
     trait :with_esp_member do
       ignore do
-        school_id 1
-        state 'ca'
+        esp_member_school_id 1
+        esp_member_state 'ca'
         member_id 1
       end
       after(:create) do |osp_form_responses, evaluator|
         FactoryGirl.create(:esp_membership,
           id: osp_form_responses.esp_membership_id,
-          school_id: evaluator.school_id,
-          state: evaluator.state,
+          school_id: evaluator.esp_member_school_id,
+          state: evaluator.esp_member_state,
           member_id: evaluator.member_id
         )
       end

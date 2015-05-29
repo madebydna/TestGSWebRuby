@@ -1,9 +1,10 @@
-<% if @school.metadata.facebook_url %>
+<% facebook_url = @school.cache_results.values_for(EspKeys::FACEBOOK_URL).first || @school.metadata.facebook_url %>
+<% if facebook_url %>
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row">
     <div class="<%= layout_grid %> tac">
         <div class="fb-like-box "
-          data-href="<%= @school.metadata.facebook_url %>"
+          data-href="<%= facebook_url %>"
           data-width="300"
           data-colorscheme="light"
           data-show-faces="true"

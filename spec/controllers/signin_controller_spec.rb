@@ -111,12 +111,12 @@ describe SigninController do
           expect(subject).to redirect_to '/city-hub/'
         end
 
-        it 'should redirect to overview page last visited even if redirect cookie is set' do
+        it 'should redirect to redirect cookie even if overview page last visited cookie is set' do
           allow(controller).to receive(:should_attempt_login).and_return(true)
           allow(controller).to receive(:log_user_in).with(user)
           allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
           cookies[:redirect_uri] = '/city-hub/'
-          expect(subject).to redirect_to '/profile-url'
+          expect(subject).to redirect_to '/city-hub/'
         end
       end
     end
@@ -181,10 +181,10 @@ describe SigninController do
           expect(subject).to redirect_to '/city-hub/'
         end
 
-        it 'should redirect to overview page last visited even if redirect cookie is set' do
+        it 'should redirect to redirect cookie even if overview page last visited cookie is set' do
           allow(controller).to receive(:overview_page_for_last_school).and_return('/profile-url')
           cookies[:redirect_uri] = '/city-hub/'
-          expect(subject).to redirect_to '/profile-url'
+          expect(subject).to redirect_to '/city-hub/'
         end
 
         it 'should not decode square brackets if redirect_uri contains encoded square brackets' do

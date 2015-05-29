@@ -31,6 +31,34 @@ module CachedCharacteristicsMethods
     NO_DATA_SYMBOL
   end
 
+  def census_value(name, options={})
+    if valid_characteristic_cache(characteristics[name])
+      characteristics[name].each do |characteristic|
+        if options.present?
+          if options.key? :grade
+            next unless characteristic['grade'] == options[:grade]
+          end
+          if options[:number_value]
+            return number_with_delimiter(characteristic['school_value'].to_i, delimiter: ',')
+          else
+            return characteristic['school_value']
+          end
+        else
+          return characteristic['school_value']
+        end
+      end
+    end
+  end
+
+  def created_time(name)
+    if valid_characteristic_cache(characteristics[name]) && characteristics[name].present? && characteristics[name].first['created'].present?
+      Time.parse(characteristics[name].first['created'])
+    end
+  end
+
+
+
+
   def ethnicity_data
     characteristics['Ethnicity'] || []
   end
@@ -94,7 +122,6 @@ module CachedCharacteristicsMethods
       false
     end
   end
-
 
 
 

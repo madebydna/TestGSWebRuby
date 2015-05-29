@@ -1,4 +1,6 @@
 class SchoolProfileReviewsPage < SitePrism::Page
+  include WaitForAjax
+
   class ReviewsSection < SitePrism::Section
     elements :questions, 'form'
     elements :review_questions, '.js-topicalReviewContainer'
@@ -35,12 +37,18 @@ class SchoolProfileReviewsPage < SitePrism::Page
     element :all_filter_button, 'button', text: 'All'
     element :parents_filter_button, 'button', text: 'Parents'
     element :students_filter_button, 'button', text: 'Students'
+    element :reviews_topic_filter_button, 'button', text: 'All topics'
+    element :overall_topic_filter, 'a', text: 'Overall'
+    element :teachers_topic_filter, 'a', text: 'Teachers'
   end
 
   class ReviewSection < SitePrism::Section
-    element :review_helpful_button, '.js_reviewHelpfulButton'
+    element :vote_for_review_button, '.rs-review-voting button' # vote on helpful review
+    element :unvote_review_button, '.rs-review-voting button.active'
+    element :number_of_votes, '.rs-review-voting>span'
     element :flag_review_link, '.rs-report-review-link'
     element :review_flagged_text, 'div', text: 'You\'ve reported this review'
+    element :stars, '.iconx16-stars'
     element :one_star, '.i-16-orange-star .i-16-star-1'
     element :two_stars, '.i-16-orange-star .i-16-star-2'
     element :three_stars, '.i-16-orange-star .i-16-star-3'
@@ -53,6 +61,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
       element :comment_box, 'textarea[name="review_flag[comment]"]'
       element :submit_button, 'button', text: 'Submit'
       element :cancel_link, 'a', text: 'Cancel'
+    end
+
+    def number_of_votes_text
+      number_of_votes.text
     end
 
     def posted_date
@@ -78,6 +90,14 @@ class SchoolProfileReviewsPage < SitePrism::Page
 
     def school_leader_review?
       !! text.match(/- a school leader/)
+    end
+
+    def overall_review?
+       has_stars?
+    end
+
+    def teacher_effectiveness_review?
+      !!text.match(/Teacher effectiveness/)
     end
   end
 
@@ -105,6 +125,26 @@ class SchoolProfileReviewsPage < SitePrism::Page
 
   def filter_by_students
     reviews_list_header.students_filter_button.click
+  end
+
+  def filter_by_overall_topic
+    reviews_list_header.reviews_topic_filter_button.click
+    reviews_list_header.overall_topic_filter.click
+  end
+
+  def filter_by_teachers_topic
+    reviews_list_header.reviews_topic_filter_button.click
+    reviews_list_header.teachers_topic_filter.click
+  end
+
+  def vote_on_the_first_review
+    first_review.vote_for_review_button.click
+    wait_for_ajax
+  end
+
+  def unvote_the_first_review
+    first_review.unvote_review_button.click
+    wait_for_ajax
   end
 end
 

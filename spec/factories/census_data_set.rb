@@ -11,6 +11,7 @@ FactoryGirl.define do
     sequence(:value_float)
     sequence(:school_id)
     active 1
+    data_set_id 1
     modified Time.now
   end
 
@@ -18,12 +19,14 @@ FactoryGirl.define do
     sequence(:value_float)
     sequence(:district_id)
     active 1
+    data_set_id 1
     modified Time.now
   end
 
   factory :census_data_state_value_with_newer_data, class: CensusDataStateValue do
     sequence(:value_float)
     active 1
+    data_set_id 1
     modified Time.now
   end
 

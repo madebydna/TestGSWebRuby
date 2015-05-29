@@ -1,41 +1,44 @@
 <% reviews %>
 
-<div class="row rs-review-list-header">
-  <hr />
+<div id="js_reviewsListHeader" class="link-down-compensate rs-review-list-header">
+  <hr/>
   <div class="plm mbl">
     <h2>Review comments</h2>
   </div>
 
-  <div class="col-xs-12 col-md-6 pam">
-    <h3 class="mvn"><%= pluralize(reviews.number_of_reviews_with_comments, 'review', 'reviews') %> of this school</h3>
-  </div>
 
-  <div class="col-xs-12 col-md-6 clearfix pam">
-    <div class="dropdown fr pll margin-bottom-mobile">
-      <button type="button"
-              class="btn btn-default js_reviewFilterDropDownText js_bootstrapExtDropdownText"
-              data-toggle="dropdown"
-              href="#">Date newest to oldest <b class="caret"></b></button>
-      <ul class="dropdown-menu mll js_reviewFilterDropDown" data-order-selected="newToOld">
-        <li><a data-order-review="newToOld">Date newest to oldest</a></li>
-        <li><a data-order-review="oldToNew">Date oldest to newest</a></li>
-        <li><a data-order-review="ratingsHighToLow">Ratings high to low</a></li>
-        <li><a data-order-review="ratingsLowToHigh">Ratings low to high</a></li>
-      </ul>
-    </div>
-
-    <% if reviews.parent_reviews.having_comments.any? || reviews.student_reviews.having_comments.any? %>
-      <div class="fr">
-        <div class="btn-group js_reviewFilterButton js_bootstrapExtButtonSelect" data-group-selected="all">
-          <button type="button" class="btn btn-default active" data-group-name="all">All</button>
-          <% if reviews.parent_reviews.having_comments.any? %>
-            <button type="button" class="btn btn-default" data-group-name="parent">Parents</button>
-          <% end %>
-          <% if reviews.student_reviews.having_comments.any? %>
-            <button type="button" class="btn btn-default" data-group-name="student">Students</button>
-          <% end %>
+  <% topics = reviews.map(&:topic).uniq.sort %>
+  <div class="clearfix bg-medium-gray pam">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <div class="dropdown reviews-topic-filter margin-bottom-mobile">
+          <button type="button"
+                  class="btn btn-default pointer js_reviewTopicFilterDropDownText js_bootstrapExtDropdownText"
+                  data-toggle="dropdown"
+                  >All topics <b class="caret"></b></button>
+          <ul class="dropdown-menu mll js_reviewTopicFilterDropDown" data-topic-selected="allTopics">
+            <li><a class="pointer" data-topic-filter="allTopics">All topics</a></li>
+            <% topics.each do |topic| %>
+                <li><a class="pointer" data-topic-filter="<%= topic.name %>"><%= topic.name %></a></li>
+            <% end %>
+          </ul>
         </div>
       </div>
-    <% end %>
+      <div class="col-xs-12 col-sm-9">
+        <% if reviews.parent_reviews.having_comments.any? || reviews.student_reviews.having_comments.any? %>
+            <div class="fr pl60">
+              <div class="btn-group js_reviewFilterButton js_bootstrapExtButtonSelect" data-group-selected="all">
+                <button type="button" class="btn btn-default active" data-group-name="all">All</button>
+                <% if reviews.parent_reviews.having_comments.any? %>
+                    <button type="button" class="btn btn-default" data-group-name="parent">Parents</button>
+                <% end %>
+                <% if reviews.student_reviews.having_comments.any? %>
+                    <button type="button" class="btn btn-default" data-group-name="student">Students</button>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

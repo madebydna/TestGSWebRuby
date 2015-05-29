@@ -258,6 +258,66 @@ GS.visualchart = GS.visualchart || function($) {
         }
     };
 
+
+    var drawBarChartReviewsList = function (barChartData, div) {
+        var reviewsListColors = ['#fad700','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#836d93','#e4b4d4','#3c97d3','#db688c','#67499d','#aa5e5b'];
+        var func = function () {
+            var options = {
+                colors: reviewsListColors,
+                legend:{
+                    position: 'none'
+                },
+//                theme: 'maximized',
+
+                annotations: {
+                    alwaysOutside: true
+                },
+                hAxis:{
+                    gridlines: {
+                        color: '#333',
+                        count: 0
+                    }
+
+                },
+                vAxis:{
+                    textStyle:{
+                        fontName: 'Arial',
+                        fontSize: 12,
+                        italic: false,
+                        textPosition: 'in'
+                    }
+                },
+                width:300,
+                height:200,
+                chartArea: {
+                    top: 0,
+                    bottom: 0,
+                    left:100,
+                    width: '70%',
+                    height: '100%'
+
+                }
+            };
+            var domNode = document.getElementById(div);
+
+            if (domNode != null) {
+                var data = google.visualization.arrayToDataTable(JSON.parse(barChartData));
+                var chart = new google.visualization.BarChart(domNode);
+                chart.draw(data, options);
+            }
+        };
+
+        if (loader) {
+
+            loader.push(func);
+        } else {
+//            This loads google visualization dynamically to activate chart on ajax and not on page load
+//            See Dynamic Loading on page below
+//            https://developers.google.com/loader/
+            google.load("visualization", "1", {"callback" : func});
+        }
+    };
+
     return {
         colors: colors,
         pieSelectHandler: pieSelectHandler,
@@ -266,6 +326,7 @@ GS.visualchart = GS.visualchart || function($) {
         drawBarChartTestScores: drawBarChartTestScores,
         drawBarChartTestScoresStacked: drawBarChartTestScoresStacked,
         drawBarChartReviews:drawBarChartReviews,
+        drawBarChartReviewsList:drawBarChartReviewsList,
         loader: loader
     }
 

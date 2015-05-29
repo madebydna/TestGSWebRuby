@@ -16,10 +16,14 @@
         <% end %>
         Email: <%= email %>
         <br/>
+        <% if review.user %>
+          Email verified: <%= review.user.email_verified? ? 'Yes' : 'No' %>
+          <br/>
+        <% end %>
         Username: <%= username %>
         <br/>
 
-        Submitted on: <%= review.created.strftime('%B %d, %Y') %>
+        Submitted on: <%= review.created.strftime('%B %d, %Y') %><%= " at #{review.created.strftime('%r')}" if review.created.strftime('%r') != '12:00:00 AM' %>
         <br/>
         Status: <%= review.status %>
         <br/>

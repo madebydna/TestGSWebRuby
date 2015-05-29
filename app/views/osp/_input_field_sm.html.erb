@@ -3,8 +3,10 @@
 <% display_validations    = display_question.display_validations %>
 <% #parsley_validations can look like (data-parsley-youtubevimeotag data-parsley-type='email') rendered on page and {'data-parsley-youtubevimeotag': '', 'data-parsley-type':'email'} in db%>
 <% parsley_validations = [*display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
+<% isInteger =   parsley_validations.include?("data-parsley-type=integer")  ? true :false %>
 
 <% response_key  %>
+
 
 <div class="row mbl pbl">
   <div class="col-xs-12">
@@ -14,6 +16,6 @@
       </span>
     </h3>
   </div>
-  <input  <%= parsley_validations %>  <%= @parsley_defaults %> type="text" class="form-control input-field-sm" name="<%= "#{q_id}-#{response_key}" %>" value="<%= preexisting_esp_values[0] %>">
-</div>
+    <input  <%= parsley_validations %>  <%= @parsley_defaults %> type="text" class="form-control input-field-sm" name="<%= "#{q_id}-#{response_key}" %>" value="<%= isInteger ? preexisting_esp_values[0].to_i : preexisting_esp_values[0] %>">
+  </div>
 

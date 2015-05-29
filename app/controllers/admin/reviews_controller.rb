@@ -44,13 +44,6 @@ class Admin::ReviewsController < ApplicationController
       #reviews that are flagged by the user.
       @reviews_flagged_by_user = find_reviews_flagged_by_user(user)
     end
-
-    # ip = ip_from_params
-    # if ip
-    #   @reviews_by_user = SchoolRating.by_ip(ip)
-    #   @banned_ip = BannedIp.new
-    #   @banned_ip.ip = ip
-    # end
   end
 
   def ban_ip
@@ -95,7 +88,7 @@ class Admin::ReviewsController < ApplicationController
         # email_user_about_review_removal(review)
         flash_notice 'Review activated.'
       else
-        flash_error 'Sorry, something went wrong while activating the review.'
+        flash_error "Sorry, something went wrong while activating the review: #{review.errors.full_messages.first}"
       end
     end
 
@@ -115,7 +108,7 @@ class Admin::ReviewsController < ApplicationController
         # email_user_about_review_removal(review)
         flash_notice 'Review deactivated'
       else
-        flash_error 'Sorry, something went wrong while deactivating the review.'
+        flash_error "Sorry, something went wrong while deactivating the review: #{review.errors.full_messages.first}"
       end
     end
 
@@ -180,23 +173,13 @@ class Admin::ReviewsController < ApplicationController
     end
   end
 
-  def ip_from_params
-    search_string = params[:review_moderation_search_string]
-
-    if search_string.present?
-      search_string = search_string.strip
-
-      search_string unless search_string.match(/[a-zA-z]/)
-    end
-  end
-
-  def email_user_about_review_removal(review)
-    if review.who == 'student'
-      StudentReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
-    else
-      ReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
-    end
-  end
+  # def email_user_about_review_removal(review)
+  #   if review.who == 'student'
+  #     StudentReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
+  #   else
+  #     ReviewHasBeenRemovedEmail.deliver_to_user(review.user, review.school)
+  #   end
+  # end
 
   def find_reviews_by_user(user)
     user.reviews

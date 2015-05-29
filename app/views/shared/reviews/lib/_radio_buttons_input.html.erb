@@ -1,4 +1,5 @@
-<% f; question; %>
+<% f; question; submitted_answer; %>
+
 <div class="row mtl mbl tac">
   <!--Currently this grid is set up only for five options-->
   <% new_object = f.object.send(:answers).klass.new %>
@@ -12,7 +13,10 @@
                 <div class="clearfix visible-xs"></div>
             <% end %>
             <div class="<%= offset %> col-xs-4 col-sm-2 mtm phm">
-              <div><%= builder.radio_button(:answer_value, response_value, class: 'js-topicalRadioButton') %>
+              <div><%= builder.radio_button(:answer_value,
+                                            response_value,
+                                            class: 'js-topicalRadioButton',
+                                            checked: response_value ==  submitted_answer ? true : false )  %>
               </div>
               <div> <%= response_value %> </div>
             </div>

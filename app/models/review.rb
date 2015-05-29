@@ -16,6 +16,7 @@ class Review < ActiveRecord::Base
   has_many :answers, class_name:'ReviewAnswer', foreign_key: 'review_id', inverse_of: :review
   has_many :notes, class_name: 'ReviewNote', foreign_key: 'review_id', inverse_of: :review
   has_many :flags, class_name: 'ReviewFlag', foreign_key: 'review_id', inverse_of: :review
+  has_many :votes, class_name: 'ReviewVote', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :answers, allow_destroy: true
 
   # See http://pivotallabs.com/rails-associations-with-multiple-foreign-keys/ and comments
@@ -45,7 +46,7 @@ class Review < ActiveRecord::Base
   # TODO: i18n this message
   validates_uniqueness_of(
     :member_id,
-    scope: [:school_id, :state, :review_question_id],
+    scope: [:school_id, :state, :review_question_id, :active],
     conditions: -> { where(active: 1) },
     message: 'You have already submitted a review for this topic.'
   )
