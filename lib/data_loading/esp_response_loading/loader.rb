@@ -58,14 +58,15 @@ class EspResponseLoading::Loader < EspResponseLoading::Base
   end
 
   def existing_values_for_response_key(esp_response_update)
-    return @existing_values_for_response_key if defined? @existing_values_for_response_key
-    @existing_values_for_response_key ||= begin (
+    @existing_values_for_response_key ||= (
     EspResponse
     .on_db(esp_response_update.shard)
     .where(esp_response_update.attributes)
-    .where(active: 1)
-    ) || []
-    end
+    .where(active: 1).to_a
+    )
+    # @existing_values_for_response_key
+    # require 'pry' ;binding.pry
+
   end
   def handle_update(esp_response_update, value_row)
     value_info = EspResponseValueUpdate.new(esp_response_update, value_row.first)
