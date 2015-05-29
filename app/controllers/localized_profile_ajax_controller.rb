@@ -6,6 +6,7 @@ class LocalizedProfileAjaxController < ApplicationController
   layout false
 
   def reviews_pagination
+    @school_member = school_member if logged_in?
     @topic_scoped = topic_scoped?
     @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(
                                                         SchoolReviews.new {filtered_reviews}, view_context)
@@ -13,6 +14,12 @@ class LocalizedProfileAjaxController < ApplicationController
   end
 
   protected
+
+  def school_member
+    member = SchoolMember.find_by_school_and_user(@school, current_user)
+    member ||= SchoolMember.build_unknown_school_member(school, current_user)
+    member
+  end
 
   def topic_scoped?
     topic_scope = params[:filter_by_topic]
