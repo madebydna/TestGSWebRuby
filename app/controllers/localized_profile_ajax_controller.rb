@@ -17,7 +17,7 @@ class LocalizedProfileAjaxController < ApplicationController
 
   def school_member
     member = SchoolMember.find_by_school_and_user(@school, current_user)
-    member ||= SchoolMember.build_unknown_school_member(school, current_user)
+    member ||= SchoolMember.build_unknown_school_member(@school, current_user)
     member
   end
 
