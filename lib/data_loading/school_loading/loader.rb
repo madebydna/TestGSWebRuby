@@ -12,11 +12,11 @@ class SchoolLoading::Loader < SchoolLoading::Base
         database = school_update.entity_state.to_s.downcase.to_sym
         existing_school = School.on_db(database).find(school_update.entity_id)
         if should_be_inserted?(school_update,existing_school)
-        existing_school.on_db(database).update_attributes(
-            to_be_updated_column_name => to_be_updated_value,
-            modified: updates.first['created'].present? ? updates.first['created'] : Time.now,
-            modifiedBy: source
-        )
+          existing_school.on_db(database).update_attributes(
+              to_be_updated_column_name => to_be_updated_value,
+              modified: updates.first['created'].present? ? updates.first['created'] : Time.now,
+              modifiedBy: source
+          )
         end
       end
     end
