@@ -26,7 +26,6 @@ shared_examples 'an update' do |update_class, required_update_keys|
       it "should raise an error like #{required_key} if there is no #{required_key}" do
         invalid_update = valid_update.clone
         invalid_update.delete(required_key)
-        # require 'pry';binding.pry
         if update_class == EspResponseLoading::Update
           next if required_key == :entity_type
           expect { update_class.new('data type', invalid_update, nil) }.to raise_error(/#{required_key}/)
@@ -34,7 +33,6 @@ shared_examples 'an update' do |update_class, required_update_keys|
           expect { update_class.new('data type', invalid_update) }.to raise_error(/#{required_key}/)
         else
           expect { update_class.new(nil, invalid_update) }.to raise_error(/#{required_key}/)
-
         end
       end
     end
