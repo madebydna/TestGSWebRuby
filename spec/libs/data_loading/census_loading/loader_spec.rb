@@ -68,7 +68,6 @@ describe CensusLoading::Loader do
               allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(@data_set)
               allow(value_class).to   receive(:first_or_initialize).and_return(@data_value)
               loader.insert_into!(census_update, entity)
-              # require 'pry'; binding.pry if entity_type == :district
               @value_row = value_class.on_db(census_update.shard).order(modified: :desc).first
             end
 
