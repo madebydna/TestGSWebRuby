@@ -55,7 +55,7 @@ class OspData
 
 
     rescue => error
-      GSLogger.error('OSP', error, message: "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}")
+      GSLogger.error(:osp, error, message: "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}")
       []
     end
   end

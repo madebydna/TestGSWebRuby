@@ -122,7 +122,7 @@ module ReviewControllerConcerns
           if review_flag.save
             flash_notice t('actions.report_review.reported')
           else
-            GSLogger.error('REVIEWS', nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
+            GSLogger.error(:reviews, nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
             flash_error t('actions.generic_error')
           end
         else

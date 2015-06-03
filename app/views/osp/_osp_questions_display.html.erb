@@ -14,7 +14,7 @@
                   response_key:               display_question.question_response_key
           } %>
       <% rescue => error %>
-          <% GSLogger.warn('OSP', error, message: 'Error rendering Osp Question Partial') %>
+          <% GSLogger.warn(:osp, error, message: 'Error rendering Osp Question Partial') %>
       <% end %>
   <% end %>
 </div>

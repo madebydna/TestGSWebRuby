@@ -56,7 +56,7 @@ class OspController < ApplicationController
       approve_all_images_for_school(@school) if @is_approved_user
       render_success_js(school_media.id)
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Failed to add image')
+      GSLogger.error(:osp, error, vars: params, message: 'Failed to add image')
       render_error_js
     end
   end
@@ -78,7 +78,7 @@ class OspController < ApplicationController
       begin
         question_id, response_key = param.split('-', 2)
       rescue => error
-        GSLogger.warn('OSP', error, vars: params, message: "invalid param #{param}") and next
+        GSLogger.warn(:osp, error, vars: params, message: "invalid param #{param}") and next
       end
       next if question_id.to_i == 0
       next unless values.present?
@@ -169,7 +169,7 @@ class OspController < ApplicationController
         create_update_queue_row!(response_blob) if is_approved_user
       end
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue and osp response table')
+      GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue and osp response table')
       error
     end
   end
@@ -185,12 +185,12 @@ class OspController < ApplicationController
           updated: submit_time
       ).errors.full_messages
 
-      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to osp_form_response table') if error.present?
+      GSLogger.error(:osp, nil, vars: params, message: "Didnt save osp response to osp_form_response table #{[*error].first}") if error.present?
       error
 
     rescue => e
-      GSLogger.error('OSP', e, vars: params, message: 'Didnt save osp response to osp_form_response table')
-      error
+      GSLogger.error(:osp, e, vars: params, message: 'Didnt save osp response to osp_form_response table')
+      error.presence || ["An error occured"]
     end
   end
 
@@ -202,12 +202,12 @@ class OspController < ApplicationController
           update_blob: response_blob,
       ).errors.full_messages
 
-      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to update_queue table') if error.present?
+      GSLogger.error(:osp, nil, vars: params, message: "Didnt save osp response to update_queue table #{[*error].first}") if error.present?
       error
 
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue table')
-      error
+      GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue table')
+      error.presence || ["An error occured"]
     end
   end
 

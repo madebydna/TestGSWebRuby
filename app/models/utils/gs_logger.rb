@@ -1,8 +1,12 @@
 class GSLogger
-
   WARN  = 'WARN'
   ERROR = 'ERROR'
   INFO  = 'INFO"'
+
+  TAGS = Hash.new('MISC').merge({
+    osp: 'OSP',
+    reviews: 'REVIEWS'
+  })
 
   class << self
 
@@ -19,12 +23,12 @@ class GSLogger
     def log_own_failure(e)
       m = "GS||ERROR||GSLogger||#{e.class} #{e.message}||#{Time.now}||ERROR_LOCATION:#{e.backtrace.first}||"
       m << "RESCUE_LOCATION:#{binding.send(:caller).first}||OPT_MESSAGE||OPT_VARS"
-      m.gsub!(/\n\t/, '')
+      m.gsub!(/\n|\t/, '')
       Rails.logger.error(m)
     end
 
     def log(level, tag, rescue_line, exception, opts = {})
-      base_log = process_log(level, tag, rescue_line, exception)
+      base_log = process_log(level, TAGS[tag], rescue_line, exception)
       options  = process_opts(opts)
 
       log = (base_log + options).join('||').gsub(/\n|\t|\r/, '')
