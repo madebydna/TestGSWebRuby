@@ -14,7 +14,7 @@ class SchoolUserController < SchoolProfileController
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
       if school_user.principal? || school_user.student?
-        school_user.deactivate_reviews!
+        school_user.deactivate_reviews_with_comments!
       end
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")

@@ -167,8 +167,8 @@ class Review < ActiveRecord::Base
       return self
     end
 
-    def check_for_student_user_type
-      if school_member.student?
+    def check_for_student_user_type_with_comment
+      if school_member.student? && review.comment.present?
         self.reasons << ReviewFlag::STUDENT
       end
       return self
@@ -186,7 +186,7 @@ class Review < ActiveRecord::Base
     def auto_moderate
       check_alert_words
       check_for_local_school
-      check_for_student_user_type
+      check_for_student_user_type_with_comment
       check_for_principal_user_type
       check_for_held_school
       check_for_forced_moderation
@@ -233,7 +233,7 @@ class Review < ActiveRecord::Base
   def calculate_and_set_active
     if user.provisional?  ||
       school.held? ||
-      school_member_or_default.student? ||
+      school_member_or_default.student? && comment.present? ||
       (school_member_or_default.principal? && ! school_member_or_default.approved_osp_user?) ||
       (comment.present? && AlertWord.search(comment).has_really_bad_words?) ||
       PropertyConfig.force_review_moderation? ||

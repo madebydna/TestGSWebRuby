@@ -180,10 +180,21 @@ describe Review do
       context 'when user is a student' do
         let(:school_member) { FactoryGirl.build(:student_school_member) }
         before { allow(review).to receive(:school_member).and_return(school_member) }
-        it 'should flag reviews for students' do
-          expect(AlertWord).to receive(:search).and_return(no_bad_language)
-          expect(subject).to receive(:build_review_flag).with(be_nil, [:'student'])
-          subject.auto_moderate.build
+        context 'with comment in review' do
+          before { allow(review).to receive(:comment).and_return(' lorem ' * 15) }
+          it 'should flag reviews for students' do
+            expect(AlertWord).to receive(:search).and_return(no_bad_language)
+            expect(subject).to receive(:build_review_flag).with(nil,[:'student'])
+            subject.auto_moderate.build
+          end
+        end
+        context 'without comment in review' do
+          before { allow(review).to receive(:comment).and_return('') }
+          it 'should not flag reviews for students' do
+            expect(AlertWord).to receive(:search).and_return(no_bad_language)
+            expect(subject).to_not receive(:build_review_flag)
+            subject.auto_moderate.build
+          end
         end
       end
 
@@ -318,10 +329,17 @@ describe Review do
             expect(subject).to be_active
           end
 
-          it 'should be inactive if user is student' do
+          it 'should be inactive if user is student and review has comment' do
+            subject.comment = ' foo ' * 15
             allow(subject).to receive(:school_member).and_return(student_school_member)
             subject.calculate_and_set_active
             expect(subject).to be_inactive
+          end
+
+          it 'should be active if user is student and review has no comment' do
+            allow(subject).to receive(:school_member).and_return(student_school_member)
+            subject.calculate_and_set_active
+            expect(subject).to be_active
           end
 
           it 'should be inactive if user is a principal and not approved' do

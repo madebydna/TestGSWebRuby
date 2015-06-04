@@ -74,4 +74,33 @@ describe SchoolMember do
       it { is_expected.to_not be_provisional_osp_user }
     end
   end
+
+  describe '#deactivate_reviews_with_comments!' do
+    subject { school_member }
+
+    context 'with review without comments' do
+      let(:reviews) { FactoryGirl.build_list(:review, 2, comment: ' lorem ' * 15) }
+      before do
+        allow(subject).to receive(:reviews).and_return(reviews.extend ReviewScoping)
+      end
+      after { clean_models(:gs_schooldb, Review, ReviewTopic, ReviewQuestion)}
+      it 'should deactivate both reviews' do
+        expect{subject.deactivate_reviews_with_comments!}.to change {reviews.map(&:active)}
+        expect(reviews.map(&:active)).to eq([false, false])
+      end
+    end
+
+    context 'with review with comment' do
+      let(:reviews) { FactoryGirl.build_list(:review, 2, comment: '') }
+      before do
+        allow(subject).to receive(:reviews).and_return(reviews.extend ReviewScoping)
+      end
+      after { clean_models(:gs_schooldb, Review, ReviewTopic, ReviewQuestion)}
+      it 'should not deactivate review' do
+        expect{subject.deactivate_reviews_with_comments!}.to_not change {reviews.map(&:active) }
+        expect(reviews.map(&:active)).to eq([true, true])
+      end
+    end
+  end
+
 end

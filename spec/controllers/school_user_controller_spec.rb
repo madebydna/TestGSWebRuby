@@ -10,11 +10,14 @@ describe SchoolUserController do
       allow(controller).to receive(:require_school).and_return(school)
       allow(controller).to receive(:find_or_initialize_school_user).and_return(school_member)
     end
+    after do
+      clean_models(:gs_schooldb, SchoolMember)
+    end
 
     [SchoolMember::Affiliation::PRINCIPAL, SchoolMember::Affiliation::STUDENT].each do |type|
       context "when school member is a #{type}" do
         it 'should deactivate user\'s reviews' do
-          expect(school_member).to receive(:deactivate_reviews!)
+          expect(school_member).to receive(:deactivate_reviews_with_comments!)
           xhr :post, :create,
               state: States.state_name(school.state),
               schoolId: school.id,

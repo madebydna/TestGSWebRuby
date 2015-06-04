@@ -65,10 +65,11 @@ class SchoolMember < ActiveRecord::Base
   # Returns all reviews the user wrote for the school
   def reviews
     @reviews ||= user.reviews_for_school(school: school).to_a
+    @reviews.extend ReviewScoping
   end
 
-  def deactivate_reviews!
-    reviews.each do |review|
+  def deactivate_reviews_with_comments!
+    reviews.having_comments.each do |review|
       review.deactivate
       unless review.save
         message = "Error(s) occurred while attempting to deactivate review #{review.id}"
