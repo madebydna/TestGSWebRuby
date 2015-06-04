@@ -26,6 +26,15 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
         return (match === null || match.length !== 10) ? false : true;
     };
 
+    var currency = function(val, _) {
+        var currencyRegEx = /^\$\d{1,3}(?:\d*(?:[.,]\d{2})?|(?:,\d{3})*(?:\.\d{2})?)$/;
+        if(val.match(currencyRegEx)){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     var init = function() {
         window.ParsleyValidator
               .addValidator('blockhtmltags', blockHtmlTags)
@@ -34,6 +43,8 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
               .addMessage('en','youtubevimeotag','Only valid Youtube or Vimeo videos allowed.')
               .addValidator('phonenumber', phoneNumber)
               .addMessage('en','phonenumber','Please enter a valid 10 digit phone number')
+              .addValidator('currency', currency)
+              .addMessage('en','currency', 'Please enter a valid dollar amount.')
     };
 
     return {
