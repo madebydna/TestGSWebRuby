@@ -583,7 +583,16 @@ GS.forms.elements = (function() {
 
     var toggleDisable = function($self, parentContainer) {
         var $disableTarget = $self.closest(parentContainer).find(disableElementTargetSelector);
-        $self.val() === '' ? disableElementAndChildInputs($disableTarget) : enableElementAndChildInputs($disableTarget);
+        var $childElements = $self.closest(parentContainer).children(disableElementTriggerSelector);
+        var val = '';
+        $.each( $childElements, function(){
+            if (val !='') {
+                return ;
+            } else {
+                val = $(this).val();
+            }
+        });
+        val === '' ? disableElementAndChildInputs($disableTarget) : enableElementAndChildInputs($disableTarget);
     }
 
 
