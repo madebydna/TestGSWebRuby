@@ -44,11 +44,12 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
               .addValidator('phonenumber', phoneNumber)
               .addMessage('en','phonenumber','Please enter a valid 10 digit phone number')
               .addValidator('currency', currency)
-              .addMessage('en','currency', 'Please enter a valid dollar amount.')
+              .addMessage('en','currency', 'Please enter a valid dollar amount. (Example: $1000)')
     };
 
     return {
-        init: init //must be inited on load after jquery has loaded
+        init: init,  //must be inited on load after jquery has loaded
+        currency: currency //TODO: object needed for teaspoon test, need to find a better way to access object
     }
 
 })();
