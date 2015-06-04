@@ -78,6 +78,9 @@ shared_context 'with a basic set of osp questions in db' do
       award:             7,
       award_year:        8,
       date_picker:       9,
+      tution_low:       10,
+      tution_high:      11,
+      tution_year:      12,
     }
   end
   let(:questions) do
@@ -150,6 +153,16 @@ shared_context 'with a basic set of osp questions in db' do
           question_type: 'input_and_year',
           config: { #will be turned into json, so needs to be string
             'question_ids' => [question_ids[:award_year]]
+          }.to_json
+      },
+      {
+          id: question_ids[:tution_year],
+          esp_response_key: :tution_year,
+          osp_question_group_id: nil,
+          question_type: 'input_and_year',
+          config: { #will be turned into json, so needs to be string
+                    'question_ids' => [question_ids[:tution_low],question_ids[:tution_low]],
+                    'year_display'=> 'Range'
           }.to_json
       },
       {
