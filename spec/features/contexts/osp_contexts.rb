@@ -147,12 +147,12 @@ shared_context 'with a basic set of osp questions in db' do
 
       },
       {
-          id: question_ids[:award],
-          esp_response_key: :award,
+          id: question_ids[:award_year],
+          esp_response_key: :award_year,
           osp_question_group_id: nil,
           question_type: 'input_and_year',
           config: { #will be turned into json, so needs to be string
-            'question_ids' => [question_ids[:award_year]]
+            'question_ids' => [question_ids[:award]]
           }.to_json
       },
       {
@@ -161,8 +161,7 @@ shared_context 'with a basic set of osp questions in db' do
           osp_question_group_id: nil,
           question_type: 'input_and_year',
           config: { #will be turned into json, so needs to be string
-                    'question_ids' => [question_ids[:tution_low],question_ids[:tution_low]],
-                    'year_display'=> 'Range'
+                    'question_ids' => [question_ids[:tution_low]]
           }.to_json
       },
       {
@@ -177,8 +176,8 @@ shared_context 'with a basic set of osp questions in db' do
   let(:questions_without_display_conf) do
     [
       {
-        id: question_ids[:award_year],
-        esp_response_key: :award_year,
+        id: question_ids[:award],
+        esp_response_key: :award,
         question_type: 'input_and_year',
       }
     ]

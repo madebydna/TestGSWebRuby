@@ -138,13 +138,7 @@ describe 'OSP Basic Page' do
             include_example 'should not be disabled'
           end
 
-          with_shared_context 'selecting the following option in select box with name', '2015-2016', :tution_year do
-            with_shared_context 'submit the osp form' do
-              with_shared_context 'within select box', :tution_year do
-                include_example 'should eql the expected value', '2015-2016'
-              end
-            end
-          end
+
           with_shared_context 'selecting the following option in select box with name', '2015', :award_year do
             with_shared_context 'submit the osp form' do
               with_shared_context 'within select box', :award_year do
@@ -160,7 +154,14 @@ describe 'OSP Basic Page' do
 
        with_shared_context 'find input field with name', :date_picker do
          include_example 'should display calendar picker'
-        end
+       end
+        # with_shared_context 'selecting the following option in select box with name', '2015-2016', :tution_year do
+        #   with_shared_context 'submit the osp form' do
+        #     with_shared_context 'within select box', :tution_year do
+        #       include_example 'should eql the expected value', '2015-2016'
+        #     end
+        #   end
+        # end
       end
     end
   end
