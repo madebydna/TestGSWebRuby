@@ -161,7 +161,8 @@ shared_context 'with a basic set of osp questions in db' do
           osp_question_group_id: nil,
           question_type: 'input_and_year',
           config: { #will be turned into json, so needs to be string
-                    'question_ids' => [question_ids[:tution_low]]
+                    'question_ids' => [question_ids[:tution_low],question_ids[:tution_high]],
+                    'year_display' => 'Range'
           }.to_json
       },
       {
