@@ -177,8 +177,10 @@ describe 'OSP Basic Page' do
         #     end
         #   end
         # end
-        #
+
         # with_shared_context 'within select box', :tution_year do
+        #   require 'pry'
+        #   binding.pry
         #   include_example 'should be disabled'
         # end
       end
