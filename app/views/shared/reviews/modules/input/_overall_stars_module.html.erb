@@ -5,7 +5,7 @@
 %>
 
 <div class="topical-review-question-container left">
-  <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
+  <%= render 'shared/reviews/lib/question_title', question: question %>
   <% unless principal %>
       <%= render 'shared/reviews/lib/stars_input', f: f,
                                                    question: question,

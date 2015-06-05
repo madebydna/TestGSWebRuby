@@ -103,7 +103,8 @@ describe 'School Profile Reviews Page', js: true do
           end
         end
         with_shared_context 'with signed in as principal for school' do
-        include_example 'should show the overall star question'
+        include_example 'should not show the overall star question'
+        include_example 'should show the overall star principal question'
         include_example 'should not show stars'
         include_example 'should show the review comment section'
         include_example 'should show submit button with principal text'

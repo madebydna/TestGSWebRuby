@@ -8,7 +8,7 @@
 <% review_comments_text = reviews_for_topic.see_comments_text%>
 
 <div class="topical-review-question-container left">
-  <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
+  <%= render 'shared/reviews/lib/question_title', question: question %>
   <% if principal %>
     <% if answer_summary_text %>
       <div class="font-size-large mtxl ptxl">

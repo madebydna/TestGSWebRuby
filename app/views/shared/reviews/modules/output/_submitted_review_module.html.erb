@@ -4,7 +4,7 @@
 
 <div class="js-submittedReviewContainer">
   <div class="topical-review-question-container left">
-    <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
+    <%= render 'shared/reviews/lib/question_title', question: question %>
     <% unless @school_member.principal? %>
         <div class=" tac ptl font-size-large"><%= submitted_review.submitted_values_text %></span></div>
     <% end %>

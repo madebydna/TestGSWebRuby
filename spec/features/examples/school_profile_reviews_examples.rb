@@ -22,7 +22,15 @@ shared_example 'should not show role question' do
 end
 
 shared_example 'should show the overall star question' do
-  expect(subject.visible_review_question.review_form.text).to include('How would you rate your experience at this school?')
+  expect(subject.visible_review_question.review_form.text).to include(FactoryGirl.build(:overall_rating_question).question)
+end
+
+shared_example 'should not show the overall star question' do
+  expect(subject.visible_review_question.review_form.text).to_not include(FactoryGirl.build(:overall_rating_question).question)
+end
+
+shared_example 'should show the overall star principal question' do
+  expect(subject.visible_review_question.review_form.text).to include(FactoryGirl.build(:overall_rating_question).principal_question)
 end
 
 shared_example 'should show stars' do
