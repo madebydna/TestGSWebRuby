@@ -6,7 +6,7 @@ describe ReviewQuestionDecorator do
   end
   describe '#placeholder' do
     context 'with a overall topic question' do
-        let(:review_question) { ReviewQuestionDecorator.decorate(FactoryGirl.build(:overall_rating_question)) }
+        let(:review_question) { ReviewQuestionDecorator.decorate(FactoryGirl.build(:overall_rating_question, id: 1)) }
       subject { review_question.placeholder }
       it { is_expected.to eq('Please share why you feel this way.') }
     end
