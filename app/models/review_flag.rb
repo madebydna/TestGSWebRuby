@@ -23,6 +23,10 @@ class ReviewFlag < ActiveRecord::Base
   USER_REPORTED, AUTO_FLAGGED, BAD_LANGUAGE, STUDENT, HELD_SCHOOL, FORCE_FLAGGED, BLOCKED_IP,
     LOCAL_SCHOOL = *VALID_REASONS
 
+  VALID_REASONS.each do |reason|
+    scope reason, -> { where("reason like ?", "%#{reason}%") }
+  end
+
   def reasons=(reasons)
     reasons = Array.wrap(reasons)
     reason_string = reasons.join(',')

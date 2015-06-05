@@ -1,5 +1,9 @@
 class Admin::ReviewsController < ApplicationController
 
+  ReviewFlag::VALID_REASONS.each do |reason|
+    has_scope reason, type: :boolean
+  end
+
   def moderation
     if params[:review_moderation_search_string]
       moderate_by_user
@@ -200,8 +204,19 @@ class Admin::ReviewsController < ApplicationController
       partial_scope = Review.flagged
     end
 
+    partial_scope = partial_scope.eager_load(:flags)
+
+    filtered_review_flags_scope = apply_scopes(ReviewFlag)
+
+    # If there are not active filters set for this request, the apply scopes call will return a ReviewFlag class
+    # rather than ActiveRecord::Relation. In prior case, merging into our partial_scope relation will break things
+    # It would be better to find out from the has_scope gem if there are any scopes set, but I looked and didn't see
+    # a way
+    if filtered_review_flags_scope.is_a?(ActiveRecord::Relation)
+      partial_scope = partial_scope.merge(apply_scopes(ReviewFlag))
+    end
+
     partial_scope.
-      eager_load(:flags).
       order('review_flags.created desc').
         eager_load(:user).
         merge(User.verified).

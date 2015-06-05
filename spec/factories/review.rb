@@ -1,6 +1,10 @@
 FactoryGirl.define do
 
   factory :review, class: Review do
+    ignore do
+      review_flag_reason ReviewFlag::AUTO_FLAGGED
+    end
+
     sequence(:id) { |n| n }
     association :user, factory: :verified_user, strategy: :build
     association :question, factory: :review_question, strategy: :build
@@ -92,7 +96,8 @@ FactoryGirl.define do
         FactoryGirl.create(
           :review_flag,
           review: review,
-          user: review.user
+          user: review.user,
+          reason: evaluator.review_flag_reason
         )
       end
     end

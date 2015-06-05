@@ -8,6 +8,22 @@ shared_context 'visit the review moderation page' do
   end
 end
 
+shared_context 'with a review flagged because of' do |reason|
+  before do
+    FactoryGirl.create(:review, :flagged, review_flag_reason: reason)
+  end
+  after do
+    clean_dbs :gs_schooldb
+    clean_models School
+  end
+end
+
+shared_context 'when I filter on' do |reason|
+  before do
+    page_object.reason_filters.filter_on(reason)
+  end
+end
+
 describe 'Review moderation page' do
 
   # let!(:school) { FactoryGirl.create(:alameda_high_school) }
@@ -32,6 +48,26 @@ describe 'Review moderation page' do
 
       it 'should show the header' do
         expect(subject).to have_content 'Reviews moderation list'
+      end
+
+      it { is_expected.to have_reason_filters }
+
+      with_shared_context 'with a review flagged because of', ReviewFlag::STUDENT, js: true do
+        include_context 'with a review flagged because of', ReviewFlag::BAD_LANGUAGE
+        with_shared_context 'visit the review moderation page' do
+          [ReviewFlag::STUDENT, ReviewFlag::BAD_LANGUAGE].each do |reason|
+            with_shared_context 'when I filter on', reason do
+              describe 'each flagged review' do
+                subject { page_object.flagged_reviews_table.reviews }
+                it "should have reason #{reason}" do
+                  subject.each do |item|
+                    expect(item.reason.text).to eq(reason.to_s)
+                  end
+                end
+              end
+            end
+          end
+        end
       end
 
       describe 'the list of reviews', js: true do

@@ -32,7 +32,7 @@ module SchoolAssociationPreloading
   # Set a @school instance variable on the model, with the assumption that the model will know
   # to use it (see behavior_for_models_with_school_association.rb)
   def preload_associated_schools!
-    return unless present?
+    return self unless present?
 
     make_key = Proc.new { |state, id| "#{state}_#{id}" }
     states = map(&:state)
