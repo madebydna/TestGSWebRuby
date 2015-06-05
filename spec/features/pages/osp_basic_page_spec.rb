@@ -156,33 +156,31 @@ describe 'OSP Basic Page' do
          include_example 'should display calendar picker'
        end
 
-        # with_shared_context 'enter following text into text field with name', '$1000', :tution_low do
-        #   with_shared_context 'submit the osp form' do
-        #     with_shared_context 'within input field', :tution_low do
-        #       include_example 'should eql the expected value', '$1000'
-        #     end
-        #   end
-        #
-        #   #conditional select box that should only be active if there is a value in text field
-        #   with_shared_context 'within select box', :tution_year do
-        #     include_example 'should not be disabled'
-        #   end
-        #
-        #
-        #   with_shared_context 'selecting the following option in select box with name', '2014-2015', :tution_year do
-        #     with_shared_context 'submit the osp form' do
-        #       with_shared_context 'within select box', :tution_year do
-        #         include_example 'should eql the expected value', '2014-2015'
-        #       end
-        #     end
-        #   end
-        # end
+        with_shared_context 'enter following text into text field with name', '$1000', :tuition_low do
+          with_shared_context 'submit the osp form' do
+            with_shared_context 'within input field', :tuition_low do
+              include_example 'should eql the expected value', '$1000'
+            end
+          end
 
-        # with_shared_context 'within select box', :tution_year do
-        #   require 'pry'
-        #   binding.pry
-        #   include_example 'should be disabled'
-        # end
+          #conditional select box that should only be active if there is a value in text field
+          with_shared_context 'within select box', :tuition_year do
+            include_example 'should not be disabled'
+          end
+
+
+          with_shared_context 'selecting the following option in select box with name', '2014-2015', :tuition_year do
+            with_shared_context 'submit the osp form' do
+              with_shared_context 'within select box', :tuition_year do
+                include_example 'should eql the expected value', '2014-2015'
+              end
+            end
+          end
+        end
+
+        with_shared_context 'within select box', :tuition_year do
+          include_example 'should be disabled'
+        end
       end
     end
   end
