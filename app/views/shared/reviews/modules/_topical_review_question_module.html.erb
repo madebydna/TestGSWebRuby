@@ -1,7 +1,7 @@
 <!--this is its own partial and gets executed once per questions from above-->
 <!--if current school_member exists and has answered questions for school and has no role then show role question-->
 <!--and hide-->
-
+<% question = ReviewQuestionDecorator.decorate(question) %>
 <% submitted_review = @school_member.find_by_question(question) if @school_member %>
 <% submitted_review = SchoolProfileReviewDecorator.decorate(submitted_review) if submitted_review %>
 

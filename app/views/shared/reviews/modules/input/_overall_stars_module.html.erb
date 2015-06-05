@@ -15,10 +15,8 @@
 </div>
 <div class="topical-review-question-container right">
   <% options = {
-          placeholder: principal ? '' : 'Please share why you feel this way.',
           comment_required: true,
-          principal: principal,
-          submit_text: principal ? 'Submit Statement' : 'Submit'
+          principal: principal
   } %>
   <%= render 'shared/reviews/modules/input/review_comment', f: f,
                                                             options: options,

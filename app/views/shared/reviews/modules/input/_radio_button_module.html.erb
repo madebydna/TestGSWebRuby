@@ -23,10 +23,8 @@
   <% end %>
 </div>
 <% options = {
-        placeholder: principal ? '' : 'Please share why you feel this way. (optional)',
-        display_none: principal ? false : true,
         comment_required: principal ?  true : false,
-        submit_text: principal ? 'Submit Statement' : 'Submit'
+        principal: principal
 } %>
 <div class="topical-review-question-container right">
   <% unless options[:comment_required] %>

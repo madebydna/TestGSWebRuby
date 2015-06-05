@@ -13,7 +13,7 @@ class ReviewQuestion < ActiveRecord::Base
 
   alias_method :topic, :review_topic
 
-  def stars_question?
+  def overall?
     layout == 'overall_stars'
   end
 
