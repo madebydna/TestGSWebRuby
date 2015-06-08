@@ -40,6 +40,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
+  get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
+
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
   post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
   delete  '/gsr/ajax/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
