@@ -3,17 +3,17 @@ class ReviewQuestionDecorator < Draper::Decorator
   decorates :review_question
   delegate_all
 
-  def placeholder
-    placeholder_text = placeholder_prefix
+  def placeholder_text
+    placeholder_text = placeholder_prefix_text
     # if there is no matching key will default to prefix statement
-    placeholder_text += placeholder_question_key[id.to_s] || '.'
-    placeholder_text += placeholder_optional_text if id.to_i > 1
+    placeholder_text += placeholder_question_key[topic.name] || '.'
+    placeholder_text += placeholder_optional_text if !overall?
     placeholder_text
   end
 
   private
 
-  def placeholder_prefix
+  def placeholder_prefix_text
     'Please share why you feel this way'
   end
 
@@ -22,13 +22,14 @@ class ReviewQuestionDecorator < Draper::Decorator
   end
 
   def placeholder_question_key
-    {'1'=>'.',
-     '2'=> '. How do you see honesty, integrity, and fairness developed or not developed in students?' ,
-     '3'=> '. How do you see compassion, caring, and empathy developed or not developed in students?',
-     '4'=> '. How do you see respect developed or not developed in students?',
-     '5'=> '. How do you see persistence, grit, and determination developed or not developed in students?',
-     '6'=> ' about homework.' ,
-     '7'=> ' about teachers.'
+    {
+     'Overall'=>'.',
+     'Honesty'=> '. How do you see honesty, integrity, and fairness developed or not developed in students?' ,
+     'Empathy'=> '. How do you see compassion, caring, and empathy developed or not developed in students?',
+     'Respect'=> '. How do you see respect developed or not developed in students?',
+     'Grit'=> '. How do you see persistence, grit, and determination developed or not developed in students?',
+     'Homework'=> ' about homework.' ,
+     'Teachers'=> ' about teachers.'
     }
   end
 end
