@@ -1,4 +1,6 @@
 require './app/models/presenters/topnav'
+require 'open-uri'
+
 
 module ApplicationHelper
   include CookieConcerns
@@ -40,14 +42,22 @@ module ApplicationHelper
 
   def school_video_hashes(*args)
     args.compact.map do |video_str|
-      id = youtube_parse_id_from_str(video_str)
-      {type: :youtube, id: id} if id.present?
+      if (youtube_parse_id_from_str(video_str)).present?
+        id = youtube_parse_id_from_str(video_str)
+        {type: :youtube, id: id} if id.present?
+
+      elsif (vimeo_parse_id_from_str(video_str)).present?
+        id = vimeo_parse_id_from_str(video_str)
+        {type: :vimeo, id: id} if id.present?
+      end
     end.compact
   end
 
   def include_lightbox_school_video(video_source)
     return unless video_source.present?
-    include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
+
+    return include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
+    return include_lightbox_vimeo_video(video_source[:id]) if video_source[:type] == :vimeo
   end
 
   def youtube_parse_id (video_str, youtube_match_string)
@@ -69,6 +79,15 @@ module ApplicationHelper
     youtube_id
   end
 
+  def vimeo_parse_id_from_str(video_str)
+    vimeo_id = nil
+    if video_str.present?
+      vimeo_match_string = 'vimeo.com/'
+      (vimeo_id = video_str.split(vimeo_match_string)[1].split('/')[-1]) if video_str.include?(vimeo_match_string)
+    end
+    vimeo_id
+  end
+
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
   def include_lightbox_youtube_video (youtube_id)
     r_str= ''
@@ -81,7 +100,19 @@ module ApplicationHelper
         r_str <<  'data-description=""'
         r_str <<  '>'
         r_str <<  '</a>'
+
+      return r_str.html_safe
     end
+  end
+
+  def include_lightbox_vimeo_video(vimeo_id)
+  r_str= ''
+    if vimeo_id.present?
+      r_str << '<a href="https://vimeo.com/' + vimeo_id + '">' + "\n"
+      r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"/>"'
+      r_str << '</a>'
+    end
+
     return r_str.html_safe
   end
 
@@ -104,6 +135,21 @@ module ApplicationHelper
 
       return r_str.html_safe
     end
+  end
+
+  def vimeo_lightbox_thumbnail(vimeo_api_url)
+    begin
+      parsed_vimeo_json = JSON.parse(open(vimeo_api_url).read)
+      img_url = parsed_vimeo_json['thumbnail_url']
+      img_url.to_s
+    rescue => error
+      error.presence || ["An error occured with creating vimeo api url"]
+    end
+  end
+
+  def create_vimeo_api_url(vimeo_id)
+    vimeo_api_url = "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}"
+    vimeo_api_url
   end
 
   def state_partial ( state )

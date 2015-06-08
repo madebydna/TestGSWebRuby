@@ -84,4 +84,23 @@ describe ApplicationHelper do
       expect(guided_search_path(all_the_words_multi_hub)).to eq('/new-york/new-york-city/guided-search')
     end
   end
+
+  describe '#vimeo_parse_id_from_str' do
+    it 'should parse vimeo id from long url' do
+      vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/channels/staffpicks/129710408')
+      expect(vimeo_id).to eq('129710408')
+    end
+
+    it 'should parse vimeo id from short url' do
+      vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/129710408')
+      expect(vimeo_id).to eq('129710408')
+    end
+  end
+
+  describe '#create_vimeo_api_url' do
+    it 'should insert vimeo video id into api url' do
+      vimeo_id = '129710408'
+      expect(create_vimeo_api_url(vimeo_id)).to eq('https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/129710408')
+    end
+  end
 end
