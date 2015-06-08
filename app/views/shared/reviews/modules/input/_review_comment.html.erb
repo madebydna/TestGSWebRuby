@@ -9,7 +9,7 @@
   <% text_area_options =  {class: "form-control mbs",
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
-                             placeholder_text: placeholder_text,
+                             placeholder: placeholder_text,
                              'data-parsley-minwords'=>'15',
                              'data-parsley-required'=>"#{options[:comment_required] ? 'true' : 'false'}",
                              'data-parsley-errors-container' => "##{parsley_error_id}",

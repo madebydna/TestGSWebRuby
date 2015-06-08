@@ -6,7 +6,7 @@ class ReviewQuestionDecorator < Draper::Decorator
   def placeholder_text
     placeholder_text = placeholder_prefix_text
     # if there is no matching key will default to prefix statement
-    placeholder_text += placeholder_question_key[topic.name] || '.'
+    placeholder_text += placeholder_question_key[topic.name] || '. '
     placeholder_text += placeholder_optional_text if !overall?
     placeholder_text
   end
@@ -18,18 +18,18 @@ class ReviewQuestionDecorator < Draper::Decorator
   end
 
   def placeholder_optional_text
-    ' (Optional. Please do not repeat exact text from another review.)'
+    "\n(Optional. There\'s no need to repeat text from another review.)"
   end
 
   def placeholder_question_key
     {
-     'Overall'=>'.',
-     'Honesty'=> '. How do you see honesty, integrity, and fairness developed or not developed in students?' ,
-     'Empathy'=> '. How do you see compassion, caring, and empathy developed or not developed in students?',
-     'Respect'=> '. How do you see respect developed or not developed in students?',
-     'Grit'=> '. How do you see persistence, grit, and determination developed or not developed in students?',
-     'Homework'=> ' about homework.' ,
-     'Teachers'=> ' about teachers.'
+     'Overall'=>'. ',
+     'Honesty'=> '. How do you feel this school develops honesty, integrity, and fairness in students? ' ,
+     'Empathy'=> '. How do you feel this school develops compassion, caring, and empathy in students? ',
+     'Respect'=> '. How do you feel this school develops respect in students? ',
+     'Grit'=> '. How do you feel this school develops persistence, grit, and determination in students? ',
+     'Homework'=> ' about homework at this school. ',
+     'Teachers'=> ' about teachers at this school. '
     }
   end
 end
