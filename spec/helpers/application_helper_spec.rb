@@ -103,4 +103,12 @@ describe ApplicationHelper do
       expect(create_vimeo_api_url(vimeo_id)).to eq('https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/129710408')
     end
   end
+
+  describe '#vimeo_lightbox_thumbnail' do
+    it 'should retrieve vimeo thumbnail from api' do
+      config = {'thumbnail_url' => 'www.correctthumbnail.com'}.to_json
+      parsed_json = JSON.parse(config)
+      expect(parsed_json['thumbnail_url']).to eq('www.correctthumbnail.com')
+    end
+  end
 end

@@ -54,10 +54,7 @@ module ApplicationHelper
   end
 
   def include_lightbox_school_video(video_source)
-    return unless video_source.present?
-
-    return include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
-    return include_lightbox_vimeo_video(video_source[:id]) if video_source[:type] == :vimeo
+    send("include_lightbox_#{video_source[:type]}_video", video_source[:id]) if video_source.present?
   end
 
   def youtube_parse_id (video_str, youtube_match_string)
@@ -80,12 +77,10 @@ module ApplicationHelper
   end
 
   def vimeo_parse_id_from_str(video_str)
-    vimeo_id = nil
     if video_str.present?
       vimeo_match_string = 'vimeo.com/'
-      (vimeo_id = video_str.split(vimeo_match_string)[1].split('/')[-1]) if video_str.include?(vimeo_match_string)
+      video_str.split(vimeo_match_string)[1].split('/')[-1] if video_str.include?(vimeo_match_string)
     end
-    vimeo_id
   end
 
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
@@ -106,7 +101,7 @@ module ApplicationHelper
   end
 
   def include_lightbox_vimeo_video(vimeo_id)
-  r_str= ''
+    r_str= ''
     if vimeo_id.present?
       r_str << '<a href="https://vimeo.com/' + vimeo_id + '">' + "\n"
       r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"/>"'
@@ -148,8 +143,7 @@ module ApplicationHelper
   end
 
   def create_vimeo_api_url(vimeo_id)
-    vimeo_api_url = "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}"
-    vimeo_api_url
+     "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}"
   end
 
   def state_partial ( state )
