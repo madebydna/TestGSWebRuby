@@ -8,6 +8,7 @@ class Admin::StyleGuideController < ApplicationController
       page_name = 'index'
     end
     path = "admin/style_guide/"+page_name
+    @sections = []
     @directory = 'Make me dynamic directory name'
     @page_title = 'Make me dynamic page name'
     render path

@@ -20,4 +20,8 @@ module StyleGuideHelper
   def begin_section_content(&block)
     render layout: "#{STYLE_GUIDE_LAYOUT_FILES_DIRECTORY}/section_content", &block
   end
+
+  def slugify(string)
+    string.gsub(' ', '-').downcase
+  end
 end
