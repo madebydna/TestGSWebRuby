@@ -3,7 +3,6 @@
 <head>
   <%= display_meta_tags %>
   <%= stylesheet_link_tag    "gs/style_guide/main", media: "all" %>
-  <%= stylesheet_link_tag    "gs/style_guide/styleguide", media: "all" %>
   <link href="https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic" rel="stylesheet" type="text/css">
 
   <%= yield :stylesheet_includes %>
@@ -37,7 +36,7 @@
   <%= yield :head %>
 </head>
 
-<body class="open-sans section-material-design first-chapter qp-ui qp-ui-mask" data-qp-ui="{ 'Mask': {} }"
+<body class="open-sans section-material-design first-chapter qp-ui qp-ui-mask gs-style-guide" data-qp-ui="{ 'Mask': {} }"
       data-qp-ui-data-id="qp:1" style="margin-top:0px; padding-top: 0px;">
 <header class="qp-ui qp-ui-peekaboo" data-qp-ui="{
   'Peekaboo': {
@@ -53,8 +52,8 @@
       'default': 82
     }
   }" data-qp-ui-data-id="qp:3">
-    <div class="header-title">      <span class="section-title">Material design</span>
-      <span class="chapter-title">Introduction</span>
+    <div class="header-title">      <span class="section-title"><%= @directory %></span>
+      <span class="chapter-title"><%= @page_title %></span>
     </div>
   </div><div class="header-wrapper qp-ui qp-ui-peekaboo-placeholder" data-qp-ui="{
     'Peekaboo': {
@@ -63,28 +62,10 @@
       'default': 82
     }
   }" aria-hidden="true">
-  <div class="header-title">      <span class="section-title">Material design</span>
-    <span class="chapter-title">Introduction</span>
+    <div class="header-title">      <span class="section-title"><%= @directory %></span>
+      <span class="chapter-title"><%= @page_title %></span>
   </div>
 </div>
-</header><header class="qp-ui qp-ui-peekaboo-placeholder" data-qp-ui="{
-  'Peekaboo': {
-    'mobile': 72,
-    'desktop-sm': 72,
-    'default': 192
-  }
-}" aria-hidden="true">
-  <div class="header-wrapper qp-ui" data-qp-ui="{
-    'Peekaboo': {
-      'mobile': 28,
-      'desktop-sm': 28,
-      'default': 82
-    }
-  }">
-    <div class="header-title">      <span class="section-title">Material design</span>
-      <span class="chapter-title">Introduction</span>
-    </div>
-  </div>
 </header>
 <nav>
   <button class="hamburger-button qp-ui qp-ui-side-nav-toggle" data-qp-ui="{ 'SideNavToggle': {} }" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:4">Show navigation</button>
@@ -252,9 +233,12 @@
 
 <div id="grid-cont">
   <section class="grid_outer chapter">
-    <%= content_for?(:content) ? yield(:content) : yield %>
-</section>
-  </div>
+    <%= render_chapter_title %>
+    <%= begin_chapter_content do %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    <% end %>
+  </section>
+</div>
 
 <footer>
   <div class="footer-grid">
