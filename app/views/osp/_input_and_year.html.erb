@@ -41,6 +41,13 @@
              value="<%= @osp_data.values_for(child_question.esp_response_key, child_question.id).first %>"
       >
 
+      <% if child_questions.length == 1%>
+          <div id=<%= "#{child_question.id}-parsley-error" %> style="clear: both;float: left"></div>
+      <% else %>
+          <div id=<%= "#{child_question.id}-parsley-error" %> "></div>
+
+<% end%>
+
   <% } %>
 
 
@@ -60,7 +67,6 @@
     <option value='n/a' <% if should_select_na then %> selected <% end %>>Not Applicable</option>
 
   </select>
-  <div id=<%= "#{q_id}-parsley-error" %> style="clear: both;"></div>
 
 </div>
 
