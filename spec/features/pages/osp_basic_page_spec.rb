@@ -21,7 +21,6 @@ describe 'OSP Basic Page' do
     describe_mobile_and_desktop do
 
       include_example 'should have nav bar with school name'
-      include_example 'should have a submit button'
       include_example 'should have basic school information'
       include_example 'should have school address'
       include_example 'should have need help link'
@@ -37,6 +36,7 @@ describe 'OSP Basic Page' do
         end
       end
 
+      include_example 'should have a save edits button', 2
       include_example 'should have go to school profile button'
       include_example 'should have post a message button'
     end
@@ -48,6 +48,8 @@ describe 'OSP Basic Page' do
         end
       end
 
+      include_example 'should have a save edits button', 1
+      include_example 'should have save edits link'
       include_example 'should have go to school profile link'
       include_example 'should have post a message link'
     end
