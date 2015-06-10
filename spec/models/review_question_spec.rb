@@ -41,10 +41,4 @@ describe ReviewQuestion do
     end
   end
 
-  describe '#display_hash' do
-    it 'should return a hash' do
-      expect(review_question.display_hash).to be_a(Hash)
-    end
-  end
-
 end

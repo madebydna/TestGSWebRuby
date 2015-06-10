@@ -34,13 +34,5 @@ class ReviewQuestion < ActiveRecord::Base
         school.includes_level_code?(self.level_code_array) && self.school_type.include?(school.type) && self.active
   end
 
-  def display_hash
-    {
-        id: self.id,
-        question: self.question,
-        layout: self.layout,
-        responses: self.response_array
-    }
-  end
 
 end
