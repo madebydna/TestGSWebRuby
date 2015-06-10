@@ -120,8 +120,8 @@ LocalizedProfiles::Application.routes.draw do
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
-    get '/style-guide/*page', to: 'style_guide#index'
     get '/style-guide/', to: 'style_guide#index'
+    get '/style-guide/:category/:page', to: 'style_guide#render_page'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
 
