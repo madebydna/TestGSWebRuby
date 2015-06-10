@@ -104,7 +104,8 @@ module ApplicationHelper
     r_str= ''
     if vimeo_id.present?
       r_str << '<a href="https://vimeo.com/' + vimeo_id + '">' + "\n"
-      r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"/>"'
+      r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"'
+      r_str << 'style="height:40px; width:40px"' + '/>'
       r_str << '</a>'
     end
 
@@ -143,7 +144,7 @@ module ApplicationHelper
   end
 
   def create_vimeo_api_url(vimeo_id)
-     "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}&height=200&width=300"
+     "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}"
   end
 
   def state_partial ( state )
