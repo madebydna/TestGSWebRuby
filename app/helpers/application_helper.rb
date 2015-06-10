@@ -46,15 +46,20 @@ module ApplicationHelper
         id = youtube_parse_id_from_str(video_str)
         {type: :youtube, id: id} if id.present?
 
-      elsif (vimeo_parse_id_from_str(video_str)).present?
-        id = vimeo_parse_id_from_str(video_str)
-        {type: :vimeo, id: id} if id.present?
+
+      # TODO: move media gallery to front end to show vimeo. Cannot do vimeo API calls from the server right now.
+      # elsif (vimeo_parse_id_from_str(video_str)).present?
+      #   id = vimeo_parse_id_from_str(video_str)
+      #   {type: :vimeo, id: id} if id.present?
       end
     end.compact
   end
 
   def include_lightbox_school_video(video_source)
-    send("include_lightbox_#{video_source[:type]}_video", video_source[:id]) if video_source.present?
+    return unless video_source.present?
+
+    return include_lightbox_youtube_video(video_source[:id]) if video_source[:type] == :youtube
+    # send("include_lightbox_#{video_source[:type]}_video", video_source[:id]) if video_source.present?
   end
 
   def youtube_parse_id (video_str, youtube_match_string)
@@ -76,12 +81,12 @@ module ApplicationHelper
     youtube_id
   end
 
-  def vimeo_parse_id_from_str(video_str)
-    if video_str.present?
-      vimeo_match_string = 'vimeo.com/'
-      video_str.split(vimeo_match_string)[1].split('/')[-1] if video_str.include?(vimeo_match_string)
-    end
-  end
+  # def vimeo_parse_id_from_str(video_str)
+  #   if video_str.present?
+  #     vimeo_match_string = 'vimeo.com/'
+  #     video_str.split(vimeo_match_string)[1].split('/')[-1] if video_str.include?(vimeo_match_string)
+  #   end
+  # end
 
   # This is used to include the video asset, for the school, only if it is a youtube link, then adds it to the lightbox.
   def include_lightbox_youtube_video (youtube_id)
@@ -100,17 +105,17 @@ module ApplicationHelper
     end
   end
 
-  def include_lightbox_vimeo_video(vimeo_id)
-    r_str= ''
-    if vimeo_id.present?
-      r_str << '<a href="https://vimeo.com/' + vimeo_id + '">' + "\n"
-      r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"'
-      r_str << 'style="height:40px; width:40px"' + '/>'
-      r_str << '</a>'
-    end
-
-    return r_str.html_safe
-  end
+  # def include_lightbox_vimeo_video(vimeo_id)
+  #   r_str= ''
+  #   if vimeo_id.present?
+  #     r_str << '<a href="https://vimeo.com/' + vimeo_id + '">' + "\n"
+  #     r_str << '<img src ="'+ vimeo_lightbox_thumbnail(create_vimeo_api_url(vimeo_id)) + '"'
+  #     r_str << 'style="height:40px; width:40px"' + '/>'
+  #     r_str << '</a>'
+  #   end
+  #
+  #   return r_str.html_safe
+  # end
 
   # This is used to include all the media assets for a school to the lightbox.
   def include_lightbox_media (school)
@@ -133,19 +138,19 @@ module ApplicationHelper
     end
   end
 
-  def vimeo_lightbox_thumbnail(vimeo_api_url)
-    begin
-      parsed_vimeo_json = JSON.parse(open(vimeo_api_url).read)
-      img_url = parsed_vimeo_json['thumbnail_url']
-      img_url.to_s
-    rescue => error
-      error.presence || ["An error occured with creating vimeo api url"]
-    end
-  end
+  # def vimeo_lightbox_thumbnail(vimeo_api_url)
+  #   begin
+  #     parsed_vimeo_json = JSON.parse(open(vimeo_api_url).read)
+  #     img_url = parsed_vimeo_json['thumbnail_url']
+  #     img_url.to_s
+  #   rescue => error
+  #     error.presence || ["An error occured with creating vimeo api url"]
+  #   end
+  # end
 
-  def create_vimeo_api_url(vimeo_id)
-     "--no-check-certificate https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}&height=40&width=40"
-  end
+  # def create_vimeo_api_url(vimeo_id)
+  #    "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}"
+  # end
 
   def state_partial ( state )
     # case state

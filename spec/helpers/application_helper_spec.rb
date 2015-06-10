@@ -85,30 +85,31 @@ describe ApplicationHelper do
     end
   end
 
-  describe '#vimeo_parse_id_from_str' do
-    it 'should parse vimeo id from long url' do
-      vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/channels/staffpicks/129710408')
-      expect(vimeo_id).to eq('129710408')
-    end
-
-    it 'should parse vimeo id from short url' do
-      vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/129710408')
-      expect(vimeo_id).to eq('129710408')
-    end
-  end
-
-  describe '#create_vimeo_api_url' do
-    it 'should insert vimeo video id into api url' do
-      vimeo_id = '129710408'
-      expect(create_vimeo_api_url(vimeo_id)).to eq('https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/129710408')
-    end
-  end
-
-  describe '#vimeo_lightbox_thumbnail' do
-    it 'should retrieve vimeo thumbnail from api' do
-      config = {'thumbnail_url' => 'www.correctthumbnail.com'}.to_json
-      parsed_json = JSON.parse(config)
-      expect(parsed_json['thumbnail_url']).to eq('www.correctthumbnail.com')
-    end
-  end
+  # TODO: move media gallery to front end to show vimeo. Cannot do vimeo API calls from the server right now.
+  # describe '#vimeo_parse_id_from_str' do
+  #   it 'should parse vimeo id from long url' do
+  #     vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/channels/staffpicks/129710408')
+  #     expect(vimeo_id).to eq('129710408')
+  #   end
+  #
+  #   it 'should parse vimeo id from short url' do
+  #     vimeo_id = vimeo_parse_id_from_str('https://vimeo.com/129710408')
+  #     expect(vimeo_id).to eq('129710408')
+  #   end
+  # end
+  #
+  # describe '#create_vimeo_api_url' do
+  #   it 'should insert vimeo video id into api url' do
+  #     vimeo_id = '129710408'
+  #     expect(create_vimeo_api_url(vimeo_id)).to eq('https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/129710408')
+  #   end
+  # end
+  #
+  # describe '#vimeo_lightbox_thumbnail' do
+  #   it 'should retrieve vimeo thumbnail from api' do
+  #     config = {'thumbnail_url' => 'www.correctthumbnail.com'}.to_json
+  #     parsed_json = JSON.parse(config)
+  #     expect(parsed_json['thumbnail_url']).to eq('www.correctthumbnail.com')
+  #   end
+  # end
 end
