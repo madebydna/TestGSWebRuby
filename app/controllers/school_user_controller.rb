@@ -13,9 +13,7 @@ class SchoolUserController < SchoolProfileController
         status = :unprocessable_entity
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
-      if school_user.principal? || school_user.student?
-        school_user.deactivate_reviews_with_comments!
-      end
+      school_user.handle_saved_reviews_for_students_and_principals
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
       status = :unprocessable_entity

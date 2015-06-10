@@ -16,8 +16,8 @@ describe SchoolUserController do
 
     [SchoolMember::Affiliation::PRINCIPAL, SchoolMember::Affiliation::STUDENT].each do |type|
       context "when school member is a #{type}" do
-        it 'should deactivate user\'s reviews' do
-          expect(school_member).to receive(:deactivate_reviews_with_comments!)
+        it 'should handle user\'s saved reviews' do
+          expect(school_member).to receive(:handle_saved_reviews_for_students_and_principals)
           xhr :post, :create,
               state: States.state_name(school.state),
               schoolId: school.id,

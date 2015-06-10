@@ -68,6 +68,31 @@ class SchoolMember < ActiveRecord::Base
     @reviews.extend ReviewScoping
   end
 
+  def deactivate_reviews!
+    reviews.each do |review|
+      review.deactivate
+      unless review.save
+        message = "Error(s) occurred while attempting to deactivate review #{review.id}"
+        message << " for user #{school_member.user.id}. review.errors: #{review.errors.full_messages}"
+        Rails.logger.error(message)
+        end
+      end
+    end
+
+  def handle_saved_reviews_for_students_and_principals
+    deactivate_reviews_with_comments! if student?
+    if principal?
+      deactivate_reviews!
+      remove_review_answers!
+    end
+  end
+
+  def remove_review_answers!
+    reviews.each do |review|
+      review.answers.destroy_all
+    end
+  end
+
   def deactivate_reviews_with_comments!
     reviews.having_comments.each do |review|
       review.deactivate

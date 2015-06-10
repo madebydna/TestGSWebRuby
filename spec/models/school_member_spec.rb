@@ -10,6 +10,9 @@ describe SchoolMember do
   let(:school) { FactoryGirl.build(:alameda_high_school) }
   let(:school_member) { FactoryGirl.build(:school_member, user: user, school: school, user_type: nil) }
   subject { school_member }
+  after do
+    clean_dbs(:gs_schooldb)
+  end
 
   describe '#user_type' do
     context 'when user is not esp member' do
@@ -75,6 +78,80 @@ describe SchoolMember do
     end
   end
 
+  describe '#handle_saved_reviews_for_students_and_principals' do
+    subject { school_member }
+    context 'with student' do
+      before do
+        allow(subject).to receive(:student?).and_return(true)
+        allow(subject).to receive(:principal?).and_return(false)
+      end
+      it 'should deactivate reviews with comments' do
+        expect(subject).to receive(:deactivate_reviews_with_comments!)
+        subject.handle_saved_reviews_for_students_and_principals
+      end
+    end
+    context 'with principal' do
+      before do
+        allow(subject).to receive(:student?).and_return(false)
+        allow(subject).to receive(:principal?).and_return(true)
+      end
+      it 'should deactivate all reviews' do
+        expect(subject).to receive(:deactivate_reviews!)
+        subject.handle_saved_reviews_for_students_and_principals
+      end
+      it 'should remove all review answers' do
+        expect(subject).to receive(:remove_review_answers!)
+        subject.handle_saved_reviews_for_students_and_principals
+      end
+    end
+  end
+
+  describe '#deactivate_reviews!' do
+    subject { school_member }
+    context 'with reviews with comments' do
+      let(:reviews) { FactoryGirl.build_list(:review, 4) }
+      before do
+        allow(subject).to receive(:reviews).and_return(reviews)
+      end
+      after { clean_models(:gs_schooldb, Review, ReviewTopic, ReviewQuestion) }
+      it 'should deactivate all reviews' do
+        expect { subject.deactivate_reviews!}.to change { reviews.map(&:active) }.from(Array.new(4,true)).to(Array.new(4,false))
+      end
+    end
+
+    context 'with reviews without comments' do
+      let(:reviews) { FactoryGirl.build_list(:review, 4, comment: '') }
+      before do
+        allow(subject).to receive(:reviews).and_return(reviews)
+      end
+      after { clean_models(:gs_schooldb, Review, ReviewTopic, ReviewQuestion) }
+      it 'should deactivate all reviews' do
+        expect { subject.deactivate_reviews! }.to change { reviews.map(&:active) }.from(Array.new(4, true)).to(Array.new(4, false))
+      end
+    end
+  end
+
+  describe '#remove_review_answers!' do
+    subject { school_member }
+    let (:school) { FactoryGirl.build(:school)}
+    let(:review_answers) { FactoryGirl.build_list(:review_answer, 2, value: 1) }
+    let(:reviews) { FactoryGirl.build_list(:review, 2) }
+    before do
+      reviews.each_with_index do |review, index|
+        review.answers << review_answers[index]
+        review.save
+      end
+      allow(subject).to receive(:reviews).and_return(reviews)
+    end
+
+    it 'should remove all review answers' do
+     subject.remove_review_answers!
+      reviews.each do |review|
+        expect(review.answers.count).to eq(0)
+      end
+    end
+  end
+
   describe '#deactivate_reviews_with_comments!' do
     subject { school_member }
 
@@ -85,8 +162,7 @@ describe SchoolMember do
       end
       after { clean_models(:gs_schooldb, Review, ReviewTopic, ReviewQuestion)}
       it 'should deactivate both reviews' do
-        expect{subject.deactivate_reviews_with_comments!}.to change {reviews.map(&:active)}
-        expect(reviews.map(&:active)).to eq([false, false])
+        expect{subject.deactivate_reviews_with_comments!}.to change {reviews.map(&:active)}.from(Array.new(2,true)).to(Array.new(2,false))
       end
     end
 
