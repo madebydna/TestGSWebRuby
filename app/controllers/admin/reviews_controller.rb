@@ -86,7 +86,7 @@ class Admin::ReviewsController < ApplicationController
   # Since we already know how many pages there must be, set this info directly on the reviews relation,
   # rather than allow Kaminari to compute it later via a "select count()" query
   def set_pagination_data_on_reviews(reviews)
-    total_pages = (total_number_of_reviews_to_moderate / MODERATION_LIST_PAGE_SIZE).ceil
+    total_pages = (total_number_of_reviews_to_moderate.to_f / MODERATION_LIST_PAGE_SIZE).ceil
     reviews.define_singleton_method('total_pages') { total_pages }
   end
 

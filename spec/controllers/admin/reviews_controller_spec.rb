@@ -254,5 +254,19 @@ describe Admin::ReviewsController do
     end
   end
 
+  describe '#set_pagination_data_on_reviews' do
+    before do
+      allow(controller).to receive(:total_number_of_reviews_to_moderate) { 101 }
+      stub_const('Admin::ReviewsController::MODERATION_LIST_PAGE_SIZE', 100)
+    end
+    it 'should define #total_pages on input and it should return 2' do
+      stubbed_reviews = Object.new
+      expect do
+        controller.set_pagination_data_on_reviews(stubbed_reviews)
+      end.to change { stubbed_reviews.try(:total_pages) }.from(nil).to(2)
+    end
+  end
+
+
 
 end
