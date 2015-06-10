@@ -81,7 +81,7 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a parent' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:parent_school_member, school: school, user: user) }
+      let!(:school_member) { FactoryGirl.create(:parent_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
       end
@@ -93,10 +93,10 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as an osp approved principal' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
+      let!(:school_member) { FactoryGirl.create(:principal_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
-        allow_any_instance_of(SchoolMember).to receive(:approved_osp_user?).and_return(true)
+        allow_any_instance_of(SchoolUser).to receive(:approved_osp_user?).and_return(true)
       end
       after do
         clean_models School
@@ -106,10 +106,10 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a non-approved principal' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
+      let!(:school_member) { FactoryGirl.create(:principal_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
-        allow_any_instance_of(SchoolMember).to receive(:approved_osp_user?).and_return(false)
+        allow_any_instance_of(SchoolUser).to receive(:approved_osp_user?).and_return(false)
       end
       after do
         clean_models School
@@ -119,7 +119,7 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a student' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:student_school_member, school: school, user: user) }
+      let!(:school_member) { FactoryGirl.create(:student_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
       end

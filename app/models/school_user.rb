@@ -1,4 +1,5 @@
-class SchoolMember < ActiveRecord::Base
+class SchoolUser < ActiveRecord::Base
+  self.table_name = 'school_members'
 
   module Affiliation
     PARENT = :parent
@@ -42,11 +43,11 @@ class SchoolMember < ActiveRecord::Base
     end
   end
 
-  def self.build_unknown_school_member(school, user)
-    school_member = new
-    school_member.school = school
-    school_member.user = user
-    school_member
+  def self.build_unknown_school_user(school, user)
+    school_user = new
+    school_user.school = school
+    school_user.user = user
+    school_user
   end
 
   def self.find_by_school_and_user(school, user)

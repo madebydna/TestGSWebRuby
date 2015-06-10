@@ -32,9 +32,9 @@ class SchoolUserController < SchoolProfileController
       raise Exception.new('Current school is unknown')
     end
 
-    school_member = SchoolMember.find_by_school_and_user(@school, current_user)
-    school_member ||= SchoolMember.build_unknown_school_member(@school, current_user)
-    school_member
+    school_user = SchoolUser.find_by_school_and_user(@school, current_user)
+    school_user ||= SchoolUser.build_unknown_school_user(@school, current_user)
+    school_user
   end
 
   private

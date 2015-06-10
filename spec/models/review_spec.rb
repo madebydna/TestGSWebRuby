@@ -178,7 +178,7 @@ describe Review do
       end
 
       context 'when user is a student' do
-        let(:school_member) { FactoryGirl.build(:student_school_member) }
+        let(:school_member) { FactoryGirl.build(:student_school_user) }
         before { allow(review).to receive(:school_member).and_return(school_member) }
         context 'with comment in review' do
           before { allow(review).to receive(:comment).and_return(' lorem ' * 15) }
@@ -199,7 +199,7 @@ describe Review do
       end
 
       context 'when user is a principal' do
-        let(:school_member) { FactoryGirl.build(:principal_school_member) }
+        let(:school_member) { FactoryGirl.build(:principal_school_user) }
         before do
           allow(review).to receive(:school_member).and_return(school_member)
           expect(AlertWord).to receive(:search).and_return(no_bad_language)
@@ -287,9 +287,9 @@ describe Review do
 
     context 'when reviews are not per-moderated' do
       context 'with new parent user' do
-        let(:parent_school_member) { FactoryGirl.build(:parent_school_member) }
+        let(:parent_school_user) { FactoryGirl.build(:parent_school_user) }
         before do
-          allow(subject).to receive(:school_member).and_return(parent_school_member)
+          allow(subject).to receive(:school_member).and_return(parent_school_user)
           subject.user = new_user
         end
 
@@ -307,15 +307,15 @@ describe Review do
 
       context 'with registered user' do
         let(:registered_user) { FactoryGirl.build(:verified_user) }
-        let(:principal_school_member) { FactoryGirl.build(:principal_school_member) }
-        let(:student_school_member) { FactoryGirl.build(:student_school_member) }
-        let(:parent_school_member) { FactoryGirl.build(:parent_school_member) }
+        let(:principal_school_user) { FactoryGirl.build(:principal_school_user) }
+        let(:student_school_user) { FactoryGirl.build(:student_school_user) }
+        let(:parent_school_user) { FactoryGirl.build(:parent_school_user) }
 
         before do
           subject.school = school
           subject.user = registered_user
           allow(AlertWord).to receive(:search).and_return(no_bad_language)
-          allow(subject).to receive(:school_member).and_return(parent_school_member)
+          allow(subject).to receive(:school_member).and_return(parent_school_user)
         end
 
         context 'non-held school' do
@@ -324,34 +324,34 @@ describe Review do
           end
 
           it 'should be active when user is a parent' do
-            allow(subject).to receive(:school_member).and_return(parent_school_member)
+            allow(subject).to receive(:school_member).and_return(parent_school_user)
             subject.calculate_and_set_active
             expect(subject).to be_active
           end
 
           it 'should be inactive if user is student and review has comment' do
             subject.comment = ' foo ' * 15
-            allow(subject).to receive(:school_member).and_return(student_school_member)
+            allow(subject).to receive(:school_member).and_return(student_school_user)
             subject.calculate_and_set_active
             expect(subject).to be_inactive
           end
 
           it 'should be active if user is student and review has no comment' do
-            allow(subject).to receive(:school_member).and_return(student_school_member)
+            allow(subject).to receive(:school_member).and_return(student_school_user)
             subject.calculate_and_set_active
             expect(subject).to be_active
           end
 
           it 'should be inactive if user is a principal and not approved' do
-            allow(principal_school_member).to receive(:approved_osp_user?).and_return(false)
-            allow(subject).to receive(:school_member).and_return(principal_school_member)
+            allow(principal_school_user).to receive(:approved_osp_user?).and_return(false)
+            allow(subject).to receive(:school_member).and_return(principal_school_user)
             subject.calculate_and_set_active
             expect(subject).to be_inactive
           end
 
           it 'should be active if user is a principal and is approved' do
-            allow(principal_school_member).to receive(:approved_osp_user?).and_return(true)
-            allow(subject).to receive(:school_member).and_return(principal_school_member)
+            allow(principal_school_user).to receive(:approved_osp_user?).and_return(true)
+            allow(subject).to receive(:school_member).and_return(principal_school_user)
             subject.calculate_and_set_active
             expect(subject).to be_active
           end

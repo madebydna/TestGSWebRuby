@@ -5,11 +5,11 @@ shared_context 'when user type has value' do |value|
 end
 
 
-describe SchoolMember do
+describe SchoolUser do
   let(:user) { FactoryGirl.build(:verified_user) }
   let(:school) { FactoryGirl.build(:alameda_high_school) }
-  let(:school_member) { FactoryGirl.build(:school_member, user: user, school: school, user_type: nil) }
-  subject { school_member }
+  let(:school_user) { FactoryGirl.build(:school_member, user: user, school: school, user_type: nil) }
+  subject { school_user }
   after do
     clean_dbs(:gs_schooldb)
   end
@@ -79,7 +79,7 @@ describe SchoolMember do
   end
 
   describe '#handle_saved_reviews_for_students_and_principals' do
-    subject { school_member }
+    subject { school_user }
     context 'with student' do
       before do
         allow(subject).to receive(:student?).and_return(true)
@@ -107,7 +107,7 @@ describe SchoolMember do
   end
 
   describe '#deactivate_reviews!' do
-    subject { school_member }
+    subject { school_user }
     context 'with reviews with comments' do
       let(:reviews) { FactoryGirl.build_list(:review, 4) }
       before do
@@ -132,7 +132,7 @@ describe SchoolMember do
   end
 
   describe '#remove_review_answers!' do
-    subject { school_member }
+    subject { school_user }
     let (:school) { FactoryGirl.build(:school)}
     let(:review_answers) { FactoryGirl.build_list(:review_answer, 2, value: 1) }
     let(:reviews) { FactoryGirl.build_list(:review, 2) }
@@ -153,7 +153,7 @@ describe SchoolMember do
   end
 
   describe '#deactivate_reviews_with_comments!' do
-    subject { school_member }
+    subject { school_user }
 
     context 'with review without comments' do
       let(:reviews) { FactoryGirl.build_list(:review, 2, comment: ' lorem ' * 15) }

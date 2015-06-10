@@ -10,7 +10,7 @@ end
 shared_context 'flagged reviews' do
   let!(:user) { FactoryGirl.create(:verified_user) }
   let!(:review) { FactoryGirl.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
-  let!(:school_member) { FactoryGirl.create(:principal_school_member, user: user, school: school) }
+  let!(:school_member) { FactoryGirl.create(:principal_school_user, user: user, school: school) }
   after do
     clean_dbs :gs_schooldb, :surveys, :community
   end

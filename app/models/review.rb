@@ -20,7 +20,7 @@ class Review < ActiveRecord::Base
   accepts_nested_attributes_for :answers, allow_destroy: true
 
   # See http://pivotallabs.com/rails-associations-with-multiple-foreign-keys/ and comments
-  # See the primary key and foreign key of association which will make ActiveRecord join Review to SchoolMember
+  # See the primary key and foreign key of association which will make ActiveRecord join Review to SchoolUser
   # using member_id. But we need two use two more keys. Specify state and school ID in association's condition block
   # Need to check for JoinAssociation:
   # - If school_member is being included/preloaded onto a join, do 1st part of condition using arel_table
@@ -32,7 +32,7 @@ class Review < ActiveRecord::Base
                else
                  where(state: join_or_model.state, school_id: join_or_model.school_id)
                end
-             end, foreign_key: 'member_id', primary_key: 'member_id'
+             end, foreign_key: 'member_id', primary_key: 'member_id', class_name: 'SchoolUser'
 
 
   scope :flagged, -> { eager_load(:flags).where('review_flags.active' => true) }
@@ -116,7 +116,7 @@ class Review < ActiveRecord::Base
     end
 
     def school_member
-      @school_member ||= review.school_member || SchoolMember.build_unknown_school_member(review.school, review.user)
+      @school_member ||= review.school_member || SchoolUser.build_unknown_school_user(review.school, review.user)
     end
 
     def school
@@ -233,8 +233,8 @@ class Review < ActiveRecord::Base
   def calculate_and_set_active
     if user.provisional?  ||
       school.held? ||
-      school_member_or_default.student? && comment.present? ||
-      (school_member_or_default.principal? && ! school_member_or_default.approved_osp_user?) ||
+      school_user_or_default.student? && comment.present? ||
+      (school_user_or_default.principal? && ! school_user_or_default.approved_osp_user?) ||
       (comment.present? && AlertWord.search(comment).has_really_bad_words?) ||
       PropertyConfig.force_review_moderation? ||
       flags.any?
@@ -245,16 +245,16 @@ class Review < ActiveRecord::Base
     true
   end
 
-  def school_member_or_default
-    school_member || build_school_member
+  def school_user_or_default
+    school_member || build_school_user
   end
 
-  def build_school_member
-    SchoolMember.build_unknown_school_member(school, user)
+  def build_school_user
+    SchoolUser.build_unknown_school_user(school, user)
   end
 
   def user_type
-    school_member_or_default.user_type.to_s
+    school_user_or_default.user_type.to_s
   end
 
   def answer
@@ -278,7 +278,7 @@ class Review < ActiveRecord::Base
   end
 
   def remove_answers_for_principals
-    if school_member_or_default.principal?
+    if school_user_or_default.principal?
       answers.each { |answer| answer.destroy }
     end
   end

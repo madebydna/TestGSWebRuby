@@ -66,7 +66,7 @@ describe 'School Profile Reviews Page', js: true do
                 include_example 'should show role question'
                 with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  include_example 'should save SchoolMember with parent user type'
+                  include_example 'should save SchoolUser with parent user type'
                 end
               end
 
@@ -89,7 +89,7 @@ describe 'School Profile Reviews Page', js: true do
                 with_shared_context 'Visit School Profile Reviews' do
                   with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  include_example 'should save SchoolMember with parent user type'
+                  include_example 'should save SchoolUser with parent user type'
                   end
                 end
               end
