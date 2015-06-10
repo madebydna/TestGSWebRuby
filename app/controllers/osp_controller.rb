@@ -53,6 +53,9 @@ class OspController < ApplicationController
 
       return render_error_js unless valid_file?(file)
       school_media = create_image!(file)
+
+      #We are approving all photos for the school if an approved user adds a photo
+      #If they add a photo that means they have 'seen' the other photos and has signed off on them
       approve_all_images_for_school(@school) if @is_approved_user
       render_success_js(school_media.id)
     rescue => error
