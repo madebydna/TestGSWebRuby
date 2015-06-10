@@ -4,5 +4,5 @@ question = question.question
 %>
 
 <div class="bg-yellow open-sans_sb pvl phl">
-  <%= @school_member.try(:principal?) ? principal_question || question : question %>
+  <%= @school_user.try(:principal?) ? principal_question || question : question %>
 </div>

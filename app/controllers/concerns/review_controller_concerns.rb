@@ -34,7 +34,7 @@ module ReviewControllerConcerns
     end
 
     def school_user
-      @school_member ||= SchoolUser.build_unknown_school_user(school, user)
+      @school_user ||= SchoolUser.build_unknown_school_user(school, user)
     end
 
     def save_new_review

@@ -23,7 +23,7 @@ describe SchoolUserController do
               schoolId: school.id,
               city: school.city,
               school_name: school.name,
-              school_member: { user_type: type.to_s }
+              school_user: { user_type: type.to_s }
         end
       end
     end
@@ -38,7 +38,7 @@ describe SchoolUserController do
             schoolId: school.id,
             city: school.city,
             school_name: school.name,
-            school_member: { user_type: 'parent' }
+            school_user: { user_type: 'parent' }
         expect(response.status).to eq(200)
       end
     end

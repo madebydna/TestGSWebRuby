@@ -8,7 +8,7 @@ end
 describe SchoolUser do
   let(:user) { FactoryGirl.build(:verified_user) }
   let(:school) { FactoryGirl.build(:alameda_high_school) }
-  let(:school_user) { FactoryGirl.build(:school_member, user: user, school: school, user_type: nil) }
+  let(:school_user) { FactoryGirl.build(:school_user, user: user, school: school, user_type: nil) }
   subject { school_user }
   after do
     clean_dbs(:gs_schooldb)

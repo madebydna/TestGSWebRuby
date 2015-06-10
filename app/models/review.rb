@@ -23,9 +23,9 @@ class Review < ActiveRecord::Base
   # See the primary key and foreign key of association which will make ActiveRecord join Review to SchoolUser
   # using member_id. But we need two use two more keys. Specify state and school ID in association's condition block
   # Need to check for JoinAssociation:
-  # - If school_member is being included/preloaded onto a join, do 1st part of condition using arel_table
+  # - If school_user is being included/preloaded onto a join, do 1st part of condition using arel_table
   # - If review is a single model, perform 2nd part of condition
-  belongs_to :school_member,
+  belongs_to :school_user,
              ->(join_or_model) do
                if join_or_model.is_a?(JoinDependency::JoinAssociation)
                  where(state: Review.arel_table[:state], school_id: Review.arel_table[:school_id])
@@ -115,8 +115,8 @@ class Review < ActiveRecord::Base
       new(review).auto_moderate.build
     end
 
-    def school_member
-      @school_member ||= review.school_member || SchoolUser.build_unknown_school_user(review.school, review.user)
+    def school_user
+      @school_user ||= review.school_user || SchoolUser.build_unknown_school_user(review.school, review.user)
     end
 
     def school
@@ -168,15 +168,15 @@ class Review < ActiveRecord::Base
     end
 
     def check_for_student_user_type_with_comment
-      if school_member.student? && review.comment.present?
+      if school_user.student? && review.comment.present?
         self.reasons << ReviewFlag::STUDENT
       end
       return self
     end
 
     def check_for_principal_user_type
-      if school_member.principal?
-        unless school_member.approved_osp_user?
+      if school_user.principal?
+        unless school_user.approved_osp_user?
           self.comment << PRINCIPAL_NOT_APPROVED_ERROR
           self.reasons << ReviewFlag::AUTO_FLAGGED
         end
@@ -246,7 +246,7 @@ class Review < ActiveRecord::Base
   end
 
   def school_user_or_default
-    school_member || build_school_user
+    school_user || build_school_user
   end
 
   def build_school_user

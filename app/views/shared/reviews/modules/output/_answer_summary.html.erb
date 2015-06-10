@@ -2,7 +2,7 @@
    reviews_for_topic;
    answer_summary_text = reviews_for_topic.answer_summary_text
    review_comments_text = reviews_for_topic.see_comments_text
-   principal = @school_member ? @school_member.principal? : false
+   principal = @school_user ? @school_user.principal? : false
 %>
 <div class="font-size-large <%= principal ? '' : 'mxtl' %> ptxl">
   <%= answer_summary_text ? answer_summary_text : 'No one has voted for this topic yet.' %>

@@ -11,7 +11,7 @@ describe ReviewsCaching::ReviewsSnapshotCacher do
     ]
     school_user = SchoolUser.new
     school_user.user_type = 'parent'
-    reviews.each { |review| review.school_member = school_user }
+    reviews.each { |review| review.school_user = school_user }
     reviews
   end
 

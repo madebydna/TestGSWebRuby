@@ -1,12 +1,12 @@
 <% submitted_review %>
 <% topic_name = question.topic.name %>
 <% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
-<% principal = @school_member.principal? %>
+<% principal = @school_user.principal? %>
 
 <div class="js-submittedReviewContainer">
   <div class="topical-review-question-container left">
     <%= render 'shared/reviews/lib/question_title', question: question %>
-    <% unless @school_member.principal? %>
+    <% unless @school_user.principal? %>
         <div class=" tac ptl font-size-large"><%= submitted_review.submitted_values_text %></span></div>
     <% end %>
     <div class="ptm pbl phxl tal <%= principal ? 'mtl' : '' %>">

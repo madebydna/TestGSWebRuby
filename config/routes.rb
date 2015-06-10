@@ -244,7 +244,7 @@ LocalizedProfiles::Application.routes.draw do
       # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
       resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
       resources :reviews, only: [:create], controller: 'school_profile_reviews'
-      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_member association
+      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
       resource :user, only: [:create], controller: 'school_user', action: 'create'
       get '', to: 'school_profile_overview#overview'
     end

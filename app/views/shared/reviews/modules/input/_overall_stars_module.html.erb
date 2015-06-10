@@ -1,7 +1,7 @@
 <%
    f
    submitted_review
-   principal = @school_member ? @school_member.principal? : false
+   principal = @school_user ? @school_user.principal? : false
    reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.five_star_rating_reviews, self)
 %>
 

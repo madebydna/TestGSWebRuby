@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :school_member, class: SchoolUser do
+  factory :school_user, class: SchoolUser do
     sequence(:id) { |n| n }
 
     factory :parent_school_user do

@@ -11,7 +11,7 @@
   <% end %>
 <% end %>
 <hr />
-<% if (review.school_member && review.school_member.principal?) %>
+<% if (review.school_user && review.school_user.principal?) %>
     <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
       <div class="rs-review-value mbs">
         <span class="open-sans_i"><%= review.topic_markup || 'Message to families' %></span>

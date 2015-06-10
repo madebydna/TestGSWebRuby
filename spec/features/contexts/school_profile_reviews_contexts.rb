@@ -76,7 +76,7 @@ shared_context 'with signing into a verified account with role for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
+  let!(:school_user) do
     FactoryGirl.create(:parent_school_user, school: school, user: user)
   end
   before do
@@ -97,7 +97,7 @@ shared_context 'signed in verified user with role for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
+  let!(:school_user) do
     FactoryGirl.create(:parent_school_user, school: school, user: user)
   end
 
@@ -114,7 +114,7 @@ shared_context 'with signed in as principal for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
+  let!(:school_user) do
     FactoryGirl.create(:principal_school_user, school: school, user: user)
   end
 

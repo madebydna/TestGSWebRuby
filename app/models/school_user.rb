@@ -74,7 +74,7 @@ class SchoolUser < ActiveRecord::Base
       review.deactivate
       unless review.save
         message = "Error(s) occurred while attempting to deactivate review #{review.id}"
-        message << " for user #{school_member.user.id}. review.errors: #{review.errors.full_messages}"
+        message << " for user #{school_user.user.id}. review.errors: #{review.errors.full_messages}"
         Rails.logger.error(message)
         end
       end
@@ -99,7 +99,7 @@ class SchoolUser < ActiveRecord::Base
       review.deactivate
       unless review.save
         message = "Error(s) occurred while attempting to deactivate review #{review.id}"
-        message << " for user #{school_member.user.id}. review.errors: #{review.errors.full_messages}"
+        message << " for user #{school_user.user.id}. review.errors: #{review.errors.full_messages}"
         Rails.logger.error(message)
       end
     end

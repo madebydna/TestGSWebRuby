@@ -32,17 +32,17 @@ module SchoolReviewConcerns
 
   # returns an ActiveRecord::Relation
   # used for building a partial query using the most common criteria for getting reviews for a school
-  # get active reviews for a school, and eager load school_members.
+  # get active reviews for a school, and eager load school_users.
   # also preload review answers, questions, and topics using ActiveRecord's include method, which will decide itself
   # whether to preload those associations using a join or using a second query (it will probably use a second query)
   #
   # The school members have to be loaded using eager_load, which uses an outer join, since a join is required
-  # to get the school members (see the school_member association in review.rb)
+  # to get the school members (see the school_user association in review.rb)
   def reviews_scope
     Review.
       active.
         where(school_id: self.id, state: self.state).
-          eager_load(:school_member).
+          eager_load(:school_user).
           includes(:answers, :votes, question: :review_topic)
   end
 

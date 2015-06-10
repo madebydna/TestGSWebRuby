@@ -2,7 +2,7 @@
 <div class="clearfix pts">
   <% if review.comment.present? %>
       <div class="pull-left ptm">
-        <%= render 'shared/reviews/review_voting', review: review unless @school_member && @school_member.active_reviews.include?(review) %>
+        <%= render 'shared/reviews/review_voting', review: review unless @school_user && @school_user.active_reviews.include?(review) %>
       </div>
       <% if logged_in? && current_user.flagged_review?(review) %>
           <div class="pull-right small ptm">You've reported this review</div>

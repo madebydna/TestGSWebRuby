@@ -1,6 +1,6 @@
 <%
    f; submitted_review;
-   principal = @school_member ? @school_member.principal? : false
+   principal = @school_user ? @school_user.principal? : false
 %>
 <% topic_name = question.topic.name %>
 <% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>

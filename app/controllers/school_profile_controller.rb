@@ -29,7 +29,7 @@ class SchoolProfileController < SchoolController
   end
 
   def init_page
-    @school_member = school_user if logged_in?
+    @school_user = school_user if logged_in?
     set_noindex_meta_tags if @school.demo_school?
     @school_reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
     create_sized_maps(gon)

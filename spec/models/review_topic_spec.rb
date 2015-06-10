@@ -3,7 +3,7 @@ require_relative 'examples/model_with_active_field'
 
 describe ReviewTopic do
   it_behaves_like 'model with active field'
-  
+
   let(:review_topic) { FactoryGirl.build(:review_topic) }
   let (:school) { FactoryGirl.build(:school) }
   after do

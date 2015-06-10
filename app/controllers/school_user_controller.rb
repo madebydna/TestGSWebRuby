@@ -41,7 +41,7 @@ class SchoolUserController < SchoolProfileController
 
   def school_user_params
     params.
-        require(:school_member).
+        require(:school_user).
         permit(
         :user_type
           )
