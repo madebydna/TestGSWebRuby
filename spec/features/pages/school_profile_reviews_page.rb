@@ -92,7 +92,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     end
 
     def school_leader_review?
-      !! text.match(/- a school leader/)
+      !! text.match(/SCHOOL LEADER/)
     end
 
     def overall_review?
