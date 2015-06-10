@@ -1,4 +1,5 @@
 class Admin::StyleGuideController < ApplicationController
+  require 'find'
 
   before_action :set_nav_instance_var!
 
