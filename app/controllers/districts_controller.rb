@@ -22,6 +22,7 @@ class DistrictsController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
     ad_setTargeting_through_gon
+    data_layer_through_gon
     prepare_map
     set_omniture_data
     render 'districts/district_home'
@@ -68,15 +69,31 @@ class DistrictsController < ApplicationController
     assign_sprite_files_though_gon
   end
 
+  def page_view_metadata
+    @page_view_metadata ||= (
+    page_view_metadata = {}
+    page_view_metadata['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    page_view_metadata['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    page_view_metadata['State']      = @state[:short].upcase # abbreviation
+    page_view_metadata['editorial']  = 'FindaSchoo'
+    page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
+
+    page_view_metadata
+    )
+
+  end
+
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
-      ad_targeting_gon_hash['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-      ad_targeting_gon_hash['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-      ad_targeting_gon_hash['State']      = @state[:short].upcase # abbreviation
-      ad_targeting_gon_hash['editorial']  = 'FindaSchoo'
-      ad_targeting_gon_hash['template']   = "ros" # use this for page name - configured_page_name
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
     end
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
 end

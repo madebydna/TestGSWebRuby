@@ -36,8 +36,10 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
 
       ad_setTargeting_through_gon
+      data_layer_through_gon
 
     end
+
   end
 
   def state_home
@@ -51,6 +53,7 @@ class StatesController < ApplicationController
     @show_ads = PropertyConfig.advertising_enabled?
     gon.show_ads = show_ads?
     ad_setTargeting_through_gon
+    data_layer_through_gon
     render 'states/state_home'
   end
 
@@ -185,13 +188,32 @@ class StatesController < ApplicationController
     end
   end
 
+  def page_view_metadata
+
+    @page_view_metadata ||= (
+    page_view_metadata = {}
+
+    page_view_metadata['State']      = @state[:short].upcase # abbreviation
+    page_view_metadata['editorial']  = 'FindaSchoo'
+    page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
+
+    page_view_metadata
+
+    )
+
+  end
+
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
-      ad_targeting_gon_hash['State']      = @state[:short].upcase # abbreviation
-      ad_targeting_gon_hash['editorial']  = 'FindaSchoo'
-      ad_targeting_gon_hash['template']   = "ros" # use this for page name - configured_page_name
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
     end
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
   private

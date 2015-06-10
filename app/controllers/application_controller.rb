@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include OmnitureConcerns
   include HubConcerns
   include AdvertisingHelper
+  include DataLayerHelper
 
   prepend_before_action :set_global_ad_targeting_through_gon
 

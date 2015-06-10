@@ -167,6 +167,7 @@ class SearchController < ApplicationController
     yield search_options, @params_hash if block_given?
 
     ad_setTargeting_through_gon
+    data_layer_through_gon
 
     results = search_method.call(search_options)
     session[:soft_filter_params] = soft_filters_params_hash
@@ -398,23 +399,39 @@ class SearchController < ApplicationController
     gon.omniture_lists['search_filters'] = @filter_values.join(',')
   end
 
+  def page_view_metadata
+    @page_view_metadata ||= (
+      page_view_metadata = {}
+      page_view_metadata['template']    = 'search' # use this for page name - configured_page_name
+      targeted_city = if @city && @city.respond_to?(:name)
+                        @city.name
+                      elsif params[:city]
+                        params[:city]
+                      end
+      page_view_metadata['City']        = targeted_city if targeted_city
+      page_view_metadata['State']       = @state[:short] if @state
+      page_view_metadata['County']      = county_object.try(:name) if county_object
+      if params[:grades].present?
+        level_code = LevelCode.from_grade(params[:grades])
+        page_view_metadata['level'] = level_code if level_code
+      end
+      if params[:zipCode].present?
+        page_view_metadata['Zipcode'] = params[:zipCode]
+      end
+
+      page_view_metadata
+    )
+
+  end
+
   def ad_setTargeting_through_gon
-    ad_targeting_gon_hash['template']    = 'search' # use this for page name - configured_page_name
-    targeted_city = if @city && @city.respond_to?(:name)
-                      @city.name
-                    elsif params[:city]
-                      params[:city]
-                    end
-    ad_targeting_gon_hash['City']        = targeted_city if targeted_city
-    ad_targeting_gon_hash['State']       = @state[:short] if @state
-    ad_targeting_gon_hash['County']      = county_object.try(:name) if county_object
-    if params[:grades].present?
-      level_code = LevelCode.from_grade(params[:grades])
-      ad_targeting_gon_hash['level'] = level_code if level_code
+    page_view_metadata.each do |key, value|
+      ad_targeting_gon_hash[key] = value
     end
-    if params[:zipCode].present?
-      ad_targeting_gon_hash['Zipcode'] = params[:zipCode]
-    end
+  end
+
+  def data_layer_through_gon
+   data_layer_gon_hash.merge!(page_view_metadata)
   end
 
   def county_object

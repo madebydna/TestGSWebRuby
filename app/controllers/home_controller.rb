@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   protect_from_forgery
 
   before_action :ad_setTargeting_through_gon
+  before_action :data_layer_through_gon
   before_action :set_login_redirect
 
   layout 'application'
@@ -42,13 +43,28 @@ class HomeController < ApplicationController
     publications
   end
 
+  def page_view_metadata
+    @page_view_metadata ||= (
+    page_view_metadata = {}
+    page_view_metadata[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    page_view_metadata['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    page_view_metadata['template'] = 'homepage' # use this for page name - configured_page_name
+    page_view_metadata['editorial'] = 'pushdownad'
+
+    page_view_metadata
+
+    )
+  end
+
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
-    # City, compfilter, env,State, type, template
-    ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-    ad_targeting_gon_hash['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    ad_targeting_gon_hash['template'] = 'homepage' # use this for page name - configured_page_name
-    ad_targeting_gon_hash['editorial'] = 'pushdownad'
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
 end

@@ -12,6 +12,7 @@ class SchoolProfileController < SchoolController
   before_action :set_seo_meta_tags, only: [:overview, :quality, :details, :reviews]
 
   before_action :ad_setTargeting_through_gon, only: [:overview, :quality, :details, :reviews]
+  before_action :data_layer_through_gon, only: [:overview, :quality, :details, :reviews]
   before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
   before_action :set_hub, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
@@ -138,21 +139,38 @@ class SchoolProfileController < SchoolController
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end
 
+  def page_view_metadata
+    @page_view_metadata ||= (
+    page_view_metadata = {}
+
+    page_view_metadata['City']        = @school.city
+    page_view_metadata['county']      = @school.county # county name?
+    page_view_metadata['gs_rating']   = @school.gs_rating
+    page_view_metadata['level']       = @school.level_code # p,e,m,h
+    page_view_metadata['school_id']   = @school.id.to_s
+    page_view_metadata['State']       = @school.state # abbreviation
+    page_view_metadata['type']        = @school.type  # private, public, charter
+    page_view_metadata['zipcode']     = @school.zipcode
+    page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+    page_view_metadata['template']    = "SchoolProf"
+
+    page_view_metadata
+
+    )
+  end
+
   def ad_setTargeting_through_gon
     if @school.show_ads
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
-      ad_targeting_gon_hash['City']        = @school.city
-      ad_targeting_gon_hash['county']      = @school.county # county name?
-      ad_targeting_gon_hash['gs_rating']   = @school.gs_rating
-      ad_targeting_gon_hash['level']       = @school.level_code # p,e,m,h
-      ad_targeting_gon_hash['school_id']   = @school.id.to_s
-      ad_targeting_gon_hash['State']       = @school.state # abbreviation
-      ad_targeting_gon_hash['type']        = @school.type  # private, public, charter
-      ad_targeting_gon_hash['zipcode']     = @school.zipcode
-      ad_targeting_gon_hash['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
-      ad_targeting_gon_hash['template']    = "SchoolProf"
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
     end
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
   def enable_ads
