@@ -73,8 +73,8 @@ module ApplicationHelper
     if video_str.present?
       youtube_match_string_1 = "youtube.com/watch?v="
       youtube_match_string_2 = "youtu.be/"
-      (youtube_id = video_str.split(youtube_match_string_1)[1].split('&')[0]) if video_str.include?(youtube_match_string_1)
-      (youtube_id = video_str.split(youtube_match_string_2)[1].split('&')[0]) if video_str.include?(youtube_match_string_2)
+      (youtube_id = video_str.split(youtube_match_string_1)[1].split(/['?', '&']/)[0]) if video_str.include?(youtube_match_string_1)
+      (youtube_id = video_str.split(youtube_match_string_2)[1].split(/['?', '&']/)[0]) if video_str.include?(youtube_match_string_2)
 
     end
 
@@ -84,6 +84,7 @@ module ApplicationHelper
   # def vimeo_parse_id_from_str(video_str)
   #   if video_str.present?
   #     vimeo_match_string = 'vimeo.com/'
+  # todo need to make sure this still works w/ url params
   #     video_str.split(vimeo_match_string)[1].split('/')[-1] if video_str.include?(vimeo_match_string)
   #   end
   # end

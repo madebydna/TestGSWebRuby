@@ -9,9 +9,9 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
     };
 
     var youtubeVimeoTag = function(val, _){
-        var youtubeWatchRegEx = /^(?:https?:\/\/)?(?:www\.)?(\byoutube\.com\b)\/(\bwatch\b)\?(v=)([0-9a-zA-Z\-_]*)?$/;
-        var youtubeShareRegEx = /^(?:https?:\/\/)?(\byoutu\.be\b)\/?([0-9a-zA-Z\-_]*)?$/;
-        var vimeoREgEx = /^(?:https?:\/\/)?(?:www\.)?(\bvimeo\.com\b)\/([0-9a-zA-Z\-_]+)$/;
+        var youtubeWatchRegEx = /^(?:https?:\/\/)?(?:www\.)?(\byoutube\.com\b)\/(\bwatch\b)\?(v=)([0-9a-zA-Z\-_]*)?/;
+        var youtubeShareRegEx = /^(?:https?:\/\/)?(\byoutu\.be\b)\/?([0-9a-zA-Z\-_]*)?/;
+        var vimeoREgEx = /^(?:https?:\/\/)?(?:www\.)?(\bvimeo\.com\b)\/([0-9a-zA-Z\-_]+)/;
         if(val.match(youtubeWatchRegEx) || val.match(youtubeShareRegEx) || val.match(vimeoREgEx) ){
             return true;
         } else {
@@ -49,7 +49,8 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     return {
         init: init,  //must be inited on load after jquery has loaded
-        currency: currency //TODO: object needed for teaspoon test, need to find a better way to access object
+        currency: currency, //TODO: object needed for teaspoon test, need to find a better way to access object
+        youtubeVimeoTag: youtubeVimeoTag //TODO: object needed for teaspoon test, need to find a better way to access object
     }
 
 })();

@@ -85,6 +85,28 @@ describe ApplicationHelper do
     end
   end
 
+  describe '#youtube_parse_id_from_str' do
+    it 'should parse id from long url without parameters' do
+      youtube_id = youtube_parse_id_from_str('https://www.youtube.com/watch?v=FxdvM7epMUA')
+      expect(youtube_id).to eq('FxdvM7epMUA')
+    end
+
+    it 'should parse id from long url with parameters' do
+      youtube_id = youtube_parse_id_from_str('https://www.youtube.com/watch?v=FxdvM7epMUA&maru=kawaii?hana=kawaii')
+      expect(youtube_id).to eq('FxdvM7epMUA')
+    end
+
+    it 'should parse id from short url without parameters' do
+      youtube_id = youtube_parse_id_from_str('https://youtu.be/FxdvM7epMUA')
+      expect(youtube_id).to eq('FxdvM7epMUA')
+    end
+
+    it 'should parse id from short url with parameters' do
+      youtube_id = youtube_parse_id_from_str('https://youtu.be/FxdvM7epMUA?maru=kawaii&hana=kawaii')
+      expect(youtube_id).to eq('FxdvM7epMUA')
+    end
+  end
+
   # TODO: move media gallery to front end to show vimeo. Cannot do vimeo API calls from the server right now.
   # describe '#vimeo_parse_id_from_str' do
   #   it 'should parse vimeo id from long url' do
