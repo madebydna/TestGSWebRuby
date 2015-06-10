@@ -144,7 +144,7 @@ module ApplicationHelper
   end
 
   def create_vimeo_api_url(vimeo_id)
-     "https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}&height=40&width=40"
+     "--no-check-certificate https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/#{vimeo_id}&height=40&width=40"
   end
 
   def state_partial ( state )
