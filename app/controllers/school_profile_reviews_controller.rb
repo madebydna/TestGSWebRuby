@@ -14,7 +14,6 @@ class SchoolProfileReviewsController < SchoolProfileController
     @canonical_url = school_url(@school)
 
     @reviews_page_size = 10
-    @show_facebook_comments = PropertyConfig.show_facebook_comments?(@state[:short])
   end
 
   def create
