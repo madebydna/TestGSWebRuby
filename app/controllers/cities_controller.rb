@@ -33,6 +33,7 @@ class CitiesController < ApplicationController
       @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
       @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
       ad_setTargeting_through_gon
+      data_layer_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
       gon.state_abbr = @state[:short]
 
