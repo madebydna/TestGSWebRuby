@@ -1,0 +1,28 @@
+@mixin osp_landing_page_module($backgroundcolor,$titlecolor) {
+  background-color: $backgroundcolor;
+  h1 {
+    color: $titlecolor;
+    font-size: 30px;
+    font-family: 'RobotoSlab-Light';
+  }
+  h3 {
+    color: white;
+  }
+  @media only screen and (min-width: $screen-sm-min) {
+    h1 {
+      font-size: 60px;
+    }
+  }
+}
+
+.osp-landing-page {
+  .school-story {
+    @include osp_landing_page_module($dirt-green,#add36e);
+  }
+  .connect-parents {
+    @include osp_landing_page_module(#25b798, $dirt-green);
+  }
+
+
+
+}
