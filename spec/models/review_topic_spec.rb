@@ -1,6 +1,9 @@
 require 'spec_helper'
+require_relative 'examples/model_with_active_field'
 
 describe ReviewTopic do
+  it_behaves_like 'model with active field'
+  
   let(:review_topic) { FactoryGirl.build(:review_topic) }
   let (:school) { FactoryGirl.build(:school) }
   after do
@@ -43,6 +46,7 @@ describe '.find_by_school' do
     let!(:review_topic_matching) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type)}
     let!(:review_topic_not_matching) {FactoryGirl.create(:review_topic, school_level: 'e', school_type: alameda_high_school.type)}
     let!(:review_topic_not_matching2) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: 'private')}
+    let!(:inactive_topic) {FactoryGirl.create(:review_topic, school_level: alameda_high_school.level_code, school_type: alameda_high_school.type, active: false)}
 
     it 'should return Topic matching level code of school and type of school' do
       expect(ReviewTopic.find_by_school(alameda_high_school)).to include(review_topic_matching)
@@ -54,6 +58,10 @@ describe '.find_by_school' do
     #
     it 'should not return Topic not matching type of school but matching school level' do
       expect(ReviewTopic.find_by_school(alameda_high_school)).to_not include(review_topic_not_matching2)
+    end
+
+    it 'should not matching inactive topics' do
+      expect(ReviewTopic.find_by_school(alameda_high_school)).to_not include(inactive_topic)
     end
   end
 

@@ -1,4 +1,6 @@
 class ReviewTopic < ActiveRecord::Base
+  include BehaviorForModelsWithActiveField
+
   self.table_name = 'review_topics'
 
   db_magic :connection => :gs_schooldb
@@ -26,7 +28,7 @@ class ReviewTopic < ActiveRecord::Base
 
   def self.find_by_school(school)
     # TODO: convert to straight SQL
-    all.select do |review_topic|
+    active.to_a.select do |review_topic|
       # Return true if any items in intersection between school and review topic level code
       school.includes_level_code?(review_topic.level_code_array) && review_topic.school_type.include?(school.type)
     end
