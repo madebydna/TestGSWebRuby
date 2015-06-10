@@ -5,5 +5,7 @@ Rails.application.config.assets.precompile += [
     'bootstrap-datepicker.min.js',
     'bootstrap-datepicker3.css',
     'jquery.timepicker.css',
-    'jquery.timepicker.min.js'
+    'jquery.timepicker.min.js',
+    'main.js', #for style-guide
+    'picturefill.min.js' #for style-guide
 ]
