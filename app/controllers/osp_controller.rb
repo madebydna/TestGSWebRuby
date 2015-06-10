@@ -46,7 +46,7 @@ class OspController < ApplicationController
 
   def add_image
     number_of_images_for_school = SchoolMedia.where(school_id: @school.id, state: @school.state).all_except_inactive.count
-    return render_error_js unless number_of_images_for_school <= MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
+    return render_error_js unless number_of_images_for_school < MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
 
     begin
       file = params['imageFile']['0']
@@ -64,9 +64,10 @@ class OspController < ApplicationController
   #test that unauthorized user can't delete images via directly hitting this action and changing params
   def delete_image
     media = SchoolMedia.find(params[:fileId]) rescue (return render_error_js)
-    if @is_approved_user || media.member_id == @esp_membership_id
+    if can_delete_image?(media)
       media.update_attributes(status: SchoolMedia::DISABLED, date_updated: Time.now) and render_success_js(media.id)
     else
+      Rails.logger.error("Was not able to delete osp image. time:#{Time.now} params:#{params}")
       render_error_js
     end
   end

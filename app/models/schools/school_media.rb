@@ -8,6 +8,7 @@ class SchoolMedia < ActiveRecord::Base
   scope :limit_number, ->(count) { limit(count) unless count.to_s.empty? }
   scope :status, -> { where("status = 1") }
   scope :all_except_inactive, -> { where(status: [PENDING, ACTIVE, PROVISIONAL_PENDING, PROVISIONAL]) }
+  scope :sort_desc, -> { order("id ASC, sort DESC") }
 
   MAX_PHOTOS_FOR_OSP = 10
   OSP_IMAGE_SIZE = 130
@@ -26,14 +27,10 @@ class SchoolMedia < ActiveRecord::Base
   PROVISIONAL_PENDING            = 6 #provisional here means provisional user
   PROVISIONAL                    = 7
 
-  def self.order_by()
-        order("id ASC, sort DESC")
-  end
-
   def self.fetch_school_media(school, quantity)
     SchoolMedia.where(school_id: school.id, state: school.state)
     .limit_number(quantity)
-    .order_by()
+    .sort_desc
     .status
   end
 
@@ -53,7 +50,7 @@ class SchoolMedia < ActiveRecord::Base
   def self.fetch_all_except_inactive_school_media(school, quantity)
     SchoolMedia.where(school_id: school.id, state: school.state)
       .all_except_inactive
-      .order_by
+      .sort_desc
       .limit_number(quantity)
   end
 

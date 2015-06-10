@@ -4,12 +4,13 @@ GS.photoUploads = GS.photoUploads || (function() {
     var dropzoneInit = function() {
         var dropzone = this;
         modifyDropzoneConfig(dropzone);
+        var authenticity_token = $("input[name='authenticity_token']").val()
         _.each(gon.school_media_hashes, function(file) {
             var newImage = {
                 name: file.name,
                 id: file.id,
                 size: 30000,
-                authenticity_token: $("input[name='authenticity_token']").val()
+                authenticity_token: authenticity_token
             };
 
             dropzone.emit("addedfile", newImage);
@@ -100,7 +101,7 @@ GS.photoUploads = GS.photoUploads || (function() {
     };
 
     var init = function() {
-        var $photoUploader = $("div#photo_uploader")
+        var $photoUploader = $("#photo_uploader")
         if ($photoUploader.length === 1) {
             Dropzone.autoDiscover = false;
             $photoUploader.dropzone(dropzoneConfig)
