@@ -35,7 +35,7 @@ class Review < ActiveRecord::Base
              end, foreign_key: 'member_id', primary_key: 'member_id'
 
 
-  scope :flagged, -> { joins(:flags).where('review_flags.active' => true) }
+  scope :flagged, -> { eager_load(:flags).where('review_flags.active' => true) }
   scope :not_flagged, -> { eager_load(:flags).where( 'review_flags.active = 0 OR review_flags.review_id IS NULL' ) }
   scope :has_inactive_flags, -> { joins(:flags).where('review_flags.active' => false) }
   scope :ever_flagged, -> { joins(:flags) }

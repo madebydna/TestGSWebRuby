@@ -25,7 +25,7 @@
       <% end %>
     </div>
 
-    <h3>Showing <%= @flagged_reviews.size %> flagged reviews out of <%= @flagged_reviews.total_count %> </h3>
+    <h3>Showing <%= @flagged_reviews.size %> flagged reviews out of <%= @total_number_of_reviews_to_moderate %> </h3>
 
 
     <%= render 'list_of_reviews', reviews: @flagged_reviews, css_class: 'flagged_reviews_table' %>

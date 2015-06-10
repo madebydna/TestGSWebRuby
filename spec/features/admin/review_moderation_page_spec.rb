@@ -24,18 +24,43 @@ shared_context 'when I filter on' do |reason|
   end
 end
 
+shared_context 'with three inactive reviews' do
+  let!(:user) { FactoryGirl.create(:verified_user) }
+  let!(:school) { FactoryGirl.create(:alameda_high_school) }
+  let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
+  before do
+    reviews.each do |review|
+      review.moderated = true
+      review.deactivate
+      review.question = ReviewQuestion.first
+      review.save
+    end
+  end
+  after do
+    clean_dbs :surveys, :gs_schooldb, :community
+    clean_models School
+  end
+end
+
 describe 'Review moderation page' do
 
-  # let!(:school) { FactoryGirl.create(:alameda_high_school) }
   let(:page_object) { ReviewModerationPage.new }
   subject { page_object }
+
+  with_shared_context 'with three inactive reviews' do
+    with_shared_context 'visit the review moderation page' do
+      with_subject :flagged_reviews_table do
+        it 'should show only one review' do
+          expect(subject.reviews.size).to eq(1)
+        end
+      end
+    end
+  end
 
   context 'when there are flagged reviews' do
     let!(:user) { FactoryGirl.create(:verified_user) }
     let!(:school) { FactoryGirl.create(:alameda_high_school) }
     let!(:reviews) { FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user) }
-    before do
-    end
     after do
       clean_dbs :surveys, :gs_schooldb, :community
       clean_models School
