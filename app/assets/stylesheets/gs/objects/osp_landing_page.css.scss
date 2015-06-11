@@ -1,12 +1,13 @@
-@mixin osp_landing_page_module($backgroundcolor,$titlecolor) {
+@mixin osp_landing_page_module($backgroundcolor,$titlecolor,$h3color) {
   background-color: $backgroundcolor;
+
   h1 {
     color: $titlecolor;
     font-size: 30px;
     font-family: 'RobotoSlab-Light';
   }
   h3 {
-    color: white;
+    color: $h3color;
   }
   @media only screen and (min-width: $screen-sm-min) {
     h1 {
@@ -17,10 +18,22 @@
 
 .osp-landing-page {
   .school-story {
-    @include osp_landing_page_module($dirt-green,#add36e);
+    @include osp_landing_page_module($dirt-green,#add36e,white);
   }
   .connect-parents {
-    @include osp_landing_page_module(#25b798, $dirt-green);
+    @include osp_landing_page_module(#25b798, $dirt-green,white);
+  }
+
+  .social-media {
+    @include osp_landing_page_module(#f7ffe3, #25b798,black);
+  }
+  .ensure-accuracy {
+    @include osp_landing_page_module(#135c4c,#add36e,white);
+  }
+
+  .padding {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
 
