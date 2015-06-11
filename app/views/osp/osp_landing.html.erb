@@ -66,6 +66,12 @@
     </div>
    </div>
     <div class="row">
+      <div class="col-xs-12 col-sm-offset-3 col-sm-6 padding">
+        <% partial_params = {searchClass: 'js-forceLocationSearch'}%>
+        <%= render partial: 'nav/search_form', locals: partial_params %>
+      </div>
+    </div>
+    <div class="row">
     <div class="col-xs-12 col-sm-4 padding">
       <h4>1. CREATE YOUR ACCOUNT</h4>
       <p> Sign up using a school email address.We won't span you</p>
@@ -79,7 +85,7 @@
         <p> Answer a few questions to get started.Add photos,video, and social links to make it yours, or do so later.</p>
       </div>
       <div class="row">
-        <div class="col-xs-12 padding">
+        <div class="col-xs-12 col-sm-offset-7 col-sm-15 padding">
           <h3>We will handle the rest</h3>
         </div>
       </div>
