@@ -33,7 +33,8 @@ class Admin::ReviewsController < ApplicationController
     set_meta_tags :title =>  'Reviews moderation school search'
 
     if school_id.present? && state.present?
-      redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
+      state_param = gs_legacy_url_encode(States.state_name(state))
+      redirect_to admin_school_moderate_path(state: state_param, school_id: school_id)
     end
   end
 
