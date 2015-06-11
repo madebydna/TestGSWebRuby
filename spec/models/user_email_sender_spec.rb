@@ -1,5 +1,19 @@
 require 'spec_helper'
 
+shared_example 'should not send email' do
+  expect(subject.send_thank_you_email?(school_user)).to be_falsey
+end
+
+shared_example 'should send email' do
+  expect(subject.send_thank_you_email?(school_user)).to be_truthy
+end
+
+shared_context 'with one active review' do
+  before do
+    allow(school_user).to receive_message_chain(:active_reviews, :count).and_return(1)
+  end
+end
+
 describe UserEmailSender do
   let(:user) { FactoryGirl.build(:user) }
   subject {UserEmailSender.new(user)}
@@ -29,45 +43,36 @@ describe UserEmailSender do
   end
 
   describe '#send_thank_you_email?' do
-    context 'with one active review' do
-      before do
-        allow(school_user).to receive_message_chain(:active_reviews, :count).and_return(1)
+    context 'with no school user' do
+      let(:school_user) { nil }
+      include_example 'should not send email'
+    end
+    with_shared_context 'with one active review' do
+      context 'with unknown school user for user' do
+        let(:school_user) { FactoryGirl.build(:unknown_school_user) }
+        include_example 'should not send email'
       end
-      context 'with student school_user' do
-        let(:school_user) { FactoryGirl.build(:student_school_user) }
-        context 'with review with comment present' do
-          before do
-            allow(school_user).to receive_message_chain(:active_reviews, :first, :comment, :present?).
-                                        and_return(true)
-          end
-          it 'should not send email' do
-            expect(subject.send_thank_you_email?(school_user)).to be_falsey
-          end
-        end
-        context 'with review without  comment present' do
-          before do
-            allow(school_user).to receive_message_chain(:active_reviews, :first, :comment, :present?).
-                                        and_return(false)
-          end
-          it 'should send email' do
-            expect(subject.send_thank_you_email?(school_user)).to be_truthy
-          end
+
+      ['parent', 'student', 'teacher', 'principal', 'community'].each do |member_type|
+        context "with #{member_type} type" do
+          let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
+          include_example 'should send email'
         end
       end
     end
+
     context 'with no active reviews' do
       before do
         allow(school_user).to receive_message_chain(:active_reviews, :count).and_return(0)
       end
-      ['parent', 'student', 'teacher', 'principal', 'community'].each do |member_type|
+      ['parent', 'student', 'teacher', 'principal', 'community', 'unknown'].each do |member_type|
         context "with #{member_type} type" do
           let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
-          it 'should not send email' do
-            expect(subject.send_thank_you_email?(school_user)).to be_falsey
-          end
+          include_example 'should not send email'
         end
       end
     end
+
     context 'with more than one active' do
       before do
         allow(school_user).to receive_message_chain(:active_reviews, :count).and_return(2)
@@ -75,9 +80,7 @@ describe UserEmailSender do
       ['parent', 'student', 'teacher', 'principal', 'community'].each do |member_type|
         context "with #{member_type} type" do
           let(:school_user) { FactoryGirl.build("#{member_type}_school_user".to_sym) }
-          it 'should not send email' do
-            expect(subject.send_thank_you_email?(school_user)).to be_falsey
-          end
+          include_example 'should not send email'
         end
       end
     end

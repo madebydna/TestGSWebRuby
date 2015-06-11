@@ -18,6 +18,9 @@ FactoryGirl.define do
     factory :community_school_user do
       user_type 'community member'
     end
+    factory :unknown_school_user do
+      user_type 'unknown'
+    end
   end
 
 end

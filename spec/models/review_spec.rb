@@ -439,53 +439,23 @@ describe Review do
   end
 
   describe '#send_thank_you_email_if_published' do
-    let(:review) { FactoryGirl.create(:review, active: false) }
-    before do
-      allow(review).to receive(:calculate_and_set_active) {}
-      allow(review).to receive(:remove_answers_for_principals)
-    end
-    context 'with school user not unknown' do
-      before do
-        allow(review).to receive_message_chain(:school_user_or_default, :unknown?).and_return(false)
-      end
-      context 'with only 1 active email for school user' do
-        before do
-          allow(review).to receive_message_chain(:school_user_or_default, :active_reviews, :count).and_return(1)
-        end
-        it 'Tells ThankYouForReviewEmail to send an email' do
-          expect(ThankYouForReviewEmail).to receive(:deliver_to_user)
-          review.activate
-          review.save
-        end
-      end
-      context 'with more than 1 active email for school user' do
-        before do
-          allow(review).to receive_message_chain(:school_user_or_default, :active_reviews, :count).and_return(2)
-        end
-        it 'does not send an email' do
-          expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
-          review.activate
-          review.save
-        end
-      end
-    end
-    context 'with school user unknown' do
-      before do
-        allow(review).to receive_message_chain(:school_user_or_default, :unknown?).and_return(true)
-      end
-      it 'does not send an email' do
-        expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
-        review.activate
-        review.save
+    let(:review) { FactoryGirl.create(:review, active: true) }
+    let(:user) { FactoryGirl.create(:user) }
+    before { allow(review).to receive(:user).and_return(user) }
+    context 'if review active' do
+      it 'should send email' do
+        expect(user).to receive(:send_thank_you_email_for_school)
+        review.send_thank_you_email_if_published
       end
     end
 
-    it 'Only sends an email when status is active' do
-      expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
-      review.deactivate
-      review.save
+    context 'if review not active' do
+      let(:review) { FactoryGirl.create(:review, active: false) }
+      it 'should not send email' do
+        expect(user).to_not receive(:send_thank_you_email_for_school)
+        review.send_thank_you_email_if_published
+      end
     end
-
   end
 
   describe '#uniqueness' do
