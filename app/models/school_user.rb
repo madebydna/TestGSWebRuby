@@ -83,8 +83,8 @@ class SchoolUser < ActiveRecord::Base
   def handle_saved_reviews_for_students_and_principals
     deactivate_reviews_with_comments! if student?
     if principal?
-      deactivate_reviews!
       remove_review_answers!
+      deactivate_reviews! if !approved_osp_user?
     end
   end
 

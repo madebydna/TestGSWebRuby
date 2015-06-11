@@ -5,10 +5,13 @@ describe SchoolUserController do
   describe '#create' do
     let(:school) { FactoryGirl.build(:alameda_high_school) }
     let(:school_user) { FactoryGirl.build(:teacher_school_user, school: school) }
+    let(:user) { FactoryGirl.build(:verified_user) }
+
     before do
       controller.instance_variable_set(:@school, school)
       allow(controller).to receive(:require_school).and_return(school)
       allow(controller).to receive(:find_or_initialize_school_user).and_return(school_user)
+      controller.instance_variable_set(:@current_user, user)
     end
     after do
       clean_models(:gs_schooldb, SchoolUser)
@@ -31,6 +34,7 @@ describe SchoolUserController do
     context 'when school member is saved successfully' do
       before do
         allow(school_user).to receive(:save).and_return(true)
+        allow(user).to receive(:send_thank_you_email_for_school)
       end
       it 'should return status ok' do
         xhr :post, :create,

@@ -442,12 +442,42 @@ describe Review do
     let(:review) { FactoryGirl.create(:review, active: false) }
     before do
       allow(review).to receive(:calculate_and_set_active) {}
+      allow(review).to receive(:remove_answers_for_principals)
     end
-
-    it 'Tells ThankYouForReviewEmail to send an email' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user)
-      review.activate
-      review.save
+    context 'with school user not unknown' do
+      before do
+        allow(review).to receive_message_chain(:school_user_or_default, :unknown?).and_return(false)
+      end
+      context 'with only 1 active email for school user' do
+        before do
+          allow(review).to receive_message_chain(:school_user_or_default, :active_reviews, :count).and_return(1)
+        end
+        it 'Tells ThankYouForReviewEmail to send an email' do
+          expect(ThankYouForReviewEmail).to receive(:deliver_to_user)
+          review.activate
+          review.save
+        end
+      end
+      context 'with more than 1 active email for school user' do
+        before do
+          allow(review).to receive_message_chain(:school_user_or_default, :active_reviews, :count).and_return(2)
+        end
+        it 'does not send an email' do
+          expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
+          review.activate
+          review.save
+        end
+      end
+    end
+    context 'with school user unknown' do
+      before do
+        allow(review).to receive_message_chain(:school_user_or_default, :unknown?).and_return(true)
+      end
+      it 'does not send an email' do
+        expect(ThankYouForReviewEmail).to_not receive(:deliver_to_user)
+        review.activate
+        review.save
+      end
     end
 
     it 'Only sends an email when status is active' do
@@ -456,25 +486,6 @@ describe Review do
       review.save
     end
 
-    it 'Sends only one email when review is saved multiple times' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user).once
-      review.activate
-      review.save
-      review.comment = review.comment + ' foo'
-      review.save
-      review.comment = review.comment + ' bar'
-      review.save
-    end
-
-    it 'Sends two emails if review is published, disabled, published again' do
-      expect(ThankYouForReviewEmail).to receive(:deliver_to_user).twice
-      review.activate
-      review.save
-      review.deactivate
-      review.save
-      review.activate
-      review.save
-    end
   end
 
   describe '#uniqueness' do

@@ -224,7 +224,9 @@ class Review < ActiveRecord::Base
   end
 
   def send_thank_you_email_if_published
-    if self.active_changed? && self.active?
+    if active &&
+        !school_user_or_default.unknown? &&
+        school_user_or_default.active_reviews.count == 1
       review_url = school_reviews_url(school)
       ThankYouForReviewEmail.deliver_to_user(user, school, review_url)
     end

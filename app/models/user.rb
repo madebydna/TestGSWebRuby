@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # reviews
   include UserReviewConcerns
+  include UserEmailConcerns
 
   self.table_name = 'list_member'
   db_magic :connection => :gs_schooldb

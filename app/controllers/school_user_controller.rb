@@ -14,6 +14,7 @@ class SchoolUserController < SchoolProfileController
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
       school_user.handle_saved_reviews_for_students_and_principals
+      current_user.send_thank_you_email_for_school(@school)
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
       status = :unprocessable_entity
