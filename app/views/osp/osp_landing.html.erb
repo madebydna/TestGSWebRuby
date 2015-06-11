@@ -1,102 +1,114 @@
 <div class="osp-landing-page">
   <div class="info-module">
     <div class="limit-width-1200 ">
-    <div class="row">
-      <div class="col-lg-12 padding">
-      <h3>
-        <font color="#fad700"><i>Half of Americans parents*</i></font> use GreatSchools&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-        We have <font color="#fad700"><i>more accurate</i></font> school data than anyone else
-      </h3>
+      <div class="row">
+        <div class="col-lg-12 padding">
+          <h3>
+            <font color="#fad700"><i>Half of Americans parents*</i></font> use GreatSchools&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            We have <font color="#fad700"><i>more accurate</i></font> school data than anyone else
+          </h3>
+        </div>
       </div>
     </div>
-    </div>
   </div>
-  <div class="limit-width-1200 school-story">
-    <div class="row">
-    <%= image_tag (image_path('osp/landing_school1.png')), class: "pull-right hidden-xs col-sm-4" %>
-    <%= image_tag (image_path('osp/OSP_landingpage3_mobile.png')), class: "pull-right visible-xs" %>
-    <div class="col-xs-8 col-lg-6 padding">
-      <h1>Tell your school's story</h1>
-      <h3>
-        You know your school best. Showcase it with your words, your photos and your videos.
-      </h3>
-    </div>
-    </div>
-  </div>
-  <div class="limit-width-1200 connect-parents">
-    <div class="row">
-      <%= image_tag (image_path('osp/landing_book2.png')), class: "pull-left hidden-xs col-sm-4" %>
-      <%= image_tag (image_path('osp/OSP_landingpage4_mobile.png')), class: "pull-left visible-xs" %>
+  <div class="school-story">
+    <div class="limit-width-1200 ">
+      <div class="row">
+        <%= image_tag (image_path('osp/landing_school1.png')), class: "pull-right hidden-xs col-sm-4" %>
+        <%= image_tag (image_path('osp/OSP_landingpage3_mobile.png')), class: "pull-right visible-xs" %>
+        <div class="col-xs-8 col-lg-6 padding">
+          <h1>Tell your school's story</h1>
 
-      <div class="col-xs-8 col-lg-6 padding">
-        <h1> Connect with parents</h1>
-        <h3>
-          Reach prospective and existing parents with all the relevant school information they need
-        </h3>
+          <h3>
+            You know your school best. Showcase it with your words, your photos and your videos.
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="connect-parents">
+    <div class="limit-width-1200 ">
+      <div class="row">
+        <%= image_tag (image_path('osp/landing_book2.png')), class: "pull-left hidden-xs col-sm-4" %>
+        <%= image_tag (image_path('osp/OSP_landingpage4_mobile.png')), class: "pull-left visible-xs" %>
+
+        <div class="col-xs-8 col-lg-6 padding">
+          <h1> Connect with parents</h1>
+
+          <h3>
+            Reach prospective and existing parents with all the relevant school information they need
+          </h3>
+        </div>
       </div>
     </div>
   </div>
   <div class="social-media">
     <div class="limit-width-1200">
-    <div class="row">
-      <%= image_tag (image_path('osp/landing_phone3.png')), class: "pull-right hidden-xs col-sm-4" %>
-      <%= image_tag (image_path('osp/OSP_landingpage5_mobile.png')), class: "pull-right visible-xs" %>
-      <div class="col-xs-8 col-lg-6 padding">
-        <h1>Add existing social media</h1>
-        <h3>
-          Already have a Facebook page or Twitter account?Add it to keep your profile fresh
-        </h3>
+      <div class="row">
+        <%= image_tag (image_path('osp/landing_phone3.png')), class: "pull-right hidden-xs col-sm-4" %>
+        <%= image_tag (image_path('osp/OSP_landingpage5_mobile.png')), class: "pull-right visible-xs" %>
+        <div class="col-xs-8 col-lg-6 padding">
+          <h1>Add existing social media</h1>
+
+          <h3>
+            Already have a Facebook page or Twitter account?Add it to keep your profile fresh
+          </h3>
+        </div>
       </div>
-    </div>
     </div>
   </div>
   <div class="ensure-accuracy">
     <div class="limit-width-1200">
-    <div class="row">
+      <div class="row">
         <%= image_tag (image_path('osp/landing_kids4.png')), class: "pull-left hidden-xs col-sm-4" %>
         <%= image_tag (image_path('osp/OSP_landingpage6_mobile.png')), class: "pull-left visible-xs" %>
-       <div class="col-xs-8 col-lg-6 padding">
-         <h1>Ensure our accuracy</h1>
-         <h3>
-          Sometimes, errors creep into data.Help us maintain accuracy with your school
-         </h3>
+        <div class="col-xs-8 col-lg-6 padding">
+          <h1>Ensure our accuracy</h1>
+
+          <h3>
+            Sometimes, errors creep into data.Help us maintain accuracy with your school
+          </h3>
         </div>
-  </div>
-  </div>
+      </div>
+    </div>
   </div>
   <div class="claim-profile">
     <div class="limit-width-1200">
-  <div class="row">
-    <div class="col-xs-12 padding">
-      <h1>Claim your school profile in minutes</h1>
-    </div>
-   </div>
-    <div class="row">
-      <div class="col-xs-12 col-sm-offset-3 col-sm-6 padding">
-        <% partial_params = {searchClass: 'js-forceLocationSearch'}%>
-        <%= render partial: 'nav/search_form', locals: partial_params %>
-      </div>
-    </div>
-    <div class="row">
-    <div class="col-xs-12 col-sm-4 padding">
-      <h4>1. CREATE YOUR ACCOUNT</h4>
-      <p> Sign up using a school email address.We won't span you</p>
-    </div>
-      <div class="col-xs-12 col-sm-4 padding">
-        <h4>2. VERIFY YOUR EMAIL</h4>
-        <p> We will send you a verification email- just click the link inside</p>
-      </div>
-      <div class="col-xs-12 col-sm-4 padding">
-        <h4>3. CUSTOMIZE YOUR PROFILE</h4>
-        <p> Answer a few questions to get started.Add photos,video, and social links to make it yours, or do so later.</p>
+      <div class="row">
+        <div class="col-xs-12 padding">
+          <h1>Claim your school profile in minutes</h1>
+        </div>
       </div>
       <div class="row">
-        <div class="col-xs-offset-4 col-xs-8 col-sm-offset-5 col-sm-7">
-          <h3>We will handle the rest</h3>
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 padding">
+          <% partial_params = {searchClass: 'js-forceLocationSearch'} %>
+          <%= render partial: 'nav/search_form', locals: partial_params %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 padding">
+          <h4>1. CREATE YOUR ACCOUNT</h4>
+
+          <p> Sign up using a school email address.We won't span you</p>
+        </div>
+        <div class="col-xs-12 col-sm-4 padding">
+          <h4>2. VERIFY YOUR EMAIL</h4>
+
+          <p> We will send you a verification email- just click the link inside</p>
+        </div>
+        <div class="col-xs-12 col-sm-4 padding">
+          <h4>3. CUSTOMIZE YOUR PROFILE</h4>
+
+          <p> Answer a few questions to get started.Add photos,video, and social links to make it yours, or do so
+            later.</p>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-4 col-xs-8 col-sm-offset-5 col-sm-7">
+            <h3>We will handle the rest</h3>
+          </div>
         </div>
       </div>
     </div>
-   </div>
-</div>
+  </div>
 </div>
 <%= render 'shared/home_footer' %>
