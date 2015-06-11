@@ -36,6 +36,15 @@
     padding-right: 10px;
   }
 
+  .info-module{
+    background-color: $dark-green;
+    text-align: center;
+    h3 {
+      color: white;
+      font-family: 'opensans-regular';
+      font-size: 18px;
+    }
 
+  }
 
 }
