@@ -1,4 +1,4 @@
-@mixin osp_landing_page_module($backgroundcolor,$titlecolor,$h3color) {
+@mixin osp_landing_page_module($backgroundcolor,$titlecolor,$h4color) {
   background-color: $backgroundcolor;
 
   h1 {
@@ -6,12 +6,12 @@
     font-size: 30px;
     font-family: 'RobotoSlab-Light';
   }
-  h3 {
-    color: $h3color;
+  h4 {
+    color: $h4color;
   }
   @media only screen and (min-width: $screen-sm-min) {
     h1 {
-      font-size: 55px;
+      font-size: 50px;
     }
   }
 }
