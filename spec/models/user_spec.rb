@@ -233,16 +233,16 @@ describe User do
 
     describe '#reviews_for_school' do
       context 'with saved school and an active and inactive review' do
-        let(:user) { FactoryGirl.create(:verified_user) }
-        let(:school) { FactoryGirl.create(:alameda_high_school) }
-        let(:review1) do
+        let!(:user) { FactoryGirl.create(:verified_user) }
+        let!(:school) { FactoryGirl.create(:alameda_high_school) }
+        let!(:review1) do
           review1 = FactoryGirl.create(:five_star_review, user: user, school: school)
           review1.moderated = true
           review1.deactivate
           review1.save
           review1
         end
-        let(:review2) do
+        let!(:review2) do
           review2 = FactoryGirl.create(:five_star_review, user: user, school: school)
           review2.moderated = true
           review2.activate
@@ -260,7 +260,8 @@ describe User do
         end
 
         it 'should return all reviews' do
-          expect(user.reviews_for_school(school)).to eq([review1, review2])
+          expected_array = [review1, review2].sort
+          expect(user.reviews_for_school(school).to_a.sort).to eq(expected_array)
         end
       end
     end
