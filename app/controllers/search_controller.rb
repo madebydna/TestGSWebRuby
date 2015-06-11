@@ -402,6 +402,7 @@ class SearchController < ApplicationController
   def page_view_metadata
     @page_view_metadata ||= (
       page_view_metadata = {}
+      page_view_metadata['page_name']   = 'GS:SchoolSearchResults'
       page_view_metadata['template']    = 'search' # use this for page name - configured_page_name
       targeted_city = if @city && @city.respond_to?(:name)
                         @city.name

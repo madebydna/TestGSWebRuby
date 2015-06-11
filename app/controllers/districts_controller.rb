@@ -72,6 +72,7 @@ class DistrictsController < ApplicationController
   def page_view_metadata
     @page_view_metadata ||= (
     page_view_metadata = {}
+    page_view_metadata['page_name']    = 'GS:District:Home'
     page_view_metadata['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     page_view_metadata['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     page_view_metadata['State']      = @state[:short].upcase # abbreviation

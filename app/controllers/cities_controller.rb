@@ -280,6 +280,7 @@ class CitiesController < ApplicationController
   def page_view_metadata
     @page_view_metadata ||= (
     page_view_metadata = {}
+    page_view_metadata['page_name']   = 'GS:City:Home'
     page_view_metadata['template']    = 'ros' # use this for page name - configured_page_name
     page_view_metadata['City']        = @city.gs_capitalize_words
     page_view_metadata['State']       = @state[:short].upcase # abbreviation

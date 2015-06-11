@@ -193,6 +193,7 @@ class StatesController < ApplicationController
     @page_view_metadata ||= (
     page_view_metadata = {}
 
+    page_view_metadata['page_name'] = "GS:State:EducationCommunity"
     page_view_metadata['State']      = @state[:short].upcase # abbreviation
     page_view_metadata['editorial']  = 'FindaSchoo'
     page_view_metadata['template']   = "ros" # use this for page name - configured_page_name

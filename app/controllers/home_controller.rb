@@ -46,10 +46,11 @@ class HomeController < ApplicationController
   def page_view_metadata
     @page_view_metadata ||= (
     page_view_metadata = {}
-    page_view_metadata[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
-    page_view_metadata['env'] = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    page_view_metadata['template'] = 'homepage' # use this for page name - configured_page_name
-    page_view_metadata['editorial'] = 'pushdownad'
+    page_view_metadata['page_name']   = 'GS:Home'
+    page_view_metadata['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
+    page_view_metadata['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
+    page_view_metadata['template']    = 'homepage' # use this for page name - configured_page_name
+    page_view_metadata['editorial']   = 'pushdownad'
 
     page_view_metadata
 

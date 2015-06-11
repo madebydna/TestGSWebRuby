@@ -143,6 +143,7 @@ class SchoolProfileController < SchoolController
     @page_view_metadata ||= (
     page_view_metadata = {}
 
+    page_view_metadata['page_name']   = 'GS:'+ @ad_page_name.to_s
     page_view_metadata['City']        = @school.city
     page_view_metadata['county']      = @school.county # county name?
     page_view_metadata['gs_rating']   = @school.gs_rating
