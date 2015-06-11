@@ -18,17 +18,17 @@
 
 .osp-landing-page {
   .school-story {
-    @include osp_landing_page_module($dirt-green,#add36e,white);
+    @include osp_landing_page_module($dirt-green,$lighter-green,white);
   }
   .connect-parents {
-    @include osp_landing_page_module(#25b798, $dirt-green,white);
+    @include osp_landing_page_module($blue-green, $dirt-green,white);
   }
 
   .social-media {
-    @include osp_landing_page_module(#f7ffe3, #25b798,black);
+    @include osp_landing_page_module($pale-yellow,$blue-green,black);
   }
   .ensure-accuracy {
-    @include osp_landing_page_module(#135c4c,#add36e,white);
+    @include osp_landing_page_module($dark-green,$lighter-green,white);
   }
 
   .padding {
