@@ -108,4 +108,40 @@ describe '.find_by_school' do
     end
   end
 
+  describe '.find_id_by_name' do
+    before do
+      clean_models :gs_schooldb, ReviewTopic
+      FactoryGirl.create(:overall_topic, id: 1, name: 'Overall')
+      FactoryGirl.create(:honesty_topic, id: 2, name: 'Honesty')
+    end
+    after do
+      clean_models :gs_schooldb, ReviewTopic
+    end
+
+    {
+      'Overall' => 1,
+      'Honesty' => 2,
+      'Foo' => nil
+    }.each_pair do |name, expected_id|
+      it "should return id #{expected_id} for #{name}" do
+        expect(ReviewTopic.find_id_by_name(name)).to eq(expected_id)
+      end
+    end
+
+    it 'should be cached' do
+      Rails.cache.clear
+      expect(ReviewTopic).to receive(:active).once.and_call_original
+      2.times { ReviewTopic.find_id_by_name('Overall') }
+    end
+
+    context 'with an inactive topic' do
+      before do
+        FactoryGirl.create(:teachers_topic, id: 3, name: 'Teachers', active: false)
+      end
+      it 'should not return inactive topic id' do
+        expect(ReviewTopic.find_id_by_name('Teachers')).to be_nil
+      end
+    end
+  end
+
 end

@@ -203,4 +203,25 @@ describe SchoolProfileReviewsController do
     end
   end
 
+  describe '#first_topic_id_to_show' do
+    context 'when @school_user is set' do
+      let(:school) { FactoryGirl.build(:alameda_high_school) }
+      let(:user) { FactoryGirl.build(:verified_user) }
+      let(:school_user) { FactoryGirl.build(:parent_school_user, school: school, user: user) }
+      let(:honesty_topic) { FactoryGirl.build(:honesty_topic) }
+      before do
+        controller.instance_variable_set(:@school_user, school_user)
+        allow(school_user).to receive(:first_unanswered_topic).and_return(honesty_topic)
+      end
+      it 'should return id for user\'s first unanswered topic' do
+        expect(controller.first_topic_id_to_show).to eq(honesty_topic.id)
+      end
+    end
+    context 'when @school_user is not set' do
+      it 'should return id for Honesty topic' do
+        expect(ReviewTopic).to receive(:find_id_by_name).with(ReviewTopic::HONESTY).and_return(2)
+        controller.first_topic_id_to_show
+      end
+    end
+  end
 end

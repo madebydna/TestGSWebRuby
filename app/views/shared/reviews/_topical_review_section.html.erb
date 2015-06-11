@@ -1,3 +1,5 @@
+<% @first_topic_id_to_show %>
+
 <hr/>
 <div class="js-topicalReviewQuestionsContainer">
   <div class="plm mbl">
@@ -27,12 +29,8 @@
       <% display_review_questions = true %>
   <% end %>
 
-  <% first_unanswered_topic_id_for_user = '' %>
-  <% if logged_in? %>
-      <% first_unanswered_topic_id_for_user = @current_user.first_unanswered_topic(@school).try(:id) %>
-  <% end %>
   <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
-    <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= first_unanswered_topic_id_for_user %>">
+    <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
       <%= render partial: "shared/reviews/modules/topical_review_question_module",
                  collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
       %>

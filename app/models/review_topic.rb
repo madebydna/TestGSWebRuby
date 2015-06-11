@@ -9,6 +9,9 @@ class ReviewTopic < ActiveRecord::Base
 
   alias_attribute :school_level_code, :school_level
 
+  # Topic names
+  HONESTY = 'Honesty'
+
   class ReviewTopicsForSchool
     attr_reader :review_topic, :school
 
@@ -24,6 +27,10 @@ class ReviewTopic < ActiveRecord::Base
         end
       )
     end
+  end
+
+  def self.find_id_by_name(name)
+    names_to_ids_hash[name]
   end
 
   def self.find_by_school(school)
@@ -52,6 +59,16 @@ class ReviewTopic < ActiveRecord::Base
 
   def first_question
     review_questions.first
+  end
+
+  protected
+
+  def self.names_to_ids_hash
+    Rails.cache.fetch("::ReviewTopic#names_to_ids_hash", expires_in: 5.minutes) do
+      active.each_with_object({}) do |topic, hash|
+        hash[topic.name] = topic.id
+      end.freeze
+    end
   end
 
 end
