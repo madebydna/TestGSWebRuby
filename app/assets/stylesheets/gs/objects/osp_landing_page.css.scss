@@ -1,10 +1,11 @@
-@mixin osp_landing_page_module($backgroundcolor,$titlecolor,$h4color) {
+@mixin osp_landing_page_module($backgroundcolor,$titlecolor,$h4color,$h1textAligh) {
   background-color: $backgroundcolor;
 
   h1 {
     color: $titlecolor;
     font-size: 30px;
     font-family: 'RobotoSlab-Light';
+    text-align: $h1textAligh;
   }
   h4 {
     color: $h4color;
@@ -18,17 +19,17 @@
 
 .osp-landing-page {
   .school-story {
-    @include osp_landing_page_module($dirt-green,$lighter-green,white);
+    @include osp_landing_page_module($dirt-green,$lighter-green,white,left);
   }
   .connect-parents {
-    @include osp_landing_page_module($blue-green, $dirt-green,white);
+    @include osp_landing_page_module($blue-green, $dirt-green,white,left);
   }
 
   .social-media {
-    @include osp_landing_page_module($pale-yellow,$blue-green,black);
+    @include osp_landing_page_module($pale-yellow,$blue-green,black,left);
   }
   .ensure-accuracy {
-    @include osp_landing_page_module($dark-green,$lighter-green,white);
+    @include osp_landing_page_module($dark-green,$lighter-green,white,left);
   }
 
   .padding {
