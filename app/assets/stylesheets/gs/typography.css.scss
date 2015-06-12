@@ -281,40 +281,7 @@ img {
 
 .parsley-errors-list{
   padding-left: 0;
-}
-
-.parsley-required{
   color: $state-danger-text;
   list-style-type: none;
 }
 
-.parsley-maxlength{
-  color: $state-danger-text;
-  list-style-type: none;
-}
-
-.parsley-type{
-  color: $state-danger-text;
-  list-style-type: none;
-}
-
-.parsley-custom-error-message{
-  color: $state-danger-text;
-  list-style-type: none;
-
-}
-
-.parsley-minwords {
-  color: $state-danger-text;
-  list-style-type: none;
-}
-
-.parsley-minlength {
-  color: $state-danger-text;
-  list-style-type: none;
-}
-
-.parsley-youtubevimeotag, .parsley-blockhtmltags, .parsley-phonenumber, .parsley-currency {
-  color: $state-danger-text;
-  list-style-type: none;
-}
