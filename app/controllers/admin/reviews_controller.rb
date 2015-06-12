@@ -51,7 +51,8 @@ class Admin::ReviewsController < ApplicationController
       @reviews_by_user = find_reviews_by_user(user)
 
       #reviews that are flagged by the user.
-      @reviews_flagged_by_user = find_reviews_flagged_by_user(user)
+      @reviews_flagged_by_user = find_reviews_flagged_by_user
+      @user_flags = review_flags_for_user
     end
   end
 
@@ -184,13 +185,15 @@ class Admin::ReviewsController < ApplicationController
   protected
 
   def user_from_params
-    search_string = params[:review_moderation_search_string]
+    @user_from_params ||= (
+      search_string = params[:review_moderation_search_string]
 
-    if search_string.present?
-      search_string = search_string.strip
+      if search_string.present?
+        search_string = search_string.strip
 
-      User.find_by_email(search_string) if search_string.match(/[a-zA-z]/)
-    end
+        User.find_by_email(search_string) if search_string.match(/[a-zA-z]/)
+      end
+    )
   end
 
   # def email_user_about_review_removal(review)
@@ -202,11 +205,23 @@ class Admin::ReviewsController < ApplicationController
   # end
 
   def find_reviews_by_user(user)
-    user.reviews
+    user.reviews.includes(:user, :answers, :flags).load.extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
-  def find_reviews_flagged_by_user(user)
-    user.reviews_user_flagged
+  def review_flags_for_user
+    @review_flags_for_user ||= (
+      user_from_params.review_flags.
+        eager_load(review: [:user, :answers]).
+        page(params[:page]).per(10)
+    )
+  end
+
+  def find_reviews_flagged_by_user
+    @find_reviews_flagged_by_user ||= (
+      review_flags_for_user.
+        map(&:review).
+        extend(SchoolAssociationPreloading).preload_associated_schools!
+    )
   end
 
   def find_reviews_by_ids(review_ids)
