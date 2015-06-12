@@ -40,7 +40,7 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
               .addValidator('blockhtmltags', blockHtmlTags)
               .addMessage('en', 'blockhtmltags', 'Sorry but html tags are not allowed')
               .addValidator('youtubevimeotag', youtubeVimeoTag)
-              .addMessage('en','youtubevimeotag','Only valid Youtube or Vimeo videos allowed.')
+              .addMessage('en','youtubevimeotag','Only valid Youtube videos allowed.')
               .addValidator('phonenumber', phoneNumber)
               .addMessage('en','phonenumber','Please enter a valid 10 digit phone number')
               .addValidator('currency', currency)
