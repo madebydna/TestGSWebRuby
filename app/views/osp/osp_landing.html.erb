@@ -139,7 +139,7 @@
             </div>
 
             <% #list of select boxes     %>
-            <div class="js-selectListsContainer dn ma" style="max-width: 600px;">
+            <div class="js-selectListsContainer dn ma phm" style="max-width: 600px;">
               <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),
                              {:prompt => 'Select state', class: 'form-control js-stateSelect notranslate'} %>
               <select class="form-control js-citySelect dn mtm notranslate"></select>
