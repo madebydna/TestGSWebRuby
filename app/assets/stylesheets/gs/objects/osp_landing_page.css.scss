@@ -61,10 +61,7 @@
     h4{
       color:white;
     }
-    p{
-      color:white;
-      alight:left;
-    }
+
     h3 {
       color: white;
       font-family: 'opensans-italic';
@@ -74,4 +71,33 @@
 
   }
 
+  .search-link {
+    color: #222;
+  }
+
+  .wallpaper-green{
+    background-color: $wallpaper-green;
+    background-image: image-url('signin/wallpaper.png');
+    color: $dirt-green;
+  }
+
+  .picker-border{
+    border-top: 10px solid #07251e;
+    border-left: 10px solid #07251e;
+    border-right: 10px solid #07251e;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+    .picker-background{
+      background-color: #07251e;
+    }
+
+  .black-border-bottom{
+    border-bottom: 10px solid #07251e;
+  }
+
+  .search-bar-osp {
+    max-width: 600px;
+  }
 }

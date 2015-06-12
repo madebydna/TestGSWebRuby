@@ -332,6 +332,7 @@ GS.forms.elements = (function() {
     var autocompleteFieldContainer = '.js-autocompleteFieldContainer';
     var doNotSeeResult = '.js-doNotSeeResult';
     var selectListsContianer = '.js-selectListsContainer';
+    var stateSelect = '.js-stateSelect';
     var citySelect = '.js-citySelect';
     var schoolSelect = '.js-schoolSelect';
     var typeahead = '.typeahead';
@@ -339,6 +340,7 @@ GS.forms.elements = (function() {
     var change = "change";
     var keyup = 'keyup';
     var dataState = 'state';
+    var dataCity = 'city';
     var dataNoResultText = 'no-result-text';
     var dataReturnToSearchText = 'return-to-search-text';
     var dataResponseKey = 'response-key';
@@ -488,7 +490,8 @@ GS.forms.elements = (function() {
             var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
 
             if ($self.text().trim() == $self.data(dataNoResultText)) {
-                dontSeeResultCallback.call(this, $self, $autocompleteContainer);
+                var state = $self.data(dataState);
+                dontSeeResultCallback.call(this, state, $autocompleteContainer);
                 $self.text($self.data(dataReturnToSearchText));
             } else {
                 $selectListsContainer.hide('slow', function() {
@@ -499,12 +502,37 @@ GS.forms.elements = (function() {
         });
     };
 
+    var setStateSelectHandler = function() {
+        $(stateSelect).on(change, function() {
+            var $stateSelect = $(this);
+            var $autocompleteContainer = $stateSelect.closest(autocompleteContainer);
+            var state = $stateSelect.val();
+            loadCities(state, $autocompleteContainer);
+        });
+
+    };
+
+    var showStateSelect = function(state, $autocompleteContainer) {
+        var $autocompleteContainer = $(this).closest(autocompleteContainer);
+        var $stateSelect = $autocompleteContainer.find(stateSelect);
+        var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
+        var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
+
+        $autocompleteFieldContainer.hide(function() {
+            $stateSelect.removeClass('dn');
+            $selectListsContainer.show();
+        })
+
+    };
+
+
     //Call with call or apply on js-dontSeeResult link
-    var loadCities = function($self, $autocompleteContainer) {
+    var loadCities = function(state, $autocompleteContainer) {
         var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
         var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
         var $citySelect = $autocompleteContainer.find(citySelect);
-        var state = $self.data(dataState);
+        var $doNotSeeResult = $autocompleteContainer.find(doNotSeeResult);
+        $doNotSeeResult.data(dataState, state);
 
         $.ajax({
             type: 'GET',
@@ -529,20 +557,26 @@ GS.forms.elements = (function() {
             var $self = $(this);
             var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
             var $schoolSelect = $self.siblings(schoolSelect + ':first');
+            var state = $doNotSeeResult.data(dataState);
+            var city = $self.find(':selected').data('value');
+            $doNotSeeResult.data(dataCity, city);
+            loadSchools(state, city, $schoolSelect);
+        });
+    };
 
-            $.ajax({
-                type: 'GET',
-                url: "/gsr/ajax/get_schools",
-                data: {state: $doNotSeeResult.data(dataState), city: $self.find(':selected').data('value')},
-                async: true
-            }).done(function(data) {
-                $schoolSelect.find('option').remove();
-                $schoolSelect.append('<option>'+'Select school'+'</option>');
-                for(i=0; i < data.length; i++){
-                    $schoolSelect.append('<option data-value="'+data[i].name+'">'+data[i].name+'</option>');
-                }
-                $schoolSelect.removeClass('dn');
-            });
+    var loadSchools = function(state, city, $schoolSelect) {
+        $.ajax({
+            type: 'GET',
+            url: "/gsr/ajax/get_schools",
+            data: {state: state, city: city},
+            async: true
+        }).done(function(data) {
+            $schoolSelect.find('option').remove();
+            $schoolSelect.append('<option>'+'Select school'+'</option>');
+            for(i=0; i < data.length; i++){
+                $schoolSelect.append('<option data-id="'+data[i].id+'" data-value="'+data[i].name+'">'+data[i].name+'</option>');
+            }
+            $schoolSelect.removeClass('dn');
         });
     };
 
@@ -552,6 +586,37 @@ GS.forms.elements = (function() {
             var schoolName = $self.find(':selected').data('value');
             setAutocompleteVal(schoolName, $(this).closest(selectListsContianer))
         });
+    };
+
+    var setSchoolSelectedOspLandingPageHandler = function() {
+        $(autocompleteContainer).on(change, schoolSelect, function() {
+             $self = $(this);
+             schoolId = $self.find(':selected').data('id');
+            var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
+            var state = $doNotSeeResult.data(dataState);
+            var city = $doNotSeeResult.data(dataCity);
+
+            goToRegistrationPage(state, city, schoolId)
+        });
+    };
+
+    var onSchoolSelectedCallback =  function (event, suggestion, dataset) {
+        goToRegistrationPage(suggestion['state'], suggestion['city_name'], suggestion['id'])
+    };
+
+    var goToRegistrationPage = function(state, city, id) {
+        var link = '/official-school-profile/register.page?state=' + state + '&schoolId=' + id + '&city=' + city;
+        GS.uri.Uri.goToPage(link)
+    };
+
+    var initOspLandingPageAutocomplete = function(parentContainer) {
+        setStateSelectHandler();
+        setDoNotSeeResultHandlers(showStateSelect);
+        setCitySelectedHandler();
+        setSchoolSelectedOspLandingPageHandler();
+
+        var markup = GS.search.autocomplete.display.schoolResultsNoLinkMarkup;
+        GS.search.autocomplete.selectAutocomplete.init(gon.state_name, markup, onSchoolSelectedCallback);
     };
 
     var initOspPageAutocomplete = function(parentContainer) {
@@ -606,6 +671,7 @@ GS.forms.elements = (function() {
         setCustomSubmitHandler: setCustomSubmitHandler,
         setEditAutocompleteHandler: setEditAutocompleteHandler,
         initOspPageAutocomplete: initOspPageAutocomplete,
+        initOspLandingPageAutocomplete: initOspLandingPageAutocomplete,
         setConditionalQuestionHandler: setConditionalQuestionHandler,
         disableTargetElementsIfTriggerEmpty: disableTargetElementsIfTriggerEmpty
     }
