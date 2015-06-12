@@ -47,4 +47,51 @@ FactoryGirl.define do
     }.to_json)
     updated Time.now
   end
+
+  factory :school_cache_odd_formatted_esp_responses, class: SchoolCache do
+    name 'esp_responses'
+    sequence(:school_id) { |n| n }
+    state 'CA'
+    value ({
+      'before_after_care' => {
+        'Before' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        },
+        'AFTER' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      },
+      'boys_sports' => {
+        'SocceR' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        },
+        'BASEBALL' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      },
+      'transportation' => {
+        'None' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      },
+      'dress_code' => {
+        'No_Dress_Code' => {
+          "member_id" => 1,
+          "source" => "osp",
+          "created" => Time.now
+        }
+      }
+    }.to_json)
+    updated Time.now
+  end
 end

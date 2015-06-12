@@ -1,12 +1,21 @@
 <%= render 'reviews_navigation', page_name: :moderation_list %>
 
 <div class="row limit-width-1200">
+  <div class="col-xs-12">
     <div class="row pbl">
-      <%= div_tag sizes: { md: 6, lg: 6 } do %>
+      <%= div_tag sizes: { sm: 12 } do %>
         <h3>Reviews moderation list</h3>
-        <!--
-        <%= check_box_tag :open_cases, true, params[:open_cases] == 'true' %> Only open cases &nbsp;&nbsp;
-        -->
+
+        <div class="rs-reason-filters">
+          <h5>Reason filters</h5>
+          <% ReviewFlag::VALID_REASONS.each do |reason| %>
+            <span class="prm">
+              <%= check_box_tag(reason, true, params[reason] == 'true') %>
+              <%= label_tag(reason, reason) %>
+            </span>
+          <% end %>
+        </div>
+
         <div>
           <% if @school %>
             <br/>
@@ -16,7 +25,7 @@
       <% end %>
     </div>
 
-    <h3>Showing <%= @flagged_reviews.size %> flagged reviews out of <%= @flagged_reviews.total_count %> </h3>
+    <h3>Showing <%= @flagged_reviews.size %> flagged reviews out of <%= @total_number_of_reviews_to_moderate %> </h3>
 
 
     <%= render 'list_of_reviews', reviews: @flagged_reviews, css_class: 'flagged_reviews_table' %>
@@ -24,5 +33,6 @@
     Flagged reviews: <%= paginate @flagged_reviews, param_name: :page %>
 
     <br/><br/>
+  </div>
 
 </div>

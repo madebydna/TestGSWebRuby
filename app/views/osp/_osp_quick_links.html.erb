@@ -1,12 +1,21 @@
 <div class="fr vdl col-lg-2 col-md-3 col-sm-3 col-xs-12">
-  <div class="hidden-xs fr pt45 prl col-sm-12">
+  <div class="hidden-xs fr pt45 prl col-sm-12 js-ospQuickLinkSubmit">
+    <div class="pll">
+      <button class="btn btn-primary js-submitTrigger rs-submit" type="submit" data-page-number="<%= page %>">Save edits</button>
+    </div>
+  </div>
+  <div class="visible-xs tac col-xs-12 js-ospQuickLinkSubmit">
+    <%= link_to 'Save edits', osp_page_path(@school), {:'data-page-number' => "#{page}", :class => 'js-submitTrigger'} %>
+  </div>
+
+  <div class="hidden-xs fr prl mtl col-sm-12">
     <div class="pll">
       <button class="btn btn-default js-button-link" data-link-value="<%= school_reviews_path(@school, anchor: 'topic1') %>" data-link-use-new-window='true'>
         Post a message
       </button>
     </div>
   </div>
-  <div class="visible-xs tac col-xs-12">
+  <div class="visible-xs tac mtm col-xs-12">
     <%= link_to 'Post a message', school_reviews_path(@school, anchor: 'topic1'), target: '_blank' %>
   </div>
 

@@ -12,7 +12,7 @@
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 mtl">
     <div class="font-size-large open-sans_sb phs mvl">WHAT'S YOUR RELATIONSHIP TO THIS SCHOOL?</div>
     <div class="row">
-      <%= form_for @school_member, remote: true, url: school_user_path(@school) do |f| %>
+      <%= form_for @school_user, remote: true, url: school_user_path(@school) do |f| %>
 
           <% member_roles.each do |value, display_value| %>
 

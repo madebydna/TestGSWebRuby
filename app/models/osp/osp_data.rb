@@ -6,9 +6,9 @@ class OspData
 
   SCHOOL_CACHE_KEYS = %w(characteristics esp_responses)
 
-  CENSUS_KEY_TO_ESP_KEY = {'pk_capacity' => 'capacity','student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
+  ESP_KEY_TO_CENSUS_KEY = {'pk_capacity' => 'capacity','student_enrollment' => 'Enrollment' , 'administrator_name' => 'Head official name' , 'administrator_email' => 'Head official email address'}
 
-  SCHOOL_KEY_TO_ESP_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url' ,'school_phone' => 'phone' ,'school_fax' => 'fax'}
+  ESP_KEY_TO_SCHOOL_KEY = {'address' => 'street' , 'grade_levels' => 'level' , 'school_url' => 'home_page_url' ,'school_phone' => 'phone' ,'school_fax' => 'fax'}
 
 
 
@@ -20,37 +20,42 @@ class OspData
   def values_for(key, question_id)
     begin
       key = key.to_s
-      census_key = CENSUS_KEY_TO_ESP_KEY[key]
-      school_key = SCHOOL_KEY_TO_ESP_KEY[key]
+      census_key = ESP_KEY_TO_CENSUS_KEY[key]
+      school_key = ESP_KEY_TO_SCHOOL_KEY[key]
       osp_response_values = most_recent_osp_form_response(key, question_id)
       if census_key.present?
         school_cache_values_from_census_data  = cachified_school.census_value(census_key, grade: nil, number_value: false).to_s.split(',')
+        value = school_cache_values_from_census_data
         if osp_response_values.present? && school_cache_values_from_census_data.present? && cachified_school.created_time(census_key).present?
-          cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
+          value = cachified_school.created_time(census_key) > osp_response_values[:created_at] ? school_cache_values_from_census_data : osp_response_values[:values]
         else
-          osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_census_data
+          value = osp_response_values.present? ? osp_response_values[:values] : school_cache_values_from_census_data
         end
+         return value
       elsif school_key.present?
         school_value  = cachified_school.school.send(school_key).split(',') #will return empty array if no results
         modified_time = cachified_school.school.modified
+        value = school_value
         if osp_response_values.present? && school_value.present?
-          modified_time > osp_response_values[:created_at] ? school_value : osp_response_values[:values]
+          value = modified_time > osp_response_values[:created_at] ? school_value : osp_response_values[:values]
         else
-          osp_response_values.present? ? osp_response_values[:values] : school_value
+          value =osp_response_values.present? ? osp_response_values[:values] : school_value
         end
+         return value
       else
         school_cache_values  = cachified_school.values_for(key) #will return empty array if no results
+        value = school_cache_values
         if osp_response_values.present? && school_cache_values.present?
-          cachified_school.created_time_for(key) > osp_response_values[:created_at] ? school_cache_values : osp_response_values[:values]
+          value = cachified_school.created_time_for(key) > osp_response_values[:created_at] ? school_cache_values : osp_response_values[:values]
         else
-          osp_response_values.present? ? osp_response_values[:values] : school_cache_values
+          value = osp_response_values.present? ? osp_response_values[:values] : school_cache_values
         end
-
+         return value
       end
 
 
     rescue => error
-      GSLogger.error('OSP', error, message: "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}")
+      GSLogger.error(:osp, error, message: "Can't get values for q_id: #{question_id}; key: #{key}; school: #{cachified_school.state}, #{cachified_school.id}")
       []
     end
   end

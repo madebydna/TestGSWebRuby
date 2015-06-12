@@ -1,56 +1,72 @@
-<% display_question_label = display_question.displayed_label %>
 <% q_id                   = display_question.osp_question_id %>
-<% display_validations    = display_question.display_validations %>
 <% #parsley_validations can look like (data-parsley-youtubevimeotag data-parsley-type='email') rendered on page and {'data-parsley-youtubevimeotag': '', 'data-parsley-type':'email'} in db%>
-<% parsley_validations    = [*display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
 <% preexisting_esp_value  = preexisting_esp_values.first %>
+<% years_display          = display_question.years_display %>
+
 <% response_key  %>
 
-<% child_question            = display_question.children.first %>
-<% child_id                  = child_question.id %>
-<% child_response_key        = child_question.esp_response_key %>
-<% child_esp_value           = @osp_data.values_for(child_response_key, child_id).first %>
+<% child_questions            = display_question.children %>
+
+
 <% current_year              = Date.today.strftime("%Y").to_i %>
 <% years_to_show             = (0..5).map { |x| (current_year - x).to_s } %>
-<% should_select_child_value = preexisting_esp_value.present? && years_to_show.include?(child_esp_value) %>
-<% should_select_na          = preexisting_esp_value.present? && !should_select_child_value %>
+<% next_year                 = Time.now.year + 1 %>
+<% next_years_to_show        = (0..5).map { |x| (next_year - x).to_s } %>
+<% year_ranges               = []  %>
+<% years_to_show.each_with_index {|x,index| year_ranges.push(x+"-"+next_years_to_show[index]) } %>
+<% years_to_show_in_select   = years_display.present? && years_display == "Range" ? year_ranges : years_to_show  %>
+
+<% should_select_value       = preexisting_esp_value.present? && years_to_show_in_select.include?(preexisting_esp_value) %>
+<% should_select_na          = preexisting_esp_value.present? && !should_select_value %>
 
 <div class="row mbl js-conditionalQuestion">
-  <% if display_question_label.present? %>
-    <div class="col-xs-12">
-      <h3 class="mbl">
+  <% child_questions.each_with_index { |child_question|  %>
+      <% if child_question.question_label.present? %>
+          <div class="col-xs-12">
+            <h3 class="mbl">
         <span class="mrl">
-          <%= display_question_label %>
+          <%= child_question.question_label %>
         </span>
-      </h3>
-    </div>
-  <% end %>
+            </h3>
+          </div>
+      <% end %>
+      <% child_display_validations = child_question.validations %>
+      <% parsley_validations       = [*child_display_validations].inject('') { |string, (k , v)| string << (v.present? ? "#{k}=#{v} " : "#{k} ") }  %>
 
-  <input <%= parsley_validations %> <%= @parsley_defaults %>
-         type="text"
-         class="form-control pull-left mrl mbl input-field-sm js-disableTriggerElement"
-         data-parsley-errors-container= <%= "##{q_id}-parsley-error" %>
-         name="<%= "#{q_id}-#{response_key}" %>"
-         value="<%= preexisting_esp_value %>"
-  >
+      <input <%= parsley_validations %> <%= @parsley_defaults %>
+             type="text"
+             class="form-control pull-left mrl mbl input-field-sm js-disableTriggerElement"
+             data-parsley-errors-container= <%= "##{child_question.id}-parsley-error" %>
+                     name="<%= "#{child_question.id}-#{child_question.esp_response_key}" %>"
+             value="<%= @osp_data.values_for(child_question.esp_response_key, child_question.id).first %>"
+      >
+
+      <% if child_questions.length == 1%>
+          <div id=<%= "#{child_question.id}-parsley-error" %> style="clear: both;float: left"></div>
+      <% else %>
+          <div id=<%= "#{child_question.id}-parsley-error" %> "></div>
+
+<% end%>
+
+  <% } %>
+
+
+  <% #goes back the last 4 years either in range or full year depending on the config so as to keep the time up to date %>
+
   <select class="form-control js-disableTarget"
           style='width: 150px;'
-          name=<%= "#{child_id}-#{child_response_key}"%>
+          name=<%= "#{q_id}-#{response_key}"%>
   >
 
-    <% #currently hardcoded for the last 4 years so as to keep the time up to date %>
-    <% #can move to config hash in db later if desired %>
-
     <option value='n/a'>Select Year</option>
-    <% years_to_show.each do |this_year| %>
-      <option <% if this_year == child_esp_value && should_select_child_value then %> selected <% end %> value=<%= this_year %> >
+    <% years_to_show_in_select.each do |this_year| %>
+      <option <% if this_year == preexisting_esp_value && should_select_value then %> selected <% end %> value=<%= this_year %> >
         <%= this_year %>
       </option>
     <% end %>
     <option value='n/a' <% if should_select_na then %> selected <% end %>>Not Applicable</option>
 
   </select>
-  <div id=<%= "#{q_id}-parsley-error" %> style="clear: both;"></div>
 
 </div>
 

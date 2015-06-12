@@ -1,4 +1,3 @@
-
 class OspController < ApplicationController
   include PhotoUploadConcerns
 
@@ -8,11 +7,11 @@ class OspController < ApplicationController
   before_action :set_footer_cities, only: [:show]
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
-  after_action  :success_or_error_flash, only: [:submit]
+  after_action :success_or_error_flash, only: [:submit]
 
-  GON_PAGE_NAME = { '1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
+  GON_PAGE_NAME = {'1' => 'GS:OSP:BasicInformation', '2' => 'GS:OSP:Academics', '3' => 'GS:OSP:Extracurriculars', '4' => 'GS:OSP:StaffFacilities'}
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
-  DB_PAGE_NAME = { '1' => 'basic_information', '2' => 'academics', '3' => 'extracurricular_culture', '4' => 'facilities_staff' }
+  DB_PAGE_NAME = {'1' => 'basic_information', '2' => 'academics', '3' => 'extracurricular_culture', '4' => 'facilities_staff'}
   RESPONSE_VALIDATIONS = ['school_phone', 'school_fax', 'start_time', 'end_time'] #eventually move into shared module that the queue daemon also uses to validate data
 
   def show
@@ -28,16 +27,16 @@ class OspController < ApplicationController
     q = OspDisplayConfig.joins(:osp_question).where('osp_questions.question_type' => 'photo_upload').first
     approve_all_images_for_school(@school) if @is_approved_user && DB_PAGE_NAME[params[:page]] == q.try(:page_name)
 
-    questions_and_answers.each do | (question_id, response_key, values) |
+    questions_and_answers.each do |(question_id, response_key, values)|
       save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
-    redirect_to(:action => 'show',:state => params[:state], :schoolId => params[:schoolId], :page => params[:redirectPage])
+    redirect_to(:action => 'show', :state => params[:state], :schoolId => params[:schoolId], :page => params[:redirectPage])
   end
 
   #ToDo when Java is no longer the proxy, this should not be a route
   def approve_provisional_osp_user_data
     osp_form_responses = OspFormResponse.where(esp_membership_id: params[:membership_id])
-    osp_form_responses.each do | osp_form_response |
+    osp_form_responses.each do |osp_form_response|
       create_update_queue_row!(osp_form_response.response)
     end
     approve_all_images_for_member(params[:membership_id])
@@ -47,17 +46,20 @@ class OspController < ApplicationController
 
   def add_image
     number_of_images_for_school = SchoolMedia.where(school_id: @school.id, state: @school.state).all_except_inactive.count
-    return render_error_js unless number_of_images_for_school <= MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
+    return render_error_js unless number_of_images_for_school < MAX_NUMBER_OF_IMAGES_FOR_SCHOOL
 
     begin
       file = params['imageFile']['0']
 
       return render_error_js unless valid_file?(file)
       school_media = create_image!(file)
+
+      #We are approving all photos for the school if an approved user adds a photo
+      #If they add a photo that means they have 'seen' the other photos and has signed off on them
       approve_all_images_for_school(@school) if @is_approved_user
       render_success_js(school_media.id)
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Failed to add image')
+      GSLogger.error(:osp, error, vars: params, message: 'Failed to add image')
       render_error_js
     end
   end
@@ -65,9 +67,10 @@ class OspController < ApplicationController
   #test that unauthorized user can't delete images via directly hitting this action and changing params
   def delete_image
     media = SchoolMedia.find(params[:fileId]) rescue (return render_error_js)
-    if @is_approved_user || media.member_id == @esp_membership_id
+    if can_delete_image?(media)
       media.update_attributes(status: SchoolMedia::DISABLED, date_updated: Time.now) and render_success_js(media.id)
     else
+      Rails.logger.error("Was not able to delete osp image. time:#{Time.now} params:#{params}")
       render_error_js
     end
   end
@@ -75,11 +78,11 @@ class OspController < ApplicationController
   protected
 
   def questions_and_answers
-    params.except(:controller, :action, :page, :redirectPage, :schoolId, :state, :utf8, :authenticy_token, :isFruitcakeSchool, :showOspGateway, :anyPageStarted).map do | param, values |
+    params.except(:controller, :action, :page, :redirectPage, :schoolId, :state, :utf8, :authenticy_token, :isFruitcakeSchool, :showOspGateway, :anyPageStarted).map do |param, values|
       begin
         question_id, response_key = param.split('-', 2)
       rescue => error
-        GSLogger.warn('OSP', error, vars: params, message: "invalid param #{param}") and next
+        GSLogger.warn(:osp, error, vars: params, message: "invalid param #{param}") and next
       end
       next if question_id.to_i == 0
       next unless values.present?
@@ -92,7 +95,7 @@ class OspController < ApplicationController
     #TODO add validation here to only allow questions/answers that a school is registered for
     #Validate based on question type and for open text use same validation logic as JS
     #eventually move into shared module that the queue daemon also uses to validate data
-    
+
     if RESPONSE_VALIDATIONS.include?(response_key)
       send("#{response_key}_validation".to_sym, question_id, response_key, response_values)
     else
@@ -126,21 +129,18 @@ class OspController < ApplicationController
     error = create_osp_form_response!(question_id, esp_membership_id, response_blob, submit_time)
     create_update_queue_row!(response_blob) if is_approved_user && !error.present?
     @render_error ||= error.present?
-    error = create_nonOSP_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
+    error = create_nonOSP_response!(question_id, response_values, submit_time, esp_membership_id, is_approved_user, question_key)
     @render_error ||= error.present?
-
-
-    #if this fails how do we reconcile the inconsistency of data because this isn't in school cache?
   end
 
   def make_esp_response_blob(question_key, esp_membership_id, response_values, submit_time)
     rvals = [*response_values].map do |response_value|
       {
-        entity_state: params[:state],
-           entity_id: @school.id,
-               value: response_value,
-           member_id: esp_membership_id,
-             created: submit_time,
+          entity_state: params[:state],
+          entity_id: @school.id,
+          value: response_value,
+          member_id: esp_membership_id,
+          created: submit_time,
           esp_source: "osp"
       }.stringify_keys!
     end
@@ -148,7 +148,7 @@ class OspController < ApplicationController
     {question_key => rvals}.to_json
   end
 
-  def make_nonOSP_response_blob(census_data_type, response_values, submit_time,esp_membership_id)
+  def make_nonOSP_response_blob(census_data_type, response_values, submit_time, esp_membership_id)
     rvals = [*response_values].map do |response_value|
       {
           entity_state: params[:state],
@@ -164,16 +164,16 @@ class OspController < ApplicationController
     {census_data_type => rvals}.to_json
   end
 
-  def create_nonOSP_response!(question_id, response_values, submit_time,esp_membership_id,is_approved_user,question_key)
+  def create_nonOSP_response!(question_id, response_values, submit_time, esp_membership_id, is_approved_user, question_key)
     begin
-     data_type = OspData::CENSUS_KEY_TO_ESP_KEY[question_key] || OspData::SCHOOL_KEY_TO_ESP_KEY[question_key]
+      data_type = OspData::ESP_KEY_TO_CENSUS_KEY[question_key] || OspData::ESP_KEY_TO_SCHOOL_KEY[question_key]
       if data_type.present?
-        response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time,esp_membership_id)
+        response_blob = make_nonOSP_response_blob(data_type, response_values, submit_time, esp_membership_id)
         create_osp_form_response!(question_id, esp_membership_id, response_blob, submit_time)
         create_update_queue_row!(response_blob) if is_approved_user
       end
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue and osp response table')
+      GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue and osp response table')
       error
     end
   end
@@ -181,20 +181,20 @@ class OspController < ApplicationController
   def create_osp_form_response!(osp_question_id, esp_membership_id, response, submit_time)
     begin
       error = OspFormResponse.create(
-          osp_question_id:   osp_question_id,
+          osp_question_id: osp_question_id,
           esp_membership_id: esp_membership_id,
-          school_id:         @school.id,
-          state:             @school.state,
-          response:          response,
-          updated:           submit_time
+          school_id: @school.id,
+          state: @school.state,
+          response: response,
+          updated: submit_time
       ).errors.full_messages
 
-      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to osp_form_response table') if error.present?
+      GSLogger.error(:osp, nil, vars: params, message: "Didnt save osp response to osp_form_response table #{[*error].first}") if error.present?
       error
 
     rescue => e
-      GSLogger.error('OSP', e, vars: params, message: 'Didnt save osp response to osp_form_response table')
-      error
+      GSLogger.error(:osp, e, vars: params, message: 'Didnt save osp response to osp_form_response table')
+      error.presence || ["An error occured"]
     end
   end
 
@@ -206,12 +206,12 @@ class OspController < ApplicationController
           update_blob: response_blob,
       ).errors.full_messages
 
-      GSLogger.error('OSP', nil, vars: params, message: 'Didnt save osp response to update_queue table') if error.present?
+      GSLogger.error(:osp, nil, vars: params, message: "Didnt save osp response to update_queue table #{[*error].first}") if error.present?
       error
 
     rescue => error
-      GSLogger.error('OSP', error, vars: params, message: 'Didnt save osp response to update_queue table')
-      error
+      GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue table')
+      error.presence || ["An error occured"]
     end
   end
 
@@ -243,7 +243,7 @@ class OspController < ApplicationController
 
   def set_school_media_hashs_gon_var!
     gon.school_media_hashes = SchoolMedia.school_media_hashes_for_osp(@school)
-    gon.school_id           = @school.id
+    gon.school_id = @school.id
   end
 
   ### BEFORE ACTIONS ###
@@ -261,7 +261,7 @@ class OspController < ApplicationController
     esp_membership = current_user.esp_membership_for_school(@school)
     if esp_membership.try(:approved?) || esp_membership.try(:provisional?)
       @esp_membership_id = esp_membership.id
-      @is_approved_user  = esp_membership.approved?
+      @is_approved_user = esp_membership.approved?
       notify_provisional_user! if esp_membership.provisional? && !request.xhr?
     else
       redirect_to my_account_url #ToDo think of better redirect

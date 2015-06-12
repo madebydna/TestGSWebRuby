@@ -78,6 +78,9 @@ shared_context 'with a basic set of osp questions in db' do
       award:             7,
       award_year:        8,
       date_picker:       9,
+      tuition_low:       10,
+      tuition_high:      11,
+      tuition_year:      12,
     }
   end
   let(:questions) do
@@ -144,12 +147,22 @@ shared_context 'with a basic set of osp questions in db' do
 
       },
       {
-          id: question_ids[:award],
-          esp_response_key: :award,
+          id: question_ids[:award_year],
+          esp_response_key: :award_year,
           osp_question_group_id: nil,
           question_type: 'input_and_year',
           config: { #will be turned into json, so needs to be string
-            'question_ids' => [question_ids[:award_year]]
+            'question_ids' => [question_ids[:award]]
+          }.to_json
+      },
+      {
+          id: question_ids[:tuition_year],
+          esp_response_key: :tuition_year,
+          osp_question_group_id: nil,
+          question_type: 'input_and_year',
+          config: { #will be turned into json, so needs to be string
+                    'question_ids' => [question_ids[:tuition_low],question_ids[:tuition_high]],
+                    'year_display' => 'Range'
           }.to_json
       },
       {
@@ -160,13 +173,23 @@ shared_context 'with a basic set of osp questions in db' do
       }
     ]
   end
-
+# All Child Questions should go here
   let(:questions_without_display_conf) do
     [
       {
-        id: question_ids[:award_year],
-        esp_response_key: :award_year,
+        id: question_ids[:award],
+        esp_response_key: :award,
         question_type: 'input_and_year',
+      },
+      {
+          id: question_ids[:tuition_low],
+          esp_response_key: :tuition_low,
+          question_type: 'input_and_year',
+      },
+      {
+          id: question_ids[:tuition_high],
+          esp_response_key: :tuition_high,
+          question_type: 'input_and_year',
       }
     ]
   end
@@ -281,6 +304,16 @@ shared_context 'save osp question to db' do
     end
   end
   after { clean_models :gs_schooldb, OspQuestion, OspDisplayConfig }
+end
+
+shared_context 'with oddly formatted data in school cache for school' do |state, school_id|
+  before do
+    FactoryGirl.create(:school_cache_odd_formatted_esp_responses, state: state, school_id: school_id )
+  end
+
+  after do
+    clean_models :gs_schooldb, SchoolCache
+  end
 end
 
 ### Clicking Buttons ###
@@ -403,6 +436,13 @@ shared_context 'within textarea field' do |esp_response_key|
   subject do
     form = osp_page.osp_form
     form.find("form textarea[name='#{question_ids[esp_response_key]}-#{esp_response_key.to_s}']")
+  end
+end
+
+shared_context 'within button(s) with the text(s)' do |button_text| #string or array
+  subject do
+    answers = Regexp.new([*button_text].join('|'))
+    osp_page.osp_form.buttons(text: answers)
   end
 end
 

@@ -4,30 +4,37 @@ describe SchoolUserController do
 
   describe '#create' do
     let(:school) { FactoryGirl.build(:alameda_high_school) }
-    let(:school_member) { FactoryGirl.build(:teacher_school_member, school: school) }
+    let(:school_user) { FactoryGirl.build(:teacher_school_user, school: school) }
+    let(:user) { FactoryGirl.build(:verified_user) }
+
     before do
       controller.instance_variable_set(:@school, school)
       allow(controller).to receive(:require_school).and_return(school)
-      allow(controller).to receive(:find_or_initialize_school_user).and_return(school_member)
+      allow(controller).to receive(:find_or_initialize_school_user).and_return(school_user)
+      controller.instance_variable_set(:@current_user, user)
+    end
+    after do
+      clean_models(:gs_schooldb, SchoolUser)
     end
 
-    [SchoolMember::Affiliation::PRINCIPAL, SchoolMember::Affiliation::STUDENT].each do |type|
+    [SchoolUser::Affiliation::PRINCIPAL, SchoolUser::Affiliation::STUDENT].each do |type|
       context "when school member is a #{type}" do
-        it 'should deactivate user\'s reviews' do
-          expect(school_member).to receive(:deactivate_reviews!)
+        it 'should handle user\'s saved reviews' do
+          expect(school_user).to receive(:handle_saved_reviews_for_students_and_principals)
           xhr :post, :create,
               state: States.state_name(school.state),
               schoolId: school.id,
               city: school.city,
               school_name: school.name,
-              school_member: { user_type: type.to_s }
+              school_user: { user_type: type.to_s }
         end
       end
     end
 
     context 'when school member is saved successfully' do
       before do
-        allow(school_member).to receive(:save).and_return(true)
+        allow(school_user).to receive(:save).and_return(true)
+        allow(user).to receive(:send_thank_you_email_for_school)
       end
       it 'should return status ok' do
         xhr :post, :create,
@@ -35,7 +42,7 @@ describe SchoolUserController do
             schoolId: school.id,
             city: school.city,
             school_name: school.name,
-            school_member: { user_type: 'parent' }
+            school_user: { user_type: 'parent' }
         expect(response.status).to eq(200)
       end
     end
@@ -45,7 +52,7 @@ describe SchoolUserController do
   describe '#find_or_initialize_school_user' do
     let(:user) { FactoryGirl.build(:verified_user) }
     let(:school) { FactoryGirl.build(:alameda_high_school) }
-    let(:school_member) { FactoryGirl.build(:parent_school_member, user: user, school: school) }
+    let(:school_user) { FactoryGirl.build(:parent_school_user, user: user, school: school) }
     before do
       allow(controller).to receive(:logged_in?).and_return true
       allow(controller).to receive(:current_user).and_return user
@@ -53,18 +60,18 @@ describe SchoolUserController do
     end
     context 'with no existing SchoolUser' do
       before do
-        allow(SchoolMember).to receive(:find_by_school_and_user).and_return nil
+        allow(SchoolUser).to receive(:find_by_school_and_user).and_return nil
       end
       it 'should build a SchoolUser' do
-        expect(controller.find_or_initialize_school_user).to be_a(SchoolMember)
+        expect(controller.find_or_initialize_school_user).to be_a(SchoolUser)
       end
     end
     context 'with an existing SchoolUser' do
       before do
-        allow(SchoolMember).to receive(:find_by_school_and_user).and_return school_member
+        allow(SchoolUser).to receive(:find_by_school_and_user).and_return school_user
       end
       it 'should build a SchoolUser' do
-        expect(controller.find_or_initialize_school_user).to be(school_member)
+        expect(controller.find_or_initialize_school_user).to be(school_user)
       end
     end
     context 'when not logged in' do

@@ -8,53 +8,62 @@
       var value = $this.prop('checked');
       var name = $this.attr('name');
 
-      new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+      newLocation = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
 
-      if (_.indexOf(new_location, '?') == -1) {
-        new_location += '?';
+      if (_.indexOf(newLocation, '?') == -1) {
+        newLocation += '?';
       } else {
-        new_location += '&';
+        newLocation += '&';
       }
-      location.href = new_location + name + "=" + value;
+      location.href = newLocation + name + "=" + value;
     });
   });
 </script>
 
-<%= render 'admin/reviews/reviews_navigation', page_name: :schools %>
+<div class="container">
+  <%= render 'admin/reviews/reviews_navigation', page_name: :schools %>
+  <%= render 'admin/reviews/reviews_school_search' %>
 
-<%= render 'admin/reviews/reviews_school_search' %>
+  <div class="row">
+    <br/>
+    <h2><%= link_to @school.name, school_url(@school), class:'h2' %></h2>
 
-<div class="row limit-width-1200 pam">
-  <br/>
-  <h2><%= link_to @school.name, school_url(@school), class:'h2' %></h2>
-
-  <div>
-    <%= render 'held_school_form',
-      school: @school,
-      held_school: @held_school %>
+    <div>
+      <%= render 'held_school_form',
+        school: @school,
+        held_school: @held_school %>
+      <br/>
+    </div>
     <br/>
   </div>
-  <br/>
 
-  <div>
-    <h5>Filters</h5>
-    <%= check_box_tag :active, true, params[:active] == 'true' %> Active &nbsp;&nbsp;
-    <%= check_box_tag :inactive, true, params[:inactive] == 'true' %> Inactive &nbsp;&nbsp;
-    <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Open flags &nbsp;&nbsp;
-    <%= check_box_tag :has_inactive_flags, true, params[:has_inactive_flags] == 'true' %> Resolved flags &nbsp;&nbsp;
+  <div class="row">
+    <div class="col-xs-12">
+      <h5>Filters</h5>
+      <span class="prl">
+        <%= render 'filter_reviews_by_topic_button' %>
+      </span>
+      <%= check_box_tag :active, true, params[:active] == 'true' %> Active &nbsp;&nbsp;
+      <%= check_box_tag :inactive, true, params[:inactive] == 'true' %> Inactive &nbsp;&nbsp;
+      <%= check_box_tag :flagged, true, params[:flagged] == 'true' %> Open flags &nbsp;&nbsp;
+      <%= check_box_tag :has_inactive_flags, true, params[:has_inactive_flags] == 'true' %> Resolved flags &nbsp;&nbsp;
+    </div>
   </div>
-  <div>
-    <strong><%= pluralize @reviews.size, 'review' %></strong> displayed
-      <%= link_to('Show all',
-                  admin_school_moderate_path(
-                    state: school_params(@school)[:state],
-                    school_id: @school.id
-                  )
-                ) if params[:review_id] %>
-    <% if current_scopes.any? %>
-        <br/>
-        Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
-    <% end %>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <strong><%= pluralize(@reviews.size, "#{params[:topic]} review", "#{params[:topic]} reviews") %></strong> displayed
+        <%= link_to('Show all',
+                    admin_school_moderate_path(
+                      state: school_params(@school)[:state],
+                      school_id: @school.id
+                    )
+                  ) if params[:review_id] %>
+      <% if current_scopes.any? %>
+          <br/>
+          Showing reviews that are <%= current_scopes.stringify_keys.keys.join ' and ' %>
+      <% end %>
+    </div>
   </div>
 
   <div class="rs-list-of-reviews">

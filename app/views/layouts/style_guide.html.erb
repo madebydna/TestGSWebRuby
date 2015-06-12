@@ -2,15 +2,14 @@
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
-  <%= stylesheet_link_tag    "gs/style_guide/main", media: "all" %>
-  <%= stylesheet_link_tag    "gs/style_guide/styleguide", media: "all" %>
+  <%= stylesheet_link_tag    "main", media: "all" %>
   <link href="https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic" rel="stylesheet" type="text/css">
 
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= include_gon %>
-  <%= javascript_include_tag "style_guide/main", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "style_guide/picturefill.min", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "main", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "picturefill.min", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= yield :javascript_includes %>
   <%= csrf_meta_tags %>
@@ -37,7 +36,7 @@
   <%= yield :head %>
 </head>
 
-<body class="open-sans section-material-design first-chapter qp-ui qp-ui-mask" data-qp-ui="{ 'Mask': {} }"
+<body class="open-sans section-material-design first-chapter qp-ui qp-ui-mask gs-style-guide" data-qp-ui="{ 'Mask': {} }"
       data-qp-ui-data-id="qp:1" style="margin-top:0px; padding-top: 0px;">
 <header class="qp-ui qp-ui-peekaboo" data-qp-ui="{
   'Peekaboo': {
@@ -53,8 +52,8 @@
       'default': 82
     }
   }" data-qp-ui-data-id="qp:3">
-    <div class="header-title">      <span class="section-title">Material design</span>
-      <span class="chapter-title">Introduction</span>
+    <div class="header-title">      <span class="section-title"><%= @directory %></span>
+      <span class="chapter-title"><%= @page_title %></span>
     </div>
   </div><div class="header-wrapper qp-ui qp-ui-peekaboo-placeholder" data-qp-ui="{
     'Peekaboo': {
@@ -63,184 +62,46 @@
       'default': 82
     }
   }" aria-hidden="true">
-  <div class="header-title">      <span class="section-title">Material design</span>
-    <span class="chapter-title">Introduction</span>
+    <div class="header-title">      <span class="section-title"><%= @directory %></span>
+      <span class="chapter-title"><%= @page_title %></span>
   </div>
 </div>
-</header><header class="qp-ui qp-ui-peekaboo-placeholder" data-qp-ui="{
-  'Peekaboo': {
-    'mobile': 72,
-    'desktop-sm': 72,
-    'default': 192
-  }
-}" aria-hidden="true">
-  <div class="header-wrapper qp-ui" data-qp-ui="{
-    'Peekaboo': {
-      'mobile': 28,
-      'desktop-sm': 28,
-      'default': 82
-    }
-  }">
-    <div class="header-title">      <span class="section-title">Material design</span>
-      <span class="chapter-title">Introduction</span>
-    </div>
-  </div>
 </header>
 <nav>
-  <button class="hamburger-button qp-ui qp-ui-side-nav-toggle" data-qp-ui="{ 'SideNavToggle': {} }" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:4">Show navigation</button>
+            <button type="button" class="btn btn-default qp-ui qp-ui-side-nav-toggle" data-qp-ui="{ 'SideNavToggle': {} }" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:4">
+                <span >Toggle navigation</span>
+            </button>
+  <!-- <button class="hamburger&#45;button qp&#45;ui qp&#45;ui&#45;side&#45;nav&#45;toggle" data&#45;qp&#45;ui="{ 'SideNavToggle': {} }" role="tab" aria&#45;expanded="false" data&#45;qp&#45;ui&#45;data&#45;id="qp:4">Show navigation</button> -->
 </nav>
 <div id="side-nav" class="qp-ui qp-ui-side-nav-drawer" data-qp-ui="{ 'SideNavDrawer': {} }" data-qp-ui-data-id="qp:5">
   <div class="side-nav-wrapper">
-    <span id="logo"><img alt="GreatSchools.org" height="35" src="http://localhost:3000/assets/nav/GS_logo_2x-new.png" width="150"></span>
+    <div class="pam"><%= link_to(admin_style_guide_path) { image_tag 'nav/GS_logo_2x-new.png', size:'150x35', alt:'GreatSchools.org' } %></div>
     <nav>
       <dl>
-        <dt class="qp-ui goog-zippy-header goog-zippy-expanded" data-qp-ui="{ 'SideNavZippy': true }" tabindex="0"
-            role="tab" aria-expanded="false" data-qp-ui-data-id="qp:6">Material design
-        </dt>
-        <div style="overflow: hidden;display: none"><dd>
-          <a class="nav_selected" href="/design/spec/material-design/introduction.html">Introduction
-          </a>
-        </dd></div>
+
+        <% #Navbar code Begin %>
         <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0"
-            role="tab" aria-expanded="false" data-qp-ui-data-id="qp:7">What is material?
+          role="tab" aria-expanded="false" data-qp-ui-data-id="qp:6">GreatSchools Style Guide
         </dt>
-        <div style="overflow: hidden;"><dd style="margin-top: 0px;">
-          <a class="" href="/design/spec/what-is-material/environment.html">Environment
-          </a>
-          <a class="" href="/design/spec/what-is-material/material-properties.html">Material properties
-          </a>
-          <a class="" href="/design/spec/what-is-material/objects-in-3d-space.html">Objects in 3D space
-          </a>
+        <div style="overflow: hidden; display: block"><dd>
+          <%= link_to "Welcome!", "/admin/gsr/style-guide/" %>
         </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0"
-            role="tab" aria-expanded="false" data-qp-ui-data-id="qp:8">Animation
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/animation/authentic-motion.html">Authentic motion
-          </a>
-          <a class="" href="/design/spec/animation/responsive-interaction.html">Responsive interaction
-          </a>
-          <a class="" href="/design/spec/animation/meaningful-transitions.html">Meaningful transitions
-          </a>
-          <a class="" href="/design/spec/animation/delightful-details.html">Delightful details
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:9">Style
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/style/color.html">Color
-          </a>
-          <a class="" href="/design/spec/style/icons.html">Icons
-          </a>
-          <a class="" href="/design/spec/style/imagery.html">Imagery
-          </a>
-          <a class="" href="/design/spec/style/typography.html">Typography
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:a">Layout
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/layout/principles.html">Principles
-          </a>
-          <a class="" href="/design/spec/layout/metrics-keylines.html">Metrics &amp; keylines
-          </a>
-          <a class="" href="/design/spec/layout/structure.html">Structure
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:b">Components
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/components/bottom-sheets.html">Bottom sheets
-          </a>
-          <a class="" href="/design/spec/components/buttons.html">Buttons
-          </a>
-          <a class="" href="/design/spec/components/cards.html">Cards
-          </a>
-          <a class="" href="/design/spec/components/chips.html">Chips
-          </a>
-          <a class="" href="/design/spec/components/dialogs.html">Dialogs
-          </a>
-          <a class="" href="/design/spec/components/dividers.html">Dividers
-          </a>
-          <a class="" href="/design/spec/components/grids.html">Grids
-          </a>
-          <a class="" href="/design/spec/components/lists.html">Lists
-          </a>
-          <a class="" href="/design/spec/components/list-controls.html">List controls
-          </a>
-          <a class="" href="/design/spec/components/menus.html">Menus
-          </a>
-          <a class="" href="/design/spec/components/pickers.html">Pickers
-          </a>
-          <a class="" href="/design/spec/components/progress-activity.html">Progress &amp; activity
-          </a>
-          <a class="" href="/design/spec/components/sliders.html">Sliders
-          </a>
-          <a class="" href="/design/spec/components/snackbars-toasts.html">Snackbars &amp; toasts
-          </a>
-          <a class="" href="/design/spec/components/subheaders.html">Subheaders
-          </a>
-          <a class="" href="/design/spec/components/switches.html">Switches
-          </a>
-          <a class="" href="/design/spec/components/tabs.html">Tabs
-          </a>
-          <a class="" href="/design/spec/components/text-fields.html">Text fields
-          </a>
-          <a class="" href="/design/spec/components/tooltips.html">Tooltips
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:c">Patterns
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/patterns/data-formats.html">Data formats
-          </a>
-          <a class="" href="/design/spec/patterns/errors.html">Errors
-          </a>
-          <a class="" href="/design/spec/patterns/gestures.html">Gestures
-          </a>
-          <a class="" href="/design/spec/patterns/loading-images.html">Loading images
-          </a>
-          <a class="" href="/design/spec/patterns/navigation-drawer.html">Navigation drawer
-          </a>
-          <a class="" href="/design/spec/patterns/navigational-transitions.html">Navigational transitions
-          </a>
-          <a class="" href="/design/spec/patterns/scrolling-techniques.html">Scrolling techniques
-          </a>
-          <a class="" href="/design/spec/patterns/search.html">Search
-          </a>
-          <a class="" href="/design/spec/patterns/selection.html">Selection
-          </a>
-          <a class="" href="/design/spec/patterns/settings.html">Settings
-          </a>
-          <a class="" href="/design/spec/patterns/swipe-to-refresh.html">Swipe to refresh
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:d">Usability
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/usability/accessibility.html">Accessibility
-          </a>
-          <a class="" href="/design/spec/usability/bidirectionality.html">Bidirectionality
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:e">Resources
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/resources/color-palettes.html">Color palettes
-          </a>
-          <a class="" href="/design/spec/resources/layout-templates.html">Layout templates
-          </a>
-          <a class="" href="/design/spec/resources/roboto-noto-fonts.html">Roboto &amp; Noto fonts
-          </a>
-          <a class="" href="/design/spec/resources/sticker-sheets-icons.html">Sticker sheets &amp; icons
-          </a>
-        </dd></div>
-        <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0" role="tab" aria-expanded="false" data-qp-ui-data-id="qp:f">What's new
-        </dt>
-        <div style="overflow: hidden; display: block;"><dd>
-          <a class="" href="/design/spec/whats-new/whats-new.html">What's new
-          </a>
-        </dd></div>
+
+        <% @categories_and_pages.each do |category, pages| %>
+          <dt class="qp-ui goog-zippy-header goog-zippy-collapsed" data-qp-ui="{ 'SideNavZippy': false }" tabindex="0"
+            role="tab" aria-expanded="false"> <%= category.gsub(/-|_/, ' ').capitalize %>
+          </dt>
+
+          <div style="overflow: hidden; display: block;"><dd>
+            <% pages.each do |page| %>
+              <% #ex from /style-guide/pages/category/authentic-motion.html.erb to authentic-motion %>
+              <% p = page.split('/').pop.split('.').first  %>
+              <%= link_to p.gsub(/-|_/, ' ').capitalize, "/admin/gsr/style-guide/#{category}/#{p}" %>
+            <% end %>
+          </dd></div>
+        <% end %>
+        <% #Navbar code end %>
+
       </dl>
     </nav>
     <div class="legal">
@@ -252,9 +113,12 @@
 
 <div id="grid-cont">
   <section class="grid_outer chapter">
-    <%= content_for?(:content) ? yield(:content) : yield %>
-</section>
-  </div>
+    <%= render_chapter_title %>
+    <%= begin_chapter_content do %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    <% end %>
+  </section>
+</div>
 
 <footer>
   <div class="footer-grid">
@@ -275,8 +139,6 @@
 
   </div>
 </footer>
-<script src="js/picturefill.min.js"></script>
-<script src="js/main.js"></script>
 
 
 

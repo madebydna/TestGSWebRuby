@@ -1,4 +1,6 @@
 class ReviewTopic < ActiveRecord::Base
+  include BehaviorForModelsWithActiveField
+
   self.table_name = 'review_topics'
 
   db_magic :connection => :gs_schooldb
@@ -6,6 +8,9 @@ class ReviewTopic < ActiveRecord::Base
   has_many :review_questions, inverse_of: :review_topic
 
   alias_attribute :school_level_code, :school_level
+
+  # Topic names
+  HONESTY = 'Honesty'
 
   class ReviewTopicsForSchool
     attr_reader :review_topic, :school
@@ -22,23 +27,21 @@ class ReviewTopic < ActiveRecord::Base
         end
       )
     end
+  end
 
-  #   def display_array
-  #     # questions_matching_school(school).map { |review_question| review_question.display_hash }
-  #     @display_hash ||= questions.map(&:display_hash)
-  #   end
+  def self.find_id_by_name(name)
+    names_to_ids_hash[name]
   end
 
   def self.find_by_school(school)
     # TODO: convert to straight SQL
-    all.select do |review_topic|
+    active.to_a.select do |review_topic|
       # Return true if any items in intersection between school and review topic level code
       school.includes_level_code?(review_topic.level_code_array) && review_topic.school_type.include?(school.type)
     end
   end
 
   def build_questions_display_array(school)
-    # questions_matching_school(school).map { |review_question| review_question.display_hash }
     create_review_topics_for_school(school).questions
   end
 
@@ -56,6 +59,16 @@ class ReviewTopic < ActiveRecord::Base
 
   def first_question
     review_questions.first
+  end
+
+  protected
+
+  def self.names_to_ids_hash
+    Rails.cache.fetch("::ReviewTopic#names_to_ids_hash", expires_in: 5.minutes) do
+      active.each_with_object({}) do |topic, hash|
+        hash[topic.name] = topic.id
+      end.freeze
+    end
   end
 
 end

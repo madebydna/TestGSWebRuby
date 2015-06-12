@@ -1,28 +1,33 @@
 <%
    f
    submitted_review
-   principal = @school_member ? @school_member.principal? : false
+   principal = @school_user ? @school_user.principal? : false
+   reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.five_star_rating_reviews, self)
 %>
 
 <div class="topical-review-question-container left">
-  <%= render 'shared/reviews/lib/question_title', question: question.question.html_safe %>
-  <% unless principal %>
-      <%= render 'shared/reviews/lib/stars_input', f: f,
-                                                   question: question,
-                                                   submitted_answer: submitted_review.try(:answer)
+  <%= render 'shared/reviews/lib/question_title', question: question %>
+  <% if principal %>
+      <%= render 'shared/reviews/modules/output/answer_summary',
+                 reviews_for_topic: reviews_for_topic
+      %>
+  <% else %>
+      <%= render 'shared/reviews/lib/stars_input',
+                 f: f,
+                 question: question,
+                 submitted_answer: submitted_review.try(:answer)
       %>
   <% end %>
 </div>
 <div class="topical-review-question-container right">
   <% options = {
-          placeholder: principal ? '' : 'Please share why you feel this way.',
           comment_required: true,
-          principal: principal,
-          submit_text: principal ? 'Submit Statement' : 'Submit'
+          principal: principal
   } %>
-  <%= render 'shared/reviews/modules/input/review_comment', f: f,
-                                                            options: options,
-                                                            question: question,
-                                                            submitted_review: submitted_review
+  <%= render 'shared/reviews/modules/input/review_comment',
+             f: f,
+             options: options,
+             question: question,
+             submitted_review: submitted_review
   %>
 </div>

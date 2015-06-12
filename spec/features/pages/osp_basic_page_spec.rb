@@ -21,7 +21,6 @@ describe 'OSP Basic Page' do
     describe_mobile_and_desktop do
 
       include_example 'should have nav bar with school name'
-      include_example 'should have a submit button'
       include_example 'should have basic school information'
       include_example 'should have school address'
       include_example 'should have need help link'
@@ -37,6 +36,7 @@ describe 'OSP Basic Page' do
         end
       end
 
+      include_example 'should have a save edits button', 2
       include_example 'should have go to school profile button'
       include_example 'should have post a message button'
     end
@@ -48,6 +48,8 @@ describe 'OSP Basic Page' do
         end
       end
 
+      include_example 'should have a save edits button', 1
+      include_example 'should have save edits link'
       include_example 'should have go to school profile link'
       include_example 'should have post a message link'
     end
@@ -138,6 +140,7 @@ describe 'OSP Basic Page' do
             include_example 'should not be disabled'
           end
 
+
           with_shared_context 'selecting the following option in select box with name', '2015', :award_year do
             with_shared_context 'submit the osp form' do
               with_shared_context 'within select box', :award_year do
@@ -153,6 +156,32 @@ describe 'OSP Basic Page' do
 
        with_shared_context 'find input field with name', :date_picker do
          include_example 'should display calendar picker'
+       end
+
+        with_shared_context 'enter following text into text field with name', '$1000', :tuition_low do
+          with_shared_context 'submit the osp form' do
+            with_shared_context 'within input field', :tuition_low do
+              include_example 'should eql the expected value', '$1000'
+            end
+          end
+
+          #conditional select box that should only be active if there is a value in text field
+          with_shared_context 'within select box', :tuition_year do
+            include_example 'should not be disabled'
+          end
+
+
+          with_shared_context 'selecting the following option in select box with name', '2014-2015', :tuition_year do
+            with_shared_context 'submit the osp form' do
+              with_shared_context 'within select box', :tuition_year do
+                include_example 'should eql the expected value', '2014-2015'
+              end
+            end
+          end
+        end
+
+        with_shared_context 'within select box', :tuition_year do
+          include_example 'should be disabled'
         end
       end
     end
@@ -197,6 +226,22 @@ describe 'OSP Basic Page' do
       with_shared_context 'enter following text into text field with name', 'uuddlrlrbas', :school_fax, js: true do
         with_shared_context 'within textarea field', :school_fax do
           include_example 'should not submit value in text field'
+        end
+      end
+    end
+  end
+
+  with_shared_context 'with a basic set of osp questions in db' do
+    with_shared_context 'with oddly formatted data in school cache for school', 'CA', 1 do
+      with_shared_context 'visit OSP page', js: true do
+        with_shared_context 'within button(s) with the text(s)', 'Before Care' do
+          include_example 'should contain the active class'
+        end
+        with_shared_context 'within button(s) with the text(s)', 'Unicycle!!!' do
+          include_example 'should be disabled'
+        end
+        with_shared_context 'within button(s) with the text(s)', 'No dress code' do
+          include_example 'should contain the active class'
         end
       end
     end

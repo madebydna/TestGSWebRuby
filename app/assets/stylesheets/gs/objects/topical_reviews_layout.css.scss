@@ -19,3 +19,8 @@
   }
 }
 
+// This hides parsley added ul to hold errors that disrupts design
+// in the radio_buttons_input partial
+.js-topicalHiddenField > div > ul {
+  display: none
+}

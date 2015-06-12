@@ -40,6 +40,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
+  get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
+
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
   post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
   delete  '/gsr/ajax/esp/delete_image', to: 'osp#delete_image' , as: :osp_delete_image
@@ -118,8 +120,8 @@ LocalizedProfiles::Application.routes.draw do
       mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
-    get '/style-guide/*page', to: 'style_guide#index'
     get '/style-guide/', to: 'style_guide#index'
+    get '/style-guide/:category/:page', to: 'style_guide#render_page'
     get '/pyoc', to: 'pyoc#print_pdf'
     get '/choose-pyoc', to: 'pyoc#choose'
 
@@ -242,7 +244,7 @@ LocalizedProfiles::Application.routes.draw do
       # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
       resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
       resources :reviews, only: [:create], controller: 'school_profile_reviews'
-      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_member association
+      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
       resource :user, only: [:create], controller: 'school_user', action: 'create'
       get '', to: 'school_profile_overview#overview'
     end

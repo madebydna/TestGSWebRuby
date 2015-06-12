@@ -11,7 +11,7 @@
 <% display_options            = display_question.display_options %>
 <% input_value                = display_options['input_value'] || 'none' %>
 <% q_id                       = display_question.osp_question_id %>
-<% preexisting_esp_values %>
+<% preexisting_esp_values.map!(&:downcase) %>
 <% response_key  %>
 
 <div class="row js-disableTriggerAndTargetParent mbl pbl">
@@ -21,7 +21,7 @@
         <%= display_question_label %>
       </span>
       <div class="mtm">
-        <% is_none_active = preexisting_esp_values.include?(input_value) || preexisting_esp_values.include?('None') ? true : false  %>
+        <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
         <%= render partial: 'shared/form_elements/checkbox_square', locals: {
                 key: "#{q_id}-#{response_key}[]",
                 value: input_value,

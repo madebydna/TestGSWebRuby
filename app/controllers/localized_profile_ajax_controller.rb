@@ -6,7 +6,7 @@ class LocalizedProfileAjaxController < ApplicationController
   layout false
 
   def reviews_pagination
-    @school_member = school_member if logged_in?
+    @school_user = school_user if logged_in?
     @topic_scoped = topic_scoped?
     @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(
                                                         SchoolReviews.new {filtered_reviews}, view_context)
@@ -15,9 +15,9 @@ class LocalizedProfileAjaxController < ApplicationController
 
   protected
 
-  def school_member
-    member = SchoolMember.find_by_school_and_user(@school, current_user)
-    member ||= SchoolMember.build_unknown_school_member(@school, current_user)
+  def school_user
+    member = SchoolUser.find_by_school_and_user(@school, current_user)
+    member ||= SchoolUser.build_unknown_school_user(@school, current_user)
     member
   end
 

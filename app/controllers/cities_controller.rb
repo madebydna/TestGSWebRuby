@@ -33,6 +33,7 @@ class CitiesController < ApplicationController
       @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
       @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
       ad_setTargeting_through_gon
+      data_layer_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
       gon.state_abbr = @state[:short]
 
@@ -61,6 +62,7 @@ class CitiesController < ApplicationController
     @show_ads = @show_ads && PropertyConfig.advertising_enabled?
     gon.show_ads = show_ads?
     ad_setTargeting_through_gon
+    data_layer_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     set_city_home_metadata
 
@@ -275,13 +277,29 @@ class CitiesController < ApplicationController
       partners
     end
 
+  def page_view_metadata
+    @page_view_metadata ||= (
+    page_view_metadata = {}
+    page_view_metadata['page_name']   = 'GS:City:Home'
+    page_view_metadata['template']    = 'ros' # use this for page name - configured_page_name
+    page_view_metadata['City']        = @city.gs_capitalize_words
+    page_view_metadata['State']       = @state[:short].upcase # abbreviation
+
+    page_view_metadata
+
+    )
+  end
 
   def ad_setTargeting_through_gon
     @ad_definition = Advertising.new
     if show_ads?
-      ad_targeting_gon_hash['City'] = @city.gs_capitalize_words
-      ad_targeting_gon_hash['State'] = @state[:short].upcase # abbreviation
-      ad_targeting_gon_hash['template'] = "ros" # use this for page name - configured_page_name
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
     end
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 end

@@ -1,0 +1,18 @@
+<% unless @sections.empty? %>
+  <nav class="chapter-toc">
+    <h1>Contents</h1>
+    <ul>
+      <% @sections.each do |section| %>
+        <li>
+          <a class="gweb-smoothscroll-control qp-ui"
+             data-qp-ui="{ 'SmoothScroll': {} }"
+             href="#<%= slugify(section) %>"
+             data-qp-ui-data-id="qp:g"
+             >
+             <%= section %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

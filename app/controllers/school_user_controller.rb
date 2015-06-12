@@ -13,9 +13,8 @@ class SchoolUserController < SchoolProfileController
         status = :unprocessable_entity
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
-      if school_user.principal? || school_user.student?
-        school_user.deactivate_reviews!
-      end
+      school_user.handle_saved_reviews_for_students_and_principals
+      current_user.send_thank_you_email_for_school(@school)
     rescue Exception => e
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
       status = :unprocessable_entity
@@ -34,16 +33,16 @@ class SchoolUserController < SchoolProfileController
       raise Exception.new('Current school is unknown')
     end
 
-    school_member = SchoolMember.find_by_school_and_user(@school, current_user)
-    school_member ||= SchoolMember.build_unknown_school_member(@school, current_user)
-    school_member
+    school_user = SchoolUser.find_by_school_and_user(@school, current_user)
+    school_user ||= SchoolUser.build_unknown_school_user(@school, current_user)
+    school_user
   end
 
   private
 
   def school_user_params
     params.
-        require(:school_member).
+        require(:school_user).
         permit(
         :user_type
           )

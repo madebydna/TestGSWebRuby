@@ -1,6 +1,6 @@
 <%= form_for(ReviewFlag.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'parsley-form', role: 'form'}, url: flag_review_path(id: '0')) do |f| %>
     <fieldset>
-      <div class="form-group">
+      <div class="form-group mtm">
         <p class="open-sans_sb">Report this review as inappropriate</p>
         <label class="control-label pull-left pbl" for="textarea">
           Please explain how this review may have violated our <%= link_to('terms of use', terms_of_use_url, target: '_blank') %>

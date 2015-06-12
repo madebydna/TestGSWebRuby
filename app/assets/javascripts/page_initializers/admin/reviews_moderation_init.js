@@ -17,14 +17,14 @@ if(gon.pagename == "Reviews moderation list"){
       var value = $this.prop('checked');
       var name = $this.attr('name');
 
-      new_location = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
+      newLocation = location.href.replace(new RegExp("&?" + name + "=([^&]$|[^&]*)", "i"), "");
 
-      if (_.indexOf(new_location, '?') == -1) {
-        new_location += '?';
+      if (_.indexOf(newLocation, '?') == -1) {
+        newLocation += '?';
       } else {
-        new_location += '&';
+        newLocation += '&';
       }
-      location.href = new_location + name + "=" + value;
+      location.href = newLocation + name + "=" + value;
     });
   });
 }

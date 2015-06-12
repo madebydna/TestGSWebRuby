@@ -29,11 +29,6 @@ module UserReviewConcerns
     Review.find_by_school(*args).unscope(where: :active).where(member_id: self.id).order(created: :desc).includes(:answers)
   end
 
-  # Does not consider active vs inactive reviews
-  def first_unanswered_topic(school)
-    (ReviewTopic.all.to_a - reviews_for_school(school: school).map(&:topic)).first
-  end
-
   def publish_reviews!
     UserReviewPublisher.new(self).publish_reviews_for_new_user!
   end

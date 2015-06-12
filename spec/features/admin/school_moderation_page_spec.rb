@@ -7,12 +7,19 @@ shared_context 'visit page' do |page_class, *args|
   subject { page_object }
 end
 
-shared_context 'flagged reviews' do
+shared_context 'flagged five star reviews' do
   let!(:user) { FactoryGirl.create(:verified_user) }
   let!(:review) { FactoryGirl.create(:five_star_review, :flagged, user: user, school: school, answer_value: 'Agree') }
-  let!(:school_member) { FactoryGirl.create(:principal_school_member, user: user, school: school) }
+  let!(:school_user) { FactoryGirl.create(:principal_school_user, user: user, school: school) }
   after do
-    clean_dbs :gs_schooldb, :surveys, :community
+    clean_dbs :gs_schooldb
+  end
+end
+
+shared_context 'flagged teacher reviews' do
+  let!(:teacher_review) { FactoryGirl.create(:teacher_effectiveness_review, :flagged, user: user, school: school, answer_value: 'Agree') }
+  after do
+    clean_dbs :gs_schooldb
   end
 end
 
@@ -63,11 +70,28 @@ describe 'School moderate page' do
       end
     end
 
-    with_shared_context 'flagged reviews' do
+    with_shared_context 'flagged five star reviews', js: true do
+      # with_shared_context 'flagged teacher reviews' do
+      #   with_shared_context 'visit page', SchoolModerationPage, state: state_name, school_id: school_id do
+      #     with_subject :review_topics do
+      #       it { is_expected.to include('Overall') }
+      #       it { is_expected.to include('Teachers') }
+      #     end
+      #
+      #     when_I :filter_by_overall_topic do
+      #       with_subject :review_topics do
+      #         it { is_expected.to include('Overall') }
+      #         it { is_expected.to_not include('Teachers') }
+      #       end
+      #     end
+      #   end
+      # end
+
       with_shared_context 'visit page', SchoolModerationPage, state: state_name, school_id: school_id do
         when_I 'search for school', state, school_id do
           it { is_expected.to have_content school.name }
           it { is_expected.to have_reviews }
+          # it { is_expected.to have_reviews_topic_filter_button }
 
           with_subject :the_first_review do
             it { is_expected.to have_comment }

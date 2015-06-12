@@ -27,4 +27,6 @@
           <%= banned_ip.submit "Block this IP", :name => 'disable_ip'%>
       <% end %>
   <% end %>
+
+  <%= paginate @user_flags, param_name: :page if @user_flags %>
 </div>

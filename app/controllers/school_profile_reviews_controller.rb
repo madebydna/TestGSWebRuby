@@ -12,9 +12,17 @@ class SchoolProfileReviewsController < SchoolProfileController
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
     set_omniture_data(gon.omniture_pagename)
     @canonical_url = school_url(@school)
-
     @reviews_page_size = 10
-    @show_facebook_comments = PropertyConfig.show_facebook_comments?(@state[:short])
+    @first_topic_id_to_show = first_topic_id_to_show
+  end
+
+  # Must be called after the init_page before_action, since that sets the @school_user instance variable
+  def first_topic_id_to_show
+    if @school_user
+      @school_user.first_unanswered_topic.try(:id)
+    else
+      ReviewTopic.find_id_by_name(ReviewTopic::HONESTY)
+    end
   end
 
   def create

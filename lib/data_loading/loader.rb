@@ -21,7 +21,7 @@ class Loader
   end
 
   def self.school_data_type?(data_type)
-    OspData::SCHOOL_KEY_TO_ESP_KEY.values.include?(data_type)
+    OspData::ESP_KEY_TO_SCHOOL_KEY.values.include?(data_type)
   end
 
   def self.determine_loading_class(source ,data_type)

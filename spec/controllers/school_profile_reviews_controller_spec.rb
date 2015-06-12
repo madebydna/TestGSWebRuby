@@ -81,7 +81,7 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a parent' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:parent_school_member, school: school, user: user) }
+      let!(:school_user) { FactoryGirl.create(:parent_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
       end
@@ -93,10 +93,10 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as an osp approved principal' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
+      let!(:school_user) { FactoryGirl.create(:principal_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
-        allow_any_instance_of(SchoolMember).to receive(:approved_osp_user?).and_return(true)
+        allow_any_instance_of(SchoolUser).to receive(:approved_osp_user?).and_return(true)
       end
       after do
         clean_models School
@@ -106,10 +106,10 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a non-approved principal' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:principal_school_member, school: school, user: user) }
+      let!(:school_user) { FactoryGirl.create(:principal_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
-        allow_any_instance_of(SchoolMember).to receive(:approved_osp_user?).and_return(false)
+        allow_any_instance_of(SchoolUser).to receive(:approved_osp_user?).and_return(false)
       end
       after do
         clean_models School
@@ -119,7 +119,7 @@ describe SchoolProfileReviewsController do
 
     shared_context 'when logged in as a student' do
       let!(:user) { FactoryGirl.create(:verified_user) }
-      let!(:school_member) { FactoryGirl.create(:student_school_member, school: school, user: user) }
+      let!(:school_user) { FactoryGirl.create(:student_school_user, school: school, user: user) }
       before do
         controller.instance_variable_set(:@current_user, user)
       end
@@ -203,4 +203,25 @@ describe SchoolProfileReviewsController do
     end
   end
 
+  describe '#first_topic_id_to_show' do
+    context 'when @school_user is set' do
+      let(:school) { FactoryGirl.build(:alameda_high_school) }
+      let(:user) { FactoryGirl.build(:verified_user) }
+      let(:school_user) { FactoryGirl.build(:parent_school_user, school: school, user: user) }
+      let(:honesty_topic) { FactoryGirl.build(:honesty_topic) }
+      before do
+        controller.instance_variable_set(:@school_user, school_user)
+        allow(school_user).to receive(:first_unanswered_topic).and_return(honesty_topic)
+      end
+      it 'should return id for user\'s first unanswered topic' do
+        expect(controller.first_topic_id_to_show).to eq(honesty_topic.id)
+      end
+    end
+    context 'when @school_user is not set' do
+      it 'should return id for Honesty topic' do
+        expect(ReviewTopic).to receive(:find_id_by_name).with(ReviewTopic::HONESTY).and_return(2)
+        controller.first_topic_id_to_show
+      end
+    end
+  end
 end

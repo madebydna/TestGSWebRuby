@@ -209,8 +209,8 @@ GS.topicalReview.memberForm = (function () {
 //        Ajax submission for role question
     var init = function () {
 
-        $('.new_school_member').on('ajax:success', function (event, xhr, status, error) {
-            var userType =  $('#new_school_member input:checked').val()
+        $('.new_school_user').on('ajax:success', function (event, xhr, status, error) {
+            var userType =  $('#new_school_user input:checked').val()
             if (userType == 'principal') {
                 window.location.reload();
             }

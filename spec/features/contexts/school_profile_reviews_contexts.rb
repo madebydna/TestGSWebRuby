@@ -68,7 +68,7 @@ shared_context 'with signing into a verified account without role for school' do
     current_url
   end
   after do
-    clean_models User, SchoolMember
+    clean_models User, SchoolUser
   end
 end
 
@@ -76,8 +76,8 @@ shared_context 'with signing into a verified account with role for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
-    FactoryGirl.create(:parent_school_member, school: school, user: user)
+  let!(:school_user) do
+    FactoryGirl.create(:parent_school_user, school: school, user: user)
   end
   before do
     click_link('Login')
@@ -89,7 +89,7 @@ shared_context 'with signing into a verified account with role for school' do
     current_url
   end
   after do
-    clean_models User, SchoolMember
+    clean_models User, SchoolUser
   end
 end
 
@@ -97,8 +97,8 @@ shared_context 'signed in verified user with role for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
-    FactoryGirl.create(:parent_school_member, school: school, user: user)
+  let!(:school_user) do
+    FactoryGirl.create(:parent_school_user, school: school, user: user)
   end
 
   before do
@@ -106,7 +106,7 @@ shared_context 'signed in verified user with role for school' do
   end
 
   after do
-    clean_models User, SchoolMember
+    clean_models User, SchoolUser
   end
 end
 
@@ -114,8 +114,8 @@ shared_context 'with signed in as principal for school' do
   let(:user) do
     FactoryGirl.create(:verified_user)
   end
-  let!(:school_member) do
-    FactoryGirl.create(:principal_school_member, school: school, user: user)
+  let!(:school_user) do
+    FactoryGirl.create(:principal_school_user, school: school, user: user)
   end
 
   before do
@@ -123,7 +123,7 @@ shared_context 'with signed in as principal for school' do
   end
 
   after do
-    clean_models User, SchoolMember
+    clean_models User, SchoolUser
   end
 end
 
@@ -186,14 +186,14 @@ shared_context 'with two active reviews' do
     ]
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolUser
   end
 end
 
 shared_context 'an overall principal review' do
   let!(:overall_principal_review) do
     review = FactoryGirl.create(:five_star_review, active: true, school: school)
-    FactoryGirl.create(:principal_school_member, school: review.school, user: review.user)
+    FactoryGirl.create(:principal_school_user, school: review.school, user: review.user)
     review
   end
 end
@@ -201,7 +201,7 @@ end
 shared_context 'a topical principal review' do
   let!(:topical_principal_review) do
     review = FactoryGirl.create(:teacher_effectiveness_review, active: true, school: school)
-    FactoryGirl.create(:principal_school_member, school: review.school, user: review.user)
+    FactoryGirl.create(:principal_school_user, school: review.school, user: review.user)
     review
   end
 end
@@ -210,12 +210,12 @@ shared_context 'with seven parent reviews' do
   let!(:seven_parent_reviews) do
     reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
     reviews.each do |review|
-      FactoryGirl.create(:parent_school_member, school: review.school, user: review.user)
+      FactoryGirl.create(:parent_school_user, school: review.school, user: review.user)
     end
     reviews
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolUser
   end
 end
 
@@ -223,12 +223,12 @@ shared_context 'with seven student reviews' do
   let!(:seven_student_reviews) do
     reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school)
     reviews.each do |review|
-      FactoryGirl.create(:student_school_member, school: review.school, user: review.user)
+      FactoryGirl.create(:student_school_user, school: review.school, user: review.user)
     end
     reviews
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolUser
   end
 end
 
@@ -244,13 +244,13 @@ shared_context 'with seven parent overall reviews' do
   let!(:seven_parent_reviews) do
     reviews = FactoryGirl.create_list(:five_star_review, 7, active: true, school: school, question: overall_question)
     reviews.each do |review|
-      FactoryGirl.create(:parent_school_member, school: review.school, user: review.user)
+      FactoryGirl.create(:parent_school_user, school: review.school, user: review.user)
       # FactoryGirl.create(:review_answer_overall, review: review)
     end
     reviews
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolUser
   end
 end
 
@@ -262,13 +262,13 @@ shared_context 'with seven student teacher effectiveness reviews' do
   let!(:seven_student_reviews) do
     reviews = FactoryGirl.create_list(:teacher_effectiveness_review, 7, active: true, school: school, question: teacher_question )
     reviews.each do |review|
-      FactoryGirl.create(:student_school_member, school: review.school, user: review.user)
+      FactoryGirl.create(:student_school_user, school: review.school, user: review.user)
       # FactoryGirl.create(:review_answer_teacher, review: review)
     end
     reviews
   end
   after do
-    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolMember
+    clean_models Review, ReviewQuestion, ReviewTopic, ReviewAnswer, SchoolUser
   end
 end
 

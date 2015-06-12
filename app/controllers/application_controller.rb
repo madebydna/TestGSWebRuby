@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include OmnitureConcerns
   include HubConcerns
   include AdvertisingHelper
+  include DataLayerHelper
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -285,7 +286,7 @@ class ApplicationController < ActionController::Base
     gon.omniture_hier1 = page_hier
     gon.omniture_sprops['localPageName'] = gon.omniture_pagename if @hub.present?
     gon.omniture_sprops['locale'] = locale
-    gon.omniture_channel = @state[:short].try(:upcase)
+    gon.omniture_channel = @state[:short].try(:upcase) if @state.present?
   end
 
   def create_sized_maps(gon)

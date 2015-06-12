@@ -11,61 +11,59 @@
   <% end %>
 <% end %>
 <hr />
-<div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
-  <% if include_rich_snippets %>
-    <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
-    <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted %>"></time>
-    <span itemprop="rating" class="dn"><%= review.star_rating %></span>
-  <% end %>
-
-  <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 }, class: 'pbm' do %>
-    <div class="open-sans_i rs-review-value">
-      <%= review.topic_markup %>
-      <span class="open-sans_cb">
-        <%= review.answer_markup %>
-      </span>
+<% if (review.school_user && review.school_user.principal?) %>
+    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
+      <div class="rs-review-value mbs">
+        <span class="open-sans_i"><%= review.topic_markup || 'Message to families' %></span>
+      </div>
+      <div class="open-sans_cb mbs">SCHOOL LEADER</div>
+      <div class="open-sans"> <%= review.comment %></div>
+      <div class="clearfix">
+        <div class="rs-review-posted mts fr">Posted <%= review.posted %></div>
+      </div>
+      <%= render 'shared/report_and_helpful_review_buttons', review: review %>
+      <div style="display:none;">
+        <%= div_tag sizes: {xs: 12, sm: 12, md: 12, lg: 12}, class: "js-report-review-container-#{review.id}" %>
+      </div>
     </div>
-    <br /><span class="rs-review-posted">Posted <%= review.posted %></span><br />
-    - a <span class="cuc_posted-by"><%= review.user_type %></span>
-  <% end %>
-
-  <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 } do %>
-    <% if review.comment.present? %>
+<% else %>
+    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
       <% if include_rich_snippets %>
-        <span itemprop="description">
-          <%= review.comment %>
-        </span>
-      <% else %>
-        <%= review.comment %>
+          <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
+          <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted %>"></time>
+          <span itemprop="rating" class="dn"><%= review.star_rating %></span>
       <% end %>
-    <% else %>
-      <div class="well mbn">This review submitted without content.</div>
-    <% end %>
-    <div class="clearfix pts">
-      <% if review.comment.present? %>
-        <div class="pull-left ptm">
-          <%= render 'shared/reviews/review_voting', review: review unless @school_member && @school_member.active_reviews.include?(review) %>
-        </div>
-        <% if logged_in? && current_user.flagged_review?(review) %>
-          <div class="pull-right small ptm">You've reported this review</div>
+
+      <%= div_tag sizes: {xs: 12, sm: 4, md: 3, lg: 3}, class: 'pbm' do %>
+          <div class="open-sans_i rs-review-value">
+            <%= review.topic_markup %>
+            <span class="open-sans_cb">
+                <%= review.answer_markup %>
+            </span>
+          </div>
+          <br/><span class="rs-review-posted">Posted <%= review.posted %></span><br/>
+          - a <span class="cuc_posted-by"><%= review.user_type %></span>
+      <% end %>
+
+      <%= div_tag sizes: {xs: 12, sm: 8, md: 9, lg: 9} do %>
+        <% if review.comment.present? %>
+          <% if include_rich_snippets %>
+            <span itemprop="description"><%= review.comment %></span>
+          <% else %>
+            <%= review.comment %>
+          <% end %>
         <% else %>
-          <div class="pull-right small ptm rs-report-review-link js-report-review-link-<%= review.id %>">
-            <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report this review</a>
-          </div>
-          <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
-            <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close form</a>
-          </div>
+          <div class="well mbn">This review submitted without content.</div>
         <% end %>
+        <%= render 'shared/report_and_helpful_review_buttons', review: review %>
       <% end %>
+
+      <div style="display:none;">
+        <%= div_tag sizes: {xs: 12, sm: 4, md: 3, lg: 3} %>
+        <%= div_tag sizes: {xs: 12, sm: 8, md: 9, lg: 9}, class: "js-report-review-container-#{review.id}" %>
+      </div>
     </div>
-  <% end %>
-
-  <div style="display:none;">
-    <%= div_tag sizes: { xs: 12, sm: 4, md: 3, lg: 3 } %>
-    <%= div_tag sizes: { xs: 12, sm: 8, md: 9, lg: 9 }, class: "js-report-review-container-#{review.id}" %>
-  </div>
-</div>
-
+<% end %>
 
 
 <% unique_content_for :global_hidden_content do %>

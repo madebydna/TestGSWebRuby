@@ -1,0 +1,35 @@
+.gs-style-guide {
+  .gs_section {
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .gs_section .description{
+    text-align:center;
+    margin: auto;
+    clear: both;
+    margin-bottom: 20px;
+  }
+  .gs_section .description .module{
+    display:inline-block;
+    padding:0 10px;
+  }
+
+  .nav-toggle {
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    margin-bottom: 12px;
+    margin-right: 0px;
+    margin-top: 12px;
+    padding: 9px 10px;
+    position: relative;
+    .icon-bar {
+      border-radius: 1px;
+      color: red;
+      display: block;
+      height: 2px;
+      width: 22px;
+    }
+  }
+}

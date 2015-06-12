@@ -1,3 +1,8 @@
-<div class="bg-yellow open-sans_sb pvl">
-  <%= question %>
+<%
+principal_question = question.try(:principal_question)
+question = question.question
+%>
+
+<div class="bg-yellow open-sans_sb pvl phl">
+  <%= @school_user.try(:principal?) ? principal_question || question : question %>
 </div>

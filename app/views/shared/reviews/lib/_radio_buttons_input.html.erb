@@ -6,6 +6,9 @@
   <% id = Time.now.to_f.to_s.sub('.', '') %>
   <%= f.fields_for(:answers, new_object, child_index: id) do |builder| %>
       <fieldset class="js-topicalHiddenField">
+        <!--Note that if you update the structure of the html in this fieldset, you need to update-->
+        <!--the styling in the topical_reviews_layout scss that hide the automatically parsley ul-->
+        <!--that is added and disrupts the design of the radio buttons-->
         <% question.response_array.each_with_index do |response_value, index| %>
             <% offset = "" %>
             <% offset = "col-sm-offset-1 col-md-offset-1 col-lg-offset-1" if index == 0 %>

@@ -35,7 +35,7 @@ describe 'School Profile Reviews Page', js: true do
               include_example 'should save review that is active'
               include_example 'should show next question'
               include_example 'should show a radio_button question'
-              include_example 'should have call to action text'
+              # include_example 'should have call to action text'
               include_example 'should not show the review comment form'
             end
 
@@ -64,6 +64,10 @@ describe 'School Profile Reviews Page', js: true do
                 include_example 'should save overall review with comment without bad words'
                 include_example 'should save review that is active'
                 include_example 'should show role question'
+                with_shared_context 'select parent role' do
+                  include_example 'should show a radio_button question'
+                  include_example 'should save SchoolUser with parent user type'
+                end
               end
 
               with_shared_context 'with signing into a verified account with role for school' do
@@ -85,7 +89,7 @@ describe 'School Profile Reviews Page', js: true do
                 with_shared_context 'Visit School Profile Reviews' do
                   with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  include_example 'should save SchoolMember with parent user type'
+                  include_example 'should save SchoolUser with parent user type'
                   end
                 end
               end
@@ -103,7 +107,8 @@ describe 'School Profile Reviews Page', js: true do
           end
         end
         with_shared_context 'with signed in as principal for school' do
-        include_example 'should show the overall star question'
+        include_example 'should not show the overall star question'
+        include_example 'should show the overall star principal question'
         include_example 'should not show stars'
         include_example 'should show the review comment section'
         include_example 'should show submit button with principal text'

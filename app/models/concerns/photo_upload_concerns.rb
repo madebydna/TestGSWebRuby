@@ -3,6 +3,8 @@
 module PhotoUploadConcerns 
   extend ActiveSupport::Concern
 
+  require 'rest_client'
+
   MAX_FILE_SIZE                   = 2000000 #2MB
   VALID_FILE_TYPES                = ["image/gif", "image/jpeg", "image/png", "application/octet-stream"]
   MAX_NUMBER_OF_IMAGES_FOR_SCHOOL = 10
@@ -10,6 +12,11 @@ module PhotoUploadConcerns
     return false if file.size > MAX_FILE_SIZE
     return false if !VALID_FILE_TYPES.any? { |type| /#{type}/ =~ file.content_type }
     true
+  end
+
+  #Can delete if approved user or if you own the photo
+  def can_delete_image?(school_media)
+    @is_approved_user || school_media.member_id == @esp_membership_id
   end
 
   def create_image!(file)
@@ -35,7 +42,6 @@ module PhotoUploadConcerns
   end
 
   def send_image_to_processor!(school_media, file)
-    require 'rest_client'
 
     RestClient::Request.execute(
       method:          :post,
@@ -44,7 +50,7 @@ module PhotoUploadConcerns
       open_timeout:    7,
       payload: {
         blob1:           file,
-        upload_type:     'school_media',
+        upload_type:     :school_media,
         numblobs:        1,
         user_id:         current_user.id,
         school_media_id: school_media.id

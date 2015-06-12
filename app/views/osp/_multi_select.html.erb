@@ -8,7 +8,7 @@
 <% display_question_label     = display_question.displayed_label %>
 <% display_text_and_value_map = display_question.displayed_answers %>
 <% q_id                       = display_question.osp_question_id %>
-<% preexisting_esp_values %>
+<% preexisting_esp_values.map!(&:downcase) %>
 <% response_key  %>
 
 <div class="row mbl pbl">

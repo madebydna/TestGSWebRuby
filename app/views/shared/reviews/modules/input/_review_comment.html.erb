@@ -1,12 +1,15 @@
 <% f %>
 <%
+   principal = options[:principal]
    parsley_error_id = "topical-parsley-errors-#{question.id}"
+   submit_text = principal ? 'Submit statement' : 'Submit'
+   placeholder_text = principal ? '' : question.placeholder_text
 %>
-<div class="ptl phl js-topicalReviewComment <%= options[:display_none] ? 'dn' : '' %>">
+<div class="ptl phl js-topicalReviewComment <%= principal || question.overall? ? '' : 'dn' %>">
   <% text_area_options =  {class: "form-control mbs",
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
-                             placeholder: options[:placeholder],
+                             placeholder: placeholder_text,
                              'data-parsley-minwords'=>'15',
                              'data-parsley-required'=>"#{options[:comment_required] ? 'true' : 'false'}",
                              'data-parsley-errors-container' => "##{parsley_error_id}",
@@ -30,7 +33,7 @@
       <div class= "js-topicalReviewErrorMessage parsley-type" id="<%= parsley_error_id %>"></div>
     </div>
     <div class="col-xs-2 col-xs-offset-2 js-topicalReviewSubmitContainer">
-      <button type="submit" class="btn btn-primary fr mtl mbl" data-disable-with="Submitting"><%= options[:submit_text] %></button>
+      <button type="submit" class="btn btn-primary fr mtl mbl" data-disable-with="Submitting"><%= submit_text %></button>
     </div>
   </div>
 </div>

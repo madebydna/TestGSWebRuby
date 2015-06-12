@@ -31,7 +31,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
   element :active_topic_1_question_aria, :xpath, "//div[@id='topic1'][@aria-hidden='false']"
   element :active_topic_2_question, :xpath, "//div[@id='topic2'][contains(concat(' ',@class, ' '),'slick-active')]"
   element :active_topic_2_question_aria, :xpath, "//div[@id='topic2'][@aria-hidden='false']"
-  element :role_question, '.js-roleQuestion'
+  section :role_question, '.js-roleQuestion' do
+    element :parent_option, 'input[value="parent"]'
+    element :submit_button, 'button', text: 'Submit'
+  end
 
   section :reviews_list_header, '.rs-review-list-header' do
     element :all_filter_button, 'button', text: 'All'
@@ -89,7 +92,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     end
 
     def school_leader_review?
-      !! text.match(/- a school leader/)
+      !! text.match(/SCHOOL LEADER/)
     end
 
     def overall_review?

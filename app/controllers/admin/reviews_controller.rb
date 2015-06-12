@@ -1,21 +1,29 @@
 class Admin::ReviewsController < ApplicationController
 
+  MODERATION_LIST_PAGE_SIZE = 50
+
+  ReviewFlag::VALID_REASONS.each do |reason|
+    has_scope reason, type: :boolean
+  end
+
   def moderation
     if params[:review_moderation_search_string]
       moderate_by_user
       render 'reviews_for_email'
     end
 
-    if params[:state].present? && params[:school_id].present?
-      @school = School.find_by_state_and_id(params[:state], params[:school_id])
-      @flagged_reviews = flagged_reviews(@school)
-    else
-      @flagged_reviews = flagged_reviews
-    end
+    @flagged_reviews = flagged_reviews
+    @total_number_of_reviews_to_moderate = total_number_of_reviews_to_moderate
+
+    set_pagination_data_on_reviews(@flagged_reviews)
 
     gon.flagged_reviews_count = @flagged_reviews.length
     gon.pagename = 'Reviews moderation list'
     set_meta_tags :title =>  'Reviews moderation list'
+  end
+
+  def school_from_params
+    @school ||= School.find_by_state_and_id(params[:state], params[:school_id])
   end
 
   def schools
@@ -25,7 +33,8 @@ class Admin::ReviewsController < ApplicationController
     set_meta_tags :title =>  'Reviews moderation school search'
 
     if school_id.present? && state.present?
-      redirect_to admin_school_moderate_path(state: States.state_name(state), school_id: school_id)
+      state_param = gs_legacy_url_encode(States.state_name(state))
+      redirect_to admin_school_moderate_path(state: state_param, school_id: school_id)
     end
   end
 
@@ -42,7 +51,8 @@ class Admin::ReviewsController < ApplicationController
       @reviews_by_user = find_reviews_by_user(user)
 
       #reviews that are flagged by the user.
-      @reviews_flagged_by_user = find_reviews_flagged_by_user(user)
+      @reviews_flagged_by_user = find_reviews_flagged_by_user
+      @user_flags = review_flags_for_user
     end
   end
 
@@ -73,6 +83,17 @@ class Admin::ReviewsController < ApplicationController
     end
 
     redirect_back
+  end
+
+  # Since we already know how many pages there must be, set this info directly on the reviews relation,
+  # rather than allow Kaminari to compute it later via a "select count()" query
+  def set_pagination_data_on_reviews(reviews)
+    total_pages = (total_number_of_reviews_to_moderate.to_f / MODERATION_LIST_PAGE_SIZE).ceil
+    reviews.define_singleton_method('total_pages') { total_pages }
+  end
+
+  def total_number_of_reviews_to_moderate
+    flagged_review_ids.size
   end
 
   def activate
@@ -164,13 +185,15 @@ class Admin::ReviewsController < ApplicationController
   protected
 
   def user_from_params
-    search_string = params[:review_moderation_search_string]
+    @user_from_params ||= (
+      search_string = params[:review_moderation_search_string]
 
-    if search_string.present?
-      search_string = search_string.strip
+      if search_string.present?
+        search_string = search_string.strip
 
-      User.find_by_email(search_string) if search_string.match(/[a-zA-z]/)
-    end
+        User.find_by_email(search_string) if search_string.match(/[a-zA-z]/)
+      end
+    )
   end
 
   # def email_user_about_review_removal(review)
@@ -182,32 +205,89 @@ class Admin::ReviewsController < ApplicationController
   # end
 
   def find_reviews_by_user(user)
-    user.reviews
+    user.reviews.includes(:user, :answers, :flags).load.extend(SchoolAssociationPreloading).preload_associated_schools!
   end
 
-  def find_reviews_flagged_by_user(user)
-    user.reviews_user_flagged
+  def review_flags_for_user
+    @review_flags_for_user ||= (
+      user_from_params.review_flags.
+        eager_load(review: [:user, :answers]).
+        page(params[:page]).per(10)
+    )
+  end
+
+  def find_reviews_flagged_by_user
+    @find_reviews_flagged_by_user ||= (
+      review_flags_for_user.
+        map(&:review).
+        extend(SchoolAssociationPreloading).preload_associated_schools!
+    )
   end
 
   def find_reviews_by_ids(review_ids)
     Review.where(id: review_ids)
   end
 
-  def flagged_reviews(school = nil)
-    if school
-      partial_scope = school.reviews_scope.ever_flagged
-    else
-      partial_scope = Review.flagged
-    end
+  def filtered_flagged_reviews_scope
+    @filtered_flagged_reviews_scope ||= (
+      if school_from_params
+        partial_scope = school_from_params.reviews_scope.unscope(where: :active).ever_flagged
+      else
+        partial_scope = Review.flagged
+      end
 
-    partial_scope.
-      eager_load(:flags).
-      order('review_flags.created desc').
+      filtered_review_flags_scope = apply_scopes(ReviewFlag)
+
+      # If there are not active filters set for this request, the apply scopes call will return a ReviewFlag class
+      # rather than ActiveRecord::Relation. In prior case, merging into our partial_scope relation will break things
+      # It would be better to find out from the has_scope gem if there are any scopes set, but I looked and didn't see
+      # a way
+      if filtered_review_flags_scope.is_a?(ActiveRecord::Relation)
+        partial_scope = partial_scope.merge(filtered_review_flags_scope)
+      end
+
+      partial_scope
+    )
+  end
+
+  # Using default Kaminari methods causes extra complicated queries to be created, since it runs "count" queries
+  # using the same joins / conditions present in our other queries that get actual results
+  # Instead we'll compute it ourselves
+  def total_number_of_items
+    flagged_review_ids.size
+  end
+
+  def flagged_review_ids
+    @flagged_review_ids ||= (
+      # Because we only want to show the most recent inactive review for a given school/user/question combo,
+      # We need to call .group and pass that list of fields, and also select the max ID for each group, assuming
+      # IDs with higher values were inserted more recently
+      #
+      # The side effect is getting the actual Review objects requires a separate query. There might be a crafty way to
+      # do it in one query but I was unsuccessful.
+      #
+      # Note there is currently no index on review_question_id - adding one could speed up the 'group by'
+      filtered_flagged_reviews_scope.
+        group('reviews.member_id, reviews.review_question_id, reviews.school_id, reviews.state').
         eager_load(:user).
         merge(User.verified).
-          page(params[:page]).per(50).
-            extend(SchoolAssociationPreloading).
-              preload_associated_schools!
+        pluck('max(reviews.id)')
+    )
+  end
+
+  def flagged_reviews
+    # load needs to be called at the end of this chain, otherwise ActiveRecord will perform two extra queries
+    # when extending the results and preloading the associated schools
+    @flagged_reviews ||= (
+      results = filtered_flagged_reviews_scope.
+        where(id: flagged_review_ids).
+        order('review_flags.created desc').
+          includes(:user, :answers).
+          page(params[:page]).per(MODERATION_LIST_PAGE_SIZE).
+          load
+
+      results.extend(SchoolAssociationPreloading).preload_associated_schools!
+    )
   end
 
   def review_params

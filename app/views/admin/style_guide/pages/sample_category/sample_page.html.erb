@@ -1,0 +1,86 @@
+<%
+  # Welcome!
+  # This is a sample page to help you get started with the Style Guide.
+  # To start, please copy and paste this file to something with a new name.
+  # Please never edit this file (sample_page.html.erb).
+  #
+  # Great, so now you should be editing a file called something other than sample_page.html.erb.
+  # Comments like this one will help you edit this file correctly.
+  #
+  # This file describes a Page.
+  # A Page is comprised of Sections.
+  # Sections are comprised of a Title, a Description, and Content.
+  #
+  # Sections, Descriptions, and Content are set up with Ruby code.
+  # Ruby code is surrounded by tags like <%.
+  # The only Ruby code necessary to edit is the Title of each Section.
+  # There are comments below to help with that.
+  # Other than that, there are HTML comments to guide where to edit.
+  # HTML comments look like <!-- Put your description here -->.
+  #
+  # Enjoy! And ask questions if you have them.
+%>
+
+
+<%
+  # ::BEGIN:: code for one section.
+  # Please only edit where there is HTML or HTML comments.
+  # HTML comments look like this: <!-- Put your description here -->.
+%>
+<%= begin_section_with_title('CHANGE THIS TO THE SECTION TITLE') do %>
+  <%= begin_section_description do %>
+    <!--
+      Put this Section's Description here.
+      You can use any HTML to write it, but it looks nice with <p> tags.
+    -->
+    <p>Here is an example description.</p>
+    <p>It has paragraphs! Wow, much context.</p>
+    <p>For this one I'll show you the headers.</p>
+
+  <% end # of description %>
+  <%= begin_section_content do %>
+    <!--
+      Put this Section's Content here.
+      You can use any HTML to write it.
+    -->
+    <h1>Header 1</h1>
+    <h2>Header 2</h2>
+    <h3>Header 3</h3>
+    <h4>Header 4</h4>
+    <h5>Header 5</h5>
+    <h6>Header 6</h6>
+
+  <% end # of content. %>
+<% end # of section. %>
+
+
+<%
+  # To create another section, just copy and paste one and edit its Title, Description and Content.
+  # Example below:
+%>
+
+
+<%
+  # ::BEGIN:: code for one section.
+  # Please only edit where there is HTML or HTML comments.
+  # HTML comments look like this: <!-- Put your description here -->.
+%>
+<%= begin_section_with_title('Another Section') do %>
+  <%= begin_section_description do %>
+    <!--
+      Put this Section's Description here.
+      You can use any HTML to write it, but it looks nice with <p> tags.
+    -->
+    <p>Here is an example description.</p>
+    <p>Looks just like the one above, right?</p>
+
+  <% end # of description %>
+  <%= begin_section_content do %>
+    <!--
+      Put this Section's Content here.
+      You can use any HTML to write it.
+    -->
+    <div class="btn btn-primary">This is our primary button</div>
+
+  <% end # of content. %>
+<% end # of section. %>

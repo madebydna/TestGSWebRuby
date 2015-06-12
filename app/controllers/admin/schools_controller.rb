@@ -23,13 +23,19 @@ class Admin::SchoolsController < ApplicationController
       review.notes.build
     end
     set_meta_tags :title => title
+    gon.pagename = 'admin_school_moderate'
   end
 
   def school_reviews(school)
-    Review.
+    relation = Review.
       where(school_id: school.id, state: school.state).
-      includes(:answers, question: :review_topic).
+      eager_load(:answers, question: :review_topic).
       order(created: :desc)
+
+    if params[:topic]
+      relation = relation.merge(ReviewTopic.where(id: ReviewTopic.find_id_by_name(params[:topic])))
+    end
+    relation
   end
 
 end

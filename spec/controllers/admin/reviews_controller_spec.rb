@@ -81,11 +81,6 @@ describe Admin::ReviewsController do
       allow(controller).to receive(:find_reviews_flagged_by_user).and_return flagged_reviews
     end
 
-    it 'should not look for a school if not provided a state and school ID' do
-      expect(School).to_not receive(:find_by_state_and_id)
-      get :moderation
-    end
-
     context 'provided a state and school ID' do
       before do
         expect(School).to receive(:find_by_state_and_id).with('ca', '1').and_return(school)
@@ -127,30 +122,80 @@ describe Admin::ReviewsController do
   end
 
   describe '#flagged reviews' do
-    let(:school) { FactoryGirl.build(:school) }
-    let(:reviews) { FactoryGirl.build_list(:review, 3) }
-
-    it 'should return any previously flagged review for school if school is set' do
-      pending('PT-1213: TODO: Fix rspec or code')
-      controller.instance_variable_set(:@school, school)
-      reviews = double('reviews')
-      expect(reviews).to receive(:order).and_return reviews
-      expect(reviews).to receive(:page).and_return reviews
-      expect(reviews).to receive(:per).and_return reviews
-      allow(school).to receive(:reviews).and_return reviews
-      expect(controller.send :flagged_reviews).to eq(reviews)
+    let!(:school) { FactoryGirl.create(:alameda_high_school) }
+    let!(:user) { FactoryGirl.create(:verified_user) }
+    let!(:non_verified_user) { FactoryGirl.create(:new_user, email_verified: false) }
+    before do
+      controller.instance_variable_set(:@current_user, user)
+      allow(controller).to receive(:school_from_params) { school }
+    end
+    after do
+      clean_dbs :gs_schooldb
+      clean_models :ca, School
+    end
+    subject do
+      controller.send(:flagged_reviews)
     end
 
-    it 'should return flagged reviews if no school is set' do
-      pending('PT-1213: TODO: Fix rspec or code')
-      reviews = double('reviews')
-      expect(reviews).to receive(:order).and_return reviews
-      expect(reviews).to receive(:page).and_return reviews
-      expect(reviews).to receive(:per).and_return reviews
-      expect(reviews).to receive(:flagged).and_return reviews
+    context 'with flagged reviews for a non-verified user' do
+      let!(:flagged_review_for_non_verified_user) do
+        FactoryGirl.create(:review, :flagged, school: school, user: non_verified_user)
+      end
 
-      expect(Review).to receive(:where).with(status: %w[p d r a]).and_return reviews
-      expect(controller.send :flagged_reviews).to eq(reviews)
+      context 'with a non-flagged inactive review for the same school/user/question' do
+        let!(:non_flagged_review) { FactoryGirl.create(:review, school: school, user: user) }
+
+        context 'with multiple flagged inactive reviews for the same school/user/question' do
+          let!(:reviews) do
+            FactoryGirl.create_list(:review, 3, :flagged, school: school, user: user)
+          end
+          before do
+            reviews.each do |review|
+              review.moderated = true
+              review.deactivate
+              review.question = ReviewQuestion.first
+              review.save
+            end
+          end
+
+          it 'should only return one review for the given school/user/question group' do
+            expect(subject.size).to eq(1)
+            groups = subject.group_by { |review| "#{review.member_id} #{review.state} #{review.school_id} #{review.review_question_id} "}
+            groups.values.each do |reviews_per_group|
+              expect(reviews_per_group.size).to eq(1)
+            end
+          end
+
+          it 'should only return flagged reviews' do
+            subject.each do |review|
+              expect(review.flags).to be_present
+            end
+          end
+
+          it 'should return only reviews for verified users' do
+            expect(subject).to_not include(flagged_review_for_non_verified_user)
+          end
+
+          it "should preload schools" do
+            subject
+            fake_class = double.as_null_object
+            stub_const('School', fake_class)
+            expect(fake_class).to_not receive(:on_db)
+            subject.each do |review|
+              review.send(:school)
+            end
+          end
+
+          [:user, :question, :answers].each do |association|
+            it "should preload #{association}s" do
+              subject
+              subject.each do |review|
+                expect(review.association(association)).to be_loaded
+              end
+            end
+          end
+        end
+      end
     end
   end
 
@@ -208,6 +253,20 @@ describe Admin::ReviewsController do
       end
     end
   end
+
+  describe '#set_pagination_data_on_reviews' do
+    before do
+      allow(controller).to receive(:total_number_of_reviews_to_moderate) { 101 }
+      stub_const('Admin::ReviewsController::MODERATION_LIST_PAGE_SIZE', 100)
+    end
+    it 'should define #total_pages on input and it should return 2' do
+      stubbed_reviews = Object.new
+      expect do
+        controller.set_pagination_data_on_reviews(stubbed_reviews)
+      end.to change { stubbed_reviews.try(:total_pages) }.from(nil).to(2)
+    end
+  end
+
 
 
 end

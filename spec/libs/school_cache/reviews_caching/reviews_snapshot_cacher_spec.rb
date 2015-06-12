@@ -9,9 +9,9 @@ describe ReviewsCaching::ReviewsSnapshotCacher do
       FactoryGirl.build(:five_star_review, created: now, answer_value: '5'),
       FactoryGirl.build(:five_star_review, created: now, answer_value: '5')
     ]
-    school_member = SchoolMember.new
-    school_member.user_type = 'parent'
-    reviews.each { |review| review.school_member = school_member }
+    school_user = SchoolUser.new
+    school_user.user_type = 'parent'
+    reviews.each { |review| review.school_user = school_user }
     reviews
   end
 

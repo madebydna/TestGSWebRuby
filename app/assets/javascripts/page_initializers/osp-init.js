@@ -13,6 +13,11 @@ $(function() {
             var pageNumber = $(this).data('page-number');
             $form.find('input[name=redirectPage]').val(pageNumber);
         });
+        GS.forms.elements.setCustomSubmitHandler('.js-submitTrigger', 'ospPage', '.js-ospQuickLinkSubmit', function(e, $form) {
+            e.preventDefault();
+            var pageNumber = $(this).data('page-number');
+            $form.find('input[name=redirectPage]').val(pageNumber);
+        });
 
         GS.gsParsleyValidations.init();
         GS.photoUploads.init();

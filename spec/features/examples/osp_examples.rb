@@ -35,8 +35,8 @@ shared_example 'should have basic school information' do
   subject.find('.rs-school-information', text: school.state)
 end
 
-shared_example 'should have a submit button' do
-  subject.find_button('Submit')
+shared_example 'should have a save edits button' do |count|
+  subject.assert_selector('button.rs-submit', :count => count)
 end
 
 shared_example 'should only contain the following values in the form response' do | *matches |
@@ -80,6 +80,10 @@ shared_example 'should have post a message link' do
 
 shared_example 'should have need help link' do
   subject.find_link('Need help?', exact: true)
+  end
+
+shared_example 'should have save edits link' do
+  subject.find_link('Save edits', exact: true)
 end
 
 shared_example 'should display calendar picker' do

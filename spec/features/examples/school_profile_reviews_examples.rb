@@ -22,7 +22,15 @@ shared_example 'should not show role question' do
 end
 
 shared_example 'should show the overall star question' do
-  expect(subject.visible_review_question.review_form.text).to include('How would you rate your experience at this school?')
+  expect(subject.visible_review_question.review_form.text).to include(FactoryGirl.build(:overall_rating_question).question)
+end
+
+shared_example 'should not show the overall star question' do
+  expect(subject.visible_review_question.review_form.text).to_not include(FactoryGirl.build(:overall_rating_question).question)
+end
+
+shared_example 'should show the overall star principal question' do
+  expect(subject.visible_review_question.review_form.text).to include(FactoryGirl.build(:overall_rating_question).principal_question)
 end
 
 shared_example 'should show stars' do
@@ -75,9 +83,9 @@ shared_example 'should save review with expected value' do |value|
   expect(Review.last.answers.first.value).to eq(value)
 end
 
-shared_example 'should save SchoolMember with parent user type' do
+shared_example 'should save SchoolUser with parent user type' do
   wait_for_page_to_finish
-  expect(SchoolMember.last.user_type).to eq(:parent)
+  expect(SchoolUser.last.user_type).to eq(:parent)
 end
 
 shared_example 'should save overall review with comment without bad words' do

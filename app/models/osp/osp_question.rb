@@ -9,7 +9,7 @@ class OspQuestion < ActiveRecord::Base
   has_many :osp_form_responses
   scope :active, -> { where(active: true) }
 
-  jsonified_attribute :answers, :options,:validations, json_attribute: :default_config, type: :string
+  jsonified_attribute :answers, :options, :validations, :year_display, json_attribute: :default_config, type: :string
 
   def level_code
     super.split(',')
