@@ -2,6 +2,10 @@ class SchoolModerationPage < SitePrism::Page
   set_url_matcher /admin\/gsr\/#{States.any_state_name_regex.source}\/schools\/\d+\/moderate\/?/
   set_url "/admin/gsr/{/state}/schools/{/school_id}/moderate"
 
+  element :reviews_topic_filter_button, '.js_reviewTopicFilterDropDownText'
+  element :all_topics_filter, '.js_reviewTopicFilterDropDownText a', text: 'All topics'
+  element :overall_topic_filter, '.js_reviewTopicFilterDropDownText a', text: 'Overall'
+
   section :school_search_form, '.rs-school-search-form' do
     element :state_dropdown, 'select'
     element :school_id_box, 'input'
@@ -64,6 +68,10 @@ class SchoolModerationPage < SitePrism::Page
     def school_leader_review?
       !! text.match(/Affiliation: school leader/)
     end
+
+    def review_topic_text
+      review_topic.text.sub('Topic: ', '')
+    end
   end
 
   sections :reviews, ReviewSection, '.rs-list-of-reviews div.row'
@@ -103,6 +111,20 @@ class SchoolModerationPage < SitePrism::Page
     form.state_dropdown.select(state)
     form.school_id_box.set(id)
     form.search_button.click
+  end
+
+  def reset_topic_filter
+    reviews_topic_filter_button.click
+    all_topics_filter.click
+  end
+
+  def filter_by_overall_topic
+    reviews_topic_filter_button.click
+    overall_topic_filter.click
+  end
+
+  def review_topics
+    reviews.map(&:review_topic_text)
   end
 
 end

@@ -1,0 +1,23 @@
+<% if !!defined?(reviews) %>
+  <% topics = reviews.map(&:topic).uniq.sort %>
+<% else %>
+  <% topics = ReviewTopic.all.to_a.sort %>
+<% end %>
+
+<div class="dropdown reviews-topic-filter margin-bottom-mobile">
+  <button type="button"
+          class="btn btn-default pointer js_reviewTopicFilterDropDownText js_bootstrapExtDropdownText"
+          data-toggle="dropdown">
+    All topics<b class="caret"></b>
+  </button>
+  <ul class="dropdown-menu mll js_reviewTopicFilterDropDown" data-topic-selected="allTopics">
+    <li>
+      <a class="pointer" data-topic-filter="allTopics">All topics</a>
+    </li>
+    <% topics.each do |topic| %>
+      <li>
+        <a class="pointer" data-topic-filter="<%= topic.name %>"><%= topic.name %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
