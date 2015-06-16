@@ -302,7 +302,6 @@ GEM
       rack (~> 1.3)
     rack-test (0.6.3)
       rack (>= 1.0)
-    rack_after_reply (0.0.3)
     rails (4.1.1)
       actionmailer (= 4.1.1)
       actionpack (= 4.1.1)
@@ -547,7 +546,6 @@ DEPENDENCIES
   pry-debugger
   quiet_assets
   rack-mini-profiler
-  rack_after_reply
   rails (= 4.1.1)
   rails_admin
   rails_admin_nestable!

@@ -42,16 +42,16 @@ class ApplicationController < ActionController::Base
   ApplicationController.send :public, :url_for
 
   def disconnect_connection_pools
-    return unless @school.present? && request.env['rack_after_reply.callbacks']
+    # This used to be done with the rack_after_reply gem.
+    # Because it was out of date, we removed it and switched this to a
+    # regular after_filter. See PT-1616 for more information.
+    return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
-    request.env['rack_after_reply.callbacks'] << lambda do
-      ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool|
-        if pool.connections.present? &&
-          ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" )
-          pool.disconnect!
-        end
+    ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
+      if pool.connections.present? &&
+        ( pool.connections.first.
+         current_database == "_#{@school.state.downcase}" )
+        pool.disconnect!
       end
     end
   end
