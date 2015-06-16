@@ -42,6 +42,7 @@
     padding-bottom: 30px;
   }
 
+
   .info-module{
     background-color: $dark-green;
     text-align: center;
@@ -70,18 +71,27 @@
     }
 
   }
+
+
+  .osp-school-picker-module{
+    background-color: $wallpaper-green;
+    background-image: image-url('signin/wallpaper.png');
+    border-bottom: 10px solid $dirt-green;
+    h1{
+      text-align: center;
+      padding-top: 20px;
+    }
+
+
+
+
+  }
   .bright-yellow-color{
     color :  $bright-yellow;
   }
 
   .search-link {
     color: $lighter-black;
-  }
-
-  .wallpaper-green{
-    background-color: $wallpaper-green;
-    background-image: image-url('signin/wallpaper.png');
-    color: $dirt-green;
   }
 
   .picker-border{
@@ -96,9 +106,6 @@
       background-color: $dirt-green;
     }
 
-  .black-border-bottom{
-    border-bottom: 10px solid $dirt-green;
-  }
 
   .search-bar-osp {
     max-width: 600px;
