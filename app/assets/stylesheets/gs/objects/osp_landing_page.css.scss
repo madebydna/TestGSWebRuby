@@ -70,9 +70,12 @@
     }
 
   }
+  .bright-yellow-color{
+    color :  $bright-yellow;
+  }
 
   .search-link {
-    color: #222;
+    color: $lighter-black;
   }
 
   .wallpaper-green{
@@ -82,19 +85,19 @@
   }
 
   .picker-border{
-    border-top: 10px solid #07251e;
-    border-left: 10px solid #07251e;
-    border-right: 10px solid #07251e;
+    border-top: 10px solid $dirt-green;
+    border-left: 10px solid $dirt-green;
+    border-right: 10px solid $dirt-green;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
 
     .picker-background{
-      background-color: #07251e;
+      background-color: $dirt-green;
     }
 
   .black-border-bottom{
-    border-bottom: 10px solid #07251e;
+    border-bottom: 10px solid $dirt-green;
   }
 
   .search-bar-osp {
