@@ -16,6 +16,9 @@
     }
   }
 }
+@mixin osp_search_link_color($color){
+  color:$color;
+}
 
 .osp-landing-page {
   .school-story {
@@ -90,10 +93,12 @@
     color :  $bright-yellow;
   }
 
-  .search-link {
-    color: $lighter-black;
+  .search-link-white {
+    @include  osp_search_link_color(white)
   }
-
+  .search-link-grey {
+    @include  osp_search_link_color($lighter-black)
+  }
   .picker-border{
     border-top: 10px solid $dirt-green;
     border-left: 10px solid $dirt-green;

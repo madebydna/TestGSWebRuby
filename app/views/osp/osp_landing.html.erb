@@ -10,36 +10,8 @@
   </div>
   <div class="row">
       <div class="col-lg-12">
-
-        <div class="js-autocompleteContainer clearfix">
-          <% #don't see your school      %>
-          <div class="subtitle-sm tac" style="height:35px;">
-            <a class="js-doNotSeeResult dn pointer search-link"
-               data-no-result-text="Don't see your school?"
-               data-return-to-search-text="Return to original search"
-               data-state="<%= params['state'] %>">
-              Don't see your school?
-            </a>
-          </div>
-            <% #autocomplete search bar      %>
-            <div class="search-bar-osp js-autocompleteFieldContainer ma picker-border">
-              <div class="full-width">
-                <input type="text"
-                       class='typeahead search-text full-width pam'
-                       placeholder="Enter school name">
-                <label class="dn js-translate-placeholder">Enter school name</label>
-              </div>
-            </div>
-
-          <% #list of select boxes      %>
-          <div class="js-selectListsContainer dn ma picker-border picker-background" style="max-width: 600px;">
-            <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),
-                           {:prompt => 'Select state', class: 'form-control js-stateSelect notranslate'} %>
-            <select class="form-control js-citySelect dn mtm notranslate"></select>
-            <select class="form-control js-schoolSelect mtm dn notranslate"></select>
-          </div>
-        </div>
-      </div>
+        <%= render partial: 'osp/school_picker', locals: {linkClass: 'search-link-grey'} %>
+       </div>
   </div>
   </div>
   </div>
@@ -115,42 +87,14 @@
     <div class="claim-profile">
       <div class="container">
         <div class="row">
-          <div class="col-xs-12 padding">
+          <div class="col-xs-12">
             <h1>Claim your school’s profile in minutes </h1>
           </div>
         </div>
         <div class="row">
-          <div class="js-autocompleteContainer clearfix">
-            <% #don't see your school     %>
-            <div class="subtitle-sm tac" style="height:35px;">
-              <a class="js-doNotSeeResult dn pointer text_fff"
-                 data-no-result-text="Don't see your school?"
-                 data-return-to-search-text="Return to original search"
-                 data-state="<%= params['state'] %>">
-                Don't see your school?
-              </a>
-            </div>
-
-            <div class="col-xs-12">
-              <% #autocomplete search bar     %>
-              <div class="search-bar-osp js-autocompleteFieldContainer ma phm">
-                <div class="full-width">
-                  <input type="text"
-                         class='typeahead search-text full-width pam'
-                         placeholder="Enter school name">
-                  <label class="dn js-translate-placeholder">Enter school name</label>
-                </div>
-              </div>
-            </div>
-
-            <% #list of select boxes     %>
-            <div class="js-selectListsContainer dn ma phm" style="max-width: 600px;">
-              <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),
-                             {:prompt => 'Select state', class: 'form-control js-stateSelect notranslate'} %>
-              <select class="form-control js-citySelect dn mtm notranslate"></select>
-              <select class="form-control js-schoolSelect mtm dn notranslate"></select>
-            </div>
-          </div>
+          <div class="col-lg-12">
+            <%= render partial: 'osp/school_picker', locals: {linkClass: 'search-link-white'} %>
+        </div>
         </div>
         <div class="row mtl">
           <div class="col-xs-12 col-sm-4 padding">
