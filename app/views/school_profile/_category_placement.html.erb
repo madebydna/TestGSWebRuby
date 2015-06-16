@@ -17,6 +17,7 @@
 
   <% rescue => e %>
     <%= log_view_error "Something went wrong when trying to render category placement #{category_placement.title}", e %>
+    <% GSLogger.error(:school_profile, e, vars: category_placement.category_placement.attributes, message: 'Something went wrong when trying to render category placement') %>
     <% raise e if params[:debug] %>
   <% end %>
 <% end %>
