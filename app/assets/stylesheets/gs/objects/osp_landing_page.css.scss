@@ -20,7 +20,7 @@
   color:$color;
 }
 
-.osp-landing-page {
+.osp-pages {
   .school-story {
     @include osp_landing_page_module($dirt-green,$lighter-green,white,left);
   }
@@ -89,6 +89,27 @@
 
 
   }
+
+  .osp-header-module{
+    background-color:$dirt-green ;
+    h1{
+      color:$pale-yellow;
+      text-align: center;
+
+    }
+    h4{
+      color:$pale-yellow;
+      text-align: center;
+
+    }
+    a{
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+    }
+
+  }
+
   .bright-yellow-color{
     color :  $bright-yellow;
   }
