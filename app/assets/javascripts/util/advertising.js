@@ -56,10 +56,10 @@ if (gon.advertising_enabled) {
   GS.ad.slotRenderedHandler = function(event) {
     if (event.isEmpty) {
       // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
-      jQuery('.js-' + event.slot.getSlotId().getDomId() + '-wrapper').hide();
+      jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper').hide();
     } else {
       // Show the ghost text as an ad is rendered
-      jQuery('.js-' + event.slot.getSlotId().getDomId() + '-wrapper .advertisement-text').removeClass('dn').show();
+      jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper .advertisement-text').removeClass('dn').show();
     }
   };
 
