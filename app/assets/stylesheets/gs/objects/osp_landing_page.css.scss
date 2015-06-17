@@ -110,6 +110,17 @@
 
   }
 
+  .osp-confirmation-body-module{
+    h2{
+      text-align: center;
+    }
+
+    h4{
+      text-align: center;
+    }
+
+  }
+
   .bright-yellow-color{
     color :  $bright-yellow;
   }
@@ -137,14 +148,4 @@
     max-width: 600px;
   }
 
-  .osp-confirmation-body-module{
-    h2{
-      text-align: center;
-    }
-
-    h4{
-      text-align: center;
-    }
-
-  }
 }
