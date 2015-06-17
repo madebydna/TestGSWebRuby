@@ -1,15 +1,6 @@
 <div class="osp-landing-page">
-  <div class="osp-confirmation-body-module">
-    <div class="container">
-      <div class="row">
-        <div class="padding-lg">
-          <h2>Thanks for creating a school account!</h2>
-        </div>
-      </div>
-      <div class="row">
-        <h4>We've sent you a verification email, click the link in the verification email to begin editing your profile</h4>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'osp/osp_confirmation_body',
+             locals: {title_text: 'Thanks for creating a school account!',
+                      body_text:"We've sent you a verification email, click the link in the verification email to begin editing your profile"} %>
 </div>
 
