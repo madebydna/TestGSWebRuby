@@ -1,12 +1,29 @@
+
+<%title_text = title_text%>
+<% body_text = body_text %>
+<% body_middle_text = body_middle_text %>
+<% bottom_text = bottom_text %>
+
 <div class="osp-confirmation-body-module">
   <div class="container">
+    <% if title_text.present? %>
     <div class="row">
-      <div class="padding-lg">
+      <div>
         <h2><%= title_text%></h2>
       </div>
     </div>
+    <% end %>
     <div class="row">
-      <h4><%= body_text %></h4>
+      <h4><%= body_text.html_safe %></h4>
     </div>
+    <% if body_middle_text.present?%>
+        <div class="row padding-lg">
+          <p><%= body_middle_text %></p>
+        </div>
+        <div class="row padding-lg">
+          <p><%= bottom_text.html_safe %></p>
+        </div>
+    <% end %>
   </div>
 </div>
+

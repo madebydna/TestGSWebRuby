@@ -1,6 +1,5 @@
 class OspConfirmationController < ApplicationController
 
-
   def show
 
     page_title = 'Registration Confirmation'

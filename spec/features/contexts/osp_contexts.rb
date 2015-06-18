@@ -67,6 +67,21 @@ shared_context 'visit registration confirmation page' do
   subject { page }
 end
 
+shared_context 'visit registration page with no state or school' do
+  before do
+    visit osp_registration_path
+  end
+  subject { page }
+end
+
+# shared_context 'visit registration page as a DE user' do
+#
+#   before do
+#     visit osp_registration_path
+#   end
+#   subject { page }
+# end
+
 shared_context 'click osp nav link element with text:' do |text|
   before do
     button = osp_page.osp_nav.nav_buttons(text: text).first

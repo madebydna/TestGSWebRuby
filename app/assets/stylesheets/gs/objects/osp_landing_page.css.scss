@@ -113,12 +113,23 @@
   .osp-confirmation-body-module{
     h2{
       text-align: center;
+      padding-top: 30px;
     }
 
     h4{
       text-align: center;
+      padding-top: 30px;
     }
 
+    p{
+      text-align: center;
+    }
+
+  }
+
+  .medium-link {
+    font-family: "opensans-semibold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
   }
 
   .bright-yellow-color{

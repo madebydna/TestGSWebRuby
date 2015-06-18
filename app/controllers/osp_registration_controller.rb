@@ -11,11 +11,16 @@ class OspRegistrationController < ApplicationController
     set_meta_tags title: page_title,
                   description:' Register for a school account to edit your school\'s profile on GreatSchools.',
                   keywords:'School accounts, register, registration, edit profile'
-    if @state.present? && params[:schoolId].present?
-      @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
-    end
 
-    render 'osp/osp_register'
+    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+
+    if !@school.present?
+      render 'osp/osp_no_school_selected'
+    elsif @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
+      render 'osp/osp_registration_de'
+    else @state.present? && params[:schoolId].present?
+      render 'osp/osp_register'
+    end
   end
 
 end
