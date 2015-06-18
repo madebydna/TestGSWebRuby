@@ -57,6 +57,16 @@ shared_context 'visit OSP superuser page' do
   subject { page }
 end
 
+shared_context 'visit registration confirmation page' do
+  # include_context 'signed in approved osp user for school', :ca, 1
+  # include_context 'Basic High School'
+  # let(:osp_page) { OspPage.new }
+  before do
+    visit osp_confirmation_path
+  end
+  subject { page }
+end
+
 shared_context 'click osp nav link element with text:' do |text|
   before do
     button = osp_page.osp_nav.nav_buttons(text: text).first

@@ -89,3 +89,7 @@ end
 shared_example 'should display calendar picker' do
   page.find('.datepicker')
 end
+
+shared_example 'should have element with text' do | element, text|
+  subject.find( element, text: text, exact: true)
+end
