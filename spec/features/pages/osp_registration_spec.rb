@@ -23,8 +23,8 @@ describe 'OSP Registration page' do
       include_example 'should have link', 'select', '/official-school-profile'
     end
   end
-  #
-  # with_shared_context 'visit registration page as a DE user' do
+
+  # with_shared_context 'visit registration page as a public or charter DE osp user' do
   #
   # end
 end

@@ -74,7 +74,7 @@ shared_context 'visit registration page with no state or school' do
   subject { page }
 end
 
-# shared_context 'visit registration page as a DE user' do
+# shared_context 'visit registration page as a public or charter DE osp user' do
 #
 #   before do
 #     visit osp_registration_path
