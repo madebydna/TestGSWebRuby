@@ -8,12 +8,13 @@ class ApplicationController < ActionController::Base
   include OmnitureConcerns
   include HubConcerns
   include AdvertisingHelper
-  include DataLayerHelper
+  include DataLayerConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
+  before_action :add_user_id_to_gtm_data_layer
   before_action :set_optimizely_gon_env_value
   before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
