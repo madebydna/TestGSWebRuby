@@ -19,4 +19,9 @@ module DataLayerConcerns
     end
   end
 
+  def add_collection_id_to_gtm_data_layer
+    if @hub
+      data_layer_gon_hash['Collection ID'] = @hub.collection_id
+    end
+  end
 end

@@ -11,6 +11,7 @@ class SearchController < ApplicationController
   before_action :set_city_state, only: [:suggest_school_by_name, :suggest_city_by_name, :suggest_district_by_name]
   before_action :set_verified_city_state, only: [:city_browse, :district_browse]
   before_action :set_hub, only: [:city_browse, :district_browse]
+  before_action :add_collection_id_to_gtm_data_layer, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
 
   layout 'application'
@@ -174,6 +175,7 @@ class SearchController < ApplicationController
     # sort_by_fit(results[:results], sort) if sorting_by_fit?
     process_results(results, offset) unless results.empty?
     set_hub # must come after @schools is defined in process_results
+    add_collection_id_to_gtm_data_layer
     @show_guided_search = has_guided_search?
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
     @ad_definition = Advertising.new

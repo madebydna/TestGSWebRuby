@@ -15,6 +15,7 @@ class SchoolProfileController < SchoolController
   before_action :data_layer_through_gon, only: [:overview, :quality, :details, :reviews]
   before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
   before_action :set_hub, only: [:overview, :quality, :details, :reviews]
+  before_action :add_collection_id_to_gtm_data_layer, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
   before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
   # after_filter :set_last_modified_date
