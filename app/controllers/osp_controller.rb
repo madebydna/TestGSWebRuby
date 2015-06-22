@@ -219,6 +219,7 @@ class OspController < ApplicationController
     gon.pagename = "Osp"
     gon.state_name = @state[:short]
     gon.omniture_pagename = GON_PAGE_NAME[params[:page]]
+    data_layer_gon_hash.merge!({ 'page_name' => GON_PAGE_NAME[params[:page]] })
     set_omniture_data_for_school(gon.omniture_pagename)
     set_omniture_data_for_user_request
     set_meta_tags title: "Edit School Profile - #{PAGE_TITLE[params[:page]]} | GreatSchools"

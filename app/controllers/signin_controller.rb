@@ -23,6 +23,7 @@ class SigninController < ApplicationController
     gon.pagename = @pagename
 
     gon.omniture_pagename = 'GS:Admin:Login'
+    data_layer_gon_hash.merge!({ 'page_name' => 'GS:Admin:Login' })
     gon.omniture_hier1 = 'Account,LogIn'
     set_omniture_data_for_user_request
   end
@@ -36,6 +37,7 @@ class SigninController < ApplicationController
     gon.pagename = @pagename  # If this is changed, make sure JS is handled, i.e. signin_new-init.js
 
     gon.omniture_pagename = 'GS:Admin:CreateAccount'
+    data_layer_gon_hash.merge!({ 'page_name' => 'GS:Admin:CreateAccount' })
     gon.omniture_hier1 = 'Account,SignUp'
     set_omniture_data_for_user_request
     render :template => 'signin/new'
