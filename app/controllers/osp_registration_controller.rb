@@ -6,7 +6,7 @@ class OspRegistrationController < ApplicationController
 
     page_title = 'School Account - Register | GreatSchools'
     gon.pageTitle = page_title
-    gon.pagename = "OspLanding"
+    gon.pagename = @pagename
     set_omniture_data('GS:OSP:Register', 'Home,OSP,RegisterPage')
     set_meta_tags title: page_title,
                   description:' Register for a school account to edit your school\'s profile on GreatSchools.',

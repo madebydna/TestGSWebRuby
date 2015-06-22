@@ -132,6 +132,10 @@
     color :  $bright-yellow;
   }
 
+  .red-error{
+    color: $state-danger-text;
+  }
+
   .search-link-white {
     @include  osp_search_link_color(white)
   }

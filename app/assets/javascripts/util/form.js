@@ -628,6 +628,32 @@ GS.forms.elements = (function() {
 
     //AUTOCOMPLETE END
 
+    //AJAX EMAIL VALIDATION START
+
+    var ajaxEmailValidation = function(emailField){
+        $.ajax({
+            type: 'GET',
+            url: "/gsr/validations/email_available",
+            data: { email: $('#user_email').val()},
+            async: true
+
+        }).done(function( response ) {
+            if(response == 'true'){
+                $(emailField).addClass('dn');
+            } else {
+                $(emailField).removeClass('dn');
+            }
+        });
+    };
+
+    var initOspAjaxEmailValidation = function(errorMessage, emailField){
+        $(errorMessage).on('change', function(){
+            ajaxEmailValidation(emailField);
+        });
+    };
+
+    //AJAX EMAIL VALIDATION END
+
     var setConditionalQuestionHandler = function(conditionalQuestionContainer) {
         $(conditionalQuestionContainer).on(keyup, disableElementTriggerSelector, function() {
             toggleDisable($(this), conditionalQuestionContainer);
@@ -667,6 +693,7 @@ GS.forms.elements = (function() {
         setEditAutocompleteHandler: setEditAutocompleteHandler,
         initOspPageAutocomplete: initOspPageAutocomplete,
         initOspLandingPageAutocomplete: initOspLandingPageAutocomplete,
+        initOspAjaxEmailValidation: initOspAjaxEmailValidation,
         setConditionalQuestionHandler: setConditionalQuestionHandler,
         disableTargetElementsIfTriggerEmpty: disableTargetElementsIfTriggerEmpty
     }
