@@ -1,7 +1,8 @@
+<% utm_params = { utm_source: 'GS', utm_medium: 'web_module', utm_content: 'homepage', utm_campaign: 'Emotional_Smarts' } %>
 <div class="sel-promo-banner">
   <div class="container">
     <div class="row">
-      <%= link_to(emotional_smarts_url) do %>
+      <%= link_to emotional_smarts_url(utm_params) do %>
         <div class="col-sm-4">
           <div class="hidden-xs sel-banner-heart"></div>
         </div>
