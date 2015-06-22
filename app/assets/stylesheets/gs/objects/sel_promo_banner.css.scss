@@ -1,0 +1,66 @@
+.sel-promo-banner {
+  // Banner background
+  background-color: white;
+  background-image: asset_data_url('home/sel_banner_bg.png');
+  background-repeat: repeat;
+
+  // Heart image
+  .sel-banner-heart {
+    background-image: asset_data_url('home/sel_banner_heart.png');
+    background-size: cover;
+
+    background-position: left;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 5px;
+    width: 55px;
+  }
+  @media (min-width: $screen-sm-min) {
+    .sel-banner-heart {
+      background-position: left;
+      height: 210px;
+      margin-left: 0;
+      margin-top: 30px;
+      width: 230px;
+    }
+  }
+  @media (min-width: $screen-md-min) {
+    .sel-banner-heart {
+      background-position: center;
+      height: 255px;
+      margin-top: 10px;
+      width: 280px;
+    }
+  }
+  @media (min-width: $screen-lg-min) {
+    .sel-banner-heart {
+      background-position: center;
+      height: 270px;
+      margin-top: 0;
+      width: 315px;
+    }
+  }
+
+  // Banner text
+  h2 {
+    color: $gk-brand-primary;
+    font-size: 32px;
+    margin-top: 0;
+  }
+  @media (min-width: $screen-sm-min) {
+    h2 {
+      font-size: 50px;
+    }
+  }
+
+  // Fake GK button
+  button {
+    background-color: #343434;
+    border-color: #131f28;
+    border-bottom-width: 3px;
+    &:hover, &:active {
+      background-color: #495056;
+      border-color: #383838;
+    }
+  }
+}
