@@ -78,7 +78,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
-    get '/gk/category/learning-disabilities/', as: :learning_difficulties
+    get '/gk/emotional-smarts/', as: :emotional_smarts
+    get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
     # TODO: see how to fix this route for ruby
     get '/reviews/', as: :the_scoop
