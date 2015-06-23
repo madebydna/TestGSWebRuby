@@ -13,9 +13,14 @@ module DataLayerConcerns
     @data_layer_gon_hash ||= (gon.data_layer_hash = {})
   end
 
-  def add_user_id_to_gtm_data_layer
+  def add_user_info_to_gtm_data_layer
     if current_user
       data_layer_gon_hash['User ID'] = current_user.id
+      if current_user.provisional_or_approved_osp_user?
+        data_layer_gon_hash['GS User Type'] = 'OSP'
+      else
+        data_layer_gon_hash['GS User Type'] = 'regular'
+      end
     end
   end
 
