@@ -307,7 +307,7 @@ describe SigninController do
     end
 
     def stub_fb_login_success
-      user = double('user', id: 1, auth_token: 'foo')
+      user = double('user', id: 1, auth_token: 'foo', provisional_or_approved_osp_user?: 'foo')
       allow(user).to receive(:provisional?).and_return(false)
       allow(controller).to receive(:current_user) { user }
       allow(controller).to receive(:facebook_login) { [user, nil] }
