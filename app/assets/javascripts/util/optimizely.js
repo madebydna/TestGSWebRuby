@@ -5,3 +5,4 @@ if(window.gon !== undefined){
 }
 window.optimizely = window.optimizely || [];
 window.optimizely.push("activateSiteCatalyst");
+window.optimizely.push("activateUniversalAnalytics");
