@@ -15,8 +15,10 @@ class OspRegistrationController < ApplicationController
                   keywords:'School accounts, register, registration, edit profile'
 
     @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+    @parsley_defaults = "data-parsley-trigger=keyup data-parsley-blockhtmltags data-parsley-validation-threshold=0 "
 
-    if !@school.present?
+
+    if @school.blank?
       render 'osp/osp_no_school_selected'
     elsif @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
       render 'osp/osp_registration_de'
