@@ -77,6 +77,8 @@ class DistrictsController < ApplicationController
     page_view_metadata['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     page_view_metadata['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     page_view_metadata['State']      = @state[:short].upcase # abbreviation
+    page_view_metadata['City']       = @district.city
+    page_view_metadata['county']     = @district.county if @district.county
     page_view_metadata['editorial']  = 'FindaSchoo'
     page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
 
