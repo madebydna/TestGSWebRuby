@@ -2,9 +2,11 @@
   <%= render partial: 'osp/osp_confirmation_body',
              locals: {title_text: 'Thanks for creating a school account!',
                       body_text:"We've sent you a verification email, click the link in the verification email to begin editing your profile."} %>
-  <div class="tac mtm">
-  <%= link_to 'Go to school profile', school_path(@school), target: '_blank' %>
-  </div>
+  <% if @school.present? %>
+      <div class="school-profile-link">
+        <%= link_to "View your school's profile", school_path(@school), target: '_blank' %>
+      </div>
+  <% end %>
 </div>
 
 <%= render 'nav/short_footer' %>

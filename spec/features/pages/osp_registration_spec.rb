@@ -14,7 +14,7 @@ describe 'OSP Registration page' do
     describe_mobile_and_desktop do
       include_example 'should have element with text', 'h2', 'Thanks for creating a school account!'
       include_example 'should have element with text', 'h4', "We've sent you a verification email, click the link in the verification email to begin editing your profile."
-      include_example 'should have link text on page', 'Go to school profile'
+      include_example 'should have link text on page', "View your school's profile"
     end
   end
 
