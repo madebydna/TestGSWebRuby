@@ -413,7 +413,7 @@ class SearchController < ApplicationController
                       end
       page_view_metadata['City']        = targeted_city if targeted_city
       page_view_metadata['State']       = @state[:short].upcase if @state
-      page_view_metadata['County']      = county_object.try(:name) if county_object
+      page_view_metadata['county']      = county_object.try(:name) if county_object
       if params[:grades].present?
         level_code = LevelCode.from_grade(params[:grades])
         page_view_metadata['level'] = level_code if level_code
