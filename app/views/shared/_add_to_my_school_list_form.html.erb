@@ -7,3 +7,11 @@
     <%= f.hidden_field :driver, :value => driver %>
 
   <% end %>
+
+<% # TODO: find way to remove duplicated hidden form %>
+<% # Currently this form is being triggered by the signin and save school modal  %>
+  <%= form_for FavoriteSchool.new, url: favorite_schools_url, remote: true, html: { class: 'js-save-this-school-form-ajax', id: 'new_favorite_school_ajax',  } do |f| %>
+    <%= f.hidden_field :school_id, :value => school.id %>
+    <%= f.hidden_field :state, :value => school.state %>
+    <%= f.hidden_field :driver, :value => driver %>
+  <% end %>

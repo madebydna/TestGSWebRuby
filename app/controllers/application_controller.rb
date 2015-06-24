@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   before_action :track_ab_version_in_omniture
   before_action :check_for_java_hover_cookie
   before_action :write_locale_session
+  before_action :set_signed_in_gon_value
 
   after_filter :disconnect_connection_pools
 
@@ -405,6 +406,14 @@ class ApplicationController < ActionController::Base
 
   def show_ads?
     @show_ads
+  end
+
+  def set_signed_in_gon_value
+    if current_user
+      gon.signed_in = true
+    else
+      gon.signed_in = false
+    end
   end
 
 end

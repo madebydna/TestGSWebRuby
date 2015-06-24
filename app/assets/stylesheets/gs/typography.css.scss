@@ -120,12 +120,20 @@ p, a {
   color: #999
 }
 
+.danger-color {
+  color: $state-danger-text;
+}
+
 .dark-blue-bg {
   background-color: $blue-dark;
 }
 
 .dark-gray-bg {
   background: #3d3d3d;
+}
+
+.darker-gray-bg {
+  background-color: #666666;
 }
 
 .inverted-text {

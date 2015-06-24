@@ -1,0 +1,53 @@
+<% modal_css_class = params[:modal_css_class] %>
+<div class="modal fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+  <div class="gs-modal-dialog modal-dialog" >
+    <%= form_tag authenticate_user_path, method: :post, remote: true,
+                 id: 'signup-school-form',
+                 'data-parsley-namespace'=>"data-parsley-" do %>
+        <%= token_tag form_authenticity_token %>
+        <div class="shim-100 hidden-xs"></div>
+        <div class="bg-white brs">
+          <div class="modal-title">
+            Get email updates on this school.
+            <span><button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button></span>
+          </div>
+          <div class="pal">
+            <div class="js-signup-success alert alert-success dn">Thanks! You're now signed up.</div>
+            <p>
+              Sign up to receive email updates about test scores, reviews or profile updates
+              for this school. We'll only email you when there's something new to share.
+            </p>
+
+            <p class="open-sans_sb">Plus, the GreatSchools Newsletter!</p>
+
+            <p>Our best articles, free worksheets and more delivered weekly.</p>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <div class="form-group controls row">
+                  <div class="col-xs-8 col-sm-9">
+                    <%= text_field_tag(:email,
+                                       nil,
+                                       {id: "signup-email",
+                                        placeholder: "",
+                                        class: 'full-width js-signup-email parsley-error pam',
+                                        'data-parsley-required' => "true",
+                                        'data-parsley-type' => "email",
+                                        'data-parsley-required-message' => "Please enter an email address.",
+                                        'data-parsley-error-container' => ".js-signup-email-errors" }) %>
+                  </div>
+                  <div class="col-xs-4 col-sm-3">
+                    <button class="btn btn-primary js-modal-signup-button modal-signup-button" data-disable-with="Signing up">Sign Up</button>
+                  </div>
+                </div>
+                <p class="js-signup-email-errors danger-color"></p>
+              </div>
+            </div>
+            <p>By signing up, I agree to the GreatSchools <%= link_to 'Terms of Use.', terms_of_use_url %></p>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+</div>

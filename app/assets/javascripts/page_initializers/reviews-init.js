@@ -5,4 +5,6 @@ if(gon.pagename == "Reviews"){
     });
     GS.ad.addToAdSlotDefinitionArray(GS.reviewsAd.reviewContent, this, []);
     GS.ad.addToAdShowArray(GS.reviewsAd.writeDivAndFillReviews, this, [0]);
+    GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
+
 }

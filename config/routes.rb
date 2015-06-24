@@ -179,6 +179,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
+  get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
+
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]

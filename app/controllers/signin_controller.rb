@@ -45,36 +45,40 @@ class SigninController < ApplicationController
 
   # handles registration and login
   def create
-    if should_attempt_login
-      user, error = authenticate  # log in
-    else
+     if joining?
       user, error = register      # join
+      flash_notice t('actions.account.pending_email_verification') unless error || ajax?
+    else
+      user, error = authenticate  # log in
     end
 
     # successful login or registration is determined by presence of error
-    if error
+    handle_registration_and_login_error(error) and return if error
+
+    log_user_in(user)
+    executed_deferred_action
+
+    # no errors, log in if this was an authentication(login) request
+    if ! ajax?
+      unless already_redirecting?
+        redirect_to (post_registration_redirect_url)
+      end
+    else
+      render json: {}
+    end
+  end
+
+  def handle_registration_and_login_error(error)
+    if request.xhr?
+      #  If the ajax request from the signup already has an account no error is returned
+      if error == 'Sorry, but the email you chose has already been taken.'
+        render json: {}, status: 200
+      else
+        render json: {error: error}, status: 422
+      end
+    else
       flash_error error
       redirect_to signin_url
-    else
-      # no errors, log in if this was an authentication(login) request
-      if should_attempt_login
-        log_user_in(user)
-      else
-        # Log the user in after registration. User has a non-verified email address unless they signed in with Facebook
-        log_user_in(user)
-        flash_notice t('actions.account.pending_email_verification')
-      end
-
-      executed_deferred_action
-
-      unless already_redirecting?
-        redirect_uri = nil
-        if cookies[:redirect_uri]
-          redirect_uri = cookies[:redirect_uri]
-          delete_cookie :redirect_uri
-        end
-        redirect_to (redirect_uri || overview_page_for_last_school || (should_attempt_login ? home_url : join_url))
-      end
     end
   end
 
@@ -173,10 +177,10 @@ class SigninController < ApplicationController
   protected
 
   # rather than invoke different controller actions for login / join, determine intent by presence of certain params
-  def should_attempt_login
+  def joining? 
     is_registration = params[:password].nil? && params[:confirm_password].nil?
 
-    return !is_registration
+    return is_registration
   end
 
   def authenticate
@@ -224,6 +228,19 @@ class SigninController < ApplicationController
     end
 
     return user, error
+  end
+
+  def post_registration_redirect_url
+        redirect_uri = nil
+        if cookies[:redirect_uri]
+          redirect_uri = cookies[:redirect_uri]
+          delete_cookie :redirect_uri
+        end
+        (redirect_uri || overview_page_for_last_school || (joining? ? join_url : home_url))
+  end
+
+  def ajax?
+    request.xhr?
   end
 
 end

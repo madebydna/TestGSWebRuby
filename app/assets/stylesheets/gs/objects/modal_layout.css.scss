@@ -1,0 +1,55 @@
+.modal-container {
+
+}
+
+.modal-title {
+  font-size: $font-size-large;
+  color: white;
+  font-family: 'RobotoSlab-Light';
+  font-weight: 400;
+  font-style: normal;
+  padding: 20px;
+  background-color: #666666;
+}
+
+.modal-signup-button {
+  height: 46px;
+  border-radius: 0 4px 4px 0;
+  width: 100%;
+}
+// Adds an inverse class for the modal close symbol for the dark background
+.close-inverse {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 1px 0 rgba(255,255,255,1);
+  @include opacity(20);
+  &:hover,
+  &:focus {
+    color: $gray;
+    text-decoration: none;
+    cursor: pointer;
+    @include opacity(40);
+  }
+}
+
+// Additional properties for button version
+// iOS requires the button element instead of an anchor tag.
+// If you want the anchor version, it requires `href="#"`.
+button.close-inverse {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+
+// Bootstrap sets the modal-dialog width at 600px which is smaller than the designed modal.
+// This increases width to allow the user to close modal by click outside modal
+@media screen and (min-width: $screen-sm-min) {
+  .gs-modal-dialog {
+    width: 800px;
+  }
+}
+
