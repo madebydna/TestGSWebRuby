@@ -14,6 +14,8 @@ class CitiesController < ApplicationController
   before_action :write_meta_tags, except: [:partner, :guided_search, :city_home]
 
   def show
+    @city_object = City.where(name: @city, state: @state[:short], active: 1).first
+
     if @hub.nil?  || hub_matching_current_url[:city].nil?
       city_home
     else
@@ -44,7 +46,6 @@ class CitiesController < ApplicationController
   def city_home
     gon.pagename = 'GS:City:Home'
     @ad_page_name = 'City_Page'.to_sym
-    @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
     if @city_object.blank? && @state.present?
       return redirect_to state_url
@@ -285,6 +286,7 @@ class CitiesController < ApplicationController
     page_view_metadata['template']    = 'ros' # use this for page name - configured_page_name
     page_view_metadata['City']        = @city.gs_capitalize_words
     page_view_metadata['State']       = @state[:short].upcase # abbreviation
+    page_view_metadata['county']      = county_object.try(:name) if county_object
 
     page_view_metadata
 
@@ -302,5 +304,11 @@ class CitiesController < ApplicationController
 
   def data_layer_through_gon
     data_layer_gon_hash.merge!(page_view_metadata)
+  end
+
+  def county_object
+    if @city_object && @city_object.respond_to?(:county)
+      @city_object.county
+    end
   end
 end
