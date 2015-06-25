@@ -1,8 +1,5 @@
 class OspRegistrationController < ApplicationController
-  before_action :set_login_redirect
   before_action :set_city_state
-
-
 
   def show
 
@@ -28,14 +25,36 @@ class OspRegistrationController < ApplicationController
 
 
   def submit
+    school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+
     # create row in user
     #create row in Esp memebership
-    # send emails
+
     # escape html
 
     # user, error = register
 
-    #rediect to thank you page
-    redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    user = User.with_email('sarora+975@greatschools.org')
+    if user.present? && school.present?
+      #Send OSP Verification Email
+      OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
+      #Redirect to thank you page
+      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    end
+  end
+
+  private
+
+  def osp_email_verification_url(user)
+    tracking_code = 'eml_ospverify'
+    verification_link_params = {}
+    hash, date = user.email_verification_token
+    verification_link_params.merge!(
+        id: hash,
+        date: date,
+        redirect: '/official-school-profile/dashboard/',
+        s_cid: tracking_code
+    )
+    path = verify_email_url(verification_link_params)
   end
 end
