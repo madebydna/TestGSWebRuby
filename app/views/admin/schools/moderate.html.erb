@@ -68,5 +68,6 @@
 
   <div class="rs-list-of-reviews">
     <%= render partial: 'review', collection: @reviews, as: :review %>
+    school reviews: <%= paginate @reviews, param_name: :page %>
   </div>
 </div>

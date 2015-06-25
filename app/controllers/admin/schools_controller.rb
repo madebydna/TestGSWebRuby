@@ -1,5 +1,7 @@
 class Admin::SchoolsController < ApplicationController
 
+  MODERATION_LIST_PAGE_SIZE = 50
+
   before_action :require_state, :require_school, except: :index
 
   has_scope :active, type: :boolean
@@ -16,8 +18,7 @@ class Admin::SchoolsController < ApplicationController
     else
       title = 'Reviews moderation - school'
       @reviews = school_reviews(@school)
-      @reviews = apply_scopes(@reviews)
-      @reviews.to_a.uniq!(&:id)
+      @reviews = apply_scopes(@reviews).page(params[:page]).per(MODERATION_LIST_PAGE_SIZE).load
     end
     @reviews.each do |review|
       review.notes.build
