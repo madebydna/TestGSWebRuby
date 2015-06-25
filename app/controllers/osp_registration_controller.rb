@@ -33,8 +33,6 @@ class OspRegistrationController < ApplicationController
     # send emails
     # escape html
 
-    require 'pry'
-    binding.pry
     # user, error = register
 
     #rediect to thank you page
