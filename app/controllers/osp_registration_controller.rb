@@ -32,6 +32,7 @@ class OspRegistrationController < ApplicationController
     first_name = params[:first_name]
     last_name = params[:last_name]
     school_website = params[:school_website]
+    job_title = params[:job_title]
 
     user = User.where(email:user_email, password: nil).first_or_initialize
     user.password = password
@@ -40,18 +41,35 @@ class OspRegistrationController < ApplicationController
     user.welcome_message_status='never_send'
     user.how='esp'
 
+    # create row in user
 
     begin
       user.save!
-    rescue
+     rescue
       return user, user.errors.messages.first[1].first
     end
-    # create row in user
     #create row in Esp membership
+
+    begin
+      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
+      esp_membership.state = @state[:short]
+      esp_membership.school_id = school.id
+      esp_membership.status = 'provisional'
+      esp_membership.active = false
+      esp_membership.web_url = school_website
+      esp_membership.job_title = job_title
+      esp_membership.created = Time.now
+      esp_membership.updated = Time.now
+      esp_membership.save!
+
+    rescue
+      return esp_membership, esp_membership.errors.messages.first[1].first
+
+
+    end
 
     # escape html
 
-    # user, error = register
 
     # adding a static email for now to check email sending should send email from user once the saving user part is done
     if user.present? && school.present?
