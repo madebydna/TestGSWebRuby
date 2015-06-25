@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   after_initialize :set_defaults
 
-  attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how
+  attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how,:welcome_message_status
   attr_accessor :updating_password, :plain_text_password
 
   scope :verified, -> { where(email_verified: true) }

@@ -33,7 +33,19 @@ class OspRegistrationController < ApplicationController
     last_name = params[:last_name]
     school_website = params[:school_website]
 
+    user = User.where(email:user_email, password: nil).first_or_initialize
+    user.password = password
+    user.first_name = first_name
+    user.last_name = last_name
+    user.welcome_message_status='never_send'
+    user.how='esp'
 
+
+    begin
+      user.save!
+    rescue
+      return user, user.errors.messages.first[1].first
+    end
     # create row in user
     #create row in Esp membership
 
@@ -42,7 +54,6 @@ class OspRegistrationController < ApplicationController
     # user, error = register
 
     # adding a static email for now to check email sending should send email from user once the saving user part is done
-    user = User.with_email('sarora+975@greatschools.org')
     if user.present? && school.present?
       #Send OSP Verification Email
       OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
