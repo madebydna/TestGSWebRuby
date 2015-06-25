@@ -6,7 +6,11 @@ describe DataLayerConcerns do
   before(:each) do
     controller.request = request
     controller.gon.data_layer_hash = {}
-    controller.gon.data_layer_hash
+  end
+  after(:each) do
+    clean_models User
+    clean_models HubCityMapping
+    clean_models EspMembership
   end
   before(:all) do
     class FakeController < ActionController::Base
@@ -15,9 +19,6 @@ describe DataLayerConcerns do
   end
   after(:all) do
     Object.send :remove_const, :FakeController
-    clean_models User
-    clean_models HubCityMapping
-    clean_models EspMembership
   end
 
   describe '#add_user_info_to_gtm_data_layer' do
