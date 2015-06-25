@@ -18,15 +18,14 @@ class FavoriteSchoolsController < ApplicationController
       add_favorite_school favorite_schools_params
       create_subscription favorite_schools_params
       if request.xhr?
-        render json: {}, status: 200
+        render 'create', status: 200
       else
         redirect_back_or_default
       end
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
-      error_message = 'Please log in or register your email to begin tracking your favorite schools.'
       if request.xhr?
-        render json: { error: error_message}, status: 422
+        render 'create', status: 422
       else
         flash_error error_message
         redirect_to signin_url

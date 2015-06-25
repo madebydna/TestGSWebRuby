@@ -7,16 +7,18 @@
         <%= token_tag form_authenticity_token %>
         <div class="shim-100 hidden-xs"></div>
         <div class="bg-white brs">
-          <div class="modal-title">
-            Get email updates on this school.
-            <span><button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button></span>
+          <div class="modal-title row">
+            <div class="col-xs-11">Get email updates on this school.</div>
+            <div class="col-xs-1">
+              <button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
           </div>
           <div class="pal">
             <div class="js-signup-success alert alert-success dn">Thanks! You're now signed up.</div>
             <p>
-              Sign up to receive email updates about test scores, reviews or profile updates
-              for this school. We'll only email you when there's something new to share.
+              Get notified about test scores, reviews or profile updates.​ We'll only email you when there's something new!
             </p>
 
             <p class="open-sans_sb">Plus, the GreatSchools Newsletter!</p>
@@ -27,7 +29,7 @@
               <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                 <div class="form-group controls row">
                   <div class="col-xs-8 col-sm-9">
-                    <%= text_field_tag(:email,
+                    <%= email_field_tag(:email,
                                        nil,
                                        {id: "signup-email",
                                         placeholder: "",
@@ -44,7 +46,7 @@
                 <p class="js-signup-email-errors danger-color"></p>
               </div>
             </div>
-            <p>By signing up, I agree to the GreatSchools <%= link_to 'Terms of Use.', terms_of_use_url %></p>
+            <p class="tac">By signing up, I agree to the <%= link_to 'GreatSchools Terms of Use.', terms_of_use_url %></p>
           </div>
         </div>
     <% end %>

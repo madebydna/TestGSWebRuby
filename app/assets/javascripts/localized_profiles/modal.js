@@ -45,8 +45,10 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
 
     var initializeSignupForm = function () {
         $(SIGNUP_SCHOOL_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
+            $(SUBMIT_BUTTON_SELECTOR).hide();
             $(SAVE_THIS_SCHOOL_FORM_SELECTOR).submit();
         }).on('ajax:error', function (e, xhr, status, error) {
+            $(SUBMIT_BUTTON_SELECTOR).show();
             showError(xhr.responseJSON);
         });
     };
@@ -55,11 +57,13 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
         $(SIGNUP_SCHOOL_SELECTOR).parsley();
         $(FAVORITE_SCHOOL_FORM_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
             $(SUBMIT_BUTTON_SELECTOR).prop('disabled', true);
+            $(SUBMIT_BUTTON_SELECTOR).show();
             $(SIGNUP_SUCCESS_MESSAGE_SELECTOR).slideToggle();
             setTimeout(function () {
                 hideModal();
             }, SUCCESS_MESSAGE_TIME)
         }).on('ajax:error', function (e, xhr, status, error) {
+            $(SUBMIT_BUTTON_SELECTOR).show();
             showError(xhr.responseJSON);
         });
     };
