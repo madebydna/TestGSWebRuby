@@ -1,7 +1,7 @@
 var GS = GS || {};
 
 GS.schoolProfiles = GS.schoolProfiles || (function($) {
-    var MODAL_DELAY = 8000;
+    var MODAL_DELAY = 15000;
 
     var shouldShowSignUpForSchoolModal = function() {
      return $.cookie('profileModal') != 'true' && gon.signed_in === false;
