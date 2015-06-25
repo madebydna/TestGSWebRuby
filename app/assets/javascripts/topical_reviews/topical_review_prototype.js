@@ -1,7 +1,7 @@
 GS.topicalReview = GS.topicalReview || {};
 
 GS.topicalReview.starRating = (function () {
-    var YELLOW_STAR_SELECTOR = 'i-48-orange-star';
+    var YELLOW_STAR_SELECTOR = 'i-48-orange-star-blue-border';
     var BLUE_STAR_SELECTOR = 'i-48-blue-star';
     var INDIVIDUAL_STAR_CONTAINER = '.js-topicalReviewStarContainer';
     var INDIVIDUAL_STAR_SELECTOR = '.js-topicalReviewStar';
@@ -43,16 +43,18 @@ GS.topicalReview.starRating = (function () {
 
         $(container).on('click', INDIVIDUAL_STAR_CONTAINER, function () {
             $this = $(this);
+            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+            var hiddenDataField = $this.data(HIDDEN_FIELDS_DATA_SELECTOR);
+            var hiddenFieldsContainer = $(".js-starHiddenFields");
+            var rating = $this.index() + 1;
 //            This resets the dummy field used to validate the rating using parsley
 //            TODO: find a better way to do this
             resetDummyParsleyForm();
-            var hiddenFieldsContainer = $(".js-starHiddenFields");
             hiddenFieldsContainer.empty();
-            var rating = $this.index() + 1;
-            var hidden_field = $this.data('fields');
-            hiddenFieldsContainer.append(hidden_field);
+            hiddenFieldsContainer.append(hiddenDataField);
             $(hiddenField).val(rating);
             selectStar(rating);
+            showCommentField(reviewContainer);
         });
 
         $(container).on('mouseover', INDIVIDUAL_STAR_CONTAINER, function () {
@@ -66,6 +68,11 @@ GS.topicalReview.starRating = (function () {
             $(selectedStar).children('.js-topicalReviewLabel').addClass(LABEL_BOLD_CLASS);
             $(selectedStar).children('.js-topicalReviewLabel').removeClass('gray-dark');
         });
+    };
+
+    var showCommentField = function (reviewContainer) {
+        $(reviewContainer).find('.js-overallRatingSummary').hide();
+        $(reviewContainer).find('.js-topicalReviewComment').show();
     };
 
     return {

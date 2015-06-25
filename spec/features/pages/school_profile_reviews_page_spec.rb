@@ -26,9 +26,10 @@ describe 'School Profile Reviews Page', js: true do
       with_shared_context 'with 2 questions: first an overall star topic question; second a radio button question' do
         include_example 'should show the overall star question'
         include_example 'should show stars'
-        include_example 'should show the review comment section'
+        include_example 'should show overall summary'
         with_shared_context 'signed in verified user with role for school' do
           with_shared_context 'click third star' do
+            include_example 'should show the review comment section'
             with_shared_context 'submit response with comment without bad words' do
               include_example 'should save review with expected value', '3'
               include_example 'should save overall review with comment without bad words'
