@@ -2,19 +2,21 @@
     <%= render 'osp/osp_page_header' %>
     <%= render 'osp/osp_header'%>
     <div class="osp-registration-form">
-        <div class="container">
-            <div class="row">
-              <%= form_tag osp_registration_path, name: 'OspLanding', remote: true, 'data-parsley-validate' => '' do %>
-                  <input type="hidden" name="redirectPage" value="">
-                  <input type="hidden" name="page" value="">
-                  <input type="hidden" name="state" value="<%= @state[:short] %>">
-                  <input type="hidden" name="schoolId" value="<%= @school.id %>">
+          <div class="container">
+          <%= form_tag osp_registration_submit_path, name: 'ospRegisterPage', 'data-parsley-validate' => '' do %>
+                  <%= hidden_field_tag :tab , "drive" %>
+                  <input type="hidden" id="state" name="state" value="<%= @state[:short] %>">
+                  <input type="hidden" id-="name" name="schoolId" value="<%= @school.id %>">
                   <%= label_tag(:email, "Email*:") %>
                   <%= email_field(:user, :email, class: 'form-control js-email-validation') %>
                   <div class="js-email-error dn"><font class="red-error">Looks like you already have an account.</font> <%= link_to 'Sign in.', signin_path%></div>
-               <% end %>
-            </div>
+                 <button class="btn btn-primary" type="submit">
+                  Save edits
+                 </button>
         </div>
+        <% end %>
     </div>
+
+
 </div>
 <%= render 'nav/short_footer' %>

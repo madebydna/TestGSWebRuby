@@ -17,7 +17,6 @@ class OspRegistrationController < ApplicationController
     @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
     @parsley_defaults = "data-parsley-trigger=keyup data-parsley-blockhtmltags data-parsley-validation-threshold=0 "
 
-
     if @school.blank?
       render 'osp/osp_no_school_selected'
     elsif @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
@@ -27,4 +26,18 @@ class OspRegistrationController < ApplicationController
     end
   end
 
+
+  def submit
+    # create row in user
+    #create row in Esp memebership
+    # send emails
+    # escape html
+
+    require 'pry'
+    binding.pry
+    # user, error = register
+
+    #rediect to thank you page
+    redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+  end
 end
