@@ -27,7 +27,7 @@ class FavoriteSchoolsController < ApplicationController
       if request.xhr?
         render 'create', status: 422
       else
-        flash_error error_message
+        flash_error 'Please log in or register your email to begin tracking your favorite schools.'
         redirect_to signin_url
       end
     end
