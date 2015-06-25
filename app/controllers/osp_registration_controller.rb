@@ -26,14 +26,22 @@ class OspRegistrationController < ApplicationController
 
   def submit
     school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+    user_email = params[:email]
+    password   = params[:password]
+    password_verify = params[:password_verify]
+    first_name = params[:first_name]
+    last_name = params[:last_name]
+    school_website = params[:school_website]
+
 
     # create row in user
-    #create row in Esp memebership
+    #create row in Esp membership
 
     # escape html
 
     # user, error = register
 
+    # adding a static email for now to check email sending should send email from user once the saving user part is done
     user = User.with_email('sarora+975@greatschools.org')
     if user.present? && school.present?
       #Send OSP Verification Email
