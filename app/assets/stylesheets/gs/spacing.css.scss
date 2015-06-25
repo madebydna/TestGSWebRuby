@@ -272,7 +272,14 @@ body { padding-top: 50px }
 }
 
 @media (max-width:1200px){
-  .plm-mobile {padding-left: 10px}
+  .plm-mobile {
+    padding-left: 10px;
+    h2 {
+      a:hover {
+        color: #3d3d3d;
+      }
+    }
+  }
   .mobile_img {width: 300px; height: 178px;}
 }
 
