@@ -30,8 +30,6 @@ class OspController < ApplicationController
     questions_and_answers.each do |(question_id, response_key, values)|
       save_response!(question_id, response_key, values, submit_time, @esp_membership_id, @is_approved_user)
     end
-    require 'pry'
-    binding.pry
     redirect_to(:action => 'show', :state => params[:state], :schoolId => params[:schoolId], :page => params[:redirectPage])
   end
 
