@@ -1,4 +1,4 @@
-<div class="osp-pages">
+<div class="osp-pages" xmlns="http://www.w3.org/1999/html">
     <%= render 'osp/osp_page_header' %>
     <%= render 'osp/osp_header'%>
     <div class="osp-registration-form">
@@ -7,9 +7,13 @@
                   <%= hidden_field_tag :tab , "drive" %>
                   <input type="hidden" id="state" name="state" value="<%= @state[:short] %>">
                   <input type="hidden" id-="name" name="schoolId" value="<%= @school.id %>">
-                  <%= label_tag(:email, "Email*:") %>
-                  <%= email_field(:user, :email, class: 'form-control js-email-validation') %>
-                  <div class="js-email-error dn"><font class="red-error">Looks like you already have an account.</font> <%= link_to 'Sign in.', signin_path%></div>
+                <%= label_tag(:email, "Email*:") %>
+                <input class="form-control" type="text" name="email" id="email"
+                       data-parsley-trigger="change"
+                       data-parsley-remote = '/gsr/validations/email_available'
+                       data-parsley-remote-options='{ "type": "GET"}'
+                       data-parsley-remote-message="Looks like you already have an account. <a href='/gsr/login'>Sign in.</a>"
+                >
                  <button class="btn btn-primary" type="submit">
                   Save edits
                  </button>
@@ -20,3 +24,4 @@
 
 </div>
 <%= render 'nav/short_footer' %>
+
