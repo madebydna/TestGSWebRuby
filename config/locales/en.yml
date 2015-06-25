@@ -63,6 +63,7 @@ en:
       activated: 'Thanks for your school review! Your feedback helps other parents choose the right schools!'
     report_review:
       login_required: 'Please sign in or register to report a review.'
+      email_verification_required: 'Before flagging a review, you must verify your email by clicking the link in the email we sent you. <a href="%{verification_email_url}">Click here</a> to resend the email.'
       reported: 'Thank you for flagging this review. Our moderators have been notified and will investigate.'
     account:
       pending_email_verification: 'Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.'
