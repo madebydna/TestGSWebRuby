@@ -32,17 +32,17 @@
           <% display_review_questions = true %>
       <% end %>
 
-      <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
+      <%= render 'shared/reviews/modules/question_navigation' %>
+      <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
         <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
           <%= render partial: "shared/reviews/modules/topical_review_question_module",
                      collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
           %>
         </div>
-        <%= render 'shared/reviews/modules/question_navigation' %>
       </div>
     </div>
     <% if @show_ads %>
-        <div class="col-xs-12 col-sm-4 ptl">
+        <div class="col-xs-12 col-sm-4 ptxl">
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop %>
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile %>
         </div>
