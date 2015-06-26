@@ -33,6 +33,21 @@ end
 shared_context 'Basic High School' do
   let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
   after { clean_models School }
+  end
+
+shared_context 'Delaware public school' do
+  let!(:school) { School.on_db(:de).create!(id: 1, type: 'public', state: 'de', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry') }
+  after { clean_models :de, School }
+  end
+
+shared_context 'Delaware charter school' do
+  let!(:school) { School.on_db(:de).create(id: 1, type: 'charter', state: 'de', city: 'Pyrenees', name: 'Beauxbatons Academy of Magic') }
+  after { clean_models :de, School }
+  end
+
+shared_context 'Delaware private school' do
+  let!(:school) { School.on_db(:de).create(id: 1, type: 'private', state: 'de', city: 'Sweden', name: 'Durmstrang Institute') }
+  after { clean_models :de, School }
 end
 
 ### Navigation ###
@@ -72,16 +87,22 @@ shared_context 'visit registration page with no state or school' do
     visit osp_registration_path
   end
   subject { page }
+  end
+
+shared_context 'visit registration page with school state and school' do
+  before do
+    visit osp_registration_path(schoolId: school.id, state: school.state)
+  end
+  subject { page }
 end
 
-# shared_context 'visit registration page as a public or charter DE osp user' do
-#   include_context 'signed in approved osp user for school', :de, 25
-#
-#   before do
-#     visit osp_registration_path
-#   end
-#   subject { page }
-# end
+shared_context 'visit registration page as a public or charter DE osp user' do
+
+  before do
+    visit osp_registration_path(schoolId: school.id, state: school.state)
+  end
+  subject { page }
+end
 
 shared_context 'click osp nav link element with text:' do |text|
   before do
