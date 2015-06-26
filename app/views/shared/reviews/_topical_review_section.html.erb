@@ -13,21 +13,23 @@
     <div class="col-xs-12 <%= 'col-sm-8' if @show_ads %>">
       <% # if not logged in there will be no @school member only show review questions   %>
       <% if @school_user %>
-          <% # if logged in and user has a role only show questions   %>
+          <% # if logged in and user has a role only show questions    %>
           <% if !@school_user.unknown?
                display_review_questions = true %>
-              <% # if logged in and has unknown role   %>
+              <% # if logged in and has unknown role    %>
           <% else %>
-              <% # if user answered questions render and display role question & hide review questions   %>
+              <% # if user answered questions render and display role question & hide review questions    %>
               <% if @school_user.reviews.present? %>
                   <%= render 'shared/reviews/modules/member_role_question_module', display: true %>
                   <% display_review_questions = false %>
-                  <% # if logged in and has not answered questions, render and hide role question & display review questions   %>
+                  <% # if logged in and has not answered questions, render and hide role question & display review questions    %>
               <% else %>
                   <%= render 'shared/reviews/modules/member_role_question_module', display: false %>
                   <% display_review_questions = true %>
               <% end %>
           <% end %>
+      <% else %>
+          <% display_review_questions = true %>
       <% end %>
 
       <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
