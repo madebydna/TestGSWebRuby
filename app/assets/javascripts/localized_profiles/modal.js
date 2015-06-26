@@ -69,7 +69,8 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     };
 
     var showError = function (responseJSON) {
-        var errorMessage = responseJSON['error'];
+        //var errorMessage = responseJSON['error'];
+        var errorMessage = 'Please <a href="/gsr/login/">log in or register your email</a> to begin tracking your favorite schools.';
         $(ERROR_CONTAINER_SELECTOR).html(errorMessage);
     };
 
