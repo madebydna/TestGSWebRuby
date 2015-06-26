@@ -21,7 +21,7 @@ class SchoolProfileReviewsController < SchoolProfileController
     if @school_user
       @school_user.first_unanswered_topic.try(:id)
     else
-      ReviewTopic.find_id_by_name(ReviewTopic::HONESTY)
+      ReviewTopic.find_id_by_name(ReviewTopic::TEACHERS)
     end
   end
 

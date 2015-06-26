@@ -11,6 +11,7 @@ class ReviewTopic < ActiveRecord::Base
 
   # Topic names
   HONESTY = 'Honesty'
+  TEACHERS = 'Teachers'
 
   class ReviewTopicsForSchool
     attr_reader :review_topic, :school
