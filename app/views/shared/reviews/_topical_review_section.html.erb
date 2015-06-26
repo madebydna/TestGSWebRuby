@@ -42,7 +42,7 @@
       </div>
     </div>
     <% if @show_ads %>
-        <div class="col-xs-12 col-sm-4 ptxl">
+        <div class="col-xs-12 col-sm-4 ptxl mbl">
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop %>
           <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile %>
         </div>
