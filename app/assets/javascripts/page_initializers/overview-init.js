@@ -4,4 +4,7 @@ if(gon.pagename == "Overview"){
         Galleria.run('#galleria');
     }
   });
-}
+
+  GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
+
+};

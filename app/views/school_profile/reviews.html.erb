@@ -4,7 +4,7 @@
 <%= render 'school_profile/profile_nav', school: @school, page_name: :reviews %>
 <%= render 'school_profile/profile_nav_w_dropdowns', school: @school, page_name: :reviews %>
 <div class="row limit-width-1200">
-    <% if @school_reviews.having_comments.blank? %>
+    <% if @school_reviews.blank? %>
       <div class="col-xs-12 mtl"  style="z-index: 1;">
         <% if @show_ads %>
           <div class="pvl">
@@ -14,9 +14,6 @@
         <% end %>
         <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
         <%= render 'shared/review_no_ratings' %>
-        <% if @show_ads %>
-            <%= render "shared/reviews/top_section_with_ad",driver: 'Reviews' %>
-        <% end %>
         <%= render 'shared/reviews/topical_review_section' %>
       </div>
     <% else %>
@@ -25,22 +22,9 @@
               <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
               <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
-            <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
-            <div class="row">
-              <div class="col-xs-12">
-                <% if @show_ads %>
-                    <%= render "shared/reviews/top_two_sections" %>
-                    <%= render "shared/reviews/top_section_with_ad",driver: 'Reviews' %>
-                <% else %>
-                  <%= render 'shared/review_top_sections',
-                             driver: 'Reviews',
-                             average_score: @school_reviews.average_5_star_rating,
-                             ratings_count: @school_reviews.number_of_5_star_ratings %>
-                <% end %>
-                <%= render 'shared/reviews/topical_review_section' %>
-              </div>
-            </div>
-            <% if @show_ads %>
+          <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
+          <%= render 'shared/reviews/topical_review_section' %>
+          <% if @show_ads %>
               <div class="row">
                 <div class="col-xs-12">
                   <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>

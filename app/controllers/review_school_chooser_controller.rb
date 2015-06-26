@@ -14,7 +14,6 @@ class ReviewSchoolChooserController < ApplicationController
 
   def write_tags_and_gon
     @display_morgan_stanley = 'dn'
-    # require 'pry'; binding.pry;
     @topic = review_topic
     gon.pagename = "Write a school review | GreatSchools"
     gon.omniture_pagename = 'GS:Promo:Reviews'
@@ -22,6 +21,7 @@ class ReviewSchoolChooserController < ApplicationController
     gon.topic_id = @topic.id
     set_meta_tags :title => "Write a school review | GreatSchools" , :description => "Write a review for your school today and you can help other parents make a
     more informed choice about which school is right for their family."
+    data_layer_gon_hash.merge!({ 'page_name' => 'GS:Promo:Reviews' })
   end
 
   def review_topic

@@ -13,12 +13,26 @@ describe ReviewsController do
 
     it 'should save deferred action if not logged in' do
       allow(controller).to receive(:logged_in?).and_return false
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return false
       expect(controller).to_not receive :flag_review_and_redirect
       put :flag, id: 1, review_flag: { comment: 'any reason' }
       expect(response).to redirect_to controller.signin_url
     end
 
+    it 'should flash error, save deferred action and redirect back if logged in and provisional' do
+      request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
+      allow(controller).to receive(:logged_in?).and_return true
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return true
+      expect(controller).to_not receive :flag_review_and_redirect
+      put :flag, id: 1, review_flag: { comment: 'any reason' }
+      expect(response).to redirect_to request.env['HTTP_REFERER']
+    end
+
     it 'should report review and redirect' do
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return false
       allow(controller).to receive(:logged_in?).and_return true
       allow(controller).to receive(:flag_review_and_redirect) { controller.redirect_to 'blah' }
       put :flag, id: 1, review_flag: { comment: 'any reason' }

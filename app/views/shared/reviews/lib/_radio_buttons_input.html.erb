@@ -11,11 +11,14 @@
         <!--that is added and disrupts the design of the radio buttons-->
         <% question.response_array.each_with_index do |response_value, index| %>
             <% offset = "" %>
-            <% offset = "col-sm-offset-1 col-md-offset-1 col-lg-offset-1" if index == 0 %>
+            <% offset = " col-sm-offset-1 col-md-offset-1 col-lg-offset-1" if index == 0 %>
+            <!--With ads on the radio buttons wrap into two rows on all sizes-->
+            <!--With ads the clearfix is visible for all sizes, the offset is removed and col sizes are 4-->
+            <!--Without ads the clearfix is visible only for xs, the offset is added for sizes sm and up, and col sizes are 2-->
             <% if index % 3 == 0 %>
-                <div class="clearfix visible-xs"></div>
+                <div class="clearfix visible-xs <%= 'visible-sm visible-md visible-lg' if @show_ads %>"></div>
             <% end %>
-            <div class="<%= offset %> col-xs-4 col-sm-2 mtm phm">
+            <div class="col-xs-4 <%= 'col-sm-2' + offset if ! @show_ads %> mtm phm">
               <div><%= builder.radio_button(:answer_value,
                                             response_value,
                                             class: 'js-topicalRadioButton',

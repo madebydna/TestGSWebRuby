@@ -85,8 +85,6 @@ gem 'rack-mini-profiler', require: false
 gem 'rubocop', '= 0.20.1', require: false
 gem 'rubocop-checkstyle_formatter', require: false
 
-gem 'rack_after_reply'
-
 gem 'protected_attributes'
 
 gem 'nokogiri', '= 1.6.1'

@@ -6,6 +6,7 @@ class EspMembership < ActiveRecord::Base
   belongs_to :user, foreign_key: 'member_id'
   has_many :osp_form_responses, :class_name => 'OspFormResponses'
 
+  attr_accessible :member_id, :created, :updated, :state, :school_id, :status,:active,:job_title,:web_url,:note
 
   scope :active, -> { where(active: 1) }
 

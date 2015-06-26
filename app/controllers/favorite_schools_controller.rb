@@ -17,11 +17,19 @@ class FavoriteSchoolsController < ApplicationController
     if logged_in?
       add_favorite_school favorite_schools_params
       create_subscription favorite_schools_params
-      redirect_back_or_default
+      if request.xhr?
+        render 'create', status: 200
+      else
+        redirect_back_or_default
+      end
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
-      flash_error 'Please log in or register your email to begin tracking your favorite schools.'
-      redirect_to signin_url
+      if request.xhr?
+        render 'create', status: 422
+      else
+        flash_error 'Please log in or register your email to begin tracking your favorite schools.'
+        redirect_to signin_url
+      end
     end
   end
 

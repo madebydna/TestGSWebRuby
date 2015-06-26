@@ -89,3 +89,15 @@ end
 shared_example 'should display calendar picker' do
   page.find('.datepicker')
 end
+
+shared_example 'should have element with text' do | element, text|
+  subject.find( element, text: text, exact: true)
+end
+
+shared_example 'should have link' do |link, url|
+  subject.click_link(link, :href => url)
+end
+
+shared_example 'should have link text on page' do |text|
+  subject.find_link(text, exact: true)
+end

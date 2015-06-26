@@ -41,6 +41,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
+  get '/official-school-profile/register.page', to: 'osp_registration#show',as: :osp_registration
+  match '/official-school-profile/register-submit', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+
+  get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
   post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
@@ -176,6 +180,8 @@ LocalizedProfiles::Application.routes.draw do
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
+
+  get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]

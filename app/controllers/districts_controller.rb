@@ -7,6 +7,7 @@ class DistrictsController < ApplicationController
   before_action :set_city_state
   before_action :require_district
   before_action :set_hub
+  before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
   before_action :write_meta_tags
   before_action :redirect_to_canonical_url
@@ -76,6 +77,8 @@ class DistrictsController < ApplicationController
     page_view_metadata['compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by adveritiser
     page_view_metadata['env']        = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     page_view_metadata['State']      = @state[:short].upcase # abbreviation
+    page_view_metadata['City']       = @district.city
+    page_view_metadata['county']     = @district.county if @district.county
     page_view_metadata['editorial']  = 'FindaSchoo'
     page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
 

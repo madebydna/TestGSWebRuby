@@ -11,8 +11,14 @@ class UserController < ApplicationController
     #Allowing users to take email addresses with no password per PT-898
     #Addresses bug where users with no passwords (signed up via newsletter) could not create an account
 
-    respond_to do |format|
-      format.js { render json: is_available }
+    if is_available == true
+      respond_to do |format|
+        format.js { render json: is_available }
+      end
+    else
+      respond_to do |format|
+        format.js { render json: is_available, status: 403  }
+      end
     end
   end
 

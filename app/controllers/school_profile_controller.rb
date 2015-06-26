@@ -15,6 +15,7 @@ class SchoolProfileController < SchoolController
   before_action :data_layer_through_gon, only: [:overview, :quality, :details, :reviews]
   before_action :set_city_state, only: [:overview, :quality, :details, :reviews]
   before_action :set_hub, only: [:overview, :quality, :details, :reviews]
+  before_action :add_collection_id_to_gtm_data_layer, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
   before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
   # after_filter :set_last_modified_date
@@ -143,7 +144,9 @@ class SchoolProfileController < SchoolController
     @page_view_metadata ||= (
     page_view_metadata = {}
 
-    page_view_metadata['page_name']   = 'GS:'+ @ad_page_name.to_s
+    page_name_base = 'GS:'+ @ad_page_name.to_s
+
+    page_view_metadata['page_name']   = page_name_base.sub! '_','Profile:'
     page_view_metadata['City']        = @school.city
     page_view_metadata['county']      = @school.county # county name?
     page_view_metadata['gs_rating']   = @school.gs_rating

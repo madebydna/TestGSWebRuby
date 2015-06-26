@@ -36,6 +36,9 @@ describe CitiesController do
 
   describe '#ad_setTargeting_through_gon' do
     subject do
+      city_object = double(county: double(name: 'foo'))
+      allow(City).to receive(:where).and_return([city_object])
+      allow(City).to receive(:popular_cities).and_return(nil)
       get :show, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
       controller.gon.get_variable('ad_set_targeting')
     end
@@ -43,7 +46,7 @@ describe CitiesController do
     with_shared_context('when ads are enabled') do
       include_examples 'sets at least one google ad targeting attribute'
       include_examples 'sets the base google ad targeting attributes for all pages'
-      include_examples 'sets specific google ad targeting attributes', %w[City State]
+      include_examples 'sets specific google ad targeting attributes', %w[City State county]
     end
 
     with_shared_context('when ads are not enabled') do

@@ -443,11 +443,10 @@ GS.forms.elements = (function() {
             var doNotShowText = $doNotSeeResults.data(dataNoResultText);
 
             $doNotSeeResults.text(doNotShowText);
-            $self.closest(selectedAutocompleteVal).hide('slow', function() {
-                $doNotSeeResults.show('fast');
-                $autocompleteFieldContainer.show('slow');
-                $self.siblings('input').removeAttr('name').removeAttr('value')
-            });
+            $self.closest(selectedAutocompleteVal).addClass('dn')
+            $doNotSeeResults.removeClass('dn');
+            $autocompleteFieldContainer.removeClass('dn');
+            $self.siblings('input').removeAttr('name').removeAttr('value')
         });
     };
 
@@ -458,13 +457,12 @@ GS.forms.elements = (function() {
         var $input = $val.find('input');
         var keyName = $input.data(dataResponseKey);
 
-        $elementToHide.hide('slow', function() {
-            $doNotSeeResults.hide('fast');
-            $input.val(text);
-            $input.attr('name', keyName);
-            $val.find('span').text(text);
-            $val.show('slow');
-        });
+        $elementToHide.addClass('dn')
+        $doNotSeeResults.hide();
+        $input.val(text);
+        $input.attr('name', keyName);
+        $val.find('span').text(text);
+        $val.removeClass('dn');
     };
 
     var setDoNotSeeResultHandlers = function(dontSeeResultCallback) {
@@ -494,9 +492,8 @@ GS.forms.elements = (function() {
                 dontSeeResultCallback.call(this, state, $autocompleteContainer);
                 $self.text($self.data(dataReturnToSearchText));
             } else {
-                $selectListsContainer.hide('slow', function() {
-                    $autocompleteFieldContainer.show('slow');
-                });
+                $selectListsContainer.addClass('dn');
+                $autocompleteFieldContainer.removeClass('dn');
                 $self.text($self.data(dataNoResultText));
             }
         });
@@ -518,10 +515,9 @@ GS.forms.elements = (function() {
         var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
         var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
 
-        $autocompleteFieldContainer.hide(function() {
-            $stateSelect.removeClass('dn');
-            $selectListsContainer.show();
-        })
+        $autocompleteFieldContainer.addClass('dn')
+        $stateSelect.removeClass('dn');
+        $selectListsContainer.removeClass('dn');
 
     };
 
@@ -545,10 +541,9 @@ GS.forms.elements = (function() {
             for(i=0; i < data.length; i++){
                 $citySelect.append('<option data-value="'+data[i]+'">'+data[i]+'</option>');
             }
-            $autocompleteFieldContainer.hide('slow', function() {
-                $citySelect.removeClass('dn');
-                $selectListsContainer.show('slow');
-            })
+            $autocompleteFieldContainer.addClass('dn')
+            $citySelect.removeClass('dn');
+            $selectListsContainer.removeClass('dn');
         });
     };
 

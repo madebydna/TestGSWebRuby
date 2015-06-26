@@ -35,6 +35,10 @@ module ApplicationHelper
     draw_stars 24, on_star_count
   end
 
+  def draw_stars_48(on_star_count)
+    draw_stars 48, on_star_count
+  end
+
   def generate_img_path(img_size, media_hash)
     comm_media_prefix = "library/"
     ENV_GLOBAL['media_server'] + '/' + comm_media_prefix + "school_media/" + @school.state.downcase + "/" + media_hash[0,2] + "/" + media_hash + "-#{img_size}.jpg"

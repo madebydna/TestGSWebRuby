@@ -43,6 +43,11 @@ shared_example 'should not show stars' do
   expect(subject.visible_review_question).to_not have_stars
 end
 
+shared_example 'should show overall summary' do
+  subject.wait_for_visible_review_question
+  expect(subject.visible_review_question).to have_overall_summary
+end
+
 shared_example 'should show submit button with principal text' do
   expect(subject.visible_review_question).to_not have_stars
 end

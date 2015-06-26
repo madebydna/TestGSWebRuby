@@ -186,7 +186,7 @@ describe SearchController do
         controller.instance_variable_set(:@city, city)
       end
       it 'does not set the county' do
-        expect(subject['County']).to be_nil
+        expect(subject['county']).to be_nil
       end
     end
     context 'when city has a county' do
@@ -198,7 +198,7 @@ describe SearchController do
         controller.instance_variable_set(:@city, city)
       end
       it 'sets the city county' do
-        expect(subject['County']).to eq('county')
+        expect(subject['county']).to eq('county')
       end
     end
     {

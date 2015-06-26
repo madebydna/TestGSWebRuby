@@ -1,0 +1,5 @@
+<% @error_message = "Please #{link_to( 'log in or register your email', signin_path)} to begin tracking your favorite schools." unless logged_in? %>
+<% response_hash = { error: @error_message }  %>
+
+
+<%= response_hash.to_json.html_safe %>

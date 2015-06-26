@@ -69,7 +69,7 @@ p, a {
 
 @media (max-width:480px){
   h1{font-size:26px; font-family: $headings-font-family-bold}
-  h2{font-size:26px; font-family: $headings-font-family-robotoslab-light;}
+  h2, .h2{font-size:26px; font-family: $headings-font-family-robotoslab-light;}
   .best_known_for{font-size: 20px}
 
 }
@@ -120,12 +120,20 @@ p, a {
   color: #999
 }
 
+.danger-color {
+  color: $state-danger-text;
+}
+
 .dark-blue-bg {
   background-color: $blue-dark;
 }
 
 .dark-gray-bg {
   background: #3d3d3d;
+}
+
+.darker-gray-bg {
+  background-color: #666666;
 }
 
 .inverted-text {
@@ -186,7 +194,7 @@ p, a {
 
 @media (max-width:480px) {
   h1 { font-size:26px; font-family: $headings-font-family-bold; }
-  h2 { font-size:26px; font-family: $headings-font-family-robotoslab-light; }
+  h2, .h2 { font-size:26px; font-family: $headings-font-family-robotoslab-light; }
   .best-known-for { font-size: 20px; }
   .subtitle-lg {font-size: 20px}
   .subtitle-md {font-size: 16px}
@@ -208,7 +216,7 @@ p, a {
 
 @media (min-width:481px) and (max-width:768px) {
   h1{font-size:32px;}
-  h2{font-size:26px;}
+  h2, .h2{font-size:26px;}
   .best-known-for{font-size: 22px}
 }
 
@@ -287,5 +295,12 @@ img {
   padding-left: 0;
   color: $state-danger-text;
   list-style-type: none;
+}
+
+.gk-link {
+  color: #3d3d3d;
+  &:hover {
+    color: #3d3d3d;
+  }
 }
 

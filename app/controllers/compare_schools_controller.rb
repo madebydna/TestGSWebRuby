@@ -22,6 +22,7 @@ class CompareSchoolsController < ApplicationController
                   keywords:'Compare schools, school comparison',
                   robots: 'noindex'
     set_omniture_data
+    set_data_layer_variables
 
     @school_compare_config = SchoolCompareConfig.new(compare_schools_list_mapping)
   end
@@ -44,6 +45,16 @@ class CompareSchoolsController < ApplicationController
     gon.omniture_hier1 = "Compare"
     set_omniture_data_for_user_request
     gon.omniture_channel = @state.try(:upcase) if @state
+  end
 
+  def set_data_layer_variables
+    state = @state.try(:upcase) if @state
+
+    data_layer_gon_hash.merge!(
+      {
+        'page_name' => 'GS:Compare',
+        'State' => state,
+      }
+    )
   end
 end

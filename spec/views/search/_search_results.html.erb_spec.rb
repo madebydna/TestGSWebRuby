@@ -51,7 +51,7 @@ describe 'search/_search_results.html.erb', js: true do
         'env' => ENV_GLOBAL['advertising_env'],
         'template' => 'search',
         'City' => 'GrandRapid',
-        'State' => 'mi'
+        'State' => 'MI'
       }
 
       it_should_behave_like 'a controller that sets the gon.set_ad_targeting hash', ad_targeting_hash
@@ -59,7 +59,7 @@ describe 'search/_search_results.html.erb', js: true do
       it 'should target the state and city' do
         ad_targeting = page.evaluate_script('gon.ad_set_targeting')
         expect(ad_targeting['City']).to eq('GrandRapid') # Remove spaces and truncate at 10 characters
-        expect(ad_targeting['State']).to eq('mi')
+        expect(ad_targeting['State']).to eq('MI')
       end
     end
 
@@ -72,7 +72,7 @@ describe 'search/_search_results.html.erb', js: true do
       it 'should target the state and city' do
         ad_targeting = page.evaluate_script('gon.ad_set_targeting')
         expect(ad_targeting['City']).to eq('Appoquinim') # Remove spaces and truncate at 10 characters
-        expect(ad_targeting['State']).to eq('de')
+        expect(ad_targeting['State']).to eq('DE')
       end
     end
 
@@ -85,7 +85,7 @@ describe 'search/_search_results.html.erb', js: true do
       it 'should target the state' do
         ad_targeting = page.evaluate_script('gon.ad_set_targeting')
         expect(ad_targeting['City']).to be_nil
-        expect(ad_targeting['State']).to eq('de')
+        expect(ad_targeting['State']).to eq('DE')
       end
     end
 
@@ -98,7 +98,7 @@ describe 'search/_search_results.html.erb', js: true do
       it 'should target the state and city' do
         ad_targeting = page.evaluate_script('gon.ad_set_targeting')
         expect(ad_targeting['City']).to eq('Wilmington') # Remove spaces and truncate at 10 characters
-        expect(ad_targeting['State']).to eq('de')
+        expect(ad_targeting['State']).to eq('DE')
       end
     end
   end

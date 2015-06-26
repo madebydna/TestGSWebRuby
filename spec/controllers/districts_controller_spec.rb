@@ -22,7 +22,7 @@ describe DistrictsController, type: :controller do
     with_shared_context('when ads are enabled') do
       include_example 'sets at least one google ad targeting attribute'
       include_examples 'sets the base google ad targeting attributes for all pages'
-      include_examples 'sets specific google ad targeting attributes', %w[editorial State]
+      include_examples 'sets specific google ad targeting attributes', %w[editorial State City county]
     end
 
     with_shared_context('when ads are not enabled') do

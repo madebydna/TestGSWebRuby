@@ -4,6 +4,7 @@ class ForgotPasswordController < ApplicationController
   def show
     gon.pagename = 'Forgot Password'
     set_omniture_data
+    set_data_layer_variables
     set_forgot_password_meta_tags
   end
 
@@ -44,4 +45,11 @@ class ForgotPasswordController < ApplicationController
     gon.omniture_hier1 = 'Account,Registration,Forgot Password Entry'
   end
 
+  def set_data_layer_variables
+    data_layer_gon_hash.merge!(
+      {
+        'page_name' => 'GS:Admin:ForgotPassword',
+      }
+    )
+  end
 end

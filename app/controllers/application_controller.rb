@@ -8,18 +8,20 @@ class ApplicationController < ActionController::Base
   include OmnitureConcerns
   include HubConcerns
   include AdvertisingHelper
-  include DataLayerHelper
+  include DataLayerConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
   before_action :adapt_flash_messages_from_java
   before_action :login_from_cookie, :init_omniture
+  before_action :add_user_info_to_gtm_data_layer
   before_action :set_optimizely_gon_env_value
   before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :check_for_java_hover_cookie
   before_action :write_locale_session
+  before_action :set_signed_in_gon_value
 
   after_filter :disconnect_connection_pools
 
@@ -42,16 +44,16 @@ class ApplicationController < ActionController::Base
   ApplicationController.send :public, :url_for
 
   def disconnect_connection_pools
-    return unless @school.present? && request.env['rack_after_reply.callbacks']
+    # This used to be done with the rack_after_reply gem.
+    # Because it was out of date, we removed it and switched this to a
+    # regular after_filter. See PT-1616 for more information.
+    return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
-    request.env['rack_after_reply.callbacks'] << lambda do
-      ActiveRecord::Base.connection_handler.connection_pools.
-        values.each do |pool|
-        if pool.connections.present? &&
-          ( pool.connections.first.
-            current_database == "_#{@school.state.downcase}" )
-          pool.disconnect!
-        end
+    ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
+      if pool.connections.present? &&
+        ( pool.connections.first.
+         current_database == "_#{@school.state.downcase}" )
+        pool.disconnect!
       end
     end
   end
@@ -404,6 +406,14 @@ class ApplicationController < ActionController::Base
 
   def show_ads?
     @show_ads
+  end
+
+  def set_signed_in_gon_value
+    if current_user
+      gon.signed_in = true
+    else
+      gon.signed_in = false
+    end
   end
 
 end

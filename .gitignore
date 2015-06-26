@@ -16,6 +16,7 @@ atlassian-ide-plugin.xml
 # Vim
 *.swp
 .*un~
+tags
 
 profiling-results/
 profiling-results-*
@@ -33,6 +34,7 @@ config/env_global_local.yml
 .rakeTasks
 .zeus.sock
 .gemtags
+.bundle
 
 # custom rspec runner to get rubymine to play nice with zeus
 rspec_runner.rb

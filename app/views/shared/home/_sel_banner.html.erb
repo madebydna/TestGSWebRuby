@@ -1,24 +1,24 @@
 <% utm_params = { utm_source: 'GS', utm_medium: 'web_module', utm_content: 'homepage', utm_campaign: 'Emotional_Smarts' } %>
-<div class="sel-promo-banner">
-  <div class="container">
-    <div class="row">
-      <%= link_to emotional_smarts_url(utm_params) do %>
+<%= link_to emotional_smarts_url(utm_params), class: 'sel-promo-banner' do %>
+  <div class="sel-promo-banner">
+    <div class="limit-width-1200 phl">
+      <div class="row">
         <div class="col-sm-4">
           <div class="hidden-xs sel-banner-heart"></div>
         </div>
         <div class="col-xs-12 col-sm-8">
-          <div class="pll pvm">
-            <div class="pbl">
+          <div class="banner-text-container">
+            <div class="banner-text">
               <h2>Introducing Emotional Smarts</h2>
               <div class="subtitle-lg text_000">The secret to raising confident, happy kids starts with emotional intelligence.</div>
             </div>
             <button class="btn btn-lg btn-primary">Find out more</button>
-            <div class="fr ptm prm">
+            <div class="logo">
               <%= image_tag (image_path('home/Greatkids_logo.png')), size: "75x31"  %>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

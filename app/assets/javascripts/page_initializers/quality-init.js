@@ -15,5 +15,8 @@ if(gon.pagename == "Quality"){
         } else {
             google.setOnLoadCallback(func);
         }
+
+        GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
+
     });
 }

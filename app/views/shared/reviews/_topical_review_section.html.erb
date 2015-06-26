@@ -8,33 +8,44 @@
     <p class="">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
       <%= link_to 'Learn more.', review_guidelines_url %></p>
   </div>
-  <% # if not logged in there will be no @school member only show review questions  %>
-  <% if @school_user %>
-      <% # if logged in and user has a role only show questions  %>
-      <% if !@school_user.unknown?
-           display_review_questions = true %>
-      <% # if logged in and has unknown role  %>
-      <% else %>
-          <% # if user answered questions render and display role question & hide review questions  %>
-          <% if @school_user.reviews.present? %>
-              <%= render 'shared/reviews/modules/member_role_question_module', display: true %>
-              <% display_review_questions = false %>
-          <% # if logged in and has not answered questions, render and hide role question & display review questions  %>
-          <% else %>
-              <%= render 'shared/reviews/modules/member_role_question_module', display: false %>
-              <% display_review_questions = true %>
-          <% end %>
-      <% end %>
-  <% else %>
-      <% display_review_questions = true %>
-  <% end %>
 
-  <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
-    <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
-      <%= render partial: "shared/reviews/modules/topical_review_question_module",
-                 collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
-      %>
+  <div class="row">
+    <div class="col-xs-12 <%= 'col-sm-8' if @show_ads %>">
+      <% # if not logged in there will be no @school member only show review questions   %>
+      <% if @school_user %>
+          <% # if logged in and user has a role only show questions    %>
+          <% if !@school_user.unknown?
+               display_review_questions = true %>
+              <% # if logged in and has unknown role    %>
+          <% else %>
+              <% # if user answered questions render and display role question & hide review questions    %>
+              <% if @school_user.reviews.present? %>
+                  <%= render 'shared/reviews/modules/member_role_question_module', display: true %>
+                  <% display_review_questions = false %>
+                  <% # if logged in and has not answered questions, render and hide role question & display review questions    %>
+              <% else %>
+                  <%= render 'shared/reviews/modules/member_role_question_module', display: false %>
+                  <% display_review_questions = true %>
+              <% end %>
+          <% end %>
+      <% else %>
+          <% display_review_questions = true %>
+      <% end %>
+
+      <%= render 'shared/reviews/modules/question_navigation' %>
+      <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
+        <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
+          <%= render partial: "shared/reviews/modules/topical_review_question_module",
+                     collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
+          %>
+        </div>
+      </div>
     </div>
-    <%= render 'shared/reviews/modules/question_navigation' %>
+    <% if @show_ads %>
+        <div class="col-xs-12 col-sm-4 ptxl mbl">
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile %>
+        </div>
+    <% end %>
   </div>
 </div>
