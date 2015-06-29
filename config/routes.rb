@@ -41,10 +41,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
-  get '/official-school-profile/register.page', to: 'osp_registration#show',as: :osp_registration
-  match '/official-school-profile/register-submit', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+  match '/official-school-profile/register.page', to: 'osp_registration#show',as: :osp_registration, via: [:get]
+  match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
 
-  get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
+   get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
   post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
