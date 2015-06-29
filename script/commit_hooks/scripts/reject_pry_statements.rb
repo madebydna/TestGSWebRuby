@@ -1,6 +1,6 @@
 require_relative '../commit_hooks'
 
-arbiter = CommitHooks::DesignerAccess.new
+arbiter = CommitHooks::RejectPry.new
 arbiter.reject_commit? do |error|
   if error
     puts error
