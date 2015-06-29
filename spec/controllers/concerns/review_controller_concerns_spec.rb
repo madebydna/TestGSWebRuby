@@ -187,6 +187,7 @@ describe ReviewControllerConcerns::ReviewParams do
 
       context 'when user is provisional' do
         it "should flash actions.review.pending_email_verification message" do
+          allow(controller).to receive(:delete_account_pending_email_verification_flash_notice)
           allow(review).to receive(:active?).and_return(false)
           allow(controller).to receive(:current_user).and_return(current_user)
           allow(current_user).to receive(:provisional?).and_return(true)
@@ -210,4 +211,39 @@ describe ReviewControllerConcerns::ReviewParams do
     end
   end
 
+  describe '#delete_account_pending_email_verification_flash_notice' do
+    context 'with account_pending_email_verification_flash_notice already set' do
+      let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
+      let(:flash_notice_array) { ['account pending message', 'other message'] }
+      let(:flash) { {notice: flash_notice_array} }
+      before do
+        allow(controller).to receive(:flash).and_return(flash)
+        allow(controller).to receive(:t).with('actions.account.pending_email_verification').and_return('account pending message')
+      end
+      subject { controller.send :delete_account_pending_email_verification_flash_notice }
+      it 'should remove the account pending message from the account sign up' do
+        subject
+        expect(flash_notice_array).to_not include('account pending message')
+      end
+      it 'should include all other flash messages' do
+        subject
+        expect(flash_notice_array).to include('other message')
+      end
+    end
+    context 'with account_pending_email_verification_flash_notice not set' do
+      let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
+      let(:flash_notice_array) { ['other message'] }
+      let(:flash) { {notice: flash_notice_array} }
+      before do
+        allow(controller).to receive(:flash).and_return(flash)
+        allow(controller).to receive(:t).with('actions.account.pending_email_verification').and_return('account pending message')
+      end
+      subject { controller.send :delete_account_pending_email_verification_flash_notice }
+      it 'should include all other flash messages' do
+        subject
+        expect(flash_notice_array).to include('other message')
+      end
+    end
+  end
 end
+
