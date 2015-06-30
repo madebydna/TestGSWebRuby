@@ -9,6 +9,19 @@ GS.window.sizing.maxMobileWidth = 767;
 
 GS.window.sizing.navBarHeight = 60;
 
+GS.window.isLargerThanMobile = function() {
+  return $(document).width() > GS.window.sizing.maxMobileWidth;
+};
+
+GS.window.pushFooterToBottom = function(containerSelector, footerSelector) {
+  $container = $(containerSelector);
+  window_height = $(window).height();
+  container_top_offset = $container.offset().top;
+  footer_height = $(footerSelector).height();
+
+  $container.height(window_height - container_top_offset - footer_height - 8);
+};
+
 GS.window.sizing.pieChartWidth = function(chartname){
     var obj = GS.window.sizing.sizeBasedObjHash();
     return eval("obj."+chartname+".pieChartWidth");
