@@ -1,3 +1,6 @@
+<% email = @current_user.email if @current_user.present? && @current_user.email.present? %>
+<% password = @current_user.blank? || !@current_user.has_password? %>
+
 <div class="osp-pages" xmlns="http://www.w3.org/1999/html">
   <%= render 'osp/registration/header' %>
   <%= render 'osp/osp_header' %>
@@ -11,7 +14,7 @@
           <input type="hidden" id="state" name="state" value="<%= @state[:short] %>">
           <input type="hidden" id-="name" name="schoolId" value="<%= @school.id %>">
           <%= label_tag(:email, "Email address") %>
-          <input class="form-control" type="text" name="email" id="email"
+          <input class="form-control" type="text" name="email" id="email" value="<%= email %>" <%= email ? 'readonly' : nil %>
                  data-parsley-trigger="change"
                  data-parsley-blockhtmltags
                  data-parsley-required="true"
@@ -21,18 +24,20 @@
                  data-parsley-remote='/gsr/validations/email_available'
                  data-parsley-remote-options='{ "type": "GET"}'
                  data-parsley-remote-message="Looks like you already have an account. <a href='/gsr/login'>Sign in.</a>"
+
           >
+          <% if password %>
+              <%= label_tag(:password, "Password (6-14 characters)") %>
+              <input type="password" class="form-control" required placeholder="Password" id="password" name="password" data-parsley-blockhtmltags
+                     data-parsley-required="true"
+                     data-parsley-length="[6, 14]" data-parsley-trigger="change" data-parsley-required-message="Password is required">
 
-          <%= label_tag(:password, "Password (6-14 characters)") %>
-          <input type="password" class="form-control" required placeholder="Password" id="password" name="password" data-parsley-blockhtmltags
-                 data-parsley-required="true"
-                 data-parsley-length="[6, 14]" data-parsley-trigger="change" data-parsley-required-message="Password is required">
-
-          <%= label_tag(:password_verify, "Confirm password") %>
-          <input type="password" class="form-control" data-parsley-required="true" data-parsley-blockhtmltags
-                 data-parsley-required-message="Password is required"
-                 data-parsley-equalto="#password" data-parsley-equalto-message="Password values should match" id="password_verify" name="password_verify"
-                 data-parsley-trigger="change" placeholder="Re-Type Password">
+              <%= label_tag(:password_verify, "Confirm password") %>
+              <input type="password" class="form-control" data-parsley-required="true" data-parsley-blockhtmltags
+                     data-parsley-required-message="Password is required"
+                     data-parsley-equalto="#password" data-parsley-equalto-message="Password values should match" id="password_verify" name="password_verify"
+                     data-parsley-trigger="change" placeholder="Re-Type Password">
+          <% end %>
 
 
           <%= label_tag(:first_name, "First name") %>
