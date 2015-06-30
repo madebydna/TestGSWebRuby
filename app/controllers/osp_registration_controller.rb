@@ -18,7 +18,7 @@ class OspRegistrationController < ApplicationController
     if @school.blank?
       render 'osp/registration/no_school_selected'
     elsif is_delaware_public_or_charter_user?
-      render 'osp/registration/deleware'
+      render 'osp/registration/delaware'
     elsif @current_user.present? && (@current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? || @current_user.is_esp_demigod?)
       redirect_to osp_dashboard_path
     else @state.present? && params[:schoolId].present?
@@ -98,7 +98,7 @@ class OspRegistrationController < ApplicationController
   end
 
   def is_delaware_public_or_charter_user?
-    (@state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter'))? true : false
+    @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
   end
 
 end
