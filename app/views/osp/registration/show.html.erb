@@ -1,6 +1,9 @@
 <div class="osp-pages" xmlns="http://www.w3.org/1999/html">
   <%= render 'osp/registration/header' %>
   <%= render 'osp/osp_header' %>
+  <div class="tac">
+    <a href="/gsr/login/">Already have an account?</a>
+  </div>
   <div class="osp-registration-form">
     <div class="container">
       <%= form_tag osp_registration_submit_path, name: 'ospRegisterPage', 'data-parsley-validate' => '' do %>

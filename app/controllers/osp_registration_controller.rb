@@ -1,5 +1,7 @@
 class OspRegistrationController < ApplicationController
+
   before_action :set_city_state
+  before_action :set_login_redirect
 
   def show
 
