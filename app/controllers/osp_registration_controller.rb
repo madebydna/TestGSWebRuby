@@ -13,15 +13,16 @@ class OspRegistrationController < ApplicationController
 
     @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
 
-    if @school.blank?
-      render 'osp/osp_no_school_selected'
-    elsif @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
-      render 'osp/osp_registration_de'
-    else @state.present? && params[:schoolId].present?
+      if @school.blank?
+        render 'osp/osp_no_school_selected'
+      elsif is_delaware_public_or_charter_user?
+        render 'osp/osp_registration_de'
+      elsif (@current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? || @current_user.is_esp_demigod?)
+        redirect_to osp_dashboard_path
+      else @state.present? && params[:schoolId].present?
       render 'osp/osp_register'
+      end
     end
-  end
-
 
   def submit
     school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
@@ -93,4 +94,9 @@ class OspRegistrationController < ApplicationController
     )
     path = verify_email_url(verification_link_params)
   end
+
+  def is_delaware_public_or_charter_user?
+    (@state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter'))? true : false
+  end
+
 end
