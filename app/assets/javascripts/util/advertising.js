@@ -176,6 +176,22 @@ if (gon.advertising_enabled) {
     GS.ad.functionAdShowArray.push(GS.util.wrapFunction(fn, context, params));
   };
 
+  GS.ad.checkMessageOrigin = function(origin) {
+    return typeof origin === 'string' && (origin.match(/greatschools\.org$/) || origin.match(/googlesyndication\.com$/) || origin.match(/doubleclick\.net$/));
+  };
+
+  GS.ad.handleGhostTextMessages = function(event) {
+    if (typeof event !== 'undefined' && GS.ad.checkMessageOrigin(event.origin) && typeof event.data !== 'undefined' && typeof event.data.ghostText == 'string') {
+      jQuery('iframe').each(function() {
+        if (this.getAttribute('name') && window.frames[this.getAttribute('name')] == event.source) {
+          jQuery(this).parents('.gs_ad_slot').parent().find('.advertisement-text').text(event.data.ghostText);
+        }
+      });
+    }
+  };
+
+  window.addEventListener('message', GS.ad.handleGhostTextMessages, false);
+
 ///// examples
 // desktop
 //<div class="gs_ad_slot visible-lg visible-md" id="div-gpt-ad-1397603538853-0" data-ad-size="[[300,600],[300,250]]" style="width: 300px;" data-dfp="School_Overview_Snapshot_300x250"></div>
