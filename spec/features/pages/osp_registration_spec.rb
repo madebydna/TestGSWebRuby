@@ -26,7 +26,7 @@ describe 'OSP Registration page' do
   end
 
   with_shared_context 'Delaware public school' do
-    with_shared_context 'visit registration page as a public or charter DE osp user' do
+    with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
       include_example 'should have element with text', 'h4', "Please create a school profile on the state's Department of Education website!"
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
@@ -34,7 +34,7 @@ describe 'OSP Registration page' do
   end
 
   with_shared_context 'Delaware charter school' do
-    with_shared_context 'visit registration page as a public or charter DE osp user' do
+    with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
       include_example 'should have element with text', 'h4', "Please create a school profile on the state's Department of Education website!"
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
@@ -56,4 +56,7 @@ describe 'OSP Registration page' do
       end
     end
   end
+
+  #TODO: write test for when signed in osp user tries to go to OSP registration when official-school-profile/dashboard is a ruby page
+
 end

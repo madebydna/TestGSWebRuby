@@ -80,6 +80,16 @@ shared_context 'visit registration confirmation page' do
     visit osp_confirmation_path(schoolId: school.id, state: school.state)
   end
   subject { page }
+  end
+
+shared_context 'visit registration page' do
+  include_context 'signed in approved osp user for school', :ca, 1
+  include_context 'Basic High School'
+  let(:osp_page) { OspPage.new }
+  before do
+    visit osp_confirmation_path(schoolId: school.id, state: school.state)
+  end
+  subject { page }
 end
 
 shared_context 'visit registration page with no state or school' do
@@ -96,7 +106,7 @@ shared_context 'visit registration page with school state and school' do
   subject { page }
 end
 
-shared_context 'visit registration page as a public or charter DE osp user' do
+shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
 
   before do
     visit osp_registration_path(schoolId: school.id, state: school.state)
