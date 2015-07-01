@@ -1,19 +1,22 @@
 <% email = @current_user.email if @current_user.present? && @current_user.email.present? %>
 <% password = @current_user.blank? || !@current_user.has_password? %>
 
-<div class="osp-pages" xmlns="http://www.w3.org/1999/html">
-  <%= render 'osp/registration/header' %>
-  <%= render 'osp/osp_header' %>
-  <div class="tac">
-    <a href="/gsr/login/">Already have an account?</a>
-  </div>
-  <div class="osp-registration-form">
-    <div class="container">
-      <%= form_tag osp_registration_submit_path, name: 'ospRegisterPage', 'data-parsley-validate' => '' do %>
+<div class="osp-pages gs-bootstrap" xmlns="http://www.w3.org/1999/html">
+  <div class="osp-registration">
+    <%= render 'osp/registration/header' %>
+    <%= render 'osp/osp_header' %>
+    <div class="limit-width">
+      <div class="tac pvl">
+        <a href="/gsr/login/">Already have an account?</a>
+      </div>
+      <div class="container-fluid">
+        <%= form_tag osp_registration_submit_path, name: 'ospRegisterPage', 'data-parsley-validate' => '' do %>
           <%= hidden_field_tag :tab, "drive" %>
           <input type="hidden" id="state" name="state" value="<%= @state[:short] %>">
           <input type="hidden" id-="name" name="schoolId" value="<%= @school.id %>">
-          <%= label_tag(:email, "Email address") %>
+
+          <div class="fr">* required field</div>
+          <%= label_tag(:email, "Email address *") %>
           <input class="form-control" type="text" name="email" id="email" value="<%= email %>" <%= email ? 'readonly' : nil %>
                  data-parsley-trigger="change"
                  data-parsley-blockhtmltags
@@ -24,33 +27,33 @@
                  data-parsley-remote='/gsr/validations/email_available'
                  data-parsley-remote-options='{ "type": "GET"}'
                  data-parsley-remote-message="Looks like you already have an account. <a href='/gsr/login'>Sign in.</a>"
-
           >
+
           <% if password %>
-              <%= label_tag(:password, "Password (6-14 characters)") %>
+              <%= label_tag(:password, "Password (6-14 characters) *") %>
               <input type="password" class="form-control" required placeholder="Password" id="password" name="password" data-parsley-blockhtmltags
                      data-parsley-required="true"
                      data-parsley-length="[6, 14]" data-parsley-trigger="change" data-parsley-required-message="Password is required">
 
-              <%= label_tag(:password_verify, "Confirm password") %>
+              <%= label_tag(:password_verify, "Confirm password *") %>
               <input type="password" class="form-control" data-parsley-required="true" data-parsley-blockhtmltags
                      data-parsley-required-message="Password is required"
                      data-parsley-equalto="#password" data-parsley-equalto-message="Password values should match" id="password_verify" name="password_verify"
                      data-parsley-trigger="change" placeholder="Re-Type Password">
           <% end %>
 
-
-          <%= label_tag(:first_name, "First name") %>
+          <%= label_tag(:first_name, "First name *") %>
           <input class="form-control" type="text" name="first_name" id="first_name" data-parsley-blockhtmltags
                  data-parsley-required-message="First Name is required"
                  data-parsley-trigger="change" data-parsley-required="true">
 
-          <%= label_tag(:last_name, "Last name") %>
+          <%= label_tag(:last_name, "Last name *") %>
           <input class="form-control" type="text" name="last_name" id="last_name" data-parsley-blockhtmltags
                  data-parsley-required-message="Last Name is required"
                  data-parsley-trigger="change" data-parsley-required="true">
 
-          <%= label_tag(:job_title, "Role in relation to the school") %>
+          <%= label_tag(:job_title, "Role in relation to the school *") %>
+          <div>
           <%= select_tag "job_title", "<option value=\"\">Choose One</option><option value=\"administrative assistant\">Administrative Asst.</option>
                                        <option value=\"administrator (other)\">Administrator (Other)</option>
                                        <option value=\"admissions representative\">Admissions Rep</option>
@@ -66,25 +69,31 @@
                                        <option value=\"special education director\">Special Ed Director</option>
                                        <option value=\"superintendent\">Superintendent</option>
                                        <option value=\"teacher\">Teacher</option>
-                                      <option value=\"webmaster\">Webmaster</option>".html_safe, class: 'form_control required' %>
-
+                                      <option value=\"webmaster\">Webmaster</option>".html_safe, class: 'selectpicker required role-select' %>
+          </div>
 
           <%= label_tag(:school_website, "Official school website (URL)") %>
           <input class="form-control" type="text" name="school_website" id="school_website" data-parsley-blockhtmltags
-                 data-parsley-trigger="change" data-parsley-type="url"  data-parsley-type-message="Please enter a valid School Website">
+                 data-parsley-trigger="change" data-parsley-type="url"  data-parsley-type-message="Please enter a valid school website">
 
-
-
+          <div class="tac">
+            <span class="open-sans_sb">
+              By creating a school account, you agree to GreatSchools'
+              <%= link_to 'Terms of Use', terms_of_use_url, class: 'open-sans_sb' %> and
+              <%= link_to 'Privacy Policy', privacy_url, class: 'open-sans_sb' %>
+              .
+            </span>
+          </div>
           <div class="padding-lg tac">
-          <button class="btn btn-primary" type="submit">
+          <button class="btn btn-lg btn-primary" type="submit">
             Sign up
           </button>
           </div>
           </div>
       <% end %>
       </div>
-
-
+    </div>
+  </div>
 </div>
-<%= render 'nav/short_footer' %>
+<%= render 'nav/short_footer', gs_bootstrap: @gs_bootstrap %>
 

@@ -1,52 +1,49 @@
 <% osp_school_decorator = SchoolProfileDecorator.decorate(@school) %>
 <% if  osp_school_decorator.present? %>
-<div class="pvm bg-light-gray ">
-  <div class="limit-width-1200 prl hidden-xs">
-    <div class="container-fluid plm">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="clearfix">
-            <h4 class="fl gray-header rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></h4>
-             <% if current_user.present? &&  (current_user.is_esp_demigod? || current_user.is_esp_superuser?) %>
-                <%= link_to 'switch schools', osp_dashboard_path, class: 'fl pll mtm pt2' %>
-              <% elsif  !current_user.present? %>
-                <%= link_to 'Not your school?', osp_landing_path, class: 'fl pll mtm pt2' %>
-              <% end %>
-          </div>
-          <div>
-            <p class="small rs-school_address">
-              <%= osp_school_decorator.street %>
-            </p>
-
-            <p class="small rs-school-information">
-              <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
-              | <%= osp_school_decorator.city_state %>
-            </p>
-
-          </div>
+  <div class="pvm bg-light-gray gs-bootstrap">
+    <% # .limit-width is used to help this module on osp-registration %>
+    <div class="hidden-xs limit-width">
+      <div class="container-fluid">
+        <div class="clearfix">
+          <h4 class="fl gray-header rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></h4>
+          <% if current_user.present? &&  (current_user.is_esp_demigod? || current_user.is_esp_superuser?) %>
+            <%= link_to 'switch schools', osp_dashboard_path, class: 'fl pll mtm pt2' %>
+          <% elsif  !current_user.present? %>
+            <%= link_to 'Not your school?', osp_landing_path, class: 'fl pll mtm pt2' %>
+          <% end %>
+        </div>
+        <div>
+          <p class="small rs-school_address">
+          <%= osp_school_decorator.street %>
+          </p>
+          <p class="small rs-school-information">
+          <%= osp_school_decorator.process_level %> |
+          <%= school_type_display(osp_school_decorator.type) %> |
+          <%= osp_school_decorator.city_state %>
+          </p>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="visible-xs clearfix prm">
-    <p class="gray-header default ptm plm rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></p>
+    <% # .limit-width is used to help this module on osp-registration %>
+    <div class="visible-xs container-fluid limit-width prm">
+      <p class="gray-header default ptm plm rs-osp_school_name"> <%= osp_school_decorator.name.upcase %></p>
 
-    <div class="plm">
-      <p class="small rs-school_address">
+      <div class="plm">
+        <p class="small rs-school_address">
         <%= osp_school_decorator.street %>
-      </p>
+        </p>
 
-      <p class="small rs-school-information">
+        <p class="small rs-school-information">
         <%= osp_school_decorator.process_level %> | <%= school_type_display(osp_school_decorator.type) %>
         | <%= osp_school_decorator.city_state %>
       </p>
-    </div>
-    <% if current_user.present? &&  (current_user.is_esp_demigod? || current_user.is_esp_superuser?) %>
+      </div>
+      <% if current_user.present? &&  (current_user.is_esp_demigod? || current_user.is_esp_superuser?) %>
         <%= link_to 'switch schools', osp_dashboard_path, class: 'plm' %>
-    <% elsif  !current_user.present? %>
+      <% elsif  !current_user.present? %>
         <%= link_to 'Not your school?', osp_landing_path, class: 'fl pll mtm pt2' %>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 <% end %>

@@ -79,6 +79,13 @@
     }
   }
 
+  .osp-registration {
+    .limit-width {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 650px;
+    }
+  }
 
   .osp-school-picker-module{
     background-color: $wallpaper-green;
@@ -125,6 +132,13 @@
       text-align: center;
     }
 
+  }
+
+  .role-select {
+    width: 100% !important;
+    @media (min-width: $screen-sm-min) {
+      width: 33% !important;
+    }
   }
 
   .medium-link {

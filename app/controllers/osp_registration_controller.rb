@@ -2,6 +2,7 @@ class OspRegistrationController < ApplicationController
 
   before_action :set_city_state
   before_action :set_login_redirect
+  before_action :use_gs_bootstrap
 
   def show
 
