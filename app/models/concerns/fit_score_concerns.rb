@@ -43,8 +43,12 @@ module FitScoreConcerns
       mandarin: :foreign_language
     }.stringify_keys!,
     enrollment: {
-      vouchers: :students_vouchers
-    }.stringify_keys!,
+      vouchers: :students_vouchers,
+      EdChoice:  :voucher_type,
+      Autism:  :voucher_type,
+      Cleveland: :voucher_type,
+      "Jon Peterson Special Needs" => :voucher_type
+  }.stringify_keys!,
     summer_program: {
         yes: :summer_program
     }.stringify_keys!
