@@ -17,7 +17,7 @@
 
           <div class="fr">* required field</div>
           <%= label_tag(:email, "Email address *") %>
-          <input class="form-control" type="text" name="email" id="email" value="<%= email %>" <%= email ? 'readonly' : nil %>
+          <input class="form-control" type="email" name="email" id="email" value="<%= email %>" <%= email ? 'readonly' : nil %>
                  data-parsley-trigger="change"
                  data-parsley-blockhtmltags
                  data-parsley-required="true"
