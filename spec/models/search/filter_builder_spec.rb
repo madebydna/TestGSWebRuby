@@ -225,6 +225,26 @@ describe FilterBuilder do
         end
       end
     end
+    context 'in Ohio' do
+      let (:filters) { FilterBuilder.new('OH', nil, false).filters }
+      [ { panel: 1,
+          contains: [:grades, :distance, :st, :gs_rating],
+          does_not_contain: [:ptq_rating]
+        },
+        { panel: 2,
+          contains: [:transportation, :extendedHours, :dress_code, :class_offerings],
+          does_not_contain: [:gs_rating]
+        },
+        { panel: 3,
+          contains: [:boys_sports, :girls_sports, :school_focus, :enrollment],
+          does_not_contain: [:class_offerings]
+        }].each_with_index do |filter_map, index|
+        assert_filter_structure(filter_map, index)
+        it 'should have the voucher type filter' do
+          expect(filters.filters[2].filters[3].filters[1].name).to eq(:voucher_type)
+        end
+      end
+    end
     context 'in Indiana' do
       let (:filters) { FilterBuilder.new('IN', nil, false).filters }
       [ { panel: 1,
