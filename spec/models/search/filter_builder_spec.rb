@@ -388,6 +388,16 @@ describe FilterBuilder do
         expect(cache_key).to start_with('simple')
       end
     end
+    context 'in Ohio' do
+      let (:oh_cache_key) { FilterBuilder.new('oh', nil, false).filters.cache_key }
+      let (:forced_simple) { FilterBuilder.new('oh', nil, true).filters.cache_key }
+      it 'should represent a vouchers configuration' do
+        expect(oh_cache_key).to start_with('vouchers')
+      end
+      it 'should represent a simple configuration if forced' do
+        expect(forced_simple).to start_with('simple')
+      end
+    end
     context 'in Delaware' do
       let (:de_cache_key) { FilterBuilder.new('de', nil, false).filters.cache_key }
       let (:forced_simple) { FilterBuilder.new('de', nil, true).filters.cache_key }
