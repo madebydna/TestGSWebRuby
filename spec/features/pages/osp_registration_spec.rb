@@ -20,14 +20,14 @@ describe 'OSP Registration page' do
 
   with_shared_context 'visit registration page with no state or school' do
     describe_mobile_and_desktop do
-      include_example 'should have element with text', 'h4', 'To register for a school account you have to select a school first'
+      include_example 'should have element with text', 'h4', 'To register for a school account, please select a school first'
       include_example 'should have link', 'select a school', '/official-school-profile'
     end
   end
 
   with_shared_context 'Delaware public school' do
     with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-      include_example 'should have element with text', 'h4', "Please create a school profile on the state's Department of Education website!"
+      include_example 'should have element with text', 'h4', "Your school account has been created via the State Department of Education IMS portal."
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
     end
@@ -35,7 +35,7 @@ describe 'OSP Registration page' do
 
   with_shared_context 'Delaware charter school' do
     with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-      include_example 'should have element with text', 'h4', "Please create a school profile on the state's Department of Education website!"
+      include_example 'should have element with text', 'h4', "Your school account has been created via the State Department of Education IMS portal."
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
     end
