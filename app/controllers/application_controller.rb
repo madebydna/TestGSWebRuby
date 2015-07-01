@@ -417,7 +417,7 @@ class ApplicationController < ActionController::Base
   end
 
   def use_gs_bootstrap
-    @gs_bootstrap = true
+    @gs_bootstrap = 'gs-bootstrap'
   end
 
 end
