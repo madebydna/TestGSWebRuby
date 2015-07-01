@@ -59,4 +59,28 @@ describe 'OSP Registration page' do
 
   #TODO: write test for when signed in osp user tries to go to OSP registration when official-school-profile/dashboard is a ruby page
 
+  with_shared_context 'Basic High School' do
+    with_shared_context 'signed in regular user with', email: 'test+1@greatschools.org' do
+      with_shared_context 'visit registration page with school state and school' do
+        include_example 'should have field on page with text', 'Email address', 'test+1@greatschools.org'
+        include_example 'should not have field on page', '#password', 'password'
+        include_example 'should not have field on page', '#password_verify', 'password'
+        include_example 'should have field on page with text', '#first_name', 'text'
+        include_example 'should have field on page with text', '#last_name', 'text'
+        include_example 'should have field on page with text', '#school_website', 'text'
+      end
+    end
+  end
+
+  with_shared_context 'Basic High School' do
+    with_shared_context 'visit registration page with school state and school' do
+      include_example 'should have field on page with text', '#email', 'email'
+      include_example 'should have field on page with text', '#password', 'password'
+      include_example 'should have field on page with text', '#password_verify', 'password'
+      include_example 'should have field on page with text', '#first_name', 'text'
+      include_example 'should have field on page with text', '#last_name', 'text'
+      include_example 'should have field on page with text', '#school_website', 'text'
+    end
+  end
+
 end
