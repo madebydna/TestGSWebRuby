@@ -31,7 +31,7 @@
 
           <% if password %>
               <%= label_tag(:password, "Password (6-14 characters) *") %>
-              <input type="password" class="form-control" required placeholder="Password" id="password" name="password" data-parsley-blockhtmltags
+              <input type="password" class="form-control" required id="password" name="password" data-parsley-blockhtmltags
                      data-parsley-required="true"
                      data-parsley-length="[6, 14]" data-parsley-trigger="change" data-parsley-required-message="Password is required">
 
@@ -39,7 +39,7 @@
               <input type="password" class="form-control" data-parsley-required="true" data-parsley-blockhtmltags
                      data-parsley-required-message="Password is required"
                      data-parsley-equalto="#password" data-parsley-equalto-message="Password values should match" id="password_verify" name="password_verify"
-                     data-parsley-trigger="change" placeholder="Re-Type Password">
+                     data-parsley-trigger="change" >
           <% end %>
 
           <%= label_tag(:first_name, "First name *") %>
