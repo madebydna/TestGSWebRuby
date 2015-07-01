@@ -41,7 +41,7 @@ LocalizedProfiles::Application.routes.draw do
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
-  match '/official-school-profile/register.page', to: 'osp_registration#show',as: :osp_registration, via: [:get]
+  match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
   match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
 
    get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation

@@ -3,7 +3,7 @@ require 'controllers/contexts/osp_shared_contexts'
 require 'features/contexts/osp_contexts.rb'
 
 describe OspRegistrationController do
-  describe '#show' do
+  describe '#new' do
     it 'should have correct osp page meta tag' do
       allow(controller).to receive(:set_meta_tags)
     end
@@ -38,7 +38,7 @@ describe OspRegistrationController do
     with_shared_context 'Delaware private school' do
       with_shared_context 'visit registration page with school state and school' do
         it ' should render correct registration page' do
-          expect(response).to render_template('osp/registration/show')
+          expect(response).to render_template('osp/registration/new')
         end
       end
     end
@@ -46,7 +46,7 @@ describe OspRegistrationController do
     with_shared_context 'Basic High School' do
       with_shared_context 'visit registration page with school state and school' do
         it ' should render correct registration page' do
-          expect(response).to render_template('osp/registration/show')
+          expect(response).to render_template('osp/registration/new')
         end
       end
     end

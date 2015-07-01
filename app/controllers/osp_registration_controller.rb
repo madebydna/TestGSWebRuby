@@ -4,7 +4,7 @@ class OspRegistrationController < ApplicationController
   before_action :set_login_redirect
   before_action :use_gs_bootstrap
 
-  def show
+  def new
 
     page_title = 'School Account - Register | GreatSchools'
     gon.pageTitle = page_title
@@ -23,7 +23,7 @@ class OspRegistrationController < ApplicationController
     elsif @current_user.present? && (@current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? || @current_user.is_esp_demigod?)
       redirect_to osp_dashboard_path
     else @state.present? && params[:schoolId].present?
-      render 'osp/registration/show'
+      render 'osp/registration/new'
     end
   end
 
