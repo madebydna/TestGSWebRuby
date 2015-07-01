@@ -18,7 +18,7 @@
     </div>
     <% if body_middle_text.present?%>
         <div class="row padding-lg">
-          <p><%= body_middle_text %></p>
+          <p><%= body_middle_text.html_safe %></p>
         </div>
         <div class="row padding-lg">
           <p><%= bottom_text.html_safe %></p>
