@@ -184,7 +184,9 @@ if (gon.advertising_enabled) {
     if (typeof event !== 'undefined' && GS.ad.checkMessageOrigin(event.origin) && typeof event.data !== 'undefined' && typeof event.data.ghostText == 'string') {
       jQuery('iframe').each(function() {
         if (this.getAttribute('name') && window.frames[this.getAttribute('name')] == event.source) {
-          jQuery(this).parents('.gs_ad_slot').parent().find('.advertisement-text').text(event.data.ghostText);
+          var $adSlotDiv = jQuery(this).parents('.gs_ad_slot');
+          var slotName = $adSlotDiv.attr('id');
+          $adSlotDiv.parents('.js-' + slotName + '-wrapper').find('.advertisement-text').text(event.data.ghostText);
         }
       });
     }
