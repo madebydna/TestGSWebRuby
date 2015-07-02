@@ -1,0 +1,33 @@
+<% #all text in structs/classes should be pulled from the locale files %>
+<% bar_chart_struct = Struct.new(:title_text, :button_text, :rows) %>
+<% bar_chart_row_struct = Struct.new(:bar_text, :bar_color_value, :bar_grey_value, :bar_value_text, :color, :sub_text, :cursor_value) %>
+<% #have bar_color_value and bar_grey_value calculated ahead of time %>
+<% #have logic to determine the appropriate text for sub_text %>
+<% rows = [
+            bar_chart_row_struct.new('All Students', '65%', '34.5%', 'Advanced', '#ec843e', '300 students tested', '75%'),
+            bar_chart_row_struct.new('Latino', '87%', '12.5%', 'Advanced', '#40a753', '10% of the population', '60%'),
+            bar_chart_row_struct.new('Asian', '20%', '79.5%', 'Advanced', '#bf3c29', '20% of the population', '40%'),
+            bar_chart_row_struct.new('European', '40%', '59.5%', 'Advanced', '#ec843e', '80% of the population', '70%'),
+            bar_chart_row_struct.new('African American', '79%', '20.5%', 'Advanced', '#40a753', '22% of the population', '90%')
+          ]
+%>
+
+<% bar_chart = bar_chart_struct.new('Advanced Only', 'Display Proficient & Advanced', rows) %>
+
+
+<% #Move to stylesheet and use mixins/extends/etc.. %>
+
+<div class="col-xs-12 data-viz-bar-chart">
+  <div class='header'>
+    <div class='title-text'><%= bar_chart.title_text %></div>
+    <% #<div class='btn btn-sm btn-default pull-left'><%= bar_chart.button_text ></div> %>
+  </div>
+
+  <div class='row'>
+    <% bar_chart.rows.each do | row | %>
+      <%= render partial: 'school_profile/data_viz/bar_chart_row', locals: {row: row} %>
+    <% end %>
+  </div>
+</div>
+
+

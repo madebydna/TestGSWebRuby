@@ -1,0 +1,54 @@
+.data-viz-bar-chart {
+
+  .header {
+    width: 100%;
+    @include clearfix();
+  }
+
+  .title-text {
+    font-size: 22px;
+    font-weight: bold;
+    padding-right: 10px;
+    float: left;
+  }
+
+  .bar-chart-rows {
+    padding: 10px 10px 10px 0px;
+
+    .row-text {
+      font-size: 16px;
+      font-weight: bold;
+      padding-right: 10px;
+      float: left;
+    }
+
+
+    .bar-row {
+      width: 100%;
+      @include clearfix();
+      padding-right: 10px;
+    }
+
+    .subtext {
+      width: 100%;
+      @include clearfix();
+    }
+
+    .color-row {
+      height:10px;
+      border-radius: 1px 0px 0px 1px;
+      float: left;
+    }
+
+    .grey-row {
+      height:10px;
+      border-radius: 0px 1px 1px 0px;
+      background-color: #dedede;
+      float: right;
+    }
+  }
+}
+
+
+
+
