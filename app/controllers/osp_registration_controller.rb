@@ -150,6 +150,7 @@ class OspRegistrationController < ApplicationController
   end
 
   def sign_up_user_for_subscriptions!(user, school, subscriptions)
+    subscriptions ||= []
     if subscriptions.include?('mystat_osp')
       user.add_subscription!('mystat', school)
       user.add_subscription!('osp', school)
