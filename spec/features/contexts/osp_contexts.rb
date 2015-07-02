@@ -129,6 +129,32 @@ shared_context 'click osp nav link element with text:' do |text|
   end
 end
 
+shared_context 'fill in OSP Registration with valid values' do |email|
+  before do
+    fill_in(:email, with: email)
+    fill_in(:password, with: 'password')
+    fill_in(:password_verify, with: 'password')
+    fill_in(:first_name, with: 'Dev')
+    fill_in(:last_name, with: 'Eloper')
+    fill_in(:school_website, with: 'www.schoolwebsite.com')
+  end
+end
+
+shared_context 'with both email opt-ins selected' do
+  # Do nothing. This is the default.
+end
+
+shared_context 'with an email opt-in unselected' do |list|
+  before do
+    subject.find(:xpath, "//input[@value='#{list}']").set(false)
+  end
+end
+
+shared_context 'submit OSP Registration form' do
+  before { click_button 'Sign up' }
+  after { clean_models :gs_schooldb, User, Subscription, EspMembership }
+end
+
 ### DB Setup ###
 
 shared_context 'with a basic set of osp questions in db' do

@@ -78,12 +78,26 @@
           <input class="form-control" type="text" name="school_website" id="school_website" data-parsley-blockhtmltags
                  data-parsley-trigger="change" data-parsley-type="url"  data-parsley-type-message="Please enter a valid school website">
 
+          <div class="pvl">
+            <div class="clearfix">
+              <label>
+                <%= check_box_tag('subscriptions[]', 'mystat_osp', true, id: 'subscriptions_mystat_osp', class: 'fl') %>
+                <div class="pll">Send me updates about my school's profile, including new reviews, updated test scores and new features.</div>
+              </label>
+            </div>
+
+            <div class="clearfix">
+              <label>
+                <%= check_box_tag('subscriptions[]', 'osp_partner_promos', true, id: 'subscriptions_osp_partners_promo', class: 'fl') %>
+                <div class="pll">Send me education news about my community, and occasional messages from carefully chosen GreatSchools partners.</div>
+              </label>
+            </div>
+          </div>
           <div class="tac">
             <span class="open-sans_sb">
               By creating a school account, you agree to GreatSchools'
               <%= link_to 'Terms of Use', terms_of_use_url, class: 'open-sans_sb' %> and
-              <%= link_to 'Privacy Policy', privacy_url, class: 'open-sans_sb' %>
-              .
+              <%= link_to 'Privacy Policy', privacy_url, class: 'open-sans_sb' %>.
             </span>
           </div>
           <div class="padding-lg tac">

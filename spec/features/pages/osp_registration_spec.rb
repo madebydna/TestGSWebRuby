@@ -8,6 +8,7 @@ require_relative '../../../spec/features/contexts/osp_contexts'
 require 'features/examples/osp_examples'
 require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
+require 'features/examples/user_examples'
 
 describe 'OSP Registration page' do
   with_shared_context 'visit registration confirmation page' do
@@ -53,6 +54,35 @@ describe 'OSP Registration page' do
 
       describe_mobile_and_desktop do
         include_example 'should have element with text', 'label', 'Email address'
+      end
+    end
+  end
+
+  with_shared_context 'Basic High School' do
+    with_shared_context 'visit registration page with school state and school' do
+      email = 'developer@greatschools.org'
+      with_shared_context 'fill in OSP Registration with valid values', email do
+        with_shared_context 'with both email opt-ins selected' do
+          with_shared_context 'submit OSP Registration form' do
+            include_example 'user should have list', email, 'mystat'
+            include_example 'user should have list', email, 'osp'
+            include_example 'user should have list', email, 'osp_partner_promos'
+          end
+        end
+        with_shared_context 'with an email opt-in unselected', 'mystat_osp' do
+          with_shared_context 'submit OSP Registration form' do
+            include_example 'user should not have list', email, 'mystat'
+            include_example 'user should not have list', email, 'osp'
+            include_example 'user should have list', email, 'osp_partner_promos'
+          end
+        end
+        with_shared_context 'with an email opt-in unselected', 'osp_partner_promos' do
+          with_shared_context 'submit OSP Registration form' do
+            include_example 'user should have list', email, 'mystat'
+            include_example 'user should have list', email, 'osp'
+            include_example 'user should not have list', email, 'osp_partner_promos'
+          end
+        end
       end
     end
   end

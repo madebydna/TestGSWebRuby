@@ -98,16 +98,10 @@ class OspRegistrationController < ApplicationController
       return esp_membership, esp_membership.errors.messages.first[1].first
     end
 
-    # escape html
+    sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
 
-
-    # adding a static email for now to check email sending should send email from user once the saving user part is done
-    if user.present? && school.present?
-      #Send OSP Verification Email
-      OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
-      #Redirect to thank you page
-      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
-    end
+    OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
+    redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
   end
 
   def upgrade_user_to_osp_user(school)
@@ -155,4 +149,13 @@ class OspRegistrationController < ApplicationController
     end
   end
 
+  def sign_up_user_for_subscriptions!(user, school, subscriptions)
+    if subscriptions.include?('mystat_osp')
+      user.add_subscription!('mystat', school)
+      user.add_subscription!('osp', school)
+    end
+    if subscriptions.include?('osp_partner_promos')
+      user.add_subscription!('osp_partner_promos', school)
+    end
+  end
 end

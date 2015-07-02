@@ -74,4 +74,68 @@ describe OspRegistrationController do
     # end
 
   end
+
+  describe '#sign_up_user_for_subscriptions!' do
+    after do
+      clean_models :ca, School
+      clean_models :gs_schooldb, Subscription
+    end
+
+    let(:user) { FactoryGirl.build(:user) }
+    let(:school) { FactoryGirl.create(:school) }
+
+    context 'with both opt-ins selected' do
+      let(:subscription_params) { ['mystat_osp', 'osp_partner_promos'] }
+
+      before do
+        controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+      end
+
+      %w(mystat osp osp_partner_promos).each do |list|
+        it "should sign up the user for #{list}" do
+          expect(user.has_subscription?(list, school)).to be true
+        end
+      end
+    end
+
+    context 'with the osp_parter_promos opt-in selected' do
+      let(:subscription_params) { ['osp_partner_promos'] }
+
+      before do
+        controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+      end
+
+      %w(osp_partner_promos).each do |list|
+        it "should sign up the user for #{list}" do
+          expect(user.has_subscription?(list, school)).to be true
+        end
+      end
+    end
+
+    context 'with the mystat_osp opt-in selected' do
+      let(:subscription_params) { ['mystat_osp'] }
+
+      before do
+        controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+      end
+
+      %w(mystat osp).each do |list|
+        it "should sign up the user for #{list}" do
+          expect(user.has_subscription?(list, school)).to be true
+        end
+      end
+    end
+
+    context 'with no opt-in selected' do
+      let(:subscription_params) { [] }
+
+      before do
+        controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+      end
+
+      it "should sign up the user for no lists" do
+        expect(user.subscriptions).to be_empty
+      end
+    end
+  end
 end
