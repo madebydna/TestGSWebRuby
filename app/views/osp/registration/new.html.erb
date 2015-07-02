@@ -18,15 +18,17 @@
           <div class="fr">* required field</div>
           <%= label_tag(:email, "Email address *") %>
           <input class="form-control" type="email" name="email" id="email" value="<%= email %>" <%= email ? 'readonly' : nil %>
-                 data-parsley-trigger="change"
-                 data-parsley-blockhtmltags
-                 data-parsley-required="true"
-                 data-parsley-required-message="Email is required"
-                 data-parsley-type="email"
-                 data-parsley-type-message="Please enter a valid email"
-                 data-parsley-remote='/gsr/validations/email_available'
-                 data-parsley-remote-options='{ "type": "GET"}'
-                 data-parsley-remote-message="Looks like you already have an account. <a href='/gsr/login'>Sign in.</a>"
+                 <% if !email %>
+                    data-parsley-trigger="change"
+                    data-parsley-blockhtmltags
+                    data-parsley-required="true"
+                    data-parsley-required-message="Email is required"
+                    data-parsley-type="email"
+                    data-parsley-type-message="Please enter a valid email"
+                    data-parsley-remote='/gsr/validations/email_available'
+                    data-parsley-remote-options='{ "type": "GET"}'
+                    data-parsley-remote-message="Looks like you already have an account. <a href='/gsr/login'>Sign in.</a>"
+                 <% end %>
           >
 
           <% if password %>

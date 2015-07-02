@@ -29,58 +29,13 @@ class OspRegistrationController < ApplicationController
 
   def submit
     school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
-    user_email = params[:email]
-    password   = params[:password]
-    password_verify = params[:password_verify]
-    first_name = params[:first_name]
-    last_name = params[:last_name]
-    school_website = params[:school_website]
-    job_title = params[:job_title]
 
-    user = User.where(email:user_email, password: nil).first_or_initialize
-    user.password = password
-    user.first_name = first_name
-    user.last_name = last_name
-    user.welcome_message_status='never_send'
-    user.how='esp'
-
-    # create row in user
-
-    begin
-      user.save!
-     rescue
-      return user, user.errors.messages.first[1].first
-    end
-    #create row in Esp membership
-
-    begin
-      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
-      esp_membership.state = @state[:short]
-      esp_membership.school_id = school.id
-      esp_membership.status = 'provisional'
-      esp_membership.active = false
-      esp_membership.web_url = school_website
-      esp_membership.job_title = job_title
-      esp_membership.created = Time.now
-      esp_membership.updated = Time.now
-      esp_membership.save!
-
-    rescue
-      return esp_membership, esp_membership.errors.messages.first[1].first
-
-
+    if current_user.present?
+      upgrade_user_to_osp_user(school)
+    else
+      save_new_osp_user(school)
     end
 
-    # escape html
-
-
-    # adding a static email for now to check email sending should send email from user once the saving user part is done
-    if user.present? && school.present?
-      #Send OSP Verification Email
-      OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
-      #Redirect to thank you page
-      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
-    end
   end
 
   private
@@ -100,6 +55,104 @@ class OspRegistrationController < ApplicationController
 
   def is_delaware_public_or_charter_user?
     @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
+  end
+
+  def save_new_osp_user(school)
+    user_email = params[:email]
+    password   = params[:password]
+    password_verify = params[:password_verify]
+    first_name = params[:first_name]
+    last_name = params[:last_name]
+    school_website = params[:school_website]
+    job_title = params[:job_title]
+
+    user = User.where(email:user_email, password: nil).first_or_initialize
+    user.password = password
+    user.first_name = first_name
+    user.last_name = last_name
+    user.welcome_message_status='never_send'
+    user.how='esp'
+
+    # create row in user
+
+    begin
+      user.save!
+    rescue
+      return user, user.errors.messages.first[1].first
+    end
+    #create row in Esp membership
+
+    begin
+      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
+      esp_membership.state = @state[:short]
+      esp_membership.school_id = school.id
+      esp_membership.status = 'provisional'
+      esp_membership.active = false
+      esp_membership.web_url = school_website
+      esp_membership.job_title = job_title
+      esp_membership.created = Time.now
+      esp_membership.updated = Time.now
+      esp_membership.save!
+
+    rescue
+      return esp_membership, esp_membership.errors.messages.first[1].first
+    end
+
+    # escape html
+
+
+    # adding a static email for now to check email sending should send email from user once the saving user part is done
+    if user.present? && school.present?
+      #Send OSP Verification Email
+      OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
+      #Redirect to thank you page
+      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    end
+  end
+
+  def upgrade_user_to_osp_user(school)
+    user_email = params[:email]
+    first_name = params[:first_name]
+    last_name = params[:last_name]
+    school_website = params[:school_website]
+    job_title = params[:job_title]
+
+    user = User.where(email:user_email).first_or_initialize
+    user.first_name = first_name
+    user.last_name = last_name
+    user.welcome_message_status='never_send'
+    user.how='esp'
+
+    # update row in users
+
+    begin
+      user.update_attributes(first_name: first_name ,last_name: last_name, school_website: school_website, job_title: job_title)
+    rescue
+      return user, user.errors.messages.first[1].first
+    end
+
+    #create row in Esp membership
+
+    begin
+      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
+      esp_membership.state = @state[:short]
+      esp_membership.school_id = school.id
+      esp_membership.status = 'provisional'
+      esp_membership.active = false
+      esp_membership.web_url = school_website
+      esp_membership.job_title = job_title
+      esp_membership.created = Time.now
+      esp_membership.updated = Time.now
+      esp_membership.save!
+
+    rescue
+      return esp_membership, esp_membership.errors.messages.first[1].first
+    end
+
+    if user.present? && school.present?
+      #Redirect to thank you page
+      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    end
   end
 
 end
