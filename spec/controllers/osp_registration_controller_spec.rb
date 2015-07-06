@@ -13,41 +13,36 @@ describe OspRegistrationController do
       allow(controller).to receive(:set_omniture_data_for_user_request)
     end
 
-    with_shared_context 'visit registration page with no state or school' do
-      it ' should render correct error page' do
-        expect(response).to render_template('osp/registration/no_school_selected')
-      end
+    it 'should render correct error page with no state or school' do
+      get :new
+      expect(response).to render_template('osp/registration/no_school_selected')
     end
 
     with_shared_context 'Delaware public school' do
-      with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-        it ' should render correct error page' do
-          expect(response).to render_template('osp/registration/delaware')
-        end
+      it ' should render correct error page' do
+        get :new, state: school.state, schoolId: school.id
+        expect(response).to render_template('osp/registration/delaware')
       end
     end
 
     with_shared_context 'Delaware charter school' do
-      with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-        it ' should render correct error page' do
-          expect(response).to render_template('osp/registration/delaware')
-        end
+      it ' should render correct error page' do
+        get :new, state: school.state, schoolId: school.id
+        expect(response).to render_template('osp/registration/delaware')
       end
     end
 
     with_shared_context 'Delaware private school' do
-      with_shared_context 'visit registration page with school state and school' do
-        it ' should render correct registration page' do
-          expect(response).to render_template('osp/registration/new')
+      it ' should render correct registration page' do
+        get :new, state: school.state, schoolId: school.id
+        expect(response).to render_template('osp/registration/new')
         end
-      end
     end
 
     with_shared_context 'Basic High School' do
-      with_shared_context 'visit registration page with school state and school' do
-        it ' should render correct registration page' do
-          expect(response).to render_template('osp/registration/new')
-        end
+      it ' should render correct registration page' do
+        get :new, state: school.state, schoolId: school.id
+        expect(response).to render_template('osp/registration/new')
       end
     end
 
@@ -73,6 +68,43 @@ describe OspRegistrationController do
     #   end
     # end
 
+  end
+
+  describe '#submit' do
+    after do
+      clean_models :gs_schooldb, User, EspMembership
+      clean_models :ca, School
+    end
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:esp_membership) { FactoryGirl.build(:esp_membership) }
+    let(:upgrade_osp_user_hash) {{ state: school.state, schoolId: school.id, email: user.email,
+                                  first_name: user.first_name, last_name: user.last_name,
+                                  school_website: 'foo.com', job_title: 'ping pong master', esp_membership: esp_membership.member_id }}
+    let(:save_new_osp_user_hash) {{ state: school.state, schoolId: school.id, email: user.email, password: user.password,
+                                    first_name: user.first_name, last_name: user.last_name,
+                                    school_website: 'foo.com', job_title: 'ping pong master', esp_membership: esp_membership.member_id}}
+
+    with_shared_context 'Basic High School' do
+        it 'should upgrade regular user to osp user' do
+          allow_any_instance_of(OspRegistrationController).to receive(:current_user).and_return user
+          expect(controller).to receive(:upgrade_user_to_osp_user).and_call_original
+          get :submit, upgrade_osp_user_hash
+          expect(response.redirect_url).to eq(osp_confirmation_url(state: school.state, schoolId: school.id))
+          expect(EspMembership.count).to_not be 0
+          # todo: test for user row saving
+          # expect(User.job_title).to be 'ping pong master'
+        end
+
+        # it 'should register new osp user' do
+        #   # allow_any_instance_of(OspRegistrationController).to receive(:user).and_return user
+        #   expect(controller).to receive(:save_new_osp_user)
+        #   get :submit, save_new_osp_user_hash
+        #   expect(response.redirect_url).to eq(osp_confirmation_url(state: school.state, schoolId: school.id))
+        #   expect(EspMembership.count).to_not be 0
+        #   expect(User.count).to_not be 0
+        # end
+    end
   end
 
   describe '#sign_up_user_for_subscriptions!' do

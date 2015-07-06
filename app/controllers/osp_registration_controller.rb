@@ -29,7 +29,6 @@ class OspRegistrationController < ApplicationController
 
   def submit
     school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
-
     if current_user.present?
       upgrade_user_to_osp_user(school)
     else
@@ -60,13 +59,14 @@ class OspRegistrationController < ApplicationController
   def save_new_osp_user(school)
     user_email = params[:email]
     password   = params[:password]
-    password_verify = params[:password_verify]
+    # password_verify = params[:password_verify]
     first_name = params[:first_name]
     last_name = params[:last_name]
     school_website = params[:school_website]
     job_title = params[:job_title]
 
-    user = User.where(email:user_email, password: nil).first_or_initialize
+    user = User.new
+    user.email = user_email
     user.password = password
     user.first_name = first_name
     user.last_name = last_name
@@ -111,7 +111,7 @@ class OspRegistrationController < ApplicationController
     school_website = params[:school_website]
     job_title = params[:job_title]
 
-    user = User.where(email:user_email).first_or_initialize
+    user = User.where(email:current_user.email).first_or_initialize
     user.first_name = first_name
     user.last_name = last_name
     user.welcome_message_status='never_send'
@@ -142,7 +142,6 @@ class OspRegistrationController < ApplicationController
     rescue
       return esp_membership, esp_membership.errors.messages.first[1].first
     end
-
     if user.present? && school.present?
       #Redirect to thank you page
       redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])

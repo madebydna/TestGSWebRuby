@@ -40,7 +40,7 @@ end
 
 shared_context 'Basic High School' do
   let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h') }
-  after { clean_models School }
+  after { clean_models :ca, School }
   end
 
 shared_context 'Delaware public school' do
