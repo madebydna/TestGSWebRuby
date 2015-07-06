@@ -181,7 +181,6 @@ class CensusDataReader < SchoolProfileDataReader
     @all_census_data =
       CensusDataResults.new(results)
         .filter_to_max_year_per_data_type!
-        .keep_null_breakdowns!
         .sort_school_value_desc_by_date_type!
   end
 end
