@@ -97,7 +97,7 @@ class CategoryData < ActiveRecord::Base
   def response_key
     key = super
     return nil if key.nil?
-    key.match(/\A\d+\z/) ? key.to_i : key.downcase
+    key.match(/\A\d+\z/) ? key.to_i : key
   end
 
   def computed_label
