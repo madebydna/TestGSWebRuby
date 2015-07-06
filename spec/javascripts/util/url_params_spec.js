@@ -67,5 +67,9 @@ describe('url_params', function() {
             sinon.stub(GS.uri.Uri, 'getPath').returns('/michigan/detroit/preschools/YMCA-Child-Care-Center-Upa/6907/reviews/');
             expect(GS.schoolIdFromUrl()).to.eq(6907);
         });
+        it('should get the school id from the path for preK when preschool name has digit in it', function() {
+            sinon.stub(GS.uri.Uri, 'getPath').returns('/michigan/detroit/preschools/Gr8t-YMCA-Child-Care-Center-Upa/6907/reviews/');
+            expect(GS.schoolIdFromUrl()).to.eq(6907);
+        });
     });
 });
