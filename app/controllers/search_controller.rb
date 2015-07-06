@@ -17,7 +17,7 @@ class SearchController < ApplicationController
   layout 'application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
-  SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program)
+  SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program voucher_type)
   MAX_RESULTS_FOR_MAP = 100
   NUM_NEARBY_CITIES = 8
   MAX_RESULTS_FOR_FIT = 300

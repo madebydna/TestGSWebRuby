@@ -185,7 +185,7 @@ class FilterBuilder
                 label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
                     filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers },
                     filter2: { label: 'Cleveland scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Cleveland },
-                    filter3: { label: 'Special needs', display_type: :basic_checkbox, name: :voucher_type, value: "Jon Peterson Special Needs" },
+                    filter3: { label: 'Special needs', display_type: :basic_checkbox, name: :voucher_type, value: :Jon_Peterson_Special_Needs},
                     filter4: { label: 'Autism scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Autism },
                     filter5: { label: 'EdChoice scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :EdChoice }
 

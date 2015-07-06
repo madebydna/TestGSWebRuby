@@ -43,12 +43,14 @@ module FitScoreConcerns
       mandarin: :foreign_language
     }.stringify_keys!,
     enrollment: {
-      vouchers: :students_vouchers,
-      EdChoice:  :voucher_type,
-      Autism:  :voucher_type,
-      Cleveland: :voucher_type,
-      "Jon Peterson Special Needs" => :voucher_type
-  }.stringify_keys!,
+        vouchers: :students_vouchers
+    }.stringify_keys!,
+    voucher_type: {
+        EdChoice:  :voucher_type,
+        Autism:  :voucher_type,
+        Cleveland: :voucher_type,
+        "Jon Peterson Special Needs" => :voucher_type
+    }.stringify_keys!,
     summer_program: {
         yes: :summer_program
     }.stringify_keys!
@@ -91,8 +93,14 @@ module FitScoreConcerns
       mandarin: /^mandarin$/
     }.stringify_keys!,
     enrollment: {
-      vouchers: {type: 'private', regex: /^yes$/}
-    }.stringify_keys!
+        vouchers: {type: 'private', regex: /^yes$/}
+    }.stringify_keys!,
+    voucher_type: {
+        Cleveland:/^Cleveland$/,
+        EdChoice:  /^EdChoice$/,
+        Autism:  /^Autism$/,
+        Jon_Peterson_Special_Needs: /^Jon Peterson Special Needs$/
+  }.stringify_keys!
   }.stringify_keys!)
 
   def strong_fit?
