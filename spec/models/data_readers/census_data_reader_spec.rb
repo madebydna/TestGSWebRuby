@@ -215,7 +215,7 @@ describe CensusDataReader do
               year: 2011
             }
           ]
-        }
+        }.symbolize_keys
     end
 
     let(:results_hash) do
@@ -240,14 +240,14 @@ describe CensusDataReader do
             :description=>nil
           }
         ]
-      }
+      }.symbolize_keys
     end
 
     before do
       allow(subject).to receive(:convert_subject_to_id).with('English Language Arts').and_return(4)
       allow(subject).to receive(:convert_subject_to_id).with('Math').and_return(5)
-      allow(subject).to receive(:data_type_id_for_data_type_label).with("Class size").and_return(35)
-      allow(subject).to receive(:data_type_id_for_data_type_label).with("Ethnicity").and_return(32)
+      allow(CensusDataType).to receive(:data_type_id_for_data_type_label).with("Class size".to_sym).and_return(35)
+      allow(CensusDataType).to receive(:data_type_id_for_data_type_label).with("Ethnicity".to_sym).and_return(32)
 
     end
 
@@ -262,13 +262,32 @@ describe CensusDataReader do
       expect(results).to eq({})
     end
 
-    it 'should return data for only for class size and english, since it matches the configuration.' do
-      allow(subject).to receive(:cached_data_for_category).and_return(all_data)
-      allow(category.category_datas.first).to receive(:response_key).and_return(35) #class size only
-      allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
+    context 'with old style census data type ID response_key' do
+      before do
+        allow(category.category_datas.first).to receive(:response_key).and_return(35) #class size only
+      end
 
-      results = subject.labels_to_hashes_map(category)
-      expect(results).to eq(results_hash)
+      it 'should return data for only for class size and english, since it matches the configuration.' do
+        allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
+        allow(SchoolCache).to receive(:cached_characteristics_data).and_return(all_data)
+
+        results = subject.labels_to_hashes_map(category)
+        expect(results).to eq(results_hash)
+      end
+    end
+
+    context 'with new style census data type name response_key' do
+      before do
+        allow(category.category_datas.first).to receive(:response_key).and_return('Class size'.to_sym) #class size only
+      end
+
+      it 'should return data for only for class size and english, since it matches the configuration.' do
+        allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
+        allow(SchoolCache).to receive(:cached_characteristics_data).and_return(all_data)
+
+        results = subject.labels_to_hashes_map(category)
+        expect(results).to eq(results_hash)
+      end
     end
   end
 

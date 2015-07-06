@@ -44,7 +44,7 @@ class CategoryData < ActiveRecord::Base
   # Will return CategoryData with nil collection_id
   def self.belonging_to_collections(category, collections = nil)
     all_data_for_category(category).select do |category_data|
-      array_of_ids_with_nil = (Array(collections).map(&:id))<<nil
+      array_of_ids_with_nil = (Array(collections).map(&:id)) << nil
       array_of_ids_with_nil.include? category_data.collection_id
     end
   end
@@ -156,7 +156,7 @@ class CategoryData < ActiveRecord::Base
   def census_data_type_dropdown_values
     key_type_string = KEY_TYPES[:census_data]
     census_data_type_hash =
-      CensusDataType.description_id_hash.gs_rename_keys do |key|
+      CensusDataType.description_description_hash.gs_rename_keys do |key|
         "#{key_type_string}: #{key}"
       end
 

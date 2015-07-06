@@ -5,6 +5,7 @@
 #
 class CensusDataReader < SchoolProfileDataReader
   include CensusLoading::Subjects
+  include CachedCategoryDataConcerns
 
 
 
@@ -52,15 +53,15 @@ class CensusDataReader < SchoolProfileDataReader
     @labels_to_hashes_map ||= {}
     @labels_to_hashes_map[category.id] ||= (
       # Get data for all data types
-      all_data = cached_data_for_category(category, school)
+      all_data = cached_data_for_category(category, 'characteristics', school)
 
       results_hash = {}
 
       category.category_datas.each do |cd|
         # Filter by data type
         data_for_data_type = all_data.select do |data_type, data|
-          cd.response_key == data_type_id_for_data_type_label(data_type) ||
-          cd.response_key.to_s.match(/#{data_type_id_for_data_type_label(data_type)}/i)
+          data_type = CensusDataType.data_type_id_for_data_type_label(data_type) if cd.response_key.is_a? Numeric
+          cd.response_key == data_type || cd.response_key.to_s.match(/#{data_type}/i)
         end
 
         next if data_for_data_type.values.empty?
@@ -107,8 +108,10 @@ class CensusDataReader < SchoolProfileDataReader
     # end
 
     (
-      category_data.response_key == data_type_id_for_data_type_label(data_set) ||
-      category_data.response_key.to_s.match(/#{data_type_id_for_data_type_label(data_set)}/i)
+      category_data.response_key == data_set ||
+      category_data.response_key.to_s.match(/#{data_set}/i) ||
+      category_data.response_key == CensusDataType.data_type_id_for_data_type_label(data_set) ||
+      category_data.response_key.to_s.match(/#{CensusDataType.data_type_id_for_data_type_label(data_set)}/i)
     ) &&
     (
       category_data.subject_id.nil? || 
@@ -180,33 +183,5 @@ class CensusDataReader < SchoolProfileDataReader
         .filter_to_max_year_per_data_type!
         .keep_null_breakdowns!
         .sort_school_value_desc_by_date_type!
-  end
-
-  def cached_characteristics_data(school)
-    @cached_characteristics_data ||= (
-      cached_characteristics_data = SchoolCache.for_school('characteristics',school.id,school.state)
-
-      begin
-        results = cached_characteristics_data.blank? ? {} : JSON.parse(cached_characteristics_data.value, symbolize_names: true)
-      rescue JSON::ParserError => e
-        results = {}
-        Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +
-                             "Exception message: #{e.message}"
-      end
-
-      results
-    )
-  end
-
-  def data_type_id_for_data_type_label(label)
-    @description_id_hash ||= CensusDataType.description_id_hash
-    @description_id_hash[label.to_s]
-  end
-
-  def cached_data_for_category(category, school)
-    category_data_types = category.keys(school.collections)
-    cached_characteristics_data(school).select do |k,v|
-      category_data_types.include?(k) || category_data_types.include?(data_type_id_for_data_type_label(k))
-    end
   end
 end
