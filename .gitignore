@@ -22,6 +22,9 @@ profiling-results/
 profiling-results-*
 tmp
 
+# local bundled gems
+vendor/bundle/
+
 # simplecov code coverage
 coverage/
 
