@@ -89,8 +89,9 @@ describe OspRegistrationController do
         it 'should upgrade regular user to osp user' do
           allow_any_instance_of(OspRegistrationController).to receive(:current_user).and_return user
           expect(controller).to receive(:upgrade_user_to_osp_user).and_call_original
+          expect(controller).to receive(:sign_up_user_for_subscriptions!)
           get :submit, upgrade_osp_user_hash
-          expect(response.redirect_url).to eq(osp_confirmation_url(state: school.state, schoolId: school.id))
+          expect(response).to redirect_to(osp_page_path(state: school.state, schoolId: school.id, page: 1).sub('/?', '?'))
           expect(EspMembership.count).to_not be 0
           # todo: test for user row saving
           # expect(User.job_title).to be 'ping pong master'

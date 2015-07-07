@@ -143,8 +143,9 @@ class OspRegistrationController < ApplicationController
       return esp_membership, esp_membership.errors.messages.first[1].first
     end
     if user.present? && school.present?
-      #Redirect to thank you page
-      redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+      #Redirect to osp form
+      sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
+      redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
     end
   end
 
