@@ -10,7 +10,9 @@
     <div class="pr clearfix">
       <div class="color-row <%= chart.performance_level %>" style="width:<%= chart.value %>%;"></div>
       <div class="grey-row" style="width:<%= chart.grey_value %>%;"></div>
-      <div class="i-data-viz-state-avg state-avg-marker" style="left:<%= chart.comparison_value %>%"></div>
+      <% if chart.comparison_value %>
+        <div class="i-data-viz-state-avg state-avg-marker" style="left:<%= chart.comparison_value %>%"></div>
+      <% end %>
     </div>
   </div>
 
