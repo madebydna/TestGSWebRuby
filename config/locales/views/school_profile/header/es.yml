@@ -1,3 +1,11 @@
 es:
   school_profile:
     header:
+      back_to_compare: Volver 
+      contact_info: Más Informacion
+      students_enrolled: Estudiantes inscritos
+      follow_school_button: Siga esta escuela
+      rate_and_review_button: Evaluar y calificar
+      apply_button: Aplica ya
+      before_care: Cuidado antes de clases
+      after_care: Cuidado despues de clases
