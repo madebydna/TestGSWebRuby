@@ -1,0 +1,9 @@
+<%
+  # A bar_chart_group is the second-order grouping described in the group
+  # comparison data reader.
+%>
+
+<% bar_chart_group.bar_charts.each do | bar_chart | %>
+  <%= render partial: 'school_profile/data_viz/bar_chart',
+              locals: { chart: bar_chart } %>
+<% end %>

@@ -1,5 +1,9 @@
 .data-viz-bar-chart {
 
+  $above_average: #40a753;
+  $average:       #ec843e;
+  $below_average: #bf3c29;
+
   .header {
     width: 100%;
     @include clearfix();
@@ -20,6 +24,9 @@
       font-weight: bold;
       padding-right: 10px;
       float: left;
+      &.above_average { color: $above_average; }
+      &.average       { color: $average; }
+      &.below_average { color: $below_average; }
     }
 
 
@@ -40,6 +47,9 @@
       height:10px;
       border-radius: 2px 0px 0px 2px;
       float: left;
+      &.above_average { background-color: $above_average; }
+      &.average       { background-color: $average; }
+      &.below_average { background-color: $below_average; }
     }
 
     .grey-row {
