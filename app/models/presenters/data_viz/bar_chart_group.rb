@@ -25,7 +25,7 @@ class BarChartGroup
           label: data_point[options[:label_field]],
           value: data_point[:school_value],
           comparison_value: data_point[:state_average],
-          color: data_point[:color],
+          performance_level: data_point[:performance_level],
         }
       )
     end

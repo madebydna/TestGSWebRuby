@@ -12,8 +12,8 @@ class BarChart
   def parse_config
     self.label = config[:label] || 'All Students'
     self.value = config[:value]
-    self.grey_value = 100 - value - 0.5
+    self.grey_value = 100 - value.to_f - 0.5
     self.comparison_value = config[:comparison_value]
-    self.performance_level = config[:performance_level] || 'above_average'
+    self.performance_level = config[:performance_level]
   end
 end
