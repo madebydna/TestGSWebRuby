@@ -76,35 +76,71 @@ describe OspRegistrationController do
       clean_models :ca, School
     end
 
-    let(:user) { FactoryGirl.create(:user) }
-    let(:esp_membership) { FactoryGirl.build(:esp_membership) }
-    let(:upgrade_osp_user_hash) {{ state: school.state, schoolId: school.id, email: user.email,
-                                  first_name: user.first_name, last_name: user.last_name,
-                                  school_website: 'foo.com', job_title: 'ping pong master', esp_membership: esp_membership.member_id }}
-    let(:save_new_osp_user_hash) {{ state: school.state, schoolId: school.id, email: user.email, password: user.password,
-                                    first_name: user.first_name, last_name: user.last_name,
-                                    school_website: 'foo.com', job_title: 'ping pong master', esp_membership: esp_membership.member_id}}
+    let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h', state: 'CA') }
+    let(:user) { FactoryGirl.create(:user, email: 'albus@hogwarts.uk') }
+    let(:upgrade_osp_user_hash) { {state: school.state, schoolId: school.id, email: user.email,
+                                   first_name: 'Albus', last_name: 'Dumbledore',
+                                   school_website: 'www.hogwarts.uk', job_title: 'headmaster'} }
+    let(:save_new_osp_user_hash) { {state: school.state, schoolId: school.id, email: 'minerva@hogwarts.uk', password: user.password,
+                                    first_name: 'Minerva', last_name: 'McGonagall',
+                                    school_website: 'www.hogwarts.uk', job_title: 'headmistress'} }
 
-    with_shared_context 'Basic High School' do
-        it 'should upgrade regular user to osp user' do
-          allow_any_instance_of(OspRegistrationController).to receive(:current_user).and_return user
-          expect(controller).to receive(:upgrade_user_to_osp_user).and_call_original
-          expect(controller).to receive(:sign_up_user_for_subscriptions!)
-          get :submit, upgrade_osp_user_hash
-          expect(response).to redirect_to(osp_page_path(state: school.state, schoolId: school.id, page: 1).sub('/?', '?'))
-          expect(EspMembership.count).to_not be 0
-          # todo: test for user row saving
-          # expect(User.job_title).to be 'ping pong master'
+    context 'with a non osp user' do
+      before do
+        allow_any_instance_of(OspRegistrationController).to receive(:current_user).and_return user
+        expect(controller).to receive(:upgrade_user_to_osp_user).and_call_original
+        expect(controller).to receive(:sign_up_user_for_subscriptions!)
+        get :submit, upgrade_osp_user_hash
+        @updated_user = User.where(email: 'albus@hogwarts.uk').first_or_initialize
+        @updated_esp_membership = EspMembership.where(member_id: @updated_user.id).first_or_initialize
+      end
+
+      it 'should redirect to osp form' do
+        expect(response).to redirect_to(osp_page_path(state: school.state, schoolId: school.id, page: 1).sub('/?', '?'))
+      end
+
+      user_data = {first_name: 'Albus', last_name: 'Dumbledore', welcome_message_status: 'never_send', how: 'esp'}
+      user_data.each do |column, expected_value|
+        it "should update the user's #{column}" do
+          expect(@updated_user.send(column)).to eq expected_value
         end
+      end
 
-        # it 'should register new osp user' do
-        #   # allow_any_instance_of(OspRegistrationController).to receive(:user).and_return user
-        #   expect(controller).to receive(:save_new_osp_user)
-        #   get :submit, save_new_osp_user_hash
-        #   expect(response.redirect_url).to eq(osp_confirmation_url(state: school.state, schoolId: school.id))
-        #   expect(EspMembership.count).to_not be 0
-        #   expect(User.count).to_not be 0
-        # end
+      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmaster', web_url: 'www.hogwarts.uk',
+                             status: 'provisional', active: false}
+      esp_membership_data.each do |column, expected_value|
+        it "should update esp_membership #{column}" do
+          expect(@updated_esp_membership.send(column)).to eq expected_value
+        end
+      end
+    end
+
+    context 'should register new osp user' do
+      before do
+        expect(controller).to receive(:save_new_osp_user).and_call_original
+        expect(controller).to receive(:sign_up_user_for_subscriptions!)
+        get :submit, save_new_osp_user_hash
+        @updated_user = User.where(email: 'minerva@hogwarts.uk').first_or_initialize
+        @updated_esp_membership = EspMembership.where(member_id: @updated_user.id).first_or_initialize
+      end
+      it 'should redirect to osp form' do
+        expect(response).to redirect_to(osp_confirmation_path(state: school.state, schoolId: school.id))
+      end
+
+      user_data = {first_name: 'Minerva', last_name: 'McGonagall', welcome_message_status: 'never_send', how: 'esp'}
+      user_data.each do |column, expected_value|
+        it "should update the user's #{column}" do
+          expect(@updated_user.send(column)).to eq expected_value
+        end
+      end
+
+      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmistress', web_url: 'www.hogwarts.uk',
+                             status: 'provisional', active: false}
+      esp_membership_data.each do |column, expected_value|
+        it "should update esp_membership #{column}" do
+          expect(@updated_esp_membership.send(column)).to eq expected_value
+        end
+      end
     end
   end
 

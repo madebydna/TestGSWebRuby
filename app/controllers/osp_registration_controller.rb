@@ -59,7 +59,7 @@ class OspRegistrationController < ApplicationController
   def save_new_osp_user(school)
     user_email = params[:email]
     password   = params[:password]
-    # password_verify = params[:password_verify]
+    password_verify = params[:password_verify]
     first_name = params[:first_name]
     last_name = params[:last_name]
     school_website = params[:school_website]
@@ -84,7 +84,7 @@ class OspRegistrationController < ApplicationController
 
     begin
       esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
-      esp_membership.state = @state[:short]
+      esp_membership.state = @state[:short].upcase
       esp_membership.school_id = school.id
       esp_membership.status = 'provisional'
       esp_membership.active = false
@@ -101,7 +101,9 @@ class OspRegistrationController < ApplicationController
     sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
 
     OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
-    redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    # redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
+    redirect_to(osp_confirmation_path(:state =>params[:state], :schoolId => params[:schoolId]))
+
   end
 
   def upgrade_user_to_osp_user(school)
@@ -121,6 +123,7 @@ class OspRegistrationController < ApplicationController
 
     begin
       user.update_attributes(first_name: first_name ,last_name: last_name, school_website: school_website, job_title: job_title)
+      user.save!
     rescue
       return user, user.errors.messages.first[1].first
     end
@@ -129,7 +132,7 @@ class OspRegistrationController < ApplicationController
 
     begin
       esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
-      esp_membership.state = @state[:short]
+      esp_membership.state = @state[:short].upcase
       esp_membership.school_id = school.id
       esp_membership.status = 'provisional'
       esp_membership.active = false
