@@ -19,12 +19,13 @@ class SchoolCache < ActiveRecord::Base
     school_data
   end
 
-  self::KEYS.each do |cache_key|
-    method_name = "cached_#{cache_key}_data"
+  self::KEYS.each do |key|
+    method_name = "cached_#{key}_data"
     define_singleton_method(method_name) do |school|
-      return instance_variable_get("@#{method_name}") if instance_variable_get("@#{method_name}")
+      cache_key = "#{method_name}#{school.state}#{school.id}"
+      return instance_variable_get("@#{cache_key}") if instance_variable_get("@#{cache_key}")
       cached_data = (
-        school_cache_data = self.for_school(cache_key,school.id,school.state)
+        school_cache_data = self.for_school(key,school.id,school.state)
 
         begin
           results = school_cache_data.blank? ? {} : JSON.parse(school_cache_data.value, symbolize_names: true)
@@ -36,7 +37,7 @@ class SchoolCache < ActiveRecord::Base
 
         results
       )
-      instance_variable_set("@#{method_name}", cached_data)
+      instance_variable_set("@#{cache_key}", cached_data)
     end
   end
 
