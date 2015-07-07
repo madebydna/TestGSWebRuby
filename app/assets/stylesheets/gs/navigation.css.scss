@@ -1,5 +1,9 @@
 .gs-tooltip + .tooltip > .tooltip-inner {background-color: $brand-primary;}
-.gs-tooltip + .tooltip > .tooltip-arrow { border-bottom-color:$brand-primary; }
+.gs-tooltip + .tooltip.bottom > .tooltip-arrow { border-bottom-color:$brand-primary; }
+.gs-tooltip + .tooltip.right > .tooltip-arrow {  border-right-color:$brand-primary;}
+.gs-tooltip + .tooltip.in { opacity: 1;}
+
+
 
 
 #navigation li {

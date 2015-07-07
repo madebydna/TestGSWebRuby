@@ -520,7 +520,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
+    var setupToolTip = function() {
+        $('.js-open-tooltip').tooltip('show');
 
+    };
     return {
         init:init,
         setupTabs: setupTabs,
@@ -536,6 +539,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
-        updateFilterState: updateFilterState
+        updateFilterState: updateFilterState,
+        setupToolTip: setupToolTip
     };
 })();

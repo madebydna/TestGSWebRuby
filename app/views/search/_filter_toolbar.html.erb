@@ -1,3 +1,5 @@
+
+
 <div class="visible-xs">
     <div class="btn-group row full-width mln js-mobileFiltersToolbar">
         <button type="button" class="btn btn-primary nav-button nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
@@ -20,11 +22,14 @@
 </div>
 <div class="limit-width-1200 pr plm prm">
   <div class="pa ptl pbm">
-    <div class="hidden-xs zir-1 js-searchFiltersDropdown toolbar-text open-sans_sb pointer" style="max-width: 125px">
-      <a href="#" data-toggle="tooltip" class="gs-tooltip" title="<div class='font-size-small'>Sample tooltip text</div>" data-html="true">
+    <div class="hidden-xs zir-1 js-searchFiltersDropdown toolbar-text open-sans_sb  gs-tooltip pointer js-open-tooltip" data-toggle="tooltip"
+         title="<div class='font-size-small'>fshghglkhglghlghlkghlghslkgh
+      sflhslghsgklhgklgshgglh slghslghlgahlghslgsgh alfhsglhsglsSample tooltip text</div>" data-placement="right" data-html="true"
+         style="max-width: 125px">
         Refine Search<span class="caret"></span>
-      </a>
     </div>
+
+
     <div class="dn zir-1 ptm prm pbm js-searchFiltersMenu">
       <div class="ptm panel panel-primary mbn">
         <div class="clearfix js-searchFiltersFormParent">
@@ -64,5 +69,8 @@
     </div>
   </div>
 </div>
+<script>
+    $('[data-toggle="tooltip"]').tooltip({});
+</script>
 
 
