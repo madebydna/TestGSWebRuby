@@ -18,28 +18,32 @@ class DisplayRange < ActiveRecord::Base
   end
 
   def self.cached_ranges
-    #how long should we set cache for?
-    Rails.cache.fetch("display_ranges/#{Time.now.to_i}", expires_in: 12.hours) do
+    Rails.cache.fetch("display_ranges", expires_in: 12.hours) do
       display_ranges_map
     end
   end
 
+  # ex {['census', 287, 'ce'] => {'below average cap' => 32, 'average' => 60, 'above avg' => 101}}
   def self.display_ranges_map
-    #where clause to only grab current and past years
     display_ranges.inject({}) do | h, (key, drs) |
       h.merge({key => JSON.parse(drs.first.range)})
     end
   end
 
   def self.display_ranges
-    all.order(year: :desc).group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || DEFAULT)] }
+    #where clause to only grab current and past years
+    all
+      .order(year: :desc)
+      .to_a
+      .delete_if { |dr| dr.year.to_i > Time.now.year }
+      .group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || DEFAULT)] }
   end
 
-  #ex range. {'below average cap' => 32, 'average' => 60, 'above avg' => 101}
+  #ex range arg = {'below average cap' => 32, 'average' => 60, 'above avg' => 101}. val arg = 20
   def self.get_range_value(range, value)
-    value = value.to_i
+    value = value.to_f
     range.sort_by{|k,v| v}.each do |text, cap|
-      return text.chomp('_cap') if value <= cap.to_i
+      return text.chomp('_cap') if value <= cap.to_f
     end
     return nil
   end

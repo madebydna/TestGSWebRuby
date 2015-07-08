@@ -11,6 +11,7 @@ describe DisplayRange do
       ['census', 1, 'ca', 100, 1, 'ca', 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'above_average'],
       ['census', 1, 'ca', 45, 1, 'ca', 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
       ['census', 1, 'ca', 25, 1, 'ca', 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'below_average'],
+      ['census', 1, 'ca', 30.5, 1, 'ca', 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
       ['census', 1, 'ca', 25, 1, 'ca', 2015, {'above_average_cap'=>101,'below_average_cap'=>30,'average_cap'=>60}.to_json, 'below_average'],
     ].each do | data_type, data_type_id, state, school_value, range_data_type_id, range_state, range_year, range, return_value |
 
@@ -49,7 +50,8 @@ describe DisplayRange do
           [ 1, nil, nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
           [ 2, 'de', nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
           [ 3, 'ca', 2011, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
-          [ 3, 'ca', 2012, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json]
+          [ 3, 'ca', 2012, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
+          [ 4, 'ca', (Time.now.year + 1), {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json]
         ].each do | data_type_id, state, year, range |
           FactoryGirl.create(:display_range, data_type_id: data_type_id, state: state, year: year, range: range)
         end
@@ -77,6 +79,13 @@ describe DisplayRange do
         dr_in_map = dr_map[['census', 3, 'ca']]
         expect(dr).to eql(dr_in_map)
       end
+
+      it 'should not return ranges that have years in the future' do
+        dr_map = DisplayRange.display_ranges
+        dr_in_map = dr_map[['census', 4, 'ca']]
+        expect(dr_in_map).to eql(nil)
+      end
+
     end
   end
 
