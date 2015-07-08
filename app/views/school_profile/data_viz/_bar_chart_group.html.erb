@@ -3,7 +3,13 @@
   # comparison data reader.
 %>
 
-<% bar_chart_group.bar_charts.each do | bar_chart | %>
-  <%= render partial: 'school_profile/data_viz/bar_chart',
-              locals: { chart: bar_chart } %>
-<% end %>
+<%
+  # The .bar-chart-group class is just to prove that it was rendering correctly.
+  # You may delete it when you make the real module.
+%>
+<div class="bar-chart-group">
+  <% bar_chart_group.bar_charts.each do | bar_chart | %>
+    <%= render partial: 'school_profile/data_viz/bar_chart',
+      locals: { chart: bar_chart } %>
+  <% end %>
+</div>
