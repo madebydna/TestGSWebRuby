@@ -53,7 +53,7 @@ class CensusDataType < ActiveRecord::Base
   end
 
   def self.description_description_hash
-    Rails.cache.fetch("CensusDataType/description_id_hash", expires_in: 5.minutes) do
+    Rails.cache.fetch("CensusDataType/description_description_hash", expires_in: 5.minutes) do
       all.inject({}) { |hash, cdt| hash[cdt.description] = cdt.description; hash }
     end
   end
