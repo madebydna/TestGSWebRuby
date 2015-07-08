@@ -30,6 +30,31 @@ describe UserController do
     end
   end
 
+  describe '#need_to_signin' do
+    let(:email_address) { 'blah@host.com'}
+    after do
+      clean_models User
+    end
+
+    it 'should return false if email doesn\'t exist' do
+      xhr :post, :need_to_signin, email: email_address
+      expect(response.body).to eq 'false'
+    end
+
+    it 'should return true if email exists and doesnt have a password' do
+      user = FactoryGirl.build(:user, email: email_address, password: nil)
+      user.save(validate: false)
+      xhr :post, :need_to_signin, email: email_address
+      expect(response.body).to eq 'true'
+    end
+
+    it 'should return true if email exists and has a password' do
+      FactoryGirl.create(:new_user, email: email_address)
+      xhr :post, :need_to_signin, email: email_address
+      expect(response.body).to eq 'true'
+    end
+  end
+
   describe '#email_provisional_validation' do
     let(:email_address) { 'blah@host.com'}
     let(:no_error_response) { {'error_msg' => ''}.to_json }
