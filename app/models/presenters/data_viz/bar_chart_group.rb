@@ -4,13 +4,12 @@ class BarChartGroup
   # Class that holds a collection of graphs related by subject or breakdown.
   # Header and array of chart data.
 
-  attr_accessor :bar_charts, :data, :options, :title
+  attr_accessor :bar_charts, :data, :config, :title
 
-  def initialize(data, title = nil, options = {})
+  def initialize(data, title = nil, config = {})
     # Title is optional because for single chart groups, there is no group title
-    # TODO This needs some config about which field to pass as chart title
     self.data = data
-    self.options = options
+    self.config = config
     self.title = title
 
     create_bar_charts!
@@ -20,14 +19,19 @@ class BarChartGroup
 
   def create_bar_charts!
     self.bar_charts = data.map do |data_point|
-      BarChart.new(
+      bar_chart = BarChart.new(
         {
-          label: data_point[options[:label_field]],
+          label: label_for(data_point, config),
           value: data_point[:school_value],
           comparison_value: data_point[:state_average],
           performance_level: data_point[:performance_level],
         }
       )
-    end
+      bar_chart.display? ? bar_chart : nil
+    end.compact
+  end
+
+  def label_for(data_point, config)
+    config[:label_field] ? data_point[config[:label_field]] : nil
   end
 end
