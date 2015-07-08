@@ -12,7 +12,7 @@ class Admin::SchoolsController < ApplicationController
   def moderate
     @held_school = @school.held_school
 
-    @reviews = set_reviews_instance_variable
+    reviews_list
 
     set_meta_tags :title => page_title
     gon.pagename = 'admin_school_moderate'
@@ -32,18 +32,20 @@ class Admin::SchoolsController < ApplicationController
     relation
   end
 
-  def set_reviews_instance_variable
-    if params[:review_id]
-      reviews = Review.where(id: params[:review_id])
-    else
-      reviews = school_reviews(@school)
-      reviews = apply_scopes(reviews).page(params[:page]).per(MODERATION_LIST_PAGE_SIZE).load
-    end
+  def reviews_list
+    @reviews ||= (
+      if params[:review_id]
+        reviews = Review.where(id: params[:review_id])
+      else
+        reviews = school_reviews(@school)
+        reviews = apply_scopes(reviews).page(params[:page]).per(MODERATION_LIST_PAGE_SIZE).load
+      end
 
-    reviews.each do |review|
-      review.notes.build
-    end
-    reviews
+      reviews.each do |review|
+        review.notes.build
+      end
+      reviews
+    )
   end
 
   def page_title
@@ -51,7 +53,9 @@ class Admin::SchoolsController < ApplicationController
   end
 
   def should_paginate_reviews?
-    @reviews.respond_to?(:current_page)
+    # this depends on .page and .per being called on the reviews list and adding
+    # the current_page method
+    reviews_list.respond_to?(:current_page)
   end
 
 end
