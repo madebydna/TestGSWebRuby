@@ -2,12 +2,12 @@
                                           background-color: white;
                                           color: black;border: solid 1px #999 ;
                                           padding: 10px ;
-                                          -moz-box-shadow:    3px 3px 5px 6px #ccc;
-                                          -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-                                          box-shadow:         3px 3px 5px 6px #ccc;
+                                          -webkit-box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
+                                          -moz-box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
+                                          box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
                                         }
-.gs-tooltip + .tooltip.bottom > .tooltip-arrow { border-bottom-color:black; }
-.gs-tooltip + .tooltip.right > .tooltip-arrow {  border-right-color:black;}
+.gs-tooltip + .tooltip.bottom > .tooltip-arrow { border-bottom-color:#999; }
+.gs-tooltip + .tooltip.right > .tooltip-arrow {  border-right-color:#999;}
 .gs-tooltip + .tooltip.in { opacity: 1;}
 
 
