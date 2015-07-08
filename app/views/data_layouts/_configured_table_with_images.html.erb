@@ -4,6 +4,13 @@
 
 <% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
+<%
+  data.each do |k, values|
+    data[k] = values.select do |value|
+      value[:breakdown].nil? || value[:breakdown].to_s.downcase == 'all students'
+    end
+  end
+%>
 <% data = TableData.new data %>
 
 <% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
