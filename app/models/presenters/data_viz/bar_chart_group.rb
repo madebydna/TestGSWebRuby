@@ -28,7 +28,9 @@ class BarChartGroup
         }
       )
       bar_chart.display? ? bar_chart : nil
-    end.compact
+    end.compact.sort_by { |chart| chart.label }.reverse
+    # The above 'sort by desc' appears to be the most performant way:
+    # http://stackoverflow.com/questions/2642182/sorting-an-array-in-descending-order-in-ruby
   end
 
   def label_for(data_point, config)

@@ -15,6 +15,7 @@ describe BarChartGroup do
   }
   let(:valueless_data_point) { valid_data_point.merge(school_value: nil) }
   let(:state_averageless_data_point) { valid_data_point.merge(state_average: nil) }
+  let(:earlier_data_point) { valid_data_point.merge(year: 2012) }
   context '#create_bar_charts!' do
     {
       valid_data_point: 1,
@@ -31,6 +32,19 @@ describe BarChartGroup do
         it "should create #{number_bar_charts} bar charts" do
           expect(subject.size).to eq(number_bar_charts)
         end
+      end
+    end
+
+    context 'with something to group by' do
+      subject do
+        # The array of bar charts
+        BarChartGroup
+          .new([earlier_data_point, valid_data_point], nil, label_field: :year)
+          .send(:create_bar_charts!)
+      end
+      it 'should create a bar chart for each group' do
+        expect(subject.size).to eq(2)
+        expect(subject.map(&:label).uniq).to eq([2013, 2012])
       end
     end
   end
