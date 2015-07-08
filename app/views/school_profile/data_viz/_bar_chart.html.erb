@@ -1,11 +1,9 @@
 <div class="col-xs-12 col-md-6 bar-chart-rows">
-  <% #Row header %>
   <div class='header'>
     <div class='row-text'><%= chart.label %></div>
     <div class='row-text <%= chart.performance_level %>'><%= chart.value %></div>
   </div>
 
-  <% #Row bar %>
   <div class="bar-row">
     <div class="pr clearfix">
       <div class="color-row <%= chart.performance_level %>" style="width:<%= chart.value %>%;"></div>
@@ -16,7 +14,6 @@
     </div>
   </div>
 
-  <% #Subtext %>
   <div class='subtext'>
   </div>
 </div>
