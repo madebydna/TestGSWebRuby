@@ -197,6 +197,7 @@ GS.topicalReview.manageReview = (function () {
     var showReviewForm = function() {
         var topicalReview= $(this).parents('.js-topicalReviewContainer');
         topicalReview.find('.js-topicalReviewHaveAVoice').hide();
+        topicalReview.find('.js-overallRatingSummary').hide();
         topicalReview.find('.js-topicalReviewComment').show();
         topicalReview.find('.js-submittedReviewContainer').hide();
         topicalReview.find('.js-reviewFormContainer').show();
