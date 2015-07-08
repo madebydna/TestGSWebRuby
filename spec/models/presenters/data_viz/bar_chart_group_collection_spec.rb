@@ -18,7 +18,7 @@ describe BarChartGroupCollection do
       subject do
         # The array of bar chart groups
         BarChartGroupCollection
-          .new(nil, data_points, group_by: :year)
+          .new(nil, data_points, create_groups_by: :year)
           .send(:create_bar_chart_groups!)
       end
 

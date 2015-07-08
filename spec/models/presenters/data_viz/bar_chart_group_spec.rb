@@ -26,7 +26,7 @@ describe BarChartGroup do
         subject do
           # The array of bar charts
           BarChartGroup
-            .new([eval(data_point.to_s)], nil, label_field: :breakdown)
+            .new([eval(data_point.to_s)], nil, label_charts_with: :breakdown)
             .send(:create_bar_charts!)
         end
         it "should create #{number_bar_charts} bar charts" do
@@ -39,12 +39,12 @@ describe BarChartGroup do
       subject do
         # The array of bar charts
         BarChartGroup
-          .new([earlier_data_point, valid_data_point], nil, label_field: :year)
+          .new([earlier_data_point, valid_data_point], nil, label_charts_with: :year)
           .send(:create_bar_charts!)
       end
       it 'should create a bar chart for each group' do
         expect(subject.size).to eq(2)
-        expect(subject.map(&:label).uniq).to eq([2013, 2012])
+        expect(subject.map(&:label).uniq).to eq([2012, 2013])
       end
     end
   end
