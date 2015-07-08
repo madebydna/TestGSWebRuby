@@ -8,7 +8,7 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     };
 
     var setSignUpForSchoolModalCookie = function() {
-      $.cookie('profileModal', 'true', {expires: 1});
+      $.cookie('profileModal', 'true', {expires: 1, path: '/' });
     };
 
     var showSignUpForSchoolModalAfterDelay = function () {
