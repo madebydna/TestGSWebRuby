@@ -103,7 +103,7 @@ shared_example 'should have link text on page' do |text|
 end
 
 shared_example 'should have field on page with text' do |field, text|
-  subject.has_field?(field, :type => text)
+  subject.has_field?(field, :with => text)
 end
 
 shared_example 'should have field on page' do |field, type|

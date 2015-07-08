@@ -101,7 +101,6 @@ class OspRegistrationController < ApplicationController
     sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
 
     OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
-    # redirect_to(:action => 'show',:controller => 'osp_confirmation', :state =>params[:state], :schoolId => params[:schoolId])
     redirect_to(osp_confirmation_path(:state =>params[:state], :schoolId => params[:schoolId]))
 
   end

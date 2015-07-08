@@ -8,6 +8,7 @@ require_relative '../../../spec/features/contexts/osp_contexts'
 require 'features/examples/osp_examples'
 require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
+require 'features/contexts/user_contexts'
 require 'features/examples/user_examples'
 
 describe 'OSP Registration page' do
@@ -101,24 +102,26 @@ describe 'OSP Registration page' do
   with_shared_context 'Basic High School' do
     with_shared_context 'signed in regular user with', email: 'test+1@greatschools.org' do
       with_shared_context 'visit registration page with school state and school' do
+        rendered_form_fields_hash = {first_name: 'text', last_name: 'text', school_website: 'text'}
+
         include_example 'should have field on page with text', 'Email address', 'test+1@greatschools.org'
-        include_example 'should not have field on page', '#password', 'password'
-        include_example 'should not have field on page', '#password_verify', 'password'
-        include_example 'should have field on page with text', '#first_name', 'text'
-        include_example 'should have field on page with text', '#last_name', 'text'
-        include_example 'should have field on page with text', '#school_website', 'text'
+        include_example 'should not have field on page', 'password', 'password'
+        include_example 'should not have field on page', 'password_verify', 'password'
+
+        rendered_form_fields_hash.each do |field, type|
+          include_example 'should have field on page', field, type
+        end
       end
     end
   end
 
   with_shared_context 'Basic High School' do
     with_shared_context 'visit registration page with school state and school' do
-      include_example 'should have field on page with text', '#email', 'email'
-      include_example 'should have field on page with text', '#password', 'password'
-      include_example 'should have field on page with text', '#password_verify', 'password'
-      include_example 'should have field on page with text', '#first_name', 'text'
-      include_example 'should have field on page with text', '#last_name', 'text'
-      include_example 'should have field on page with text', '#school_website', 'text'
+      form_fields_hash = {email: 'email', password: 'password', password_verify: 'password', first_name: 'text',
+                          last_name: 'text', school_website: 'text' }
+      form_fields_hash.each do |field, type|
+        include_example 'should have field on page', field, type
+      end
     end
   end
 
