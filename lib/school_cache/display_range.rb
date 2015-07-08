@@ -19,7 +19,7 @@ class DisplayRange < ActiveRecord::Base
 
   def self.cached_ranges
     #how long should we set cache for?
-    Rails.cache.fetch("display_ranges/#{Time.now.to_i}", expires_in: 1.minute) do
+    Rails.cache.fetch("display_ranges/#{Time.now.to_i}", expires_in: 12.hours) do
       display_ranges_map
     end
   end
