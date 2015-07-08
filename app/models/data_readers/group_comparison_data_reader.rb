@@ -34,8 +34,13 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   # charts themselves.
   def data_for_category(category)
     data = cached_data_for_category(category, 'characteristics', school)
+    config = {
+      create_groups_by: nil,
+      create_charts_by: :breakdown,
+      label_charts_with: :breakdown,
+    }
     data.map do |collection_name, collection_data|
-      BarChartGroupCollection.new(collection_name, collection_data, group_by: :year)
+      BarChartGroupCollection.new(collection_name, collection_data, config)
     end
   end
 end

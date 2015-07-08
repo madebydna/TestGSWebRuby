@@ -17,9 +17,9 @@ class BarChartGroupCollection < ActiveRecord::Base
   private
 
   def create_bar_chart_groups!
-    grouped_data = data.group_by { |d| d[options[:group_by]] }
+    grouped_data = data.group_by { |d| d[options[:create_groups_by]] }
     self.bar_chart_groups = grouped_data.map do |name, group_data|
-      BarChartGroup.new(group_data, name, label_field: :breakdown)
+      BarChartGroup.new(group_data, name, options)
     end
   end
 end

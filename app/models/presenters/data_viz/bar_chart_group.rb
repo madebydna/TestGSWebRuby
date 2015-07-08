@@ -32,6 +32,6 @@ class BarChartGroup
   end
 
   def label_for(data_point, config)
-    config[:label_field] ? data_point[config[:label_field]] : nil
+    config[:label_charts_with] ? data_point[config[:label_charts_with]] : nil
   end
 end
