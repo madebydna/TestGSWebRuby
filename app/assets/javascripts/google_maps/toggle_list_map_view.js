@@ -110,11 +110,11 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         });
 
         if ($(elemMapCanvas).length > 0) {
-            if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
-                hideMapView();
+            if ( $.cookie('map_view') === 'true' && $(document).width() > GS.window.sizing.maxMobileWidth) {
+                showMapView();
             }
             else {
-                showMapView();
+                hideMapView();
             }
         }
     };

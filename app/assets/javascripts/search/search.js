@@ -407,17 +407,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
-    var showFiltersMenuOnLoad = function() {
-        var externalSearch = (document.referrer &&
-            (document.referrer.indexOf('search/search.page') == -1 && document.referrer.indexOf('/schools/') == -1));
-        if(externalSearch || $.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
-            if ($(document).width() > GS.window.sizing.maxMobileWidth && searchResultsDisplayed() ) {
-                $('.js-searchFiltersMenu').show();
-            }
-        }
-        $.cookie('showFiltersMenu', 'false', {path:'/'});
-    };
-
     var updateFilterState = function() {
         var updated = false;
         var queryData = GS.uri.Uri.getQueryData();
@@ -535,7 +524,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        showFiltersMenuOnLoad: showFiltersMenuOnLoad,
         placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
