@@ -33,7 +33,7 @@ describe UserController do
   describe '#need_to_signin' do
     let(:email_address) { 'blah@host.com'}
     after do
-      clean_models User
+      clean_models :gs_schooldb, User
     end
 
     it 'should return false if email doesn\'t exist' do
