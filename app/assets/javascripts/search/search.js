@@ -72,7 +72,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 var searchOptions = {};
 
                 if (input.value == $(schoolResultsSearchSelector).data('prev-search') && GS.search.stateAbbreviation == $(schoolResultsSearchSelector).data('state')) {
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
@@ -80,12 +79,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     return false
                 } else if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = schoolResultsSearchSelector;
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = schoolResultsSearchSelector;
                     GS.uri.Uri.addHiddenFieldsToForm({state: GS.search.stateAbbreviation}, this);
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
