@@ -344,4 +344,51 @@ describe SearchController do
       end
     end
   end
+
+  describe '#add_filters_to_gtm_data_layer' do
+    context 'The dimension "GS Search Filters Used"' do
+      it 'should handle no variable set' do
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Used']).to eq('No')
+      end
+      it 'should handle no filters set' do
+        controller.instance_variable_set(:@filter_values, [])
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Used']).to eq('No')
+      end
+      it 'should ignore the default 5 miles filter' do
+        controller.instance_variable_set(:@filter_values, ['5_miles'])
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Used']).to eq('No')
+      end
+      it 'should include filter values' do
+        controller.instance_variable_set(:@filter_values, ['boys_basketball'])
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Used']).to eq('Yes')
+      end
+      it 'should include filter values if there are others besides the default 5 miles' do
+        controller.instance_variable_set(:@filter_values, %w(5_miles boys_basketball))
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Used']).to eq('Yes')
+      end
+    end
+    context 'The dimension "GS Search Filters Applied"' do
+      it 'should list filter values with a trailing space' do
+        # the trailing space allows Google Analytics admins to run queries on it
+        controller.instance_variable_set(:@filter_values, %w(before_care boys_basketball))
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Applied']).to eq('before_care boys_basketball ')
+      end
+      it 'should include the default 5_miles' do
+        controller.instance_variable_set(:@filter_values, %w(5_miles))
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Applied']).to eq('5_miles ')
+      end
+      it 'should not be defined if there are no filters' do
+        controller.instance_variable_set(:@filter_values, [])
+        controller.send(:add_filters_to_gtm_data_layer)
+        expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Applied']).to be_nil
+      end
+    end
+  end
 end
