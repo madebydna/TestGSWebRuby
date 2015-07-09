@@ -78,12 +78,16 @@ describe OspRegistrationController do
 
     let(:school) { FactoryGirl.create(:school, id: 1, level_code: 'h', state: 'CA') }
     let(:user) { FactoryGirl.create(:user, email: 'albus@hogwarts.uk') }
-    let(:upgrade_osp_user_hash) { {state: school.state, schoolId: school.id, email: user.email,
-                                   first_name: 'Albus', last_name: 'Dumbledore',
-                                   school_website: 'www.hogwarts.uk', job_title: 'headmaster'} }
-    let(:save_new_osp_user_hash) { {state: school.state, schoolId: school.id, email: 'minerva@hogwarts.uk', password: user.password,
-                                    first_name: 'Minerva', last_name: 'McGonagall',
-                                    school_website: 'www.hogwarts.uk', job_title: 'headmistress'} }
+    let(:upgrade_osp_user_hash) do
+      {state: school.state, schoolId: school.id, email: user.email,
+       first_name: 'Albus', last_name: 'Dumbledore',
+       school_website: 'www.hogwarts.uk', job_title: 'headmaster'}
+    end
+    let(:save_new_osp_user_hash) do
+      {state: school.state, schoolId: school.id, email: 'minerva@hogwarts.uk', password: user.password,
+       first_name: 'Minerva', last_name: 'McGonagall',
+       school_website: 'www.hogwarts.uk', job_title: 'headmistress'}
+    end
 
     context 'with a non osp user' do
       before do
