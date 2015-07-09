@@ -67,6 +67,9 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
 
     var init = function () {
+        if ($.cookie('map_view') == 'undefined') {
+            $.cookie('map_view', 'false', { path: '/' });
+        }
         $(elemListViewToggle).on('click', function() {
             hideMapView();
             GS.track.sendCustomLink('search_list_view');
