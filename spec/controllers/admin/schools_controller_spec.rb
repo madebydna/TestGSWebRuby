@@ -59,7 +59,7 @@ describe Admin::SchoolsController do
       it 'should set reviews instance variable to equal all the reviews for the schools' do
         subject.moderate
         expect(subject.instance_variable_get('@reviews').count).to eq(reviews.count)
-        expect(subject.instance_variable_get('@reviews')).to eq(reviews)
+        expect(subject.instance_variable_get('@reviews').to_a).to eq(reviews)
       end
 
       it 'the reviews instance variable should respond to pagination methods' do
