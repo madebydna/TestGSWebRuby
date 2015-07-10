@@ -7,7 +7,7 @@ class SchoolSearchResult
                 :foreign_language, :girls_sports, :grade_range, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :name, :on_page, :overall_gs_rating,
                 :review_count, :school_media_first_hash, :state, :state_name, :street, :summer_program,
-                :transportation, :type, :zip, :zipcode, :profile_path, :students_vouchers
+                :transportation, :type, :voucher_type, :zip, :zipcode, :profile_path, :students_vouchers
 
   def initialize(hash)
     @fit_score = 0
@@ -50,6 +50,7 @@ class SchoolSearchResult
     @summer_program = hash['summer_program']
     @transportation = hash['transportation']
     @type = hash['school_type']
+    @voucher_type = hash['voucher_type']
     @zip = hash['zip']
     @zipcode = hash['zip']
   end

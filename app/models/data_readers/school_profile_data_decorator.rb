@@ -16,6 +16,9 @@ module SchoolProfileDataDecorator
     if (base.instance_variable_get :@esp_data_reader).nil?
       base.instance_variable_set :@esp_data_reader, EspDataReader.new(base)
     end
+    if (base.instance_variable_get :@group_comparison_data_reader).nil?
+      base.instance_variable_set :@group_comparison_data_reader, GroupComparisonDataReader.new(base)
+    end
     if (base.instance_variable_get :@rating_data_reader).nil?
       base.instance_variable_set :@rating_data_reader, RatingDataReader.new(base)
     end
@@ -43,6 +46,7 @@ module SchoolProfileDataDecorator
       details: @details_data_reader,
       esp_data_points: @esp_data_points_data_reader,
       esp_response: @esp_data_reader,
+      group_comparison_data: @group_comparison_data_reader,
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
       test_scores: @test_scores_data_reader
@@ -57,6 +61,7 @@ module SchoolProfileDataDecorator
       details
       esp_data_points
       esp_response
+      group_comparison_data
       rating_data
       snapshot
       test_scores
@@ -158,6 +163,11 @@ module SchoolProfileDataDecorator
   def esp_response(options = {})
     category = options[:category]
     @esp_data_reader.data_for_category category
+  end
+
+  def group_comparison_data(options = {})
+    category = options[:category]
+    @group_comparison_data_reader.data_for_category category
   end
 
   def rating_data(options = {})

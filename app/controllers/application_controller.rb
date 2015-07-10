@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   before_action :check_for_java_hover_cookie
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
+  before_action :set_locale
 
   after_filter :disconnect_connection_pools
 
@@ -71,6 +72,16 @@ class ApplicationController < ActionController::Base
     path = request.path + '/'
     path << '?' << request.query_string unless request.query_string.empty?
     "#{request.protocol}#{host}#{path}"
+  end
+
+# by default preserve the "lang" paramter on all links
+  def set_locale
+    I18n.locale = params[:lang] || I18n.default_locale
+  end
+
+  def url_options
+    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
+    super
   end
 
   def state_param
@@ -414,6 +425,10 @@ class ApplicationController < ActionController::Base
     else
       gon.signed_in = false
     end
+  end
+
+  def use_gs_bootstrap
+    @gs_bootstrap = 'gs-bootstrap'
   end
 
 end

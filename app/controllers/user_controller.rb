@@ -22,6 +22,22 @@ class UserController < ApplicationController
     end
   end
 
+  def need_to_signin
+    email = params[:email]
+    user = User.where(email: email).first
+    need_to_signin = user.present?
+
+    if need_to_signin == true
+      respond_to do |format|
+        format.js { render json: need_to_signin, status: 403  }
+      end
+    else
+      respond_to do |format|
+        format.js { render json: need_to_signin }
+      end
+    end
+  end
+
   def email_provisional_validation
     result = ''
     email = params[:email]

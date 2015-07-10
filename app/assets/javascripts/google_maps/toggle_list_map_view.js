@@ -67,6 +67,9 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
 
     var init = function () {
+        if ($.cookie('map_view') == 'undefined') {
+            $.cookie('map_view', 'false', { path: '/' });
+        }
         $(elemListViewToggle).on('click', function() {
             hideMapView();
             GS.track.sendCustomLink('search_list_view');
@@ -107,11 +110,11 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         });
 
         if ($(elemMapCanvas).length > 0) {
-            if ($.cookie('map_view') === 'false' || $(document).width() <= GS.window.sizing.maxMobileWidth) {
-                hideMapView();
+            if ( $.cookie('map_view') === 'true' && $(document).width() > GS.window.sizing.maxMobileWidth) {
+                showMapView();
             }
             else {
-                showMapView();
+                hideMapView();
             }
         }
     };

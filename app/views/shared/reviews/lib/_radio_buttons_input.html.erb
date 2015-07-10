@@ -22,6 +22,7 @@
               <div><%= builder.radio_button(:answer_value,
                                             response_value,
                                             class: 'js-topicalRadioButton',
+                                            'data-parsley-required' => 'true',
                                             checked: response_value ==  submitted_answer ? true : false )  %>
               </div>
               <div> <%= response_value %> </div>

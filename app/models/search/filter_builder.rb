@@ -65,7 +65,7 @@ class FilterBuilder
             de: [],
             ga: [],
             ok: [],
-            oh: add_vouchers_callbacks
+            oh: add_vouchers_callbacks_oh
         }
     ).stringify_keys!
   end
@@ -160,6 +160,39 @@ class FilterBuilder
       },
       voucher_callback
     ]
+  end
+
+  def add_vouchers_callbacks_oh
+    [
+        {
+            callback_type: 'cache_key',
+            options: {
+                value: 'vouchers',
+                version: 1
+            }
+        },
+        voucher_callback_oh
+    ]
+  end
+
+  def voucher_callback_oh
+    # Note that this callback is different than the rest because it needs to be combined
+    # with another. Regular callbacks should all include a cache_key component.
+    {
+        conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
+        {
+            enrollment: {
+                label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
+                    filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers },
+                    filter2: { label: 'Cleveland scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Cleveland },
+                    filter3: { label: 'Special needs scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Jon_Peterson_Special_Needs},
+                    filter4: { label: 'Autism scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Autism },
+                    filter5: { label: 'EdChoice scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :EdChoice }
+
+                }
+            }
+        }
+    }
   end
 
   def voucher_callback

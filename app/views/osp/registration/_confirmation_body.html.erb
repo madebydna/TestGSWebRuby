@@ -4,7 +4,7 @@
 <% body_middle_text = body_middle_text %>
 <% bottom_text = bottom_text %>
 
-<div class="osp-confirmation-body-module">
+<div class="osp-confirmation-body-module js-pushFooter">
   <div class="container">
     <% if title_text.present? %>
     <div class="row">
@@ -18,7 +18,7 @@
     </div>
     <% if body_middle_text.present?%>
         <div class="row padding-lg">
-          <p><%= body_middle_text %></p>
+          <p><%= body_middle_text.html_safe %></p>
         </div>
         <div class="row padding-lg">
           <p><%= bottom_text.html_safe %></p>

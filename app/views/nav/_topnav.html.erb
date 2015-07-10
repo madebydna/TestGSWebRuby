@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top <%= @gs_bootstrap %>" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="limit-width-1200">
         <div class="navbar-header">
@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div class="fl pam"><%= link_to(home_url) { image_tag 'nav/GS_logo_2x-new.png', size:'150x35', alt:'GreatSchools.org' } %></div>
+            <div class="fl gs-logo"><%= link_to(home_url) { image_tag 'nav/GS_logo_2x-new.png', size:'150x35', alt:'GreatSchools.org' } %></div>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse topnav-float">
@@ -86,10 +86,10 @@
                                           'ga-load-label'=>'topNav emotionalSmarts link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Moving With Kids'.html_safe, moving_url,
+                        <%= link_to 'Back To School'.html_safe, back_to_school_url,
                                     class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav movingWithKids link',
-                                          'ga-load-label'=>'topNav movingWithKids link' } %>
+                                    data:{'ga-click-label'=>'topNav backToSchool_url link',
+                                          'ga-load-label'=>'topNav backToSchool_url link' } %>
                       </li>
                       <li class=" ">
                         <%= link_to 'Early Learning'.html_safe, early_learning_url,

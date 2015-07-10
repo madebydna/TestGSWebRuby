@@ -101,3 +101,17 @@ end
 shared_example 'should have link text on page' do |text|
   subject.find_link(text, exact: true)
 end
+
+shared_example 'should have field on page with text' do |field, text|
+  subject.has_field?(field, :with => text)
+end
+
+shared_example 'should have field on page' do |field, type|
+  expect(subject).to have_field(field, :type => type)
+end
+
+shared_example 'should not have field on page' do |field, type|
+  expect(subject).to have_no_field(field, :type => type)
+end
+
+

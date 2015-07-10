@@ -97,6 +97,7 @@ module ReviewControllerConcerns
       else
         if current_user.provisional?
           flash_notice t('actions.review.pending_email_verification')
+          delete_account_pending_email_verification_flash_notice
         else
           flash_notice t('actions.review.pending_moderation')
         end
@@ -106,6 +107,13 @@ module ReviewControllerConcerns
       flash_error error
       redirect_to reviews_page_for_last_school
     end
+  end
+
+  def delete_account_pending_email_verification_flash_notice
+    #   removes the provisional flash message set when user signs in user
+    #   and signin controller
+    pending_email_verification_msg = t('actions.account.pending_email_verification')
+    flash[:notice].delete_if {|msg| msg == pending_email_verification_msg }
   end
 
   def flag_review_and_redirect(params)

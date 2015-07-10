@@ -35,7 +35,8 @@
     var schoolIdFromUrlPath = function() {
         var schoolId;
         var schoolPathRegex = /(\d+)-.+/;
-        var schoolPathRegexPreK = /(\d+)/;
+//        Regex to grab preschool ids by grabbing any path component that has only numeric digits
+        var schoolPathRegexPreK = /([^a-zA-Z\-]+\d+[^a-zA-Z\-]+)/;
         var preschool = false;
 
         schoolId = _(GS.uri.Uri.getPath().split('/')).map(function(pathComponent) {

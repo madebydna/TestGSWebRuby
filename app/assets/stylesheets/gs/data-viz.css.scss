@@ -1,0 +1,72 @@
+.data-viz-bar-chart {
+
+  $above_average: #40a753;
+  $average:       #ec843e;
+  $below_average: #bf3c29;
+
+  .header {
+    width: 100%;
+    @include clearfix();
+  }
+
+  .title-text {
+    font-size: 22px;
+    font-weight: bold;
+    padding-right: 10px;
+    float: left;
+  }
+
+  .bar-chart-rows {
+    padding: 10px 10px 10px 0px;
+
+    .row-text {
+      font-size: 16px;
+      font-weight: bold;
+      padding-right: 10px;
+      float: left;
+      &.above_average { color: $above_average; }
+      &.average       { color: $average; }
+      &.below_average { color: $below_average; }
+    }
+
+
+    .bar-row {
+      width: 100%;
+      @include clearfix();
+      padding-right: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .subtext {
+      width: 100%;
+      @include clearfix();
+    }
+
+    .color-row {
+      height:10px;
+      border-radius: 2px 0px 0px 2px;
+      float: left;
+      &.above_average { background-color: $above_average; }
+      &.average       { background-color: $average; }
+      &.below_average { background-color: $below_average; }
+    }
+
+    .grey-row {
+      height:10px;
+      border-radius: 0px 2px 2px 0px;
+      background-color: #dedede;
+      float: right;
+    }
+
+    .state-avg-marker {
+      position: absolute;
+      top: -5px;
+      line-height: 18px;
+    }
+  }
+}
+
+
+
+

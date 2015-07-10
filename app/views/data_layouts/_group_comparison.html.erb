@@ -1,0 +1,4 @@
+<% data.each do |bar_chart_collection| %>
+  <%= render partial: 'school_profile/data_viz/bar_chart_group_collection',
+              locals: { bar_chart_collection: bar_chart_collection } %>
+<% end %>

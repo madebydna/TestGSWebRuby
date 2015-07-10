@@ -276,7 +276,9 @@ module UrlHelper
    state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
    school_id = school_hash['id']
    return nil unless normalized_name && city_name && state_name && school_id
-   "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
+   school_url = "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
+   school_url += "?lang=#{params[:lang]}" if params[:lang]
+   school_url
   end
 
 end

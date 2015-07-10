@@ -42,7 +42,7 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
   end
 
   def data_keys
-    [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average,:district_average, :created]
+    [:year,:source,:breakdown,:grade,:subject,:school_value,:state_average,:district_average, :created, :performance_level]
   end
 
   def config_entry_test(characteristic)

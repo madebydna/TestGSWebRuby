@@ -61,7 +61,8 @@ class SchoolProfileController < SchoolController
     helper_name << "#{action_name}_" if action_name != 'overview'
     helper_name << 'path'
 
-    canonical_path = self.send helper_name.to_sym, @school
+    #  this prevents an endless redirect loop for the profile pages
+    canonical_path = remove_query_params_from_url( self.send(helper_name.to_sym, @school), [:lang] )
 
 
     # Add a tailing slash to the request path, only if one doesn't already exist.

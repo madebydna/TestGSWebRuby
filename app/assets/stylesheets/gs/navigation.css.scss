@@ -1,3 +1,23 @@
+
+// GS Tooltip Styling start
+.gs-tooltip + .tooltip > .tooltip-inner {
+                                          white-space:pre;
+                                          max-width:none;
+                                          background-color: white;
+                                          color: black;border: solid 1px #999 ;
+                                          padding: 10px ;
+                                          -webkit-box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
+                                          -moz-box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
+                                          box-shadow: 0px 0px 3px 3px rgba(153, 153, 153, .25);
+                                        }
+.gs-tooltip + .tooltip.bottom > .tooltip-arrow { border-bottom-color:#999; }
+.gs-tooltip + .tooltip.right > .tooltip-arrow {  border-right-color:#999;}
+.gs-tooltip + .tooltip.in { opacity: 1;}
+
+// GS Tooltip Styling End
+
+
+
 #navigation li {
   list-style-type: none;
   display: inline;
@@ -277,4 +297,8 @@
   }
 }
 
-
+.navbar {
+  .gs-logo {
+    padding: 10px;
+  }
+}

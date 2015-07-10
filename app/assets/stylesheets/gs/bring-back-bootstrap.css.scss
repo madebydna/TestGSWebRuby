@@ -1,0 +1,67 @@
+// Wrapper class that brings back Bootstrap's grid system as vanilla.
+// Essentially this adds back in gutters - the spaces between columns.
+
+$grid-gutter-width: 30px;
+$half-gutter-width: ($grid-gutter-width / 2);
+
+@mixin gs-make-grid-columns() {
+  $list: '';
+  $i: 1;
+  $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
+  @for $i from 2 through $grid-columns {
+    $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}, #{$list}";
+  }
+  // Copy pasta from Bootstrap but wrapping in our special class.
+  .gs-bootstrap {
+    #{$list} {
+      position: relative;
+      // Prevent columns from collapsing when empty
+      min-height: 1px;
+      // Inner gutter via padding
+      padding-left:  $half-gutter-width;
+      padding-right: $half-gutter-width;
+    }
+  }
+}
+
+@include gs-make-grid-columns();
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  margin-left:  ($gutter / -2);
+  margin-right: ($gutter / -2);
+  @include clearfix();
+}
+
+.gs-bootstrap {
+  .container {
+    @include container-fixed();
+  }
+
+  .container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: $screen-lg;
+    @media (max-width: ($screen-lg + $grid-gutter-width)) {
+      padding-left:  $half-gutter-width;
+      padding-right: $half-gutter-width;
+    }
+    @include clearfix();
+  }
+
+  .row {
+    @include make-row();
+  }
+
+  .form-horizontal {
+    .form-group {
+      @include make-row();
+    }
+  }
+
+  &.navbar .gs-logo {
+    padding: 10px 0 10px 0;
+    @media (max-width: ($screen-lg + $grid-gutter-width)) {
+      padding-left:  $half-gutter-width;
+    }
+  }
+}

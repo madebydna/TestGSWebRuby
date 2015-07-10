@@ -37,9 +37,14 @@ class DistrictsController < ApplicationController
   end
 
   def redirect_to_canonical_url
+
+    #  this prevents an endless redirect loop for the district pages
+    canonical_path = remove_query_params_from_url( self.city_district_path, [:lang] )
+
     # Add a tailing slash to the request path, only if one doesn't already exist.
     # Requests made by rspec sometimes contain a trailing slash
     unless canonical_path == with_trailing_slash(request.path)
+
       redirect_to add_query_params_to_url(
         canonical_path,
         true,

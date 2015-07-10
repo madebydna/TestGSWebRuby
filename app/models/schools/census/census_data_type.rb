@@ -41,9 +41,20 @@ class CensusDataType < ActiveRecord::Base
     all_data_types.find { |dt| id == dt.id }.description
   end
 
+  def self.data_type_id_for_data_type_label(label)
+    @description_id_hash ||= CensusDataType.description_id_hash
+    @description_id_hash[label.to_s]
+  end
+
   def self.description_id_hash
     Rails.cache.fetch("CensusDataType/description_id_hash", expires_in: 5.minutes) do
       all.inject({}) { |hash, cdt| hash[cdt.description] = cdt.id; hash }
+    end
+  end
+
+  def self.description_description_hash
+    Rails.cache.fetch("CensusDataType/description_description_hash", expires_in: 5.minutes) do
+      all.inject({}) { |hash, cdt| hash[cdt.description] = cdt.description; hash }
     end
   end
 

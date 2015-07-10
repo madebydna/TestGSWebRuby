@@ -1,3 +1,4 @@
+require_relative '../display_range'
 class CharacteristicsCaching::QueryResultDecorator
   extend Forwardable
 
@@ -73,6 +74,10 @@ class CharacteristicsCaching::QueryResultDecorator
 
   def created
     data_set_with_values.school_modified
+  end
+
+  def performance_level
+    DisplayRange.for('census', data_type_id, state, school_value)
   end
 
 end

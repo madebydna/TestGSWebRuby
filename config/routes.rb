@@ -41,10 +41,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
-  get '/official-school-profile/register.page', to: 'osp_registration#show',as: :osp_registration
-  match '/official-school-profile/register-submit', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+  match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
+  match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
 
-  get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
+   get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
   post  '/school/esp/submit_form.page', to: 'osp#submit' , as: :osp_submit
   post  '/gsr/ajax/esp/add_image', to: 'osp#add_image' , as: :osp_add_image
@@ -173,6 +173,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
+  get '/gsr/validations/need_to_signin', :to => 'user#need_to_signin'
   get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
   get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
   get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'

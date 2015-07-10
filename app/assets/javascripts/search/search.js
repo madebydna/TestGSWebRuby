@@ -72,7 +72,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 var searchOptions = {};
 
                 if (input.value == $(schoolResultsSearchSelector).data('prev-search') && GS.search.stateAbbreviation == $(schoolResultsSearchSelector).data('state')) {
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
@@ -80,12 +79,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     return false
                 } else if (searchType == 'byLocation') {
                     GS.search.schoolSearchForm.findByLocationSelector = schoolResultsSearchSelector;
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByLocationSearch.apply(this);
                 } else if (searchType == 'byName') {
                     GS.search.schoolSearchForm.findByNameSelector = schoolResultsSearchSelector;
                     GS.uri.Uri.addHiddenFieldsToForm({state: GS.search.stateAbbreviation}, this);
-                    $.cookie('showFiltersMenu', 'true', {path: '/'});
                     return submitByNameSearch.call(this, searchOptions);
                 } else {
                     return false;
@@ -407,17 +404,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
-    var showFiltersMenuOnLoad = function() {
-        var externalSearch = (document.referrer &&
-            (document.referrer.indexOf('search/search.page') == -1 && document.referrer.indexOf('/schools/') == -1));
-        if(externalSearch || $.cookie('showFiltersMenu') == 'true' || $.cookie('showFiltersMenu') == undefined){
-            if ($(document).width() > GS.window.sizing.maxMobileWidth && searchResultsDisplayed() ) {
-                $('.js-searchFiltersMenu').show();
-            }
-        }
-        $.cookie('showFiltersMenu', 'false', {path:'/'});
-    };
-
     var updateFilterState = function() {
         var updated = false;
         var queryData = GS.uri.Uri.getQueryData();
@@ -455,10 +441,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             if (typeof filterValue === 'object' && filterValue.length) {
                 for (var x=filterValue.length-1; x >= 0; x--) {
                     // currently, filters with multi-values can't be represented by selects
-                    updateFormElement($form, inputName, filterValue[x], {includeSelect:false});
+                    updateFormElement($form, inputName, decodeURIComponent(filterValue[x]), {includeSelect:false});
                 }
             } else {
-                updateFormElement($form, inputName, filterValue, {includeSelect:true});
+                updateFormElement($form, inputName, decodeURIComponent(filterValue), {includeSelect:true});
             }
         } catch (e) {
             // continue
@@ -520,7 +506,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
+    var setupToolTip = function() {
+        $('.js-open-tooltip').tooltip('show');
 
+    };
     return {
         init:init,
         setupTabs: setupTabs,
@@ -532,10 +521,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        showFiltersMenuOnLoad: showFiltersMenuOnLoad,
         placeholderMobile: placeholderMobile,
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
-        updateFilterState: updateFilterState
+        updateFilterState: updateFilterState,
+        setupToolTip: setupToolTip
     };
 })();
