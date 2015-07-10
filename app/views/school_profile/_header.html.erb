@@ -7,7 +7,7 @@
 <div class="header-bg-color ">
     <div class="row pal limit-width-1200 open-sans">
       <div >
-        <a class="dn  js-backToCompare">&laquo; Back to compare<div class="pbm"></div></a>
+        <a class="dn  js-backToCompare">&laquo; <%= t('.back_to_compare') %> <div class="pbm"></div></a>
       </div>
       <div class="pbl">
         <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs, top_margin: 'mtn' %>
@@ -78,10 +78,10 @@
                             <div class="fl prm">
                               <% if after_school.downcase == 'yes'%>
                                   <%= link_to school_details_url(@school, anchor:"Extracurriculars") do %>
-                                    <span class="link-darkgray"><%= t('.after_school') %>: <strong><%= after_school %></strong></span>
+                                    <span class="link-darkgray"><%= t('.after_care') %>: <strong><%= after_school %></strong></span>
                                   <% end %>
                               <% else %>
-                                <%= t('.after_school') %>: <strong><%= after_school %></strong>
+                                <%= t('.after_care') %>: <strong><%= after_school %></strong>
                               <% end %>
                             </div>
                         <% end %>
