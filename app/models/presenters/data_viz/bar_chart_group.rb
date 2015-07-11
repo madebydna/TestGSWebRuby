@@ -25,6 +25,7 @@ class BarChartGroup
           value: data_point[:school_value],
           comparison_value: data_point[:state_average],
           performance_level: data_point[:performance_level],
+          subtext: data_point[:subtext]
         }
       )
       bar_chart.display? ? bar_chart : nil

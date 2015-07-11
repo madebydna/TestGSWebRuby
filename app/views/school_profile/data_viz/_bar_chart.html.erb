@@ -14,6 +14,9 @@
     </div>
   </div>
 
-  <div class='subtext'>
-  </div>
+  <% if chart.subtext.present? %>
+    <div class='subtext'>
+      <div><%= chart.subtext %></div>
+    </div>
+  <% end %>
 </div>
