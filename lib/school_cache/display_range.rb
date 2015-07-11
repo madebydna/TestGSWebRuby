@@ -2,7 +2,7 @@ class DisplayRange < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 
-  attr_accessible :state, :data_type, :data_type_id, :year, :range
+  attr_accessible :state, :data_type, :data_type_id, :year, :ranges
 
   DEFAULT = 'default'
 
@@ -26,7 +26,7 @@ class DisplayRange < ActiveRecord::Base
   # ex {['census', 287, 'ce'] => {'below average cap' => 32, 'average' => 60, 'above avg' => 101}}
   def self.display_ranges_map
     display_ranges.inject({}) do | h, (key, drs) |
-      h.merge({key => JSON.parse(drs.first.range)})
+      h.merge({key => JSON.parse(drs.first.ranges)})
     end
   end
 
