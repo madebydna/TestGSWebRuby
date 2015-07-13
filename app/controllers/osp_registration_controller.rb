@@ -59,12 +59,10 @@ class OspRegistrationController < ApplicationController
   def save_new_osp_user(school)
     user_email = params[:email]
     password   = params[:password]
-    password_verify = params[:password_verify]
     first_name = params[:first_name]
     last_name = params[:last_name]
     school_website = params[:school_website]
     job_title = params[:job_title]
-
     user = User.new
     user.email = user_email
     user.password = password

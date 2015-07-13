@@ -22,7 +22,11 @@ class CharacteristicsCaching::QueryResultDecorator
 
   def breakdown
     breakdown = CharacteristicsCaching::Base.characteristics_data_breakdowns[breakdown_id]
-    breakdown.breakdown if breakdown
+    if breakdown
+      breakdown.breakdown
+    else
+      'All students'
+    end
   end
 
   def school_value
@@ -79,5 +83,9 @@ class CharacteristicsCaching::QueryResultDecorator
   def performance_level
     DisplayRange.for('census', data_type_id, state, school_value)
   end
+  #
+  # def uc_csu_entrance_requirements
+  #   data_set_with_values.value_float
+  # end
 
 end
