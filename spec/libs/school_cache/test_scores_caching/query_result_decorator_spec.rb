@@ -1,11 +1,14 @@
 require 'spec_helper'
 
-def decorator(hash, state = 'CA')
-  hash = hash.stringify_keys
-  TestScoresCaching::QueryResultDecorator.new(state, Hashie::Mash.new(hash))
-end
+
 
 describe TestScoresCaching::QueryResultDecorator do
+
+  def decorator(hash, state = 'CA')
+    hash = hash.stringify_keys
+    TestScoresCaching::QueryResultDecorator.new(state, Hashie::Mash.new(hash))
+  end
+
   [:school_value, :state_value].each do |field|
     method = field.to_s
     describe "##{method}" do

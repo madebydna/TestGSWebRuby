@@ -1,10 +1,12 @@
 require 'spec_helper'
 
-def decorator(hash, state= 'CA')
-  CharacteristicsCaching::QueryResultDecorator.new(state, Hashie::Mash.new(hash))
-end
 
 describe CharacteristicsCaching::QueryResultDecorator do
+
+
+  def decorator(hash, state= 'CA')
+    CharacteristicsCaching::QueryResultDecorator.new(state, Hashie::Mash.new(hash))
+  end
 
   describe '#breakdown' do
     before do
