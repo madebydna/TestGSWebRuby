@@ -122,17 +122,17 @@
                         <ul class="dropdown-menu dropdown-menu_top_nav">
                             <% if current_user.provisional_or_approved_osp_user? %>
                                 <li>
-                                    <%= link_to 'Edit school profile', osp_dashboard_url %>
+                                    <%= link_to 'Edit school profile', osp_dashboard_url, class: "js-no_ad" %>
                                 </li>
                             <% end %>
                             <li>
-                                <%= link_to 'My School List', my_school_list_url, rel:'nofollow' %>
+                                <%= link_to 'My School List', my_school_list_url, rel:'nofollow', class: "js-no_ad" %>
                             </li>
                             <li>
-                                <%= link_to 'Account Settings', my_account_url %>
+                                <%= link_to 'Account Settings', my_account_url, class: "js-no_ad" %>
                             </li>
                             <li>
-                                <%= link_to('Sign Out', logout_url, :method => :delete) %>
+                                <%= link_to('Sign Out', logout_url, :method => :delete, class: "js-no_ad") %>
                             </li>
                         </ul>
                     <% else %>
