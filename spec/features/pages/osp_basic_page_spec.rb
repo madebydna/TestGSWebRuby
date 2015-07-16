@@ -55,6 +55,13 @@ describe 'OSP Basic Page' do
     end
   end
 
+  with_shared_context 'signed in approved osp user for school', 'ca', 1 do
+    with_shared_context 'visit OSP page with inactive school', js: true do
+        include_example 'should have element with text', '.flash_notice', 'Exceptional Death Eaters Academy may no longer exist. If you feel this is incorrect, please contact us.'
+        include_example 'should have link text on page', 'contact us', '/about/feedback.page'
+      end
+  end
+
   with_shared_context 'with a basic set of osp questions in db' do
     with_shared_context 'visit OSP page' do
 

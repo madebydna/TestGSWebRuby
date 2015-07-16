@@ -72,6 +72,23 @@ shared_context 'visit OSP superuser page' do
   subject { page }
 end
 
+shared_context 'visit OSP page with inactive school' do
+  let!(:school) { School.on_db(:ca).create(id: 1, name: 'Exceptional Death Eaters Academy', active: 0, state: 'ca') }
+  let(:osp_page) { OspPage.new }
+  after { clean_models :ca, School }
+  before do
+    visit osp_page_path(page: 1, schoolId: school.id, state: school.state)
+  end
+  subject { page }
+end
+
+shared_context 'visit my account page' do
+  before do
+    visit my_account_path
+  end
+  subject { page }
+end
+
 shared_context 'visit registration confirmation page' do
   include_context 'signed in approved osp user for school', :ca, 1
   include_context 'Basic High School'

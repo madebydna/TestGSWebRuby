@@ -253,6 +253,14 @@ class OspController < ApplicationController
   def set_osp_school_instance_vars
     if @state[:short].present? && params[:schoolId].present?
       @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
+      if @school.nil?
+        redirect_to my_account_url
+      elsif @school.active == 0
+        inactive_school_flash
+        redirect_to my_account_url
+      else
+        @school
+      end
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
@@ -275,6 +283,10 @@ class OspController < ApplicationController
 
   def success_or_error_flash
     @render_error ? flash_error(t('forms.osp.saving_error')) : flash_success(t('forms.osp.changes_saved'))
+  end
+
+  def inactive_school_flash
+    flash_notice ("#{@school.name} may no longer exist. If you feel this is incorrect, please #{view_context.link_to('contact us', contact_us_path)}.").html_safe
   end
 
 end
