@@ -167,7 +167,7 @@ class FilterBuilder
         {
             callback_type: 'cache_key',
             options: {
-                value: 'vouchers',
+                value: 'vouchers_oh',
                 version: 1
             }
         },
