@@ -82,13 +82,6 @@ shared_context 'visit OSP page with inactive school' do
   subject { page }
 end
 
-shared_context 'visit my account page' do
-  before do
-    visit my_account_path
-  end
-  subject { page }
-end
-
 shared_context 'visit registration confirmation page' do
   include_context 'signed in approved osp user for school', :ca, 1
   include_context 'Basic High School'
