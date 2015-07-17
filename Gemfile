@@ -180,6 +180,9 @@ group :development, :test do
   gem 'pdf-reader'
 
   gem 'sourcify'
+  
+  #  translation tasks gem
+  gem 'i18n-tasks', '~> 0.8.3'
 end
 
 # gem 'sass-rails',   '~> 3.2.3'
