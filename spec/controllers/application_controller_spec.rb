@@ -305,34 +305,6 @@ describe ApplicationController do
     end
   end
 
-  describe '#original_url' do
-    context 'for search page' do
-      it 'does not add trailing backslash' do
-        allow(request).to receive(:path).and_return '/search.page'
-        allow(request).to receive(:query_string).and_return 'distance=15&lat=123&locationSearchString=94111&lon=456'
-        expect(controller.send(:original_url)).to eq 'http://localhost:3001/search.page?distance=15&lat=123&locationSearchString=94111&lon=456'
-      end
-    end
-    context 'for state page' do
-      it 'does add trailing backslash' do
-        allow(request).to receive(:path).and_return '/indiana'
-        expect(controller.send(:original_url)).to eq 'http://localhost:3001/indiana/'
-      end
-    end
-
-    context 'for osp registration page' do
-      it 'does not add trailing backslash' do
-        allow(request).to receive(:path).and_return '/school/esp/form.page'
-        allow(request).to receive(:query_string).and_return 'page=1&schoolId=871&state=FL'
-        expect(controller.send(:original_url)).to eq 'http://localhost:3001/school/esp/form.page?page=1&schoolId=871&state=FL'
-      end
-    end
-  end
-
-
-
-
-
   describe '#path_w_query_string' do
     context 'from school profile' do
       let (:profile_url) { 'http://www.greatschools.org/california/alameda/1-Alameda-High-School/' }
