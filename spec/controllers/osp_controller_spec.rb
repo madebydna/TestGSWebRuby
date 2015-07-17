@@ -36,6 +36,42 @@ describe Admin::OspController do
           allow(controller).to receive(:set_omniture_data_for_user_request)
         end
       end
+
+      context 'when signed in and going to delaware without an gs_localAuth token set' do
+        it 'should redirect to my account page and set flash notice' do
+          expect(controller).to receive(:flash_notice).at_least(:once)
+          get :show, state: 'de', schoolId: school.id, page: 1
+          expect(response.redirect_url).to redirect_to(my_account_url)
+        end
+      end
+
+      context 'when signed in and going to delaware with an gs_localAuth token set' do
+        let(:auth_cookie) { Digest::MD5.base64digest(Admin::OspController::AUTH_SALT + current_user.email) }
+        it 'should render the osp page' do
+          request.cookies['gs_localAuth'] = auth_cookie
+          get :show, state: 'de', schoolId: school.id, page: 1
+          expect(response).to render_template(:osp_basic_information)
+        end
+      end
+
+      context 'when signed in and going to delaware with an incorrect gs_localAuth token set' do
+        let(:auth_cookie) { Digest::MD5.base64digest(Admin::OspController::AUTH_SALT + current_user.email + 'blah') }
+        it 'should redirect to the my account page' do
+          request.cookies['gs_localAuth'] = auth_cookie
+          get :show, state: 'DE', schoolId: school.id, page: 1
+          expect(response.redirect_url).to redirect_to(my_account_url)
+        end
+      end
+
+      context 'when not signed in and going to delaware' do
+        before { allow(controller).to receive(:logged_in?).and_return(false) }
+        it 'should redirect to signin page and set flash notice' do
+          expect(controller).to receive(:flash_notice).at_least(:once)
+          get :show, state: 'de', schoolId: school.id, page: 1
+          expect(response.redirect_url).to include(signin_path)
+        end
+      end
+
     end
 
     with_shared_context 'user esp_membership status is', :provisional do
@@ -235,4 +271,5 @@ describe Admin::OspController do
       end
     end
   end
+
 end

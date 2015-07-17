@@ -128,6 +128,10 @@ class School < ActiveRecord::Base
     type == 'private'
   end
 
+  def public_or_charter?
+    ['public', 'charter'].include?(type)
+  end
+
   def preschool?
     level_code == 'p'
   end

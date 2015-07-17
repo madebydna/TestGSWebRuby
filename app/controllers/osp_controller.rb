@@ -1,11 +1,13 @@
 class OspController < ApplicationController
   include PhotoUploadConcerns
 
+  #order of some of these callbacks matter
   before_action :set_login_redirect
-  before_action :login_required, except: [:approve_provisional_osp_user_data]
   before_action :set_city_state
+  before_action :login_required_for_osp, except: [:approve_provisional_osp_user_data]
   before_action :set_footer_cities, only: [:show]
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
+  before_action :validate_delaware_users, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
   after_action :success_or_error_flash, only: [:submit]
 
@@ -13,6 +15,8 @@ class OspController < ApplicationController
   PAGE_TITLE = {'1' => 'Basic Information', '2' => 'Academics', '3' => 'Extracurricular & Culture', '4' => 'Facilities & Staff'}
   DB_PAGE_NAME = {'1' => 'basic_information', '2' => 'academics', '3' => 'extracurricular_culture', '4' => 'facilities_staff'}
   RESPONSE_VALIDATIONS = ['school_phone', 'school_fax', 'start_time', 'end_time'] #eventually move into shared module that the queue daemon also uses to validate data
+  AUTH_COOKIE_NAME = 'gs_localAuth'
+  AUTH_SALT = '9e209040c863f84a31e719795b2577523954739fe5ed3b58a75cff2127075ed1'
 
   def show
     @osp_data = OspData.new(@school) #add rescue here that shows nice error
@@ -275,6 +279,37 @@ class OspController < ApplicationController
     else
       redirect_to my_account_url #ToDo think of better redirect
     end
+  end
+
+  def login_required_for_osp
+    if @state[:short] == 'de'
+      delaware_error_and_redirect_to(signin_path) unless logged_in?
+    else
+      login_required
+    end
+  end
+
+  def validate_delaware_users
+    if should_check_for_sso_token
+      auth_cookie = cookies[AUTH_COOKIE_NAME]
+      return delaware_error_and_redirect_to(my_account_url) unless auth_cookie.present?
+
+      auth_token = generate_auth_token(AUTH_SALT + current_user.email)
+      return delaware_error_and_redirect_to(my_account_url) unless auth_cookie == auth_token
+    end
+  end
+
+  def delaware_error_and_redirect_to(url)
+    flash_notice t('forms.osp.delaware_error').html_safe
+    redirect_to(url)
+  end
+
+  def generate_auth_token(string)
+    Digest::MD5.base64digest(string)
+  end
+
+  def should_check_for_sso_token
+    @state[:short] == 'de' && @school.public_or_charter? && !current_user.is_esp_superuser?
   end
 
   def notify_provisional_user!
