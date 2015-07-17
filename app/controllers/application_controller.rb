@@ -69,7 +69,10 @@ class ApplicationController < ActionController::Base
   end
 
   def original_url
-    path = request.path + '/'
+    path = request.path
+    if !path.end_with? ".page"
+      path = request.path + '/'
+    end
     path << '?' << request.query_string unless request.query_string.empty?
     "#{request.protocol}#{host}#{path}"
   end
