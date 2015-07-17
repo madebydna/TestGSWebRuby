@@ -22,7 +22,7 @@ class GSLogger
 
     def log_own_failure(e)
       m = "GS||ERROR||GSLogger||#{e.class} #{e.message}||#{Time.now}||ERROR_LOCATION:#{e.backtrace.first}||"
-      m << "RESCUE_LOCATION:#{binding.send(:caller).first}||OPT_MESSAGE||OPT_VARS"
+      m << "RESCUE_LOCATION:#{binding.send(:caller).first}||REQUEST_URL||OPT_MESSAGE||OPT_VARS"
       m.gsub!(/\n|\t/, '')
       Rails.logger.error(m)
     end
@@ -38,11 +38,12 @@ class GSLogger
     end
 
     #make sure to keep the order of the logs consistent
-    #ie GS||LEVEL||TAG||ERROR||TIME||ERROR_LOCATION||RESCUE_LOCATION||OPT_MESSAGE||OPT_VARS
+    #ie GS||LEVEL||TAG||ERROR||TIME||ERROR_LOCATION||RESCUE_LOCATION||REQUEST_URL||OPT_MESSAGE||OPT_VARS
     def process_log(level, tag, rescue_line, e)
       time            = Time.now
       error           = e.is_a?(Exception) ? "#{e.class} #{e.message}" : "No exception thrown"
       error_location  = e.is_a?(Exception) ? "#{e.backtrace.first}" : "No exception thrown"
+      request_url     = get_request_url || "REQUEST_URL"
 
       [
         "GS",
@@ -51,8 +52,20 @@ class GSLogger
         "#{error}",
         "#{time}",
         "ERROR_LOCATION:#{error_location}",
-        "RESCUE_LOCATION:#{rescue_line}"
+        "RESCUE_LOCATION:#{rescue_line}",
+        request_url
       ]
+    end
+
+    def get_request_url
+      binding.send(:caller).each_with_index do | caller_line, index|
+        next unless caller_line.include?('app/controllers/')
+
+        #the 3 is there to offset the 3 stack trace steps added because of the each block
+        url = binding.of_caller(index + 3).eval('try(:request).try(:original_url)')
+        return url if url.present?
+      end
+      nil
     end
 
     def process_opts(opts = {})
