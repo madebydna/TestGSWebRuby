@@ -5,7 +5,7 @@
       <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
       <br/>
       <% if @school.home_page_url.present? %>
-        <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank">School website</a><br/>
+        <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank"><%= t('data_layouts.school_contact_info.school_website') %></a><br/>
       <% end %>
       <% if @school.phone.present? %>
         <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
@@ -15,7 +15,7 @@
       <% end %>
       <span class="iconx16 i-16-home vam"></span>
       <%= link_to zillow_url(@school), class: 'contact-content vam pls', rel: 'nofollow', onclick: "if (s.tl) {s.tl(this,'o', 'Zillow_'+gon.omniture_pagename);} return true;", target: '_blank' do %>
-          <span>Nearby homes for sale</span>
+          <span><%= t('data_layouts.school_contact_info.nearby_homes') %></span>
       <% end %>
     </div>
     <div class="col-sm-8 col-md-8 col-lg-8 pbl ">

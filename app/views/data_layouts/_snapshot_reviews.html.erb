@@ -8,7 +8,7 @@
                 'ga-load-label' => 'reviewsSnapshot communityRating link',
                 'ga-click-label' => 'reviewsSnapshot communityRating link'
               } do %>
-    <div class="link-darkgray tac pbl">Community rating</div>
+    <div class="link-darkgray tac pbl"><%= t('.community_rating') %></div>
   <% end %>
 
   <div class="row tac mtm">
@@ -52,15 +52,16 @@
                       'ga-load-label' => 'reviewsSnapshot helpOthersNoReviewText link',
                       'ga-click-label' => 'reviewsSnapshot helpOthersNoReviewText link'
                     } do %>
-            <div class="link-darkgray">Help others find their GreatSchool!</div>
-            <div class="link-darkgray">Rate and review this school now!</div>
+            <div class="link-darkgray"><%= t('.help_others') %></div>
+            <div class="link-darkgray"><%= t('.rate_and_review') %></div>
         <% end %>
     <% end %>
   </div>
 
   <div class="tac pa full-width" style="bottom: 20px;">
     <% if reviews_count > 0 %>
-      <% reviews_count_text = pluralize(reviews_count, 'Review', 'Reviews') %>
+      <% # reviews_count_text = pluralize(reviews_count, 'Review', 'Reviews') %>
+      <% reviews_count_text =  t('.reviews', count: reviews_count) %>
       <%= link_to reviews_count_text, school_reviews_url(@school),
                   class:"js-gaLoad js-gaClick",
                   data:{
@@ -72,7 +73,7 @@
               class="btn btn-primary mtm js-button-link js-gaLoad js-gaClick"
               data-ga-load-label="reviewsSnapshot writeAReview link"
               data-ga-click-label="reviewsSnapshot writeAReview link">
-        Write a review
+              <%= t('.write_review') %>
       </button>
     <% end %>
   </div>

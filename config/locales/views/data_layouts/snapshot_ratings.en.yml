@@ -1,0 +1,11 @@
+---
+en:
+  data_layouts:
+    snapshot_ratings:
+      api_score: API score
+      esd_rating: ESD rating
+      greatschool_rating: GreatSchools rating
+      preschool_rating: Preschool rating
+      ratings: Ratings
+      state_rating: State rating
+      test_scores: Test scores

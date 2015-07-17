@@ -1,0 +1,11 @@
+---
+en:
+  data_layouts:
+    snapshot_reviews:
+      community_rating: Community rating
+      help_others: Help others find their GreatSchool!
+      rate_and_review: Rate and review this school now!
+      write_review: Write a review
+      reviews: 
+        one: "%{count} Review"
+        other: "%{count} Reviews"

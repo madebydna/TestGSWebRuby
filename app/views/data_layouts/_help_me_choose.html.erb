@@ -4,6 +4,6 @@
 <% link_value = :help_me_e_video if @school.level_code_array.include? 'e' %>
 <% link_value = :help_me_e_video if @school.level_code_array.include? 'p' %>
 
-<div class="tac pal mtm"><span>Need help choosing a school?</span>
-    <%= link_to "We can help &raquo;".html_safe, link_value %>
+<div class="tac pal mtm"><span><%= t('.need_help') %></span>
+    <%= link_to t('.we_can_help_html'), link_value %>
 </div>

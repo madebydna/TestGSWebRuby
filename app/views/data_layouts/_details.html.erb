@@ -1,30 +1,4 @@
 <%= render layout:'col', locals: { css_class:'', category_placement: category_placement } do %>
     <!-- needs three fields: title, link_text, link_to -->
     <%= render "shared/section_header", category_placement:category_placement, link_text:'See all Details', link_to:'details' %>
-        <div class="row">
-            <% if @school.includes_level_code? (['e','m','h']) %>
-                <!-- Hack for Safari on IOS  -- using ad page name -->
-                <% append_page = "" %>
-                <% if @ad_page_name != :School_Details %>
-                    <% append_page = "details/" %>
-                <% end %>
-                <a href="<%= append_page %>#Programs">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:art], sprite: 'art' %></div>
-                </a>
-                <a href="<%= append_page %>#Extracurriculars">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:club], sprite: 'clubs' %></div>
-                </a>
-                <a href="<%= append_page %>#Extracurriculars">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sport], sprite: 'sports' %></div>
-                </a>
-                <a href="<%= append_page %>#Programs">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang], sprite: 'language' %></div>
-                </a>
-            <% end %>
-            <% turn_on_prek_details = false %>
-            <% if @school.includes_preschool? && turn_on_prek_details %>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:sched], sprite: 'schedule' %></div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:commu], sprite: 'community' %></div>
-            <% end %>
-        </div>
-<% end %>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"><%= render "shared/icon_content", data_local: data[:lang], sprite

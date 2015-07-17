@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'shared/_nearby_school_display' do
+describe 'school_profile/_nearby_school_display' do
 
   context 'with ads not turned off' do
 
@@ -10,7 +10,7 @@ describe 'shared/_nearby_school_display' do
       stub_template  "school_profile/_nearby_school.html.erb" => "this content"
       allow_any_instance_of(SchoolProfileDecorator).to receive(:school_zip_location_search_url).and_return("url")
       @show_ads = true
-      render partial: "shared/nearby_school_display", locals: {title: "Nearby schools", schools: [mocked_school]}
+      render partial: "school_profile/nearby_school_display", locals: {title: "Nearby schools", schools: [mocked_school]}
     end
 
     it 'should show ads' do
@@ -33,7 +33,7 @@ describe 'shared/_nearby_school_display' do
       stub_template  "school_profile/_nearby_school.html.erb" => "this content"
       allow_any_instance_of(SchoolProfileDecorator).to receive(:school_zip_location_search_url).and_return("url")
       @show_ads = false
-      render partial: "shared/nearby_school_display", locals: {title: "Nearby schools", schools: [mocked_school] }
+      render partial: "school_profile/nearby_school_display", locals: {title: "Nearby schools", schools: [mocked_school] }
     end
 
     it 'renders the title' do

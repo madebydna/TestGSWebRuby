@@ -1,0 +1,11 @@
+---
+es:
+  data_layouts:
+    snapshot_ratings:
+      api_score: Calificación API
+      esd_rating: Calificación ESD
+      greatschool_rating: Calificación GreatSchools
+      preschool_rating: Calificación Preescolar
+      ratings: Calificaciones
+      state_rating: Calificación del Estado
+      test_scores: Resultados de los exámenes

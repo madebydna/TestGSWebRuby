@@ -1,0 +1,7 @@
+---
+es:
+  data_layouts:
+    snapshot_details:
+      programs: Programas
+      students: Estudiantes
+      teachers: Profesores

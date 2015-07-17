@@ -29,7 +29,7 @@
                   <%= render partial: 'school_profile/nearby_school',
                              locals: {school: school} %>
               <% end %>
-              <%= link_to('See more schools', school_profile_decorator.school_zip_location_search_url, class: 'pls') %>
+              <%= link_to(t('.more_schools'), school_profile_decorator.school_zip_location_search_url, class: 'pls') %>
             </div>
         <% else %>
             <div class="pbm col-lg-12">
@@ -37,7 +37,7 @@
                   <%= render partial: 'school_profile/nearby_school',
                              locals: {school: school} %>
               <% end %>
-              <%= link_to('See more schools', school_profile_decorator.school_zip_location_search_url) %>
+              <%= link_to(t('.more_schools'), school_profile_decorator.school_zip_location_search_url) %>
             </div>
         <% end %>
       </div>

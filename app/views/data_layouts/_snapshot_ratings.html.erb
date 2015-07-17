@@ -5,7 +5,7 @@
   <div class="col-xs-12 tac">
     <a href="quality#Ratings"
       class="js-gaLoad js-gaClick" data-ga-load-label="ratingsSnapshot greatSchoolsRating link" data-ga-click-label="ratingsSnapshot greatSchoolsRating link">
-      <div class="link-darkgray pbs">GreatSchools rating<br /></div>
+      <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
       <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
     </a>
   </div>
@@ -14,18 +14,18 @@
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>
-    <% rating_text = (@school.state == 'CA' ? 'API score' : 'State rating') %>
+    <% rating_text = (@school.state == 'CA' ? t('.api_score') : t('.state_rating')) %>
     <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
 <% end %>
 
 <% local_rating = @school.local_rating %>
 <% if local_rating %>
-       <% rating_text = ('ESD rating') %>
+       <% rating_text = (t('.esd_rating')) %>
         <% ratings_array << (render "shared/rating/snapshot/variable_icon_rating", icon_to_use:'iconx72-ESD-ratings', icon_to_choose:'i-72-ratings-',rating:@school.local_rating,supporting_text: rating_text) %>
 <% end %>
 
 <% if @school.preK_star_rating %>
-        <% rating_text = 'Preschool rating' %>
+        <% rating_text = t('.preschool_rating') %>
     <% if @school.state == 'MI' %>
         <% ratings_array << ( render "shared/rating/snapshot/detroit_blue_star", rating:@school.preK_star_rating, supporting_text: rating_text) %>
     <% else %>
@@ -43,10 +43,10 @@
 
 
 <div class="tac pa full-width"  style="bottom: 20px;" >
-    <%= link_to 'Test scores', school_quality_url(@school, anchor:"Test_scores"), class:"js-gaLoad js-gaClick",
+    <%= link_to t('.test_scores'), school_quality_url(@school, anchor:"Test_scores"), class:"js-gaLoad js-gaClick",
                   data:{'ga-load-label'=>'ratingsSnapshot testScores link',
                         'ga-click-label'=>'ratingsSnapshot testScores link' } %>&nbsp;|&nbsp;
-    <%= link_to 'Ratings', school_quality_url(@school, anchor:"Ratings"), class:"js-gaLoad js-gaClick",
+    <%= link_to t('.ratings'), school_quality_url(@school, anchor:"Ratings"), class:"js-gaLoad js-gaClick",
                   data:{'ga-load-label'=>'ratingsSnapshot ratings link',
                         'ga-click-label'=>'ratingsSnapshot ratings link' } %>
 </div>

@@ -1,0 +1,11 @@
+---
+es:
+  data_layouts:
+    snapshot_reviews:
+      community_rating: Valoración de la Comunidad
+      help_others: ¡Ayuda a otros a enconrtra su GreatSchool!
+      rate_and_review: ¡Evaluar y calificar esta escuela ahora!
+      write_review: Escribe una evaluacion
+      reviews: 
+        one: "%{count} Evaluacion"
+        other: "%{count} Evaluaciones"
