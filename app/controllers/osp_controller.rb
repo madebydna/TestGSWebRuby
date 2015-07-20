@@ -291,7 +291,7 @@ class OspController < ApplicationController
 
   def validate_delaware_users
     if should_check_for_sso_token
-      auth_cookie = cookies[AUTH_COOKIE_NAME]
+      auth_cookie = get_auth_cookie
       return delaware_error_and_redirect_to(my_account_url) unless auth_cookie.present?
 
       auth_token = generate_auth_token(AUTH_SALT + current_user.email)
@@ -302,6 +302,11 @@ class OspController < ApplicationController
   def delaware_error_and_redirect_to(url)
     flash_notice t('forms.osp.delaware_error').html_safe
     redirect_to(url)
+  end
+
+  def get_auth_cookie
+    auth_cookie = cookies[AUTH_COOKIE_NAME] || return
+    auth_cookie.gsub('"', '').gsub(' ', '+') #removing " that were encoded in. And adding back + that were wrongly decoded
   end
 
   def generate_auth_token(string)
