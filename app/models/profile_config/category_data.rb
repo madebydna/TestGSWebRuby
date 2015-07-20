@@ -100,6 +100,12 @@ class CategoryData < ActiveRecord::Base
     key.match(/\A\d+\z/) ? key.to_i : key
   end
 
+  def label
+    s = super
+    return s if s.blank?
+    I18n.t(s, scope: self.class.name.underscore, default: s)
+  end
+
   def computed_label
     return label if label.present?
 
