@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'controllers/contexts/osp_shared_contexts'
 
 describe Admin::OspController do
+  include ActionView::Helpers::TranslationHelper
 
   describe '#show' do
     with_shared_context 'user esp_membership status is', :approved do
@@ -39,7 +40,7 @@ describe Admin::OspController do
 
       context 'when signed in and going to delaware without an gs_localAuth token set' do
         it 'should redirect to my account page and set flash notice' do
-          expect(controller).to receive(:flash_notice).at_least(:once)
+          expect(controller).to receive(:flash_notice).at_least(:once).with(t('forms.osp.delaware_error').html_safe)
           get :show, state: 'de', schoolId: school.id, page: 1
           expect(response.redirect_url).to redirect_to(my_account_url)
         end
