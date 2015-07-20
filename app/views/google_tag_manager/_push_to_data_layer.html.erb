@@ -15,17 +15,20 @@
     if (gaCookie.events) {
       $.each(gaCookie.events, function(_, event) {
         if (event.category && event.action) {
-          dataLayer.push({
+          var gaEvent = {
             'event': 'analyticsEvent',
             'eventCategory': event.category,
             'eventAction': event.action,
             'eventLabel': event.label,
             'eventValue': event.value,
             'eventNonInt': event.non_interactive
-          });
+          };
+          dataLayer.push(gaEvent);
         }
       });
     }
+
+    $.removeCookie('GATracking', {path: '/'});
   })();
 </script>
 <!-- End gon.data_layer_hash to Google Tag Manager Data Layer -->
