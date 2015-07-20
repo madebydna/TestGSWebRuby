@@ -29,6 +29,9 @@ module CookieConcerns
     },
       OmnitureTracking: {
       hash: true
+    },
+      GATracking: {
+      hash: true
     }
   }
 

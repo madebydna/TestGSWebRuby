@@ -414,7 +414,7 @@ describe SigninController do
               stub_fb_login_fail
               allow(controller).to receive(:overview_page_for_last_school) { nil }
               get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/')
+              expect(response).to redirect_to(home_url)
             end
           end
         end
@@ -504,6 +504,11 @@ describe SigninController do
 
       it 'should sign the user in' do
         expect(controller).to receive(:log_user_in).with user
+        subject
+      end
+
+      it 'should set a Google Analytics event' do
+        expect(controller).to receive(:trigger_event).with 'registration', 'verified email', 'regular'
         subject
       end
     end

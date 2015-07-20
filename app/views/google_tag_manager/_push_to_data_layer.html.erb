@@ -1,5 +1,31 @@
 <!-- gon.data_layer_hash to Google Tag Manager Data Layer -->
-<script>
-    dataLayer.push(gon.data_layer_hash);
+<script type="text/javascript">
+  dataLayer.push(gon.data_layer_hash);
+
+  (function() {
+    var gaCookie = {};
+    var cval = $.cookie('GATracking');
+    if (!(_.isEmpty(cval))) {
+      try {
+        gaCookie = JSON.parse(cval);
+      } catch (e) {
+        GS.util.log('Error parsing GA tracking cookie');
+      }
+    }
+    if (gaCookie.events) {
+      $.each(gaCookie.events, function(_, event) {
+        if (event.category && event.action) {
+          dataLayer.push({
+            'event': 'analyticsEvent',
+            'eventCategory': event.category,
+            'eventAction': event.action,
+            'eventLabel': event.label,
+            'eventValue': event.value,
+            'eventNonInt': event.non_interactive
+          });
+        }
+      });
+    }
+  })();
 </script>
 <!-- End gon.data_layer_hash to Google Tag Manager Data Layer -->

@@ -1,5 +1,6 @@
 class SigninController < ApplicationController
   include DeferredActionConcerns
+  include DataLayerConcerns
 
   protect_from_forgery
 
@@ -160,6 +161,7 @@ class SigninController < ApplicationController
             set_omniture_events_in_cookie(['review_updates_mss_end_event'])
             set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
           end
+          trigger_event('registration', 'verified email', 'regular')
           log_user_in user
           redirect_to success_redirect
         else
