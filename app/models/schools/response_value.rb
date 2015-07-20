@@ -17,13 +17,17 @@ class ResponseValue < ActiveRecord::Base
     cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
       hash = {}
       ResponseValue.all.each do |row|
-        key = [row['response_key'], row['response_value']]
-        hash[key] = row['response_label']
+        key = [row.response_key, row.response_value]
+        hash[key] = row.response_label
       end
       hash
     end
-
     return cached_all_values
+  end
+
+  def response_label
+    s = read_attribute(:response_label)
+    I18n.t(s, scope: self.class.name.underscore, default: s)
   end
 
   def self.all_values
