@@ -4,13 +4,7 @@
 
 <% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
-<%
-  data.each do |k, values|
-    data[k] = values.select do |value|
-      value[:breakdown].nil? || value[:breakdown].to_s.downcase == 'all students'
-    end
-  end
-%>
+<% data = filter_for_all_students(data) %>
 <% data = TableData.new data %>
 
 <% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
@@ -52,7 +46,7 @@
               <div class="<%= div_class%>">
                 <% if col_index != 1 %>
 
-                    <% raw_value = raw_value || 0 %>
+                    <% raw_value = raw_value.to_i || 0 %>
                     <% human_width =  220*raw_value/100%>
                     <% human_width_grey = 220 - human_width %>
                     <% human_width_grey_offset = human_width%22 %>

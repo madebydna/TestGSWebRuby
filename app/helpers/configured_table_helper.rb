@@ -15,4 +15,12 @@ module ConfiguredTableHelper
     output.html_safe
   end
 
+  def filter_for_all_students(data)
+    data.each do |k, values|
+      data[k] = values.select do |value|
+        value[:breakdown].nil? || value[:breakdown].to_s.downcase == 'all students'
+      end
+    end
+  end
+
 end
