@@ -12,9 +12,15 @@ describe ResponseValue do
       }
     end
     before do
+      @old_i18n_backend = I18n.backend
+      @old_locale = I18n.locale
       I18n.backend = I18n::Backend::KeyValue.new({})
       I18n.backend.store_translations(locale, translations)
       I18n.locale = locale
+    end
+    after do
+      I18n.backend = @old_i18n_backend
+      I18n.locale = @old_locale
     end
     it 'should be translated' do
       subject['response_label'] = 'Hello World'
