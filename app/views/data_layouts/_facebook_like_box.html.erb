@@ -3,7 +3,7 @@
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row">
     <div class="<%= layout_grid %> tac">
-        <div class="fb-like-box "
+        <div class="fb-like-box js-fb-page-plugin"
           data-href="<%= facebook_url %>"
           data-width="300"
           data-colorscheme="light"
@@ -25,4 +25,23 @@
      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Facebook, view: :mobile  %>
     </div>
   <% end %>
+
+  <script type="text/javascript">
+    jQuery(function() {
+      var opts = {
+        fbPagePluginDiv: jQuery('.js-fb-page-plugin').first(),
+        schoolName: "<%=j @school.name %>",
+        fbUrl: "<%=j facebook_url %>",
+        tooShortCounter: 0,
+        justRightCounter: 0
+      };
+
+      opts.intervalId = window.setInterval(GS.facebook.checkIframeHeight.bind(undefined, opts, jQuery), 50);
+
+      // Stop monitoring after at most 15 seconds. e.g. if Facebook failed to insert the iframe.
+      window.setTimeout(function() {
+        window.clearInterval(opts.intervalId);
+      },15000);
+    });
+  </script>
 <% end %>
