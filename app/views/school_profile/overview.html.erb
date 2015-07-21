@@ -9,7 +9,7 @@
   <div class="col-xs-12">
     <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
     <%= render 'data_layouts/nearby_schools' %>
-    <div class="mtl pll ptl" style="color:#999999">Last modified: <%= @last_modified_date.strftime('%B %d, %Y') %></div>
+    <div class="mtl pll ptl" style="color:#999999"><%= t('.last_modified') %>: <%= @last_modified_date.strftime('%B %d, %Y') %></div>
   </div>
 </div>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
