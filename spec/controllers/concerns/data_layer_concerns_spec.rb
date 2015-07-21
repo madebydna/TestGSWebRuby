@@ -95,4 +95,20 @@ describe DataLayerConcerns do
       end
     end
   end
+
+  describe '#trigger_event' do
+    it 'logs a single event into the cookie' do
+      allow(controller).to receive(:read_cookie_value).and_return(nil)
+      e = [{category: 'cat', action: 'action', label: 'label', value: 'value', non_interactive: true}]
+      expect(controller).to receive(:write_cookie_value).with(:GATracking, e, 'events')
+      controller.send(:trigger_event, 'cat', 'action', 'label', 'value', true)
+    end
+
+    it 'adds an event into an existing cookie' do
+      allow(controller).to receive(:read_cookie_value).and_return([{category: 'cat1', action: 'action1', label: 'label1'}])
+      e = [{category: 'cat1', action: 'action1', label: 'label1'},{category: 'cat2', action: 'action2', label: nil, value: nil, non_interactive: false}]
+      expect(controller).to receive(:write_cookie_value).with(:GATracking, e, 'events')
+      controller.send(:trigger_event, 'cat2', 'action2')
+    end
+  end
 end
