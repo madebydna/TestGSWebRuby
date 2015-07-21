@@ -3,10 +3,11 @@
 <hr/>
 <div class="js-topicalReviewQuestionsContainer">
   <div class="plm mbl">
-    <h2>Review topics</h2>
+    <h2><%= t('.title') %></h2>
 
-    <p class="">This is a safe place to share your honest opinions of a school, whether good or bad.&nbsp;
-      <%= link_to 'Learn more.', review_guidelines_url %></p>
+    <p class=""><%= t('.sub_title') %>&nbsp;
+      <%= link_to t('.learn_more'), review_guidelines_url %>
+    </p>
   </div>
 
   <div class="row">

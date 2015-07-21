@@ -3,7 +3,7 @@
 <div id="js_reviewsListHeader" class="link-down-compensate rs-review-list-header">
   <hr/>
   <div class="plm mbl">
-    <h2>Review comments</h2>
+    <h2><%= t('.title') %></h2>
   </div>
 
 
@@ -15,9 +15,9 @@
           <button type="button"
                   class="btn btn-default pointer js_reviewTopicFilterDropDownText js_bootstrapExtDropdownText"
                   data-toggle="dropdown"
-                  >All topics <b class="caret"></b></button>
+                  ><%= t('.all_topics') %><b class="caret"></b></button>
           <ul class="dropdown-menu mll js_reviewTopicFilterDropDown" data-topic-selected="allTopics">
-            <li><a class="pointer" data-topic-filter="allTopics">All topics</a></li>
+            <li><a class="pointer" data-topic-filter="allTopics"><%= t('.all_topics') %></a></li>
             <% topics.each do |topic| %>
                 <li><a class="pointer" data-topic-filter="<%= topic.name %>"><%= topic.name %></a></li>
             <% end %>
@@ -28,12 +28,12 @@
         <% if reviews.parent_reviews.having_comments.any? || reviews.student_reviews.having_comments.any? %>
             <div class="fr pl60">
               <div class="btn-group js_reviewFilterButton js_bootstrapExtButtonSelect" data-group-selected="all">
-                <button type="button" class="btn btn-default active" data-group-name="all">All</button>
+                <button type="button" class="btn btn-default active" data-group-name="all"><%= t('.all') %></button>
                 <% if reviews.parent_reviews.having_comments.any? %>
-                    <button type="button" class="btn btn-default" data-group-name="parent">Parents</button>
+                    <button type="button" class="btn btn-default" data-group-name="parent"><%= t('.parents') %></button>
                 <% end %>
                 <% if reviews.student_reviews.having_comments.any? %>
-                    <button type="button" class="btn btn-default" data-group-name="student">Students</button>
+                    <button type="button" class="btn btn-default" data-group-name="student"><%= t('.students') %></button>
                 <% end %>
               </div>
             </div>

@@ -1,0 +1,15 @@
+---
+es:
+  decorators:
+    school_profile_review_decorator:
+      community_member: community member
+      found_helpful: ' found this helpful'
+      no_rating: no rating
+      persons:
+        one: '%{count} person'
+        other: '%{count} people'
+      stars:
+        one: '%{count} star'
+        other: '%{count} stars'
+      school_leader: school leader
+      you_selected_html: 'You selected:&nbsp;'

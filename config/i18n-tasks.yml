@@ -110,6 +110,9 @@ ignore_unused:
   - actions.*
   - admin.*
   - helpers.*
+  - category_data.*
+  - response_value.*
+  - decorators.*
 
 # - 'activerecord.attributes.*'
 # - '{devise,kaminari,will_paginate}.*'

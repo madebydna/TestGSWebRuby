@@ -1,0 +1,9 @@
+---
+es:
+  school_profile:
+    review_list_header:
+      all: All SP
+      all_topics: All topics SP
+      parents: Parents SP
+      students: Students SP
+      title: Review comments SP

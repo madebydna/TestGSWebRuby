@@ -6,7 +6,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   delegate_all
 
   def answer_markup
-    default_text = 'no rating' # non five-star ratings must have answer specified, no always use 'no rating'
+    default_text = t('decorators.school_profile_review_decorator.no_rating') # non five-star ratings must have answer specified, no always use 'no rating'
     if review.question.overall?
       star_rating.present? ? h.draw_stars_16(star_rating.to_i) : default_text
     else
@@ -50,9 +50,9 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def user_type
     if review.school_user_or_default.unknown?
-      'community member'
+      t('decorators.school_profile_review_decorator.community_member')
     elsif review.school_user_or_default.principal?
-      'school leader'
+      t('decorators.school_profile_review_decorator.school_leader')
     else
       review.school_user_or_default.user_type
     end
@@ -81,8 +81,8 @@ class SchoolProfileReviewDecorator < Draper::Decorator
       number_of_votes = review.votes.active.size
       text = ''
       if number_of_votes > 0
-        text << pluralize(number_of_votes, 'person', 'people')
-        text << ' found this helpful'
+        text << t('decorators.school_profile_review_decorator.persons', count: number_of_votes)
+        text << t('decorators.school_profile_review_decorator.found_helpful', count: number_of_votes)
       end
       text
     )
@@ -90,8 +90,8 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def submitted_values_text
     submitted_value = answer_value
-    submitted_value = pluralize(answer_value, 'star', 'stars') if topic.overall?
-    text = "You selected: "
+    submitted_value = t('decorators.school_profile_review_decorator.stars', count: answer_value) if topic.overall?
+    text = t('decorators.school_profile_review_decorator.you_selected_html')
     text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
     text.html_safe
   end

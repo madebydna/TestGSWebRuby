@@ -1,0 +1,8 @@
+---
+es:
+  school_profile:
+    reviews:
+      modules:
+        question_navigation:
+          next_topic: Next Topic SP
+          previous_topic: Previous Topic SP

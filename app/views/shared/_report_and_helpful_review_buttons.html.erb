@@ -5,15 +5,13 @@
         <%= render 'school_profile/reviews/review_voting', review: review unless @school_user && @school_user.active_reviews.include?(review) %>
       </div>
       <% if logged_in? && current_user.flagged_review?(review) %>
-          <div class="pull-right small ptm">You've reported this review</div>
+          <div class="pull-right small ptm"><%= t('.review_reported') %></div>
       <% else %>
           <div class="pull-right small ptm rs-report-review-link js-report-review-link-<%= review.id %>">
-            <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Report
-              this review</a>
+            <a href="javascript:GS.reviews.reportReviewLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');"><%= t('.report_review') %></a>
           </div>
           <div class="dn pull-right small ptm js-report-review-close-link-<%= review.id %>">
-            <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');">Close
-              form</a>
+            <a href="javascript:GS.reviews.reportReviewCloseLinkClicked(<%= review.id %>, '.js-report-review-container-<%= review.id %>');"><%= t('.close') %></a>
           </div>
       <% end %>
   <% end %>

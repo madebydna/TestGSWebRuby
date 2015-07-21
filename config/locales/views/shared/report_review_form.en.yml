@@ -1,0 +1,8 @@
+---
+en:
+  shared:
+    report_review_form:
+      cancel: Cancel
+      report_review: Report this review as inappropriate
+      reporting: Reporting...
+      submit: Submit

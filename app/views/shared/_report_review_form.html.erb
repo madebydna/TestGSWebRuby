@@ -1,7 +1,7 @@
 <%= form_for(ReviewFlag.new, html: {'data-parsley-namespace' => 'data-parsley-', :class => 'parsley-form', role: 'form'}, url: flag_review_path(id: '0')) do |f| %>
     <fieldset>
       <div class="form-group mtm">
-        <p class="open-sans_sb">Report this review as inappropriate</p>
+        <p class="open-sans_sb"><%= t('.report_review') %></p>
         <label class="control-label pull-left pbl" for="textarea">
           Please explain how this review may have violated our <%= link_to('terms of use', terms_of_use_url, target: '_blank') %>
           or <%= link_to 'school review guidelines', school_review_guidelines_url, target: '_blank' %>:
@@ -12,8 +12,8 @@
       </div>
 
       <div class="form-actions pull-right">
-        <%= button_tag 'Submit', type:'submit', class: 'btn btn-primary', data: { disable_with: 'Reporting...' } %>
-        <a href="javascript:void(0);" class="phm js-report-review-form-cancel">Cancel</a>
+        <%= button_tag t('.submit'), type:'submit', class: 'btn btn-primary', data: { disable_with: t('.reporting') } %>
+        <a href="javascript:void(0);" class="phm js-report-review-form-cancel"><%= t('.cancel') %></a>
       </div>
     </fieldset>
 <% end %>

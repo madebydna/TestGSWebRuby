@@ -1,0 +1,8 @@
+---
+es:
+  shared:
+    review_module:
+      no_content_message: This review submitted without content.
+      posted: Posted
+      school_leader: SCHOOL LEADER
+      school_leader_message: Message to families
