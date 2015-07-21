@@ -100,11 +100,14 @@ gem 'prawn-table', '~> 0.1.2'
 
 gem 'rest_client', '1.8.1'
 
+gem 'binding_of_caller', '~> 0.7.2'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
+  # https://github.com/banister/binding_of_caller/issues/14
   gem 'better_errors', '~> 0.9.0'
-  gem 'binding_of_caller', '~> 0.7.2'
+  #gem 'binding_of_caller', '~> 0.7.2' #moved up into production. AT-873 GSLogger code
 
   # Use the Thin server in development for speed and other improvements
   gem 'thin'

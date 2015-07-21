@@ -57,13 +57,14 @@ class GSLogger
       ]
     end
 
+    #beware of possible segmentation fault issue with binding.of_caller method
+    #https://github.com/banister/binding_of_caller/issues/14
+    #Haven't been able to reproduce it. Probably ok for now, but worth keeping an eye on
     def get_request_url
-      binding.send(:caller).each_with_index do | caller_line, index|
-        next unless caller_line.include?('app/controllers/')
-
-        #the 3 is there to offset the 3 stack trace steps added because of the each block
-        url = binding.of_caller(index + 3).eval('try(:request).try(:original_url)')
-        return url if url.present?
+      frame_count = binding.frame_count - 1 #excluding current frame
+      frame_count.times do | n |
+        url = binding.of_caller(n).eval('try(:request).try(:original_url)')
+        url.present? ? (return "REQUEST_URL:#{url}") : next
       end
       nil
     end

@@ -295,7 +295,11 @@ class OspController < ApplicationController
       return delaware_error_and_redirect_to(my_account_url) unless auth_cookie.present?
 
       auth_token = generate_auth_token(AUTH_SALT + current_user.email)
-      return delaware_error_and_redirect_to(my_account_url) unless auth_cookie == auth_token
+      unless auth_cookie == auth_token
+        logger_vars = params.merge({gs_localAuth: cookies[AUTH_COOKIE_NAME], current_user_id: current_user.id, current_user_email: current_user.email})
+        GSLogger.warn(:osp, nil, vars: logger_vars, message: 'gs_localAuth cookie failed authentication')
+        return delaware_error_and_redirect_to(my_account_url)
+      end
     end
   end
 
