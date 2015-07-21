@@ -6,13 +6,13 @@
 <% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
 
 <div class="topical-review-question-container left">
-  <%= render 'shared/reviews/lib/question_title', question: question %>
+  <%= render 'school_profile/reviews/lib/question_title', question: question %>
   <% if principal %>
-      <%= render 'shared/reviews/modules/output/answer_summary',
+      <%= render 'school_profile/reviews/modules/output/answer_summary',
                  reviews_for_topic: reviews_for_topic
       %>
   <% else %>
-      <%= render 'shared/reviews/lib/radio_buttons_input',
+      <%= render 'school_profile/reviews/lib/radio_buttons_input',
                  f: f,
                  question: question,
                  submitted_answer: submitted_review.try(:answer)
@@ -27,15 +27,15 @@
   <% unless options[:comment_required] %>
       <div class="ptl phl <%= principal ? 'dn' : '' %> js-topicalReviewHaveAVoice">
         <% if reviews_for_topic.answer_summary_text.present? %>
-            <%= render 'shared/reviews/modules/output/answer_summary',
+            <%= render 'school_profile/reviews/modules/output/answer_summary',
                        reviews_for_topic: reviews_for_topic
             %>
         <% else %>
-            <%= render 'shared/reviews/modules/output/have_a_voice' %>
+            <%= render 'school_profile/reviews/modules/output/have_a_voice' %>
         <% end %>
       </div>
   <% end %>
-  <%= render 'shared/reviews/modules/input/review_comment',
+  <%= render 'school_profile/reviews/modules/input/review_comment',
              f: f,
              options: options,
              question: question,

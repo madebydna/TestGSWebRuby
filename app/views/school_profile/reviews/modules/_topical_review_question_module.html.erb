@@ -10,7 +10,7 @@ id='<%= "topic#{question.topic.id}" %>'
 class="link-down-compensate bg-light-gray gray-box-border-v row limit-width-1200 js-topicalReviewContainer dn"
 data-review-topic="<%= question.review_topic.id %>">
   <% if submitted_review %>
-      <%= render "shared/reviews/modules/output/submitted_review_module", question: question,
+      <%= render "school_profile/reviews/modules/output/submitted_review_module", question: question,
                                                                           submitted_review: submitted_review
       %>
   <% end %>
@@ -24,7 +24,7 @@ data-review-topic="<%= question.review_topic.id %>">
         <%= f.hidden_field :school_id, value: @school.id %>
         <%= f.hidden_field :review_question_id, value: question.id %>
 
-        <%= render "shared/reviews/modules/input/#{question.layout}_module", question: question,
+        <%= render "school_profile/reviews/modules/input/#{question.layout}_module", question: question,
                                                                              f: f,
                                                                              submitted_review: submitted_review
         %>

@@ -14,7 +14,7 @@
         <% end %>
         <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
         <%= render 'shared/review_no_ratings' %>
-        <%= render 'shared/reviews/topical_review_section' %>
+        <%= render 'school_profile/reviews/topical_review_section' %>
       </div>
     <% else %>
         <div class="col-xs-12 ptl"  style="z-index: 1;">
@@ -23,7 +23,7 @@
               <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
             <% end %>
           <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
-          <%= render 'shared/reviews/topical_review_section' %>
+          <%= render 'school_profile/reviews/topical_review_section' %>
           <% if @show_ads %>
               <div class="row">
                 <div class="col-xs-12">

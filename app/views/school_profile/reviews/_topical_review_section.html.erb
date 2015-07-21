@@ -20,11 +20,11 @@
           <% else %>
               <% # if user answered questions render and display role question & hide review questions    %>
               <% if @school_user.reviews.present? %>
-                  <%= render 'shared/reviews/modules/member_role_question_module', display: true %>
+                  <%= render 'school_profile/reviews/modules/member_role_question_module', display: true %>
                   <% display_review_questions = false %>
                   <% # if logged in and has not answered questions, render and hide role question & display review questions    %>
               <% else %>
-                  <%= render 'shared/reviews/modules/member_role_question_module', display: false %>
+                  <%= render 'school_profile/reviews/modules/member_role_question_module', display: false %>
                   <% display_review_questions = true %>
               <% end %>
           <% end %>
@@ -32,10 +32,10 @@
           <% display_review_questions = true %>
       <% end %>
 
-      <%= render 'shared/reviews/modules/question_navigation' %>
+      <%= render 'school_profile/reviews/modules/question_navigation' %>
       <div class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
         <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
-          <%= render partial: "shared/reviews/modules/topical_review_question_module",
+          <%= render partial: "school_profile/reviews/modules/topical_review_question_module",
                      collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
           %>
         </div>

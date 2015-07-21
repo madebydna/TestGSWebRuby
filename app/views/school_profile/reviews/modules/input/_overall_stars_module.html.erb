@@ -6,13 +6,13 @@
 %>
 
 <div class="topical-review-question-container left">
-  <%= render 'shared/reviews/lib/question_title', question: question %>
+  <%= render 'school_profile/reviews/lib/question_title', question: question %>
   <% if principal %>
-      <%= render 'shared/reviews/modules/output/answer_summary',
+      <%= render 'school_profile/reviews/modules/output/answer_summary',
                  reviews_for_topic: reviews_for_topic
       %>
   <% else %>
-      <%= render 'shared/reviews/lib/stars_input',
+      <%= render 'school_profile/reviews/lib/stars_input',
                  f: f,
                  question: question,
                  submitted_answer: submitted_review.try(:answer)
@@ -21,13 +21,13 @@
 </div>
 <div class="topical-review-question-container right">
 
-  <%= render 'shared/reviews/modules/output/overall_rating_summary' %>
+  <%= render 'school_profile/reviews/modules/output/overall_rating_summary' %>
 
   <% options = {
           comment_required: true,
           principal: principal
   } %>
-  <%= render 'shared/reviews/modules/input/review_comment',
+  <%= render 'school_profile/reviews/modules/input/review_comment',
              f: f,
              options: options,
              question: question,
