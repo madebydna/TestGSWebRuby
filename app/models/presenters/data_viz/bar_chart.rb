@@ -1,35 +1,38 @@
 class BarChart
+  include ActiveRecord::Callbacks
 
-  attr_accessor :config, :label, :value, :comparison_value, :performance_level, :grey_value, :subtext
+  # Class that holds a collection of graphs related by subject or breakdown.
+  # Header and array of chart data.
 
-  FULL_WIDTH = 100
-  SEPERATOR_WIDTH = 0.5
+  attr_accessor :bar_chart_bars, :data, :config, :title
 
-  def initialize(config = {})
+  def initialize(data, title = nil, config = {})
+    # Title is optional because for single chart groups, there is no group title
+    self.data = data
     self.config = config
-    parse_config!
-  end
+    self.title = title
 
-  def display?
-    value.present?
+    create_bar_chart_bars!
   end
 
   private
 
-  def parse_config!
-    self.label = config[:label]
-    self.comparison_value = config[:comparison_value]
-    self.performance_level = config[:performance_level]
-    self.subtext = config[:subtext]
-    set_value_fields!
+  def create_bar_chart_bars!
+    self.bar_chart_bars = data.map do |data_point|
+      bar_chart_bar = BarChartBar.new(
+        {
+          label: label_for(data_point, config),
+          value: data_point[:school_value],
+          comparison_value: data_point[:state_average],
+          performance_level: data_point[:performance_level],
+          subtext: data_point[:subtext]
+        }
+      )
+      bar_chart_bar.display? ? bar_chart_bar : nil
+    end.compact
   end
 
-  def set_value_fields!
-    self.value = config[:value]
-    if [0, FULL_WIDTH].include? value.to_f
-      self.grey_value = FULL_WIDTH - value.to_f
-    else
-      self.grey_value = FULL_WIDTH - value.to_f - SEPERATOR_WIDTH
-    end
+  def label_for(data_point, config)
+    config[:label_charts_with] ? data_point[config[:label_charts_with]] : nil
   end
 end

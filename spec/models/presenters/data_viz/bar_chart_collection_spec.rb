@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BarChartGroupCollection do
+describe BarChartCollection do
   let(:data) {
     {
       year: 2013,
@@ -12,14 +12,14 @@ describe BarChartGroupCollection do
       performance_level: "above_average"
     }
   }
-  context '#create_bar_chart_groups!' do
+  context '#create_bar_charts!' do
     let(:data_points) { [data, data.merge(year: 2014), data.merge(year: 2019)] }
     context 'with a group_by year option specified' do
       subject do
         # The array of bar chart groups
-        BarChartGroupCollection
+        BarChartCollection
           .new(nil, data_points, create_groups_by: :year)
-          .send(:create_bar_chart_groups!)
+          .send(:create_bar_charts!)
       end
 
       it 'should create bar chart groups for each year' do
@@ -34,9 +34,9 @@ describe BarChartGroupCollection do
     context 'with no group_by option specified' do
       subject do
         # The array of bar chart groups
-        BarChartGroupCollection
+        BarChartCollection
           .new(nil, data_points)
-          .send(:create_bar_chart_groups!)
+          .send(:create_bar_charts!)
       end
 
       it 'should create a single bar chart group' do

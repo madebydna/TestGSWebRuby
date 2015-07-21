@@ -12,9 +12,9 @@ describe GroupComparisonDataReader do
     }
   }
 
-  it 'should create a BarChartGroupCollection for each data type' do
+  it 'should create a BarChartCollection for each data type' do
     allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-    expect(BarChartGroupCollection).to receive(:new).exactly(sample_data.keys.size).times
+    expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
     subject.data_for_category(nil)
   end
 

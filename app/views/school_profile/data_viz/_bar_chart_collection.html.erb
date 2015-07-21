@@ -1,5 +1,5 @@
 <%
-  # A bar_chart_group_collection is the first-order grouping described in the
+  # A bar_chart_collection is the first-order grouping described in the
   # group comparison data reader.
 %>
 
@@ -10,9 +10,9 @@
   </div>
 
   <div class='row'>
-    <% bar_chart_collection.bar_chart_groups.each do | bar_chart_group | %>
-      <%= render partial: 'school_profile/data_viz/bar_chart_group',
-                  locals: { bar_chart_group: bar_chart_group } %>
+    <% bar_chart_collection.bar_charts.each do | bar_chart | %>
+      <%= render partial: 'school_profile/data_viz/bar_chart',
+                  locals: { bar_chart: bar_chart } %>
     <% end %>
   </div>
 </div>

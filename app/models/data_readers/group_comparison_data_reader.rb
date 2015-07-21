@@ -2,34 +2,34 @@
 # Right now this is just set up to work with bar charts.
 # Bar charts are organized into group_collections and groups.
 #
-# bar_chart_group_collection is the first-order grouping of charts.
+# BarChartCollection is the first-order grouping of charts.
 # - It has things like the name that goes on the button and knows how to
-#   segment the data into the smaller bar_chart_group's
-# bar_chart_group is the second-order grouping of charts.
-# - It has a title and knows how to create the bar_charts underneath it.
+#   segment the data into the smaller BarChart's
+# BarChart is the second-order grouping of charts.
+# - It has a title and knows how to create the BarChartBars underneath it.
 # - It also knows why its charts are related. For instance, this will often
 #   be a collection of results for one student breakdown over multiple years.
 #
 # EXAMPLES:
 # 1. Student group comparison.
-#  - Each bar_chart_group_collection is for a data type and creates
-#    bar_chart_groups for each student breakdown, like ethnicity.
-#  - Each bar_chart_group is therefore for a student breakdown. In this
+#  - Each BarChartCollection is for a data type and creates
+#    BarCharts for each student breakdown, like ethnicity.
+#  - Each BarChart is therefore for a student breakdown. In this
 #    example, let's pretend we aren't showing data over time, so we aren't
-#    segmenting the groups further. Thus, each bar_chart_group has only one
-#    bar_chart in it.
+#    segmenting the groups further. Thus, each BarChart has only one
+#    BarChartBar in it.
 # 2. Test scores by subject.
-#  - Each bar_chart_group_collection is for a subject (the whole thing is test
+#  - Each BarChartCollection is for a subject (the whole thing is test
 #    results for a single test, or more technically, TestDataType). We're
-#    again segments by breakdown, so this creates bar_chart_groups for each
+#    again segments by breakdown, so this creates BarCharts for each
 #    breakdown.
-#  - Each bar_chart_group is for a breakdown and we're also looking at data by
-#    year so each bar_chart_group creates bar_charts within it for each year.
+#  - Each BarChart is for a breakdown and we're also looking at data by
+#    year so each BarChart creates BarChartBars within it for each year.
 
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
-  # An array of BarChartGroupCollection objects.
+  # An array of BarChartCollection objects.
   # Each of these has inner objects of groups of charts and then the
   # charts themselves.
   def data_for_category(category)
@@ -44,7 +44,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data = get_data(category, config)
 
     data.map do |collection_name, collection_data|
-      BarChartGroupCollection.new(collection_name, collection_data, config)
+      BarChartCollection.new(collection_name, collection_data, config)
     end
   end
 
