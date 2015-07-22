@@ -8,8 +8,8 @@ en:
       persons:
         one: '%{count} person'
         other: '%{count} people'
+      school_leader: school leader
       stars:
         one: '%{count} star'
         other: '%{count} stars'
-      school_leader: school leader
       you_selected_html: 'You selected:&nbsp;'

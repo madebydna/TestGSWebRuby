@@ -6,8 +6,6 @@ en:
         advanced: ADVANCED
         answer_questions: Answer questions
         basic: BASIC
-        parents_call_out: for Parents
-        schools_call_out: for Schools
         honor_roll: HONOR ROLL
         improve_profile: Want to improve this school’s profile? You can!
         intermediate: INTERMEDIATE
@@ -23,5 +21,7 @@ en:
         then ADVANCED, and finally HONOR ROLL as you complete the following: 10
         or more reviews, at least 1 photo, and 9 program questions parents find
         helpful.</p>"
+        parents_call_out: for Parents
+        schools_call_out: for Schools
         upload_photos: Upload photos
         write_review: Write a review

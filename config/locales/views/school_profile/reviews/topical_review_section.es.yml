@@ -3,7 +3,6 @@ es:
   school_profile:
     reviews:
       topical_review_section:
-        title: Temas de revisión
-        sub_title: "Este es un lugar seguro para compartir sus opiniones honestas de una escuela, ya sea 
-                    bueno o malo."
         learn_more: Aprender más.
+        sub_title: Este es un lugar seguro para compartir sus opiniones honestas de una escuela, ya sea bueno o malo.
+        title: Temas de revisión

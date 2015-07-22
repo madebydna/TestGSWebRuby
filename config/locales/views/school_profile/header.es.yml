@@ -1,11 +1,12 @@
+---
 es:
   school_profile:
     header:
+      after_care: Cuidado despues de clases
+      apply: Aplica ya
       back_to_compare: Volver
+      before_care: Cuidado antes de clases
       contact_info: Mas Informacion
-      students_enrolled: Estudiantes inscritos
       follow_school: Siga esta escuela
       rate_and_review: Evaluar y calificar
-      apply: Aplica ya
-      before_care: Cuidado antes de clases
-      after_care: Cuidado despues de clases
+      students_enrolled: Estudiantes inscritos

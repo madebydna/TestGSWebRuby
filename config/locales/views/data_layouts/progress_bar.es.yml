@@ -6,21 +6,21 @@ es:
         advanced: AVANZADA
         answer_questions: Responder a preguntas
         basic: BASICA
-        parents_call_out: para los Padres
-        schools_call_out: para Escuelas
         honor_roll: LISTA DE HONOR
         improve_profile: ¿Quieres mejorar el perfil de esta escuela?
         intermediate: INTERMEDIO
         learn_more: Aprender más
         learn_more_text_html: "<p>¿Quieres mejorar el perfil de esta escuela? Puedes!</p>
-        <p>Todas las escuelas de GreatSchools comienzan con completitud BASICA, 
-        que incluye importante información como datos de contacto y resultados de exámenes de 
+        <p>Todas las escuelas de GreatSchools comienzan con completitud BASICA,
+        que incluye importante información como datos de contacto y resultados de exámenes de
         cada escuela.  Todo depende de la comunidad escolar para dar los siguientes pasos.
-        Como padre o miembro de la comunidad, pueden compartir lo que sabes con otras familias 
-        ya sea escribiendo una evaluación o respondiendo a algunas preguntas acerca de lo que 
-        ofrece la escuela.  Como un líder de la escuela, pueden subir fotos, describir los 
+        Como padre o miembro de la comunidad, pueden compartir lo que sabes con otras familias
+        ya sea escribiendo una evaluación o respondiendo a algunas preguntas acerca de lo que
+        ofrece la escuela.  Como un líder de la escuela, pueden subir fotos, describir los
         programas escolares, y llenar un perfil escolar oficial.</p>
-        <p>Los metros integridad traslada a INTERMEDIO, AVANZADO luego, y finalmente HONOR a 
+        <p>Los metros integridad traslada a INTERMEDIO, AVANZADO luego, y finalmente HONOR a
         medida que completa el siguiente: 10 o mås del programa preguntas padres encuentra útil.</p>"
+        parents_call_out: para los Padres
+        schools_call_out: para Escuelas
         upload_photos: Subir fotos
         write_review: Escribe una evaluacion

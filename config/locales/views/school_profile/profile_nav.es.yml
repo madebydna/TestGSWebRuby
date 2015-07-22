@@ -1,7 +1,8 @@
+---
 es:
   school_profile:
     profile_nav:
-      overview: Resumen
-      reviews: Evaluacion
-      report_card: Reporte
       details: Detalles
+      overview: Resumen
+      report_card: Reporte
+      reviews: Evaluacion

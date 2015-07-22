@@ -10,8 +10,8 @@ es:
       persons:
         one: '%{count} persona'
         other: '%{count} personas'
+      school_leader: líder de la escuela
       stars:
         one: '%{count} estrella'
         other: '%{count} estrellas'
-      school_leader: líder de la escuela
       you_selected_html: 'Usted ha seleccionado:&nbsp;'

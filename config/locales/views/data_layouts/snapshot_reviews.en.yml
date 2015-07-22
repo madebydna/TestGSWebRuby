@@ -5,7 +5,7 @@ en:
       community_rating: Community rating
       help_others: Help others find their GreatSchool!
       rate_and_review: Rate and review this school now!
+      reviews:
+        one: ! "%{count} Review"
+        other: ! "%{count} Reviews"
       write_review: Write a review
-      reviews: 
-        one: "%{count} Review"
-        other: "%{count} Reviews"

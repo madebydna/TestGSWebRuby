@@ -1,11 +1,12 @@
+---
 en:
   school_profile:
     header:
+      after_care: After care
+      apply: Apply now
       back_to_compare: Back to compare
+      before_care: Before care
       contact_info: Contact info
-      students_enrolled: Students enrolled
       follow_school: Follow this school
       rate_and_review: Rate & Review
-      apply: Apply now
-      before_care: Before care
-      after_care: After care
+      students_enrolled: Students enrolled
