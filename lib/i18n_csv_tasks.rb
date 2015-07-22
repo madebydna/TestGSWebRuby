@@ -74,7 +74,7 @@ Note yml param should be a path and a filename prefix, as the script will append
     arguments_hash = HashWithIndifferentAccess[opts[:arguments].map { |arg| arg.split('=') }]
     yml_file_path_and_name_prefix = arguments_hash[:yml]
     csv_file_path_and_name = arguments_hash[:csv]
-    files = csv_file_path_and_name || i18n.config["csv"]["import"]
+    files = [csv_file_path_and_name] || i18n.config["csv"]["import"]
     unless yml_file_path_and_name_prefix && csv_file_path_and_name
       print_usage
       raise "Must provide yml and csv arguments. Provided arguments #{opts[:arguments]}"
