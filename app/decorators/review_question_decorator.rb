@@ -14,22 +14,22 @@ class ReviewQuestionDecorator < Draper::Decorator
   private
 
   def placeholder_prefix_text
-    'Please share why you feel this way'
+    I18n.t('decorators.review_question_decorator.placeholder_prefix')
   end
 
   def placeholder_optional_text
-    "\n(Optional. There\'s no need to repeat text from another review.)"
+    I18n.t('decorators.review_question_decorator.optional_suffix')
   end
 
   def placeholder_question_key
     {
-     'Overall'=>'. ',
-     'Honesty'=> '. How do you feel this school develops honesty, integrity, and fairness in students? ' ,
-     'Empathy'=> '. How do you feel this school develops compassion, caring, and empathy in students? ',
-     'Respect'=> '. How do you feel this school develops respect in students? ',
-     'Grit'=> '. How do you feel this school develops persistence, grit, and determination in students? ',
-     'Homework'=> ' about homework at this school. ',
-     'Teachers'=> ' about teachers at this school. '
+     'Overall'=> I18n.t('decorators.review_question_decorator.overall_placeholder_text'),
+     'Honesty'=> I18n.t('decorators.review_question_decorator.honesty_placeholder_text'),
+     'Empathy'=> I18n.t('decorators.review_question_decorator.empathy_placeholder_text'),
+     'Respect'=> I18n.t('decorators.review_question_decorator.respect_placeholder_text'),
+     'Grit'=> I18n.t('decorators.review_question_decorator.grit_placeholder_text'),
+     'Homework'=> I18n.t('decorators.review_question_decorator.homework_placeholder_text'),
+     'Teachers'=> I18n.t('decorators.review_question_decorator.teachers_placeholder_text')
     }
   end
 end

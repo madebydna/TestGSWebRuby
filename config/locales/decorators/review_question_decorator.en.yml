@@ -1,0 +1,17 @@
+---
+en:
+  decorators:
+    review_question_decorator:
+      empathy_placeholder_text: '. How do you feel this school develops compassion,
+        caring, and empathy in students? '
+      grit_placeholder_text: '. How do you feel this school develops persistence,
+        grit, and determination in students? '
+      homework_placeholder_text: ' about homework at this school. '
+      honesty_placeholder_text: '. How do you feel this school develops honesty, integrity,
+        and fairness in students? '
+      optional_suffix: "\n(Optional. There's no need to repeat text from another review.)"
+      overall_placeholder_text: '. '
+      placeholder_prefix: Please share why you feel this way
+      respect_placeholder_text: '. How do you feel this school develops respect in
+        students? '
+      teachers_placeholder_text: ' about teachers at this school. '
