@@ -3,12 +3,7 @@
   # group comparison data reader.
 %>
 
-<div class="col-xs-12 data-viz-bar-chart">
-  <div class='header'>
-    <h4 class='title-text'><%= bar_chart_collection.title %></h4>
-    <% #<div class='btn btn-sm btn-default pull-left'><%= bar_chart.button_text ></div> %>
-  </div>
-
+<div class="col-xs-12 data-viz-bar-chart js-foo">
   <div class='row'>
     <% bar_chart_collection.bar_charts.each do | bar_chart | %>
       <%= render partial: 'school_profile/data_viz/bar_chart',
