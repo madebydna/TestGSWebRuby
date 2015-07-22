@@ -1,4 +1,5 @@
 <div class="tal">
-  <span class="i-data-viz-state-avg"></span><span class="vat"> = State Average</span>
-  <%= number_to_percentage(chart.comparison_value.to_i, precision: 0) %> Proficient
+  <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average') %></span>
+  <% percent = number_to_percentage(chart.comparison_value.to_i, precision: 0) %>
+  <%= t('.percent_proficient', percent: percent) %>
 </div>

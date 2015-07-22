@@ -1,0 +1,7 @@
+---
+es:
+  school_profile:
+    data_viz:
+      bar_chart_tooltip:
+        state_average: El promedio del estado
+        percent_proficient: '%{percent} de habilidad'
