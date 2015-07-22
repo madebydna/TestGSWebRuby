@@ -1,7 +1,7 @@
 module DataLayerConcerns
   extend ActiveSupport::Concern
 
-  DATALAYER_COOKIE_NAME = 'GATracking'
+  DATALAYER_COOKIE_NAME = :GATracking
 
   protected
 
@@ -32,9 +32,9 @@ module DataLayerConcerns
     end
   end
 
-  def trigger_event(category, action, label=nil, value=nil, non_interactive=false)
-    events = read_cookie_value(:"#{DATALAYER_COOKIE_NAME}",'events') || []
+  def insert_into_ga_event_cookie(category, action, label=nil, value=nil, non_interactive=false)
+    events = read_cookie_value(DATALAYER_COOKIE_NAME,'events') || []
     events += [{category: category, action: action, label: label, value: value, non_interactive: non_interactive}]
-    write_cookie_value(:"#{DATALAYER_COOKIE_NAME}", events, 'events')
+    write_cookie_value(DATALAYER_COOKIE_NAME, events, 'events')
   end
 end

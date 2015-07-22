@@ -508,7 +508,7 @@ describe SigninController do
       end
 
       it 'should set a Google Analytics event' do
-        expect(controller).to receive(:trigger_event).with 'registration', 'verified email', 'regular'
+        expect(controller).to receive(:insert_into_ga_event_cookie).with 'registration', 'verified email', 'regular'
         subject
       end
     end

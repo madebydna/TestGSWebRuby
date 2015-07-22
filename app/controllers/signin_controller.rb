@@ -161,8 +161,8 @@ class SigninController < ApplicationController
             set_omniture_events_in_cookie(['review_updates_mss_end_event'])
             set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
           end
-          event_label = user.esp_memberships.blank? ? 'regular' : 'osp'
-          trigger_event('registration', 'verified email', event_label)
+          event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
+          insert_into_ga_event_cookie('registration', 'verified email', event_label)
           log_user_in user
           redirect_to success_redirect
         else
@@ -227,6 +227,7 @@ class SigninController < ApplicationController
         end
       end
 
+      flash_notice email_verification_url(user)
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 
