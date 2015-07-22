@@ -2,7 +2,7 @@
 es:
   shared:
     review_module:
-      no_content_message: This review submitted without content.
-      posted: Posted
-      school_leader: SCHOOL LEADER
-      school_leader_message: Message to families
+      no_content_message: Esta evaluación fue enviada sin contenido
+      posted: Publicado
+      school_leader: LÍDER DE LA ESCUELA
+      school_leader_message: Mensaje a las familias

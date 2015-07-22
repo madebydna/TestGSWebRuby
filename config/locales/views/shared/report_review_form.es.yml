@@ -2,7 +2,11 @@
 es:
   shared:
     report_review_form:
-      cancel: Cancel
-      report_review: Report this review as inappropriate
-      reporting: Reporting...
-      submit: Submit
+      cancel: Cancelar
+      or: o
+      report_review: Reportar este comentario como inapropiado
+      reporting: Reportar...
+      school_review_guidelines: school review guidelines SP
+      submit: Enviar
+      terms_of_use: terms of use SP
+      terms_of_use_message: Please explain how this review may have violated our SP

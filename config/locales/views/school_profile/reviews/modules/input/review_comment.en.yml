@@ -1,0 +1,12 @@
+---
+en:
+  school_profile:
+    reviews:
+      modules:
+        input:
+          review_comment:
+            left_in_review: left in your review
+            submit: Submit
+            submitting: Submitting
+            submit_statement: Submit statement
+            you_have: You have

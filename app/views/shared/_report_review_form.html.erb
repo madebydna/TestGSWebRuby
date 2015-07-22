@@ -3,7 +3,7 @@
       <div class="form-group mtm">
         <p class="open-sans_sb"><%= t('.report_review') %></p>
         <label class="control-label pull-left pbl" for="textarea">
-          Please explain how this review may have violated our <%= link_to('terms of use', terms_of_use_url, target: '_blank') %>
+          <%= t('.terms_of_use_message') %> <%= link_to(t('.terms_of_use'), terms_of_use_url, target: '_blank') %>
           or <%= link_to 'school review guidelines', school_review_guidelines_url, target: '_blank' %>:
         </label>
         <div class="controls">

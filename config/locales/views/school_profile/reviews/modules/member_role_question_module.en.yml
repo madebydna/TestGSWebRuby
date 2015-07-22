@@ -1,0 +1,13 @@
+---
+en:
+  school_profile:
+    reviews:
+      modules:
+        member_role_question_module:
+          community_member: community member
+          current_student: current student
+          parent: parent
+          role_question: 'WHAT''S YOUR RELATIONSHIP TO THIS SCHOOL?'
+          school_official: school official
+          submit: Submit
+          teacher: teacher

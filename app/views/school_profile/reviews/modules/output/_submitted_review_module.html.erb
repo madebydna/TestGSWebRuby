@@ -11,13 +11,13 @@
     <% end %>
     <div class="ptm pbl phxl tal <%= principal ? 'mtl' : '' %>">
       <% unless submitted_review.active? %>
-          <span class="open-sans_i">(Pending activation) </span>
+          <span class="open-sans_i"><%= t('.pending_activation') %> </span>
       <% end %>
       <%= submitted_review.truncated_comment(220) %>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary mvm js-reviewManageButton" data-topic-id="<%= question.topic.id %>">Manage
-        review
+      <button type="submit" class="btn btn-primary mvm js-reviewManageButton" data-topic-id="<%= question.topic.id %>">
+       <%= t('.manage_review') %>
       </button>
     </div>
   </div>

@@ -1,0 +1,10 @@
+---
+en:
+  school_profile:
+    reviews:
+      modules:
+        output:
+          overall_rating_summary:
+            overall_ratings: 
+              one: "%{count} OVERALL RATING"
+              other: "%{count} OVERALL RATINGS"

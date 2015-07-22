@@ -2,14 +2,16 @@
 es:
   decorators:
     school_profile_review_decorator:
-      community_member: community member
-      found_helpful: ' found this helpful'
-      no_rating: no rating
+      community_member: miembro de la comunidad
+      found_helpful:
+        one: ' encontraron esta útil'
+        other: ' encontraron útil'
+      no_rating: no calificación
       persons:
-        one: '%{count} person'
-        other: '%{count} people'
+        one: '%{count} persona'
+        other: '%{count} personas'
       stars:
-        one: '%{count} star'
-        other: '%{count} stars'
-      school_leader: school leader
-      you_selected_html: 'You selected:&nbsp;'
+        one: '%{count} estrella'
+        other: '%{count} estrellas'
+      school_leader: líder de la escuela
+      you_selected_html: 'Usted ha seleccionado:&nbsp;'

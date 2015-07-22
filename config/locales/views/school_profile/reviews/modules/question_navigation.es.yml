@@ -4,5 +4,5 @@ es:
     reviews:
       modules:
         question_navigation:
-          next_topic: Next Topic SP
-          previous_topic: Previous Topic SP
+          next_topic: Tema siguiente
+          previous_topic: Tema anterior

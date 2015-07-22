@@ -1,0 +1,8 @@
+---
+en:
+  school_profile:
+    reviews:
+      modules:
+        output:
+          answer_summary:
+            no_votes_text: No one has voted for this topic yet.

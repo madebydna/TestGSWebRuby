@@ -3,6 +3,10 @@ en:
   shared:
     report_review_form:
       cancel: Cancel
+      or: or
       report_review: Report this review as inappropriate
       reporting: Reporting...
+      school_review_guidelines: school review guidelines
       submit: Submit
+      terms_of_use: terms of use
+      terms_of_use_message: Please explain how this review may have violated our

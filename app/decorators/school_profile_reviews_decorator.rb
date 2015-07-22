@@ -33,21 +33,16 @@ module SchoolProfileReviewsDecorator
   end
 
   def see_comments_text
-    text = "See ratings"
+    text = h.t('decorators.school_profile_reviews_decorator.see_ratings')
     number_with_comments = having_comments.count
     if number_with_comments > 0
-      text = 'See '
-      text << 'all ' if number_with_comments > 1
-      text << h.pluralize(number_with_comments, 'comment', 'comments')
+      text = h.t('decorators.school_profile_reviews_decorator.comments', count: number_with_comments)
     end
     text
   end
 
   def see_all_reviews_phrase
-    phrase = 'See '
-    phrase << 'all ' if count > 1
-    phrase << h.pluralize(count, 'review', 'reviews')
-    phrase
+    h.t('decorators.school_profile_reviews_decorator.reviews', count: count)
   end
 
   def reviews_count_text

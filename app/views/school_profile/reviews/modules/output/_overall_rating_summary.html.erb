@@ -8,7 +8,7 @@
 <div class="js-overallRatingSummary mtxl">
   <% if average_score > 0 %>
       <div class="tac">
-        <div class="open-sans_sb mvm"><%= pluralize ratings_count, 'OVERALL RATING', 'OVERALL RATINGS' %></div>
+        <div class="open-sans_sb mvm"><%= t('.overall_ratings', count: ratings_count) %></div>
         <%= draw_stars_48 average_score %><br />
       </div>
       <div class="js_reviewTopicFilterLink mtm">

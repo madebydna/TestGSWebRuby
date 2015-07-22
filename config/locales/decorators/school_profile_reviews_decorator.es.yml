@@ -1,0 +1,12 @@
+---
+es:
+  decorators:
+    school_profile_reviews_decorator:
+      comments:
+        one: "Ver %{count} comentario"
+        other: "Ver todos %{count} comentarios"
+      reviews:
+        one: "See %{count} review"
+        other: "See all %{count} reviews"
+      see_ratings: Ver calificaciones
+

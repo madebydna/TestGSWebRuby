@@ -2,7 +2,7 @@
 <%
    principal = options[:principal]
    parsley_error_id = "topical-parsley-errors-#{question.id}"
-   submit_text = principal ? 'Submit statement' : 'Submit'
+   submit_text = principal ? t('.submit_statement') : t('.submit')
    placeholder_text = principal ? '' : question.placeholder_text
 %>
 <div class="ptl phl js-topicalReviewComment <%= principal ? '' : 'dn' %>">
@@ -26,14 +26,13 @@
   <%= f.text_area :comment, text_area_options %>
   <div class="row tal">
     <div class="col-xs-8">
-      <div class="help-block js-reviewCharacterDisplay mtn mbn dn">You have <span class="js-reviewCharacterCount"></span> left
-        in your review</div>
+      <div class="help-block js-reviewCharacterDisplay mtn mbn dn"><%= t('.you_have') %> <span class="js-reviewCharacterCount"></span> <%= t('.left_in_review') %></div>
       <% #parsley error id places error message for the specific question_id %>
 
       <div class= "js-topicalReviewErrorMessage parsley-type" id="<%= parsley_error_id %>"></div>
     </div>
     <div class="col-xs-2 col-xs-offset-2 js-topicalReviewSubmitContainer">
-      <button type="submit" class="btn btn-primary fr mtl mbl" data-disable-with="Submitting"><%= submit_text %></button>
+      <button type="submit" class="btn btn-primary fr mtl mbl" data-disable-with=<%= t('.submitting') %>><%= submit_text %></button>
     </div>
   </div>
 </div>

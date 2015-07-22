@@ -1,0 +1,9 @@
+---
+en:
+  school_profile:
+    reviews:
+      modules:
+        output:
+          submitted_review_module:
+            manage_review: Manage review
+            pending_activation: (Pending activation)

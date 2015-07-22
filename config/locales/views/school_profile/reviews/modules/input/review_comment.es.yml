@@ -1,0 +1,12 @@
+---
+es:
+  school_profile:
+    reviews:
+      modules:
+        input:
+          review_comment:
+            left_in_review: queda en su opinión
+            submit: Enviar
+            submitting: Enviar
+            submit_statement: Submit statement
+            you_have: Has

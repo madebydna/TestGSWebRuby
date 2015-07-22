@@ -1,0 +1,10 @@
+---
+es:
+  school_profile:
+    reviews:
+      modules:
+        output:
+          overall_rating_summary:
+            overall_ratings:
+              one: "%{count} CALIFICACIÓN GENERAL"
+              other: "%{count} CALIFICACIONES GENERALES"
