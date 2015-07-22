@@ -8,7 +8,7 @@ csv:
     - ["response_value.*", "tmp/i18n-export/response_value.csv"]
     - "tmp/i18n-export/main.csv"
   import:
-    - tmp/i18n-export/response_value.csv
+    - tmp/i18n-export/main.csv
 
 # i18n-tasks finds and manages missing and unused translations: https://github.com/glebm/i18n-tasks
 
