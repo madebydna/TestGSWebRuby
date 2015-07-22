@@ -6,4 +6,4 @@ es:
         output:
           submitted_review_module:
             manage_review: Administrar opinión
-            pending_activation: (Pending activation) SP
+            pending_activation: En espera de activación

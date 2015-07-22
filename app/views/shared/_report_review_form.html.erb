@@ -4,7 +4,7 @@
         <p class="open-sans_sb"><%= t('.report_review') %></p>
         <label class="control-label pull-left pbl" for="textarea">
           <%= t('.terms_of_use_message') %> <%= link_to(t('.terms_of_use'), terms_of_use_url, target: '_blank') %>
-          or <%= link_to 'school review guidelines', school_review_guidelines_url, target: '_blank' %>:
+          <%= t('.or') %> <%= link_to t('.school_review_guidelines'), school_review_guidelines_url, target: '_blank' %>:
         </label>
         <div class="controls">
           <%= f.text_area :comment, value: '', rows: 5, class: 'input-xlarge', 'data-parsley-required' => 'true', 'data-parsley-trigger' => 'change', 'style' => 'width: 100%' %>

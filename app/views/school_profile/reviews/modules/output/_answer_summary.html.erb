@@ -4,8 +4,8 @@
    review_comments_text = reviews_for_topic.see_comments_text
    principal = @school_user ? @school_user.principal? : false
 %>
-<div class="font-size-large <%= principal ? '' : 'mxtl' %> ptxl">
-  <%= answer_summary_text ? answer_summary_text : 'No one has voted for this topic yet.' %>
+<div class="font-size-large <%= principal ? '' : 'mxtl' %> ptxl mbl">
+  <%= answer_summary_text ? answer_summary_text : t('.no_votes_text') %>
 </div>
 <% if answer_summary_text %>
     <div class="js_reviewTopicFilterLink">

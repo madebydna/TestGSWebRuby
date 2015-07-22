@@ -3,9 +3,21 @@ en:
   decorators:
     school_profile_reviews_decorator:
       comments:
+        one: "%{count} comment"
+        other: "%{count} comments"
+      see_comments:
         one: "See %{count} comment"
         other: "See all %{count} comments"
+      overall_response:
+        one:  "%{count} star"
+        other:  "%{count} stars"
+      review_answer_summary_html:
+        one: "Currently, most people answered <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;response)"
+        other: "Currently, most people answered <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;responses)"
       reviews:
+        one: "%{count} review"
+        other: "%{count} reviews"
+      see_reviews:
         one: "See %{count} review"
         other: "See all %{count} reviews"
       see_ratings: See ratings

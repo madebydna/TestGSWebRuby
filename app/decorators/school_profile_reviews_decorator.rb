@@ -24,33 +24,35 @@ module SchoolProfileReviewsDecorator
     distribution = score_distribution.sort_by { |k, v| v }.reverse
     top_response_text = distribution.first.first
     if first_topic.overall?
-      top_response_text = h.pluralize(top_response_text, 'star', 'stars')
+      top_response_text = h.t('decorators.school_profile_reviews_decorator.overall_response',
+                            count: top_response_text
+                           )
     end
-    text = "Currently, most people answered "
-    text << h.content_tag('span', top_response_text, class:'open-sans_cb')
-    text << " (#{h.pluralize(distribution.first.last, 'response', 'responses')})."
-    text.html_safe
+    h.t('decorators.school_profile_reviews_decorator.review_answer_summary_html',
+         count: distribution.first.last,
+         top_response_text: top_response_text
+       )
   end
 
   def see_comments_text
     text = h.t('decorators.school_profile_reviews_decorator.see_ratings')
     number_with_comments = having_comments.count
     if number_with_comments > 0
-      text = h.t('decorators.school_profile_reviews_decorator.comments', count: number_with_comments)
+      text = h.t('decorators.school_profile_reviews_decorator.see_comments', count: number_with_comments)
     end
     text
   end
 
   def see_all_reviews_phrase
-    h.t('decorators.school_profile_reviews_decorator.reviews', count: count)
+    h.t('decorators.school_profile_reviews_decorator.see_reviews', count: count)
   end
 
   def reviews_count_text
-    h.pluralize(count, 'review', 'reviews')
+    h.t('decorators.school_profile_reviews_decorator.reviews', count: count )
   end
 
   def comments_count_text
-    h.pluralize(having_comments.count, 'comment', 'comments')
+    h.t( 'decorators.school_profile_reviews_decorator.comments', count: having_comments.count )
   end
 
   def question_text
@@ -71,7 +73,7 @@ module SchoolProfileReviewsDecorator
 
     topic_distribution.each_with_object(chart) do |(label, number_of_occurrences), chart_array|
       if topic.overall?
-        label = h.pluralize(label, 'star', 'stars')
+        label = h.t('decorators.school_profile_reviews_decorator.overall_response', count: label.to_i)
       end
       chart_array << [label, number_of_occurrences]
     end

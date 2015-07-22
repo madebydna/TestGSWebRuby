@@ -3,10 +3,22 @@ es:
   decorators:
     school_profile_reviews_decorator:
       comments:
+        one: "%{count} comentario"
+        other: "%{count} comentarios"
+      see_comments:
         one: "Ver %{count} comentario"
         other: "Ver todos %{count} comentarios"
+      overall_response:
+        one:  "%{count} estrella"
+        other:  "%{count} estrellas"
+      review_answer_summary_html:
+        one: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuesta)"
+        other: "Actualmente, la mayoría de la gente responde a <span class= 'open-sans_cb wsnw'>%{top_response_text}</span> (%{count}&nbsp;respuestas)"
       reviews:
-        one: "See %{count} review"
-        other: "See all %{count} reviews"
+        one: "%{count} evaluacion"
+        other: "%{count} evaluaciones"
+      see_reviews:
+        one: "Ver %{count} evaluacion"
+        other: "Ver todas las %{count} evaluaciones"
       see_ratings: Ver calificaciones
 
