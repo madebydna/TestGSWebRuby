@@ -29,11 +29,15 @@
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
+  attr_accessor :category, :config, :data
+
   # An array of BarChartCollection objects.
   # Each of these has inner objects of groups of charts and then the
   # charts themselves.
   def data_for_category(category)
-    config = {
+    self.category = category
+
+    self.config = {
       create_groups_by: nil,
       create_charts_by: :breakdown,
       label_charts_with: :breakdown,
@@ -41,29 +45,33 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       breakdown_all: 'Enrollment'
     }
 
-    data = get_data(category, config)
+    get_data!
 
     data.map do |collection_name, collection_data|
       BarChartCollection.new(collection_name, collection_data, config)
     end
   end
 
-  def get_data(category, config)
-    data = cached_data_for_category(category, 'characteristics', school)
-    modify_data!(data, config)
+  def get_data!
+    self.data = cached_data_for_category(category, 'characteristics', school)
+    modify_data!
   end
 
   #this code exists to modify the data from school cache and make it more friendly for the Bar Charts
   #However, consider moving this calculation to school cache and precalculate it there.
-  def modify_data!(data, config)
-    modify_data_callbacks.inject(data) { | d, callback | send(callback, d, config) }
+  def modify_data!
+    modify_data_callbacks.each { |callback| send(callback) }
   end
 
   def modify_data_callbacks
-    [:add_ethnicity_callback, :add_enrollment_callback]
+    [:change_data_type_to_label, :add_ethnicity_callback, :add_enrollment_callback]
   end
 
-  def add_ethnicity_callback(data, config)
+  def change_data_type_to_label
+    data.transform_keys! { |key| category.key_label_map[key.to_s] }
+  end
+
+  def add_ethnicity_callback
     return data unless config[:breakdown] == 'Ethnicity'
 
     ethnicity_data = get_cache_data('characteristics', :Ethnicity, school)[:Ethnicity]
@@ -84,7 +92,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data
   end
 
-  def add_enrollment_callback(data, config)
+  def add_enrollment_callback
     return data unless config[:breakdown_all] == 'Enrollment'
 
     enrollment_data = get_cache_data('characteristics', :Enrollment, school)[:Enrollment]
