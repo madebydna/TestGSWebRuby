@@ -1,6 +1,4 @@
 class BarChart
-  include ActiveRecord::Callbacks
-
   # Class that holds a collection of graphs related by subject or breakdown.
   # Header and array of chart data.
 
