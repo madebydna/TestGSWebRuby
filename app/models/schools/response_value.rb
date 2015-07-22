@@ -27,7 +27,7 @@ class ResponseValue < ActiveRecord::Base
 
   def response_label
     s = read_attribute(:response_label)
-    I18n.t(s, scope: self.class.name.underscore, default: s)
+    I18n.t(s, default: s)
   end
 
   def self.all_values

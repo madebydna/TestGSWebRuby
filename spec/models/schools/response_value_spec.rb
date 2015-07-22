@@ -6,9 +6,7 @@ describe ResponseValue do
     let(:locale) { :es }
     let(:translations) do
       {
-        'response_value' => {
-          'Hello World' => 'Hola Mundo'
-        }
+        'Hello World' => 'Hola Mundo'
       }
     end
     before do
