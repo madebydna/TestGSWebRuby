@@ -1,296 +1,297 @@
+---
 en:
   category_data:
-    '# of applications received': '# of applications received'
-    '# of students accepted': '# of students accepted'
-    '% Graduates going directly into the workforce': '% Graduates going directly into the workforce'
-    '% Graduates going into military service': '% Graduates going into military service'
-    '% Graduates going into vocational programs': '% Graduates going into vocational programs'
-    '% Graduates going to a 2 year college': '% Graduates going to a 2 year college'
-    '% Graduates going to a 4 year college': '% Graduates going to a 4 year college'
-    'A positive, differentiated instructional focus is the norm among teachers': 'A positive, differentiated instructional focus is the norm among teachers'
-    'About the program': 'About the program'
-    'About the school': 'About the school'
-    'Academic award': 'Academic award'
-    'Academic Personalism': 'Academic Personalism'
-    'Academic Press': 'Academic Press'
-    'Academic themes / Areas of focus': 'Academic themes / Areas of focus'
-    'Adults at school care how students are doing': 'Adults at school care how students are doing'
-    'Adults provide the academic support needed to do well': 'Adults provide the academic support needed to do well'
-    'Adults respect students': 'Adults respect students'
-    'After care ends': 'After care ends'
-    'After school': 'After school'
-    'After school end time': 'After school end time'
-    'After school program offered': 'After school program offered'
-    'All subjects': 'All subjects'
-    'Ambitious Instruction': 'Ambitious Instruction'
-    'AP classes offered': 'AP classes offered'
-    'AP students passing the test (score of 3 or higher)': 'AP students passing the test (score of 3 or higher)'
-    'Application deadline': 'Application deadline'
-    'Application deadline date': 'Application deadline date'
-    'Application fee amount': 'Application fee amount'
-    'Application fee waivers available?': 'Application fee waivers available?'
-    'Application requirements': 'Application requirements'
-    'Application submission begins': 'Application submission begins'
-    'Application/ enrollment process details': 'Application/ enrollment process details'
-    'Applications Received': 'Applications Received'
-    'Approach to addressing and preventing bullying': 'Approach to addressing and preventing bullying'
-    'Arts & Humanities': 'Arts & Humanities'
-    'Attending the most selective US colleges (as rated by Barron''s Profiles of American Colleges)': 'Attending the most selective US colleges (as rated by Barron''s Profiles of American Colleges)'
-    'Average ACT score (1-36 scale)': 'Average ACT score (1-36 scale)'
-    'Average first year GPA (out of 40) for graduates in-state': 'Average first year GPA (out of 40) for graduates in-state'
-    'Average number of students': 'Average number of students'
-    'Average number of students - English Language Arts': 'Average number of students - English Language Arts'
-    'Average number of units completed in first year for graduates in-state': 'Average number of units completed in first year for graduates in-state'
-    'Average teacher experience (in years)': 'Average teacher experience (in years)'
-    'Before / after care offered': 'Before / after care offered'
-    'Before care begins': 'Before care begins'
-    'Before school': 'Before school'
-    'Before school start time': 'Before school start time'
-    'Bi-lingual or language immersion languages (misc)': 'Bi-lingual or language immersion languages (misc)'
-    'Bi-lingual or language immersion programs offered': 'Bi-lingual or language immersion programs offered'
-    'Boys sports': 'Boys sports'
-    'Boys sports (misc)': 'Boys sports (misc)'
-    'Career and Tech programs': 'Career and Tech programs'
-    'Child feels safe inside and outside the school': 'Child feels safe inside and outside the school'
-    'Child is receiving a high quality education': 'Child is receiving a high quality education'
-    'Climate rating': 'Climate rating'
-    'Clubs': 'Clubs'
-    'Clubs - dance': 'Clubs - dance'
-    'Clubs - language': 'Clubs - language'
-    'Clubs (misc)': 'Clubs (misc)'
-    'Coed/Single-gender': 'Coed/Single-gender'
-    'Collaborative Teachers': 'Collaborative Teachers'
-    'Collective Responsibility': 'Collective Responsibility'
-    'College name': 'College name'
-    'College preparation resources': 'College preparation resources'
-    'College preparation resources (misc)': 'College preparation resources (misc)'
-    'College-going students who enroll for a second year': 'College-going students who enroll for a second year'
-    'Colleges students typically attend after graduation': 'Colleges students typically attend after graduation'
-    'Community service award': 'Community service award'
-    'Contact with school personnel has been positive': 'Contact with school personnel has been positive'
-    'Continue in college': 'Continue in college'
-    'Cost per week (infant)': 'Cost per week (infant)'
-    'Cost per week (kindergarten)': 'Cost per week (kindergarten)'
-    'Cost per week (school-age)': 'Cost per week (school-age)'
-    'Cost per week (toddler)': 'Cost per week (toddler)'
-    'Course Clarity': 'Course Clarity'
-    'Current principal''s tenure (in years)': 'Current principal''s tenure (in years)'
-    'Dates offered (end)': 'Dates offered (end)'
-    'Dates offered (start)': 'Dates offered (start)'
-    'Day or Boarding offered': 'Day or Boarding offered'
-    'Days offered': 'Days offered'
-    'Disorder in hallways is rare': 'Disorder in hallways is rare'
-    'District': 'District'
-    'Dress code': 'Dress code'
-    'Dropout rate over 4 years': 'Dropout rate over 4 years'
-    'Early childhood program offered': 'Early childhood program offered'
-    'Early childhood starting age': 'Early childhood starting age'
-    'Early release Wednesdays are productive and useful': 'Early release Wednesdays are productive and useful'
-    'Economics': 'Economics'
-    'Education levels: Master''s degree or higher': 'Education levels: Master''s degree or higher'
-    'Educational philosophy and approach to learning': 'Educational philosophy and approach to learning'
-    'Effective Leaders': 'Effective Leaders'
-    'Employees': 'Employees'
-    'End time': 'End time'
-    'English': 'English'
-    'English Instruction': 'English Instruction'
-    'English Language Arts': 'English Language Arts'
-    'English Language Learner program details': 'English Language Learner program details'
-    'English Language Learner programs': 'English Language Learner programs'
-    'Enough school computers': 'Enough school computers'
-    'Enter college': 'Enter college'
-    'Extended care / Extended programs': 'Extended care / Extended programs'
-    'Extra learning resources': 'Extra learning resources'
-    'Extra learning resources (misc)': 'Extra learning resources (misc)'
-    'Facilities': 'Facilities'
-    'Feeder pattern': 'Feeder pattern'
-    'Female': 'Female'
-    'Financial aid offered': 'Financial aid offered'
-    'Financial aid type (misc)': 'Financial aid type (misc)'
-    'Food quality': 'Food quality'
-    'For the year': 'For the year'
-    'General Elementary': 'General Elementary'
-    'Geography': 'Geography'
-    'Girls sports': 'Girls sports'
-    'Girls sports (misc)': 'Girls sports (misc)'
-    'Government': 'Government'
-    'Graduate high school': 'Graduate high school'
-    'Graduates who enroll in college immediately after high school graduation': 'Graduates who enroll in college immediately after high school graduation'
-    'Graduates who need remediation, or help strengthening basic skills': 'Graduates who need remediation, or help strengthening basic skills'
-    'HIB preparation score': 'HIB preparation score'
-    'High expectations are set for all students'' academic success': 'High expectations are set for all students'' academic success'
-    'History - Social Science Grade 8 Cumulative': 'History - Social Science Grade 8 Cumulative'
-    'Hours': 'Hours'
-    'How can parents find out more about fees?': 'How can parents find out more about fees?'
-    'Human and Social Resources in the Community': 'Human and Social Resources in the Community'
-    'Instructional / curriculum models used': 'Instructional / curriculum models used'
-    'Involved Families': 'Involved Families'
-    'Is enrollment limited to students who attend the school?': 'Is enrollment limited to students who attend the school?'
-    'Is financial aid available?': 'Is financial aid available?'
-    'Is there a fee for the program?': 'Is there a fee for the program?'
-    'Learn more': 'Learn more'
-    'Level of ESL/ELL programming ': 'Level of ESL/ELL programming '
-    'Level of special education programming': 'Level of special education programming'
-    'Live in district - \"choicing\"': 'Live in district - \"choicing\"'
-    'Live outside district - \"choicing\"': 'Live outside district - \"choicing\"'
-    'Male': 'Male'
-    'Math': 'Math'
-    'Math Instruction': 'Math Instruction'
-    'Media arts': 'Media arts'
-    'Music': 'Music'
-    'Number of principals in the last 5 years': 'Number of principals in the last 5 years'
-    'Open enrollment available': 'Open enrollment available'
-    'Open Friday': 'Open Friday'
-    'Open Monday': 'Open Monday'
-    'Open Saturday': 'Open Saturday'
-    'Open Sunday': 'Open Sunday'
-    'Open Thursday': 'Open Thursday'
-    'Open Tuesday': 'Open Tuesday'
-    'Open Wednesday': 'Open Wednesday'
-    'Operated by': 'Operated by'
-    'Outreach to Parents': 'Outreach to Parents'
-    'Overall score (out of 5)': 'Overall score (out of 5)'
-    'Parent involvement': 'Parent involvement'
-    'Parent involvement (misc)': 'Parent involvement (misc)'
-    'Parent involvement details': 'Parent involvement details'
-    'Parents': 'Parents'
-    'Parents are actively involved in their child''s education': 'Parents are actively involved in their child''s education'
-    'Parents are involved in the learning process': 'Parents are involved in the learning process'
-    'Parents average score': 'Parents average score'
-    'Partner': 'Partner'
-    'Partner website': 'Partner website'
-    'Partnerships with local resources and organizations': 'Partnerships with local resources and organizations'
-    'Peer Support for Academic Work': 'Peer Support for Academic Work'
-    'Percent of graduates enrolled': 'Percent of graduates enrolled'
-    'Performing & written arts': 'Performing & written arts'
-    'Phone number': 'Phone number'
-    'Physical environment': 'Physical environment'
-    'Preschool capacity': 'Preschool capacity'
-    'Preschool environment': 'Preschool environment'
-    'Preschool meals offered': 'Preschool meals offered'
-    'Principal Instructional Leadership': 'Principal Instructional Leadership'
-    'Program Coherence': 'Program Coherence'
-    'Program name': 'Program name'
-    'PSAT score': 'PSAT score'
-    'Quality of Student Discussion': 'Quality of Student Discussion'
-    'Quality Professional Development': 'Quality Professional Development'
-    'Recommend this school to parents': 'Recommend this school to parents'
-    'Religious / Parochial': 'Religious / Parochial'
-    'Religious affiliation': 'Religious affiliation'
-    'Safety': 'Safety'
-    'Safety around hallways': 'Safety around hallways'
-    'SAT score': 'SAT score'
-    'Schedule': 'Schedule'
-    'School colors': 'School colors'
-    'School Commitment': 'School Commitment'
-    'School does a good job of communicating with parents about school activities and student progress': 'School does a good job of communicating with parents about school activities and student progress'
-    'School does a good job of communicating with parents about their child''s learning': 'School does a good job of communicating with parents about their child''s learning'
-    'School employees': 'School employees'
-    'School has a positive sense of collaboration among school leadership and staff': 'School has a positive sense of collaboration among school leadership and staff'
-    'School has a strong culture of respect and fairness': 'School has a strong culture of respect and fairness'
-    'School is helping students be college and career ready': 'School is helping students be college and career ready'
-    'School is safe': 'School is safe'
-    'School is welcoming and supportive of parent involvement': 'School is welcoming and supportive of parent involvement'
-    'School leader': 'School leader'
-    'School leadership': 'School leadership'
-    'School mascot': 'School mascot'
-    'School-run shuttle from nearby metro and bus stops': 'School-run shuttle from nearby metro and bus stops'
-    'Science': 'Science'
-    'Social emotional learning is a personal, school, and district priority': 'Social emotional learning is a personal, school, and district priority'
-    'Social Studies': 'Social Studies'
-    'Special education': 'Special education'
-    'Special education program details': 'Special education program details'
-    'Special education programs': 'Special education programs'
-    'Specialized programs for specific types of special education students': 'Specialized programs for specific types of special education students'
-    'Staff': 'Staff'
-    'Staff details': 'Staff details'
-    'Start 9th grade': 'Start 9th grade'
-    'Start time': 'Start time'
-    'Student-Teacher Trust': 'Student-Teacher Trust'
-    'Students': 'Students'
-    'Students \"choicing\" into this school who live in the district': 'Students \"choicing\" into this school who live in the district'
-    'Students \"choicing\" into this school who live outside the district (includes vocational and charter schools)': 'Students \"choicing\" into this school who live outside the district (includes vocational and charter schools)'
-    'Students (grades 3-5)': 'Students (grades 3-5)'
-    'Students (grades 3-5) average score': 'Students (grades 3-5) average score'
-    'Students (grades 6-8)': 'Students (grades 6-8)'
-    'Students (grades 6-8) average score': 'Students (grades 6-8) average score'
-    'Students (grades 9-12)': 'Students (grades 9-12)'
-    'Students (grades 9-12) average score': 'Students (grades 9-12) average score'
-    'Students Accepted': 'Students Accepted'
-    'Students are academically engaged in coursework': 'Students are academically engaged in coursework'
-    'Students are committed to doing well in school': 'Students are committed to doing well in school'
-    'Students are mostly planning to attend college': 'Students are mostly planning to attend college'
-    'Students attending a 2-year institution': 'Students attending a 2-year institution'
-    'Students attending a 4-year institution': 'Students attending a 4-year institution'
-    'Students attending any higher learning institution': 'Students attending any higher learning institution'
-    'Students attending in-state colleges': 'Students attending in-state colleges'
-    'Students attending out-of-state colleges': 'Students attending out-of-state colleges'
-    'Students attending this school through their feeder pattern assignment': 'Students attending this school through their feeder pattern assignment'
-    'Students bullied by teasing at school': 'Students bullied by teasing at school'
-    'Students earning a GPA of at least 20 for the first year': 'Students earning a GPA of at least 20 for the first year'
-    'Students enrolled': 'Students enrolled'
-    'Students feel safe walking outside of school': 'Students feel safe walking outside of school'
-    'Students have the social and emotional skills needed to do well in school': 'Students have the social and emotional skills needed to do well in school'
-    'Students participating in a free or reduced-price lunch program': 'Students participating in a free or reduced-price lunch program'
-    'Students per teacher': 'Students per teacher'
-    'Students respect one another': 'Students respect one another'
-    'Students taking AP courses': 'Students taking AP courses'
-    'Students taking the ACT': 'Students taking the ACT'
-    'Students taking the SAT': 'Students taking the SAT'
-    'Students taking the SAT or ACT': 'Students taking the SAT or ACT'
-    'Students think inside of school looks nice': 'Students think inside of school looks nice'
-    'Students think outside of school looks nice': 'Students think outside of school looks nice'
-    'Students treat each other with respect': 'Students treat each other with respect'
-    'Students typically come from these schools': 'Students typically come from these schools'
-    'Students typically continue on to these schools': 'Students typically continue on to these schools'
-    'Students who complete the 1st year of college (24 credits) on time': 'Students who complete the 1st year of college (24 credits) on time'
-    'Summer program': 'Summer program'
-    'Summer program offered': 'Summer program offered'
-    'Supportive Environment': 'Supportive Environment'
-    'Teacher experience: 5 years or more': 'Teacher experience: 5 years or more'
-    'Teacher Influence': 'Teacher Influence'
-    'Teacher-Parent Trust': 'Teacher-Parent Trust'
-    'Teacher-Principal Trust': 'Teacher-Principal Trust'
-    'Teacher-Teacher Trust': 'Teacher-Teacher Trust'
-    'Teachers': 'Teachers'
-    'Teachers and parents are partners in education': 'Teachers and parents are partners in education'
-    'Teachers ask difficult test questions': 'Teachers ask difficult test questions'
-    'Teachers average score': 'Teachers average score'
-    'Teachers explain things in different ways': 'Teachers explain things in different ways'
-    'Teachers give good instructions': 'Teachers give good instructions'
-    'Teachers inspire students to do their best': 'Teachers inspire students to do their best'
-    'Teachers listen to student input': 'Teachers listen to student input'
-    'Teachers make sure students are planning for post-graduation': 'Teachers make sure students are planning for post-graduation'
-    'Teachers trust each other': 'Teachers trust each other'
-    'Teachers with a valid license': 'Teachers with a valid license'
-    'Tested students who are college-ready': 'Tested students who are college-ready'
-    'Tested students who are college-ready (based on ACT)': 'Tested students who are college-ready (based on ACT)'
-    'Tested students who are college-ready (based on SAT)': 'Tested students who are college-ready (based on SAT)'
-    'This school': 'This school'
-    'This school''s math score': 'This school''s math score'
-    'This school''s reading score': 'This school''s reading score'
-    'This school''s science score': 'This school''s science score'
-    'Total': 'Total'
-    'Transportation details': 'Transportation details'
-    'Transportation options': 'Transportation options'
-    'Transportation options (misc)': 'Transportation options (misc)'
-    'Tuition for out-of-district, in-state students': 'Tuition for out-of-district, in-state students'
-    'Tuition range (high)': 'Tuition range (high)'
-    'Tuition range (low)': 'Tuition range (low)'
-    'Type': 'Type'
-    'Type of application deadline': 'Type of application deadline'
-    'Type of school': 'Type of school'
-    'Type of voucher': 'Type of voucher'
-    'Types of activities': 'Types of activities'
-    'Types of activities (misc)': 'Types of activities (misc)'
-    'Visual arts': 'Visual arts'
-    'Vouchers accepted': 'Vouchers accepted'
-    'Ways to enroll/attend this school': 'Ways to enroll/attend this school'
-    'Website': 'Website'
-    'What grades can participate?': 'What grades can participate?'
-    'World Languages': 'World Languages'
-    'World languages spoken by staff': 'World languages spoken by staff'
-    'World languages spoken by staff (misc)': 'World languages spoken by staff (misc)'
-    'World languages taught': 'World languages taught'
-    'World languages taught (misc)': 'World languages taught (misc)'
-    'Year received': 'Year received'
+    ! '# of applications received': ! '# of applications received'
+    ! '# of students accepted': ! '# of students accepted'
+    ! '% Graduates going directly into the workforce': ! '% Graduates going directly into the workforce'
+    ! '% Graduates going into military service': ! '% Graduates going into military service'
+    ! '% Graduates going into vocational programs': ! '% Graduates going into vocational programs'
+    ! '% Graduates going to a 2 year college': ! '% Graduates going to a 2 year college'
+    ! '% Graduates going to a 4 year college': ! '% Graduates going to a 4 year college'
+    A positive, differentiated instructional focus is the norm among teachers: A positive, differentiated instructional focus is the norm among teachers
+    AP classes offered: AP classes offered
+    AP students passing the test (score of 3 or higher): AP students passing the test (score of 3 or higher)
+    About the program: About the program
+    About the school: About the school
+    Academic Personalism: Academic Personalism
+    Academic Press: Academic Press
+    Academic award: Academic award
+    Academic themes / Areas of focus: Academic themes / Areas of focus
+    Adults at school care how students are doing: Adults at school care how students are doing
+    Adults provide the academic support needed to do well: Adults provide the academic support needed to do well
+    Adults respect students: Adults respect students
+    After care ends: After care ends
+    After school: After school
+    After school end time: After school end time
+    After school program offered: After school program offered
+    All subjects: All subjects
+    Ambitious Instruction: Ambitious Instruction
+    Application deadline: Application deadline
+    Application deadline date: Application deadline date
+    Application fee amount: Application fee amount
+    Application fee waivers available?: Application fee waivers available?
+    Application requirements: Application requirements
+    Application submission begins: Application submission begins
+    Application/ enrollment process details: Application/ enrollment process details
+    Applications Received: Applications Received
+    Approach to addressing and preventing bullying: Approach to addressing and preventing bullying
+    Arts & Humanities: Arts & Humanities
+    Attending the most selective US colleges (as rated by Barron's Profiles of American Colleges): Attending the most selective US colleges (as rated by Barron's Profiles of American Colleges)
+    Average ACT score (1-36 scale): Average ACT score (1-36 scale)
+    Average first year GPA (out of 40) for graduates in-state: Average first year GPA (out of 40) for graduates in-state
+    Average number of students: Average number of students
+    Average number of students - English Language Arts: Average number of students - English Language Arts
+    Average number of units completed in first year for graduates in-state: Average number of units completed in first year for graduates in-state
+    Average teacher experience (in years): Average teacher experience (in years)
+    Before / after care offered: Before / after care offered
+    Before care begins: Before care begins
+    Before school: Before school
+    Before school start time: Before school start time
+    Bi-lingual or language immersion languages (misc): Bi-lingual or language immersion languages (misc)
+    Bi-lingual or language immersion programs offered: Bi-lingual or language immersion programs offered
+    Boys sports: Boys sports
+    Boys sports (misc): Boys sports (misc)
+    Career and Tech programs: Career and Tech programs
+    Child feels safe inside and outside the school: Child feels safe inside and outside the school
+    Child is receiving a high quality education: Child is receiving a high quality education
+    Climate rating: Climate rating
+    Clubs: Clubs
+    Clubs (misc): Clubs (misc)
+    Clubs - dance: Clubs - dance
+    Clubs - language: Clubs - language
+    Coed/Single-gender: Coed/Single-gender
+    Collaborative Teachers: Collaborative Teachers
+    Collective Responsibility: Collective Responsibility
+    College name: College name
+    College preparation resources: College preparation resources
+    College preparation resources (misc): College preparation resources (misc)
+    College-going students who enroll for a second year: College-going students who enroll for a second year
+    Colleges students typically attend after graduation: Colleges students typically attend after graduation
+    Community service award: Community service award
+    Contact with school personnel has been positive: Contact with school personnel has been positive
+    Continue in college: Continue in college
+    Cost per week (infant): Cost per week (infant)
+    Cost per week (kindergarten): Cost per week (kindergarten)
+    Cost per week (school-age): Cost per week (school-age)
+    Cost per week (toddler): Cost per week (toddler)
+    Course Clarity: Course Clarity
+    Current principal's tenure (in years): Current principal's tenure (in years)
+    Dates offered (end): Dates offered (end)
+    Dates offered (start): Dates offered (start)
+    Day or Boarding offered: Day or Boarding offered
+    Days offered: Days offered
+    Disorder in hallways is rare: Disorder in hallways is rare
+    District: District
+    Dress code: Dress code
+    Dropout rate over 4 years: Dropout rate over 4 years
+    Early childhood program offered: Early childhood program offered
+    Early childhood starting age: Early childhood starting age
+    Early release Wednesdays are productive and useful: Early release Wednesdays are productive and useful
+    Economics: Economics
+    ! 'Education levels: Master''s degree or higher': ! 'Education levels: Master''s degree or higher'
+    Educational philosophy and approach to learning: Educational philosophy and approach to learning
+    Effective Leaders: Effective Leaders
+    Employees: Employees
+    End time: End time
+    English: English
+    English Instruction: English Instruction
+    English Language Arts: English Language Arts
+    English Language Learner program details: English Language Learner program details
+    English Language Learner programs: English Language Learner programs
+    Enough school computers: Enough school computers
+    Enter college: Enter college
+    Extended care / Extended programs: Extended care / Extended programs
+    Extra learning resources: Extra learning resources
+    Extra learning resources (misc): Extra learning resources (misc)
+    Facilities: Facilities
+    Feeder pattern: Feeder pattern
+    Female: Female
+    Financial aid offered: Financial aid offered
+    Financial aid type (misc): Financial aid type (misc)
+    Food quality: Food quality
+    For the year: For the year
+    General Elementary: General Elementary
+    Geography: Geography
+    Girls sports: Girls sports
+    Girls sports (misc): Girls sports (misc)
+    Government: Government
+    Graduate high school: Graduate high school
+    Graduates who enroll in college immediately after high school graduation: Graduates who enroll in college immediately after high school graduation
+    Graduates who need remediation, or help strengthening basic skills: Graduates who need remediation, or help strengthening basic skills
+    HIB preparation score: HIB preparation score
+    High expectations are set for all students' academic success: High expectations are set for all students' academic success
+    History - Social Science Grade 8 Cumulative: History - Social Science Grade 8 Cumulative
+    Hours: Hours
+    How can parents find out more about fees?: How can parents find out more about fees?
+    Human and Social Resources in the Community: Human and Social Resources in the Community
+    Instructional / curriculum models used: Instructional / curriculum models used
+    Involved Families: Involved Families
+    Is enrollment limited to students who attend the school?: Is enrollment limited to students who attend the school?
+    Is financial aid available?: Is financial aid available?
+    Is there a fee for the program?: Is there a fee for the program?
+    Learn more: Learn more
+    ! 'Level of ESL/ELL programming ': ! 'Level of ESL/ELL programming '
+    Level of special education programming: Level of special education programming
+    Live in district - \"choicing\": Live in district - \"choicing\"
+    Live outside district - \"choicing\": Live outside district - \"choicing\"
+    Male: Male
+    Math: Math
+    Math Instruction: Math Instruction
+    Media arts: Media arts
+    Music: Music
+    Number of principals in the last 5 years: Number of principals in the last 5 years
+    Open Friday: Open Friday
+    Open Monday: Open Monday
+    Open Saturday: Open Saturday
+    Open Sunday: Open Sunday
+    Open Thursday: Open Thursday
+    Open Tuesday: Open Tuesday
+    Open Wednesday: Open Wednesday
+    Open enrollment available: Open enrollment available
+    Operated by: Operated by
+    Outreach to Parents: Outreach to Parents
+    Overall score (out of 5): Overall score (out of 5)
+    PSAT score: PSAT score
+    Parent involvement: Parent involvement
+    Parent involvement (misc): Parent involvement (misc)
+    Parent involvement details: Parent involvement details
+    Parents: Parents
+    Parents are actively involved in their child's education: Parents are actively involved in their child's education
+    Parents are involved in the learning process: Parents are involved in the learning process
+    Parents average score: Parents average score
+    Partner: Partner
+    Partner website: Partner website
+    Partnerships with local resources and organizations: Partnerships with local resources and organizations
+    Peer Support for Academic Work: Peer Support for Academic Work
+    Percent of graduates enrolled: Percent of graduates enrolled
+    Performing & written arts: Performing & written arts
+    Phone number: Phone number
+    Physical environment: Physical environment
+    Preschool capacity: Preschool capacity
+    Preschool environment: Preschool environment
+    Preschool meals offered: Preschool meals offered
+    Principal Instructional Leadership: Principal Instructional Leadership
+    Program Coherence: Program Coherence
+    Program name: Program name
+    Quality Professional Development: Quality Professional Development
+    Quality of Student Discussion: Quality of Student Discussion
+    Recommend this school to parents: Recommend this school to parents
+    Religious / Parochial: Religious / Parochial
+    Religious affiliation: Religious affiliation
+    SAT score: SAT score
+    Safety: Safety
+    Safety around hallways: Safety around hallways
+    Schedule: Schedule
+    School Commitment: School Commitment
+    School colors: School colors
+    School does a good job of communicating with parents about school activities and student progress: School does a good job of communicating with parents about school activities and student progress
+    School does a good job of communicating with parents about their child's learning: School does a good job of communicating with parents about their child's learning
+    School employees: School employees
+    School has a positive sense of collaboration among school leadership and staff: School has a positive sense of collaboration among school leadership and staff
+    School has a strong culture of respect and fairness: School has a strong culture of respect and fairness
+    School is helping students be college and career ready: School is helping students be college and career ready
+    School is safe: School is safe
+    School is welcoming and supportive of parent involvement: School is welcoming and supportive of parent involvement
+    School leader: School leader
+    School leadership: School leadership
+    School mascot: School mascot
+    School-run shuttle from nearby metro and bus stops: School-run shuttle from nearby metro and bus stops
+    Science: Science
+    Social Studies: Social Studies
+    Social emotional learning is a personal, school, and district priority: Social emotional learning is a personal, school, and district priority
+    Special education: Special education
+    Special education program details: Special education program details
+    Special education programs: Special education programs
+    Specialized programs for specific types of special education students: Specialized programs for specific types of special education students
+    Staff: Staff
+    Staff details: Staff details
+    Start 9th grade: Start 9th grade
+    Start time: Start time
+    Student-Teacher Trust: Student-Teacher Trust
+    Students: Students
+    Students (grades 3-5): Students (grades 3-5)
+    Students (grades 3-5) average score: Students (grades 3-5) average score
+    Students (grades 6-8): Students (grades 6-8)
+    Students (grades 6-8) average score: Students (grades 6-8) average score
+    Students (grades 9-12): Students (grades 9-12)
+    Students (grades 9-12) average score: Students (grades 9-12) average score
+    Students Accepted: Students Accepted
+    Students \"choicing\" into this school who live in the district: Students \"choicing\" into this school who live in the district
+    Students \"choicing\" into this school who live outside the district (includes vocational and charter schools): Students \"choicing\" into this school who live outside the district (includes vocational and charter schools)
+    Students are academically engaged in coursework: Students are academically engaged in coursework
+    Students are committed to doing well in school: Students are committed to doing well in school
+    Students are mostly planning to attend college: Students are mostly planning to attend college
+    Students attending a 2-year institution: Students attending a 2-year institution
+    Students attending a 4-year institution: Students attending a 4-year institution
+    Students attending any higher learning institution: Students attending any higher learning institution
+    Students attending in-state colleges: Students attending in-state colleges
+    Students attending out-of-state colleges: Students attending out-of-state colleges
+    Students attending this school through their feeder pattern assignment: Students attending this school through their feeder pattern assignment
+    Students bullied by teasing at school: Students bullied by teasing at school
+    Students earning a GPA of at least 20 for the first year: Students earning a GPA of at least 20 for the first year
+    Students enrolled: Students enrolled
+    Students feel safe walking outside of school: Students feel safe walking outside of school
+    Students have the social and emotional skills needed to do well in school: Students have the social and emotional skills needed to do well in school
+    Students participating in a free or reduced-price lunch program: Students participating in a free or reduced-price lunch program
+    Students per teacher: Students per teacher
+    Students respect one another: Students respect one another
+    Students taking AP courses: Students taking AP courses
+    Students taking the ACT: Students taking the ACT
+    Students taking the SAT: Students taking the SAT
+    Students taking the SAT or ACT: Students taking the SAT or ACT
+    Students think inside of school looks nice: Students think inside of school looks nice
+    Students think outside of school looks nice: Students think outside of school looks nice
+    Students treat each other with respect: Students treat each other with respect
+    Students typically come from these schools: Students typically come from these schools
+    Students typically continue on to these schools: Students typically continue on to these schools
+    Students who complete the 1st year of college (24 credits) on time: Students who complete the 1st year of college (24 credits) on time
+    Summer program: Summer program
+    Summer program offered: Summer program offered
+    Supportive Environment: Supportive Environment
+    Teacher Influence: Teacher Influence
+    ! 'Teacher experience: 5 years or more': ! 'Teacher experience: 5 years or more'
+    Teacher-Parent Trust: Teacher-Parent Trust
+    Teacher-Principal Trust: Teacher-Principal Trust
+    Teacher-Teacher Trust: Teacher-Teacher Trust
+    Teachers: Teachers
+    Teachers and parents are partners in education: Teachers and parents are partners in education
+    Teachers ask difficult test questions: Teachers ask difficult test questions
+    Teachers average score: Teachers average score
+    Teachers explain things in different ways: Teachers explain things in different ways
+    Teachers give good instructions: Teachers give good instructions
+    Teachers inspire students to do their best: Teachers inspire students to do their best
+    Teachers listen to student input: Teachers listen to student input
+    Teachers make sure students are planning for post-graduation: Teachers make sure students are planning for post-graduation
+    Teachers trust each other: Teachers trust each other
+    Teachers with a valid license: Teachers with a valid license
+    Tested students who are college-ready: Tested students who are college-ready
+    Tested students who are college-ready (based on ACT): Tested students who are college-ready (based on ACT)
+    Tested students who are college-ready (based on SAT): Tested students who are college-ready (based on SAT)
+    This school: This school
+    This school's math score: This school's math score
+    This school's reading score: This school's reading score
+    This school's science score: This school's science score
+    Total: Total
+    Transportation details: Transportation details
+    Transportation options: Transportation options
+    Transportation options (misc): Transportation options (misc)
+    Tuition for out-of-district, in-state students: Tuition for out-of-district, in-state students
+    Tuition range (high): Tuition range (high)
+    Tuition range (low): Tuition range (low)
+    Type: Type
+    Type of application deadline: Type of application deadline
+    Type of school: Type of school
+    Type of voucher: Type of voucher
+    Types of activities: Types of activities
+    Types of activities (misc): Types of activities (misc)
+    Visual arts: Visual arts
+    Vouchers accepted: Vouchers accepted
+    Ways to enroll/attend this school: Ways to enroll/attend this school
+    Website: Website
+    What grades can participate?: What grades can participate?
+    World Languages: World Languages
+    World languages spoken by staff: World languages spoken by staff
+    World languages spoken by staff (misc): World languages spoken by staff (misc)
+    World languages taught: World languages taught
+    World languages taught (misc): World languages taught (misc)
+    Year received: Year received
