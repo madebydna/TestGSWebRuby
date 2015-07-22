@@ -1,3 +1,15 @@
+<%
+  require './lib/i18n_csv_tasks'
+  I18n::Tasks::Commands.send :include, I18nCsvTasks
+%>
+
+csv:
+  export:
+    - ["response_value.*", "tmp/i18n-export/response_value.csv"]
+    - "tmp/i18n-export/main.csv"
+  import:
+    - tmp/i18n-export/response_value.csv
+
 # i18n-tasks finds and manages missing and unused translations: https://github.com/glebm/i18n-tasks
 
 # The "main" locale.
