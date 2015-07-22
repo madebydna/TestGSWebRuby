@@ -27,8 +27,8 @@ GS.facebook.checkIframeHeight = function(opts, $) {
       var $newContents = $('<div>').addClass('col-xs-12 tac')
         .append($('<h3>').addClass('mtn').text('Find out what parents are saying about ' + schoolName))
         .append($('<a>').attr('target', '_blank').attr('href', fbUrl).text(fbUrl));
-      $grandParent.children().addClass('dn'); // hide existing contents of Facebook module
-      $grandParent.append($newContents); // append a new, visible child linking directly to the FB URL
+      $grandParent.children().not('.js-nohide').addClass('dn'); // hide existing contents of Facebook module, but not ads
+      $grandParent.prepend($newContents); // prepend a new, visible child linking directly to the FB URL
     }
   } else if (opts.justRightCounter++ > JUST_RIGHT_LIMIT) {
     window.clearInterval(opts.intervalId);

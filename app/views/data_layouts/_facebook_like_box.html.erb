@@ -15,13 +15,13 @@
     </div>
     <div id="fb-root"></div>
     <% if @show_ads %>
-        <div class="mtl <%= layout_grid %>">
+        <div class="js-nohide mtl <%= layout_grid %>">
             <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Facebook, view: :desktop  %>
         </div>
     <% end %>
   </div>
   <% if @show_ads %>
-    <div class="ptl mtl">
+    <div class="js-nohide ptl mtl">
      <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Facebook, view: :mobile  %>
     </div>
   <% end %>
