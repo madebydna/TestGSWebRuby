@@ -32,7 +32,7 @@
                            {value: @school.state, class: "dummy",
                                     'data-parsley-minlength' => 9999,
                                     'data-parsley-errors-container' => "##{parsley_error_id}",
-                                    'data-parsley-minlength-message' => 'Thanks for sharing your story! Please vote in order to save your comments.'
+                                    'data-parsley-minlength-message' =>t('.required_vote_error_message')
           }) %>
         </div>
     <% end %>
