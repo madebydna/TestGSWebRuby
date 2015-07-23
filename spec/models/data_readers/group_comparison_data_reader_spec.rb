@@ -6,11 +6,84 @@ describe GroupComparisonDataReader do
 
   let(:sample_data) {
     {
-      first_data_type: [],
-      second_data_type: [],
-      third_data_type: [],
+      first_data_type: [
+        {
+          year: 2013,
+          breakdown: 'Pacific Islander',
+          school_value: 100.0,
+          state_average: 78.35,
+          performance_level: 'above_average',
+        }
+      ],
+      second_data_type: [
+        {
+          year: 2013,
+          breakdown: 'Male',
+          school_value: 90.0,
+          state_average: 98.35,
+          performance_level: 'average',
+        }
+      ],
+      third_data_type: [
+        {
+          year: 2013,
+          breakdown: 'Economically disadvantaged',
+          school_value: 10.0,
+          state_average: 8.35,
+          performance_level: 'below_average',
+        }
+      ],
     }
   }
+
+  let(:subtext_data) {
+    {
+      Ethnicity: [
+        {
+          year: 2013,
+          breakdown: 'Pacific Islander',
+          school_value: 100.0,
+          state_average: 78.35,
+          performance_level: 'above_average',
+        },
+        {
+          year: 2013,
+          breakdown: 'Wizard',
+          school_value: 10.0,
+          state_average: 8.35,
+          performance_level: 'below_average',
+        }
+      ],
+      Male: [
+        {
+          year: 2013,
+          breakdown: 'All students',
+          school_value: 90.0,
+          state_average: 98.35,
+          performance_level: 'average',
+        }
+      ],
+      'Economically disadvantaged'.to_sym => [
+        {
+          year: 2013,
+          breakdown: 'All students',
+          school_value: 10.0,
+          state_average: 8.35,
+          performance_level: 'below_average',
+        }
+      ],
+      Enrollment: [
+        {
+          year: 2013,
+          breakdown: 'All students',
+          school_value: 10.0,
+          state_average: 8.35,
+          performance_level: 'below_average',
+        }
+      ],
+    }
+  }
+
   let(:sample_label_map) { Hash[sample_data.map { |k,v| [k.to_s,"#{k} label"] }] }
   let(:fake_category) do
     o = Object.new
@@ -29,13 +102,13 @@ describe GroupComparisonDataReader do
     context 'when config has {breakdown: \'Ethnicity\', breakdown_all: \'Enrollment\'} set' do
       before do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+        allow(subject).to receive(:get_cache_data).and_return(subtext_data)
         allow(subject).to receive(:category).and_return(fake_category)
-        subject.get_data!
+        allow(subject).to receive(:config).and_return({ breakdown: 'Ethnicity', breakdown_all: 'Enrollment' })
+        subject.send(:get_data!)
       end
 
-      let(:config) { { breakdown: 'Ethnicity', breakdown_all: 'Enrollment' } }
       let(:school) { FactoryGirl.create(:school, id: 1) }
-      let!(:cachified_school) { FactoryGirl.create(:school_characteristic_responses, school_id: school.id, state: school.state ) }
 
       subject { GroupComparisonDataReader.new(school) }
 
@@ -54,7 +127,7 @@ describe GroupComparisonDataReader do
         end
       end
 
-      context 'when there is corresponding Ethnicity data for an ethnic data set' do
+      context 'when there is corresponding Ethnicity, gender, or programs data for a data set' do
         it 'should set subtext to \'x% of population\'' do
           subject.data.values.first.each do |d|
             (expect(d[:subtext]).to include '% of population') unless d[:breakdown] == 'All students'
@@ -62,14 +135,13 @@ describe GroupComparisonDataReader do
         end
       end
 
-      context 'when there is corresponding Enrollment data for a ethnic data set' do
+      context 'when there is corresponding Enrollment data for a data set' do
         it 'should set subtext to \'number students tested\'' do
           subject.data.values.first.each do |d|
             (expect(d[:subtext]).to include 'students tested') if d[:breakdown] == 'All students'
           end
         end
       end
-
     end
   end
 

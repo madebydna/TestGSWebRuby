@@ -55,6 +55,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  protected
+
   def get_data!
     self.data = cached_data_for_category(category, 'characteristics', school)
     modify_data!
@@ -67,7 +69,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def modify_data_callbacks
-    [:change_data_type_to_label, :add_ethnicity_callback, :add_enrollment_callback]
+    [
+      :change_data_type_to_label,
+      :add_ethnicity_callback,
+      :add_enrollment_callback,
+      :add_student_types_callback,
+    ]
   end
 
   def change_data_type_to_label
@@ -84,18 +91,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
     data.values.flatten.each do | hash |
       if (ethnicity_percent = ethnicity_map[hash[:breakdown]]).present?
-        hash[:subtext] = I18n.t(
-          :percent_of_population_subtext,
-          percent: ethnicity_percent.to_i,
-          scope: self.class.name.underscore,
-          default:"#{ethnicity_percent.to_i}% of population"
-        )
-      else
-        hash[:subtext] = I18n.t(
-          :no_data_subtext,
-          scope: self.class.name.underscore,
-          default:"no data"
-        )
+        hash[:subtext] = percent_of_population_text(ethnicity_percent)
+      elsif hash[:subtext].nil?
+        hash[:subtext] = no_data_text
       end
     end
 
@@ -108,16 +106,20 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     return data unless config[:breakdown_all] == 'Enrollment'
 
     enrollment_data = get_cache_data('characteristics', :Enrollment, school)[:Enrollment]
-    enrollment_size = enrollment_data.first[:school_value].to_i
+    enrollment_size = enrollment_data.first[:school_value]
 
     data.values.flatten.each do | hash |
       if hash[:breakdown].downcase == 'all students'
-        hash[:subtext] = I18n.t(
-          :number_tested_subtext,
-          number: enrollment_size,
-          scope: self.class.name.underscore,
-          default: "#{enrollment_size} students tested"
-        )
+        if enrollment_size
+          hash[:subtext] = I18n.t(
+            :number_tested_subtext,
+            number: enrollment_size.to_i,
+            scope: i18n_scope,
+            default: "#{enrollment_size} students tested"
+          )
+        elsif hash[:subtext].nil?
+          hash[:subtext] = no_data_text
+        end
       end
     end
 
@@ -126,4 +128,43 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data
   end
 
+  def add_student_types_callback
+    genders = get_cache_data('characteristics', Genders.all + StudentTypes.all, school)
+    genders.each do | gender, data |
+      genders[gender] = data.first[:school_value]
+    end
+
+    data.values.flatten.each do | hash |
+      if (gender_percent = genders[hash[:breakdown].to_s.to_sym]).present?
+        hash[:subtext] = percent_of_population_text(gender_percent)
+      elsif hash[:subtext].nil?
+        hash[:subtext] = no_data_text
+      end
+    end
+
+    data
+  rescue
+    data
+  end
+
+  def i18n_scope
+    self.class.name.underscore
+  end
+
+  def percent_of_population_text(percent)
+    I18n.t(
+      :percent_of_population_subtext,
+      percent: percent.to_i,
+      scope: i18n_scope,
+      default:"#{percent.to_i}% of population"
+    )
+  end
+
+  def no_data_text
+    I18n.t(
+      :no_data_subtext,
+      scope: i18n_scope,
+      default:"No data"
+    )
+  end
 end
