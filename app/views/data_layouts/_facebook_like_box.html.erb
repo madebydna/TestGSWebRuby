@@ -2,8 +2,13 @@
 <% if facebook_url %>
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row">
-    <div class="<%= layout_grid %> tac">
-        <div class="fb-like-box js-fb-page-plugin"
+
+      <div class="<%= layout_grid %> tac">
+          <div class="js-fb-page-plugin-fallback dn">
+              <h3 class="mtn"><%=t '.parents_talking_about', school_name: @school.name %></h3>
+              <a target="_blank" href="<%= facebook_url %>"><%= facebook_url %></a>
+          </div>
+          <div class="fb-like-box js-fb-page-plugin"
           data-href="<%= facebook_url %>"
           data-width="300"
           data-colorscheme="light"
@@ -30,8 +35,7 @@
     jQuery(function() {
       var opts = {
         fbPagePluginDiv: jQuery('.js-fb-page-plugin').first(),
-        schoolName: "<%=j @school.name %>",
-        fbUrl: "<%=j facebook_url %>",
+        fbPagePluginFallbackDiv: jQuery('.js-fb-page-plugin-fallback').first(),
         tooShortCounter: 0,
         justRightCounter: 0
       };
