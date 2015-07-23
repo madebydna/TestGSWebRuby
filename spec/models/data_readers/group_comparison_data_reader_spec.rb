@@ -9,7 +9,8 @@ describe GroupComparisonDataReader do
       first_data_type: [
         {
           year: 2013,
-          breakdown: 'Pacific Islander',
+          breakdown: 'Pacific Islander different than ethnicity label',
+          original_breakdown: 'Original breakdown',
           school_value: 100.0,
           state_average: 78.35,
           performance_level: 'above_average',
@@ -19,6 +20,7 @@ describe GroupComparisonDataReader do
         {
           year: 2013,
           breakdown: 'Male',
+          original_breakdown: 'Male',
           school_value: 90.0,
           state_average: 98.35,
           performance_level: 'average',
@@ -28,6 +30,7 @@ describe GroupComparisonDataReader do
         {
           year: 2013,
           breakdown: 'Economically disadvantaged',
+          original_breakdown: 'Economically disadvantaged',
           school_value: 10.0,
           state_average: 8.35,
           performance_level: 'below_average',
@@ -42,22 +45,17 @@ describe GroupComparisonDataReader do
         {
           year: 2013,
           breakdown: 'Pacific Islander',
+          original_breakdown: 'Original breakdown',
           school_value: 100.0,
           state_average: 78.35,
           performance_level: 'above_average',
         },
-        {
-          year: 2013,
-          breakdown: 'Wizard',
-          school_value: 10.0,
-          state_average: 8.35,
-          performance_level: 'below_average',
-        }
       ],
       Male: [
         {
           year: 2013,
           breakdown: 'All students',
+          original_breakdown: 'All students',
           school_value: 90.0,
           state_average: 98.35,
           performance_level: 'average',
@@ -67,6 +65,7 @@ describe GroupComparisonDataReader do
         {
           year: 2013,
           breakdown: 'All students',
+          original_breakdown: 'All students',
           school_value: 10.0,
           state_average: 8.35,
           performance_level: 'below_average',
@@ -76,6 +75,7 @@ describe GroupComparisonDataReader do
         {
           year: 2013,
           breakdown: 'All students',
+          original_breakdown: 'All students',
           school_value: 10.0,
           state_average: 8.35,
           performance_level: 'below_average',

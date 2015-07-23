@@ -86,11 +86,11 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
     ethnicity_data = get_cache_data('characteristics', :Ethnicity, school)[:Ethnicity]
     ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
-      h.merge(ethnicity[:breakdown] => ethnicity[:school_value])
+      h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
     end
 
     data.values.flatten.each do | hash |
-      if (ethnicity_percent = ethnicity_map[hash[:breakdown]]).present?
+      if (ethnicity_percent = ethnicity_map[hash[:original_breakdown]]).present?
         hash[:subtext] = percent_of_population_text(ethnicity_percent)
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text
