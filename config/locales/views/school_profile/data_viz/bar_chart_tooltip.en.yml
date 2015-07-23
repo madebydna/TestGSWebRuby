@@ -4,4 +4,4 @@ en:
     data_viz:
       bar_chart_tooltip:
         state_average: State Average
-        percent_proficient: '%{percent} Proficient'
+        percent_proficient: '%{percent}% Proficient'
