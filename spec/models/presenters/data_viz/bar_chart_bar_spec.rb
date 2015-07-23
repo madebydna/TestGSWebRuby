@@ -21,7 +21,7 @@ describe BarChartBar do
     {
       valueless_config: [nil, 100],
       zero_value_config: [0, 100],
-      value_config: [40.40, 59.10],
+      value_config: [40.40, 59.50],
       hundred_value_config: [100, 0],
     }.each do |config, values|
       context "with #{config}" do
@@ -32,8 +32,14 @@ describe BarChartBar do
           @value, @grey_value = values
         end
 
-        it "should have value #{@value}" do
-          expect(chart.value).to eq(@value)
+        if @value
+          it "should have value #{@value}" do
+            expect(chart.value).to eq(@value.to_f.round)
+          end
+
+          it 'should have a rounded value' do
+            expect(chart.value.round).to eq(chart.value)
+          end
         end
 
         it "should have grey_value #{@grey_value}" do
