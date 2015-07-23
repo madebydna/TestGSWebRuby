@@ -3,23 +3,24 @@ require 'spec_helper'
 describe BarChartBar do
 
   subject {BarChartBar}
-  let(:valueless_config) {
+  let(:base_config) {
     {
       label: 'Label',
       comparison_value: 25.62,
       perfomance_level: 'above_average'
     }
   }
-  let(:zero_value_config) { valueless_config.merge( value: 0 )}
-  let(:value_config) { valueless_config.merge( value: 40.40 )}
-  let(:hundred_value_config) { valueless_config.merge( value: 100 )}
+  let(:zero_value_config) { base_config.merge( value: 0 )}
+  let(:value_config) { base_config.merge( value: 40.40 )}
+  let(:hundred_value_config) { base_config.merge( value: 100 )}
+  let(:comparisonless_config) { base_config.merge( comparison_value: nil )}
 
   # write spec about no value
   # write spec about value = 0. gray should be 100 here
   # write spec about value = 100: gray whould be 0
-  context '#set_value_fields!' do
+  describe '#set_value_fields!' do
     {
-      valueless_config: [nil, 100],
+      base_config: [nil, 100],
       zero_value_config: [0, 100],
       value_config: [40.40, 59.50],
       hundred_value_config: [100, 0],
@@ -49,9 +50,9 @@ describe BarChartBar do
     end
   end
 
-  context '#display?' do
+  describe '#display?' do
     {
-      valueless_config: false,
+      base_config: false,
       zero_value_config: true,
       value_config: true,
       hundred_value_config: true,
@@ -61,6 +62,26 @@ describe BarChartBar do
         it "should be #{return_value}" do
           expect(chart.display?).to be return_value
         end
+      end
+    end
+  end
+
+  describe '#parse_config!' do
+    context 'with a comparison value' do
+      let(:chart) { subject.new(base_config) }
+
+      it 'should round the comparison value' do
+        chart.send(:parse_config!)
+        expect(chart.comparison_value).to eq(base_config[:comparison_value].round)
+      end
+    end
+
+    context 'without a comparison value' do
+      let(:chart) { subject.new(comparisonless_config) }
+
+      it 'should have no comparison value' do
+        chart.send(:parse_config!)
+        expect(chart.comparison_value).to be_nil
       end
     end
   end

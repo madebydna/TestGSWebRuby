@@ -18,7 +18,7 @@ class BarChartBar
 
   def parse_config!
     self.label = config[:label]
-    self.comparison_value = config[:comparison_value]
+    self.comparison_value = config[:comparison_value].to_f.round if config[:comparison_value]
     self.performance_level = config[:performance_level]
     self.subtext = config[:subtext]
     set_value_fields!
