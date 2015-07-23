@@ -26,6 +26,13 @@ GS.uri.Uri.reloadPageWithNewQuery = function(query) {
     GS.uri.Uri.goToPage(GS.uri.Uri.getHref().split('?')[0] + query)
 };
 
+GS.uri.Uri.copyParam = function(param, sourceUrl, targetUrl) {
+  var queryString = GS.uri.Uri.getQueryStringFromGivenUrl(sourceUrl);
+  var queryData = GS.uri.Uri.getQueryData('?' + queryString);
+  var value = queryData[param];
+  return GS.uri.Uri.addQueryParamToUrl(param, value, targetUrl);
+};
+
 /**
  * Written for GS-12127. When necessary, make ajax calls prepend result of this method to relative path, in order
  * to override any <base> tag that's on the page, *if* the base tag specifies a host that is different than current
@@ -161,6 +168,37 @@ GS.uri.Uri.getQueryStringFromURL = function () {
     else {
         return window.location.href.slice(index + 1);
     }
+};
+
+GS.uri.Uri.getQueryStringFromGivenUrl = function(url) {
+  var index = url.indexOf('?');
+  if(index === -1) {
+    return "";
+  }
+  else {
+    return url.slice(index + 1);
+  }
+};
+
+GS.uri.Uri.stripQueryStringFromUrl = function(url) {
+  if(url === undefined) {
+    return undefined;
+  }
+  var index = url.indexOf('?');
+  if(index === -1) {
+    return url;
+  } else {
+    return url.slice(0, index); // everything before the '?'
+  }
+};
+
+GS.uri.Uri.addQueryParamToUrl = function(param, value, targetUrl) {
+  var queryString = GS.uri.Uri.getQueryStringFromGivenUrl(targetUrl);
+  var queryData = GS.uri.Uri.getQueryData('?' + queryString);
+  queryData[param] = value;
+  var newQueryString = GS.uri.Uri.getQueryStringFromObject(queryData);
+  var targetUrlWithoutQueryString = GS.uri.Uri.stripQueryStringFromUrl(targetUrl);
+  return targetUrlWithoutQueryString + newQueryString;
 };
 
 /**
