@@ -120,10 +120,10 @@ describe OspRegistrationController do
     end
 
     context 'with a non osp user with bad data posted' do
-      victim_attrs = {id: 100, email: 'victim@hogwarts.uk', password: 'victim_pass'}
-      victim_membership_attrs = { member_id: 100, job_title: 'the principle', state: 'de', school_id: 2 }
+      victim_attrs = {email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
       let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
-      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs) }
+      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
       let(:bad_upgrade_osp_user_hash) do
         {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
          first_name: 'Albus', last_name: 'Dumbledore',
@@ -185,10 +185,10 @@ describe OspRegistrationController do
     end
 
     context 'when creating a new user and trying to use an existing account ' do
-      victim_attrs = {id: 100, email: 'victim@hogwarts.uk', password: 'victim_pass'}
-      victim_membership_attrs = { member_id: 100, job_title: 'the principle', state: 'de', school_id: 2 }
+      victim_attrs = { email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_membership_attrs = { job_title: 'the principle', state: 'de', school_id: 2 }
       let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
-      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs) }
+      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs.merge(member_id: victim.id)) }
       let(:bad_save_new_osp_user_hash) do
         {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
          first_name: 'Minerva', last_name: 'McGonagall',
