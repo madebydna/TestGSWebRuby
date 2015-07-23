@@ -81,16 +81,18 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
     data.values.flatten.each do | hash |
       if (ethnicity_percent = ethnicity_map[hash[:breakdown]]).present?
-        hash[:subtext] = I18n.t(:percent_of_population_subtext,
-                                percent: ethnicity_percent.to_i,
-                                scope: self.class.name.underscore,
-                                default:"#{ethnicity_percent.to_i}% of population"
-                               )
+        hash[:subtext] = I18n.t(
+          :percent_of_population_subtext,
+          percent: ethnicity_percent.to_i,
+          scope: self.class.name.underscore,
+          default:"#{ethnicity_percent.to_i}% of population"
+        )
       else
-        hash[:subtext] = I18n.t(:no_data_subtext,
-                                scope: self.class.name.underscore,
-                                default:"no data"
-                               )
+        hash[:subtext] = I18n.t(
+          :no_data_subtext,
+          scope: self.class.name.underscore,
+          default:"no data"
+        )
       end
     end
 
@@ -107,11 +109,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
     data.values.flatten.each do | hash |
       if hash[:breakdown].downcase == 'all students'
-        hash[:subtext] = I18n.t(:number_tested_subtext,
-                                number: enrollment_size,
-                                scope: self.class.name.underscore,
-                                default: "#{enrollment_size} students tested"
-                               )
+        hash[:subtext] = I18n.t(
+          :number_tested_subtext,
+          number: enrollment_size,
+          scope: self.class.name.underscore,
+          default: "#{enrollment_size} students tested"
+        )
       end
     end
 
