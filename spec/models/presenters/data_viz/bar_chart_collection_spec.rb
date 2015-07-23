@@ -12,36 +12,56 @@ describe BarChartCollection do
       performance_level: "above_average"
     }
   }
-  context '#create_bar_charts!' do
-    let(:data_points) { [data, data.merge(year: 2014), data.merge(year: 2019)] }
-    context 'with a group_by year option specified' do
+
+  describe '#create_bar_charts!' do
+    let(:data_points) {
+      [
+        data.merge(breakdown: "Pacific Islander", school_value: 100.0),
+        data.merge(breakdown: "All Students", school_value: 100.0),
+        data.merge(breakdown: "Asian", school_value: 30.0),
+        data.merge(breakdown: "African American", school_value: 80.0),
+        data.merge(breakdown: "European", school_value: 70.0),
+        data.merge(breakdown: "male", school_value: 40.0),
+        data.merge(breakdown: "female", school_value: 50.0)
+      ]
+    }
+    context 'when the group by gender callback is set' do
       subject do
         # The array of bar chart groups
         BarChartCollection
-          .new(nil, data_points, create_groups_by: :year)
+          .new(nil, data_points, create_groups_by: :breakdown, group_groups_by: [:gender])
           .send(:create_bar_charts!)
       end
-
-      it 'should create bar chart groups for each year' do
-        expect(subject.map(&:title).uniq).to eq([2013, 2014, 2019])
-      end
-
-      it 'should create a bar chart group for each data point' do
-        expect(subject.size).to eq(data_points.size)
+      it 'should group the data by gender and everything else' do
+        expect(subject.map(&:title)).to eq([nil, 'gender'])
       end
     end
 
-    context 'with no group_by option specified' do
+    context 'when the sort by descending and all students callbacks are set' do
       subject do
         # The array of bar chart groups
-        BarChartCollection
-          .new(nil, data_points)
-          .send(:create_bar_charts!)
+        BarChartCollection.new(nil, data_points, {
+                    create_sort_by: :school_value,
+                    sort_groups_by: [:desc, :all_students],
+                    label_charts_with: :breakdown
+        }).send(:create_bar_charts!)
       end
+      it 'should sort the groups by value descending and all students' do
+        bar_chart_bars = subject.first.bar_chart_bars
+        values = bar_chart_bars.map do |bars|
+          bars.value
+        end
+        expect(values[1..-1]).to eq(values[1..-1].sort.reverse!)
+        #leave out All students thats at the top and make sure the rest are in order
 
-      it 'should create a single bar chart group' do
-        expect(subject.size).to eq(1)
+        all_students_label = bar_chart_bars.first.label
+        expect(all_students_label).to eq('All Students')
+
       end
     end
   end
+
+
+
+
 end
