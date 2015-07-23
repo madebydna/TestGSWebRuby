@@ -67,7 +67,7 @@ describe Admin::OspController do
 
         context 'when gs_localAuth cookie has space instead of + due to encoding issue' do
           it 'should render the osp page' do
-            request.cookies['gs_localAuth'] = auth_cookie
+            request.cookies['gs_localAuth'] = auth_cookie.gsub('+', ' ')
             get :show, state: 'de', schoolId: school.id, page: 1
             expect(response).to render_template(:osp_basic_information)
           end
