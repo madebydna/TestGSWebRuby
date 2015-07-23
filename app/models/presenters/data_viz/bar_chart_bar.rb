@@ -25,11 +25,22 @@ class BarChartBar
   end
 
   def set_value_fields!
-    self.value = config[:value].to_f.round if config[:value]
+    self.value = rounded_value
     self.grey_value = if [0, FULL_WIDTH].include? value.to_f
                         FULL_WIDTH - value.to_f
                       else
                         FULL_WIDTH - value.to_f - SEPERATOR_WIDTH
                       end
+  end
+
+  def rounded_value
+    value = config[:value]
+    if value
+      if value > 100
+        100
+      else
+        value.to_f.round
+      end
+    end
   end
 end

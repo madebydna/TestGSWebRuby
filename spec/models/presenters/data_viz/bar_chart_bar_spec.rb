@@ -13,6 +13,7 @@ describe BarChartBar do
   let(:zero_value_config) { base_config.merge( value: 0 )}
   let(:value_config) { base_config.merge( value: 40.40 )}
   let(:hundred_value_config) { base_config.merge( value: 100 )}
+  let(:over_hundred_value_config) { base_config.merge( value: 109 )}
   let(:comparisonless_config) { base_config.merge( comparison_value: nil )}
 
   # write spec about no value
@@ -24,27 +25,32 @@ describe BarChartBar do
       zero_value_config: [0, 100],
       value_config: [40.40, 59.50],
       hundred_value_config: [100, 0],
+      over_hundred_value_config: [100, 0],
     }.each do |config, values|
       context "with #{config}" do
         let!(:chart) { subject.new(eval(config.to_s)) }
+        value, grey_value = values
 
         before do
           chart.send(:set_value_fields!)
-          @value, @grey_value = values
         end
 
-        if @value
-          it "should have value #{@value}" do
-            expect(chart.value).to eq(@value.to_f.round)
+        if value
+          it "should have value #{value}" do
+            expect(chart.value).to eq(value.to_f.round)
           end
 
           it 'should have a rounded value' do
             expect(chart.value.round).to eq(chart.value)
           end
+
+          it 'should not have a value > 100' do
+            expect(chart.value).to be <= 100
+          end
         end
 
-        it "should have grey_value #{@grey_value}" do
-          expect(chart.grey_value).to eq(@grey_value)
+        it "should have grey_value #{grey_value}" do
+          expect(chart.grey_value).to eq(grey_value)
         end
       end
     end
