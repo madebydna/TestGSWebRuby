@@ -18,5 +18,21 @@ if(gon.pagename == "Quality"){
 
         GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
 
+        var SubgroupCharts = function () {
+            $('.js-barChart').on('click', 'li', function () {
+                var title = $(this).text();
+                var dashedTitle = title.replace(/ /g, "-");
+                var parent = $(this).closest('.js-barChart');
+                $('.data-viz-bar-chart:not(.js-' + dashedTitle + ')').addClass('dn');
+                $('.js-' + dashedTitle).removeClass('dn');
+            });
+        };
+
+        $('.data-viz-bar-chart').first().removeClass('dn');
+        SubgroupCharts();
+
+
     });
+
+
 }
