@@ -77,8 +77,8 @@ GS.reviews = GS.reviews || function($) {
 
         var callReviewsAjax = function(results, nextTen){
             var current_url = GS.uri.Uri.getHref();
-            var pagination_url = "/gsr/ajax/reviews_pagination"
-            pagination_url = GS.uri.Uri.copyParam('lang',current_url, pagination_url)
+            var pagination_url = "/gsr/ajax/reviews_pagination";
+            pagination_url = GS.uri.Uri.copyParam('lang',current_url, pagination_url);
             jQuery.ajax({
                 type:'GET',
                 url: pagination_url,
