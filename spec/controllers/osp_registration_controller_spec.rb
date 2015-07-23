@@ -119,6 +119,43 @@ describe OspRegistrationController do
       end
     end
 
+    context 'with a non osp user with bad data posted' do
+      victim_attrs = {id: 100, email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_membership_attrs = { member_id: 100, job_title: 'the principle', state: 'de', school_id: 2 }
+      let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
+      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs) }
+      let(:bad_upgrade_osp_user_hash) do
+        {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
+         first_name: 'Albus', last_name: 'Dumbledore',
+         school_website: 'www.hogwarts.uk', job_title: 'headmaster'}
+      end
+
+      before do
+        allow_any_instance_of(OspRegistrationController).to receive(:current_user).and_return user
+        expect(controller).to receive(:upgrade_user_to_osp_user).and_call_original
+        expect(controller).to receive(:sign_up_user_for_subscriptions!)
+        get :submit, bad_upgrade_osp_user_hash
+        @victim = User.where(email: victim.email).first
+        @victim_membership = EspMembership.where(member_id: @victim.id).first
+      end
+
+      it 'should redirect to osp form' do
+        expect(response).to redirect_to(osp_page_path(state: school.state, schoolId: school.id, page: 1).sub('/?', '?'))
+      end
+
+      victim_attrs.each do |column, expected_value|
+        it "should not update the victim's #{column}" do
+          expect(@victim[column].to_s).to include(expected_value.to_s)
+        end
+      end
+
+      victim_membership_attrs.each do |column, expected_value|
+        it "should not update the victim's membership's #{column}" do
+          expect(@victim_membership.send(column)).to eq expected_value
+        end
+      end
+    end
+
     context 'should register new osp user' do
       before do
         expect(controller).to receive(:save_new_osp_user).and_call_original
@@ -146,6 +183,37 @@ describe OspRegistrationController do
         end
       end
     end
+
+    context 'when creating a new user and trying to use an existing account ' do
+      victim_attrs = {id: 100, email: 'victim@hogwarts.uk', password: 'victim_pass'}
+      victim_membership_attrs = { member_id: 100, job_title: 'the principle', state: 'de', school_id: 2 }
+      let!(:victim) { FactoryGirl.create(:user, victim_attrs) }
+      let!(:victim_membership) { FactoryGirl.create(:esp_membership, victim_membership_attrs) }
+      let(:bad_save_new_osp_user_hash) do
+        {state: school.state, schoolId: school.id, email: victim.email, password: 'new_password',
+         first_name: 'Minerva', last_name: 'McGonagall',
+         school_website: 'www.hogwarts.uk', job_title: 'headmistress'}
+      end
+      before do
+        expect(controller).to receive(:save_new_osp_user).and_call_original
+        get :submit, bad_save_new_osp_user_hash
+        @victim = User.where(email: victim.email).first
+        @victim_membership = EspMembership.where(member_id: @victim.id).first
+      end
+
+      victim_attrs.each do |column, expected_value|
+        it "should not update the victim's #{column}" do
+          expect(@victim[column].to_s).to include(expected_value.to_s)
+        end
+      end
+
+      victim_membership_attrs.each do |column, expected_value|
+        it "should not update the victim's membership's #{column}" do
+          expect(@victim_membership.send(column)).to eq expected_value
+        end
+      end
+    end
+
   end
 
   describe '#sign_up_user_for_subscriptions!' do

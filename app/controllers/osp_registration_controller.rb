@@ -6,13 +6,7 @@ class OspRegistrationController < ApplicationController
 
   def new
 
-    page_title = 'School Account - Register | GreatSchools'
-    gon.pageTitle = page_title
-    gon.pagename = 'GS:OSP:Register'
-    set_omniture_data('GS:OSP:Register', 'Home,OSP,RegisterPage')
-    set_meta_tags title: page_title,
-                  description:' Register for a school account to edit your school\'s profile on GreatSchools.',
-                  keywords:'School accounts, register, registration, edit profile'
+    set_gon_and_metadata!
 
     @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
 
@@ -20,24 +14,104 @@ class OspRegistrationController < ApplicationController
       render 'osp/registration/no_school_selected'
     elsif is_delaware_public_or_charter_user?
       render 'osp/registration/delaware'
-    elsif @current_user.present? && (@current_user.provisional_or_approved_osp_user? || @current_user.is_esp_superuser? || @current_user.is_esp_demigod?)
+    elsif @current_user.present? && @current_user.is_active_esp_member?
       redirect_to osp_dashboard_path
-    else @state.present? && params[:schoolId].present?
+    else
       render 'osp/registration/new'
     end
   end
 
   def submit
-    school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
     if current_user.present?
-      upgrade_user_to_osp_user(school)
+      upgrade_user_to_osp_user(@school)
     else
-      save_new_osp_user(school)
+      save_new_osp_user(@school)
     end
-
   end
 
   private
+
+  def set_gon_and_metadata!
+    page_title = 'School Account - Register | GreatSchools'
+    gon.pageTitle = page_title
+    gon.pagename = 'GS:OSP:Register'
+    set_omniture_data('GS:OSP:Register', 'Home,OSP,RegisterPage')
+    set_meta_tags title: page_title,
+                  description:' Register for a school account to edit your school\'s profile on GreatSchools.',
+                  keywords:'School accounts, register, registration, edit profile'
+  end
+
+  def is_delaware_public_or_charter_user?
+    @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
+  end
+
+  def save_new_osp_user(school)
+    user = User.new(user_attrs.merge({email: params[:email], password: params[:password]}))
+    begin
+      user.save!
+    rescue => error
+      GSLogger.error(:osp, error, vars: params, message: 'Failed to save new user in esp registration controller')
+      return render 'osp/registration/new'
+    end
+
+    return render 'osp/registration/new' unless save_esp_membership!(user)
+
+    sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
+
+    OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
+    redirect_to(osp_confirmation_path(:state =>params[:state], :schoolId => params[:schoolId]))
+  end
+
+  def upgrade_user_to_osp_user(school)
+    user = User.where(email: current_user.email).first_or_initialize
+
+    begin
+      user.update_attributes(user_attrs)
+    rescue => error
+      GSLogger.error(:osp, error, vars: params, message: 'Failed to save new user in esp registration controller')
+      return render 'osp/registration/new'
+    end
+
+    return render 'osp/registration/new' unless save_esp_membership!(user)
+
+    if user.present? && school.present?
+      #Redirect to osp form
+      sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
+      redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
+    end
+  end
+
+  def save_esp_membership!(user)
+    esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
+    esp_membership.update_attributes(esp_membership_attrs)
+    true
+  rescue => error
+    GSLogger.error(:osp, error, vars: params, message: 'Failed to save esp membership in esp registration controller')
+    false
+  end
+
+  def user_attrs
+    {
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      welcome_message_status: 'never_send',
+      how: 'esp'
+    }
+  end
+
+  def esp_membership_attrs
+    {
+      state: @state[:short].upcase,
+      school_id: @school.id,
+      status: 'provisional',
+      active: false,
+      web_url: params[:school_website],
+      job_title: params[:job_title],
+      created: Time.now,
+      updated: Time.now
+    }
+  end
 
   def osp_email_verification_url(user)
     tracking_code = 'eml_ospverify'
@@ -50,103 +124,6 @@ class OspRegistrationController < ApplicationController
         s_cid: tracking_code
     )
     path = verify_email_url(verification_link_params)
-  end
-
-  def is_delaware_public_or_charter_user?
-    @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
-  end
-
-  def save_new_osp_user(school)
-    user_email = params[:email]
-    password   = params[:password]
-    first_name = params[:first_name]
-    last_name = params[:last_name]
-    school_website = params[:school_website]
-    job_title = params[:job_title]
-    user = User.new
-    user.email = user_email
-    user.password = password
-    user.first_name = first_name
-    user.last_name = last_name
-    user.welcome_message_status='never_send'
-    user.how='esp'
-
-    # create row in user
-
-    begin
-      user.save!
-    rescue
-      return user, user.errors.messages.first[1].first
-    end
-    #create row in Esp membership
-
-    begin
-      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
-      esp_membership.state = @state[:short].upcase
-      esp_membership.school_id = school.id
-      esp_membership.status = 'provisional'
-      esp_membership.active = false
-      esp_membership.web_url = school_website
-      esp_membership.job_title = job_title
-      esp_membership.created = Time.now
-      esp_membership.updated = Time.now
-      esp_membership.save!
-
-    rescue
-      return esp_membership, esp_membership.errors.messages.first[1].first
-    end
-
-    sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
-
-    OSPEmailVerificationEmail.deliver_to_osp_user(user,osp_email_verification_url(user),school)
-    redirect_to(osp_confirmation_path(:state =>params[:state], :schoolId => params[:schoolId]))
-
-  end
-
-  def upgrade_user_to_osp_user(school)
-    user_email = params[:email]
-    first_name = params[:first_name]
-    last_name = params[:last_name]
-    school_website = params[:school_website]
-    job_title = params[:job_title]
-
-    user = User.where(email:current_user.email).first_or_initialize
-    user.first_name = first_name
-    user.last_name = last_name
-    user.welcome_message_status='never_send'
-    user.how='esp'
-
-    # update row in users
-
-    begin
-      user.update_attributes(first_name: first_name ,last_name: last_name, school_website: school_website, job_title: job_title)
-      user.save!
-    rescue
-      return user, user.errors.messages.first[1].first
-    end
-
-    #create row in Esp membership
-
-    begin
-      esp_membership = EspMembership.where(member_id:user.id).first_or_initialize
-      esp_membership.state = @state[:short].upcase
-      esp_membership.school_id = school.id
-      esp_membership.status = 'provisional'
-      esp_membership.active = false
-      esp_membership.web_url = school_website
-      esp_membership.job_title = job_title
-      esp_membership.created = Time.now
-      esp_membership.updated = Time.now
-      esp_membership.save!
-
-    rescue
-      return esp_membership, esp_membership.errors.messages.first[1].first
-    end
-    if user.present? && school.present?
-      #Redirect to osp form
-      sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
-      redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
-    end
   end
 
   def sign_up_user_for_subscriptions!(user, school, subscriptions)
