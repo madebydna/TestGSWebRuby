@@ -22,7 +22,6 @@ if(gon.pagename == "Quality"){
             $('.js-barChart').on('click', 'li', function () {
                 var title = $(this).text();
                 var dashedTitle = title.replace(/ /g, "-");
-                var parent = $(this).closest('.js-barChart');
                 $('.data-viz-bar-chart:not(.js-' + dashedTitle + ')').addClass('dn');
                 $('.js-' + dashedTitle).removeClass('dn');
             });
