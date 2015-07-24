@@ -16,5 +16,5 @@
   </div>
 
 <% else %>
-  <div class="ptm" style="font-size:18px"> <%= t('.grouped_by', breakdown: t(".#{breakdowns.first}")) %> </div>
+  <div class="ptm" style="font-size:18px"> <%= t('.grouped_by', breakdown: t(".#{breakdowns.first}")).html_safe %> </div>
 <% end %>
