@@ -12,6 +12,7 @@ class ReviewTopic < ActiveRecord::Base
   # Topic names
   HONESTY = 'Honesty'
   TEACHERS = 'Teachers'
+  OVERALL = 'Overall'
 
   class ReviewTopicsForSchool
     attr_reader :review_topic, :school

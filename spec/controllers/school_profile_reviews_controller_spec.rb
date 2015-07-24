@@ -209,7 +209,7 @@ describe SchoolProfileReviewsController do
       let(:user) { FactoryGirl.build(:verified_user) }
       let(:school_user) { FactoryGirl.build(:parent_school_user, school: school, user: user) }
       let(:honesty_topic) { FactoryGirl.build(:honesty_topic) }
-      let(:teachers_topic) {FactoryGirl.build(:teachers_topic)}
+      let(:overall_topic) { FactoryGirl.build(:overall_topic) }
       before do
         controller.instance_variable_set(:@school_user, school_user)
         allow(school_user).to receive(:first_unanswered_topic).and_return(honesty_topic)
@@ -220,7 +220,7 @@ describe SchoolProfileReviewsController do
     end
     context 'when @school_user is not set' do
       it 'should return id for Teachers topic' do
-        expect(ReviewTopic).to receive(:find_id_by_name).with(ReviewTopic::TEACHERS)
+        expect(ReviewTopic).to receive(:find_id_by_name).with(ReviewTopic::OVERALL)
         controller.first_topic_id_to_show
       end
     end
