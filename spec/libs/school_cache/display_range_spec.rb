@@ -52,8 +52,8 @@ describe DisplayRange do
           [ 3, 'ca', 2011, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
           [ 3, 'ca', 2012, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json],
           [ 4, 'ca', (Time.now.year + 1), {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json]
-        ].each do | data_type_id, state, year, range |
-          FactoryGirl.create(:display_range, data_type_id: data_type_id, state: state, year: year, range: range)
+        ].each do | data_type_id, state, year, ranges |
+          FactoryGirl.create(:display_range, data_type_id: data_type_id, state: state, year: year, ranges: ranges)
         end
       end
   

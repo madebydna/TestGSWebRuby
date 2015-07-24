@@ -3,7 +3,7 @@
     <%= render "shared/section_header", category_placement:category_placement %>
 
     <% progress_bar_percent_hash = [ 15, 50, 75, 97 ] %>
-    <% progress_bar_text_hash = [ 'BASIC', 'INTERMEDIATE', 'ADVANCED', 'HONOR ROLL' ] %>
+    <% progress_bar_text_hash = [ t('views.data_layouts.progress_bar.basic'), t('views.data_layouts.progress_bar.intermediate'), t('views.data_layouts.progress_bar.advanced'), t('views.data_layouts.progress_bar.honor_roll') ] %>
     <% score = @school.cache_results.progress_bar["total_completeness_score"] %>
 
     <div class="row mtl">
@@ -15,48 +15,38 @@
     <div class="row">
         <div class="col-md-12 tac font-size-xl open-sans_sb"><%= progress_bar_text_hash[score] %></div>
         <div class="col-md-12 tac mbm">
-            <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small">Learn More &raquo;</a></div>
+            <div><a href="javascript:void(0)" class="js_toggle_parent_sib font-size-small"><%= t('views.data_layouts.progress_bar.learn_more') %> &raquo;</a></div>
             <div class="dn tal well ma pal" style="max-width: 600px;">
-                <p>Want to improve this school’s profile? You can!</p>
-                <p>All schools on GreatSchools begin with BASIC completeness,
-                    which includes important information like contact details and test scores.
-                    It’s up to the school community to take the next steps.
-                    As a parent or community member, you can share what you know with other families
-                    by writing a review or answering a few questions about what the school offers.
-                    As a school leader, you can upload photos, describe school programs,
-                    and more with an Official school profile.</p>
-                <p>The completeness meter moves to INTERMEDIATE, then ADVANCED, and finally HONOR ROLL
-                    as you complete the following: 10 or more reviews, at least 1 photo,
-                    and 9 program questions parents find helpful.</p>
+                <%=  t('views.data_layouts.progress_bar.learn_more_text_html')  %>
             </div>
         </div>
-        <div class="col-md-12 tac text_green font-size-block mtl">Want to improve this school's profile?</div>
+        <div class="col-md-12 tac text_green font-size-block mtl"><%= t('views.data_layouts.progress_bar.improve_profile') %></div>
     </div>
 
         <div class="row">
 
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mtl">
-            <div class="tac font-size-xl">for Parents</div>
+            <div class="tac font-size-xl"><%= t('views.data_layouts.progress_bar.parents_call_out') %></div>
 
             <div class="tac">
               <button type="button" data-ga-click-label="ProgressBar Review" data-ga-click-value="<%= score %>"
                       data-link-value="<%= school_reviews_path(@school) %>" class="btn btn-default js-button-link js-gaClick mas" onclick="GS.omniture.track_reviews('Overview');">
-                  <span class="iconx24-icons i-24-write-review vam mrm"></span>Write a review
+                  <span class="iconx24-icons i-24-write-review vam mrm"></span><%= t('views.data_layouts.progress_bar.write_review') %>
               </button>
             </div>
           </div>
 
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mtl">
-            <div class="tac font-size-xl">for Schools</div>
+            <div class="tac font-size-xl"><%= t('views.data_layouts.progress_bar.schools_call_out') %></div>
 
             <div class="tac">
               <button type="button" data-ga-click-label="ProgressBar Photos" data-ga-click-value="<%= score %>"
                       data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link js-gaClick mas">
-                <span class="iconx24-icons i-24-upload-photos vam mrm"></span>Upload photos
+                <span class="iconx24-icons i-24-upload-photos vam mrm"></span><%= t('views.data_layouts.progress_bar.upload_photos') %>
               </button>
               <button type="button" data-ga-click-label="ProgressBar OSP" data-ga-click-value="<%= score %>"
                       data-link-value="<%= osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>" class="btn btn-default js-button-link js-gaClick mas">
-                  <span class="iconx24-icons i-24-answer-questions vam mrm"></span>Answer questions
+                  <span class="iconx24-icons i-24-answer-questions vam mrm"></span><%= t('views.data_layouts.progress_bar.answer_questions') %>
               </button>
             </div>
           </div>

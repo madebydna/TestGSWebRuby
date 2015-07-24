@@ -22,7 +22,7 @@ class GSLogger
 
     def log_own_failure(e)
       m = "GS||ERROR||GSLogger||#{e.class} #{e.message}||#{Time.now}||ERROR_LOCATION:#{e.backtrace.first}||"
-      m << "RESCUE_LOCATION:#{binding.send(:caller).first}||OPT_MESSAGE||OPT_VARS"
+      m << "RESCUE_LOCATION:#{binding.send(:caller).first}||REQUEST_URL||OPT_MESSAGE||OPT_VARS"
       m.gsub!(/\n|\t/, '')
       Rails.logger.error(m)
     end
@@ -38,11 +38,12 @@ class GSLogger
     end
 
     #make sure to keep the order of the logs consistent
-    #ie GS||LEVEL||TAG||ERROR||TIME||ERROR_LOCATION||RESCUE_LOCATION||OPT_MESSAGE||OPT_VARS
+    #ie GS||LEVEL||TAG||ERROR||TIME||ERROR_LOCATION||RESCUE_LOCATION||REQUEST_URL||OPT_MESSAGE||OPT_VARS
     def process_log(level, tag, rescue_line, e)
       time            = Time.now
       error           = e.is_a?(Exception) ? "#{e.class} #{e.message}" : "No exception thrown"
       error_location  = e.is_a?(Exception) ? "#{e.backtrace.first}" : "No exception thrown"
+      request_url     = get_request_url || "REQUEST_URL"
 
       [
         "GS",
@@ -51,8 +52,21 @@ class GSLogger
         "#{error}",
         "#{time}",
         "ERROR_LOCATION:#{error_location}",
-        "RESCUE_LOCATION:#{rescue_line}"
+        "RESCUE_LOCATION:#{rescue_line}",
+        request_url
       ]
+    end
+
+    #beware of possible segmentation fault issue with binding.of_caller method
+    #https://github.com/banister/binding_of_caller/issues/14
+    #Haven't been able to reproduce it. Probably ok for now, but worth keeping an eye on
+    def get_request_url
+      frame_count = binding.frame_count - 1 #excluding current frame
+      frame_count.times do | n |
+        url = binding.of_caller(n).eval('try(:request).try(:original_url)')
+        url.present? ? (return "REQUEST_URL:#{url}") : next
+      end
+      nil
     end
 
     def process_opts(opts = {})

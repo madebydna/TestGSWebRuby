@@ -29,9 +29,9 @@
                                                                                                       data[:lang], sprite: 'language'  %></div>
       <% end %>
         <div class="tac pa full-width"  style="bottom: 20px;" >
-          <%= link_to 'Programs', school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
-          <%= link_to 'Students', school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
-          <%= link_to 'Teachers', school_details_url(@school, anchor:"Teachers") %>
+          <%= link_to t('.programs'), school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
+          <%= link_to t('.students'), school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
+          <%= link_to t('.teachers'), school_details_url(@school, anchor:"Teachers") %>
         </div>
       </div>
     <% end %>
@@ -59,8 +59,8 @@
 </div>
 
 <div class="tac mbl <%= details_v2_hidden %>">
-  <%= link_to 'Programs', school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
-  <%= link_to 'Students', school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
-  <%= link_to 'Teachers', school_details_url(@school, anchor:"Teachers") %>
+  <%= link_to t('.programs'), school_details_url(@school, anchor:"Programs") %>&nbsp;|&nbsp;
+  <%= link_to t('.students'), school_details_url(@school, anchor:"Students") %>&nbsp;|&nbsp;
+  <%= link_to t('.teachers'), school_details_url(@school, anchor:"Teachers") %>
 </div>
   <% end %>

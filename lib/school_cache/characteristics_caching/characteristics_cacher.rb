@@ -31,10 +31,13 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
       if value
         # if the datatype and the breakdowns are configured in the census_data_config_entry table then use those configure specifically
         # else if the datatype id not present in the census_data_config_entry then cache the datatype.
-        if characteristic.data_set_with_values.census_data_config_entry && key == :breakdown
-          hash[key] = characteristic.data_set_with_values.census_data_config_entry.label
-        else
-          hash[key] = value
+        # we always store the original breakdown to allow for data matching between data types.
+        hash[key] = value
+        if key == :breakdown
+          if characteristic.data_set_with_values.census_data_config_entry
+            hash[key] = characteristic.data_set_with_values.census_data_config_entry.label
+          end
+          hash[:original_breakdown] = value
         end
       end
     end

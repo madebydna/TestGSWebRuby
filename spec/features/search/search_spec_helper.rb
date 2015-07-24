@@ -139,7 +139,13 @@ module SearchSpecHelper
     "//label[@data-gs-checkbox-name='#{name}'][@data-gs-checkbox-value='#{value}']/span"
   end
 
+  def  open_filter_dialog
+  find(:css, '.js-searchFiltersDropdown').click
+  end
+
+
   def open_full_filter_dialog
+    open_filter_dialog
     find(:css, '.js-advancedFilters').click
   end
 

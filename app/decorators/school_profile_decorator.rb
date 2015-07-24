@@ -91,12 +91,20 @@ class SchoolProfileDecorator < Draper::Decorator
 
   # Returns the url for a location search with the school address at the center of the search
   def school_zip_location_search_url
+    # TODO: I just refactored this for OM-1283 and don't think we need the sortBy param but am not 100% sure
     normalizedAddress = school.zipcode
-    search_url= "/search/search.page?"
-    search_url += "lat=#{school.lat}&lon=#{school.lon}&state=#{school.state}"
-    search_url +="&locationType=street_address&normalizedAddress=#{normalizedAddress}"
-    search_url +="&sortBy=DISTANCE&locationSearchString=#{normalizedAddress}&distance=5&sort=distance_asc"
-    search_url
+    query_params = {
+      lat: school.lat,
+      lon: school.lon,
+      state: school.state,
+      locationType: 'street_address',
+      normalizedAddress: normalizedAddress,
+      sortBy: 'DISTANCE',
+      locationSearchString: normalizedAddress,
+      distance: 5,
+      sort: 'distance_asc'
+    }
+    h.search_path(query_params)
   end
 
 end

@@ -24,24 +24,12 @@ class SchoolCache < ActiveRecord::Base
     define_singleton_method(method_name) do |school|
       cache_key = "#{method_name}#{school.state}#{school.id}"
       return instance_variable_get("@#{cache_key}") if instance_variable_get("@#{cache_key}")
-      cached_data = (
-        school_cache_data = self.for_school(key,school.id,school.state)
-
-        begin
-          results = school_cache_data.blank? ? {} : JSON.parse(school_cache_data.value, symbolize_names: true)
-        rescue JSON::ParserError => e
-          results = {}
-          Rails.logger.debug "ERROR: parsing JSON test scores from school cache for school: #{school.id} in state: #{school.state}" +
-            "Exception message: #{e.message}"
-        end
-
-        results
-      )
+      cached_data = self.for_school(key,school.id,school.state).cache_data(symbolize_names: true)
       instance_variable_set("@#{cache_key}", cached_data)
     end
   end
 
-  def cache_data
-    JSON.parse(value) rescue {}
+  def cache_data(options = {})
+    JSON.parse(value, options) rescue {}
   end
 end

@@ -14,12 +14,12 @@
 <% if (review.school_user && review.school_user.principal?) %>
     <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
       <div class="rs-review-value mbs">
-        <span class="open-sans_i"><%= review.topic_markup || 'Message to families' %></span>
+        <span class="open-sans_i"><%= review.topic_markup || t('.school_leader_message') %></span>
       </div>
-      <div class="open-sans_cb mbs">SCHOOL LEADER</div>
+      <div class="open-sans_cb mbs"><%= t('.school_leader') %></div>
       <div class="open-sans"> <%= review.comment %></div>
       <div class="clearfix">
-        <div class="rs-review-posted mts fr">Posted <%= review.posted %></div>
+        <div class="rs-review-posted mts fr"><%= t('.posted') %> <%= review.posted %></div>
       </div>
       <%= render 'shared/report_and_helpful_review_buttons', review: review %>
       <div style="display:none;">
@@ -41,7 +41,7 @@
                 <%= review.answer_markup %>
             </span>
           </div>
-          <br/><span class="rs-review-posted">Posted <%= review.posted %></span><br/>
+          <br/><span class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
           - a <span class="cuc_posted-by"><%= review.user_type %></span>
       <% end %>
 
@@ -53,7 +53,7 @@
             <%= review.comment %>
           <% end %>
         <% else %>
-          <div class="well mbn">This review submitted without content.</div>
+          <div class="well mbn"><%= t('.no_content_message') %></div>
         <% end %>
         <%= render 'shared/report_and_helpful_review_buttons', review: review %>
       <% end %>

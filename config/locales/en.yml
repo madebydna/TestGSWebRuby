@@ -52,6 +52,7 @@ en:
       provisional_user: 'You have a provisional account. Any changes you make will be published on the site after your account has been approved.'
       changes_saved: 'Any changes you made have been saved'
       saving_error: 'An error occurred while saving your data. Please try saving again.'
+      delaware_error: 'To access your school profile, please sign in to the <a href="https://login.doe.k12.de.us/">IMS portal</a>, then click on the GreatSchools Delaware application.'
   actions:
     generic_error: 'We''re sorry, something went wrong processing your request.'
     session:

@@ -1,8 +1,8 @@
 <%= 
   render(
-    partial: 'shared/nearby_school_display',
-    locals: { 
-      title: "Nearby schools",
+    partial: 'school_profile/nearby_school_display',
+    locals: {
+      title: t('.title'),
       schools: @school.cache_results.nearby_schools
 
       # schools: NearbySchoolDecorator.decorate_collection(@school.neighbors)

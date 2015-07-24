@@ -2,59 +2,49 @@ require 'spec_helper'
 
 describe BarChart do
 
-  subject {BarChart}
-  let(:valueless_config) {
+  let(:valid_data_point) {
     {
-      label: 'Label',
-      comparison_value: 25.62,
-      perfomance_level: 'above_average'
+      year: 2013,
+      source: "CA Dept. of Education",
+      breakdown: "Pacific Islander",
+      school_value: 100.0,
+      state_average: 78.35,
+      created: "2014-11-13T12:51:44-08:00",
+      performance_level: "above_average"
     }
   }
-  let(:zero_value_config) { valueless_config.merge( value: 0 )}
-  let(:value_config) { valueless_config.merge( value: 40.40 )}
-  let(:hundred_value_config) { valueless_config.merge( value: 100 )}
-
-  # write spec about no value
-  # write spec about value = 0. gray should be 100 here
-  # write spec about value = 100: gray whould be 0
-  context '#set_value_fields!' do
+  let(:valueless_data_point) { valid_data_point.merge(school_value: nil) }
+  let(:state_averageless_data_point) { valid_data_point.merge(state_average: nil) }
+  let(:earlier_data_point) { valid_data_point.merge(year: 2012) }
+  context '#create_bar_chart_bars!' do
     {
-      valueless_config: [nil, 100],
-      zero_value_config: [0, 100],
-      value_config: [40.40, 59.10],
-      hundred_value_config: [100, 0],
-    }.each do |config, values|
-      context "with #{config}" do
-        let!(:chart) { subject.new(eval(config.to_s)) }
-
-        before do
-          chart.send(:set_value_fields!)
-          @value, @grey_value = values
+      valid_data_point: 1,
+      valueless_data_point: 0,
+      state_averageless_data_point: 1,
+    }.each do |data_point, number_bar_charts|
+      context "with a #{data_point}" do
+        subject do
+          # The array of bar charts
+          BarChart
+            .new([eval(data_point.to_s)], nil, label_charts_with: :breakdown)
+            .send(:create_bar_chart_bars!)
         end
-
-        it "should have value #{@value}" do
-          expect(chart.value).to eq(@value)
-        end
-
-        it "should have grey_value #{@grey_value}" do
-          expect(chart.grey_value).to eq(@grey_value)
+        it "should create #{number_bar_charts} bar charts" do
+          expect(subject.size).to eq(number_bar_charts)
         end
       end
     end
-  end
 
-  context '#display?' do
-    {
-      valueless_config: false,
-      zero_value_config: true,
-      value_config: true,
-      hundred_value_config: true,
-    }.each do |config, return_value|
-      context "with #{config}" do
-        let(:chart) { subject.new(eval(config.to_s)) }
-        it "should be #{return_value}" do
-          expect(chart.display?).to be return_value
-        end
+    context 'with something to group by' do
+      subject do
+        # The array of bar charts
+        BarChart
+          .new([earlier_data_point, valid_data_point], nil, label_charts_with: :year)
+          .send(:create_bar_chart_bars!)
+      end
+      it 'should create a bar chart for each group' do
+        expect(subject.size).to eq(2)
+        expect(subject.map(&:label).uniq).to eq([2012, 2013])
       end
     end
   end

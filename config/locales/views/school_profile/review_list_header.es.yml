@@ -1,0 +1,9 @@
+---
+es:
+  school_profile:
+    review_list_header:
+      all: Todos
+      all_topics: Todos los temas
+      parents: Padres
+      students: Estudiantes
+      title: Revisión comentarios

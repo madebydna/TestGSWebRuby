@@ -1,0 +1,9 @@
+---
+es:
+  school_profile:
+    reviews:
+      modules:
+        output:
+          have_a_voice:
+            have_your_say: Danos tu opinión!
+            let_others_know: Deja que otras sepan más acerca de esta escuela.

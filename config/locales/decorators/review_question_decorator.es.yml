@@ -1,0 +1,13 @@
+---
+es:
+  decorators:
+    review_question_decorator:
+      empathy_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la compasión, el cuidado, y la empatía en los estudiantes? '
+      grit_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la persistencia, la arena, y la determinación de los estudiantes? '
+      homework_placeholder_text: ' acerca de la tarea en esta escuela. '
+      honesty_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la honestidad, integridad y equidad en los estudiantes? '
+      optional_suffix: "\n(Opcional. No hay necesidad de repetir el texto de otra crítica.)"
+      overall_placeholder_text: '. '
+      placeholder_prefix: Por favor, comparta por qué se siente de esta manera
+      respect_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla el respeto en los estudiantes? '
+      teachers_placeholder_text: ' de los maestros en esta escuela. '

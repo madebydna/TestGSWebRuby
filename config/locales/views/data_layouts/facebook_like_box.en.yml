@@ -1,0 +1,5 @@
+---
+en:
+  data_layouts:
+    facebook_like_box:
+      parents_talking_about: Find out what parents are saying about %{school_name}

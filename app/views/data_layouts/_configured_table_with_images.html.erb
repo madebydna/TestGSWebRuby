@@ -4,16 +4,10 @@
 
 <% data_config = category_placement.table_config %>
 <%= debug data if params[:debug] %>
-<%
-  data.each do |k, values|
-    data[k] = values.select do |value|
-      value[:breakdown].nil? || value[:breakdown].to_s.downcase == 'all students'
-    end
-  end
-%>
-<% data = TableData.new data %>
+<% filtered_data = filter_for_all_students(data) %>
+<% table_data = TableData.new filtered_data %>
 
-<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+<% table_data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
 <a name="<%= category.code_name %>"></a>
@@ -21,7 +15,7 @@
     <%= render "shared/section_header", category_placement:category_placement %>
 
     <div class="row pbm_sm">
-      <% category_placement.table_config.columns_to_print(data).each do |column| %>
+      <% category_placement.table_config.columns_to_print(table_data).each do |column| %>
           <% if column['display_type'] == :data_and_header %>
               <div class="col-sm-5 col-xs-4 center_when_small tac">
                 <% if column['icon_css_class'].present? %>
@@ -37,10 +31,10 @@
           <% end %>
       </div>
 
-    <% columns_to_print = data_config.columns_to_print(data) %>
+    <% columns_to_print = data_config.columns_to_print(table_data) %>
 
     <% row_index=0 %>
-    <% data.rows.each do |hash| %>
+    <% table_data.rows.each do |hash| %>
         <div class="row pvm">
           <% col_index=0 %>
           <% data_config.row_values(columns_to_print, hash) do |label, value, raw_value| %>
@@ -52,7 +46,7 @@
               <div class="<%= div_class%>">
                 <% if col_index != 1 %>
 
-                    <% raw_value = raw_value || 0 %>
+                    <% raw_value = raw_value.to_i || 0 %>
                     <% human_width =  220*raw_value/100%>
                     <% human_width_grey = 220 - human_width %>
                     <% human_width_grey_offset = human_width%22 %>
@@ -75,7 +69,7 @@
 
                 <% else %>
                     <div class="pts pbm mrl_large"><%= value.to_s.upcase if value.present?%></div>
-                    <% if row_index != (data.rows.size-1 )%>
+                    <% if row_index != (table_data.rows.size-1 )%>
                         <div class="iconx24-icons i-24-grey-down-arrow mrl_large" ></div>
                     <% end %>
                 <% end %>
@@ -96,7 +90,7 @@
 <%= render partial: 'about_this_data',
            locals: {
                    unique_id: category_placement.id,
-                   descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+                   descriptions: table_data.rows.map { |hash| hash[:description] }.uniq.compact
            }
 %>
 

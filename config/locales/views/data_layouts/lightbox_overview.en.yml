@@ -1,0 +1,6 @@
+---
+en:
+  data_layouts:
+    lightbox_overview:
+      no_photos: "Uh oh! No photos. This frame will look much better when you"
+      upload_photos_html: upload photos&nbsp;&raquo;

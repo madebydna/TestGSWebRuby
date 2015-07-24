@@ -69,14 +69,21 @@ class ApplicationController < ActionController::Base
   end
 
   def original_url
-    path = request.path + '/'
+    path = request.path
+    if !path.end_with? ".page"
+      path = request.path + '/'
+    end
     path << '?' << request.query_string unless request.query_string.empty?
     "#{request.protocol}#{host}#{path}"
   end
 
 # by default preserve the "lang" paramter on all links
   def set_locale
+    begin
     I18n.locale = params[:lang] || I18n.default_locale
+      rescue
+        I18n.locale = I18n.default_locale
+    end
   end
 
   def url_options

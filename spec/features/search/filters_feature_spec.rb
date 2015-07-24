@@ -119,12 +119,14 @@ feature 'Search filters submission', js: true do
       context "for #{grade}" do
         before do
           set_up_city_browse('de','dover')
+          open_filter_dialog
           page.all(:css, 'select.js-grades-select-box').last.select(grade)
           submit_filters
           page
         end
 
         it 'should still be selected after page load' do
+          open_filter_dialog
           select_value = find(:css, 'select.js-grades-select-box').value
           expect(select_value).to eq(grade_value)
         end

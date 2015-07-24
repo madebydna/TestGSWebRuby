@@ -1,0 +1,8 @@
+---
+en:
+  school_profile:
+    reviews:
+      lib:
+        stars_input:
+          required_vote_error_message: "Thanks for sharing your story! Please vote in order
+            to save your comments."

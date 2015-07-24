@@ -94,4 +94,54 @@ FactoryGirl.define do
     }.to_json)
     updated Time.now
   end
+
+
+  factory :school_characteristic_responses, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'CA'
+    value ({
+      'Enrollment' => [
+        "year" => 2012,
+        "source" => "NCES",
+        "school_value" => 1200.0,
+        "district_average" => 3803.0,
+        "created" => "2014-05-02T08:42:51-07:00"
+      ],
+      'Ethnicity' => [
+        {
+          "year" => 2014,
+          "source" => "CA Dept. of Education",
+          "breakdown" => "Multiracial",
+          "school_value" => 34.5178,
+          "created" => "2014-07-25T10:33:24-07:00"
+        },
+      ],
+      'Graduation Rate' => [
+        {
+          "year" => 2013,
+          "breakdown" => "Multiracial",
+          "school_value" => 100.0,
+          "state_average" => 84.47,
+          "created" => "2014-11-13T12:51:46-08:00",
+          "performance_level" => "above_average"
+        },
+        {
+          "year" => 2013,
+          "breakdown" => "All students",
+          "school_value" => 87.0,
+          "state_average" => 84.47,
+          "created" => "2014-11-13T12:51:46-08:00",
+          "performance_level" => "above_average"
+        }
+      ]
+    }.to_json)
+    updated Time.now
+  end
+
+
+
+
+
+
 end

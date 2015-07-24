@@ -35,12 +35,15 @@ describe CharacteristicsCaching::CharacteristicsCacher do
   }
   let(:configured_characteristics_data_types) { {a: 1, b: 2, c: 3} }
   let(:result_hash) {
-    {year: 2010,
-     source: 'Jupiter Dept of Ed',
-     grade: 2,
-     school_value: 10,
-     state_average: 20,
-     breakdown: 'Earthling'}
+    {
+      year: 2010,
+      source: 'Jupiter Dept of Ed',
+      grade: 2,
+      school_value: 10,
+      state_average: 20,
+      breakdown: 'Earthling',
+      original_breakdown: 'Earthling',
+    }
   }
   let(:decorator) { Hashie::Mash.new(result) }
   let(:unconfigured_ethnicity_decorator) { Hashie::Mash.new(unconfigured_ethnicity_result) }

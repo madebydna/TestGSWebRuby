@@ -1,6 +1,7 @@
+---
 en:
   admin:
     actions:
       undo:
-        menu: "Undo"
-        breadcrumb: "Undo"
+        breadcrumb: Undo
+        menu: Undo

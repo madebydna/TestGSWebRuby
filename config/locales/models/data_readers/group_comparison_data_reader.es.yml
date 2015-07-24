@@ -1,0 +1,5 @@
+es:
+  group_comparison_data_reader:
+    no_data_subtext: 'Sin datos'
+    number_tested_subtext: '%{number} alumnos evaluados'
+    percent_of_population_subtext: '%{percent}% de la población'

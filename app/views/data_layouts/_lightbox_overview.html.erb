@@ -34,8 +34,8 @@
     <div class=" <%= layout_grid %>">
       <div class="well ma" style="max-width: 400px">
         <div class="pam tac"><%= image_tag(image_path("lib/media_missing.png"))%></div>
-        <p class="ptm">Uh oh! No photos. This frame will look much better when you
-        <%= link_to 'upload photos&nbsp;&raquo;'.html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
+        <p class="ptm"><%= t('.no_photos') %>
+        <%= link_to t('.upload_photos_html').html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>
         </p>
       </div>
     </div>

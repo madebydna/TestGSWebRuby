@@ -108,6 +108,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
   sections :reviews, ReviewSection, '.js_reviewsList .cuc_review', visible: true
 
   def first_review
+    wait_for_ajax
     reviews.first
   end
 
@@ -142,11 +143,13 @@ class SchoolProfileReviewsPage < SitePrism::Page
   end
 
   def vote_on_the_first_review
+    wait_for_ajax
     first_review.vote_for_review_button.click
     wait_for_ajax
   end
 
   def unvote_the_first_review
+    wait_for_ajax
     first_review.unvote_review_button.click
     wait_for_ajax
   end

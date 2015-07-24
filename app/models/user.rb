@@ -215,6 +215,10 @@ class User < ActiveRecord::Base
     has_role?(Role.esp_superuser)
   end
 
+  def is_active_esp_member?
+    esp_memberships.approved_or_provisional.active.present? || is_esp_superuser?
+  end
+
   def is_esp_demigod?
     if esp_memberships.count > 1
       true

@@ -16,8 +16,16 @@
     float: left;
   }
 
+  .tal {
+    text-align: left;
+  }
+
+  .vat {
+    vertical-align: top;
+  }
+
   .bar-chart-rows {
-    padding: 10px 10px 10px 0px;
+    padding: 10px 0;
 
     .row-text {
       font-size: 16px;
@@ -33,7 +41,6 @@
     .bar-row {
       width: 100%;
       @include clearfix();
-      padding-right: 10px;
       padding-top: 5px;
       padding-bottom: 5px;
     }
@@ -64,6 +71,12 @@
       top: -5px;
       line-height: 18px;
     }
+  }
+}
+
+.group-comparison{
+  @media (min-width: $screen-lg-min){
+    padding-left: 10px;
   }
 }
 

@@ -1,0 +1,31 @@
+<% submitted_review %>
+<% topic_name = question.topic.name %>
+<% reviews_for_topic = SchoolProfileReviewsDecorator.decorate(@school_reviews.by_topic[topic_name], self) %>
+<% principal = @school_user.principal? %>
+
+<div class="js-submittedReviewContainer">
+  <div class="topical-review-question-container left">
+    <%= render 'school_profile/reviews/lib/question_title', question: question %>
+    <% unless @school_user.principal? %>
+        <div class=" tac ptl font-size-large"><%= submitted_review.submitted_values_text %></span></div>
+    <% end %>
+    <div class="ptm pbl phxl tal <%= principal ? 'mtl' : '' %>">
+      <% unless submitted_review.active? %>
+          <span class="open-sans_i"><%= t('.pending_activation') %> </span>
+      <% end %>
+      <%= submitted_review.truncated_comment(220) %>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary mvm js-reviewManageButton" data-topic-id="<%= question.topic.id %>">
+       <%= t('.manage_review') %>
+      </button>
+    </div>
+  </div>
+  <div class="topical-review-question-container right">
+    <div class="ptl phl ">
+      <%= render 'school_profile/reviews/modules/output/answer_summary',
+                 reviews_for_topic: reviews_for_topic
+      %>
+    </div>
+  </div>
+</div>
