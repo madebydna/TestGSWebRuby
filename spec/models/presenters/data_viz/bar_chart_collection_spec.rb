@@ -33,7 +33,7 @@ describe BarChartCollection do
           .send(:create_bar_charts!)
       end
       it 'should group the data by gender and everything else' do
-        expect(subject.map(&:title)).to eq([nil, 'gender'])
+        expect(subject.map(&:title)).to eq(['ethnicity', 'gender'])
       end
     end
 
