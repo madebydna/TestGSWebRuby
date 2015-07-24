@@ -1,7 +1,10 @@
 <% school_page_path = (school.try(:profile_path) || school_path(school)) %>
+<% query_string = '' %>
+<% query_string << "?lang=#{params[:lang]}" if params[:lang] %>
 <% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
-<% school_reviews_page_url = school_page_url + 'reviews/' %>
-<% school_quality_page_url = school_page_url + 'quality/' %>
+<% school_reviews_page_url = school_page_url + 'reviews/' + query_string %>
+<% school_quality_page_url = school_page_url + 'quality/' + query_string %>
+<% school_page_url << query_string %>
 <% school_provided_photo = decorated_school.uploaded_photo(130) %>
 <% if search_by_location? %>
   <% distance = decorated_school.distance #converting to 2 decimal places %>
