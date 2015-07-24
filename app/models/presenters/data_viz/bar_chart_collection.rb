@@ -4,7 +4,7 @@ class BarChartCollection < ActiveRecord::Base
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
-  attr_accessor :bar_charts, :data, :options, :sub_title, :title
+  attr_accessor :bar_charts, :data, :options, :sub_title, :title, :breakdowns
 
   def initialize(title, data, options = {})
     self.data      = data
@@ -12,6 +12,7 @@ class BarChartCollection < ActiveRecord::Base
     self.sub_title = options[:sub_title]
     self.title     = title
     create_bar_charts!
+    self.breakdowns = bar_charts.map(&:title) if options[:create_groups_by].present?
   end
 
   private
@@ -19,7 +20,7 @@ class BarChartCollection < ActiveRecord::Base
   def create_bar_charts!
     self.bar_charts = grouped_data.map do |name, group_data|
       gd = sort_group(group_data)
-      BarChart.new(gd, name, options)
+      BarChart.new(gd, name || 'ethnicity', options) #we assume if there is no title its an ethnicity
     end
   end
 

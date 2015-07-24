@@ -19,16 +19,29 @@ if(gon.pagename == "Quality"){
         GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
 
         var SubgroupCharts = function () {
-            $('.js-barChart').on('click', 'li', function () {
+            $('.js-dataVizBarChartContainer').on('click', 'li', function () {
                 var title = $(this).text();
                 var dashedTitle = title.replace(/ /g, "-");
-                $('.data-viz-bar-chart:not(.js-' + dashedTitle + ')').addClass('dn');
+                $('.js-dataVizBarChart:not(.js-' + dashedTitle + ')').addClass('dn');
                 $('.js-' + dashedTitle).removeClass('dn');
             });
         };
 
-        $('.data-viz-bar-chart').first().removeClass('dn');
+        $('.js-dataVizBarChart').first().removeClass('dn');
         SubgroupCharts();
+
+        var toggleBreakdownsHandler = function() {
+            $('.js-dataVizBarChartContainer').on('click', '.js-barChartBreakdown', function () {
+                var $self = $(this);
+                var breakdownClass = '.js-' + $self.data('breakdown')
+                var $parent = $self.closest('.js-dataVizBarChart');
+
+                $parent.find('.js-barChart').addClass('dn')
+                $parent.find('.js-barChart' + breakdownClass).removeClass('dn')
+            });
+        }
+
+        toggleBreakdownsHandler()
 
 
     });
