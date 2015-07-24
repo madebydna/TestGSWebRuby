@@ -4,6 +4,9 @@ GS.search.autocomplete = GS.search.autocomplete || {};
 GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocomplete || (function() {
 
     var init = function(state_abbr) {
+        Handlebars.registerHelper('addLangToUrl', function(url) {
+          return GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
+        });
         attachAutocomplete(state_abbr);
         attachAutocompleteHandlers();
     };
@@ -53,9 +56,7 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
                 clearBloodhound: schools.ttAdapterClear(),
                 templates: markup.schoolResultsMarkup()
             }
-        ).on('typeahead:selected', function (event, suggestion, dataset) {
-            GS.uri.Uri.goToPage(suggestion['url']);
-        });
+        );
     };
 
     var attachAutocompleteHandlers = function() {

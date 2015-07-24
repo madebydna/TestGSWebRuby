@@ -61,5 +61,9 @@ var topicAnchor = function () {
 
 var schoolReviewsCallback =  function (event, suggestion, dataset) {
     var queryStringsAnchors = buildQueryStringsAnchors();
-    GS.uri.Uri.goToPage(suggestion['url']+"reviews/" + queryStringsAnchors);
+    var url = suggestion['url'];
+    url = url + 'reviews/';
+    url = GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
+    url = url + queryStringsAnchors;
+    GS.uri.Uri.goToPage(url);
 };
