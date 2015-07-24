@@ -2,19 +2,21 @@
 <% breakdowns = bar_chart_collection.breakdowns %>
 
 <% if breakdowns.count > 1 %>
-  <div class='ptm clearfix'>
-    <% ['btn-group hidden-xs', 'btn-group-vertical visible-xs maxw-400'].each do | classes | %>
-      <div class="<%= classes %>" data-toggle="buttons">
-        <% breakdowns.each_with_index do |b, i| %>
-          <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown' data-breakdown="<%= b %>">
-            <input type="radio"/>
-            <%= t(".#{b}") %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+  <div class='row'>
+    <div class='ptm clearfix col-xs-12 col-md-4'>
+      <% ['btn-group btn-group-justified hidden-xs', 'btn-group-vertical visible-xs full-width'].each do | classes | %>
+        <div class="<%= classes %>" data-toggle="buttons">
+          <% breakdowns.each_with_index do |b, i| %>
+            <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown' data-breakdown="<%= b %>">
+              <input type="radio"/>
+              <%= t(".#{b}") %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
 <% else %>
-  <div class="ptm" style="font-size:18px"> <%= t('.grouped_by', breakdown: t(".#{breakdowns.first}")).html_safe %> </div>
+  <div class="ptm font-size-large"> <%= t('.grouped_by', breakdown: t(".#{breakdowns.first}")).html_safe %> </div>
 <% end %>

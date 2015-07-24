@@ -2,8 +2,8 @@
   <div class="container-fluid js-dataVizBarChartContainer group-comparison">
     <div class="row">
 
-      <div class="col-lg-3">
-        <%= select_tag 'subgroup', options_for_select(data.map { |bar_chart_collection| [bar_chart_collection.title] }), class: 'selectpicker' %>
+      <div class="col-xs-12 col-md-4">
+        <%= select_tag 'subgroup', options_for_select(data.map { |bar_chart_collection| [bar_chart_collection.title] }), class: 'selectpicker', data: {width: '100%'} %>
       </div>
     </div>
 
