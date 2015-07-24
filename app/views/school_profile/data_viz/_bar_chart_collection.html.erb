@@ -4,16 +4,16 @@
   # group comparison data reader.
 %>
 
-<div class="col-xs-12 data-viz-bar-chart js-dataVizBarChart dn js-<%=(bar_chart_collection.title).gsub(/\s/,'-') %>">
+<div class="col-xs-12 data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.title).gsub(/\s/,'-') %>">
   <% if show_breakdown_toggle %>
     <%= render partial: 'school_profile/data_viz/bar_chart_breakdowns_toggle',
                locals: { bar_chart_collection: bar_chart_collection } %>
   <% end %>
   <div class='row'>
     <% bar_chart_collection.bar_charts.each_with_index do | bar_chart, i| %>
-      <% hide_chart = (i > 0 && show_breakdown_toggle) ? true : false %>
+      <% show_hide_chart = (i > 0 && show_breakdown_toggle) ? 'dn' : '' %>
       <%= render partial: 'school_profile/data_viz/bar_chart',
-                  locals: { bar_chart: bar_chart, hide_chart: hide_chart } %>
+                  locals: { bar_chart: bar_chart, show_hide_chart: show_hide_chart } %>
     <% end %>
   </div>
 </div>

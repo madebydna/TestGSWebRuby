@@ -7,7 +7,7 @@
   # The .bar-chart class is just to prove that it was rendering correctly.
   # You may delete it when you make the real module.
 %>
-<div class="js-barChart js-<%= bar_chart.title %> <%= 'dn' if hide_chart %>">
+<div class="js-barChart js-<%= bar_chart.title %> <%= show_hide_chart %>">
   <% bar_chart.bar_chart_bars.each do | bar_chart_bar | %>
     <%= render partial: 'school_profile/data_viz/bar_chart_bar',
       locals: { chart: bar_chart_bar } %>

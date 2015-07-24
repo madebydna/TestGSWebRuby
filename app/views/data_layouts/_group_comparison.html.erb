@@ -6,9 +6,11 @@
     </div>
   </div>
 
-  <% data.each do |bar_chart_collection| %>
+  <% data.each_with_index do |bar_chart_collection, i| %>
+      <%  show_hide_collection = i == 0 ? '' : 'dn' %>
       <%= render partial: 'school_profile/data_viz/bar_chart_collection',
-                 locals: {bar_chart_collection: bar_chart_collection} %>
+                 locals: {bar_chart_collection: bar_chart_collection,
+                          show_hide_collection: show_hide_collection} %>
   <% end %>
 
 </div>
