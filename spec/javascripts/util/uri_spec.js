@@ -32,6 +32,11 @@ describe('GS.uri.Uri', function() {
       url = 'www.greatschools.org?foo=123';
       expect(GS.uri.Uri.getQueryStringFromGivenUrl(url)).to.eq('foo=123');
     });
+
+    it('gets query string from URLs with anchors', function() {
+      url = 'www.greatschools.org?foo=123#anchor';
+      expect(GS.uri.Uri.getQueryStringFromGivenUrl(url)).to.eq('foo=123');
+    });
   });
 
   describe('.stripQueryStringFromUrl', function() {
@@ -59,6 +64,50 @@ describe('GS.uri.Uri', function() {
       url = 'www.greatschools.org?foo=bar&bar=baz';
       expect(GS.uri.Uri.stripQueryStringFromUrl(url)).to.eq('www.greatschools.org');
     });
+
+    it('strips off query string when URL contains an anchor', function() {
+      url = 'www.greatschools.org?foo=bar#anchor';
+      expect(GS.uri.Uri.stripQueryStringFromUrl(url)).to.eq('www.greatschools.org#anchor');
+      url = 'www.greatschools.org?#anchor';
+      expect(GS.uri.Uri.stripQueryStringFromUrl(url)).to.eq('www.greatschools.org#anchor');
+    });
+  });
+
+  describe('.stripQueryStringAndAnchorFromUrl', function() {
+    it('returns full URL when URL has no query string or anchor', function() {
+      url = 'http://www.greatschools.org';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq(url);
+    });
+
+    it('returns undefined when URL is undefined', function() {
+      url = undefined;
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq(url);
+    });
+
+    it('returns empty string when url is empty string', function() {
+      url = '';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq(url);
+    });
+
+    it('returns www.greatschools.org for www.greatschools.org?foo=bar', function() {
+      url = 'www.greatschools.org?foo=bar';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq('www.greatschools.org');
+    });
+
+    it('returns www.greatschools.org for www.greatschools.org?foo=bar&bar=baz', function() {
+      url = 'www.greatschools.org?foo=bar&bar=baz';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq('www.greatschools.org');
+    });
+
+    it('strips off query string and anchor when URL contains a query string and anchor', function() {
+      url = 'www.greatschools.org?foo=bar#anchor';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq('www.greatschools.org');
+    });
+
+    it('strips off anchor when URL contains an anchor', function() {
+      url = 'www.greatschools.org?#anchor';
+      expect(GS.uri.Uri.stripQueryStringAndAnchorFromUrl(url)).to.eq('www.greatschools.org');
+    });
   });
 
   describe('.addQueryParamToUrl', function() {
@@ -74,6 +123,13 @@ describe('GS.uri.Uri', function() {
       var value = 'bar';
       var url = 'www.greatschools.org?bar=baz';
       expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?bar=baz&foo=bar');
+    });
+
+    it('handles URLs with anchors', function() {
+      var param = 'foo';
+      var value = 'bar';
+      var url = 'www.greatschools.org#anchor';
+      expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?foo=bar#anchor');
     });
   });
 
@@ -93,10 +149,29 @@ describe('GS.uri.Uri', function() {
     });
 
     it('handles URLs that have params that are empty strings', function() {
-      var param = 'bar'
+      var param = 'bar';
       var sourceUrl = 'www.greatschools.org?tricky=&bar=baz';
       var targetUrl = 'www.greatschools.org?foo=bar&teehee=';
       expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org?foo=bar&teehee=&bar=baz');
+    });
+
+    it('handles URLs that have anchors', function() {
+      var param = 'foo';
+      var sourceUrl = 'www.greatschools.org?foo=bar';
+      var targetUrl = 'www.greatschools.org#anchor';
+      expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org?foo=bar#anchor');
+    });
+  });
+
+  describe('.getAnchorFromUrl', function() {
+    it('gets anchor from url without query string', function() {
+      var url = 'www.greatschools.org#anchor';
+      expect(GS.uri.Uri.getAnchorFromUrl(url)).to.eq('#anchor');
+    });
+
+    it('gets anchor from url with query string', function() {
+      var url = 'www.greatschools.org?foo=bar&bar=baz#anchor';
+      expect(GS.uri.Uri.getAnchorFromUrl(url)).to.eq('#anchor');
     });
   });
 });

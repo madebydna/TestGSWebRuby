@@ -171,25 +171,44 @@ GS.uri.Uri.getQueryStringFromURL = function () {
 };
 
 GS.uri.Uri.getQueryStringFromGivenUrl = function(url) {
+  var queryString = '';
   var index = url.indexOf('?');
-  if(index === -1) {
-    return "";
+  if(index !== -1) {
+    queryString = url.slice(index + 1);
   }
-  else {
-    return url.slice(index + 1);
+  index = queryString.indexOf('#');
+  if(index !== -1) {
+    queryString = queryString.slice(0, index);
   }
+  return queryString;
 };
 
 GS.uri.Uri.stripQueryStringFromUrl = function(url) {
   if(url === undefined) {
     return undefined;
   }
+  var urlWithoutQueryString = url;
   var index = url.indexOf('?');
-  if(index === -1) {
-    return url;
-  } else {
-    return url.slice(0, index); // everything before the '?'
+  if(index !== -1) {
+    urlWithoutQueryString = url.slice(0, index);
+    var indexOfAnchor = url.indexOf('#');
+    if (indexOfAnchor !== -1) {
+      urlWithoutQueryString = urlWithoutQueryString + url.slice(indexOfAnchor);
+    }
   }
+  return urlWithoutQueryString;
+};
+
+GS.uri.Uri.stripQueryStringAndAnchorFromUrl = function(url) {
+  if(url === undefined) {
+    return undefined;
+  }
+  var urlWithoutQueryStringAndAnchor = GS.uri.Uri.stripQueryStringFromUrl(url);
+  var index = urlWithoutQueryStringAndAnchor.indexOf('#');
+  if(index !== -1) {
+    urlWithoutQueryStringAndAnchor = url.slice(0, index);
+  }
+  return urlWithoutQueryStringAndAnchor;
 };
 
 GS.uri.Uri.addQueryParamToUrl = function(param, value, targetUrl) {
@@ -198,7 +217,22 @@ GS.uri.Uri.addQueryParamToUrl = function(param, value, targetUrl) {
   queryData[param] = value;
   var newQueryString = GS.uri.Uri.getQueryStringFromObject(queryData);
   var targetUrlWithoutQueryString = GS.uri.Uri.stripQueryStringFromUrl(targetUrl);
-  return targetUrlWithoutQueryString + newQueryString;
+  return GS.uri.Uri.placeQueryStringIntoUrl(newQueryString, targetUrlWithoutQueryString);
+};
+
+GS.uri.Uri.placeQueryStringIntoUrl = function(queryString, targetUrl) {
+  var url = GS.uri.Uri.stripQueryStringAndAnchorFromUrl(targetUrl);
+  var anchor = GS.uri.Uri.getAnchorFromUrl(targetUrl);
+  return url + queryString + anchor;
+};
+
+GS.uri.Uri.getAnchorFromUrl = function(url) {
+  var indexOfHash = url.indexOf('#');
+  if(indexOfHash !== -1) {
+    return url.slice(indexOfHash);
+  } else {
+    return '';
+  }
 };
 
 /**
