@@ -2,7 +2,7 @@
 <% breakdowns = bar_chart_collection.breakdowns %>
 
 <% if breakdowns.count > 1 %>
-  <div class='row ptm'>
+  <div class='ptm clearfix'>
     <% ['btn-group hidden-xs', 'btn-group-vertical visible-xs maxw-400'].each do | classes | %>
       <div class="<%= classes %>" data-toggle="buttons">
         <% breakdowns.each_with_index do |b, i| %>
