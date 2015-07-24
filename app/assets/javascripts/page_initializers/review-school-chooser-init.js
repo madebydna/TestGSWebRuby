@@ -41,7 +41,7 @@ var buildQueryStringsAnchors = function () {
     queryStringAnchor += morganStanleyQueryString();
     queryStringAnchor += topicAnchor();
     return queryStringAnchor;
-}
+};
 
 var morganStanleyQueryString = function () {
     var queryString = "";
@@ -49,7 +49,7 @@ var morganStanleyQueryString = function () {
         queryString = "?morganstanley=1";
     }
     return queryString;
-}
+};
 
 var topicAnchor = function () {
     var topicAnchor = "";
@@ -57,9 +57,13 @@ var topicAnchor = function () {
         topicAnchor += "#topic" + gon.topic_id;
     }
     return topicAnchor;
-}
+};
 
 var schoolReviewsCallback =  function (event, suggestion, dataset) {
     var queryStringsAnchors = buildQueryStringsAnchors();
-    GS.uri.Uri.goToPage(suggestion['url']+"reviews/" + queryStringsAnchors);
+    var url = suggestion['url'];
+    url = url + 'reviews/';
+    url = url + queryStringsAnchors;
+    url = GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
+    GS.uri.Uri.goToPage(url);
 };
