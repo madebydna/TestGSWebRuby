@@ -53,6 +53,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data.map do |collection_name, collection_data|
       BarChartCollection.new(collection_name, collection_data, config)
     end
+  rescue
+    []
   end
 
   protected
