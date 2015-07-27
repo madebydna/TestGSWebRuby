@@ -1,0 +1,23 @@
+<%
+  promo = {
+    button: 'Sign Up',
+    cta:    'Advocate for greater school options in your community!',
+    image:  'ips_placer_logo.png',
+  }
+%>
+
+<div class="send-to-partner">
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 logo">
+      <img src="<%= asset_path(promo[:image])%>" class="img-responsive center-block">
+    </div>
+    <div class="col-xs-12 col-sm-9">
+      <div class="cta">
+        <div class="cta-text">
+          <%= promo[:cta] %>
+        </div>
+        <div class="btn btn-primary"><%= promo[:button] %></div>
+      </div>
+    </div>
+  </div>
+</div>

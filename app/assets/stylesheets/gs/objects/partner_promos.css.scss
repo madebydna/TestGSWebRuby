@@ -1,0 +1,23 @@
+$partner-promo-solid-color:  #f4f4f4;
+$partner-promo-stroke-color: #dedede;
+
+.send-to-partner {
+  border: 2px solid $partner-promo-stroke-color;
+  text-align: center;
+  .cta {
+    background-color: $partner-promo-solid-color;
+    padding: 10px 10px 15px;
+    .cta-text {
+      font-family: 'opensans-semibold';
+      padding-bottom: 10px;
+    }
+  }
+  .logo {
+    img {
+      max-height: 100px;
+      max-width: 220px;
+      padding: 10px;
+      width: 85%;
+    }
+  }
+}
