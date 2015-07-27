@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-#TODO when we refactor the ratings cacher into classes,  move this spec and rename it accordingly.
-
 describe SchoolCache do
 
   let!(:school) { FactoryGirl.create(:school, id:1) }
@@ -14,6 +12,8 @@ describe SchoolCache do
   end
 
   describe '#ratings' do
+    #TODO when we refactor the ratings cacher into classes,  move this spec and rename it accordingly.
+
 
     context 'when a school has ratings data' do
       let!(:test_data_set) do
@@ -67,6 +67,17 @@ describe SchoolCache do
         cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
 
         expect(cache_row).to be_empty
+      end
+    end
+  end
+
+  [:characteristics, :esp_responses, :ratings, :test_scores].each do |key|
+    describe "#cached_#{key}_data" do
+      context 'with no cache row for this key' do
+        it 'should return {}' do
+          allow(SchoolCache).to receive(:for_school).and_return(nil)
+          expect(SchoolCache.send("cached_#{key}_data".to_sym, school)).to eq ({})
+        end
       end
     end
   end
