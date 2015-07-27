@@ -29,7 +29,7 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection
-          .new(nil, data_points, create_groups_by: :breakdown, group_groups_by: [:gender])
+          .new(nil, data_points, create_groups_by: :breakdown, group_groups_by: [:gender], default_group: 'ethnicity')
           .send(:create_bar_charts!)
       end
       it 'should group the data by gender and everything else' do
@@ -43,6 +43,7 @@ describe BarChartCollection do
         BarChartCollection.new(nil, data_points, {
                     create_sort_by: :school_value,
                     sort_groups_by: [:desc, :all_students],
+                    default_group: 'ethnicity',
                     label_charts_with: :breakdown
         }).send(:create_bar_charts!)
       end

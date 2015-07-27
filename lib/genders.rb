@@ -3,7 +3,7 @@ module Genders
     [:Female, :Male]
   end
 
-  def self.all_in_strings
+  def self.all_as_strings
     ['female', 'male']
   end
 end
