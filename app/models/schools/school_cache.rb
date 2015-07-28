@@ -22,14 +22,16 @@ class SchoolCache < ActiveRecord::Base
   self::KEYS.each do |key|
     method_name = "cached_#{key}_data"
     define_singleton_method(method_name) do |school|
-      cache_key = "#{method_name}#{school.state}#{school.id}"
-      return instance_variable_get("@#{cache_key}") if instance_variable_get("@#{cache_key}")
+      cache_key = "#{method_name}"
+      if school.instance_variable_get("@#{cache_key}")
+        return school.instance_variable_get("@#{cache_key}")
+      end
       cached_data = if (school_cache = self.for_school(key,school.id,school.state))
                       school_cache.cache_data(symbolize_names: true)
                     else
                       {}
                     end
-      instance_variable_set("@#{cache_key}", cached_data)
+      school.instance_variable_set("@#{cache_key}", cached_data)
     end
   end
 

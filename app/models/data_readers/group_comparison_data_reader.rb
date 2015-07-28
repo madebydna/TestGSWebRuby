@@ -61,7 +61,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   protected
 
   def get_data!
-    self.data = cached_data_for_category(category, 'characteristics', school)
+    self.data = cached_data_for_category(category, 'characteristics', school).deep_clone
     modify_data!
   end
 
