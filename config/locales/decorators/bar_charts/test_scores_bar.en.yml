@@ -1,0 +1,7 @@
+---
+en:
+  decorators:
+    test_scores_bar:
+      state_average: 'State average'
+      students_proficient_or_better: 'Students are proficient or better'
+      students_tested: 'Students tested'

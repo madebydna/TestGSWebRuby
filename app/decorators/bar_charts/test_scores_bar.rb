@@ -51,13 +51,16 @@ class BarCharts::TestScoresBar
       tooltip = '<table style="line-height:1.2" cellpadding=5>'
 
       if student_count.present?
-        tooltip << '<tr><td valign="top"><b>' + student_count.to_s + '</b></td><td>Students tested</td></tr>'
+        tooltip << '<tr><td valign="top"><b>' << student_count.to_s << '</b></td>'
+        tooltip << "<td>#{I18n.t('decorators.test_scores_bar.students_tested')}</td></tr>"
       end
       if student_proficiency.present?
-        tooltip << "<tr><td valign=\"top\"><b>#{display_value(student_proficiency)}%</b></td><td>Students are proficient or better</td></tr>"
+        tooltip << "<tr><td valign=\"top\"><b>#{display_value(student_proficiency)}%</b></td>"
+        tooltip << "<td>#{I18n.t('decorators.test_scores_bar.students_proficient_or_better')}</td></tr>"
       end
       if state_average.present?
-        tooltip << "<tr><td valign=\"top\"><b>#{display_value(state_average)}%</b></td><td>State average</td></tr>"
+        tooltip << "<tr><td valign=\"top\"><b>#{display_value(state_average)}%</b></td>"
+        tooltip << "<td>#{I18n.t('decorators.test_scores_bar.state_average')}</td></tr>"
       end
       tooltip << '</table>'
     end
