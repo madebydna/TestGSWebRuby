@@ -1,19 +1,29 @@
+<% bar_chart_collections = data[:bar_chart_collections] %>
 <div class="gs-bootstrap">
   <div class="container-fluid js-dataVizBarChartContainer group-comparison">
     <div class="row">
 
       <div class="col-xs-12 col-md-4">
-        <%= select_tag 'subgroup', options_for_select(data.map { |bar_chart_collection| [bar_chart_collection.title] }), class: 'selectpicker', data: {width: '100%'} %>
+        <%=
+          select_tag 'subgroup',
+            options_for_select(bar_chart_collections.map(&:title)),
+            class: 'selectpicker',
+            data: { width: '100%' }
+        %>
       </div>
     </div>
 
-    <% data.each_with_index do |bar_chart_collection, i| %>
+    <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
         <% show_hide_collection = i == 0 ? '' : 'dn' %>
         <%= render partial: 'school_profile/data_viz/bar_chart_collection',
                    locals: {bar_chart_collection: bar_chart_collection,
                             show_hide_collection: show_hide_collection} %>
     <% end %>
 
+    <%= render partial: 'shared/partners/send_to_partner',
+      locals: {
+        partner: data[:partner],
+      }
+    %>
   </div>
 </div>
-

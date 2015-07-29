@@ -4,18 +4,20 @@
 <div class="send-to-partner">
   <div class="row">
     <div class="col-xs-12 col-sm-3 logo">
-      <img src="<%= catalog_path(t('.innovate_public_schools.logo_path')) %>" class="img-responsive center-block">
+      <img src="<%= catalog_path(t(".#{partner}.logo_path")) %>"
+           class="img-responsive center-block"
+           />
     </div>
     <div class="col-xs-12 col-sm-9">
       <div class="cta">
         <div class="cta-text">
-          <%= t('.innovate_public_schools.call_to_action') %>
+          <%= t(".#{partner}.call_to_action") %>
         </div>
         <a class="btn btn-primary"
-           href="<%= t('.innovate_public_schools.link_url') %>"
+           href="<%= t(".#{partner}.link_url") %>"
            target="_blank"
           >
-          <%= t('.innovate_public_schools.link_text') %>
+          <%= t(".#{partner}.link_text") %>
         </a>
       </div>
     </div>

@@ -92,10 +92,22 @@ describe GroupComparisonDataReader do
     o
   end
 
-  it 'should create a BarChartCollection for each data type' do
-    allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-    expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
-    subject.data_for_category(fake_category)
+
+  describe '#data_for_category' do
+    before do
+      allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+    end
+
+    it 'should create a BarChartCollection for each data type' do
+      expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
+      subject.data_for_category(fake_category)
+    end
+
+    [:partner, :bar_chart_collections].each do |key|
+      it "should return a hash with key #{key}" do
+        expect(subject.data_for_category(fake_category)).to have_key key
+      end
+    end
   end
 
   describe '#get_data!' do
