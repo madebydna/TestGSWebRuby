@@ -74,10 +74,19 @@ p, a {
 
 }
 
-.advertisement-text {
-  width: 100px;
+@mixin ghost-text() {
   color: $gray-dark;
   font-size: 12px;
+}
+
+.advertisement-text {
+  @include ghost-text();
+  width: 100px;
+}
+
+.sponsored-by-text {
+  @include ghost-text();
+  padding: 0 0 5px 10px;
 }
 
 .link-darkgray {
