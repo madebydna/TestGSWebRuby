@@ -12,7 +12,10 @@
 
 indent = ARGV[0].to_i
 require 'yaml'
-STDIN.to_a.each do |text|
+array = STDIN.to_a.sort.uniq
+array.each do |text|
+  text.strip!
+  next if text.to_i.to_s == text || text == 'false' || text == 'true'
   # note from samson
   # I tried to use YAML.dump / obj.to_yaml to generate yaml instead of doing this
   # however, those yaml generating methods don't property escape periods
