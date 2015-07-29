@@ -7,8 +7,9 @@
 
 <% data.each_with_index do |(test,value),index| %>
   <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
-    <h3><%= value[:All][:test_label] %></h3><br/>
-    <span class="">Showing results for all <span class="open-sans_sb js_button-filter-title-<%= test %>"></span> students</span>
+    <% test_label = value[:All][:test_label] %>
+    <h3><%= test_label %></h3><br/>
+    <span class=""><%= t('data_layouts.test_scores.showing_results_for_html', test: test) %></span>
     <br/><br/>
 
     <% decorator = TestScoresDecorator.decorate(data, context: { state: @school.state }) %>
@@ -17,7 +18,7 @@
     
     <% if decorator.description(value) %>
       <div>
-        <p class="mbm"><span class="open-sans_sb">About the test</span>
+        <p class="mbm"><span class="open-sans_sb"><%= t('data_layouts.test_scores.about_the_test') %></span>
           <!--<a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a>-->
         </p>
         <div><%= raw decorator.description(value) %></div>
@@ -25,7 +26,7 @@
     <% end %>
     <% if decorator.source(value) %>
       <div class="pbm">
-        <p class="font-size-small ptm">Source: <%= decorator.source(value) %></p>
+        <p class="font-size-small ptm"><%= t('data_layouts.test_scores.source') %>: <%= decorator.source(value) %></p>
       </div>
     <% end %>
     <% if @school.show_ads %>

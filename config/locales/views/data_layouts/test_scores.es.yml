@@ -1,0 +1,7 @@
+---
+es:
+  data_layouts:
+    test_scores:
+      about_the_test: Sobre la prueba
+      showing_results_for_html: Mostrando resultados para todos los estudiantes de <span class="open-sans_sb js_button-filter-title-%{test}"></span>
+      source: Fuente
