@@ -68,7 +68,7 @@ module SchoolProfileReviewsDecorator
     topic_distribution = topic_keys.merge(topic_distribution)
 
     chart = [
-        [topic.name, 'count']
+      [topic.name, h.t('decorators.school_profile_reviews_decorator.count')]
     ]
 
     topic_distribution.each_with_object(chart) do |(label, number_of_occurrences), chart_array|
