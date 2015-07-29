@@ -41,7 +41,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       create_groups_by: :breakdown,
       group_groups_by: [:gender],
       default_group: 'ethnicity',
-      create_sort_by: :school_value,
+      create_sort_by: :percent_of_population,
       sort_groups_by: [:desc, :all_students],
       create_charts_by: :breakdown,
       label_charts_with: :breakdown,
@@ -99,6 +99,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data.values.flatten.each do | hash |
       if (ethnicity_percent = ethnicity_map[hash[:original_breakdown]]).present?
         hash[:subtext] = percent_of_population_text(ethnicity_percent)
+        hash[:percent_of_population] = percent_of_population(ethnicity_percent)
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text
       end
@@ -165,6 +166,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       scope: i18n_scope,
       default:"#{percent.to_i}% of population"
     )
+  end
+
+  def percent_of_population(percent)
+    percent.to_i
   end
 
   def no_data_text

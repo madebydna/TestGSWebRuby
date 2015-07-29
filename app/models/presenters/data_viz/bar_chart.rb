@@ -42,7 +42,7 @@ class BarChart
     key = config[:create_sort_by]
     return group_data unless key.present?
 
-    group_data.sort_by{|d| d[key].to_f }.reverse!
+    group_data.sort_by{|d| d[key].nil? ? -1 : d[key].to_f}.reverse!
   end
 
   def sort_by_all_students(group_data)
