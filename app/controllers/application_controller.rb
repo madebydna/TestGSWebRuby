@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   include HubConcerns
   include AdvertisingHelper
   include DataLayerConcerns
+  include JavascriptI18nConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -23,6 +24,7 @@ class ApplicationController < ActionController::Base
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
   before_action :set_locale
+  before_action :add_configured_translations_to_js
 
   after_filter :disconnect_connection_pools
 

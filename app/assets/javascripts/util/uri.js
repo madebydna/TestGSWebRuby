@@ -161,13 +161,7 @@ GS.uri.Uri.removeFromQueryString = function(queryString, key) {
 };
 
 GS.uri.Uri.getQueryStringFromURL = function () {
-    var index = window.location.href.indexOf('?');
-    if(index === -1) {
-        return "";
-    }
-    else {
-        return window.location.href.slice(index + 1);
-    }
+  return GS.uri.Uri.getQueryStringFromGivenUrl(GS.uri.Uri.getHref());
 };
 
 GS.uri.Uri.getQueryStringFromGivenUrl = function(url) {
@@ -233,6 +227,12 @@ GS.uri.Uri.getAnchorFromUrl = function(url) {
   } else {
     return '';
   }
+};
+
+GS.uri.Uri.getValueOfQueryParam = function(param) {
+  var queryString = GS.uri.Uri.getQueryStringFromURL();
+  var queryData = GS.uri.Uri.getQueryData('?' + queryString);
+  return queryData[param];
 };
 
 /**

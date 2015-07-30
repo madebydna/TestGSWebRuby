@@ -1,6 +1,16 @@
 //= require util/uri
 
 describe('GS.uri.Uri', function() {
+  function unstub(obj) {
+    if(obj.hasOwnProperty('restore')) {
+      obj.restore();
+    }
+  }
+
+  afterEach(function() {
+    unstub(GS.uri.Uri.getHref);
+  });
+
   describe('.getQueryStringFromObject', function() {
     it('returns an empty string for empty inputs', function() {
         expect(GS.uri.Uri.getQueryStringFromObject({})).to.eq('');
@@ -172,6 +182,28 @@ describe('GS.uri.Uri', function() {
     it('gets anchor from url with query string', function() {
       var url = 'www.greatschools.org?foo=bar&bar=baz#anchor';
       expect(GS.uri.Uri.getAnchorFromUrl(url)).to.eq('#anchor');
+    });
+  });
+
+  describe('.getQueryStringFromURL', function() {
+    it('gets correct query string when it has an anchor', function() {
+      var url = 'www.greatschools.org?foo=bar&bar=baz#anchor';
+      sinon.stub(GS.uri.Uri, 'getHref').returns(url);
+      expect(GS.uri.Uri.getQueryStringFromURL()).to.eq('foo=bar&bar=baz');
+    });
+  });
+
+  describe('.getValueOfQueryParam', function() {
+    it('gets param value from url with anchor', function() {
+      var url = 'www.greatschools.org?foo=bar#anchor';
+      sinon.stub(GS.uri.Uri, 'getHref').returns(url);
+      expect(GS.uri.Uri.getValueOfQueryParam('foo')).to.eq('bar');
+    });
+
+    it('handles case where param does not exist', function() {
+      var url = 'www.greatschools.org?foo=bar#anchor';
+      sinon.stub(GS.uri.Uri, 'getHref').returns(url);
+      expect(GS.uri.Uri.getValueOfQueryParam('baz')).to.eq(undefined);
     });
   });
 });

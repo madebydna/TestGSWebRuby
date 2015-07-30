@@ -2,6 +2,9 @@
 en:
   data_layouts:
     test_scores:
+      advanced: 'Advanced'
       about_the_test: 'About the test'
+      proficient: 'Proficient'
+      proficient_or_better: 'Proficient or better'
       source: 'Source'
       showing_results_for_html: "Showing results for all <span class=\"open-sans_sb js_button-filter-title-%{test}\"></span> students"
