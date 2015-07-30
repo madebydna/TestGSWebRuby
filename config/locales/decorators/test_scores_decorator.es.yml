@@ -2,4 +2,6 @@
 es:
   decorators:
     test_scores_decorator:
-      grade: "grado %{grade_number}"
+      School-wide: En toda la escuela
+      by_group: Por Grupo
+      grade: grado %{grade_number}
