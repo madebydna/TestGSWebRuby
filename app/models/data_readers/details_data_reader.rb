@@ -1,5 +1,9 @@
 class DetailsDataReader < SchoolProfileDataReader
 
+  def i18n_scope
+    self.class.name.underscore
+  end
+
   def data_for_category(category)
     #Bugathon - PreK details icons are not ready yet, hence hide the details section temporarily.
     if school.preschool?
@@ -18,12 +22,36 @@ class DetailsDataReader < SchoolProfileDataReader
     #need icon sprite size and name.  subtitle w color.  content
     return_counts_details = {
       data_show: false,
-      art:   {count: 'no info', content: 'Arts & music'},
-      sport: {count: 'no info', content: 'Sports'},
-      club:  {count: 'no info', content: 'Clubs'},
-      lang:  {count: 'no info', content: 'World languages'},
-      sched: {count: 'Half day', content: 'Preschool schedule'},
-      commu: {count: 'Community center', content: 'Care setting'}
+      art:   {count: 'no info', content: I18n.t(
+                                          :arts_and_music,
+                                          scope: i18n_scope,
+                                          default: "Arts & music"
+                                        )},
+      sport: {count: 'no info', content: I18n.t(
+                                          :sports,
+                                          scope: i18n_scope,
+                                          default: "Sports"
+                                        )},
+      club:  {count: 'no info', content: I18n.t(
+                                          :clubs,
+                                          scope: i18n_scope,
+                                          default: "Clubs"
+                                        )},
+      lang:  {count: 'no info', content: I18n.t(
+                                          :world_languages,
+                                          scope: i18n_scope,
+                                          default: "World languages"
+                                        )},
+      sched: {count: 'Half day', content: I18n.t(
+                                          :preschool_schedule,
+                                          scope: i18n_scope,
+                                          default: "Preschool schedule"
+                                        )},
+      commu: {count: 'Community center', content: I18n.t(
+                                          :care_setting,
+                                          scope: i18n_scope,
+                                          default: "Care setting"
+                                        )}
     }
 
     # loop through details and handle total count for 0, infinity cases
