@@ -15,12 +15,18 @@ module ConfiguredTableHelper
     output.html_safe
   end
 
-  def filter_for_all_students(data = {})
-    data.each do |k, values|
+  def filter_for_all_students(data)
+    filter_by_breakdowns(['', 'all students'], data)
+  end
+
+  def filter_by_breakdowns(breakdowns, data)
+    return data if breakdowns == 'all'
+    data.deep_dup.each do |k, values|
       data[k] = values.select do |value|
-        value[:breakdown].nil? || value[:breakdown].to_s.downcase == 'all students'
+        [*breakdowns].any? do |breakdown|
+          value[:breakdown].to_s.downcase == breakdown
+        end
       end
     end
   end
-
 end

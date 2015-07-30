@@ -1,12 +1,20 @@
-<% data # A +Hash+ containing data for this table to display %>
-<% category_placement # The +CategoryPlacement+ that this table is for %>
-<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+<%
+  data # A +Hash+ containing data for this table to display
+  category_placement # The +CategoryPlacement+ that this table is for
+  category # The +Category+ belonging to this table's +CategoryPlacement+
 
-<% data_config = category_placement.table_config %>
-<%= debug data if params[:debug] %>
-<% data = TableData.new data %>
+  data_config = category_placement.table_config
 
-<% data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+  filtered_data = if data_config.config['breakdowns']
+                    filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  else
+                    filter_for_all_students(data)
+                  end
+%>
+<%= debug filtered_data if params[:debug] %>
+<% table_data = TableData.new filtered_data %>
+
+<% table_data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
 
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
 
@@ -17,7 +25,7 @@
     <table class="table table-striped no-more-tables">
         <thead>
             <tr>
-                <% category_placement.table_config.columns_to_print(data).each do |column| %>
+                <% category_placement.table_config.columns_to_print(table_data).each do |column| %>
                     <% if column['display_type'] == :data_and_header %>
                         <th><%= column['label'] %></th>
                     <% else %>
@@ -28,9 +36,9 @@
         </thead>
 
         <tbody>
-            <% columns_to_print = data_config.columns_to_print(data) %>
+            <% columns_to_print = data_config.columns_to_print(table_data) %>
 
-            <% data.rows.each do |hash| %>
+            <% table_data.rows.each do |hash| %>
                 <tr>
                    <% data_config.row_values(columns_to_print, hash) do |label, value| %>
                       <%= td label, value %>
@@ -45,7 +53,7 @@
 <%= render partial: 'about_this_data',
   locals: {
     unique_id: category_placement.id,
-    descriptions: data.rows.map { |hash| hash[:description] }.uniq.compact
+    descriptions: table_data.rows.map { |hash| hash[:description] }.uniq.compact
   }
 %>
 
