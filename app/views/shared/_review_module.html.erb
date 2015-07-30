@@ -42,7 +42,7 @@
             </span>
           </div>
           <br/><span class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
-          - a <span class="cuc_posted-by"><%= review.user_type %></span>
+          <%= t('.user_type_html', user_type: review.user_type)  %>
       <% end %>
 
       <%= div_tag sizes: {xs: 12, sm: 8, md: 9, lg: 9} do %>

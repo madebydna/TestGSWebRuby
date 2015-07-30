@@ -54,7 +54,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     elsif review.school_user_or_default.principal?
       t('decorators.school_profile_review_decorator.school_leader')
     else
-      review.school_user_or_default.user_type
+      t(review.school_user_or_default.user_type)
     end
   end
 
