@@ -128,7 +128,7 @@ class TestScoresDecorator < Draper::Decorator
               h.raw bar_chart(value).script_tag(div_id)
             end
             div_content << h.content_tag(:h4, class: (index_subject == 0 ? 'ptl' : '')) do
-              subject.to_s.gs_capitalize_first
+              I18n.t(subject.to_s.gsub('.', ''), default: subject.to_s).gs_capitalize_first
             end
             # TODO change this to test id
             div_content << h.content_tag(:div, id: div_id, class: 'notranslate ma') do
