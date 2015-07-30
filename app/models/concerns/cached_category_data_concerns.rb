@@ -14,7 +14,7 @@ module CachedCategoryDataConcerns
     SchoolCache.send("cached_#{cache_key}_data", school).select do |k,v|
       # TODO Make this generic so that it works for all caches
       [*desired_keys].include?(k) || [*desired_keys].include?(CensusDataType.data_type_id_for_data_type_label(k))
-    end.deep_clone
+    end.deep_dup
   end
 
 end
