@@ -17,6 +17,17 @@ class TestScoresDecorator < Draper::Decorator
     test[:All][:test_source]
   end
 
+  def label(grade_hash)
+    cached_label = grade_hash[:label]
+    grade_number_regex_matches = cached_label.match /GRADE ([0-9]+)/
+    if !!grade_number_regex_matches
+      grade_number = grade_number_regex_matches[1]
+      I18n.t('decorators.test_scores_decorator.grade', grade_number: grade_number).upcase
+    else
+      cached_label
+    end
+  end
+
   def tabs_for_test(test)
     buttons = ''
     grades = self.grades(test)
@@ -28,7 +39,7 @@ class TestScoresDecorator < Draper::Decorator
           id: test_button_dom_id(test, :All, grade),
           class: "btn btn-default js_test_scores_grades#{index_grade == 0 ? ' active' : ''}"
         ) do
-          grade_hash[:label].html_safe
+          label(grade_hash)
         end)
       end
     end

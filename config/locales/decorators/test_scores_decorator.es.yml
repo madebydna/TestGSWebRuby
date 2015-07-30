@@ -1,0 +1,5 @@
+---
+es:
+  decorators:
+    test_scores_decorator:
+      grade: "grado %{grade_number}"
