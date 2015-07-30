@@ -49,9 +49,7 @@ describe BarChartCollection do
       end
       it 'should sort the groups by percent breakdown descending and all students' do
         bar_chart_bars = subject.first.bar_chart_bars
-        subtexts = bar_chart_bars.map do |bars|
-          bars.subtext
-        end
+        subtexts = bar_chart_bars.map(&:subtext)
         parsed_subtext = subtexts[1..-1].sort_by do |subtext|
           parsed_string = /^\d+/.match(subtext)
           parsed_string.nil? ? -1 : parsed_string[0].to_i
