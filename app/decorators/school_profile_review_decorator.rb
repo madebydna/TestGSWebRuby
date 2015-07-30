@@ -16,7 +16,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def answer_value
     unless review.answers.empty?
-      review.answers.first.answer_value
+      t(review.answers.first.answer_value)
     end
   end
 
@@ -29,11 +29,11 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def topic_markup
-    h.content_tag(:span, "#{topic_label}:", class: 'pbs') unless review.question.overall?
+    h.content_tag(:span, "#{t(topic_label)}:", class: 'pbs') unless review.question.overall?
   end
 
   def topic_name
-    review.question.review_topic.name
+    t(review.question.review_topic.name)
   end
 
   def star_rating

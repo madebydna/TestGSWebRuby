@@ -4,5 +4,10 @@ es:
     reviews:
       lib:
         stars_input:
-          required_vote_error_message: "¡Gracias por compartir su historia! Por 
-          favor vote para guardar sus comentarios."
+          average: Promedio
+          bad: Malo
+          good: Bueno
+          great: Gran
+          required_vote_error_message: '¡Gracias por compartir su historia! Por 
+          favor vote para guardar sus comentarios.'
+          terrible: Terrible
