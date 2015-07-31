@@ -71,8 +71,8 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-          create_sort_by: :percent_of_population,
-          sort_groups_by: [:desc, :all_students],
+          bar_chart_callbacks: [:move_all_students],
+          sort_by: {desc: :percent_of_population},
           default_group: 'ethnicity',
           label_charts_with: :breakdown
         })
@@ -86,8 +86,8 @@ describe BarChartCollection do
         bar_chart_collection_callbacks: [:copy_all_students],
         group_by: {gender: :breakdown},
         default_group: 'ethnicity',
-        create_sort_by: :percent_of_population,
-        sort_groups_by: [:desc, :all_students],
+        bar_chart_callbacks: [:move_all_students],
+        sort_by: {desc: :percent_of_population},
         create_charts_by: :breakdown,
         label_charts_with: :breakdown,
         breakdown: 'Ethnicity',

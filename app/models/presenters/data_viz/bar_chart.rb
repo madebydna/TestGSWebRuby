@@ -2,13 +2,16 @@ class BarChart
   # Class that holds a collection of graphs related by subject or breakdown.
   # Header and array of chart data.
 
-  attr_accessor :bar_chart_bars, :data, :config, :title
+  attr_accessor :bar_chart_bars, :data, :config, :title, :sort_by_config
+
+  DEFAULT_CALLBACKS = [:sort_by]
 
   def initialize(data, title = nil, config = {})
     # Title is optional because for single chart groups, there is no group title
     self.data = data
     self.config = config
     self.title = title
+    self.sort_by_config = config[:sort_by]
 
     create_bar_chart_bars!
   end
@@ -16,7 +19,9 @@ class BarChart
   private
 
   def create_bar_chart_bars!
-    self.bar_chart_bars = sorted_data.map do |data_point|
+    run_config_callbacks!
+
+    self.bar_chart_bars = data.map do |data_point|
       bar_chart_bar = BarChartBar.new(
         {
           label: label_for(data_point, config),
@@ -30,24 +35,25 @@ class BarChart
     end.compact
   end
 
-  def sorted_data
-    callbacks = config[:sort_groups_by]
+  def run_config_callbacks!
+    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_callbacks]]
 
-    [*callbacks].inject(data) do |gd, c|
-      send("sort_by_#{c}".to_sym, gd)
-    end
+    [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
 
-  def sort_by_desc(group_data)
-    key = config[:create_sort_by]
-    return group_data unless key.present?
+  def sort_by_callback
+    return unless sort_by_config.present?
 
-    group_data.sort_by{|d| d[key].nil? ? -1 : d[key].to_f}.reverse!
+    sort_by_config.each { |sort, key_to_use| send("sort_by_#{sort}".to_sym, key_to_use) }
   end
 
-  def sort_by_all_students(group_data)
-    i = group_data.find_index { |d| d[:breakdown].downcase == 'all students' }
-    i.present? ? group_data.insert(0, group_data.delete_at(i)) : group_data
+  def sort_by_desc(key)
+    self.data = data.sort_by{|d| d[key].nil? ? -1 : d[key].to_f}.reverse!
+  end
+
+  def move_all_students_callback
+    i = data.find_index { |d| d[:breakdown].downcase == 'all students' }
+    data.insert(0, data.delete_at(i)) if i.present?
   end
 
   def label_for(data_point, config)

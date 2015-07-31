@@ -1,22 +1,22 @@
 class BarChartCollection
 
-  # options defines things like title, sub-title, and
+  # config defines things like title, sub-title, and
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
-  attr_accessor :bar_charts, :data, :options, :sub_title, :title, :default_group, :group_by_options, :breakdowns
+  attr_accessor :bar_charts, :data, :config, :sub_title, :title, :default_group, :group_by_config, :breakdowns
 
   DEFAULT_CALLBACKS = [:group_by]
 
-  def initialize(title, data, options = {})
+  def initialize(title, data, config = {})
     self.data             = data
-    self.options          = options
-    self.sub_title        = options[:sub_title]
+    self.config          = config
+    self.sub_title        = config[:sub_title]
     self.title            = title
-    self.default_group    = options[:default_group]
-    self.group_by_options = options[:group_by]
+    self.default_group    = config[:default_group]
+    self.group_by_config = config[:group_by]
     create_bar_charts!
-    self.breakdowns       = bar_charts.map(&:title) if options[:group_by].present?
+    self.breakdowns       = bar_charts.map(&:title) if config[:group_by].present?
   end
 
   private
@@ -25,12 +25,12 @@ class BarChartCollection
     run_config_callbacks!
 
     self.bar_charts = data.map do |name, group_data|
-      BarChart.new(group_data, name, options) #we assume if there is no title its an ethnicity
+      BarChart.new(group_data, name, config) #we assume if there is no title its an ethnicity
     end
   end
 
   def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*options[:bar_chart_collection_callbacks]]
+    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_collection_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
@@ -41,9 +41,9 @@ class BarChartCollection
   end
 
   def find_group(data)
-    return default_group unless group_by_options.present?
+    return default_group unless group_by_config.present?
 
-    group_by_options.each do | group, value_to_use |
+    group_by_config.each do | group, value_to_use |
       found_group = send("find_group_by_#{group}".to_sym, data[value_to_use])
       return found_group if found_group.present?
     end
